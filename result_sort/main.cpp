@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-#define N 100020
+#define N 1000020
 
 using namespace std;
 
@@ -39,6 +39,15 @@ bool cmp2(const data &x, const data &y) {
 	return 1;
 }
 
+bool no_a_check(string s) {
+	for (int i = 0; i < (int)s.length() - 6; ++i)
+		if (s[i] == 'A' && isdigit(s[i + 1]) && isdigit(s[i + 2]) &&
+			isdigit(s[i + 3]) && isdigit(s[i + 4]) && isdigit(s[i + 5]) &&
+			isdigit(s[i + 6]))
+			return 0;
+	return 1;
+}
+
 void solve(const char *file_name) {
 	freopen(file_name, "r", stdin);
 	char w;
@@ -51,6 +60,7 @@ void solve(const char *file_name) {
 		w = getchar();
 		while (w <= 32) w = getchar();
 		int top = 0;
+		s[top++] = '\n';
 		while (1) {
 			if (w == '\n') {
 				s[top++] = w;
@@ -112,19 +122,23 @@ void solve(const char *file_name) {
 			if (s[j] == '\n') {
 				if (s[j + 1] == 'a' && s[j + 2] == '(' && T < 6) {
 					int k;
+					string tf = "";
 					for (k = j + 1; k < top && s[k] != '\n'; ++k)
-						t.formula += s[k];
+						tf += s[k];
 					j = k;
-					t.formula += '\n';
-					t.formula += '\n';
-					++ T;
+					tf += '\n';
+					tf += '\n';
+					if (no_a_check(tf)) {
+						t.formula += tf;
+						++ T;
+					}
 				}
 			}
 		int cf = 0;
 		for (int i = 0; i < (int)tmp.size() - 1; ++i)
 			if (tmp[i] == tmp[i + 1])
 				++ cf;
-		if (t.formula != string("") && cf < (int)tmp.size() / 2)
+		if (t.formula != string("") && cf < (int)tmp.size() / 2 && tmp.size() > 20)
 			whole.push_back(t);
 	}
 }
