@@ -48,6 +48,35 @@ bool no_a_check(string s) {
 	return 1;
 }
 
+const string d[12] = {(string)"Jan", (string)"Feb", (string)"Mar", (string)"Apr", (string)"May", (string)"Jun", (string)"Jul", (string)"Aug", (string)"Sep", (string)"Oct", (string)"Nov", (string)"Dec"};
+
+string remove_date(string x) {
+	for (int i = 0; i < 12; ++i)
+		if (x.find(d[i]) != string::npos) {
+			int t = x.find(d[i]);
+			for (int j = t; j >= 2; --j)
+				if (x[j] == '-' && x[j - 1] == ' ' && x[j - 2] == '.') {
+					return x.substr(0, j);
+				}
+		}
+	return x;
+}
+
+bool not_sim(string x) {
+	if (x.size() >= 6 && x[0] == 'a' && x[1] == '(' && x[2] == 'n' && x[3] == ')' && x[4] == ' ' && x[5] == '~') return 0;
+	if (x.size() >= 5 && x[0] == 'a' && x[1] == '(' && x[2] == 'n' && x[3] == ')' && x[4] == '~') return 0;
+	return 1;
+}
+
+string trim(string s) {
+	if (s.empty()) return s;
+	s.erase(0, s.find_first_not_of(" "));
+	s.erase(0, s.find_first_not_of("\n"));
+	s.erase(s.find_last_not_of(" ") + 1);
+	s.erase(s.find_last_not_of("\n") + 1);
+	return s;
+}
+
 void solve(const char *file_name) {
 	freopen(file_name, "r", stdin);
 	char w;
@@ -126,9 +155,10 @@ void solve(const char *file_name) {
 					for (k = j + 1; k < top && s[k] != '\n'; ++k)
 						tf += s[k];
 					j = k;
+					// tf = remove_date(tf);
 					tf += '\n';
 					tf += '\n';
-					if (no_a_check(tf)) {
+					if (no_a_check(tf) && not_sim(tf)) {
 						t.formula += tf;
 						++ T;
 					}
@@ -138,8 +168,9 @@ void solve(const char *file_name) {
 		for (int i = 0; i < (int)tmp.size() - 1; ++i)
 			if (tmp[i] == tmp[i + 1])
 				++ cf;
-		if (t.formula != string("") && cf < (int)tmp.size() / 2 && tmp.size() > 20)
+		if (trim(t.formula) != string("") && cf < (int)tmp.size() / 2 && tmp.size() > 25) {
 			whole.push_back(t);
+		}
 	}
 }
 
@@ -181,6 +212,8 @@ int main() {
 		printf("}");
 		puts("");
 		puts("");
+		puts("\\begin{sloppypar}");
+		// puts("<span style=\"white-space:pre;\"></span>");
 		for (int j = 0; j < whole[i].formula.length(); ++j) {
 			char c = whole[i].formula[j];
 			if (c == '#' || c == '$' || c == '%' || c == '{' || c == '}' || c == '~' || c == '^' || c == '_')
@@ -192,6 +225,8 @@ int main() {
 			if (c == '~' || c == '^')
 				printf("{}");
 		}
+//		puts("</span>");
+		puts("\\end{sloppypar}");
 	}
 	return 0;
 }
