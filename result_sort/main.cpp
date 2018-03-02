@@ -40,10 +40,10 @@ bool cmp2(const data &x, const data &y) {
 }
 
 bool no_a_check(string s) {
-	for (int i = 0; i < (int)s.length() - 6; ++i)
+	for (int i = 0; i < (int)s.length() - 7; ++i)
 		if (s[i] == 'A' && isdigit(s[i + 1]) && isdigit(s[i + 2]) &&
 			isdigit(s[i + 3]) && isdigit(s[i + 4]) && isdigit(s[i + 5]) &&
-			isdigit(s[i + 6]))
+			isdigit(s[i + 6]) && s[i + 7] == '(')
 			return 0;
 	return 1;
 }
@@ -142,6 +142,11 @@ void solve(const char *file_name) {
 		}
 		fprintf(stderr, "%s\n", id.c_str());
 		t.id = id;
+		if (id == "A058649") {
+			int t = 1;
+			t *= 2;
+			t *= w;
+		}
 		t.seq = tmp;
 		t.formula = "";
 		t.prefix.clear();
@@ -168,7 +173,8 @@ void solve(const char *file_name) {
 		for (int i = 0; i < (int)tmp.size() - 1; ++i)
 			if (tmp[i] == tmp[i + 1])
 				++ cf;
-		if (trim(t.formula) != string("") && cf < (int)tmp.size() / 2 && tmp.size() > 25) {
+		if (trim(t.formula) != string("") && cf < (int)tmp.size() / 2) {
+			t.seq.resize(min(30, (int)t.seq.size()));
 			whole.push_back(t);
 		}
 	}
