@@ -1,0 +1,65 @@
+{
+    "number": 272445,
+    "data": "1,2,30,4942,5853876,58039036412,4458135334234700,2811002302704446996926,14204916761279146343474398608,580077332863329104087361516015280826,190934226579364879405564404836420471442186330",
+    "name": "Numbers of paths for moving a king from a corner to the opposite one in a n X n chessboard, provided that each cell must be reached exactly once.",
+    "link": [
+        "C\u00e9sar Eliud Lozada, <a href=\"/A272445/a272445.pdf\">Chess king paths</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/KingGraph.html\">King Graph</a>"
+    ],
+    "example": [
+        "On a 2 X 2 chessboard, the king has 2 paths to go from a corner to the opposite one, standing exactly one time on each cell, so a(2)=2.",
+        "On a 3 X 3 chessboard, the king has 30 paths to go from a corner to the opposite one, standing exactly one time on each cell, so a(3)=30."
+    ],
+    "maple": [
+        "ChessKingPaths := proc(N, aUsed:=[1])",
+        "  local nLast, nPrev,  nNext,  i, j, i1, j1, i2, j2:",
+        "  global aPath, nPaths;",
+        "if N=1 then",
+        "  aPath:=[[1]]; nPaths:=1; return nPaths;",
+        "end if:",
+        "  if aUsed=[1] then",
+        "    aPath:=[]; nPaths:=0;",
+        "  end if;",
+        "  nLast:=N^(2);   #`opposite corner`",
+        "  nPrev := aUsed[-1] ; #actual position",
+        "  #Check all possible next cells",
+        "  i1:=`if`(floor((nPrev-1)/N)=0,0,-N); i2:=`if`(floor((nPrev-1)/N)=N-1,0,N);",
+        "  j1:=`if`((nPrev-1)mod N=0,0,-1); j2:=`if`((nPrev-1) mod N=N-1,0,1);",
+        "  for i from i1 to i2 by N do",
+        "    for j from j1 to j2 by 1 do",
+        "      if i=0 and j=0 then next fi; #`no move`",
+        "      nNext:=nPrev+i+j;",
+        "      #`out of bounds or already visited`",
+        "      if nNext<1 or nNext>nLast or (nNext in aUsed) then next: fi;",
+        "      #`nLast must be the last one`",
+        "      if (nNext=nLast and nops(aUsed)<>nLast-1) then next fi:",
+        "      if nNext=nLast  and nops(aUsed)=nLast-1 then  #`path completed`",
+        "        #comment if list is not required. It will consume all memory for N>=5",
+        "        aPath:=[op(aPath), [op(aUsed),nNext]];",
+        "        nPaths:=nPaths+1;",
+        "        break:",
+        "      else",
+        "        ChessKingPaths(N,[op(aUsed),nNext]) #move and continue",
+        "      end if;",
+        "    end do:",
+        "  end do:",
+        "  return nPaths;",
+        "end proc:",
+        "#For a(n) call this function with parameter n.",
+        "#Examples: ChessKingPaths(2), ChessKingPaths(3),...",
+        "#The list of paths is stored in variable aPath."
+    ],
+    "xref": [
+        "Cf. A001184, A158651, A140518, A288033."
+    ],
+    "keyword": "nonn,walk,more",
+    "offset": "1,2",
+    "author": "_C\u00e9sar Eliud Lozada_, Apr 29 2016",
+    "ext": [
+        "a(5)-a(11) from _Andrew Howroyd_, Jun 19 2017"
+    ],
+    "references": 2,
+    "revision": 23,
+    "time": "2017-06-20T12:24:10-04:00",
+    "created": "2016-04-30T03:41:09-04:00"
+}

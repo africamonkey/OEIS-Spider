@@ -1,0 +1,37 @@
+{
+    "number": 92366,
+    "data": "1,8,81,1120,19375,400896,9630411,262955008,8032730715,271175200000,10017828457483,401738097475584,17371952344599385,805429080795852800,39844314853048828125,2094272851244149112832,116526044312704751752451",
+    "name": "Coefficient of X^n in expansion of (1+n*X+n*X^2)^n.",
+    "comment": [
+        "Also coefficient of X^n in expansion of (1-2*n*X+(n^2-4*n)*X^2)^(-1/2). - _Vladeta Jovovic_, Mar 22 2004"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A092366/b092366.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "formula": [
+        "a(n) = n^(n/2)*GegenbauerPoly(n,-n,-sqrt(n)/2). - _Emanuele Munarini_, Oct 20 2016",
+        "Sum_{k=floor(n/2)..n} n^k*binomial(n, k)*binomial(k, n-k). - _Vladeta Jovovic_, Mar 22 2004",
+        "a(n) ~ n^(n-1/4) * exp(2*sqrt(n)-2) / (2*sqrt(Pi)). - _Vaclav Kotesovec_, Apr 17 2014"
+    ],
+    "maple": [
+        "seq(n!*coeff(series(exp(n*x)*BesselI(0,2*sqrt(n)*x),x,n+1),x,n),n=1..17);"
+    ],
+    "mathematica": [
+        "Table[Sum[n^k*Binomial[n,k]*Binomial[k,n-k],{k,Floor[n/2],n}],{n,1,20}] (* _Vaclav Kotesovec_, Apr 17 2014 *)",
+        "Table[If[n == 0, 1, n^(n/2) GegenbauerC[n, -n, -Sqrt[n]/2]], {n, 0,",
+        "12}] (* _Emanuele Munarini_, Oct 20 2016 *)"
+    ],
+    "program": [
+        "(PARI) q(n)=(1+n*X+n*X^2)^n; for(i=1,20,print1(\",\"polcoeff(q(i),i)))",
+        "(MAGMA) P<x>:=PolynomialRing(Integers()); [ Coefficients((1+n*x+n*x^2)^n)[n+1]: n in [1..22] ]; // Klaus Brockhaus, Mar 03 2011",
+        "(Maxima) a(n):=coeff(expand((1+n*x+n*x^2)^n), x, n);",
+        "makelist(a(n), n, 1, 12); /* Emanuele Munarini, Mar 02 2011 */"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jon Perry_, Mar 19 2004",
+    "references": 7,
+    "revision": 17,
+    "time": "2016-10-20T06:40:27-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

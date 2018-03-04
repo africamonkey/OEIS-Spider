@@ -1,0 +1,55 @@
+{
+    "number": 734,
+    "data": "1,2,5,15,49,177,715,3255,16689,95777,609875,4270695,32624329,269995377,2406363835,22979029335,234062319969,2533147494977,29027730898595,351112918079175,4470508510495609,59766296291090577",
+    "name": "Boustrophedon transform of 1,1,2,4,8,16,32,...",
+    "comment": [
+        "Binomial transform of A062272. - _Paul Barry_, Jan 21 2005"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A000734/b000734.txt\">Table of n, a(n) for n = 0..400</a>",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>",
+        "J. Millar, N. J. A. Sloane and N. E. Young, A new operation on sequences: the Boustrophedon on transform, J. Combin. Theory, 17A 44-54 1996 (<a href=\"http://neilsloane.com/doc/bous.txt\">Abstract</a>, <a href=\"http://neilsloane.com/doc/bous.pdf\">pdf</a>, <a href=\"http://neilsloane.com/doc/bous.ps\">ps</a>).",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Boustrophedon_transform\">Boustrophedon_transform</a>",
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "formula": [
+        "E.g.f.: (1+exp(2x))(sec(x)+tan(x))/2. - _Paul Barry_, Jan 21 2005",
+        "a(n) ~ n! * (1+exp(Pi)) * (2/Pi)^(n+1). - _Vaclav Kotesovec_, Oct 07 2013"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1+E^(2*x))*(Sec[x]+Tan[x])/2, {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Oct 07 2013 *)",
+        "t[n_, 0] := If[n == 0, 1, 2^(n-1)]; t[n_, k_] := t[n, k] = t[n, k-1] + t[n - 1, n-k]; a[n_] := t[n, n]; Array[a, 30, 0] (* _Jean-Fran\u00e7ois Alcover_, Feb 12 2016 *)"
+    ],
+    "program": [
+        "(Sage) # Algorithm of L. Seidel (1877)",
+        "def A000734_list(n) :",
+        "    A = {-1:0, 0:1}; R = []",
+        "    k = 0; e = 1; Bm = 1",
+        "    for i in range(n) :",
+        "        Am = Bm",
+        "        A[k + e] = 0",
+        "        e = -e",
+        "        for j in (0..i) :",
+        "            Am += A[k]",
+        "            A[k] = Am",
+        "            k += e",
+        "        Bm += Bm",
+        "        R.append(A[e*i//2]/2)",
+        "    return R",
+        "A000734_list(22) # _Peter Luschny_, Jun 02 2012",
+        "(Haskell)",
+        "a000734 n = sum $ zipWith (*) (a109449_row n) (1 : a000079_list)",
+        "-- _Reinhard Zumkeller_, Nov 04 2013"
+    ],
+    "xref": [
+        "Cf. A109449, A000079, A000752."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, _Simon Plouffe_",
+    "references": 5,
+    "revision": 30,
+    "time": "2016-02-12T07:52:46-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

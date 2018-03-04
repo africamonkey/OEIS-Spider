@@ -1,0 +1,36 @@
+{
+    "number": 174070,
+    "data": "14,29,30,50,54,55,77,86,90,91,110,126,135,139,140,149,174,190,194,199,203,204,230,245,255,271,280,284,285,294,302,330,355,365,366,371,380,384,385,415,434,446,451,476,492,501,505,506,509,510,534,559,590,595",
+    "name": "Numbers that can be written as a sum of at least 3 consecutive squares.",
+    "comment": [
+        "Numbers of the form (a(a+1)(2a+1)-b(b+1)(2b+1))/6 where a >= b+3 and b >= 0. - _Robert Israel_, Jul 18 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A174070/b174070.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "14 = 1^2 + 2^2 + 3^2, 29 = 2^2 + 3^2 + 4^2.",
+        "30 = 1^2 + 2^2 + 3^2 + 4^2, 50 = 3^2 + 4^2 + 5^2."
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "R:= [seq(b*(b+1)*(2*b+1)/6, b=0..ceil(sqrt(N/3)))]:",
+        "sort(convert(select(`<=`, {seq(seq(R[i]-R[j],j=1..i-3),i=1..nops(R))},N),list)); # _Robert Israel_, Jul 18 2017"
+    ],
+    "mathematica": [
+        "max=50^2;lst={};Do[z=n^2+(n+1)^2;Do[z+=(n+x)^2;If[z>max,Break[]];AppendTo[lst,z],{x,2,max/2}],{n,max/2}];Union[lst]",
+        "(* Second program: *)",
+        "Function[s, Function[t, Union@ Flatten@ Map[TakeWhile[#, # < t[[1, -1]] &] &, t]]@ Map[Total /@ Partition[s, #, 1] &, Range[3, Length@ s]]][Range[16]^2] (* _Michael De Vlieger_, Jul 18 2017 *)",
+        "Module[{nn=30,sq},sq=Range[nn]^2;Take[Union[Flatten[Table[Total/@ Partition[ sq,n,1],{n,3,nn-2}]]],2nn]] (* _Harvey P. Dale_, Nov 16 2017 *)"
+    ],
+    "xref": [
+        "Cf. A111774, A138591, A174069."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladimir Joseph Stephan Orlovsky_, Mar 06 2010",
+    "references": 4,
+    "revision": 16,
+    "time": "2017-11-16T09:39:07-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

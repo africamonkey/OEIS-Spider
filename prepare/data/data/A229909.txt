@@ -1,0 +1,53 @@
+{
+    "number": 229909,
+    "data": "1,2080,8038045",
+    "name": "Triangular numbers t such that the following are three triangular numbers: x, y, x+y, where x and y are distances from t to the two nearest squares.",
+    "comment": [
+        "No more terms through 10^34. - _Jon E. Schoenfield_, Feb 09 2014"
+    ],
+    "example": [
+        "2080 is in the sequence because the following three are triangular numbers:",
+        "2080-2025 = 55,",
+        "2116-2080 = 36,",
+        "55 + 36 = 91.",
+        "2025 = 45^2 and 2116 = 46^2 are the nearest to 2080 squares."
+    ],
+    "mathematica": [
+        "ttnQ[n_]:=Module[{s=Sqrt[n],x,y},x=If[IntegerQ[s],n-(s-1)^2,n- Floor[ s]^2];y=If[IntegerQ[s],(s+1)^2-n,Ceiling[s]^2-n];AllTrue[ {Sqrt[ 8x+1],Sqrt[8y+1],Sqrt[8(x+y)+1]},OddQ]]; Join[{1},Select[Accumulate[ Range[10000]],ttnQ]] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, May 30 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "def isTriangular(a):",
+        "    a+=a",
+        "    sr = int(math.sqrt(a))",
+        "    return (a==sr*(sr+1))",
+        "for n in xrange(1,1000000000L):",
+        "    tn = n*(n+1)/2  # = x+y = distance between squares",
+        "    if tn&1:",
+        "        k = tn>>1",
+        "        k*= k       # square below t",
+        "        a = int(math.sqrt(k*2))",
+        "        t = a*(a+1)/2",
+        "        if t <= k:",
+        "            a+=1",
+        "            t+=a",
+        "        ktn = k+tn   # square above t",
+        "        while t <= ktn:  # check if x and y are triangular:",
+        "            if isTriangular(t-k) and isTriangular(ktn-t):",
+        "                print t",
+        "            a+=1",
+        "            t+=a",
+        "    if (n&0xfffff)==0: print '.',"
+    ],
+    "xref": [
+        "Cf. A000217, A000290, A234143."
+    ],
+    "keyword": "nonn,bref,hard,more",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, Dec 19 2013",
+    "references": 1,
+    "revision": 19,
+    "time": "2015-05-30T09:41:54-04:00",
+    "created": "2013-12-25T02:51:21-05:00"
+}

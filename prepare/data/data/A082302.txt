@@ -1,0 +1,42 @@
+{
+    "number": 82302,
+    "data": "1,6,42,330,2814,25422,239442,2326434,23151030,234784662,2417832186,25216231866,265796560302,2827138163550,30306009654690,327081253546770,3551148743559270,38758882760119590,425024567305557450",
+    "name": "G.f.: (1 - 5*x - sqrt(25*x^2 - 14*x + 1))/(2*x).",
+    "comment": [
+        "More generally coefficients of (1 - m*x - sqrt(m^2*x^2 - (2*m + 4)*x + 1))/(2*x) are given by a(0)=1 and, for n > 0, a(n) = (1/n)*Sum_{k=0..n} (m+1)^k*C(n,k)*C(n,k-1).",
+        "Hankel transform is 6^C(n+1,2). - _Philippe Del\u00e9ham_, Feb 11 2009"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A082302/b082302.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Paul Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL9/Barry/barry91.html\">On Integer-Sequence-Based Constructions of Generalized Pascal Triangles</a>, Journal of Integer Sequences, Vol. 9 (2006), Article 06.2.4."
+    ],
+    "formula": [
+        "a(0)=1; for n > 0, a(n) = (1/n)*Sum_{k=0..n} 6^k*C(n, k)*C(n, k-1).",
+        "Conjecture: (n+1)*a(n) + 7*(1-2n)*a(n-1) + 25*(n-2)*a(n-2) = 0. - _R. J. Mathar_, Dec 08 2011",
+        "a(n) ~ sqrt(12 + 7*sqrt(6))*(7 + 2*sqrt(6))^n/(2*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Oct 14 2012",
+        "a(n) = 6*hypergeom([1 - n, -n], [2], 6) for n > 0. - _Peter Luschny_, May 22 2017"
+    ],
+    "maple": [
+        "A082302_list := proc(n) local j, a, w; a := array(0..n); a[0] := 1;",
+        "for w from 1 to n do a[w] := 6*a[w-1]+add(a[j]*a[w-j-1], j=1..w-1) od; convert(a,list)end: A082302_list(18); # _Peter Luschny_, May 19 2011",
+        "a := n -> `if`(n=0, 1, 6*hypergeom([1 - n, -n], [2], 6)):",
+        "seq(simplify(a(n)), n=0..18); # _Peter Luschny_, May 22 2017"
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[(1-5*x-Sqrt[25*x^2-14*x+1])/(2*x),{x,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Oct 14 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,1,sum(k=0,n,6^k*binomial(n,k)*binomial(n,k-1))/n)"
+    ],
+    "xref": [
+        "Cf. A006318, A047891.",
+        "Equals 6*A078018(n) for n > 0."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Benoit Cloitre_, May 10 2003",
+    "references": 6,
+    "revision": 31,
+    "time": "2017-08-14T02:41:10-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

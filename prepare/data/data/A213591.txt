@@ -1,0 +1,69 @@
+{
+    "number": 213591,
+    "data": "1,1,4,24,178,1512,14152,142705,1528212,17211564,202460400,2474708496,31310415376,408815254832,5495451727376,75907303147652,1075685334980240,15618612118252960,232102241507321384,3526880759915999016,54755450619399484512,867928449982022915984",
+    "name": "G.f. A(x) satisfies: A( x - A(x)^2 ) = x.",
+    "comment": [
+        "Unsigned version of A139702.",
+        "Self-convolution is A276370.",
+        "Row sums of triangle A277295."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A213591/b213591.txt\">Table of n, a(n) for n = 1..300</a>"
+    ],
+    "formula": [
+        "G.f. satisfies:",
+        "(1) A(x) = x + A(A(x))^2.",
+        "(2) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) A(x)^(2*n) / n!.",
+        "(3) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) A(x)^(2*n)/x / n! ).",
+        "(4) A(x) = x*G(A(x)^2/x) where G(x) = 1 + x*G(1-1/G(x))^2 is the g.f. of A212411.",
+        "(5) A(x)^2 = x*F(A(x)) where F(x) = 1 - (x^2/F(x))/F(x^2/F(x)) is the g.f. of A213628.",
+        "(6) x = A(A( x-x^2 - A(x)^2 )). - _Paul D. Hanna_, Jul 01 2012",
+        "(7) A(x) is the unique solution to variable A in the infinite system of simultaneous equations starting with:",
+        "A = x + B^2;",
+        "B = A + C^2;",
+        "C = B + D^2;",
+        "D = C + E^2;  ...",
+        "where B = A(A(x)), C = A(A(A(x))), D = A(A(A(A(x)))), etc.",
+        "...",
+        "a(n) = Sum_{k=0..n-1} A277295(n,k)."
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^2 + 4*x^3 + 24*x^4 + 178*x^5 + 1512*x^6 + 14152*x^7 +...",
+        "where A(x) = x + A(A(x))^2:",
+        "A(A(x)) = x + 2*x^2 + 10*x^3 + 69*x^4 + 568*x^5 + 5250*x^6 + 52792*x^7 +...",
+        "A(A(x))^2 = x^2 + 4*x^3 + 24*x^4 + 178*x^5 + 1512*x^6 + 14152*x^7 +...",
+        "The g.f. satisfies the series:",
+        "A(x) = x + A(x)^2 + d/dx A(x)^4/2! + d^2/dx^2 A(x)^6/3! + d^3/dx^3 A(x)^8/4! +...",
+        "Logarithmic series:",
+        "log(A(x)/x) = A(x)^2/x + [d/dx A(x)^4/x]/2! + [d^2/dx^2 A(x)^6/x]/3! + [d^3/dx^3 A(x)^8/x]/4! +...",
+        "Also, A(x) = x*G(A(x)^2/x) where G(x) = x/A(x/G(x)^2) is the g.f. of A212411:",
+        "G(x) = 1 + x + 2*x^2 + 7*x^3 + 36*x^4 + 235*x^5 + 1792*x^6 + 15261*x^7 +...",
+        "Also, A(x)^2 = x*F(A(x)) where F(x) is the g.f. of A213628:",
+        "F(x) = x + x^2 + 3*x^3 + 14*x^4 + 85*x^5 + 616*x^6 + 5072*x^7 + 46013*x^8 +..."
+    ],
+    "mathematica": [
+        "terms = 22; A[_] = 0; Do[A[x_] = x + A[A[x]]^2 + O[x]^(terms+1) // Normal, terms+1]; CoefficientList[A[x], x] // Rest (* _Jean-Fran\u00e7ois Alcover_, Jan 09 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x); if(n<1, 0, for(i=1, n, A=serreverse(x - A^2+x*O(x^n))); polcoeff(A, n))}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); for(i=1, n, A=x+sum(m=1, n, Dx(m-1, A^(2*m))/m!)+x*O(x^n)); polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); for(i=1, n, A=x*exp(sum(m=1, n, Dx(m-1, A^(2*m)/x)/m!)+x*O(x^n))); polcoeff(A, n)}",
+        "for(n=1,21,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A220379, A139702, A212411, A138740, A213628, A213639.",
+        "Cf. A088714, A088717, A091713, A120971, A140094, A140095.",
+        "Cf. A143426, A087949, A143435, A182969.",
+        "Cf. A275765, A276360, A276361, A276362, A276363, A276370.",
+        "Cf. A277295 (triangle)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Jun 14 2012",
+    "references": 31,
+    "revision": 35,
+    "time": "2018-01-09T14:30:57-05:00",
+    "created": "2012-06-14T22:47:01-04:00"
+}

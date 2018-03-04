@@ -1,0 +1,38 @@
+{
+    "number": 235329,
+    "data": "1,1,4,22,184,1888,24352,364336,6372352,125098624,2765195776,67161837568,1795080211456,51946830487552,1628857441189888,54705106541123584,1968709261466042368,75262309701303402496,3057220808668673081344,131069643224297960046592",
+    "name": "E.g.f. satisfies: A'(x) = A(x)^3 / A(-x) with A(0) = 1.",
+    "formula": [
+        "E.g.f.: 1/(1 - 3*Series_Reversion( Integral 1/(1-9*x^2)^(1/3) dx ))^(1/3).",
+        "Limit n->infinity (a(n)/n!)^(1/n) = Pi*2^(5/3)/(sqrt(3)*GAMMA(2/3)^3) = 2.3191905339278567... - _Vaclav Kotesovec_, Jan 28 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 4*x^2/2! + 22*x^3/3! + 184*x^4/4! + 1888*x^5/5! +...",
+        "Related series.",
+        "A(x)^3 = 1 + 3*x + 18*x^2/2! + 144*x^3/3! + 1512*x^4/4! + 19224*x^5/5! +...",
+        "Note that 1 - 1/A(x)^3 is an odd function:",
+        "1 - 1/A(x)^3 = 3*x - 18*x^3/3! - 216*x^5/5! - 18144*x^7/7! - 3483648*x^9/9! +...",
+        "where Series_Reversion((1 - 1/A(x)^3)/3) = Integral 1/(1-9*x^2)^(1/3) dx."
+    ],
+    "mathematica": [
+        "CoefficientList[1/(1 - 3*InverseSeries[Series[Integrate[1/(1-9*x^2)^(1/3),x],{x,0,20}],x])^(1/3),x] * Range[0,20]! (* _Vaclav Kotesovec_, Jan 28 2014 *)"
+    ],
+    "program": [
+        "(PARI) /* By definition A'(x) = A(x)^3 / A(-x): */",
+        "{a(n)=local(A=1); for(i=0, n, A=1+intformal(A^3/subst(A, x, -x) +x*O(x^n) )); n!*polcoeff(A, n)}",
+        "for(n=0, 25, print1(a(n), \", \"))",
+        "(PARI) /* E.g.f. 1/(1 - 3*Series_Reversion(Integral (1-9*x)^(1/3) dx))^(1/3): */",
+        "{a(n)=local(A=1);A=1/(1-3*serreverse(intformal(1/(1-9*x^2 +x*O(x^n))^(1/3))))^(1/3);n!*polcoeff(A, n)}",
+        "for(n=0,25,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A235322, A235345."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jan 05 2014",
+    "references": 3,
+    "revision": 11,
+    "time": "2014-07-03T05:44:43-04:00",
+    "created": "2014-01-05T21:39:02-05:00"
+}

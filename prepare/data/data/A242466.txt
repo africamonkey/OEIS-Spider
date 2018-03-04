@@ -1,0 +1,45 @@
+{
+    "number": 242466,
+    "data": "2,9,14,21,25,33,34,38,57,85,86,93,94,116,118,121,122,133,141,142,145,158,170,171,177,201,202,205,213,214,217,218,253,284,298,301,302,326,332,334,361,369,381,387,393,394,434,435,445,446,453,481,501,514,526",
+    "name": "A term in this sequence a(n) is such that n and n+1 have isomorphic factor decomposition binary trees.",
+    "comment": [
+        "Integral Fission (consecutive isomorphic trees): For a natural number, n, make it the root node of a binary tree. The left child node (L) is the largest divisor of n which is greater than 1 but less than or equal to the square root of n, if this exists. The right child node is n/L, if the left node exists. Thus if n is a prime it is a leaf node; otherwise if it is composite then it is the product of its two children. If n = 1 then we have an empty tree."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A242466/b242466.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Gordon Hamilton, <a href=\"http://youtu.be/1fpY8WU_DJI\">Integral Fission</a>, Video for grade 7 teachers"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "t:= proc(n) option remember; `if`(n=1, \"0\",",
+        "      `if`(isprime(n), \"10\", (d-> cat(\"1\", t(d), t(n/d), \"0\"))(",
+        "       max(select(x-> is(x<=sqrt(n)), divisors(n))[]))))",
+        "    end:",
+        "a:= proc(n) option remember; local k;",
+        "      for k from 1 +`if`(n=1, 0, a(n-1))",
+        "      while t(k)<>t(k+1) do od; k",
+        "    end:",
+        "seq(a(n), n=1..60);  # _Alois P. Heinz_, Aug 09 2014"
+    ],
+    "mathematica": [
+        "t[n_] := t[n] = If[n == 1, \"0\", If[PrimeQ[n], \"10\", (\"1\" <> t[#] <> t[n/#] <> \"0\"&)[Max[Select[Divisors[n], # <= Sqrt[n]&]]]]];",
+        "a[n_] := a[n] = (For[k = 1 + If[n == 1, 0, a[n-1]], t[k] != t[k+1], k++]; k);",
+        "Array[a, 60] (* _Jean-Fran\u00e7ois Alcover_, Mar 27 2017, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = eqvec(empty(fiss(n)), empty(fiss(n+1))); \\\\ using A125508 scripts; _Michel Marcus_, May 25 2014"
+    ],
+    "xref": [
+        "Cf. A125508."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gordon Hamilton_, May 15 2014",
+    "ext": [
+        "More terms from _Michel Marcus_, May 25 2014"
+    ],
+    "references": 1,
+    "revision": 27,
+    "time": "2017-03-27T03:42:04-04:00",
+    "created": "2014-05-31T21:27:56-04:00"
+}

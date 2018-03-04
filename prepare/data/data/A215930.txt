@@ -1,0 +1,64 @@
+{
+    "number": 215930,
+    "data": "1,1,2,4,8,16,34,71,154,341,768,1765,4134,9838,23766,58226,144353,361899,916152,2339912,6023447,15617254,40752401,106967331,282267774,748500921,1993727506,5332497586,14316894271,38574473086,104273776038,282733466684,768809041078",
+    "name": "Number of forests on unlabeled nodes with n edges and no single node trees.",
+    "comment": [
+        "Each forest counted by a(n) with n>0 has number of nodes from the interval [n+1,2*n] and number of trees in [1,n].",
+        "Also limiting sequence of reversed rows of A095133.",
+        "Differs from A011782 first at n=6 (32) and from A088325 at n=8 (153)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A215930/b215930.txt\">Table of n, a(n) for n = 0..650</a>"
+    ],
+    "formula": [
+        "a(n) = A095133(2*n,n).",
+        "a(n) = A105821(2*n+1,n+1). - _Alois P. Heinz_, Jul 10 2013",
+        "a(n) = A136605(2*n+1,n). - _Alois P. Heinz_, Apr 11 2014",
+        "a(n) ~ c * d^n / n^(5/2), where d = A051491 = 2.955765285..., c = 3.36695186... . - _Vaclav Kotesovec_, Sep 10 2014"
+    ],
+    "example": [
+        "a(0) = 1: (  ), the empty forest with 0 trees and 0 edges.",
+        "a(1) = 1: ( o-o ), 1 tree and 1 edge.                      o",
+        "a(2) = 2: ( o-o-o ), ( o-o o-o ).                          |",
+        "a(3) = 4: ( o-o-o-o ), ( o-o-o o-o ), ( o-o o-o o-o ), ( o-o-o )."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; local d, j; `if`(n<=1, n,",
+        "      (add(add(d*b(d), d=divisors(j)) *b(n-j), j=1..n-1))/(n-1))",
+        "    end:",
+        "t:= proc(n) option remember; local k; `if` (n=0, 1, b(n)-",
+        "      (add(b(k)*b(n-k), k=0..n)-`if`(irem(n, 2)=0, b(n/2), 0))/2)",
+        "    end:",
+        "g:= proc(n, i, p) option remember; `if`(p>n, 0, `if`(n=0, 1,",
+        "      `if`(min(i, p)<1, 0, add(g(n-i*j, i-1, p-j)*",
+        "       binomial(t(i)+j-1, j), j=0..min(n/i, p)))))",
+        "    end:",
+        "a:= n-> g(2*n, 2*n, n):",
+        "seq(a(n), n=0..40);"
+    ],
+    "mathematica": [
+        "nn = 30; t[x_] := Sum[a[n] x^n, {n, 1, nn}]; a[0] = 0;",
+        "a[1] = 1; sol =",
+        "SolveAlways[",
+        "  0 == Series[",
+        "    t[x] - x Product[1/(1 - x^i)^a[i], {i, 1, nn}], {x, 0, nn}], x];",
+        "b[x_] := Sum[a[n] x^n /. sol, {n, 0, nn}]; ft =",
+        "Drop[Flatten[",
+        "   CoefficientList[Series[b[x] - (b[x]^2 - b[x^2])/2, {x, 0, nn}],",
+        "    x]], 1]; Drop[",
+        "CoefficientList[",
+        "  Series[Product[1/(1 - y ^(i - 1))^ft[[i]], {i, 2, nn}], {y, 0, nn}],",
+        "y], -1] (* _Geoffrey Critzer_, Nov 10 2014 *)"
+    ],
+    "xref": [
+        "Cf. A000055, A005195, A011782, A051491, A088325, A095133, A105821, A136605."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 27 2012",
+    "references": 4,
+    "revision": 37,
+    "time": "2017-05-11T16:51:15-04:00",
+    "created": "2012-08-28T10:48:23-04:00"
+}

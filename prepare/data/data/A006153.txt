@@ -1,0 +1,69 @@
+{
+    "number": 6153,
+    "id": "M3578",
+    "data": "1,1,4,21,148,1305,13806,170401,2403640,38143377,672552730,13044463641,276003553860,6326524990825,156171026562838,4130464801497105,116526877671782896,3492868475952497313,110856698175372359346,3713836169709782989993",
+    "name": "E.g.f.: 1/(1-x*exp(x)).",
+    "comment": [
+        "Without the first \"1\" = eigensequence of triangle A003566. - _Gary W. Adamson_, Dec 29 2008",
+        "a(n) is the sum of the row entries of triangle A199673, that is, a(n) is the number of ways to assign n people into labeled groups and then to assign a leader for each group from its members; see example below. - _Dennis P. Walsh_, Nov 15 2011",
+        "a(n) is the number of functions f:{1,2,...,n}->{1,2,...,n} (endofunctions) such that for some j>1, f^j=f where f^j denotes iterated functional composition. Equivalently, the number of endofunctions such that every element is mapped to a recurrent element. Equivalently, every vertex of the functional digraph is at a distance at most 1 from a cycle. - _Geoffrey Critzer_, Jan 21 2012"
+    ],
+    "reference": [
+        "Getu, S.; Shapiro, L. W.; Combinatorial view of the composition of functions. Ars Combin. 10 (1980), 131-145.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "R. P. Stanley, Enumerative Combinatorics, Cambridge, Vol. 2, 1999; see Problem 5.32(d)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A006153/b006153.txt\">Table of n, a(n) for n = 0..200</a>",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=110\">Encyclopedia of Combinatorial Structures 110</a>",
+        "Dennis Walsh, <a href=\"http://frank.mtsu.edu/~dwalsh/GROUPCNT.pdf\"> Assigning people into labeled groups with leaders</a>"
+    ],
+    "formula": [
+        "a(n) = n! * Sum_{k=0..n}(n-k)^k/k!.",
+        "a(n) = Sum_{k=0..n} k! k^(n-k) binomial(n,k).",
+        "For n>=1, a(n-1) = b(n) where b(1)=1 and b(n) = Sum_{i=1..n-1} i*binomial(n-1, i)*b(i). - _Benoit Cloitre_, Nov 13 2004",
+        "a(n) = Sum_{k=1..n}A199673(n,k) = Sum_{k=1..n}n! k^(n-k)/(n-k)!. - _Dennis P. Walsh_, Nov 15 2011",
+        "E.g.f. for a(n), n>=1: x*e^x/(1-x*e^x). - _Dennis P. Walsh_, Nov 15 2011",
+        "a(n) ~ n! / ((1+LambertW(1))*LambertW(1)^n). - _Vaclav Kotesovec_, Jun 21 2013"
+    ],
+    "example": [
+        "a(3) = 21 since there are 21 ways to assign 3 people into labeled groups with designated leaders. If there is one group, there are 3 ways to select a leader from the 3 people in the group. If there are two groups (group 1 and group 2), there are 6 ways to assign leaders and then 2 ways to select a group for the remaining person, and thus there are 12 assignments. If there are three groups (group1, group 2, and group3), each person is a leader of their singleton group, and there are 6 ways to assign the 3 people to the 3 groups. Hence a(3) = 3 + 12 + 6 = 21.",
+        "a(4) = 148 = 4 + 48 + 72 + 24."
+    ],
+    "maple": [
+        "a := proc(n) local k; add(k^(n-k)*n!/(n-k)!,k=1..n); end; # for n >= 1"
+    ],
+    "mathematica": [
+        "With[{nn=20},CoefficientList[Series[1/(1-x Exp[x]),{x,0,nn}],x] Range[0,nn]!] (* _Harvey P. Dale_, Aug 29 2012 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^66); /* that many terms */",
+        "egf=1/(1-x*exp(x)); /* = 1 + x + 2*x^2 + 7/2*x^3 + 37/6*x^4 + 87/8*x^5 +... */",
+        "Vec(serlaplace(egf)) /* show terms */ /* _Joerg Arndt_, Apr 30 2011 */",
+        "(Sage)",
+        "def A006153_list(len):",
+        "    f, R, C = 1, [1], [1]+[0]*(len-1)",
+        "    for n in (1..len-1):",
+        "        f *= n",
+        "        for k in range(n, 0, -1):",
+        "            C[k] = -C[k-1]*(1/(k-1) if k>1 else 1)",
+        "        C[0] = sum((-1)^k*C[k] for k in (1..n))",
+        "        R.append(C[0]*f)",
+        "    return R",
+        "print A006153_list(20) # _Peter Luschny_, Feb 21 2016"
+    ],
+    "xref": [
+        "Row sums of triangle A199673.",
+        "Cf. A003566, A072597, A089148."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,3",
+    "author": "_Simon Plouffe_ and _N. J. A. Sloane_",
+    "ext": [
+        "Definition corrected by _Joerg Arndt_, Apr 30 2011"
+    ],
+    "references": 14,
+    "revision": 65,
+    "time": "2017-04-18T07:02:55-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

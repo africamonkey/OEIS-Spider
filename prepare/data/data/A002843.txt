@@ -1,0 +1,82 @@
+{
+    "number": 2843,
+    "id": "M1072 N0405",
+    "data": "1,1,2,4,7,13,24,43,78,141,253,456,820,1472,2645,4749,8523,15299,27456,49267,88407,158630,284622,510683,916271,1643963,2949570,5292027,9494758,17035112,30563634,54835835,98383803,176515310,316694823,568197628,1019430782",
+    "name": "Number of partitions of n into parts 1/2, 3/4, 7/8, 15/16, etc.",
+    "comment": [
+        "The g.f. (z**2+z+1)*(z-1)**2/(1-2*z-z**3+3*z**4) conjectured by _Simon Plouffe_ in his 1992 dissertation is wrong.",
+        "Also number of compositions (a_1,a_2,...) of n with each a_i <= 2*a_(i-1). [_Vladeta Jovovic_, Dec 02 2009]"
+    ],
+    "reference": [
+        "Minc, H.; A problem in partitions: Enumeration of elements of a given degree in the free commutative entropic cyclic groupoid. Proc. Edinburgh Math. Soc. (2) 11 1958/1959 223-224.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A002843/b002843.txt\">Table of n, a(n) for n = 0..2000</a> (first 201 terms from Vincenzo Librandi)",
+        "R. K. Guy, Letter to N. J. A. Sloane, June 24 1971: <a href=\"/A002572/a002572.jpg\">front</a>, <a href=\"/A002572/a002572_1.jpg\">back</a> [Annotated scanned copy, with permission]",
+        "H. Minc, <a href=\"http://dx.doi.org/10.1017/S0013091500021945\">A problem in partitions: Enumeration of elements of a given degree in the free commutative entropic cyclic groupoid</a>, Proc. Edinburgh Math. Soc. (2) 11 1958/1959 223-224.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992."
+    ],
+    "formula": [
+        "Row sums of A049286 and A047913. [_Vladeta Jovovic_, Dec 02 2009]"
+    ],
+    "example": [
+        "A straightforward partition problem: 1=1/2 + 1/2 and there is no other partition of 1, so a(1)=1.",
+        "a(3)=4 since 3 = 6(1/2) = 4(3/4) = 2(3/4)+3(1/2) = 2(7/8)+3/4+1/2.",
+        "a(4)=7 since 4 = 8(1/2) = 5(1/2)+2(3/4) = 2(1/2)+4(3/4) = 3(1/2)+3/4+2(7/8) = 3(3/4)+2(7/8) = 1/2+4(7/8) = 2(15/16)+7/8+3/4+1/2.",
+        "From _Joerg Arndt_, Dec 28 2012: (Start)",
+        "There are a(6)=24 compositions of 6 where part(k) <= 2 * part(k-1):",
+        "[ 1]  [ 1 1 1 1 1 1 ]",
+        "[ 2]  [ 1 1 1 1 2 ]",
+        "[ 3]  [ 1 1 1 2 1 ]",
+        "[ 4]  [ 1 1 2 1 1 ]",
+        "[ 5]  [ 1 1 2 2 ]",
+        "[ 6]  [ 1 2 1 1 1 ]",
+        "[ 7]  [ 1 2 1 2 ]",
+        "[ 8]  [ 1 2 2 1 ]",
+        "[ 9]  [ 1 2 3 ]",
+        "[10]  [ 2 1 1 1 1 ]",
+        "[11]  [ 2 1 1 2 ]",
+        "[12]  [ 2 1 2 1 ]",
+        "[13]  [ 2 2 1 1 ]",
+        "[14]  [ 2 2 2 ]",
+        "[15]  [ 2 3 1 ]",
+        "[16]  [ 2 4 ]",
+        "[17]  [ 3 1 1 1 ]",
+        "[18]  [ 3 1 2 ]",
+        "[19]  [ 3 2 1 ]",
+        "[20]  [ 3 3 ]",
+        "[21]  [ 4 1 1 ]",
+        "[22]  [ 4 2 ]",
+        "[23]  [ 5 1 ]",
+        "[24]  [ 6 ]",
+        "(End)"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1,",
+        "      add(b(n-j, min(n-j, 2*j)), j=1..i))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jun 24 2017"
+    ],
+    "mathematica": [
+        "v[c_, d_] := v[c, d] = If[d < 0 || c < 0, 0, If[d == c, 1, Sum[v[i, d - c], {i, 1, 2*c}]]]; Join[{1}, Plus @@@ Table[v[d, c], {c, 1, 34}, {d, 1, c}]] (* _Jean-Fran\u00e7ois Alcover_, Dec 10 2012, after _Vladeta Jovovic_ *)"
+    ],
+    "xref": [
+        "Cf. A047913."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _John W. Layman_, Nov 24 2001",
+        "Examples and offset corrected by Larry Reeves (larryr(AT)acm.org), Jan 06 2005",
+        "Further terms from _Vladeta Jovovic_, Mar 13 2006"
+    ],
+    "references": 3,
+    "revision": 44,
+    "time": "2017-06-24T14:32:22-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

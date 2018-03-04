@@ -1,0 +1,75 @@
+{
+    "number": 151374,
+    "data": "1,2,8,40,224,1344,8448,54912,366080,2489344,17199104,120393728,852017152,6085836800,43818024960,317680680960,2317200261120,16992801914880,125210119372800,926554883358720,6882979133521920,51309480813527040,383705682605506560,2877792619541299200",
+    "name": "Number of walks within N^2 (the first quadrant of Z^2) starting at (0,0), ending on the vertical axis and consisting of 2 n steps taken from {(-1, -1), (-1, 0), (1, 1)}.",
+    "comment": [
+        "A052701 shifted one place left. - _R. J. Mathar_, Dec 13 2008",
+        "Expansion of 1/(1-2*x*c(2x)), c(x) the g.f. of A000108. - _Philippe Del\u00e9ham_, Feb 26 2009",
+        "From _Joerg Arndt_, Oct 22 2012: (Start)",
+        "Also the number of strings of length 2*n of two different types of balanced parentheses.",
+        "For example, a(1) = 2, since the two possible strings of length 2 are [] and (), a(2) = 8, since the 8 possible strings of length 4 are (()), [()], ([]), [[]], ()(), [](), ()[], and [][].",
+        "The number of strings of length 2*n of t different types of balanced parentheses is given by t^n * A000108(n): there are n opening parentheses in the strings, giving t^n choices for the type (the closing parentheses are chosen to match). (End)",
+        "Number of Dyck paths of length 2n in which the step U=(1,1) come in 2 colors. - _Jos\u00e9 Luis Ram\u00edrez Ram\u00edrez_, Jan 31 2013",
+        "Row sums of triangle in A085880. - _Philippe Del\u00e9ham_, Nov 15 2013",
+        "Hankel transform is 2^(n+n^2) = A053763(n+1). - _Philippe Del\u00e9ham_, Nov 15 2013"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A151374/b151374.txt\">Table of n, a(n) for n = 0..200</a>",
+        "M. Bousquet-M\u00e9lou and M. Mishna, <a href=\"http://arxiv.org/abs/0810.4387\">Walks with small steps in the quarter plane</a>, arXiv:0810.4387 [math.CO], 2008-2009.",
+        "V. \u010ca\u010di\u0107 and V. Kova\u010d, <a href=\"http://arxiv.org/abs/1309.3408\">On the fraction of IL formulas that have normal forms</a>, arXiv:1309.3408 [math.LO], 2013.",
+        "S. Capparelli, A. Del Fra, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Capparelli/cap3.html\">Dyck Paths, Motzkin Paths, and the Binomial Transform</a>, Journal of Integer Sequences, 18 (2015), #15.8.5.",
+        "Z. Chen, H. Pan, <a href=\"http://arxiv.org/abs/1608.02448\">Identities involving weighted Catalan-Schroder and Motzkin Paths</a>, arXiv:1608.02448 (2016), eq. (1.13), a=b=2.",
+        "B. R. Jones, <a href=\"http://summit.sfu.ca/item/14554\">On tree hook length formulas, Feynman rules and B-series</a>, Master's thesis, Simon Fraser University, 2014.",
+        "G. Muntingh, <a href=\"http://arxiv.org/abs/1204.2709\">Implicit Divided Differences, Little Schroder Numbers and Catalan Numbers</a>, arXiv:1204.2709 [math.CO], 2012, and <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL15/Muntingh/muntingh2.html\">J. Int. Seq. 15 (2012) #12.6.5</a>"
+    ],
+    "formula": [
+        "a(n) = 2^n * A000108(n). - _Philippe Del\u00e9ham_, Feb 01 2009",
+        "a(n) = the top left term in M^n, M = the following infinite square production matrix:",
+        "2, 2, 0, 0, 0, 0,...",
+        "2, 2, 2, 0, 0, 0,...",
+        "2, 2, 2, 2, 0, 0,...",
+        "2, 2, 2, 2, 2, 0,...",
+        "2, 2, 2, 2, 2, 2,...",
+        "...",
+        "- _Gary W. Adamson_, Jul 12 2011",
+        "E.g.f.: KummerM(1/2, 2, 8*x). - _Peter Luschny_, Aug 26 2012",
+        "E.g.f.: Let F(x)=Sum_{n>=0} a(n)*x^n/(2*n)!, then F(x)= E(0)/(1-sqrt(x)) where E(k) =  1 - sqrt(x)/(1 - sqrt(x)/(sqrt(x) - (k+1)*(k+2)/2/E(k+1) )); (continued fraction ). - _Sergei N. Gladkovskii_, Apr 05 2013",
+        "G.f.: 1 + 4*x/(G(0)-4*x) where G(k) = k*(8*x+1) + 4*x + 2 - 2*x*(2*k+3)*(2*k+4)/G(k+1) ; (continued fraction ). - _Sergei N. Gladkovskii_, Apr 05 2013",
+        "G.f.: sqrt(2-8*x-2*sqrt(1-8*x))/(4*x). - _Mark van Hoeij_, May 10 2013",
+        "G.f.: (1-sqrt(1-8*x))/(4*x). - _Philippe Del\u00e9ham_, Nov 15 2013",
+        "(n+1)*a(n) +4*(-2*n+1)*a(n-1)=0. - _R. J. Mathar_, Mar 05 2014",
+        "a(n) = 4^n*2F1((1-n)/2,-n/2;1;1)/(n+1). - _Benedict W. J. Irwin_, Jul 12 2016",
+        "a(n) ~ 8^n*n^(-3/2)/sqrt(Pi). - _Ilya Gutkovskiy_, Jul 12 2016"
+    ],
+    "maple": [
+        "A151374_list := proc(n) local j, a, w; a := array(0..n); a[0] := 1;",
+        "for w from 1 to n do a[w] := 2*(a[w-1]+add(a[j]*a[w-j-1],j=1..w-1)) od;",
+        "convert(a,list)end: A151374_list(23); # _Peter Luschny_, May 19 2011"
+    ],
+    "mathematica": [
+        "aux[i_Integer, j_Integer, n_Integer] := Which[Min[i, j, n] < 0 || Max[i, j] > n, 0, n == 0, KroneckerDelta[i, j, n], True, aux[i, j, n] = aux[-1 + i, -1 + j, -1 + n] + aux[1 + i, j, -1 + n] + aux[1 + i, 1 + j, -1 + n]]; Table[Sum[aux[0, k, 2 n], {k, 0, 2 n}], {n, 0, 25}]"
+    ],
+    "program": [
+        "(MAGMA) [2^n * Catalan(n): n in [0..25]]; // _Vincenzo Librandi_, Oct 24 2012",
+        "(PARI) x='x+O('x^66); Vec(sqrt(2-8*x-2*sqrt(1-8*x))/(4*x)) \\\\ _Joerg Arndt_, May 11 2013",
+        "(Sage)",
+        "def A151374():",
+        "    a, n = 1, 1",
+        "    while True:",
+        "        yield a",
+        "        n += 1",
+        "        a = a * (8*n - 12) // n",
+        "A = A151374()",
+        "print [A.next() for _ in range(24)] # _Peter Luschny_, Nov 30 2016"
+    ],
+    "xref": [
+        "Cf. A000108."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Manuel Kauers_, Nov 18 2008",
+    "references": 20,
+    "revision": 95,
+    "time": "2017-10-20T11:59:05-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

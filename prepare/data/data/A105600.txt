@@ -1,0 +1,21 @@
+{
+    "number": 105600,
+    "data": "1,5,9,16,25,43,91,105,427,463,484,4085,4306,4413,5583,6273,10172,18105,24946,31686,31886",
+    "name": "Assume the conjectured terms of A105594 are the correct beginnings of the trajectories described in A003508. a(n) is a record length of b(n) iterations to arrive at the collected trajectories. This sequence cites the a(n)'s.",
+    "comment": [
+        "The trajectory in A003508, etc., is defined as a(1)=n, for n>1, a(n) = a(n-1) + 1 + sum of distinct prime factors of a(n-1) that are < a(n-1)."
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := a[n] = a[n - 1] + 1 + Plus @@ Select[ Flatten[ Table[ #[[1]], {1}] & /@ FactorInteger[ a[n - 1]]], # < a[n - 1] &]; t = Table[ a[n], {n, 1500}]; f[n_] := Module[{b, k = 1}, b[1] = n; b[m_] := b[m] = b[m - 1] + 1 + Plus @@ Select[ Flatten[ Table[ #[[1]], {1}] & /@ FactorInteger[ b[m - 1]]], # < b[m - 1] &]; While[ Position[t, b[k]] == {} && k < 1000, k++ ]; If[ k == 1000, t = Select[ Union[ Join[t, Table[ b[i], {i, 2, k}]]], # > n &]; -1, k - 1]]; lst = {{1, 0}}; Do[d = f[n]; If[d > lst[[ -1, 2]], AppendTo[lst, {n, d}]], {n, 60000}]; Transpose[ lst][[1]]"
+    ],
+    "xref": [
+        "Cf. A105593, the b(n)'s are in A105600."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_R. K. Guy_ and _Robert G. Wilson v_, Apr 15 2005",
+    "references": 2,
+    "revision": 6,
+    "time": "2013-05-22T15:12:15-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

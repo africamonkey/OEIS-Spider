@@ -1,0 +1,40 @@
+{
+    "number": 180715,
+    "data": "1,2,10,84,988,14944,276288,6037088,152213344,4349539776,138913306816,4903586835328,189581185491072,7966928227397120,361586320101395968,17626603314884699136,918522989907500809216,50952388648850059964416,2997739520942089756839936",
+    "name": "E.g.f.: A(x) = Series_Reversion[ x - Sum_{n>=2} (-x)^n/(n(n-1)/2) ].",
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) (1+A(x))*log(1+A(x)) = (3*A(x) - x)/2.",
+        "(2) log(1+A(x)) = Series_Reversion[(3-2*x)*exp(x) - 3].",
+        "(3) Let B(x) = 1+A(x), then: B(x) = exp( B(x)^2 * Integral 1/B(x)^3 dx ). - _Paul D. Hanna_, Dec 06 2013",
+        "a(n) ~ n^(n-1) / (sqrt(2) * exp(n-1/4) * (2*exp(1/2)-3)^(n-1/2)). - _Vaclav Kotesovec_, Dec 07 2013"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 10*x^3/3! + 84*x^4/4! + 988*x^5/5! +...",
+        "Series reversion of the e.g.f. A(x) begins:",
+        "x - x^2 + x^3/3 - x^4/6 + x^5/10 - x^6/15 + x^7/21 - x^8/28 +-...",
+        "Series reversion of log(1+A(x)) begins:",
+        "x - x^2/2! - 3*x^3/3! - 5*x^4/4! - 7*x^5/5! - 9*x^6/6! - 11*x^7/7! -..."
+    ],
+    "maple": [
+        "series(exp(LambertW(-exp(-3/2)*(3+x)/2)+3/2)-1, x, 31): A:=simplify(%, symbolic): A180715:=n->n!*coeff(A, x, n): - _Vladeta Jovovic_, Sep 28 2010"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,0,n!*polcoeff(serreverse(x-sum(k=2, n, (-x)^k*2/(k*(k-1)))+x*O(x^n)), n))",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) a(n)=if(n<1,0,n!*polcoeff(exp(serreverse((3-2*x)*exp(x+x*O(x^n))-3))-1,n))",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) a(n)=local(B=1+x);for(i=1,n,B=exp(B^2*intformal(1/B^3+x*O(x^n))));n!*polcoeff(B-1,n)",
+        "for(n=1,25,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Dec 06 2013"
+    ],
+    "xref": [
+        "Cf. A074059, A232693."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Sep 24 2010",
+    "references": 2,
+    "revision": 14,
+    "time": "2016-07-19T11:29:23-04:00",
+    "created": "2010-10-02T03:00:00-04:00"
+}

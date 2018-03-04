@@ -1,0 +1,62 @@
+{
+    "number": 229176,
+    "data": "23,29,83,293,347,349,431,439,653,659,677,743,1123,1297,1423,1489,1523,1657,1867,2239,2377,2459,2467,2543,2579,2663,2753,3163,3253,3271,3329,3457,3461,3581,3691,3727,3833,3947,3967,4129,4253,4297,4423,4567,4957,5323,5381,5651",
+    "name": "Primes p with nonzero digits such that p + product_of_digits and p - product_of_digits are both prime.",
+    "comment": [
+        "Numbers with nonzero digits in A227217; the non-degenerate cases, so to speak.",
+        "Intersection of primes with nonzero digits in A157677 and A225319."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A229176/b229176.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "743 is prime.",
+        "743 - (7*4*3) = 659 is prime.",
+        "743 + (7*4*3) = 827 is prime.",
+        "So, 743 is a member of this sequence."
+    ],
+    "maple": [
+        "A007954 := proc(n)",
+        "    mul(d, d=convert(n, base, 10))",
+        "end proc:",
+        "isA229176 := proc(n)",
+        "    if isprime(n) and A007954(n) <> 0 then",
+        "        isprime(n+A007954(n)) and isprime(n-A007954(n))  ;",
+        "        simplify(%) ;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 to 10000 do",
+        "    if isA229176(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do:"
+    ],
+    "mathematica": [
+        "id[x_] := IntegerDigits[x]; ti[x_] := Times @@ id[x]; m=5000; Select[Range[3,m,2], PrimeQ[#] && Min[id[#]] > 0 && PrimeQ[#+ti[#]] && PrimeQ[#-ti[#]]&] (* _Zak Seidov_, Oct 02 2013 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import sympy",
+        "from sympy import isprime",
+        "def DP(n):",
+        "..p = 1",
+        "..for i in str(n):",
+        "....p *= int(i)",
+        "..return p",
+        "{print(n,end=', ') for n in range(10**4) if DP(n) and isprime(n) and isprime(n+DP(n)) and isprime(n-DP(n))}",
+        "# Simplified by _Derek Orr_, Mar 22 2015",
+        "(PARI) forprime(p=1,10^4,d=digits(p);P=prod(i=1,#d,d[i]);if(P&&isprime(p+P)&&isprime(p-P),print1(p,\", \"))) \\\\ _Derek Orr_, Mar 22 2015"
+    ],
+    "xref": [
+        "Cf. A227217, A157677, A225319."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Derek Orr_, Sep 30 2013",
+    "references": 1,
+    "revision": 38,
+    "time": "2015-03-28T00:03:33-04:00",
+    "created": "2013-10-01T16:54:42-04:00"
+}

@@ -1,0 +1,57 @@
+{
+    "number": 260442,
+    "data": "1,2,3,5,6,7,11,13,15,17,18,19,23,29,30,31,35,37,41,43,47,53,59,61,67,71,73,75,77,79,83,89,90,97,101,103,105,107,109,113,127,131,137,139,143,149,151,157,163,167,173,179,181,191,193,197,199,210,211,221,223,227,229,233,239,241,245,251,257,263,269,270,271,277,281,283,293,307,311",
+    "name": "Sequence A260443 sorted into ascending order.",
+    "comment": [
+        "Each term is a prime factorization encoding of one of the Stern polynomials. See A260443 for details.",
+        "Numbers n for which A260443(A048675(n)) = n. - _Antti Karttunen_, Oct 14 2016"
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A260442/b260442.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Antti Karttunen, <a href=\"/A260442/b260442.txt\">Table of n, a(n) for n = 0..5000</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "allocatemem(2^30);",
+        "A048675(n) = my(f = factor(n)); sum(k=1, #f~, f[k, 2]*2^primepi(f[k, 1]))/2; \\\\ _Michel Marcus_, Oct 10 2016",
+        "A003961(n) = my(f = factor(n)); for (i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); \\\\ From _Michel Marcus_",
+        "A260443(n) = if(n<2, n+1, if(n%2, A260443(n\\2)*A260443(n\\2+1), A003961(A260443(n\\2))));",
+        "isA260442(n) = (A260443(A048675(n)) == n);  \\\\ The most naive version.",
+        "A055396(n) = if(n==1, 0, primepi(factor(n)[1, 1])) \\\\ _Charles R Greathouse IV_, Apr 23 2015",
+        "A061395(n) =  if(1==n, 0, primepi(vecmax(factor(n)[, 1]))); \\\\ After _M. F. Hasler_'s code for A006530.",
+        "isA260442(n) = ((1==n) || isprime(n) || ((omega(n) == 1+(A061395(n)-A055396(n))) && (A260443(A048675(n)) == n))); \\\\ Somewhat optimized.",
+        "i=0; n=0; while(i < 10001, n++; if(isA260442(n), write(\"b260442.txt\", i, \" \", n); i++));",
+        "(Scheme, with Antti Karttunen's IntSeq-library)",
+        "(define A260442 (FIXED-POINTS 0 1 (COMPOSE A260443 A048675)))",
+        ";; An optimized version:",
+        "(define A260442 (MATCHING-POS 0 1 (lambda (n) (or (= 1 n) (= 1 (A010051 n)) (and (not (< (A001221 n) (+ 1 (A243055 n)))) (= n (A260443 (A048675 n))))))))",
+        "(Python)",
+        "from sympy import factorint, prime, primepi",
+        "from operator import mul",
+        "def a048675(n):",
+        "    F=factorint(n)",
+        "    return 0 if n==1 else sum([F[i]*2**(primepi(i) - 1) for i in F])",
+        "def a003961(n):",
+        "    F=factorint(n)",
+        "    return 1 if n==1 else reduce(mul, [prime(primepi(i) + 1)**F[i] for i in F])",
+        "def a(n): return n + 1 if n<2 else a003961(a(n/2)) if n%2==0 else a((n - 1)/2)*a((n + 1)/2)",
+        "print [n for n in xrange(301) if a(a048675(n))==n] # _Indranil Ghosh_, Jun 21 2017"
+    ],
+    "xref": [
+        "Cf. A003961, A048675, A260443.",
+        "Subsequence of A073491.",
+        "From 2 onward the positions of nonzeros in A277333.",
+        "Various subsequences: A000040, A002110, A070826, A277317, A277200 (even terms).  Also all terms of A277318 are included here.",
+        "Cf. also A277323, A277324 and permutation pair A277415 & A277416."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Antti Karttunen_, Jul 29 2015",
+    "ext": [
+        "Pari and Scheme program code added by _Antti Karttunen_, Oct 14 2016"
+    ],
+    "references": 8,
+    "revision": 40,
+    "time": "2017-06-21T10:04:49-04:00",
+    "created": "2015-08-02T17:54:00-04:00"
+}

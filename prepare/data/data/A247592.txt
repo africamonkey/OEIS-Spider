@@ -1,0 +1,58 @@
+{
+    "number": 247592,
+    "data": "2,8,10,25,42,147,160,169,238,260,491,544,869,890,923,1140,1337,1386,1465,1643,1927,3371,4614,5038,5086,5225,5832,5909,5995,7118,7157,8540,9859,12543,13505,13795,13841,14211,15347,17079,17263,18643,20211,21184,21245",
+    "name": "Numbers n such that A002496(n) mod A002496(n-1) is a perfect square.",
+    "comment": [
+        "A002496 : primes of form n^2+1.",
+        "The prime numbers of the sequence are 2, 491, 3371, 9859, 13841,...",
+        "The corresponding squares A002496(n) mod A002496 (n-1) are : {1, 144, 100, 1024, 4900, 10816, 11664, 12544,...} = {1} union {A216330} minus {64}."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A247592/b247592.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "a(3)=10 because A002496(10) mod A002496(9)= 677 mod 577 = 10^2."
+    ],
+    "maple": [
+        "with(numtheory):nn:=360000:T:=array(1..nn):kk:=0:",
+        "for n from 1 to nn do:",
+        "  if type(n^2+1,prime)=true then",
+        "   kk:=kk+1:T[kk]:=n^2+1:",
+        "   else",
+        "   fi:",
+        "od:",
+        "    for m from 1 to kk-1 do:",
+        "     r:=irem(T[m+1],T[m]):z:=sqrt(r):",
+        "      if z=floor(z)",
+        "       then printf(`%d, `, m+1):",
+        "       else",
+        "      fi:",
+        "    od:"
+    ],
+    "mathematica": [
+        "lst={};lst1={};nn=400000;Do[If[PrimeQ[n^2+1],AppendTo[lst,n^2+1]],{n,1,nn}];nn1:=Length[lst];",
+        "Do[If[IntegerQ[Sqrt[Mod[lst[[m]],lst[[m-1]]]]],AppendTo[lst1,m]],{m,2,nn1}];lst1"
+    ],
+    "program": [
+        "(Python)",
+        "from gmpy2 import t_mod, is_square, is_prime",
+        "A247592_list, A002496_list, m, c = [], [2], 2, 2",
+        "for n in range(1, 10**7):",
+        "....m += 2*n+1",
+        "....if is_prime(m):",
+        "........if is_square(t_mod(m, A002496_list[-1])):",
+        "............A247592_list.append(c)",
+        "........A002496_list.append(m)",
+        "........c += 1 # _Chai Wah Wu_, Sep 20 2014"
+    ],
+    "xref": [
+        "Cf. A002496, A193558, A216330."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Sep 20 2014",
+    "references": 1,
+    "revision": 12,
+    "time": "2014-09-21T16:23:06-04:00",
+    "created": "2014-09-20T14:21:05-04:00"
+}

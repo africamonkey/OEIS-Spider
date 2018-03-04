@@ -1,0 +1,40 @@
+{
+    "number": 16067,
+    "data": "139,181,619,2341,3331,4189,4801,5911,6319,8251,9751,11311,12739,13051,15889,20641,21349,22741,23659,24079,32191,33631,39961,42871,45769,56131,57511,65341,71839,80149,90919,95989,99181,105271,119131,130651,157261,167359",
+    "name": "Consider all ways of writing a number as p+2m^2 where p is 1 or a prime and m >= 0; sequence gives numbers that are expressible in at least 2 more ways than any smaller number.",
+    "comment": [
+        "Max{A046920(k): k <= a(n)} + 1 < A046920(a(n)). - _Reinhard Zumkeller_, Aug 26 2013, Apr 03 2013"
+    ],
+    "reference": [
+        "G. H. Hardy and J. E. Littlewood, Some problems of `partitio numerorum'; III: On the expression of a number as a sum of primes, Acta Math., 44 (1922) pp. 1-70.",
+        "M. A. Stern, Sur un assertion de Goldbach relative aux nombres impairs, Nouvelles Annales Math., 15 (1856) pp. 23-24."
+    ],
+    "link": [
+        "Donovan Johnson, <a href=\"/A016067/b016067.txt\">Table of n, a(n) for n = 1..245</a> (terms <= 2*10^9)",
+        "L. Hodges, <a href=\"http://learning.physics.iastate.edu/hodges/mm-1.pdf\">A lesser-known Goldbach conjecture</a>, Math. Mag., 66 (1993), 45-47.",
+        "<a href=\"/index/Go#Goldbach\">Index entries for sequences related to Goldbach conjecture</a>"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (findIndices)",
+        "a016067 n = a016067_list !! (n-1)",
+        "a016067_list = (map (+ 1) $ findIndices (> 1) $",
+        "   zipWith (-) (tail rs) rs where rs = scanl max 0 a046920_list",
+        "-- _Reinhard Zumkeller_, Aug 26 2013, Apr 03 2013",
+        "(PARI) /* finds first 80 terms */ mx=6023671; v=vector(mx); p=vector(414391); p[1]=1; pr=1; for(j=2, 414391, pr=nextprime(pr+1); p[j]=pr); for(m=0, 1735, m2=2*m^2; for(j=1, 414391, s=m2+p[j]; if(s<=mx, v[s]++, next(2)))); c=0; n=0; for(j=1, mx, if(v[j]>c, if(v[j]>=c+2, n++; write(\"b016067.txt\", n \" \" j)); c=v[j])) /* _Donovan Johnson_, Aug 24 2013 */"
+    ],
+    "xref": [
+        "Cf. A007697, A046920."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_",
+    "ext": [
+        "Better description and more terms from _Jud McCranie_, Jun 16, 2000",
+        "Invalid first term removed by _Donovan Johnson_, Aug 24 2013"
+    ],
+    "references": 7,
+    "revision": 30,
+    "time": "2013-08-26T06:26:51-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

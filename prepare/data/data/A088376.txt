@@ -1,0 +1,24 @@
+{
+    "number": 88376,
+    "data": "8,75,1875,3267,5625,46875,1171875,3951075",
+    "name": "Numbers n such that n divides the concatenation of all divisors of n in ascending order other than 1 and n itself.",
+    "example": [
+        "a{2}=75 because the divisors of 75 are 1, 3, 5, 15, 25 and 75, excluding 1 and 75 and concatenating in ascending order yields 351525 which is divisible by 75 (351525/75 = 4687)."
+    ],
+    "maple": [
+        "divisorCat := proc(upLim, timeLimit, dvc) local s,m,n,d,t,f,startTime,startSet; startTime := time(); s := dvc[1]; m := dvc[2]; for n from s to upLim while time()-startTime<timeLimit do; d := divisors(n); d := d minus {1,n}; if d<>{} then t := \"\"; for f in d do; t := sprintf(\"%s%d\",t,f); od; if parse(t) mod n = 0 then m := m union {n}; print(n,d,t,parse(t)/n); fi; fi; if n mod 10000=0 then printf(\"%10.4f secs ... testing %d \",time()-startTime,n) fi; od; [n-1,m]; end;"
+    ],
+    "mathematica": [
+        "Select[Range[2,1000000],!PrimeQ[#]&&Divisible[FromDigits[ Flatten[ IntegerDigits/@ Most[Rest[Divisors[#]]]]],#]&] (* _Harvey P. Dale_, May 03 2014 *)"
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "Chuck Seggelin (barkeep(AT)plastereddragon.com), Nov 07 2003",
+    "ext": [
+        "More terms (a(7) and a(8)) from _Harvey P. Dale_, May 03 2014"
+    ],
+    "references": 0,
+    "revision": 7,
+    "time": "2014-05-03T11:14:43-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

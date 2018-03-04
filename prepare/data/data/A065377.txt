@@ -1,0 +1,38 @@
+{
+    "number": 65377,
+    "data": "2,5,13,31,37,61,127,379,439,571,829,991,1549,3319,7549",
+    "name": "Primes not of the form p + k^2, with p prime and k > 0.",
+    "maple": [
+        "N:= 10^6: # to get all entries <= N",
+        "Primes:= select(isprime,{2,seq(2*i+1,i=1..floor((N-1)/2))}):",
+        "A:= NULL:",
+        "for i from 1 to nops(Primes) do",
+        " for k from floor(sqrt(Primes[i])) to 1 by -1 do",
+        "   if isprime(Primes[i] - k^2) then break fi",
+        " od:",
+        " if k = 0 then A:= A, Primes[i] fi;",
+        "od:",
+        "A; # _Robert Israel_, Sep 03 2014"
+    ],
+    "mathematica": [
+        "Do[ k = 1; p = Prime[n]; While[k^2 < p && !PrimeQ[p - k^2], k++ ]; If[k^2 > p, Print[p]], {n, 1, 10^6} ]",
+        "Module[{nn=1000,pr},pr=Flatten[Table[Prime[n]+Range[nn]^2,{n,nn}]];Complement[Prime[Range[nn]],pr]] (* _Harvey P. Dale_, May 30 2014 *)"
+    ],
+    "program": [
+        "(PARI) is(p)=forstep(m=2,sqrtint(p),2,if(isprime(p-m^2),return(0)));isprime(p) && (p==2 || !issquare(p-2)) \\\\ _Charles R Greathouse IV_, Jun 04 2012"
+    ],
+    "xref": [
+        "A000040-Complement of A065376."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Nov 03 2001",
+    "ext": [
+        "Probably finite and 7549 is the last entry. - _Robert G. Wilson v_, Nov 05 2001",
+        "Offset corrected by _Charles R Greathouse IV_, May 29 2012"
+    ],
+    "references": 6,
+    "revision": 14,
+    "time": "2014-09-03T04:04:07-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 244660,
+    "data": "11142,11553,14088,16713,18801,22284,23097,23718,26787,28818,323589,327939,328992,416103,438357,459069,502149,595194,617928,647178,656457,665853,677019,682230,747099,767748,775782,799233,813861,832986,847266,855897,858648,862014,924366,970767,10174023,10240146",
+    "name": "Numbers x such that the base 10 representation of x^2 forms an arithmetic sequence when split into equal-sized chunks.",
+    "comment": [
+        "This sequence only includes numbers which produce arithmetic sequences of at least three terms (and in fact, no squares containing sequences of more than three terms have been found)."
+    ],
+    "link": [
+        "Michel Marcus, <a href=\"/A244660/b244660.txt\">Table of n, a(n) for n = 1..142 (up to 10^8)</a>"
+    ],
+    "example": [
+        "11142^2 = 124144164 and 124,144,164 is an arithmetic sequence."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count",
+        ".",
+        "def check(n,power):",
+        "...np = str(n**power)",
+        "...l=len(np)",
+        "...for chunks in range(3,5):",
+        "......if l%chunks==0:",
+        ".........step = l//chunks",
+        ".........bits = [int(np[i:i+step]) for i in range(0,l,step)]",
+        ".........diff = bits[1]-bits[0]",
+        ".........old=bits[1]",
+        ".........go = True",
+        ".........for bit in bits[2:]:",
+        "............if bit-old!=diff:",
+        "...............go=False",
+        "...............break",
+        "............old = bit",
+        ".........if go:",
+        "............return True",
+        ".",
+        "for n in count(1):",
+        "...if check(n,2):",
+        "......print(n)",
+        "(PARI) isoneap(vch) = {r = vch[2] - vch[1]; for (i=3, #vch, if (vch[i] - vch[i-1] != r, return (0));); return (1);}",
+        "isap(vd, nch, nd) = {npch = nd/nch; vch = vector(nch); ich = 1; inew = 1; for (i=1, nd, if (inew, vch[ich] = vd[i]; inew = 0;, vch[ich] = 10*vch[ich] + vd[i]); if ((i % npch) == 0, ich++; inew = 1);); isoneap(vch);}",
+        "isok(n) = {vd = digits(n^2); nd = #vd; if (isprime(nd), return(0)); ok = 0; fordiv(nd, nch, if (nch > 2, if(isap(vd, nch, nd), return (1)));); return (0);} \\\\ _Michel Marcus_, Jul 06 2014"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Christian Perfect_, Jul 04 2014",
+    "references": 1,
+    "revision": 13,
+    "time": "2014-07-12T18:01:23-04:00",
+    "created": "2014-07-12T18:01:23-04:00"
+}

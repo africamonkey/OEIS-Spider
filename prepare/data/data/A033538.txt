@@ -1,0 +1,50 @@
+{
+    "number": 33538,
+    "data": "1,1,5,17,57,189,625,2065,6821,22529,74409,245757,811681,2680801,8854085,29243057,96583257,318992829,1053561745,3479678065,11492595941,37957465889,125364993609,414052446717,1367522333761,4516619448001",
+    "name": "a(0)=1, a(1)=1, a(n)=3*a(n-1)+a(n-2)+1.",
+    "comment": [
+        "Number of times certain simple recursive programs (such as the Lisp program shown) call themselves on an input of length n.",
+        "This is the sequence A(1,1;3,1;1) of the family of sequences [a,b:c,d:k] considered by G. Detlefs, and treated as A(a,b;c,d;k) in the W. Lang link given below. [From Wolfdieter Lang, Oct 18 2010]"
+    ],
+    "reference": [
+        "E. Hyv\u00f6nen and J. Sepp\u00e4nen, LISP-kurssi, Osa 6 (Funktionaalinen ohjelmointi), Prosessori 4/1983, pp. 48-50 (in Finnish)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A033538/b033538.txt\">Table of n, a(n) for n = 0..200</a>",
+        "A. Karttunen, <a href=\"http://www.iki.fi/~kartturi/software/stacks.lsp\">More information</a>",
+        "Wolfdieter Lang, <a href=\"/A033538/a033538.pdf\">Notes on certain inhomogeneous three term recurrences.</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (4, -2, -1)."
+    ],
+    "formula": [
+        "O.g.f.: (1-3*x+3*x^2)/((1-x)*(1-3*x-x^2)). a(n)=(4*A006190(n+1)-8*A006190(n)-1)/3. - _R. J. Mathar_, Aug 22 2008",
+        "a(n) = 4*a(n-1) -2*a(n-2) - a(n-3), a(0)=1=a(1), a(2)=5. Observed by G. Detlefs. See the W. Lang link. [From Wolfdieter Lang, Oct 18 2010]",
+        "a(n) = -1/3+2/39*(3/2-1/2*sqrt(13))^n*sqrt(13)-2/39*sqrt(13)*(3/2+1/2*sqrt(13))^n+2/3 *(3/2-1/2*sqrt(13))^n+2/3*(3/2+1/2*sqrt(13))^n, with n>=0 [From Paolo P. Lava, Sep 01 2008]"
+    ],
+    "maple": [
+        "a := proc(n) option remember; if(n < 2) then RETURN(1); else RETURN(3*a(n-1)+a(n-2)+1); fi; end;"
+    ],
+    "mathematica": [
+        "CoefficientList[ Series[(1-3x+3x^2)/(1-4x+2x^2+x^3), {x, 0, 25}], x](* _Jean-Fran\u00e7ois Alcover_, Nov 30 2011 *)",
+        "RecurrenceTable[{a[0]==a[1]==1,a[n]==3a[n-1]+a[n-2]+1},a,{n,30}] (* or *) LinearRecurrence[{4,-2,-1},{1,1,5},31] (* _Harvey P. Dale_, Jan 05 2012 *)"
+    ],
+    "program": [
+        "(Lisp) (defun rewerse (lista) (cond ((null (cdr lista)) lista) (t (cons (car (rewerse (cdr lista))) (rewerse (cons (car lista) (rewerse (cdr (rewerse (cdr lista))))))))))",
+        "(Haskell)",
+        "a033538 n = a033538_list !! n",
+        "a033538_list =",
+        "   1 : 1 : (map (+ 1) $ zipWith (+) a033538_list",
+        "                                    $ map (3 *) $ tail a033538_list)",
+        "-- _Reinhard Zumkeller_, Aug 14 2011",
+        "(PARI) a(n)=([0,1,0; 0,0,1; -1,-2,4]^n*[1;1;5])[1,1] \\\\ _Charles R Greathouse IV_, Feb 19 2017"
+    ],
+    "xref": [
+        "Cf. A033539, A001595."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,3",
+    "author": "Antti Karttunen",
+    "references": 4,
+    "revision": 33,
+    "time": "2017-02-19T05:35:18-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

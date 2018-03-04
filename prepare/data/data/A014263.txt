@@ -1,0 +1,75 @@
+{
+    "number": 14263,
+    "data": "0,2,4,6,8,20,22,24,26,28,40,42,44,46,48,60,62,64,66,68,80,82,84,86,88,200,202,204,206,208,220,222,224,226,228,240,242,244,246,248,260,262,264,266,268,280,282,284,286,288,400,402,404,406,408,420,422,424",
+    "name": "Numbers that contain even digits only.",
+    "comment": [
+        "The set of real numbers between 0 and 1 that contain no odd digits in their decimal expansion has Hausdorff dimension log 5 / log 10.",
+        "Integers written in base 5 and then doubled (in base 10). - _Franklin T. Adams-Watters_, Mar 15 2006",
+        "A045888(a(n)) = 0. - _Reinhard Zumkeller_, Aug 25 2009",
+        "a(n) = A179082(n) for n <= 25. - _Reinhard Zumkeller_, Jun 28 2010",
+        "The carryless mod 10 \"even\" numbers (cf. A004529) sorted and duplicates removed. - _N. J. A. Sloane_, Aug 03 2010.",
+        "Complement of A007957; A196564(a(n)) = 0; A103181(a(n)) = 0. - _Reinhard Zumkeller_, Oct 04 2011",
+        "If n-1 is represented as a base-5 number (s. A007091) according to n-1 = d(m)d(m-1)\u2026d(3)d(2)d(1)d(0) then a(n)= sum_{j=0..m} c(d(j))*10^j, where c(k)=0,2,4,6,8 for k=0..4. - _Hieronymus Fischer_, Jun 03 2012"
+    ],
+    "reference": [
+        "K. J. Falconer, The Geometry of Fractal Sets, Cambridge, 1985; p. 19."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A014263/b014263.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Ar#10-automatic\">Index entries for 10-automatic sequences</a>.",
+        "<a href=\"/index/Ca#CARRYLESS\">Index entries for sequences related to carryless arithmetic</a>"
+    ],
+    "formula": [
+        "From _Hieronymus Fischer_, Jun 06 2012: (Start)",
+        "a(n) = ((2*b_m(n)) mod 8 + 2)*10^m + sum_{j=0..m-1} ((2*b_j(n)) mod 10)*10^j, where n>1, b_j(n)) = floor((n-1-5^m)/5^j), m = floor(log_5(n-1)).",
+        "a(1*5^n+1) = 2*10^n.",
+        "a(2*5^n+1) = 4*10^n.",
+        "a(3*5^n+1) = 6*10^n.",
+        "a(4*5^n+1) = 8*10^n.",
+        "a(n) = 2*10^log_5(n-1) for n=5^k+1,",
+        "a(n) < 2*10^log_5(n-1), else.",
+        "a(n) > (8/9)*10^log_5(n-1) n>1.",
+        "a(n) = 2*A007091(n-1), iff the digits of A007091(n-1) are 0 or 1.",
+        "G.f.: g(x) = (x/(1-x))*sum_{j>=0} 10^j*x^5^j *(1-x^5^j)* (2+4x^5^j+ 6(x^2)^5^j+ 8(x^3)^5^j)/(1-x^5^(j+1)).",
+        "Also: g(x) = 2*(x/(1-x))*sum_{j>=0} 10^j*x^5^j * (1-4x^(3*5^j)+3x^(4*5^j))/((1-x^5^j)(1-x^5^(j+1))).",
+        "Also: g(x) = 2*(x/(1-x))*(h_(5,1)(x) + h_(5,2)(x) + h_(5,3)(x) + h_(5,4)(x) - 4*h_(5,5)(x)), where h_(5,k)(x) = sum_{j>=0} 10^j*(x^5^j)^k/(1-(x^5^j)^5). (End)",
+        "a(5*n+i-4) = 10*a(n) + 2*i for n >= 1, i=0..4. - _Robert Israel_, Apr 07 2016"
+    ],
+    "example": [
+        "a(1000) = 24888.",
+        "a(10^4) = 60888.",
+        "a(10^5) = 22288888.",
+        "a(10^6) = 446888888."
+    ],
+    "maple": [
+        "a:= proc(m) local L,i;",
+        "  L:= convert(m-1,base,5);",
+        "  2*add(L[i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "seq(a(i),i=1..100); # _Robert Israel_, Apr 07 2016"
+    ],
+    "mathematica": [
+        "Select[Range[450], And@@EvenQ[IntegerDigits[#]]&] (* _Harvey P. Dale_, Jan 30 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a014263 n = a014263_list !! (n-1)",
+        "a014263_list = filter (all (`elem` \"02468\") . show) [0,2..]",
+        "-- _Reinhard Zumkeller_, Jul 05 2011",
+        "(MAGMA) [n: n in [0..424] | Set(Intseq(n)) subset [0..8 by 2]];  // _Bruno Berselli_, Jul 19 2011"
+    ],
+    "xref": [
+        "Subsequence of A059708.",
+        "Cf. A061810, A061811, A007091, A014261, A046034, A052382, A084544, A089581, A084984, A017042, A001743, A202267, A202268, A196563."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Examples and crossrefs added by _Hieronymus Fischer_, Jun 06 2012"
+    ],
+    "references": 40,
+    "revision": 44,
+    "time": "2017-02-13T00:21:49-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

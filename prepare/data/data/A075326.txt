@@ -1,0 +1,54 @@
+{
+    "number": 75326,
+    "data": "0,3,9,13,18,23,29,33,39,43,49,53,58,63,69,73,78,83,89,93,98,103,109,113,119,123,129,133,138,143,149,153,159,163,169,173,178,183,189,193,199,203,209,213,218,223,229,233,238,243,249,253,258,263,269,273,279,283",
+    "name": "Anti-Fibonacci numbers: start with a(0) = 0, and extend by rule that the next term is the sum of the two smallest numbers that are not in the sequence nor were used to form an earlier sum.",
+    "comment": [
+        "In more detail, the sequence is constructed as follows: Start with a(1) = 0. The missing numbers are 1 2 3 4 5 6 ... Add the first two, and we get 3, which is therefore a(2). Cross 1, 2, and 1+2=3 off the missing list. The first two missing numbers are now 4 and 5, so a(3) = 4+5 = 9. Cross off 4,5,9 from the missing list. Repeat.",
+        "In other words, this is the sum of consecutive pairs in the sequence 1, 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 15, ..., (A249031) the complement to the present one in the natural numbers. For example, a(1)=1+2=3, a(2)=4+5=9, a(3)=6+7=13, ... - Philippe Lallouet (philip.lallouet(AT)orange.fr), May 08 2008",
+        "The new definition is due to Philippe Lalloue (philip.lallouet(AT)orange.fr), May 08 2008, while the name anti-Fibonacci numbers is due to D. R. Hofstadter, Oct 23 2014.",
+        "Original definition: second members of pairs in A075325.",
+        "If instead we take the sum of the last used non-member and the most recent (i.e. 1+2, 2+4, 4+5, 5+7, etc.), we get A008585. - _Jon Perry_, Nov 01 2014"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A075326/b075326.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "D. R. Hofstadter, <a href=\"/A075326/a075326_1.pdf\">Anti-Fibonacci numbers</a>, Oct 23 2014",
+        "Thomas Zaslavsky, <a href=\"/A075326/a075326_2.pdf\">Anti-Fibonacci Numbers: A Formula</a>, Sep 26 2016"
+    ],
+    "formula": [
+        "See Zaslavsky (2016) link."
+    ],
+    "maple": [
+        "# Maple code for M+1 terms of sequence, from _N. J. A. Sloane_, Oct 26 2014",
+        "c:=0; a:=[c]; t:=0; M:=100;",
+        "for n from 1 to M do",
+        "s:=t+1; if s in a then s:=s+1; fi;",
+        "t:=s+1; if t in a then t:=t+1; fi;",
+        "c:=s+t;",
+        "a:=[op(a),c];",
+        "od:",
+        "[seq(a[n],n=1..nops(a))];"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List ((\\\\))",
+        "a075326 n = a075326_list !! n",
+        "a075326_list = 0 : f [1..] where",
+        "   f ws@(u:v:_) = y : f (ws \\\\ [u, v, y]) where y = u + v",
+        "-- _Reinhard Zumkeller_, Oct 26 2014"
+    ],
+    "xref": [
+        "Cf. A008585, A075325, A075327, A249031, A249032 (first differences), A000045.",
+        "Cf. also A079523, A131323, A249031, A249032, A249406."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Amarnath Murthy_, Sep 16 2002",
+    "ext": [
+        "More terms from _David Wasserman_, Jan 16 2005",
+        "Entry revised (including the addition of an initial 0) by _N. J. A. Sloane_, Oct 26 2014 and Sep 26 2016 (following a suggestion from _Thomas Zaslavsky_)."
+    ],
+    "references": 13,
+    "revision": 49,
+    "time": "2016-09-27T09:49:51-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

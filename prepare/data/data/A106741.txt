@@ -1,0 +1,50 @@
+{
+    "number": 106741,
+    "data": "1,2,3,6,10,21,30,42,78,110,210,330,390,546,903,930,1218,1806,1830,2310,2530,2730,4134,4290,6090,6162,6510,7590,9030,10230,12090,12246,12810,14910,15834,20130,20670,22110,23478,23790,28938,30030,30810,43134",
+    "name": "Numbers n such that n divides the denominator of 2n-th Bernoulli number.",
+    "comment": [
+        "Numbers n such that the congruence k^(2n+1) == k (mod n) is true for 1<=k<=n. - _Michel Lagneau_, May 02 2012",
+        "In 2005, B. C. Kellner proved E. W. Weisstein's conjecture that denom(B_n) = n only if n = 1806. - _Jonathan Sondow_, Oct 14 2013."
+    ],
+    "link": [
+        "Joerg Arndt, <a href=\"/A106741/b106741.txt\">Table of n, a(n) for n = 1..594</a> (terms <= 10^8)",
+        "Bernd C. Kellner, <a href=\"http://bernoulli.org/~bk/denombneqn.pdf\">The equation denom(B_n) = n has only one solution</a>, preprint 2005.",
+        "Victor Miller, <a href=\"http://listserv.nodak.edu/cgi-bin/wa.exe?A2=ind1205&amp;L=nmbrthry&amp;F=&amp;S=&amp;P=5042\">Re: Q about a property of Bernoulli denominators</a>, NMBRTHRY list, May 5, 2012",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/BernoulliNumber.html\">Bernoulli Number</a>"
+    ],
+    "maple": [
+        "for n from 1 to 10000 do:",
+        "    m:=2*n+1: i:=1:",
+        "    for k from 1 to n while(k &^ m mod n =k) do: i:=i+1: od:",
+        "    if i=n then print(n) fi:",
+        "od: # _Michel Lagneau_, May 02 2012",
+        "A106741_list := proc(searchlimit) local isA106741, i;",
+        "isA106741 := proc(n)",
+        "  numtheory[divisors](2*n);",
+        "  map(i->i+1,%);",
+        "  select(isprime,%);",
+        "  mul(i,i=%) mod n = 0;",
+        "  if % then n else NULL fi end:",
+        "seq(isA106741(i),i=1..searchlimit) end:",
+        "A106741_list(30000); # _Peter Luschny_, May 04 2012"
+    ],
+    "program": [
+        "(PARI) is_A106741(n)=denominator(bernfrac(2*n))%n==0 \\\\ _Charles R Greathouse IV_, May 02 2012",
+        "(PARI){ for (n=1, 10^6, m = 2*n + 1; for (k=2, n, if ( Mod(k,n)^m != k,  next(2) ); ); print1(n,\", \"); ); } /* _Joerg Arndt_, May 04 2012 */",
+        "(PARI) is_A106741(n)={ my(m=2*n+1); for(k=2, n, Mod(k, n)^m - k & return); 1} /* more than twice faster (in PARI 2.4.2) than with \"if(...)\" */ \\\\ _M. F. Hasler_, May 06 2012"
+    ],
+    "xref": [
+        "Cf. A002445, A014117."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Benoit Cloitre_, May 15 2005",
+    "ext": [
+        "Terms a(19)-a(29) from _Michel Lagneau_, May 02 2012",
+        "Terms >= 10230 by _Joerg Arndt_, May 04 2012"
+    ],
+    "references": 5,
+    "revision": 48,
+    "time": "2017-01-29T09:34:30-05:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

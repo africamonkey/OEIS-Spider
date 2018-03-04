@@ -1,0 +1,57 @@
+{
+    "number": 185352,
+    "data": "2,4,8,17,39,92,275,922,2894,10843,35944",
+    "name": "The \"smallest countdown\" numbers are the smallest positive integer that cannot be made using the numbers n through 1, in order, using the operations +, -, *, /, and parentheses.",
+    "comment": [
+        "Inspired by a now-lost blog post in which someone discussed a \"new year's countdown\" equation for 2012, e.g., 10 * (9 + ((8 * (((7 + (6 / (5 * 4))) * 3) + 2)) + 1)) = 2012. This sequence has been \"verified\" by two independently created programs."
+    ],
+    "example": [
+        "for n = 3, a(3) = 8, because 3*2+1=7, and 3*(2+1)=9, but there is no equation with 3,2,and 1 in order that equals 8. Note that if we allow the order to change, we can make 8, because 2*(3+1)=8, but reordering is not allowed."
+    ],
+    "program": [
+        "# Python",
+        "from fractions import Fraction",
+        "def genAllTrees(l):",
+        "....if len(l) == 0:",
+        "........return",
+        "....elif len(l) == 1:",
+        "........yield l[0], str(l[0])",
+        "....else:",
+        "........for middle in range(len(l)):",
+        "............for lval, leqn in genAllTrees(l[:middle]):",
+        "................for rval, reqn in genAllTrees(l[middle:]):",
+        "....................yield lval+rval, (\"(\" + leqn + \" + \" + reqn + \")\")",
+        "....................yield lval-rval, (\"(\" + leqn + \" - \" + reqn + \")\")",
+        "....................yield lval*rval, (\"(\" + leqn + \" * \" + reqn + \")\")",
+        "....................if rval != Fraction(0):",
+        "........................yield lval/rval, (\"(\" + leqn + \" / \" + reqn + \")\")",
+        ".",
+        "def findSmallestIntNotPresent(n):",
+        "....vals = {}",
+        "....for val, eqn in genAllTrees([Fraction(i) for i in range(n, 0, -1)]):",
+        "........if val.denominator == 1:",
+        "............val = val.numerator",
+        "............if val not in vals:",
+        "................vals[val] = eqn",
+        "....i = 1",
+        "....while i in vals:",
+        "........i += 1",
+        "....return i",
+        ".",
+        "for i in range(1,11):",
+        "....print(i, findSmallestIntNotPresent(i))"
+    ],
+    "xref": [
+        "Related to A060315, which is the smallest number that cannot be made with the numbers 1 to n, in any order."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,1",
+    "author": "_Peter Boothe_ and Abraham Asfaw, Feb 08 2012",
+    "ext": [
+        "a(10)-a(11) from _Hiroaki Yamanouchi_, Oct 04 2014"
+    ],
+    "references": 0,
+    "revision": 35,
+    "time": "2015-12-07T04:39:57-05:00",
+    "created": "2012-02-09T12:10:18-05:00"
+}

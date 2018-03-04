@@ -1,0 +1,53 @@
+{
+    "number": 210949,
+    "data": "1,1,4,29,309,4383,78121,1684706,42801222,1255919755,41918624013,1572257236114,65619165625383,3022617826829288,152615633802149416,8397224009015443509,500957609480739613321,32261529179806961067634,2234133327582388824135291",
+    "name": "E.g.f. A(x) satisfies: A'(x) = 1/(1 - A(A(x))).",
+    "comment": [
+        "An unsigned version of A067146.",
+        "Equals row sums of triangle A277410."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A210949/b210949.txt\">Table of n, a(n) for n = 1..180</a>"
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A(x) = Series_Reversion( Integral 1 - A(x) dx ).",
+        "(2) A''(x) = 1 / ( (1 - A(A(x)))^3 * (1 - A(A(A(x)))) ).",
+        "Let G(x) = Integral A(x) dx with G(0)=0, then the e.g.f. A(x) satisfies:",
+        "(3) A(x) = x + G(A(x)) or, equivalently, A(x - G(x)) = x.",
+        "(4) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) G(x)^n / n!.",
+        "(5) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) G(x)^n/(n!*x) ).",
+        "a(n) = Sum_{k=0..n-1} A277410(n,k)."
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + x^2/2! + 4*x^3/3! + 29*x^4/4! + 309*x^5/5! + 4383*x^6/6! +...",
+        "Let G(x) = Integral A(x) dx, then A(x) = x + G(A(x)) where",
+        "G(x) = x^2/2! + x^3/3! + 4*x^4/4! + 29*x^5/5! + 309*x^6/6! + 4383*x^7/7! +...",
+        "Also,",
+        "A(x) = x + G(x) + d/dx G(x)^2/2! + d^2/dx^2 G(x)^3/3! + d^3/dx^3 G(x)^4/4! +...",
+        "log(A(x)/x) = G(x)/x + d/dx G(x)^2/(2!*x) + d^2/dx^2 G(x)^3/(3!*x) + d^3/dx^3 G(x)^4/(4!*x) +...",
+        "By definition, A'(x) = 1/(1 - A(A(x))), where",
+        "A(A(x)) = x + 2*x^2/2! + 11*x^3/3! + 101*x^4/4! + 1313*x^5/5! + 22235*x^6/6! + 466356*x^7/7! + 11710760*x^8/8! +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x,G);for(i=1,n,G=intformal(A+x*O(x^n));A=serreverse(x-G));n!*polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=x,G);for(i=1,n,G=intformal(A+x*O(x^n));A=x+subst(G,x,A+x*O(x^n))); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x,G);for(i=0,n,G=intformal(A+x*O(x^n)); A=x+sum(m=1, n, Dx(m-1, G^m/m!))); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x,G);for(i=0,n,G=intformal(A+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, G^m/x/m!)+x*O(x^n)))); n!*polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))",
+        "(PARI) {a(n) = local(A=x); for(i=1,n, A = serreverse(intformal(1-A +x*O(x^n)))); n!*polcoeff(A,n)}",
+        "for(n=1, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A277410, A067146, A279843, A279844, A279845, A280570, A280571, A280572, A280573, A280574, A280575."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Jul 22 2012",
+    "references": 14,
+    "revision": 31,
+    "time": "2017-01-06T06:36:32-05:00",
+    "created": "2012-07-22T00:36:27-04:00"
+}

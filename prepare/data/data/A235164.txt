@@ -1,0 +1,41 @@
+{
+    "number": 235164,
+    "data": "1,27,57,2285,7465,874615,1391089,1538257,381654729,559922224824157",
+    "name": "Numbers whose digits, when the number is written in base n+1, are a permutation of 1...n, and such that for all k in {1,...,n} the first k digits (still in base n+1) form a number divisible by k.",
+    "comment": [
+        "See sequence A163574 (which lists, for each n, the smallest term with n digits) for further discussion, in particular the proof that n must be odd, and that there is no further term with less than 13 digits.  See sequence A235133 for the version where the terms (up to 9 digits) are written down in base 10."
+    ],
+    "example": [
+        "The terms with 5 digits in base 6 are 2285 = 14325[6] and 7465 = 54321[6], since these numbers are divisible by 5, and 14[6] = 10, 143[6] = 63, 1432[6] = 380 are divisible by 2, 3 and 4, respectively, and the same is the case for 54[6] = 34, 543[6] = 207 and 5432[6] = 1244."
+    ],
+    "program": [
+        "(PARI) for(n=1,9,p=vector(n,i,(n+1)^(i-1));for(k=0,n!-1,d=numtoperm(n,k);for(j=2,n,sum(i=1,j,d[i]*p[j-i+1])%j &&next(2)); print1(d*vector(n,i,(n+1)^(n-i))~\",\")))",
+        "(Python)",
+        "def vgen(n,b):",
+        "....if n == 1:",
+        "........t = list(range(1,b))",
+        "........for i in range(1,b):",
+        "............u = list(t)",
+        "............u.remove(i)",
+        "............yield i, u",
+        "....else:",
+        "........for d, v in vgen(n-1,b):",
+        "............for g in v:",
+        "................k = d*b+g",
+        "................if not k % n:",
+        "....................u = list(v)",
+        "....................u.remove(g)",
+        "....................yield k, u",
+        "A235164_list = [a for n in range(2,15,2) for a, b in vgen(n-1,n)] # _Chai Wah Wu_, Jun 07 2015"
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "_M. F. Hasler_, Jan 04 2014",
+    "ext": [
+        "a(10) from _Chai Wah Wu_, Jun 07 2015"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2015-06-09T12:33:20-04:00",
+    "created": "2014-01-05T16:26:38-05:00"
+}

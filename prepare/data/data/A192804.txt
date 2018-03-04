@@ -1,0 +1,51 @@
+{
+    "number": 192804,
+    "data": "1,1,1,2,3,5,9,16,29,53,97,178,327,601,1105,2032,3737,6873,12641,23250,42763,78653,144665,266080,489397,900141,1655617,3045154,5600911,10301681,18947745,34850336,64099761,117897841,216847937,398845538",
+    "name": "Constant term in the reduction of the polynomial 1+x+x^2+...+x^n by x^3->x^2+x+1. See Comments.",
+    "comment": [
+        "For discussions of polynomial reduction, see A192232 and A192744."
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (2,0,0,-1)"
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1)-a(n-4).",
+        "a(n) = a(n-1)+a(n-2)+a(n-3)-1. - _Alzhekeyev Ascar M_, Feb 05 2012",
+        "G.f.: ( 1-x-x^2 ) / ( (x-1)*(x^3+x^2+x-1) ). - _R. J. Mathar_, May 06 2014",
+        "a(n) -a(n-1)= A000073(n-1). - _R. J. Mathar_, May 06 2014"
+    ],
+    "example": [
+        "The first five polynomials p(n,x) and their reductions:",
+        "p(1,x)=1 -> 1",
+        "p(2,x)=x+1 -> x+1",
+        "p(3,x)=x^2+x+1 -> x^2+x+1",
+        "p(4,x)=x^3+x^2+x+1 -> 2x^2+2x+2",
+        "p(5,x)=x^4+x^3+x^2+x+1 -> 4x^2+4*x+3, so that",
+        "A192804=(1,1,1,2,3,...), A000073=(0,1,1,2,4,...), A008937=(0,0,1,2,4,...)."
+    ],
+    "mathematica": [
+        "q = x^3; s = x^2 + x + 1; z = 40;",
+        "p[0, x_] := 1; p[n_, x_] := x^n + p[n - 1, x];",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "  (* A192804 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "  (* A000073 *)",
+        "u3 = Table[Coefficient[Part[t, n], x, 2], {n, 1, z}]",
+        "  (* A008937 *)"
+    ],
+    "xref": [
+        "Cf. A192744, A192232, A000073."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Clark Kimberling_, Jul 10 2011",
+    "references": 3,
+    "revision": 18,
+    "time": "2015-08-13T03:02:50-04:00",
+    "created": "2011-07-11T11:09:13-04:00"
+}

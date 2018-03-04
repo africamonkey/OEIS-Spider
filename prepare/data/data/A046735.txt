@@ -1,0 +1,45 @@
+{
+    "number": 46735,
+    "data": "2,27,91,103,163,199,203,221,247,305,371,377,397,421,551,559,757,779,883,991,1021,1079,1087,1123,1189,1199,1237,1351,1521,1543,1567,1609,1651,1753,1769,1799,1807,1873,1883,1919,2009,2071,2261,2539",
+    "name": "Nontrivial (i.e., having no nontrivial factors with this property) integers which do not divide any terms of A000213.",
+    "link": [
+        "Robert Israel, <a href=\"/A046735/b046735.txt\">Table of n, a(n) for n = 1..1275</a>"
+    ],
+    "maple": [
+        "nd:= proc(p) local a,b,c,r,R;",
+        "   a:= 1; b:= 1; c:= 1; R[1,1,1]:= true;",
+        "   do",
+        "     r:= a+b+c mod p;",
+        "     if r = 0 then return false fi;",
+        "     a:= b; b:= c; c:= r;",
+        "     if assigned(R[a,b,c]) or nops({a,b,c})=1",
+        "         then return true",
+        "         else R[a,b,c]:= true",
+        "       fi;",
+        "   od",
+        "end proc:",
+        "N:= 10^4: # to get all terms <= N",
+        "V:= Vector(N): Res:= NULL:",
+        "for n from 1 to N do",
+        "  if V[n] = 0 then",
+        "    if nd(n) then Res:= Res,n; V[[seq(k*n,k=2..floor(N/n))]]:= 1; fi",
+        "  fi;",
+        "od:",
+        "Res; # _Robert Israel_, Feb 26 2017"
+    ],
+    "program": [
+        "(PARI) nondivisor(n)=my(a=1,b=1,c=1,t);for(i=1,n^2,t=(a+b+c)%n;if(t,a=b;b=c;c=t,return(0));if(c==1&&b==1&&a==1,return(1)))",
+        "is(n)=fordiv(n,d,if(nondivisor(d),return(n==d)));0 \\\\ _Charles R Greathouse IV_, Aug 29 2012"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "Definition corrected by Henry Ayoola (henry.ayoola(AT)googlemail.com), Feb 03 2009",
+        "a(1) added by _Charles R Greathouse IV_, Aug 29 2012"
+    ],
+    "references": 4,
+    "revision": 17,
+    "time": "2017-02-26T20:57:17-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 166401,
+    "data": "1,2,3,4,5,7,8,9,11,13,16,17,18,19,23,25,27,29,31,32,36,37,41,43,47,49,50,53,59,61,64,67,71,73,75,79,81,83,89,97,98,100,101,103,107,109,113,121,125,127,128,131,137,139,144,147,149,151,157,162,163,167,169,173",
+    "name": "Positive integers n where (the largest divisor of n that is <= sqrt(n)) divides (the smallest divisor of n that is >= sqrt(n)).",
+    "comment": [
+        "This sequence contains all the primes and prime powers. For those terms that are composite, see A166402. For those terms that are not powers of primes, see A166403.",
+        "Also, the sequence contains all the positive squares. - _Ivan Neretin_, Jan 12 2016"
+    ],
+    "link": [
+        "Ivan Neretin, <a href=\"/A166401/b166401.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The divisors of 50 are 1,2,5,10,25,50. The middle two divisors are 5 and 10. Since 5 divides 10, then 50 is in this sequence."
+    ],
+    "maple": [
+        "filter:= proc(n) local a,b;",
+        "   if issqr(n) then return true fi;",
+        "   a,b:= selectremove(t -> (t^2 <= n),numtheory:-divisors(n));",
+        "   min(b) mod max(a) = 0",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Jan 13 2016"
+    ],
+    "mathematica": [
+        "Select[Range[174], Divisible[(d = Divisors[#])[[n = Floor[Length[d]/2 + 1]]], d[[-n]]] &] (* _Ivan Neretin_, Jan 12 2016 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = my(d = divisors(n), ld = if(n<2, 1, d[(length(d)+1)\\2]), sd = d[length(d)\\2+1]); sd % ld == 0; \\\\ adapted from A033676 & A033677; _Michel Marcus_, Jan 13 2016"
+    ],
+    "xref": [
+        "Cf. A033676, A033677.",
+        "Cf. A166402, A166403."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Oct 13 2009",
+    "ext": [
+        "More terms from _Max Alekseyev_, Feb 23 2010"
+    ],
+    "references": 3,
+    "revision": 22,
+    "time": "2016-01-20T04:19:04-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

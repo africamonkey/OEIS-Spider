@@ -1,0 +1,62 @@
+{
+    "number": 316,
+    "id": "M3702 N1513",
+    "data": "0,4,80,4752,440192,59245120,10930514688,2649865335040,817154768973824,312426715251262464,145060238642780180480,80403174342119992692736,52443098500204184915312640,39764049487996490505336537088",
+    "name": "Two decks each have n kinds of cards, 2 of each kind. The first deck is laid out in order. The second deck is shuffled and laid out next to the first. A match occurs if a card from the second deck is next to a card of the same kind from the first deck. a(n) is the number of ways of achieving no matches.",
+    "comment": [
+        "Each deck contains 2n cards.",
+        "The probability of no matches is a(n)/(2n)!.",
+        "n couples meet for a party and they exchange gifts. Each of the 2n writes their name on a piece of paper and puts it into a hat. They take turns drawing names and give their gift to the person whose name they drew. If anyone draws either their own name or the name of their partner, everyone puts the name they have drawn back into the hat and everyone draws anew. a(n) is the number of different permissible drawings. - _Dan Dima_, Dec 17 2006",
+        "(2n)! / a(n) is the expected number of deck shuffles until no matches occur. a(n) / (2n)! is the probability for a permissible drawing to be achieved. (2n)! / a(n) is the expected number of drawings before a permissible drawing is achieved. As n goes to infinity (2n)! / a(n) will strictly decrease very slowly to e^2 ~ 7.38906 (starting from n > 2) - _Dan Dima_, Dec 17 2006",
+        "a(n) equals the permanent of the (2n)X(2n) matrix with 0's along the main diagonal and the antidiagonal, and 1's everywhere else. - _John M. Campbell_, Jul 11 2011",
+        "Also, number of permutations p of (1,...,2n) such that round(p(k)/2) != round(k/2) for all k=1,...,2n (where half-integers are rounded up). - _M. F. Hasler_, Sep 30 2015"
+    ],
+    "reference": [
+        "F. N. David and D. E. Barton, Combinatorial Chance, Hafner, NY, 1962, Ch. 7 and Ch. 12.",
+        "J. Riordan, An Introduction to Combinatorial Analysis, Wiley, 1958, p. 187.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A000316/b000316.txt\">Table of n, a(n) for n=1..100</a>",
+        "F. F. Knudsen and I. Skau, <a href=\"http://www.jstor.org/stable/2691467\">On the Asymptotic Solution of a Card-Matching Problem</a>, Mathematics Magazine 69 (1996), 190-197.",
+        "B. H. Margolius, <a href=\"http://www.jstor.org/stable/3219303\">The Dinner-Diner Matching Problem</a>, Mathematics Magazine, 76 (2003), 107-118.",
+        "Barbara H. Margolius, <a href=\"http://academic.csuohio.edu/bmargolius/homepage/dinner/dinner/cardentry.htm\">Dinner-Diner Matching Probabilities</a>",
+        "L. I. Nicolaescu, <a href=\"http://nyjm.albany.edu/j/2004/10-7.pdf\">Derangements and asymptotics of the Laplace transforms of large powers of a polynomial</a> New York J. Math. 10 (2004) 117-131.",
+        "John Riordan and N. J. A. Sloane, <a href=\"/A003471/a003471_1.pdf\">Correspondence, 1974</a>",
+        "<a href=\"/index/Ca#cardmatch\">Index entries for sequences related to card matching</a>"
+    ],
+    "formula": [
+        "a(n) = A000459(n)*2^n.",
+        "G.f.: Sum_{j=0..n*k} coeff(R(x, n, k), x, j)*(t-1)^j*(n*k-j)! where n is the number of kinds of cards, k is the number of cards of each kind (2 in this case) and R(x, n, k) is the rook polynomial given by R(x, n, k)=(k!^2*sum(x^j/((k-j)!^2*j!))^n (see Riordan). coeff(R(x, n, k), x, j) indicates the coefficient for x^j of the rook polynomial.",
+        "a(n) = n! * sum((-1)^b * 2^{a+2b} * (2n-2a-b)! / (a! * b! * (n-a-b)!), a,b >= 0, a+b <= n) a(n) = n * a(n-1) + n! * 4^n * sum((-1)^a / (a! * 2^a), a=0 to n). - _Dan Dima_, Dec 17 2006",
+        "a(n) = 2^n * round(2^(n/2 + 3/4)*Pi^(-1/2)*exp(-2)*n!*BesselK(1/2+n,2^(1/2))). - _Mark van Hoeij, Oct 30 2011.",
+        "Recurrence: (2*n-3)*a(n) = 2*(n-1)*(2*n-1)^2*a(n-1) + 4*(n-1)*(2*n-3)*a(n-2) - 16*(n-2)*(n-1)*(2*n-1)*a(n-3). - _Vaclav Kotesovec_, Aug 07 2013",
+        "a(n) = int_{0..inf} exp(-x)*(x^2 - 4*x + 2)^n dx. Cf. A000166(n) = int_{0..inf} exp(-x)*(x - 1)^n dx. Asymptotic: a(n) ~ (2*n)!*exp(-2)*( 1 - 1/(2*n) - 23/(96*n^2) + O(1/n^3) ). See Nicolaescu. - _Peter Bala_, Jul 07 2014"
+    ],
+    "example": [
+        "There are 80 ways of achieving zero matches when there are 2 cards of each kind and 3 kinds of card so a(3)=80.",
+        "Among the 24 (multiset) permutations of {1,1',2,2'}, only {2,2',1,1'}, {2',2,1,1'}, {2,2',1',1} and {2',2,1',1} have no fixed points, thus a(2)=4."
+    ],
+    "maple": [
+        "p := (x,k)->k!^2*sum(x^j/((k-j)!^2*j!),j=0..k); R := (x,n,k)->p(x,k)^n; f := (t,n,k)->sum(coeff(R(x,n,k),x,j)*(t-1)^j*(n*k-j)!,j=0..n*k); seq(f(0,n,2), n=0..18);"
+    ],
+    "program": [
+        "(PARI) a(n)=round(2^(n/2+3/4)/Pi^.5*exp(-2)*n!*besselk(1/2+n,2^.5))<<2^n \\\\ requires sufficient realprecision. - _M. F. Hasler_, Sep 27 2015",
+        "(PARI) count(n,c=ceil(vector(n,i,i)/2))=sum(k=1,n!,!setsearch(Set(ceil(numtoperm(n,k)/2)-c),0)) \\\\ Illustration of the multiset-fixed-point interpretation: a(n) = count(2n). - _M. F. Hasler_, Sep 30 2015"
+    ],
+    "xref": [
+        "Cf. A000166."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Formulae, more terms etc. from Barbara Haas Margolius (margolius(AT)math.csuohio.edu), Dec 22 2000",
+        "Edited by _M. F. Hasler_, Sep 27 2015 and _N. J. A. Sloane_, Oct 02 2015"
+    ],
+    "references": 6,
+    "revision": 62,
+    "time": "2017-06-18T18:31:21-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

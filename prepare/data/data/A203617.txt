@@ -1,0 +1,45 @@
+{
+    "number": 203617,
+    "data": "30,210,246,858,1722,66198,235290,282342,1929378,1976394,2214408306",
+    "name": "Solutions n of the differential equation (n'-1)' = n+1, where n' denotes the arithmetic derivative of n.",
+    "comment": [
+        "The differential equation whose solutions are the Giuga numbers is n\u2019 = k*n+1, with k positive integer. Let us rewrite the equation as n\u2019-1 = k*n and then take the derivative: (n\u2019-1)' = (k*n)\u2019 = k\u2019*n + k*n\u2019 = k\u2019*n + k*(k*n+1) = (k\u2019+k^2)*n+k.",
+        "Let k=1: (n\u2019-1)\u2019 = n+1. The solutions of this equation are the Giuga numbers plus couples of numbers (x,y) for which x\u2019 = y+1 and y\u2019 = x+1.",
+        "A007850 is a subset of this sequence.",
+        "a(11) > 10^9. - _Michel Marcus_, Nov 05 2014",
+        "a(12) > 10^10. - _Giovanni Resta_, Jun 04 2016"
+    ],
+    "example": [
+        "n=235290. 235290\u2019=282343; (282343-1)\u2019=282342\u2019=235291=235290+1.",
+        "n=282342. 282342\u2019=235291; (235291-1)\u2019=235290\u2019=282343=282342+1."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "P:=proc(i)",
+        "local a,n,p,pfs;",
+        "for n from 1 to i do",
+        "  pfs:=ifactors(n)[2]; a:=n*add(op(2,p)/op(1,p),p=pfs) ;",
+        "  pfs:=ifactors(a-1)[2]; a:=(a-1)*add(op(2,p)/op(1,p),p=pfs) ;",
+        "  if a=n+1 then print(n); fi;",
+        "od;",
+        "end:",
+        "P(10000000);"
+    ],
+    "program": [
+        "(PARI) ad(n) = sum(i=1, #f=factor(n)~, n/f[1, i]*f[2, i]);",
+        "isok(n) = my(m = ad(n)-1); (m) && ad(m) == n+1; \\\\ _Michel Marcus_, Nov 05 2014"
+    ],
+    "xref": [
+        "Cf. A007850, A185222, A203618."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jan 20 2012",
+    "ext": [
+        "a(11) from _Giovanni Resta_, Jun 04 2016"
+    ],
+    "references": 1,
+    "revision": 22,
+    "time": "2016-06-04T07:51:37-04:00",
+    "created": "2012-01-24T14:40:44-05:00"
+}

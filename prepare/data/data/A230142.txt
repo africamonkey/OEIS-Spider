@@ -1,0 +1,33 @@
+{
+    "number": 230142,
+    "data": "16,256,5632,1048576,80543744,18185977856,2823575044096,4608812904349696,1194823452775677952,766890677854432919552,298370458295691856838656,184465173199612912007643136,301475731054794304317414178816,381273851270136749855228154609664",
+    "name": "Numerator of 1/u_n(1/2), where polynomial u_n(x) is used to approximate x->sin(Pi*x)/Pi.",
+    "comment": [
+        "Coefficients of u_n are given by the n-th row of A144846/A144847."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A230142/b230142.txt\">Table of n, a(n) for n = 1..99</a>"
+    ],
+    "formula": [
+        "limit_{n->infinity} 1/u_n(1/2) = Pi."
+    ],
+    "example": [
+        "16/3, 256/75, 5632/1785, 1048576/333795, 80543744/25638459, 18185977856/5788790007, 2823575044096/898772045457 ... = A230142/A230143"
+    ],
+    "maple": [
+        "u:= proc(n) option remember; local f, i, x; f:= unapply(simplify(sum('cat(a||(2*i+1)) *x^(2*i+1)', 'i'=0..n) ), x); unapply(subs(solve({f(1)=0, seq((D@@i)(f)(1)=`if`(i=1, -1, -(D@@i)(f)(0)), i=1..n)}, {seq(cat(a||(2*i+1)), i=0..n)}), sum('cat(a||(2*i+1)) *x^(2*i+1)', 'i'=0..n)), x) end: seq(numer(1/u(n)(1/2)), n=1..15);"
+    ],
+    "mathematica": [
+        "u[n_] := u[n] = Module[{f, i, x, a}, f = Function[x, Sum[a[2*i+1]*x^(2*i+1), {i, 0, n}]]; Function[x, Sum[a[2*i+1]*x^(2*i+1), {i, 0, n}] /. First @ Solve[Join[{f[1] == 0}, Table[Derivative[i][f][1] == If[i == 1, -1, -Derivative[i][f][0]], {i, 1, n}]], Table[a[2*i+1], {i, 0, n}]]]]; Table[Numerator[1/u[n][1/2]], {n, 1, 15}] (* _Jean-Fran\u00e7ois Alcover_, Feb 13 2014, after Maple *)"
+    ],
+    "xref": [
+        "Cf. A000796."
+    ],
+    "keyword": "nonn,frac",
+    "offset": "1,1",
+    "author": "_Alois P. Heinz_, Oct 10 2013",
+    "references": 3,
+    "revision": 11,
+    "time": "2014-02-13T08:47:57-05:00",
+    "created": "2013-10-11T18:56:03-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 239112,
+    "data": "1,4,36,396,4788,61200,811548,11047176,153362196,2161860912,30850416144,444692531052,6464058125868,94633260282288,1393927177591080,20641691487933648,307096967638064340,4587717402640280304,68788081908126980784,1034809142155901808624",
+    "name": "Nonzero coefficients of g.f. A(x) = 1 + 4*x^2 + 36*x^4 + 396*x^6 + ... satisfying (A-1)*(1+3/A)^3 = 256*x^2.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A239112/b239112.txt\">Table of n, a(n) for n = 0..250</a>",
+        "A. Bostan, <a href=\"https://www-apr.lip6.fr/sem-comb-slides/IHP-bostan.pdf\">Computer Algebra for Lattice Path Combinatorics</a>, S\u00e9minaire de Combinatoire Ph. Flajolet, March 28 2013. See Slide 13.",
+        "M. Bousquet-M\u00e9lou, <a href=\"http://arxiv.org/abs/1511.02111\">Plane lattice walks avoiding a quadrant</a>, arXiv:1511.02111 [math.CO], 2015. See App. A.",
+        "Mireille Bousquet-M\u00e9lou, <a href=\"https://doi.org/10.1016/j.jcta.2016.06.010\">Square lattice walks avoiding a quadrant</a>, Journal of Combinatorial Theory, Series A, Elsevier, 2016, Special issue for the 50th anniversary of the journal, 144, pp. 37-79. Also <hal-01225710v3>. See App. A.",
+        "V. Kotesovec, <a href=\"https://oeis.org/wiki/User:Vaclav_Kotesovec\">Asymptotic of implicit functions if Fww = 0</a>"
+    ],
+    "formula": [
+        "From _Vaclav Kotesovec_, Mar 30 2014: (Start)",
+        "G.f. B(x) satisfies: B(x) = 1+256*x/(1+3/B(x))^3.",
+        "G.f.: -2 + 64*x + sqrt(1 - 256*x + 4096*x^2 + 12*(x - 16*x^2)^(1/3)) + sqrt(-24 + 32*(1 - 32*x)^2 - 48*(x - 16*x^2)^(1/3) + (8*(1 + 480*x - 24576*x^2 + 262144*x^3))/sqrt(1 - 256*x + 4096*x^2 + 12*(x - 16*x^2)^(1/3)))/2.",
+        "Recurrence: n*(3*n-2)*(3*n-1)*a(n) = 8*(36*n^3 - 108*n^2 + 82*n - 15)*a(n-1) - 256*(n-3)*(3*n-5)*(3*n-1)*a(n-2).",
+        "a(n) ~ sqrt(3) * GAMMA(1/3) * 2^(4*n-1/3) / (Pi * n^(4/3)) * (1 - 3*2^(1/3) * sqrt(Pi) / (n^(1/3) * GAMMA(1/6))).",
+        "(End)"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[-2 + 64*x + Sqrt[1 - 256*x + 4096*x^2 + 12*(x - 16*x^2)^(1/3)] + (1/2)*Sqrt[-24 + 32*(1 - 32*x)^2 - 48*(x - 16*x^2)^(1/3) + (8*(1 + 480*x - 24576*x^2 + 262144*x^3)) / Sqrt[1 - 256*x + 4096*x^2 + 12*(x - 16*x^2)^(1/3)]], {x, 0, 20}], x] (* _Vaclav Kotesovec_, Mar 30 2014 *)",
+        "Flatten[{1,RecurrenceTable[{256 (-3+n) (-5+3 n) (-1+3 n) a[-2+n]-8 (-15+82 n-108 n^2+36 n^3) a[-1+n]+n (-2+3 n) (-1+3 n) a[n]==0, a[1]==4, a[2]==36}, a, {n,20}]}] (* _Vaclav Kotesovec_, Mar 30 2014 *)",
+        "terms = 20; B[_] = 1; Do[B[x_] = 1+256*x/(1+3/B[x])^3 + O[x]^terms, terms]; CoefficientList[B[x], x] (* _Jean-Fran\u00e7ois Alcover_, Jan 15 2018, after _Vaclav Kotesovec_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(B=1+x*O(x^n)); for(i=0, n, B=1+256*x/(1+3/B)^3); polcoeff(B, n)}",
+        "for(n=0, 20, print1(a(n), \", \")) \\\\ _Vaclav Kotesovec_, Mar 30 2014"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Mar 29 2014",
+    "ext": [
+        "a(7)-a(20) from _Vaclav Kotesovec_, Mar 30 2014"
+    ],
+    "references": 2,
+    "revision": 34,
+    "time": "2018-01-15T10:22:28-05:00",
+    "created": "2014-03-29T03:17:37-04:00"
+}

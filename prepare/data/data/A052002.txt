@@ -1,0 +1,51 @@
+{
+    "number": 52002,
+    "data": "0,1,3,4,5,6,7,12,13,14,16,17,18,20,23,24,29,32,33,35,36,37,38,39,41,43,44,48,49,51,52,53,54,56,60,61,63,67,68,69,71,72,73,76,77,81,82,83,85,87,88,89,90,91,92,93,95,99,102,104,105,107,111,114,115,118,119,121",
+    "name": "Numbers with an odd number of partitions.",
+    "comment": [
+        "A052003(n) = A000041(a(n+1)). - _Reinhard Zumkeller_, Nov 03 2015",
+        "Also, numbers having an odd number of partitions into distinct odd parts; that is, numbers m such that A000700(m) is odd. For example, 16 is in the list since 16 has 5 partitions into distinct odd parts, namely, 1 + 15, 3 + 13, 5 + 11, 7 + 9 and 1 + 3 + 5 + 7. See Formula section for a proof. - _Peter Bala_, Jan 22 2017"
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A052002/b052002.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "O. Kolberg, <a href=\"http://www.mscand.dk/article/view/10584/8605\">Note on the parity of the partition function</a>, Math. Scand. 7 1959 377-378. MR0117213 (22 #7995)."
+    ],
+    "formula": [
+        "From _Peter Bala_, Jan 22 2016: (Start)",
+        "Sum_{n>=0} x^a(n) = (1 + x)*(1 + x^3)*(1 + x^5)*... taken modulo 2. Proof: Product_{n>=1} 1 + x^(2*n-1) = Product_{n>=1} (1 - x^(4*n-2))/(1 - x^(2*n-1)) = Product_{n>=1} (1 - x^(2*n))*(1 - x^(4*n-2))/( (1 - x^(2*n)) * (1 - x^(2*n-1)) ) = ( 1 + 2*Sum_{n>=1} (-1)^n*x^(2*n^2) )/(Product_{n>=1} (1 - x^n)) == 1/( Product_{n>=1} (1 - x^n) ) (mod 2). (End)"
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "V:= Vector(N+1):",
+        "V[1]:= 1:",
+        "for i from 1 to (N+1)/2  do",
+        "  V[2*i..N+1]:= V[2*i..N+1] + V[1..N-2*i+2] mod 2",
+        "od:",
+        "select(t -> V[t+1]=1, [$1..N]); # _Robert Israel_, Jan 22 2017"
+    ],
+    "mathematica": [
+        "f[n_, k_] := Select[Range[250], Mod[PartitionsP[#], n] == k &]",
+        "Table[f[2, k], {k, 0, 1}] (* _Clark Kimberling_, Jan 05 2014 *)"
+    ],
+    "program": [
+        "(PARI) for(n=0, 200, if(numbpart(n)%2==1, print1(n\", \"))) \\\\ _Altug Alkan_, Nov 02 2015",
+        "(Haskell)",
+        "import Data.List (findIndices)",
+        "a052002 n = a052002_list !! (n-1)",
+        "a052002_list = findIndices odd a000041_list",
+        "-- _Reinhard Zumkeller_, Nov 03 2015"
+    ],
+    "xref": [
+        "Cf. A052003, A001560, A000041, A052001, A000700."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Patrick De Geest_, Nov 15 1999",
+    "ext": [
+        "Offset corrected and b-file adjusted by _Reinhard Zumkeller_, Nov 03 2015"
+    ],
+    "references": 11,
+    "revision": 42,
+    "time": "2017-11-12T02:59:17-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

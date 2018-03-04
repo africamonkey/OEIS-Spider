@@ -1,0 +1,42 @@
+{
+    "number": 203576,
+    "data": "1,2,14,56,446,2152,18248,97120,848254,4796552,42454664,250140640,2226532712,13516860320,120553738144,748819997056,6679690686334,42254745008840,376638926040392,2418457241945056,21530200591563496,139992790135717792,1244418656720926624,8178446389043428736",
+    "name": "Exponential (or binomial) half-convolution of A000984 (central binomial) with itself.",
+    "comment": [
+        "In general the exponential (also known as binomial) half-convolution af a sequence {b(n)}_0^\\infty with itself is defined by",
+        "bhat(n) := sum(binomial(n,k)*b(k)*b(n-k), k=0..floor(n/2)), n>=0.",
+        "The e.g.f. of the sequence {bhat(n)} is Bhat(x) = ((B(x))^2 + B2(x^2))/2, with the e.g.f. B(x) of {b(n)}_0^\\infty and the e.g.f. B2(x) := sum((b(n)^2/n!)*x^n/n!, n=0..infty) of the scaled squares.  The proof runs along the same line as the one given for the ordinary half-convolution in a comment on A201204. In fact, bhat(n)/n! is the ordinary half-convolution of the sequence {b(n)/n!}_0^\\infty with itself.",
+        "Here b(n)=A000984(n)=binomial(2*n,n), n>=0, B(x) = exp(2*x)* BesselI(0,2*x) (see the Abramowitz-Stegun reference and link under A008277 for BesselI, p. 375, eq. 9.6.10) and B2(x) = hypergeometric([1/2,1/2],[1,1,1],16*x)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A203576/b203576.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = sum(binomial(n,k)*cbi(k)*cbi(n-k),k=0..floor(n/2), n>=0.",
+        "with cbi(n)=A000984(n).",
+        "E.g.f: (exp(4*x)*BesselI(0, 2*x)^2 + hypergeom([1/2,1/2], [1,1,1],(4*x)^2))/2. See a comment above.",
+        "Recurrence: (n-1)^2 * n^3 * (3*n^5 - 40*n^4 + 200*n^3 - 476*n^2 + 544*n - 241)*a(n) = 4*(n-1)^3 * (9*n^7 - 126*n^6 + 699*n^5 - 1997*n^4 + 3165*n^3 - 2770*n^2 + 1239*n - 228)*a(n-1) + 32*(3*n^10 - 55*n^9 + 420*n^8 - 1786*n^7 + 4731*n^6 - 8232*n^5 + 9630*n^4 - 7580*n^3 + 3900*n^2 - 1194*n + 162)*a(n-2) - 256*(n-2)^3 * (9*n^7 - 126*n^6 + 699*n^5 - 1997*n^4 + 3165*n^3 - 2770*n^2 + 1239*n - 228)*a(n-3) + 2048*(n-3)^3 * (n-2)^2 * (3*n^5 - 25*n^4 + 70*n^3 - 86*n^2 + 47*n - 10)*a(n-4). - _Vaclav Kotesovec_, Feb 25 2014",
+        "a(n) ~ 8^n / (Pi*n) * (1 + (1+(-1)^n)/sqrt(2*Pi*n)). - _Vaclav Kotesovec_, Feb 25 2014"
+    ],
+    "example": [
+        "With cbi = {1, 2, 6, 20, 70, 252, ..}",
+        "a(4) = 1*70 + 4*2*20 + 6*6^2 = 446.",
+        "a(5) = 1*252 + 5*2*70 + 10*6*20 = 2152."
+    ],
+    "mathematica": [
+        "cbi[n_] := Binomial[2*n, n]; a[n_] := Sum[Binomial[n, k]*cbi[k]*cbi[n - k], {k, 0, Floor[n/2]}]; Table[a[n], {n, 0, 23}] (* _Jean-Fran\u00e7ois Alcover_, Jul 09 2013 *)"
+    ],
+    "program": [
+        "(PARI) A203576(n)=sum(k=0,n\\2,binomial(n,k)*A000984(k)*A000984(n-k))  \\\\ - M. F. Hasler, Jan 13 2012"
+    ],
+    "xref": [
+        "Cf. A000984, A081085 (exponential convolution)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Wolfdieter Lang_, Jan 13 2012",
+    "references": 4,
+    "revision": 17,
+    "time": "2014-03-03T04:25:03-05:00",
+    "created": "2012-01-13T08:19:18-05:00"
+}

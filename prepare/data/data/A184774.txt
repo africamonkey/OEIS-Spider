@@ -1,0 +1,49 @@
+{
+    "number": 184774,
+    "data": "2,5,7,11,19,29,31,41,43,53,59,67,73,79,83,89,97,101,103,107,113,127,131,137,149,151,173,179,181,193,197,199,223,227,229,233,239,241,251,257,263,271,277,281,311,313,337,347,349,353,359,367,373,379,383,397",
+    "name": "Primes of the form floor(k*sqrt(2)).",
+    "comment": [
+        "Let N={1,2,...}, L={floor(n*sqrt(2)): n in N} and U={2n+L(n): n in N}.  Every prime is in L or U, since the union of the (disjoint) sets L and U is N.",
+        "The conjecture formerly posted here, that \"if r is an irrational number and 1<r<2, then there are infinitely many primes in the set L={floor(n*r)},\" is proved in I. M. Vinogradov, The Method of Trigonometrical Sums in the Theory of Numbers, (1954), page 180.",
+        "Note that every prime not in L is in U={floor(n*s}, where s=r/(r-1).  That is, Beatty sequences partition the primes into two infinite classes.",
+        "The conjecture generalized: if r is a positive irrational number and h is a real number, then each of the sets {floor(n*r+h)}, {round(n*r+h)}, and {ceiling(n*r+h)} contains infinitely many primes.  Can the method in Vinogradov be extended to cover these cases?",
+        "[Update regarding the conjecture from Clark Kimberling, Jan 03 2011.]"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A184774/b184774.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) ~ sqrt(2)*n log n. - _Charles R Greathouse IV_, Apr 29 2015"
+    ],
+    "example": [
+        "The sequence L(n)=floor(n*sqrt(2)) begins with 1, 2, 4, 5, 7, 8, 9, 11, 12, 14, 15, 16, 18, 19,..., which includes primes L(2)=2, L(4)=5, L(5)=7,..."
+    ],
+    "mathematica": [
+        "r=2^(1/2); s=r/(r-1);",
+        "a[n_]:=Floor [n*r];  (* A001951 *)",
+        "b[n_]:=Floor [n*s];  (* A001952 *)",
+        "Table[a[n],{n,1,120}]",
+        "t1={}; Do[If[PrimeQ[a[n]], AppendTo[t1,a[n]]], {n,1,600}]; t1",
+        "t2={}; Do[If[PrimeQ[a[n]], AppendTo[t2,n]], {n,1,600}]; t2",
+        "t3={}; Do[If[MemberQ[t1, Prime[n]], AppendTo[t3,n]],{n,1,300}]; t3",
+        "t4={}; Do[If[PrimeQ[b[n]], AppendTo[t4,b[n]]],{n,1,600}]; t4",
+        "t5={}; Do[If[PrimeQ[b[n]], AppendTo[t5,n]],{n,1,600}]; t5",
+        "t6={}; Do[If[MemberQ[t4, Prime[n]], AppendTo[t6,n]],{n,1,300}]; t6",
+        "(* the lists t1,t2,t3,t4,t5,t6 match the sequences",
+        "A184774, A184775, A184776 ,A184777, A184778, A184779 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(k=sqrtint(n^2\\2)+1); sqrtint(2*k^2)==n && isprime(n) \\\\ _Charles R Greathouse IV_, Apr 29 2015",
+        "(MAGMA) [Floor(n*Sqrt(2)): n in [1..400] | IsPrime(Floor(n*Sqrt(2)))]; // _Vincenzo Librandi_, Apr 30 2015"
+    ],
+    "xref": [
+        "Cf. A001951 (Beatty sequence of sqrt(2)), A001952 (Beatty sequence of 2+sqrt(2)), A184775, A184776, A184777, A184778, A184779."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jan 21 2011",
+    "references": 21,
+    "revision": 20,
+    "time": "2015-04-30T21:11:14-04:00",
+    "created": "2011-01-21T19:32:12-05:00"
+}

@@ -1,0 +1,30 @@
+{
+    "number": 224797,
+    "data": "1,1,4,35,503,10207,268865,8731102,337630732,15165277773,776576049655,44683002944571,2855602714004089,200794017101260026,15413426272667102594,1283152929854467388195,115198576226248396583523,11099504126776462035978911",
+    "name": "E.g.f. satisfies: A(x) = Sum_{n>=0} (exp(x*A(x)^n) - 1)^n / n!.",
+    "formula": [
+        "E.g.f. satisfies: A(x) = Sum_{n>=0} Sum_{k=0..n} Stirling2(n, k)*A(x)^(n*k) * x^n/n!."
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 4*x^2/2! + 35*x^3/3! + 503*x^4/4! + 10207*x^5/5! +...",
+        "where",
+        "A(x) = 1 + (exp(x*A(x)) - 1) + (exp(x*A(x)^2) - 1)^2/2! + (exp(x*A(x)^3) - 1)^3/3! + (exp(x*A(x)^4) - 1)^4/4! + (exp(x*A(x)^5) - 1)^5/5! +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=sum(m=0, n, (exp(x*A^m +x*O(x^n))-1)^m/m!)); n!*polcoeff(A, n)}",
+        "for(n=0,21,print1(a(n),\", \"))",
+        "(PARI) {Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)}",
+        "{a(n)=local(A=1+x); for(i=1, n, A=sum(m=0, n, sum(k=0, m, Stirling2(m, k)*(A+x*O(x^n))^(m*k))*x^m/m!)); n!*polcoeff(A, n)}",
+        "for(n=0,21,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A189981."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 18 2013",
+    "references": 1,
+    "revision": 5,
+    "time": "2013-04-18T19:18:22-04:00",
+    "created": "2013-04-18T19:17:22-04:00"
+}

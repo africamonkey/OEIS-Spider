@@ -1,0 +1,52 @@
+{
+    "number": 276187,
+    "data": "0,1,4,7,18,21,48,63,94,105,220,235,482,529,600,711,1438,1501,3020,3211,3594,3849,7720,7975,11142,11877,14628,15459,30946,31201,62432,69855,76126,80221,89820,91611,183258,192601,208600,214231",
+    "name": "Number of subsets of {1,..,n} of cardinality >= 2 such that the elements of each counted subset are pairwise coprime.",
+    "comment": [
+        "n is prime if and only if a(n) = 2*a(n-1)+n-1. - _Robert Israel_, Aug 24 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A276187/b276187.txt\">Table of n, a(n) for n = 1..340</a>"
+    ],
+    "example": [
+        "For n = 4, a(4) = 7 because there are 7 subsets of {1, 2, 3, 4} of cardinality >= 2 such that the elements of each counted subset are pairwise coprime; these 7 subsets are as follows: {1, 2}, {1, 2, 3}, {1, 3}, {1, 3, 4}, {1, 4}, {2, 3}, {3, 4}."
+    ],
+    "maple": [
+        "f:= proc(S) option remember;",
+        "    local s, Sp;",
+        "    if S = {} then return 1 fi;",
+        "    s:= S[-1];",
+        "    Sp:= S[1..-2];",
+        "    procname(Sp) + procname(select(t -> igcd(t,s)=1, Sp))",
+        "end proc:",
+        "seq(f({$1..n}) - n - 1, n=1..50); # _Robert Israel_, Aug 24 2016"
+    ],
+    "program": [
+        "(Sage)",
+        "from sage.combinat.subsets_pairwise import PairwiseCompatibleSubsets",
+        "def is_coprime(x, y): return gcd(x, y) == 1",
+        "def is_len_gt_1(s): return len(s) > 1",
+        "max_n = 40",
+        "seq = []",
+        "for n in range(1, max_n+1):",
+        "    P = PairwiseCompatibleSubsets(range(1,n+1), is_coprime)",
+        "    a_n = len( filter(is_len_gt_1, [s for s in P.list()]) )",
+        "    seq.append( a_n )",
+        "print seq",
+        "(PARI) f(n,k=1)=if(n==1, return(2)); if(gcd(k,n)==1, f(n-1,n*k)) + f(n-1,k)",
+        "a(n)=f(n)-n-1 \\\\ _Charles R Greathouse IV_, Aug 24 2016"
+    ],
+    "xref": [
+        "Cf. A000010, A002088, A018805."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Robert C. Lyons_, Aug 23 2016",
+    "ext": [
+        "Name and example edited by _Robert Israel_, Aug 24 2016"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2016-08-24T21:11:56-04:00",
+    "created": "2016-08-23T22:15:52-04:00"
+}

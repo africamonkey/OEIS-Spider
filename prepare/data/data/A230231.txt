@@ -1,0 +1,36 @@
+{
+    "number": 230231,
+    "data": "1,1,2,6,24,120,720,5040,40320,362879,3628781,39916492,478996716,6226941864,87176969880,1307651304960,20922368987520,355679390626560,6402213152423659,121641748198554547,2432828930036156696,51089280818439941448,1123961390341566969192",
+    "name": "Number of permutations of [n] avoiding adjacent step pattern {up}^8.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A230231/b230231.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1 / Sum_{n>=0} (9*n+1-x)*x^(9*n)/(9*n+1)!.",
+        "a(n)/n! ~ 1.0000195665100891649606434859189953881417919885320660432331680939719... * (1/r)^n, where r = 1.0000024802134092668222044475851121972165291678378389183730077680957571... is the root of the equation Sum_{n>=0} (r^(9*n)/(9*n)! - r^(9*n+1)/(9*n+1)!) = 0. - _Vaclav Kotesovec_, Jan 17 2015",
+        "E.g.f.: 1/(1/3 * cos((sqrt(3)*x)/2) * cosh(x/2) + 2/9 * cos(x * sin(Pi/9)) * cosh(x * cos(Pi/9)) + 2/9 * cos(Pi/9) * cos(x * sin(Pi/9)) * cosh(x * cos(Pi/9)) + 2/9 * cos(x * cos(Pi/18)) * cosh(x * sin(Pi/18)) + 2/9 * cos(x/2*(sqrt(3) * cos(Pi/9) - sin(Pi/9)))* cosh(x/2*(cos(Pi/9) + sqrt(3) * sin(Pi/9))) - 1/9 * cos(Pi/9) * cos(x/2*(sqrt(3) * cos(Pi/9) - sin(Pi/9))) * cosh(x/2*(cos(Pi/9) + sqrt(3) * sin(Pi/9))) - 2/9 * cos(x * cos(Pi/18))* cosh(x * sin(Pi/18)) * sin(Pi/18) - (cos(x/2*(sqrt(3) * cos(Pi/9) - sin(Pi/9)))* cosh(x/2*(cos(Pi/9) + sqrt(3) * sin(Pi/9)))* sin(Pi/9))/(3 * sqrt(3)) - (cosh(x/2) * sin((sqrt(3)*x)/2))/(3 * sqrt(3)) - 2/9 * cos(Pi/18) * cosh(x * sin(Pi/18)) * sin(x * cos(Pi/18)) - (cos(Pi/9) * cosh(x/2*(cos(Pi/9) + sqrt(3) * sin(Pi/9)))* sin(x/2*(sqrt(3) * cos(Pi/9) - sin(Pi/9))))/ (3 * sqrt(3)) + 1/9 * cosh(x/2*(cos(Pi/9) + sqrt(3) * sin(Pi/9)))* sin(Pi/9) * sin(x/2*(sqrt(3) * cos(Pi/9) - sin(Pi/9))) - 2/9 * cosh(x * cos(Pi/9)) * sin(Pi/9)* sin(x * sin(Pi/9)) - 1/3 * cos((sqrt(3)*x)/2)* sinh(x/2) + (sin((sqrt(3)*x)/2) * sinh(x/2))/ (3 * sqrt(3)) - 2/9 * cos(x * sin(Pi/9))* sinh(x * cos(Pi/9)) - 2/9 * cos(Pi/9) * cos(x * sin(Pi/9))* sinh(x * cos(Pi/9)) + 2/9 * sin(Pi/9) * sin(x * sin(Pi/9))* sinh(x * cos(Pi/9)) + 2/9 * cos(x * cos(Pi/18))* sinh(x * sin(Pi/18)) - 2/9 * cos(x * cos(Pi/18))* sin(Pi/18) * sinh(x * sin(Pi/18)) - 2/9 * cos(Pi/18)* sin(x * cos(Pi/18)) * sinh(x * sin(Pi/18)) + 2/9 * cos(x/2*(sqrt(3) * cos(Pi/9) - sin(Pi/9)))* sinh(x/2*(cos(Pi/9) + sqrt(3) * sin(Pi/9))) - 1/9 * cos(Pi/9) * cos(x/2*(sqrt(3) * cos(Pi/9) - sin(Pi/9))) * sinh(x/2*(cos(Pi/9) + sqrt(3) * sin(Pi/9))) - (cos(x/2*(sqrt(3) * cos(Pi/9) - sin(Pi/9))) * sin(Pi/9)* sinh(x/2*(cos(Pi/9) + sqrt(3) * sin(Pi/9))))/ (3 * sqrt(3)) - (cos(Pi/9) * sin(x/2*(sqrt(3) * cos(Pi/9) - sin(Pi/9)))* sinh(x/2*(cos(Pi/9) + sqrt(3) * sin(Pi/9))))/ (3 * sqrt(3)) + 1/9 * sin(Pi/9)* sin(x/2*(sqrt(3) * cos(Pi/9) - sin(Pi/9)))* sinh(x/2*(cos(Pi/9) + sqrt(3) * sin(Pi/9)))). - _Vaclav Kotesovec_, Feb 01 2015"
+    ],
+    "maple": [
+        "b:= proc(u, o, t) option remember; `if`(u+o=0, 1,",
+        "      `if`(t<7, add(b(u+j-1, o-j, t+1), j=1..o), 0)+",
+        "      add(b(u-j, o+j-1, 0), j=1..u))",
+        "    end:",
+        "a:= n-> b(n, 0, 0):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "nn=20;r=8;a=Apply[Plus,Table[Normal[Series[y x^(r+1)/(1-Sum[y x^i,{i,1,r}]),{x,0,nn}]][[n]]/(n+r)!,{n,1,nn-r}]]/.y->-1;Range[0,nn]! CoefficientList[Series[1/(1-x-a),{x,0,nn}],x] (* _Geoffrey Critzer_, Feb 25 2014 *)",
+        "CoefficientList[Series[1/(HypergeometricPFQ[{}, {1/9, 2/9, 1/3, 4/9, 5/9, 2/3, 7/9, 8/9}, x^9/387420489] - x*HypergeometricPFQ[{}, {2/9, 1/3, 4/9, 5/9, 2/3, 7/9, 8/9, 10/9}, x^9/387420489]), {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Feb 01 2015 *)"
+    ],
+    "xref": [
+        "Cf. A049774, A117158, A177523, A177533, A177553, A230051, A230232, A230233.",
+        "Column k=255 of A242784."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Oct 12 2013",
+    "references": 7,
+    "revision": 17,
+    "time": "2015-02-01T03:27:45-05:00",
+    "created": "2013-10-12T19:27:42-04:00"
+}

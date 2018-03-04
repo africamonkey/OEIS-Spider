@@ -1,0 +1,39 @@
+{
+    "number": 191555,
+    "data": "2,12,720,3628800,144850083840000,272760108249915378892800000000,1264767303092594444142256488682840323816161280000000000000000",
+    "name": "prod(k=1..n, prime(k)^(2^(n-k))).",
+    "comment": [
+        "x^(2^n) - a(n) is the minimal polynomial over Q for the algebraic number sqrt(p(1)*sqrt(p(2)*...*sqrt(p(n-1)*sqrt(p(n)))...)), where p(k) is the k-th prime.  Each such monic polynomial is irreducible by Eisenstein's Criterion (using p = p(n)).",
+        "A prime version of Somos's quadratic recurrence sequence A052129(n) = A052129(n-1)^2 * n = prod(k=1..n, k^(2^(n-k))). - _Jonathan Sondow_, Mar 29 2014"
+    ],
+    "formula": [
+        "For n > 1, a(n) = a(n-1)^2 * prime(n); a(1) = prime(1) = 2.",
+        "a(1) = 2; for n > 1, a(n) = 2^(2^(n-1)) * A003961(a(n-1)). - _Antti Karttunen_, Feb 06 2016"
+    ],
+    "example": [
+        "a(1) = 2^1 = 2 and x^2 - 2 is the minimal polynomial for the algebraic number sqrt(2).",
+        "a(4) = 2^8*3^4*5^2*7^1 = 3628800 and x^16 - 3628800 is the minimal polynomial for the algebraic number sqrt(2*sqrt(3*sqrt(5*sqrt(7))))."
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[1] == 2, a[n] == a[n-1]^2 Prime[n]}, a, {n, 10}] (* _Vincenzo Librandi_, Feb 06 2016 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = prod(k=1, n, prime(k)^(2^(n-k)))",
+        "(Scheme, two variants, both with memoization-macro definec)",
+        "(definec (A191555 n) (if (= 1 n) 2 (* (A000040 n) (A000290 (A191555 (- n 1)))))) ;; After the original recurrence.",
+        "(definec (A191555 n) (if (= 1 n) 2 (* (A000079 (A000079 (- n 1))) (A003961 (A191555 (- n 1)))))) ;; After the alternative recurrence - _Antti Karttunen_, Feb 06 2016",
+        "(MAGMA) [n le 1 select 2 else Self(n-1)^2*NthPrime(n): n in [1..10]]; // _Vincenzo Librandi_, Feb 06 2016"
+    ],
+    "xref": [
+        "Cf. A191554.",
+        "Cf. also A000040, A000079, A000290, A003961, A052129, A239349, A239350, A252738, A266639.",
+        "Subsequence of A268375 and also of A267117 (apart from the initial 2)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Rick L. Shepherd_, Jun 06 2011",
+    "references": 7,
+    "revision": 22,
+    "time": "2016-02-06T15:09:00-05:00",
+    "created": "2011-06-08T10:48:54-04:00"
+}

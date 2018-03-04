@@ -1,0 +1,52 @@
+{
+    "number": 232608,
+    "data": "1,10,15,253,325,11026,237016,8439886,1119946128",
+    "name": "Triangular numbers t such that distances from t to three nearest squares are three triangular numbers.",
+    "comment": [
+        "Triangular numbers in A232501."
+    ],
+    "program": [
+        "(C99)",
+        "#include <stdio.h>",
+        "#include <math.h>",
+        "typedef unsigned long long U64;",
+        "int isTriang(U64 x) {",
+        "    x+=x;",
+        "    U64 r = sqrt(x);",
+        "    return (r*(r+1)==x);",
+        "}",
+        "int main() {",
+        "  for (U64 n=0, i=0; i < (1ULL<<32); ++i) {",
+        "    U64 s, d, d1, d2, d3;",
+        "    s = sqrt(n+=i);",
+        "    d1 = n - s*s;",
+        "    if (!isTriang(d1)) continue;",
+        "    d2 = (s+1)*(s+1) - n;",
+        "    if (!isTriang(d2)) continue;",
+        "    d3 = (s+2)*(s+2) - n;",
+        "    if (s) {",
+        "        d = n - (s-1)*(s-1);",
+        "        if (d < d3)  d3 = d;",
+        "    }",
+        "    if (isTriang(d3))   printf(\"%llu, \", n);",
+        "  }",
+        "}",
+        "(Haskell)",
+        "a232608 n = a232608_list !! (n-1)",
+        "a232608_list = filter f $ tail a000217_list where",
+        "   f x = all ((== 1) . a010054) $ init $ sort $",
+        "         map (abs . (x -) . (^ 2) . (+ (a000196 x))) [-1..2]",
+        "-- _Reinhard Zumkeller_, Mar 16 2014"
+    ],
+    "xref": [
+        "Cf. A000217, A000290, A232501.",
+        "Cf. A000196, A010054."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, Feb 23 2014",
+    "references": 2,
+    "revision": 11,
+    "time": "2014-03-17T20:16:49-04:00",
+    "created": "2014-03-17T20:16:49-04:00"
+}

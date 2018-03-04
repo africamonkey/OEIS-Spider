@@ -1,0 +1,66 @@
+{
+    "number": 14847,
+    "data": "1,2,6,15,20,28,42,45,66,77,88,91,104,110,126,140,153,156,170,187,190,204,209,210,220,228,231,238,240,266,276,299,308,312,315,322,325,330,345,368,378,414,420,429,435,440,442,450,459,460,464,468,476,483,493",
+    "name": "Numbers k such that k-th Catalan number C(2k,k)/(k+1) is divisible by k.",
+    "comment": [
+        "The sequence does not contain any odd primes p (follows by quadratic reciprocity and field structure of Z/pZ). Aside from the first 2 terms, all other terms are composite integers. - _Thomas M. Bridge_, Nov 03 2013",
+        "Equivalently, numbers such that binomial(2n, n) = 0 (mod n). Indices of zeros in A059288. See A260640 (and A260636) for the analogs for 3n. - _M. F. Hasler_, Nov 11 2015",
+        "The 2nd comment is true because gcd(n,n+1) = 1 and n+1 divides C(2n,n). The 1st comment then follows, because prime p does not divide C(2p,p) = 2p*(2p-1)*...*(p+1)/(p*(p-1)*...*1) unless p = 2. - _Jonathan Sondow_, Jan 07 2018",
+        "A number n is in the sequence if and only if, for each prime p dividing n, the number of carries in the addition n+n in base p is at least the p-adic valuation of n. In particular, if n is squarefree, the condition is that at least one base-p digit of n is at least p/2. - _Robert Israel_, Jan 07 2018",
+        "If A is the set of all a(k)'s, Pomerance proved that the upper density of A is at most 1 - log 2 = 0.30685... and conjectured that A has positive lower density. I improved Pomerance's result by showing that the upper density of A is at most 1 - log 2 - 0.05551 = 0.25134... Numerically, this upper density seems to be less than 0.11. - _Carlo Sanna_, Jan 28 2018"
+    ],
+    "link": [
+        "Franklin T. Adams-Watters and Chai Wah Wu, <a href=\"/A014847/b014847.txt\">Table of n, a(n) for n = 1..10000</a> n=1..1069 (a(n) <= 10000) from Franklin T. Adams-Watters",
+        "M. Alekseyev, <a href=\"http://home.gwu.edu/~maxal/gpscripts/\">PARI/GP Scripts for Miscellaneous Math Problems</a>, sect. III: Binomial coefficients modulo integers, binomod.gp (V. 1.4, 11/2015).",
+        "C. Pomerance, <a href=\"https://math.dartmouth.edu/~carlp/catalan5.pdf\">Divisors of the middle binomial coefficient</a>, Amer. Math. Monthly, 112 (2015), 636-644.",
+        "C. Sanna, <a href=\"http://dx.doi.org/10.1142/S1793042118500707\">Central binomial coefficients divisible by or coprime to their indices</a>, Int. J. Number Theory (2018).",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/DiskLinePicking.html\">Disk Line Picking</a>"
+    ],
+    "formula": [
+        "It seems that a(n)/n is bounded and more precisely that lim_{n -> infinity} a(n)/n = C exists with 9 <= c < 10. - _Benoit Cloitre_, Aug 13 2002",
+        "a(n) = A004782(n) - 1. - _Enrique P\u00e9rez Herrero_, Feb 03 2013"
+    ],
+    "maple": [
+        "filter:= proc(n) local F, f, r, c, t,j;",
+        "  F:= ifactors(n)[2];",
+        "  for f in F do",
+        "    r:= convert(n,base,f[1]);",
+        "    c:= 0: t:= 0:",
+        "    for j from 1 to nops(r) do",
+        "      if 2*r[j]+c >= f[1] then",
+        "          c:= 1; t:= t+1;",
+        "      else c:= 0",
+        "      fi;",
+        "    od;",
+        "    if t < f[2] then return false fi;",
+        "  od;",
+        "  true",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Jan 07 2018"
+    ],
+    "mathematica": [
+        "fQ[n_] := IntegerQ[Binomial[2n, n]/ n]; Select[ Range@495, fQ@# &] (* _Robert G. Wilson v_, Jun 19 2006 *)"
+    ],
+    "program": [
+        "(PARI) is_A014847(n)=!binomod(2*n,n,n) \\\\ Suitable for large n. Using binomod.gp by M. Alekseyev, cf. links. - _M. F. Hasler_, Nov 11 2015",
+        "(PARI) for(n=1, 1e3, if(binomial(2*n, n)/(n+1) % n==0, print1(n\", \"))) \\\\ _Altug Alkan_, Nov 11 2015",
+        "(Python)",
+        "from __future__ import division",
+        "A014847_list, b = [], 1",
+        "for n in range(1,10**3):",
+        "    if not b % n:",
+        "        A014847_list.append(n)",
+        "    b = b*(4*n+2)//(n+2) # _Chai Wah Wu_, Jan 27 2016",
+        "(MAGMA) [n: n in [1..500] | IsZero((Binomial(2*n, n) div (n+1)) mod n)]; // _Vincenzo Librandi_, Jan 29 2016"
+    ],
+    "xref": [
+        "Cf. A000108, A000984, A120622, A120623, A120624, A120625, A120626, A121943, A282163, A282346, A283073, A283074, A282672."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 20,
+    "revision": 96,
+    "time": "2018-01-28T13:35:37-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 211895,
+    "data": "1,3,6,36,186,1254,8208,57540,404619,2913705,21146694,155231256,1147302756,8538393900,63879354096,480212156664,3624581868297,27456690186507,208644709097070,1589982296208492,12147079485362406,93012131704072698,713676733469348352",
+    "name": "G.f.: exp( Sum_{n>=1} 3 * Jacobsthal(n)^3 * x^n/n ), where Jacobsthal(n) = A001045(n).",
+    "comment": [
+        "Given g.f. A(x), note that A(x)^(1/3) is not an integer series."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A211895/b211895.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "G.f.: ( (1+x)*(1+4*x)^3 / ((1-2*x)^3*(1-8*x)) )^(1/9).",
+        "G.f.: exp( Sum_{n>=1} (2^n - (-1)^n)^3 / 9 * x^n/n ).",
+        "Recurrence: n*a(n) = (5*n-2)*a(n-1) + 6*(5*n-12)*a(n-2) - 8*(5*n-12)*a(n-3) - 64*(n-4)*a(n-4). - _Vaclav Kotesovec_, Oct 24 2012",
+        "a(n) ~ 3^(2/9)*8^n/(Gamma(1/9)*n^(8/9)). - _Vaclav Kotesovec_, Oct 24 2012"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 3*x + 6*x^2 + 36*x^3 + 186*x^4 + 1254*x^5 + 8208*x^6 +...",
+        "such that",
+        "log(A(x))/3 = x + x^2/2 + 3^3*x^3/3 + 5^3*x^4/4 + 11^3*x^5/5 + 21^3*x^6/6 + 43^3*x^7/7 +...+ Jacobsthal(n)^3*x^n/n +...",
+        "Jacobsthal numbers begin:",
+        "A001045 = [1,1,3,5,11,21,43,85,171,341,683,1365,2731,5461,10923,...]."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[((1+x)*(1+4*x)^3/((1-2*x)^3*(1-8*x)))^(1/9), {x, 0, 20}], x] (* _Vaclav Kotesovec_, Oct 24 2012 *)"
+    ],
+    "program": [
+        "(PARI) {Jacobsthal(n)=polcoeff(x/(1-x-2*x^2+x*O(x^n)),n)}",
+        "{a(n)=polcoeff(exp(sum(k=1, n, 3*Jacobsthal(k)^3*x^k/k)+x*O(x^n)), n)}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n)=polcoeff(( (1+x)*(1+4*x)^3 / ((1-2*x)^3*(1-8*x)+x*O(x^n)) )^(1/9),n)}"
+    ],
+    "xref": [
+        "Cf. A211893, A211894, A211896, A207970, A001045 (Jacobsthal)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Apr 25 2012",
+    "references": 5,
+    "revision": 20,
+    "time": "2013-09-26T05:22:42-04:00",
+    "created": "2012-04-25T00:03:07-04:00"
+}

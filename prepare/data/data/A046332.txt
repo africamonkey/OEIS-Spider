@@ -1,0 +1,53 @@
+{
+    "number": 46332,
+    "data": "2772,2992,6776,8008,21112,21712,21912,23632,23832,25452,25752,25952,27472,28782,29392,40104,40304,40404,42024,42924,44044,44144,44744,44944,45954,46764,46864,48984,53235,54945,55755,59895,60606,61216",
+    "name": "Palindromes with exactly 6 prime factors (counted with multiplicity).",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A046332/b046332.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "maple": [
+        "N:= 6: # to get all terms of up to N digits",
+        "digrev:= proc(n) local L,Ln; L:= convert(n,base,10);Ln:= nops(L);",
+        "add(L[i]*10^(Ln-i),i=1..Ln);",
+        "end proc:",
+        "Res:= NULL:",
+        "for d from 2 to N do",
+        "  if d::even then",
+        "    m:= d/2;",
+        "    Res:= Res, select(numtheory:-bigomega=6,",
+        "           [seq](n*10^m + digrev(n), n=10^(m-1)..10^m-1));",
+        "  else",
+        "    m:= (d-1)/2;",
+        "    Res:= Res, select(numtheory:-bigomega=6,",
+        "           [seq](seq(n*10^(m+1)+y*10^m+digrev(n), y=0..9), n=10^(m-1)..10^m-1));",
+        "  fi",
+        "od:",
+        "map(op,[Res]); # _Robert Israel_, Dec 23 2014"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def palQgen10(l): # generator of palindromes in base 10 of length <= 2*l",
+        "....if l > 0:",
+        "........yield 0",
+        "........for x in range(1,l+1):",
+        "............for y in range(10**(x-1),10**x):",
+        "................s = str(y)",
+        "................yield int(s+s[-2::-1])",
+        "............for y in range(10**(x-1),10**x):",
+        "................s = str(y)",
+        "................yield int(s+s[::-1])",
+        "A046332_list = [x for x in palQgen10(4) if sum(list(factorint(x).values())) == 6]",
+        "# _Chai Wah Wu_, Dec 21 2014"
+    ],
+    "xref": [
+        "Cf. A046306, A046319."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Jun 15 1998",
+    "references": 3,
+    "revision": 13,
+    "time": "2014-12-23T18:18:21-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

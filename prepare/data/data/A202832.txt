@@ -1,0 +1,36 @@
+{
+    "number": 202832,
+    "data": "1,2,9,38,211,1182,7639,50738,368841,2767202,22132249,182624598,1582522891,14122521662,131109031239,1250794578818,12334766500561,124733099306562,1297921351160809,13821821639912198,150946171640101251,1684074507271422302,19217497036753475959",
+    "name": "E.g.f: exp(2*x + 5*x^2/2).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A202832/b202832.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..[n/2]} 2^(n-3*k)*5^k * n!/((n-2*k)!*k!).",
+        "O.g.f.: 1/(1-2*x - 5*x^2/(1-2*x - 10*x^2/(1-2*x - 15*x^2/(1-2*x - 20*x^2/(1-2*x -...))))), a continued fraction.",
+        "Recurrence: a(n) = 2*a(n-1) + 5*(n-1)*a(n-2). - _Vaclav Kotesovec_, Oct 20 2012",
+        "a(n) ~ exp(2/5*sqrt(5*n)-n/2-1/5)*5^(n/2)*n^(n/2)/sqrt(2)*(1+17/150*sqrt(5)/sqrt(n)). - _Vaclav Kotesovec_, Oct 20 2012"
+    ],
+    "example": [
+        "E.g.f.: 1 + 2*x + 9*x^2/2! + 38*x^3/3! + 211*x^4/4! + 1182*x^5/5! +..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[E^(2*x+5*x^2/2), {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Oct 20 2012 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(exp(2*x+5*x^2/2+x*O(x^n)),n)}",
+        "(PARI) {a(n)=sum(k=0,n\\2,2^(n-3*k)*5^k*n!/((n-2*k)!*k!))}",
+        "(PARI) /* O.g.f. as a continued fraction: */",
+        "{a(n)=local(CF=1+2*x+x*O(x^n)); for(k=1, n-1, CF=1/(1-2*x-5*(n-k)*x^2*CF)); polcoeff(CF, n)}"
+    ],
+    "xref": [
+        "Cf. A202831."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 25 2011",
+    "references": 2,
+    "revision": 11,
+    "time": "2013-07-18T18:12:43-04:00",
+    "created": "2011-12-26T13:27:00-05:00"
+}

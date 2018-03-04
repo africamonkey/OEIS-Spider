@@ -1,0 +1,35 @@
+{
+    "number": 262529,
+    "data": "1,1,4,31,464,10423,307123,11087757,471750268,23064505722,1272685923725,78185947269685,5290601944971906,390900941750607195,31309282176759170370,2701913799542547998709,249913023732255442857064,24663493072687443375499678",
+    "name": "Number of partitions of 2n into parts of exactly n sorts which are introduced in ascending order such that sorts of adjacent parts are different.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A262529/b262529.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "a(n) = A262495(2n,n)."
+    ],
+    "example": [
+        "a(2) = 4: 3a1b, 2a2b, 2a1b1a, 1a1b1a1b."
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0 or i=1, k^(n-1),",
+        "      b(n, i-1, k) +`if`(i>n, 0, k*b(n-i, i, k)))",
+        "    end:",
+        "A:= (n, k)-> `if`(n=0, 1, `if`(k<2, k, k*b(n$2, k-1))):",
+        "a:= n-> add(A(2*n, n-i)*(-1)^i/(i!*(n-i)!), i=0..n):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0 || i == 1, k^(n-1), b[n, i-1, k] + If[i>n, 0, k*b[n-i, i, k]]]; A[n_, k_] := If[n == 0, 1, If[k<2, k, k*b[n, n, k-1]]]; a[n_] := Sum[A[2*n, n-i]*(-1)^i/(i!*(n-i)!), {i, 0, n}]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Feb 07 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A262495."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 24 2015",
+    "references": 2,
+    "revision": 10,
+    "time": "2017-02-07T09:23:21-05:00",
+    "created": "2015-09-24T15:52:16-04:00"
+}

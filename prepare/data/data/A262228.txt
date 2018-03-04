@@ -1,0 +1,40 @@
+{
+    "number": 262228,
+    "data": "1,2,5,11,59,653,84761,2763189059,377406001499268899,2638619515495963542360422694651593,135435890329895562961039215198033899386421965445591860752412324961",
+    "name": "Deficiency sequence: a(0) = 1, a(n) is the smallest prime p > a(n-1) such that the product of a(i), 1 <= i < n, is deficient (belongs to A005100).",
+    "comment": [
+        "The product of the first n+1 terms is the smallest deficient multiple of the product of the first n terms.",
+        "The product of any finite number of distinct terms of this sequence is deficient."
+    ],
+    "formula": [
+        "a(n) = A151800(floor(1/(2*(Product_{i=2..n-1} a(i)/(a(i)+1))-1)), where A151800 is the \"next larger prime\" function.",
+        "lim_{n->inf} A001065(Product_{i=0..n} a(i))/(Product_{i=0..n} a(i)) = 1. [Corrected by _M. F. Hasler_, Dec 04 2017]",
+        "Conjecture: log(a(n)) ~ e^(an+b) where a and b are approximately 0.6 and -1.6 respectively."
+    ],
+    "example": [
+        "a(3) = 11 because A001065(2*5*7) = A001065(70) = 74 > 70, and A001065(2*5*11) = A001065(110) = 106 < 110.",
+        "From _M. F. Hasler_, Dec 14 2017: (Start)",
+        "Let Q(x) = 1/(2x/sigma(x) - 1), P(n) = Product( a(k), k<n): P(0) = 1 (empty product). Then:",
+        "Q(P(0)) = 1, a(0) = nextprime(1) = 2 = P(1).",
+        "Q(P(1)) = 3, a(1) = 5. (2*3 is perfect, P(2) = 2*5 is deficient.)",
+        "Q(P(2)) = 9, a(2) = 11. (2*5*7 is weird, P(3) = 2*5*11 is deficient.)",
+        "Q(P(3)) = 54, a(3) = 59. (P(3)*53 is weird, P(4) = 2*5*11*59 is deficient.)",
+        "Q(P(4)) = 648, a(4) = 653. (P(4)*647 is weird, P(5) = 2*5*11*59*653 is deficient.)",
+        "Q(P(5)) = 84758.4, a(5) = 84761. (P(5)*84751 is abundant and semiperfect: sum of all proper divisors except {1, 2, 11, 22, 55, 59, 590}; P(6) = 2*5*11*59*653*84761 is deficient.) (End)"
+    ],
+    "program": [
+        "(PARI) lista(nn) = {print1(p=1, \", \"); vp = [p]; for (n=2, nn, np = nextprime(1+floor(1/(2*prod(i=2, n-1, vp[i]/(vp[i]+1))-1))); vp = concat(vp, np); print1(np, \", \"););} \\\\ _Michel Marcus_, Oct 16 2015",
+        "(PARI) a=List(); m=1; for(n=0, 13, listput(a, p=nextprime(1\\(2/sigma(m,-1)-1)+1)); p>default(primelimit)&&addprimes(p); m*=p) \\\\ _M. F. Hasler_, Dec 14 2017"
+    ],
+    "xref": [
+        "Cf. A001065, A005100, A151800 (nextprime).",
+        "Cf. A002975 (primitive weird numbers), A000203 (sigma), A295001 (same definition but a(0) = 4)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Chayim Lowen_, Sep 15 2015",
+    "references": 1,
+    "revision": 31,
+    "time": "2017-12-14T19:58:36-05:00",
+    "created": "2015-12-24T10:45:23-05:00"
+}

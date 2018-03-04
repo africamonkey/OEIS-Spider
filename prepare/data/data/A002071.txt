@@ -1,0 +1,52 @@
+{
+    "number": 2071,
+    "id": "M3386 N1366",
+    "data": "1,4,10,23,40,68,108,167,241,345,482,653,869,1153,1502,1930",
+    "name": "Number of pairs of consecutive integers x, x+1 such that all prime factors of both x and x+1 are at most the n-th prime.",
+    "comment": [
+        "St\u00f8rmer's theorem proves that a(n) is finite. - _Charles R Greathouse IV_, Feb 19 2013",
+        "Also: Number of positive integers x such that x(x+1) is prime(n)-smooth. - _M. F. Hasler_, Jan 16 2015",
+        "Also: Row lengths of A138180; partial sums of A145604. - _M. F. Hasler_, Jan 16 2015"
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "E. F. Ecklund and R. B. Eggleton, <a href=\"http://www.jstor.org/stable/2317422\">Prime factors of consecutive integers</a>, Amer. Math. Monthly, 79 (1972), 1082-1089.",
+        "D. Eppstein, <a href=\"https://11011110.github.io/blog/2007/03/23/smooth-pairs.html\">Smooth pairs</a>.",
+        "D. Eppstein, <a href=\"https://11011110.github.io/blog/2007/03/19/strmers-algorithm.html\">Python program</a>",
+        "D. H. Lehmer, <a href=\"http://projecteuclid.org/euclid.ijm/1256067456\">On a problem of St\u00f8rmer</a>, Ill. J. Math., 8 (1964), 57-69.",
+        "C. Stormer, <a href=\"https://archive.org/stream/skrifterudgivnea1897chri#page/n81/mode/2up\">Quelques th\u00e9or\u00e8mes sur l'\u00e9quation de Pell x^2 - Dy^2 = +-1 et leurs applications</a>, Skrifter Videnskabs-selskabet (Christiania), Mat.-Naturv (1897). Kl. I (2).",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/St%C3%B8rmer%27s_theorem\">St\u00f8rmer's theorem</a>",
+        "<a href=\"/index/Ab#abc\">OEIS Index entries for sequences related to the abc conjecture</a>"
+    ],
+    "formula": [
+        "a(n) <= (2^n-1)*(prime(n)+1)/2 is implicit in Lehmer 1964. - _Charles R Greathouse IV_, Feb 19 2013"
+    ],
+    "mathematica": [
+        "(* This program needs x maxima taken from A002072. *) xMaxima = A002072;",
+        "smoothNumbers[p_, max_] := Module[{a, aa, k, pp, iter}, k = PrimePi[p]; aa = Array[a, k]; pp = Prime[Range[k]]; iter = Table[{a[j], 0, PowerExpand @ Log[pp[[j]], max/Times @@ (Take[pp, j-1]^Take[aa, j-1])]}, {j, 1, k}]; Table[Times @@ (pp^aa), Sequence @@ iter // Evaluate] // Flatten // Sort]; a[n_] := Module[{sn, cnt}, sn = smoothNumbers[Prime[n], xMaxima[[n]]+1]; cnt = 0; Do[If[sn[[i]]+1 == sn[[i+1]], cnt++], {i, 1, Length[sn]-1}]; cnt]; Table[an = a[n]; Print[\"a(\", n, \") = \", an]; an, {n, 1, 16}] (* _Jean-Fran\u00e7ois Alcover_, Nov 10 2016 *)"
+    ],
+    "program": [
+        "(PARI) A002071(n)=[1,4,10,23,40,68,108,167,241,345,482,653,869,1153,1502][n] \\\\ \"practical\" solution. - _M. F. Hasler_, Jan 16 2015",
+        "(PARI) A002071(n,b=A002072,c=1,p=prime(n))={for(k=2,b(n),vecmax(factor(k++,p)[,1])<=p && vecmax(factor(k--+(k<2),p)[,1])<=p && c++); c} \\\\ b can be any upper bound for A002072, e.g., n->10^n should work, too. - _M. F. Hasler_, Jan 16 2015"
+    ],
+    "xref": [
+        "Cf. A002072, A145604, A145605, A145606.",
+        "Cf. A138180 (triangle of x values for each n).",
+        "Cf. A085152, A085153.",
+        "Cf. A285283 (equivalent for x^2 + 1). - _Tomohiro Yamada_, Apr 22 2017"
+    ],
+    "keyword": "nonn,nice,hard,more",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Better description and more terms from _David Eppstein_, Mar 23 2007",
+        "a(16) from _Jean-Fran\u00e7ois Alcover_, Nov 10 2016"
+    ],
+    "references": 16,
+    "revision": 66,
+    "time": "2017-07-25T02:15:56-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

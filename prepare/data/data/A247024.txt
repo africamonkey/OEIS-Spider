@@ -1,0 +1,57 @@
+{
+    "number": 247024,
+    "data": "3,47,347,10139,396527668833598369303619003,1624796301562061610805093487,2637188343637273091841153207596203623407",
+    "name": "Primes of the form x*(2^x - x) - 1.",
+    "comment": [
+        "Subsequence of A245014. a(n) represents the identity between (p + 4k^2 + 1) and (2n*4^k) for the least prime p defining A245014(k). Those first k where it occurs are: 1,2,3,5,41,42,62,183,357,407.",
+        "Consider the table of Stirling numbers of the second kind (A008277). The second column contains the numbers A000225, or 2^m - 1, and the first subdiagonal contains the triangular numbers. If a number appears in both sequences, we have the equation f(x) = 2^x - x^2 + x - 2 = 0 which has integer roots x = 1, 2, 3. Set g(x) = (x - 1)*(2^x - 1). Then it is found that the sum f(x) + g(x) for some even x defines this sequence and satisfies in common with A245014: Both sequences have three consecutive terms (those first) such that when they are represented in decimal the third term is the concatenation of the two terms preceding it.",
+        "Prime or PRP for x = 2, 4, 6, 10, 82, 84, 124, 366, 714, 814, 1584, 8938, 17812, 27054, 35380, 71358. - _Jens Kruse Andersen_, Sep 10 2014",
+        "The complete solution to the remark on Stirling2 numbers in a comment above is given in A076046. See also my Oct 08 2014 remark in the history. - _Wolfdieter Lang_, Oct 16 2014"
+    ],
+    "link": [
+        "R. J. Cano, <a href=\"/A247024/b247024.txt\">Table of n, a(n) for n = 1..11</a>"
+    ],
+    "maple": [
+        "A247024:=n->`if`(isprime(n*(2^n-n)-1),n*(2^n-n)-1,NULL): seq(A247024(n), n=1..10^2); # _Wesley Ivan Hurt_, Sep 13 2014"
+    ],
+    "mathematica": [
+        "Select[Table[n(2^n - n) - 1, {n, 200}], PrimeQ] (* _Alonso del Arte_, Sep 09 2014 *)"
+    ],
+    "program": [
+        "(PARI) listToVec(l:list,Comp,Omega=#l)=vector(Omega,i,l[i][Comp]);",
+        "fplusg(x)=x*(2^x-x)-1;",
+        "find_next_N_terms(N,resumeFrom:list=List(),verbose=0)= {",
+        "  my(s:list,q,j,F,N0);",
+        "  s=resumeFrom;",
+        "  q=#s;",
+        "  N0=q;",
+        "  if(q,j=s[q][1]);",
+        "  while(q<N0+N,",
+        "    j++;",
+        "    F=fplusg(2*j);",
+        "    if(isprime(F), q++;listput(s,[j,F]);if(verbose,print1(\", (\"j\")\")), if(verbose,print1(\", \"j)))",
+        "  );",
+        "  s",
+        "} /* This will keep a record of the terms and the x values",
+        "     generating these primes through fplusg(2*x); For example use:",
+        "          listToVec(find_next_N_terms(11),2);",
+        "     in order to find the first 11 terms. */",
+        "(PFGW) ABC2 $a*(2^$a-$a)-1",
+        "a: from 2 to 100000 step 2",
+        "_Charles R Greathouse IV_, Sep 18 2014",
+        "(MAGMA) [a: x in [0..450] | IsPrime(a) where a is x*(2^x - x)-1]; // _Vincenzo Librandi_, Oct 16 2014"
+    ],
+    "xref": [
+        "Cf. A000225, A008277, A245014."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. J. Cano_, Sep 09 2014",
+    "ext": [
+        "Edited: 'penultimate column' replaced by 'first subdiagonal'. - _Wolfdieter Lang_, Oct 16 2014"
+    ],
+    "references": 3,
+    "revision": 58,
+    "time": "2014-10-16T17:54:26-04:00",
+    "created": "2014-10-14T15:36:35-04:00"
+}

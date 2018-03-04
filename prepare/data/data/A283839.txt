@@ -1,0 +1,37 @@
+{
+    "number": 283839,
+    "data": "1,3,6,12,24,42,76,136,240,424,753,1337,2388,4280,7706,13940,25332,46224,84696,155786,287574,532624,989554,1843744,3444389,6450369,12107004,22771642,42913116,81014528,153199818,290152952,550332614,1045234672,1987731140",
+    "name": "Row sums of A283838.",
+    "comment": [
+        "a(n) is odd for n >= 8 and n in { A247375 }. - _Alois P. Heinz_, Mar 26 2017"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A283839/b283839.txt\">Table of n, a(n) for n = 8..1000</a>",
+        "Stefano Bilotta, <a href=\"http://arxiv.org/abs/1605.03785\">Variable-length Non-overlapping Codes</a>, arXiv preprint arXiv:1605.03785, 2016"
+    ],
+    "maple": [
+        "b:= proc(n, l, c, k) option remember; `if`(n=0, l,",
+        "      b(n-1, 1-l, 1, k)+`if`(c=k-1, 0, b(n-1, l, c+1, k)))",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n<8, 0, a(n-1)+",
+        "      add(b(n-2*k-1, 0, 1, k), k=3..floor(n/2)-1))",
+        "    end:",
+        "seq(a(n), n=8..60);  # _Alois P. Heinz_, Mar 26 2017"
+    ],
+    "mathematica": [
+        "nMax = 60; gf[k_] := gf[k] = x^(2k)(x-x^k)^2 / ((1-x)(1-x^k)(1-2x+x^k)) + O[x]^(nMax+1); a[n_] := Sum[SeriesCoefficient[gf[k], n], {k, 3, Floor[ n/2] - 1}]; Table[a[n], {n, 8, nMax}] (* _Jean-Fran\u00e7ois Alcover_, Apr 05 2017 *)"
+    ],
+    "xref": [
+        "Cf. A247375, A283838."
+    ],
+    "keyword": "nonn",
+    "offset": "8,2",
+    "author": "_N. J. A. Sloane_, Mar 25 2017",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Mar 26 2017"
+    ],
+    "references": 2,
+    "revision": 17,
+    "time": "2017-04-05T07:44:05-04:00",
+    "created": "2017-03-25T20:03:08-04:00"
+}

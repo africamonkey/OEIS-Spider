@@ -1,0 +1,32 @@
+{
+    "number": 66723,
+    "data": "1,1,2,5,13,36,109,340,1116,3744,12981,45722,165247,603242,2242932,8422438",
+    "name": "Number of distinct partitions of n-th triangular number which can be obtained by merging parts in the partition 1+2+...+n.",
+    "example": [
+        "For n=4, the 13 partitions are 10, 1+9, 2+8, 3+7, 4+6, 5+5, 1+2+7, 1+3+6, 1+4+5, 2+3+5, 2+4+4, 3+3+4, 1+2+3+4. 3+7 and 4+6 can be obtained in two ways each: 3+7 = (3)+(1+2+4) = (1+2)+(3+4), 4+6 = (4)+(1+2+3) = (1+3)+(2+4)."
+    ],
+    "maple": [
+        "b:= proc(n) b(n):= `if`(n<2, {[1$n]}, map(x-> [sort([x[], n]),",
+        "      seq(sort(subsop(i=x[i]+n, x)), i=1..nops(x))][], b(n-1)))",
+        "    end:",
+        "a:= n-> nops(b(n)):",
+        "seq(a(n), n=0..10);  # _Alois P. Heinz_, May 31 2013"
+    ],
+    "mathematica": [
+        "addto[ p_, k_ ] := Module[ {}, lth=Length[ p ]; Union[ Sort/@Append[ Table[ Join[ Take[ p, i-1 ], {p[ [ i ] ]+k}, Take[ p, i-lth ] ], {i, 1, lth} ], Append[ p, k ] ] ] ]; addtolist[ plist_, k_ ] := Union[ Join@@(addto[ #, k ]&/@plist) ]; l[ 0 ]={{}}; l[ n_ ] := l[ n ]=addtolist[ l[ n-1 ], n ]; a[ n_ ] := Length[ l[ n ] ]"
+    ],
+    "xref": [
+        "Cf. A000041, A000110, A000217, A066740."
+    ],
+    "keyword": "more,nonn",
+    "offset": "0,3",
+    "author": "_Naohiro Nomoto_, Jan 15 2002",
+    "ext": [
+        "Edited by _Dean Hickerson_, Jan 18 2002",
+        "a(15) from _Alois P. Heinz_, May 31 2013"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2014-06-24T01:08:19-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

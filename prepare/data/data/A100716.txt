@@ -1,0 +1,52 @@
+{
+    "number": 100716,
+    "data": "4,8,12,16,20,24,27,28,32,36,40,44,48,52,54,56,60,64,68,72,76,80,81,84,88,92,96,100,104,108,112,116,120,124,128,132,135,136,140,144,148,152,156,160,162,164,168,172,176,180,184,188,189,192,196,200,204,208,212",
+    "name": "Numbers n such that p^p divides n for some prime p.",
+    "comment": [
+        "Complement of A048103; A129251(a(n)) > 0; A051674 is a subsequence; A129254 = (terms a(k) such that a(k+1)=a(k)+1). - _Reinhard Zumkeller_, Apr 07 2007",
+        "A027748(a(n),k) <= A124010(a(n),k) for some k<=A001221(a(n)). - _Reinhard Zumkeller_, Apr 28 2012"
+    ],
+    "link": [
+        "R. Zumkeller, <a href=\"/A100716/b100716.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) ~ k*n with k = 1/(1 - prod(1 - p^-p)) = 3.5969959469... where the product is over all primes p. - _Charles R Greathouse IV_, Jan 24 2012"
+    ],
+    "example": [
+        "54 is included because 3^3 divides 54."
+    ],
+    "mathematica": [
+        "fQ[n_] := Union[ Table[ #[[1]] <= #[[2]]] & /@ FactorInteger[n]][[ -1]] == True; Select[ Range[2, 215], fQ[ # ] &] (* _Robert G. Wilson v_, Dec 14 2004 *)",
+        "f[n_] := Module[{aux=FactorInteger[n]}, Last@Union@Table[aux[[i,1]] <=  aux[[i,2]], {i,Length[aux]}] == True]; Select[Range[2,215], f] (* _Jos\u00e9 Mar\u00eda Grau Ribas_, Jan 25 2012 *)",
+        "Rest@ Select[Range@ 216, Times @@ Boole@ Map[First@ # > Last@ # &, FactorInteger@ #] == 0 &] (* _Michael De Vlieger_, Aug 19 2016 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=forprime(p=2,default(primelimit),if(n%p^p==0,return(1));if(p^p>n,return(0))) \\\\ _Charles R Greathouse IV_, Jan 24 2012",
+        "(Haskell)",
+        "a100716 n = a100716_list !! (n-1)",
+        "a100716_list = filter (\\x -> or $",
+        "   zipWith (<=) (a027748_row x) (map toInteger $ a124010_row x)) [1..]",
+        "-- _Reinhard Zumkeller_, Apr 28 2012",
+        "(Scheme, with Antti Karttunen's IntSeq-library)",
+        "(define A100716 (NONZERO-POS 1 1 A129251))",
+        ";; _Antti Karttunen_, Aug 18 2016"
+    ],
+    "xref": [
+        "Complement: A048103.",
+        "Positions of nonzeros in A129251.",
+        "Cf. A100717, A129150, A129152.",
+        "Cf. A054744.",
+        "Cf. A051674 (a subsequence).",
+        "Subsequence of A276079 from which it differs for the first time at n=175, where a(175) = 628, while A276079(175) = 625, a value missing from here."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Leroy Quet_, Dec 10 2004",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Dec 14 2004"
+    ],
+    "references": 12,
+    "revision": 30,
+    "time": "2016-08-21T11:22:33-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

@@ -1,0 +1,56 @@
+{
+    "number": 10672,
+    "data": "0,1,2,4,7,12,20,29,38,52,73,94,127,151,181,211,257,315,373,412,475,530,545,607,716,797,861,964,1059,1160,1306,1385,1434,1555,1721,1833,1933,2057,2260,2496,2698,2873,3060,3196,3331,3628,3711,3867,4139,4446,4639",
+    "name": "A B_2 sequence: a(n) = least value such that sequence increases and pairwise sums of distinct elements are all distinct.",
+    "link": [
+        "Daniel Mondot and Giovanni Resta, <a href=\"/A010672/b010672.txt\">Table of n, a(n) for n = 0..10000</a> (first 7611 terms from D. Mondot)",
+        "<a href=\"/index/Br#B_2\">Index entries for B_2 sequences.</a>"
+    ],
+    "formula": [
+        "a(n) = A011185(n+1)-1. - _Robert Israel_, May 02 2016"
+    ],
+    "maple": [
+        "N:= 10^6: # to get all terms <= N",
+        "A[0]:= 0: Delta:= {}: As:= {A[0]}:",
+        "Cands:= {$1..N}:",
+        "for n from 1  while Cands <> {} do",
+        "  A[n]:= min(Cands);",
+        "  Cands:= Cands minus ({A[n]} union map(`+`,Delta, A[n]));",
+        "  Delta:= Delta union map(t ->A[n] - t, As);",
+        "  As:= As union {A[n]};",
+        "od:",
+        "seq(A[i],i=0..n-1); # _Robert Israel_, May 02 2016"
+    ],
+    "program": [
+        "(MATLAB)",
+        "N = 3*10^8; % to get all terms < N",
+        "Cands = ones(N,1);",
+        "Delta = [];",
+        "A = [];",
+        "n = 1;",
+        "while nnz(Cands) > 0",
+        "      A(n) = find(Cands,1,'first');",
+        "      Cands(A(n)) = 0;",
+        "      Rem = Delta(Delta <= N - A(n)) + A(n);",
+        "      Cands(Rem) = 0;",
+        "      Delta = union(Delta, -A(1:n-1)+A(n));",
+        "      if mod(n,10)==0",
+        "       fprintf('a(%d)=%d\\n',n,A(n));",
+        "       toc;",
+        "      end",
+        "      n = n + 1;",
+        "end",
+        "A - 1 % _Robert Israel_, May 02 2016"
+    ],
+    "xref": [
+        "A025582 is a similar sequence, but there the pairwise sums of (not necessarily distinct) elements are all distinct.",
+        "Cf. A011185."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Dan Hoey_",
+    "references": 9,
+    "revision": 26,
+    "time": "2017-12-17T07:19:45-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

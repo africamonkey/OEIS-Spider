@@ -1,0 +1,24 @@
+{
+    "number": 136246,
+    "data": "1,1,32,2712,449102,122886128,50225389432,28670796914144,21789885975738524,21271115441652577064,25938193213744579451420,38638907727108476424404864,69044758685363149615280762608",
+    "name": "a(n) = (1/n!)*Sum_{k=0..n} (-1)^(n-k)*Stirling1(n,k)*A062208(k).",
+    "formula": [
+        "a(n) = Sum_{m>=0} binomial(binomial(m,3)+n-1,n)/2^(m+1)."
+    ],
+    "maple": [
+        "A000629 := proc(n) local k ; sum( k^n/2^k,k=0..infinity) ; end: A062208 := proc(n) option remember ; local a,stir,ni,n1,n2,n3,stir2,i,j,tmp ; a := 0 ; if n = 0 then RETURN(1) ; fi ; stir := combinat[partition](n) ; stir2 := {} ; for i in stir do if nops(i) <= 3 then tmp := i ; while nops(tmp) < 3 do tmp := [op(tmp),0] ; od: tmp := combinat[permute](tmp) ; for j in tmp do stir2 := stir2 union { j } ; od: fi ; od: for ni in stir2 do n1 := op(1,ni) ; n2 := op(2,ni) ; n3 := op(3,ni) ; a := a+combinat[multinomial](n,n1,n2,n3)*(A000629(3*n1+2*n2+n3)-1/2-2^(3*n1+2*n2+n3)/4)*(-3)^n2*2^n3 ; od: a/(2*6^n) ; end: A136246 := proc(n) local k ; add((-1)^(n-k)*combinat[stirling1](n,k)*A062208(k),k=0..n)/n! ; end: seq(A136246(n),n=0..14) ; # _R. J. Mathar_, Apr 01 2008"
+    ],
+    "xref": [
+        "Cf. A121316."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Vladeta Jovovic_, Mar 16 2008",
+    "ext": [
+        "More terms from _R. J. Mathar_, Apr 01 2008"
+    ],
+    "references": 1,
+    "revision": 6,
+    "time": "2015-09-21T01:37:33-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

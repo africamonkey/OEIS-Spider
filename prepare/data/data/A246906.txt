@@ -1,0 +1,39 @@
+{
+    "number": 246906,
+    "data": "1,25,729,24025,866761,33350625,1342856025,55849505625,2378365418025,103099146750625,4531090723144129,201324497403240225,9025111586043157801,407581475160408424225,18521763259935613598649,846187436813348419025625,38838031986984135802130025",
+    "name": "G.f.:  1 / AGM(1-21*x, sqrt((1-9*x)*(1-49*x))).",
+    "comment": [
+        "In general, the g.f. of the squares of coefficients in g.f. 1/sqrt((1-p*x)*(1-q*x)) is given by",
+        "1/AGM(1-p*q*x, sqrt((1-p^2*x)*(1-q^2*x))) = Sum_{n>=0} x^n*[Sum_{k=0..n} p^(n-k)*((q-p)/4)^k*C(n,k)*C(2*k,k)]^2,",
+        "and consists of integer coefficients when 4|(q-p).",
+        "Here AGM(x,y) = AGM((x+y)/2,sqrt(x*y)) is the arithmetic-geometric mean."
+    ],
+    "formula": [
+        "a(n) = A098409(n)^2 = [Sum_{k=0..n} 3^(n-k)*C(n,k)*C(2*k,k)]^2.",
+        "G.f.:  1 / AGM((1-3*x)*(1+7*x), (1+3*x)*(1-7*x)) = Sum_{n>=0} a(n)*x^(2*n)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 25*x + 729*x^2 + 24025*x^3 + 866761*x^4 +...",
+        "where the square-root of the terms yields A098409:",
+        "[1, 5, 27, 155, 931, 5775, 36645, 236325, 1542195, ...],",
+        "the g.f. of which is 1/sqrt((1-3*x)*(1-7*x))."
+    ],
+    "program": [
+        "(PARI) {a(n,p=3,q=7)=polcoeff( 1 / agm(1-p*q*x, sqrt((1-p^2*x)*(1-q^2*x) +x*O(x^n))), n) }",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n,p=3,q=7)=polcoeff( 1 / sqrt((1-p*x)*(1-q*x) +x*O(x^n)), n)^2 }",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n,p=3,q=7)=sum(k=0,n,p^(n-k)*((q-p)/4)^k*binomial(n,k)*binomial(2*k,k))^2 }",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A098409, A246467, A248167."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Sep 07 2014",
+    "references": 4,
+    "revision": 11,
+    "time": "2014-10-04T10:58:39-04:00",
+    "created": "2014-09-07T13:17:24-04:00"
+}

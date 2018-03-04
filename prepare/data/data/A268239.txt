@@ -1,0 +1,33 @@
+{
+    "number": 268239,
+    "data": "0,1,7,25,56,109,187",
+    "name": "Given an n X n X n grid of points, a(n) is the maximum number of points that can be painted red so that, if any 8 of the red points are chosen, they do not form a cube with sides parallel to the grid.",
+    "comment": [
+        "Using a greedy coloring gives a(4) >= 49."
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A268239/a268239.png\">Illustration of a(3)-a(6)</a>"
+    ],
+    "example": [
+        "For n=3, we may color 25 of the 27 points red (X) without any of 25 red points forming a cube. Color the three slices as follows:",
+        "XXX XXX XXX",
+        "XXX X.X XXX",
+        "XXX XXX xx."
+    ],
+    "mathematica": [
+        "a[n_] := Block[{m, qq, nv = n^3, ne}, qq = Flatten[1 + Table[n^2*z + n*x + y + s*Plus @@@ Tuples[{{0, 1}, {0, n}, {0, n^2}}], {x, 0, n-2}, {y, 0, n-2}, {z, 0, n-2}, {s, Min[n-x, n-y, n-z] - 1}], 3]; ne = Length@ qq; m = Table[0, {ne}, {nv}]; Do[m[[i, qq[[i]]]] = 1, {i, ne}]; Total@ Quiet@ LinearProgramming[ Table[-1, {nv}], m, Table[{7, -1}, {ne}], Table[{0, 1}, {nv}], Integers]]; Table[ a[n], {n, 0, 6}] (* _Giovanni Resta_, Feb 06 2016 *)"
+    ],
+    "xref": [
+        "This is a three-dimensional analog of A227133."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Benoit Cloitre_ and _N. J. A. Sloane_, Feb 05 2016",
+    "ext": [
+        "a(4)-a(6) from _Giovanni Resta_, Feb 06 2016"
+    ],
+    "references": 3,
+    "revision": 14,
+    "time": "2016-02-06T15:11:11-05:00",
+    "created": "2016-02-05T14:51:33-05:00"
+}

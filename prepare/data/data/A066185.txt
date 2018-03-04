@@ -1,0 +1,41 @@
+{
+    "number": 66185,
+    "data": "0,0,1,4,12,26,57,103,191,320,537,843,1342,2015,3048,4457,6509,9250,13170,18316,25483,34853,47556,64017,86063,114285,151462,198871,260426,338275,438437,564131,724202,924108,1176201,1489237,1881273,2365079",
+    "name": "Sum of the first moments of all partitions of n.",
+    "comment": [
+        "The first element of each partition is given weight 0.",
+        "Consider the partitions of n, e.g., n=5. For each partition sum T(e-1) and sum all these. E.g., 5 -> T(4)=10, 41 -> T(3)+T(0)=6, 32 -> T(2)+T(1)=4, 311 -> T(2)+T(0)+T(0)=3, 221 -> T(1)+T(1)+T(0)=2, 21111 ->1 and 11111 ->0. Summing, 10+6+4+3+2+1+0 = 26 as desired. - _Jon Perry_, Dec 12 2003",
+        "Also equals the sum of f(p) over the partitions p of n, where f(p) is obtained by replacing each part p_i  of partition p by (p_i*(p_i-1)/2. See I. G. Macdonald: Symmetric functions and Hall polynomials 2nd edition, p. 3, eqn (1.5) and (1.6). - _Wouter Meeussen_, Sep 25 2014"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A066185/b066185.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = 1/2*(A066183(n) - A066186(n)). - _Vladeta Jovovic_, Mar 23 2003"
+    ],
+    "example": [
+        "a(3)=4 because the first moments of all partitions of 3 are {3}.{0},{2,1}.{0,1} and {1,1,1}.{0,1,2}, resulting in 0,1,3; summing to 4."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, [1, 0],",
+        "      `if`(i<1, [0$2], `if`(i>n, b(n, i-1), b(n, i-1)+",
+        "       (h-> h+[0, h[1]*i*(i-1)/2])(b(n-i, i)))))",
+        "    end:",
+        "a:= n-> b(n$2)[2]:",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Jan 29 2014"
+    ],
+    "mathematica": [
+        "Table[ Plus@@ Map[ #.Range[ 0, -1+Length[ # ] ]&, IntegerPartitions[ n ] ], {n, 40} ]",
+        "b[n_, i_] := b[n, i] = If[n==0, {1, 0}, If[i<1, {0, 0}, If[i>n, b[n, i-1], b[n, i-1] + Function[h, h+{0, h[[1]]*i*(i-1)/2}][b[n-i, i]]]]]; a[n_] := b[n, n][[2]]; Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Oct 26 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000337, A001788, A066183, A066184, A066186."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,4",
+    "author": "_Wouter Meeussen_, Dec 15 2001",
+    "references": 4,
+    "revision": 29,
+    "time": "2016-12-18T23:07:43-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

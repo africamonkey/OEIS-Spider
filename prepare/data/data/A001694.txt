@@ -1,0 +1,82 @@
+{
+    "number": 1694,
+    "id": "M3325 N1335",
+    "data": "1,4,8,9,16,25,27,32,36,49,64,72,81,100,108,121,125,128,144,169,196,200,216,225,243,256,288,289,324,343,361,392,400,432,441,484,500,512,529,576,625,648,675,676,729,784,800,841,864,900,961,968,972,1000",
+    "name": "Powerful numbers, definition (1): if a prime p divides n then p^2 must also divide n (also called squareful, square full, square-full or 2-full numbers).",
+    "comment": [
+        "In other words if the prime factorization of n is Product_k p_k^e_k then all e_k are greater than 1.",
+        "Numbers n such that Sum_{d|n} phi(d)*phi(n/d)*mu(d) > 0. - _Benoit Cloitre_, Nov 30 2002",
+        "This sequence is closed under multiplication. The primitive elements are A168363. - _Franklin T. Adams-Watters_, May 30 2011",
+        "Complement of A052485; A112526(a(n)) = 1. - _Reinhard Zumkeller_, Sep 16 2011",
+        "a(n) = A224866(n) - 1. - _Reinhard Zumkeller_, Jul 23 2013",
+        "The number of terms less than or equal to 10^k beginning with k=0: 1, 4, 14, 54, 185, 619, 2027, 6553, 21044, ...: A118896. - _Robert G. Wilson v_, Aug 11 2014",
+        "a(10^n): 1, 49, 3136, 253472, 23002083, 2200079025, 215523459072, 21348015504200, 2125390162618116, ... . - _Robert G. Wilson v_, Aug 15 2014",
+        "a(m) mod prime(n) > 0 for m < A258599(n); a(A258599(n)) = A001248(n) = prime(n)^2. - _Reinhard Zumkeller_, Jun 06 2015"
+    ],
+    "reference": [
+        "G. E. Hardy and M. V. Subbarao, Highly powerful numbers, Congress. Numer. 37 (1983), 277-307.",
+        "A. Ivic, The Riemann Zeta-Function, Wiley, NY, 1985, see p. 407.",
+        "R. A. Mollin, Quadratics, CRC Press, 1996, Section 1.6.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A001694/b001694.txt\">Table of n, a(n) for n = 1..5000</a> (terms 1..1000 from T. D. Noe)",
+        "Paul T. Bateman and Emil Grosswald, <a href=\"http://projecteuclid.org/euclid.ijm/1255380836\">On a theorem of Erd\u0151s and Szekeres</a>, Illinois J. Math. 2:1 (1958), pp. 88-98.",
+        "Valentin Blomer, <a href=\"http://dx.doi.org/10.1112/S0024610704006040\">Binary quadratic forms with large discriminants and sums of two squareful numbers II</a>, Journal of the London Mathematical Society 71:1 (2005), pp. 69-84.",
+        "C. K. Caldwell, <a href=\"http://primes.utm.edu/glossary/page.php?sort=PowerfulNumber\">Powerful Numbers</a>",
+        "J.-M. de Koninck, N. Doyon, F. Luca, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL14/DeKoninck/dek.html\">Powerful Values of Quadratic Polynomials</a>, J. Int. Seq. 14 (2011) # 11.3.3",
+        "P. Erd\u0151s and G. Szekeres, <a href=\"http://acta.fyx.hu/acta/showCustomerArticle.action?id=5508&amp;dataObjectType=article&amp;returnAction=showCustomerVolume&amp;sessionDataSetId=110a1d923e88e7e\">\u00dcber die Anzahl der Abelschen Gruppen gegebener Ordnung und ueber ein verwandtes zahlentheoretisches Problem</a>, Acta Sci. Math. (Szeged), 7 (1935), 95-102.",
+        "S. W. Golomb, <a href=\"http://www.jstor.org/stable/2317020\">Powerful numbers</a>, Amer. Math. Monthly, Vol. 77 (1970), 848-852.",
+        "K. Schneider, PlanetMath.org, <a href=\"http://planetmath.org/encyclopedia/SquarefullNumber.html\">Squarefull Number</a>, <a href=\"http://mathworld.wolfram.com/PowerfulNumber.html\">Powerful Number</a>, <a href=\"http://mathworld.wolfram.com/Squareful.html\">Squareful</a>",
+        "V. Shevelev, <a href=\"http://dx.doi.org/10.4064/aa8395-5-2016\">S-exponential numbers</a>, Acta Arithmetica, Vol. 175(2016), 385-395.",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Powerful_number\">Powerful number</a>",
+        "<a href=\"/index/Pow#powerful\">Index entries for sequences related to powerful numbers</a>"
+    ],
+    "formula": [
+        "Numbers of the form a^2*b^3, a>=1, b>= 1.",
+        "Bateman & Grosswald prove that a(n) = zeta(3/2)/zeta(3) x^{1/2} + zeta(2/3)/zeta(2) x^{1/3} + O(x^{1/6}); see section 5 for a more precise error term. - _Charles R Greathouse IV_, Nov 19 2012",
+        "Sum_{n>=1} 1/a(n) = zeta(2)*zeta(3)/zeta(6). - _Ivan Neretin_, Aug 30 2015"
+    ],
+    "maple": [
+        "isA001694 := proc(n) for p in ifactors(n)[2] do if op(2,p) = 1 then return false; end if; end do; return true; end proc:",
+        "A001694 := proc(n) option remember; if n = 1 then 1; else for a from procname(n-1)+1 do if isA001694(a) then return a; end if; end do; end if; end proc:",
+        "seq(A001694(n),n=1..20) ; # _R. J. Mathar_, Jun 07 2011"
+    ],
+    "mathematica": [
+        "Join[{1}, Select[ Range@ 1250, Min@ FactorInteger[#][[All, 2]] > 1 &]]",
+        "(* _Harvey P. Dale_, Sep 18 2011; modified by _Robert G. Wilson v_, Aug 11 2014 *)",
+        "max = 10^3; Union@ Flatten@ Table[a^2*b^3, {b, max^(1/3)}, {a, Sqrt[max/b^3]}] (* _Robert G. Wilson v_, Aug 11 2014 *)",
+        "nextPowerfulNumber[n_] := Block[{r = Range[ Floor[1 + n^(1/3)]]^3}, Min@ Select[ Sort[ r*Floor[1 + Sqrt[n/r]]^2], # > n &]]; NestList[ nextPowerfulNumber, 1, 55] (* _Robert G. Wilson v_, Aug 16 2014 *)"
+    ],
+    "program": [
+        "(PARI) isA001694(n)=n=factor(n)[,2];for(i=1,#n,if(n[i]==1,return(0)));1 \\\\ _Charles R Greathouse IV_, Feb 11 2011",
+        "(PARI) list(lim,mn=2)=my(v=List(),t); for(m=1,sqrtnint(lim\\1,3), t=m^3; for(n=1,sqrtint(lim\\t), listput(v,t*n^2))); Set(v) \\\\ _Charles R Greathouse IV_, Jul 31 2011; edited Sep 22 2015",
+        "(PARI) is=ispowerful \\\\ _Charles R Greathouse IV_, Nov 13 2012",
+        "(Haskell)",
+        "a001694 n = a001694_list !! (n-1)",
+        "a001694_list = filter ((== 1) . a112526) [1..]",
+        "-- _Reinhard Zumkeller_, Nov 30 2012",
+        "(Python)",
+        "from sympy import factorint",
+        "A001694 = [1]+[n for n in xrange(2,10**6) if min(factorint(n).values()) > 1]",
+        "# _Chai Wah Wu_, Aug 14 2014",
+        "(Sage)",
+        "sloane.A001694.list(54) # _Peter Luschny_, Feb 08 2015"
+    ],
+    "xref": [
+        "Cf. A007532, A005934, A005188, A003321, A014576, A023052, A046074, A013929, A076871, A258599, A001248, A261883.",
+        "Cf. A076446 (first differences)."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Henry Bottomley_, Mar 16 2000",
+        "Definition expanded by _Jonathan Sondow_, Jan 03 2016"
+    ],
+    "references": 158,
+    "revision": 128,
+    "time": "2018-02-06T11:27:05-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

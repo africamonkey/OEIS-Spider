@@ -1,0 +1,37 @@
+{
+    "number": 2785,
+    "id": "M0375 N0141",
+    "data": "2,2,8,12,88,176,2752,8784,279968,1492288,95458560,872687552,111698291584,1787154671104,457509297625088,13013584213369088,6662951988432581120,341143107490935724032,349330527429800077778944",
+    "name": "Number of self-complementary oriented graphs with n nodes.",
+    "comment": [
+        "Farrugia's Chapter 8 on enumeration of self-complementary and self-converse graphs and digraphs contains many explicit formulas as well as an in-depth discussion of the literature on this subject. - Pab Ter (pabrlos2(AT)yahoo.com), Oct 22 2005"
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Farrugia, Alastair; <a href=\"http://www.alastairfarrugia.net/sc-graph/sc-graph-survey.pdf\">Self-complementary graphs and generalizations: a comprehensive reference</a>, M.Sc. Thesis, University of Malta, August 1999.",
+        "Sridharan, M. R., <a href=\"/A002785/a002785.pdf\"> Self-complementary and self-converse oriented graphs </a>, Nederl. Akad. Wetensch. Proc. Ser. A 73=Indag. Math. 32 1970 441-447. [Annotated scanned copy]",
+        "Peter Steinbach, <a href=\"/A000664/a000664_11.pdf\">Field Guide to Simple Graphs, Volume 4</a>, Part 11 (For Volumes 1, 2, 3, 4 of this book see A000088, A008406, A000055, A000664, respectively.)"
+    ],
+    "formula": [
+        "a(2n) = sum_{j partition of n & jk=0 if k even} [ prod_{k} 2^(k*jk^2-jk) * prod_{r<t} 2^(2*gcd(r, t)*jr*jt) / prod_{k} k^jk*jk! ]; a(2n+1) = sum_{j partition of n & jk=0 if k even} [ prod_{1<=r, t<=n} 2^(gcd(r, t)*jr*jt) / prod_{k} k^jk*jk! ] - Pab Ter (pabrlos2(AT)yahoo.com), Oct 22 2005"
+    ],
+    "maple": [
+        "with(combinat, partition): j:=proc(p) local k, jpart: jpart:=[seq(0,k=1..max(op(p)))]: for k from 1 to nops(p) do jpart[p[k]]:=jpart[p[k]]+1 od: RETURN(jpart): end; numeven:=jtot->2^add(add((2*igcd(r,t)*jtot[r]*jtot[t]),r=1..t-1)+(t*jtot[t]^2-jtot[t]),t=1..nops(jtot)); numodd:=jtot->mul(mul(2^(igcd(r,t)*jtot[r]*jtot[t]),r=1..nops(jtot)),t=1..nops(jtot));den:=jtot->mul(k^jtot[k]*jtot[k]!,k=1..nops(jtot)); testj:=proc(jtot) local i: for i from 1 to floor(nops(jtot)/2) do if(jtot[2*i]<>0) then RETURN(0) fi od: RETURN(1) end; teven:=proc(n) local s,part,k,p,jtot: s:=0: part:=partition(n): for k from 1 to nops(part) do p:=part[k]: jtot:=j(p): if testj(jtot)=1 then s:=s+numeven(jtot)/den(jtot) fi od:RETURN(s): end; todd:=proc(n) local s,part,k,p,jtot: s:=0: part:=partition(n): for k from 1 to nops(part) do p:=part[k]: jtot:=j(p): if testj(jtot)=1 then s:=s+numodd(jtot)/den(jtot) fi od:RETURN(s): end; seq(op([todd(n),teven(n+1)]),n=1..12); (Pab Ter)"
+    ],
+    "mathematica": [
+        "j[p_] := Module[{k, jpart}, jpart = Array[0&, Max[p]]; For[k = 1, k <= Length[p], k++, jpart[[ p[[k]] ]] = jpart[[ p[[k]] ]]+1]; Return[jpart] ]; numeven[jtot_] := 2^Sum[Sum[2*GCD[r, t]*jtot[[r]]*jtot[[t]], {r, 1, t-1}] + (t*jtot[[t]]^2 - jtot[[t]]), {t, 1, Length[jtot]}]; numodd[jtot_] := Product[Product[2^(GCD[r, t]*jtot[[r]]*jtot[[t]]), {r, 1, Length[jtot]}], {t, 1, Length[jtot]}]; den[jtot_] := Product[k^jtot[[k]]*jtot[[k]]!, {k, 1, Length[jtot]}]; testj[jtot_] := Module[{i}, For[i = 1, i <= Floor[Length[jtot]/2], i++, If[jtot[[2*i]] != 0, Return[0] ] ]; Return[1] ]; teven[n_] := Module[{s, part, k, p, jtot}, s = 0; part = IntegerPartitions[n]; For[k = 1, k <= Length[part], k++, p = part[[k]]; jtot = j[p]; If[testj[jtot] == 1, s = s+numeven[jtot]/den[jtot] ] ]; Return[s]]; todd[n_] := Module[{s, part, k, p, jtot}, s = 0; part = IntegerPartitions[n]; For[k = 1, k <= Length[part], k++, p = part[[k]]; jtot = j[p]; If[testj[jtot] == 1 , s = s+numodd[jtot]/den[jtot] ] ]; Return[s]]; Table[{todd[n], teven[n+1]}, {n, 1, 10}] // Flatten (* _Jean-Fran\u00e7ois Alcover_, Dec 20 2013, translated from Maple *)"
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "3,1",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from Pab Ter (pabrlos2(AT)yahoo.com), Oct 22 2005"
+    ],
+    "references": 3,
+    "revision": 24,
+    "time": "2017-03-19T12:17:46-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

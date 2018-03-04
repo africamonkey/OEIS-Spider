@@ -1,0 +1,44 @@
+{
+    "number": 220082,
+    "data": "1,5,17,29,53,73,109,137,185,221,281,325,397,449,533,593,689,757,865,941,1061,1145,1277,1369,1513,1613,1769,1877,2045,2161,2341,2465,2657,2789,2993,3133,3349,3497,3725,3881,4121,4285,4537,4709,4973,5153,5429,5617,5905",
+    "name": "Numbers k such that 10*k-1 is a square.",
+    "comment": [
+        "Equivalently, numbers of the form m*(10*m+6)+1, where m=0,-1,1,-2,2,-3,3,..."
+    ],
+    "link": [
+        "Bruno Berselli, <a href=\"/A220082/b220082.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2,-1,1)."
+    ],
+    "formula": [
+        "G.f.: x*(1+4*x+10*x^2+4*x^3+x^4)/((1+x)^2*(1-x)^3).",
+        "a(n) = a(-n+1) = (10*n*(n-1)-(2*n-1)*(-1)^n+3)/4.",
+        "For the definition: 10*a(n)-1 = ((10*n-(-1)^n-5)/2)^2.",
+        "a(n) = A212570(n)-A212570(n-1) = 4*A085787(n-1)+1 = A132356(n-1)-(2*n-1)*(-1)^n."
+    ],
+    "maple": [
+        "A220082:=proc(q)",
+        "local n;",
+        "for n from 1 to q do if type(sqrt(10*n-1), integer) then print(n);",
+        "fi; od; end:",
+        "A220082(1000); # _Paolo P. Lava_, Feb 19 2013"
+    ],
+    "mathematica": [
+        "Select[Range[0, 6000], IntegerQ[Sqrt[10 # - 1]] &]",
+        "CoefficientList[Series[(1 + 4 x + 10 x^2 + 4 x^3 + x^4) / ((1 + x)^2 (1 - x)^3), {x, 0, 50}], x] (* _Vincenzo Librandi_, Aug 18 2013 *)"
+    ],
+    "program": [
+        "(MAGMA) [n: n in [1..6000] | IsSquare(10*n-1)]; /* or (see the first comment): */ [1] cat [m*(10*m+6)+1: m in [-n,n], n in [1..24]];",
+        "(MAGMA) I:=[1,5,17,29,53]; [n le 5 select I[n] else Self(n-1) +2*Self(n-2)-2*Self(n-3)-Self(n-4)+Self(n-5): n in [1..60]]; // _Vincenzo Librandi_, Aug 18 2013"
+    ],
+    "xref": [
+        "Cf. A085787, A132356 (numbers n such that 10*n+1 is a square).",
+        "Cf. numbers n such that k*n-1 is a square: A002522 (k=1), A001844 (k=2), A062317 (k=5)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Bruno Berselli_, Dec 05 2012",
+    "references": 4,
+    "revision": 33,
+    "time": "2016-12-01T03:24:08-05:00",
+    "created": "2012-12-05T11:40:12-05:00"
+}

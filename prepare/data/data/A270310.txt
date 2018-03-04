@@ -1,0 +1,72 @@
+{
+    "number": 270310,
+    "data": "139,149,181,191,241,251,283,293,337,347,409,419,421,431,547,557,577,587,631,641,691,701,709,719,787,797,811,821,829,839,887,907,919,929,1021,1031,1039,1049,1051,1061,1153,1163,1171,1181,1249,1259,1399,1409,1471,1481,1627,1637,1657,1699,1709",
+    "name": "Primes ending with the same decimal digit as the previous or next prime.",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A270310/b270310.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Robert J. Lemke Oliver and Kannan Soundararajan, <a href=\"http://arxiv.org/abs/1603.03720\">Unexpected biases in the distribution of consecutive primes</a> (2016)"
+    ],
+    "formula": [
+        "a(n) = prime(A270311(n))."
+    ],
+    "mathematica": [
+        "Select[Prime@ Range@ 300, Function[k, Or[k == Mod[NextPrime@ #, 10], k == Mod[NextPrime[#, -1], 10]]]@ Mod[#, 10] &] (* _Michael De Vlieger_, Mar 15 2016 *)"
+    ],
+    "program": [
+        "(Javascript)",
+        "function computeBuddyPrimes(max)",
+        "{",
+        "    const list = []",
+        "    var prev_digit = 0",
+        "    var prev_prime = 0",
+        "    var curr_digit = 0",
+        "    var first_friend = true",
+        "    for (var n=2; n<=max; n++)",
+        "    {",
+        "        if (!isPrime(n)) continue;",
+        "        curr_digit = n % 10",
+        "        if (curr_digit === prev_digit){",
+        "            // add previous prime if it was first in current group",
+        "            if (first_friend) {",
+        "                list.push(prev_prime)",
+        "                first_friend = false",
+        "            }",
+        "            // add current prime",
+        "            list.push(n)",
+        "        }else{",
+        "            prev_digit = curr_digit",
+        "            first_friend = true",
+        "        }",
+        "        prev_prime = n",
+        "    }",
+        "    return list",
+        "}",
+        "function isPrime(n)",
+        "{",
+        "    if (n<2)",
+        "        return false;",
+        "    const sqrt = Math.sqrt(n)",
+        "    var div = 2",
+        "    while (div <= sqrt) {",
+        "        if (n % div < 1)",
+        "            return false;",
+        "        div++",
+        "    }",
+        "    return true",
+        "}",
+        "(PARI) is(n)=isprime(n) && ((nextprime(n+1)-n)%10==0 || (n-precprime(n-1))%10==0) \\\\ _Charles R Greathouse IV_, Mar 15 2016"
+    ],
+    "xref": [
+        "Cf. A270311."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,1",
+    "author": "_Francois Alcover_, Mar 15 2016",
+    "ext": [
+        "a(15)-a(55) from _Charles R Greathouse IV_, Mar 15 2016"
+    ],
+    "references": 4,
+    "revision": 12,
+    "time": "2016-03-16T17:18:58-04:00",
+    "created": "2016-03-16T17:18:58-04:00"
+}

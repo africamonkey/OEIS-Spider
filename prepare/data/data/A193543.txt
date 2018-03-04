@@ -1,0 +1,68 @@
+{
+    "number": 193543,
+    "data": "1,1,9,153,4977,261009,20039481,2121958377,296297348193,52750142341281,11662264481073129,3134732109393169593,1006734732695870345937,380718482718134681818929,167456229155543640166939161,84761007600911799530893148937,48919649166315485705652984573633",
+    "name": "E.g.f.: Pi/(sqrt(2)*L) * (1 + 2*Sum_{n>=1} cosh(2*Pi*n*x/L)/cosh(n*Pi)) where L = Lemniscate constant.",
+    "comment": [
+        "L = Lemniscate constant = 2*(Pi/2)^(3/2)/gamma(3/4)^2 = 2.62205755429...",
+        "Compare the definition with that of the dual sequence A193540."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RamanujanCosCoshIdentity.html\">Ramanujan Cos/Cosh Identity</a>."
+    ],
+    "formula": [
+        "E.g.f.: cosh( Series_Reversion( Integral 1/sqrt( cosh(2*x) ) dx ) ). - _Paul D. Hanna_, Aug 14 2017",
+        "E.g.f.: sqrt(1 + S(x)^2), where S(x) is the e.g.f. of A289695. - _Paul D. Hanna_, Aug 14 2017",
+        "E.g.f.: 1 + Integral S(x) * sqrt(1 + 2*S(x)^2) dx, where S(x) is the e.g.f. of A289695. - _Paul D. Hanna_, Aug 14 2017",
+        "...",
+        "Given e.g.f. A(x), define the e.g.f. of A193540:",
+        "B(x) = Pi/(sqrt(2)*L) * (1 + 2*Sum_{n>=1} cos(2*Pi*n*x/L) / cosh(n*Pi)),",
+        "then A(x)^-2 + B(x)^-2 = 2 by Ramanujan's cos/cosh identity.",
+        "...",
+        "E.g.f. equals the reciprocal of the e.g.f. of A193544.",
+        "...",
+        "O.g.f.: 1/(1 - 1^2*x/(1 - 2*2^2*x/(1 - 3^2*x/(1 - 2*4^2*x/(1 - 5^2*x/(1 - 2*6^2*x/(1 - 7^2*x/(1 - 2*8^2*x/(1-...))))))))) (continued fraction).",
+        "O.g.f.: Pi/(sqrt(2)*L) * (1 + 2*Sum_{n>=1} 1/(1 - (2*n*Pi/L)^2*x) / cosh(n*Pi)) where L = Lemniscate constant. - _Paul D. Hanna_, Aug 29 2012",
+        "...",
+        "a(n) = sqrt(2)*Pi/L * Sum_{k>=1} (2*k*Pi/L)^(2*n) / cosh(k*Pi) for n>0 where L = Lemniscate constant. - _Paul D. Hanna_, Aug 29 2012",
+        "...",
+        "G.f.:  Q(0), where Q(k) = 1 - x*(2*k+1)^2/(x*(2*k+1)^2 - 1/(1 - 2*x*(2*k+2)^2/(2*x*(2*k+2)^2 - 1/Q(k+1) ))); (continued fraction). - _Sergei N. Gladkovskii_, Nov 21 2013"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x^2/2! + 9*x^4/4! + 153*x^6/6! + 4977*x^8/8! + 261009*x^10/10! + 20039481*x^12/12! +...+ a(n)*x^(2*n)/(2*n)! +...",
+        "where",
+        "A(x)*sqrt(2)*L/Pi = 1 + 2*cosh(2*Pi*x/L)/cosh(Pi) + 2*cosh(4*Pi*x/L)/cosh(2*Pi) + 2*cosh(6*Pi*x/L)/cosh(3*Pi) +...",
+        "Let B(x) equal the e.g.f. of A193540, where:",
+        "B(x)*sqrt(2)*L/Pi = 1 + 2*cos(2*Pi*x/L)/cosh(Pi) + 2*cos(4*Pi*x/L)/cosh(2*Pi) + 2*cos(6*Pi*x/L)/cosh(3*Pi) +...",
+        "explicitly,",
+        "B(x) = 1 - x^2/2! + 9*x^4/4! - 153*x^6/6! + 4977*x^8/8! - 261009*x^10/10! + 20039481*x^12/12! +...",
+        "then A(x)^-2 + B(x)^-2 = 2",
+        "as illustrated by:",
+        "A(x)^-2 = 1 - 2*x^2/2! + 144*x^6/6! - 96768*x^10/10! + 268240896*x^14/14! +...",
+        "B(x)^-2 = 1 + 2*x^2/2! - 144*x^6/6! + 96768*x^10/10! - 268240896*x^14/14! +...",
+        "...",
+        "O.g.f.: 1 + x + 9*x^2 + 153*x^3 + 4977*x^4 + 261009*x^5 + 20039481*x^6 +...+ a(n)*x^n +...",
+        "O.g.f.: 1/(1 - x/(1 - 8*x/(1 - 9*x/(1 - 32*x/(1 - 25*x/(1 - 72*x/(1 - 49*x/(1 - 128*x/(1-...)))))))))."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(L=2*(Pi/2)^(3/2)/gamma(3/4)^2);if(n==0,1,sqrt(2)*Pi/L*suminf(k=1,(2*k*Pi/L)^(2*n)/cosh(k*Pi)))} \\\\ _Paul D. Hanna_, Aug 29 2012",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n)=local(R,L=2*(Pi/2)^(3/2)/gamma(3/4)^2);",
+        "R=Pi/(sqrt(2)*L)*(1 + 2*suminf(m=1,cosh(2*Pi*m*x/L +O(x^(2*n+1)))/cosh(m*Pi)));",
+        "round((2*n)!*polcoeff(R,2*n))}",
+        "(PARI) {a(n)=local(R,L=2*(Pi/2)^(3/2)/gamma(3/4)^2);",
+        "R=Pi/(sqrt(2)*L)*(1 + 2*suminf(m=1,1/(1 - (2*m*Pi/L)^2*x+x*O(x^n))/cosh(m*Pi)));",
+        "round(polcoeff(R,n))} \\\\ _Paul D. Hanna_, Aug 29 2012",
+        "(PARI) {a(n) = my(C=1); C = cosh( serreverse( intformal( 1/sqrt( cosh(2*x +O(x^(2*n+1))) ) ) ) ); (2*n)!*polcoeff(C,2*n)}",
+        "for(n=0,20,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Aug 14 2017"
+    ],
+    "xref": [
+        "Cf. A193540, A193541, A193542, A193544, A193545."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jul 29 2011",
+    "references": 9,
+    "revision": 27,
+    "time": "2017-08-14T11:40:16-04:00",
+    "created": "2011-07-30T03:54:04-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 92621,
+    "data": "2,3,5,7,13,17,29,31,43,47,59,67,71,79,83,97,103,107,113,131,139,151,163,167,179,193,197,211,241,269,281,311,349,389,421,431,439,443,463,467,479,487,509,541,569,599,607,613,617,631,643,647,659,683,701,709",
+    "name": "Primes with exactly one prime digit.",
+    "link": [
+        "Zak Seidov, <a href=\"/A092621/b092621.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) >> n^1.28 because of the digit restriction"
+    ],
+    "example": [
+        "13 is prime and it has one prime digit, 3;",
+        "103 is prime and it has one prime digit, 3."
+    ],
+    "maple": [
+        "stev_sez:=proc(n) local i, tren, st, ans, anstren; ans:=[ ]: anstren:=[ ]: tren:=n: for i while (tren>0) do st:=round( 10*frac(tren/10) ): ans:=[ op(ans), st ]: tren:=trunc(tren/10): end do; for i from nops(ans) to 1 by -1 do anstren:=[ op(anstren), op(i,ans) ]; od; RETURN(anstren); end: ts_stpf:=proc(n) local i, stpf, ans; ans:=stev_sez(n): stpf:=0: for i from 1 to nops(ans) do if (isprime(op(i,ans))='true') then stpf:=stpf+1; # number of prime digits fi od; RETURN(stpf) end: ts_pr_prn:=proc(n) local i, stpf, ans, ans1, tren; ans:=[ ]: stpf:=0: tren:=1: for i from 1 to n do if ( isprime(i)='true' and ts_stpf(i) = 1) then ans:=[ op(ans), i ]: tren:=tren+1; fi od; RETURN(ans) end: ts_pr_prn(1000);"
+    ],
+    "mathematica": [
+        "podQ[n_]:=(1==Length@Select[IntegerDigits[n],PrimeQ]);Select[Prime[Range[250]],podQ](* Zak Seidov *)"
+    ],
+    "program": [
+        "(Sage) A092621 = list(p for p in primes(1000) if len([d for d in p.digits() if is_prime(d)]) == 1)",
+        "(PARI) isok(n) = isprime(n) && (d = digits(n)) && (sum(i=1, #d, isprime(d[i])) == 1); \\\\ _Michel Marcus_, Mar 10 2014"
+    ],
+    "xref": [
+        "Cf. A034844, A092620.",
+        "Cf. A239037 (prime digit in A092621(n)). - _Zak Seidov_, Mar 10 2014"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jani Melik_, Apr 11 2004",
+    "references": 18,
+    "revision": 25,
+    "time": "2014-03-10T12:42:34-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

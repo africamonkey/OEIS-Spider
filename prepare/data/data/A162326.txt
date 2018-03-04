@@ -1,0 +1,61 @@
+{
+    "number": 162326,
+    "data": "1,1,3,13,71,441,2955,20805,151695,1135345,8671763,67320573,529626839,4213228969,33833367963,273892683573,2232832964895,18314495896545,151037687326755,1251606057754605,10416531069771111,87029307323766681",
+    "name": "Let a(0) = a(1) = 1, and n*a(n) = 2*(-7+5*n)*a(n-1) + 9*(2-n)*a(n-2) for n >= 2.",
+    "comment": [
+        "Let y = y(x) be implicitly defined by g(x,y(x)) = 0, with dg/dy not identically zero. For n >= 1, the sequence a(n) is the number of terms in the expansion of the divided difference [x0,...,xn]y in terms of bivariate divided differences of g.",
+        "(1 + 3x + 13x^2 + 71x^3 + ...) = (1 + 4x + 20x^2 + 116x^3 + ...) * 1/(1 + x + 4x^2 + 20x^3 + 116x^4 + ...); where A082298 = (1, 4, 20, 116, 740,...). - _Gary W. Adamson_, Nov 17 2011",
+        "The shifted sequence 1,3,13,71,.. is the binomial transform of A151374. [_Georg Muntingh_, Jul 19 2012].",
+        "a(n+1) is the number of Schr\u00f6der paths of semilength n in which the (2,0)-steps come in 3 colors and with no peaks at level 1. [_Jos\u00e9 Luis Ram\u00edrez Ram\u00edrez_, Mar 31 2013]",
+        "Define an infinite triangle by T(n,0)=1 and the other cells by T(n,k)=sum_{c=0..k-1} T(n,c) + sum_{r=k..n-1} T(r,k), the sum of the cells to the left and above a cell. The column k=1 contains A000079, the column k=2 essentially A001792. Then T(n,n)=a(n) on the diagonal. - _J. M. Bergot_, May 22 2013"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A162326/b162326.txt\">Table of n, a(n) for n = 0..300</a>",
+        "G. Muntingh, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL15/Muntingh/muntingh2.html\">Implicit Divided Differences, Little Schroeder Numbers, and Catalan Numbers</a>, J. Integ. Seqs., Vol. 15 (2012), Article 12.6.5"
+    ],
+    "formula": [
+        "Let E = N x N \\ {(0,0), (0,1)} be a set of pairs of natural numbers. The number of terms a(n) is the coefficient of x^n*y^{n-1} of the generating function 1 - log(1 - Sum_{(s,t) in E} x^s*y^{s+t-1}) = 1 + Sum_{q >= 1} (Sum_{(s,t) in E} x^s*y^{s+t-1})^q / q.",
+        "From _Georg Muntingh_, Jul 19 2012: (Start)",
+        "a(n) = 2F1(1/2,1-n;2;-8), where 2F1 is the Gauss hypergeometric series.",
+        "G.f.: 5/4 - 1/4 * sqrt( (1-9*x)/(1-x) ).",
+        "Quadratic recurrence relation: a(n) = 1 + 2*sum(m=1..n-1, a(m)*a(n-m) ).",
+        "(End)",
+        "a(n) ~ 3^(2*n+1)/(16*sqrt(2*Pi)*n^(3/2)). - _Vaclav Kotesovec_, Oct 20 2012"
+    ],
+    "example": [
+        "Write [0...n]y for [x0,...,xn]y and [0...s,0...t]g for [x0,...,xs;y0,...,yt]g.",
+        "For n = 1 one finds 1 term, [01]y = -[01;1]g/[0;01]g.",
+        "For n = 2 one finds 3 terms, [012]y = -[012;2]g/[0;02]g + ([01;12]g[12;2]g)/([0;02]g[1;12]g) - ([0;012]g[01;1]g[12;2]g)/([0;02]g[0;01]g[1;12]g).",
+        "a(n) = Sum_{k=0..n} (binomial(n,k)*2^(n-k-1)*binomial(2*n-2*k-2,n-k-1))/n, n>0, a(0)=1. - _Vladimir Kruchinin_, Mar 13 2016"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[5/4-1/4*Sqrt[(1-9*x)/(1-x)], {x, 0, 20}], x] (* _Vaclav Kotesovec_, Oct 20 2012 *)"
+    ],
+    "program": [
+        "(Python)",
+        "L = [1, 1]",
+        "for n in range(2,22):",
+        "....L.append( ((-14 + 10*n)*L[-1] + (18-9*n)*L[-2])/n )",
+        "print L",
+        "# _Georg Muntingh_, Jul 19 2012",
+        "(PARI) a(n) = if(n<2, 1, (2*(-7+5*n)*a(n-1) + 9*(2-n)*a(n-2))/n);",
+        "vector(25, n, a(n-1)) \\\\ _Altug Alkan_, Oct 06 2015",
+        "(Maxima)",
+        "a(n):=if n=0 then 1 else sum(binomial(n,k)*2^(n-k-1)*binomial(2*n-2*k-2,n-k-1),k,0,n)/n; /* _Vladimir Kruchinin_, Mar 13 2016 */"
+    ],
+    "xref": [
+        "Cf. A172003, which is a generalization to bivariate implicit functions.",
+        "Cf. A003262, which is the analogous sequence for implicit derivatives, and A172004 for its generalization to bivariate implicit functions.",
+        "Cf. A082298."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Georg Muntingh_, Jul 01 2009",
+    "ext": [
+        "Edited by _Georg Muntingh_, Jan 22 2010"
+    ],
+    "references": 5,
+    "revision": 52,
+    "time": "2016-03-13T09:20:54-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 96005,
+    "data": "0,1,2,7,20,52,144,389,1058,2876,7817,21250,57763,157017,426817,1160207,3153770,8572836,23303385,63345169,172190019,468061001,1272321714,3458528995,9401256521,25555264765,69466411833,188829284972",
+    "name": "For k >= 1, let b(k) = ceiling( Sum_{i=1..k} 1/i ); a(n) = number of b(k) that are equal to n.",
+    "formula": [
+        "a(n+1)/a(n) approaches e = exp(1) = 2.71828...",
+        "First differences of A002387. - _Vladeta Jovovic_, Jul 30 2004"
+    ],
+    "example": [
+        "The ceilings of the first several partial sums of the reciprocal of the positive integers are 1 2 2 3 3 3 3 3 3 3 4 4 and the series is monotonically increasing, so a(0) = 0 (there being no zero), a(1) = 1 (there being but one 1) and a(3) = 7 (there being seven 3s)."
+    ],
+    "mathematica": [
+        "fh[0] = 0; fh[1] = 1; fh[k_] := Module[{tmp}, If[ Floor[tmp = Log[k + 1/2] + EulerGamma] == Floor[tmp + 1/(24k^2)], Floor[tmp], UNKNOWN]]; a[0] = 1; a[1] = 2; a[n_] := Module[{val}, val = Round[Exp[n - EulerGamma]]; If[fh[val] == n && fh[val - 1] == n - 1, val, UNKNOWN]]; Table[ a[n + 1] - a[n], {n, 0, 27}] (* _Robert G. Wilson v_, Aug 05 2004 *)"
+    ],
+    "program": [
+        "(C)",
+        "int A096005(int k)",
+        "{    if(k<3) return k;",
+        "    double sum = 0, n = 1; int ceiling = 2, cnt = 0;",
+        "    for(;;) {",
+        "        sum += 1/n++;",
+        "        if(sum < ceiling) { cnt++; continue; }",
+        "        if(ceiling++ == k) return cnt; else cnt = 1; }",
+        "} /* _Oskar Wieland_, May 01 2014 */"
+    ],
+    "xref": [
+        "Cf. A002387, A096143."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_W. Neville Holmes_, Jul 29 2004",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Aug 05 2004"
+    ],
+    "references": 1,
+    "revision": 20,
+    "time": "2017-05-12T19:40:53-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

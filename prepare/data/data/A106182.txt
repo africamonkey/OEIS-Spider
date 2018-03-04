@@ -1,0 +1,63 @@
+{
+    "number": 106182,
+    "data": "1,2,3,6,8,14,20,32,48,60,109,138,200,296,404,576,776,1170,1480,2144,2912,3888,5578,7204,10032,13276",
+    "name": "Number of inequivalent binary sequences of length n, where two sequences are said to be equivalent if they have the same set of phrases in their Ziv-Lempel encodings (the phrases can appear in a different order in the two sequences).",
+    "comment": [
+        "The Ziv-Lempel encoding scans the sequence from left to right and inserts a comma when the current phrase is an extension by one bit of an earlier phrase. In any case the scan ends with a comma. The phrases are the segments between the commas.",
+        "Equivalent sequences necessarily have the same Hamming weight."
+    ],
+    "reference": [
+        "J. Ziv and A. Lempel, A universal algorithm for sequential data compression. IEEE Trans. Information Theory IT-23 (1977), 337-343."
+    ],
+    "link": [
+        "G. Seroussi, <a href=\"http://www.hpl.hp.com/techreports/2004/HPL-2004-153.html\">On universal types</a>, Preprint, 2004.",
+        "G. Seroussi, <a href=\"http://arXiv.org/abs/cs/0509046v2\">On the number of t-ary trees with a given path length</a>, Algorithmica 46(3), 557-565, 2006."
+    ],
+    "formula": [
+        "Seroussi shows that a(n) is asymptotically 2^{2cn/log_2(n)(1+o(1))}, where c = 0.11... is the inverse entropy function of 1/2."
+    ],
+    "example": [
+        "The Ziv-Lempel encodings of the strings of lengths 1 through 3 are:",
+        "0,",
+        "1, so a(1)=2;",
+        "0,0,",
+        "0,1,",
+        "1,0, (same phrases as in previous line)",
+        "1,1, so a(2)=3;",
+        "0,00,",
+        "0,01,",
+        "0,1,0,",
+        "1,0,0, (same phrases as in previous line)",
+        "0,1,1,",
+        "1,0,1, (same phrases as in previous line)",
+        "1,10,",
+        "1,11, so a(3)=6; ..."
+    ],
+    "program": [
+        "(TCL program from David Applegate) proc compress_phrases {vec} {set cur []; foreach v $vec {lappend cur $v",
+        "if {![info exists phrases($cur)]} {set phrases($cur) 1; set cur []}}",
+        "set plist [array names phrases]; if {[llength $cur]} {lappend plist $cur}",
+        "return [lsort $plist]}",
+        "proc enum {n vec} {if {$n == 0} {global phraselists",
+        "set phraselists([compress_phrases $vec]) 1} else {incr n -1",
+        "enum $n [concat $vec [list 0]];enum $n [concat $vec [list 1]]}}",
+        "proc doit {} {global phraselists; set n 0; while {1} {array unset phraselists",
+        "enum $n []; puts -nonewline \"[array size phraselists],\"; flush stdout; incr n}}",
+        "doit"
+    ],
+    "xref": [
+        "Row sums of A109338. Cf. A109337.",
+        "Cf. A095830."
+    ],
+    "keyword": "nonn,hard",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Aug 23 2005",
+    "ext": [
+        "Terms from a(6) onwards from _David Applegate_, Aug 29 2005",
+        "Terms a(0)-a(20) confirmed and a(21)-a(25) added by _John W. Layman_, Sep 20 2010"
+    ],
+    "references": 5,
+    "revision": 10,
+    "time": "2012-03-30T17:37:53-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 137782,
+    "data": "1,1,2,2,12,24,200,540,6160,21616,306432,1310880,22338624,113017696,2245983168,13108918368,297761967360,1969736890624,50332737128960,372125016868608,10565549532009472,86337114225206784,2696451226217269248,24132714802787013632",
+    "name": "a(n) = the number of permutations (p(1), p(2), ..., p(n)) of (1,2,...,n) where, for each k (2 <= k <= n), the sign of (p(k) - p(k-1)) equals the sign of (p(n+2-k) - p(n+1-k)).",
+    "comment": [
+        "Number of order n permutations whose descent set is invariant w.r.t. the function f(x) = n-x. - _Max Alekseyev_, May 06 2009"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A137782/b137782.txt\">Table of n, a(n) for n = 0..190</a>"
+    ],
+    "formula": [
+        "a(2n) = A000984(n)*A060350(n). - _Max Alekseyev_, Apr 23 2009"
+    ],
+    "example": [
+        "Consider the permutation (for n = 7):",
+        "3,6,7,5,1,2,4",
+        "The signs of the differences between adjacent terms form the sequence: ++--++, which has reflective symmetry. So this permutation, among others, is counted when n = 7."
+    ],
+    "maple": [
+        "b:= proc(u, o, h) option remember; `if`(u+o=0, 1,",
+        "      add(add(b(u-j, o+j-1, h+i-1), i=1..u+o-h), j=1..u)+",
+        "      add(add(b(u+j-1, o-j, h-i), i=1..h), j=1..o))",
+        "    end:",
+        "a:= proc(n) option remember; local r;",
+        "     `if`(irem(n, 2, 'r')=0, b(0, r$2)*binomial(n, r),",
+        "      add(add(binomial(j-1, i)*binomial(n-j, r-i)*",
+        "      b(r-i, i, n-j-r+i), i=0..min(j-1, r)), j=1..n))",
+        "    end:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Sep 15 2015"
+    ],
+    "program": [
+        "(PARI) { a(n) = local(r,u,c,t); r=0; forvec(v=vector(n-1,i,[2*i==n,1]), u=sum(i=1,#v,v[i]); c=sum(i=1,(n-1)\\2,!v[i]&&!v[n-i]); t=[0]; for(i=1,#v,if(v[i],t=concat(t,[i]))); r += (-1)^u * 2^c * n! \\ prod(i=2,#t,(t[i]-t[i-1])!) \\ (n-t[ #t])! ); (-1)^(n+1)*r } \\\\ _Max Alekseyev_, May 06 2009"
+    ],
+    "xref": [
+        "Cf. A137783."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Leroy Quet_, Feb 10 2008",
+    "ext": [
+        "First 8 terms calculated by _Olivier G\u00e9rard_",
+        "Extended by _Max Alekseyev_, May 06 2009",
+        "a(0), a(22) from _Alois P. Heinz_, Jul 02 2015",
+        "a(23) from _Alois P. Heinz_, Sep 15 2015"
+    ],
+    "references": 3,
+    "revision": 24,
+    "time": "2017-10-04T00:17:44-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

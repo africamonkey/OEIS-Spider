@@ -1,0 +1,40 @@
+{
+    "number": 235374,
+    "data": "1,1,2,14,88,1096,11792,209744,3211648,74050816,1474533632,41710490624,1023774788608,34285617473536,1001167232079872,38715438665007104,1311494550010298368,57488503079879213056,2217017970860729434112,108599775372146808848384",
+    "name": "E.g.f. satisfies: A'(x) = A(x)^6 * A(-x)^4 with A(0) = 1.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A235374/b235374.txt\">Table of n, a(n) for n = 0..390</a>",
+        "Vaclav Kotesovec, <a href=\"/A235374/a235374.txt\">Recurrence (of order 8)</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1/(1 - Series_Reversion( Integral (1-x^2)^4 dx )).",
+        "a(n) ~ n! * 2^(4/5) * (315/128)^(n+1/5) / (Gamma(1/5) * 5^(1/5) * n^(4/5)). - _Vaclav Kotesovec_, Jan 29 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 2*x^2/2! + 14*x^3/3! + 88*x^4/4! + 1096*x^5/5! +...",
+        "Related series.",
+        "A(x)^6 = 1 + 6*x + 42*x^2/2! + 384*x^3/3! + 4368*x^4/4! + 60096*x^5/5! +...",
+        "Note that 1 - 1/A(x) is an odd function:",
+        "1 - 1/A(x) = x + 8*x^3/3! + 496*x^5/5! + 81728*x^7/7! +...",
+        "where Series_Reversion(1 - 1/A(x)) = Integral (1-x^2)^4 dx."
+    ],
+    "mathematica": [
+        "CoefficientList[1/(1 - InverseSeries[Series[Integrate[(1-x^2)^4,x],{x,0,20}],x]),x] * Range[0,20]! (* _Vaclav Kotesovec_, Jan 28 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1); for(i=0, n, A=1+intformal(A^6*subst(A, x, -x)^4 +x*O(x^n) )); n!*polcoeff(A, n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n)=local(A=1); A=1/(1-serreverse(intformal((1-x^2 +x*O(x^n))^4))); n!*polcoeff(A, n)}",
+        "for(n=0, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A235370, A235371, A235372, A235373."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jan 07 2014",
+    "references": 6,
+    "revision": 10,
+    "time": "2014-01-29T06:47:21-05:00",
+    "created": "2014-01-07T22:12:12-05:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 181315,
+    "data": "1,1,2,6,19,64,227,832,3125,11970,46579,183614,731688,2942673,11928707,48688888,199932987,825379993,3423614756,14261439594,59635806865,250241613688,1053380320889,4446989542144,18823433444211,79871578901283",
+    "name": "G.f. A(x) satisfies A(x) = Product_{n>=1} (1 + x^n*A(x)^n).",
+    "formula": [
+        "G.f.: A(x) = Sum_{n>=0} A000009(n)*x^n*A(x)^n, where A000009(n) is the number of partitions of n into distinct parts.",
+        "G.f.: A(x) = (1/x)*Series_Reversion[x^(1/24)*eta(x)/eta(x^2)] (cf. A081362).",
+        "G.f. satisfies A(x) = exp( Sum_{n>=1} (x^n/n)*A(x)^n/(1 - (x*A(x))^(2*n)) )."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 6*x^3 + 19*x^4 + 64*x^5 + 227*x^6 +...",
+        "The g.f. A = A(x) satisfies",
+        "log(A) = x*A/(1-x^2*A^2) + (x^2/2)*A^2/(1-x^4*A^4) + (x^3/3)*A^3/(1-x^6*A^6) +..."
+    ],
+    "maple": [
+        "nmax:=25: kmax:=nmax: for n from 1 to nmax+1 do A(x):=add(a(k)*x^k, k=0..kmax-1): A(x) := product((1 + x^k*A(x)^k),k=1..kmax+1): a(n-1):=coeff(A(x),x,n-1): od: seq(a(n),n=0..nmax); # _Johannes W. Meijer_, Jul 04 2011"
+    ],
+    "mathematica": [
+        "InverseSeries[x QPochhammer[x, x^2] + O[x]^30][[3]] (* _Vladimir Reshetnikov_, Nov 21 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(1/x*serreverse(x/prod(k=1,n+1,1+x^k+x*O(x^n))),n)}",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=exp(sum(m=1, n, (x*A+x*O(x^n))^m/(1-(x*A)^(2*m))/m))); polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A000009, A081362, A109085."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Oct 16 2010",
+    "references": 1,
+    "revision": 12,
+    "time": "2016-11-22T10:56:41-05:00",
+    "created": "2010-10-20T03:00:00-04:00"
+}

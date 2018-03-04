@@ -1,0 +1,38 @@
+{
+    "number": 275011,
+    "data": "2,5,7,13,19,31,37,59,61,79,89,103,109,127,193,199,211,239,241,251,281,283,307,313,353,367,373,379,397,421,439,463,487,547,557,571,577,601,619,643,661,673,727,733,739,751,757,809,823,829,853,941",
+    "name": "a(1) = 2; for n > 1, a(n) is the least prime p > a(n-1) such that none of p-a(1), ..., p-a(n-1) is a square.",
+    "comment": [
+        "I conjecture that the sequence is infinite (in fact for any initial term).",
+        "Theorem: The sequence is infinite. Given primes a(1)...a(n), take k(1) ... k(n) such that k(i) is not a square mod a(i). If x == k(i) mod a(i) for i=1..n, then x - a(i) is not a square. By the Chinese Remainder Theorem and Dirichlet's theorem on primes in arithmetic progressions, there is such an x > a(n) that is prime. - _Robert Israel_, Nov 20 2016"
+    ],
+    "link": [
+        "Zak Seidov, <a href=\"/A275011/b275011.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "After 2, the sequence can't continue with 3 because 3 - 2 = 1^2. So instead we take 5, which gives 5 - 2 = 3.",
+        "Then 7, for which we verify that 7 - 2 = 5 and 7 - 5 = 2.",
+        "And then we can't use 11 because 11 - 2 = 3^2."
+    ],
+    "maple": [
+        "A:= <2>;",
+        "for n from 2 to 100 do",
+        "  p:= nextprime(A[n-1]);",
+        "  while ormap(t -> issqr(p - t), A) do",
+        "    p:= nextprime(p)",
+        "  od;",
+        "  A(n):= p",
+        "od:",
+        "convert(A,list); # _Robert Israel_, Nov 20 2016"
+    ],
+    "mathematica": [
+        "primesNoSqDiffs = {2}; p = 3; Do[While[MemberQ[IntegerQ[Sqrt[#]] & /@ (p - s), True], p = NextPrime[p]]; AppendTo[primesNoSqDiffs, p], {60}]; primesNoSqDiffs"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, Nov 11 2016",
+    "references": 1,
+    "revision": 25,
+    "time": "2016-11-30T06:01:34-05:00",
+    "created": "2016-11-30T06:01:34-05:00"
+}

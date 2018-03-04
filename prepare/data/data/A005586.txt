@@ -1,0 +1,66 @@
+{
+    "number": 5586,
+    "id": "M3841",
+    "data": "0,5,14,28,48,75,110,154,208,273,350,440,544,663,798,950,1120,1309,1518,1748,2000,2275,2574,2898,3248,3625,4030,4464,4928,5423,5950,6510,7104,7733,8398,9100,9840,10619,11438,12298,13200,14145,15134,16168,17248",
+    "name": "a(n) = n(n+4)(n+5)/6.",
+    "comment": [
+        "Number of walks on square lattice.",
+        "Number of standard tableaux of shape (n+2,3) (n >= 1). - _Emeric Deutsch_, May 20 2004",
+        "Number of left factors of Dyck paths from (0,0) to (n+5,n-1). E.g. a(1)=5 because we have UDUDUD, UDUUDD, UUDDUD, UUDUDD and UUUDDD, where U=(1,1) and D=(1,-1). - _Emeric Deutsch_, Jan 25 2005",
+        "Column 4 of Catalan triangle A009766. - _Zerinvary Lajos_, Nov 25 2006",
+        "Sum of first n triangular numbers minus next triangular number. - _Vladimir Joseph Stephan Orlovsky_, Oct 13 2009",
+        "a(n) = A214292(n+4,2). - _Reinhard Zumkeller_, Jul 12 2012"
+    ],
+    "reference": [
+        "M. Abramowitz and I. A. Stegun, eds., Handbook of Mathematical Functions, National Bureau of Standards Applied Math. Series 55, 1964 (and various reprintings), p. 796.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A005586/b005586.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "M. Abramowitz and I. A. Stegun, eds., <a href=\"http://apps.nrbook.com/abramowitz_and_stegun/index.html\">Handbook of Mathematical Functions</a>, National Bureau of Standards, Applied Math. Series 55, Tenth Printing, 1972 [alternative scanned copy].",
+        "R. K. Guy, <a href=\"/A005581/a005581_1.pdf\">Letter to N. J. A. Sloane, Feb 1988</a>",
+        "R. K. Guy, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/GUY/catwalks.html\">Catwalks, Sandsteps and Pascal Pyramids</a>, J. Integer Seqs., Vol. 3 (2000), #00.1.6",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992."
+    ],
+    "formula": [
+        "G.f.: x * (5 - 6*x + 2*x^2) / (1 - x)^4.",
+        "E.g.f.: (5*x + 2*x^2 + x^3/6) * exp(x). - _Michael Somos_, Apr 13 2007",
+        "Let t(n) = n*(n+1)/2, te(n) = (n+1)*(n+2)*(n+3)/6. Then a(n-4) = -2*t(n) + te(n-1), e.g., a(2) = -2*t(6) + te(5) = -2*21 + 56 = 14, where te(n) are the tetrahedral numbers A000292 and t(n) are the triangular numbers A000217. - _Jon Perry_, Jul 23 2003",
+        "a(n) = C(5+n, 3)-C(5+n, 2). - _Zerinvary Lajos_, Jan 09 2006",
+        "a(n) = C(n,3) - C(n,1), n>=4. - _Zerinvary Lajos_, Nov 25 2006",
+        "a(n) = - A005581(-4-n) for all n in Z. - _Michael Somos_, Apr 13 2007"
+    ],
+    "example": [
+        "G.f. = 5*x + 14*x^2 + 28*x^3 + 48*x^4 + 75*x^5 + 110*x^6 + 154*x^7 + ..."
+    ],
+    "maple": [
+        "[seq(binomial(n,3 )-binomial(n,1),n=4..48)]; # _Zerinvary Lajos_, Nov 25 2006",
+        "a:=n->sum ((j-3)*j/2,j=0..n): seq(a(n),n=4..48); # _Zerinvary Lajos_, Dec 17 2006",
+        "A005586:=z*(5-6*z+2*z**2)/(z-1)**4; # conjectured by _Simon Plouffe_ in his 1992 dissertation",
+        "seq(sum(binomial(n,m), m=1..3)-n^2,n=5..49); # _Zerinvary Lajos_, Jun 19 2008"
+    ],
+    "mathematica": [
+        "Clear[lst,n,a,f]; f[n_]:=n*(n+1)/2; a=0;lst={};Do[a+=f[n];AppendTo[lst,a-f[n+1]],{n,5!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Oct 13 2009 *)",
+        "CoefficientList[Series[x (5 - 6 x + 2 x^2) / (1 - x)^4, {x, 0, 50}], x] (* _Vincenzo Librandi_, Jun 09 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = n * (n+4) * (n+5) / 6}; /* _Michael Somos_, Apr 13 2007 */",
+        "(MAGMA) [n*(n+4)*(n+5)/6: n in [0..50]]; // _Vincenzo Librandi_, Jun 09 2013"
+    ],
+    "xref": [
+        "Cf. A000217, A000292, A005581, A009766, A053121.",
+        "a(n)=A053121(n+5,n-1)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "M3842=A005555 in the 1995 EIS was the same sequence as this.",
+        "More terms from _Zerinvary Lajos_, Jan 09 2006"
+    ],
+    "references": 18,
+    "revision": 53,
+    "time": "2017-07-01T18:03:18-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

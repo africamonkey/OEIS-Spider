@@ -1,0 +1,50 @@
+{
+    "number": 79832,
+    "data": "15,16,29,104,114,124,134,135,144,145,155,165,166,175,176,185,186,195,196,207,208,217,218,227,228,237,238,239,247,248,249,258,259,268,269,278,279,288,289,299,1004,1013,1023,1033,1043,1053,1063,1073,1083,1093",
+    "name": "Numbers n such that floor(reverse(n)/n) = 3.",
+    "comment": [
+        "First digit of n must be 1,2 or 3. - _Robert Israel_, Aug 18 2014"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A079832/b079832.txt\">Table of n, a(n) for n = 1..10000</a> (n = 1..407 from Edward Jiang)"
+    ],
+    "example": [
+        "15 is a member as floor(51/15) = 3."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,nL,k;",
+        "   L:= convert(n,base,10);",
+        "   nL:= nops(L);",
+        "   add(L[i]*10^(nL-i),i=1..nL);",
+        "end proc;",
+        "select(n -> floor(revdigs(n)/n)=3, [$1..10^4]); # _Robert Israel_, Aug 18 2014"
+    ],
+    "mathematica": [
+        "a079832Q[n_Integer] := If[",
+        "  Floor[FromDigits[Reverse[IntegerDigits[n]]]/n] == 3, True, False",
+        "  ]; a079832[n_Integer] := Select[Range[n], Mod[#, 10] != 0 && a079832Q[#] &]; a079832[1100] (* _Michael De Vlieger_, Aug 17 2014 *)"
+    ],
+    "program": [
+        "(ARIBAS) for n := 1 to 1100 do nst := \"\"; st := itoa(n); for i := 0 to length(st) - 1 do nst := concat(st[i],nst); end; a := atoi(nst); if a div n = 3 then write(n,\",\") end; end;",
+        "(PARI) for(n=1,1100,if(floor(eval(concat(Vecrev(Str(n))))/n)==3,print1(n,\",\"))) \\\\ _Edward Jiang_, Aug 16 2014",
+        "(Python)",
+        "from math import floor",
+        "for i in range(1,1100):",
+        "....if floor(int(str(i)[::-1])/i)==3:",
+        "........print(i)",
+        "# _Edward Jiang_, Aug 16 2014"
+    ],
+    "xref": [
+        "Cf. A079831."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Feb 11 2003",
+    "ext": [
+        "Edited and extended by _Klaus Brockhaus_, Feb 12 2003"
+    ],
+    "references": 2,
+    "revision": 32,
+    "time": "2014-08-19T03:26:32-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

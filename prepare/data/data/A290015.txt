@@ -1,0 +1,64 @@
+{
+    "number": 290015,
+    "data": "15,18,21,26,28,30,31,32,44,45,50,52,56,57,62,64,68,75,76,85,86,91,92,93,98,99,110,111,116,117,129,133,146,147,148,153,164,175,183,188,207,212,215,219,236,243,244,245,259,261,268,275,279,284,314,316,325,332,338,341,343,356,363,365,369,381,387,388",
+    "name": "Brazilian numbers which have exactly two Brazilian representations.",
+    "comment": [
+        "These numbers could be called 2-Brazilian numbers.",
+        "The smallest number of this sequence is 15 which is also the smallest odd composite Brazilian in A257521 with 15 = 11111_2 = 33_4. The number 15 is of course highly Brazilian in A066044.",
+        "Following the Goormaghtigh conjecture, only two primes, 31 and 8191, which are both Mersenne numbers, are Brazilian in two different bases (A119598)."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Goormaghtigh_conjecture\">Goormaghtigh conjecture</a>"
+    ],
+    "example": [
+        "18 = 2 * 9 = 22_8 = 3 * 6 = 33_5.",
+        "26 = 2 * 13 = 2 * 111_3 = 222_3 = 22_12.",
+        "31 = 11111_2 = 111_5;",
+        "8191 = 1111111111111_2 = 111_90."
+    ],
+    "maple": [
+        "bresilienbaseb:=proc(n,b)",
+        "local r,q,coupleq:",
+        "if n<b then",
+        "return [1,n]",
+        "else",
+        "r:=(n mod b):",
+        "q:=(n-r)/b",
+        "coupleq:=bresilienbase(q,b):",
+        "if r=coupleq[2] and r>0 then",
+        "return [couple[1]+1,r]",
+        "else",
+        "return [0,0]",
+        "end if",
+        "end if",
+        "end proc;",
+        "bresil:=proc(n)",
+        "local b,L,k,t:",
+        "k:=0:",
+        "for b from 2 to (n-2) do",
+        "t:=bresilienbase(n,b):",
+        "if t[1]>0 then",
+        "k:=k+1",
+        "L[k]:=[b,t[1],t[2]]:",
+        "end if:",
+        "end do:",
+        "seq(L[i],i=1..k);",
+        "end proc;",
+        "nbbresil:=n->nops([bresil(n)]);",
+        "#Numbers 2 times Brazilian",
+        "for n from 1 to 100 do if nbbresil(n)=2 then print(n,bresil(n)) else fi; od:"
+    ],
+    "mathematica": [
+        "Flatten@ Position[#, 2] &@ Table[Count[Range[2, n - 2], _?(And[Length@ # != 1, Length@ Union@ # == 1] &@ IntegerDigits[n, #] &)], {n, 400}] (* _Michael De Vlieger_, Jul 18 2017 *)"
+    ],
+    "xref": [
+        "Cf. A066044, A085104, A125134, A220570, A220571, A257521, A284758, A288783, A290016, A290017, A290018."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Jul 17 2017",
+    "references": 3,
+    "revision": 23,
+    "time": "2017-08-04T03:46:23-04:00",
+    "created": "2017-08-04T03:46:23-04:00"
+}

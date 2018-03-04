@@ -1,0 +1,38 @@
+{
+    "number": 111394,
+    "data": "1,2,8,40,280,2240,22400,246400,3203200,44844800,717516800,12197785600,231757926400,4635158528000,101973487616000,2345390215168000,58634755379200000,1524503639859200000,42686101916057600000,1237896955565670400000,38374805622535782400000",
+    "name": "a(n) = product of first n integers not divisible by 3.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A111394/b111394.txt\">Table of n, a(n) for n = 1..160</a>"
+    ],
+    "formula": [
+        "Let b(n) = n!/(3^floor(n/3)*floor(n/3)!) then a(n) = b(3*floor(n/2)+(-1)^(n+1)). # formula corrected _Peter Luschny_, Oct 03 2012",
+        "E.g.f.: 1/(1 - x*G(x^2/3)) - 1 where G(x) = 1 + x*G(x)^3 is the g.f. of A001764. - _Paul D. Hanna_, Jan 04 2014",
+        "E.g.f. A(x) satisfies: A'(x) = (1 + A(x))^3 * (1 + A(-x)). - _Paul D. Hanna_, Jan 04 2014"
+    ],
+    "example": [
+        "a(5) = 1*2*4*5*7 = 280."
+    ],
+    "maple": [
+        "a:= proc(n) a(n):= `if`(n=1, 1, (3*iquo(n, 2)-(-1)^n)*a(n-1)) end:",
+        "seq (a(n), n=1..25);  # _Alois P. Heinz_, Oct 03 2012"
+    ],
+    "mathematica": [
+        "a[n_] := ((3*n-Mod[n, 2])/2)!/(3^((n-Mod[n, 2])/2)*((n-Mod[n, 2])/2)!); Table[a[n], {n, 1, 21}] (* _Jean-Fran\u00e7ois Alcover_, Feb 25 2014 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def Gauss_factorial(N, n): return mul(j for j in (1..N) if gcd(j, n) == 1)",
+        "def A111394_list(n): return sorted(set([Gauss_factorial(j, 3) for j in (1..n)]))",
+        "A111394_list(28) # _Peter Luschny_, Oct 01 2012",
+        "(PARI) {a(n)=local(A,G=sum(k=0,n,binomial(3*k,k)/(2*k+1)*x^k +x*O(x^n))); A=1/(1-x*subst(G,x,x^2/3))-1; n!*polcoeff(A,n)} \\\\ _Paul D. Hanna_, Jan 04 2014",
+        "(PARI) {a(n)=local(A=x); for(i=0, n, A=intformal((1+A)^3*subst(1+A, x,-x +x*O(x^n))^1 +x*O(x^n) )); n!*polcoeff(A, n)} \\\\ _Paul D. Hanna_, Jan 04 2014"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jon Perry_, Nov 11 2005",
+    "references": 1,
+    "revision": 17,
+    "time": "2014-02-25T07:04:22-05:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

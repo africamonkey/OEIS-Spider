@@ -1,0 +1,32 @@
+{
+    "number": 204265,
+    "data": "2,2,9,40,144,1032,7824,48816,530712,5619456,50015232,707802624,9591229440,112586112000,1938416832000,32061464064000,469224244224000,9509523337728000,185772505605120000,3261008730405888000",
+    "name": "Permanent of n X n matrix M with M(i,j) = (i+j) (mod 3).",
+    "comment": [
+        "Permanent of the n-th principal submatrix of A204263."
+    ],
+    "mathematica": [
+        "f[i_, j_] := Mod[i + j, 3];",
+        "m[n_] := Table[f[i, j], {i, 1, n}, {j, 1, n}]",
+        "TableForm[m[8]] (* 8x8 principal submatrix *)",
+        "Flatten[Table[f[i, n + 1 - i],",
+        "  {n, 1, 14}, {i, 1, n}]]    (* A204263 *)",
+        "Permanent[m_] :=",
+        "  With[{a = Array[x, Length[m]]},",
+        "   Coefficient[Times @@ (m.a), Times @@ a]];",
+        "Table[Permanent[m[n]], {n, 1, 22}]    (* A204265 *)"
+    ],
+    "program": [
+        "(PARI) matperm(M)=my(n=#M,t);sum(i=1,n!,t=numtoperm(n,i);prod(j=1,n,M[j,t[j]]));a(n)=matperm(matrix(n,n,i,j,(i+j)%3)) \\\\ _Ralf Stephan_, Oct 19 2013"
+    ],
+    "xref": [
+        "Cf. A204263."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jan 15 2012",
+    "references": 2,
+    "revision": 10,
+    "time": "2013-10-19T03:58:36-04:00",
+    "created": "2012-01-15T20:53:34-05:00"
+}

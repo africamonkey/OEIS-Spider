@@ -1,0 +1,45 @@
+{
+    "number": 82623,
+    "data": "5,151,10501,1035301,106353601,10063536001,1006305036001,100630353036001,10062303530326001,1000623035303260001,910006230353032600019,91000620303530302600019,9100062003035303002600019,901000620030353030026000109,79010006200303530300260001097,7901000620003035303000260001097,790100062000308353803000260001097",
+    "name": "a(1) = 5, a(n) = smallest palindromic prime obtained by inserting two digits anywhere in a(n-1).",
+    "comment": [
+        "a(83) is the last term, as none of the candidates for a(84) is prime. - _Robert Israel_, Jan 03 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A082623/b082623.txt\">Table of n, a(n) for n = 1..83</a>"
+    ],
+    "maple": [
+        "cp:= proc(x,y) if x[1] < y[1] then true",
+        "           elif x[1] > y[1] then false",
+        "           elif nops(x)=1 then true",
+        "           else procname(x[2..-1],y[2..-1])",
+        "           fi",
+        "end proc:",
+        "A[1]:= 5: L:= []:",
+        "for n from 2 to 15 do",
+        "  nL:= nops(L);",
+        "  Lp:= sort([seq(seq([op(L[1..i]),x,op(L[i+1..-1])],x=`if`(i=0,1..9,0..9)),i=0..nL)],cp);",
+        "  cands:= map(t -> add(t[i]*(10^(i-1)+10^(2*nL+3-i)),i=1..nL+1)+5*10^(nL+1), Lp);",
+        "  found:= false;",
+        "  for i from 1 to nops(cands) do",
+        "    if isprime(cands[i]) then",
+        "      A[n]:= cands[i];",
+        "      L:= Lp[i];",
+        "      found:= true;",
+        "      break",
+        "    fi",
+        "  od;",
+        "od:",
+        "seq(A[i],i=1..15); # _Robert Israel_, Jan 03 2017"
+    ],
+    "xref": [
+        "Cf. A002385, A082620, A082621, A082622, A082624."
+    ],
+    "keyword": "base,fini,full,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_ and Meenakshi Srikanth (menakan_s(AT)yahoo.com), Apr 29 2003",
+    "references": 4,
+    "revision": 18,
+    "time": "2017-01-04T02:34:41-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

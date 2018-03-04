@@ -1,0 +1,38 @@
+{
+    "number": 216435,
+    "data": "1,1,2,3,7,15,48,133,456,1439,5060,16797,60693,208013,760326,2677217,9879513,35357671,131763844,477638701,1790943777,6566420517,24748372638,91482563641,346597488614,1289904685149,4905215393598,18370277279665,70085754999907,263747951750361",
+    "name": "Number of Dyck n-paths with equally spaced returns.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A216435/b216435.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(0)=1, a(n) = Sum_{d|n} (binomial(2*d-2, d-1)/d)^(n/d) = Sum_{d|n} A000108(d-1)^(n/d) for n>=1."
+    ],
+    "example": [
+        "The 3 Dyck 3-paths are UUUDDD*, UUDUDD* and UD*UD*UD* where * marks the returns; the paths UD*UUDD* and UUDD*UD* do not have equally spaced returns."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "a:= n->`if`(n=0, 1, add((binomial(2*d-2, d-1)/d)^(n/d), d=divisors(n))):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Sep 10 2012"
+    ],
+    "mathematica": [
+        "a={1};For[n=1,n<=29,++n, t=0; d=Divisors[n];For[i=1, i<=Length[d],++i, t+= (Binomial[2*d[[i]]-2,d[[i]]-1]/d[[i]])^(n/d[[i]])];a=Append[a,t];];a"
+    ],
+    "program": [
+        "(PARI)",
+        "C(n)=binomial(2*n,n)/(n+1);",
+        "a(n)=if(n==0, 1, sumdiv(n,d, C(d-1)^(n/d) ) );",
+        "/* _Joerg Arndt_, Sep 30 2012 */"
+    ],
+    "xref": [
+        "Cf. A000108."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_David Scambler_, Sep 10 2012",
+    "references": 2,
+    "revision": 24,
+    "time": "2015-01-10T10:48:31-05:00",
+    "created": "2012-09-10T04:09:37-04:00"
+}

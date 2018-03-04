@@ -1,0 +1,27 @@
+{
+    "number": 20229,
+    "data": "121,703,1891,3281,8401,8911,10585,12403,16531,18721,19345,23521,31621,44287,47197,55969,63139,74593,79003,82513,87913,88573,97567,105163,111361,112141,148417,152551,182527,188191,211411,218791,221761,226801",
+    "name": "Strong pseudoprimes to base 3.",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A020229/b020229.txt\">Table of n, a(n) for n = 1..24767</a> (first 752 terms from R. J. Mathar)",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>, section 39.10, pp. 786-792",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/StrongPseudoprime.html\">Strong Pseudoprime</a>",
+        "<a href=\"/index/Ps#pseudoprimes\">Index entries for sequences related to pseudoprimes</a>"
+    ],
+    "mathematica": [
+        "sppQ[n_?EvenQ, _] := False; sppQ[n_?PrimeQ, _] := False; sppQ[n_, b_] := (s = IntegerExponent[n-1, 2]; d = (n-1)/2^s; If[PowerMod[b, d, n] == 1, Return[True], Do[If[PowerMod[b, d*2^r, n] == n-1, Return[True]], {r, 0, s-1}]]); A020229 = {}; lst = {}; k = 3; While[k < 500000, If[sppQ[k, 3], Print[k]; AppendTo[lst, k]]; k += 2]; lst (* _Jean-Fran\u00e7ois Alcover_, Oct 20 2011, after _R. J. Mathar_ *)"
+    ],
+    "program": [
+        "(PARI) is_A020229(n,b=3)={ bittest(n,0) || return;ispseudoprime(n) && return;my(d=(n-1)>>valuation(n-1,2));Mod(b,n)^d==1 || until(n-1<=d*=2,Mod(b,n)^d+1 || return(1))} \\\\ _M. F. Hasler_, Jul 19 2012"
+    ],
+    "xref": [
+        "Cf. A001262, A072276, A056915, A074773, A005935."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "references": 15,
+    "revision": 44,
+    "time": "2018-02-07T17:19:44-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

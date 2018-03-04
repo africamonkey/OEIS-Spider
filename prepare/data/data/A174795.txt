@@ -1,0 +1,31 @@
+{
+    "number": 174795,
+    "data": "1,2,5,14,56,202,715,3244,12945,49742,238048,996158,3991995,19676358,84649176,347993910,1747681160,7656026268,32018897274,162900330572,722787262419,3060338457400,15718332812096,70407433197686",
+    "name": "Number of admissible sequences of order j; related to 5x+1 problem",
+    "formula": [
+        "A sequence s(k), where k=1, 2, ..., n, is *admissible* if it satisfies s(k)=5/2 exactly j times, s(k)=1/2 exactly n-j times, s(1)*s(2)*...*s(n) < 1 but s(1)*s(2)*...*s(m) > 1 for all 1 < m < n.",
+        "a(1)=1 and a(k+1) = Sum_{m=1..k}(-1)^(m-1)*binomial(floor((k-m+1)*(log(5)/log(2)))+m-1, m)*a(k-m+1) for k >= 1. - _Vladimir M. Zarubin_, Sep 25 2015"
+    ],
+    "example": [
+        "The unique admissible sequence of order 1 is 5/2, 1/2, 1/2.",
+        "The two admissible sequences of order 2 are 5/2, 5/2, 1/2, 1/2, 1/2 and 5/2, 1/2, 5/2, 1/2, 1/2."
+    ],
+    "mathematica": [
+        "h[n_] := Module[{L = {{1}}}, For[i = 1, i <= n, i++, K = {}; S = 0; j = 1; While[5^i >= 2^(i + j - 1), If[5^(i - 1) >= 2^(i + j - 2), S = S + L[[i, j]]]; AppendTo[K, S]; j = j + 1]; AppendTo[L, K]; ]; Return[Map[Last, Drop[L, 1]]]]"
+    ],
+    "program": [
+        "(PARI)",
+        "n=20; a=vector(n); log52=log(5)/log(2);",
+        "{a[1]=1; for ( k=1, n-1, a[k+1]=sum( m=1,k,(-1)^(m-1)*binomial( floor( (k-m+1)*log52)+m-1,m)*a[k-m+1] );print1(a[k], \", \") );} \\\\ _Vladimir M. Zarubin_, Sep 25 2015"
+    ],
+    "xref": [
+        "Similar to A100982, but for the 5x+1 problem."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "T.M.M. Laarhoven (t.laarhoven(AT)gmail.com), Mar 29 2010",
+    "references": 2,
+    "revision": 24,
+    "time": "2015-10-11T04:45:09-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

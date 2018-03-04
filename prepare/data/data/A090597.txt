@@ -1,0 +1,46 @@
+{
+    "number": 90597,
+    "data": "0,1,1,3,3,8,12,27,45,96,176,363,693,1408,2752,5547,10965,22016,43776,87723,174933,350208,699392,1399467,2796885,5595136,11186176,22375083,44741973,89489408",
+    "name": "a(n) = - a(n-1) + 5(a(n-2) + a(n-3)) - 2(a(n-4) + a(n-5)) - 8(a(n-6) + a(n-7)).",
+    "comment": [
+        "Arises from a conjecture about sequence of rational links with n crossings.",
+        "Conjecture derived from: s(n) = k(n) + l(n): definition of sum of rational knots (k) and links (l) s(n) = 6s(n-2) -8s(n-4): see A005418 (Jablan's observation) d(n) = d(n-2) + 2d(n-4): see A001045 (modified Jacobsthal sequence) l(n) = k(n-1) + d(n): conjecture.",
+        "a(n) = number of rational (2-component) links. - Slavik Jablan, Dec 26 2003",
+        "Also yields the number of meanders, reduced by symmetry, on an n X 3 rectangle (see A200893). - _Jon Wild_, Nov 25 2011"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A090597/b090597.txt\">Table of n, a(n) for n = 3..1000</a>",
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (1,3,-1,0,-2,-4)."
+    ],
+    "formula": [
+        "a(n) = +a(n-1) +3*a(n-2) -a(n-3) -2*a(n-5) -4*a(n-6). - _R. J. Mathar_, Nov 23 2011",
+        "G.f. -x^4*(-1+x^2+3*x^4+2*x^3) / ( (2*x-1)*(1+x)*(2*x^2-1)*(1+x^2) ). - _R. J. Mathar_, Nov 23 2011",
+        "a(n) = (J(n-3) + J((n-3)/2))/2 if n is odd; (J(n-3) + J(n/2))/2 if n is even, where J is the Jacobsthal number A001045. - _David Scambler_, Dec 12 2011"
+    ],
+    "mathematica": [
+        "f[x_] := (x-x^3-2x^4-3x^5) / (1-x-3x^2+x^3+2x^5+4x^6); CoefficientList[ Series[ f[x], {x, 0, 29}], x] (* _Jean-Fran\u00e7ois Alcover_, Dec 06 2011 *)",
+        "J[n_] := (2^n - (-1)^n)/3; Table[(J[n - 3] + J[(n - If[OddQ[n], 3, 0])/2])/2 , {n, 3, 31}] (* _David Scambler_, Dec 13 2011 *)",
+        "LinearRecurrence[{1,3,-1,0,-2,-4},{0,1,1,3,3,8},30] (* _Harvey P. Dale_, Nov 12 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a090597 n = a090597_list !! (n-3)",
+        "a090597_list = [0,1,1,3,3,8,12] ++ zipWith (-)",
+        "   (drop 4 $ zipWith (-) (map (* 5) zs) (drop 2 a090597_list))",
+        "   (zipWith (+) (drop 2 $ map (* 2) zs) (map (* 8) zs))",
+        "   where zs = zipWith (+) a090597_list $ tail a090597_list",
+        "-- _Reinhard Zumkeller_, Nov 24 2011"
+    ],
+    "xref": [
+        "This is the difference between A005418 and A090596 (or A018240).",
+        "Cf. A018240 = sequence of rational knots, A005418 = number of rational knots and links, A001045 = Jacobsthal sequence, A090596.",
+        "Cf. A200893, and see the third column of the triangle read by rows there."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "3,4",
+    "author": "_Thomas A. Gittings_, Dec 11 2003",
+    "references": 3,
+    "revision": 36,
+    "time": "2015-06-13T00:51:17-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

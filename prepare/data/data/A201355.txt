@@ -1,0 +1,47 @@
+{
+    "number": 201355,
+    "data": "1,4,20,132,1140,12324,160020,2424132,41967540,817374564,17688328020,421061260932,10934334077940,307610736087204,9319558144624020,302518807147502532,10474617188712332340,385347795973248950244,15010362565222418008020,617178205591321673884932",
+    "name": "E.g.f.: 3*exp(3*x) / (4 - exp(3*x)).",
+    "formula": [
+        "O.g.f.: A(x) = Sum_{n>=0} n! * 4^n*x^n / Product_{k=0..n} (1+3*k*x).",
+        "O.g.f.: A(x) = 1/(1 - 4*x/(1-x/(1 - 8*x/(1-2*x/(1 - 12*x/(1-3*x/(1 - 16*x/(1-4*x/(1 - 20*x/(1-5*x/(1 - ...)))))))))), a continued fraction.",
+        "a(n) = Sum_{k=0..n} (-3)^(n-k) * 4^k * Stirling2(n,k) * k!.",
+        "a(n) = Sum_{k, 0<=k<=n} A123125(n,k)*4^k. - _Philippe Del\u00e9ham_, Nov 30 2011",
+        "G.f.: 2/G(0), where G(k)= 1 + 1/(1 - 8*x*(k+1)/(8*x*(k+1) - 1 + 2*x*(k+1)/G(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, May 30 2013",
+        "a(n) ~ n! * (3/log(4))^(n+1) . - _Vaclav Kotesovec_, Jun 13 2013",
+        "a(n) = 3^n*log(4)* int {x = 0..inf} (ceiling(x))^n * 4^(-x) dx. - _Peter Bala_, Feb 06 2015"
+    ],
+    "example": [
+        "E.g.f.: E(x) = 1 + 4*x + 20*x^2/2! + 132*x^3/3! + 1140*x^4/4! + 12324*x^5/5! +...",
+        "O.g.f.: A(x) = 1 + 4*x + 20*x^2 + 132*x^3 + 1140*x^4 + 12324*x^5 +...",
+        "where A(x) = 1 + 4*x/(1+3*x) + 2!*4^2*x^2/((1+3*x)*(1+6*x)) + 3!*4^3*x^3/((1+3*x)*(1+6*x)*(1+9*x)) + 4!*4^4*x^4/((1+3*x)*(1+6*x)*(1+9*x)*(1+12*x)) +..."
+    ],
+    "mathematica": [
+        "Table[Sum[(-3)^(n-k)*4^k*StirlingS2[n,k]*k!,{k,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Jun 13 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(3*exp(3*x+x*O(x^n))/(4 - exp(3*x+x*O(x^n))), n)}",
+        "(PARI) {a(n)=polcoeff(sum(m=0, n, 4^m*m!*x^m/prod(k=1, m, 1+3*k*x+x*O(x^n))), n)}",
+        "(PARI) a(n)=sum(k=0, n, (-3)^(n-k)*4^k*stirling(n,k,2)*k!);",
+        "(Sage)",
+        "@CachedFunction",
+        "def BB(n, k, x):  # modified cardinal B-splines",
+        "    if n == 1: return 0 if (x < 0) or (x >= k) else 1",
+        "    return x*BB(n-1, k, x) + (n*k-x)*BB(n-1, k, x-k)",
+        "def EulerianPolynomial(n, k, x):",
+        "    if n == 0: return 1",
+        "    return add(BB(n+1, k, k*m+1)*x^m for m in (0..n))",
+        "[4^n*EulerianPolynomial(n,1,1/4) for n in (0..19)]  # _Peter Luschny_, May 04 2013",
+        "(PARI) x='x+O('x^66); Vec(serlaplace(3*exp(3*x)/(4-exp(3*x)))) \\\\ _Joerg Arndt_, May 06 2013"
+    ],
+    "xref": [
+        "Cf. A201354, A000629, A123227."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 30 2011",
+    "references": 1,
+    "revision": 26,
+    "time": "2015-02-11T10:45:27-05:00",
+    "created": "2011-11-30T12:42:19-05:00"
+}

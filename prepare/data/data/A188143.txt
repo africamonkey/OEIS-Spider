@@ -1,0 +1,35 @@
+{
+    "number": 188143,
+    "data": "1,5,29,193,1453,12209,113237,1149241,12675661,151095569,1937411429,26614052617,390244490749,6087782363009,100728768290645,1762767028074937,32542231109506285,632202858036492593,12895661952702667205",
+    "name": "Binomial transform of A187848.",
+    "comment": [
+        "a(n) is also the INVERTi transform of A010842(n+1) starting at n=2.",
+        "a(n) is also the moment of order n for the measure of density: exp(x-2) / ((Ei(x-2))^2+Pi^2) over the interval 2..infinity with Ei the exponential integral.",
+        "More generally, for every integer k, the sequence a(n,k)=int(x^n*exp(x-k) / ((Ei(x-k))^2+Pi^2), x=k..infinity) is the INVERTi transform of the sequence b(n+1,k), starting at n=2, with b(n,k)=int(x^n*exp(x-k), x=k..infinity) whose e.g.f. is exp(k*x)/(1-x)."
+    ],
+    "formula": [
+        "a(n) = int(x^n*exp(x-2)/((Ei(x-2))^2+Pi^2), x=2..infinity).",
+        "G.f.: 1/x^2 - 3/x - Q(0)/x^2, where Q(k)= 1 - 2*x - x*(k+1)/(1-x*(k+1)/Q(k+1)); (continued fraction). - _Sergei N. Gladkovskii_, Apr 19 2013"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "c:= proc(n) option remember; add(n!/k!, k=0..n) end:",
+        "b:= n-> (-1)^(n+1) * Determinant(Matrix(n+2,",
+        "        (i, j)-> `if`(0<=i+1-j, c(i+1-j), 0))):",
+        "a:= proc(n) add(b(k) *binomial(n,k), k=0..n) end:",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Mar 24 2011"
+    ],
+    "mathematica": [
+        "c[n_] := c[n] = Sum[n!/k!, {k, 0, n}]; b[n_] := (-1)^(n+1)*Det[Table[If[0 <= i+1-j, c[i+1-j], 0], {i, 1, n+2}, {j, 1, n+2}]]; a[n_] := Sum[b[k] * Binomial[n, k], {k, 0, n}]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Feb 28 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000023."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Groux Roland_, Mar 24 2011",
+    "references": 0,
+    "revision": 26,
+    "time": "2017-02-28T10:24:42-05:00",
+    "created": "2011-03-24T22:41:55-04:00"
+}

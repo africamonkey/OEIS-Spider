@@ -1,0 +1,53 @@
+{
+    "number": 7547,
+    "id": "M5075",
+    "data": "19,69,281,710,2375,3893,8102,11361,19268,36981,45680,75417,101354,118093,152344,215797,293897,327571,429229,508284,556494,701008,809381,990746,1274952,1435957,1531854,1712701,1820085,2021938,2835628,3107393,3549288,3723821",
+    "name": "Number of steps to compute n-th prime in PRIMEGAME (slow version).",
+    "reference": [
+        "D. Olivastro, Ancient Puzzles. Bantam Books, NY, 1993, p. 21.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "J. H. Conway, <a href=\"http://dx.doi.org/10.1007/978-1-4612-4808-8_2\">FRACTRAN: a simple universal programming language for arithmetic</a>, in T. M. Cover and Gopinath, eds., Open Problems in Communication and Computation, Springer, NY 1987, pp. 4-26.",
+        "R. K. Guy, <a href=\"http://www.jstor.org/stable/2690263\">Conway's prime producing machine</a>, Math. Mag. 56 (1983), no. 1, 26-33."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local l, p, m, k;",
+        "      l:= [17/91, 78/85, 19/51, 23/38, 29/33, 77/29, 95/23,",
+        "           77/19, 1/17, 11/13, 13/11, 15/2, 1/7, 55/1]:",
+        "      if n=1 then b(0):= 2; a(0):= 0 else a(n-1) fi;",
+        "      p:= b(n-1);",
+        "      for m do for k while not type(p*l[k], integer) do od;",
+        "               p:= p*l[k];",
+        "               if 2^ilog2(p)=p then break fi",
+        "      od:",
+        "      b(n):= p;",
+        "      m + a(n-1)",
+        "    end:",
+        "seq(a(n), n=1..10);  # _Alois P. Heinz_, May 01 2011"
+    ],
+    "mathematica": [
+        "Clear[a]; a[n_] := a[n] = Module[{l, p, m, k}, l = {17/91, 78/85, 19/51, 23/38, 29/33, 77/29, 95/23, 77/19, 1/17, 11/13, 13/11, 15/2, 1/7, 55/1}; If[n == 1, b[0] = 2; a[0] = 0, a[n-1]]; p = b[n-1]; For[m=1, True, m++, For[k=1, !IntegerQ[p*l[[k]]], k++]; p = p*l[[k]]; If[2^Floor[Log[2, p]] == p, Break[]]]; b[n] = p; m + a[n-1]]; Table[Print[a[n]]; a[n], {n, 1, 30}] (* _Jean-Fran\u00e7ois Alcover_, Nov 25 2014, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (elemIndices)",
+        "a007547 n = a007547_list !! n",
+        "a007547_list = tail $ elemIndices 2 $ map a006530 a007542_list",
+        "-- _Reinhard Zumkeller_, Jan 24 2012"
+    ],
+    "xref": [
+        "Cf. A007542, A007546.",
+        "Cf. A006530, A034785."
+    ],
+    "keyword": "easy,nonn,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Alois P. Heinz_, May 01 2011"
+    ],
+    "references": 7,
+    "revision": 35,
+    "time": "2016-06-21T08:32:59-04:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

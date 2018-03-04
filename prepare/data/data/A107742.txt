@@ -1,0 +1,40 @@
+{
+    "number": 107742,
+    "data": "1,1,2,4,6,10,17,25,38,59,86,125,184,260,369,524,726,1005,1391,1894,2576,3493,4687,6272,8373,11090,14647,19294,25265,32991,42974,55705,72025,92895,119349,152965,195592,249280,316991,402215,508932,642598,809739,1017850,1276959,1599015,1997943,2491874,3102477,3855165,4782408,5922954",
+    "name": "G.f.: prod(j>=1, prod(i>=1, 1+x^(i*j) ) ).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A107742/b107742.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "Euler transform of A001227.",
+        "Weigh transform of A000005.",
+        "G.f. satisfies: log(A(x)) = Sum_{n>=1} A109386(n)/n*x^n, where A109386(n) = Sum_{d|n} d*Sum_{m|d} (m mod 2). [_Paul D. Hanna_, Jun 26 2005]",
+        "G.f.: A(x) = exp( Sum_{n>=1} sigma(n)*x^n/(1-x^(2n)) /n ). [_Paul D. Hanna_, Mar 28 2009]",
+        "G.f.: prod(n>=1, Q(x^n) ) where Q(x) is the g.f. of A000009. [_Joerg Arndt_, Feb 27 2014]",
+        "Conjecture: log(a(n)) ~ 5*Pi*sqrt(n*log(n))/12. - _Vaclav Kotesovec_, Jan 06 2017",
+        "a(0) = 1, a(n) = (1/n)*Sum_{k=1..n} A109386(k)*a(n-k) for n > 0. - _Seiichi Manyama_, Jun 04 2017"
+    ],
+    "mathematica": [
+        "nmax = 50; CoefficientList[Series[Product[(1+x^(i*j)), {i, 1, nmax}, {j, 1, nmax/i}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Jan 04 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=polcoeff(prod(k=1,n,prod(j=1,n\\k,1+x^(j*k)+x*O(x^n))),n) /* _Paul D. Hanna_ */",
+        "(PARI) N=66;  x='x+O('x^N); gf=1/prod(j=0,N, eta(x^(2*j+1))); gf=prod(j=1,N,(1+x^j)^numdiv(j)); Vec(gf) /* _Joerg Arndt_, May 03 2008 */",
+        "(PARI) {a(n)=if(n==0,1,polcoeff(exp(sum(m=1,n,sigma(m)*x^m/(1-x^(2*m)+x*O(x^n))/m)),n))} /* _Paul D. Hanna_, Mar 28 2009 */"
+    ],
+    "xref": [
+        "Cf. A006171, A109386, A219554, A280473, A280486, A288007.",
+        "Product_{k>=1} (1 + x^k)^sigma_m(k): this sequence (m=0), A192065 (m=1), A288414 (m=2), A288415 (m=3)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Vladeta Jovovic_, Jun 11 2005",
+    "ext": [
+        "More terms from _Paul D. Hanna_, Jun 26 2005"
+    ],
+    "references": 15,
+    "revision": 29,
+    "time": "2017-06-09T09:09:20-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

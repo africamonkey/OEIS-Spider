@@ -1,0 +1,37 @@
+{
+    "number": 226950,
+    "data": "7449150177,8936757492481,11587386200625,22449633661000,30511719124992,36443545848801,283680450809856,583096733580816,613579106939841,3958783819215057,4098048384032001,4556608567054336,13469350037585841,23887131799781376,36604958689202176,58634065908167841,69952404620958561,91953699475456000,124976001535967232,149272763796688896,183001280170947121,225430653627891712",
+    "name": "Higher powers having partitions into distinct higher powers in more than one way.",
+    "comment": [
+        "A power m^k is called a higher power if k > 2, cf. A076467."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A226950/a226950_1.txt\">First 22 terms of A226950</a>"
+    ],
+    "example": [
+        "a(1) = 7449150177 = 1953^3 = 1116^3 + 279^4 = 217^4 + 1736^3;",
+        "a(2) = 8936757492481 = 1729^4 = 1729^3 + 20748^3 = 15561^3 + 17290^3;",
+        "see link for more examples and more info."
+    ],
+    "program": [
+        "(Haskell)",
+        "import qualified Data.Set as Set (split, filter)",
+        "import Data.Set (Set, empty, size, insert, member)",
+        "a226950 n = a226950_list !! (n-1)",
+        "a226950_list = f a076467_list empty where",
+        "   f (x:xs) s | size s'' <= 1 = f xs (x `insert` s)",
+        "              | otherwise     = x : f xs (x `insert` s)",
+        "              where s'' = Set.filter ((`member` s) . (x -)) s'",
+        "                    (s', _) = Set.split (x `div` 2) s"
+    ],
+    "xref": [
+        "Cf. A051388, subsequence of A226777."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert Israel_ and _Reinhard Zumkeller_, Sep 13 2013",
+    "references": 2,
+    "revision": 7,
+    "time": "2013-09-15T09:49:38-04:00",
+    "created": "2013-09-15T09:49:38-04:00"
+}

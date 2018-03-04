@@ -1,0 +1,47 @@
+{
+    "number": 287198,
+    "data": "4,6,8,9,25,49,52,56,58,65,85,94,116,134,145,158,161,178,187,253,275,295,325,341,358,413,451,514,527,529,532,581,583,589,611,718,752,781,815,817,835,871,895,899,952,958,989,998,1154,1156,1159,1165,1189,1192",
+    "name": "Numbers with the property that every cyclic permutation of its digits is a composite number with none of its permutations sharing any common prime factors.",
+    "comment": [
+        "Subsequence of A052382, as a number with a zero digit have cyclic permutations of the forms 0x and x0 which share prime factors of x. The only exception to this argument is 10, but 01 is not composite, so 10 is not a member of the sequence as well. - _Chai Wah Wu_, May 24 2017",
+        "If m is a multiple of 11 with an even number of digits, then m is not a term. - _Chai Wah Wu_, May 30 2017"
+    ],
+    "link": [
+        "Luke Zieroth and Giovanni Resta, <a href=\"/A287198/b287198.txt\">Table of n, a(n) for n = 1..10000</a> (first 212 terms from Luke Zieroth)"
+    ],
+    "example": [
+        "The numbers formed by cyclic permutations of 134 are 341 and 413. The factors of 134 are 2 and 67, the factors of 341 are 11 and 31, and the factors of 413 are 7 and 59. Since these numbers are all composite and none share any common factors with each other, 134 is included on the list."
+    ],
+    "mathematica": [
+        "ok[n_] := Catch@ Block[{t = FromDigits /@ (RotateLeft[IntegerDigits[n], #] & /@ Range[ IntegerLength@ n])}, If[! AllTrue[t, CompositeQ], Throw@False]; Do[ If[ GCD[t[[i]], t[[j]]] > 1, Throw@False], {i, Length@t}, {j, i-1}]; True]; Select[ Range@ 1200, ok] (* _Giovanni Resta_, May 25 2017 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = {my(d=digits(n), v=vector(#d)); v[1]=n; if(isprime(n)||n==10, return(0)); for(i=2, #d, v[i] = v[i-1]\\10; v[i] = v[i]+(v[i-1]-v[i]*10)*10^(#d-1); if(isprime(v[i]), return(0)); for(j=1,i-1,if(gcd(v[j], v[i])>1, return(0)))); n>1} \\\\ _David A. Corneth_, May 25 2017",
+        "(Python)",
+        "from gmpy2 import is_prime, gcd, mpz",
+        "A287198_list, n  = [], 2",
+        "while n <= 10**6:",
+        "    s = str(n)",
+        "    if not is_prime(n) and '0' not in s:",
+        "        k = n",
+        "        for i in range(len(s)-1):",
+        "            s = s[1:]+s[0]",
+        "            m = mpz(s)",
+        "            if is_prime(m) or gcd(k,m) > 1:",
+        "                break",
+        "            k *= m",
+        "        else:",
+        "            A287198_list.append(n)",
+        "    n += 1 # _Chai Wah Wu_, May 27 2017"
+    ],
+    "xref": [
+        "Cf. A052382, A068652, A067012."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Luke Zieroth_, May 21 2017",
+    "references": 3,
+    "revision": 73,
+    "time": "2017-05-30T22:55:00-04:00",
+    "created": "2017-05-22T19:31:27-04:00"
+}

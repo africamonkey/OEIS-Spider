@@ -1,0 +1,44 @@
+{
+    "number": 211520,
+    "data": "0,0,0,1,2,3,5,7,10,12,16,19,24,27,33,37,44,48,56,61,70,75,85,91,102,108,120,127,140,147,161,169,184,192,208,217,234,243,261,271,290,300,320,331,352,363,385,397,420,432,456,469,494,507,533,547,574",
+    "name": "Number of ordered triples (w,x,y) with all terms in {1,...,n} and w + 4y = 2x.",
+    "comment": [
+        "For a guide to related sequences, see A211422.",
+        "For n > 2: partial sums of A178804. - _Reinhard Zumkeller_, Nov 15 2014"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A211520/b211520.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (1, 1, -1, 1, -1, -1, 1)."
+    ],
+    "formula": [
+        "a(n) = a(n-1)+a(n-2)-a(n-3)+a(n-4)-a(n-5)-a(n-6)+a(n-7).",
+        "a(n) = (6*n^2-10*n+3+(2*n-7)*(-1)^n-4*(-1)^((2*n-3-(-1)^n)/4))/32. - _Luce ETIENNE_, Dec 31 2015",
+        "a(n) = Sum_{k=1..floor(n/2)} floor((n-k)/2). - _Wesley Ivan Hurt_, Apr 01 2017",
+        "G.f.: x^3 * (1+x+x^3) / ( (1-x)^3*(1+x)^2*(1+x^2) ). - _Joerg Arndt_, Apr 02 2017"
+    ],
+    "mathematica": [
+        "t[n_] := t[n] = Flatten[Table[w - 2 x + 4 y, {w, 1, n}, {x, 1, n}, {y, 1, n}]]",
+        "c[n_] := Count[t[n], 0]",
+        "t = Table[c[n], {n, 0, 70}]  (* A211520 *)",
+        "FindLinearRecurrence[t]",
+        "LinearRecurrence[{1,1,-1,1,-1,-1,1},{0,0,0,1,2,3,5},57] (* _Ray Chandler_, Aug 02 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a211520 n = a211520_list !! n",
+        "a211520_list = 0 : 0 : 0 : scanl1 (+) a178804_list",
+        "-- _Reinhard Zumkeller_, Nov 15 2014",
+        "(PARI) { my(x='x+O('x^66)); concat([0,0,0],Vec( x^3*(1+x+x^3) / ( (1-x)^3*(1+x)^2*(1+x^2) ) ) ) } \\\\ _Joerg Arndt_, Apr 02 2017"
+    ],
+    "xref": [
+        "Cf. A211422.",
+        "Cf. A178804."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,5",
+    "author": "_Clark Kimberling_, Apr 14 2012",
+    "references": 3,
+    "revision": 22,
+    "time": "2017-04-02T03:08:04-04:00",
+    "created": "2012-04-22T14:52:13-04:00"
+}

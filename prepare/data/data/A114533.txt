@@ -1,0 +1,39 @@
+{
+    "number": 114533,
+    "data": "1,2,29,3746,1919534,2514903732,6571874957648,30662862975835376,228731722381012564816,2641049525155781555257440,43818773386947889568479502592,1014966115357067575070490776083200,31412851866841234377483875199638978304",
+    "name": "Permanent of the n X n matrix with numbers prime(1),prime(2),...,prime(n^2) in order across rows.",
+    "comment": [
+        "Previous name was : \"a(n) = permanent of the n X n matrix M defined as follows: if we concatenate the rows of M to form a vector v of length n^2, v_i is the i-th prime number\"."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A114533/b114533.txt\">Table of n, a(n) for n = 0..20</a>"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "a:= n->`if`(n=0, 1, Permanent(Matrix(n, (i, j)->ithprime((i-1)*n+j)))):",
+        "seq(a(n), n=0..12);  # _Alois P. Heinz_, Dec 23 2013"
+    ],
+    "mathematica": [
+        "a[n_] := Permanent[Table[Prime[(i-1)*n+j], {i, 1, n}, {j, 1, n}]]; a[0]=1; Table[an = a[n]; Print[\"a(\", n, \") = \", an]; an, {n, 0, 12}] (* _Jean-Fran\u00e7ois Alcover_, Jan 07 2016, adapted from Maple *)"
+    ],
+    "program": [
+        "(PARI) permRWN(a)=n=matsize(a)[1]; if(n==1,return(a[1,1])); n1=n-1; sg=1; m=1; nc=0; in=vector(n); x=in; for(i=1,n,x[i]=a[i,n]-sum(j=1,n,a[i,j])/2); p=prod(i=1,n,x[i]); while(m,sg=-sg; j=1; if((nc%2)!=0,j++; while(in[j-1]==0,j++)); in[j]=1-in[j]; z=2*in[j]-1; nc+=z; m=nc!=in[n1]; for(i=1,n,x[i]+=z*a[i,j]); p+=sg*prod(i=1,n,x[i])); return(2*(2*(n%2)-1)*p) for(n=1,19,a=matrix(n,n,i,j,prime((i-1)*n+j)); print1(permRWN(a)\", \")) \\\\ Herman Jamke (hermanjamke(AT)fastmail.fm), May 11 2007",
+        "(PARI) permRWNb(a)=n=matsize(a)[1];if(n==1,return(a[1,1]));sg=1;in=vectorv(n);x=in;x=a[,n]-sum(j=1,n,a[,j])/2;p=prod(i=1,n,x[i]);for(k=1,2^(n-1)-1,sg=-sg;j=valuation(k,2)+1;z=1-2*in[j];in[j]+=z;x+=z*a[,j];p+=prod(i=1,n,x[i],sg));return(2*(2*(n%2)-1)*p) for(n=1,23,a=matrix(n,n,i,j,prime((i-1)*n+j));print1(permRWNb(a)\",\")) \\\\ Herman Jamke (hermanjamke(AT)fastmail.fm), May 15 2007"
+    ],
+    "xref": [
+        "Cf. A232773."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Simone Severini_, Feb 15 2006",
+    "ext": [
+        "More terms from Herman Jamke (hermanjamke(AT)fastmail.fm), May 11 2007",
+        "More terms from Herman Jamke (hermanjamke(AT)fastmail.fm), May 15 2007",
+        "New name from _Michel Marcus_, Nov 30 2013",
+        "a(0) inserted and a(12) by _Alois P. Heinz_, Dec 23 2013"
+    ],
+    "references": 2,
+    "revision": 22,
+    "time": "2016-01-07T03:49:23-05:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

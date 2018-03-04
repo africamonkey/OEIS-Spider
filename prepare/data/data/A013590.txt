@@ -1,0 +1,50 @@
+{
+    "number": 13590,
+    "data": "105,165,195,210,255,273,285,315,330,345,357,385,390,420,429,455,495,510,525,546,555,561,570,585,595,609,615,627,630,645,660,665,690,705,714,715,735,759,765,770,777,780,795,805,819,825,840,855",
+    "name": "Orders of cyclotomic polynomials containing a coefficient with an absolute value greater than one.",
+    "comment": [
+        "First occurrence of A137979(n)=k is given in A013594."
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A013590/b013590.txt\">Table of n, a(n) for n = 1..1627</a>"
+    ],
+    "maple": [
+        "isA013590 := proc(n)",
+        "    numtheory[cyclotomic](n,x) ;",
+        "    {coeffs(%,x)} ;",
+        "    map(abs,%) ;",
+        "    if % minus {1}  = {} then",
+        "        false;",
+        "    else",
+        "        true;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 do",
+        "    if isA013590(n) then",
+        "        print(n);",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Nov 28 2016"
+    ],
+    "mathematica": [
+        "S[ n_ ] := For[ j=1; t=0, j<n, j++, t=Cases[ CoefficientList[ Cyclotomic[ j, x ], x ], k_ /; Abs[ k ]>1 ]; If[ Length[ t ]!=0, Print[ j ] ] ]; S[ 856 ]",
+        "f[n_] := Max@ Abs@ CoefficientList[ Cyclotomic[n, x], x]; Select[ Range@ 1000, f@# > 1 &] (* _Robert G. Wilson v_ *)",
+        "Select[Range[900],Max[Abs[CoefficientList[Cyclotomic[#,x],x]]]>1&] (* _Harvey P. Dale_, Mar 13 2013 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=for(k=0,n,if(abs(polcoeff(polcyclo(n),k))>1,return(n)));0",
+        "for(n=1,1000,if(a(n),print1(n,\", \"))) \\\\ _Derek Orr_, Apr 22 2015"
+    ],
+    "xref": [
+        "Cf. A137979, A013594."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Peter T. Wang (peterw(AT)cco.caltech.edu)",
+    "ext": [
+        "Definition clarified by _Harvey P. Dale_, Mar 13 2013"
+    ],
+    "references": 7,
+    "revision": 23,
+    "time": "2016-11-28T04:59:25-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 22488,
+    "data": "2,21,1121,112112,21122112,2112221221,112211231221,1122113121122212,21112312211131122212,211123123113221131211321,112131122111311222311231211131211321",
+    "name": "Describe previous term from the right (method B - initial term is 2).",
+    "comment": [
+        "Method B = 'digit'-indication followed by 'frequency'."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A022488/b022488.txt\">Table of n, a(n) for n = 1..22</a>"
+    ],
+    "example": [
+        "E.g. the term after 1121 is obtained by saying \"1 once, 2 once, 1 twice\", which gives 112112."
+    ],
+    "mathematica": [
+        "A022488[1]:=2;A022488[n_]:=A022488[n]=FromDigits[Flatten[{First[#],Length[#]}&/@Split[Reverse[IntegerDigits[A022488[n-1]]]]]];Map[A022488,Range[15]] (* _Peter J. C. Moses_, Apr 22 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (group, transpose)",
+        "a022488 n = a022488_list !! (n-1)",
+        "a022488_list = 2 : f [2] :: [Integer] where",
+        "   f xs = (read $ concatMap show ys) : f ys where",
+        "          ys = concat $ transpose [map head zss, map length zss]",
+        "          zss = reverse $ group xs",
+        "-- _Reinhard Zumkeller_, Apr 14 2014",
+        "(Python)",
+        "from re import split",
+        "A022488_list, l = [2], '2'",
+        "for _ in range(10):",
+        "....l = ''.join(d[0]+str(len(d)) for d in split('(0+|1+|2+|3+|4+|5+|6+|7+|8+|9+)',l[::-1]) if d != '')",
+        "....A022488_list.append(int(l)) # _Chai Wah Wu_, Jan 07 2015"
+    ],
+    "xref": [
+        "Cf. A022481, A022514-A022520."
+    ],
+    "keyword": "nonn,base,easy,nice",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_",
+    "references": 9,
+    "revision": 14,
+    "time": "2015-01-08T17:31:27-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

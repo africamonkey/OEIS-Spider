@@ -1,0 +1,40 @@
+{
+    "number": 162404,
+    "data": "1,2,3,5,10,13,16,18,20,30,35,38,51,54,57,73,75,93,96,116,126,131,136,139,142,155,168,171,184,214,217,233,249,251,286,304,322,360,363,383,403,413,423,428,441,446,451,467,470,488,539,559,572,626,639,642,699",
+    "name": "a(1)=1. a(n) = a(n-1) + (the largest value among (a(1),a(2),...,a(n-1)) that when written in binary occurs as a substring in the binary representation of n).",
+    "link": [
+        "Robert Israel, <a href=\"/A162404/b162404.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "a[1]:= 1: sa[1]:= \"1\":",
+        "m:= 1:",
+        "for n from 2 to 1000 do",
+        "  if n > a[m] and n > m+1 then m:= m+1 fi;",
+        "  bn:= convert(convert(n,binary),string);",
+        "  for j from m by -1 to 1 do",
+        "    if StringTools[Search](sa[j],bn) <> 0 then",
+        "       a[n]:= a[n-1]+a[j];",
+        "       sa[n]:= convert(convert(a[n],binary),string);",
+        "       break",
+        "    fi",
+        "  od",
+        "od:",
+        "seq(a[n],n=1..1000); # _Robert Israel_, Oct 07 2015"
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := a[n] = a[n - 1] + Max@ Select[ Table[ a@i, {i, 0, n - 1}], StringPosition[ ToString@ FromDigits@ IntegerDigits[n, 2], ToString@ FromDigits@ IntegerDigits[ #, 2]] != {} &]; Table[ a@n, {n, 57}] (* _Robert G. Wilson v_, Aug 17 2009 *)"
+    ],
+    "xref": [
+        "Cf. A162405, A162406."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Jul 02 2009",
+    "ext": [
+        "a(13) to a(57) from _Robert G. Wilson v_, Aug 17 2009"
+    ],
+    "references": 3,
+    "revision": 13,
+    "time": "2015-10-07T04:01:23-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

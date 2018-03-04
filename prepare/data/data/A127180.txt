@@ -1,0 +1,31 @@
+{
+    "number": 127180,
+    "data": "2,2,3,5,10,22,54,142,402,1206,3810,12636,43776,157824,590520,2287080,9148320,37719360,160029696,697553280,3119552640,14295585696,67052240640,321571257120,1575370944000,7876854720000,40164235953600",
+    "name": "a(n) = smallest possible (product of b(k)'s + product of c(k)'s), where the positive integers <= n are partitioned somehow into {b(k)} and {c(k)}.",
+    "comment": [
+        "The maximum (product of b(k)'s + product of c(k)'s) occurs, for n>=2, when {b(k)} = (2,3,4,...n) and {c(k)} = (1). a(1) = 2 because the product over the empty set is defined here as 1."
+    ],
+    "formula": [
+        "a(n)<=A060696(n+1) considering the interleaved partition b={2,4,6,..}, c={1,3,5, 7,...}. - _R. J. Mathar_, Jan 10 2007"
+    ],
+    "example": [
+        "By partitioning (1,2,3,...8) into {b(k)} and {c(k)} so that {b(k)} = (1,4,6,8) and {c(k)} = (2,3,5,7), then (product of b(k)'s + product of c(k)'s) is minimized. Therefore a(8) = 1*4*6*8 + 2*3*5*7 = 402."
+    ],
+    "maple": [
+        "LQprod := proc(S) if nops(S) = 0 then 1 ; else product(S[i],i=1..nops(S)) ; fi ; end: A127180 := proc(n) local S,m,B,b,c,s,res,i ; res := -1 ; S := {} ; for i from 1 to n do S := S union {i} ; od; for m from 0 to n/2 do B := combinat[permute](n,m) ; for i from 1 to nops(B) do b := op(i,B) ; c := S minus convert(b,set) ; s := LQprod(b)+LQprod(c) ; if res < 0 or s < res then res := s ; fi ; od ; od ; RETURN(res) ; end: for n from 1 to 20 do A127180(n) ; od ; # _R. J. Mathar_, Jan 10 2007"
+    ],
+    "xref": [
+        "Cf. A127181."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Leroy Quet_, Jan 07 2007",
+    "ext": [
+        "More terms from _R. J. Mathar_, Jan 10 2007",
+        "a(14) and following from _Ray Chandler_, Feb 14 2007"
+    ],
+    "references": 2,
+    "revision": 11,
+    "time": "2015-08-12T21:15:02-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

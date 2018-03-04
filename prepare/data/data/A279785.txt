@@ -1,0 +1,40 @@
+{
+    "number": 279785,
+    "data": "1,1,1,3,4,7,11,18,28,47,71,108,166,252,382,587,869,1282,1938,2832,4153,6148,8962,12965,18913,27301,39380,56747,81226,115907,166358,236000,334647,475517,671806,947552,1335679,1875175,2630584,3687589,5150585,7183548",
+    "name": "Number of ways to choose a strict partition of each part of a strict partition of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A279785/b279785.txt\">Table of n, a(n) for n = 0..5000</a>",
+        "Gus Wiseman, <a href=\"/A063834/a063834.txt\">Sequences enumerating triangles of integer partitions</a>"
+    ],
+    "example": [
+        "The a(6)=11 twice-partitions are:",
+        "((6)), ((5)(1)), ((51)), ((4)(2)), ((42)), ((41)(1)),",
+        "((3)(2)(1)), ((31)(2)), ((32)(1)), ((321)), ((21)(2)(1))."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "g:= proc(n) option remember; `if`(n=0, 1, add(add(",
+        "      `if`(d::odd, d, 0), d=divisors(j))*g(n-j), j=1..n)/n)",
+        "    end:",
+        "b:= proc(n, i) option remember; `if`(n>i*(i+1)/2, 0,",
+        "      `if`(n=0, 1, b(n, i-1)+`if`(i>n, 0, g(i)*b(n-i, i-1))))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..70);  # _Alois P. Heinz_, Dec 20 2016"
+    ],
+    "mathematica": [
+        "nn=20;CoefficientList[Series[Product[(1+PartitionsQ[k]x^k),{k,nn}],{x,0,nn}],x]",
+        "(* Second program: *)",
+        "g[n_] := g[n] = If[n==0, 1, Sum[Sum[If[OddQ[d], d, 0], {d, Divisors[j]}]* g[n - j], {j, 1, n}]/n]; b[n_, i_] := b[n, i] = If[n > i*(i + 1)/2, 0, If[n==0, 1, b[n, i-1] + If[i>n, 0, g[i]*b[n-i, i-1]]]]; a[n_] := b[n, n]; Table[a[n], {n, 0, 70}] (* _Jean-Fran\u00e7ois Alcover_, Feb 07 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000009, A063834, A279375."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Dec 18 2016",
+    "references": 3,
+    "revision": 12,
+    "time": "2017-02-07T12:32:10-05:00",
+    "created": "2016-12-21T11:04:17-05:00"
+}

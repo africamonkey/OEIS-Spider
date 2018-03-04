@@ -1,0 +1,43 @@
+{
+    "number": 27697,
+    "data": "2,7,11,13,19,31,37,41,47,59,61,67,73,79,97,103,107,109,127,131,137,151,157,167,173,179,181,191,193,199,211,223,227,229,233,239,241,251,271,283,307,313,331,367,379,397,409,419,421,431,433,439,443,457,463,487,491,499,521,541,557,563",
+    "name": "Odious primes: primes with odd number of 1's in binary expansion.",
+    "comment": [
+        "Conjecture: a(n) < A027699(n) except for n = 2; verified up to n=5*10^7. Moreover, I conjecture that A027699(n) - a(n) tends to infinity. - _Vladimir Shevelev_"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A027697/b027697.txt\">Table of n, a(n) for n=1..10000</a>",
+        "E. Fouvry, C. Mauduit, <a href=\"http://dx.doi.org/10.1007/BF01444238\">Sommes des chiffres et nombres presque premiers</a>, (French) [Sums of digits and almost primes] Math. Ann. 305 (1996), no. 3, 571--599. MR1397437 (97k:11029)",
+        "Ben Green, <a href=\"http://arXiv.org/abs/0710.0823\">Three topics in additive prime number theory</a>, arXiv:0710.0823 [math.NT], Oct 03, 2007, pp. 12-27.",
+        "V. Shevelev, <a href=\"http://www.hindawi.com/journals/ijmms/2008/908045.html\">Generalized Newman phenomena and digit conjectures on primes</a>, Internat. J. of Mathematics and Math. Sciences, 2008 (2008), Article ID 908045, 1-12."
+    ],
+    "maple": [
+        "a:=proc(n) local nn: nn:= convert(ithprime(n), base, 2): if `mod`(sum(nn[j], j =1..nops(nn)), 2)=1 then ithprime(n) else end if end proc: seq(a(n),n=1..103); # _Emeric Deutsch_, Oct 24 2007"
+    ],
+    "mathematica": [
+        "Clear[BinSumOddQ];BinSumOddQ[a_]:=Module[{i,s=0},s=0;For[i=1,i<=Length[IntegerDigits[a,2]],s+=Extract[IntegerDigits[a,2],i];i++ ];OddQ[s]]; lst={};Do[p=Prime[n];If[BinSumOddQ[p],AppendTo[lst,p]],{n,4!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Apr 06 2009 *)",
+        "Select[Prime@ Range@ 120, OddQ@ First@ DigitCount[#, 2] &] (* _Michael De Vlieger_, Feb 08 2016 *)"
+    ],
+    "program": [
+        "(PARI) f(p)={v=binary(p);s=0;for(k=1,#v,if(v[k]==1,s++));return(s%2)};",
+        "forprime(p=2, 563, if(f(p), print1(p,\", \"))) \\\\ _Washington Bomfim_, Jan 14 2011",
+        "(PARI) s=[]; forprime(p=2, 1000, if(norml2(binary(p))%2==1, s=concat(s, p))); s \\\\ _Colin Barker_, Feb 18 2014",
+        "(Python)",
+        "from sympy import primerange",
+        "print [n for n in primerange(1, 1001) if bin(n)[2:].count(\"1\")%2==1] # _Indranil Ghosh_, May 03 2017"
+    ],
+    "xref": [
+        "Cf. A027699, A066148, A066149.",
+        "Cf. A000069 (odious numbers), A092246 (odd odious numbers)"
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from Scott Lindhurst (ScottL(AT)alumni.princeton.edu)"
+    ],
+    "references": 39,
+    "revision": 49,
+    "time": "2017-10-15T23:32:33-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

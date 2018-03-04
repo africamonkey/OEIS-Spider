@@ -1,0 +1,51 @@
+{
+    "number": 236359,
+    "data": "6,18,24,28,36,42,54,66,78,102,108,114,126,132,138,162,174,186,196,198,222,234,246,258,282,288,294,306,318,324,342,354,360,366,378,402,414,426,432,438,462,474,486,496,498,504,522,534,540,546,558,582,594,600,606,618,642,654,666,678,684,690,696,702,714,726",
+    "name": "Pseudoperfect (or semiperfect) numbers in which a sum of contiguous proper divisors of n equals n.",
+    "comment": [
+        "Also includes perfect numbers.",
+        "Are there numbers that contain multiple contiguous divisor sums?"
+    ],
+    "link": [
+        "Matthew Schuster and Charles R Greathouse IV, <a href=\"/A236359/b236359.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from Schuster)",
+        "Matthew Schuster, <a href=\"/A236359/a236359.cpp.txt\">A236359.cpp; source file</a>"
+    ],
+    "example": [
+        "The proper divisors of 132 are [1,2,3,4,6,11,12,22,33,44,66]; only the contiguous divisor set of 4+6+11+12+22+33+44=132."
+    ],
+    "mathematica": [
+        "aQ[n_] := Catch@Block[{d = Most@Divisors@n, s, i=1}, s = Accumulate@d; While[s != {}, If[MemberQ[s, n], Throw@True, s = Rest[s - d[[i++]]]]]; False]; Select[ Range@ 726, aQ] (* _Giovanni Resta_, Jan 23 2014 *)",
+        "Select[Range[800],MemberQ[Flatten[Table[Total/@Partition[Most[Divisors[ #]],n,1],{n,DivisorSigma[0,#]-1}]],#]&] (* _Harvey P. Dale_, Apr 25 2015 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(d=divisors(n),i=1,j=1,s=1); while(i<#d, s+=d[i++]; while(s>n, s-=d[j]; j++); if(s==n, return(i<#d))); 0 \\\\ _Charles R Greathouse IV_, Jan 23 2014",
+        "(Python)",
+        "from sympy import divisors",
+        "A236359_list = []",
+        "for n in range(1,10**3):",
+        "....d = divisors(n)",
+        "....d.pop()",
+        "....ld = len(d)",
+        "....if sum(d) >= n:",
+        "........s, j = d[0], 1",
+        "........for i in range(ld-1):",
+        "............while s < n and j < ld:",
+        "................s += d[j]",
+        "................j += 1",
+        "............if s == n:",
+        "................A236359_list.append(n)",
+        "................break",
+        "............j -= 1",
+        "............s -= d[i]+d[j] # _Chai Wah Wu_, Sep 16 2014"
+    ],
+    "xref": [
+        "Subsequence of A005835."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Matthew Schuster_, Jan 23 2014",
+    "references": 1,
+    "revision": 29,
+    "time": "2015-09-24T05:01:02-04:00",
+    "created": "2014-01-24T05:09:18-05:00"
+}

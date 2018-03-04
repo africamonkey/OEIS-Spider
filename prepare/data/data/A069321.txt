@@ -1,0 +1,48 @@
+{
+    "number": 69321,
+    "data": "1,1,5,31,233,2071,21305,249271,3270713,47580151,760192505,13234467511,249383390393,5057242311031,109820924003705,2542685745501751,62527556173577273,1627581948113854711,44708026328035782905,1292443104462527895991,39223568601129844839353",
+    "name": "Stirling transform of A001563: a(0)=1, a(n) = Sum(stirling2(n,k)*k*k!,k=1..n) for n=1,2...",
+    "comment": [
+        "The number of compatible bipartitions of a set of cardinality n for which at least one subset is not underlined. E.g., for n=2 there are 5 such bipartitions: {1 2}, {1}{2}, {2}{1}, _{1}_{2}, _{2}_{1}. A005649 is the number of bipartitions of a set of cardinality n. A000670 is the number of bipartitions of a set of cardinality n with none of the subsets underlined. - _Kyle Petersen_, Mar 31 2005",
+        "a(n) is the cardinality of the image set summed over \"all surjections\". All surjections means: onto functions f:{1, 2, ..., n} -> {1, 2, ..., k} for every k, 1 <= k <= n.  a(n) = Sum_{k = 1, ..., n} A019538(n, k)*k. - _Geoffrey Critzer_, Nov 12 2012"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A069321/b069321.txt\">Table of n, a(n) for n = 0..200</a>",
+        "B. Cloitre, <a href=\"http://bcmathematics.monsite-orange.fr/FractalOrderOfPrimes.pdf\">On the fractal behavior of primes</a>, 2011. [Dead link]",
+        "D. Foata and D. Zeilberger, <a href=\"http://arxiv.org/abs/math/9406220\">The Graphical Major Index</a>, arXiv:math/9406220 [math.CO], 1994.",
+        "D. Foata and D. Zeilberger, <a href=\"http://dx.doi.org/10.1016/0377-0427(95)00254-5\">Graphical major indices</a>, J. Comput. Appl. Math. 68 (1996), no. 1-2, 79-101."
+    ],
+    "formula": [
+        "Representation as an infinite series, in Maple notation: a(0)=1, a(n) = Sum_{k>=2}(k^n*(k-1)/(2^k))/4, n=1, 2, ... This is a Dobinski-type summation formula. E.g.f.: (exp(x)-1)/((2-exp(x))^2).",
+        "a(n) = (1/2)*(A000670(n+1)-A000670(n)).",
+        "O.g.f.: 1 + Sum_{n>=1} (2*n-1)!/(n-1)! * x^n / Product_{k=1..n} (1 + (n+k-1)*x). - _Paul D. Hanna_, Oct 28 2013",
+        "a(n) = (A000629(n+1) - A000629(n))/4. - _Benoit Cloitre_, Oct 20 2002",
+        "a(n) = A232472(n-1)/2. - _Vincenzo Librandi_, Jan 03 2016"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1,",
+        "      add(b(n-j)*binomial(n, j), j=1..n))",
+        "    end:",
+        "a:= n-> `if`(n=0, 2, b(n+1)-b(n))/2:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Feb 02 2018"
+    ],
+    "mathematica": [
+        "max = 20; t = Sum[n^(n - 1)x^n/n!, {n, 1, max}]; Range[0, max]!CoefficientList[Series[D[1/(1 - y(Exp[x] - 1)), y] /. y -> 1, {x, 0, max}], x] (* _Geoffrey Critzer_, Nov 12 2012 *)",
+        "Prepend[Table[Sum[StirlingS2[n, k]*k*k!, {k, n}], {n, 18}], 1] (* _Michael De Vlieger_, Jan 03 2016 *)",
+        "a[n_] := (PolyLog[-n-1, 1/2] - PolyLog[-n, 1/2])/4; a[0] = 1; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Mar 30 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(1+sum(m=1, n, (2*m-1)!/(m-1)!*x^m/prod(k=1, m, 1+(m+k-1)*x+x*O(x^n))), n)} \\\\ _Paul D. Hanna_, Oct 28 2013"
+    ],
+    "xref": [
+        "Cf. A001563.",
+        "Cf. A005649, A000670."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Karol A. Penson_, Mar 14 2002",
+    "references": 10,
+    "revision": 47,
+    "time": "2018-02-02T10:03:26-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

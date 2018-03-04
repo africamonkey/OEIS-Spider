@@ -1,0 +1,29 @@
+{
+    "number": 290959,
+    "data": "1,2,3,5,7,11,13,17,20,24,26,32,34,38,42,47,49,55,57,63,67,71,73,81,84,88",
+    "name": "Matrix rank of the number of dots in the pairwise intersections of Ferrers diagrams.",
+    "comment": [
+        "Let f(q, r) be the number of dots in the intersection of the Ferrers diagrams of the integer partitions q and r of n. Let a(n) be the matrix rank of the p(n) by p(n) matrix of f(q, r) as q and r range over the partitions of n. Conjecture: For n > 3, a(n+1) - a(n) = A000005(n+2), the number of divisors of n. The same is true empirically for the union, complement, and set difference. Note that A000005 count rectangular partitions."
+    ],
+    "mathematica": [
+        "intersection[{p_, q_}] := Module[{min},",
+        "  min = Min[Length /@ {p, q}];",
+        "  Total[Min /@ Transpose@{Take[p, min], Take[q, min]}]",
+        "  ];",
+        "intersections@k_ := intersections@k = Module[{ip = IntegerPartitions[k]},",
+        "   Table[intersection@{ip[[m]], ip[[n]]}, {m, PartitionsP@k}, {n,",
+        "     PartitionsP@k}]];",
+        "a[n_]:=MatrixRank@intersections@n;",
+        "Table[MatrixRank@intersections@n, {n, 20}]"
+    ],
+    "xref": [
+        "Cf. A000005, A218904, A218905, A218906, A218907, A246581."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_George Beck_, Aug 14 2017",
+    "references": 0,
+    "revision": 13,
+    "time": "2017-08-16T23:48:02-04:00",
+    "created": "2017-08-16T23:48:02-04:00"
+}

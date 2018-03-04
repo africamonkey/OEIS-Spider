@@ -1,0 +1,44 @@
+{
+    "number": 151281,
+    "data": "1,2,6,16,48,136,408,1184,3552,10432,31296,92544,277632,824448,2473344,7365120,22095360,65920000,197760000,590790656,1772371968,5299916800,15899750400,47578857472,142736572416,427357700096,1282073100288,3840133464064,11520400392192,34517383151616,103552149454848",
+    "name": "Number of walks within N^2 (the first quadrant of Z^2) starting at (0,0) and consisting of n steps taken from {(-1, 0), (1, 0), (1, 1)}.",
+    "comment": [
+        "From _Paul Barry_, Jan 26 2009: (Start)",
+        "Image of 2^n under A155761. Binomial transform is A129637. Hankel transform is 2^C(n+1,2).",
+        "In general, the g.f. of the reversion of x(1+cx)/(1+ax+bx^2) is given by the continued fraction",
+        "x/(1-(a-c)x-(b-ac+c^2)x^2/(1-(a-2c)x-(b-ac+c^2)x^2/(1-(a-2c)x-(b-ac+c^2)x^2/(1-.... (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A151281/b151281.txt\">Table of n, a(n) for n = 0..2000</a>",
+        "P. Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL12/Barry2/barry73.html\">A Note on a One-Parameter Family of Catalan-Like Numbers</a>, JIS 12 (2009) 09.5.4",
+        "A. Bostan, <a href=\"http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.410.1160&amp;rep=rep1&amp;type=pdf\">Computer Algebra for Lattice Path Combinatorics</a>, Seminaire de Combinatoire Ph. Flajolet, March 28 2013.",
+        "M. Bousquet-M\u00e9lou and M. Mishna, 2008. Walks with small steps in the quarter plane, <a href=\"http://arxiv.org/abs/0810.4387\">ArXiv 0810.4387</a>.",
+        "A. Bostan and M. Kauers, 2008. Automatic Classification of Restricted Lattice Walks, <a href=\"http://arxiv.org/abs/0811.2899\">ArXiv 0811.2899</a>."
+    ],
+    "formula": [
+        "From _Paul Barry_, Jan 26 2009: (Start)",
+        "G.f.: 1/(1-2x-2x^2/(1-2x^2/(1-2x^2/(1-2x^2/(1-2x^2/(1-.... (continued fraction);",
+        "G.f.: c(2x^2)/(1-2xc(2x^2))=(sqrt(1-8x^2)+4x-1)/(4x(1-3x));",
+        "a(n) = sum{k=0..n, ((k+1)/(n+k+1))*C(n,(n-k)/2)*(1+(-1)^(n-k))*2^((n-k)/ 2)*2^k};",
+        "Reversion of x(1+2x)/(1+4x+6x^2). (End)",
+        "a(n) = sum{k=0..n, A120730(n,k)*2^k}. - _Philippe Del\u00e9ham_, Feb 01 2009",
+        "a(2n+2)=3*a(2n+1), a(2n+1)=3*a(2n)-2^n*A000108(n) = 3*a(2n)-A151374(n). - _Philippe Del\u00e9ham_, Feb 02 2009",
+        "Conjecture: (n+1)*a(n) +3*(-n-1)*a(n-1) +8*(-n+2)*a(n-2) +24*(n-2)* a(n-3)=0. - _R. J. Mathar_, Nov 26 2012",
+        "a(n) ~ 3^n/2. - _Vaclav Kotesovec_, Feb 13 2014"
+    ],
+    "maple": [
+        "N:= 1000: # to get terms up to a(N)",
+        "S:= series((sqrt(1-8*x^2)+4*x-1)/(4*x*(1-3*x)),x,N+1):",
+        "seq(coeff(S,x,j),j=0..N); # _Robert Israel_, Feb 18 2013"
+    ],
+    "mathematica": [
+        "aux[i_Integer, j_Integer, n_Integer] := Which[Min[i, j, n] < 0 || Max[i, j] > n, 0, n == 0, KroneckerDelta[i, j, n], True, aux[i, j, n] = aux[-1 + i, -1 + j, -1 + n] + aux[-1 + i, j, -1 + n] + aux[1 + i, j, -1 + n]]; Table[Sum[aux[i, j, n], {i, 0, n}, {j, 0, n}], {n, 0, 25}]"
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Manuel Kauers_, Nov 18 2008",
+    "references": 7,
+    "revision": 27,
+    "time": "2016-12-04T13:56:59-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

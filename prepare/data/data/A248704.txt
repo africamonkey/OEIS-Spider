@@ -1,0 +1,57 @@
+{
+    "number": 248704,
+    "data": "3,19,1429,25243,340577,1107791",
+    "name": "Smallest prime such that the n preceding prime gaps are strictly decreasing and the n subsequent prime gaps strictly increasing.",
+    "link": [
+        "Abhiram R Devesh, <a href=\"/A248704/a248704.py.txt\">Python code for generating strict valley primes</a>"
+    ],
+    "example": [
+        "a(3)=1429 is in the middle of the sequence of successive primes [1409, 1423, 1427, 1429, 1433, 1439 , 1447] which have prime gaps [14, 4, 2, 4, 6, 8], and 14>4>2 is strictly decreasing and 4<6<8 is strictly increasing."
+    ],
+    "maple": [
+        "A248704 := proc(n)",
+        "    local glist,p,wrks,s ;",
+        "    if n = 0 then",
+        "        return ;",
+        "    else",
+        "        s := n+1 ;",
+        "        p := ithprime(s) ;",
+        "        glist := [seq(ithprime(i+1)-ithprime(i),i=1..2*n)] ;",
+        "        while true do",
+        "            wrks := true;",
+        "            for i from 1 to n-1 do",
+        "                if glist[i] <= glist[i+1] then",
+        "                    wrks := false;",
+        "                    break;",
+        "                end if;",
+        "            end do:",
+        "            if wrks then",
+        "                for i from n+1 to 2*n-1 do",
+        "                    if glist[i] >= glist[i+1] then",
+        "                        wrks := false;",
+        "                        break;",
+        "                    end if;",
+        "                end do:",
+        "            end if;",
+        "            if wrks then",
+        "                return p;",
+        "            end if;",
+        "            p := nextprime(p) ;",
+        "            s := s+1 ;",
+        "            glist := subsop(1=NULL,glist) ;",
+        "            glist := [op(glist),ithprime(s+n)-ithprime(s+n-1)] ;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Dec 04 2014"
+    ],
+    "xref": [
+        "Cf. A248701, A248702, A248703."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Abhiram R Devesh_, Oct 12 2014",
+    "references": 4,
+    "revision": 15,
+    "time": "2014-12-04T15:11:58-05:00",
+    "created": "2014-12-04T15:11:58-05:00"
+}

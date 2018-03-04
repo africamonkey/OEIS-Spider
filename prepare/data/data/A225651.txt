@@ -1,0 +1,44 @@
+{
+    "number": 225651,
+    "data": "1,2,3,4,6,10,12,14,15,20,21,24,30,35,36,39,40,42,44,52,55,56,60,65,66,70,72,76,77,78,84,85,90,91,95,99,102,105,110,114,115,117,119,120,126,130,132,133,136,138,140,143,152,153,154,155,156,161,165,170",
+    "name": "Numbers n such that n divides A000793(n).",
+    "comment": [
+        "After 1, a subset of A225649.",
+        "Also, for all n, A225650(a(n)) = a(n) and A225655(a(n)) = A000793(a(n))."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A225651/b225651.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; local p;",
+        "      p:= `if`(i<1, 1, ithprime(i));",
+        "      `if`(n=0 or i<1, 1, max(b(n, i-1),",
+        "           seq(p^j*b(n-p^j, i-1), j=1..ilog[p](n))))",
+        "    end:",
+        "g:=n->b(n, `if`(n<8, 3, numtheory[pi](ceil(1.328*isqrt(n*ilog(n)))))):",
+        "a:= proc(n) option remember; local k;",
+        "      for k from 1+`if`(n=1, 0, a(n-1))",
+        "      while not irem(g(k), k)=0 do od; k",
+        "    end:",
+        "seq(a(n), n=1..70);  # _Alois P. Heinz_, May 22 2013"
+    ],
+    "mathematica": [
+        "Reap[For[n=1, n <= 40, n++, If[Divisible[Max[LCM @@@ IntegerPartitions[n] ], n], Sow[n]]]][[2, 1]]",
+        "(* or, for a large number of terms: *)",
+        "b[n_, i_] := b[n, i] = Module[{p}, p = If[i<1, 1, Prime[i]]; If[n==0 || i<1, 1, Max[b[n, i-1], Table[p^j*b[n - p^j, i-1], {j, 1, Log[p, n] // Floor}]]]]; g[n_] := b[n, If[n<8, 3, PrimePi[Ceiling[1.328*Sqrt[n*Log[n] // Floor]]]]]; Reap[For[k=1, k <= 1000, k++, If[Divisible[g[k], k], Sow[ k]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Feb 28 2016, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Scheme with _Antti Karttunen_'s IntSeq-library):",
+        "(define A225651 (MATCHING-POS 1 1 (lambda (i) (zero? (modulo (A000793 i) i)))))"
+    ],
+    "xref": [
+        "Cf. A225648, A225649, A225650, A225653, A225655-A225657."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, May 16 2013",
+    "references": 6,
+    "revision": 17,
+    "time": "2016-02-28T05:26:14-05:00",
+    "created": "2013-05-22T17:08:58-04:00"
+}

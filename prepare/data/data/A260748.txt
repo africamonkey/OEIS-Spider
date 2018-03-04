@@ -1,0 +1,42 @@
+{
+    "number": 260748,
+    "data": "13,26,37,52,73,74,97,103,104,111,133,146,148,157,193,194,199,206,207,208,209,217,221,222,223,231,253,266,277,292,296,307,313,314,317,337,373,386,388,397,398,409,412,414,416,417,418,419,431,433,434,439,442,444,446,447,449,457,461,462,463,471,493,506,517,532,553,554,577,583,584,591,592,613,614,619,626,627,628,629,631,634,637,667,673,674,677,697,733,746,757,772,776,787,793,794,797,817,853",
+    "name": "Dragon Curve triple point lower inverses. If D:[0,1] is a Dragon curve, then besides n, there are two larger integers p, q (with p < q) with D(A(n)/(15*2^k)) = D(A(p)/(15*2^k)) = D(A(q)/(15*2^k)), where k is any integer > lg(A(q)/15).",
+    "comment": [
+        "For the triples grouped, use Dragon(A260748(n)) = Dragon(A260749(n)) = Dragon(A260750(n)).  (I.e., they're \"conformal\".)",
+        "Unlike A260747, A260749, A260750, and A260482, the first differences show a fractal pattern of repetitions.",
+        "See dragun in the MATHEMATICA section for an exact evaluator of a continuous, spacefilling Dragon function, and undrag, its multivalued inverse."
+    ],
+    "link": [
+        "Brady Haran and Don Knuth, <a href=\"https://www.youtube.com/watch?v=v678Em6qyzk\">Wrong turn on the Dragon - Numberphile</a> (2014)",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Dragon_curve\">Dragon curve</a>"
+    ],
+    "example": [
+        "For definiteness, we choose the Dragon in the complex plane with Dragon(0) = 0, Dragon(1) = 1, Dragon(1/3) = 1/5+2i/5",
+        "Then using A(1) = 13, for k=0,1,2, {dragun[13/15], dragun[13/30], dragun[13/60]}",
+        "-> {{2/3 - I/3}, {1/2 + I/6}, {1/6 + I/3}}",
+        "These have inverse images undrag/@First/@%",
+        "{{13/15}, {13/30, 7/10, 23/30}, {13/60, 7/20, 23/60}}",
+        "k=0 is too small--7/5 and 23/15 are off the end of the curve!",
+        "dragun[13/15/2^k] = dragun[21/15/2^k] = dragun[23/15/2^k], which empirically = (2/3 - I/3) (1/2 + I/2)^k"
+    ],
+    "mathematica": [
+        "(*by Julian Ziegler Hunts*)",
+        "piecewiserecursivefractal[x_, f_, which_, iters_, fns_] := piecewiserecursivefractal[x, g_, which, iters, fns] = ((piecewiserecursivefractal[x, h_, which, iters, fns] := Block[{y}, y /. Solve[f[y] == h[y], y]]); Union @@ ((fns[[#]] /@ piecewiserecursivefractal[iters[[#]][x], Composition[f, fns[[#]]], which, iters, fns]) & /@ which[x]));",
+        "dragun[t_] := piecewiserecursivefractal[t, Identity, Piecewise[{{{1}, 0 <= # <= 1/2}, {{2}, 1/2 <= # <= 1}}, {}] &, {2*# &, 2*(1 - #) &}, {(1 + I)*#/2 &, (I - 1)*#/2 + 1 &}]",
+        "undrag[z_] := piecewiserecursivefractal[z, Identity, If[-(1/3) <= Re[#] <= 7/6 && -(1/3) <= Im[#] <= 2/3, {1, 2}, {}] &, {#*(1 - I) &, (1 - #)*(1 + I) &}, {#/2 &, 1 - #/2 &}]",
+        "DeleteDuplicates[Reap[Do[If[Length[#] > 2, Sow[15*64*#[[1]]]] &@",
+        "     undrag[dragun[k/15/64][[1]]], {k, 0, 288*3}]][[2, 1]]]",
+        "(* or 128 or 256 or ...*)"
+    ],
+    "xref": [
+        "A260747 = A260748 U A260749 U A260750 = Superset of 3*A260482."
+    ],
+    "keyword": "nonn,frac,unkn",
+    "offset": "1,1",
+    "author": "_Bill Gosper_, Jul 30 2015",
+    "references": 5,
+    "revision": 7,
+    "time": "2016-01-21T00:46:56-05:00",
+    "created": "2015-07-30T21:34:32-04:00"
+}

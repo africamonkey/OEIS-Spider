@@ -1,0 +1,103 @@
+{
+    "number": 7629,
+    "id": "M4922",
+    "data": "14,19,28,47,61,75,197,742,1104,1537,2208,2580,3684,4788,7385,7647,7909,31331,34285,34348,55604,62662,86935,93993,120284,129106,147640,156146,174680,183186,298320,355419,694280,925993,1084051,7913837,11436171,33445755,44121607",
+    "name": "Repfigit (REPetitive FIbonacci-like diGIT) numbers (or Keith numbers).",
+    "comment": [
+        "Numbers n>9 with following property: form a sequence b(i) whose initial terms are the t digits of n, later terms given by rule that b(i) = sum of t previous terms; then n itself appears in the sequence.",
+        "Called Sep-Numbers by Baumann (2004). - _N. J. A. Sloane_, Mar 02 2014"
+    ],
+    "reference": [
+        "C. Ashbacher, J. Rec. Math., vol. 21, no. 4, p. 310, 1989.",
+        "J.-M. De Koninck, Ces nombres qui nous fascinent, Entry 197, p. 59, Ellipses, Paris 2008.",
+        "M. Keith, Repfigit Numbers, J. Recreational Math., Vol. 19, No. 2, pp. 41-42, 1987.",
+        "C. A. Pickover, All Known Replicating Fibonacci Digits Less Than One Billion, J. Recreational Math., Vol. 22, No. 3, p. 176, 1990.",
+        "C. A. Pickover, Computers and the Imagination, St. Martin's Press, NY, 1991, p. 229.",
+        "C. A. Pickover, Wonders of Numbers, \"Looping Replicating Fibonacci digits\", pp. 174-5, OUP 2000.",
+        "K. Sherriff, Computing Replicating Fibonacci Digits, J. Recreational Math., Vol. 26, No. 3, p. 191, 1994.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "David Wells, The Penguin Dictionary of Curious and Interesting Numbers, see p. 71."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A007629/b007629.txt\">Table of n, a(n) for n = 1..94</a> [Taken from first Keith link below.]",
+        "R\u00fcdeger Baumann, <a href=\"http://www.austromath.at/dug/dnl53.pdf\">Sep-Zahlen or Sep-Numbers</a>, DERIVE Newsletter, #53 (2004), p. 33.",
+        "Jhon J. Bravo, Sergio Guzm\u00e1n, Florian Luca, <a href=\"http://dx.doi.org/10.1007/s10986-013-9199-3\">Repdigit Keith numbers</a>, Lithuanian Mathematical Journal, April 2013, Volume 53, Issue 2, pp 143-148.",
+        "M. Keith, <a href=\"http://www.cadaeic.net/keithnum.htm\">Keith numbers</a>",
+        "M. Keith, <a href=\"http://web.archive.org/web/20070208082537/http://users.aol.com/s6sj7gt/keithnum.htm\">Determination of All Keith Numbers Up to 10^19.</a>",
+        "M. Keith, <a href=\"/A007629/a007629.pdf\">Power-sum numbers</a>, J. Recreational Mathematics 18.4 (1986), 275-278. (Annotated scanned copy)",
+        "M. Klazar and F. Luca, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL10/Klazar/klazar15.html\">Counting Keith numbers</a>, Journal of Integer Sequences, Vol. 10 (2007), #07.2.2.",
+        "Madras Math's Amazing Number Facts, <a href=\"http://www.madras.fife.sch.uk/maths/amazingnofacts/fact049.html\">Repfigits</a>",
+        "C. A. Pickover, \"Wonders of Numbers, Adventures in Mathematics, Mind and Meaning,\" <a href=\"http://www.zentralblatt-math.org/zmath/en/search/?q=an:0983.00008&amp;format=complete\">Zentralblatt review</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/KeithNumber.html\">Keith Number.</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Keith_number\">Keith number</a>"
+    ],
+    "example": [
+        "197 is a term since sequence is 1, 9, 7, 17, 33, 57, 107, 197, ..., which contains 197."
+    ],
+    "maple": [
+        "isA007629 := proc(n)",
+        "    local L,t,a ;",
+        "    if n < 10 then",
+        "        return false;",
+        "    end if;",
+        "    L := ListTools[Reverse](convert(n,base,10)) ;",
+        "    t :=  nops(L) ;",
+        "    while true do",
+        "        a := add(op(-i,L),i=1..t) ;",
+        "        L := [op(L),a] ;",
+        "        if a > n then",
+        "            return false;",
+        "        elif a = n then",
+        "            return true;",
+        "        end if;",
+        "    end do:",
+        "end proc:",
+        "for n from 1 do",
+        "    if isA007629(n) then",
+        "        printf(\"%d,\\n\",n);",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 12 2016"
+    ],
+    "mathematica": [
+        "keithQ[n_Integer] := Module[{b = IntegerDigits[n], s, k = 0}, s = Total[b]; While[s < n, AppendTo[b, s]; k++; s = 2*s - b[[k]]]; s == n]; Select[Range[10, 100000], keithQ] (* _T. D. Noe_, Mar 15 2011 *)",
+        "nxt[n_]:=Rest[Flatten[Join[{n,Total[n]}]]]; repfigitQ[m_]:=MemberQ[ NestWhileList[ nxt,IntegerDigits[m],Max[#]<=m&][[All,-1]],m]; Select[ Range[10,45*10^6],repfigitQ] (* _Harvey P. Dale_, Sep 02 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Char (digitToInt",
+        "a007629 n = a007629_list !! (n-1)",
+        "a007629_list = filter isKeith [10..] where",
+        "   isKeith n = repfigit $ reverse $ map digitToInt $ show n where",
+        "      repfigit ns = s == n || s < n && (repfigit $ s : init ns) where",
+        "         s = sum ns",
+        "-- _Reinhard Zumkeller_, Nov 04 2010, Mar 31 2011",
+        "(PARI) is(n)=if(n<14,return(0));my(v=digits(n),t=#v);while(v[#v]<n,v=concat(v,sum(i=0,t-1,v[#v-i]))); v[#v]==n \\\\ _Charles R Greathouse IV_, Feb 01 2013",
+        "(Python)",
+        "A007629_list = []",
+        "for n in range(10,10**9):",
+        "....x = [int(d) for d in str(n)]",
+        "....y = sum(x)",
+        "....while y < n:",
+        "........x, y = x[1:]+[y], 2*y-x[0]",
+        "....if y == n:",
+        "........A007629_list.append(n) # _Chai Wah Wu_, Sep 12 2014"
+    ],
+    "xref": [
+        "Cf. A006576, A048970, A050235, A186830. See A130010 for another version.",
+        "Cf. A162724, A187713, A188195-A188200 (base 2, 5, 3-4, 6-9).",
+        "Cf. A188380 (balanced ternary), A188381 (base -2).",
+        "Cf. A188201 (least base-n Keith number >= n)."
+    ],
+    "keyword": "nonn,base,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, _Mira Bernstein_, _Robert G. Wilson v_",
+    "ext": [
+        "12th term corrected from 2508 to 2580, Aug 15 1997",
+        "More terms from Mike Keith (Domnei(AT)aol.com), Feb 15 1999",
+        "Keith's old links fixed and C. Ashbacher's name added by _Christopher Carl Heckman_, Nov 18 2010"
+    ],
+    "references": 55,
+    "revision": 64,
+    "time": "2017-12-20T23:29:56-05:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

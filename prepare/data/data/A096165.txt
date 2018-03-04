@@ -1,0 +1,49 @@
+{
+    "number": 96165,
+    "data": "2,3,4,5,7,8,9,11,13,16,17,19,23,25,27,29,31,32,37,41,43,47,49,53,59,61,67,71,73,79,81,83,89,97,101,103,107,109,113,121,125,127,128,131,137,139,149,151,157,163,167,169,173,179,181,191,193,197,199,211,223,227",
+    "name": "Prime powers with exponents that are themselves prime powers.",
+    "comment": [
+        "A000040, A053810, A050376 and A082522 are subsequences;",
+        "a(n) = A000961(n+1) for 1<=n<=26.",
+        "Complement of A164345 with respect to A000961."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A096165/b096165.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) ~ n log n. - _Charles R Greathouse IV_, Oct 19 2015"
+    ],
+    "example": [
+        "512=2^9=2^(3^2), A000961(118)=A000040(1)^A000961(118), therefore 512 is a term;",
+        "64=2^6, but 6 is not a prime power, therefore 64 is not a term."
+    ],
+    "maple": [
+        "F:= proc(t) local P;",
+        "P:= ifactors(t)[2];",
+        "nops(P) = 1 and (P[1][2]=1 or nops(numtheory:-factorset(P[1][2]))=1)",
+        "end proc:",
+        "select(F, [$2..1000]); # _Robert Israel_, Jul 20 2015"
+    ],
+    "mathematica": [
+        "Select[Range@ 240, Or[PrimeQ@ #, PrimePowerQ@ # && PrimePowerQ@ FactorInteger[#][[1, 2]]] &] (* _Michael De Vlieger_, Jul 20 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a096165 n = a096165_list !! (n-1)",
+        "a096165_list = filter ((== 1) . a010055 . a001222) $ tail a000961_list",
+        "-- _Reinhard Zumkeller_, Nov 17 2011",
+        "(PARI) is(n)=while(1,if(!(n=isprimepower(n)),return(0),if(n==1,return(1)))) \\\\ _Anders Hellstr\u00f6m_, Jul 19 2015",
+        "(PARI) ispp(n)=n==1 || isprimepower(n)",
+        "is(n)=ispp(isprimepower(n)) \\\\ _Charles R Greathouse IV_, Oct 19 2015"
+    ],
+    "xref": [
+        "Cf. A000040, A000961, A010055, A001222, A050376, A053810, A082522, A164336, A164345."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Jul 25 2004",
+    "references": 3,
+    "revision": 24,
+    "time": "2015-10-19T13:25:50-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

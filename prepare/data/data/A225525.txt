@@ -1,0 +1,42 @@
+{
+    "number": 225525,
+    "data": "2,12,32,56,132,288,464,752,1976,2952,4776,10304,14588,26976,65472,70624,128556,300456,373960,726096,1566464,1900944,3075792,6635648,10401182,15200808,35136320,45481408,68991060,178607808,192662336,311734208,756594816,918147096,1980790944,3472069328",
+    "name": "a(n) = (sigma(2*n) - sigma(n))*Lucas(n) where Lucas(n) = A000204(n) and sigma(n) = A000203(n) is the sum of divisors of n.",
+    "comment": [
+        "Compare l.g.f. to log(theta_4(x)) = Sum_{n>=1} (sigma(2*n)-sigma(n))*x^n/n, where Jacobi theta_4(x) = 1 + 2*Sum_{n>=1} (-1)^n*x^(n^2)."
+    ],
+    "formula": [
+        "Logarithmic derivative of A225524 and A203850 (up to sign).",
+        "L.g.f.: Sum_{n>=1} log( (1 + Lucas(n)*x^n + (-x^2)^n) / (1 - Lucas(n)*x^n + (-x^2)^n) ) =  Sum_{n>=1} a(n)*x^n/n.",
+        "a(n) == 0 (mod 2); a(n) == 2 (mod 4) iff n is congruent to 1 or 5 mod 6 (A007310)."
+    ],
+    "example": [
+        "L.g.f.: L(x) = 2*x + 4*3*x^2/2 + 8*4*x^3/3 + 8*7*x^4/4 + 12*11*x^5/5 + 16*18*x^6/6 +...",
+        "where",
+        "exp(-L(x)) = 1 - 2*x - 4*x^2 + 14*x^4 + 16*x^5 + 4*x^8 - 152*x^9 - 188*x^10 +...+ A203850(n)*x^n +...",
+        "Also,",
+        "exp(L(x)) = 1 + 2*x + 8*x^2 + 24*x^3 + 66*x^4 + 184*x^5 + 488*x^6 + 1248*x^7 +...+ A225524(n)*x^n +...",
+        "Exponentiation yields the product:",
+        "exp(L(x)) = (1+x-x^2)/(1-x-x^2) * (1+3*x^2+x^4)/(1-3*x^2+x^4) * (1+4*x^3-x^6)/(1-4*x^3-x^6) * (1+7*x^4+x^8)/(1-7*x^4+x^8) * (1+11*x^5-x^10)/(1-11*x^5-x^10) *...* (1 + Lucas(n)*x^n + (-x^2)^n)/(1 - Lucas(n)*x^n + (-x^2)^n) *..."
+    ],
+    "mathematica": [
+        "Table[(DivisorSigma[1,2n]-DivisorSigma[1,n])LucasL[n],{n,40}] (* _Harvey P. Dale_, Sep 10 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=(sigma(2*n) - sigma(n))*(fibonacci(n-1)+fibonacci(n+1))}",
+        "for(n=1,40,print1(a(n),\", \"))",
+        "(PARI) {Lucas(n)=fibonacci(n-1)+fibonacci(n+1)}",
+        "{a(n)=n*polcoeff(-log(prod(m=1, n\\2+1, (1 - Lucas(2*m-1)*x^(2*m-1) - x^(4*m-2))^2*(1 - Lucas(2*m)*x^(2*m) + x^(4*m) +x*O(x^n)))), n)}",
+        "for(n=1,40,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A203850, A225524."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paul D. Hanna_, May 09 2013",
+    "references": 2,
+    "revision": 7,
+    "time": "2016-09-10T13:43:36-04:00",
+    "created": "2013-05-09T19:37:08-04:00"
+}

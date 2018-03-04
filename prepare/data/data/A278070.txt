@@ -1,0 +1,51 @@
+{
+    "number": 278070,
+    "data": "1,2,11,106,1457,25946,566827,14665106,438351041,14862109042,563501581931,23624177026682,1085079390005041,54185293223976266,2922842896378005707,169366580127359119906,10492171932362920604417,691986726674000405367266,48408260338825019327539531",
+    "name": "a(n) = hypergeometric([n, -n], [], -1).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A278070/b278070.txt\">Table of n, a(n) for n = 0..370</a>"
+    ],
+    "formula": [
+        "a(-n) = a(n).",
+        "a(n) = n! [x^n] exp((1-h(x))/2)*(1+h(x))/(2*h(x)) with h(x) = sqrt(1-4*x).",
+        "a(n) = ((2*n-1)*a(n-2) + 4*(n*(2*n-4)+1)*a(n-1))/(2*n-3)) for n>=2.",
+        "a(n) ~ 2^(2*n-1/2) * n^n / exp(n-1/2). - _Vaclav Kotesovec_, Nov 10 2016",
+        "a(n) = n!*Sum_{i=0..n}(binomial(2*n-i-1,n-i)/i!). - _Vladimir Kruchinin_, Nov 23 2016",
+        "a(n) = n! * [x^n] exp(x)/(1 - x)^n. - _Ilya Gutkovskiy_, Sep 21 2017"
+    ],
+    "maple": [
+        "a := n -> hypergeom([n, -n], [], -1): seq(simplify(a(n)), n=0..18);",
+        "# Alternatively:",
+        "a := proc(n) option remember; `if`(n<2, n+1,",
+        "((2*n-1)*a(n-2) + 4*(n*(2*n-4)+1)*a(n-1))/(2*n-3)) end:",
+        "seq(a(n), n=0..18);"
+    ],
+    "mathematica": [
+        "Table[HypergeometricPFQ[{n, -n}, {}, -1], {n, 0, 20}] (* _Vaclav Kotesovec_, Nov 10 2016 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def a():",
+        "    a, b, c, d, h, e = 1, 2, 1, 8, 4, 0",
+        "    yield a",
+        "    while True:",
+        "        yield b",
+        "        e = c; c += 2",
+        "        a, b = b, (c*a + h*b)//e",
+        "        d += 16; h += d",
+        "A278070 = a()",
+        "[A278070.next() for _ in range(19)]",
+        "(Maxima)",
+        "a(n):=n!*sum(binomial(2*n-i-1,n-i)/i!,i,0,n); /* _Vladimir Kruchinin_, Nov 23 2016 */"
+    ],
+    "xref": [
+        "Cf. A278069, A278071."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Peter Luschny_, Nov 10 2016",
+    "references": 3,
+    "revision": 23,
+    "time": "2017-09-21T20:16:10-04:00",
+    "created": "2016-11-11T08:42:43-05:00"
+}

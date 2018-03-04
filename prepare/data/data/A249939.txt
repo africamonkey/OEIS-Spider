@@ -1,0 +1,45 @@
+{
+    "number": 249939,
+    "data": "1,4,100,6244,727780,136330084,37455423460,14188457293924,7087539575975140,4514046217675793764,3570250394992512270820,3433125893070920512725604,3944372161432193963534198500,5336301013125557989981503385444,8396749419933421378024498580446180",
+    "name": "E.g.f.: 1/(5 - 4*cosh(x)).",
+    "comment": [
+        "a(n) = 4*A242858(2*n) for n>0.",
+        "a(n) = A249940(n)/3.",
+        "a(n) == 4 (mod 96) for n>0."
+    ],
+    "formula": [
+        "E.g.f.: 1/3 + (2/3)*Sum_{n>=1} exp(n^2*x) / 2^n  =  Sum_{n>=0} a(n)*x^n/n!.",
+        "a(n) = (4/3) * Sum_{k=0..2*n} k! * Stirling2(2*n, k) for n>0 with a(0)=1.",
+        "a(n) = Sum_{k=1..[(2*n+1)/3]} 2 * (3*k-1)! * Stirling2(2*n+1, 3*k) for n>0 with a(0)=3, after _Vladimir Kruchinin_ in A242858."
+    ],
+    "example": [
+        "E.g.f.: E(x) = 1 + 4*x^2/2! + 100*x^4/4! + 6244*x^6/6! + 727780*x^8/8! +...",
+        "where E(x) = 1/(5 - 4*cosh(x)) = -exp(x) / (2 - 5*exp(x) + 2*exp(2*x)).",
+        "ALTERNATE GENERATING FUNCTION.",
+        "E.g.f.: A(x) = 1 + 4*x + 100*x^2/2! + 6244*x^3/3! + 727780*x^4/4! +...",
+        "where 3*A(x) = 1 + 2*exp(x)/2 + 2*exp(4*x)/2^2 + 2*exp(9*x)/2^3 + 2*exp(16*x)/2^4 + 2*exp(25*x)/2^5 + 2*exp(36*x)/2^6 + 2*exp(49*x)/2^7 +..."
+    ],
+    "program": [
+        "(PARI) /* E.g.f.: 1/(5 - 4*cosh(x)) */",
+        "{a(n) = local(X=x+O(x^(2*n+1))); (2*n)!*polcoeff( 1/(5 - 4*cosh(X)), 2*n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) /* Formula for a(n): */",
+        "{Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)}",
+        "{a(n) = if(n==0, 1, sum(k=1, (2*n+1)\\3, 2*(3*k-1)! * Stirling2(2*n+1, 3*k)))}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) /* Formula for a(n): */",
+        "{Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)}",
+        "{a(n) = if(n==0, 1, (4/3)*sum(k=0, 2*n, k! * Stirling2(2*n, k) ))}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A249938, A249940, A247082, A250914, A250915, A242858."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 19 2014",
+    "references": 9,
+    "revision": 22,
+    "time": "2014-11-29T18:16:23-05:00",
+    "created": "2014-11-19T20:31:16-05:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 53031,
+    "data": "1,2,4,11,19,22,29,31,38,44,58,59,62,71,76,79,101,116,118,121,124,131,139,142,151,158,179,181,191,199,202,209,211,229,236,239,242,251,262,271,278,284,302,311,316,319,331,341,349,358,359,361,362,379,382,398",
+    "name": "Numbers with 1 zero in Fibonacci numbers mod m.",
+    "comment": [
+        "Conjecture: m is on this list iff m is an odd number all of whose factors are on this list or m is 2 or 4 times such an odd number.",
+        "A001176(a(n)) = A128924(a(n),1) = 1. - _Reinhard Zumkeller_, Jan 16 2014"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A053031/b053031.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "M. Renault, <a href=\"http://www.math.temple.edu/~renault/fibonacci/fiblist.html\">Fibonacci sequence modulo m</a>"
+    ],
+    "program": [
+        "(Haskell)",
+        "a053031 n = a053031_list !! (n-1)",
+        "a053031_list = filter ((== 1) . a001176) [1..]",
+        "-- _Reinhard Zumkeller_, Jan 16 2014",
+        "(PARI) entryp(p)=my(k=p+[0, -1, 1, 1, -1][p%5+1], f=factor(k)); for(i=1, #f[, 1],for(j=1, f[i, 2], if((Mod([1, 1; 1, 0], p)^(k/f[i, 1]))[1, 2], break); k/=f[i, 1])); k",
+        "entry(n)=if(n==1, return(1)); my(f=factor(n), v); v=vector(#f~, i, if(f[i, 1]>1e14, entryp(f[i, 1]^f[i, 2]), entryp(f[i, 1])*f[i, 1]^(f[i, 2]-1))); if(f[1, 1]==2&&f[1, 2]>1, v[1]=3<<max(f[1, 2]-2, 1)); lcm(v)",
+        "fibmod(n, m)=((Mod([1, 1; 1, 0], m))^n)[1, 2]",
+        "is(n)=fibmod(entry(n)+1,n)==1 \\\\ _Charles R Greathouse IV_, Dec 14 2016"
+    ],
+    "xref": [
+        "Cf. A001176, A053032.",
+        "Cf. A053029 (with 4 zeros), A053030 (with 2 zeros)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Henry Bottomley_, Feb 23 2000",
+    "references": 5,
+    "revision": 10,
+    "time": "2016-12-14T21:22:19-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

@@ -1,0 +1,52 @@
+{
+    "number": 279214,
+    "data": "0,0,0,0,0,0,2,40,792,15374,281434,5089060",
+    "name": "Number of permutations sigma such that |sigma(i+1)-sigma(i)| >= 3 for 1 <= i <= n - 1 and |sigma(i+2)-sigma(i)| >= 3 for 1 <= i <= n - 2.",
+    "comment": [
+        "2 | a(n)."
+    ],
+    "example": [
+        "a(9) = 2: 369258147, 741852963."
+    ],
+    "program": [
+        "(Ruby)",
+        "def check(d, a, i)",
+        "  return true if i == 0",
+        "  j = 1",
+        "  d_max = [i, d - 1].min",
+        "  while (a[i] - a[i - j]).abs >= d && j < d_max",
+        "    j += 1",
+        "  end",
+        "  (a[i] - a[i - j]).abs >= d",
+        "end",
+        "def solve(d, len, a = [])",
+        "  b = []",
+        "  if a.size == len",
+        "    b << a",
+        "  else",
+        "    (1..len).each{|m|",
+        "      s = a.size",
+        "      if s == 0 || (s > 0 && !a.include?(m))",
+        "        if check(d, a + [m], s)",
+        "          b += solve(d, len, a + [m])",
+        "        end",
+        "      end",
+        "    }",
+        "  end",
+        "  b",
+        "end",
+        "def A279214(n)",
+        "  (3..n).map{|b| solve(3, b).size}",
+        "end"
+    ],
+    "xref": [
+        "Cf. A002464 (|sigma(i+1)-sigma(i)| >= 2), A127697 (|sigma(i+1)-sigma(i)| >= 3)."
+    ],
+    "keyword": "nonn",
+    "offset": "3,7",
+    "author": "_Seiichi Manyama_, Dec 17 2016",
+    "references": 1,
+    "revision": 67,
+    "time": "2016-12-21T02:35:27-05:00",
+    "created": "2016-12-19T17:06:29-05:00"
+}

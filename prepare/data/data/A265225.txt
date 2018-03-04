@@ -1,0 +1,61 @@
+{
+    "number": 265225,
+    "data": "1,4,6,12,15,24,28,40,45,60,66,84,91,112,120,144,153,180,190,220,231,264,276,312,325,364,378,420,435,480,496,544,561,612,630,684,703,760,780,840,861,924,946,1012,1035,1104,1128,1200,1225,1300,1326,1404,1431",
+    "name": "Total number of ON (black) cells after n iterations of the \"Rule 54\" elementary cellular automaton starting with a single ON (black) cell.",
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 55."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A265225/b265225.txt\">Table of n, a(n) for n = 0..999</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2,-1,1)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Dec 08 2015: (Start)",
+        "a(n) = 1/4*(n+1)*(2*n-(-1)^n+5).",
+        "a(n) = a(n-1)+2*a(n-2)-2*a(n-3)-a(n-4)+a(n-5) for n>4.",
+        "G.f.: (1+3*x) / ((1-x)^3*(1+x)^2). (End)",
+        "a(n) = n + 1 + (n+1) * floor((n+1)/2). - _Wesley Ivan Hurt_, Dec 25 2016"
+    ],
+    "example": [
+        "From _Michael De Vlieger_, Dec 14 2015: (Start)",
+        "First 12 rows, replacing \"0\" with \".\" for better visibility of ON cells, followed by the total number of 1's per row, and the running total up to that row:",
+        "                        1                          =  1 ->  1",
+        "                      1 1 1                        =  3 ->  4",
+        "                    1 . . . 1                      =  2 ->  6",
+        "                  1 1 1 . 1 1 1                    =  6 -> 12",
+        "                1 . . . 1 . . . 1                  =  3 -> 15",
+        "              1 1 1 . 1 1 1 . 1 1 1                =  9 -> 24",
+        "            1 . . . 1 . . . 1 . . . 1              =  4 -> 28",
+        "          1 1 1 . 1 1 1 . 1 1 1 . 1 1 1            = 12 -> 40",
+        "        1 . . . 1 . . . 1 . . . 1 . . . 1          =  5 -> 45",
+        "      1 1 1 . 1 1 1 . 1 1 1 . 1 1 1 . 1 1 1        = 15 -> 60",
+        "    1 . . . 1 . . . 1 . . . 1 . . . 1 . . . 1      =  6 -> 66",
+        "  1 1 1 . 1 1 1 . 1 1 1 . 1 1 1 . 1 1 1 . 1 1 1    = 18 -> 84",
+        "1 . . . 1 . . . 1 . . . 1 . . . 1 . . . 1 . . . 1  =  7 -> 91",
+        "(End)"
+    ],
+    "maple": [
+        "A265225:=n->1/4*(n+1)*(2*n-(-1)^n+5): seq(A265225(n), n=0..100); # _Wesley Ivan Hurt_, Dec 25 2016"
+    ],
+    "mathematica": [
+        "rule = 54; rows = 30; Table[Total[Take[Table[Total[Table[Take[CellularAutomaton[rule,{{1},0},rows-1,{All,All}][[k]],{rows-k+1,rows+k-1}],{k,1,rows}][[k]]],{k,1,rows}],k]],{k,1,rows}]",
+        "Accumulate[Total /@ CellularAutomaton[54, {{1}, 0}, 52]] (* or *)",
+        "Table[SeriesCoefficient[(1 + 3 x)/((1 - x)^3 (1 + x)^2), {x, 0, n}], {n, 0, 52}] (* _Michael De Vlieger_, Dec 14 2015 *)"
+    ],
+    "program": [
+        "(PARI) Vec((1+3*x)/((1-x)^3*(1+x)^2) + O(x^100)) \\\\ _Colin Barker_, Dec 14 2015"
+    ],
+    "xref": [
+        "Cf. A071030, A118108, A118109, A133872."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Robert Price_, Dec 05 2015",
+    "references": 1,
+    "revision": 22,
+    "time": "2016-12-25T23:16:45-05:00",
+    "created": "2015-12-05T22:08:40-05:00"
+}

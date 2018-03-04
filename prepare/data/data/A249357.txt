@@ -1,0 +1,63 @@
+{
+    "number": 249357,
+    "data": "1,2,3,8,15,26,45,74,123,200,327,530,861,1396,2259,3656,5919,9578,15501,25082,40587,65672,106263,171938,278211,450151,728367,1178527,1906896,3085439,4992336,8077783,13070121,21147910,34218033,55365944,89583981,144949928,234533913,379483844,614017761,993501608",
+    "name": "Fibonacci-Zumkeller numbers: a(n)=n if n<=3, otherwise the smallest number >= a(n-2) + a(n-1) having at least one common factor with a(n-2), but none with a(n-1).",
+    "comment": [
+        "To construct Fibonacci-like sequence, we use a rule from the definition of A098550."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A249357/b249357.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "a(3)+a(4)=3+8=11. However, gcd(11,3)=1, further, gcd(12,8)>1, gcd(13,3)=1, gcd(14,8)>1, finally, gcd(15,3)>1 and gcd(15,8)=1. Thus 15 is the smallest number >11 which satisfies the definition. So a(5)=15."
+    ],
+    "maple": [
+        "for n from 1 to 3 do a[n]:= n od:",
+        "for n from 4 to 100 do",
+        "  for k from a[n-1]+a[n-2] do",
+        "    if igcd(k,a[n-2]) > 1 and igcd(k,a[n-1]) = 1 then",
+        "       a[n]:= k;",
+        "       break",
+        "    fi",
+        "  od",
+        "od:",
+        "seq(a[n],n=1..100); # _Robert Israel_, Dec 03 2014"
+    ],
+    "mathematica": [
+        "A249357={1,2,3};Do[AppendTo[A249357,NestWhile[#+1&,A249357[[-1]]+A249357[[-2]],!(GCD[#,A249357[[-1]]]==1&&GCD[#,A249357[[-2]]]>1)&]],{50}];A249357 (* _Peter J. C. Moses_, Dec 03 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n, show=1, a=3, o=2)={n<3&&return(n); show&&print1(\"1,2\"); for(i=4,n, show&&print1(\",\"a); k=a+o; until(gcd(k,o)>1 && gcd(k,a)==1,k++); o=a; a=k); a} \\\\ _M. F. Hasler_, Dec 03 2014",
+        "(Python)",
+        "from fractions import gcd",
+        "A249357_list, l1, l2 = [1,2,3], 3, 2",
+        "for _ in range(100):",
+        "....i = l1+l2",
+        "....while True:",
+        "........if gcd(i,l1) == 1 and gcd(i,l2) > 1:",
+        "............A249357_list.append(i)",
+        "............l2, l1 = l1, i",
+        "............break",
+        "........i += 1 # _Chai Wah Wu_, Dec 04 2014",
+        "(Haskell)",
+        "a249357 n = a249357_list",
+        "a249357_list = 1 : 2 : 3 : f 2 3 where",
+        "   f u v = y : f v y where",
+        "     y = head [x | x <- [u + v ..], gcd x u > 1, gcd x v == 1]",
+        "-- _Reinhard Zumkeller_, Dec 04 2014"
+    ],
+    "xref": [
+        "Cf. A000045, A098550.",
+        "Cf. A251608."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vladimir Shevelev_, Dec 03 2014",
+    "ext": [
+        "More terms from _M. F. Hasler_, Dec 03 2014"
+    ],
+    "references": 3,
+    "revision": 45,
+    "time": "2014-12-05T16:18:31-05:00",
+    "created": "2014-12-03T16:20:49-05:00"
+}

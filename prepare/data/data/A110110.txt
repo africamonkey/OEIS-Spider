@@ -1,0 +1,46 @@
+{
+    "number": 110110,
+    "data": "1,2,4,8,18,38,88,192,450,1002,2364,5336,12642,28814,68464,157184,374274,864146,2060980,4780008,11414898,26572086,63521352,148321344,354870594,830764794,1989102444,4666890936,11180805570,26283115038",
+    "name": "Number of symmetric Schroeder paths of length 2n (A Schroeder path of length 2n is a lattice path from (0,0) to (2n,0) consisting of U=(1,1), D=(1,-1) and H=(2,0) steps and never going below the x-axis).",
+    "comment": [
+        "a(n) = A026003(n-1)+A026003(n) (n>=1; indeed, every symmetric Schroeder path of length 2n is either a left factor L of length n-1 of a Schroeder path, followed by a H=(2,0) step and followed by the mirror image of L, or it is a left factor of length n of a Schroeder paths, followed by its mirror image).",
+        "a(n) is the number of sequences (f(n)) composed of n letters using letters a, b, c with the following rules. Each new sequence is built by adding a letter to the right end of a previous generation sequence. Letters a and b may not be adjacent. The number of c's <= n/2 in each sequence. Example: f(1) = {[a] [b]}, f(2) = {[aa], [ac], [bb], [bc]}, f(3) = {[aaa] [aac] [aca] [acb] [bbb] [bbc] [bcb] [bca]}. - _Roger Ford_, Jul 13 2014"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A110110/b110110.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Jacob A. Siehler, <a href=\"http://arxiv.org/abs/1409.3869\">Selections Without Adjacency on a Rectangular Grid</a>, arXiv:1409.3869 [math.CO], 2014, p.9."
+    ],
+    "formula": [
+        "G.f.: (1 + x) * ( -1 + sqrt( 1 - 6*x^2 + x^4) / (1 - 2*x - x^2)) / (2*x). - _Michael Somos_, Feb 07 2011",
+        "G.f.: (1+z)R(z^2)/[1-zR(z^2)], where R=1+zR+zR^2=[1-z-sqrt(1-6z+z^2)]/(2z) is the g.f. of the large Schroeder numbers.",
+        "a(2*n) = A050146(n+1). - _Michael Somos_, Feb 07 2011",
+        "From _Roger Ford_, May 25 2014: (Start)",
+        "a(2*n) = 3*a(2*n-1) - 2*A026003(2*n-2), n>0.",
+        "a(2*n+1) = a(2*n) + 2*A026003(2*n) - A006318(n).",
+        "(End)",
+        "a(n) ~ sqrt(6*sqrt(2)-8) * (1+sqrt(2))^(n+2)/ (2*sqrt(Pi*n)). - _Vaclav Kotesovec_, Mar 09 2016"
+    ],
+    "example": [
+        "a(2)=4 because we have HH, UDUD, UHD and UUDD.",
+        "1 + 2*x + 4*x^2 + 8*x^3 + 18*x^4 + 38*x^5 + 88*x^6 + 192*x^7 + 450*x^8 + ..."
+    ],
+    "maple": [
+        "RR:=(1-z^2-sqrt(1-6*z^2+z^4))/2/z^2: G:=(1+z)*RR/(1-z*RR): Gser:=series(G,z=0,36): 1,seq(coeff(Gser,z^n),n=1..33);"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1+x) * (-1 + Sqrt[1 - 6*x^2 + x^4] / (1 - 2*x - x^2)) / (2*x), {x, 0, 30}], x] (* _Vaclav Kotesovec_, Mar 09 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( (1 + x) * ( -1 + sqrt( 1 - 6*x^2 + x^4 + x^2 * O(x^n)) / (1 - 2*x - x^2)) / (2*x), n))} /* _Michael Somos_, Feb 07 2011 */"
+    ],
+    "xref": [
+        "Cf. A026003, A006318."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Emeric Deutsch_, Jul 12 2005",
+    "references": 3,
+    "revision": 37,
+    "time": "2017-02-08T20:59:36-05:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 91137,
+    "data": "1,2,12,24,720,1440,60480,120960,3628800,7257600,479001600,958003200,2615348736000,5230697472000,31384184832000,62768369664000,32011868528640000,64023737057280000,51090942171709440000",
+    "name": "Largest number m such that number of times m divides k! is almost k/n for large k, i.e., largest m with A090624(m)=n.",
+    "comment": [
+        "This is always a relatively small multiple of n!, since the multiplicity with which a prime p divides n! is always <= n/(p-1); it is equal to floor(n/(p-1)) at least when n is a power of p. - _Franklin T. Adams-Watters_, May 31 2010",
+        "At least for most small n, a(n) = A002790(n) * n!; the first difference is n=15. It appears that A002790(n) * n! always divides a(n).",
+        "Conjecture: The denominators of the series reversion of the sequence with e.g.f. Polylog(2,x). - _Benedict W. J. Irwin_, Jan 05 2017"
+    ],
+    "reference": [
+        "P. Curtz, Integration numerique ..., Note 12, C.C.S.A., Arcueil, 1969; see pp. 36, 56.",
+        "F. Hirzebruch, Topological Methods in Algebraic Geometry, Springer, 3rd. ed., 1966; Lemma 1.7.3, p. 14. [From _N. J. A. Sloane_, Sep 06 2010]"
+    ],
+    "formula": [
+        "a(n) = Product_p {p prime} p^floor(n/(p-1)).",
+        "a(2n+1) = 2*a(2n).",
+        "a(n+1) = A027760(n+1)*a(n). - _Paul Curtz_, Aug 01 2008"
+    ],
+    "example": [
+        "a(2) = 12 noting that 100! is a multiple of 12^48 and 48 is almost 100/2."
+    ],
+    "maple": [
+        "A091137 := proc(n) local a,i,p ; a := 1 ; for i from 1 do p := ithprime(i) ; if p > n+1 then break; fi; a := a*p^floor(n/(p-1)) ; od: a ; end: for n from 0 to 20 do printf(\"%a,\",A091137(n) ) ; od: # _R. J. Mathar_, Feb 23 2009"
+    ],
+    "mathematica": [
+        "A027760[n_] := Product[d, {d, Select[ Divisors[n] + 1, PrimeQ]}]; a[n_] := a[n] = A027760[n]*a[n-1]; a[0] = 1; Table[ a[n], {n, 0, 18}] (* _Jean-Fran\u00e7ois Alcover_, Oct 04 2011 *)",
+        "(* Conjecture - gives first 19 terms *) Rest@Denominator@Table[CoefficientList[InverseSeries[Series[PolyLog[2, x], {x, 0, 20}]], x][[n]] (n - 1)!, {n, 1, 20}] (* _Benedict W. J. Irwin_, Jan 05 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=local(r);r=1;forprime(p=2,n+1,r*=p^(n\\(p-1)));r \\\\ _Franklin T. Adams-Watters_, May 31 2010"
+    ],
+    "xref": [
+        "Starts similarly to A002207 especially for even n and all values of A002207 seen so far seem to divide a(n). Cf. A090622, A090624, A091136.",
+        "Cf. A171080.",
+        "Cf. A002790, A000142. - _Franklin T. Adams-Watters_, May 31 2010"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Henry Bottomley_, Dec 19 2003",
+    "references": 35,
+    "revision": 29,
+    "time": "2017-01-06T08:47:59-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

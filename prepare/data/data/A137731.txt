@@ -1,0 +1,86 @@
+{
+    "number": 137731,
+    "data": "1,1,2,7,40,355,4720,91690,2559980,101724390,5724370860,455400049575,51225573119870,8155535394029685,1840116104410154380,589128078915179209630,267942956094193363173030,173296035183231212307098790,159532934947213401229226873410",
+    "name": "Repeated set splitting, labeled elements.",
+    "comment": [
+        "Consider a set of n labeled elements. Form all splittings into two subsets. Consider the resulting sets and perform the splittings on all their subsets and so on. a(n+1) = number of splittings of the n-set {1,2,3,...,n}.",
+        "E.g. a(4) = 7 because we have {abc}, {ab}{c}, {ac}{b}, {bc}{a}, {{a}{b}}{c}, {{a}{c}}{b}, {{b}{c}}{a}. The case for unlabeled elements is described by A137732. This structure is related to the Double Factorials A000142 for which the recurrence is a(n) = sum(C(n-1,k) *a(k) *a(n-k), k=1..n-1) with a(1)=1, a(2)=1.",
+        "See also A137591 = Number of parenthesizings of products formed by n factors assuming noncommutativity and nonassociativity. See also the Catalan numbers A000108."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A137731/b137731.txt\">Table of n, a(n) for n = 1..70</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n-1} S2(n-1,k)*a(k)*a(n-k) with a(1)=1, where S2(n,k) denotes the Stirling numbers of the second kind."
+    ],
+    "example": [
+        "{a}.",
+        "{ab}, {a}{b}.",
+        "{abc}, {ab}{c}, {ac}{b}, {bc}{a}, {{a}{b}}{c}, {{a}{c}}{b}, {{b}{c}}{a}.",
+        "{abcd}, {abc}{d}, {abd}{c}, {acd}{b}, {bcd}{a},",
+        "{{ab}{c}}{d}, {{ab}{d}}{c}, {{ac}{d}}{b}, {{bc}{d}}{a},",
+        "{{ac}{b}}{d}, {{ad}{b}}{c}, {{ad}{c}}{b}, {{bd}{c}}{a},",
+        "{{bc}{a}}{d}, {{bd}{a}}{c}, {{cd}{a}}{b}, {{cd}{b}}{a},",
+        "{{{a}{b}}{c}}{d}, {{{a}{b}}{d}}{c}, {{{a}{c}}{d}}{b}, {{{b}{c}}{d}}{a},",
+        "{{{a}{c}}{b}}{d}, {{{a}{d}}{b}}{c}, {{{a}{d}}{c}}{b}, {{{b}{d}}{c}}{a},",
+        "{{{b}{c}}{a}}{d}, {{{b}{d}}{a}}{c}, {{{c}{d}}{a}}{b}, {{{c}{d}}{b}}{a},",
+        "{{ab}{cd}}, {{ac}{bd}}, {{ad}{bc}},",
+        "{{{a}{b}}{cd}}, {{{a}{c}}{bd}}, {{{a}{d}}{bc}},",
+        "{{ab}{{c}{d}}}, {{ac}{{b}{d}}}, {{ad}{{b}{c}}},",
+        "{{{a}{b}}{{c}{d}}}, {{{a}{c}}{{b}{d}}}, {{{a}{d}}{{b}{c}}}."
+    ],
+    "maple": [
+        "A137731 := proc(n) option remember ; local k ; if n = 1 then 1; else add(combinat[stirling2](n-1,k)*procname(k)*procname(n-k),k=1..n-1) ; fi; end: for n from 1 to 20 do printf(\"%d,\",A137731(n)) ; od: # _R. J. Mathar_, Aug 25 2008"
+    ],
+    "program": [
+        "Sub A137731() ' This is a VBA program.",
+        "Dim n As Long, nstart As Long, nend As Long",
+        "Dim k As Long, HSumme As Long, H(100) As Long",
+        "nstart = 2",
+        "nend = 10",
+        "H(1) = 1",
+        "For n = nstart To nend",
+        "HSumme = 0",
+        "For k = 1 To n - 1",
+        "HSumme = HSumme + Stirling2(n - 1, k) * H(k) * H(n - k)",
+        "Next k",
+        "H(n) = HSumme",
+        "Next n",
+        "Debug.Print H(1), H(2), H(3), H(4), H(5), H(6), H(7), H(8), H(9), H(10)",
+        "End Sub",
+        "Function Stirling2(n As Long, k As Long)",
+        "Dim i As Long, Summe As Long",
+        "Summe = 0",
+        "For i = 0 To k",
+        "Summe = Summe + ((-1) ^ i) * binomial(k, i) * (k - i) ^ n",
+        "Next i",
+        "Stirling2 = (1 / faculty(k)) * Summe",
+        "End Function",
+        "Function binomial(m As Long, n As Long)",
+        "Dim Result As Long",
+        "Result = faculty(m) / (faculty(m - n) * faculty(n))",
+        "binomial = Result",
+        "End Function",
+        "Function faculty(n As Long)",
+        "Dim Result As Long, i As Long",
+        "Result = 1",
+        "For i = 2 To n",
+        "Result = Result * i",
+        "Next i",
+        "faculty = Result",
+        "End Function"
+    ],
+    "xref": [
+        "Cf. A000108, A000142, A137591, A137732."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Thomas Wieder_, Feb 09 2008",
+    "ext": [
+        "Extended by _R. J. Mathar_, Aug 25 2008"
+    ],
+    "references": 3,
+    "revision": 11,
+    "time": "2015-10-03T23:01:27-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

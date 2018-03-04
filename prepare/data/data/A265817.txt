@@ -1,0 +1,39 @@
+{
+    "number": 265817,
+    "data": "2,5,7,11,17,29,71,4139,5573,6361,9293,17159,18089",
+    "name": "Denominators of upper primes-only best approximates (POBAs) to e; see Comments.",
+    "comment": [
+        "Suppose that x > 0. A fraction p/q of primes is an upper primes-only best approximate, and we write \"p/q is in U(x)\", if p'/q < x < p/q < u/v for all primes u and v such that v < q, where p' is greatest prime < p in case p >= 3.",
+        "Let q(1) = 2 and let p(1) be the least prime >= x. The sequence U(x) follows inductively:  for n >= 1, let q(n) is the least prime q such that x < p/q < p(n)/q(n) for some prime p.  Let q(n+1) = q and let p(n+1) be the least prime p such that x < p/q < p(n)/q(n).",
+        "For a guide to POBAs, lower POBAs, and upper POBAs, see A265759."
+    ],
+    "example": [
+        "The upper POBAs to e start with 77/2, 17/5, 23/7, 31/11, 47/17, 79/29, 193/71, 11251/4139.  For example, if p and q are primes and q > 71, and p/q > e, then 193/71 is closer to e than p/q is."
+    ],
+    "mathematica": [
+        "x = E; z = 1000; p[k_] := p[k] = Prime[k];",
+        "t = Table[Max[Table[NextPrime[x*p[k], -1]/p[k], {k, 1, n}]], {n, 1, z}];",
+        "d = DeleteDuplicates[t]; tL = Select[d, # > 0 &] (*lower POBA*)",
+        "t = Table[Min[Table[NextPrime[x*p[k]]/p[k], {k, 1, n}]], {n, 1, z}];",
+        "d = DeleteDuplicates[t]; tU = Select[d, # > 0 &] (*upper POBA*)",
+        "v = Sort[Union[tL, tU], Abs[#1 - x] > Abs[#2 - x] &];",
+        "b = Denominator[v]; s = Select[Range[Length[b]], b[[#]] == Min[Drop[b, # - 1]] &];",
+        "y = Table[v[[s[[n]]]], {n, 1, Length[s]}] (*POBA,A265818/A265819*)",
+        "Numerator[tL]   (*A265814*)",
+        "Denominator[tL] (*A265815*)",
+        "Numerator[tU]   (*A265816*)",
+        "Denominator[tU] (*A265817*)",
+        "Numerator[y]    (*A265818*)",
+        "Denominator[y]  (*A265819*)"
+    ],
+    "xref": [
+        "Cf. A000040, A265759, A265814, A265815, A265816, A265818, A265819."
+    ],
+    "keyword": "nonn,frac,more",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jan 06 2016",
+    "references": 7,
+    "revision": 4,
+    "time": "2016-01-09T14:24:10-05:00",
+    "created": "2016-01-09T14:24:10-05:00"
+}

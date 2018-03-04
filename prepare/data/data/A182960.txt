@@ -1,0 +1,39 @@
+{
+    "number": 182960,
+    "data": "1,5,95,2496,76063,2524161,88534548,3228482908,121171012431,4649906785719,181614908182551,7196014051078368,288537887780406468,11686156771344086156,477379538839242423528,19645977861506470428324",
+    "name": "G.f.: exp( Sum_{n>=1} C(6n-1,2n-1)*x^n/n ).",
+    "comment": [
+        "The logarithmic derivative of this sequence is a bisection of the logarithmic derivative of A001764 (ternary trees).",
+        "To see this, compare the g.f. of this sequence with g.f. of A001764:",
+        "exp(Sum_{n>=1} C(3n-1,n-1)*x^n/n) = 1 + x + 3*x^2 + 12*x^3 + 55*x^4 +..."
+    ],
+    "formula": [
+        "G.f. A(x) satisfies: A(x^2) = F(x)*F(-x) where F(x) = 1 + x*F(x)^3 = Sum_{n>=0} C(3n,n)*x^n/(2n+1) is the g.f. of A001764.",
+        "Let G(x) = 2*(1+x)^2/(1-2*x+sqrt(1-8*x)), then g.f. A(x) satisfies:",
+        "* A(x) = G(x*A(x)^3) and A(x/G(x)^3) = G(x);",
+        "* A(x) = [Series_Reversion( x/G(x)^3 ) / x]^(1/3)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 5*x + 95*x^2 + 2496*x^3 + 76063*x^4 + 2524161*x^5 +...",
+        "log(A(x)) = 5*x + 165*x^2 + 6188*x^3 + 245157*x^4 + 10015005*x^5 +...+ A025174(2n)*x^n/n +...",
+        "G.f. satisfies: A(x) = G(x*A(x)^3) where G(x) begins:",
+        "G(x) = 1 + 5*x + 20*x^2 + 96*x^3 + 528*x^4 + 3136*x^5 + 19584*x^6 +..."
+    ],
+    "mathematica": [
+        "f[n_] := Exp[ Sum[ Binomial[6 i - 1, 2 i - 1]*x^i/i, {i, n}]]; CoefficientList[ Series[f@ 15, {x, 0, 15}], x]  (* _Robert G. Wilson v_, Dec 31 2010 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1,n,binomial(6*m-1,2*m-1)*x^m/m)+x*O(x^n)),n)}",
+        "(PARI) {a(n)=polcoeff((serreverse(x*(1-2*x+sqrt(1-8*x+x*O(x^n)))^3/(8*(1+x)^6))/x)^(1/3),n)}"
+    ],
+    "xref": [
+        "Cf. A182959, A025174, A001764."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 31 2010",
+    "references": 1,
+    "revision": 12,
+    "time": "2015-03-15T19:01:00-04:00",
+    "created": "2010-12-15T21:20:24-05:00"
+}

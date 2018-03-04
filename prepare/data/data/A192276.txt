@@ -1,0 +1,45 @@
+{
+    "number": 192276,
+    "data": "3,4,6,8,12,15,16,21,24,25,30,35,36,40,48,51,54,55,60,63,64,65,69,70,72,75,80,84,90,96,100,112,114,120,125,126,133,140,141,143,147,155,156,160,161,171,174,180,189,190,200,205,207,210,216,220,231,240",
+    "name": "Numbers n such that the number of anti-divisors of n divides n.",
+    "comment": [
+        "Like A033950 but using anti-divisors."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A192276/b192276.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "There are 3 anti-divisors of 30: 4, 12, 10; 3 divides 30, so 30 is in the sequence."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "P:=proc(i)",
+        "local a,b,k,n;",
+        "for n from 3 by 1 to i do",
+        "   a:={};",
+        "   for k from 2 to n-1 do if abs((n mod k)- k/2) < 1 then a:=a union {k}; fi; od;",
+        "   b:=nops(a);",
+        "   if trunc(n/b)=n/b then print(n); fi;",
+        "od;",
+        "end:",
+        "P(10000);"
+    ],
+    "mathematica": [
+        "Select[Range[3, 400], Function[n, Mod[n, Length@Select[Range[2, n - 1], Abs[Mod[n, #] - #/2] < 1 &]] == 0]] (* _Olivier G\u00e9rard_, Jul 05 2011 *)"
+    ],
+    "program": [
+        "(MAGMA) Antidivisors:=func< n | [ d: d in [1..n-1] | n mod d ne 0 and ((IsEven(d) and 2*n mod d eq 0) or (IsOdd(d) and ((2*n-1) mod d eq 0 or (2*n+1) mod d eq 0))) ] >; [ n: n in [3..10^4] | IsDivisibleBy(n,#Antidivisors(n)) ];  // _Bruno Berselli_, Jul 06 2011",
+        "(Python)",
+        "[n for n in xrange(3,10**5) if not n % len([d for d in xrange(2,n) if n%d and 2*n%d in [d-1,0,1]])] # _Chai Wah Wu_, Aug 08 2014"
+    ],
+    "xref": [
+        "Cf. A033950, A066272."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jul 05 2011",
+    "references": 1,
+    "revision": 18,
+    "time": "2014-08-08T17:24:47-04:00",
+    "created": "2011-07-12T13:02:22-04:00"
+}

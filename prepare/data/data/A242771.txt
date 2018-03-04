@@ -1,0 +1,44 @@
+{
+    "number": 242771,
+    "data": "0,0,1,3,6,9,14,19,25,32,40,48,58,68,79,91,104,117,132,147,163,180,198,216,236,256,277,299,322,345,370,395,421,448,476,504,534,564,595,627,660,693,728,763,799,836,874,912,952,992,1033,1075,1118,1161,1206",
+    "name": "Number of integer points in a certain quadrilateral scaled by a factor of n (another version).",
+    "comment": [
+        "The quadrilateral is given by four vertices [(1/2, 1/3), (0, 1), (0, 0), (1, 0)] as an example on page 22 of Ehrhart 1967. Here the open line segment from (1/2, 1/3) to (0, 1) is included but the rest of the boundary is not. The sequence is denoted by d'(n)."
+    ],
+    "link": [
+        "E. Ehrhart, <a href=\"http://dx.doi.org/10.1515/crll.1967.226.1\">Sur un probl\u00e8me de g\u00e9om\u00e9trie diophantienne lin\u00e9aire I</a>, (Poly\u00e8dres et r\u00e9seaux), J. Reine Angew. Math. 226 1967 1-29. MR0213320 (35 #4184).",
+        "E. Ehrhart, <a href=\"/A002789/a002789.pdf\">Sur un probl\u00e8me de g\u00e9om\u00e9trie diophantienne lin\u00e9aire I, (Poly\u00e8dres et r\u00e9seaux)</a>, J. Reine Angew. Math. 226 1967 1-29. MR0213320 (35 #4184). [Annotated scanned copy of pages 16 and 22 only]",
+        "E. Ehrhart, <a href=\"/A002789/a002789_1.pdf\">Sur un probl\u00e8me de g\u00e9om\u00e9trie diophantienne lin\u00e9aire II. Systemes diophantiens lineaires</a>, J. Reine Angew. Math. 227 1967 25-49. [Annotated scanned copy of pages 47-49 only]",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Ehrhart_polynomial\">Ehrhart polynomial</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,0,-1,-1,1)."
+    ],
+    "formula": [
+        "G.f.: x^3 * (1 + 2*x + 2*x^2) / (1 - x - x^2 + x^4 + x^5 - x^6) = (x^3 + x^4 + x^5 + 2*x^7) / ((1 - x)^2 * (1 - x^6)).",
+        "a(n) = floor( A147874(n) / 12).",
+        "a(-n) = A002789(n).",
+        "a(n+1) - a(n) = A010761(n)."
+    ],
+    "example": [
+        "G.f. = x^3 + 3*x^4 + 6*x^5 + 9*x^6 + 14*x^7 + 19*x^8 + 25*x^9 + 32*x^10 + ..."
+    ],
+    "mathematica": [
+        "a[ n_] := Quotient[ 7 - 12 n + 5 n^2, 12];",
+        "a[ n_] := With[ {o = Boole[ 0 < n], c = Boole[ 0 >= n], m = Abs@n}, Length @ FindInstance[ 0 < c + x && 0 < c + y && (2 x < c + m && 4 x + 3 y < o + 3 m || m < o + 2 x && 2 x + 3 y < c + 2 m), {x, y}, Integers, 10^9]];",
+        "LinearRecurrence[{1,1,0,-1,-1,1},{0,0,1,3,6,9},90] (* _Harvey P. Dale_, May 28 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = (7 - 12*n + 5*n^2) \\ 12};",
+        "(PARI) {a(n) = if( n<0, polcoeff( x * (2 + x^2 + x^3 + x^4) / ((1 - x)^2 * (1 - x^6)) + x * O(x^-n), -n), polcoeff( x^3 * (1 + x + x^2 + 2*x^4) / ((1 - x)^2 * (1 - x^6)) + x * O(x^n), n))};",
+        "(MAGMA) [Floor((5*n-7)*(n-1)/12): n in [1..60]]; // _Vincenzo Librandi_, Jun 27 2015"
+    ],
+    "xref": [
+        "Cf. A002789, A010761, A147874."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Michael Somos_, May 22 2014",
+    "references": 1,
+    "revision": 24,
+    "time": "2015-10-23T19:40:10-04:00",
+    "created": "2014-05-22T08:41:00-04:00"
+}

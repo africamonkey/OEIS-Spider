@@ -1,0 +1,52 @@
+{
+    "number": 134980,
+    "data": "1,2,10,77,799,10427,163967,3017562,63625324,1512354975,40012800675,1166271373797,37134022033885,1282405154139046,47745103281852282,1906411492286148245,81267367663098939459,3683790958912910588623,176937226305157687076779",
+    "name": "a(n) = Sum_{k=0..n} binomial(n,k)*n^(n-k)*A000110(k).",
+    "comment": [
+        "Main diagonal of array \"The first r-Bell numbers\" from r=0 and from n=0, p.3 of Mezo, A108087. First 7 rows and columns of array shown. [_Jonathan Vos Post_, Sep 25 2009]"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A134980/b134980.txt\">Table of n, a(n) for n = 0..385</a>",
+        "R. Jakimczuk, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL14/Jakimczuk2/jakimczuk17.html\">Successive Derivatives and Integer Sequences</a>, J. Int. Seq. 14 (2011) # 11.7.3.",
+        "Istvan Mezo, <a href=\"http://arxiv.org/abs/0909.4417\">The r-Bell numbers</a>, arXiv:0909.4417 [math.CO], 2009-2010.",
+        "I. Mezo, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL14/Mezo/mezo9.html\">The r-Bell numbers</a>, J. Int. Seq. 14 (2011) # 11.1.1."
+    ],
+    "formula": [
+        "a(n) = exp(-1)*Sum_{k>=0} (n+k)^n/k!.",
+        "E.g.f.: A(x) = exp(-1)*Sum_{k>=0} (1+k*x)^k/k!.",
+        "a(n) = Sum_{k=0..n} Stirling1(n,k)*A000110(n+k). [_Vladeta Jovovic_, Nov 08 2009]",
+        "a(n) = n! * [x^n] exp(exp(x) + n*x - 1). - _Ilya Gutkovskiy_, Sep 26 2017"
+    ],
+    "maple": [
+        "with(combinat): a := n -> add(binomial(n, k)*n^(n-k)*bell(k), k=0..n):",
+        "1, seq(a(n), n=1..20); # _Emeric Deutsch_, Mar 02 2008",
+        "# Alternate:",
+        "g:= proc(n) local S;",
+        "  S:= series(exp(exp(x)+n*x-1),x,n+1);",
+        "n!*coeff(S,x,n);",
+        "end proc:",
+        "map(g, [$0..30]); # _Robert Israel_, Sep 29 2017"
+    ],
+    "mathematica": [
+        "a[n_] := n!*SeriesCoefficient[Exp[Exp[x] + n*x - 1], {x, 0, n}]; Array[a, 19, 0] (* _Jean-Fran\u00e7ois Alcover_, Sep 28 2017, after _Ilya Gutkovskiy_ *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A134980(n):",
+        "    return add(binomial(n, k)*n^(n-k)*bell_number(k) for k in (0..n))",
+        "[A134980(n) for n in (0..18)]  # _Peter Luschny_, May 05 2013"
+    ],
+    "xref": [
+        "Cf. A108087."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Vladeta Jovovic_, Feb 04 2008",
+    "ext": [
+        "More terms from _Emeric Deutsch_, Mar 02 2008"
+    ],
+    "references": 4,
+    "revision": 31,
+    "time": "2017-09-29T04:52:09-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

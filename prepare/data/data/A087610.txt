@@ -1,0 +1,47 @@
+{
+    "number": 87610,
+    "data": "3,5,12,34,104,292,916,2791,8660,26538,81584,248554",
+    "name": "Number of (-1,0,1) polynomials of degree-n irreducible over the integers.",
+    "comment": [
+        "A (-1,0,1) polynomial is defined as a monic polynomial whose remaining coefficients are either -1, 0, or 1. For each n, there are 3^n polynomials to consider."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/IrreduciblePolynomial.html\">Irreducible Polynomial</a>"
+    ],
+    "example": [
+        "a(2) = 5 because 1+x+x^2, 1+x^2, 1-x+x^2, -1+x+x^2, -1-x+x^2 are irreducible over the integers."
+    ],
+    "maple": [
+        "F:= proc(n) local T, count, t,x,p;",
+        "      if n::odd then",
+        "        T:= combinat:-cartprod([[-1,0,1]$(n-1),[1]])",
+        "      else",
+        "        T:= combinat:-cartprod([[-1,0,1]$(n-1),[-1,1]])",
+        "      fi;",
+        "      count:= 0;",
+        "      while not T[finished] do",
+        "         t:= T[nextvalue]();",
+        "         p:= x^n + add(t[i]*x^(n-i),i=1..n);",
+        "         if irreduc(p) then count:= count+1 fi;",
+        "      od;",
+        "      if n::odd then 2*count else count fi;",
+        "end proc:",
+        "3, seq(F(n),n=2..11); # _Robert Israel_, Dec 10 2015"
+    ],
+    "mathematica": [
+        "Irreducible[p_, n_] := Module[{f}, f=FactorList[p, Modulus->n]; Length[f]==1 || Simplify[p-f[[2, 1]]]===0]; Table[xx=x^Range[0, n-1]; cnt=0; Do[p=x^n+xx.(IntegerDigits[i, 3, n]-1); If[Irreducible[p, 0], cnt++ ], {i, 0, 3^n-1}]; cnt, {n, 10}]"
+    ],
+    "xref": [
+        "Cf. A087481 (irreducible polynomials of the form x^n +- x^(n-1) +- x^(n-2) +- ... +- 1), A087482 (irreducible binary polynomials)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_T. D. Noe_, Sep 11 2003",
+    "ext": [
+        "a(11) and a(12) from _Robert Israel_, Dec 10 2015"
+    ],
+    "references": 6,
+    "revision": 12,
+    "time": "2015-12-10T16:50:47-05:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 192808,
+    "data": "1,2,6,26,126,618,3022,14746,71902,350538,1708910,8331130,40615294,198004778,965298958,4705957722,22942154782,111845982474,545263681710,2658231220538,12959222223038,63177890368490,308000415667278,1501542003033370",
+    "name": "Constant term in the reduction of the polynomial (x^2+2)^n by x^3->x^2+2.  See Comments.",
+    "comment": [
+        "For discussions of polynomial reduction, see A192232 and A192744.",
+        "If the reduction (x^2+c)^n by x^3->x^2+c is applied to the polynomials (x^2+c)^n for c=1 instead of c=2, the results are as follows:",
+        "A052554: constant terms,",
+        "A052529: coefficients of x,",
+        "A124820: coefficients of x^2.",
+        "Those three sequences satisfy the recurrence:",
+        "u(n)=4*u(n-1)-3*u(n-2)+u(n-3)."
+    ],
+    "link": [
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (7,-12,8)."
+    ],
+    "formula": [
+        "a(n)=7*a(n-1)-12*a(n-2)+8*a(n-3).",
+        "G.f.: (1-x)*(1-4*x)/(1-7*x+12*x^2-8*x^3). [_Colin Barker_, Jul 26 2012]"
+    ],
+    "mathematica": [
+        "q = x^3; s = x^2 + 2; z = 40;",
+        "p[n_, x_] := (x^2 + 2)^n;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "  (* A192808 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "  (* A192809 *)",
+        "u3 = Table[Coefficient[Part[t, n], x, 2], {n, 1, z}]",
+        "  (* A192810 *)",
+        "uu = u2/2, {n, 1, z}]  (* A192811 *)"
+    ],
+    "xref": [
+        "Cf. A192744, A192232, A192808-A192811."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, Jul 10 2011",
+    "references": 4,
+    "revision": 12,
+    "time": "2015-06-13T00:53:54-04:00",
+    "created": "2011-07-11T11:10:27-04:00"
+}

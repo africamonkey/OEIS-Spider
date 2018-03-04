@@ -1,0 +1,45 @@
+{
+    "number": 7996,
+    "data": "2,3,7,13,43,73,139,181,547,607,1033,1171,1459,1861,1987,2029,2287,2437,4219,4519,6469,7603,8221,9829,12763,13147,13291,13999,15373,17881,17977,19597,20161,20479,20641,20857,20929,21661,23689,23773,27031",
+    "name": "Primes that divide at least one term of the sequence f given by f(1) = 2, f(n+1) = f(n)^2-f(n)+1 = A000058(n).",
+    "comment": [
+        "Or, let S_1 = [2] and let S_{n+1} = list formed by sorting the union of S_n together with all prime factors of 1 + Product_i S_n(i) into increasing order; sequence is limit as n -> infinity of S_n.",
+        "Prime divisors of the terms of Sylvester's sequence A000058. - _Max Alekseyev_, Jan 03 2004. Also of A007018. - _N. J. A. Sloane_, Jan 27 2007",
+        "Because all terms of the sequence f(n) are coprime, a prime can divide at most one term. Odoni shows that primes p>3 in this sequence must satisfy p=1 (mod 6). - _T. D. Noe_, Sep 25 2010",
+        "See A180871(n) for the index of the first term of A000058 (this is one less than the index of the f-sequence) divisible by a(n). - _M. F. Hasler_, Apr 24 2014"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A007996/b007996.txt\">Table of n, a(n) for n = 1..8181</a> (all primes < 2^32, from Andersen)",
+        "Jens Kruse Andersen, <a href=\"http://primerecords.dk/sylvester-factors.htm\">Factorization of Sylvester's sequence</a>",
+        "R. Mestrovic, <a href=\"http://arxiv.org/abs/1202.3670\">Euclid's theorem on the infinitude of primes: a historical survey of its proofs (300 BC--2012) and another new proof</a>, arXiv preprint arXiv:1202.3670, 2012 - From N. J. A. Sloane, Jun 13 2012",
+        "R. W. K. Odoni, <a href=\"http://jlms.oxfordjournals.org/content/s2-32/1/1.extract\">On the prime divisors of the sequence w_{n+1} = 1+w_1 ... w_n</a>, J. London Math. Soc. 32 (1985), 1-11.",
+        "Filip Saidak, <a href=\"http://www.jstor.org/stable/27642094\">A New Proof of Euclid's Theorem</a>, Amer. Math. Monthly, Dec 2006",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SylvestersSequence.html\">Sylvester's sequence</a>"
+    ],
+    "maple": [
+        "n := 1; for p do if isprime(p) then x := 2 mod p; S := {}; while not member(x,S) do if x=0 then a[n] := p; n := n+1; break; fi; S := S union {x}; x := (x^2-x+1) mod p; od; fi; od;"
+    ],
+    "mathematica": [
+        "t={}; p=1; While[Length[t]<100, p=NextPrime[p]; s=Mod[2,p]; k=0; modSet={}; While[s>0 && !MemberQ[modSet,s], AppendTo[modSet,s]; k++; s=Mod[s^2-s+1,p]]; If[s==0, AppendTo[t,{p,k}]]]; Transpose[t][[1]] (* _T. D. Noe_, Sep 25 2010 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(k=Mod(2,n)); for(i=1, n, k=(k-1)*k+1; if(k==0, return(isprime(n)))); n==2 \\\\ _Charles R Greathouse IV_, Sep 30 2015"
+    ],
+    "xref": [
+        "The missing primes form A096264.",
+        "Cf. A014546, A091335, A091336.",
+        "Cf. A180871 (k such that a(n) divides A000058(k))."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Bennett Battaile (bennett.battaile(AT)autodesk.com)",
+    "ext": [
+        "More terms from _Max Alekseyev_, Jan 03 2004",
+        "Entry revised by _N. J. A. Sloane_, Jan 28 2007",
+        "Definition corrected (following a remark by _Don Reble_) by _M. F. Hasler_, Apr 24 2014"
+    ],
+    "references": 8,
+    "revision": 39,
+    "time": "2017-10-19T10:43:02-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

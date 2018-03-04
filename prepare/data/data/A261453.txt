@@ -1,0 +1,56 @@
+{
+    "number": 261453,
+    "data": "101,121,131,141,151,161,171,181,191,202,212,232,242,252,262,272,282,292,303,313,323,343,353,363,373,383,393,404,414,424,434,454,464,474,484,494,505,515,525,535,545,565,575,585,595,606,616,626,636,646,656,676",
+    "name": "Near-repdigit palindromes with an odd number of digits and all digits except the middle digit equal.",
+    "comment": [
+        "a(n) = A002113(A210666(A001633(n)))."
+    ],
+    "link": [
+        "<a href=\"/A261453/b261453.txt\">Table of n, a(n) for n = 1..171</a>"
+    ],
+    "maple": [
+        "isA261453 := proc(n)",
+        "    local ndgs,dgs,d ;",
+        "    if isA002113(n) then",
+        "        ndgs := A055642(n) ;",
+        "        if type(ndgs,'odd') and A043537(n) = 2 then",
+        "            dgs := convert(n,base,10) ;",
+        "            for d from 2 to nops(dgs)/2 do",
+        "                if op(d,dgs) <> op(d-1,dgs) then",
+        "                    return false;",
+        "                end if;",
+        "            end do:",
+        "            true ;",
+        "        else",
+        "            false;",
+        "        end if;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "n := 1:",
+        "for i from 100 to 2000000 do",
+        "    if isA261453(i) then",
+        "        printf(\"%d %d\\n\",n,i) ;",
+        "        n := n+1 ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Sep 30 2015"
+    ],
+    "mathematica": [
+        "id[n_]:=IntegerDigits[n];len[n_]:=Length[id[n]];",
+        "del[n_]:=Delete[id[n],Ceiling[len[id[n]]/2]];",
+        "u[n_]:=Union[del[id[n]]];",
+        "Select[Range[10^5],StringMatchQ[ToString[#],a__~~b_~~a__]&&Length[u[#]]==1&&u[#]!= Union[id[#]]&] (* _Ivan N. Ianakiev_, Sep 06 2015 *)"
+    ],
+    "xref": [
+        "Subsequence of A088882.",
+        "Cf. A001633, A002113, A210666."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, Aug 25 2015",
+    "references": 1,
+    "revision": 25,
+    "time": "2015-09-30T04:26:17-04:00",
+    "created": "2015-09-05T14:01:52-04:00"
+}

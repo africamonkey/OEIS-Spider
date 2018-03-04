@@ -1,0 +1,34 @@
+{
+    "number": 275787,
+    "data": "1,5,41,509,8469,176217,4400325,128203049,4268957449,159922273421,6656731517249,304797275277365,15224868078068845,823874409422614577,48012621942105876301,2997884066292303095889,199666128081901473290833,14129411123649333432720277,1058688691179737704258634521,83732563305101190468369022317,6971039973751002759723517967941",
+    "name": "Number of cells in the two-sided Coxeter complex of type B_n.",
+    "link": [
+        "Evgeniy Krasko, <a href=\"https://arxiv.org/abs/1709.00796\">Counting Unlabelled Chord Diagrams of Maximal Genus</a>, arXiv:1709.00796 [math.CO], 2017.",
+        "T. K. Petersen, <a href=\"http://arxiv.org/abs/1607.00086\">A two-sided analogue of the Coxeter complex</a>, arXiv:1607.00086 [math.CO], (2016)"
+    ],
+    "maple": [
+        "B:=proc(n) local f;",
+        "option remember;",
+        "if n=1 then 1+s*t;",
+        "elif n>1 then",
+        "f:=B(n-1);",
+        "RETURN(simplify( (2*n*s*t-s*t+1)*f+(2*s*t*(1-s)+s/n*(1-s)*(1-t))*diff(f,s) + (2*s*t*(1-t)+t/n*(1-s)*(1-t))*diff(f,t) + 2/n*s*t*(1-s)*(1-t)*diff( diff(f,s),t) ));",
+        "fi;",
+        "end:",
+        "seq(eval(eval(subs(s=x/(1+x),t=y/(1+y), B(n))*(1+x)^n*(1+y)^n,y=1),x=1), n=1..30);"
+    ],
+    "mathematica": [
+        "B[n_] := B[n] = Which[n == 1, 1 + s*t, n > 1, f = B[n - 1]; Return[ Simplify[ (2*n*s*t - s*t + 1)*f + (2*s*t*(1 - s) + s/n*(1 - s)*(1 - t))*D[f, s] + (2*s*t*(1 - t) + t/n*(1 - s)*(1 - t))*D[f, t] + 2/n*s*t*(1 - s)*(1 - t)*D[ D[f, s], t]]]];",
+        "Join[{1}, Table[bn = ((B[n] /. {s -> x/(1 + x), t -> y/(1 + y)})*(1 + x)^n*(1 + y)^n /. {y -> 1, x -> 1}); Print[bn]; bn, {n, 1, 20}]] (* _Jean-Fran\u00e7ois Alcover_, Nov 27 2017, from Maple *)"
+    ],
+    "xref": [
+        "Cf. A120733 gives the number of cells for type A_n."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Kyle Petersen_, Aug 09 2016",
+    "references": 2,
+    "revision": 19,
+    "time": "2017-11-27T05:50:04-05:00",
+    "created": "2016-08-09T17:18:07-04:00"
+}

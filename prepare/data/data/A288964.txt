@@ -1,0 +1,42 @@
+{
+    "number": 288964,
+    "data": "0,0,2,16,116,888,7416,67968,682272,7467840,88678080,1136712960,15655438080,230672171520,3621985113600,60392753971200,1065907048550400,19855856150323200,389354639411404800,8017578241634304000,172991656889856000000,3903132531903897600000",
+    "name": "Number of key comparisons to sort all n! permutations of n elements by quicksort.",
+    "link": [
+        "Daniel Krenn, <a href=\"/A288964/b288964.txt\">Table of n, a(n) for n = 0..100</a>",
+        "<a href=\"/index/So#sorting\">Index entries for sequences related to sorting</a>"
+    ],
+    "formula": [
+        "a(n) / n! = 2*(n+1)*H(n) - 4*n.",
+        "c(n) = a(n) / n! satisfies c(n) = (n-1) + 2/n * Sum_{i < n} c(i).",
+        "a(n) = 2*A002538(n-1), n >= 2. - _Omar E. Pol_, Jun 20 2017",
+        "E.g.f.: -2*log(1-x)/(1-x)^2 - 2*x/(1-x)^2. - _Daniel Krenn_, Jun 20 2017",
+        "a(n) = ((2*n^2-3*n-1)*a(n-1) -(n-1)^2*n*a(n-2))/(n-2) for n >= 3, a(n) = n*(n-1) for n<3. - _Alois P. Heinz_, Jun 21 2017"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<3, n*(n-1),",
+        "      ((2*n^2-3*n-1)*a(n-1)-(n-1)^2*n*a(n-2))/(n-2))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jun 21 2017"
+    ],
+    "program": [
+        "(SageMath) [n.factorial() * (2*(n+1)*sum(1/k for k in srange(1, n+1)) - 4*n) for n in srange(21)]",
+        "(SageMath) # alternative using the recurrence relation",
+        "@cached_function",
+        "def c(n):",
+        "    if n <= 1:",
+        "        return 0",
+        "    return (n - 1) + 2/n*sum(c(i) for i in srange(n))",
+        "[n.factorial() * c(n) for n in srange(21)]"
+    ],
+    "xref": [
+        "Cf. A096620, A115107, A117627, A117628, A159324, A288965."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Daniel Krenn_, Jun 20 2017",
+    "references": 4,
+    "revision": 41,
+    "time": "2017-06-22T11:07:48-04:00",
+    "created": "2017-06-22T11:07:48-04:00"
+}

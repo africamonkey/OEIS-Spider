@@ -1,0 +1,41 @@
+{
+    "number": 248915,
+    "data": "378,12467,95823,10715274,13485829,111495095,42002916561,176685987695",
+    "name": "Composite numbers which divide the concatenation of their prime factors, with multiplicity, in descending order.",
+    "comment": [
+        "Prime numbers are not considered because they trivially satisfy the relation.",
+        "If ascending order is selected instead of the descending one, 28749 is the only term for n <= 13*10^7.",
+        "In ascending order, another term is 21757820799 (see StackExchange link). [_Paolo P. Lava_, Jun 16 2015]"
+    ],
+    "link": [
+        "StackExchange, <a href=\"http://math.stackexchange.com/questions/1166424/numbers-divide-its-prime-factors-concatenation\">New term in ascending order</a>"
+    ],
+    "example": [
+        "Prime factors of 378 are 2,3,3,3,7; concat(7,3,3,3,2) = 73332 and 73332/378 = 194."
+    ],
+    "maple": [
+        "with(numtheory); P:=proc(q) local a,b,c,d,j,k,n;",
+        "for n from 1 to q do if not isprime(n) then a:=ifactors(n)[2]; b:=[]; d:=0;",
+        "for k from 1 to nops(a) do b:=[op(b),a[k][1]]; od; b:=sort(b);",
+        "for k from nops(a) by -1 to 1 do c:=1; while not b[k]=a[c][1] do c:=c+1; od;",
+        "for j from 1 to a[c][2] do d:=10^(ilog10(b[k])+1)*d+b[k]; od; od;",
+        "if type(d/n,integer) then print(n); fi;",
+        "fi; od; end: P(10^9);"
+    ],
+    "program": [
+        "(PARI) isok(n) = {my(s = \"\"); my(f = factor(n)); forstep (i=#f~, 1, -1, for (k=1, f[i,2], s = concat(s, Str(f[i,1])))); (eval(s) % n) == 0;} \\\\ _Michel Marcus_, Jun 16 2015"
+    ],
+    "xref": [
+        "Cf. A037276, A069872, A224930, A240265, A259047."
+    ],
+    "keyword": "nonn,more,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Oct 16 2014",
+    "ext": [
+        "a(7)-a(8) from _Giovanni Resta_, Jun 16 2015"
+    ],
+    "references": 1,
+    "revision": 33,
+    "time": "2015-06-22T07:46:00-04:00",
+    "created": "2014-10-28T05:14:04-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 188836,
+    "data": "4,9,25,49,121,169,289,361,625,841,961,1369,1681,1849,3721,4489,5041,5329,7921,9409,10201,10609,11881,12769,16129,17161,18769,19321,22201,22801,24649,32761,36481,37249,38809,39601,44521,52441,57121,58081,63001,73441",
+    "name": "Numbers n for which A188794(n)^2 = n.",
+    "comment": [
+        "The sequence contains many squares of primes.",
+        "Question 1: What is the sequence of primes whose squares are not in this sequence?  It begins: 23, 47, 53, 59, 79, 83, 107, ... A188833",
+        "Question 2: What is the sequence of composite numbers whose squares are in this sequence?  It begins: 25, 289, 361, 529, ..."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) local h, i, k, m;",
+        "       m, i:= 0, 0;",
+        "       for k from 2 to floor(sqrt(n)) do",
+        "          h:= nops(select(x-> irem(x, k)=0,",
+        "                  [seq (n-d, d=divisors(n-k) minus{1})]));",
+        "          if h>m then m, i:= h, k fi",
+        "       od; i",
+        "    end:",
+        "a:= proc(n) option remember; local k;",
+        "      for k from 1+ `if` (n=1, 3, a(n-1))",
+        "      while not b(k)^2=k do od; k",
+        "    end:",
+        "seq(a(n), n=1..15);  # _Alois P. Heinz_, Apr 13 2011"
+    ],
+    "xref": [
+        "Cf. A188550, A188579, A188794, A188833."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladimir Shevelev_, Apr 12 2011",
+    "references": 2,
+    "revision": 27,
+    "time": "2014-11-14T09:17:01-05:00",
+    "created": "2011-04-14T13:47:32-04:00"
+}

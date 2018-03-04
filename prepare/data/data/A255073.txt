@@ -1,0 +1,41 @@
+{
+    "number": 255073,
+    "data": "2,3,5,7,11,13,17,19,23,37,43,47,67,71,79,83,101,103,107,109,113,131,137,139,167,173,179,191,211,241,263,269,281,307,311,313,331,337,353,359,367,397,431,479,491,503,521,577,593,601,613,617,659,673",
+    "name": "Primes that remain prime after each digit is replaced by the power of its position.",
+    "comment": [
+        "In the definition, \"position\" refers to the position of the digit in the decimal expansion, starting counting at 1 for the least significant digit.",
+        "In the Example section, the notation a&b denotes the concatenation of two numbers, a and b.",
+        "a(n) = n for 2, 3, 5, 7, 11, 13, 17, 19, 101, 103, 107, 109, 113, ..."
+    ],
+    "link": [
+        "Abhiram R Devesh, <a href=\"/A255073/b255073.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "p =   2 -> (2^1)             -> 2 (prime).",
+        "p =  23 -> (2^2)&(3^1)       -> 43 (prime).",
+        "p = 337 -> (3^3)&(3^2)&(7^1) -> 2797 (prime)."
+    ],
+    "mathematica": [
+        "f[n_] := Block[{d = Reverse@ IntegerDigits@ n, k}, FromDigits[Reap@ For[k = 1, k <= Length@ d, k++, Sow[d[[k]]^k]] // Flatten // Rest // Reverse // IntegerDigits // Flatten]]; Select[Prime@ Range@ 125, PrimeQ[f@ #] &] (* _Michael De Vlieger_, Apr 02 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import sympy",
+        "def powdig(m):",
+        "....l=len(str(m))",
+        "....return(int(''.join([str(int(list(i)[1])**(l-list(i)[0])) for i in enumerate(list(str(m)))])))",
+        "n=2",
+        "while n>0:",
+        "....t=powdig(n)",
+        "....if sympy.isprime(t)==True:",
+        "........print(n)",
+        "....n=sympy.nextprime(n)"
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,1",
+    "author": "_Abhiram R Devesh_, Feb 14 2015",
+    "references": 2,
+    "revision": 24,
+    "time": "2015-04-04T18:25:32-04:00",
+    "created": "2015-04-04T18:25:32-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 272032,
+    "data": "7,13,43,127,281",
+    "name": "Positive integers n such that (q^n + r^n)/(q+r) is prime, where q is the number of consecutive composite numbers smaller than n and r is the number of consecutive composite numbers greater than n.",
+    "comment": [
+        "All terms are prime (conjecture).",
+        "The variables q and r are the number of composite numbers between the previous and following successive primes of the number n.",
+        "They seem to be extremely rare. I checked them for {q,r}<=15 and n < 10^5.",
+        "Numbers n with q + r = 0 lead to 0/0 and are excluded. - _Wolfdieter Lang_, Apr 22 2016"
+    ],
+    "example": [
+        "For a(1)=7, q=1 and r=3, (1^7+3^7)/(1+3)=547, 547 is prime."
+    ],
+    "mathematica": [
+        "Select[Range[3, 10^3], Function[n, With[{q = n - NextPrime[n, -1] - 1, r = NextPrime@ n - n - 1}, If[q + r == 0, False, PrimeQ[(q^n + r^n)/(q + r)]]]]] (* _Michael De Vlieger_, Apr 18 2016 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(q=n-precprime(n-1)-1,r=nextprime(n+1)-n-1,t); q+r && denominator(t=(q^n + r^n)/(q+r))==1 && isprime(t) \\\\ _Charles R Greathouse IV_, Apr 18 2016",
+        "(PARI) list(lim)=my(v=List(),p=2,q=3,t); forprime(r=5,nextprime(lim+1), t=((q-p-1)^q+(r-q-1)^q)/(r-p-2); if(denominator(t)==1 && ispseudoprime(t), listput(v,q)); p=q; q=r); Vec(v) \\\\ _Charles R Greathouse IV_, Apr 18 2016"
+    ],
+    "xref": [
+        "Cf. A046933."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Marc Morgenegg_, Apr 18 2016",
+    "ext": [
+        "a(1) added by _Charles R Greathouse IV_, Apr 18 2016"
+    ],
+    "references": 0,
+    "revision": 22,
+    "time": "2016-06-27T16:15:57-04:00",
+    "created": "2016-04-22T16:25:04-04:00"
+}

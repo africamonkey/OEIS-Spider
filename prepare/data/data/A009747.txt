@@ -1,0 +1,46 @@
+{
+    "number": 9747,
+    "data": "0,2,12,142,3192,116282,6219972,458790022,44625674352,5534347077362,852334810990332,159592488559874302,35703580441464231912,9405575479317650316842,2881823738166957609703092,1016124476854507687644180982,408525180980254462140262747872,185768439922172208338308590282722",
+    "name": "E.g.f. tan(x)*sinh(x) (even powers only).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A009747/b009747.txt\">Table of n, a(n) for n = 0..240</a>",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>"
+    ],
+    "formula": [
+        "a(n) ~ (2*n)! * 4^(n+1) * sinh(Pi/2) / Pi^(2*n+1). - _Vaclav Kotesovec_, Jan 24 2015"
+    ],
+    "mathematica": [
+        "nn = 20; Table[(CoefficientList[Series[Sinh[x]*Tan[x], {x, 0, 2*nn}], x] * Range[0, 2*nn]!)[[n]], {n, 1, 2*nn+1, 2}] (* _Vaclav Kotesovec_, Jan 24 2015 *)"
+    ],
+    "program": [
+        "(Sage) # Generalized algorithm of L. Seidel (1877)",
+        "def A009747_list(n) :",
+        "    R = []; A = {-1:0, 0:0}",
+        "    k = 0; e = 1",
+        "    for i in range(2*n) :",
+        "        Am = 1 if e == -1 else 0",
+        "        A[k + e] = 0",
+        "        e = -e",
+        "        for j in (0..i) :",
+        "            Am += A[k]",
+        "            A[k] = Am",
+        "            k += e",
+        "        if e == -1 : R.append(A[-i//2])",
+        "    return R",
+        "A009747_list(10) # _Peter Luschny_, Jun 02 2012",
+        "(PARI) x='x+O('x^66); v=Vec(serlaplace(tan(x)*sinh(x))); concat([0],vector(#v\\2,n,v[2*n-1])) \\\\ _Joerg Arndt_, Apr 26 2013"
+    ],
+    "xref": [
+        "Bisection of A009739 and (apparently) A062161."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_R. H. Hardin_",
+    "ext": [
+        "Extended and signs tested by _Olivier G\u00e9rard_, Mar 15 1997"
+    ],
+    "references": 9,
+    "revision": 24,
+    "time": "2017-04-12T23:09:13-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

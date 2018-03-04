@@ -1,0 +1,42 @@
+{
+    "number": 206444,
+    "data": "13,53,213,853,3413,13653,54613,218453,873813,3495253",
+    "name": "Least n such that L(n)<-1 and L(n)<L(n-1), where L(k) means the least root of the polynomial p(k,x) defined at A206284, and a(1)=13.",
+    "comment": [
+        "A206074 gives an ordering {p(n,x)} of the polynomials with coefficients in {0,1}.  The least n for which p(n,x) has a root r less than -1 is 13, hence the choice of 13 as the initial term of A206443.  (Specifically, p(13,x)=1+x^2+x^3, and r=-1.46557...)  The next p(n,x) having a root less than -1 and <r is p(53,x)=1+x^2+x^4+x^5, with least root -1.57014...",
+        "The first 10 terms of A206444 are also the 2nd through 11th terms of A072197."
+    ],
+    "mathematica": [
+        "highs := {First /@ #, Most[FoldList[Plus, 1, Length /@ #]]} &[Split[Rest[FoldList[Max, -\\[Infinity], #]]]] &",
+        "f[polyInX_] := {Min[#], Max[#]} &[",
+        "  Map[#[[1]] &, DeleteCases[Map[{#, Head[#]} &, Chop[N[x /. Solve[polyInX == 0, x], 40]]], {_, Complex}]]]",
+        "t = Table[IntegerDigits[n, 2], {n, 1, 100000}];",
+        "b[n_] := Reverse[Array[x^(# - 1) &, {n + 1}]]",
+        "p[n_] := t[[n]].b[-1 + Length[t[[n]]]]",
+        "Table[p[n], {n, 1, 25}]",
+        "fitCriterion = Intersection[Map[#[[1]] &, DeleteCases[",
+        "       Table[{n, Boole[IrreduciblePolynomialQ[p[n]]]}, {n, 1, #}], {_, 0}]], Map[#[[1]] &, DeleteCases[",
+        "       Table[{n, CountRoots[#, {x, -Infinity, 0}] -",
+        "       CountRoots[#, {x, -1, 0}] &[p[n]]}, {n, 1, #}],",
+        "           {_, 0}]]] &[Length[t]];",
+        "polyNum = Map[{f[p[#]][[1]], #} &, fitCriterion];",
+        "up = Map[polyNum[[#]] &, highs[Map[#[[1]] &, polyNum]][[2]]]",
+        "down = Map[polyNum[[#]] &, highs[Map[#[[1]] &, -polyNum]][[2]]]",
+        "Table[up[[k, 2]], {k, 1, Length[up]}]      (* A206443 *)",
+        "Table[down[[k, 2]], {k, 1, Length[down]}]  (* A206444 *)",
+        "(* _Peter J. C. Moses_, Feb 06 2012 *)"
+    ],
+    "xref": [
+        "Cf. A206074, A206443."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Feb 07 2012",
+    "ext": [
+        "a(8)-a(10) from _Robert G. Wilson v_, Feb 11 2012"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2014-03-14T02:01:13-04:00",
+    "created": "2012-02-10T12:46:22-05:00"
+}

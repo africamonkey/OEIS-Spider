@@ -1,0 +1,41 @@
+{
+    "number": 45549,
+    "data": "3,12,17,24,29,32,45,46,48,59,60,61,63,65,66,68,72,79,82,95,96,98,104,107,120,121,123,127,130,131,133,139,144,159,160,161,163,165,166,168,172,175,176,178,187,192,199,209,210,211,213,215,216,218",
+    "name": "Numbers n such that final nonzero digit of n! is '6'.",
+    "comment": [
+        "From _Robert Israel_, Dec 16 2016: (Start)",
+        "If n is in the sequence, then:",
+        "if n == 0 (mod 5), n+1 is in the sequence;",
+        "if n == 1 (mod 5), n+1 is in A045547;",
+        "if n == 2 (mod 5), n+1 is in A045550;",
+        "if n == 3 (mod 5), n+1 is in A045548. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A045549/b045549.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Fi#final\">Index entries for sequences related to final digits of numbers</a>"
+    ],
+    "maple": [
+        "count:= 0:",
+        "r:= 1:",
+        "for n from 2 while count < 100 do",
+        "  r:= r*n;",
+        "  if r mod 10 = 0 then r:= r/10^padic:-ordp(r,5) fi;",
+        "  if r mod 10 = 6 then count:= count+1; A[count]:= n fi;",
+        "od:",
+        "seq(A[i],i=1..100); # _Robert Israel_, Dec 16 2016"
+    ],
+    "mathematica": [
+        "Join[{3}, Select[Range[5,250], Most[Split[IntegerDigits[#!]]][[-1, 1]] == 6 &]] (* _Vincenzo Librandi_, Dec 16 2016 *)",
+        "f[n_] := Mod[6 Times @@ (Rest[ FoldList[{1 + #1[[1]], #2! 2^(#1[[1]] #2)} &, {0, 0}, Reverse[ IntegerDigits[n, 5]]]]), 10][[2]] (* after _Jacob A. Siehler_ & _Greg Dresden_ in A008904 *); f[0] = f[1] = 1; Select[ Range[150], f[#] == 6 &] (* _Robert G. Wilson v_, Dec 28 2016 *)"
+    ],
+    "xref": [
+        "Cf. A008904, A045547, A045548, A045550."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jeff Burch_",
+    "references": 5,
+    "revision": 28,
+    "time": "2017-10-07T12:35:21-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

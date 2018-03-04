@@ -1,0 +1,34 @@
+{
+    "number": 207871,
+    "data": "4,7,11,18,22,29,33,36,47,51,54,58,76,80,83,87,94,116,123,127,130,134,141,145,152,156,163,174,188,192,199,203,206,210,217,221,228,232,235,246,250,253,264,282,304,311,322,326,329,333,340,344,351,355",
+    "name": "Numbers matched to Zeckendorf polynomials divisible by x^2 + 1.",
+    "comment": [
+        "The Zeckendorf polynomials Z(x,n) are defined and ordered at A207813."
+    ],
+    "mathematica": [
+        "fb[n_] := Block[{k = Ceiling[Log[GoldenRatio, n*Sqrt[5]]],",
+        "   t = n, fr = {}}, While[k > 1, If[t >= Fibonacci[k],",
+        "    AppendTo[fr, 1]; t = t - Fibonacci[k],",
+        "    AppendTo[fr, 0]]; k--]; fr]; t = Table[fb[n],",
+        "      {n, 1, 500}];",
+        "b[n_] := Reverse[Table[x^k, {k, 0, n}]]",
+        "p[n_, x_] := t[[n]].b[-1 + Length[t[[n]]]]",
+        "Table[p[n, x], {n, 1, 40}]",
+        "t2 = Table[p[n, x] /. x -> I, {n, 1, 420}];",
+        "Flatten[Position[t2, 0]                (* A207871 *)",
+        "Denominator[Table[p[n, x] /. x -> 1/2,",
+        "   {n, 1, 120}]]                       (* A207872 *)",
+        "Numerator[Table[p[n, x] /. x -> 1/2,",
+        "   {n, 1, 120}]]                       (* A207873 *)"
+    ],
+    "xref": [
+        "Cf. A207813."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Feb 21 2012",
+    "references": 3,
+    "revision": 5,
+    "time": "2012-03-30T18:58:13-04:00",
+    "created": "2012-02-24T13:47:34-05:00"
+}

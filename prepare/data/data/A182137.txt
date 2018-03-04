@@ -1,0 +1,50 @@
+{
+    "number": 182137,
+    "data": "1,3,6,13,28,56,115,237,474,960,1920,3870,7825,15650,31473,63422,126844,254649,509298,1021248,2050541,4101082,8219801,16490635,32981270,66071490,132455435,264910870,530485275,1060970550,2123841570,4253619813,8507239626,17027951548,34095896991,68191793982,136383587964,272943149762,546202840156,1093108792776",
+    "name": "Size of the set of b for numbers of the form 2^n*x + b that cannot be the smallest element of a set giving a duration of infinite flight in the Collatz problem.",
+    "comment": [
+        "In the Collatz Problem A014682, it is possible to apply the algorithm to first degree polynomials like 2^n*x+b, where n is integer and 0 <= b < 2^n. The iteration terminates by two cases:",
+        "1) a*x+b where a < 2^n: the polynomial is \"minimized\"",
+        "2) a*x+b where a is odd and a > 2^n, parity cannot be found. The polynomial cannot be minimized.",
+        "The sequence counts how many first degree polynomials end like first case for each n > 0.",
+        "The interest of this sequence is that every number that can be described by a minimized polynomial cannot be the smallest element of a set of value of T(n) = infinity."
+    ],
+    "example": [
+        "Example with 4x+b (0 <= b < 4):",
+        "4x is even, thus gives 2x, 2 < 4 (first case).",
+        "4x+1, is odd thus 3(4x+1)+1 = 12x+4 is even, thus (12x+4)/2/2=3x+1 3 < 4, first case.",
+        "4x+2 is even, (4x+2)/2=2x+1, 2 < 4, first case.",
+        "4x+3 with same way gives 9x+5. 9 is odd and 9 > 4, second case.",
+        "That explains why the second (n=2) term in sequence is 3."
+    ],
+    "mathematica": [
+        "a[n_] := Module[{b, p0, p1, minimized = 0}, For[b = 1, b <= 2^n, b++, {p0, p1} = {b, 2^n}; While[Mod[p1, 2] == 0 && p1 >= 2^n, {p0, p1} = If[Mod[p0, 2] == 0, {p0/2, p1/2}, {3*p0+1, 3*p1}]; If[p1<2^n, minimized += 1]]]; minimized]; Table[Print[an = a[n]]; an, {n, 1, 40}] (* _Jean-Fran\u00e7ois Alcover_, Feb 12 2014, translated from _D. S. McNeil_'s Sage code *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A182137(n):",
+        "....minimized = 0",
+        "....for b in xrange(2**n):",
+        "........p = [b, 2**n]",
+        "........while p[1] % 2 == 0 and p[1] >= 2**n:",
+        "............p[0],p[1] = [p[0]/2, p[1]/2] if p[0] % 2 == 0 else [3*p[0]+1, 3*p[1]]",
+        "........if p[1] < 2**n: minimized += 1",
+        "....return minimized # _D. S. McNeil_, Apr 14 2012"
+    ],
+    "xref": [
+        "Cf. A074473, A186109."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_J\u00e9r\u00f4me STORTI_, Apr 14 2012",
+    "ext": [
+        "More terms from _D. S. McNeil_, Apr 14 2012",
+        "One additional term from _J\u00e9r\u00f4me STORTI_, Apr 22 2012",
+        "a(39) from _J\u00e9r\u00f4me STORTI_, Jul 26 2012",
+        "a(40) from _J\u00e9r\u00f4me STORTI_, Feb 08 2014"
+    ],
+    "references": 1,
+    "revision": 61,
+    "time": "2015-12-13T07:13:53-05:00",
+    "created": "2012-04-20T11:55:11-04:00"
+}

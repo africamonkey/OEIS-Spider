@@ -1,0 +1,56 @@
+{
+    "number": 18896,
+    "data": "1,1,1,1,1,1,1,1,2,3,4,5,9,18,34,93,180,348,724,3033,9666,24986,83761,261033,1023728,3923791,26128126,105734485,381740209,1895904805,14058722881,97964968321,517832518189,4364261070929,25225712161101,181840424632390",
+    "name": "a(n) = ( a(n-1)*a(n-7) + a(n-4)^2 ) / a(n-8); a(0) = ... = a(7) = 1.",
+    "comment": [
+        "From _Vladimir Shevelev_, Apr 04 2016: (Start)",
+        "For k>=0, an infinite sequence {a(k,n)} of Somos's sequences (n>=0) is:",
+        "a(k,0) = a(k,1)= ... = a(k,2*k+1) = 1;",
+        "and then for n>=2*k+2,",
+        "a(k,n) = (a(k,n-1)*a(k,n-2*k-1) + a(k,n-k-1)^2)/a(k,n-2*k-2).",
+        "In particular, {a(0,n)}=A006125, {a(1,n)}=A006720, {a(2,n)}=A102276, {a(3,n)}=A018896.",
+        "One can prove that the sequence {a(k,n)} has the first 4k+2 simple differences: 2k+1 zeros, after that k+1 1's and after that k consecutive squares, beginning with 2^2.",
+        "Further we have nontrivial differences. The first of them for k=0,1,2,... are 6,16,33,59,96,146,211,293,394,516,... that is {k^3/3 + 5*k^2/2 + 43*k/6 +6}.",
+        "(End)"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A018896/b018896.txt\">Table of n, a(n) for n=0..100</a>",
+        "David Gale, <a href=\"http://dx.doi.org/10.1007/BF03024306\">Mathematical Entertainments</a>, Mathematical Intelligencer, volume 18, number 3, Summer 1996, page 25.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SomosSequence.html\">Somos Sequence</a>",
+        "<a href=\"/index/Tu#2wis\">Index entries for two-way infinite sequences</a>"
+    ],
+    "maple": [
+        "f:= proc(n) option remember;",
+        "  if n <= 7 then 1 else",
+        "  (procname(n-1)*procname(n-7)+procname(n-4)^2)/procname(n-8)",
+        "  fi",
+        "end proc:",
+        "seq(f(n),n=0..50); # _Robert Israel_, Apr 04 2016"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[1]==a[2]==a[3]==a[4]==a[5]==a[6]==a[7]==a[8]==1, a[n]==(a[n-1]a[n-7]+a[n-4]^2)/a[n-8]},a[n],{n,50}] (* _Harvey P. Dale_, May 02 2011 *)",
+        "k = 3; Set[#, 1] & /@ Map[a[k, #] &, Range[0, 2 k + 1]]; a[k_, n_] /; n >= 2 k + 2 := (a[k, n - 1] a[k, n - 2 k - 1] + a[k, n - k - 1]^2)/ a[k, n - 2 k - 2]; Table[a[k, n], {n, 0, 35}] (* _Michael De Vlieger_, Apr 04 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a018896 n = a018896_list !! n",
+        "a018896_list = replicate 8 1 ++ f 8 where",
+        "   f x = ((a018896 (x - 1) * a018896 (x - 7) + a018896 (x - 4) ^ 2)",
+        "         `div` a018896 (x - 8)) : f (x + 1)",
+        "-- _Reinhard Zumkeller_, Oct 01 2012",
+        "(MAGMA) [n le 8 select 1 else (Self(n-1)*Self(n-7)+Self(n-4)^2 ) / Self(n-8): n in [1..40]]; // _Vincenzo Librandi_, Dec 08 2016"
+    ],
+    "xref": [
+        "Cf. A006125, A006720, A102276."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,9",
+    "author": "_Michael Somos_",
+    "ext": [
+        "More terms from _Harvey P. Dale_, May 02 2011"
+    ],
+    "references": 8,
+    "revision": 44,
+    "time": "2016-12-08T10:10:43-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

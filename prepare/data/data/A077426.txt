@@ -1,0 +1,68 @@
+{
+    "number": 77426,
+    "data": "5,13,17,29,37,41,53,61,65,73,85,89,97,101,109,113,125,137,145,149,157,173,181,185,193,197,229,233,241,257,265,269,277,281,293,313,317,325,337,349,353,365,373,389,397,401,409,421,425,433,445,449,457,461,481,485",
+    "name": "Nonsquare integers n such that the continued fraction (sqrt(n)+1)/2 has odd period length.",
+    "comment": [
+        "Nonsquare integers n for which Pell equation x^2 - n*y^2 = -4 has infinitely many integer solutions. The smallest solutions are given in A078356 and A078357."
+    ],
+    "reference": [
+        "O. Perron, \"Die Lehre von den Kettenbruechen, Bd.I\", Teubner, 1954, 1957 (Sec. 30, table p. 108)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A077426/b077426.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Pell%27s_equation\">Pell's equation</a>"
+    ],
+    "maple": [
+        "isOddPrim := proc(n::integer)",
+        "    local cf;",
+        "    cf := numtheory[cfrac]((sqrt(n)+1)/2,'periodic','quotients') ;",
+        "    if nops(op(2,cf)) mod 2 =1 then",
+        "        RETURN(true) ;",
+        "    else",
+        "        RETURN(false) ;",
+        "    fi ;",
+        "end:",
+        "notA077426 := proc(n::integer)",
+        "    if issqr(n) then",
+        "        RETURN(true) ;",
+        "    elif not isOddPrim(n) then",
+        "        RETURN(true) ;",
+        "    else",
+        "        RETURN(false) ;",
+        "    fi ;",
+        "end:",
+        "A077426 := proc(n::integer)",
+        "    local resul,i ;",
+        "    resul := 5 ;",
+        "    i := 1 ;",
+        "    while i < n do",
+        "        resul := resul+4 ;",
+        "        while notA077426(resul) do",
+        "            resul := resul+4 ;",
+        "        od ;",
+        "        i:= i+1 ;",
+        "    od ;",
+        "    RETURN(resul) ;",
+        "end:",
+        "for n from 1 to 61 do print(A077426(n)) ; od : # _R. J. Mathar_, Apr 25 2006"
+    ],
+    "mathematica": [
+        "fQ[n_] := !IntegerQ@ Sqrt@ n && OddQ@ Length@ ContinuedFraction[(Sqrt@ n + 1)/2][[2]]; Select[Range@ 500, fQ] (* _Robert G. Wilson v_, Nov 17 2012 *)"
+    ],
+    "xref": [
+        "A subsequence of A077425.",
+        "Odd elements of A003814.",
+        "Cf. A077427, A172000."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Wolfdieter Lang_, Nov 29 2002",
+    "ext": [
+        "Edited and extended by _Max Alekseyev_, Mar 03 2010",
+        "Edited by _Max Alekseyev_, Mar 05 2010"
+    ],
+    "references": 10,
+    "revision": 25,
+    "time": "2015-08-07T02:41:54-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

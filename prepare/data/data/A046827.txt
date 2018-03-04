@@ -1,0 +1,35 @@
+{
+    "number": 46827,
+    "data": "0,1,5,6,10,11,25,27,50,60,63,64,74,76,95,96,100,101,105,110,125,139,142,205,250,255,261,270,275,277,278,285,305,364,371,376,405,421,441,463,472,493,497,500,501,502,503,504,505,506,507,508,509,523,524,525",
+    "name": "Numbers n such that n^2 contains all the digits of n with the same or higher multiplicity.",
+    "comment": [
+        "10^n is a term for all n. - _Amarnath Murthy_, Aug 03 2005"
+    ],
+    "example": [
+        "27 is a term as 27^2 = 729 contains 2 and 7.",
+        "255 is a term as 255^2 = 65025 which contains the digits 2,5,5. 502 is a term as 502^2 = 252004 which contains 5, 0, 2."
+    ],
+    "maple": [
+        "isA046827 := proc(n) local dgsn,dgsnsq,multsn,multsn2,o,i ;",
+        "dgsn := sort(convert(n,base,10)) ;",
+        "dgsnsq := sort(convert(n^2,base,10)) ;",
+        "multsn := [seq(0,i=0..9) ] ;",
+        "multsn2 := [seq(0,i=0..9) ] ; for i from 1 to nops(dgsn) do o := op(1+op(i,dgsn),multsn) ; multsn := subsop( 1+op(i,dgsn)=o+1,multsn ) ; od: for i from 1 to nops(dgsnsq) do o := op(1+op(i,dgsnsq),multsn2) ; multsn2 := subsop( 1+op(i,dgsnsq)=o+1,multsn2 ) ; od: for i from 1 to 10 do if op(i,multsn2) < op(i,multsn) then RETURN(false) ; fi ; od: RETURN(true) ; end: for n from 1 to 700 do if isA046827(n) then printf(\"%d,\",n) ; fi ; od; # _R. J. Mathar_, Feb 11 2008"
+    ],
+    "mathematica": [
+        "Join[{0}, Select[Range[525], Count[Table[DigitCount[#^2, 10, k] - DigitCount[#, 10, k], {k, Union[IntegerDigits[#]]}], _?Negative] == 0 &]] (* _Jayanta Basu_, Jun 29 2013 *)"
+    ],
+    "xref": [
+        "Cf. A046829, A029772."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Aug 23 2008 at the suggestion of _R. J. Mathar_"
+    ],
+    "references": 5,
+    "revision": 15,
+    "time": "2015-08-02T21:39:01-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 26433,
+    "data": "2,3,4,6,8,9,10,12,13,14,16,18,20,21,22,24,28,30,32,33,34,36,37,40,42,44,45,46,48,49,50,52,54,56,57,58,60,61,64,66,68,69,70,72,74,75,76,78,80,81,82,84,85,86,88,90,92,93,94,96",
+    "name": "a(n) = least positive integer > a(n-1) and not a(i)*a(j)-1 for 1<=i<j<=n.",
+    "comment": [
+        "Contains all members of A006093 except 1. - _Robert Israel_, Mar 06 2016"
+    ],
+    "link": [
+        "Ivan Neretin, <a href=\"/A026433/b026433.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "V:= Vector(N):",
+        "a[1]:= 2: finished:= false:",
+        "for n from 2  do",
+        "  for i from a[n-1]+1 do",
+        "    if i > N then",
+        "      finished:= true; break",
+        "    elif V[i] = 0 then break",
+        "    fi",
+        "  od:",
+        "  if finished then break fi;",
+        "  a[n]:= i;",
+        "  S:= select(`<=`,[seq(a[j]*i-1,j=1..n-1)],N);",
+        "  if S <> [] then V[S]:= 1 fi;",
+        "od:",
+        "seq(a[i],i=1..n-1); # _Robert Israel_, Mar 06 2016"
+    ],
+    "mathematica": [
+        "a = {2, 3}; used = {a[[1]]*a[[2]] - 1}; Do[k = a[[-1]] + 1; While[MemberQ[used, k], k++]; used = Union[used, k*a - 1]; AppendTo[a, k], {n, 3, 60}]; a (* _Ivan Neretin_, Mar 06 2016 *)"
+    ],
+    "xref": [
+        "Cf. A026431 and references therein.",
+        "Cf. A006093."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_",
+    "references": 2,
+    "revision": 11,
+    "time": "2016-03-06T22:33:12-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

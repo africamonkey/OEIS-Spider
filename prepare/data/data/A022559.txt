@@ -1,0 +1,52 @@
+{
+    "number": 22559,
+    "data": "0,0,1,2,4,5,7,8,11,13,15,16,19,20,22,24,28,29,32,33,36,38,40,41,45,47,49,52,55,56,59,60,65,67,69,71,75,76,78,80,84,85,88,89,92,95,97,98,103,105,108,110,113,114,118,120,124,126,128,129,133,134,136,139",
+    "name": "Sum of exponents in prime-power factorization of n!.",
+    "comment": [
+        "For n > 0, partial sums of bigomega, (A001222): number of prime divisors (counted with multiplicity). Subsequence of primes: 2, 5, 7, 11, 13, 19, 29, 41, 47, 59, 67, 71, 89, 97, 103, 113, 139, 151, 179, 191, 211, 229, 239, 251, 263, ... - _Jonathan Vos Post_, Feb 10 2010"
+    ],
+    "link": [
+        "Daniel Forgues, <a href=\"/A022559/b022559.txt\">Table of n, a(n) for n = 0..100000</a>",
+        "Mehdi Hassani, <a href=\"http://arxiv.org/abs/math/0606316\">On the decomposition of n! into primes</a>, arXiv:math/0606316 [math.NT], 2006-2007.",
+        "Keith Matthews, <a href=\"http://www.numbertheory.org/php/factorial.html\">Computing the prime-power factorization of n!</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1) + A001222(n).",
+        "A027746(a(A000040(n))+1) = A000040(n). A082288(a(n)+1) = n.",
+        "A001221(n!) = omega(n!) = pi(n) = A000720(n).",
+        "a(n) = SUM[i = 1..n] A001222(i) = SUM[i = 1..n] bigomega(i) = SUM[i = 1..n] {Number of prime divisors of i (counted with multiplicity)}. - _Jonathan Vos Post_, Feb 10 2010",
+        "a(n) = n log log n + B_2 * n + o(n), with B_2 = A083342. - _Charles R Greathouse IV_, Jan 11 2012",
+        "a(n) = A210241(n) - n for n > 0. - _Reinhard Zumkeller_, Mar 23 2012",
+        "G.f.: (1/(1 - x))*Sum_{p prime, k>=1} x^(p^k)/(1 - x^(p^k)). - _Ilya Gutkovskiy_, Mar 15 2017"
+    ],
+    "maple": [
+        "with(numtheory):with(combinat):a:=proc(n) if n=0 then 0 else bigomega(numbperm(n)) fi end: seq(a(n), n=0..63); # _Zerinvary Lajos_, Apr 11 2008"
+    ],
+    "mathematica": [
+        "Array[Plus@@Last/@FactorInteger[ #! ] &, 5!, 0] (* _Vladimir Joseph Stephan Orlovsky_, Nov 10 2009 *)",
+        "f[n_] := If[n <= 1, 0, Total[FactorInteger[n]][[2]]]; Accumulate[Array[f, 100, 0]] (* _T. D. Noe_, Apr 11 2011 *)",
+        "Table[PrimeOmega[n!], {n, 0, 70}] (* _Jean-Fran\u00e7ois Alcover_, Jun 08 2013 *)",
+        "Join[{0}, Accumulate[PrimeOmega[Range[70]]]] (* _Harvey P. Dale_, Jul 23 2013 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=bigomega(n!)",
+        "(PARI) k=0;vector(n,i,k+=bigomega(i))",
+        "(Haskell)",
+        "a022559 n = a022559_list !! n",
+        "a022559_list = scanl (+) 0 $ map a001222 [1..]",
+        "-- Renhard Zumkeller, Feb 16 2012"
+    ],
+    "xref": [
+        "Cf. A001222, A013939, A046660, A144494, A115627, A238002."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,4",
+    "author": "Karen E. Wandel (kw29(AT)evansville.edu)",
+    "ext": [
+        "Typo corrected by _Daniel Forgues_, Nov 16 2009"
+    ],
+    "references": 25,
+    "revision": 63,
+    "time": "2017-03-15T20:27:30-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

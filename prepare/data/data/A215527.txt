@@ -1,0 +1,73 @@
+{
+    "number": 215527,
+    "data": "1,8,441,23436,3274015,1279624470,1429940707685,4632832974994840,44016723796115276451,1236712122885961369684270,103348977536357696768748889161,25793194766828189243602379528079372,19283754194866506189223991782133012219131",
+    "name": "Number of nonintersecting (or self-avoiding) rook paths joining opposite poles of a sphere with n horizontal sectors and n vertical sectors (demarcated by longitudes and latitudes).",
+    "comment": [
+        "Overall there are n*n sectors.",
+        "The length of the step is 1. The length of the path varies.",
+        "Equivalently, the number of directed paths in the graph C_n X P_n that start at any one of the n vertices on one side of the cylinder and terminate at any of the n vertices on the opposite side.  - _Andrew Howroyd_, Apr 09 2016"
+    ],
+    "example": [
+        "With n=2 there are four sectors: North-Western, North-Eastern, South-Western, South Eastern. Eight nonintersecting (self-avoiding) rook paths joining opposite poles exist:",
+        "NorthPole NW SW SouthPole",
+        "NorthPole NW SW SE SouthPole",
+        "NorthPole NW NE SE SouthPole",
+        "NorthPole NW NE SE SW SouthPole",
+        "NorthPole NE SE SouthPole",
+        "NorthPole NE SE SW SouthPole",
+        "NorthPole NE NW SW SouthPole",
+        "NorthPole NE NW SW SE SouthPole",
+        "So a(2)=8."
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>  // GCC -O3  // a(7) in ~1.5 hours",
+        "char grid[8][8];",
+        "long long SIZE;",
+        "long long calc_ways(long long x, long long y) {",
+        "  if (grid[x][y]) return 0;",
+        "  grid[x][y] = 1;",
+        "  long long n = calc_ways( x==0? SIZE-1 : x-1, y);  // try West",
+        "  if (SIZE>2)",
+        "            n+= calc_ways( x==SIZE-1? 0 : x+1, y);  // East",
+        "  if (y>0)  n+= calc_ways(x,y-1);  // North",
+        "  if (y==SIZE-1)  n++;",
+        "  else      n+= calc_ways(x,y+1);  // South",
+        "  grid[x][y] = 0;",
+        "  return n;",
+        "}",
+        "int main(int argc, char **argv)",
+        "{",
+        "  for (SIZE=1; SIZE<7; ++SIZE) {",
+        "    memset(grid, 0, sizeof(grid));",
+        "    printf(\"%llu, \",calc_ways(0,0)*SIZE);",
+        "  }",
+        "  printf(\"\\n      \");",
+        "  for (SIZE=3; SIZE<9; ++SIZE) {",
+        "    unsigned long long r;",
+        "    memset(grid, 0, sizeof(grid));",
+        "    grid[0][0]=1;",
+        "    grid[0][1]=1;",
+        "    r =  calc_ways(0,2)*SIZE;    if (SIZE>6) printf(\".\");",
+        "    r += calc_ways(1,1)*SIZE*2;  if (SIZE>6) printf(\".\");",
+        "    grid[0][1]=0;",
+        "    grid[1][0]=1;",
+        "    r += calc_ways(1,1)*SIZE*2;  if (SIZE>6) printf(\".\");",
+        "    r += calc_ways(2,0)*SIZE*2;  printf(\"%llu, \", r);",
+        "  }",
+        "}"
+    ],
+    "xref": [
+        "Cf. A007764, A268894."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, Aug 15 2012",
+    "ext": [
+        "a(8)-a(13) from _Andrew Howroyd_, Apr 09 2016"
+    ],
+    "references": 2,
+    "revision": 12,
+    "time": "2016-04-10T02:27:25-04:00",
+    "created": "2012-08-15T09:52:58-04:00"
+}

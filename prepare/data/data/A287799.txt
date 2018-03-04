@@ -1,0 +1,52 @@
+{
+    "number": 287799,
+    "data": "1,3,21,33,123,219,321,3453,6621,16521,18273,25089,27831,29787,62313,69981,75459,95577,101301,105459,157299,196239,197481,247047,259797,281433,359943,390237,418881,460821,529167,569559,595869,680307,727341,945141,955569,964401",
+    "name": "If x^2 + 2*y^2 is prime for all positive integers x and y with m = x*y then m is in the sequence.",
+    "comment": [
+        "a(n) == 3, 15 (mod 18), for n >= 2.",
+        "It seems that a(n) = 3*p where p is a prime, for n >= 3.",
+        "a(n) is squarefree. - _David A. Corneth_, Jun 01 2017",
+        "From _Robert Israel_, Jul 14 2017: (Start)",
+        "a(149) = 13304379 = 3*11*403163 is not of the form 3*p.",
+        "The generalized Bunyakovsky conjecture implies that there are infinitely many terms of the form 3*p, and infinitely many of the form 3*11*p. - _Robert Israel_, Jul 14 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A287799/b287799.txt\">Table of n, a(n) for n = 1..300</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Bunyakovsky_conjecture\">Bunyakovsky conjecture</a>."
+    ],
+    "example": [
+        "1 = 1*1 and 1^2 + 2*1^2 = 3, a prime.",
+        "21 = 1*21 = 3*7 = 21*1 = 7*3 => 1^2 + 2*21^2 = 883, 3^2 + 2*7^2 = 107, 21^2 + 2*1^2 = 443 and 7^2 + 2*3^2 = 67 are primes."
+    ],
+    "maple": [
+        "filter:= proc(m)",
+        "   andmap(x -> isprime(x^2 + 2*(m/x)^2),",
+        "  numtheory:-divisors(m));",
+        "end proc:",
+        "select(filter, [1, seq(seq(18*i+j, j=[3,15]),i=0..10^5)]); # _Robert Israel_, Jul 14 2017"
+    ],
+    "mathematica": [
+        "A287799 = {}; Do[ds = Divisors[n]; If[EvenQ[Length[ds]], flag = True; k = 1; While[k <= Length[ds]/2 && (criterion1 = PrimeQ[ds[[k]]^2 + 2 * ds[[-k]]^2]) && (criterion2 = PrimeQ[ds[[-k]]^2 + 2 * ds[[k]]^2]), k++]; If[criterion1 && criterion2, AppendTo[A287799, n]]], {n, 2, 10^6}]; A287799"
+    ],
+    "program": [
+        "(PARI) is(n) = d=divisors(n); for(i=1,#d, if(!isprime(d[i]^2 + 2*d[#d-i+1]^2), return(0))); n > 1 \\\\ _David A. Corneth_, Jun 01 2017",
+        "(Sage)",
+        "R = range(1,100000)",
+        "[m for m in R if all(is_prime(d^2+2*(m//d)^2) for d in divisors(m))] # _Peter Luschny_, Jun 18 2017"
+    ],
+    "xref": [
+        "Cf. A000040, A005117, A236423 (with x^2+y^2 instead of x^2+2*y^2).",
+        "Subsequence of A067201. - _Michel Marcus_, Jun 03 2017",
+        "Cf. A002332, A002333."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Lagneau_, Jun 01 2017",
+    "ext": [
+        "Name reformulated and m=1 added by _Wolfdieter Lang_, Jun 20 2017"
+    ],
+    "references": 2,
+    "revision": 46,
+    "time": "2017-07-14T02:59:51-04:00",
+    "created": "2017-06-03T02:03:45-04:00"
+}

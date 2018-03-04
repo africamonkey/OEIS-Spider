@@ -1,0 +1,33 @@
+{
+    "number": 108090,
+    "data": "1,11,13,121,143,169,1331,1573,1859,2197,14641,17303,20449,24167,28561,161051,190333,224939,265837,314171,371293,1771561,2093663,2474329,2924207,3455881,4084223,4826809,19487171,23030293,27217619",
+    "name": "Numbers of the form (11^i)*(13^j).",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A108090/b108090.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "mx = 3*10^7; Sort@ Flatten@ Table[ 11^i*13^j, {i, 0, Log[11, mx]}, {j, 0, Log[13, mx/11^i]}] (* _Robert G. Wilson v_, Aug 17 2012 *)",
+        "fQ[n_]:=PowerMod[143, n, n] == 0; Select[Range[2 10^7], fQ] (* _Vincenzo Librandi_, Jun 27 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert)",
+        "a108090 n = a108090_list !! (n-1)",
+        "a108090_list = f $ singleton (1,0,0) where",
+        "   f s = y : f (insert (11 * y, i + 1, j) $ insert (13 * y, i, j + 1) s')",
+        "         where ((y, i, j), s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, May 15 2015",
+        "(MAGMA) [n: n in [1..10^7] | PrimeDivisors(n) subset [11, 13]]; // _Vincenzo Librandi_, Jun 27 2016",
+        "(PARI) list(lim)=my(v=List(),t); for(j=0,logint(lim\\=1,13), t=13^j; while(t<=lim, listput(v,t); t*=11)); Set(v) \\\\ _Charles R Greathouse IV_, Aug 29 2016"
+    ],
+    "xref": [
+        "Cf. A003586, A003592, A003593, A003591, A003594, A003595, A003596, A003597, A003598, A003599, A107326, A107364, A107466, A108056."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Douglas Winston (douglas.winston(AT)srupc.com), Jun 03 2005",
+    "references": 20,
+    "revision": 13,
+    "time": "2016-08-29T12:06:07-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

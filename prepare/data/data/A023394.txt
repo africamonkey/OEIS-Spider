@@ -1,0 +1,44 @@
+{
+    "number": 23394,
+    "data": "3,5,17,257,641,65537,114689,274177,319489,974849,2424833,6700417,13631489,26017793,45592577,63766529,167772161,825753601,1214251009,6487031809,70525124609,190274191361,646730219521,2710954639361,2748779069441,4485296422913,6597069766657",
+    "name": "Prime factors of Fermat numbers.",
+    "comment": [
+        "Is it true that this sequence consists of the odd primes p with 2^(2^p) == 1 (mod p)? (David Wilson, Jul 31 2008). Answer from _Max Alekseyev_: Yes! If prime p divides Fm = 2^(2^m)+1, then 2^(2^(m+1)) == 1 (mod p) and p is of the form p = k*2^(m+2)+1 > m+1. Squaring the last congruence p-(m+1) times, we get 2^(2^p) == 1 (mod p). On the other hand, if 2^(2^p) == 1 (mod p) for prime p, consider a sequence 2^(2^0), 2^(2^1), 2^(2^2), ..., 2^(2^p). Modulo p this sequence ends with a bunch of 1's but just before the first 1 we must see -1 (as the only other square root of 1 modulo prime p), i.e. for some m, 2^(2^m) == -1 (mod p), implying that p divides Fermat number 2^(2^m) + 1.",
+        "Also primes p such that the multiplicative order of 2 (mod p) is a power of 2. A theorem of Lucas states that if m>1 and prime p divides 1+2^2^m (the m-th Fermat number), then p = 1+k*2^(m+2) for some integer k. - _T. D. Noe_, Jan 29 2009",
+        "Wilfrid Keller analyzed the current status of the search for prime factors of Fermat number and stated that all prime factors less than 10^19 are now known. He sent me terms a(25) to a(50). - _T. D. Noe_, Feb 01 2009, Feb 03 2009, Jan 14 2013",
+        "K\u0159\u00ed\u017eek, Luca, & Somer (2002) show that the sum of the reciprocals of this sequence converge, answering a question of Golomb (1955). - _Charles R Greathouse IV_, Jul 15 2013"
+    ],
+    "reference": [
+        "M. K\u0159\u00ed\u017eek  F. Luca, and L. Somer, 17 Lectures on Fermat Numbers, Springer-Verlag NY 2001."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A023394/b023394.txt\">Table of n, a(n) for n = 1..50</a> (from Wilfrid Keller)",
+        "Wilfrid Keller, <a href=\"http://www.prothsearch.com/fermat.html\">Prime factors k.2^n + 1 of Fermat numbers F_m</a>",
+        "M. K\u0159\u00ed\u017eek, F. Luca, and L. Somer, <a href=\"http://dx.doi.org/10.1006/jnth.2002.2782\">On the convergence of series of reciprocals of primes related to the Fermat numbers</a>, J. Number Theory 97 (2002), pp. 95-112.",
+        "A. K. Lenstra, H. W. Lenstra, M. S. Manasse and J. M. Pollard, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1993-1182953-4\">The factorization of the ninth Fermat number</a>, Math. Comp. 64 (1995), 1357.",
+        "R. Mestrovic, <a href=\"http://arxiv.org/abs/1202.3670\">Euclid's theorem on the infinitude of primes: a historical survey of its proofs (300 BC--2012) and another new proof</a> (2012), arXiv preprint arXiv:1202.3670 [math.HO], 2012.",
+        "R. Munafo, <a href=\"http://www.mrob.com/pub/math/seq-a023394.html\">Prime Factors of Fermat Numbers</a>"
+    ],
+    "formula": [
+        "a(n) is a prime factor of the Fermat number 1+2^2^A023395(n). - _T. D. Noe_, Feb 01 2009",
+        "a(n) >> n^2 log^2 n, see K\u0159\u00ed\u017eek, Luca, & Somer. - _Charles R Greathouse IV_, Jul 16 2013"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[100000]],IntegerQ[Log[2,MultiplicativeOrder[2,# ]]]&] (* _T. D. Noe_, Jan 29 2009 *)"
+    ],
+    "program": [
+        "(PARI) is(p)=p>2 && Mod(2,p)^lift(Mod(2,znorder(Mod(2,p)))^p)==1 && isprime(p) \\\\ _Charles R Greathouse IV_, Feb 04 2013",
+        "(PARI) my(isfermatdivisor(m)=if(m>0, if(m==1, return(1), v=valuation(m-1, 2); c=0; if(m>2, e=logint(m-1, 2); if(e==v&&Mod(m-1, e)==0, t=logint(v, 2); c=1)); if(v>6&&c==0, x=2; t=0; for(i=0, v-2, if(x+1==m, c=1; break); s=x*x; x=s-s\\m*m; t++)); if(c==1, print((m-1)/2^v\"*2^\"v\" + 1 divides 2^(2^\"t\") + 1\")); return(c)))); L=List([]); forstep(m=3, 63766529, 2, if(isprime(m)&&isfermatdivisor(m), listput(L, m))); print(); print(Vec(L)); \\\\ _Arkadiusz Wesolowski_, Jan 16 2018"
+    ],
+    "xref": [
+        "Supersequence of A229851.",
+        "Cf. A000215."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "references": 26,
+    "revision": 58,
+    "time": "2018-01-29T09:33:19-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

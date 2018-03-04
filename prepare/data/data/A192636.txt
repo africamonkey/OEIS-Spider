@@ -1,0 +1,53 @@
+{
+    "number": 192636,
+    "data": "8,9,16,25,32,36,64,72,81,100,108,121,125,128,144,169,196,200,216,225,243,256,288,289,324,343,361,392,400,432,441,484,500,512,576,625,648,675,676,729,784,800,841,864,900,961,968,972,1000,1024,1089,1125,1152,1156,1225",
+    "name": "Powerful sums of two powerful numbers.",
+    "comment": [
+        "Browning & Valckenborgh conjecture that a(n) ~ kn^2 with k approximately 0.139485255. See their Conjecture 1 and equation (14). Their Theorems 1 and 2 establish upper and lower asymptotic bounds."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A192636/b192636.txt\">Table of n, a(n) for n = 1..5000</a>",
+        "T. D. Browning and K. Van Valckenborgh, <a href=\"http://arxiv.org/abs/1106.4472\">Sums of three squareful numbers</a> (2011)."
+    ],
+    "formula": [
+        "n such that there exists some a, b, c with A001694(a) + A001694(b) = n = A001694(c)."
+    ],
+    "program": [
+        "(PARI) isPowerful(n)=if(n>3,vecmin(factor(n)[,2])>1,n==1)",
+        "sumset(a,b)={",
+        "  my(c=vectorsmall(#a*#b));",
+        "  for(i=1,#a,",
+        "    for(j=1,#b,",
+        "      c[(i-1)*#b+j]=a[i]+b[j]",
+        "    )",
+        "  );",
+        "  vecsort(c,,8)",
+        "}; selfsum(a)={",
+        "  my(c=vectorsmall(binomial(#a+1,2)),k);",
+        "  for(i=1,#a,",
+        "    for(j=i,#a,",
+        "      c[k++]=a[i]+a[j]",
+        "    )",
+        "  );",
+        "  vecsort(c,,8)",
+        "};",
+        "list(lim)={",
+        "  my(v=select(isPowerful, vector(floor(lim),i,i)));",
+        "  select(n->n<=lim && isPowerful(n), Vec(selfsum(v)))",
+        "};"
+    ],
+    "xref": [
+        "Subsequence of A001694 and of A076871.",
+        "Cf. A001694, A007532, A005934, A005188, A003321, A014576, A023052, A046074, A013929, A076871, A143813. - Jonathan Vos Post, Jul 10 2011"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Charles R Greathouse IV_, Jul 06 2011",
+    "ext": [
+        "Corrected (on the advice of Donovan Johnson) by _Charles R Greathouse IV_, Sep 25 2012"
+    ],
+    "references": 1,
+    "revision": 15,
+    "time": "2014-08-11T22:45:46-04:00",
+    "created": "2011-07-11T09:11:59-04:00"
+}

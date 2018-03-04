@@ -1,0 +1,47 @@
+{
+    "number": 4050,
+    "data": "2,3,4,5,7,9,10,11,13,17,19,25,28,29,31,33,35,41,43,59,65,67,73,82,83,85,89,91,97,113,129,131,137,145,155,209,244,245,247,251,257,259,265,275,283,307,337,371,499,513,515,521,539,593,730,731,733,737,745,755",
+    "name": "Numbers of the form 2^j + 3^k, for j and k >= 0.",
+    "comment": [
+        "Conjecture: Only 5, 11, 17, 35, and 259 can be expressed in two different ways. See A085634. - _Robert G. Wilson v_, Sep 19 2012",
+        "Number of terms less than or equal to 10^k, k > 0: 7, 29, 64, 118, 181, 254, 354, 453, 565, 708, 878, 1033, .... - _Robert G. Wilson v_, Sep 19 2012",
+        "Number of terms less than or equal to 10^10^k, k >= 0: 7, 708, 69923, 6962907, 696291189, 69624663057.... - _Robert G. Wilson v_, Sep 19 2012, _Zak Seidov_, Nov 29 2012"
+    ],
+    "link": [
+        "Donovan Johnson, <a href=\"/A004050/b004050.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "lincom:=proc(a,b,n) local i,j,s,m; s:={}; for i from 0 to n do for j from 0 to n do m:=a^i+b^j; if m<=n then s:={op(s),m} fi od; od; lprint(sort([op(s)])); end: lincom(2,3,760); # _Zerinvary Lajos_, Feb 24 2007"
+    ],
+    "mathematica": [
+        "mx = 760; s = Union@ Flatten@ Table[2^i + 3^j, {i, 0, Log[2, mx]}, {j, 0, Log[3, mx - 2^i]}] (* _Robert G. Wilson v_, Sep 19 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert)",
+        "a004050 n = a004050_list !! (n-1)",
+        "a004050_list = f 1 $ singleton (2, 1, 1) where",
+        "   f x s = if y /= x then y : f y s'' else f x s''",
+        "           where s'' = insert (u * 2 + v, u * 2, v) $",
+        "                       insert (u + 3 * v, u, 3 * v) s'",
+        "                 ((y, u, v), s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, May 20 2015",
+        "(PARI) ispow2(n)=n>>valuation(N,2)==1",
+        "is(n)=my(k); if(n%2, if(n<3, return(0)); for(k=0,logint(n-2,3), if(ispow2(n-3^k), return(1))); 0, ispower(n-1,,&k); k==3 || n==2 || n==4) \\\\ _Charles R Greathouse IV_, Aug 29 2016"
+    ],
+    "xref": [
+        "Cf. A085634.",
+        "Cf. A226806-A226832 (cases to 8^j + 9^k).",
+        "Cf. A004051 (primes), A000079, A000243."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Sascha Kurz_, Jan 02 2003"
+    ],
+    "references": 33,
+    "revision": 34,
+    "time": "2017-01-31T02:01:58-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

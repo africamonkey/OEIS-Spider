@@ -1,0 +1,48 @@
+{
+    "number": 75427,
+    "data": "1,2,3,6,7,14,15,30,31,62,63,126,127,254,255,510,511,1022,1023,2046,2047,4094,4095,8190,8191,16382,16383,32766,32767,65534,65535,131070,131071,262142,262143,524286,524287,1048574,1048575,2097150,2097151",
+    "name": "a(0) = 1; a(n) = if n is even then a(n-1)+1 else 2*a(n-1).",
+    "comment": [
+        "Fixed points for permutations A180200, A180201, A180198, and A180199. - _Reinhard Zumkeller_, Aug 15 2010",
+        "The Kn22 sums, see A180662, of triangle A194005 equal the terms of this sequence. - _Johannes W. Meijer_, Aug 16 2011"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A075427/b075427.txt\">Table of n, a(n) for n = 0..2000</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (0,3,0,-2)"
+    ],
+    "formula": [
+        "a(0) = 1; for n>=1, a(2*n) = 2^(n+1)-1, a(2*n-1) = 2^(n+1)-2; a(n) = 2^floor((n+3)/2)-3/2+(-1)^n/2. - _Benoit Cloitre_, Sep 17 2002 [corrected by _Robert Ferreol_, Jan 26 2011]",
+        "a(n) = (-1)^n/2-3/2+2^(n/2)*(1+sqrt(2)+(1-sqrt(2))*(-1)^n). - _Paul Barry_, Apr 22 2004",
+        "Interleaved Mersenne numbers: interleaves 2*2^n-1 and 2(2*2^n-1) (A000225(n+1) and 2*A000225(n+1)). G.f.: (1+2*x)/((1-x^2)*(1-2*x^2)); a(n) = 3*a(n-2)-2*a(n-4); a(n) = sum{k=0..n, C(floor((n+1)/2), floor((k+1)/2))}. - _Paul Barry_, Jul 30 2004",
+        "For n > 0: a(n) = (1 + n mod 2) * a(n-1) + 1 - n mod 2. - _Reinhard Zumkeller_, Feb 27 2012"
+    ],
+    "maple": [
+        "A075427 := proc(n) if type(n,'even') then 2^(n/2+1)-1 ; else 2^(1+(n+1)/2)-2 ; end if; end proc: seq(A075427(n), n=0..40); # _R. J. Mathar_, Feb 18 2011"
+    ],
+    "mathematica": [
+        "a[0]=1; a[n_]:=a[n]=If[EvenQ[n],a[n-1]+1,2*a[n-1]]; Table[a[n],{n,0,40}] (* _Jean-Fran\u00e7ois Alcover_, Mar 20 2011 *)",
+        "nxt[{n_,a_}]:={n+1,If[OddQ[n],a+1,2a]}; Transpose[NestList[nxt,{0,1},40]][[2]] (* or *) LinearRecurrence[{0,3,0,-2},{1,2,3,6},50] (* _Harvey P. Dale_, Mar 12 2016 *)"
+    ],
+    "program": [
+        "(MAGMA) [2^Floor((n+3)/2)-3/2+(-1)^n/2: n in [0..30]]; // _Vincenzo Librandi_, Aug 17 2011",
+        "(Haskell)",
+        "a075427 n = a075427_list !! n",
+        "a075427_list = 1 : f 1 1 where",
+        "   f x y = z : f (x + 1) z where z = (1 + x `mod` 2) * y + 1 - x `mod` 2",
+        "-- _Reinhard Zumkeller_, Feb 27 2012",
+        "(PARI) a(n)=2^((n+3)\\2)-3/2+(-1)^n/2 \\\\ _Charles R Greathouse IV_, Feb 06 2017"
+    ],
+    "xref": [
+        "Cf. A075426, A066880, A083416, A000225 (bisection), A000918 (bisection)."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,2",
+    "author": "_Reinhard Zumkeller_, Sep 15 2002",
+    "ext": [
+        "Formulae corrected and minor edits by _Johannes W. Meijer_, Aug 16 2011"
+    ],
+    "references": 18,
+    "revision": 61,
+    "time": "2017-02-06T22:45:36-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 52584,
+    "data": "2,2,6,30,216,2040,23760,327600,5201280,93260160,1861574400,40914720000,981474278400,25512104217600,714251739801600,21426244519680000,685618901839872000,23310686975127552000,839178328730886144000,31888654846673264640000,1275543760964922408960000",
+    "name": "E.g.f. (2-4x+x^2)/((1-x)(1-2x)).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A052584/b052584.txt\">Table of n, a(n) for n = 0..400</a>",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=529\">Encyclopedia of Combinatorial Structures 529</a>"
+    ],
+    "formula": [
+        "E.g.f.: (2-4*x+x^2)/(-1+2*x)/(-1+x).",
+        "Recurrence: {a(1)=2, a(2)=6, a(0)=2, (2*n^2 + 6*n + 4)*a(n) + (-6-3*n)*a(n+1) + a(n+2) = 0}.",
+        "a(n) = (1+2^(n-1))*n!, n > 0; see A000051.",
+        "From _Peter Luschny_, Apr 20 2009: (Start)",
+        "A weighted binomial sum of the Bernoulli numbers A027641/A027642 with A027641(1)=1 (which amounts to the definition B_{n} = B_{n}(1)).",
+        "a(n) = Sum_{k=0..n-1} n!*C(n-1,k)*B_{n-k-1}*2^(k+1)/(k+1). (See also A000051.) (End)"
+    ],
+    "maple": [
+        "spec := [S,{S=Union(Sequence(Prod(Z,Sequence(Z))),Sequence(Z))},labeled]: seq(combstruct[count](spec,size=n), n=0..20);",
+        "a := proc(n) if n = 0 then 2 else add(n!*binomial(n-1,k)*bernoulli(n-k-1,1)*2^(k+ 1)/(k+1),k=0..n-1) fi end: # _Peter Luschny_, Apr 20 2009"
+    ],
+    "mathematica": [
+        "With[{nn=25}, CoefficientList[Series[(2 - 4 x + x^2) / (-1 + 2 x) / (-1 + x), {x, 0, nn}], x] Range[0, nn]!] (* _Vincenzo Librandi_, Aug 11 2017 *)"
+    ],
+    "program": [
+        "(MAGMA) [2] cat [(1+2^(n-1))*Factorial(n): n in [1..20]]; // _Vincenzo Librandi_, Aug 11 2017"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,1",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "references": 3,
+    "revision": 22,
+    "time": "2017-08-11T03:37:25-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 16070,
+    "data": "4,5,6,7,8,9,11,12,15,21,22,26,38,88,109,173,212,235,264,3114,81619",
+    "name": "Numbers n such that n^2 contains exactly 2 different digits, excluding 10^m, 2*10^m, 3*10^m.",
+    "comment": [
+        "No other terms below 3.16*10^20 (derived from A018884)."
+    ],
+    "reference": [
+        "J.-M. De Koninck, Ces nombres qui nous fascinent, Entry 109, p. 38, Ellipses, Paris 2008.",
+        "R. K. Guy, Unsolved Problems in Number Theory, F24."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SquareNumber.html\">Square Number.</a>"
+    ],
+    "formula": [
+        "A043537(a(n)) = 2. [_Reinhard Zumkeller_, Aug 05 2010]"
+    ],
+    "mathematica": [
+        "Select[Range[100000],Length[DeleteCases[DigitCount[#^2],0]]==2 && !Divisible[ #,10]&] (* _Harvey P. Dale_, Aug 15 2013 *)",
+        "Reap[For[n = 4, n < 10^5, n++, id = IntegerDigits[n^2]; If[FreeQ[id, {_, 0 ...}], If[Length[Union[id]] == 2, Sow[n]]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Sep 30 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from gmpy2 import is_square, isqrt",
+        "from itertools import combinations, product",
+        "A016070_list = []",
+        "for g in range(2,20):",
+        "....n = 2**g-1",
+        "....for x in combinations('0123456789',2):",
+        "........if not x in [('0','1'), ('0','4'), ('0','9')]:",
+        "............for i,y in enumerate(product(x,repeat=g)):",
+        "................if i > 0 and i < n and y[0] != '0':",
+        "....................z = int(''.join(y))",
+        "....................if is_square(z):",
+        "........................A016070_list.append(isqrt(z))",
+        "A016070_list = sorted(A016070_list) # _Chai Wah Wu_, Nov 03 2014"
+    ],
+    "xref": [
+        "Cf. A016069, A018884, A018885."
+    ],
+    "keyword": "nonn,nice,base,more,hard",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_",
+    "references": 5,
+    "revision": 29,
+    "time": "2016-09-30T12:56:14-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

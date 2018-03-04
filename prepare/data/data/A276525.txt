@@ -1,0 +1,54 @@
+{
+    "number": 276525,
+    "data": "14,28,34,39,46,55,56,62,68,82,92,94,95,98,111,112,117,124,136,142,145,146,155,158,164,178,183,184,188,194,196,203,205,206,219,221,224,226,248,254,259,272,274,275,284,291,292,295,299,302,305,316,323,327,328",
+    "name": "Composite numbers m for which L(p(i)/p(j)) = 1 for all i, j, where p(k) are the prime factors of m and L(x/y) is the Legendre symbol of x and y, defined to be 1 if x is a quadratic residue (mod y) and -1 if x is a quadratic non-residue (mod y).",
+    "comment": [
+        "L(x/y) = L(y/x) for primes x, y, and either x = 4r+1 for some r, or y = 4r+1 for some r.",
+        "We observe pairs of the form (a(n), a(n)+1) = (55, 56), (94, 95), (111, 112), (145, 146), (183, 184), (205, 206), (274, 275), (291, 292), (327, 328), ..., .",
+        "From _Robert G. Wilson v_, Nov 16 2016: (Start)",
+        "We observe triples of the form (a(n), a(n)+1, a(n)+2) with a(n): 542, 543, 655, 1262, 1411, 1646, 1982, 2305, 2306, 2942, 3025, ..., .",
+        "We observe quadruples of the form (a(n), a(n)+1, a(n)+2, a(n)+3) with a(n): 542, 2305, 7022, 10081, 19981, 35821, 41372, 50011, 50941, ..., .",
+        "We observe quintuples of the form (a(n), a(n)+1, a(n)+2, a(n)+3, a(n)+4) with a(n): 85631, ..., .",
+        "Number of terms less than 10^k: 0, 14, 168, 1591, 14175, 127791, ...",
+        "Number of twin terms less than 10^k: 0, 2, 31, 250, 1737, 13604, ...",
+        "(End)"
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A276525/b276525.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/LegendreSymbol.html\">Legendre Symbol</a>"
+    ],
+    "example": [
+        "14 is in the sequence because the prime factors are 2 and 7 => L(2,7)= L(7,2)= 1.",
+        "137678 is in the sequence because the prime factors are 2, 23, 41 and 73 => L(2,23) = L(2,41) = L(2,73) = L(23,41) = L(23,73) = L(41,73) = L(73,41) = L(73,23) = L(73,2) = L(41,23) = L(41,2) = L(23,2) = 1."
+    ],
+    "maple": [
+        "with(numtheory): nn:=400:",
+        "for n from 1 to nn do:",
+        "x:=factorset(n):n0:=nops(x):",
+        "  if n0>1",
+        "   then",
+        "   ii:=0:",
+        "    for i from 1 to n0-1 while(ii=0) do:",
+        "     for j from 2 to n0 while(ii=0) do:",
+        "       p:=legendre(x[i],x[j]):q:=legendre(x[j],x[i]):",
+        "        if p=-1 or q=-1 then ii:=1:",
+        "        else fi:",
+        "     od:od:",
+        "     if ii=0 then printf(`%d, `,n):",
+        "     else fi:fi:",
+        "od:"
+    ],
+    "mathematica": [
+        "fQ[n_] := If[ CompositeQ@ n, Block[{pf = Transpose[ FactorInteger[n]][[1]]}, lng = Length@ pf; Union[ Flatten[ Table[ JacobiSymbol[pf[[i]], pf[[j]]], {i, lng}, {j, lng}]]] == {0, 1}], False]; Select[ Range@ 330, fQ] (* _Robert G. Wilson v_, Nov 16 2016 *)"
+    ],
+    "xref": [
+        "Cf. A002144, A002145."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Nov 16 2016",
+    "references": 2,
+    "revision": 23,
+    "time": "2017-09-13T02:15:18-04:00",
+    "created": "2016-12-15T02:49:33-05:00"
+}

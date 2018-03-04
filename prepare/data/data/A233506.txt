@@ -1,0 +1,38 @@
+{
+    "number": 233506,
+    "data": "1,14,717,62253,4732061,382882762,31449389548,2571574546111,210607584419520,17254476918858789,1413637025226131703,115812392270890399373,9488271882367228634756,777357166136453697810804,63686950935296529029018801,5217741644362129948411085318",
+    "name": "Number of tilings of a 3 X 3 X n box using bricks of shape 3 X 1 X 1 and 2 X 1 X 1.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A233506/b233506.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "maple": [
+        "b:= proc(n, l) option remember; local k, t; t:= min(l[]);",
+        "      if n=0 then 1 elif t>0 then b(n-t, map(h->h-t, l))",
+        "    else for k while l[k]>0 do od;",
+        "         add(`if`(n>=j, b(n, s(k=j, l)), 0), j=2..3)+",
+        "         `if`(k<=6 and l[k+3]=0, b(n, s(k=1, k+3=1, l)), 0)+",
+        "         `if`(k<=3 and l[k+3]=0 and l[k+6]=0,",
+        "            b(n, s(k=1, k+3=1, k+6=1, l)), 0)+",
+        "         `if`(irem(k, 3)>0 and l[k+1]=0,",
+        "            b(n, s(k=1, k+1=1, l)), 0)+",
+        "         `if`(irem(k, 3)=1 and l[k+1]=0 and l[k+2]=0,",
+        "            b(n, subsop(k=1, k+1=1, k+2=1, l)), 0)",
+        "      fi",
+        "    end:",
+        "a:=n-> b(n, [0$9]): s:=subsop:",
+        "seq(a(n), n=0..10);"
+    ],
+    "mathematica": [
+        "b[n_, l_] := b[n, l] = Module[{k, t}, t := Min[l]; If [n == 0, 1, If[t > 0, b[n-t, l-t], k = 1; While[l[[k]] > 0, k++ ]; Sum[If[n >= j, b[n, ReplacePart[l, k -> j]], 0], {j, 2, 3}] + If[k <= 6 && l[[k+3]] == 0, b[n, ReplacePart[l, {k -> 1, k+3 -> 1}]], 0] + If[k <= 3 && l[[k+3]] == 0 && l[[k+6]] == 0, b[n, ReplacePart[l, {k -> 1, k+3 -> 1, k+6 -> 1}]], 0] + If[Mod[k, 3] > 0 && l[[k+1]] == 0, b[n, ReplacePart[l, {k -> 1, k+1 -> 1}]], 0] + If[Mod[k, 3] == 1 && l[[k+1]] == 0 && l[[k+2]] == 0, b[n, ReplacePart[l, {k -> 1, k+1 -> 1, k+2 -> 1}]], 0] ]] ]; a[n_] := b[n, Array[0&, 9]]; Table[a[n], {n, 0, 10}] // Flatten (* _Jean-Fran\u00e7ois Alcover_, Dec 16 2013, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A000931, A129682, A219866, A219867, A233313, A233505, A233507, A233509."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Dec 11 2013",
+    "references": 5,
+    "revision": 14,
+    "time": "2013-12-16T08:50:04-05:00",
+    "created": "2013-12-11T20:31:18-05:00"
+}

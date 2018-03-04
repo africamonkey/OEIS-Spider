@@ -1,0 +1,50 @@
+{
+    "number": 274112,
+    "data": "1,1,1,1,2,3,4,5,8,12,17,23,35,52,75,105,157,232,337,480,712,1049,1529,2199,3248,4777,6976,10092,14869,21845,31937,46377,68222,100159,146536,213328,313487,460023,673351,981976,1441999,2115350,3097326,4522529,6637879,9735205,14257734,20836827,30572032,44829766,65666593",
+    "name": "Number of equivalence classes of ballot paths of length n for the string ddu.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A274112/b274112.txt\">Table of n, a(n) for n = 0..300</a>",
+        "K. Manes, A. Sapounakis, I. Tasoulas, P. Tsikouras, <a href=\"http://arxiv.org/abs/1510.01952\">Equivalence classes of ballot paths modulo strings of length 2 and 3</a>, arXiv:1510.01952 [math.CO], 2015, Section 3.4."
+    ],
+    "formula": [
+        "0 = x*(x^3+x-1)*y^2 + (2*x-1)*y + 1, where y is the g.f. - _Gheorghe Coserea_, Jan 05 2017",
+        "G.f.: 1/(1 - x - x^4/(1 - x^4/(1 - x^4/(1 - x^4/(1 - ...))))), a continued fraction. - _Ilya Gutkovskiy_, Jul 26 2017",
+        "a(n) ~ 3 * (1+r^2)^(n+1) / (7 + 4*r + 8*r^2), where r = A263719 = ((9+sqrt(93))/2)^(1/3)/3^(2/3) - (2/(3*(9+sqrt(93))))^(1/3) = 0.682327803828019327369483739711048256891188581898... is the real root of the equation r^3 + r = 1. - _Vaclav Kotesovec_, Nov 27 2017"
+    ],
+    "maple": [
+        "A274112 := proc(n)",
+        "    add( (n-4*i+1)/(n-3*i+1)*binomial(n-2*i,i),i=0..n/4) ;",
+        "end proc:",
+        "seq(A274112(n),n=1..50) ; # _R. J. Mathar_, Jun 20 2016"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[(n - 4*i + 1)/(n - 3*i + 1)*Binomial[n - 2*i, i], {i, 0, n/4} ];",
+        "Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Nov 27 2017, after _R. J. Mathar_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "x='x; y='y;",
+        "Fxy = x*(x^3+x-1)*y^2 + (2*x-1)*y + 1;",
+        "seq(N) = {",
+        "  my(y0 = 1 + O('x^N), y1=0);",
+        "  for (k = 1, N,",
+        "    y1 = y0 - subst(Fxy, y, y0)/subst(deriv(Fxy, y), y, y0);",
+        "    if (y1 == y0, break()); y0 = y1);",
+        "  Vec(y0);",
+        "};",
+        "seq(51)  \\\\ _Gheorghe Coserea_, Jan 05 2017"
+    ],
+    "xref": [
+        "Cf. A274110-A274115, A263719."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_, Jun 17 2016",
+    "ext": [
+        "a(0)=1 prepended by _Gheorghe Coserea_, Jan 05 2017"
+    ],
+    "references": 3,
+    "revision": 30,
+    "time": "2017-11-27T05:49:53-05:00",
+    "created": "2016-06-17T15:56:56-04:00"
+}

@@ -1,0 +1,51 @@
+{
+    "number": 266233,
+    "data": "5,7,11,23,31,47,59,71,79,83,107,127,151,167,179,191,223,227,239,263,271,347,359,383,431,439,467,479,503,563,587,599,607,631,719,727,839,863,887,911,919,967,983,991,1019,1031,1087,1103,1151,1187,1231,1279,1283",
+    "name": "Primes representable as f(f(f(...f(p)...))) where p is a prime and f(x) = x*2 + 1.",
+    "comment": [
+        "A005385 is a subsequence: f(x) is applied just once."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A266233/b266233.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(5) = f(f(7)) = (7*2 + 1)*2 + 1 = 31.",
+        "a(48) = f(f(f(137))) = ((137*2 + 1)*2 + 1)*2 + 1 = 1103."
+    ],
+    "maple": [
+        "N:= 10^4: # to get all terms <= N",
+        "Primes:= select(isprime, {2,seq(i,i=3..N,2)}):",
+        "f:= x -> 2*x+1:",
+        "S:= {}: R:= Primes:",
+        "for k from 1 while nops(R) > 0 do",
+        "   R:= select(`<=`,map(f,R),N);",
+        "   S:= S union (R intersect Primes);",
+        "od:",
+        "sort(convert(S,list)); # _Robert Israel_, Jun 29 2016"
+    ],
+    "mathematica": [
+        "Take[Select[Union@ Flatten[Table[Nest[2 # + 1 &, Prime@ n, #], {n, 120}] & /@ Range@ 120], PrimeQ], 53] (* _Michael De Vlieger_, Jan 06 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "a=[]",
+        "TOP=10000",
+        "for p in range(TOP):",
+        "    if isprime(p):",
+        "         while p<TOP:",
+        "            p = p*2+1",
+        "            if isprime(p): a.append(p)",
+        "print sorted(set(a))"
+    ],
+    "xref": [
+        "Cf. A000040, A005385, A266234, A266235."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, Dec 25 2015",
+    "references": 4,
+    "revision": 19,
+    "time": "2016-06-30T02:43:12-04:00",
+    "created": "2016-01-09T14:14:47-05:00"
+}

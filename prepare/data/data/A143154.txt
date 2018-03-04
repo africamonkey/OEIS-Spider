@@ -1,0 +1,49 @@
+{
+    "number": 143154,
+    "data": "1,2,18,262,5320,138728,4419156,166319424,7221397848,355312006392,19537581248592,1187337791554176,79025863405440432,5716937001401316000,446654003380859659488,37480492611898380241248",
+    "name": "E.g.f.: A(x) = x + log(1 - A(x))^2.",
+    "comment": [
+        "Radius of convergence is r = (-1 + 6*A(r) - A(r)^2)/4 = 0.172815973872...",
+        "where A(r) = 1 - exp((A(r)-1)/2) = 0.2965325775..."
+    ],
+    "formula": [
+        "E.g.f.: A(x) = Series_Reversion( x - log(1 - x)^2 ).",
+        "E.g.f.: x + Sum_{n>=1} d^(n-1)/dx^(n-1) log(1-x)^(2*n)/n!.",
+        "E.g.f.: x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) (log(1-x)^(2*n)/x)/n! ).",
+        "E.g.f. derivative: A'(x) = (1 - A(x))/(1 - A(x) + 2*log(1 - A(x))).",
+        "a(n) = ((n-1)!*sum(k=0..n-1, binomial(n+k-1,n-1)*sum(j=0..k, (-1)^(n+j-1)*binomial(k,j)*sum(l=0..j, (binomial(j,l)*(2*(j-l))!*stirling1(n-l+j-1,2*(j-l)))/(n-l+j-1)!)))), n>0. - _Vladimir Kruchinin_, Feb 07 2012",
+        "a(n) ~ c*sqrt(4/(1+c)-2-2*c) * n^(n-1) / (exp(n) * (1-c*(2+c))^n), where c = LambertW(1/2) = 0.35173371124919... (see A202356). - _Vaclav Kotesovec_, Jan 24 2014"
+    ],
+    "example": [
+        "A(x) = x + 2*x^2/2! + 18*x^3/3! + 262*x^4/4! + 5320*x^5/5! + ...",
+        "-log(1 - A(x)) = G(x) = the g.f. of A143155:",
+        "G(x) = x + 3*x^2/2! + 26*x^3/3! + 376*x^4/4! + 7614*x^5/5! + ...",
+        "G(x)^2 = 2*x^2/2! + 18*x^3/3! + 262*x^4/4! + 5320*x^5/5! + ...",
+        "Related expansions:",
+        "A(x) = x + log(1-x)^2 + d/dx log(1-x)^4/2! + d^2/dx^2 log(1-x)^6/3! + d^3/dx^3 log(1-x)^8/4! + ...",
+        "log(A(x)/x) = log(1-x)^2/x + d/dx (log(1-x)^4/x)/2! + d^2/dx^2 (log(1-x)^6/x)/3! + d^3/dx^3 (log(1-x)^8/x)/4! + ..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[x-Log[1-x]^2,{x,0,20}],x],x] * Range[0,20]!] (* _Vaclav Kotesovec_, Jan 24 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x+O(x^n));for(i=0,n,A=x + log(1-A)^2);n!*polcoeff(A,n)}",
+        "(PARI) {a(n)=n!*polcoeff(serreverse(x-log(1-x+x*O(x^n))^2),n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, log(1-x+x*O(x^n))^(2*m)/m!)); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, log(1-x+x*O(x^n))^(2*m)/x/m!)+x*O(x^n))); n!*polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))",
+        "(Maxima) a(n):=((n-1)!*sum(binomial(n+k-1,n-1)*sum((-1)^(n+j-1)*binomial(k,j)*sum((binomial(j,l)*(2*(j-l))!*stirling1(n-l+j-1,2*(j-l)))/(n-l+j-1)!,l,0,j),j,0,k),k,0,n-1)); /* _Vladimir Kruchinin_, Feb 07 2012 */"
+    ],
+    "xref": [
+        "Cf. A143155, A143138, A202356."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jul 27 2008",
+    "references": 2,
+    "revision": 16,
+    "time": "2018-02-09T03:11:32-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

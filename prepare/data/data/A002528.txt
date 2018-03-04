@@ -1,0 +1,47 @@
+{
+    "number": 2528,
+    "id": "M1256 N0480",
+    "data": "0,0,2,4,12,32,108,336,1036,3120,9540,29244,89768,274788,840936,2573972,7881922,24135000,73897320,226249264,692714696,2120941424,6493883944,19882820480,60876609464,186390208744,570684661408,1747307671896,5349860697088",
+    "name": "a(n) = A188491(n+1) - A188494(n) - A002526(n).",
+    "comment": [
+        "For n >= 2, a(n) is the number of permutations p on the set [n] with the properties that abs(p(i)-i) <= 3 for all i, p(1) <= 2, and p(2) <= 4.",
+        "For n >= 2, a(n) is also the permanent of the n X n matrix that has ones on its diagonal, ones on its three superdiagonals, ones on its three subdiagonals (with the exception of zeros in the (3,1), (4,1), and (5,2)-entries), and is zero elsewhere.",
+        "This is row 9 of Kl\u00f8ve's Table 3."
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Nathaniel Johnston, <a href=\"/A002528/b002528.txt\">Table of n, a(n) for n = 0..90</a>",
+        "Torleiv Kl\u00f8ve, <a href=\"http://www.ii.uib.no/publikasjoner/texrap/pdf/2008-376.pdf\"> Spheres of Permutations under the Infinity Norm - Permutations with limited displacement. </a> Reports in Informatics, Department of Informatics, University of Bergen, Norway, no. 376, November 2008.",
+        "R. Lagrange, <a href=\"http://archive.numdam.org/article/ASENS_1962_3_79_3_199_0.pdf\">Quelques r\u00e9sultats dans la m\u00e9trique des permutations</a>, Annales Scientifiques de l'\u00c9cole Normale Sup\u00e9rieure, Paris, 79 (1962), 199-241.",
+        "<a href=\"/index/Rec#order_14\">Index entries for linear recurrences with constant coefficients</a>, signature (2,2,0,10,8,-2,-16,-10,-2,4,2,0,2,1)."
+    ],
+    "formula": [
+        "a(n) = A002527(n-1) + A188491(n-1). - _Nathaniel Johnston_, Apr 10 2011",
+        "G.f.: -2*x^2 / ((x -1)*(x^13 +3*x^12 +3*x^11 +5*x^10 +9*x^9 +7*x^8 -3*x^7 -19*x^6 -21*x^5 -13*x^4 -3*x^3 -3*x^2 -x +1)). - _Colin Barker_, Dec 16 2014"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "A002528:= n-> `if` (n<=1, 0, Permanent (Matrix (n, (i, j)->",
+        "              `if` (abs(j-i)<4 and [i, j]<>[3, 1] and [i, j]<>[4, 1] and [i, j]<>[5, 2], 1, 0)))):"
+    ],
+    "mathematica": [
+        "a[n_] := Permanent[Table[If[Abs[j - i] < 4 && {i, j} != {3, 1} && {i, j} != {4, 1} && {i, j} != {5, 2}, 1, 0], {i, 1, n}, {j, 1, n}]]; a[1] = 0; Table[an = a[n]; Print[\"a(\", n, \") = \", an]; an, {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Jan 07 2016, adapted from Maple *)",
+        "CoefficientList[Series[2 x^2 / ((1 - x) (x^13 + 3 x^12 + 3 x^11 + 5 x^10 + 9 x^9 + 7 x^8 - 3 x^7 - 19 x^6 - 21 x^5 - 13 x^4 - 3 x^3 - 3 x^2 - x + 1)), {x, 0, 33}], x] (* _Vincenzo Librandi_, Jan 07 2016"
+    ],
+    "program": [
+        "(PARI) concat([0,0], Vec(-2*x^2 / ((x -1)*(x^13 +3*x^12 +3*x^11 +5*x^10 +9*x^9 +7*x^8 -3*x^7 -19*x^6 -21*x^5 -13*x^4 -3*x^3 -3*x^2 -x +1)) + O(x^100))) \\\\ _Colin Barker_, Dec 16 2014"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Name and comments edited, and a(12)-a(28) from _Nathaniel Johnston_, Apr 10 2011"
+    ],
+    "references": 4,
+    "revision": 32,
+    "time": "2016-01-07T02:54:32-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

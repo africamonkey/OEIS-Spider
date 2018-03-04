@@ -1,0 +1,91 @@
+{
+    "number": 291259,
+    "data": "0,1,9,25,45,69,108,145,193,248,305,373,437,517,608,697,793,889,1005,1124,1245,1369,1510,1649,1789,1941,2109,2278,2449,2617,2809,2997,3202,3405,3613,3834,4049,4281,4509,4762,5013,5249,5521,5785,6068,6348,6621,6917",
+    "name": "Minimum number of points of the square lattice falling strictly inside a circle of radius n.",
+    "comment": [
+        "Due to the symmetry and periodicity of the square lattice it is sufficient to explore possible circles with center belonging to the triangle with vertices (0,0), (1/2,0), and (1/2,1/2).",
+        "The different regions for the centers producing constant numbers of lattice points inside circles of radius n seem to become very complex and irregular as n increases (see density plots in Links)."
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A291259/b291259.txt\">Table of n, a(n) for n = 0..125</a>",
+        "Andres Cicuttin, <a href=\"/A291259/a291259.pdf\">Plots of regions for centers of circles of several radii n enclosing constant number of lattice points</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CircleLatticePoints.html\">Circle Lattice Points</a>"
+    ],
+    "formula": [
+        "a(n) ~ Pi*n^2.",
+        "a(n) <= A051132(n). - _Joerg Arndt_, Oct 03 2017"
+    ],
+    "example": [
+        "From _Arkadiusz Wesolowski_, Dec 18 2017 [Corrected by _Andrey Zabolotskiy_, Feb 19 2018]: (Start)",
+        "For a circle centered at the point (x, y) = (1/2, 0) with radius 6, there are 108 lattice points inside the circle.",
+        "Possible (but not unique) choices for the centers of the circles for radii up to 20 are given below.",
+        ".",
+        ".  Poss. center          Points in",
+        ".    x      y    Radius  the circle",
+        ".  -----  -----  ------  ----------",
+        ".    0      0       1         1",
+        ".    0      0       2         9",
+        ".    0      0       3        25",
+        ".    0      0       4        45",
+        ".    0      0       5        69",
+        ".   1/2     0       6       108",
+        ".    0      0       7       145",
+        ".    0      0       8       193",
+        ".   1/5     0       9       248",
+        ".    0      0      10       305",
+        ".    0      0      11       373",
+        ".    0      0      12       437",
+        ".    0      0      13       517",
+        ".   1/4     0      14       608",
+        ".    0      0      15       697",
+        ".    0      0      16       793",
+        ".    0      0      17       889",
+        ".    0      0      18      1005",
+        ".   1/2    1/2     19      1124",
+        ".    0      0      20      1245",
+        "(End)"
+    ],
+    "mathematica": [
+        "(* A291259: Minimum number of points of the square lattice falling strictly inside a circle of radius n. *)",
+        "(* The three vertices of the Explorative Triangle (ET) *)",
+        "P1={0,0}; P2={1/2,0}; P3={1/2,1/2};",
+        "dd2=SquaredEuclideanDistance;",
+        "(* candidatePointQ[p,n] gives True if \"p\" is a candidate point, and False otherwise. A candidate point is a point belonging to a circle of radius \"n\" with center in the ET *)",
+        "candidatePointQ[p_,n_] := With[{dds={dd2[p,P1],dd2[p,P2],dd2[p,P3]}}, Max[dds]>=n^2>=Min[dds]];",
+        "(* Check if point \"p\" falls inside any circle with radius \"n\" and center in the ET *)",
+        "innerPointQ[p_,n_] := With[{dds={dd2[p,P1],dd2[p,P2],dd2[p,P3]}}, Max[dds]<n^2];",
+        "(* The function \"candidatePoints[n]\" gives the list of points with distance \"n\" from some point of the ET *)",
+        "candidatePoints[n_] := Select[Table[{i,j},{i,-n,n+1},{j,-n,n+1}]//Flatten[#,1]&, candidatePointQ[#,n]&];",
+        "(* The function \"centersFromTwoPoints[{{x1,y1},{x2,y2}},n]\" gives the centers of the two circles with radius \"n\" and tangent to the pair of points {x1,y1} and {x2,y2} *) (* Note: if the distance between the two points is less than 2n then the coordinates of the centers are not integers *)",
+        "centersFromTwoPoints[{{x1_,y1_},{x2_,y2_}},n_] :=",
+        "Which[x1==x2,",
+        "Block[{sqrtTerm=Sqrt[4*n^2-(y1-y2)^2]/2},{{x1-sqrtTerm,(y1+y2)/2},",
+        "{x1+sqrtTerm,(y1+y2)/2}}],",
+        "y1==y2,",
+        "Block[{sqrtTerm=Sqrt[4*n^2-(x1-x2)^2]/2},{{(x1+x2)/2,-sqrtTerm+y1},",
+        "{(x1+x2)/2,sqrtTerm+y1}}], True,",
+        "Block[{ddxy2=dd2[{x1,y1},{x2,y2}],sqrtTerm}, sqrtTerm=Sqrt[-(ddxy2*(-4*n^2+ddxy2)*(y1-y2)^2)]; Table[{((x1+x2)*ddxy2-sqrtTerm)/(2*ddxy2),(ddxy2*(y1^2-y2^2)+sign*(x1-x2)*sqrtTerm)/(2*ddxy2*(y1-y2))}, {sign,{1,-1}}]]];",
+        "(* The function \"explorativeCenters[pairc, n]\" selects the centers of circles of radius \"n\" of the list \"pairc\" laying inside the ET *)",
+        "explorativeCenters[pairc_,n_] := Select[Table[centersFromTwoPoints[pair,n],{pair,pairc}]//Flatten[#,1]&, 0<=#[[1]]<=1/2 && 0<= #[[2]]<=#[[1]]&];",
+        "a[n_] := If[n==0, 0, Module[{points,pairc,expcent,innerpoints},",
+        "points = candidatePoints[n];",
+        "pairc = Select[Subsets[points,{2}], dd2@@#<4n^2&];",
+        "expcent = explorativeCenters[pairc,n];",
+        "innerpoints = Count[Table[{i,j},{i,-n,n+1},{j,-n,n+1}]//Flatten[#,1]&, _?(innerPointQ[#,n]&)];",
+        "Min[Table[Count[points, _?(dd2[#,center]<n^2&)], {center,expcent}]] + innerpoints]];",
+        "Table[a[n], {n, 0, 20}] (* _Andres Cicuttin_ & _Andrey Zabolotskiy_, Nov 14 2017 *)"
+    ],
+    "xref": [
+        "Cf. A046109, A051132, A295344."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,3",
+    "author": "_Andres Cicuttin_, Aug 21 2017",
+    "ext": [
+        "More terms from _Andrey Zabolotskiy_, Nov 17 2017"
+    ],
+    "references": 4,
+    "revision": 79,
+    "time": "2018-02-21T05:40:52-05:00",
+    "created": "2017-08-23T03:16:03-04:00"
+}

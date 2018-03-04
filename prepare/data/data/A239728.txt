@@ -1,0 +1,43 @@
+{
+    "number": 239728,
+    "data": "32,128,243,2048,2187,3125,7776,8192,16807,78125,100000,131072,161051,177147,248832,279936,371293,524288,537824,759375,823543,1419857,1594323,1889568,2476099,3200000,4084101,5153632,6436343,7962624,8388608,10000000,11881376,17210368",
+    "name": "Perfect power but neither square nor cube.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A239728/b239728.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "GCD(A052409(a(n), 6) = 1. - _Reinhard Zumkeller_, Mar 28 2014"
+    ],
+    "example": [
+        "279936 is included since 279936=6^7 is a power and this is not a square or a cube.",
+        "59049=9^5 not included since this is a square 243^2=59049.",
+        "32768=8^5 not included since this is a cube 32^3=32768."
+    ],
+    "program": [
+        "(PARI) for(i=1, 2^25, if(gcd(ispower(i), 6) == 1, print(i)))",
+        "(Haskell)",
+        "import Data.Map (singleton, findMin, deleteMin, insert)",
+        "a239728 n = a239728_list !! (n-1)",
+        "a239728_list = f 9 (3, 2) (singleton 4 (2, 2)) where",
+        "   f zz (bz, be) m",
+        "    | xx < zz && gcd 6 be > 1 =",
+        "                f zz (bz, be+1) (insert (bx*xx) (bx, be+1) $ deleteMin m)",
+        "    | xx < zz = xx :",
+        "                f zz (bz, be+1) (insert (bx*xx) (bx, be+1) $ deleteMin m)",
+        "    | xx > zz = f (zz+2*bz+1) (bz+1, 2) (insert (bz*zz) (bz, 3) m)",
+        "    | otherwise = f (zz + 2 * bz + 1) (bz + 1, 2) m",
+        "    where (xx, (bx, be)) = findMin m",
+        "-- _Reinhard Zumkeller_, Mar 28 2014"
+    ],
+    "xref": [
+        "Cf. A001597 (perfect powers), A097054 (nonsquare perfect powers),  A239870 (noncube perfect powers).",
+        "Cf. A052409."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Jeppe Stig Nielsen_, Mar 25 2014",
+    "references": 4,
+    "revision": 20,
+    "time": "2014-03-28T12:20:24-04:00",
+    "created": "2014-03-26T06:21:19-04:00"
+}

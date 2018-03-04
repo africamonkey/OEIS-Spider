@@ -1,0 +1,73 @@
+{
+    "number": 236326,
+    "data": "3,6,10,17,24,27,30,34,41,48,51,54,58,65,72,75,78,82,89,96,99,102,106,113,120,123,126,130,137,144,147,150,154,161,168,171,174,178,185,192,195,198,202,209,216,219,222,226,233,240,243,246,250,257,264,267,270,274,281,288,291,294,298,305,312,315,318,322",
+    "name": "a(n)*Pi is the total length of irregular spiral (center points: 1, 2, 3, 4, 5; pattern 1) after n rotations.",
+    "comment": [
+        "Let points 1, 2, 3, 4, and 5 be placed on a horizontal straight line at intervals of 1 unit. (See illustration under Links.) Construct a continuous curve from half circles, alternately lying below and above the line, centered at points 1, 2, 3, 4, 5, 1, ... and so on, with the first half circle (centered at point 1) beginning at point 2.",
+        "Also floor(a(n)/3) = A047607(n+1).",
+        "Conjecture: All forms of 120 permutations of 5 center points are non-expanded loops."
+    ],
+    "link": [
+        "Kival Ngaokrajang, <a href=\"/A236326/a236326.pdf\">Illustration of irregular spirals (center points: 1, 2, 3, 4, 5)</a> Pattern 1."
+    ],
+    "formula": [
+        "Conjecture from _Colin Barker_, Jul 12 2014: (Start)",
+        "a(n) = a(n-1)+a(n-5)-a(n-6).",
+        "G.f.: x*(7*x^4+7*x^3+4*x^2+3*x+3) / ((x-1)^2*(x^4+x^3+x^2+x+1)). (End)"
+    ],
+    "program": [
+        "(Small Basic)",
+        "n =5       'center points number 1<=n<=9",
+        "pt=-1      'pattern1: pt=-1; pattern2: pt=1",
+        "i=12345    'center points order",
+        "rota=100   'rotations",
+        "sum=0",
+        "rc=1",
+        "r[1]=1",
+        "For i1 = 1 To n",
+        "  d1=i/Math.Power(10,1)",
+        "  i=math.Floor(d1)",
+        "  d[i1]=(d1-i)*Math.Power(10,1)",
+        "EndFor",
+        "For j1=1 To n",
+        "  For j2=1 To n",
+        "    If d[j1]=j2 Then",
+        "      dd[j2]=j1",
+        "    endif",
+        "  EndFor",
+        "EndFor",
+        "For j3=1 To n",
+        "  If j3=n Then",
+        "    dxy[j3]=dd[j3]-dd[1]",
+        "  Else",
+        "    dxy[j3]=dd[j3]-dd[j3+1]",
+        "  EndIf",
+        "EndFor",
+        "For k1=1 To rota*n",
+        "  cc=Math.Floor((k1-1)/n)",
+        "  p[k1]=r[k1]+pt*dxy[k1-cc*n]*Math.Power(-1,Math.Remainder(k1,2))",
+        "  r[k1+1]=p[k1]",
+        "  sum=sum+math.Abs(r[k1])",
+        "  If math.Abs(r[k1])>0 Then",
+        "    rc=rc+1",
+        "  EndIf",
+        "  If rc=3 Then",
+        "    TextWindow.Write(sum+\", \")",
+        "    rc=1",
+        "  EndIf",
+        "EndFor"
+    ],
+    "xref": [
+        "Cf. A014105 (2 center points); A234902, A234903, A234904 (3 center points); A235088, A235089 (4 center points)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Kival Ngaokrajang_, Jan 22 2014",
+    "ext": [
+        "Description of procedure for constructing curve (under Comments) edited by _Jon E. Schoenfield_, Feb 12 2014"
+    ],
+    "references": 4,
+    "revision": 19,
+    "time": "2014-07-12T12:19:24-04:00",
+    "created": "2014-01-26T12:18:01-05:00"
+}

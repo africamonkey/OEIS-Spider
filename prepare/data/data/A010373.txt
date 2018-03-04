@@ -1,0 +1,44 @@
+{
+    "number": 10373,
+    "data": "1,1,3,10,36,153,780,4005,22366,128778,766941,4674153,29180980,185117661,1193918545,7800816871,51584238201,344632209090,2324190638055,15804057614995,108277583483391,746878494484128,5183852459907628",
+    "name": "Number of unrooted quartic trees with 2n (unlabeled) nodes and possessing a bicentroid; number of 2n-carbon alkanes C(2n)H(4n+2) with a bicentroid, ignoring stereoisomers.",
+    "comment": [
+        "The degree of each node is <= 4.",
+        "A bicentroid is an edge which connects two subtrees of exactly m/2 nodes, where m is the number of nodes in the tree. If a bicentroid exists it is unique. Clearly trees with an odd number of nodes cannot have a bicentroid.",
+        "Ignoring stereoisomers means that the children of a node are unordered. They can be permuted in any way and it is still the same tree. See A086200 for the analogous sequence with stereoisomers counted."
+    ],
+    "reference": [
+        "F. Harary, Graph Theory, p. 36, for definition of bicentroid."
+    ],
+    "link": [
+        "Vincenzo Librandi and Alois P. Heinz, <a href=\"/A010373/b010373.txt\">Table of n, a(n) for n = 1..500</a> (terms n = 1..100 from Vincenzo Librandi)",
+        "A. Cayley, <a href=\"/A000022/a000022.pdf\">\u00dcber die analytischen Figuren, welche in der Mathematik B\u00e4ume genannt werden und ihre Anwendung auf die Theorie chemischer Verbindungen</a>, Chem. Ber. 8 (1875), 1056-1059. (Annotated scanned copy)",
+        "E. M. Rains and N. J. A. Sloane, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/index.html\">On Cayley's Enumeration of Alkanes (or 4-Valent Trees).</a>, J. Integer Sequences, Vol. 2 (1999), Article 99.1.1.",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "a(n) = b(n)*(b(n)+1)/2, where b(n) = A000598[ n ]."
+    ],
+    "maple": [
+        "M[1146] := [ T,{T=Union(Epsilon,U),U=Prod(Z,Set(U,card<=3))},unlabeled ]:",
+        "bicenteredHC := proc(n) option remember; if n mod 2<>0 then 0 else binomial(count(M[ 1146 ],size=n/2)+1,2) fi end:"
+    ],
+    "mathematica": [
+        "m = 24; a[x_] = Sum[c[k]*x^k, {k, 0, m}]; s[x_] = Series[ 1 + (1/6)*x*(a[x]^3 + 3*a[x]*a[x^2] + 2*a[x^3]) - a[x], {x, 0, m}]; eq = Thread[ CoefficientList[s[x], x] == 0];",
+        "Do[so[k] = Solve[eq[[1]], c[k-1]][[1]]; eq = Rest[eq] /. so[k], {k, 1, m+1}]; b = Array[c, m, 0] /. Flatten[ Array[so, m+1] ]; Rest[b*(b+1)/2] (* _Jean-Fran\u00e7ois Alcover_, Jul 25 2011, after A000598 *)"
+    ],
+    "xref": [
+        "A000602(n) = A010372(n) + a(n/2) for n even, A000602(n) = A010372(n) for n odd.",
+        "Cf. A000200, A000598."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Paul Zimmermann_, _N. J. A. Sloane_",
+    "ext": [
+        "Description revised by Steve Strand (snstrand(AT)comcast.net), Aug 20 2003"
+    ],
+    "references": 7,
+    "revision": 34,
+    "time": "2018-01-22T22:33:32-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

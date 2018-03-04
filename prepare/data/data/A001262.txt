@@ -1,0 +1,80 @@
+{
+    "number": 1262,
+    "data": "2047,3277,4033,4681,8321,15841,29341,42799,49141,52633,65281,74665,80581,85489,88357,90751,104653,130561,196093,220729,233017,252601,253241,256999,271951,280601,314821,357761,390937,458989,476971,486737",
+    "name": "Strong pseudoprimes to base 2.",
+    "comment": [
+        "The number 2^n-1 is in the sequence iff n is in A054723 or in A001567. - _Thomas Ordowski_, Sep 02 2016"
+    ],
+    "reference": [
+        "R. K. Guy, Unsolved Problems Theory Numbers, A12.",
+        "P. Ribenboim, The Book of Prime Number Records. Springer-Verlag, NY, 2nd ed., 1989, p. 95."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A001262/b001262.txt\">Table of n, a(n) for n = 1..10000</a> (using data from A001567)",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>, section 39.10, pp.786-792",
+        "Chris Caldwell, <a href=\"http://primes.utm.edu/glossary/xpage/StrongPRP.html\">Strong probable prime</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Pseudoprime.html\">Pseudoprime</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/StrongPseudoprime.html\">Strong Pseudoprime</a>",
+        "OEIS Wiki, <a href=\"http://oeis.org/wiki/Strong_pseudoprimes\">Strong Pseudoprime</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Strong_pseudoprime\">Strong pseudoprime</a>",
+        "<a href=\"/index/Ps#pseudoprimes\">Index entries for sequences related to pseudoprimes</a>"
+    ],
+    "example": [
+        "For n = 577, n-1 = 576 = 9*2^6. Since 2^(9*2^3) = 2^72 == -1 (mod 577), 577 passes the primality test, but since it is actually prime, it is not in the sequence. For n = 3277, n-1 = 3276 = 819*2^2, and 2^(819*2) == -1 (mod 3277), so n passes the primality test, and n = 3277 = 29*113 is composite, so 3277 is in the sequence. - _Michael B. Porter_, Sep 04 2016"
+    ],
+    "maple": [
+        "A007814 := proc(n) padic[ordp](n,2) ; end proc:",
+        "isStrongPsp := proc(n,b) local d,s,r; if type(n,'even') or n<=1 then return false; elif isprime(n) then return false; else s := A007814(n-1) ; d := (n-1)/2^s ; if modp(b &^ d,n) = 1 then return true; else for r from 0 to s-1 do if modp(b &^ d,n) = n-1 then return true; end if; d := 2*d ; end do: return false; end if; end if; end proc:",
+        "isA001262 := proc(n) isStrongPsp(n,2) ; end proc:",
+        "for n from 1 by 2 do if isA001262(n) then print(n); end if; end do:",
+        "# _R. J. Mathar_, Apr 05 2011"
+    ],
+    "mathematica": [
+        "sppQ[n_?EvenQ, _] := False; sppQ[n_?PrimeQ, _] := False; sppQ[n_, b_] := (s = IntegerExponent[n-1, 2]; d = (n-1)/2^s; If[PowerMod[b, d, n] == 1, Return[True], Do[If[PowerMod[b, d, n] == n-1, Return[True]]; d = 2*d, {s}]]); lst = {}; k = 3; While[k < 500000, If[sppQ[k, 2], Print[k]; AppendTo[lst, k]]; k += 2]; lst (* _Jean-Fran\u00e7ois Alcover_, Oct 20 2011, after _R. J. Mathar_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "isStrongPsp(n,b)={",
+        "        my(s,d,r,bm) ;",
+        "        if( (n% 2) ==0 || n <=1, return(0) ;) ;",
+        "        if(isprime(n), return(0) ;) ;",
+        "        s = valuation(n-1,2) ;",
+        "        d = (n-1)/2^s ;",
+        "        bm = Mod(b,n)^d ;",
+        "        if ( bm == Mod(1,n), return(1) ;) ;",
+        "        for(r=0,s-1,",
+        "                bm = Mod(b,n)^d ;",
+        "                if ( bm == Mod(-1,n),",
+        "                        return(1) ;",
+        "                ) ;",
+        "                d *= 2;",
+        "        ) ;",
+        "        return(0);",
+        "}",
+        "isA001262(n)={",
+        "        isStrongPsp(n,2)",
+        "}",
+        "{",
+        "for(n=1,10000000000,",
+        "    if(isA001262(n),",
+        "        print(n)",
+        "    ) ;",
+        ") ;",
+        "} \\\\ _R. J. Mathar_, Mar 07 2012",
+        "(PARI) is_A001262(n,a=2)={ (bittest(n,0) && !isprime(n) && n>8) || return; my(s=valuation(n-1,2)); if(1==a=Mod(a,n)^(n>>s),return(1)); while(a!=-1 && s--, a=a^2); a==-1} \\\\ _M. F. Hasler_, Aug 16 2012"
+    ],
+    "xref": [
+        "Cf. A001567 (pseudoprimes to base 2), A020229 (strong pseudoprimes to base 3), A020231 (base 5), A020233 (base 7).",
+        "Cf. A072276 (SPP to base 2 and 3), A215568 (SPP to base 2 and 5), A056915 (SPP to base 2,3 and 5), A074773 (SPP to base 2,3,5 and 7)."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _David W. Wilson_, Aug 15 1996"
+    ],
+    "references": 56,
+    "revision": 73,
+    "time": "2017-10-01T19:58:48-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

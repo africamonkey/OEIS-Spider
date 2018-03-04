@@ -1,0 +1,45 @@
+{
+    "number": 136328,
+    "data": "0,3,75,1435,25515,436821,7339332,121782375,2005392675,32835436777,535550923908,8707954925033,141270179732500,2287544190032700,36988236910737360,597341791692978975,9637351741503033075",
+    "name": "a(n) = Wiener index of the odd graph O_n.",
+    "comment": [
+        "The odd graph O_n (n>=2) is a graph whose vertices represent the (n-1)-subsets of {1,2,...,2n-1} and two vertices are connected if and only if they correspond to disjoint subsets. It is a distance regular graph. [_Emeric Deutsch_, Aug 20 2013]"
+    ],
+    "reference": [
+        "Kailasam Viswanathan Iyer, Some computational and graph theoretical aspects of Wiener index, Ph.D. Dissertation, Dept. of Comp. Sci. & Engg., National Institute of Technology, Trichy, India, 2007."
+    ],
+    "link": [
+        "R. Balakrishnan, N. Sridharan and K. Viswanathan Iyer, <a href=\"http://journal.library.iisc.ernet.in/vol200605/paper9/527-531.pdf\">The Wiener index of odd graphs</a>, J. Ind. Inst. Sci., vol. 86, no. 5, 2006. [Broken link]",
+        "R. Balakrishnan, N. Sridharan and K. Viswanathan Iyer,, <a href=\"/A136328/a136328.pdf\">The Wiener index of odd graphs</a>, J. Ind. Inst. Sci., vol. 86, no. 5, 2006. [Cached copy]",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/OddGraph.html\">Odd Graph</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/WienerIndex.html\">Wiener Index</a>"
+    ],
+    "formula": [
+        "a(n) = binomial(2*n - 1, n - 1)/2*(sum(((2*j + 1)*n)/(j + 1)*binomial(n - 1, j)^2, {j, 0, floor(n/2) - 1}) + sum((2*(n - 1 - j)*n)/(j + 1)*binomial(n - 1, j)^2, {j, floor(n/2), n - 2})). - _Eric W. Weisstein_, Sep 08 2017",
+        "A formula is \"hidden\" in the 2nd Maple program. B(n) and C(n) are the intersection arrays of O_n, H(n) is the Hosoya-Wiener polynomial of O_n, and Wi(n) is the Wiener index of O_n. - _Emeric Deutsch_, Aug 20 2013"
+    ],
+    "example": [
+        "a(2)=3 is the Wiener index of O_2 which is C_3.",
+        "a(3)=75 is the Wiener index of O_3 which is the Petersen graph."
+    ],
+    "maple": [
+        "A136328d := proc(k) add( (2*j+1)*binomial(k-1,j)^2/(1+j),j=0..(k/2-1) ); %+2*add( (k-1-j)*binomial(k-1,j)^2/(1+j),j=floor(k/2)..(k-2) ); k*% ; end proc:",
+        "A136328 := proc(n) binomial(2*n-1,n-1)*A136328d(n)/2 ; end proc: seq(A136328(n),n=1..20) ;",
+        "# _R. J. Mathar_, Sep 15 2010",
+        "B := proc (n) options operator, arrow: [seq(n-floor((1/2)*m), m = 1 .. n-1)] end proc: C := proc (n) options operator, arrow: [seq(ceil((1/2)*m), m = 1 .. n-1)] end proc: H := proc (n) options operator, arrow: (1/2)*binomial(2*n-1, n-1)*(sum((product(B(n)[r]/C(n)[r], r = 1 .. j))*t^j, j = 1 .. n-1)) end proc: Wi := proc (n) options operator, arrow: subs(t = 1, diff(H(n), t)) end proc: seq(Wi(n), n = 2 .. 20);",
+        "# _Emeric Deutsch_, Aug 20 2013"
+    ],
+    "mathematica": [
+        "Table[Binomial[2 n - 1, n - 1]/2 (Sum[((2 j + 1) n)/(j + 1) Binomial[n - 1, j]^2, {j, 0, Floor[n/2] - 1}] + Sum[(2 (n - 1 - j) n)/(j + 1) Binomial[n - 1, j]^2, {j, Floor[n/2], n - 2}]), {n, 20}] (* _Eric W. Weisstein_, Sep 08 2017 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_K.V.Iyer_, Mar 27 2008",
+    "ext": [
+        "Extended by _R. J. Mathar_, Sep 15 2010"
+    ],
+    "references": 4,
+    "revision": 19,
+    "time": "2017-09-08T10:54:01-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

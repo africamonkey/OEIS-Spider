@@ -1,0 +1,54 @@
+{
+    "number": 262961,
+    "data": "0,1,2,15,302,12559,900288,98986140,15459635718,3251842717671,885987204390450,303482789415233775,127643176985672421000,64668997044706349592900,38844990446097247188562800,27296481783843922533011100000,22184577644604207037479874293750",
+    "name": "Crandall numbers: (2/Pi)^4 Integral_{t>=0} ([Pi I_0(t)]^2 - [K_0(t)]^2) I_0(t) [K_0(t)]^5 (2t)^(2n-1) dt.",
+    "comment": [
+        "Anton Mellit and David Broadhurst define the sequence to be the \"round\" of the integral, with the conjecture that this rounding is exact. No one seems to know how to prove that any of the integrals gives a rational number, let alone an integer.",
+        "a(0) is not defined: the integral diverges.",
+        "Several papers written by Jon Borwein with various coauthors, motivated by work of David Broadhurst, provide recurrence relations for moments of Bessel functions. - _M. F. Hasler_, Oct 11 2015"
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A262961/b262961.txt\">Table of n, a(n) for n = 1..60</a>; first 49 terms from D. Broadhurst. See also the extended table of 450 terms in the Broadhurst link below.",
+        "David H. Bailey, Jonathan M. Borwein, David Broadhurst, M. L. Glasser, <a href=\"http://dx.doi.org/10.1088/1751-8113/41/20/205203\">Elliptic integral evaluations of Bessel moments</a>, J. Phys. A: Math. Theor. 41 (2008) 205203, and arXiv:0801.0891.",
+        "Jonathan M. Borwein, Bruno Salvy, <a href=\"https://projecteuclid.org/euclid.em/1227118973\">A Proof of a Recursion for Bessel Moments</a>, Experiment. Math. Volume 17, Issue 2 (2008), 223-230.",
+        "David Broadhurst, <a href=\"http://physics.open.ac.uk/~dbroadhu/recmem.pdf\">Crandall Memorial Puzzle</a>, Oct 04, 2015.",
+        "David Broadhurst, <a href=\"/A262961/a262961.pdf\">Crandall Memorial Puzzle</a> [Cached copy, with permission]",
+        "David Broadhurst, <a href=\"http://physics.open.ac.uk/~dbroadhu/recsol.pdf\">Crandall memorial puzzle: solution and heuristics</a>",
+        "David Broadhurst, <a href=\"/A265079/a265079.pdf\">Crandall memorial puzzle: solution and heuristics</a> [Cached copy, with permission]",
+        "David Broadhurst, <a href=\"/A262961/a262961.txt\">Table of n, a(n) for n = 1..450</a>",
+        "David Broadhurst, <a href=\"/A262961/a262961_1.txt\">The largest prime (or noncomposite) factor of A262961(n) for n = 1..94</a>",
+        "David Broadhurst, <a href=\"http://arxiv.org/abs/1604.03057\">Feynman integrals, L-series and Kloosterman moments</a>, arXiv:1604.03057, 2016. See Eq. 147.",
+        "Hans Havermann and David Broadhurst, <a href=\"http://chesswanks.com/num/CrandallNumbersFactored.txt\">Crandall Numbers Factored</a>",
+        "Yajun Zhou, <a href=\"https://arxiv.org/abs/1706.01068\">Hilbert Transforms and Sum Rules of Bessel Moments</a>, arXiv:1706.01068 [math.CA], 2017."
+    ],
+    "formula": [
+        "a(n) = (2/Pi)^4 Integral_{t>=0} ([Pi I_0(t)]^2 - [K_0(t)]^2) I_0(t) [K_0(t)]^5 (2t)^(2n-1) dt, where I_0(t) and K_0(t) are Bessel functions.",
+        "Floor(a(n+1)/a(n)) = A002943(n-2) = 2(n-2)(2n-3) for n > 7; with round() the relation holds for n = 3, ..., 9. - _M. F. Hasler_, Oct 11 2015"
+    ],
+    "maple": [
+        "ogf := x * BesselI(0,sqrt(x)/2)^4 * BesselK(0,sqrt(x)/2)^4;",
+        "S := convert(simplify(asympt(ogf, x, 25)),polynom):",
+        "seq(coeff(S,x,-i),i=0..24); # _Mark van Hoeij_, Oct 23 2017"
+    ],
+    "mathematica": [
+        "a[n_] := (t1 = NIntegrate[(2*t)^(2*n-1)*BesselI[0, t]^3*BesselK[0, t]^5, {t, 0, Infinity}, WorkingPrecision -> 50]; t2 = NIntegrate[(2*t)^(2*n-1) * BesselI[0, t]*BesselK[0, t]^7, {t, 0, Infinity}, WorkingPrecision -> 50]; Round[(2/Pi)^4*(Pi^2*t1-t2)]); Table[Print[\"a(\", n, \") = \", an = a[n]]; an, {n, 1, 16}] (* _Jean-Fran\u00e7ois Alcover_, Oct 06 2015, adapted from _David Broadhurst_'s PARI script *)"
+    ],
+    "program": [
+        "(PARI) { default(realprecision,50); infty=[1]; for(n=1,16, t1=intnum(t=0,[infty,2], besseli(0,t)^3*besselk(0,t)^5*(2*t)^(2*n-1)); t2=intnum(t=0,[infty,6], besseli(0,t)*besselk(0,t)^7*(2*t)^(2*n-1)); print(n,\" \",round((2/Pi)^4*(t1*Pi^2-t2)))); } /* _David Broadhurst_, Oct 05 2015 */",
+        "(PARI) A262961(n,p=max(2*n,20),a=1)={default(realprecision,p); my(i,k,r=1); forprime(q=3,(n-1)\\2,r*=q^(2*ceil(n/q)-4)); n=n*2-1; p=Pi^-2; round(intnum(t=0,[[1],a],((i=besseli(0,t))^3*(k=besselk(0,t))^5-i*k^7*p)*t^n)*2^(n+4)/r/Pi^2)*r} \\\\ It appears that (in PARI V.2.6.1) the parameter a=1 gives much better results for the numerical integration than the \"correct\" a=2 (resp. a=6 for the second term); combining all in one integral allows evaluation of the Bessel functions and t^(2n-1) only once. - _M. F. Hasler_, Oct 11 2015, improved thanks to a suggestion by _David Broadhurst_, Oct 16 2015"
+    ],
+    "xref": [
+        "Cf. A263413 for the largest prime factor of a(n).",
+        "See also A265079."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Andrew R. Reiter_, Oct 05 2015",
+    "ext": [
+        "Offset corrected by _David Broadhurst_, Oct 05 2015"
+    ],
+    "references": 3,
+    "revision": 114,
+    "time": "2017-10-23T17:48:51-04:00",
+    "created": "2015-10-05T16:49:11-04:00"
+}

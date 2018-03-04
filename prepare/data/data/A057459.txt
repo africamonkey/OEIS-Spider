@@ -1,0 +1,37 @@
+{
+    "number": 57459,
+    "data": "2,3,5,7,11,23,31,43,47,67,71,139,211,283,311,331,431,463,659,683,691,863,947,967,1291,1303,1319,1367,1427,1699,1867,1979,1987,2011,2111,2131,2311,2531,3011,3083,4099,4423,4643,4691,4831,5171,5179,5683,5839",
+    "name": "a(n+1) = smallest prime p in the range a(n) < p < a(1)*a(2)*...*a(n) such that p-1 divides a(1)*a(2)*...*a(n); or if no such prime p exists, then a(n+1) = smallest prime > a(n).",
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A057459/b057459.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 5. Since the product of a(1)*a(2) is 6, there is no prime p < 6 such that p-1 | 6 so the next prime greater than a(2) is 5.",
+        "a(9) = 47 since 46 (2*23) | 2*3*5*7*11*23*31*43."
+    ],
+    "maple": [
+        "with(numtheory): a:=[2]; P:=1; j:=1;",
+        "for n from 2 to 36 do",
+        "sw:=-1; P:=P*a[n-1];",
+        "  for i from j+1 to 1000 do",
+        "  if (ithprime(i)<P) and (P mod (ithprime(i)-1)) = 0 then Q:=ithprime(i); j:=i; sw:=1; break; fi;",
+        "                       od:",
+        "if sw=-1 then Q:=nextprime(a[n-1]); j:=pi(Q); fi;",
+        "a:=[op(a),Q];",
+        "od:",
+        "a; # _N. J. A. Sloane_, Feb 13 2017"
+    ],
+    "mathematica": [
+        "f[s_List] := Block[{b = Times @@ s, p = NextPrime@ Sort[s][[-1]]}, While[ Mod[b, p -1] > 0 && p < b, p = NextPrime@ p]; If[p > b, p = 2; While[ MemberQ[s, p], p = NextPrime@ p]]; Append[s, p]];; Nest[ f, {2}, 50] (* and modified by _Robert G. Wilson v_, Feb 13 2017 *)"
+    ],
+    "xref": [
+        "Cf. A007459. See A282027 for another version."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Sep 26 2000",
+    "references": 3,
+    "revision": 24,
+    "time": "2017-08-11T03:26:52-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

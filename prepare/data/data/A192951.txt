@@ -1,0 +1,72 @@
+{
+    "number": 192951,
+    "data": "0,1,3,9,20,40,74,131,225,379,630,1038,1700,2773,4511,7325,11880,19252,31182,50487,81725,132271,214058,346394,560520,906985,1467579,2374641,3842300,6217024,10059410,16276523,26336025,42612643,68948766",
+    "name": "Coefficient of x in the reduction by x^2->x+1 of the polynomial p(n,x) defined at Comments.",
+    "comment": [
+        "The titular polynomials are defined recursively:  p(n,x)=x*p(n-1,x)+3n-1, with p(0,x)=1.  For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232 and A192744.",
+        "...",
+        "The list of examples at A192744 is extended here; the recurrence is given by p(n,x)=x*p(n-1,x)+v(n), with p(0,x)=1, and the reduction of p(n,x) by x^2->x+1 is represented by u1+u2*x:",
+        "...",
+        "If v(n)=        n, then u1=A001595, u2=A104161.",
+        "If v(n)=      n-1, then u1=A001610, u2=A066982.",
+        "If v(n)=     3n-1, then u1=A171516, u2=A192951.",
+        "If v(n)=     3n-2, then u1=A192746, u2=A192952.",
+        "If v(n)=     2n-1, then u1=A111314, u2=A192953.",
+        "If v(n)=      n^2, then u1=A192954, u2=A192955.",
+        "If v(n)=   -1+n^2, then u1=A192956, u2=A192957.",
+        "If v(n)=    1+n^2, then u1=A192953, u2=A192389.",
+        "If v(n)=   -2+n^2, then u1=A192958, u2=A192959.",
+        "If v(n)=    2+n^2, then u1=A192960, u2=A192961.",
+        "If v(n)=    n+n^2, then u1=A192962, u2=A192963.",
+        "If v(n)=   -n+n^2, then u1=A192964, u2=A192965.",
+        "If v(n)= n(n+1)/2, then u1=A030119, u2=A192966.",
+        "If v(n)= n(n-1)/2, then u1=A192967, u2=A192968.",
+        "If v(n)= n(n+3)/2, then u1=A192969, u2=A192970.",
+        "If v(n)=     2n^2, then u1=A192971, u2=A192972.",
+        "If v(n)=   1+2n^2, then u1=A192973, u2=A192974.",
+        "If v(n)=  -1+2n^2, then u1=A192975, u2=A192976.",
+        "If v(n)=  1+n+n^2, then u1=A027181, u2=A192978.",
+        "If v(n)=  1-n+n^2, then u1=A192979, u2=A192980.",
+        "If v(n)=  (n+1)^2, then u1=A001891, u2=A053808.",
+        "If v(n)=  (n-1)^2, then u1=A192981, u2=A192982."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A192951/b192951.txt\">Table of n, a(n) for n = 0..400</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (3, -2, -1, 1)."
+    ],
+    "formula": [
+        "a(n) = 3*a(n-1)-2*a(n-2)-a(n-3)+a(n-4).",
+        "Contribution from Bruno Berselli, Nov 16 2011:  (Start)",
+        "  G.f.: x*(1+2*x^2)/((1-x)^2*(1-x-x^2)).",
+        "  a(n) = ((25+13*t)*(1+t)^n+(25-13*t)*(1-t)^n)/(10*2^n)-3*n-5 = A000285(n+2)-3*n-5  where t=sqrt(5). (End)"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 40;",
+        "p[0, x] := 1;",
+        "p[n_, x_] := x*p[n - 1, x] + 3 n - 1;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "  (* A171516 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "  (* A192951 *)",
+        "LinearRecurrence[{3,-2,-1,1},{0,1,3,9},40] (* _Vincenzo Librandi_, Nov 16 2011 *)"
+    ],
+    "program": [
+        "(MAGMA) I:=[0, 1, 3, 9]; [n le 4 select I[n] else 3*Self(n-1)-2*Self(n-2)-1*Self(n-3)+Self(n-4): n in [1..40]]; // Vincenzo Librandi, Nov 16 2011",
+        "(PARI) a(n)=([0,1,0,0; 0,0,1,0; 0,0,0,1; 1,-1,-2,3]^n*[0;1;3;9])[1,1] \\\\ _Charles R Greathouse IV_, Mar 22 2016"
+    ],
+    "xref": [
+        "Cf. A192232, A192744."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 13 2011",
+    "references": 44,
+    "revision": 27,
+    "time": "2016-03-22T18:52:12-04:00",
+    "created": "2011-07-13T20:19:32-04:00"
+}

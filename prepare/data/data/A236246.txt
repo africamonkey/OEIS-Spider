@@ -1,0 +1,43 @@
+{
+    "number": 236246,
+    "data": "1,2,4,5,10,11,13,14,28,29,31,32,37,38,40,41,82,83,85,86,92,93,96,105,111,112,115,116,122,177,236,237,244,245,247,266,267,270,276,277,283,294,301,302,347,558,628,638,646,647,649,655,669,674,685,686",
+    "name": "Indices n for which A229037(n)=1.",
+    "comment": [
+        "_Charles R Greathouse IV_ asked for a proof showing that this sequence is infinite (SeqFan mailing list, Jan 2014).",
+        "Significant jumps occur at a(3)=4=2*a(2), a(5)=10=2*a(4), a(9)=28=2*a(8), a(17)=82=2*a(16), a(31)=236 >> a(29)=122, a(47)=628 >> a(44)=302, a(70)=1622 >> a(66)=809, a(90)=4165 >> a(87)=2062, ... . Here, the size of the terms roughly doubles over the interval of very few indices. The indices such that a(n[k]) >= 2*a(n[k-1]) are n[k] = 3, 5, 9, 17, 30, 46, 69, 89, ... .",
+        "This sequence first differs from A003278 at the 21st term, which is 92 here but 91 in A003278. Up to 91, each natural number n that did not appear in this sequence failed to do so because there were two smaller numbers n-a and n-2a, with A229037(n-a) and A229037(n-2a) both equal to 1. 91 is missing from this sequence; in other words, A229037(91) is not 1, because A229037(27) = 9 and A229037(59) = 5. - _Jack W Grahl_, Dec 28 2014"
+    ],
+    "link": [
+        "Charles R Greathouse IV and Chai Wah Wu, <a href=\"/A236246/b236246.txt\">Table of n, a(n) for n = 1..434</a>, First 266 terms from Charles R Greathouse IV.",
+        "Charles R Greathouse IV, <a href=\"http://list.seqfan.eu/pipermail/seqfan/2014-January/012322.html\">[seqfan] Lexicographically first 3-free sequence</a> (2014)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a236246 n = a236246_list !! (n-1)",
+        "a236246_list = filter ((== 1) . a229037) [1..]",
+        "-- _Reinhard Zumkeller_, Apr 26 2014",
+        "(Python)",
+        "A236246_list, A229037_list = [], []",
+        "for n in range(10**6):",
+        "....i, j, b = 1, 1, set()",
+        "....while n-2*i >= 0:",
+        "........b.add(2*A229037_list[n-i]-A229037_list[n-2*i])",
+        "........i += 1",
+        "........while j in b:",
+        "............b.remove(j)",
+        "............j += 1",
+        "....A229037_list.append(j)",
+        "....if j == 1:",
+        "........A236246_list.append(n+1) # _Chai Wah Wu_, Dec 25 2014"
+    ],
+    "xref": [
+        "Subsequence of A241673."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_M. F. Hasler_, Jan 20 2014",
+    "references": 3,
+    "revision": 32,
+    "time": "2015-09-14T16:21:20-04:00",
+    "created": "2014-01-21T12:15:25-05:00"
+}

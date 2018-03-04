@@ -1,0 +1,62 @@
+{
+    "number": 7405,
+    "id": "M1674",
+    "data": "1,2,6,24,116,648,4088,28640,219920,1832224,16430176,157554048,1606879040,17350255744,197553645440,2363935624704,29638547505408,388328781668864,5304452565517824,75381218537805824,1112348880749130752,17014743624340539392,269360902955086379008",
+    "name": "Dowling numbers: binomial transform of A004211.",
+    "comment": [
+        "Equals leftmost term in iterates of M^n * [1,1,1,...], where M = a bidiagonal matrix with (1,3,5,7,...) in the main diagonal and (1,1,1,...) in the superdiagonal. - _Gary W. Adamson_, Apr 13 2009"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A007405/b007405.txt\">Table of n, a(n) for n=0..100</a>",
+        "V. E. Adler, <a href=\"http://arxiv.org/abs/1510.02900\">Set partitions and integrable hierarchies</a>, arXiv:1510.02900 [nlin.SI], 2015.",
+        "P. Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL15/Barry3/barry84r2.html\">A Note on Three Families of Orthogonal Polynomials defined by Circular Functions, and Their Moment Sequences</a>, Journal of Integer Sequences, Vol. 15 (2012), #12.7.2.",
+        "P. Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL17/Barry2/barry281.html\">Constructing Exponential Riordan Arrays from Their A and Z Sequences</a>, Journal of Integer Sequences, 17 (2014), #14.2.6.",
+        "Paul Barry, <a href=\"https://arxiv.org/abs/1702.04007\">Eulerian-Dowling Polynomials as Moments, Using Riordan Arrays</a>, arXiv:1702.04007 [math.CO], 2017.",
+        "Moussa Benoumhani, <a href=\"http://dx.doi.org/10.1016/0012-365X(95)00095-E\">On Whitney numbers of Dowling lattices</a>, Discrete Math. 159 (1996), no. 1-3, 13-33.",
+        "Emanuele Munarini, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL20/Munarini/muna4.pdf\">Shifting Property for Riordan, Sheffer and Connection Constants Matrices</a>, Journal of Integer Sequences, Vol. 20 (2017), Article 17.8.2.",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp(z + 1/2 exp(2 z) - 1/2).",
+        "Row sums of triangles A039755, A039756. - _Philippe Del\u00e9ham_, Feb 20 2005",
+        "a(n) = sum of top row terms of M^n, M = an infinite square production matrix in which a diagonal of 1's is appended to the right of Pascal's triangle squared; as follows:",
+        "   1,  1,  0, 0, 0, 0, ...",
+        "   2,  1,  1, 0, 0, 0, ...",
+        "   4,  4,  1, 1, 0, 0, ...",
+        "   8, 12,  6, 1, 1, 0, ...",
+        "  16, 32, 24, 8, 1, 1, ...",
+        "   ... - _Gary W. Adamson_, Aug 01 2011",
+        "G.f.: (G(0) - 1)/(x-1) where G(k) = 1 - 1/(1-(2*k+1)*x)/(1-x/(x-1/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Jan 16 2013",
+        "G.f.: -G(0) where G(k) = 1 - (x*(2*k+1) - 2)/(x*(2*k+1) - 1 - x*(x*(2*k+1) - 1)/(x + (x*(2*k+1) - 2)/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Jan 29 2013",
+        "G.f.: 1/Q(0), where Q(k)= 1 - 2*(k+1)*x - 2*(k+1)*x^2/Q(k+1); (continued fraction). - _Sergei N. Gladkovskii_, May 03 2013",
+        "G.f.: 1/Q(0), where Q(k)= 1 - x - x/(1 - x*(2*k+2)/Q(k+1)); (continued fraction). - _Sergei N. Gladkovskii_, May 13 2013",
+        "G.f.: 1/(1-x*Q(0)), where Q(k)= 1 + x/(1 - x + 2*x*(k+1)/(x - 1/Q(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, May 19 2013",
+        "Conjecture : Let M_n be an n by n matrix whose elements are m_ij = 1 for i < j - 1, m_ij = -1 for i = j - 1, and m_ij = Binomial(n - i,j - i) otherwise. Then a(n - 1) = Det(M_n). - _Benedict W. J. Irwin_, Apr 19 2017"
+    ],
+    "example": [
+        "a(4) = 116 = sum of top row terms of M^3 = (49 + 44 + 18 + 4 + 1)."
+    ],
+    "mathematica": [
+        "max = 19; f[x_] := Exp[x +  Exp[2x]/2 - 1/2]; CoefficientList[ Series[ f[x], {x, 0, max}], x]*Range[0, max]! (* _Jean-Fran\u00e7ois Alcover_, Nov 22 2011 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^66); Vec(serlaplace(exp(x+1/2*exp(2*x)-1/2))) \\\\ _Joerg Arndt_, May 13 2013",
+        "(Sage)",
+        "@CachedFunction",
+        "def S(n, k, m):",
+        "    if k > n or k < 0 : return 0",
+        "    if n == 0 and k == 0: return 1",
+        "    return S(n-1, k-1, m) + (m*(k+1)-1)*S(n-1, k, m)",
+        "def A007405(n): return add(S(n, k, 2) for k in (0..n)) # _Peter Luschny_, May 20 2013"
+    ],
+    "keyword": "nonn,nice,changed",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 6,
+    "revision": 68,
+    "time": "2018-02-25T22:51:49-05:00",
+    "created": "1994-05-24T03:00:00-04:00"
+}

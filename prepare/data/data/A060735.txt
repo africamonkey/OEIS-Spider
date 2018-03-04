@@ -1,0 +1,47 @@
+{
+    "number": 60735,
+    "data": "1,2,4,6,12,18,24,30,60,90,120,150,180,210,420,630,840,1050,1260,1470,1680,1890,2100,2310,4620,6930,9240,11550,13860,16170,18480,20790,23100,25410,27720,30030,60060,90090,120120,150150,180180,210210",
+    "name": "Where n / (phi(n) + 1) increases.",
+    "comment": [
+        "Except for the initial 1, this sequence is a primorial (A002110) followed by its multiples until the next primorial, then the multiples of that primorial and so on. - Wilfredo Lopez (chakotay147138274(AT)yahoo.com), Dec 28 2006",
+        "a(1)=1, a(2)=2. For n >=3, a(n) = the smallest integer that both is > a(n-1) and is divisible by every prime that LCM(a(1),a(2),a(3),...a(n)) is divisible by. - _Leroy Quet_, Feb 23 2010",
+        "Numbers n for which A053589(n) = A260188(n), thus numbers with only one nonzero digit when written in primorial base A049345. - _Antti Karttunen_, Aug 30 2016"
+    ],
+    "link": [
+        "Enrique P\u00e9rez Herrero, <a href=\"/A060735/b060735.txt\">Table of n, a(n) for n = 1..5000</a>",
+        "Michel Planat, <a href=\"http://arxiv.org/abs/1010.3239\">Riemann hypothesis from the Dedekind psi function</a>, arXiv:1010.3239 [math.GM], 2010.",
+        "<a href=\"/index/Pri#primorialbase\">Index entries for sequences related to primorial base</a>"
+    ],
+    "formula": [
+        "a(1) = 1, a(n) = a(n-1) + rad(a(n-1)) with rad=A007947, squarefree kernel. - _Reinhard Zumkeller_, Apr 10 2006",
+        "a(A101301(n)+1) = A002110(n). - _Enrique P\u00e9rez Herrero_, Jun 10 2012"
+    ],
+    "maple": [
+        "seq(seq(k*mul(ithprime(i),i=1..n-1),k=1..ithprime(n)-1),n=1..10); # _Vladeta Jovovic_, Apr 08 2004",
+        "a := proc(n) option remember; if n=1 then return 1 fi; a(n-1);",
+        "% + convert(numtheory:-factorset(%), `*`) end:",
+        "seq(a(n), n=1..42); # after Zumkeller, _Peter Luschny_, Aug 30 2016"
+    ],
+    "mathematica": [
+        "a = 0; Do[ b = n/(EulerPhi[ n ] + 1); If[ b > a, a = b; Print[ n ] ], {n, 1, 10^6} ]",
+        "f[n_] := Range[Prime[n + 1] - 1] Times @@ Prime@ Range@ n;  Array[f, 7, 0] // Flatten (* _Robert G. Wilson v_, Jul 22 2015 *)"
+    ],
+    "program": [
+        "(PARI) first(n)=my(v=vector(n),k=1,p=1,P=1); v[1]=1; for(i=2,n, v[i]=P*k++; if(k>p && isprime(k), p=k; P=v[i]; k=1)); v \\\\ _Charles R Greathouse IV_, Jul 22 2015",
+        "(PARI) is_A060735(n,P=1)={forprime(p=2,,n>(P*=p)||return(1);n%P&&return)} \\\\ _M. F. Hasler_, Mar 14 2017"
+    ],
+    "xref": [
+        "Cf. A000010, A002110, A049345, A055719, A101301, A053589, A260188.",
+        "Indices of ones in A276157 and A267263."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Robert G. Wilson v_, Apr 23 2001",
+    "ext": [
+        "Definition corrected by _Franklin T. Adams-Watters_, Apr 16 2009"
+    ],
+    "references": 27,
+    "revision": 53,
+    "time": "2017-03-14T20:46:54-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

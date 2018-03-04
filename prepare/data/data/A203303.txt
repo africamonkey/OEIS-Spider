@@ -1,0 +1,40 @@
+{
+    "number": 203303,
+    "data": "1,1,6,1008,20321280,203199794380800,4096245678214226116608000,671169825411994707343327912777482240000,3589459026274030507466469204160461571257625328222208000000,2511229721141086754031154605327661795863172723306019839389105937236728217600000000",
+    "name": "Vandermonde determinant of the first n terms of (1,2,4,8,16,...).",
+    "comment": [
+        "Each term divides its successor, as in A002884. Indeed, 2*v(n+1)/v(n) divides v(n+2)/v(n+1), as in A171499."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A203303/b203303.txt\">Table of n, a(n) for n = 1..22</a>",
+        "Daniel M. Kane, Carlo Sanna, and Jeffrey Shallit, <a href=\"https://arxiv.org/abs/1801.04483\">Waring's theorem for binary powers</a>, arXiv:1801.04483 [math.NT], Jan 13 2018."
+    ],
+    "formula": [
+        "a(n) = Product_{0 <= i < j <= n-1} (2^j - 2^i) = 2^(n*(n-1)*(n-2)/6) * Product_{1<=k<=n-1} (2^k-1)^(n-k). - _Robert Israel_, Jan 16 2018"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "a:= n-> Determinant(VandermondeMatrix([2^i$i=0..n-1])):",
+        "seq(a(n), n=1..12);  # _Alois P. Heinz_, Jul 23 2017",
+        "f:= n -> 2^(n*(n-1)*(n-2)/6)*mul((2^k-1)^(n-k),k=1..n-1):",
+        "seq(f(n),n=1..12); # _Robert Israel_, Jan 16 2018"
+    ],
+    "mathematica": [
+        "f[j_] := 2^(j - 1); z = 15;",
+        "v[n_] := Product[Product[f[k] - f[j], {j, 1, k - 1}], {k, 2, n}]",
+        "Table[v[n], {n, 1, z}]   (* A203303 *)",
+        "Table[v[n + 1]/v[n], {n, 1, z - 1}]  (* A002884 *)",
+        "Table[v[n] v[n + 2]/(2*v[n + 1]^2), {n, 1, z - 1}]  (* A171499 *)",
+        "Table[FactorInteger[v[n]], {n, 1, z - 1}]"
+    ],
+    "xref": [
+        "Cf. A000079."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Clark Kimberling_, Jan 01 2012",
+    "references": 5,
+    "revision": 23,
+    "time": "2018-01-17T04:30:21-05:00",
+    "created": "2012-01-03T19:05:21-05:00"
+}

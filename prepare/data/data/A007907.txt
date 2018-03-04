@@ -1,0 +1,32 @@
+{
+    "number": 7907,
+    "data": "1,11,121,1221,12321,123321,1234321,12344321,123454321,1234554321,12345654321,123456654321,1234567654321,12345677654321,123456787654321,1234567887654321,12345678987654321",
+    "name": "Concatenation of sequence (1,2,..,[(n-1)/2],[n/2],[n/2]-1,..,1) for n >= 1.",
+    "comment": [
+        "For n < 4900, a(2) = A259937(1) = 11, a(19) = A173426(10) = 12345678910987654321, a(20) = A259937(10) = 1234567891010987654321 and a(4891) = A173426(2446) = 1234567..244524462445..7654321 are primes (see A173426 and A259937). - _XU Pingya_, May 19 2017"
+    ],
+    "reference": [
+        "M. Le, The Primes in the Smarandache Symmetric Sequences, Smarandache Notions Journal, Vol. 10, No. 1-2-3, 1999, 174-175."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A007907/b007907.txt\">Table of n, a(n) for n = 1..405</a> [The list of terms has an interesting visual appearance]",
+        "F. Smarandache, <a href=\"http://www.gallup.unm.edu/~smarandache/OPNS.pdf\">Only Problems, Not Solutions!</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SmarandacheSequences.html\">Smarandache Sequences</a>"
+    ],
+    "formula": [
+        "a(n)=a1+a2+a3, where a1=floor{a(n-1)/[10^(k+y*w)]}*10^(k+w+y*k2) a2=(w2*y2+b*y)*10^(k+y*w) a3=a(n-1)-floor{a(n-1)/[10^(k+y*w)]}*10^(k+y*w) being k=floor{(floor[1+log10(a(n-1)))-x*w]/2} k2=floor[1+log10(b)] x=[3+(-1)^(n+1)]/2 y=[1+(-1)^(n+1)]/2 y2=[1+(-1)^n]/2 b=[2*n+1+(-1)^(n+1)]/4 w=floor{1+log10[(2*(n-1)+1+(-1)^n)/4]} w2=[2*(n-1)+1+(-1)^n]/4. - _Paolo P. Lava_, Jun 04 2008"
+    ],
+    "maple": [
+        "P:=proc(n) local a,a1,a2,a3,b,k,k2,i,w,w2,x,y,y2; a:=1; print(a); for i from 2 by 1 to n do x:=(3+(-1)^(i+1))/2; y:=(1+(-1)^(i+1))/2; y2:=(1+(-1)^i)/2; b:=(2*i+1+(-1)^(i+1))/4; w:=floor(evalf(1+log10((2*(i-1)+1+(-1)^i)/4),1000)); w2:=(2*(i-1)+1+(-1)^i)/4; k:=floor((floor(evalf(1+log10(a),1000))-(x)*w)/2); k2:=floor(evalf(1+log10(b),1000)); a1:=floor(evalf(a/(10^(k+y*w)),1000))*10^(k+w+y*k2); a2:=(w2*y2+b*y)*10^(k+y*w); a3:=a-floor(evalf(a/10^(k+y*w),1000))*10^(k+y*w); a:=a1+a2+a3; print(a); od; end: P(500); # _Paolo P. Lava_, Jun 04 2008"
+    ],
+    "mathematica": [
+        "Table[FromDigits@ Flatten@ Map[IntegerDigits, Apply[Join, {#, If[OddQ@ n, Rest@ #, #] &@ Reverse@ #}]] &@ Range@ Ceiling[n/2]], {n, 17}]"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "R. Muller",
+    "references": 6,
+    "revision": 22,
+    "time": "2017-07-02T09:04:22-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

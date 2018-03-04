@@ -1,0 +1,53 @@
+{
+    "number": 97393,
+    "data": "15,26,39,49,51,58,62,85,93,94,115,122,123,129,143,155,158,159,169,177,178,183,185,187,203,205,221,226,265,289,302,314,319,321,326,327,329,335,339,341,355,381,394,398,413,415,437,493,497,502,511,514,533",
+    "name": "Emirpimes: numbers n such that n and its reversal are distinct semiprimes.",
+    "comment": [
+        "Computed by _Eric W. Weisstein_, Aug 13 2004."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A097393/b097393.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Emirpimes.html\">Emirpimes</a>"
+    ],
+    "example": [
+        "26 is a semiprime, as it is 2 * 13, and so is 62 = 2 * 31. 26 and 62 are therefore both in the sequence."
+    ],
+    "maple": [
+        "isA097393 := proc(n)",
+        "    local R ;",
+        "    R := digrev(n) ;",
+        "    if R <> n then",
+        "        if numtheory[bigomega](R) = 2 and numtheory[bigomega](n) = 2 then",
+        "            return true;",
+        "        else",
+        "            false;",
+        "        end if;",
+        "      else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 to 500 do",
+        "    if isA097393(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Apr 05 2012"
+    ],
+    "mathematica": [
+        "Select[Range[500], PrimeOmega[#] == 2 && PrimeOmega[FromDigits[Reverse[IntegerDigits[#]]]] == 2 &] (* _Alonso del Arte_, Oct 08 2012 *)"
+    ],
+    "program": [
+        "(PARI) rev(n)=subst(Polrev(digits(n)),'x,10)",
+        "issemi(n)=bigomega(n)==2",
+        "list(lim)=my(v=List(),r);forprime(p=2,lim\\2,forprime(q=2,min(lim\\p,p),r=rev(p*q);if(issemi(r)&&r!=p*q,listput(v,p*q))));Set(v) \\\\ _Charles R Greathouse IV_, Jan 27 2015"
+    ],
+    "xref": [
+        "Cf. A001358, A097394."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_",
+    "references": 30,
+    "revision": 14,
+    "time": "2015-11-25T18:43:28-05:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

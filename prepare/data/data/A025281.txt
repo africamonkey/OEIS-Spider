@@ -1,0 +1,33 @@
+{
+    "number": 25281,
+    "data": "0,0,2,5,9,14,19,26,32,38,45,56,63,76,85,93,101,118,126,145,154,164,177,200,209,219,234,243,254,283,293,324,334,348,367,379,389,426,447,463,474,515,527,570,585,596,621,668,679,693,705,725,742,795,806,822,835,857,888",
+    "name": "a(n) = sopfr(n!), where sopfr = A001414  is the integer log.",
+    "comment": [
+        "a(0)=0; for n>0, a(n)=sum(k=1,n, A001414(k)). - _Benoit Cloitre_, Apr 14 2002",
+        "The subsequence of primes in this partial sum begins: 2, 5, 19, 101, 283, 293, 367, 379, 389, 463, 857, 947. - _Jonathan Vos Post_, Mar 08 2010"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A025281/b025281.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A001414(A000142(n)).",
+        "Asymptotic formula: a(n)~(Pi^2/12)*n^2/log(n). - _Benoit Cloitre_, Apr 14 2002"
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(n) local a,b,k; b:=ifactors(n!)[2];",
+        "a:=add(b[k][1]*b[k][2],k=1..nops(b)); end: seq(P(i),i=0..100); # _Paolo P. Lava_, Nov 21 2017"
+    ],
+    "mathematica": [
+        "sopfr[n_] := Plus @@ Times @@@ FactorInteger@ n; a[n_] := a[n] = a[n - 1] + sopfr[n]; a[0] = a[1] = 0; Array[a, 59, 0] (* _Robert G. Wilson v_, May 18 2015 *)"
+    ],
+    "program": [
+        "(PARI) for(n=1,100,print1(sum(k=1,n,sum(i=1,omega(k), component(component(factor(k),1),i)*component(component(factor(k),2),i))),\",\"))"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Wouter Meeussen_",
+    "references": 4,
+    "revision": 31,
+    "time": "2017-11-21T04:18:37-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

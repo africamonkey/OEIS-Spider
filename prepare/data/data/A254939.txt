@@ -1,0 +1,42 @@
+{
+    "number": 254939,
+    "data": "1,4,36,120,2520,277200,5045040,183783600,4655851200,80313433200,32607253879200,2743667504978400,58772246027695200,5038384364010597600,56517528952814529600,34089489546705963770400,7391221142626702144764000",
+    "name": "a(n) = (A099795(n)^-1 mod p)*A099795(n), where p = prime(n).",
+    "comment": [
+        "The sequence lists the smallest nonnegative solutions z to the system of congruences z == 1 (mod p), z == 0 (mod v(p-1)), where p is a prime and v(p-1) = lcm(1,...,p-1)."
+    ],
+    "link": [
+        "Umberto Cerruti, <a href=\"/A254939/a254939.pdf\">Il Teorema Cinese dei Resti</a> (in Italian), 2015. The sequence is on page 21.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ModularInverse.html\">Modular Inverse</a>."
+    ],
+    "formula": [
+        "a(n) = A255010(n)*A099795(n)."
+    ],
+    "example": [
+        "5045040 is the seventh term of the sequence because the modular inverse of A099795(7) mod A000040(7) is 7 and 7*A099795(7) = 7*720720 = 5045040."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q)  local a, n;  a:=[];",
+        "for n from 1 to q do a:=[op(a),n]; if isprime(n+1) then",
+        "print(lcm(op(a))*(lcm(op(a))^(-1) mod (n+1))); fi;",
+        "od; end: P(10^3); # _Paolo P. Lava_, Feb 16 2015"
+    ],
+    "mathematica": [
+        "r[k_] := LCM @@ Range[k]; u[k_] := PowerMod[r[k - 1], -1, k] r[k - 1]; Table[u[Prime[n]], {n, 1, 20}]"
+    ],
+    "program": [
+        "(MAGMA) [Modinv(Lcm([1..p-1]),p)*Lcm([1..p-1]): p in PrimesUpTo(60)];",
+        "(PARI) a099795(n) = lcm(vector(prime(n)-1, k, k));",
+        "a(n) = {my(m = a099795(n)); m*lift(1/Mod(m, prime(n)));} \\\\ _Michel Marcus_, Feb 13 2015"
+    ],
+    "xref": [
+        "Cf. A000040, A056604, A099795, A254924, A255010."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Bruno Berselli_, Feb 12 2015 - proposed by Umberto Cerruti (Department of Mathematics \"Giuseppe Peano\", University of Turin, Italy)",
+    "references": 3,
+    "revision": 25,
+    "time": "2016-05-05T10:12:49-04:00",
+    "created": "2015-02-13T11:13:17-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 218153,
+    "data": "1,1,2,3,6,9,16,25,42,65,105,162,256,391,605,918,1401,2106,3176,4739,7076,10482,15518,22833,33556,49068,71633,104153,151155,218609,315562,454150,652343,934559,1336328,1906307,2714409,3856777,5470236,7743437,10942743,15435773",
+    "name": "G.f.: A(x) = exp( Sum_{n>=1} x^n/n * Product_{k>=1} (1 + x^(n*k)) ).",
+    "comment": [
+        "Compare to the g.f. of A001383:",
+        "1 + x*exp( Sum_{n>=1} x^n/n * Product_{k>=1} 1/(1 - x^(n*k)) )."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A218153/b218153.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{n>=1} 1 / (1 - x^n)^A000009(n-1), where A000009(n) equals the number of distinct partitions of n. - _Paul D. Hanna_, Nov 16 2012"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 3*x^3 + 6*x^4 + 9*x^5 + 16*x^6 + 25*x^7 +...",
+        "where",
+        "log(A(x)) = x/1*((1+x)*(1+x^2)*(1+x^3)*(1+x^4)*(1+x^5)*...) +",
+        "x^2/2*((1+x^2)*(1+x^4)*(1+x^6)*(1+x^8)*(1+x^10)*...) +",
+        "x^3/3*((1+x^3)*(1+x^6)*(1+x^9)*(1+x^12)*(1+x^15)*...) +",
+        "x^4/4*((1+x^4)*(1+x^8)*(1+x^12)*(1+x^16)*(1+x^20)*...) +",
+        "x^5/5*((1+x^5)*(1+x^10)*(1+x^15)*(1+x^20)*(1+x^25)*...) +...",
+        "Also, the g.f. is equal to the Euler transform of the distinct partitions A000009:",
+        "A(x) = 1/((1-x)^1*(1-x^2)^1*(1-x^3)^1*(1-x^4)^2*(1-x^5)^2*(1-x^6)^3*(1-x^7)^4*(1-x^8)^5*(1-x^9)^6*(1-x^10)^8*(1-x^11)^10*...*(1-x^n)^A000009(n-1)*...)."
+    ],
+    "mathematica": [
+        "nmax = 50; CoefficientList[Series[Product[1/(1 - x^k)^PartitionsQ[k-1], {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Apr 08 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1, n+1, x^m/m*prod(k=1, n\\m+1, 1+x^(m*k)+x*O(x^n)))), n)}",
+        "for(n=0, 50, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A218552, A218576, A000009, A001383, A089259."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Nov 01 2012",
+    "references": 8,
+    "revision": 28,
+    "time": "2016-04-08T08:58:37-04:00",
+    "created": "2012-11-01T21:40:06-04:00"
+}

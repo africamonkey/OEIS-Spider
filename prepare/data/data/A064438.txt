@@ -1,0 +1,38 @@
+{
+    "number": 64438,
+    "data": "1,2,3,4,6,8,9,12,16,18,20,21,24,28,30,32,33,35,36,40,42,48,50,52,54,60,63,64,66,68,69,72,76,78,80,81,84,88,90,91,96,100,102,108,112,114,120,126,128,129,132,136,138,140,144,148,150,154,156,160,162,168,171,180",
+    "name": "Numbers n which are divisible by the sum of their quaternary digits.",
+    "comment": [
+        "A good \"puzzle\" sequence - guess the rule given the first twenty or so terms."
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A064438/b064438.txt\">Table of n, a(n) for n=1,...,1000</a>"
+    ],
+    "example": [
+        "Quaternary representation of 28 is 130, 1 + 3 + 0 = 4 divides 28."
+    ],
+    "mathematica": [
+        "Select[Range[200],Divisible[#,Total[IntegerDigits[#,4]]]&] (* _Harvey P. Dale_, Jun 09 2011 *)"
+    ],
+    "program": [
+        "(ARIBAS): maxarg := 190; for n := 1 to maxarg do if n mod sum(quaternarray(n)) = 0 then write(n,\" \"); end; end; function quaternarray(n: integer): array; var k: integer; stk: stack; begin while n > 0 do k := n mod 4; stack_push(stk,k); n := (n - k) div 4; end; return stack2array(stk); end;.",
+        "(PARI) SumD(x)= { local(s); s=0; while (x>9, s+=x-10*(x\\10); x\\=10); return(s + x) } baseE(x, b)= { local(d,e,f); e=0; f=1; while (x>0, d=x-b*(x\\b); x\\=b; e+=d*f; f*=10); return(e) } { n=0; for (m=1, 10^9, if (m%(SumD(baseE(m, 4)))==0, write(\"b064438.txt\", n++, \" \", m); if (n==1000, break)) ) } [From _Harry J. Smith_, Sep 14 2009]",
+        "(Python)",
+        "from sympy.ntheory.factor_ import digits",
+        "print [n for n in xrange(1, 201) if n%sum(digits(n, 4)[1:]) == 0] # _Indranil Ghosh_, Apr 24 2017"
+    ],
+    "xref": [
+        "Cf. A005349 (decimal), A049445 (binary), A064150 (ternary)."
+    ],
+    "keyword": "base,easy,nice,nonn",
+    "offset": "1,2",
+    "author": "_Len Smiley_, Oct 01 2001",
+    "ext": [
+        "More terms from _Matthew Conroy_, Oct 02 2001",
+        "OFFSET changed from 0 to 1 by _Harry J. Smith_, Sep 14 2009"
+    ],
+    "references": 4,
+    "revision": 20,
+    "time": "2017-04-24T10:30:44-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

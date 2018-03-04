@@ -1,0 +1,35 @@
+{
+    "number": 206943,
+    "data": "3,7,11,13,21,31,43,57,61,73,91,111,121,127,133,157,183,205,211,241,273,307,341,343,381,421,463,507,521,547,553,601,651,683,703,757,781,813,871,931,993,1057,1093,1111,1123,1191,1261,1333,1407,1483,1555,1561",
+    "name": "Generalized repeat unit one numbers: all numbers of the form (m^p-1)/(m-1), where abs(m) > 1 and p is odd prime.",
+    "comment": [
+        "Here we define \"generalized repeat unit one numbers\" as numbers that can be represented in the form of (11...1) base m while the number of ones is k > 2 and |m| > 1.",
+        "Normal repeat unit one numbers are numbers in form (11...1) base 10 with 2 or more ones.",
+        "Any number n = (11) base (n-1), this is trivial.",
+        "These numbers take the form of cyclotomic polynomial number Phi(k,m) with k in the form of 2^i*p^j, while p is prime and i >= 0, j >= 1. It has p digits of one base -m^(2^(i-1)*p^(j-1)) when i > 0 or base m^(p^(j-1)) when i = 0.",
+        "This sequence is a subset of A206942."
+    ],
+    "example": [
+        "(111) base -2 = 3, so a(1) = 3;",
+        "(111) base 2 = 7, so a(2) = 7;",
+        "(11111) base -2 = 11, so a(3) = 11.",
+        "3 = (2^3+1)/(2+1), 7 = (2^3-1)/(2-1) = (3^3+1)/(3+1), 11 = (2^5+1)/(2+1)."
+    ],
+    "mathematica": [
+        "phiinv[n_, pl_] := Module[{i, p, e, pe, val}, If[pl == {}, Return[If[n == 1, {1}, {}]]]; val = {}; p = Last[pl]; For[e = 0; pe = 1, e == 0 || Mod[n, (p - 1) pe/p] == 0, e++; pe *= p, val = Join[val, pe*phiinv[If[e == 0, n, n*p/pe/(p - 1)], Drop[pl, -1]]]]; Sort[val]]; phiinv[n_] := phiinv[n, Select[1 + Divisors[n], PrimeQ]]; maxdata = 1600; max = Ceiling[(1 + Sqrt[1 + 4*(maxdata - 1)])/4]*2; eb = 2*Floor[(Log[2, maxdata])/2 + 0.5]; While[eg = phiinv[eb]; lu = Length[eg]; lu == 0, eb = eb + 2]; t = Select[Range[eg[[Length[eg]]]], ((EulerPhi[#] <= eb) && (a = FactorInteger[#]; b = Length[a]; (((b == 1) && (a[[1]][[1]] > 2)) || ((b == 2) && (a[[1]][[1]] == 2))))) &]; ap = SortBy[t, Cyclotomic[#, 2] &]; an = SortBy[t, Cyclotomic[#, -2] &]; a = {}; Do[i = 0; While[i++; cc = Cyclotomic[ap[[i]], m]; cc <= maxdata, a = Append[a, cc]]; i = 0;  While[i++; cc = Cyclotomic[an[[i]], -m]; cc <= maxdata, a = Append[a, cc]], {m, 2, max}]; Union[a]",
+        "nn = 40; ps = Prime[Range[2, PrimePi[Log[2, 2*nn^2 + 1]]]]; t = {}; Do[If[Abs[m] > 1, n = (m^p - 1)/(m - 1); If[n < nn^2, AppendTo[t, n]]], {p, ps}, {m, -nn, nn}]; t = Union[t] (* _T. D. Noe_, May 03 2013 *)"
+    ],
+    "xref": [
+        "Cf. A206942, A208507."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Lei Zhou_, Feb 28 2012",
+    "ext": [
+        "Improved name and added new examples - _Thomas Ordowski_, May 03 2013"
+    ],
+    "references": 1,
+    "revision": 49,
+    "time": "2013-05-06T11:02:00-04:00",
+    "created": "2012-03-06T18:29:47-05:00"
+}

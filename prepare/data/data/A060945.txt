@@ -1,0 +1,60 @@
+{
+    "number": 60945,
+    "data": "1,1,2,3,6,10,18,31,55,96,169,296,520,912,1601,2809,4930,8651,15182,26642,46754,82047,143983,252672,443409,778128,1365520,2396320,4205249,7379697,12950466,22726483,39882198,69988378,122821042,215535903,378239143,663763424,1164823609",
+    "name": "Number of compositions (ordered partitions) of n into 1's, 2's and 4's.",
+    "comment": [
+        "Diagonal sums of A038137. - _Paul Barry_, Oct 24 2005",
+        "From _Gary W. Adamson_, Oct 28 2010: (Start)",
+        "INVERT transform of the aerated Fibonacci sequence (1, 0, 1, 0, 2, 0, 3, 0, 5,...).",
+        "a(n) = term (4,4) in the n-th power of the matrix [0,1,0,0; 0,0,1,0; 0,0,0,1; 1,0,1,1]. (End)",
+        "Number of permutations satisfying -k<=p(i)-i<=r and p(i)-i not in I, i=1..n, with k=1, r=3, I={2}. - _Vladimir Baltic_, Mar 07 2012",
+        "Number of compositions of n if the summand 2 is frozen in place or equivalently, if the ordering of the summand 2 does not count. - _Gregory L. Simay_, Jul 18 2016",
+        "a(n) - a(n-2) = number of compositions of n with no 2's = A005251(n+1). - _Gregory L. Simay_, Jul 18, 2016",
+        "In general, the number of compositions of n with summand k frozen in place is equal to the number of compositions of n with only summands 1,...,k,2k. - _Gregory L. Simay_, May 10 2017"
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A060945/b060945.txt\">Table of n, a(n) for n = 0..500</a>",
+        "Vladimir Baltic, <a href=\"http://pefmath.etf.rs/vol4num1/AADM-Vol4-No1-119-135.pdf\">On the number of certain types of strongly restricted permutations</a>, Applicable Analysis and Discrete Mathematics 4 (2010), 119-135",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,0,1)."
+    ],
+    "formula": [
+        "a(n) = a(n-1) + a(n-2) + a(n-4).",
+        "G.f.: 1 / (1 - x - x^2 - x^4).",
+        "a(n) = Sum_{k=0..floor(n/2)} sum_{i=0..n-k} C(i, n-k-i)*C(2*i-n+k, 3*k-2*n+2*i). - _Paul Barry_, Oct 24 2005",
+        "a(2n) = A238236(n), a(2n+1) = A097472(n). - _Philippe Del\u00e9ham_, Feb 20 2014"
+    ],
+    "example": [
+        "There are 18=a(6) compositions of 6 with the summand 2 frozen in place: (6), (51), (15), (4,[2]), (3,3) (411), (141), (114), (3[2]1), (1[2]3)), ([222]), (3111), (1311), (1131), (1113), ([22]11), ([2]1111), (111111). Equivalently, the position of the summand 2 does not affect the composition count. For example, (321)=(231)=(312) and (123)=(213)=(132)."
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1, 1, 0, 1}, {1, 1, 2, 3}, 39] (* or *)",
+        "CoefficientList[Series[1/(1 - x - x^2 - x^4), {x, 0, 38}], x] (* _Michael De Vlieger_, May 10 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a060945 n = a060945_list !! (n-1)",
+        "a060945_list = 1 : 1 : 2 : 3 : 6 : zipWith (+) a060945_list",
+        "   (zipWith (+) (drop 2 a060945_list) (drop 3 a060945_list))",
+        "-- _Reinhard Zumkeller_, Mar 23 2012",
+        "(PARI)",
+        "N=66; x='x+O('x^N);",
+        "Vec(1/(1-x-x^2-x^4))",
+        "/* _Joerg Arndt_, Oct 21 2012 */"
+    ],
+    "xref": [
+        "Cf. A000045 (1's and 2's only), A023359 (all powers of 2)",
+        "Same as unsigned version of A077930.",
+        "All of A060945, A077930, A181532 are variations of the same sequence. - _N. J. A. Sloane_, Mar 04 2012"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Len Smiley_, May 07 2001",
+    "ext": [
+        "More terms from _Vladimir Joseph Stephan Orlovsky_, May 28 2010",
+        "a(0) = 1 prepended by _Joerg Arndt_, Oct 21 2012"
+    ],
+    "references": 11,
+    "revision": 59,
+    "time": "2017-05-10T13:21:58-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

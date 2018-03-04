@@ -1,0 +1,57 @@
+{
+    "number": 247145,
+    "data": "6,12,24,28,40,42,56,60,90,120,140,153,216,234,270,290,360,440,496,522,568,585,588,672,708,819,924,984,992,1001,1170,1316,1320,1365,1431,1780,2016,2184,2295,2296,2299,2464,2466,2655,2832,3100,3344,3420,3627,3724,3948,4320,4336,4416,4680",
+    "name": "Composite numbers such that the product of the number's proper divisors is divisible by the sum of the number's proper divisors.",
+    "comment": [
+        "Equal to the indices of the zero terms that correspond to composite numbers in A191906."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A247145/b247145.txt\">Table of n, a(n) for n = 1..1203</a>"
+    ],
+    "example": [
+        "12 is on the list because the proper divisors of 12 are [1,2,3,4,6]. The product of these numbers is 144. Their sum is 16. 144 is divisible by 16."
+    ],
+    "maple": [
+        "filter:= proc(n)",
+        "       local d,p,s;",
+        "     if isprime(n) then return false fi;",
+        "     d:= numtheory:-divisors(n) minus {n};",
+        "     convert(d,`*`) mod convert(d,`+`) = 0;",
+        "end proc:",
+        "select(filter, [$2..10000]); # _Robert Israel_, Dec 16 2014"
+    ],
+    "mathematica": [
+        "a247145[n_Integer] :=",
+        "Select[Select[Range[n], CompositeQ[#] &],",
+        "Divisible[Times @@ Most@Divisors[#], Plus @@ Most@Divisors[#]] &]; a247145[4680] (* _Michael De Vlieger_, Dec 15 2014 *)",
+        "fQ[n_Integer] := Block[{d = Most@Divisors@n}, Mod[Times @@ d, Plus @@ d] == 0]; Select[Range@4680, ! PrimeQ@# && fQ@# &] (* _Michael De Vlieger_, Dec 19 2014, suggested by _Robert G. Wilson v_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "from operator import mul",
+        "def divs(n):",
+        "....for i in xrange(1,n/2+1):",
+        "........if n%i == 0: yield i",
+        "....yield n",
+        "g = []",
+        "for a in range(2,100):",
+        "....q = list(divs(a))[0:-1]",
+        "....if reduce(mul, q, 1) % sum(q) == 0 and len(q) != 1::",
+        "........g.append(a)",
+        "print(g)",
+        "(PARI) forcomposite(n=1,10^3,d=divisors(n);p=prod(i=1,#d-1,d[i]);if(!(p%(sigma(n)-n)),print1(n,\", \"))) \\\\ _Derek Orr_, Nov 27 2014"
+    ],
+    "xref": [
+        "Cf. A145551."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_David Consiglio, Jr._, Nov 20 2014",
+    "ext": [
+        "More terms from _Derek Orr_, Dec 03 2014"
+    ],
+    "references": 1,
+    "revision": 30,
+    "time": "2015-03-14T16:00:21-04:00",
+    "created": "2015-01-07T07:08:57-05:00"
+}

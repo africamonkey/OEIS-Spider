@@ -1,0 +1,41 @@
+{
+    "number": 278,
+    "data": "0,1,1,2,3,7,16,65,321,4546,107587,20773703,11595736272,431558332068481,134461531248108526465,186242594112190847520182173826,18079903385772308300945867582153787570051,34686303861638264961101080464895364211215702792496667048327",
+    "name": "a(n) = a(n-1) + a(n-2)^2.",
+    "link": [
+        "T. D. Noe, <a href=\"/A000278/b000278.txt\">Table of n, a(n) for n = 0..25</a>",
+        "W. Duke, Stephen J. Greenfield and Eugene R. Speer, <a href=\"https://cs.uwaterloo.ca/journals/JIS/green2/qf.html\">Properties of a Quadratic Fibonacci Recurrence</a>, J. Integer Sequences, 1998, #98.1.8."
+    ],
+    "formula": [
+        "a(2n) is asymptotic to A^(sqrt(2)^(2n-1)) where A=1.668751581493687393311628852632911281060730869124873165099170786836201970866312366402366761987... and a(2n+1) to B^(sqrt(2)^(2n)) where B=1.693060557587684004961387955790151505861127759176717820241560622552858106116817244440438308887... See reference for proof. - _Benoit Cloitre_, May 03 2003"
+    ],
+    "maple": [
+        "A000278 := proc(n) option remember; if n <= 1 then n else A000278(n-2)^2+A000278(n-1); fi; end;",
+        "a[ -2]:=0: a[ -1]:=1:a[0]:=1: a[1]:=2: for n from 2 to 13 do a[n]:=a[n-1]+a[n-2]^2 od: seq(a[n], n=-2..13); # _Zerinvary Lajos_, Mar 19 2009"
+    ],
+    "mathematica": [
+        "Join[{a=0,b=1},Table[c=a^2+b;a=b;b=c,{n,16}]] (* _Vladimir Joseph Stephan Orlovsky_, Jan 22 2011 *)",
+        "RecurrenceTable[{a[n +2] == a[n +1] + a[n]^2, a[0] == 1, a[1] == 1}, a, {n, 0, 16}] (* _Robert G. Wilson v_, Apr 14 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<2,n>0,a(n-1)+a(n-2)^2)",
+        "(Sage)",
+        "def A000278():",
+        "    x, y = 0, 1",
+        "    while true:",
+        "        yield x",
+        "        x, y = x + y, x * x",
+        "a = A000278(); [a.next() for i in range(18)]  # _Peter Luschny_, Dec 17 2015",
+        "(MAGMA) [n le 2 select n-1 else Self(n-1) + Self(n-2)^2: n in [1..18]]; // _Vincenzo Librandi_, Dec 17 2015"
+    ],
+    "xref": [
+        "Cf. A000283, A058182."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "Stephen J. Greenfield (greenfie(AT)math.rutgers.edu)",
+    "references": 16,
+    "revision": 43,
+    "time": "2017-07-20T08:58:47-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

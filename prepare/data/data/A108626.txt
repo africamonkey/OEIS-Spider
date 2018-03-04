@@ -1,0 +1,50 @@
+{
+    "number": 108626,
+    "data": "1,2,5,14,41,124,383,1200,3799,12122,38919,125578,406865,1322772,4313155,14099524,46192483,151628090,498578411,1641921014,5414619739,17878144968,59097039545,195548471268,647665451911,2146947613286",
+    "name": "Antidiagonal sums of square array A108625, in which row n equals the crystal ball sequence for A_n lattice.",
+    "comment": [
+        "Limit a(n+1)/a(n) = 3.3829757679... = 1/r = 3 + r + r^2, where r is radius of convergence of A(x), which diverges at x=r.",
+        "Infinitely many recurrence relations of even order 2d can be built for this sequence; first define the following polynomial (PARI syntax): P(d)=1/2^d*sum(i=0,d\\2,binomial(d,2*i)*(x^4+2*x^2-4*x+1)^i*(x^2+2*x-1)^(d-2*i)) then call c(d,k) the coefficient of term with power k in the polynomial P(d); then we have the relation: sum(k=0,2*d, c(d,2d-k)*a(n+k)) = (-1)^d*sum(k=0,n,sum(i=0,k,binomial(n-k,d+i)*binomial(n-k,i)*binomial(n-i,k-i))). - _Thomas Baruchel_, Jan 26 2015"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A108626/b108626.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Thomas Baruchel, C Elsner, <a href=\"http://arxiv.org/abs/1602.06445\">On error sums formed by rational approximations with split denominators</a>, arXiv preprint arXiv:1602.06445, 2016"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} Sum_{i=0..k} C(n, i)^2 * C(n+k-i, k-i).",
+        "G.f.: 1 / sqrt(x^4 + 2*x^2 - 4*x + 1). - _Thomas Baruchel_, Nov 08 2014",
+        "G.f.: A(x) = exp( Sum_{n>=1} A108627(n)*x^n/n ), where A108627 has g.f.: 2*x*(1 - x - x^3)/((1-x)*(1 - 3*x - x^2 - x^3)).",
+        "a(n) = ( (5*n-3)*a(n-1) - (6*n-8)*a(n-2) + (2*n-4)*a(n-3) - (n-2)*a(n-4) + (n-3)*a(n-5) ) / n. - _Thomas Baruchel_, Nov 08 2014",
+        "a(n+2) - 2*a(n+1) - a(n) = 2*Sum_{k=0..n} Sum_{i=0..k} binomial(n-k+1,i-1)*binomial(n-k+1,i)*binomial(n-i+1,k-i) = Sum_{k=0..n} a(k)*A086581(n-k+1). - _Thomas Baruchel_, Nov 08 2014",
+        "G.f.: Sum_{n>=0} (2*n)!/n!^2 * x^(2*n) / ((1-x)*(1-2*x)^(3*n+1)). - _Paul D. Hanna_, Nov 08 2014",
+        "G.f.: Sum_{n>=0} x^n/(1-x)^(n+1) * Sum_{k=0..n} C(n,k)^2 * x^k. - _Paul D. Hanna_, Nov 08 2014",
+        "Partial sums of A171155: a(n) = Sum_{i=0..n} A171155(n). - _Thomas Baruchel_, Nov 08 2014",
+        "Recurrence: n*a(n) = 2*(2*n-1)*a(n-1) - 2*(n-1)*a(n-2) - (n-2)*a(n-4). - _Vaclav Kotesovec_, Dec 20 2015",
+        "a(n) = Sum_{k=0..n} binomial(n,k)*hypergeom([-k,k-n,k-n], [1,-n], 1). - _Peter Luschny_, Feb 13 2018"
+    ],
+    "example": [
+        "Log(A(x)) = 2*x + 6*x^2/2 + 20*x^3/3 +...+ A108627(n)*x^n/n +..."
+    ],
+    "maple": [
+        "a := n -> add(binomial(n,k)*hypergeom([-k,k-n,k-n], [1,-n], 1), k=0..n):",
+        "seq(simplify(a(n)), n=0..25); # _Peter Luschny_, Feb 13 2018"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1 / Sqrt[x^4 + 2 x^2 - 4 x + 1], {x, 0, 50}], x] (* _Vincenzo Librandi_, Nov 08 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=sum(k=0,n,sum(i=0,k,binomial(n-k,i)^2*binomial(n-i,k-i)))",
+        "(PARI) {a(n)=polcoeff( sum(m=0, n, x^m * sum(k=0, m, binomial(m, k)^2 * x^k) / (1-x +x*O(x^n))^(m+1)) , n)}",
+        "for(n=0, 30, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Nov 08 2014"
+    ],
+    "xref": [
+        "Cf. A108625, A108627, A180091."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jun 12 2005",
+    "references": 8,
+    "revision": 41,
+    "time": "2018-02-13T08:08:26-05:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

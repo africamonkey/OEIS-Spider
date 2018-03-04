@@ -1,0 +1,34 @@
+{
+    "number": 240690,
+    "data": "0,1,1,2,3,4,7,8,14,16,26,30,47,54,81,95,136,161,224,266,361,431,571,684,891,1067,1369,1641,2077,2488,3116,3726,4623,5520,6790,8093,9884,11753,14262,16923,20415,24168,29006,34255,40920,48214,57344,67410,79863",
+    "name": "Number of partitions p of n such that p contains fewer 1s than its conjugate.",
+    "comment": [
+        "a(n+1) = number of partitions p of n such that (# 1s in p) <= (#1s in conjugate(p))."
+    ],
+    "formula": [
+        "2*a(n) + A240691(n) = A000041(n) for n >= 1.",
+        "a(n) + a(n+1) = A000041(n). - _Omar E. Pol_, Mar 07 2015",
+        "G.f.: (-1 + Product_{k>0} (1 - x^k)^(-1)) * x / (1 + x). - _Michael Somos_, Mar 16 2015"
+    ],
+    "example": [
+        "a(6) counts these 4 partitions: 6, 51, 42, 411, of which the respective conjugates are 111111, 21111, 2211, 3111.",
+        "G.f. = x^2 + x^3 + 2*x^4 + 3*x^5 + 4*x^6 + 7*x^7 + 8*x^8 + 14*x^9 + 16*x^10 + ..."
+    ],
+    "mathematica": [
+        "z = 53; f[n_] := f[n] = IntegerPartitions[n]; c[p_] := Table[Count[#, _?(# >= i &)], {i, First[#]}] &[p];  (* conjugate of partition p *)",
+        "Table[Count[f[n], p_ /; Count[p, 1] < Count[c[p], 1]], {n, 1, z}]  (* A240690 *)",
+        "Table[Count[f[n], p_ /; Count[p, 1] <= Count[c[p], 1]], {n, 1, z}]  (* A240690(n+1) *)",
+        "Table[Count[f[n], p_ /; Count[p, 1] == Count[c[p], 1]], {n, 1, z}] (* A240691 *)",
+        "a[ n_] := SeriesCoefficient[ (-1 + 1 / QPochhammer[ x]) x / (1 + x), {x, 0, n}]; (* _Michael Somos_, Mar 16 2015 *)"
+    ],
+    "xref": [
+        "Cf. A240691, A000041."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,4",
+    "author": "_Clark Kimberling_, Apr 11 2014",
+    "references": 4,
+    "revision": 16,
+    "time": "2015-03-16T13:52:43-04:00",
+    "created": "2014-04-22T01:26:03-04:00"
+}

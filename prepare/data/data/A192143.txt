@@ -1,0 +1,36 @@
+{
+    "number": 192143,
+    "data": "1,1,16,44,134,332,787,1747,3736,7726,15580,30760,59685,114117,215472,402464,744674,1366484,2489175,4504695,8104536,14504226,25833336,45811344,80916169,142400137,249760912,436706132,761385086,1323910556",
+    "name": "0-sequence of reduction of hexagonal numbers sequence by x^2 -> x+1.",
+    "comment": [
+        "See A192232 for definition of \"k-sequence of reduction of [sequence] by [substitution]\"."
+    ],
+    "formula": [
+        "Empirical G.f.: x*(1-3*x+15*x^2-12*x^3+6*x^4)/(1-x)/(1-x-x^2)^3. [Colin Barker, Feb 11 2012]"
+    ],
+    "mathematica": [
+        "c[n_] := n (2 n - 1); (* hexagonal numbers, A000384 *)",
+        "Table[c[n], {n, 1, 15}]",
+        "q[x_] := x + 1;",
+        "p[0, x_] := 1; p[n_, x_] := p[n - 1, x] + (x^n)*c[n + 1]",
+        "reductionRules = {x^y_?EvenQ -> q[x]^(y/2),",
+        "   x^y_?OddQ -> x q[x]^((y - 1)/2)};",
+        "t = Table[",
+        "  Last[Most[",
+        "    FixedPointList[Expand[#1 /. reductionRules] &, p[n, x]]]], {n, 0,",
+        "   30}]",
+        "Table[Coefficient[Part[t, n], x, 0], {n, 1, 30}]  (* A192143 *)",
+        "Table[Coefficient[Part[t, n], x, 1], {n, 1, 30}]  (* A192144 *)",
+        "(* by _Peter J. C. Moses_, Jun 20 2011 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192144."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Clark Kimberling_, Jun 27 2011",
+    "references": 2,
+    "revision": 9,
+    "time": "2016-12-04T19:46:25-05:00",
+    "created": "2011-06-28T11:25:07-04:00"
+}

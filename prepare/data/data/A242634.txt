@@ -1,0 +1,32 @@
+{
+    "number": 242634,
+    "data": "0,1,1,2,2,3,4,5,6,7,9,10,13,14,18,19,24,25,31,32,40,41,50,51,63,64,77,78,95,96,114,115,138,139,163,164,194,195,226,227,266,267,307,308,357,358,408,409,471,472,535,536,612,613,690,691,785,786,881,882",
+    "name": "G.f. A(x) satisfies A(x) = A(x^2) / (1 - x) + x / (1 - x^2).",
+    "formula": [
+        "G.f.: x / (1 - x) + Sum_{k>0} x^(3*2^(k-1)) / Product_{j=0..k} (1 - x^(2^j)).",
+        "a(n) = a(n-2) + a(floor(n/2)) unless n=1.",
+        "a(n) = A088585(n) - A088585(n-1) if n>=1.",
+        "a(n) = A088567(n) if n>0.",
+        "a(2*n + 1) = a(2*n) + 1 = A088585(n) if n>=0."
+    ],
+    "example": [
+        "G.f. = x + x^2 + 2*x^3 + 2*x^4 + 3*x^5 + 4*x^6 + 5*x^7 + 6*x^8 + 7*x^9 + ..."
+    ],
+    "mathematica": [
+        "a[ n_] := If[ n < 0, 0, Module[{A = 0}, Do[A = (x + (1 + x) (A /. x -> x^2)) / (1 - x^2), {IntegerLength[ n, 2]}]; SeriesCoefficient[ A, {x, 0, n}]]];"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A = O(x)); if( n<0, 0, for(k=1, #binary(n), A = (x + (1 + x) * subst(A, x, x^2)) / (1 - x^2)); polcoeff(A, n))};",
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( sum(k=0, #binary(n\\3), x^(2^k*3 \\ 2) / prod(j=0, k, 1 - x^2^j), x * O(x^n)), n))};"
+    ],
+    "xref": [
+        "Cf. A088567, A088585."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Michael Somos_, May 19 2014",
+    "references": 0,
+    "revision": 3,
+    "time": "2014-05-19T16:49:29-04:00",
+    "created": "2014-05-19T16:49:29-04:00"
+}

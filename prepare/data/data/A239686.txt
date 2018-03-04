@@ -1,0 +1,35 @@
+{
+    "number": 239686,
+    "data": "47,118,205,846,898,1219,4181,4236,4701,4929,6014,6516,13276,30445,59956,61916,63216,67314,72066,79554,90674,106316,128998,129179,136816,142486,143396,180448,229914,284894,357841,421318,483286,486721,487618,500218,642445",
+    "name": "Numbers n such that if n = a U b (where U denotes concatenation) then sigma*(a) + sigma*(b) = abs(sigma*(n) - n), where sigma*(n) is the sum of the anti-divisors of n.",
+    "comment": [
+        "Neither a or b minor than 2 are considered because numbers 1 and 2 have no anti-divisors.",
+        "Similar to A239562 but using anti-divisors instead of divisors."
+    ],
+    "example": [
+        "Anti-divisors of 4701 are 2, 6, 7, 17, 79, 119, 1343, 553, 3134 and their sum is 5260. Consider 4701 as 4 U 701. Anti-divisors of 4 is 3 and of 701 are 2, 3, 23, 61, 467 whose sum is 556. At the end we have that 5260 - 4701 = 559 = 3 + 556."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "T:=proc(t) local w, x, y; x:=t; y:=0; while x>0 do x:=trunc(x/10); y:=y+1; od; end:",
+        "P:=proc(q) local a, b, c, d, f, g, i, j, k,n;",
+        "for n from 1 to q do b:=T(n); k:=0; j:=n; while j mod 2<>1 do k:=k+1; j:=j/2; od;",
+        "a:=sigma(2*n+1)+sigma(2*n-1)+sigma(n/2^k)*2^(k+1)-6*n-2;",
+        "for i from 1 to b-1 do c:=trunc(n/10^i); d:=n-c*10^i; if c>2 and d>2 then",
+        "k:=0; j:=c; while j mod 2<>1 do k:=k+1; j:=j/2; od;",
+        "f:=sigma(2*c+1)+sigma(2*c-1)+sigma(c/2^k)*2^(k+1)-6*c-2;",
+        "k:=0; j:=d; while j mod 2<>1 do k:=k+1; j:=j/2; od;",
+        "g:=sigma(2*d+1)+sigma(2*d-1)+sigma(d/2^k)*2^(k+1)-6*d-2;",
+        "if f+g=a-n then print(n); break; fi; fi; od; od; end: P(10^9);"
+    ],
+    "xref": [
+        "Cf. A066272, A066417, A239687."
+    ],
+    "keyword": "nonn,base,hard",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Mar 24 2014",
+    "references": 1,
+    "revision": 13,
+    "time": "2014-10-19T16:03:34-04:00",
+    "created": "2014-03-25T06:47:35-04:00"
+}

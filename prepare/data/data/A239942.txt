@@ -1,0 +1,63 @@
+{
+    "number": 239942,
+    "data": "4,114,4920,39911760,6187104000,355681201075200,121289412980736000,25851895093784567808000,8841761967887685215658639360000,8213996892184183115771019264000000,13763753083003506392138056763855339520000000",
+    "name": "Prime(n)! - prime(n - 1)!.",
+    "link": [
+        "Michael De Vlieger, <a href=\"/A239942/b239942.txt\">Table of n, a(n) for n = 2..87</a>"
+    ],
+    "formula": [
+        "a(n) = A039716(n) - A039716(n-1)."
+    ],
+    "example": [
+        "a(3) = Prime(3)! - Prime(2)! = 5! - 3! = 120 - 6 = 114."
+    ],
+    "maple": [
+        "A239942:=n->ithprime(n)!-ithprime(n-1)!: seq(A239942(n), n=2..15); # _Wesley Ivan Hurt_, Aug 03 2014"
+    ],
+    "mathematica": [
+        "a239942[n_Integer] := Prime[n]! - Prime[n - 1]!; Table[a239942[n], {n, 2, 87}] (* _Michael De Vlieger_, Aug 03 2014 *)"
+    ],
+    "program": [
+        "(Perl)",
+        "#!/usr/bin/perl",
+        "use strict;",
+        "use warnings;",
+        "use feature 'say';",
+        "use Math::Prime::XS qw(is_prime);",
+        "use Memoize;",
+        "use Math::BigInt;",
+        "memoize('factorial');",
+        "use Data::Dumper;",
+        "my @primes = ();",
+        "for (2 .. 200) {",
+        "        if(is_prime($_)) {",
+        "                push @primes, $_;",
+        "        }",
+        "}",
+        "for (1 .. $#primes) {",
+        "        say factorial($primes[$_]) - factorial($primes[$_ - 1]);",
+        "}",
+        "sub factorial {",
+        "        my $x = Math::BigInt->new(shift);",
+        "        return $x if $x == 1;",
+        "        return factorial($x - 1) * $x;",
+        "}",
+        "(PARI)  a(n)=prime(n)! - prime(n-1)!;",
+        "vector(22,n,a(n+1)) \\\\ _Joerg Arndt_, Mar 31 2014",
+        "(Python)",
+        "from gmpy2 import mpz,fac",
+        "from sympy import prime",
+        "def A239942(n):",
+        "....return fac(mpz(prime(n))) - fac(mpz(prime(n-1))) # _Chai Wah Wu_, Aug 06 2014"
+    ],
+    "xref": [
+        "Cf. A039716."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Norman Koch_, Mar 29 2014",
+    "references": 1,
+    "revision": 18,
+    "time": "2014-08-11T23:16:23-04:00",
+    "created": "2014-08-03T23:05:13-04:00"
+}

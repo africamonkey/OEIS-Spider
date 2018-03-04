@@ -1,0 +1,46 @@
+{
+    "number": 215419,
+    "data": "7,11,17,31,37,73,271,331,359,373,673,733,1033,2297,3119,3461,3923,5323,5381,5419,6073,6353,9103,9887,18289,23549,25349,31333,32933,33349,35747,37339,37361,37489,47533,84299,92333,93241,95093,98491,133733,136333,139333",
+    "name": "Primes that remain prime when a single digit 3 is inserted between any two consecutive digits or as the leading or trailing digit.",
+    "link": [
+        "Robert Israel, <a href=\"/A215419/b215419.txt\">Table of n, a(n) for n = 1..150</a>"
+    ],
+    "example": [
+        "18289 is prime and also 182893, 182839, 182389, 183289, 138289, 318289."
+    ],
+    "maple": [
+        "A215419:=proc(q,x)",
+        "local a,b,c,d,i,n,ok;",
+        "for n from 1 to q do",
+        "  a:=ithprime(n); b:=0; while a>0 do b:=b+1; a:=trunc(a/10); od;",
+        "  a:=ithprime(n); ok:=1;",
+        "  for i from 0 to b do",
+        "    c:=a+9*10^i*trunc(a/10^i)+10^i*x; if not isprime(c) then ok:=0; break; fi;",
+        "  od;",
+        "  if ok=1 then print(ithprime(n)); fi;",
+        "od; end:",
+        "A215419(1000,3);",
+        "# Alternative:",
+        "filter:= proc(n) local L,d,k,M;",
+        "if not isprime(n) then return false fi;",
+        "L:= convert(n,base,10);",
+        "d:= nops(L);",
+        "for k from 0 to d do",
+        "   M:= [seq(L[i],i=1..k),3,seq(L[i],i=k+1..d)];",
+        "   if not isprime(add(M[i]*10^(i-1),i=1..d+1)) then return false fi;",
+        "od;",
+        "true",
+        "end proc;",
+        "select(filter, [seq(i,i=3..2*10^5,2)]); # _Robert Israel_, Oct 09 2017"
+    ],
+    "xref": [
+        "Cf. A215417, A069246, A215420, A215421"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Aug 10 2012",
+    "references": 17,
+    "revision": 17,
+    "time": "2017-10-09T23:22:27-04:00",
+    "created": "2012-08-10T13:54:39-04:00"
+}

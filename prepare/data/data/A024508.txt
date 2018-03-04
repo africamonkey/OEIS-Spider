@@ -1,0 +1,32 @@
+{
+    "number": 24508,
+    "data": "65,85,125,130,145,170,185,205,221,250,260,265,290,305,325,340,365,370,377,410,425,442,445,481,485,493,500,505,520,530,533,545,565,580,585,610,625,629,650,680,685,689,697,725,730,740,745,754,765,785,793,820,845,850,865,884,890,901,905,925,949,962,965,970,985,986,1000,1010,1025,1037,1040,1060,1066,1073,1090,1105,1125",
+    "name": "Numbers that are a sum of 2 distinct nonzero squares in more than one way.",
+    "comment": [
+        "Appears to be n such that sigma(n)==0 (mod 4) and n is expressible as a sum of 2 squares. - _Benoit Cloitre_, Apr 20 2003",
+        "The comment that is in above is true most of the time. However if number of odd divisors of n that is a term of this sequence is not divisible by 4, then sigma(n) cannot be divisible by 4. For example; 325, 425, 625, 650, ... See also A000443 for more related examples. - _Altug Alkan_, Jun 09 2016",
+        "If m is a term then (a^2 + b^2) * m is a term for a,b > 0. Hence this sequence is closed under multiplication. - _David A. Corneth_, Jun 10 2016"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A024508/b024508.txt\">Table of n, a(n) for n = 1..10749</a>",
+        "G. Xiao, <a href=\"http://wims.unice.fr/~wims/en_tool~number~twosquares.en.html\">Two squares</a>",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of squares</a>"
+    ],
+    "mathematica": [
+        "lst={};q=-1;k=1;Do[Do[x=a^2;Do[y=b^2;If[x+y==n,If[n==q&&k==1,AppendTo[lst,n]];If[n!=q,q=n;k=1,k++ ]],{b,Floor[(n-x)^(1/2)],a+1,-1}],{a,Floor[n^(1/2)],1,-1}],{n,2*6!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Jan 22 2009 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = {my(t=0,i);t=sum(i=1,sqrtint((n-1)\\2),issquare(n-i^2));t>1} \\\\ _David A. Corneth_, Jun 10 2016",
+        "(PARI) is(n)=if(n<9,return(0)); my(v=valuation(n, 2), f=factor(n>>v), t=1); for(i=1, #f[, 1], if(f[i, 1]%4==1, t*=f[i, 2]+1, if(f[i, 2]%2, return(0)))); if(t%2, t-(-1)^v, t)/2-issquare(n/2)>1 \\\\ _Charles R Greathouse IV_, Jun 10 2016"
+    ],
+    "xref": [
+        "Cf. A001481, A025303 (exactly 2 ways), A025304 (exactly 3 ways), A025305 (exactly 4 ways), A025306 (exactly 5 ways)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_",
+    "references": 8,
+    "revision": 38,
+    "time": "2016-06-10T10:44:10-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

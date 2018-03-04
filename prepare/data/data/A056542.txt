@@ -1,0 +1,73 @@
+{
+    "number": 56542,
+    "data": "0,1,4,17,86,517,3620,28961,260650,2606501,28671512,344058145,4472755886,62618582405,939278736076,15028459777217,255483816212690,4598708691828421,87375465144740000,1747509302894800001",
+    "name": "a(n) = n*a(n-1) + 1, a(1) = 0.",
+    "comment": [
+        "For n>=2 also operation count to create all permutations of n distinct elements using Algorithm L (lexicographic permutation generation) from Knuth's The Art of Computer Programming, Vol. 4, chapter 7.2.1.2. Sequence gives number of loop repetitions of the j search loop in step L2. - _Hugo Pfoertner_, Feb 06 2003",
+        "More directly: sum over all permutations of length n-1 of the product of the length of the first increasing run by the value of the first position. The recurrence follows from this definition. - _Olivier G\u00e9rard_, Jul 07 2011",
+        "This sequence shares divisibility properties with A000522; each of the primes in A072456 divide only a finite number of terms of this sequence. - T. D. Noe, Jul 07 2005",
+        "This sequence also represents the number of subdeterminant evaluations when calculation a determinant by Laplace recursive method. - _Reinhard Muehlfeld_, Sep 14 2010."
+    ],
+    "reference": [
+        "D. E. Knuth: The Art of Computer Programming, Volume 4, Combinatorial Algorithms, Volume 4A, Enumeration and Backtracking. Pre-fascicle 2B, A draft of section 7.2.1.2: Generating all permutations. Available online; see link.",
+        "R. Sedgewick, Permutation generation methods, Computing Surveys, 9 (1977), 137-164."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A056542/b056542.txt\">Table of n, a(n) for n=1..100</a>",
+        "D. E. Knuth, <a href=\"http://www-cs-faculty.stanford.edu/~knuth/fasc2b.ps.gz\">TAOCP Vol. 4, Pre-fascicle 2b (generating all permutations)</a>.",
+        "Tom Muller, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL8/Mueller/mueller6.html\">Prime and Composite Terms in Sloane's Sequence A056542</a>, Journal of Integer Sequences, Vol. 8 (2005), Article 05.3.3. [Includes factorizations of a(1) through a(50)]",
+        "Hugo Pfoertner, <a href=\"http://www.randomwalk.de/sequences/lpure.txt\">FORTRAN implementation of Knuth's Algorithm L for lexicographic permutation generation</a>.",
+        "Sam Wagstaff, <a href=\"/A056542/a056542.txt\">Factorizations of a(51) through a(90)</a>"
+    ],
+    "formula": [
+        "a(n) = floor((e-2)*n!).",
+        "a(n) = A002627(n) - n!.",
+        "a(n) = A000522(n) - 2*n!.",
+        "a(n) = n! - A056543(n).",
+        "a:=n->sum((n-j)!*binomial(n,j),j=2..n). - _Zerinvary Lajos_, Jul 31 2006",
+        "a(n) = (n-1)*(a(n-1)+a(n-2))+2,n>2. - _Gary Detlefs_, Jun 22 2010",
+        "1/(e - 2) = 2! - 2!/(1*4) - 3!/(4*17) - 4!/(17*86) - 5!/(86*517) - ... (see A002627 and A185108). - _Peter Bala_, Oct 09 2013"
+    ],
+    "example": [
+        "a(4)=4*a(3)+1=4*4+1=17",
+        "Permutations of order 3 .. Length of first run * First position",
+        "123..3*1",
+        "132..2*1",
+        "213..1*2",
+        "231..2*2",
+        "312..1*3",
+        "321..1*3",
+        "a(4)=3+2+2+4+3+3=17 [_Olivier G\u00e9rard_, Jul 07 2011]"
+    ],
+    "maple": [
+        "a:=n->sum((n-j)!*binomial(n,j),j=2..n): seq(a(n), n=1..20); # _Zerinvary Lajos_, Jul 31 2006",
+        "a:=n->sum(n!/k!, k=2..n): seq(a(n), n=1..20); # _Zerinvary Lajos_, Jun 17 2007"
+    ],
+    "mathematica": [
+        "tmp=0; Join[{tmp}, Table[tmp=n*tmp+1, {n, 2, 100}]] (* _T. D. Noe_, Jul 12 2005 *)",
+        "FoldList[ #1*#2 + 1 &, 0, Range[2, 21]] (* _Robert G. Wilson v_, Oct 11 2005 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a056542 n = a056542_list !! (n-1)",
+        "a056542_list = 0 : map (+ 1) (zipWith (*) [2..] a056542_list)",
+        "-- _Reinhard Zumkeller_, Mar 24 2013",
+        "(MAGMA) [n le 2 select n-1 else n*Self(n-1)+1: n in [1..20]]; // _Bruno Berselli_, Dec 13 2013"
+    ],
+    "xref": [
+        "Cf. A079751 (same recursion formula, but starting from a(3)=0), A038155, A038156, A080047, A080048, A080049.",
+        "Cf. A007808, A002627.",
+        "Equals the row sums of A162995 triangle (n>=2). [_Johannes W. Meijer_, Jul 21 2009]",
+        "Cf. A073333, A002627, A185108."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,3",
+    "author": "_Henry Bottomley_, Jun 20 2000",
+    "ext": [
+        "More terms from _James A. Sellers_, Jul 04 2000"
+    ],
+    "references": 16,
+    "revision": 43,
+    "time": "2017-07-12T20:54:28-04:00",
+    "created": "2000-07-22T03:00:00-04:00"
+}

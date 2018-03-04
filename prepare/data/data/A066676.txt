@@ -1,0 +1,53 @@
+{
+    "number": 66676,
+    "data": "3,7,31,211,2311,60653,1023053,19417793,446235509,12939711677,200560490131,14841484883609,608500576478849,26165522997357677,1229779567395958169,65178316970529225209,3845520700432469775917,234576762719782814756597,15716643102168462956621849",
+    "name": "Smallest number m such that phi(m) is a multiple of n-th primorial number, the product of first n primes.",
+    "link": [
+        "Ray Chandler, <a href=\"/A066676/b066676.txt\">Table of n, a(n) for n = 1..25</a>"
+    ],
+    "formula": [
+        "a[n] = Min{x : Mod[A000010(x), A002110(n)] = 0}"
+    ],
+    "example": [
+        "n = 8: a[8] = 19417793, phi(a(8)) = 19199380 = 2*9699690 = 2*2*3*5*7*11*13*17*19."
+    ],
+    "mathematica": [
+        "nmax = 25;",
+        "A066676 = {};",
+        "pm = 1;",
+        "Do[",
+        "  pm *= Prime[n];",
+        "  sol = 0;",
+        "  If[PrimeQ[pm + 1],",
+        "   sol = pm + 1;",
+        "   ,",
+        "   sd = Select[Divisors[pm/2], # <= Sqrt[pm/2] &];",
+        "   Do[",
+        "    f1 = sd[[i]];",
+        "    f2 = pm/2/f1;",
+        "    If[PrimeQ[2 f1 + 1] && PrimeQ[2 f2 + 1],",
+        "     sol = (2 f1 + 1)*(2 f2 + 1);",
+        "     Break[];",
+        "     ];",
+        "     , {i, Length[sd], 1, -1}];",
+        "   ];",
+        "  AppendTo[A066676, sol];",
+        "  Print[{n, sol}];",
+        "   , {n, nmax}];",
+        "A066676 (* Ray Chandler, Oct 21 2011 *)"
+    ],
+    "xref": [
+        "Cf. A000010, A002110, A066674-A066678."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Labos Elemer_, Dec 19 2001",
+    "ext": [
+        "a(9)-a(11) from _Donovan Johnson_, Oct 12 2011",
+        "a(12)-a(13) upper limits from _Donovan Johnson_ confirmed as next terms, a(14)-a(19) added by _Ray Chandler_, Oct 21 2011"
+    ],
+    "references": 3,
+    "revision": 15,
+    "time": "2013-10-15T22:31:15-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 34289,
+    "data": "144,169,196,256,441,625,961,1024,1089,1296,1369,1764,1936,2401,2916,4096,4761,9216,9604,9801,10201,10404,10609,11236,11664,12100,12544,12769,14400,14884,16384,16641,16900,17689,18225,18769,19600,20736",
+    "name": "Squares which can be rearranged into squares with the same number of digits.",
+    "comment": [
+        "Squares that have some nontrivial permutation of digits which are also squares.",
+        "There are 87 10-digit squares whose digits are a permutation of the digits 0..9. - T. D. Noe, Jan 23 2008"
+    ],
+    "link": [
+        "Gaurav Kumar, <a href=\"/A034289/b034289.txt\">Table of n, a(n) for n = 1..523877</a> [This replaces an earlier b-file computed by T. D. Noe]"
+    ],
+    "example": [
+        "144 is a square and so is 441, which is formed by rearranging the digits of 144."
+    ],
+    "mathematica": [
+        "sndQ[n_]:=Module[{p=Select[FromDigits/@Permutations[IntegerDigits[n]], IntegerLength[ #] == IntegerLength[n]&]},Length[Select[ p,IntegerQ[ Sqrt[#]]&]]>1]; Select[Range[150]^2,sndQ] (* _Harvey P. Dale_, Feb 18 2015 *)"
+    ],
+    "program": [
+        "(Perl)",
+        "#!/usr/bin/perl",
+        "# change this to compute more terms:",
+        "$max_digits = 5;",
+        "# put the squares into a hash table; for example",
+        "# 46 -> 64",
+        "# 144 -> 144 441",
+        "# 169 -> 169 196 961",
+        "$max_i = sqrt(10 ** $max_digits);",
+        "for $i (1..$max_i)",
+        "{",
+        "    $i_sq = $i * $i;",
+        "    $normalized = join('', sort(split(//, \"$i_sq\")));",
+        "    $sq_hash{\"$normalized\"} .= \"$i_sq \";",
+        "}",
+        "# find the hash entries with more than one square",
+        "foreach (values(%sq_hash)) { $nums .= $_ if (/ \\d/); }",
+        "# print the numbers in order",
+        "print join(' ', sort( { $a <=> $b } split(' ',\"$nums\")));"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Erich Friedman_",
+    "ext": [
+        "Perl program from Jonathan Cross (jcross(AT)juggler.net), Oct 18 2003"
+    ],
+    "references": 4,
+    "revision": 15,
+    "time": "2015-02-18T11:24:53-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

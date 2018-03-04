@@ -1,0 +1,42 @@
+{
+    "number": 160748,
+    "data": "2,3,5,7,37,73,337,353,373,727,733,757,3257,3373,3527,3733,7253,7523,7577,7757,32233,32257,32323,32353,32377,32537,33223,33533,35227,35257,35323,35327,35353,35537,35753,37273,37573,72227,72253,72337,72353",
+    "name": "Primes whose digits are primes and reverse is prime.",
+    "comment": [
+        "Intersection of A007500 and A019546. - _Michel Marcus_, Dec 04 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A160748/b160748.txt\">Table of n, a(n) for n = 1..8096</a>"
+    ],
+    "maple": [
+        "listtoint:= proc(L) local i; add(L[i]*10^(i-1),i=1..nops(L)) end proc:",
+        "f:= proc(L) local s;",
+        "  s:= listtoint(L);",
+        "  if isprime(s) and isprime(listtoint(ListTools:-Reverse(L))) then s fi",
+        "end proc:",
+        "Cands:= [[3],[7]]:",
+        "A:= 2,3,5,7:",
+        "for m from 2 to 6 do",
+        "  Cands:= map(t -> seq([op(t),j], j=[2,3,5,7]), Cands);",
+        "  A:= A, op(sort(map(f,Cands)));",
+        "od:",
+        "A; # _Robert Israel_, Dec 04 2015"
+    ],
+    "mathematica": [
+        "okQ[p_] := PrimeQ[IntegerReverse[p] && AllTrue[IntegerDigits[p], PrimeQ]];",
+        "Select[Prime[Range[10^4]], okQ] (* _Jean-Fran\u00e7ois Alcover_, Feb 06 2018 *)"
+    ],
+    "program": [
+        "(MAGMA) [p: p in PrimesUpTo(2*10^5) | Set(Intseq(p)) subset [2,3,5,7] and IsPrime(Seqint(Reverse(Intseq(p))))]; // _Vincenzo Librandi_, Dec 04 2015"
+    ],
+    "xref": [
+        "Cf. A007500 (reversible primes), A019546 (primes with prime digits)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Vincenzo Librandi_, Jan 24 2010",
+    "references": 1,
+    "revision": 14,
+    "time": "2018-02-06T03:03:33-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

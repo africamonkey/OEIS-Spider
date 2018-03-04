@@ -1,0 +1,65 @@
+{
+    "number": 174144,
+    "data": "2,3,5,7,11,13,17,19,29,31,37,41,43,61,71,73,97,101,109,113,127,151,163,181,193,197,211,241,251,257,271,281,337,379,401,421,433,449,487,491,541,577,601,631,641,673,701,751,757,769,811,883,1009,1051,1153,1201",
+    "name": "Primes of the form 2^p*3^q*5^r*7^s + 1.",
+    "comment": [
+        "Restricting to r=s=0 gives the Pierpont primes (A005109); s = 0 gives A002200."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A174144/b174144.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PierpontPrime.html\">Pierpont Prime</a>"
+    ],
+    "example": [
+        "6301 = 2^2 * 3^2 * 5^2 * 7 + 1."
+    ],
+    "maple": [
+        "with(numtheory):T:=array(0..50000000):U=array(0..50000000 ):k:=1:for a from 0 to 25 do:for b from 0 to 16 do:for c from 0 to 16 do:for d from 0 to 16 do: p:= 2^a*3^b*5^c*7^d + 1:if type(p, prime)=true then T[k]:=p:k:=k+1: else fi: od :od:od:od:mini:=T[1]:ii:=1:for p from 1 to k-1 do:for n from 1 to k-1 do: if T[n] < mini then mini:= T[n]:ii:=n: indice:=U[n]: else f i:od:print(mini):T[ii]:= 10^30: ii:=1:mini:=T[1] :od:"
+    ],
+    "mathematica": [
+        "Take[ Select[ Sort[ Flatten[ Table[2^a*3^b*5^c*7^d + 1, {a, 0, 25}, {b, 0, 16},{c, 0, 16},{d, 0, 16}]]], PrimeQ[ # ] &], 100] (* or *) PrimeFactors[n_Integer] := Flatten[ Table[ #[[1]], {1}] & /@ FactorInteger[n]]; f[n_Integer] := Block[{m = n}, If[m == 0, m = 1, While[ IntegerQ[m/2], m /= 2]; While[ IntegerQ[m/3], m /= 3]]; Apply[Times, PrimeFactors[m] - 1]]; ClassMinusNbr[n_] := Length[NestWhileList[f, n, UnsameQ, All]] - 3; Prime[ Select[ Range[3, 6300],",
+        "ClassMinusNbr[ Prime[ # ]] == 1 &]] Select[Prime /@ Range[10^5], Max @@ First /@ FactorInteger[ # - 1] < 5 &]"
+    ],
+    "program": [
+        "(Sage)",
+        "A174144 = list(p for p in primes(2000) if set(prime_factors(p-1)) <= set([2,3,5,7]))",
+        "(PARI) list(lim)={",
+        "    lim\\=1;",
+        "    my(v=List([2]),s,t,p);",
+        "    for(i=0,log(lim\\2+.5)\\log(7),",
+        "        t=2*7^i;",
+        "        for(j=0,log(lim\\t+.5)\\log(5),",
+        "            s=t*5^j;",
+        "            while(s < lim,",
+        "                p=s;",
+        "                while(p < lim,",
+        "                    if(isprime(p+1),listput(v,p+1));",
+        "                    p <<= 1",
+        "                );",
+        "                s *= 3;",
+        "            )",
+        "        )",
+        "    );",
+        "    vecsort(Vec(v))",
+        "}; \\\\ _Charles R Greathouse IV_, Sep 21 2011",
+        "(MAGMA) [p: p in PrimesUpTo(2000) | forall{d: d in PrimeDivisors(p-1) | d le 7}]; // _Bruno Berselli_, Sep 24 2012",
+        "(GAP)",
+        "K:=10^7;; # to get all terms <= K.",
+        "A:=Filtered([1..K],IsPrime);;    I:=[3,5,7];;",
+        "B:=List(A,i->Elements(Factors(i-1)));;",
+        "C:=List([0..Length(I)],j->List(Combinations(I,j),i->Concatenation([2],i)));",
+        "A174144:=Concatenation([2],List(Set(Flat(List([1..Length(C)],i->List([1..Length(C[i])], j->Positions(B,C[i][j]))))),i->A[i])); # _Muniru A Asiru_, Sep 12 2017"
+    ],
+    "xref": [
+        "Cf. A002200, A005109."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Mar 09 2010",
+    "ext": [
+        "Corrected and edited by _D. S. McNeil_, Nov 20 2010"
+    ],
+    "references": 2,
+    "revision": 28,
+    "time": "2017-09-25T15:23:05-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

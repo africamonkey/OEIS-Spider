@@ -1,0 +1,41 @@
+{
+    "number": 46447,
+    "data": "1,4,8,9,16,25,27,32,39,49,64,69,81,119,121,125,128,129,159,219,243,249,256,259,329,339,343,403,429,469,507,512,625,669,679,729,795,1024,1207,1309,1329,1331,1533,1547,1587,1589,1703,2023,2048,2097,2187,2319",
+    "name": "Apart from initial term, composite numbers with property that concatenation of prime factors is a palindrome.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A046447/b046447.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "E.g., 81 = 3 * 3 * 3 * 3 -> 3333 is palindromic."
+    ],
+    "mathematica": [
+        "concat[n_]:=Flatten[Table[IntegerDigits[First[n]],{Last[n]}]]; palQ[n_]:= Module[{x=Flatten[concat/@FactorInteger[n]]},x==Reverse[x]&&!PrimeQ[n]]; Select[Range[2500],palQ] (* _Harvey P. Dale_, May 24 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a046447 n = a046447_list !! (n-1)",
+        "a046447_list = 1 : filter f [1..] where",
+        "   f x = length ps > 1 && ps' == reverse ps'",
+        "         where ps' = concatMap show ps; ps = a027746_row x",
+        "-- _Reinhard Zumkeller_, May 02 2014",
+        "(Python)",
+        "from sympy import factorint, isprime",
+        "A046447_list = [1]",
+        "for n in range(4,10**6):",
+        "....if not isprime(n):",
+        "........s = ''.join([str(p)*e for p,e in sorted(factorint(n).items())])",
+        "........if s == s[::-1]:",
+        "............A046447_list.append(n) # _Chai Wah Wu_, Jan 03 2015"
+    ],
+    "xref": [
+        "Cf. A046448, A046449, A046450.",
+        "Cf. A027746, A018252, A136522, A002113."
+    ],
+    "keyword": "nonn,nice,base",
+    "offset": "1,2",
+    "author": "_Patrick De Geest_, Jul 15 1998",
+    "references": 12,
+    "revision": 20,
+    "time": "2015-01-03T12:24:01-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

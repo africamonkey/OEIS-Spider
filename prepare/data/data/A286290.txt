@@ -1,0 +1,37 @@
+{
+    "number": 286290,
+    "data": "1,6,12,20,35,56,72,90,110,143,182,210,240,272,306,342,399,462,506,552,600,650,702,756,812,870,930,992,1056,1122,1224,1332,1406,1482,1560,1640,1722,1806,1892,1980,2070,2162,2256,2352,2450,2550,2652,2756,2862,2970,3135,3306,3422,3540",
+    "name": "A bisection of A064736.",
+    "comment": [
+        "The terms of A064736 lie on two (curved) lines; this is one of them.",
+        "To produce this set, start with S={1} and a counter c=2, then repeatedly add to S the element c*increment(c), where increment() adds 1 or 2 in case c+1 is already in S. - _M. F. Hasler_, May 23 2017",
+        "Alternate definition: {1} and numbers of the form m(m+1) if neither m nor m+1 is an earlier term, or (m-1)(m+1), if m > 1 is a term of the sequence. - _M. F. Hasler_, May 23 2017",
+        "By definition, complement of A286291. - _David A. Corneth_, May 25 2017",
+        "If the initial 1 is omitted, this is the complement of A121229. - _N. J. A. Sloane_, May 26 2017"
+    ],
+    "link": [
+        "Ray Chandler, <a href=\"/A286290/b286290.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Ray Chandler, <a href=\"/A286290/a286290_1M.gz\">Table of n, a(n) for n = 1..1000000</a> (large gzipped file)"
+    ],
+    "formula": [
+        "a(n) ~ n^2*(1 + 1.5/n^c) with c=1/2. (Conjectured, although for small n around 10^5 a smaller c ~ 0.478 is a better fit to the data.) - _M. F. Hasler_, May 23 2017",
+        "For n around 10^8, c ~ 0.4848 is a better fit. - _David A. Corneth_, May 25 2017"
+    ],
+    "program": [
+        "(PARI) A286290_list(Nmax,a=List(1),c=2)={while(#a<Nmax,listput(a,c*if(setsearch(a,c++),c++,c)));a} \\\\ _M. F. Hasler_, May 23 2017",
+        "(PARI) a(n) = my(r = 1); for(i = 2, n, r = nxt(r)); r",
+        "is(n) = if(n < 6, return(n==1)); if(issquare(n+1, &n), is(n), if(sqrtint(4*n+1)^2 == 4*n+1, s = sqrtint(4*n+1); !(is(s\\2) || is(s\\2+1)), return(0)))",
+        "nxt(n) = n==1&&return(6); if(issquare(n+1, &n), (n+1) * (n+2), my(m = sqrtint(n)); if(is(m + 2), (m + 1) * (m + 3), (m + 1) * (m + 2)))",
+        "lista(n) = my(c = 1, l = List([1])); for(i=2, n, c = nxt(c); listput(l, c)); l \\\\ _David A. Corneth_, May 25 2017"
+    ],
+    "xref": [
+        "Cf. A064736, A286291, A286292, A286293, A121229."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, May 23 2017",
+    "references": 6,
+    "revision": 31,
+    "time": "2017-05-27T07:03:54-04:00",
+    "created": "2017-05-23T10:20:16-04:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 265377,
+    "data": "9,35,36,91,99,100,189,216,224,225,341,405,432,440,441,559,684,748,775,783,784,855,1071,1196,1241,1260,1287,1295,1296,1584,1729,1800,1925,1989,2016,2024,2025,2241,2331,2584,2800,2925,2989,3016,3024,3025,3059,3060",
+    "name": "Sums of two or more consecutive positive cubes.",
+    "comment": [
+        "All numbers of the form A000537(b) - A000537(a) for 0 <= a <= b-2.",
+        "A217843 minus (A000578 minus A131643).",
+        "n is in the sequence iff n = s*t where (s+t)/2 = A000217(u) and (s-t)/2 = A000217(v) with u-v >= 2.",
+        "If a(k(n)) = A000537(n+1), k(n) >= A000217(n) for n > 0. - _Altug Alkan_, Dec 07 2015",
+        "See A062682 for sums of two or more consecutive positive cubes in more than one way. - _Reinhard Zumkeller_, Dec 16 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A265377/b265377.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1) = 1^3 + 2^3 = 9.",
+        "a(2) = 2^3 + 3^3 = 35.",
+        "a(3) = 1^3 + 2^3 + 3^3 = 36."
+    ],
+    "maple": [
+        "amin:= proc(b,N) local r;",
+        "  r:= b^2*(b+1)^2 - 4*N; if r > 0 then iroot(r,4) else 1 fi",
+        "end proc:",
+        "A265377:= proc(N) # to get all terms <= N",
+        "  local  a,b;",
+        "  sort(convert(select(`<=`,{seq(seq(b^2*(b+1)^2/4 - a^2*(a-1)^2/4,",
+        "       a = amin(b,N) .. b-1), b=2..1+iroot(floor(N/2),3))},N),list))",
+        "end proc:",
+        "A265377(10000);"
+    ],
+    "mathematica": [
+        "With[{nn=12},Select[Sort[Flatten[Table[Total/@Partition[Range[nn]^3,n,1],{n,2,nn}]]],#<=((nn(nn+1))/2)^3&]] (* _Harvey P. Dale_, Dec 25 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert, Set)",
+        "a265377 n = a265377_list !! (n-1)",
+        "a265377_list = f (singleton (1 + 2^3, (1, 2))) (-1) where",
+        "   f s z = if y /= z then y : f s'' y else f s'' y",
+        "              where s'' = (insert (y', (i, j')) $",
+        "                           insert (y' - i ^ 3 , (i + 1, j')) s')",
+        "                    y' = y + j' ^ 3; j' = j + 1",
+        "                    ((y, (i, j)), s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Dec 17 2015"
+    ],
+    "xref": [
+        "Subset of A217843.",
+        "Cf. A000217, A000537, A000578, A131643.",
+        "Cf. A062682 (subsequence)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Dec 07 2015",
+    "references": 2,
+    "revision": 29,
+    "time": "2015-12-25T15:01:00-05:00",
+    "created": "2015-12-15T09:34:02-05:00"
+}

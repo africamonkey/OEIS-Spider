@@ -1,0 +1,60 @@
+{
+    "number": 83099,
+    "data": "0,1,2,10,32,124,440,1624,5888,21520,78368,285856,1041920,3798976,13849472,50492800,184082432,671121664,2446737920,8920205824,32520839168,118562913280,432250861568,1575879202816,5745263575040",
+    "name": "a(n) = 2*a(n-1) + 6*a(n-2), a(0) = 0, a(1) = 1.",
+    "comment": [
+        "a(n+1) = a(n) + A083098(n+1). A083098(n+1)/a(n) converges to sqrt(7).",
+        "The same sequence may be obtained by the following process. Starting a priori with the fraction 1/1, the denominators of fractions built according to the rule: add top and bottom to get the new bottom, add top and 7 times the bottom to get the new top. The limit of the sequence of fractions is sqrt(7). - _Cino Hilliard_, Sep 25 2005",
+        "Pisano period lengths: 1, 1, 2, 1, 12, 2, 7, 1, 6, 12, 60, 2,168, 7, 12, 1,288, 6, 18, 12, ... - _R. J. Mathar_, Aug 10 2012",
+        "a(n) is divisible by 2^ceiling(n/2), see formula below. - _Ralf Stephan_, Dec 24 2013"
+    ],
+    "reference": [
+        "John Derbyshire, Prime Obsession, Joseph Henry Press, April 2004, see p. 16."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A083099/b083099.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (2,6)."
+    ],
+    "formula": [
+        "G.f.: x/(1-2*x-6*x^2).",
+        "From _Paul Barry_, Sep 29 2004: (Start)",
+        "E.g.f.: (d/dx)(exp(x)sinh(sqrt(7)x)/sqrt(7));",
+        "a(n-1) = Sum_{k=0..n} binomial(n, 2k+1)7^k. (End)",
+        "a(n) = -(1/14)*(1-sqrt(7))^n*sqrt(7)+(1/14)*(1+sqrt(7))^n*sqrt(7). - _Paolo P. Lava_, Jun 10 2008",
+        "Simplified formula: ((1+sqrt7)^n-(1-sqrt7)^n)/sqrt28. Offset 1. a(3)=10. - Al Hakanson (hawkuu(AT)gmail.com), Jan 05 2009",
+        "G.f.: G(0)*x/(2*(1-x)), where G(k)= 1 + 1/(1 - x*(7*k-1)/(x*(7*k+6) - 1/G(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, May 26 2013",
+        "a(2n) = 2^n * A154245(n), a(2n+1) = 2^n * (5*A154245(n) - 9*A154245(n-1)). - _Ralf Stephan_, Dec 24 2013",
+        "a(n) = Sum_{k=1,3,5,...<=n} binomial(n,k)*7^((k-1)/2). - _Vladimir Shevelev_, Feb 06 2014"
+    ],
+    "maple": [
+        "A083099 := proc(n)",
+        "    option remember;",
+        "    if n <= 1 then",
+        "        n;",
+        "    else",
+        "        2*procname(n-1)+6*procname(n-2) ;",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Sep 23 2016"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[x/(1-2x-6x^2), {x, 0, 25}], x] (* Adapted for offset 0 by _Vincenzo Librandi_, Feb 07 2014 *)",
+        "Expand[Table[((1 + Sqrt[7])^n - (1 - Sqrt[7])^n)7/(14Sqrt[7]), {n, 0, 25}]] (* _Zerinvary Lajos_, Mar 22 2007 *)",
+        "LinearRecurrence[{2, 6}, {0, 1}, 25] (* _Sture Sj\u00f6stedt_, Dec 06 2011 *)"
+    ],
+    "program": [
+        "(Sage) [lucas_number1(n,2,-6) for n in xrange(0, 25)] # _Zerinvary Lajos_, Apr 22 2009",
+        "(PARI) a(n)=([0,1; 6,2]^n*[0;1])[1,1] \\\\ _Charles R Greathouse IV_, May 10 2016",
+        "(PARI) x='x+O('x^30); concat([0], Vec(x/(1-2*x-6*x^2))) \\\\ _G. C. Greubel_, Jan 24 2018",
+        "(MAGMA) I:=[0,1]; [n le 2 select I[n] else 2*Self(n-1) + 6*Self(n-2): n in [1..30]]; // _G. C. Greubel_, Jan 24 2018"
+    ],
+    "xref": [
+        "The following sequences (and others) belong to the same family: A001333, A000129, A026150, A002605, A046717, A015518, A084057, A063727, A002533, A002532, A083098, A083099, A083100, A015519."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "Mario Catalani (mario.catalani(AT)unito.it), Apr 22 2003",
+    "references": 29,
+    "revision": 55,
+    "time": "2018-01-25T02:58:09-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

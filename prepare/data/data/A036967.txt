@@ -1,0 +1,46 @@
+{
+    "number": 36967,
+    "data": "1,16,32,64,81,128,243,256,512,625,729,1024,1296,2048,2187,2401,2592,3125,3888,4096,5184,6561,7776,8192,10000,10368,11664,14641,15552,15625,16384,16807,19683,20000,20736,23328,28561,31104,32768,34992",
+    "name": "4-full numbers: if a prime p divides n then so does p^4.",
+    "comment": [
+        "a(m) mod prime(n) > 0 for m < A258601(n); a(A258601(n)) = A030514(n) = prime(n)^4. - _Reinhard Zumkeller_, Jun 06 2015"
+    ],
+    "reference": [
+        "E. Kraetzel, Lattice Points, Kluwer, Chap. 7, p. 276."
+    ],
+    "link": [
+        "T. D. Noe and Alois P. Heinz, <a href=\"/A036967/b036967.txt\">Table of n, a(n) for n = 1..10000</a>, (first 300 terms from T. D. Noe)"
+    ],
+    "mathematica": [
+        "Join[{1},Select[Range[35000],Min[Transpose[FactorInteger[#]][[2]]]>3&]] (* _Harvey P. Dale_, Jun 05 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, fromList, union)",
+        "a036967 n = a036967_list !! (n-1)",
+        "a036967_list = 1 : f (singleton z) [1, z] zs where",
+        "   f s q4s p4s'@(p4:p4s)",
+        "     | m < p4 = m : f (union (fromList $ map (* m) ps) s') q4s p4s'",
+        "     | otherwise = f (union (fromList $ map (* p4) q4s) s) (p4:q4s) p4s",
+        "     where ps = a027748_row m",
+        "           (m, s') = deleteFindMin s",
+        "   (z:zs) = a030514_list",
+        "-- _Reinhard Zumkeller_, Jun 03 2015",
+        "(PARI) is(n)=n==1 || vecmin(factor(n)[,2])>3 \\\\ _Charles R Greathouse IV_, Sep 17 2015"
+    ],
+    "xref": [
+        "A030514 is a subsequence.",
+        "Cf. A001694, A036966, A046101, A258601."
+    ],
+    "keyword": "easy,nonn,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Erich Friedman_.",
+        "Corrected by _Vladeta Jovovic_, Aug 17 2002"
+    ],
+    "references": 11,
+    "revision": 26,
+    "time": "2018-01-08T02:11:48-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

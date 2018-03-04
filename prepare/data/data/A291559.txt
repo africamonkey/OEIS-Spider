@@ -1,0 +1,45 @@
+{
+    "number": 291559,
+    "data": "0,0,1,2,5,10,23,52,120,275,644,1508,3558,8418,20012,47699,114082,273476,657250,1582817,3819514,9233059,22356918,54216429,131663670,320158789,779461271,1899830067,4635492672,11321595218,27677333555,67720658475,165835173692",
+    "name": "Total height of all (unlabeled) rooted identity trees with n vertices.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A291559/b291559.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{h=0..n-2} Sum_{t=1..n-1-h} (h+1) * A291529(n-1,h,t)."
+    ],
+    "example": [
+        ": a(5) = 10 = 4 + 3 + 3 : a(4) = 5 = 3 + 2 :",
+        ":                       :                  :",
+        ":    o    o      o      :    o    o        :",
+        ":    |    |     / \\     :    |   / \\       :",
+        ":    o    o    o   o    :    o  o   o      :",
+        ":    |   / \\   |        :    |  |          :",
+        ":    o  o   o  o        :    o  o          :",
+        ":    |  |      |        :    |             :",
+        ":    o  o      o        :    o             :",
+        ":    |                  :                  :",
+        ":    o                  :                  :",
+        ":                       :                  :"
+    ],
+    "maple": [
+        "b:= proc(n, i, t, h) option remember; expand(`if`(n=0 or h=0 or i=1,",
+        "      `if`(n<2, x^(t*n), 0), b(n, i-1, t, h)+add(x^(t*j)*binomial(",
+        "       b(i-1$2, 0, h-1), j)*b(n-i*j, i-1, t, h), j=1..n/i)))",
+        "    end:",
+        "g:= (n, h)-> b(n$2, 1, h)-`if`(h=0, 0, b(n$2, 1, h-1)):",
+        "F:= (n, h, t)-> coeff(g(n, h), x, t):",
+        "a:= n-> add(add((h+1)*F(n-1, h, t), t=1..n-1-h), h=0..n-2):",
+        "seq(a(n), n=0..37);"
+    ],
+    "xref": [
+        "Cf. A001853, A004111, A291529."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Aug 26 2017",
+    "references": 2,
+    "revision": 10,
+    "time": "2017-08-27T08:07:26-04:00",
+    "created": "2017-08-26T19:24:33-04:00"
+}

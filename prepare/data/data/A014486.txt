@@ -1,0 +1,90 @@
+{
+    "number": 14486,
+    "data": "0,2,10,12,42,44,50,52,56,170,172,178,180,184,202,204,210,212,216,226,228,232,240,682,684,690,692,696,714,716,722,724,728,738,740,744,752,810,812,818,820,824,842,844,850,852,856,866,868,872,880",
+    "name": "List of totally balanced sequences of 2n binary digits written in base 10. Binary expansion of each term contains n 0's and n 1's and reading from left to right (the most significant to the least significant bit), the number of 0's never exceeds the number of 1's.",
+    "comment": [
+        "The binary Dyck-Language (A063171) in decimal representation.",
+        "These encode width 2n mountain ranges, rooted planar trees of n+1 vertices and n edges, planar planted trees with n nodes, rooted plane binary trees with n+1 leaves (2n edges, 2n+1 vertices, n internal nodes, the root included), Dyck words, binary bracketings, parenthesizations, non-crossing handshakes and partitions and many other combinatorial structures in Catalan family, enumerated by A000108.",
+        "Is Sum_{k=1..n} a(k)) / n^(5/2) bounded? - _Benoit Cloitre_, Aug 18 2002",
+        "This list is the intersection of A061854 and A031443. - _Jason Kimberley_, Jan 18 2013",
+        "The sequence does start at n = 0, since in the binary interpretation of the Dyck language (e.g., as parenthesizations where \"1\" stands for \"(\" and \"0\" stands for \")\") having a(0) = 0 will do since it would stand for the empty string where the \"0\"s and \"1\"s are balanced (hence the parentheses are balanced). - _Daniel Forgues_, Feb 17 2013"
+    ],
+    "link": [
+        "Franklin T. Adams-Watters, <a href=\"/A014486/b014486.txt\">Table of n, a(n) for n = 0..2500</a>",
+        "N. G. De Bruijn and B. J. M. Morselt, <a href=\"http://dx.doi.org/10.1016/S0021-9800(67)80111-X\">A note on plane trees</a>, J. Combinatorial Theory 2 (1967), 27-34.",
+        "R. K. Guy, <a href=\"http://www.jstor.org/stable/2691503\">The Second Strong Law of Small Numbers</a>, Math. Mag, 63 (1990), no. 1, 3-20.",
+        "A. Karttunen, <a href=\"http://oeis.org/wiki/Catalan_ranking_and_unranking_functions\">Catalan ranking and unranking functions</a>, OEIS Wiki.",
+        "A. Karttunen, <a href=\"/A014486/a014486.pdf\">Illustration of 626 initial terms (up to size n=7) with various combinatorial interpretations of Catalan numbers encoded by this sequence.</a>",
+        "A. Karttunen, <a href=\"/A089408/a089408.c.txt\">a089408.c - C program for computing this sequence and many of the related automorphisms</a>",
+        "A. Karttunen, <a href=\"http://www.iki.fi/~kartturi/matikka/tab9766.htm\">Some notes on Catalan's Triangle</a>",
+        "D. L. Kreher and D. R. Stinson, <a href=\"http://www.math.mtu.edu/~kreher/cages.html\">Combinatorial Algorithms, Generation, Enumeration and Search</a>, CRC Press, 1998.",
+        "R. J. Mathar, <a href=\"http://arxiv.org/abs/1603.00077\">Topologically Distinct Sets of Non-intersecting Circles in the Plane</a>, arXiv:1603.00077, 2016.",
+        "OEIS Wiki, <a href=\"/wiki/Combinatorial_interpretations_of_Catalan_numbers\">Combinatorial interpretations of Catalan numbers</a>",
+        "F. Ruskey, <a href=\"http://webhome.cs.uvic.ca/~ruskey/Publications/Thesis/Thesis.html\">Algorithmic Solution of Two Combinatorial Problems</a>",
+        "R. P. Stanley, <a href=\"http://www-math.mit.edu/~rstan/papers.html\">Hipparchus, Plutarch, Schroeder and Hough</a>, Am. Math. Monthly, Vol. 104, No. 4, p. 344, 1997.",
+        "R. P. Stanley, <a href=\"http://www-math.mit.edu/~rstan/ec/catalan.pdf\">Exercises on Catalan and Related Numbers</a>",
+        "<a href=\"/index/Ro#RootedTreePlanEncodings\">Index entries for encodings of plane rooted trees</a> (various subsets of this sequence).",
+        "<a href=\"/index/Par#parens\">Index entries for sequences related to parenthesizing</a>",
+        "<a href=\"/index/Per#IntegerPermutationCatAuto\">Index entries for signature-permutations induced by Catalan automorphisms</a> (permutations of natural numbers induced by various bijective operations acting on these structures)",
+        "<a href=\"/index/Li#ListFunsOfLisp\">Index entries for the sequences induced by list functions of Lisp</a> (sequences induced by various other operations on these codes or the corresponding structures)."
+    ],
+    "example": [
+        "a(19) = 226_10 = 11100010_2 = A063171(19) as bracket expression: ( ( ( ) ) )( ) and as a binary tree, proceeding from left to right in depth-first fashion, with 1's in binary expansion standing for internal (branching) nodes and 0's for leaves:",
+        "  0   0",
+        "   \\ /",
+        "    1   0 0  (0)",
+        "     \\ /   \\ /",
+        "      1     1",
+        "       \\   /",
+        "         1",
+        "Note that in this coding scheme the last leaf of the binary trees (here in parentheses) is implicit. This tree can be also converted to a particular S-expression in languages like Lisp, Scheme and Prolog, if we interpret its internal nodes (1's) as cons cells with each leftward leaning branch being the \"car\" and the rightward leaning branch the \"cdr\" part of the pair, with the terminal nodes (0's) being ()'s (NILs). Thus we have (cons (cons (cons () ()) ()) (cons () ())) = '( ( ( () . () ) . () ) . ( () . () ) ) = (((())) ()) i.e., the same bracket expression as above, but surrounded by extra parentheses. This mapping is effected by the Scheme function A014486->parenthesization given below."
+    ],
+    "maple": [
+        "# Maple procedure CatalanUnrank is adapted from the algorithm 3.24 of the CAGES book and the Scheme function CatalanUnrank from Ruskey's thesis. See the a089408.c program for the corresponding C-procedures.",
+        "CatalanSequences := proc(upto_n) local n,a,r; a := []; for n from 0 to upto_n do for r from 0 to (binomial(2*n,n)/(n+1))-1 do a := [op(a),CatalanUnrank(n,r)]; od; od; return a; end;",
+        "CatalanUnrank := proc(n,rr) local r,x,y,lo,m,a; r := (binomial(2*n,n)/(n+1))-(rr+1); y := 0; lo := 0; a := 0; for x from 1 to 2*n do m := Mn(n,x,y+1); if(r <= lo+m-1) then y := y+1; a := 2*a + 1; else lo := lo+m; y := y-1; a := 2*a; fi; od; return a; end;",
+        "Mn := (n,x,y) -> binomial(2*n-x,n-((x+y)/2)) - binomial(2*n-x,n-1-((x+y)/2));"
+    ],
+    "mathematica": [
+        "cat[ n_ ] := (2 n)!/n!/(n+1)!; b2d[li_List] := Fold[2#1+#2&, 0, li]; d2b[n_Integer] := IntegerDigits[n, 2] tree[n_] := Join[Table[1, {i, 1, n}], Table[0, {i, 1, n}]]",
+        "nexttree[t_] := Flatten[Reverse[t]/. {a___, 0, 0, 1, b___}:> Reverse[{Sort[{a, 0}]//Reverse, 1, 0, b}]]",
+        "wood[ n_ /; n<8 ] := NestList[ nexttree, tree[ n ], cat[ n ]-1 ]",
+        "Table[ Reverse[ b2d/@wood[ j ] ], {j, 0, 6} ]//Flatten",
+        "tbQ[n_]:=Module[{idn2=IntegerDigits[n,2]},Count[idn2,1]==Length[idn2]/2&&Min[Accumulate[idn2/.{0->-1}]]>=0]; Join[{0},Select[Range[900],tbQ]] (* _Harvey P. Dale_, Jul 04 2013 *)",
+        "balancedQ[0] = True; balancedQ[n_] := Module[{s = 0}, Do[s += If[b == 1, 1, -1]; If[s < 0, Return[False]], {b, IntegerDigits[n, 2]}]; Return[s == 0] ]; A014486 = FromDigits /@ IntegerDigits[Select[Range[0, 1000], balancedQ ]] (* _Jean-Fran\u00e7ois Alcover_, Mar 05 2016 *)",
+        "A014486Q[0] = True; A014486Q[n_] := Catch[Fold[If[# < 0, Throw[False], If[#2 == 0, # - 1, # + 1]] &, 0, IntegerDigits[n, 2]] == 0]; Select[Range[0, 880], A014486Q] (* _JungHwan Min_, Dec 11 2016 *)"
+    ],
+    "program": [
+        "(MIT Scheme) (define (A014486 n) (let ((w/2 (A072643 n))) (CatalanUnrank w/2 (if (zero? n) 0 (- n (A014137 (-1+ w/2)))))))",
+        "(Here 'm' is the row on A009766 and 'y' is the position on row 'm' of A009766, both >= 0. The resulting totally balanced binary string is computed into variable 'a'): (define (CatalanUnrank size rank) (let loop ((a 0) (m (-1+ size)) (y size) (rank rank) (c (A009766 (-1+ size) size))) (if (negative? m) a (if (>= rank c) (loop (1+ (* 2 a)) m (-1+ y) (- rank c) (A009766 m (-1+ y))) (loop (* 2 a) (-1+ m) y rank (A009766 (-1+ m) y))))))",
+        "(This converts the totally balanced binary string 'n' into the corresponding S-expression:) (define (A014486->parenthesization n) (let loop ((n n) (stack (list (list)))) (cond ((zero? n) (car stack)) ((zero? (modulo n 2)) (loop (floor->exact (/ n 2)) (cons (list) stack))) (else (loop (floor->exact (/ n 2)) (cons2top! stack))))))",
+        "(define (cons2top! stack) (let ((ex-cdr (cdr stack))) (set-cdr! stack (car ex-cdr)) (set-car! ex-cdr stack) ex-cdr))",
+        "(PARI) isA014486(n)=my(v=binary(n),t=0);for(i=1,#v,t+=if(v[i],1,-1);if(t<0,return(0))); t==0 \\\\ _Charles R Greathouse IV_, Jun 10 2011",
+        "(Sage)",
+        "def is_A014486(n) :",
+        "    B = bin(n)[2::] if n<>0 else 0",
+        "    s = 0",
+        "    for b in B :",
+        "        s += 1 if b=='1' else -1",
+        "        if 0 > s : return False",
+        "    return 0 == s",
+        "def A014486_list(n): return [k for k in (1..n) if is_A014486(k) ]",
+        "A014486_list(888) # _Peter Luschny_, Aug 10 2012"
+    ],
+    "xref": [
+        "Characteristic function: A080116. Inverse function: A080300.",
+        "The terms of binary width 2n are counted by A000108[n]. Subset of A036990. Number of peaks in each mountain (number of leaves in rooted plane general trees): A057514. Number of trailing zeros in the binary expansion: A080237. First differences: A085192.",
+        "Cf. also A009766, A014137, A071156, A072643, A079436, A085184, A213704."
+    ],
+    "keyword": "nonn,nice,easy,base",
+    "offset": "0,2",
+    "author": "_Wouter Meeussen_",
+    "ext": [
+        "Additional comments from _Antti Karttunen_, Aug 11 2000 and May 25 2004",
+        "Added a(0)=0 (which had been removed in June 2011), _Joerg Arndt_, Feb 27 2013"
+    ],
+    "references": 355,
+    "revision": 102,
+    "time": "2017-01-20T14:15:01-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 36441,
+    "data": "2,4,6,9,12,15,20,25,30,35,42,49,56,63,70,77,88,99,110,121,132,143,156,169,182,195,208,221,238,255,272,289,306,323,342,361,380,399,418,437,460,483,506,529,552,575,598,621,644,667,696,725,754,783,812,841,870",
+    "name": "a(n+1) = next number having largest prime dividing a(n) as a factor, with a(1) = 2.",
+    "comment": [
+        "a(n) satisfies the following inequality: 1/4*(n^2+3*n+1) <= a(n) <= 1/4*(n+2)^2. [Corrected by _M. F. Hasler_, Apr 08 2015]",
+        "The present sequence is the special case a(n) = a(2,n) with a more general a(m, n) := a(m, n-1) + gpf(a(m, n-1)), a(m, 1) := m, where gpf(x) := \"greatest prime factor of x\" = A006530(x). Also a(a(r,k), n)=a(r,n+k-1), for all n,k in N\\{0} and all r in N\\{0,1}; a(prime(k), n)=a(prime(i), n+prime(k)-prime(i)), for all k,i,n in N\\{0}, with k >= i, n >= prime(k-1) and with prime(x) := x-th prime.",
+        "Essentially the same as A076271 and A180107, cf. formula."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A036441/b036441.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = p(m)*(n+2-p(m)), where p(k) is the k-th prime and m is the smallest index such that n+2 <= p(m) + p(m+1). - _Max Alekseyev_, Oct 21 2008",
+        "a(n) = A076271(n+1) = A180107(n+2). - _M. F. Hasler_, Apr 08 2015",
+        "a(n+1) = A070229(a(n)). - _Reinhard Zumkeller_, Nov 07 2015"
+    ],
+    "example": [
+        "a(2,2) = 4 because 2 + gpf(2) = 2 + 2 = 4; a(2,3) = 6 because 4 + gpf(4) = 4 + 2 = 6."
+    ],
+    "mathematica": [
+        "f[n_]:=Last[First/@FactorInteger[n]];Join[{a=2},Table[a+=f[a],{n,2,100}]] (* _Vladimir Joseph Stephan Orlovsky_, Feb 08 2011*)",
+        "NestList[#+FactorInteger[#][[-1,1]]&,2,60] (* _Harvey P. Dale_, Dec 02 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a036441 n = a036441_list !! (n-1)",
+        "a036441_list = tail a076271_list",
+        "-- _Reinhard Zumkeller_, Nov 08 2015, Nov 14 2011",
+        "(PARI) a(n)=(n+2-if(n\\2+1<(p=nextprime(n\\2+1))&&n+1<p+n=precprime(p-1),p=n,p))*p \\\\ _M. F. Hasler_, Apr 08 2015"
+    ],
+    "xref": [
+        "Cf. A006530. See A076271 and A180107 for other versions.",
+        "Cf. A001043, A070229.",
+        "Cf. A123581."
+    ],
+    "keyword": "eigen,nice,nonn",
+    "offset": "1,1",
+    "author": "Frederick Magata (frederick.magata(AT)uni-muenster.de)",
+    "ext": [
+        "Better description from _Reinhard Zumkeller_, Feb 04, 2002",
+        "Edited by _M. F. Hasler_, Apr 08 2015"
+    ],
+    "references": 5,
+    "revision": 32,
+    "time": "2015-11-07T20:06:41-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

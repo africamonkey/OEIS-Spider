@@ -1,0 +1,33 @@
+{
+    "number": 214637,
+    "data": "1,16,17086,61189172,404233159860,3880365678824980,47959061464818182058,711513280222442751394224,12121127323153614807021655742,230127245538294682127207785787376,4767460278053986542112719904243778834,106115342273795146740243750912097789131600",
+    "name": "Number of solid standard Young tableaux of shape [[n,n,n],[n,n],[n]].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A214637/b214637.txt\">Table of n, a(n) for n = 0..25</a>",
+        "S. B. Ekhad, D. Zeilberger, <a href=\"https://arxiv.org/abs/1202.6229\">Computational and Theoretical Challenges on Counting Solid Standard Young Tableaux</a>, arXiv:1202.6229v1 [math.CO], 2012",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau\">Young tableau</a>"
+    ],
+    "maple": [
+        "b:= proc(l) option remember; local m; m:= nops(l);",
+        "      `if`({map(x-> x[], l)[]}={0}, 1, add(add(`if`(l[i][j]>",
+        "      `if`(i=m or nops(l[i+1])<j, 0, l[i+1][j]) and l[i][j]>",
+        "      `if`(nops(l[i])=j, 0, l[i][j+1]), b(subsop(i=subsop(",
+        "       j=l[i][j]-1, l[i]), l)), 0), j=1..nops(l[i])), i=1..m))",
+        "    end:",
+        "a:= n-> b([[n, n, n], [n, n], [n]]):",
+        "seq(a(n), n=0..10);"
+    ],
+    "mathematica": [
+        "b[l_] := b[l] = With[{m := Length[l]}, If[Union[Flatten[l]] == {0}, 1, Sum[Sum[If[l[[i, j]] > If[i == m || Length[l[[i+1]]] < j, 0, l[[i+1, j]]] && l[[i, j]] > If[Length[l[[i]]] == j, 0, l[[i, j+1]]], b[ReplacePart[l, i -> ReplacePart[l[[i]], j -> l[[i, j]]-1]]], 0], {j, 1, Length[l[[i]]]}], {i, 1, m}]] ]; a[n_] := b[{{n, n, n}, {n, n}, {n}}]; Table[a[n], {n, 0, 11}] // Flatten (* _Jean-Fran\u00e7ois Alcover_, Dec 18 2013, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A213932, A213978, A214638."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Jul 23 2012",
+    "references": 5,
+    "revision": 18,
+    "time": "2017-07-19T19:52:13-04:00",
+    "created": "2012-07-26T02:43:35-04:00"
+}

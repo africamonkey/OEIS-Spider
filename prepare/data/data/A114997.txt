@@ -1,0 +1,44 @@
+{
+    "number": 114997,
+    "data": "0,0,1,1,1,4,8,13,31,71,144,318,729,1611,3604,8249,18803,42907,98858,228474,528735,1228800,2865180,6693712,15676941,36807239,86584783,204060509,481823778,1139565120,2699329341,6403500057,15211830451,36183117255,86171536894,205459894230,490417795075",
+    "name": "Number of ordered trees with n edges and no unary or binary nodes.",
+    "comment": [
+        "Also counts sequences of n natural numbers, excluding 1 and 2, such that the sum of every prefix is no more than its length."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A114997/b114997.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Nachum Dershowitz and Shmuel Zaks, <a href=\"http://www.cs.tau.ac.il/~nachumd/papers/UpDown.pdf\">More patterns in trees: Up and down, young and old, odd and even</a>, SIAM J. Discrete Mathematics, 23 (2009), 447-465."
+    ],
+    "formula": [
+        "a(n) = Sum_{(n+3)/2 <= k <= n} (1/(n+1) * binomial(n+1, k) * binomial(2*k-n-3, n-k)).",
+        "If A(x) is the g.f. for the sequence with a(0)=1, then x^3*A^3+x*A^2-(1 + x)*A+1 = 0. - _Emeric Deutsch_, Jan 13 2015",
+        "Let A(x) be the g.f. for the sequence with a(0)=1, then x*A(x) is the reversion of x/(1+x^2*sum(k>=1,x^k)). - _Joerg Arndt_, Aug 19 2012 (proved by _Emeric Deutsch_, Jan 13 2015)",
+        "Recurrence: (n+1)*(n+2)*(28*n^2 - 38*n - 15)*a(n) = -4*(n+1)*(14*n^3 - 12*n^2 + 7*n - 15)*a(n-1) + (n-2)*(140*n^3 + 90*n^2 - 221*n + 45)*a(n-2) + 6*(n-2)*(28*n^3 - 24*n^2 - 75*n + 95)*a(n-3) + 23*(n-3)*(n-2)*(28*n^2 + 18*n - 25)*a(n-4). - _Vaclav Kotesovec_, Mar 22 2014",
+        "a(n) ~ c / (n^(3/2) * r^n), where r = (4*sqrt(2) - 3 + 23*sqrt((344*sqrt(2))/529 - 235/529))/46 = 0.402505948621022106992... is the root of the equation 23*r^4+6*r^3+5*r^2-2*r-1 = 0 and c = sqrt((280 + 133*sqrt(2) - 25*sqrt(14*(11 + 8*sqrt(2)))) / (7*Pi))/4 = 0.273007516... - _Vaclav Kotesovec_, Mar 22 2014, updated Jan 14 2015"
+    ],
+    "maple": [
+        "eq := x^3*A^3+x*A^2-(1+x)*A+1 = 0: A := RootOf(eq, A): Aser := series(A, x = 0, 40): seq(coeff(Aser, x, n), n = 1 .. 38); # _Emeric Deutsch_, Jan 13 2015"
+    ],
+    "mathematica": [
+        "Table[Sum[1/(n+1)*Binomial[n+1,k]*Binomial[2*k-n-3,n-k],{k,Ceiling[(n+3)/2],n}],{n,1,20}] (* _Vaclav Kotesovec_, Mar 22 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=sum(k=ceil((n+3)/2), n, (1/(n+1) * binomial(n+1, k) * binomial(2*k-n-3, n-k)) ); \\\\ _Joerg Arndt_, Aug 19 2012",
+        "(PARI) N=66; gf=serreverse(x/(1+x^2*sum(k=1,N,x^k))+O(x^N)) / x;",
+        "/* = 1 + x^3 + x^4 + x^5 + 4*x^6 + 8*x^7 + 13*x^8 + 31*x^9 + ... */",
+        "v114997=Vec(gf) /* = [1, 0, 0, 1, 1, 1, 4, 8, 13, 31, ...] */  \\\\ _Joerg Arndt_, Aug 19 2012"
+    ],
+    "xref": [
+        "Cf. A000108 (rev. of x/(1+1*sum(k>=1,x^k)) ), A005043 (rev. of x/(1+x*sum(k>=1,x^k)), A215341 (rev. of x/(1+x^3*sum(k>=1,x^k)) )."
+    ],
+    "keyword": "nonn",
+    "offset": "1,6",
+    "author": "_Nachum Dershowitz_, Feb 23 2006",
+    "ext": [
+        "Offset set to 1 by _Joerg Arndt_, Aug 19 2012"
+    ],
+    "references": 3,
+    "revision": 43,
+    "time": "2016-09-01T06:50:44-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

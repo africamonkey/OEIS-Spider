@@ -1,0 +1,44 @@
+{
+    "number": 97764,
+    "data": "4,16,27,36,64,100,144,196,216,256,324,400,484,576,676,729,784,900,1024,1156,1296,1444,1600,1728,1764,1936,2116,2304,2500,2704,2916,3125,3136,3364,3375,3600,3844,4096,4356,4624,4900,5184,5476,5776,5832,6084,6400",
+    "name": "Numbers of the form (kp)^p for prime p and k=1,2,3,....",
+    "comment": [
+        "The polynomial x^n - n is reducible over the integers for n in this sequence.",
+        "A result of Vahlen shows that the polynomial x^n - n is reducible over the integers for n in this sequence and no other n.",
+        "The representation (k*p)^p is generally not unique, e.g. a(120) = 46656 = (108*2)^2 = (12*3)^3. - _Reinhard Zumkeller_, Feb 14 2015",
+        "This is also numbers of the form (km)^m for any m > 1, not just primes. Let m be > 1; then m has a prime factor, so let m=pj, p a prime and j an integer > 0. Then (km)^m = (kpj)^pj = (k^j p^j j^j)^p = ((k^j p^(j-1) j^j) p) ^ p. - _Franklin T. Adams-Watters_, Sep 13 2015"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A097764/b097764.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "A. Schinzel, <a href=\"http://algo.inria.fr/seminars/sem92-93/schinzel.ps\">Problems and results on polynomials</a>"
+    ],
+    "mathematica": [
+        "nMax=10000; lst={}; n=1; While[p=Prime[n]; p^p<=nMax, k=1; While[(k*p)^p<=nMax, AppendTo[lst, (k*p)^p]; k++ ]; n++ ]; Union[lst]"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert)",
+        "a097764 n = a097764_list !! (n-1)",
+        "a097764_list = f 0 (singleton (4, 2, 2)) $",
+        "                 tail $ zip a051674_list a000040_list where",
+        "   f m s ppps'@((pp, p) : ppps)",
+        "     | pp < qq   = f m (insert (pp, p, 2) s) ppps",
+        "     | qq == m   = f m (insert ((k * q) ^ q, q, k + 1) s') ppps'",
+        "     | otherwise = qq : f qq (insert ((k * q) ^ q, q, k + 1) s') ppps'",
+        "     where ((qq, q, k), s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Feb 14 2015",
+        "(PARI) is(n)=my(b,e=ispower(n,,&b),f); if(e==0, return(0)); f=factor(e)[,1]; for(i=1,#f, if(b%f[i]==0, return(1))); 0 \\\\ _Charles R Greathouse IV_, Aug 29 2016"
+    ],
+    "xref": [
+        "Cf. A084746 (least k such that n^k-k is prime).",
+        "Cf. A097792 (numbers of the form 4k^4 or (kp)^p).",
+        "Cf. A000040, A051674, A255134 (first differences)."
+    ],
+    "keyword": "easy,nice,nonn",
+    "offset": "1,1",
+    "author": "_T. D. Noe_, Aug 24 2004",
+    "references": 14,
+    "revision": 15,
+    "time": "2016-08-29T12:19:56-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

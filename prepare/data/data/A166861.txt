@@ -1,0 +1,49 @@
+{
+    "number": 166861,
+    "data": "1,1,2,4,8,15,30,56,108,203,384,716,1342,2487,4614,8510,15675,28749,52652,96102,175110,318240,577328,1045068,1888581,3406455,6134530,11029036,19799363,35490823,63531134,113570988,202767037,361565865,643970774,1145636750",
+    "name": "Euler transform of Fibonacci numbers.",
+    "comment": [
+        "In general, the sequence with g.f. Product_{k>=1} 1/(1-x^k)^Fibonacci(k+z), where z is nonnegative integer, is asymptotic to phi^(n + z/4) / (2 * sqrt(Pi) * 5^(1/8) * n^(3/4)) * exp((phi/10 - 1/2) * Fibonacci(z) - Fibonacci(z+1)/10 + 2 * 5^(-1/4) * phi^(z/2) * sqrt(n) + s), where s = Sum_{k>=2} (Fibonacci(z) + Fibonacci(z+1) * phi^k) / ((phi^(2*k) - phi^k - 1)*k) and phi = A001622 = (1+sqrt(5))/2 is the golden ratio. - _Vaclav Kotesovec_, Aug 06 2015"
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A166861/b166861.txt\">Table of n, a(n) for n = 0..4550</a>",
+        "Loic Foissy, <a href=\"http://hal.archives-ouvertes.fr/docs/00/80/85/13/PDF/control.pdf\">The Hopf algebra of Fliess operators and its dual pre-Lie algebra</a>, 2013.",
+        "W. S. Gray, K. Ebrahimi-Fard, <a href=\"http://arxiv.org/abs/1411.0222\">Affine SISO Feedback Transformation Group and Its Faa di Bruno Hopf Algebra</a>, arXiv:1411.0222 [math.OC], 2014.",
+        "Vaclav Kotesovec, <a href=\"http://arxiv.org/abs/1508.01796\">Asymptotics of the Euler transform of Fibonacci numbers</a>, arXiv:1508.01796 [math.CO], Aug 07 2015",
+        "Vaclav Kotesovec, <a href=\"/A034691/a034691_1.pdf\">Asymptotics of sequence A034691</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{k>0} 1/(1 - x^k)^Fibonacci(k).",
+        "a(n) ~ phi^n / (2 * sqrt(Pi) * 5^(1/8) * n^(3/4)) * exp(-1/10 + 2*5^(-1/4)*sqrt(n) + s), where s = Sum_{k>=2} phi^k / ((phi^(2*k) - phi^k - 1)*k) = 0.600476601392575912969719494850393576083765123939643511355547131467... and phi = A001622 = (1+sqrt(5))/2 is the golden ratio. - _Vaclav Kotesovec_, Aug 06 2015"
+    ],
+    "example": [
+        "G.f. = 1 + x + 2*x^2 + 4*x^3 + 8*x^4 + 15*x^5 + 30*x^6 + 56*x^7 + 108*x^8 + 203*x^9 + ..."
+    ],
+    "maple": [
+        "F:= proc(n) option remember; (<<1|1>, <1|0>>^n)[1, 2] end:",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(add(d*",
+        "      F(d), d=numtheory[divisors](j))*a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jan 12 2017"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Product[1/(1-x^k)^Fibonacci[k], {k, 1, 40}], {x, 0, 40}], x] (* _Vaclav Kotesovec_, Aug 05 2015 *)"
+    ],
+    "program": [
+        "(PARI) ET(v)=Vec(prod(k=1,#v,1/(1-x^k+x*O(x^#v))^v[k]))",
+        "ET(vector(40,n,fibonacci(n)))"
+    ],
+    "xref": [
+        "Cf. A000045, A034691, A109509, A200544, A260787, A261031, A261050, A260916."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Franklin T. Adams-Watters_, Oct 21 2009",
+    "ext": [
+        "First formula corrected by _Vaclav Kotesovec_, Aug 05 2015"
+    ],
+    "references": 10,
+    "revision": 39,
+    "time": "2017-01-12T17:57:25-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

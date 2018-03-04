@@ -1,0 +1,47 @@
+{
+    "number": 102491,
+    "data": "0,1,2,3,4,5,6,7,8,9,20,21,22,23,24,25,26,27,28,29,40,41,42,43,44,45,46,47,48,49,60,61,62,63,64,65,66,67,68,69,80,81,82,83,84,85,86,87,88,89,100,101,102,103,104,105,106,107,108,109,120,121,122,123,124,125,126",
+    "name": "Numbers whose base-20 representation can be written with decimal digits.",
+    "comment": [
+        "a(n) = A118761(n) for n<=50. - _Reinhard Zumkeller_, May 01 2006"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A102491/b102491.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Vigesimal.html\">Vigesimal</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Vigesimal\">Vigesimal</a>"
+    ],
+    "formula": [
+        "From _Peter Bala_, Dec 01 2016: (Start)",
+        "If n = Sum_{i = 0..m} d(i)*10^i is the decimal expansion of n then a(n+1) = Sum_{i = 0..m} d(i)*20^i.",
+        "a(n+1) = n + 1/2*Sum_{k >= 1} 20^k*floor(n/10^k). Cf. A037454, A037462 and A007091.",
+        "a(1) = 0; a(n+1) = 20*a(n/10+1) if n == 0 (mod 10) else a(n+1) = a(n) + 1. (End)",
+        "G.f. g(x) satisfies g(x) = 20*Sum_{1<=k<=9} x^k*g(x^10)/x^9 + Sum_{1<=k<=9} k*x^(k+1)/(1-x^10). - _Robert Israel_, Dec 01 2016"
+    ],
+    "maple": [
+        "seq(n + (1/2)*add(20^k*floor(n/10^k), k = 1..floor(ln(n)/ln(10))), n = 1..100); # _Peter Bala_, Dec 01 2016"
+    ],
+    "mathematica": [
+        "Select[Range@ 126, Total@ Take[Most@ DigitCount[#, 20], -10] == 0 &] (* _Michael De Vlieger_, Apr 09 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (unfoldr)",
+        "a102491 n = a102491_list !! (n-1)",
+        "a102491_list = filter (all (<= 9) . unfoldr",
+        "   (\\x -> if x == 0 then Nothing else Just $ swap $ divMod x 20)) [0..]",
+        "-- _Reinhard Zumkeller_, Jun 27 2013",
+        "(Python)",
+        "A102491_list = [int(str(x), 20) for x in range(10**6)] # _Chai Wah Wu_, Apr 09 2016",
+        "(PARI) isok(n) = (n==0) || ((d=digits(n, 20)) && (vecmax(d) < 10)); \\\\ _Michel Marcus_, Apr 09 2016"
+    ],
+    "xref": [
+        "Complement of A102492; Cf. A102487, A102489, A102493. Cf. A037454, A037462, A007091."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,3",
+    "author": "_Reinhard Zumkeller_, Jan 12 2005",
+    "references": 10,
+    "revision": 26,
+    "time": "2016-12-06T22:35:29-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

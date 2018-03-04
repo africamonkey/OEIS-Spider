@@ -1,0 +1,31 @@
+{
+    "number": 130153,
+    "data": "0,1,8,52,362,2779,23749,224570,2334827,26504418,326476313,4338953453,61908434299,944065986251,15325676747363",
+    "name": "For each permutation p of {1,2,...,n} define maxabsjump(p) = max(|p(i) - i|, 1<=i<=n); a(n) is the sum of maxabsjumps of all p.",
+    "comment": [
+        "a(n) = Sum(k*A130152(n,k),k=0..n-1). For the case when in the definition |p(i)-i| is replaced by p(i)-i, see A018927."
+    ],
+    "example": [
+        "a(3) = 8 because the permutations 123,132,213,231,312 and 321 have maxabsjumps 0,1,1,2,2 and 2, respectively."
+    ],
+    "maple": [
+        "with(combinat): for n from 1 to 7 do P:=permute(n): for i from 0 to n-1 do ct[i]:=0 od: for j from 1 to n! do if max(seq(abs(P[j][i]-i),i=1..n))=0 then ct[0]:=ct[0]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=1 then ct[1]:=ct[1]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=2 then ct[2]:=ct[2]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=3 then ct[3]:=ct[3]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=4 then ct[4]:=ct[4]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=5 then ct[5]:=ct[5]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=6 then ct[6]:=ct[6]+1 else fi od: a[n]:=sum(k*ct[k],k=0..n-1): od: seq(a[n],n=1..7); # a cumbersome program to obtain the first 7 terms of the sequence",
+        "n := 8: st := proc (p) max(seq(abs(p[j]-j), j = 1 .. nops(p))) end proc: with(combinat): P := permute(n): f := sort(add(t^st(P[i]), i = 1 .. factorial(n))): subs(t = 1, diff(f, t)); # program yields a(n) for the specified n [From Emeric Deutsch, Aug 13 2009]"
+    ],
+    "xref": [
+        "Cf. A130152, A018927."
+    ],
+    "keyword": "more,nonn",
+    "offset": "1,3",
+    "author": "_Emeric Deutsch_, May 27 2007",
+    "ext": [
+        "Corrected by _Vladeta Jovovic_, Jun 07 2007",
+        "a(10) from _Emeric Deutsch_, Aug 13 2009",
+        "a(11)-a(14) from _Donovan Johnson_, Sep 24 2010",
+        "a(15) from _Alois P. Heinz_, Sep 29 2011"
+    ],
+    "references": 3,
+    "revision": 12,
+    "time": "2013-05-10T12:45:49-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

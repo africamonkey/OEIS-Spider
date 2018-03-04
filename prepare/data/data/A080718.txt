@@ -1,0 +1,46 @@
+{
+    "number": 80718,
+    "data": "1,1255,12955,17482,25105,100255,101299,105295,107329,117067,124483,127417,129595,132565,145273,146137,149782,174082,174298,174793,174982,250105,256315,263155,295105,297463,307183,325615,371893,536539",
+    "name": "1, together with numbers n that are the product of two primes p and q such that the multiset of the digits of n coincides with the multiset of the digits of p and q.",
+    "comment": [
+        "Except for 1, this sequence is a subsequence of A280928. More specifically, members of A280928 are also members of this sequence if and only if they are semiprime. - _Ely Golden_, Jan 11 2017",
+        "This sequence has no equivalent in odd bases. This is because any equivalent of A280928 in an odd base must have all terms having at least 3 prime factors. - _Ely Golden_, Jan 11 2017",
+        "All entries other than 1 are congruent to 4 mod 9, because p*q == p + q mod 9 (with p and q not both divisible by 3) implies p*q == 4 mod 9. - _Robert Israel_, May 05 2014"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A080718/b080718.txt\">Table of n, a(n) for n = 1..145</a>"
+    ],
+    "example": [
+        "1255 = 5*251, 12955 = 5*2591, 17482 = 2*8741, 100255 = 5*20051, 146137=317*461, etc."
+    ],
+    "maple": [
+        "filter:= proc(n) local F,p,q,Ln,Lpq;",
+        "  F:= ifactors(n)[2];",
+        "  if nops(F) > 2 or convert(F,`+`)[2]<>2 then return false fi;",
+        "  p:= F[1][1];",
+        "  if nops(F) = 2 then q:= F[2][1] else q:= F[1][1] fi;",
+        "  Ln:= sort(convert(n,base,10));",
+        "  Lpq:= sort([op(convert(p,base,10)),op(convert(q,base,10))]);",
+        "  evalb(Ln = Lpq);",
+        "end proc:",
+        "filter(1):= true:",
+        "A080718:= select(filter,[1, seq(4+9*i,i=1..10^6)]); # _Robert Israel_, May 04 2014"
+    ],
+    "mathematica": [
+        "ptpQ[n_]:=Module[{sidn=Sort[IntegerDigits[n]],fi=Transpose[ FactorInteger[ n]]}, fi[[2]]=={1,1}&&Sort[Flatten[ IntegerDigits/@ fi[[1]]]]==sidn]; Join[{1}, Select[Range[4,550000,9],ptpQ]] (* _Harvey P. Dale_, Jun 22 2014 *)"
+    ],
+    "xref": [
+        "The following sequences are all closely related: A020342, A014575, A080718, A280928, A048936, A144563."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Jeff Heleen_, Mar 06 2003",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Jan 03 2009",
+        "Incorrect entry 163797 removed by _Robert Israel_, May 04 2014"
+    ],
+    "references": 7,
+    "revision": 24,
+    "time": "2017-01-11T03:16:33-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

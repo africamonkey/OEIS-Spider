@@ -1,0 +1,53 @@
+{
+    "number": 358,
+    "data": "1,2,2,3,3,5,5,8,10,15,19,31,41,64,94,143,211,329,493,766,1170,1811,2787,4341,6713,10462,16274,25415,39651,62075,97109,152288,238838,375167,589527,927555,1459961,2300348,3626242,5721045,9030451,14264309,22542397,35646312,56393862,89264835,141358275",
+    "name": "Number of binary necklaces of length n with no subsequence 00.",
+    "comment": [
+        "a(n) is also the number of inequivalent compositions of n into parts 1 and 2 where two compositions are considered to be equivalent if one is a cyclic rotation of the other.  a(6)=5 because we have: 2+2+2, 2+2+1+1, 2+1+2+1, 2+1+1+1+1, 1+1+1+1+1+1. - _Geoffrey Critzer_, Feb 01 2014"
+    ],
+    "reference": [
+        "T. Helleseth and A. Kholosha, Bent functions and their connections to combinatorics, in Surveys in Combinatorics 2013, edited by Simon R. Blackburn, Stefanie Gerke, Mark Wildon, Camb. Univ. Press, 2013."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A000358/b000358.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "A. R. Ashrafi, J. Azarija, K. Fathalikhani, S. Klavzar, et al., <a href=\"http://www.fmf.uni-lj.si/~klavzar/preprints/Fib-Luc-orbits-August-11-2014.pdf\">Orbits of Fibonacci and Lucas cubes, dihedral transformations, and asymmetric strings</a>, 2014.",
+        "M. Assis, J. L. Jacobsen, I. Jensen, J.-M. Maillard and B. M. McCoy, <a href=\"http://arxiv.org/abs/1406.5566\">Integrability vs non-integrability: Hard hexagons and hard squares compared</a>, arXiv preprint 1406.5566 [math-ph], 2014.",
+        "P. Flajolet and M. Soria, <a href=\"http://algo.inria.fr/flajolet/Publications/cycle2.ps.gz\">The Cycle Construction</a>, SIAM J. Discr. Math., vol. 4 (1), 1991, pp. 58-60.",
+        "P. Flajolet and M. Soria, <a href=\"http://dx.doi.org/10.1137/0404006\">The Cycle Construction</a>, SIAM J. Discr. Math., vol. 4 (1), 1991, pp. 58-60.",
+        "Benjamin Hackl, Helmut Prodinger, <a href=\"https://arxiv.org/abs/1801.09934\">The Necklace Process: A Generating Function Approach</a>, arXiv:1801.09934 [math.PR], 2018. Mentions this sequence.",
+        "P. Hadjicostas, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL19/Hadjicostas/hadji2.html\">Cyclic compositions of a positive integer with parts avoiding an arithmetic sequence</a>, J. Integer Sequences 19 (2016), #16.8.2.",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=119\">Encyclopedia of Combinatorial Structures 119</a>",
+        "F. Ruskey, <a href=\"http://www.theory.cs.uvic.ca/~cos/inf/neck/NecklaceInfo.html\">Necklaces, Lyndon words, De Bruijn sequences, etc.</a>",
+        "L. Zhang and P. Hadjicostas, <a href=\"http://appliedprobability.org/content.aspx?Group=tms&amp;Page=tmsabstracts40_2#three\">On sequences of independent Bernoulli trials avoiding the pattern '11..1'</a>, Math. Scientist, 40 (2015), 89-96.",
+        "<a href=\"/index/Ne#necklaces\">Index entries for sequences related to necklaces</a>"
+    ],
+    "formula": [
+        "a(n) = (1/n) * sum_{ d divides n } totient(n/d) [ Fib(d-1)+Fib(d+1) ].",
+        "G.f. = sum(k>=1, phi(k)/k * log( 1/(1-B(x^k)) ) ) where B(x)=x*(1+x). - _Joerg Arndt_, Aug 06 2012",
+        "a(n) ~ ((1+sqrt(5))/2)^n / n. - _Vaclav Kotesovec_, Sep 12 2014"
+    ],
+    "maple": [
+        "A000358 := proc(n) local sum; sum := 0; for d in divisors(n) do sum := sum + phi(n/d)*(fibonacci(d+1)+fibonacci(d-1)) od; RETURN(sum/n); end;",
+        "with(combstruct); spec := {A=Union(zero,Cycle(one),Cycle(Prod(zero,Sequence(one,card>0)))),one=Atom,zero=Atom}; seq(count([A,spec,unlabeled],size=i),i=1..30);"
+    ],
+    "mathematica": [
+        "nn=48;Drop[Map[Total,Transpose[Map[PadRight[#,nn]&,Table[ CoefficientList[ Series[CycleIndex[CyclicGroup[n],s]/.Table[s[i]->x^i+x^(2i),{i,1,n}],{x,0,nn}],x],{n,0,nn}]]]],1] (* _Geoffrey Critzer_, Feb 01 2014 *)",
+        "max = 50; B[x_] := x*(1+x); A = Sum[EulerPhi[k]/k*Log[1/(1-B[x^k])], {k, 1, max}]/x + O[x]^max; CoefficientList[A, x] (* _Jean-Fran\u00e7ois Alcover_, Feb 08 2016, after _Joerg Arndt_ *)",
+        "Table[1/n * Sum[EulerPhi[n/d] Total@ Map[Fibonacci, d + # & /@ {-1, 1}], {d, Divisors@ n}], {n, 47}] (* _Michael De Vlieger_, Dec 28 2016 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=66;  x='x+O('x^N);",
+        "B(x)=x*(1+x);",
+        "A=sum(k=1, N, eulerphi(k)/k*log(1/(1-B(x^k))));",
+        "Vec(A)",
+        "/* _Joerg Arndt_, Aug 06 2012 */"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Frank Ruskey_",
+    "references": 10,
+    "revision": 63,
+    "time": "2018-01-31T04:00:12-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

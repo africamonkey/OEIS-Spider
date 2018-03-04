@@ -1,0 +1,39 @@
+{
+    "number": 61963,
+    "data": "1,3,9,189,753,987,6739,10953,51963,171897,224081,635031,1135001,4437459",
+    "name": "Numbers n such that n divides the (left) concatenation of all numbers <= n written in base 10 (most significant digit on right).",
+    "comment": [
+        "This sequence differs from A029527 in that all least significant zeros are kept during concatenation.",
+        "Left concatenation, reverse order (i.e., digit-wise reversal of the concatenation 123...n), as in A138793.",
+        "No more terms < 10^7.",
+        "All terms must be odd."
+    ],
+    "link": [
+        "<a href=\"/index/N#concat\">Index entries for related sequences</a>"
+    ],
+    "example": [
+        "n = 13 is not a term since 31211101987654321 is not divisible by 13. (Note that the order of the digits of 13, 12 and 10 is reversed.)",
+        "See A061955 for further examples."
+    ],
+    "mathematica": [
+        "k = 2; lst = {}; rid = 1; While[k < 1001, exp = Floor[ Log10[rid]] + 1 + If[Mod[k, 10] == 1, IntegerExponent[k - 1, 10], 0]; rid = rid + FromDigits@ Reverse@ IntegerDigits@ k*(10^exp); If[ Mod[rid, k] == 0, Print@ k; AppendTo[lst,k]]; k++]; lst (* and to test any single value n *) fQ[n_] := Mod[ FromDigits@ Reverse@ Flatten@ IntegerDigits@ Range@ n, n] == 0 (* _Robert G. Wilson v_, Sep 12 2011 *)",
+        "Select[Range[5*10^6],Divisible[FromDigits[Reverse[Flatten[ IntegerDigits/@ Range[ #]]]], #]&] (* _Harvey P. Dale_, Apr 10 2017 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = my(s = \"\"); forstep (k=n, 1, -1, sk = digits(k); forstep (j=#sk, 1, -1, s = concat(s, sk[j]))); (eval(s) % n) == 0; \\\\ _Michel Marcus_, Jan 28 2017"
+    ],
+    "xref": [
+        "Cf. A029447-A029470, A029471-A029494, A029495-A029518, A029519-A029542, A061931-A061954, A061955-A061978."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "Larry Reeves (larryr(AT)acm.org), May 24 2001",
+    "ext": [
+        "Edited and updated by Larry Reeves (larryr(AT)acm.org), Apr 12 2002",
+        "a(12)-a(14) from _Lars Blomberg_, Aug 19 2011"
+    ],
+    "references": 2,
+    "revision": 28,
+    "time": "2017-04-10T17:30:38-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

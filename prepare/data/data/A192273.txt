@@ -1,0 +1,88 @@
+{
+    "number": 192273,
+    "data": "7,10,17,22,23,31,32,33,35,37,38,39,42,45,49,50,52,53,55,58,63,67,68,70,72,73,77,78,82,83,87,88,93,94,95,98,103,105,115,116,117,123,126,127,128,130,137,142,143,148,149,157,158,160,162,163,165,171,175",
+    "name": "Zumkeller numbers using anti-divisors (or anti-Zumkeller numbers)",
+    "comment": [
+        "Numbers n whose anti-divisors can be partitioned into two disjoint sets whose sums are both sigma*(n)/2, where sigma*(n) is the sum of the anti-divisors of n."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A192273/b192273.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "7 -> anti-divisors: 2,3,5; sigma*(7)/2 = 5; 2+3 = 5.",
+        "77-> anti-divisors: 2,3,5,9,14,17,22,31,51; sigma*(77)/2=77; 2+3+5+14+22+31=9+17+51=77.",
+        "143->anti-divisors: 2,3,5,7,15,19,22,26,41,57,95;  sigma*(143)/2=146; 2+5+15+19+22+26+57=3+7+41+95=146."
+    ],
+    "maple": [
+        "with(combstruct);",
+        "P:=proc(i)",
+        "local S,R,Stop,Comb,a,b,c,d,k,m,n,s;",
+        "for n from 3 to i do",
+        "  a:={};",
+        "  for k from 2 to n-1 do if abs((n mod k)- k/2) < 1 then a:=a union {k}; fi; od;",
+        "  b:=nops(a); c:=op(a); s:=0;",
+        "  if b>1 then for k from 1 to b do s:=s+c[k]; od;",
+        "  else s:=c;",
+        "  fi;",
+        "  if (modp(s,2)=0 and 2*n<=s) then",
+        "      S:=1/2*s-n; R:=select(m->m<=S,[c]); Stop:=false; Comb:=iterstructs(Combination(R));",
+        "     while not (finished(Comb) or Stop) do Stop:=add(d,d=nextstruct(Comb))=S; od;",
+        "     if Stop then print(n); fi;",
+        "  fi;",
+        "od;",
+        "end:",
+        "P(3000);"
+    ],
+    "program": [
+        "(Python3)",
+        "from sympy import divisors",
+        "from sympy.combinatorics.subsets import Subset",
+        "def antidivisors(n):",
+        "....return [2*d for d in divisors(n) if n > 2*d and n % (2*d)] + \\",
+        "...........[d for d in divisors(2*n-1) if n > d >=2 and n % d] + \\",
+        "...........[d for d in divisors(2*n+1) if n > d >=2 and n % d]",
+        "for n in range(3,10**3):",
+        "....d = antidivisors(n)",
+        "....s = sum(d)",
+        "....if not s % 2 and max(d) <= s/2:",
+        "........for x in range(1,2**len(d)):",
+        "............if sum(Subset.unrank_binary(x,d).subset) == s/2:",
+        "................print(n,end=', ')",
+        "................break",
+        "# _Chai Wah Wu_, Aug 13 2014",
+        "(Python)",
+        "from sympy import divisors",
+        "import numpy as np",
+        "A192273 = []",
+        "for n in range(3,10**3):",
+        "....d = [2*x for x in divisors(n) if n > 2*x and n % (2*x)] + \\",
+        "........[x for x in divisors(2*n-1) if n > x >=2 and n % x] + \\",
+        "........[x for x in divisors(2*n+1) if n > x >=2 and n % x]",
+        "....s, dmax = sum(d), max(d)",
+        "....if not s % 2 and 2*dmax <= s:",
+        "........d.remove(dmax)",
+        "........s2, ld = int(s/2-dmax), len(d)",
+        "........z = np.zeros((ld+1,s2+1),dtype=int)",
+        "........for i in range(1,ld+1):",
+        "............y = min(d[i-1],s2+1)",
+        "............z[i,range(y)] = z[i-1,range(y)]",
+        "............z[i,range(y,s2+1)] = np.maximum(z[i-1,range(y,s2+1)],z[i-1,range(0,s2+1-y)]+y)",
+        "............if z[i,s2] == s2:",
+        "................A192273.append(n)",
+        "................break",
+        "# _Chai Wah Wu_, Aug 19 2014"
+    ],
+    "xref": [
+        "Cf. A083207, A066272, A192274."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jun 28 2011",
+    "ext": [
+        "Added missing terms from _Chai Wah Wu_, Aug 13 2014"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2014-08-28T02:55:58-04:00",
+    "created": "2011-07-12T12:50:29-04:00"
+}

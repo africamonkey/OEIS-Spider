@@ -1,0 +1,44 @@
+{
+    "number": 295236,
+    "data": "3,10,42,60,63,840,1260,12642,18480,18900,18963,154350,228480,252840,379260,3458700,5562480,5688900,68772480",
+    "name": "Hemi-imperfect numbers: numbers such that the denominator of n/A206369(n) is equal to 2.",
+    "comment": [
+        "This is to rho (A206369) what hemiperfect numbers are to sigma (A000203).",
+        "After 3, 10 and 42, whose quotients are resp. 3/2, 5/2 and 7/2, 373316437260251755241798182764378479569038727298776522806597255168000000 is an instance of a term with quotient 9/2. - _Michel Marcus_, Dec 17 2017"
+    ],
+    "link": [
+        "Douglas E. Iannucci, <a href=\"http://www.integers-ejcnt.org/g41/g41.Abstract.html\">On a variation of perfect numbers</a>, INTEGERS: Electronic Journal of Combinatorial Number Theory, 6 (2006), #A41.",
+        "L\u00e1szl\u00f3 T\u00f3th, <a href=\"http://arxiv.org/abs/1111.4842\">A survey of the alternating sum-of-divisors function</a>, arXiv:1111.4842 [math.NT], 2011-2014.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Hemiperfect_number\">Hemiperfect number</a>"
+    ],
+    "example": [
+        "3 is a term since rho(3)=2, so 3/rho(3) is 3/2.",
+        "10 is a term since rho(10)=4, so 10/rho(10) is 5/2.",
+        "42 is a term since rho(42)=12, so 42/rho(42) is 7/2."
+    ],
+    "maple": [
+        "rho:= proc(n) local f;",
+        "  mul((f[1]^(f[2]+1)+(-1)^f[2])/(f[1]+1), f = ifactors(n)[2]);",
+        "end proc:",
+        "select(t -> denom(t/rho(t)) = 2, [$1..10^6]); # _Robert Israel_, Nov 20 2017"
+    ],
+    "mathematica": [
+        "(* b = A209369 *) b[n_] := n*DivisorSum[n, LiouvilleLambda[#]/# &];",
+        "Select[Range[10^6], If[Denominator[#/b[#]] == 2, Print[#]; True, False]&] (* _Jean-Fran\u00e7ois Alcover_, Dec 04 2017 *)"
+    ],
+    "program": [
+        "(PARI) rho(n) = {my(f = factor(n), res = q = 1); for(i=1, #f~, q = 1; for(j = 1, f[i, 2], q = -q + f[i, 1]^j); res *= q); res;}",
+        "isok(n) = denominator(n/rho(n))==2;"
+    ],
+    "xref": [
+        "Cf. A127724 (k-imperfect), A206369 (rho).",
+        "Cf. A159907 (hemiperfect)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Nov 19 2017",
+    "references": 1,
+    "revision": 28,
+    "time": "2017-12-17T15:34:50-05:00",
+    "created": "2017-11-21T03:10:06-05:00"
+}

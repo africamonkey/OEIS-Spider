@@ -1,0 +1,50 @@
+{
+    "number": 266620,
+    "data": "2,3,4,5,7,7,11,11,11,11,13,13,17,17,17,17,19,19,23,23,23,23,29,29,29,29,29,29,31,31,37,37,37,37,37,37,41,41,41,41,43,43,47,47,47,47,53,53,53,53,53,53,59,59,59,59,59,59,61,61,67,67,67,67,67,67,71",
+    "name": "a(n) = least non-divisor of n!.",
+    "comment": [
+        "It appears that a(n) = A151800(n) with the exception of n = 3. - _Robert Israel_, Jan 13 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A266620/b266620.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = min_{k >= 1} prime(k)^(1 + v(n!, prime(k))) where v(m, p) is the p-adic order of m. - _Robert Israel_, Jan 13 2016",
+        "a(n) = prime(pi(n) + 1) except for n = 3, in which case the least non-divisor of 3! is 4, not 5. - _Alonso del Arte_, Sep 23 2017"
+    ],
+    "example": [
+        "For n = 4 the least non-divisor of 4! = 24 = 2^3 * 3 is 5.",
+        "For n = 5 the least non-divisor of 5! = 120 = 2^3 * 3 * 5 is 7."
+    ],
+    "maple": [
+        "N:= 100: # to get a(1)..a(N)",
+        "m:= 1 + numtheory:-pi(N):",
+        "Primes:= [seq(ithprime(i),i=1..m)]:",
+        "for i from 1 to m do pindex[Primes[i]]:= i od:",
+        "V:= Vector(m):",
+        "k:= 0:",
+        "for n from 1 to N do",
+        "  for f in ifactors(n)[2] do",
+        "    q:= pindex[f[1]];",
+        "    V[q]:= V[q] + f[2];",
+        "    k:= max(k, q);",
+        "  od:",
+        "  a[n]:= min(seq(Primes[i]^(1+V[i]),i=1..k),Primes[k+1]);",
+        "od:",
+        "seq(a[n],n=1..N); # _Robert Israel_, Jan 13 2016"
+    ],
+    "mathematica": [
+        "Table[Complement[Range[2n], Divisors[n!]][[1]], {n, 30}] (* _Alonso del Arte_, Sep 23 2017 *)",
+        "Table[Block[{m = n!, k = n + 1}, While[Divisible[m, k], k++]; k], {n, 67}] (* _Michael De Vlieger_, Sep 23 2017 *)"
+    ],
+    "xref": [
+        "Cf. A007918, A007978, A066169, A115627, A151800."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Jan 01 2016",
+    "references": 2,
+    "revision": 28,
+    "time": "2017-09-23T13:13:22-04:00",
+    "created": "2016-01-02T04:36:45-05:00"
+}

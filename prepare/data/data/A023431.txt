@@ -1,0 +1,59 @@
+{
+    "number": 23431,
+    "data": "1,1,1,2,4,7,13,26,52,104,212,438,910,1903,4009,8494,18080,38656,82988,178802,386490,837928,1821664,3970282,8673258,18987930,41652382,91539466,201525238,444379907,981384125,2170416738,4806513660",
+    "name": "Generalized Catalan Numbers.",
+    "comment": [
+        "Essentially the same as A025246.",
+        "Number of lattice paths in the first quadrant from (0,0) to (n,0) using only steps H=(1,0), U=(1,1) and D=(2,-1). E.g. a(5)=7 because we have HHHHH, HHUD, HUDH, HUHD, UDHH, UHDH and UHHD. - _Emeric Deutsch_, Dec 25 2003",
+        "Also number of peakless Motzkin paths of length n with no double rises; in other words, Motzkin paths of length n with no UD's and no UU's, where U=(1,1) and D=(1,-1). E.g. a(5)=7 because we have HHHHH, HHUHD, HUHDH, HUHHD, UHDHH, UHHDH and UHHHD, where H=(1,0). - _Emeric Deutsch_, Jan 09 2004",
+        "Series reversion of g.f. A(x) is -A(-x) (if offset 1). - _Michael Somos_, Jul 13 2003",
+        "Hankel transform is A010892(n+1). [From _Paul Barry_, Sep 19 2008]"
+    ],
+    "reference": [
+        "Paul Barry, Jacobsthal Decompositions of Pascal's Triangle, Ternary Trees, and Alternating Sign Matrices, Journal of Integer Sequences, 19, 2016, #16.3.5."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A023431/b023431.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "P Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL12/Barry3/barry93.html\">Continued fractions and transformations of integer sequences</a>, JIS 12 (2009) 09.7.6",
+        "J. Cigler, <a href=\"http://arxiv.org/abs/1109.1449\">Some nice Hankel determinants</a>, arXiv preprint arXiv:1109.1449, 2011.",
+        "S. B. Ekhad, M. Yang, <a href=\"http://sites.math.rutgers.edu/~zeilberg/tokhniot/oMathar1maple12.txt\"> Proofs of Linear Recurrences of Coefficients of Certain Algebraic Formal Power Series Conjectured in the On-Line Encyclopedia Of Integer Sequences</a>, (2017)",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=666\">Encyclopedia of Combinatorial Structures 666</a>",
+        "K. Park, G.-S. Cheon, <a href=\"http://www.kms.or.kr/conference/abstract/search_view.html?num=5098&amp;uid=32&amp;start=0&amp;sort=sortDate&amp;period=32&amp;cate=&amp;etitle=&amp;key_word=&amp;au_name=&amp;au_ename=&amp;au_office=&amp;au_eoffice=&amp;mode=search&amp;section=\">Lattice path counting with a bounded strip restriction</a>"
+    ],
+    "formula": [
+        "G.f.: (1-x-sqrt((1-x)^2-4x^3))/(2x^3)=A(x). y=xA(x) satisfies x-y+xy+(xy)^2=0. - _Michael Somos_, Jul 13 2003",
+        "a(n+1)=a(n)+a(0)a(n-2)+a(1)a(n-3)+...+a(n-2)a(0). - _Michael Somos_, Jul 13 2003",
+        "G.f.: (1/(1-x))c(x^3/(1-x)^2), c(x) the g.f. of A000108. [From _Paul Barry_, Sep 19 2008]",
+        "Contribution from _Paul Barry_, May 22 2009: (Start)",
+        "G.f.: 1/(1-x-x^3/(1-x-x^3/(1-x-x^3/(1-x-x^3/(1-... (continued fraction).",
+        "a(n)=sum{k=0..floor(n/3), C(n-k,2k)*A000108(k)}. (End)",
+        "Conjecture: (n+3)*a(n) +(-2*n-3)*a(n-1) +n*a(n-2) +2*(-2*n+3)*a(n-3)=0. - _R. J. Mathar_, Nov 26 2012",
+        "0 = a(n)*(16*a(n+1) - 10*a(n+2) + 32*a(n+3) - 22*a(n+4)) + a(n+1)*(2*a(n+1) - 15*a(n+2) + 9*a(n+3) + 4*a(n+4)) + a(n+2)*(a(n+2) + 2*a(n+3) - 5*a(n+4)) + a(n+3)*(a(n+3) + a(n+4)) if n>=0. - _Michael Somos_, Jan 30 2014"
+    ],
+    "example": [
+        "G.f. = 1 + x + x^2 + 2*x^3 + 4*x^4 + 7*x^5 + 13*x^6 + 26*x^7 + 52*x^8 + 104*x^9 + ..."
+    ],
+    "mathematica": [
+        "Clear[ a ]; a[ 0 ]=1; a[ n_Integer ] := a[ n ]=a[ n-1 ]+Sum[ a[ k ]*a[ n-3-k ], {k, 0, n-3} ];"
+    ],
+    "program": [
+        "(PARI) a(n)=polcoeff((1-x-sqrt((1-x)^2-4*x^3+x^4*O(x^n)))/2,n+3) /* _Michael Somos_, Jul 13 2003 */",
+        "(Haskell)",
+        "a023431 n = a023431_list !! n",
+        "a023431_list = 1 : 1 : f [1,1] where",
+        "   f xs'@(x:_:xs) = y : f (y : xs') where",
+        "     y = x + sum (zipWith (*) xs $ reverse $ xs')",
+        "-- _Reinhard Zumkeller_, Nov 13 2012"
+    ],
+    "xref": [
+        "Cf. A000108, A001006, A004148, A006318.",
+        "A025246(n+3)=a(n)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 7,
+    "revision": 41,
+    "time": "2017-08-03T12:42:33-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

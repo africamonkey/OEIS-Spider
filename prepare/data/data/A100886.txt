@@ -1,0 +1,44 @@
+{
+    "number": 100886,
+    "data": "0,1,3,3,5,10,14,23,39,61,99,162,260,421,683,1103,1785,2890,4674,7563,12239,19801,32039,51842,83880,135721,219603,355323,574925,930250,1505174,2435423,3940599,6376021,10316619,16692642,27009260,43701901",
+    "name": "Expansion of x*(1+3*x+2*x^2)/((1+x+x^2)*(1-x-x^2)).",
+    "comment": [
+        "This sequence was investigated in cooperation with Paul Barry. Generating floretion: - 0.5'i - 0.5'k - 0.5j' - 0.5'ii' + 0.5'jj' - 0.5'kk' + 0.5'ik' - 0.5'ki' (\"tes\"). (1/2)(a(n) + A100887(n) - A100888(n)) gives A061347(n+3)."
+    ],
+    "link": [
+        "W. O. J. Moser, <a href=\"http://www.fq.math.ca/Scanned/31-1/moser.pdf\">Cyclic binary strings without long runs of like (alternating) bits</a>, Fibonacci Quart. 31 (1993), no. 1, 2-6.",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (0,1,2,1)."
+    ],
+    "formula": [
+        "a(n) = (L(n+1)-A061347(n+1))/2, L=A000032; [corrected by _Wojciech Florek_, Feb 26 2018]",
+        "a(n) = a(n-2)+2a(n-3)+a(n-4), a(0) = 0, a(1) = 1, a(2) = 3, a(3) = 3.",
+        "a(n) = n*sum(j=1,floor(n/2), binomial(2*j,n-2*j)/(2*j) ). - _Vladimir Kruchinin_, Apr 09 2011"
+    ],
+    "mathematica": [
+        "a[0] = 0; a[1] = 1; a[2] = 3; a[3] = 3; a[n_] := a[n] = a[n - 2] + 2a[n - 3] + a[n - 4]; Table[ a[n], {n, 0, 36}]",
+        "(* Or *) CoefficientList[ Series[x(1 + 3x + 2x^2)/((1 + x + x^2)(1 - x - x^2)), {x, 0, 36}], x] (* _Robert G. Wilson v_, Nov 26 2004 *)",
+        "LinearRecurrence[{0,1,2,1},{0,1,3,3},40] (* _Harvey P. Dale_, Apr 04 2016 *)"
+    ],
+    "program": [
+        "(Maxima) a(n):=n*sum(binomial(k,n-k)*(if oddp(k) then 0 else 1/k),k,1,n) /* _Vladimir Kruchinin_, Apr 09 2011 */",
+        "(PARI)",
+        "A100886(n)=n*sum(j=1,n\\2,k=2*j;binomial(k,n-k)/k);",
+        "vector(66,n,A100886(n)) /* _Joerg Arndt_, Apr 09 2011 */",
+        "(PARI)",
+        "concat([0],Vec(x*(1+3*x+2*x^2)/((1+x+x^2)*(1-x-x^2))+O(x^66))) /* _Joerg Arndt_, Apr 09 2011 */",
+        "(MAGMA) I:=[0,1,3,3]; [n le 4 select I[n] else Self(n-2)+2*Self(n-3)+Self(n-4): n in [1..40]]; // _Vincenzo Librandi_, Jul 30 2015"
+    ],
+    "xref": [
+        "Cf. A007040, A087204, A100887, A100888, A100889, A100890."
+    ],
+    "keyword": "nonn,easy,changed",
+    "offset": "0,3",
+    "author": "_Creighton Dement_, Nov 21 2004",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Nov 26 2004"
+    ],
+    "references": 4,
+    "revision": 39,
+    "time": "2018-02-28T11:33:24-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

@@ -1,0 +1,55 @@
+{
+    "number": 48163,
+    "data": "1,2,14,230,6902,329462,22934774,2193664790,276054834902,44222780245622,8787513806478134,2121181056663291350,611373265185174628502,207391326125004608457782,81791647413265571604175094,37109390748309009878392597910",
+    "name": "Sum_{k=1..n} ((k-1)!)^2*Stirling2(n,k)^2.",
+    "reference": [
+        "Lovasz, L. and Vesztergombi, K.; Restricted permutations and Stirling numbers. Combinatorics (Proc. Fifth Hungarian Colloq., Keszthely, 1976), Vol. II, pp. 731-738, Colloq. Math. Soc. Janos Bolyai, 18, North-Holland, Amsterdam-New York, 1978.",
+        "K. Vesztergombi, Permutations with restriction of middle strength, Stud. Sci. Math. Hungar., 9 (1974), 181-185."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A048163/b048163.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Chad Brewbaker, <a href=\"http://www.emis.de/journals/INTEGERS/papers/i2/i2.Abstract.html\">A combinatorial interpretation of the poly-Bernoulli numbers and two Fermat analogues</a>, INTEGERS Vol. 8 (2008), #A02.",
+        "Hyeong-Kwan Ju and Seunghyun Seo, <a href=\"http://dx.doi.org/10.1016/j.disc.2012.04.019\">Enumeration of (0,1)-matrices avoiding some 2 X 2 matrices</a>, Discrete Math., 312 (2012), 2473-2481.",
+        "Ken Kamano, <a href=\"https://arxiv.org/abs/1701.07157\">Lonesum decomposable matrices</a>, arXiv:1701.07157 [math.CO], 2017.",
+        "H.-K. Kim et al., <a href=\"http://arxiv.org/abs/1103.4884\">Poly-Bernoulli numbers and lonesum matrices</a>, arXiv:1103.4884 [math.CO], 2011."
+    ],
+    "formula": [
+        "(-1)^(n-1) * Sum[k=0..n-1, (-1)^k*(k+1)^(n-1)*k!*Stirling2(k, n) ]. - _Ralf Stephan_, Oct 27 2004",
+        "E.g.f. (with offset 0): Sum((1-exp(-(m+1)*z))^m, m=0..oo)",
+        "O.g.f.: Sum_{n>=1} n^(n-1) * (n-1)! * x^n / Product_{k=1..n-1} (1 - n*k*x). - _Paul D. Hanna_, Jan 05 2013",
+        "Limit n->infinity (a(n)/n!)^(1/n)/n = 1/(exp(1)*(log(2))^2) = 0.7656928576... . - _Vaclav Kotesovec_, Jun 21 2013",
+        "a(n) ~ 2*sqrt(Pi) * n^(2*n-3/2) / (sqrt(1-log(2)) * exp(2*n) * (log(2))^(2*n-1)). - _Vaclav Kotesovec_, May 13 2014",
+        "a(n+1) = Sum_{k = 0..n} A163626(n,k)^2. - _Philippe Del\u00e9ham_, May 30 2015"
+    ],
+    "example": [
+        "1",
+        "1 + 1 = 2",
+        "1 + 9 + 4 = 14",
+        "1 + 49 + 144 + 36 = 230",
+        "1 + 225 + 2500 + 3600 + 576 = 6902",
+        "... - _Philippe Del\u00e9ham_, May 30 2015"
+    ],
+    "mathematica": [
+        "Table[Sum[((k-1)!)^2*StirlingS2[n,k]^2,{k,1,n}],{n,1,20}] (* _Vaclav Kotesovec_, Jun 21 2013 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1, 0, polcoeff(sum(m=1, n, m^(m-1)*(m-1)!*x^m/prod(k=1, m-1, 1+m*k*x+x*O(x^n))), n)) \\\\ _Paul D. Hanna_, Jan 05 2013",
+        "for(n=1,20,print1(a(n),\", \"))",
+        "(PARI) Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)",
+        "a(n)=sum(k=1,n,(-1)^(n-k)*k^(n-1)*(k-1)!*Stirling2(n-1, k-1))",
+        "for(n=1, 20, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Jan 06 2013"
+    ],
+    "xref": [
+        "Cf. A220181; Main diagonal of array A099594."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, _R. K. Guy_",
+    "ext": [
+        "Entry revised by _N. J. A. Sloane_, Jul 05 2012"
+    ],
+    "references": 8,
+    "revision": 54,
+    "time": "2017-03-05T05:54:53-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

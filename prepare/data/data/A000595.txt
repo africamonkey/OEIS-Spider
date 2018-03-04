@@ -1,0 +1,63 @@
+{
+    "number": 595,
+    "id": "M1980 N0784",
+    "data": "1,2,10,104,3044,291968,96928992,112282908928,458297100061728,6666621572153927936,349390545493499839161856,66603421985078180758538636288,46557456482586989066031126651104256,120168591267113007604119117625289606148096,1152050155760474157553893461743236772303142428672",
+    "name": "Relations: number of nonisomorphic unlabeled binary relations on n labeled nodes.",
+    "comment": [
+        "Number of orbits under the action of permutation group S(n) on n X n {0,1} matrices. The action is defined by f.M(i,j)=M(f(i),f(j)).",
+        "Equivalently, the number of digraphs on n unlabeled nodes with loops allowed but no more than one arc with the same start and end node. - _Andrew Howroyd_, Oct 22 2017"
+    ],
+    "reference": [
+        "F. Bergeron, G. Labelle and P. Leroux, Combinatorial Species and Tree-Like Structures, Cambridge, 1998, p. 76 (2.2.30)",
+        "M. D. McIlroy, Calculation of numbers of structures of relations on finite sets, Massachusetts Institute of Technology, Research Laboratory of Electronics, Quarterly Progress Reports, No. 17, Sept. 15, 1955, pp. 14-22.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Charles R. Greathouse IV, <a href=\"/A000595/b000595.txt\">Table of n, a(n) for n = 0..37</a>",
+        "P. J. Cameron, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/groups.html\">Sequences realized by oligomorphic permutation groups</a>, J. Integ. Seqs. Vol. 3 (2000), #00.1.5.",
+        "A. Casagrande, C. Piazza, A. Policriti, <a href=\"http://sets2015.cnam.fr/papers/00010001.pdf\">Is hyper-extensionality preservable under deletions of graph elements?</a>, Preprint 2015.",
+        "Matthew Dabkowski, N Fan, R Breiger, <a href=\"https://doi.org/10.1016/j.socnet.2016.05.005\">Exploratory blockmodeling for one-mode, unsigned, deterministic networks using integer programming and structural equivalence</a>, Social Networks, Volume 47, October 2016, Pages 93-106.",
+        "R. L. Davis, <a href=\"http://dx.doi.org/10.1090/S0002-9939-1953-0055294-2\">The number of structures of finite relations</a>, Proc. Amer. Math. Soc. 4 (1953), 486-495.",
+        "Thomas M. A. Fink, Emmanuel Barillot, and Sebastian E. Ahnert, <a href=\"http://www.tcm.phy.cam.ac.uk/~tmf20/PUBLICATIONS/dynamics_motifs.pdf\">Dynamics of network motifs</a>, 2006.",
+        "Frank Harary, Edgar M. Palmer, Robert W. Robinson, Allen J. Schwenk, <a href=\"http://dx.doi.org/10.1002/jgt.3190010405\">Enumeration of graphs with signed points and lines</a>, J. Graph Theory 1 (1977), no. 4, 295-308.",
+        "M. D. McIlroy, <a href=\"/A000088/a000088.pdf\">Calculation of numbers of structures of relations on finite sets</a>, Massachusetts Institute of Technology, Research Laboratory of Electronics, Quarterly Progress Reports, No. 17, Sep. 15, 1955, pp. 14-22. [Annotated scanned copy]",
+        "W. Oberschelp, <a href=\"http://gdz.sub.uni-goettingen.de/dms/load/img/?PID=GDZPPN002298732\">Kombinatorische Anzahlbestimmungen in Relationen</a>, Math. Ann., 174 (1967), 53-78.",
+        "G. Pfeiffer, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL7/Pfeiffer/pfeiffer6.html\">Counting Transitive Relations</a>, Journal of Integer Sequences, Vol. 7 (2004), Article 04.3.2.",
+        "Samuel Reid, <a href=\"http://arxiv.org/abs/1305.0064\">On Generalizing a Temporal Formalism for Game Theory to the Asymptotic Combinatorics of S5 Modal Frames</a>, arXiv preprint arXiv:1305.0064 [math.LO], 2013.",
+        "Marko Riedel, <a href=\"http://math.stackexchange.com/questions/356995/counting-non-isomorphic-relations\">Counting nonisomorphic binary relations (includes Maple code).</a>",
+        "R. W. Robinson, <a href=\"/A000666/a000666_2.pdf\">Notes - \"A Present for Neil Sloane\"</a>",
+        "R. W. Robinson, <a href=\"/A004102/a004102_1.pdf\">Notes - computer printout</a>",
+        "J. M. Tangen and N. J. A. Sloane, <a href=\"/A000666/a000666.pdf\">Correspondence, 1976-1976</a>",
+        "L. Travis, <a href=\"https://arxiv.org/abs/math/9811127\">Graphical Enumeration: A Species-Theoretic Approach</a>, arXiv:math/9811127 [math.CO], 1998.",
+        "<a href=\"/index/Mat#binmat\">Index entries for sequences related to binary matrices</a>"
+    ],
+    "formula": [
+        "a(n) = sum {1*s_1+2*s_2+...=n} (fix A[s_1, s_2, ...] / (1^s_1*s_1!*2^s_2*s_2!*...)) where fix A[s_1, s_2, ...] = 2^sum {i, j>=1} (gcd(i, j)*s_i*s_j) - _Christian G. Bower_, Jan 05 2004",
+        "a(n) ~ 2^(n^2)/n! [McIlroy, 1955]. - _Vaclav Kotesovec_, Dec 19 2016"
+    ],
+    "mathematica": [
+        "Join[{1,2}, Table[CycleIndex[Join[PairGroup[SymmetricGroup[n],Ordered], Permutations[Range[n^2-n+1,n^2]],2],s] /. Table[s[i]->2, {i,1,n^2-n}], {n,2,7}]] (* _Geoffrey Critzer_, Nov 02 2011 *)"
+    ],
+    "program": [
+        "(GAP) NSeq := function ( n ) return Sum(List(ConjugacyClasses(SymmetricGroup(n)), c -> (2^Length(Orbits(Group(Representative(c)), CartesianProduct([1..n],[1..n]), OnTuples))) * Size(c)))/Factorial(n); end; # _Dan Hoey_, May 04 2001",
+        "(PARI)",
+        "permcount(v) = {my(m=1,s=0,k=0,t); for(i=1,#v,t=v[i]; k=if(i>1&&t==v[i-1],k+1,1); m*=t*k;s+=t); s!/m}",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, 2*gcd(v[i],v[j]))) + sum(i=1, #v, v[i])}",
+        "a(n) = {my(s=0); forpart(p=n, s+=permcount(p)*2^edges(p)); s/n!} \\\\ _Andrew Howroyd_, Oct 22 2017"
+    ],
+    "xref": [
+        "Cf. A000273, A001173, A001174."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Feb 07 2000",
+        "Still more terms from _Dan Hoey_, May 04 2001"
+    ],
+    "references": 23,
+    "revision": 92,
+    "time": "2018-01-10T15:31:51-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

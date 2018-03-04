@@ -1,0 +1,45 @@
+{
+    "number": 189981,
+    "data": "1,1,2,12,120,1600,28500,621138,16017792,480474720,16390969920,626786792280,26584872779520,1238524175509608,62873918454756864,3455537675553482400,204449393824639488000,12958008875933613962880",
+    "name": "E.g.f. satisfies: A(x) = Sum_{n>=0} log(1 + x*A(x)^n)^n/n!.",
+    "comment": [
+        "The definition of the e.g.f. A(x) is an application of the identity:",
+        "* Sum_{n>=0} log(1 + q^n*x)^n/n! = Sum_{n>=0} binomial(q^n, n)*x^n at q = A(x).",
+        "Consider the function G(x) such that G(x) = 1 + x*G(x)^p, then",
+        "* G(x) = Sum_{n>=0} log(1 + x*G(x)^p)^n/n! (trivially), and",
+        "* G(x) = Sum_{n>=0} binomial(p*n+1,n)*x^n/(p*n+1) for fixed p;",
+        "does an analogous expression exist for the e.g.f. of this sequence?",
+        "Note that terms a(70)-a(83) are negative. - _Vaclav Kotesovec_, Jul 13 2014"
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A189981/b189981.txt\">Table of n, a(n) for n = 0..106</a>"
+    ],
+    "formula": [
+        "E.g.f. also satisfies:",
+        "(1) A(x) = Sum_{n>=0} binomial(A(x)^n, n) * x^n.",
+        "(2) A(x) = Sum_{n>=0} x^n * Sum_{k=0..n} Stirling1(n,k) * A(x)^(n*k)/n!."
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 2*x^2/2! + 12*x^3/3! + 120*x^4/4! + 1600*x^5/5! +...",
+        "where A(x) satisfies:",
+        "A(x) = 1 + log(1 + x*A(x)) + log(1 + x*A(x)^2)^2/2! + log(1 + x*A(x)^3)^3/3! +...",
+        "The e.g.f. also satisfies:",
+        "A(x) = 1 + A(x)*x + A(x)^2*(A(x)^2-1)*x^2/2! + A(x)^3*(A(x)^3-1)*(A(x)^3-2)*x^3/3! + A(x)^4*(A(x)^4-1)*(A(x)^4-2)*(A(x)^4-3)*x^4/4! +...+ binomial(A(x)^n, n)*x^n +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,A=sum(m=0,n,log(1+x*(A+x*O(x^n))^m)^m/m!));n!*polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,A=sum(m=0,n,binomial((A+x*O(x^n))^m,m)*x^m));n!*polcoeff(A,n)}",
+        "(PARI) {Stirling1(n, k)=n!*polcoeff(binomial(x, n), k)}",
+        "{a(n)=local(A=1+x);for(i=1,n,A=sum(m=0,n,sum(k=0,m,Stirling1(m,k)*(A+x*O(x^n))^(m*k))*x^m/m!));n!*polcoeff(A,n)}"
+    ],
+    "xref": [
+        "Cf. A014070, A221101, A224797."
+    ],
+    "keyword": "sign",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, May 03 2011",
+    "references": 8,
+    "revision": 19,
+    "time": "2014-07-14T02:11:17-04:00",
+    "created": "2011-05-04T13:42:28-04:00"
+}

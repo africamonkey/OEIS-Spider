@@ -1,0 +1,48 @@
+{
+    "number": 208235,
+    "data": "1,2,2,8,20,120,168,1344,1512,3840,7920,95040,95040",
+    "name": "Maximal order of a subgroup of the symmetric group of degree n that contains no 3-cycle.",
+    "link": [
+        "MathOverflow, <a href=\"http://mathoverflow.net/questions/118494\">Largest permutation group without 2-cycles or 3-cycles</a>"
+    ],
+    "example": [
+        "A Sylow 2-subgroup of S_4 is of order 8, and contains no 3-cycle. The only subgroups of S_4 with more than 8 elements are A_4 and S_4, which both contain 3-cycles. So a(4) = 8."
+    ],
+    "program": [
+        "(GAP)",
+        "Has3:=function(G,n)",
+        "local x,p;",
+        "for p in Elements(G) do",
+        "  x:=Product(CycleLengths(p,[1..n]));",
+        "  if  x = 3 then return true; fi;",
+        "od;",
+        "return false;",
+        "end;;",
+        "a:=function(n)",
+        "local MM,h,nn;",
+        "MM:=0;;",
+        "for H in ConjugacyClassesSubgroups(SymmetricGroup(n)) do",
+        "  h:=Representative(H);",
+        "  if Size(h)<=MM then continue; fi;",
+        "  if Has3(h,n) = false then",
+        "    nn:=Size(h);",
+        "    if nn > MM then MM:=nn; Mg:=h; fi;",
+        "  fi;",
+        "od;;",
+        "return MM;",
+        "end;;"
+    ],
+    "xref": [
+        "Cf. A208232."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_W. Edwin Clark_, Jan 10 2013",
+    "ext": [
+        "a(10)-a(13) from _Stephen A. Silver_, Feb 14 2013"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2013-02-15T18:47:23-05:00",
+    "created": "2013-01-12T14:35:20-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 173663,
+    "data": "1,2,9,19,29,44,632,11829,19262,25286,26606,29824,247273,310556,491240,1419166,1601984,9509238,113333959,220531559,1034662494,8323088842,13102043650,14053673678,23505911647",
+    "name": "Numbers n such that n divides the n-th partial sum of all semiprimes.",
+    "comment": [
+        "a(26) > 3*10^10. - Donovan Johnson"
+    ],
+    "formula": [
+        "{n: n | sum[i=1..n] A001358(i)}."
+    ],
+    "example": [
+        "a(1) = 1 because 1 divides the first semiprime 4, trivially also the first partial sum of all semiprimes.",
+        "a(2) = 2 because A062198(2) = A001358(1) + A001358(2) = 4 + 6 = 10 is divisible by 2.",
+        "a(3) = 9 because A062198(9) = 126 = 2 * 3^2 * 7 is divisible by 9.",
+        "a(4) = 19 because A062198(19) = 532 = 2^2 * 7 * 19 is divisible by 19.",
+        "a(5) = 29 because A062198(29) = 1247 = 29 * 43 is divisible by 29.",
+        "a(6) = 44 because A062198(44) = 2904 = 44 * 66."
+    ],
+    "mathematica": [
+        "SemiprimeQ[n_Integer] := If[Abs[n]<2, False, (2==Plus@@Transpose[FactorInteger[Abs[n]]][[2]])]; nn=10^6; sm=0; cnt=0; Reap[Do[If[SemiprimeQ[n], cnt++; sm=sm+n; If[Divisible[sm, cnt], Sow[cnt]]], {n, nn}]][[2, 1]]"
+    ],
+    "program": [
+        "(PARI) s=0; p=0; for(n=1, 1e9, until(bigomega(p++)==2,); (s+=p)%n | print1(n\", \"))  \\\\ - M. F. Hasler, Nov 24 2010"
+    ],
+    "xref": [
+        "Cf. A001358, A007506."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Jonathan Vos Post_, Nov 24 2010",
+    "ext": [
+        "Extended by _T. D. Noe_, Nov 24 2010",
+        "Double-checked a(1)-a(17) and added a(18) using the given PARI code. M. F. Hasler, Nov 25 2010",
+        "a(19)=113333959 from _Ray Chandler_, Nov 25 2010",
+        "a(20)-a(25) from _Donovan Johnson_, Nov 26 2010"
+    ],
+    "references": 0,
+    "revision": 18,
+    "time": "2012-03-30T18:40:51-04:00",
+    "created": "2010-11-12T14:22:43-05:00"
+}

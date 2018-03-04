@@ -1,0 +1,65 @@
+{
+    "number": 237256,
+    "data": "5,29,41609,4287599,16254449,87130709,118916729,157119089,173797289,180210059,207959879,309740999,349066439,356259989,401519399,473953229,705480749,912950249,994719629",
+    "name": "Smallest member of Sophie Germain pair, wherein each member of the prime pair is the smallest of its prime quadruplets (p, p+2, p+8, p+12).",
+    "comment": [
+        "It is not known if there are infinitely many Sophie Germain pairs with this property."
+    ],
+    "link": [
+        "Abhiram R Devesh and Dana Jacobsen, <a href=\"/A237256/b237256.txt\">Table of n, a(n) for n = 1..1155</a> [first 155 terms from Abhiram R Devesh]",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SophieGermainPrime.html\">Sophie Germain Prime</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Sophie_Germain_prime\">Sophie Germain Prime</a>"
+    ],
+    "example": [
+        "a(1): p = 5; (2*p)+1 = 11; prime quadruplets (5,7,13,17); (11,13,19,23).",
+        "a(2): p = 29; (2*p)+1 = 59; prime quadruplets (29,31,37,41); (59,61,67,71)."
+    ],
+    "program": [
+        "(Python)",
+        "p1=2",
+        "n=2",
+        "count=0",
+        "while p1>2:",
+        "....## Generate the a chain of numbers with length 4",
+        "....cc=[]",
+        "....cc.append(p1)",
+        "....for i in range(1, n):",
+        "........cc.append((2**(i)*p1+((2**i)-1)))",
+        "....## chain entries + 2",
+        "....cc2=[c+2 for c in cc]",
+        "....## chain entries + 8",
+        "....cc8=[c+8 for c in cc]",
+        "....## chain entries + 12",
+        "....cc12=[c+12 for c in cc]",
+        "....## check if cc is a Sophie Germain Pair or not",
+        "....## pf.isp_list returns True or false for a given list of numbers",
+        "....##             if they are prime or not",
+        "....##",
+        "....pcc=pf.isp_list(cc)",
+        "....pcc2=pf.isp_list(cc2)",
+        "....pcc8=pf.isp_list(cc8)",
+        "....pcc12=pf.isp_list(cc12) ....## Number of primes for cc",
+        "....npcc=pcc.count(True)",
+        "....## Number of primes for cc2",
+        "....npcc2=pcc2.count(True)",
+        "....## Number of primes for cc8",
+        "....npcc8=pcc8.count(True)",
+        "....## Number of primes for cc12",
+        "....npcc12=pcc12.count(True)",
+        "....if npcc==n and npcc2==n and npcc8==n and npcc12==n:",
+        "........print \"For length \", n, \" the series is : \", cc, \" ,\", cc2,\" , \",cc8, \" and \" cc12",
+        "....p1=pf.nextp(p1)",
+        "(PARI) forprime(p=1, 1e9, my(t=2*p+1); if(isprime(t) && isprime(p+2) && isprime(p+8) && isprime(p+12) && isprime(t+2) && isprime(t+8) && isprime(t+12), print1(p, \", \"))) \\\\ _Felix Fr\u00f6hlich_, Jul 26 2014",
+        "(Perl) use ntheory \":all\"; my @p = sieve_prime_cluster(1,2e9,2,8,12); my %h; undef @h{@p}; for (@p) { say if exists $h{2*$_+1} } # _Dana Jacobsen_, Oct 03 2015"
+    ],
+    "xref": [
+        "Cf. A005384, A233540."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Abhiram R Devesh_, Feb 05 2014",
+    "references": 3,
+    "revision": 36,
+    "time": "2016-07-03T00:14:41-04:00",
+    "created": "2014-02-10T03:30:26-05:00"
+}

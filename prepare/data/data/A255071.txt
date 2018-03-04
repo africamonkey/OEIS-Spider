@@ -1,0 +1,46 @@
+{
+    "number": 255071,
+    "data": "1,2,3,5,9,16,29,53,97,178,328,608,1134,2126,4001,7552,14292,27115,51565,98274,187657,358982,687944,1320793,2540702,4896919,9456143,18291753,35435799,68731296,133436379,259238717,503912508,979923792,1906297165,3709809375,7222584181",
+    "name": "Number of steps required to reach (2^n)-2 from 2^(n+1)-2 by iterating the map x -> x - (number of runs in binary representation of x).",
+    "formula": [
+        "a(n) = A255072((2^(n+1))-2) - A255072((2^n)-2).",
+        "a(n) = A255061(n+1) - A255061(n).",
+        "a(n) = A255125(n) + A255126(n).",
+        "a(n) = A255063(n) + A255064(n).",
+        "Other identities and observations:",
+        "It seems that a(n) <= A213709(n) for all n >= 1. A254119 gives the difference between these two sequences.",
+        "From _Antti Karttunen_, Feb 21 2015: (Start)",
+        "For n>1, a(n-1) = Sum_{k=A255062(n) .. A255061(n+1)} secondmsb(A255056(k)).",
+        "Here secondmsb is implemented by the starting offset 2 version of A079944, and effectively gives the second most significant bit in the binary expansion of n. The formula follows from the semi-regular nature of number-of-runs beanstalk, as in the upper half of any next higher range [A255062(n+1) .. A255061(n+2)] of its infinite trunk (A255056), the beanstalk imitates its behavior in the range [A255062(n) .. A255061(n+1)].",
+        "(End)"
+    ],
+    "program": [
+        "(PARI)",
+        "A005811(n) = hammingweight(bitxor(n,n\\2));",
+        "A255071(n) = { my(k, i); k = (2^(n+1))-2; i = 1; while(1, k = k - A005811(k); if(!bitand(k+1,k+2),return(i),i++)); };",
+        "for(n=1, 48, write(\"b255071.txt\", n, \" \", A255071(n)));",
+        "(Scheme)",
+        "(define (A255071 n) (- (A255072 (- (expt 2 (+ n 1)) 2)) (A255072 (- (expt 2 n) 2))))",
+        "(define (A255071shifted n) (add (COMPOSE A079944off2 A255056) (A255062 n) (A255061 (+ 1 n))))",
+        "(define (A079944off2 n) (A000035 (floor->exact (/ n (A072376 n))))) ;; Cf.",
+        "A079944.",
+        ";; Shifted variant gives: (map A255071shifted (iota 16)) --> (0 1 2 3 5 9 16 29 53 97 178 328 608 1134 2126 4001)"
+    ],
+    "xref": [
+        "First differences of A255061 and A255062.",
+        "A255069 gives the first differences of this sequence.",
+        "Cf. A005811, A079944, A236840, A255056, A255120, A255121, A255063, A255064, A255072, A255125, A255126, A254119.",
+        "Analogous sequences: A213709, A219661.",
+        "a(n) differs from A192804(n+1) for the first time at n=11, where a(11) = 328, while A192804(12) = 327."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Feb 14 2015",
+    "ext": [
+        "a(37) added by _Antti Karttunen_, Feb 19 2015"
+    ],
+    "references": 16,
+    "revision": 33,
+    "time": "2015-03-06T04:31:47-05:00",
+    "created": "2015-02-17T00:11:16-05:00"
+}

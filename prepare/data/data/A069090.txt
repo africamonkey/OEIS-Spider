@@ -1,0 +1,64 @@
+{
+    "number": 69090,
+    "data": "2,3,5,7,11,13,17,19,41,43,47,61,67,83,89,97,101,103,107,109,127,149,151,157,163,167,181,401,409,421,443,449,457,461,463,467,487,491,499,601,607,631,641,643,647,653,659,661,683,691,809,811,821,823,827,829",
+    "name": "Primes none of whose proper initial segments are primes.",
+    "link": [
+        "Franklin T. Adams-Watters and R. Zumkeller, <a href=\"/A069090/b069090.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from Franklin T. Adams-Watters)",
+        "Barry Carter, <a href=\"https://github.com/barrycarter/bcapps/blob/master/QUORA/A069090.b.txt.bz2\">Table of n, a(n) for n = 1..1411151</a> (bz2 compressed)",
+        "Barry Carter, <a href=\"https://github.com/barrycarter/bcapps/blob/master/QUORA/A069090.m\">Mathematica program</a>",
+        "StackExchange, <a href=\"http://math.stackexchange.com/q/437759/103975\">Number of digits until a prime is reached</a>"
+    ],
+    "example": [
+        "The proper initial segments of 499 are 4 and 49, none of which are primes. So 499 is a term of the sequence."
+    ],
+    "maple": [
+        "isA069090 := proc(n)",
+        "    local dgs,l ;",
+        "    if isprime(n) then",
+        "        dgs := convert(n,base,10) ;",
+        "        ndgs := nops(dgs) ;",
+        "        for l from 1 to ndgs-1 do",
+        "            add( op(ndgs+i-l+1,dgs)*10^i,i=0..l-1) ;",
+        "            if isprime(%) then",
+        "                return false;",
+        "            end if;",
+        "        end do:",
+        "        true ;",
+        "    else",
+        "        false ;",
+        "    end if;",
+        "end proc:",
+        "for n from 2 to 830 do",
+        "    if isA069090(n) then",
+        "        printf(\"%d,\",n);",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Dec 15 2016"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[200]],NoneTrue[FromDigits/@Table[Take[ IntegerDigits[ #], n],{n,IntegerLength[#]-1}],PrimeQ]&] (* The program uses the NoneTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Jul 24 2016 *)"
+    ],
+    "program": [
+        "(PARI) ina(n)=if(!isprime(n),return(0));while(n>9,n\\=10;if(isprime(n),return(0)));1 \\\\ _Franklin T. Adams-Watters_, Jun 26 2009",
+        "(Haskell)",
+        "import Data.List (inits)",
+        "a069090 n = a069090_list !! (n-1)",
+        "a069090_list = filter",
+        "   (all (== 0) . map (a010051 . read) . init . tail . inits . show)",
+        "   a000040_list",
+        "-- _Reinhard Zumkeller_, Mar 11 2014"
+    ],
+    "xref": [
+        "Cf. A074721. [_Franklin T. Adams-Watters_, Jun 26 2009]",
+        "Cf. A000040, A010051."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Joseph L. Pe_, Apr 05 2002",
+    "ext": [
+        "More terms from _Franklin T. Adams-Watters_, Jun 26 2009"
+    ],
+    "references": 4,
+    "revision": 31,
+    "time": "2018-01-16T02:44:03-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

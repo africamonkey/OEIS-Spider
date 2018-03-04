@@ -1,0 +1,43 @@
+{
+    "number": 214759,
+    "data": "1,2,12,130,1980,38828,931308,26409696,864340080,32064955512,1329619343712,60942831972240,3059502805907184,166958986644198240,9840268295795334528,622945100439880885920,42156597800781887551296,3036974549700781049394240,232047627350715685524211392",
+    "name": "E.g.f. satisfies: A(x) = x - log(1-A(x))*log(1+A(x)).",
+    "formula": [
+        "E.g.f.: Series_Reversion(x + log(1-x)*log(1+x)).",
+        "E.g.f.: x + Sum_{n>=1} d^(n-1)/dx^(n-1) (-log(1-x))^n*log(1+x)^n / n!.",
+        "E.g.f.: x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) (-log(1-x))^n*log(1+x)^n/x / n! ).",
+        "a(n) ~ n^(n-1) * sqrt(r*(1-s^2) / (2+s + log(1-s)/(1+s) + log(1+s)/(1-s))) / (exp(n) * r^n), where s = 0.4236731503498759... is the root of the equation log(1+s)/(1-s) - log(1-s)/(1+s) = 1, and r = s + log(1-s)*log(1+s) = 0.2290093920590019... - _Vaclav Kotesovec_, Jan 13 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 12*x^3/3! + 130*x^4/4! + 1980*x^5/5! +...",
+        "where A(x - log(1-x)*log(1+x)) = x and A(x) = x - log(1-A(x))*log(1+A(x)).",
+        "Related expansions:",
+        "-log(1-x)*log(1+x) = 2*x^2/2! + 10*x^4/4! + 188*x^6/6! + 7656*x^8/8! + 541152*x^10/10! + 58800960*x^12/12! +...",
+        "-log(1-A(x)) = x + 3*x^2/2! + 20*x^3/3! + 220*x^4/4! + 3374*x^5/5! + 66428*x^6/6! +...",
+        "log(1+A(x)) = x + x^2/2! + 8*x^3/3! + 88*x^4/4! + 1354*x^5/5! + 26708*x^6/6! +...",
+        "Other series:",
+        "A(x) = x - log(1-x)*log(1+x) + d/dx log(1-x)^2*log(1+x)^2/2! - d^2/dx^2 log(1-x)^3*log(1+x)^3/3! + d^3/dx^3 log(1-x)^4*log(1+x)^4/4! +...",
+        "log(A(x)/x) = -log(1-x)*log(1+x)/x + d/dx log(1-x)^2*log(1+x)^2/x/2! - d^2/dx^2 log(1-x)^3*log(1+x)^3/x/3! + d^3/dx^3 log(1-x)^4*log(1+x)^4/x/4! +..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[x + Log[1-x]*Log[1+x], {x, 0, 20}], x],x] * Range[0, 20]!] (* _Vaclav Kotesovec_, Jan 13 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(serreverse(x+log(1-x+x*O(x^n))*log(1+x+x*O(x^n))), n)}",
+        "for(n=1, 25, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, (-log(1-x+x*O(x^n)))^m*log(1+x+x*O(x^n))^m/m!)); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, (-log(1-x+x*O(x^n)))^m*log(1+x+x*O(x^n))^m/x/m!))); n!*polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A143154."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jul 31 2012",
+    "references": 0,
+    "revision": 13,
+    "time": "2014-01-13T09:13:42-05:00",
+    "created": "2012-07-31T21:52:42-04:00"
+}

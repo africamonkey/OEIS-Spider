@@ -1,0 +1,41 @@
+{
+    "number": 118478,
+    "data": "1,2,5,14,209,714,714,62985,367080,728364,64822394,1306238010,11182598504,715041747420,51913478860880,454746157008780,9314160363311804,261062105979210899,261062105979210899",
+    "name": "a(n) is the smallest m such that m(m+1) is divisible by the first n prime numbers.",
+    "comment": [
+        "a(n)*(a(n)+1)/(product of first n primes) = 1, 1, 1, 1, 19, 17, 1, 409, 604, 82, 20951, 229931, 411012, 39080794, 4382914408, ..., . - _Robert G. Wilson v_, May 13 2006. [This is now A215021. - _N. J. A. Sloane_, Aug 02 2012]"
+    ],
+    "link": [
+        "Robert Gerbicz, <a href=\"/A118478/b118478.txt\">Table of n, a(n) for n = 1..25</a>"
+    ],
+    "formula": [
+        "a(n) = minimum k such that A002110(n) | (k(k+1))."
+    ],
+    "example": [
+        "a(8) = 62985 since 62985*62986 = 2*3*5*7*11*13*17*19*409, i.e., it is divisible by the first 8 prime numbers (2,3,..,19)."
+    ],
+    "mathematica": [
+        "f[n_] := Block[{k = 1, p = Times @@ Prime@Range@n}, While[ !IntegerQ@ Sqrt[4k*p + 1], k++ ]; Floor@ Sqrt[k*p]]; Array[f, 15] (* _Robert G. Wilson v_, May 13 2006 *)"
+    ],
+    "program": [
+        "(PARI) P=primes(25);T=1;for(n=1,25,T*=P[n];m=T;for(k=2^(n-1),2^n-1,u=binary(k); a=1;for(i=1,n,if(u[i],a*=P[i]));b=T/a;w=bezout(a,b);if(w[1]<=0,w[1]+=b); c=a*w[1]-1;m=min(m,c);w[1]=b-w[1];if(w[1]<=0,w[1]+=b);c=a*w[1];m=min(m,c)); print1(m,\",\")) \\\\ _Robert Gerbicz_, Aug 24 2006",
+        "(Haskell)",
+        "import Data.List (elemIndex); import Data.Maybe (fromJust)",
+        "a118478 n = (+ 1) . fromJust $ elemIndex 0 $",
+        "            map (flip mod (a002110 n)) $ tail a002378_list",
+        "-- _Reinhard Zumkeller_, Jun 14 2015"
+    ],
+    "xref": [
+        "Cf. A002110, A059958, A002378, A193314, A053670."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Giovanni Resta_, May 05 2006",
+    "ext": [
+        "More terms from _Robert Gerbicz_, Aug 24 2006"
+    ],
+    "references": 4,
+    "revision": 22,
+    "time": "2015-11-10T11:14:30-05:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

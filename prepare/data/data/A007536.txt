@@ -1,0 +1,45 @@
+{
+    "number": 7536,
+    "id": "M3244",
+    "data": "4,5,9,10,11,14,19,20,23,24,25,26,32,33,37,38,39,41,42,48,50,53,54,55,59,63,64,65,69,70,76,77,80,83,85,86,89,99,102,104,108,110,113,114,115,116,123,124,128,129,130,131,140,143,144,145,146,152,161,162,167",
+    "name": "Numbers that are not the sum of 3 hexagonal numbers (probably finite).",
+    "comment": [
+        "_Jud McCranie_ remarks that a(638) = 146858 is probably the last term."
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A007536/b007536.txt\">Table of n, a(n) for n=1..638</a>",
+        "R. K. Guy, <a href=\"http://www.jstor.org/stable/2324367\">Every number is expressible as the sum of how many polygonal numbers?</a>, Amer. Math. Monthly 101 (1994), 169-172."
+    ],
+    "mathematica": [
+        "notSumQ[n_] := Reduce[0 <= x <= y <= z && n == x*(2x - 1) + y*(2y - 1) + z*(2z - 1), {x, y, z}, Integers] === False; A007536 = Reap[ Do[ If[notSumQ[n], Print[n]; Sow[n]], {n, 1, 135}]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Jun 27 2012 *)"
+    ],
+    "program": [
+        "(MATLAB)",
+        "N = 10^7; % to get all terms up to N",
+        "M = floor((sqrt(1+8*N)+1)/4);",
+        "H = zeros(1,N);",
+        "H((1:M) .*(2*(1:M)-1)) = 1;",
+        "H2 = conv(H,H);",
+        "H2 = H2(1:N);",
+        "H3 = conv(H,H2);",
+        "HS = H(3:N) + H2(2:N-1) + H3(1:N-2);",
+        "find(HS==0) + 2 % _Robert Israel_, Jul 06 2016"
+    ],
+    "xref": [
+        "Cf. A000384 (hexagonal numbers).",
+        "Cf. A118278, A118279."
+    ],
+    "keyword": "nonn,fini,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Corrected by _T. D. Noe_, Feb 14 2007"
+    ],
+    "references": 5,
+    "revision": 31,
+    "time": "2017-12-17T07:20:15-05:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

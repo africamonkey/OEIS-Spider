@@ -1,0 +1,56 @@
+{
+    "number": 23194,
+    "data": "2,4,9,16,25,64,289,729,1681,2401,3481,4096,5041,7921,10201,15625,17161,27889,28561,29929,65536,83521,85849,146689,262144,279841,458329,491401,531441,552049,579121,597529,683929,703921,707281,734449,829921,1190281",
+    "name": "Numbers n such that sigma(n) (sum of divisors of n) is prime.",
+    "comment": [
+        "All numbers except the first are squares. Why? - _Zak Seidov_, Jun 10 2005",
+        "Answer from Gabe Cunningham (gcasey(AT)MIT.EDU): \"From the fact that the sigma (the sum-of-divisors function) is multiplicative, we can derive that the sigma(n) is even except when n is a square or twice a square.",
+        "\"If n = 2(2k+1)^2, that is, n is twice an odd square, then sigma(n) = 3*sigma((2k+1)^2). If n = 2(2k)^2, that is, n is twice an even square, then sigma(n) is only prime if n is a power of 2; otherwise we have sigma(n) = sigma(8*2^m) * sigma(k/2^m) for some positive integer m.",
+        "\"So the only possible candidates for values of n other than squares such that sigma(n) is prime are odd powers of 2. But sigma(2^(2m+1)) = 2^(2m+2)-1 = (2^(m+1)+1) * (2^(m+1) - 1), which is only prime when m=0, that is, when n=2. So 2 is the only nonsquare n such that sigma(n) is prime.\"",
+        "All numbers on this list also have a prime number of divisors. - Howard Berman (howard_berman(AT)hotmail.com), Oct 29 2008",
+        "This is because 1 + p + ... + p^k is divisible by 1 + p + ... + p^j if k+1 is divisible by j+1. - _Robert Israel_, Jan 13 2015",
+        "From Gabe Cunningham's comment it follows that the alternate Mathematica program provided below is substantially more efficient as it only tests squares. - _Harvey P. Dale_, Dec 12 2010",
+        "Each number of this sequence is a prime power. This follows from the facts that sigma is multiplicative and sigma(n) > 1 for n > 1. Thus, for n > 1, a(n) is of the form a(n) = k^2 where k = p^m, with p prime, so the divisors of a(n) are {1, p, p^2, p^3, ..., (p^m)^2}, and this set is a multiplicative group (modulo q); if q is prime, q = sigma(k^2). Reciprocally, if q is a prime of the form 1 + p + p^2 + ... + p^(2*m), then q = sigma(p^(2*m)) (definition of sigma). - _Michel Lagneau_, Aug 17 2011, edited by _Franklin T. Adams-Watters_, Aug 17 2011",
+        "The sums of divisors of the even numbers in this sequence are the Mersenne primes, A000668. These even numbers are in A061652. - _Hartmut F. W. Hoft_, May 04 2015",
+        "Numbers n = p^(q-1), where p is a prime, such that (p^q-1)/(p-1) is prime. Then q must be a prime that does not divide p-1. - _Thomas Ordowski_, Nov 18 2017"
+    ],
+    "link": [
+        "T. D. Noe and David W. Wilson, <a href=\"/A023194/b023194.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "N:= 10^8: # to get all entries <= N",
+        "Primes:= select(isprime, [2,seq(2*i+1, i=1..floor((sqrt(N)-1)/2))]):",
+        "P2:= select(t -> (t > 2 and t < 1 + ilog2(N)), Primes):",
+        "cands:= {seq(seq([p,q],p=Primes), q=P2)} union {[2,2]}:",
+        "f:= proc(pq) local t,j;",
+        "    t:= pq[1]^(pq[2]-1);",
+        "    if t <= N and isprime((t*pq[1]-1)/(pq[1]-1)) then t else NULL fi",
+        "end proc:",
+        "map(f,cands);",
+        "# if using Maple 11 or earlier, uncomment the next line",
+        "# sort(convert(%,list));  # _Robert Israel_, Jan 13 2015"
+    ],
+    "mathematica": [
+        "Select[ Range[ 100000 ], PrimeQ[ DivisorSigma[ 1, # ] ]& ] (* _David W. Wilson_ *)",
+        "Prepend[Select[Range[1100]^2, PrimeQ[DivisorSigma[1,#]]&],2] (* _Harvey P. Dale_, Dec 12 2010 *)"
+    ],
+    "program": [
+        "(PARI) for(x=1,1000,if(isprime(sigma(x)),print(x))) /* Jorge Coveiro (jorgecoveiro(AT)yahoo.com), Dec 23 2004 */",
+        "(PARI) list(lim)=my(v=List([2])); forprime(p=2,sqrtint(lim\\=1), if(isprime(p^2+p+1), listput(v,p^2))); forstep(e=4,logint(lim,2),2, forprime(p=2,sqrtnint(lim,e), if(isprime((p^(e+1)-1)/(p-1)), listput(v,p^e)))); Set(v) \\\\ _Charles R Greathouse IV_, Aug 17 2011; updated Jul 22 2016",
+        "(MAGMA) [n: n in [1..2*10^6] | IsPrime(SumOfDivisors(n))]; // _Vincenzo Librandi_, May 05 2015",
+        "(Python)",
+        "from sympy import isprime, divisor_sigma",
+        "A023194_list = [2]+[n**2 for n in range(1,10**3) if isprime(divisor_sigma(n**2))] # _Chai Wah Wu_, Jul 14 2016"
+    ],
+    "xref": [
+        "Cf. A055638 (the square roots of the squares in this sequence).",
+        "Cf. A023195 (the primes produced by these n)."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "references": 61,
+    "revision": 86,
+    "time": "2018-01-28T13:08:37-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

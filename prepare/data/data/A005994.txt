@@ -1,0 +1,61 @@
+{
+    "number": 5994,
+    "id": "M2774",
+    "data": "1,3,9,19,38,66,110,170,255,365,511,693,924,1204,1548,1956,2445,3015,3685,4455,5346,6358,7514,8814,10283,11921,13755,15785,18040,20520,23256,26248,29529,33099,36993,41211,45790,50730,56070,61810,67991",
+    "name": "Alkane (or paraffin) numbers l(7,n).",
+    "comment": [
+        "Equals (1, 3, 6, 10, 15, ...) convolved with (1, 0, 3, 0, 5, ...). - _Gary W. Adamson_, Feb 16 2009",
+        "F(1,4,n) is the number of bracelets with 1 blue, 4 red and n black beads. If F(1,4,1)=3 and F(1,4,2)=9 taken as a base;",
+        "F(1,4,n) = n(n+1)(n+2)/6+F(1,2,n) + F(1,4,n-2). [F(1,2,n) is the number of bracelets with 1 blue, 2 red and n black beads. If F(1,2,1)=2 and F(1,2,2)=4 taken as a base F(1,2,n)=n+1+F(1,2,n-2)]. - _Ata Aydin Uslu_ and Hamdi G. Ozmenekse, Jan 11 2012",
+        "a(A254338(n)) = 6 for n > 0. - _Reinhard Zumkeller_, Feb 27 2015"
+    ],
+    "reference": [
+        "S. J. Cyvin et al., Polygonal systems including the corannulene and coronene homologs: novel applications of P\u00f3lya's theorem, Z. Naturforsch., 52a (1997), 867-873.",
+        "S. M. Losanitsch, Die Isomerie-Arten bei den Homologen der Paraffin-Reihe, Chem. Ber. 30 (1897), 1917-1926.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005994/b005994.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "S. M. Losanitsch, <a href=\"/A000602/a000602_1.pdf\">Die Isomerie-Arten bei den Homologen der Paraffin-Reihe</a>, Chem. Ber. 30 (1897), 1917-1926. (Annotated scanned copy)",
+        "N. J. A. Sloane, <a href=\"/classic.html#LOSS\">Classic Sequences</a>",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (3, -1, -5, 5, 1, -3, 1).",
+        "\"http://commons.wikimedia.org/wiki/File:Bracelet_Problem_(Bileklik_problemi).pdf\" number of bracelets made with 1 blue, 4 red and n black beads [From _Ata Aydin Uslu_ and Hamdi G. Ozmenekse, Jan 11 2012].",
+        "\"http://commons.wikimedia.org/wiki/File:Bileklik_Problemi_(Bracelet_Problem).pdf\" number of bracelets made with 1 blue, 2 red and n black beads [From _Ata Aydin Uslu_ and Hamdi G. Ozmenekse, Jan 12 2012]."
+    ],
+    "formula": [
+        "G.f.: (1+x^2)/((1-x)^3*(1-x^2)^2).",
+        "l(c, r) = 1/2 C(c+r-3, r) + 1/2 d(c, r), where d(c, r) is C((c + r - 3)/2, r/2) if c is odd and r is even, 0 if c is even and r is odd, C((c + r - 4)/2, r/2) if c is even and r is even, C((c + r - 4)/2, (r - 1)/2) if c is odd and r is odd.",
+        "a(-5-n)=a(n). - _Michael Somos_, Mar 08 2007",
+        "Euler transform of length 4 sequence [3, 3, 0, -1]. - _Michael Somos_, Mar 08 2007",
+        "a(n) = 3a(n-1) - a(n-2) - 5a(n-3) + 5a(n-4) + a(n-5) - 3a(n-6) + a(n-7), with a(0)=1, a(1)=3, a(2)=9, a(4)=19, a(5)=38, a(6)=66, a(7)=110. - _Harvey P. Dale_, May 02 2011",
+        "a(n) = A006009(n)/2 - A000332(n+4) = ((1/2)*Sum_{i=1..n+1} (i+1)*floor((i+1)^2/2)) - binomial(n+4,4). - _Enrique P\u00e9rez Herrero_, May 11 2012",
+        "a(n) = (1/48)*(n+1)*(n+3)*((n+2)*(n+4)+3)+1/32*(2*n+5)*(1+(-1)^n). - _Yosu Yurramendi_, Jun 20 2013"
+    ],
+    "maple": [
+        "a:= n -> (Matrix([[1, 0$4, 1, 3]]). Matrix(7, (i,j)-> if (i=j-1) then 1 elif j=1 then [3, -1, -5, 5, 1, -3, 1][i] else 0 fi)^n)[1,1]: seq (a(n), n=0..40); # _Alois P. Heinz_, Jul 31 2008"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{3,-1,-5,5,1,-3,1},{1,3,9,19,38,66,110},50] (* or *) CoefficientList[Series[(1+x^2)/((1-x)^3(1-x^2)^2),{x,0,50}],x] (* _Harvey P. Dale_, May 02 2011 *)",
+        "nn=45;With[{a=Accumulate[Range[nn]],b=Riffle[Range[1,nn,2],0]}, Flatten[ Table[ListConvolve[Take[a,n],Take[b,n]],{n,nn}]]] (* _Harvey P. Dale_, Nov 11 2011 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n<-4, n=-5-n); polcoeff( (1+x^2)/((1-x)^3*(1-x^2)^2)+x*O(x^n), n)} /* _Michael Somos_, Mar 08 2007 */",
+        "(Haskell)   Following _Gary W. Adamson_.",
+        "import Data.List (inits, intersperse)",
+        "a005994 n = a005994_list !! n",
+        "a005994_list = map (sum . zipWith (*) (intersperse 0 [1, 3 ..]) . reverse) $",
+        "                   tail $ inits $ tail a000217_list",
+        "-- _Reinhard Zumkeller_, Feb 27 2015"
+    ],
+    "xref": [
+        "Cf. A006009, A005997.",
+        "Cf. A000217, A005408, A282011."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Winston C. Yang (yang(AT)math.wisc.edu)",
+    "references": 7,
+    "revision": 68,
+    "time": "2018-01-22T21:10:35-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

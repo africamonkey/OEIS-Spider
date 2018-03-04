@@ -1,0 +1,50 @@
+{
+    "number": 5238,
+    "id": "M5236",
+    "data": "33,85,93,141,201,213,217,230,242,243,301,374,393,445,603,633,663,697,902,921,1041,1105,1137,1261,1274,1309,1334,1345,1401,1641,1761,1832,1837,1885,1893,1924,1941,1981,2013,2054,2101,2133,2181,2217,2264,2305",
+    "name": "Numbers n such that n, n+1 and n+2 have the same number of divisors.",
+    "reference": [
+        "M. Abramowitz and I. A. Stegun, eds., Handbook of Mathematical Functions, National Bureau of Standards Applied Math. Series 55, 1964 (and various reprintings), p. 840.",
+        "J.-M. De Koninck, Ces nombres qui nous fascinent, Entry 33, pp 12, Ellipses, Paris 2008.",
+        "R. K. Guy, Unsolved Problems in Number Theory, B18.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005238/b005238.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "M. Abramowitz and I. A. Stegun, eds., <a href=\"http://apps.nrbook.com/abramowitz_and_stegun/index.html\">Handbook of Mathematical Functions</a>, National Bureau of Standards, Applied Math. Series 55, Tenth Printing, 1972 [alternative scanned copy]."
+    ],
+    "maple": [
+        "with(numtheory);  A005238:=proc(q) local n;",
+        "for n from 1 to q do",
+        "  if tau(n)=tau(n+1) and tau(n+1)=tau(n+2) then print(n); fi;",
+        "od; end: A005238(10^4); # _Paolo P. Lava_, May 03 2013"
+    ],
+    "mathematica": [
+        "f[n_]:=Length[Divisors[n]]; lst={};Do[If[f[n]==f[n+1]==f[n+2],AppendTo[lst,n]],{n,8!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Dec 14 2009 *)",
+        "Select[Range[2500],DivisorSigma[0,#]==DivisorSigma[0,#+1] == DivisorSigma[ 0,#+2]&] (* _Harvey P. Dale_, Nov 12 2012 *)",
+        "Flatten[Position[Partition[DivisorSigma[0,Range[2500]],3,1],{x_,x_,x_}]] (* _Harvey P. Dale_, Jul 06 2015 *)",
+        "SequencePosition[DivisorSigma[0,Range[2500]],{x_,x_,x_}][[All,1]] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Jul 03 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (elemIndices)",
+        "a005238 n = a005238_list !! (n-1)",
+        "a005238_list = map (+ 1) $ elemIndices 0 $ zipWith (+) ds $ tail ds where",
+        "   ds = map abs $ zipWith (-) (tail a000005_list) a000005_list",
+        "-- _Reinhard Zumkeller_, Oct 03 2012",
+        "(PARI) is(n)=my(d=numdiv(n)); numdiv(n+1)==d && numdiv(n+2)==d \\\\ _Charles R Greathouse IV_, Feb 06 2017"
+    ],
+    "xref": [
+        "Cf. A000005, A005237, A006601, A049051, A006558, A019273, A039665, A051950."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Olivier G\u00e9rard_"
+    ],
+    "references": 21,
+    "revision": 36,
+    "time": "2017-07-03T19:30:38-04:00",
+    "created": "1991-05-20T03:00:00-04:00"
+}

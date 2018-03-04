@@ -1,0 +1,45 @@
+{
+    "number": 261063,
+    "data": "0,0,0,1,6,8,40,67,373,1232,3330,13656,47111,164957,582042,1967152,7129046,26655235,94956602,353789267,1300061367,4765080122,17726643505,66038899483,245431428625,919911458949,3457983108462,12974054097333,49016641868213,185510228030858",
+    "name": "Number of solutions to c(1)*prime(3) + ... + c(2n-1)*prime(2n+1) = -1, where c(i) = +-1 for i > 1, c(1) = 1.",
+    "comment": [
+        "There cannot be a solution for an even number of terms on the l.h.s. because all terms are odd but the r.h.s. is odd, too."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A261063/b261063.txt\">Table of n, a(n) for n = 1..300</a>"
+    ],
+    "example": [
+        "a(1) = a(2) = 0 because prime(3) and prime(3) +- prime(4) +- prime(5) are different from -1 for any choice of the signs.",
+        "a(3) = 0 because the same sums prime(3) +- ... +- prime(7) is also always different from -1 for any choice of the signs.",
+        "a(4) = 1 because prime(3) - prime(4) - prime(5) - prime(6) - prime(7) + prime(8) + prime(9) = -1 is the only solution."
+    ],
+    "maple": [
+        "s:= proc(n) option remember;",
+        "      `if`(n<4, 0, ithprime(n)+s(n-1))",
+        "    end:",
+        "b:= proc(n, i) option remember; `if`(n>s(i), 0, `if`(i=3, 1,",
+        "      b(abs(n-ithprime(i)),i-1)+b(n+ithprime(i),i-1)))",
+        "    end:",
+        "a:= n-> b(6, 2*n+1):",
+        "seq(a(n), n=1..30);  # _Alois P. Heinz_, Aug 08 2015"
+    ],
+    "mathematica": [
+        "s[n_] := s[n] = If[n<4, 0, Prime[n]+s[n-1]]; b[n_, i_] := b[n, i] = If[n > s[i], 0, If[i == 3, 1, b[Abs[n-Prime[i]], i-1] + b[n+Prime[i], i-1]]]; a[n_] := b[6, 2*n+1]; Table[a[n], {n, 1, 30}] (* _Jean-Fran\u00e7ois Alcover_, Nov 11 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) A261063(n,rhs=-1,firstprime=3)={rhs-=prime(firstprime);my(p=vector(2*n-2+bittest(rhs,0),i,prime(i+firstprime)));sum(i=1,2^#p-1,sum(j=1,#p,(-1)^bittest(i,j-1)*p[j])==rhs)} \\\\ For illustrative purpose; too slow for n >> 10."
+    ],
+    "xref": [
+        "Cf. A261061 - A261062 (starting with prime(1) resp. prime(2)), A261044 (starting with prime(4)), A022894 - A022904, A083309, A022920 (r.h.s. = 0, 1 or 2), A261057, A261059, A261060, A261045 (r.h.s. = -2)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "_M. F. Hasler_, Aug 08 2015",
+    "ext": [
+        "a(15)-a(30) from _Alois P. Heinz_, Aug 08 2015"
+    ],
+    "references": 19,
+    "revision": 11,
+    "time": "2015-11-11T05:14:30-05:00",
+    "created": "2015-08-08T15:56:39-04:00"
+}

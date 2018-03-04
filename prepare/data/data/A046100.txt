@@ -1,0 +1,64 @@
+{
+    "number": 46100,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,65,66,67,68,69,70,71,72,73,74,75,76",
+    "name": "Biquadratefree numbers.",
+    "comment": [
+        "Differs from A023809 at entries 0, 81, 162, 225, 226, etc. - _R. J. Mathar_, Oct 18 2008",
+        "Density is 1/zeta(4) = A215267 = 0.923938.... - _Charles R Greathouse IV_, Sep 02 2015",
+        "A051903(a(n)) < 4. - _Reinhard Zumkeller_, Sep 03 2015"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A046100/b046100.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Biquadratefree.html\">Biquadratefree</a>"
+    ],
+    "maple": [
+        "A046100 := proc(n)",
+        "    option remember;",
+        "    local a,p,is4free;",
+        "    if n = 1 then",
+        "        return 1;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            is4free := true ;",
+        "            for p in ifactors(a)[2] do",
+        "                if op(2,p) >= 4 then",
+        "                    is4free := false;",
+        "                    break;",
+        "                end if;",
+        "            end do:",
+        "            if is4free then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Aug 08 2012"
+    ],
+    "mathematica": [
+        "lst={};Do[a=0;Do[If[FactorInteger[m][[n, 2]]>4, a=1], {n, Length[FactorInteger[m]]}];If[a!=1, AppendTo[lst, m]], {m, 5!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Sep 27 2008 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=n==1 || vecmax(factor(n)[,2])<4 \\\\ _Charles R Greathouse IV_, Jun 16 2012",
+        "(Sage)",
+        "def is_biquadratefree(n):",
+        "    for c in list(n.factor()) :",
+        "        if c[1] >= 4 : return false",
+        "    return true",
+        "def A046100_list(n) : return [i for i in (1..n) if is_biquadratefree(i)]",
+        "A046100_list(76) # _Peter Luschny_, Aug 08 2012",
+        "(Haskell)",
+        "a046100 n = a046100_list !! (n-1)",
+        "a046100_list = filter ((< 4) . a051903) [1..]",
+        "-- _Reinhard Zumkeller_, Sep 03 2015"
+    ],
+    "xref": [
+        "Cf. A046101, A005117 (2-free), A004709 (3-free).",
+        "Cf. A051903, subsequence of A209061."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Eric W. Weisstein_",
+    "references": 12,
+    "revision": 28,
+    "time": "2015-09-03T08:14:17-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

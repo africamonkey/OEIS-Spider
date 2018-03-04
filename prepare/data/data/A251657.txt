@@ -1,0 +1,43 @@
+{
+    "number": 251657,
+    "data": "1,5,49,1331,130321,52521875,90458382169,662062621900811,20248745068443234721,2548385124666493326171875,1305282261160894865367626964649,2701607566979638625212777041914285051,22497539334127167666989016452232087989410801,751859086636251929847496735809485838154930419921875",
+    "name": "a(n) = (2^n + 3)^n.",
+    "comment": [
+        "This is a special case of the more general statement:",
+        "Sum_{n>=0} m^n * F(q^n*x)^b * log( F(q^n*x) )^n / n! = Sum_{n>=0} x^n * [y^n] F(y)^(m*q^n + b) where F(x) = exp(x), q=2, m=1, b=3."
+    ],
+    "formula": [
+        "E.g.f.: Sum_{n>=0} 2^(n^2) * exp(3*2^n*x) * x^n/n! = Sum_{n>=0} (2^n + 3)^n * x^n/n!.",
+        "O.g.f.: Sum_{n>=0} 2^(n^2) * x^n / (1 + 3*2^n*x)^(n+1).",
+        "a(n) = Sum_{k=0..n} binomial(n, k) * 3^k * (2^n)^(n-k).",
+        "a(n) = Sum_{k=0..n} A155810(k)*3^k."
+    ],
+    "example": [
+        "E.g.f.: A(x) = 4^0 + 5^1*x + 7^2*x^2/2! + 11^3*x^3/3! + 19^4*x^4/4! + 35^5*x^5/5! + 67^6*x^6/6! + 131^7*x^7/7! +...+ (2^n+3)^n*x^n/n! +...",
+        "such that",
+        "A(x) = exp(3*x) + 2*exp(3*2*x) + 2^4*exp(3*4*x)*x^2/2! + 2^9*exp(3*8*x)*x^3/3! + 2^16*exp(3*16*x)*x^4/4! +...+ 2^(n^2)*exp(3*2^n*x)*x^n/n! +..."
+    ],
+    "mathematica": [
+        "Table[(2^n+3)^n,{n,0,20}] (* _Harvey P. Dale_, Mar 16 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n,q=2,m=1,b=3) =( m*q^n + b)^n}",
+        "for(n=0,15,print1(a(n,q=2,m=1,b=3),\", \"))",
+        "(PARI) {a(n,q=2,m=1,b=3) = sum(k=0,n, binomial(n,k) * b^k * m^(n-k) * (q^n)^(n-k))}",
+        "for(n=0,15,print1(a(n,q=2,m=1,b=3),\", \"))",
+        "(PARI) {a(n,q=2,m=1,b=3) = n!*polcoeff(sum(k=0, n, m^k * q^(k^2) * exp(b*q^k*x +x*O(x^n)) * x^k/k!), n)}",
+        "for(n=0,15,print1(a(n,q=2,m=1,b=3),\", \"))",
+        "(PARI) {a(n,q=2,m=1,b=3) = polcoeff(sum(k=0, n, m^k * q^(k^2) * x^k / (1 - b*q^k*x  +x*O(x^n))^(k+1) ), n)}",
+        "for(n=0,15,print1(a(n,q=2,m=1,b=3),\", \"))"
+    ],
+    "xref": [
+        "Cf. A055601, A136516, A165327, A155810."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jan 29 2015",
+    "references": 0,
+    "revision": 10,
+    "time": "2016-03-16T16:29:18-04:00",
+    "created": "2015-01-29T19:50:11-05:00"
+}

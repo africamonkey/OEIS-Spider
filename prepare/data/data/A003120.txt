@@ -1,0 +1,84 @@
+{
+    "number": 3120,
+    "id": "M0836",
+    "data": "1,1,2,3,7,13,31,66,159,365,900,2162,5417,13436,34165,86603,223028,574493,1495524,3900055,10246172,26982966,71447432,189664782,505605729,1351179886,3623051567,9737403960,26243202664,70878565004",
+    "name": "Number of rooted trees with n nodes and omega-valency 1.",
+    "comment": [
+        "Draw the tree with the root at the bottom. The omega-valency of a leaf is 1; the omega-valency of any other vertex v is max(1,sum(omega-valence(s))-1) where the sum is over the vertices directly above v. Then the omega-valency of the tree itself is the omega-valency of the root. [_F. Chapoton_, Jul 25 2011; _N. J. A. Sloane_, Jul 27 2011]",
+        "Other names: Number of arborescences of type (n,1), or tapeworms.",
+        "Let phi_n denote the number of rooted trees on n nodes whose comparability graph is Hamiltonian. Then phi_1=1, phi_n = a(n-1) for n >= 2. [Arditti]"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "J.-C. Arditti, <a href=\"http://dx.doi.org/10.1016/0012-365X(73)90135-0\">D\u00e9nombrement des arborescences dont le graphe de comparabilit\u00e9 est Hamiltonien</a>, Discrete Math., 5 (1973), 189-200.",
+        "F. Harary and R. W. Robinson, <a href=\"/A001333/a001333_2.pdf\">Tapeworms</a>, Unpublished manuscript, circa 1973. (Annotated scanned copy)",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "The generating function is probably not rational. - _F. Chapoton_, Jul 26 2011",
+        "The g.f. -(z-1)*(3*z**2+z-1)/(-1+3*z+z**2-7*z**3+3*z**4) conjectured by _Simon Plouffe_ in his 1992 dissertation is wrong (starting from index 11)."
+    ],
+    "example": [
+        "For n=4, the 3 rooted trees are",
+        "O     O       O",
+        "|    / \\      |",
+        "|    |       / \\",
+        "|"
+    ],
+    "maple": [
+        "(Maple program from _N. J. A. Sloane_, Jul 27 2011, based on Eq. (2) of the Arditti paper. This proceeds in very small steps because I was trying to isolate the error in that formula. The error turns out to be in the display following (2): this is not phi(x). Otherwise Eq. (2) is correct.)",
+        "S:=x*y + x^2*y + 2*x^3*y + x^4*(3*y+y^2) + x^5*(7*y+y^2+y^3);",
+        "M:=30;",
+        "for n from 6 to M do",
+        "t5:=series(series(S,y,n),x,n+1);",
+        "t6:=add( subs(x=x^k,subs(y=y^k,t5))/k, k=1..n+1);",
+        "t7:=series(series(t6,y,n),x,n+1);",
+        "t8:=(x/y)*(exp(t7)-1);",
+        "t9:=series(series(t8,y,n),x,n+1);",
+        "xf1:=subs(y=0,series(t5/y,y,n));",
+        "t10:=series(series(xf1,y,n),x,n+1);",
+        "t11:=series(series(t9-x*t10,y,n),x,n+1);",
+        "t12:=series(series(t11+x*y*t10+x*y,y,n),x,n+1);",
+        "t13:=coeff(t12,x,n);",
+        "S:=S+x^n*t13;",
+        "od:",
+        "xf1:=subs(y=0,series(S/y,y,M+1));",
+        "series(%,x,M+1);",
+        "seriestolist(%);"
+    ],
+    "program": [
+        "(Sage)",
+        "def A3120(n):",
+        "    an=FractionField(PolynomialRing(QQ,'a'))",
+        "    a=an.gen()",
+        "    ri=PowerSeriesRing(an,'x')",
+        "    x=ri.gen()",
+        "    t=ri(0).O(1)",
+        "    v=ri(0).O(1)",
+        "    for l in range(n):",
+        "    truc=0",
+        "    for k in range(1,l+1):",
+        "        truc+=ri(map(lambda u:u(a=a**k),t(x**k).truncate(l+1).list()))/k",
+        "    t=a*x+x*v+x*(t-v)/a-x/a*(t+1)+x*(exp(truc))/a",
+        "    v=a*ri(map(lambda u:u(a=0),(t/a).list()))",
+        "    return [t/a,v/a]"
+    ],
+    "xref": [
+        "Cf. A193487, A193488, A193489, A193490, A193491."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Corrected by _F. Chapoton_, Jul 26 2011",
+        "Confirmed and extended to n = 30 by _N. J. A. Sloane_, Jul 27 2011"
+    ],
+    "references": 6,
+    "revision": 89,
+    "time": "2018-01-17T11:40:34-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

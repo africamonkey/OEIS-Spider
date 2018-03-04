@@ -1,0 +1,41 @@
+{
+    "number": 38055,
+    "data": "2,4,14,52,214,916,4116,18996,89894,433196,2119904,10503612,52594476,265713532,1352796790,6933598208,35747017596,185260197772,964585369012,5043220350012,26467146038744,139375369621960,736229024863276,3900074570513316,20714056652990194",
+    "name": "Number of n-node rooted trees with nodes of 2 colors.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A038055/b038055.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "R. J. Mathar, <a href=\"http://arxiv.org/abs/1603.00077\">Topologically distinct sets of non-intersecting circles in the plane</a>, arXiv:1603.00077 (2016), Table 3.",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "Shifts left and halves under Euler transform.",
+        "a(n) = 2*A000151(n).",
+        "a(n) ~ c * d^n / n^(3/2), where d = A245870 = 5.6465426162329497128927135162169138381498..., c = 0.41572319484583484264330698410170337587... . - _Vaclav Kotesovec_, Sep 11 2014"
+    ],
+    "maple": [
+        "spec := [N, {N=Prod(bead,Set(N)), bead=Union(R,B), R=Atom, B=Atom}]; [seq(combstruct[count](spec, size=n), n=1..40)];",
+        "# second Maple program:",
+        "with(numtheory):",
+        "a:= proc(n) option remember; `if`(n<2, 2*n, (add(add(d*",
+        "      a(d), d=divisors(j))*a(n-j), j=1..n-1))/(n-1))",
+        "    end:",
+        "seq(a(n), n=1..30);  # _Alois P. Heinz_, May 11 2014"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n<2, 2*n, (Sum[Sum[d*a[d], {d, Divisors[j]}]*a[n-j], {j, 1, n-1}])/(n-1)]; Table[a[n], {n, 1, 30}] (* _Jean-Fran\u00e7ois Alcover_, Feb 25 2015, after _Alois P. Heinz_ *)",
+        "a[1] = 2; a[n_] := a[n] = Sum[k a[k] a[n - m k]/(n-1), {k, n}, {m, (n-1)/k}]; Table[a[n], {n, 30}] (* _Vladimir Reshetnikov_, Aug 12 2016 *)"
+    ],
+    "xref": [
+        "Cf. A000081, A038056-A038062.",
+        "Cf. A245870."
+    ],
+    "keyword": "nonn,eigen,nice,easy",
+    "offset": "1,1",
+    "author": "_Christian G. Bower_, Jan 04 1999",
+    "references": 15,
+    "revision": 30,
+    "time": "2016-08-13T03:41:04-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

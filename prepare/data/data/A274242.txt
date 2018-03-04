@@ -1,0 +1,45 @@
+{
+    "number": 274242,
+    "data": "1,5,7,13,19,25,31,35,43,49,61,65,73,91,95,103,109,125,133,139,151,155,169,175,181,193,199,215,217,229,241,245,247,271,283,301,305,313,325,343,349,361,365,403,421,427,433,455,463,475,511,515,523,545,559,571,589,601,619,625,637,643,661,665,695,721,755,763,775,793,811,817,823,829,845,859,875,883,905,931",
+    "name": "The factorization of n contains only the greater members of twin prime pairs.",
+    "comment": [
+        "1 is in the sequence by convention."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A274242/b274242.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Benoit Cloitre, <a href=\"/A274242/a274242.png\">Plot of a(n)/A274212(n)</a>"
+    ],
+    "formula": [
+        "Arithmetic conjecture: the equation a(n+1) - a(n) = 2r has infinitely many solutions for any fixed integer value r >= 1.",
+        "Analytic conjecture: a(n) is asymptotic to D*n*log(n)^2 for a constant D > 0.4 hence lim_n-->infty a(n)/A274212(n) exists (see link)."
+    ],
+    "example": [
+        "65 = 5*13 is a member because there are twin prime pairs (3,5) and (11,13)."
+    ],
+    "maple": [
+        "N:= 10^4: # to get all terms <= N",
+        "Primes:= select(isprime, {seq(i,i=3..N,2)}):",
+        "Twins:= Primes intersect map(`+`,Primes,2):",
+        "S:= {1}:",
+        "for p in Twins do",
+        "   S:= map(s -> seq(s*p^i, i=0..ilog[p](floor(N/s))), S)",
+        "od:",
+        "sort(convert(S,list)); # _Robert Israel_, Jun 15 2016"
+    ],
+    "mathematica": [
+        "Join[{1}, Select[Range[1, 1000, 2], AllTrue[FactorInteger[#][[All, 1]], PrimeQ[# - 2]& ]& ] ] (* _Jean-Fran\u00e7ois Alcover_, Jun 16 2016 *)"
+    ],
+    "program": [
+        "(PARI) for(n=1,1000,if(prod(i=1,omega(n),isprime(factor(n)[i,1]-2))==1,print1(n,\",\")))"
+    ],
+    "xref": [
+        "Cf. A006512, A274212."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Benoit Cloitre_, Jun 15 2016",
+    "references": 1,
+    "revision": 22,
+    "time": "2016-06-17T00:40:58-04:00",
+    "created": "2016-06-17T00:40:58-04:00"
+}

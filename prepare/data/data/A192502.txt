@@ -1,0 +1,37 @@
+{
+    "number": 192502,
+    "data": "1,2,4,10,36,136,548,2316,10050,44426,199666,910090,4196984,19545844,91791112,434181656,2066656564,9891669820,47578282002,229858639366,1114895656402,5427058308018,26503888167186,129821343271168,637626106479490",
+    "name": "G.f. satisfies: A(x) = 1 + x*f(x, A(x)) where f(,) is Ramanujan's two-variable theta function.",
+    "comment": [
+        "Ramanujan's two-variable theta function is defined by:",
+        "f(a,b) = Sum_{n=-infinity..+infinity} a^(n*(n+1)/2) * b^(n*(n-1)/2)."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A192502/b192502.txt\">Table of n, a(n) for n = 0..400</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RamanujanThetaFunctions.html\">Ramanujan Theta Functions.</a>",
+        "Michael Somos, <a href=\"http://cis.csuohio.edu/~somos/multiq.pdf\">Introduction to Ramanujan theta functions.</a>"
+    ],
+    "formula": [
+        "G.f. satisfies:",
+        "(1) A(x) = 1+x + x*Sum_{n>=1} (x*A(x))^(n*(n-1)/2) * (x^n + A(x)^n).",
+        "(2) A(x) = 1 + x*Product_{n>=0} (1+x*q^n)*(1+A(x)*q^n)*(1-q^(n+1)) where q=x*A(x), due to Jacobi's triple product identity.",
+        "a(n) ~ c * d^n / n^(3/2), where d = 5.2286591857647664516287778... and c = 0.4431871616898705063582... - _Vaclav Kotesovec_, Sep 04 2017"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 4*x^2 + 10*x^3 + 36*x^4 + 136*x^5 + 548*x^6 +...",
+        "The g.f. A = A(x) satisfies:",
+        "(1) A = 1+x + x*[(x+A) + x*A*(x^2+A^2) + x^3*A^3*(x^3+A^3) + x^6*A^6*(x^4+A^4) + x^10*A^10*(x^5+A^5) +...].",
+        "(2) A = 1 + x*(1+x)*(1+A)*(1-x*A)* (1+x^2*A)*(1+x*A^2)*(1-x^2*A^2)* (1+x^3*A^2)*(1+x^2*A^3)*(1-x^3*A^3)* (1+x^4*A^3)*(1+x^3*A^4)*(1-x^4*A^4)*..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,A=1+x+x*sum(m=1,sqrtint(2*n)+1,(x*A+x*O(x^n))^(m*(m-1)/2)*(x^m+A^m)));polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,q=x*(A+O(x^n));A=1+x*prod(m=0,n,(1+x*q^m)*(1+A*q^m)*(1-q^(m+1))) );polcoeff(A,n)}"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jul 03 2011",
+    "references": 2,
+    "revision": 8,
+    "time": "2017-09-04T03:05:34-04:00",
+    "created": "2011-07-03T02:07:49-04:00"
+}

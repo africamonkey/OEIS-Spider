@@ -1,0 +1,41 @@
+{
+    "number": 210029,
+    "data": "1,14,540,40824,5103000,953029440,248619571200,86355926616960,38528927611574400,21473732319740064000,14620825330739032204800,11941607887300551753216000,11523529003703200697461248000,12970646659082235068963297280000",
+    "name": "Number of sequences over the alphabet of n symbols of length 2n which have n distinct symbols. Also number of placements of 2n balls into n cells where no cell is empty.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A210029/b210029.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{v=0..n-1}( (-1)^v * binomial(n,v) * (n-v)^(2n) ).",
+        "a(n) = n! * S2(2*n,n), where S2(n,k) = A008277(n,k) are the Stirling numbers of the second kind. - _Paul D. Hanna_, Oct 26 2012",
+        "E.g.f.: Sum_{n>=1} (n^2)^n * exp(-n^2*x) * x^n/n! = Sum_{n>=1} a(n)*x^n/n!. - _Paul D. Hanna_, Oct 26 2012",
+        "a(n) ~ n^(2*n)*(2/(exp(c)*(2-c)))^n / sqrt(1-c), where c = -LambertW(-2/exp(2)) = 0.406375739959959907676958... - _Vaclav Kotesovec_, Jan 02 2013",
+        "O.g.f.: Sum_{n>=1} n^(2*n) * x^n / (1 + n^2*x)^(n+1). - _Paul D. Hanna_, Feb 24 2013"
+    ],
+    "example": [
+        "a(2) = 14 because the 2^4 sequences on 2 symbols of length 4 can be represented by 0000, 0001, 0010, 0011, 0100, 0101, 0110, 0111, 1000, 1001, 1010, 1011, 1100,1110, and 1111. Only two of them do not have n distinct symbols. a(10)= 21473732319740064000 since all digits appear in 21473732319740064000 nonnegative integers with 20 digits.",
+        "O.g.f.: A(x) = 1 + 14*x + 540*x^2 + 40824*x^3 + 5103000*x^4 +...",
+        "where",
+        "A(x) = x/(1+x)^2 + 2^4*x^2/(1+4*x)^3 + 3^6*x^3/(1+9*x)^4 + 4^8*x^4/(1+16*x)^5 + 5^10*x^5/(1+25*x)^6 +... [_Paul D. Hanna_, Feb 24 2013]",
+        "E.g.f.: E(x) = 1 + 14*x + 540*x^2/2! + 40824*x^3/3! + 5103000*x^4/4! +...",
+        "where",
+        "E(x) = exp(-x)*x + 2^4*exp(-4*x)*x^2/2! + 3^6*exp(-9*x)*x^3/3! + 4^8*exp(-16*x)*x^4/4! + 5^10*exp(-25*x)*x^5/5! +... [_Paul D. Hanna_, Feb 24 2013]"
+    ],
+    "mathematica": [
+        "Table[Sum[((-1)^v*Binomial[n, v]*(n - v)^(2 n)), {v, 0, n - 1}], {n, 20}] (* _T. D. Noe_, Mar 16 2012 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(sum(m=1, n, (m^2)^m*exp(-m^2*x+x*O(x^n))*x^m/m!), n)} \\\\ _Paul D. Hanna_, Oct 26 2012",
+        "(PARI) {a(n)=polcoeff(sum(k=1, n, (k^2)^k*x^k/(1+k^2*x +x*O(x^n))^(k+1)), n)} for(n=0, 20, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Feb 24 2013"
+    ],
+    "xref": [
+        "Cf. A210024, A209899, A209900, A007820, A008277."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Washington Bomfim_, Mar 16 2012",
+    "references": 6,
+    "revision": 30,
+    "time": "2017-06-07T13:06:42-04:00",
+    "created": "2012-03-16T21:20:26-04:00"
+}

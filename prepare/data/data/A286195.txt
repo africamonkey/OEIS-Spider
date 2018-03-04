@@ -1,0 +1,42 @@
+{
+    "number": 286195,
+    "data": "16,24,36,48,72,108,120,144,168,180,216,240,252,288,324,360,408,432,504,540,552,600,612,648,720,756,768,792,828,864,900,912,960,1080,1128,1152,1188,1224,1248,1260,1296,1368,1392,1440,1620,1656,1680,1692,1728,1764,1800",
+    "name": "Products of two numbers that are the average of a pair of twin primes.",
+    "comment": [
+        "Product of two numbers from A014574 in at least one way. - _David A. Corneth_, Jun 12 2017",
+        "For n > 1, a(n) is divisible by 12. All terms not in 4*A014574 are divisible by 36. - _Robert Israel_, Jun 12 2017",
+        "A075369 Union A288639."
+    ],
+    "link": [
+        "Vincenzo Librandi and David A. Corneth, <a href=\"/A286195/b286195.txt\">Table of n, a(n) for n = 1..10000 (first 1182 terms from Vincenzo Librandi)</a>"
+    ],
+    "example": [
+        "4 and 12 are the average of twin prime pairs (i.e., 4 = (3+5)/2 and 12 = (11+13)/2) and 4*12 = 48, which is in the sequence.",
+        "As 4 is the average of a twin prime pair, 4*4 = 16 is also in the sequence. - _David A. Corneth_, Jun 12 2017"
+    ],
+    "maple": [
+        "N:= 2000: # to get all terms <= N",
+        "P:= select(isprime, {seq(i,i=3..N/4+1,2)}):",
+        "B:= map(`+`,P,1) intersect map(`-`,P,1):",
+        "sort(convert(select(`<=`,{seq(seq(B[i]*B[j],j=1..i),i=1..nops(B))},N),list));",
+        "# _Robert Israel_, Jun 12 2017"
+    ],
+    "mathematica": [
+        "With[{nn = 1800}, TakeWhile[Union@ Map[Times @@ # &, Tuples[#, {2}]], # <= nn &] &@ Map[Mean, Select[Partition[Prime@ Range@ PrimePi@ nn, 2, 1], Differences@ # == {2} &]]] (* _Michael De Vlieger_, Jun 12 2017 *)"
+    ],
+    "program": [
+        "(PARI) upto(n) = {my(l1=List(),l2=List(),p,q);",
+        "p=2; forprime(q=3, n, if(q-p==2, listput(l1,p+1)); p=q); for(i=1,#l1,for(j=i,#l1, if(l1[i]*l1[j]<=n, listput(l2, l1[i]*l1[j]), next(2)))); listsort(l2,1); l2} \\\\ prog adapted from PARI-prog from _Charles R Greathouse IV_ in A014574. - _David A. Corneth_, Jun 12 2017"
+    ],
+    "xref": [
+        "Cf. A014574, A249628, A288639.",
+        "A075369 is a subsequence."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Wesley Ivan Hurt_, Jun 12 2017",
+    "references": 2,
+    "revision": 37,
+    "time": "2017-06-23T08:19:08-04:00",
+    "created": "2017-06-23T08:19:08-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 19464,
+    "data": "1,1,2,4,6,18,21,84,88,440,445,2670,2676,18732,18739,149912,149920,1349280,1349289,13492890,13492900,148421900,148421911,1781062932,1781062944,23153818272,23153818285,324153455990,324153456004,4862301840060,4862301840075,77796829441200",
+    "name": "Multiply by 1, add 1, multiply by 2, add 2, etc., start with 1.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A019464/b019464.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "For n>=1, a(2n)=floor((1+e)*(n-1)!)-1, a(2n+1)=floor((1+e)*(n+1)!)-n-2. - _Benoit Cloitre_, Apr 29 2003",
+        "a(n+1) = (1/2) *a(n)*(n+1 mod 2)*(n+2)+1/2*(n mod 2)*(2*a(n)+n+1). - Francois Jooste (pin(AT)myway.com), Jun 25 2003"
+    ],
+    "mathematica": [
+        "a[n_?EvenQ] := n/2 + a[n-1]; a[n_?OddQ] := (n+1)*a[n-1]/2;",
+        "a[0] = 1; Table[a[n], {n, 0, 27}] (* _Jean-Fran\u00e7ois Alcover_, Nov 15 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a019464 n = a019464_list !! n",
+        "a019464_list = 1 : concat (unfoldr ma (1, [1, 1])) where",
+        "   ma (x, [_, j]) = Just (ij', (x + 1, ij')) where ij' = [x * j, x * j + x]",
+        "-- _Reinhard Zumkeller_, Nov 14 2011",
+        "(PARI) A019464(n,a=1)={for(i=2,n+1,if(bittest(i,0),a+=i\\2,a*=i\\2));a} \\\\ _M. F. Hasler_, Feb 25 2018"
+    ],
+    "xref": [
+        "Cf. A033540 (=a(2n)).",
+        "Cf. A082458 (same, but start with 0), A019465 (start with 2), A019466 (start with 3).",
+        "Cf. A019460 .. A019463 & A082448 (similar, but first add, then multiply)."
+    ],
+    "keyword": "nonn,easy,nice,changed",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "Edited by _M. F. Hasler_, Feb 25 2018"
+    ],
+    "references": 10,
+    "revision": 30,
+    "time": "2018-02-26T04:16:15-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

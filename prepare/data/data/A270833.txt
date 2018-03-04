@@ -1,0 +1,33 @@
+{
+    "number": 270833,
+    "data": "1093,3511,1194649,3837523,12327121,1305751357,4194412639,13473543253,43280521831,1427186233201,4584493014427,14726582775529,47305610361283,151957912148641,5010850864768711,16096154973653197,51705032124882319,166089997978464613",
+    "name": "Numbers n > 1 where all prime factors are Wieferich primes, i.e., terms of A001220.",
+    "comment": [
+        "The prime terms are Wieferich primes.",
+        "All \"Wieferich pseudoprimes\", if any exist, are in the sequence (see second comment in A240719)."
+    ],
+    "link": [
+        "PrimeGrid, <a href=\"http://prpnet.primegrid.com:13000/\">Wieferich prime search - PRPNet server statistics</a>"
+    ],
+    "example": [
+        "4194412639 = 1093^2 * 3511. All prime factors are Wieferich primes, so 4194412639 is a term of the sequence."
+    ],
+    "mathematica": [
+        "Take[#, 19] &@ Rest@ Sort@ Map[1093^First@ # 3511^Last@ # &, Tuples[Range[0, 6], 2]] (* _Michael De Vlieger_, Mar 24 2016 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = if(n==1, return(0)); my(f=factor(n)[, 1]); for(k=1, #f, if(Mod(2, f[k]^2)^(f[k]-1)!=1, return(0))); return(1)",
+        "(PARI) /* The following program is significantly faster; valid up to (p^x * q^y) < b, where b is the upper search bound for Wieferich primes (approximately 5*10^17 as of Mar 23 2016, see PrimeGrid PRPNet server statistics) */",
+        "my(p=1093, q=3511, v=vector(0), w=vector(1)); for(x=0, 4, for(y=0, 4, w[1]=p^x*q^y; v=concat(v, w))); vecextract(vecsort(v,,8), \"2..25\")"
+    ],
+    "xref": [
+        "Cf. A001220, A240719."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, Mar 23 2016",
+    "references": 1,
+    "revision": 22,
+    "time": "2017-06-02T22:25:28-04:00",
+    "created": "2016-03-25T07:50:05-04:00"
+}

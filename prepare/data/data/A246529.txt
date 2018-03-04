@@ -1,0 +1,36 @@
+{
+    "number": 246529,
+    "data": "1,1,3,18,157,1776,24687,407464,7792857,169594560,4141165051,112178655744,3339749183157,108422228887168,3812520677598375,144372964560581376,5858088633723823153,253575577033176047616,11664031615012086920307,568166632439929892761600",
+    "name": "Number of endofunctions on [n] whose cycle lengths are divisors of 9.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A246529/b246529.txt\">Table of n, a(n) for n = 0..350</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp(Sum_{d|9} (-LambertW(-x))^d/d).",
+        "a(n) - A246523(n) is a multiple of 40320. - _M. F. Hasler_, Oct 26 2014"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "egf:= k-> exp(add((-LambertW(-x))^d/d, d=divisors(k))):",
+        "a:= n-> n!*coeff(series(egf(9), x, n+1), x, n):",
+        "seq(a(n), n=0..25);",
+        "# second Maple program:",
+        "with(combinat):",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(multinomial(n, n-i*j, i$j)/j!*b(n-i*j, i-1)*",
+        "      (i-1)!^j, j=0..`if`(irem(9, i)=0, n/i, 0))))",
+        "    end:",
+        "a:= n-> add(b(j, min(9, j))*n^(n-j)*binomial(n-1, j-1), j=0..n):",
+        "seq(a(n), n=0..25);"
+    ],
+    "xref": [
+        "Column k=9 of A246522."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 28 2014",
+    "references": 2,
+    "revision": 8,
+    "time": "2014-10-26T17:30:13-04:00",
+    "created": "2014-08-28T20:45:41-04:00"
+}

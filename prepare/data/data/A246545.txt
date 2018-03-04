@@ -1,0 +1,38 @@
+{
+    "number": 246545,
+    "data": "80,880,1920,3140,3880,7305,8080,57755,63405,88880,193920,1188031,1226221,1794971,7966197,8339125",
+    "name": "Numbers such that Sum_{i=1..k}{phi(d(i))} = Sum_{i=1..k}{phi(Rev(d(i)))}, where d(i) are the k divisors of n, Rev(d(i)) the reverse of the divisors d(i) and phi(x) the Euler totient function. Numbers with all palindromic divisors are not considered.",
+    "comment": [
+        "In general Sum_{i=1..k}{phi(d(i))} = n, where d(i) are the k divisors of n.",
+        "The numbers that are not considered here belong to A062687, numbers all of whose divisors are palindromic. - _Michel Marcus_, Oct 10 2014"
+    ],
+    "example": [
+        "Divisors of 3140 are 1, 2, 4, 5, 10, 20, 157, 314, 628, 785, 1570, 3140.",
+        "Adding the Euler totient function of the reverse of the divisors: phi(1) + phi(2) + phi(4) + phi(5) + phi(01) + phi(02) + phi(751) + phi(413) + phi(826) + phi(587) + phi(0751) + phi(0413) = 3140."
+    ],
+    "maple": [
+        "with(numtheory); T:=proc(h) local x,y,w; x:=h; y:=0;",
+        "for w from 1 to ilog10(h)+1 do y:=10*y+(x mod 10); x:=trunc(x/10); od; y; end:",
+        "P:=proc(q) local a,b,k,n,ok;",
+        "for n from 1 to q do a:=divisors(n); b:=0; ok:=0;",
+        "for k from 1 to nops(a) do b:=b+phi(T(a[k]));",
+        "if a[k]<>T(a[k]) then ok:=1; fi; od;",
+        "if ok=1 and n=b then print(n); fi; od; end: P(10^9);"
+    ],
+    "program": [
+        "(PARI) isok(n) = {d = divisors(n); rd = vector(#d, i, subst(Polrev(digits(d[i])), x, 10)); (d != rd) && (n == sum(i=1, #rd, eulerphi(rd[i])));} \\\\ _Michel Marcus_, Oct 10 2014"
+    ],
+    "xref": [
+        "Cf. A000010, A196677, A247826."
+    ],
+    "keyword": "nonn,more,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Oct 01 2014",
+    "ext": [
+        "a(11)-a(16) from _Michel Marcus_, Oct 10 2014"
+    ],
+    "references": 1,
+    "revision": 15,
+    "time": "2014-10-12T16:58:14-04:00",
+    "created": "2014-10-09T18:55:44-04:00"
+}

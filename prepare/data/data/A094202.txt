@@ -1,0 +1,52 @@
+{
+    "number": 94202,
+    "data": "0,1,4,6,9,12,14,22,27,33,35,51,56,64,74,80,88,90,116,127,145,158,174,184,197,203,216,232,234,276,294,326,368,378,399,425,441,462,472,493,519,525,546,572,588,609,611,679,708,760,828,847,915,944,988,1022,1064,1090",
+    "name": "Integers n whose Zeckendorf representation A014417(n) is palindromic.",
+    "reference": [
+        "C. G. Lekkerkerker, Voorstelling van natuurlijke getallen door een som van getallen van Fibonacci, Simon Stevin vol. 29, 1952, pages 190-195.",
+        "E. Zeckendorf, Representation des nombres naturels par une somme de nombres de Fibonacci ou de nombres de Lucas, Bulletin de la Soci\u00e9t\u00e9 Royale des Sciences de Li\u00e8ge vol. 41 (1972) pages 179-182."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A094202/b094202.txt\">Table of n, a(n) for n = 1..20000</a> (first 129 terms from Indranil Ghosh)",
+        "Ron Knott, <a href=\"http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibrep.html\">Fibonacci Bases</a>."
+    ],
+    "example": [
+        "Fibonacci base columns are ...,8,5,3,2,1 with column entries 0 or 1 and no two consecutive ones (the Zeckendorf representation) so that each n has a unique representation.",
+        "12 is in the sequence because 12 = 8 + 3 + 1 = 10101 base Fib; 14 = 13 + 1 = 100001 base Fib."
+    ],
+    "mathematica": [
+        "zeck[n_Integer] := Block[{k = Ceiling[ Log[ GoldenRatio, n*Sqrt[5]]], t = n, fr = {}}, While[k > 1, If[t >= Fibonacci[k], AppendTo[ fr, 1]; t = t - Fibonacci[k], AppendTo[fr, 0]]; k-- ]; FromDigits[fr]]; a = {}; Do[z = zeck[n]; If[ FromDigits[ Reverse[ IntegerDigits[z]]] == z, AppendTo[a, n]], {n, 1123}]; a (* _Robert G. Wilson v_, May 29 2004 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import fibonacci",
+        "def a(n):",
+        "    k=0",
+        "    x=0",
+        "    while n>0:",
+        "        k=0",
+        "        while fibonacci(k)<=n: k+=1",
+        "        x+=10**(k - 3)",
+        "        n-=fibonacci(k - 1)",
+        "    return x",
+        "def ok(n):",
+        "    x=a(n)",
+        "    return 1 if str(x)==str(x)[::-1] else 0",
+        "print [n for n in xrange(1101) if ok(n)] # _Indranil Ghosh_, Jun 07 2017"
+    ],
+    "xref": [
+        "Cf. A035517.",
+        "Gives the positions of zeros in A095734. Subsets: A095730, A048757. A006995 gives the integers whose binary expansion is palindromic."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Ron Knott_, May 25 2004",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, May 28 2004",
+        "Offset changed to 1 by _Alois P. Heinz_, Aug 02 2017"
+    ],
+    "references": 6,
+    "revision": 27,
+    "time": "2017-08-02T23:17:54-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

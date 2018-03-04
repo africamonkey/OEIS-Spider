@@ -1,0 +1,33 @@
+{
+    "number": 248127,
+    "data": "2,4,5,10,31,72,75,80,162,270,383,640,1250,2000,2160,3430,4000,5000,5120,7290,10000,13310,17280,21970,27440,28875,31000,33750,40960,49130,58320,68590,72000,75000,80000,92610",
+    "name": "Numbers whose squares became cubes if some digit is prepended, inserted or appended.",
+    "example": [
+        "If n = 10 then n^2 = 100 and if we append a 0 we have (1000)^1/3 = 10.",
+        "If n = 31 then n^2 = 961 and if we insert a 2 we have (9261)^1/3 = 21.",
+        "Again, if n = 112625 then n^2 = 12684390625 and if we insert an 8 we have (126884390625)^1/3 = 5025."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a, b, c, j, k, ok, n;",
+        "for n from 1 to q do a:=n^2; c:=ilog10(a)+1; ok:=1; for k from 0 to ilog10(a)+1 do",
+        "if ok=1 then for j from 0 to 9 do if not (k=c and j=0) then b:=trunc(a/10^k)*10^(k+1)+j*10^k+(a mod 10^k);",
+        "if b=trunc(evalf((b)^(1/3)))^3 then print(n); ok:=0; break; fi; fi; od; fi; od; od; end: P(10^9);"
+    ],
+    "mathematica": [
+        "f[n_] := ! MissingQ@SelectFirst[Rest@Flatten[Outer[Insert[IntegerDigits[n^2], #2, #1] &, Range[IntegerLength[n^2] + 1], Range[0, 9]], 1], IntegerQ@CubeRoot@FromDigits@# &];",
+        "Select[Range[100], f] (* _Davin Park_, Dec 30 2016 *)"
+    ],
+    "xref": [
+        "Cf. A248051, A249853."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Nov 10 2014",
+    "ext": [
+        "Corrected by _Davin Park_, Dec 30 2016"
+    ],
+    "references": 1,
+    "revision": 31,
+    "time": "2016-12-31T07:24:24-05:00",
+    "created": "2014-11-20T13:11:48-05:00"
+}

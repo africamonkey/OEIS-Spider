@@ -1,0 +1,51 @@
+{
+    "number": 237585,
+    "data": "0,1,2,3,6,15,36,94,245,663,1815,5062,14269,40706,117103,339673,991834,2913869,8605576,25536300,76096896",
+    "name": "Number of structures of size n in class A = o x (o + MSET(A)) where o is a neutral structure of size 1.",
+    "comment": [
+        "MSET(A) is the multi-choose function: pick any number of unlabeled structures in A with repetition allowed.",
+        "Interpreting the neutral structure of size 1 as a single pointer dereference, A is the class of A-pointers either to null pointers or to a multiset of unlabeled A-pointers, where the size of a pointer is the number of dereferences required to resolve the entire structure, so a null pointer has size 1 and an A-pointer to a null pointer has size 2 and an A-pointer to {A-pointer(null), A-pointer(null), A-pointer({A-pointer(null)})} has size 1+((1+1)+(1+1)+(1+(1+1)))=8."
+    ],
+    "link": [
+        "Philippe Flajolet and Robert Sedgewick, <a href=\"http://algo.inria.fr/flajolet/Publications/AnaCombi/anacombi.html\">Analytic Combinatorics</a>, Cambridge Univ. Press, 2009",
+        "Guy P. Srinivasan, <a href=\"/A237585/a237585.txt\">C# program to generate sequence</a>"
+    ],
+    "example": [
+        "For n = 3 the a(3)=3 pointers are the pointer to the multiset of exactly the pointer to the null pointer, the pointer to the multiset of twice the pointer to the empty multiset, and the pointer to the multiset of exactly the pointer to the multiset of the pointer to the empty multiset."
+    ],
+    "program": [
+        "(C#) (see linked code for GetPartitions, Choose, and invoking this)",
+        "private static Func<int, long> A237585() {",
+        "    Func<int, long> A = null;",
+        "    Func<int, long> B = null;",
+        "    Func<int, long> C = null;",
+        "    A = (n) => n == 0 ? 0 : B(n-1);",
+        "    B = (n) => C(n) + (n == 1 ? 1 : 0);",
+        "    C = (n) =>",
+        "        {",
+        "            if (n == 0) return 1;",
+        "            long sum = 0;",
+        "            foreach (var partition in GetPartitions(n))",
+        "            {",
+        "                long product = 1;",
+        "                for (int k = 1; k < partition.Count; k++)",
+        "                {",
+        "                    var N = A(k);",
+        "                    var K = partition[k];",
+        "                    product *= Choose(N + K - 1, K);",
+        "                }",
+        "                sum += product;",
+        "            }",
+        "            return sum;",
+        "        };",
+        "    return A;",
+        "}"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Guy P. Srinivasan_, Feb 09 2014",
+    "references": 1,
+    "revision": 9,
+    "time": "2014-11-07T05:30:17-05:00",
+    "created": "2014-02-20T13:11:24-05:00"
+}

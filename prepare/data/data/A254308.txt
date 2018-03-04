@@ -1,0 +1,40 @@
+{
+    "number": 254308,
+    "data": "0,1,1,2,3,5,8,11,19,30,41,71,112,153,265,418,571,989,1560,2131,3691,5822,7953,13775,21728,29681,51409,81090,110771,191861,302632,413403,716035,1129438,1542841,2672279,4215120,5757961,9973081,15731042,21489003,37220045",
+    "name": "a(n) = a(n-1) + (if a(n-1) is odd a(n-2) else a(n-3)) with a(0) = 0, a(1) = 1.",
+    "comment": [
+        "Every third iteration is a tribonacci-type recursion: a(n) = a(n-1) + a(n-3) otherwise it is Fibonacci-type a(n) = a(n-1) + a(n-2)."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A254308/b254308.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Russell Walsmith, <a href=\"/A254308/a254308.pdf\">Fibonacci-Tribonacci Fusion</a>"
+    ],
+    "formula": [
+        "Two identities: a(3n)/2 + a(3n-3)/2 = a(3n-1); a(3n)/2 - a(3n-3)/2 = a(3n-2).",
+        "G.f.: x * (1 + x + 2*x^2 - x^3 + x^4) / (1 - 4*x^3 + x^6). - _Michael Somos_, Feb 23 2015",
+        "0 = a(n) - 4*a(n+3) + a(n+6) for all n in Z. - _Michael Somos_, Feb 23 2015",
+        "a(3*n) = A052530(n). a(3*n-2) = A001835(n). a(3*n+2) = A001834(n). - _Michael Somos_, Feb 23 2015"
+    ],
+    "example": [
+        "For n = 7, a(n-1) is even so 8 + 3 = 11.",
+        "G.f. = x + x^2 + 2*x^3 + 3*x^4 + 5*x^5 + 8*x^6 + 11*x^7 + 19*x^8 + 30*x^9 + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoeff( x * if( n<0, n=-n; -(1 - x + 2*x^2 + x^3 + x^4), (1 + x + 2*x^2 - x^3 + x^4)) / (1 - 4*x^3 + x^6) + x * O(x^n), n)}; /* _Michael Somos_, Feb 23 2015 */",
+        "(Haskell)",
+        "a254308 n = a254308_list !! n",
+        "a254308_list = 0 : 1 : 1 : zipWith3 (\\u v w -> u + if odd u then v else w)",
+        "               (drop 2 a254308_list) (tail a254308_list) a254308_list",
+        "-- _Reinhard Zumkeller_, Feb 24 2015"
+    ],
+    "xref": [
+        "Cf. A001834, A001835, A052530."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Russell Walsmith_, Feb 23 2015",
+    "references": 1,
+    "revision": 22,
+    "time": "2015-12-18T23:55:04-05:00",
+    "created": "2015-02-24T01:40:40-05:00"
+}

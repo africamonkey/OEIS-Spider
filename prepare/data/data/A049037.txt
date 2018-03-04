@@ -1,0 +1,50 @@
+{
+    "number": 49037,
+    "data": "1,6,54,996,22734,577692,15680628,445162392,13055851998,392475442092,12029082873372,374482032292008,11808861461931492,376406128925067528,12108063535794336312,392560994063887113744,12814685828476778001726,420836267423433182275404",
+    "name": "Number of cubic lattice walks that start and end at origin after 2n steps, not touching origin at intermediate stages.",
+    "reference": [
+        "S. R. Finch, Mathematical Constants, Cambridge, 2003, pp. 322-331."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A049037/b049037.txt\">Table of n, a(n) for n = 0..200</a>",
+        "S. R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/constant/polya/flajolet.html\">Symmetric Random Walk on n-Dimensional Integer Lattice</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "Define a_0, a_1, ... = [ 1, 6, 54, ... ] by 1+Sum b_i x^i = 1/(1-Sum a_i x^i) where b_0, b_1, ... = [ 1, 6, 90, ... ] = A002896.",
+        "Or, Sum[ a(n) x^(2n), n=1, 2, ...infinity ] = 1-1/Sum[ A002896(n)*x^(2n), n=0, 1, ...infinity ].",
+        "G.f.: 2-sqrt(1+12*z) /hypergeom([1/8, 3/8], [1], 64/81*z *(1+sqrt(1-36*z))^2 *(2+sqrt(1-36*z))^4 /(1+12*z)^4)/ hypergeom([1/8, 3/8], [1], 64/81*z *(1-sqrt(1-36*z))^2 *(2-sqrt(1-36*z))^4 /(1+12*z)^4). - Sergey Perepechko, Jan 30 2011",
+        "a(n) ~ c * 36^n / n^(3/2), where c = 0.1014559485279103938501072426734... . - _Vaclav Kotesovec_, Sep 13 2014"
+    ],
+    "example": [
+        "a(5) = 577692 because there are 577692 different walks that start and end at the origin after 2*5=10 steps, avoiding origin at intermediate steps."
+    ],
+    "maple": [
+        "read transforms; t1 := [ seq(A002896(i),i=1..25) ]; INVERTi(t1);",
+        "# second Maple program:",
+        "b:= proc(n) option remember; `if`(n<2, 5*n+1,",
+        "      (2*(2*n-1)*(10*n^2-10*n+3) *b(n-1)",
+        "       -36*(n-1)*(2*n-1)*(2*n-3) *b(n-2)) /n^3)",
+        "    end:",
+        "g:= proc(n) g(n):= `if` (n<1, -1, -add(g(n-i) *b(i), i=1..n)) end:",
+        "a:= n-> abs(g(n)):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Nov 02 2012"
+    ],
+    "mathematica": [
+        "(* A002896 : *) b[n_] := b[n] = Binomial[2*n, n]*HypergeometricPFQ[{1/2, -n, -n}, {1, 1}, 4]; max = 32; a[0] = 1; se = Series[ Sum[ a[n] x^(2 n), {n, 1, max}] - 1 + 1/Sum[ b[n]*x^(2 n), {n, 0, max}], {x, 0, max}]; coes = CoefficientList[se, x]; sol = First[ Solve[ Thread[ coes == 0]]]; Table[ a[n], {n, 0, 16}] /. sol (* _Jean-Fran\u00e7ois Alcover_, Dec 20 2011 *)",
+        "b[n_] := b[n] = If[n < 2, 5*n + 1, (2*(2*n - 1)*(10*n^2 - 10*n + 3)*b[n-1] - 36*(n - 1)*(2*n - 1)*(2*n - 3)*b[n-2]) / n^3];",
+        "g[n_] := g[n] = If[n < 1, -1, -Sum [g[n - i]*b[i], {i, 1, n}]];",
+        "a[n_] := Abs[g[n]];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Jan 12 2018, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Invert A002896."
+    ],
+    "keyword": "easy,nonn,nice",
+    "offset": "0,2",
+    "author": "Alessandro Zinani (alzinani(AT)tin.it)",
+    "references": 5,
+    "revision": 32,
+    "time": "2018-01-12T12:29:46-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

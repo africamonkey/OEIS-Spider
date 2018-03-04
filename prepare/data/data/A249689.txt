@@ -1,0 +1,44 @@
+{
+    "number": 249689,
+    "data": "16,65,91,1514,1993,1994,2452,2722,3047,3214,3931,3957,4356,4366,5191,5581,5805,5806,7519,8871,9228,9752,10036,10037,10039,10040,10963,10964,11278,11279,12015,12281,12595,12665,13262,13618,13648,15102,15103,18529,18991",
+    "name": "Numbers n such that A084937(3n) > A084937(3n+1).",
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A249689/b249689.txt\">Table of n, a(n) for n = 1..641</a> (Based on _John P. Linderman_'s computation of a million terms of A084937)"
+    ],
+    "program": [
+        "(AWK, using a-file for A084937)",
+        "awk ' BEGIN {s = 0}",
+        "      NR%3 == 0 { s = $2 }",
+        "      NR%3 == 1 { t = $2",
+        "          if (s > t)",
+        "             print( (NR-1)/3 )",
+        "        } ' a084937.txt | awk '{ print NR, $1}' >b249689.txt",
+        "(Python)",
+        "from __future__ import division",
+        "from fractions import gcd",
+        "A249689_list, l1, l2, s, b = [], 2, 1, 3, set()",
+        "for n in range(3,10**4):",
+        "....i = s",
+        "....while True:",
+        "........if not i in b and gcd(i,l1) == 1 and gcd(i,l2) == 1:",
+        "............l2, l1 = l1, i",
+        "............b.add(i)",
+        "............if l2 > l1 and n % 3 == 1:",
+        "................A249689_list.append((n-1)//3)",
+        "............while s in b:",
+        "................b.remove(s)",
+        "................s += 1",
+        "............break",
+        "........i += 1 # _Chai Wah Wu_, Dec 12 2014"
+    ],
+    "xref": [
+        "Cf. A084937"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Nov 12 2014",
+    "references": 2,
+    "revision": 17,
+    "time": "2014-12-13T00:27:08-05:00",
+    "created": "2014-11-12T17:20:19-05:00"
+}

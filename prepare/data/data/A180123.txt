@@ -1,0 +1,44 @@
+{
+    "number": 180123,
+    "data": "2,6,10,13,17,21,25,28,32,36,40,43,47,51,54,58,62,66,69,73,77,81,84,88,92,96,99,103,107,110,114,118,122,125,129,133,137,140,144,148,152,155,159,163,166,170,174,178,181,185,189,193,196,200,204,207,211,215,219",
+    "name": "Second of three \"least, sum, least\" self-generating sequences.",
+    "link": [
+        "Clark Kimberling, <a href=\"/A180123/b180123.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = least positive integer not yet used;",
+        "b(n) = n + a(n);",
+        "c(n) = least positive integer not yet used."
+    ],
+    "example": [
+        "The three sequences, labeled a,b,c, are",
+        "a=(1,4,7,9,...), b=(2,6,10,13,...), c=(3,5,8,11...)."
+    ],
+    "mathematica": [
+        "mex[list_, offset_] := NestWhile[# + 1 &, offset, MemberQ[list, #] &];",
+        "z = 100; a[1] = 1; b[1] = 1 + a[1];",
+        "c[1] = mex[soFar = {a[1], b[1]}, 1];",
+        "Do[soFar = Flatten[Join[{soFar, c[n - 1]}]];",
+        "a[n] = mex[soFar, c[n - 1]]; b[n] = n + a[n];",
+        "soFar = Flatten[Join[{soFar, a[n], b[n]}]];",
+        "c[n] = mex[soFar, c[n - 1]], {n, 2, z}]",
+        "Map[a, Range[z]](*A180122*)",
+        "Map[b, Range[z]](*A180123*)",
+        "Map[c, Range[z]](*A180124*)",
+        "(* _Peter J. C. Moses_, Aug 22 2014 *)",
+        "A180122 = Map[Floor[(1 + Sqrt[3]) #] - 1 &, Range[200]]",
+        "A180123 = A180122 + Range[200]",
+        "A180124 = Complement[Range[Last[A180122]], Flatten[{A180122, A180123}]]",
+        "(* _Peter J. C. Moses_, Aug 23 2014 *)"
+    ],
+    "xref": [
+        "Cf. A180122."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Aug 11 2010",
+    "references": 3,
+    "revision": 11,
+    "time": "2015-02-06T12:25:37-05:00",
+    "created": "2010-08-27T03:00:00-04:00"
+}

@@ -1,0 +1,113 @@
+{
+    "number": 131408,
+    "data": "1,2,5,14,35,95,248,668,1781,4799,12890,34766,93647,252635,681272,1838135,4958738,13379885,36100214,97409045,262833314,709207394,1913652308,5163654671,13933178390,37596275726,101446960109",
+    "name": "Repeated integer partitions or nested integer partitions.",
+    "comment": [
+        "See A131407 for the labeled case (with much more explanation)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A131408/b131408.txt\">Table of n, a(n) for n = 1..750</a>"
+    ],
+    "formula": [
+        "a(1)=1, a(2)=2, a(n) = A000041(n) + sum_{i=2..n-1} A008284(n,i)*a(i).",
+        "a(n) ~ c * d^n, where d = A246828 = 2.69832910647421123126399866618837633..., c = 0.232635324064951140265176690908381464098550827908380222089145... . - _Vaclav Kotesovec_, Sep 04 2014"
+    ],
+    "example": [
+        "Let denote * an unlabeled element. Then a(n=3)=5 because we have [ *,*,* ], [ *, * ][ * ], [[ *,* ]][[ * ]], [[ *,* ][ * ]], [ * ][ * ][ * ]."
+    ],
+    "maple": [
+        "A000041 := proc(n) combinat[numbpart](n) ; end: A008284 := proc(n,k) if k = 1 or k = n then 1; elif k > n then 0 ; else procname(n-1,k-1)+procname(n-k,k) ; fi ; end: A131408 := proc(n) option remember; local i ; if n <= 2 then n; else A000041(n)+add(A008284(n,i)*procname(i),i=2..n-1) ; fi ; end: for n from 1 to 40 do printf(\"%d,\",A131408(n)) ; od: # _R. J. Mathar_, Aug 07 2008"
+    ],
+    "mathematica": [
+        "t[_, 1] = 1; t[n_, k_] /; 1 <= k <= n := t[n, k] = Sum[t[n-i, k-1], {i, 1, n-1}] - Sum[t[n-i, k], {i, 1, k-1}]; t[_, _] = 0; a[1]=1; a[2]=2; a[n_] := a[n] = PartitionsP[n] + Sum[t[n, i]*a[i], {i, 2, n-1}]; Table[a[n], {n, 1, 40}] (* _Jean-Fran\u00e7ois Alcover_, Feb 02 2017 *)"
+    ],
+    "program": [
+        "(VB) Sub test_A131408()",
+        "Dim n As Long, Result As Long",
+        "For n = 1 To 9",
+        "Result = A131408(n)",
+        "Debug.Print n, Result",
+        "Cells(3, 3 + n) = Result",
+        "Next n",
+        "End Sub",
+        "Public Function A131408(n As Long)",
+        "Dim imsgbox As Integer",
+        "Dim i As Long, j As Long, Summe As Long",
+        "If n = 0 Then",
+        "A131408 = 0",
+        "Exit Function",
+        "ElseIf n = 1 Then",
+        "A131408 = 1",
+        "Exit Function",
+        "ElseIf n = 2 Then",
+        "A131408 = 2",
+        "Exit Function",
+        "ElseIf n > 2 And n < 13 Then",
+        "'Summe = Bell(n)",
+        "Summe = ZahlAllerPartitionen(n)",
+        "For j = 2 To n - 1",
+        "'Summe = Summe + Stirling2(n, j) * A131408(j)",
+        "Summe = Summe + ZahlPartitionen(n, j) * A131408(j)",
+        "Next j",
+        "Else",
+        "imsgbox = MsgBox(\"Illegal input for argument *** n *** !\", vbOKOnly, \"A131408\")",
+        "End",
+        "End If",
+        "A131408 = Summe",
+        "End Function",
+        "Public Function ZahlAllerPartitionen(n As Long)",
+        "Dim k As Long",
+        "ZahlAllerPartitionen = 0",
+        "For k = 1 To n",
+        "ZahlAllerPartitionen = ZahlAllerPartitionen + ZahlPartitionen(n, k)",
+        "Next k",
+        "End Function",
+        "Sub TestZahlPartitonenInTeile()",
+        "Dim n As Long, k As Long, Resultat As Long",
+        "n = 8",
+        "k = 4",
+        "Resultat = ZahlPartitionen(n, k)",
+        "Debug.Print \"TestZahlPartitonen: n,k,Resultat:\", n, k, Resultat",
+        "End Sub",
+        "Public Function ZahlPartitionen(n As Long, k As Long)",
+        "' compute recursively the number of partitions of n into k parts.",
+        "Dim imsgbox As Integer",
+        "If n > 2147483648# Or k > 2147483648# Then",
+        "imsgbox = MsgBox(\"n and k need to be smaller than 2147483648 !\", vbOKOnly, \"ZahlPartitionen\")",
+        "End",
+        "End If",
+        "If (n < 0 Or k < 0) Then",
+        "imsgbox = MsgBox(\"n and k need to be greater than 0 !\", vbOKOnly, \"ZahlPartitionen\")",
+        "End",
+        "End If",
+        "'If k > n Then",
+        "'imsgbox = MsgBox(\"k needs to be <= n !\", vbOKOnly, \"ZahlPartitionen\")",
+        "'End",
+        "'End If",
+        "If k = 1 Then",
+        "ZahlPartitionen = 1",
+        "Exit Function",
+        "ElseIf k = n Then",
+        "ZahlPartitionen = 1",
+        "Exit Function",
+        "ElseIf k > n Then",
+        "ZahlPartitionen = 0",
+        "Exit Function",
+        "End If",
+        "ZahlPartitionen = ZahlPartitionen(n - 1, k - 1) + ZahlPartitionen(n - k, k)",
+        "End Function"
+    ],
+    "xref": [
+        "Cf. A131407, A246828."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Thomas Wieder_, Jul 09 2007",
+    "ext": [
+        "Edited and extended by _R. J. Mathar_, Aug 07 2008"
+    ],
+    "references": 6,
+    "revision": 13,
+    "time": "2017-02-02T03:44:20-05:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

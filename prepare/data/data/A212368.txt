@@ -1,0 +1,40 @@
+{
+    "number": 212368,
+    "data": "1,1,1,1,1,1,1,1,1,1,2,4,7,11,16,22,29,37,46,57,73,99,142,211,317,473,694,997,1402,1937,2648,3614,4967,6917,9782,14023,20284,29438,42647,61457,87963,125093,177074,250157,353692,501658,714768,1023296,1470843",
+    "name": "Number of Dyck n-paths all of whose ascents and descents have lengths equal to 1 (mod 9).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A212368/b212368.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = 1+A(x)*(x-x^9*(1-A(x))).",
+        "a(n) = a(n-1) + Sum_{k=1..n-9} a(k)*a(n-9-k) if n>0; a(0) = 1."
+    ],
+    "example": [
+        "a(0) = 1: the empty path.",
+        "a(1) = 1: UD.",
+        "a(10) = 2: UDUDUDUDUDUDUDUDUDUD, UUUUUUUUUUDDDDDDDDDD.",
+        "a(11) = 4: UDUDUDUDUDUDUDUDUDUDUD, UDUUUUUUUUUUDDDDDDDDDD, UUUUUUUUUUDDDDDDDDDDUD, UUUUUUUUUUDUDDDDDDDDDD."
+    ],
+    "maple": [
+        "a:= proc(n) option remember;",
+        "      `if`(n=0, 1, a(n-1) +add(a(k)*a(n-9-k), k=1..n-9))",
+        "    end:",
+        "seq(a(n), n=0..60);",
+        "# second Maple program:",
+        "a:= n-> coeff(series(RootOf(A=1+A*(x-x^9*(1-A)), A), x, n+1), x, n):",
+        "seq(a(n), n=0..60);"
+    ],
+    "mathematica": [
+        "With[{k = 9}, CoefficientList[Series[(1 - x + x^k - Sqrt[(1 - x + x^k)^2 - 4*x^k]) / (2*x^k), {x, 0, 40}], x]] (* _Vaclav Kotesovec_, Sep 02 2014 *)"
+    ],
+    "xref": [
+        "Column k=9 of A212363."
+    ],
+    "keyword": "nonn",
+    "offset": "0,11",
+    "author": "_Alois P. Heinz_, May 10 2012",
+    "references": 2,
+    "revision": 10,
+    "time": "2017-06-23T07:55:20-04:00",
+    "created": "2012-05-12T17:33:10-04:00"
+}

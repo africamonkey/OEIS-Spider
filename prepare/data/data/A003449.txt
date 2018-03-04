@@ -1,0 +1,57 @@
+{
+    "number": 3449,
+    "id": "M2687",
+    "data": "1,1,3,7,24,74,259,891,3176,11326,40942,148646,543515,1996212,7367075,27294355,101501266,378701686,1417263770,5318762098,20011847548,75473144396,285267393358,1080432637662,4099856060808,15585106611244,59343290815356",
+    "name": "Number of nonequivalent dissections of an n-gon into n-3 polygons by nonintersecting diagonals up to rotation and reflection.",
+    "comment": [
+        "In other word, the number of almost-triangulations of an n-gon modulo the dihedral action.",
+        "Equivalently, the number of edges of the (n-3)-dimensional associahedron modulo the dihedral action.",
+        "The dissection will always be composed of one quadrilateral and n-4 triangles. - _Andrew Howroyd_, Nov 24 2017",
+        "See Theorem 30 of Bowman and Regev (although there appears to be a typo in the formula - see Maple code below). - _N. J. A. Sloane_, Dec 28 2012"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A003449/b003449.txt\">Table of n, a(n) for n = 4..200</a>",
+        "D. Bowman and A. Regev, <a href=\"http://arxiv.org/abs/1209.6270\">Counting symmetry classes of dissections of a convex regular polygon</a>, arXiv:1209.6270, 2012.",
+        "P. Lisonek, <a href=\"http://dx.doi.org/10.1006/jsco.1995.1066\">Closed forms for the number of polygon dissections</a>, Journal of Symbolic Computation 20 (1995), 595-601.",
+        "C. R. Read, <a href=\"http://dx.doi.org/10.1007/BF03031688\">On general dissections of a polygon</a>, Aequat. math. 18 (1978) 370-388."
+    ],
+    "maple": [
+        "C:=n->binomial(2*n,n)/(n+1);",
+        "T30:=proc(n) local t1; global C;",
+        "if n mod 2 = 0 then",
+        "t1:=(1/4-(3/(4*n)))*C(n-2) + (3/8)*C(n/2-1) + (1-3/n)*C(n/2-2);",
+        "if n mod 4 = 0 then t1:=t1+C(n/4-1)/4 fi;",
+        "else",
+        "t1:=(1/4-(3/(4*n)))*C(n-2) + (1/2)*C((n-3)/2);",
+        "fi;",
+        "t1; end;",
+        "[seq(T30(n),n=4..40)]; # _N. J. A. Sloane_, Dec 28 2012"
+    ],
+    "mathematica": [
+        "c = CatalanNumber;",
+        "T30[n_] := Module[{t1}, If[EvenQ[n], t1 = (1/4 - (3/(4*n)))*c[n - 2] + (3/8)*c[n/2 - 1] + (1 - 3/n)*c[n/2 - 2]; If[Mod[n, 4] == 0, t1 = t1 + c[n/4 - 1]/4], t1 = (1/4 - (3/(4*n)))*c[n-2] + (1/2)*c[(n-3)/2]]; t1];",
+        "Table[T30[n], {n, 4, 40}] (* _Jean-Fran\u00e7ois Alcover_, Dec 14 2017, after _N. J. A. Sloane_ *)"
+    ],
+    "program": [
+        "(PARI) \\\\ See A295419 for DissectionsModDihedral()",
+        "{ my(v=DissectionsModDihedral(apply(i->if(i>=3&&i<=4, y^(i-3) + O(y^2)), [1..25]))); apply(p->polcoeff(p, 1), v[4..#v]) } \\\\ _Andrew Howroyd_, Nov 24 2017"
+    ],
+    "xref": [
+        "A diagonal of A295634.",
+        "Cf. A003450, A295419."
+    ],
+    "keyword": "nonn",
+    "offset": "4,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Entry revised (following Bowman and Regev) by _N. J. A. Sloane_, Dec 28 2012",
+        "Name clarified by _Andrew Howroyd_, Nov 24 2017"
+    ],
+    "references": 4,
+    "revision": 33,
+    "time": "2017-12-14T05:36:46-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

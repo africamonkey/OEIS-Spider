@@ -1,0 +1,40 @@
+{
+    "number": 250260,
+    "data": "1,1,1,2,3,4,5,29,133,412,1041,2300,22991,170832,822198,3114489,10006375,141705439,1457872978,9522474417,48094772656,202808749375,3716808948931,48860589990687,403131250565618,2545098156762649,13287626090593750",
+    "name": "The number of 5-alternating permutations of [n].",
+    "comment": [
+        "A sequence a(1), a(2),... is called k-alternating if a(i) > a(i+1) iff i=1 (mod k)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A250260/b250260.txt\">Table of n, a(n) for n = 0..500</a>",
+        "R. P. Stanley, <a href=\"http://arxiv.org/abs/0912.4240\">A survey of alternating permutations</a>, arXiv:0912.4240, page 17."
+    ],
+    "maple": [
+        "# dowupP defined in A250259.",
+        "A250260 :=proc(n)",
+        "    downupP(n,4) ;",
+        "end proc:",
+        "seq(A250260(n),n=0..20) ;",
+        "# second Maple program:",
+        "b:= proc(u, o, t) option remember; `if`(u+o=0, 1,",
+        "     `if`(t=1, add(b(u-j, o+j-1, irem(t+1, 5)), j=1..u),",
+        "               add(b(u+j-1, o-j, irem(t+1, 5)), j=1..o)))",
+        "    end:",
+        "a:= n-> b(0, n, 0):",
+        "seq(a(n), n=0..35);  # _Alois P. Heinz_, Nov 15 2014"
+    ],
+    "mathematica": [
+        "b[u_, o_, t_] := b[u, o, t] = If[u+o == 0, 1, If[t == 1, Sum[b[u-j, o+j-1, Mod[t+1, 5]], {j, 1, u}], Sum[b[u+j-1, o-j, Mod[t+1, 5]], {j, 1, o}]]]; a[n_] := b[0, n, 0]; Table[a[n], {n, 0, 35}] (* _Jean-Fran\u00e7ois Alcover_, Jun 24 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A065619 (2-alternating), A249402 (3-alternating), A250259 (4-alternating).",
+        "Column k=5 of A250261."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_R. J. Mathar_, Nov 15 2014",
+    "references": 3,
+    "revision": 16,
+    "time": "2015-06-24T06:40:04-04:00",
+    "created": "2014-11-15T14:25:38-05:00"
+}

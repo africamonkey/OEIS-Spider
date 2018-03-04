@@ -1,0 +1,56 @@
+{
+    "number": 62339,
+    "data": "13,31,103,211,1021,1201,2011,3001,10111,20011,20101,21001,100003,102001,1000003,1011001,1020001,1100101,2100001,10010101,10100011,20001001,30000001,101001001,200001001,1000000021,1000001011,1000010101,1000020001,1000200001,1002000001,1010000011",
+    "name": "Primes whose sum of digits is 4.",
+    "comment": [
+        "This is a subsequence of A062338. Is this sequence (and its brothers A062337, A062341 and A062343) infinite?",
+        "10^A049054(m)+3 and 3*10^A056807(m)+1 are subsequences. A107715 (primes containing only digits from set {0,1,2,3}) is a supersequence. Terms not containing the digit 3 are either terms of A020449 (primes that contain digits 0 and 1 only) or of A106100 (primes with maximal digit 2) - and thus terms of these sequences' union A036953 (primes containing only digits from set {0,1,2}). - Rick L. Shepherd, May 23 2005",
+        "Subsequence of A107288. - _Zak Seidov_, Oct 29 2009",
+        "Includes A159352. - _Robert Israel_, Dec 28 2015"
+    ],
+    "link": [
+        "T. D. Noe and Robert Israel, <a href=\"/A062339/b062339.txt\">Table of n, a(n) for n = 1..10000</a> (n=1..1000 from T. D. Noe)",
+        "Amin Witno, <a href=\"http://www.ijopcm.org/Vol/10/IJOPCM(vol.3.2.3.J.10).pdf\">Numbers which factor as their digital sum times a prime</a>, International Journal of Open Problems in Computer Science and Mathematics 3:2 (2010), pp. 132-136."
+    ],
+    "example": [
+        "3001 is a prime with sum of digits = 4, hence belongs to the sequence."
+    ],
+    "maple": [
+        "N:= 20: # to get all terms < 10^N",
+        "B[1]:= {1}:",
+        "B[2]:= {2}:",
+        "B[3]:= {3}:",
+        "A:= {}:",
+        "for d from 2 to N do",
+        "   B[4]:= map(t -> 10*t+1,B[3]) union  map(t -> 10*t+3,B[1]);",
+        "   B[3]:= map(t -> 10*t, B[3]) union map(t -> 10*t+1,B[2]) union map(t -> 10*t+2,B[1]);",
+        "   B[2]:= map(t -> 10*t, B[2]) union map(t -> 10*t+1,B[1]);",
+        "   B[1]:= map(t -> 10*t, B[1]);",
+        "   A:= A union select(isprime,B[4]);",
+        "od:",
+        "sort(convert(A,list)); # _Robert Israel_, Dec 28 2015"
+    ],
+    "mathematica": [
+        "Union[FromDigits/@Select[Flatten[Table[Tuples[{0,1,2,3},k],{k,9}],1],PrimeQ[FromDigits[#]]&&Total[#]==4&]] (* _Jayanta Basu_, May 19 2013 *)"
+    ],
+    "program": [
+        "(PARI) for(a=1,20,for(b=0,a,for(c=0,b,if(isprime(k=10^a+10^b+10^c+1),print1(k\", \"))))) \\\\ _Charles R Greathouse IV_, Jul 26 2011",
+        "(MAGMA) [p: p in PrimesUpTo(800000000) | &+Intseq(p) eq 4]; // _Vincenzo Librandi_, Jul 08 2014"
+    ],
+    "xref": [
+        "Cf. A062337, A062341, A062343, A049054, A056807, A107715, A020449, A106100, A036953, A069663, A069664, A159352",
+        "Cf. similar sequences listed in A244918."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Jun 21 2001",
+    "ext": [
+        "Corrected and extended by Larry Reeves (larryr(AT)acm.org), Jul 06 2001",
+        "More terms from _Rick L. Shepherd_, May 23 2005",
+        "More terms from _Lekraj Beedassy_, Dec 19 2007"
+    ],
+    "references": 17,
+    "revision": 28,
+    "time": "2015-12-28T20:49:19-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

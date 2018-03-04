@@ -1,0 +1,58 @@
+{
+    "number": 192208,
+    "data": "1,6,30,138,606,2610,11070,46386,192606,793938,3253038,13261746,53832462,217707762,877594086,3527521794,14142930774,56574143754,225841103190,899866007610,3579435531846,14215941861138,56378805654510,223297285830858,883326046736814",
+    "name": "Number of n-step prudent self-avoiding walks on hexagonal [= triangular] lattice.",
+    "comment": [
+        "The hexagonal lattice is the familiar 2-dimensional lattice in which each point has 6 neighbors. This is sometimes called the triangular lattice.",
+        "A prudent walk never takes a step pointing towards a vertex it has already visited.  Prudent walks are self-avoiding but not reversible in general."
+    ],
+    "reference": [
+        "E. Duchi, On some classes of prudent walks, in: FPSAC'05, Taormina, Italy, 2005."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A192208/b192208.txt\">Table of n, a(n) for n = 0..61</a>",
+        "Mireille Bousquet-M\u00e9lou, <a href=\"https://arxiv.org/abs/0804.4843\">Families of prudent self-avoiding walks</a>, arXiv:0804.4843. J. Combin. Theory Ser. A 117 no. 3 (2010) 313-344.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Self-avoiding_walk\">Self-avoiding walk</a>"
+    ],
+    "example": [
+        "Two 5-step self-avoiding walks on hexagonal lattice from (S) to (E), the walk at left is prudent while the walk at right is not prudent:",
+        ".     o---o...o...o...o---o",
+        ".    . \\ . \\ . . . . . \\ . \\",
+        ".   o..(S)..o...o...o..(E)..o",
+        ".    . . . / . . . . . . . /",
+        ".    (E)--o...o...o..(S)--o"
+    ],
+    "maple": [
+        "i:= n-> max(n, 0)+1: d:= n-> max(n-1, -1):",
+        "b:= proc(n, x, y, z, u, v, w) option remember;",
+        "    `if`(n=0, 1, `if`(x>y, b(n, y, x, w, v, u, z),",
+        "        b(n-1, d(x), d(y), z, i(u), i(v), w)+",
+        "    `if`(min(y, z)<=0 or x=-1,",
+        "        b(n-1, d(y), d(z), u, i(v), i(w), x), 0)+",
+        "    `if`(min(z, u)<=0 or y=-1,",
+        "        b(n-1, d(z), d(u), v, i(w), i(x), y), 0)+",
+        "    `if`(min(v, w)<=0 or x=-1,",
+        "        b(n-1, d(v), d(w), x, i(y), i(z), u), 0)+",
+        "    `if`(min(w, x)<=0 or y=-1,",
+        "        b(n-1, d(w), d(x), y, i(z), i(u), v), 0)))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, 6*b(n-1, -1$2, 0, 1$2, 0)):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "i[n_]:= Max[n, 0]+1; d[n_]:= Max[n-1, -1];",
+        "b[n_, x_, y_, z_, u_, v_, w_] := b[n, x, y, z, u, v, w] = If[n==0, 1, If[x>y, b[n, y, x, w, v, u, z], b[n-1, d[x], d[y], z, i[u], i[v], w]+ If[Min[y, z]<=0 || x==-1, b[n-1, d[y], d[z], u, i[v], i[w], x], 0]+ If[Min[z, u]<=0 || y==-1, b[n-1, d[z], d[u], v, i[w], i[x], y], 0]+ If[Min[v, w]<=0 || x==-1, b[n-1, d[v], d[w], x, i[y], i[z], u], 0]+ If[Min[w, x]<=0 || y==-1, b[n-1, d[w], d[x], y, i[z], i[u], v], 0]]];",
+        "a[n_]:= If[n==0, 1, 6*b[n-1, -1,-1, 0, 1,1, 0]];",
+        "Table[a[n],{n,0,20}] (* _Jean-Fran\u00e7ois Alcover_, Aug 10 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A001334, A192871."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Jul 05 2011",
+    "references": 3,
+    "revision": 42,
+    "time": "2017-08-10T14:34:49-04:00",
+    "created": "2011-07-05T14:21:16-04:00"
+}

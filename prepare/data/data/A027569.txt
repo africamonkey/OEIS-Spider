@@ -1,0 +1,52 @@
+{
+    "number": 27569,
+    "data": "11,33081664151,83122625471,294920291201,573459229151,663903555851,688697679401,730121110331,1044815397161,1089869189021,1108671297731,1235039237891,1291458592421,1738278660731",
+    "name": "Initial members of prime decaplets (p, p+2, p+6, p+8, p+12, p+18, p+20, p+26, p+30, p+32).",
+    "comment": [
+        "All terms are congruent to 11 (modulo 210). - _Matt C. Anderson_, May 28 2015"
+    ],
+    "link": [
+        "Matt C. Anderson and Dana Jacobsen, <a href=\"/A027569/b027569.txt\">Table of n, a(n) for n = 1..10000</a> [first 100 terms from Matt C. Anderson]",
+        "T. Forbes, <a href=\"http://anthony.d.forbes.googlepages.com/adf.htm\">Prime k-tuplets</a>"
+    ],
+    "maple": [
+        "composite_small := proc (n::integer)",
+        "description \"procedure to determine if n has a prime factor less than 100\";",
+        "if igcd(2305567963945518424753102147331756070, n) = 1 then",
+        "return false else return true end if;",
+        "end proc;",
+        "# begin initialization section",
+        "p := [0, 2, 6, 8, 12, 18, 20, 26, 30, 32]; o := [1271, 1691]; m := 2310;",
+        "# end initialization section",
+        "with(ArrayTools); os := Size(o, 2); ps := Size(p, 2);",
+        "loopstop := 10^11; loopstart := 0;",
+        "print(11);",
+        "for n from loopstart to loopstop do",
+        "for a to os do",
+        "counter := 0; wc := 0; wd := 0;",
+        "while `and`(wd > -10, wd < ps) do",
+        "wd := wd+1;",
+        "if composite_small(m*n+o[a]+p[wd]) = false then wd := wd+1 else wd := -10 end if;",
+        "end do;",
+        "if wd >= 9 then while `and`(counter >= 0, wc < ps) do",
+        "wc := wc+1;",
+        "if isprime(m*n+o[a]+p[wc]) then counter := counter+1 else counter := -1 end if end do;",
+        "end if;",
+        "if counter = ps then print(m*n+o[a]); end if;",
+        "end do;",
+        "end do;",
+        "# _Matt C. Anderson_, Apr 30 2015"
+    ],
+    "program": [
+        "(PARI) is(n)=isprime(n) && isprime(n+2) && isprime(n+6) && isprime(n+8) && isprime(n+12) && isprime(n+18) && isprime(n+20) && isprime(n+26) && isprime(n+30) && isprime(n+32)",
+        "v=primes(10); t=1; forprime(p=31,1e11, v[t]=p; t=(t%10)+1; if(p-v[t]==32 && is(v[t]), print1(v[t]\", \"))) \\\\ _Charles R Greathouse IV_, May 20 2015",
+        "(Perl) use ntheory \":all\"; say for sieve_prime_cluster(1,1e13, 2,6,8,12,18,20,26,30,32); # _Dana Jacobsen_, Sep 30 2015"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Warut Roonguthai_",
+    "references": 33,
+    "revision": 31,
+    "time": "2018-01-08T02:32:27-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

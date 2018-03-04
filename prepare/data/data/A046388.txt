@@ -1,0 +1,39 @@
+{
+    "number": 46388,
+    "data": "15,21,33,35,39,51,55,57,65,69,77,85,87,91,93,95,111,115,119,123,129,133,141,143,145,155,159,161,177,183,185,187,201,203,205,209,213,215,217,219,221,235,237,247,249,253,259,265,267,287,291,295,299,301,303",
+    "name": "Odd numbers of the form p*q where p and q are distinct primes.",
+    "comment": [
+        "These are the odd squarefree semiprimes.",
+        "These numbers n have the property that n is a Fermat pseudoprime for at least two bases 1 < b < n - 1. That is, b^(n - 1) = 1 (mod n). See sequence A175101 for a count of the number of bases. - _Karsten Meyer_, Dec 02 2010",
+        "The new Mathematica function returns the next element of this sequence after integer n. This program is more efficient than the original one that was based on sorting and selecting. - _Lei Zhou_, Dec 11 2012"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A046388/b046388.txt\">Table of n, a(n) for n=1..1000</a>"
+    ],
+    "mathematica": [
+        "max = 300; A046388 = Sort@Flatten@Table[Prime[m] Prime[n], {n, 3, Ceiling[PrimePi[max/3]]}, {m, 2, n - 1}]; Select[A046388, # < max &] (* _Alonso del Arte_ based on _Robert G. Wilson v_'s program for A006881, Oct 24 2011 *)",
+        "%t f[n_]:=Block[{p1=Prime[Range[2, PrimePi[Max[3, NextPrime[Ceiling@Sqrt[n + 1] - 1]]]]], p2}, p2 = Table[Max[NextPrime[p1[[i]]], NextPrime[Ceiling[(n + 1)/p1[[i]]] - 1]], {i, Length[p1]}]; Min[p1*p2]]; NestList[f, 15, 50] (* _Lei Zhou_, Dec 11 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a046388 n = a046388_list !! (n-1)",
+        "a046388_list = filter ((== 2) . a001221) a056911_list",
+        "-- _Reinhard Zumkeller_, Jan 02 2014",
+        "(PARI) isok(n) = (n % 2) && (bigomega(n) == 2) && (omega(n)==2); \\\\ _Michel Marcus_, Feb 05 2015"
+    ],
+    "xref": [
+        "Cf. A001358, A046315, A046404.",
+        "Different from A056913, A098905, A225375.",
+        "Cf. A001221, A056911, intersection of A005117 and A046315."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Jun 15 1998",
+    "ext": [
+        "I removed some ambiguity in the definition and edited the entry, merging in some material from A146166. - _N. J. A. Sloane_, May 09 2013"
+    ],
+    "references": 39,
+    "revision": 46,
+    "time": "2015-03-03T23:06:23-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

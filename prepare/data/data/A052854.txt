@@ -1,0 +1,53 @@
+{
+    "number": 52854,
+    "data": "1,1,2,4,10,26,77,235,758,2504,8483,29203,102030,360442,1285926,4625102,16754302,61067430,223803775,824188993,3048383517,11318928477,42176798315,157664823501,591109863049,2222121888117,8374151243258,31630394287364,119725350703472",
+    "name": "Number of forests of ordered trees on n total nodes.",
+    "comment": [
+        "If B is a collection in which there are A000108(n-1) [Catalan numbers] things with n points, a(n) is the number of multisets of B with a total of n points."
+    ],
+    "link": [
+        "T. D. Noe and Alois P. Heinz, <a href=\"/A052854/b052854.txt\">Table of n, a(n) for n = 0..1000</a> (first 201 terms from T. D. Noe)",
+        "Steven R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/csolve/erradd.pdf\">Errata and Addenda to Mathematical Constants</a>, p. 40.",
+        "P. Flajolet et al., <a href=\"http://arXiv.org/abs/math.CO/0606370\">A hybrid of Darboux's method and singularity analysis in combinatorial asymptotics</a>, arXiv:math/0606370 [math.CO], 2006.",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=822\">Encyclopedia of Combinatorial Structures 822</a>"
+    ],
+    "formula": [
+        "Euler transform of Catalan numbers C(n-1) (cf. A000108).",
+        "n*a(n)=Sum_{k=1..n} a(n-k)*b(k), b(k)=Sum_{d|k} binomial(2*d-2, d-1)=A066768(k). - _Vladeta Jovovic_, Jan 17 2002",
+        "G.f.: 1/(Product_{k>0} (1-x^k)^C(k-1)) where C() is Catalan numbers.",
+        "G.f.: A(z) = prod_{n >= 1} (1-z^n)^(-A000108(n)) = exp(sum_{k >= 1} C(z^k)/k, where C(z) is the g.f. for the Catalan numbers.",
+        "a(n) ~ K 4^(n-1)/sqrt(Pi n^3), where K ~ 1.71603053492228196404746... (see A246949)."
+    ],
+    "maple": [
+        "spec := [S,{B=Sequence(C),C=Prod(Z,B),S=Set(C)},unlabeled]: seq(combstruct[count](spec,size=n), n=0..20); # version 1",
+        "spec := [ C, {B=Union(Z,Prod(B,B)), C=Set(B)}, unlabeled ]; [seq(combstruct[count](spec, size=n), n=0..40)]; # version 2",
+        "# third Maple program:",
+        "with(numtheory):",
+        "b:= proc(n) option remember; binomial(2*n, n) end:",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(add(",
+        "      b(d-1), d=divisors(j))*a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..35);  # _Alois P. Heinz_, Mar 10 2015"
+    ],
+    "mathematica": [
+        "max = 27; f[x_] := 1/Product[ (1 - x^k)^CatalanNumber[k - 1], {k, 1, max}]; se = Series[f[x], {x, 0, max}]; CoefficientList[se, x] (* _Jean-Fran\u00e7ois Alcover_, Oct 05 2011, after g.f. *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,polcoeff(1/prod(k=1,n,(1-x^k+x*O(x^n))^((2*k-2)!/k!/(k-1)!)),n))"
+    ],
+    "xref": [
+        "Cf. A000108, A052805, A066768.",
+        "Cf. A246949."
+    ],
+    "keyword": "easy,nonn,nice",
+    "offset": "0,3",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "ext": [
+        "Better title from _Geoffrey Critzer_, Feb 22 2013",
+        "Minor edits, _Vaclav Kotesovec_, May 13 2014"
+    ],
+    "references": 4,
+    "revision": 48,
+    "time": "2017-04-18T10:48:59-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

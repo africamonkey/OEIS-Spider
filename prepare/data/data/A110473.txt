@@ -1,0 +1,53 @@
+{
+    "number": 110473,
+    "data": "1,9,15,18,21,25,27,30,33,35,36,39,42,45,49,50,51,54,55,57,60,63,65,66,69,70,72,75,77,78,81,84,85,87,90,91,93,95,98,99,100,102,105,108,110,111,114,115,117,119,120,121,123,125,126,129,130,132,133,135,138,140",
+    "name": "Integers not in \"array with primes\".",
+    "comment": [
+        "This is 1 + A105441."
+    ],
+    "example": [
+        "\"Array with primes\":",
+        "consider this array where the first column is made of all prime numbers p and the n-th term of a row is two times the previous one on the same row [p(n)=p*2^n]:",
+        "p p*2 p*4 p*8 p*16 p*32 p*64 p*128 p*256 p*512 ...",
+        "2 4 8 16 32 64 128 256 512 1024 ...",
+        "3 6 12 24 48 96 192 384 768 1536 ...",
+        "5 10 20 40 80 160 320 640 1280 2560 ...",
+        "7 14 28 56 112 224 448 896 1792 3584 ...",
+        "11 22 44 88 176 352 704 1408 2816 5632 ...",
+        "13 26 52 104 208 416 832 1664 3328 6656 ...",
+        "17 34 68 136 272 544 1088 2176 4352 8704 ...",
+        "19 38 76 152 304 608 1216 2432 4864 9728 ...",
+        "23 46 92 184 368 736 1472 2944 5888 11776 ...",
+        "29 58 116 232 464 928 1856 3712 7424 14848 ...",
+        "31 62 124 248 496 992 1984 3968 7936 15872 ...",
+        "37 74 148 296 592 1184 2368 4736 9472 18944 ...",
+        "41 82 164 328 656 1312 2624 5248 10496 20992 ...",
+        "43 86 172 344 688 1376 2752 5504 11008 22016 ...",
+        "47 94 188 376 752 1504 3008 6016 12032 24064 ...",
+        "53 106 212 424 848 1696 3392 6784 13568 27136 ...",
+        "..."
+    ],
+    "maple": [
+        "# The function tries to represent the idea; an",
+        "# implementation via A105441 would be more efficient.",
+        "A110473 := proc(n) local T;",
+        "T := proc(n) local A,i,l,h,k; A := [];",
+        "k := simplify(floor(log[2](n+1))-1);",
+        "for i from 0 to k do",
+        "    l := iquo(n,2^(i+1))+1; h := iquo(n,2^i);",
+        "    A := [op(A), select(isprime, [$l..h])] od;",
+        "convert(A,set) end;",
+        "`if`(T(n-1) minus T(n) = {}, n, NULL) end:",
+        "seq(A110473(i),i=1..140); # _Peter Luschny_, Mar 18 2013"
+    ],
+    "mathematica": [
+        "With[{nn=150},Complement[Range[nn],Sort[Flatten[Table[Prime[n]*2^Range[ 0,nn],{n,nn}]]]]] (* _Harvey P. Dale_, Oct 18 2013 *)"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Eric Angelini_ & Alexandre Wajnberg, Sep 08 2005",
+    "references": 2,
+    "revision": 11,
+    "time": "2013-10-18T15:45:51-04:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

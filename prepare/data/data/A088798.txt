@@ -1,0 +1,31 @@
+{
+    "number": 88798,
+    "data": "3,19,57,3276457,9829371,22997937,24687460011,24504559526049,1152870338086169,3458611014258507,19831522709797616449,54128285729329681609,59494568129392849347,61582096835687335289",
+    "name": "Numbers n that divide the concatenation of n-1, n-2 and n-3.",
+    "comment": [
+        "Each member of this sequence also appears to be a divisor of the number formed when concatenating (n+1), (n+2) and (n+3) in that order. Each nonprime member of the terms above appears to be divisible by 3. Further note that apart from 3 itself, if a(n) is a prime, then 3 * a(n) also appears to be a member. 19*3=57, 3276457*3=9829371. More prime members would need to be found to test this."
+    ],
+    "example": [
+        "a(2)=19 because 19 is a divisor of 181716. a(4)=3276457 because 3276457 is a divisor of 327645632764553276454."
+    ],
+    "maple": [
+        "prevcatOld := proc(n,t,o) local i,s; s := \"\"; for i from 1 to t do if o=\"a\" then s := cat(convert(n-i,string),s) else s := cat(s,convert(n-i,string)) fi; od; parse(s) end; nextdivcat := proc(startAt,endAt,numTerms,catOrder) local i; for i from startAt to endAt while (prevcatOld(i,numTerms,catOrder) mod i > 0) do od; if i<=endAt then i else -1 fi; end; s := NULL; t := 2; for j from 1 to 10 do t := nextdivcat(t+1,23000000,3,\"d\"); s := s,t od; print(s);"
+    ],
+    "mathematica": [
+        "Do[ If[ Mod[ FromDigits[ Join[ IntegerDigits[2n], IntegerDigits[2n - 1], IntegerDigits[2n - 2]]], (2n + 1)] == 0, Print[2n + 1]], {n, 1, 700000000}]"
+    ],
+    "xref": [
+        "Cf. A069860, A069862, A069871, A088797."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "Chuck Seggelin (barkeep(AT)plastereddragon.com), Oct 19 2003",
+    "ext": [
+        "Edited by _Robert G. Wilson v_, Oct 20 2003",
+        "More terms from _David Wasserman_, Aug 25 2005"
+    ],
+    "references": 12,
+    "revision": 7,
+    "time": "2012-03-31T13:20:51-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 161170,
+    "data": "10,125,1809,37820,2722768,1037849736,4204496515890",
+    "name": "Least integer k such that the n-th-almost prime count is equal to the prime count.",
+    "comment": [
+        "Related to sequence A125149, but we compare the prime count to the semiprime count, then the trieneprime count, and so on.",
+        "We start with a the number two, and a prime count of 1.",
+        "Then the prime count and semiprime count are first identical when k = 10, the prime count is 4 {2,3,5,7} and the semiprime count is also 4 {4,6,9,10}.",
+        "Next, when k = 125 the prime count of 30 and trieneprime count of 30 are first identical.",
+        "Based on the write up for A125149 and examination of the factor counts as k increases, we believe our sequence is infinite, but have not proved this."
+    ],
+    "example": [
+        "a(2) = 10 since there are now 4 primes {2, 3, 5 & 7}",
+        "and 4 semiprimes {4, 6, 9 & 10} <= 10.",
+        "a(3) = 125 with 30 primes and 30 trieneprimes.",
+        "a(4) = 1809 with 279 primes and 279 products of 4 primes.",
+        "a(5) = 37820 with 4000 primes and 4000 products of 5 primes.",
+        "a(6) = 2722768 with 198183 primes and 198183 products of 6 primes.",
+        "a(7) = 1037849736 with 52672391 primes and 52672391 products of 7 primes.",
+        "a(8) = 4204496515890 with 150007470826 primes and 150007470826 products",
+        "of 8 primes."
+    ],
+    "program": [
+        "(Ruby) # A slow program to generate sequence",
+        "# Faster C code is available by request",
+        "# Tallies number of primes, semiprimes, trieneprimes ...",
+        "tally = Hash.new { |h,k| h[k] = 0}",
+        "# Returns number of factors of num",
+        "def factors(num)",
+        "(2..(Math.sqrt(num).to_i)).each{ |i|",
+        "return factors(num/i) + 1 if num % i == 0",
+        "}",
+        "1",
+        "end",
+        "# Testing number of primes against composites with num_factors",
+        "num_factors = 2",
+        "2.upto( 1.0/0.0 ) { |i|",
+        "tally[factors(i)] +=1",
+        "if tally[1] == tally[num_factors]",
+        "puts \"k: #{i} Primes: #{tally[1]} Composites with #{num_factors} factors: #{tally[num_factors]}\"",
+        "num_factors += 1",
+        "end",
+        "}"
+    ],
+    "xref": [
+        "A125149"
+    ],
+    "keyword": "hard,more,nonn",
+    "offset": "2,1",
+    "author": "_Andy Martin_, Jun 04 2009",
+    "ext": [
+        "Edited example and a(8), _Donovan Johnson_, Mar 10 2010"
+    ],
+    "references": 0,
+    "revision": 8,
+    "time": "2013-04-14T08:32:30-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

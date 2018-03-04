@@ -1,0 +1,44 @@
+{
+    "number": 229233,
+    "data": "1,1,2,8,48,387,4043,52425,819346,15133184,324769270,7986143453,222514878501,6958782341565,242274294115558,9324382604206368,394282071192289024,18218582054356563951,915480348188869318723,49812603754178905560085,2923492374797360684715882",
+    "name": "O.g.f.: Sum_{n>=0} x^n / Product_{k=1..n} (1 - n*k*x).",
+    "comment": [
+        "Compare to an o.g.f. of Bell numbers (A000110): Sum_{n>=0} x^n/Product_{k=1..n} (1-k*x)."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} k^(n-k) * Stirling2(n, k).",
+        "E.g.f.: Sum_{n>=0} (exp(n*x) - 1)^n / (n! * n^n)."
+    ],
+    "example": [
+        "O.g.f.: A(x) = 1 + x + 2*x^2 + 8*x^3 + 48*x^4 + 387*x^5 + 4043*x^6 +...",
+        "where",
+        "A(x) = 1 + x/(1-x) + x^2/((1-2*1*x)*(1-2*2*x)) + x^3/((1-3*1*x)*(1-3*2*x)*(1-3*3*x)) + x^4/((1-4*1*x)*(1-4*2*x)*(1-4*3*x)*(1-4*4*x)) +...",
+        "Exponential Generating Function.",
+        "E.g.f.: E(x) = 1 + x + 2*x^2/2! + 8*x^3/3! + 48*x^4/4! + 387*x^5/5! +...",
+        "where",
+        "E(x) = 1 + (exp(x)-1) + (exp(2*x)-1)^2/(2!*2^2) + (exp(3*x)-1)^3/(3!*3^3) + (exp(4*x)-1)^4/(4!*4^4) + (exp(5*x)-1)^5/(5!*5^5) +..."
+    ],
+    "mathematica": [
+        "Flatten[{1,Table[Sum[k^(n-k) * StirlingS2[n, k],{k,0,n}],{n,1,20}]}] (* _Vaclav Kotesovec_, May 08 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(m=0,n,x^m/prod(k=1,m,1-m*k*x +x*O(x^n))),n)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) {a(n)=n!*polcoeff(sum(m=0,n,(exp(m*x+x*O(x^n))-1)^m/(m!*m^m)),n)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) {Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)}",
+        "{a(n)=sum(k=0, n, k^(n-k) * Stirling2(n, k))}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A229234, A220181, A108459, A122399.",
+        "Cf. A229258, A229259, A229260, A229261."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Sep 17 2013",
+    "references": 7,
+    "revision": 12,
+    "time": "2014-05-08T11:26:18-04:00",
+    "created": "2013-09-17T02:58:51-04:00"
+}

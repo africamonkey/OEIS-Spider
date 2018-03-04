@@ -1,0 +1,39 @@
+{
+    "number": 6696,
+    "id": "M1836",
+    "data": "0,2,8,22,50,110,226,464,938,1888,3794,7598,15208,30438,60890,121792,243606,487238,974488,1948998,3898034,7796078,15592168,31184358,62368754,124737534,249475080,498950182,997900402,1995800846,3991601704,7983203430,15966406898",
+    "name": "a(n) = min_{k=1..n} (a(k-1) + 2^k*(n + a(n-k))); a(0) = 0.",
+    "reference": [
+        "M. V. Connolly and W. J. Knight, Search in an array in which probe costs grow exponentially or factorially, preprint, 1990.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A006696/b006696.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "M. V. Connolly and W. J. Knight, <a href=\"/A006696/a006696.pdf\">Search in an array in which probe costs grow exponentially or factorially</a>, preprint, 1990."
+    ],
+    "program": [
+        "(PARI) geta(a, j) = if (j <= 0, 0, a[j]);",
+        "lista(nn) = {print1(0, \", \"); a = vector(nn); for (i = 1, nn, amin = 0; for (k = 1, i, new = geta(a, k-1) + 2^k*(i + geta(a, i-k)); if (! amin, amin = new,  amin = min(amin, new););); print1(amin, \", \"); a[i] = amin;);} \\\\ _Michel Marcus_, Sep 09 2013, May 09 2014",
+        "(Haskell)",
+        "a006696 n = a006696_list !! (n-1)",
+        "a006696_list = 0 : f 1 [0] where",
+        "   f u vs = w : f (u + 1) (w : vs) where",
+        "     w = minimum $ zipWith (+)",
+        "         (reverse vs) (zipWith (*) (tail a000079_list) (map (+ u) vs))",
+        "- _Reinhard Zumkeller_, May 08 2014"
+    ],
+    "xref": [
+        "Cf. A000079."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,2",
+    "author": "_Jeffrey Shallit_, _N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Michel Marcus_, Sep 09 2013",
+        "Offset changed to 0 by _Reinhard Zumkeller_, May 08 2014"
+    ],
+    "references": 1,
+    "revision": 31,
+    "time": "2017-08-11T18:54:00-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

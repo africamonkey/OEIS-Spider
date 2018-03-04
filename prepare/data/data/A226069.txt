@@ -1,0 +1,53 @@
+{
+    "number": 226069,
+    "data": "2,5,17,17957,4726277,23911673957",
+    "name": "Primes p such that p-1 is a square and p-2 is a triangular number.",
+    "comment": [
+        "Roots of squares: a(n)-1 = b(n)*b(n), b(n) = A226070(n).",
+        "Roots of triangular numbers: a(n)-2 = c(n)*(c(n)+1)/2, c(n) = A226071(n).",
+        "Primes of the form A006452(k)^2+1. a(7) is too large to include here (see b-file). - _Max Alekseyev_, Jan 30 2014"
+    ],
+    "link": [
+        "Max Alekseyev, <a href=\"/A226069/b226069.txt\">Table of n, a(n) for n = 1..12</a>"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#include <stdlib.h>",
+        "#include <math.h>",
+        "#define TOP (1ULL<<34)",
+        "int main() {",
+        "  unsigned long long i, j, k, r, n=1;",
+        "  unsigned char *c = (unsigned char *)malloc(TOP/8);",
+        "  memset(c, 0, TOP/8);",
+        "  for (i=3; i < TOP*2; i+=2)",
+        "    if ((c[i>>4] & (1<<((i>>1) & 7)))==0) {",
+        "      ++n;",
+        "      if (i<(1ULL<<32))",
+        "        for (j=i*i>>1; j<TOP; j+=i)  c[j>>3] |= 1 << (j&7);",
+        "    }",
+        "  //printf(\"%llu\\n\", n);",
+        "  for (i=1, j=i*i+1; j < TOP*2; i++,j=i*i+1)",
+        "    if(j==2 || ((j&1) && (c[j>>4] & (1<<((j>>1) & 7)))==0)) {",
+        "      k = j-2;",
+        "      r = sqrt(k*2);",
+        "      if (r*r+r==k*2) printf(\"%9llu %9llu %9llu\\n\", r, i, j);",
+        "    }",
+        "  free(c);",
+        "  return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A226070-A226074."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, May 25 2013",
+    "ext": [
+        "Terms a(7)-a(12) from _Max Alekseyev_, Jan 30 2014"
+    ],
+    "references": 6,
+    "revision": 8,
+    "time": "2014-01-30T13:09:05-05:00",
+    "created": "2013-05-26T15:10:52-04:00"
+}

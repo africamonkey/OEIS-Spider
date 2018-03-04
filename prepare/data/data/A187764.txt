@@ -1,0 +1,38 @@
+{
+    "number": 187764,
+    "data": "1,1,3,11,45,198,919,4445,22215,114000,597790,3191070,17289023,94845796,525838005,2941748627,16585870501,94147448172,537592229784,3085816136840,17795391949590,103051160368120,598997937352830,3493575551891610,20438727738501275,119911429466179978",
+    "name": "Number of uud-avoiding rooted non-crossing trees of n+1 vertices with the root 1.",
+    "link": [
+        "Y. Sun, Z. Wang, <a href=\"http://dx.doi.org/10.1007/s00373-010-0950-9\">Consecutive pattern avoidances in non-crossing trees</a>, Graph. Combinat. 26 (2010) 815-832"
+    ],
+    "formula": [
+        "G.f.: (3-sqrt(5-4*C(x)))/2, where C(x) is the generating function of the Catalan numbers.",
+        "a(n) = sum(k=1..n, (C(2*k-2,k-1)*sum(i=k..n, i*C(i-1,k-1) * C(2*n-i-1,n-1))) /k)/n, n>0, a(0)=1. - _Vladimir Kruchinin_, Jan 23 2013",
+        "Conjecture: 2*n*(2*n+1)*a(n) +3*(-27*n^2+47*n-16)*a(n-1) +30*(17*n^2-63*n+56)*a(n-2) -500*(2*n-5)*(n-3)*a(n-3)=0. - _R. J. Mathar_, Jan 24 2013",
+        "a(n) = Sum_{k=1..n} binomial(2*k-2,k-1)*binomial(2*n,n-k)/n, a(0)=1. - _Vladimir Kruchinin_, Apr 28 2016",
+        "a(n) = Catalan(n)*hypergeom([1/2, 1-n], [n+2], -4) for n>=1. - _Peter Luschny_, Apr 28 2016",
+        "G.f. A=A(x) satisfies 0 = -x*A^4 + 6*x*A^3 + (-11*x - 1)*A^2 + (6*x + 3)*A + (-x - 2). - _Joerg Arndt_, Apr 29 2016"
+    ],
+    "maple": [
+        "a := n -> `if`(n=0,1,hypergeom([1/2, 1-n], [n+2], -4)*binomial(2*n,n)/(n+1)):",
+        "seq(simplify(a(n)), n=0..25); # _Peter Luschny_, Apr 28 2016"
+    ],
+    "program": [
+        "(PARI)",
+        "N = 66;  x = 'x + O('x^N);",
+        "C=(1-sqrt(1-4*x))/(2*x);",
+        "gf = (3-sqrt(5-4*C))/2;",
+        "v = Vec(gf)",
+        "/* _Joerg Arndt_, Jan 04 2013 */",
+        "(Maxima)",
+        "a(n):=if n=0 then 1 else sum((binomial(2*k-2,k-1) * sum(i*binomial(i-1,k-1) * binomial(2*n-i-1,n-1),i,k,n)) / k, k, 1, n) / n; /* _Vladimir Kruchinin_, Jan 23 2013 */",
+        "a(n):=if n=0 then 1 else sum(binomial(2*k-2,k-1)*binomial(2*n,n-k),k,1,n)/n; /*  _Vladimir Kruchinin_, Apr 28 2016 */"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_R. J. Mathar_, Jan 04 2013",
+    "references": 0,
+    "revision": 34,
+    "time": "2016-04-29T04:19:33-04:00",
+    "created": "2013-01-04T14:08:31-05:00"
+}

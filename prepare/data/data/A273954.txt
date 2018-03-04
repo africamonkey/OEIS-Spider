@@ -1,0 +1,39 @@
+{
+    "number": 273954,
+    "data": "1,1,5,37,393,5481,95053,1975821,47939601,1330923601,41629292181,1448989481589,55561575788953,2327512861252281,105767732851318749,5182512561142513501,272391086209524010017,15287595381259195453089,912525533175190887597349,57726267762799335649572549,3857920038503904547005285801,271614728547491787061947377161,20093834620842842461382077611117,1558382859432019830857786931421869,126435607093771419896444568955180081",
+    "name": "E.g.f. satisfies: A(x) = Sum_{n>=0} x^n/n! * exp(n*x) * A(x)^n.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A273954/b273954.txt\">Table of n, a(n) for n = 0..370</a>"
+    ],
+    "formula": [
+        "E.g.f.: -LambertW(-x*exp(x)) / (x*exp(x)). [corrected by _Vaclav Kotesovec_, Jun 23 2016]",
+        "E.g.f.: exp( L(x) ) where L(x) = -LambertW(-x*exp(x)) is the e.g.f. of A216857.",
+        "a(n) ~ sqrt(1+LambertW(exp(-1))) * n^(n-1) / (exp(n-1) * LambertW(exp(-1))^n). - _Vaclav Kotesovec_, Jun 23 2016"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 5*x^2/2! + 37*x^3/3! + 393*x^4/4! + 5481*x^5/5! + 95053*x^6/6! + 1975821*x^7/7! + 47939601*x^8/8! + 1330923601*x^9/9! + 41629292181*x^10/10! + 1448989481589*x^11/11! + 55561575788953*x^12/12! +...",
+        "such that",
+        "A(x) = 1 + x*exp(x)*A(x) + x^2/2!*exp(2*x)*A(x)^2 + x^3/3!*exp(3*x)*A(x)^3 + x^4/4!*exp(4*x)*A(x)^4 + x^5/5!*exp(5*x)*A(x)^5 + x^6/6!*exp(6*x)*A(x)^6 +...",
+        "The logarithm of A(x) begins:",
+        "log(A(x)) = x + 4*x^2/2! + 24*x^3/3! + 224*x^4/4! + 2880*x^5/5! + 47232*x^6/6! + 942592*x^7/7! + 22171648*x^8/8! + 600698880*x^9/9! + 18422374400*x^10/10! +...+ A216857(n)*x^n/n! +...",
+        "which equals -LambertW(-x*exp(x))."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[-LambertW[-x*E^x] / (x*E^x), {x, 0, 20}], x] * Range[0, 20]! (* _Vaclav Kotesovec_, Jun 23 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=1+x); for(i=1,n, A = sum(m=0,n,x^m/m!*exp(m*x +x*O(x^n))*A^m) ); n!*polcoeff(A,n)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) x='x+O('x^50); Vec(serlaplace(-lambertw(-x*exp(x))/(x*exp(x)))) \\\\ _G. C. Greubel_, Nov 16 2017"
+    ],
+    "xref": [
+        "Cf. A273953, A216857."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jun 14 2016",
+    "references": 2,
+    "revision": 14,
+    "time": "2017-11-16T22:45:26-05:00",
+    "created": "2016-06-14T22:30:44-04:00"
+}

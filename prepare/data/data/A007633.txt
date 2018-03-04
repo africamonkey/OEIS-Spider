@@ -1,0 +1,61 @@
+{
+    "number": 7633,
+    "id": "M1164",
+    "data": "0,1,2,4,8,121,151,212,242,484,656,757,29092,48884,74647,75457,76267,92929,93739,848848,1521251,2985892,4022204,4219124,4251524,4287824,5737375,7875787,7949497,27711772,83155138,112969211,123464321",
+    "name": "Palindromic in bases 3 and 10.",
+    "reference": [
+        "J. Meeus, Multibasic palindromes, J. Rec. Math., 18 (No. 3, 1985-1986), 168-173.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Robert Israel and Robert G. Wilson v, <a href=\"/A007633/b007633.txt\">Table of n, a(n) for n = 1..65</a> (first 41 terms from Robert Israel)",
+        "M. R. Calandra, <a href=\"/A007632/a007632.pdf\">Integers which are palindromic in both decimal and binary notation</a>, J. Rec. Math., 18 (No. 1, 1985-1986), 47. (Annotated scanned copy) [With scan of J. Rec. Math. 18.3 (1985), pp. 168-173]"
+    ],
+    "maple": [
+        "ND:= 12;  # to get all terms with <= ND decimal digits",
+        "rev10:= proc(n) option remember;",
+        "  rev10(floor(n/10)) + (n mod 10)*10^ilog10(n)",
+        "end;",
+        "for i from 0 to 9 do rev10(i):= i od:",
+        "rev3:= proc(n) option remember;",
+        "  rev3(floor(n/3)) + (n mod 3)*3^ilog[3](n)",
+        "end;",
+        "for i from 0 to 2 do rev3(i):= i od:",
+        "pali3:= n -> rev3(n) = n;",
+        "count:= 1:",
+        "A[1]:= 0:",
+        "for d from 1 to ND do",
+        "  d1:= ceil(d/2);",
+        "  for x from 10^(d1-1) to 10^d1 - 1 do",
+        "    if d::even then y:= x*10^d1+rev10(x)",
+        "    else y:= x*10^(d1-1)+rev10(floor(x/10));",
+        "    fi;",
+        "    if pali3(y) then",
+        "       count:= count+1;",
+        "       A[count]:= y;",
+        "    fi",
+        "  od:",
+        "od:",
+        "seq(A[i],i=1..count); # _Robert Israel_, Apr 20 2014"
+    ],
+    "mathematica": [
+        "Do[ a = IntegerDigits[n]; b = IntegerDigits[n, 3]; If[a == Reverse[a] && b == Reverse[b], Print[n] ], {n, 0, 10^9} ]",
+        "NextPalindrome[n_] := Block[{l = Floor[ Log[10, n] + 1], idn = IntegerDigits[n]}, If[ Union[idn] == {9}, Return[n + 2], If[l < 2, Return[n + 1], If[ FromDigits[ Reverse[ Take[idn, Ceiling[l/2]] ]] FromDigits[ Take[idn, -Ceiling[l/2]]], FromDigits[ Join[ Take[idn, Ceiling[l/2]], Reverse[ Take[idn, Floor[l/2]] ]]], idfhn = FromDigits[ Take[idn, Ceiling[l/2]]] + 1; idp = FromDigits[ Join[ IntegerDigits[idfhn], Drop[ Reverse[ IntegerDigits[idfhn]], Mod[l, 2]] ]]] ]]]; palQ[n_Integer, base_Integer] := Block[{idn = IntegerDigits[n, base]}, idn == Reverse[idn]]; l = {0}; a = 0; Do[a = NextPalindrome[a]; If[ palQ[a, 4], AppendTo[l, a]], {n, 100000}]; l (* _Robert G. Wilson v_, Sep 30 2004 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import chain",
+        "from gmpy2 import digits",
+        "A007633_list = sorted([n for n in chain((int(str(x)+str(x)[::-1]) for x in range(1,10**6)),(int(str(x)+str(x)[-2::-1]) for x in range(10**6))) if digits(n,3) == digits(n,3)[::-1]]) # _Chai Wah Wu_, Nov 23 2014"
+    ],
+    "xref": [
+        "Cf. A007632, A029961, A029962, A029963, A029964, A029804, A029965, A029966, A029967, A029968, A029969, A029970, A029731, A097855, A099165."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, _Mira Bernstein_, _Robert G. Wilson v_",
+    "references": 40,
+    "revision": 35,
+    "time": "2017-12-20T23:30:13-05:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

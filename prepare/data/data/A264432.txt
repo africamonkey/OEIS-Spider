@@ -1,0 +1,53 @@
+{
+    "number": 264432,
+    "data": "1,1,2,6,24,119,700,4748,36403,310851,2922606,29977587,332929492,3978258079,50872884285,692985674373,10015172966221,153021613683924,2464031776132958,41698912656882644,739771703127828419,13727160292457369098,265876635231121617716",
+    "name": "Third order Bell numbers.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A264432/b264432.txt\">Table of n, a(n) for n = 0..469</a>",
+        "Peter Luschny, <a href=\"https://oeis.org/wiki/User:Peter_Luschny/BellTransform\">The Bell transform</a>"
+    ],
+    "maple": [
+        "b:= proc(n, h) option remember; `if`(min(n, h)=0, 1, add(",
+        "      binomial(n-1, j-1)*b(j-1, h-1)*b(n-j, h), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, 3):",
+        "seq(a(n), n=0..22);  # _Alois P. Heinz_, Aug 21 2017"
+    ],
+    "mathematica": [
+        "b[n_, h_]:=b[n, h]=If[Min[n, h]==0, 1, Sum[Binomial[n - 1, j - 1] b[j - 1, h - 1] b[n - j, h] , {j, n}]]; Table[b[n, 3], {n, 0, 30}] (* _Indranil Ghosh_, Aug 21 2017, after Maple code *)"
+    ],
+    "program": [
+        "(Sage)",
+        "# The function bell_transform is defined in A264428.",
+        "def A264432_list(len):",
+        "    uno = [1]*dim",
+        "    bell_number = [sum(bell_transform(n, uno)) for n in range(dim)]",
+        "    bell_number_2 = [sum(bell_transform(n, bell_number)) for n in range(dim)]",
+        "    return[sum(bell_transform(n, bell_number_2)) for n in range(dim)]",
+        "print A264432_list(23)",
+        "(PARI)",
+        "\\\\ For n>23 precision has to be adapted as needed!",
+        "A = exp('x + O('x^33) );",
+        "B = exp( intformal(A) );",
+        "C = exp( intformal(B) );",
+        "D = exp( intformal(C) );",
+        "Vec( serlaplace(D) )",
+        "(Python)",
+        "from sympy.core.cache import cacheit",
+        "from sympy import binomial",
+        "@cacheit",
+        "def b(n, h): return 1 if min(n, h)==0 else sum([binomial(n - 1, j - 1)*b(j - 1, h - 1)*b(n - j, h) for j in xrange(1, n + 1)])",
+        "def a(n): return b(n, 3)",
+        "print map(a, xrange(31)) # _Indranil Ghosh_, Aug 21 2017, after Maple code"
+    ],
+    "xref": [
+        "Cf. A000110, A187761, A264428, A265312."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, Dec 02 2015",
+    "references": 3,
+    "revision": 17,
+    "time": "2017-08-21T13:08:58-04:00",
+    "created": "2015-12-12T15:50:57-05:00"
+}

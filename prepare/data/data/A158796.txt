@@ -1,0 +1,65 @@
+{
+    "number": 158796,
+    "data": "85,3696,79700,263166,283353,434935,678277,950264,1043678,1266169,1321463,1436753,2629623,3568796,3604676,3676738,3713180,5096401,5558697,7162624,9303565,9504536,10988577,12778681,13108392,18730119",
+    "name": "Index of first of three successive primes which sum to a cube.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A158796/b158796.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(1)=85 because prime(85)+prime(86)+prime(87)=439+443+449=11^3=(A076306(1))^3",
+        "a(2)=3696 because prime(3696)+prime(3697)+prime(3698)=34603+34607+34613=47^3=(A076306(2))^3."
+    ],
+    "maple": [
+        "count:= 0:",
+        "for x from 3 while count < 30 do",
+        "  y:= x^3;",
+        "  r:= floor(y/3);",
+        "  p0:= prevprime(r); p1:= nextprime(p0); p2:= nextprime(p1);",
+        "  while p0 + p1 + p2 > y do",
+        "    p2:= p1;",
+        "    p1:= p0;",
+        "    p0:= prevprime(p0);",
+        "  od:",
+        "  while p0 + p1 + p2 < y do",
+        "    p0:= p1;",
+        "    p1:= p2;",
+        "    p2:= nextprime(p2);",
+        "  od:",
+        "  if p0 + p1 + p2 = y then",
+        "    count:= count+1;",
+        "    A[count]:= numtheory:-pi(p0);",
+        "  fi",
+        "od:",
+        "seq(A[i],i=1..count); # _Robert Israel_, Feb 10 2017"
+    ],
+    "program": [
+        "(Python)",
+        "from __future__ import division",
+        "from sympy import prevprime, nextprime, isprime, primepi",
+        "A158796_list, i = [], 3",
+        "while i < 10**6:",
+        "    n = i**3",
+        "    m = n//3",
+        "    pm, nm = prevprime(m), nextprime(m)",
+        "    k = n - pm - nm",
+        "    if isprime(m):",
+        "        if m == k:",
+        "            A158796_list.append(primepi(pm))",
+        "    else:",
+        "        if nextprime(nm) == k:",
+        "            A158796_list.append(primepi(pm))",
+        "        elif prevprime(pm) == k:",
+        "            A158796_list.append(primepi(pm)-1)",
+        "    i += 1 # _Chai Wah Wu_, Jun 01 2017"
+    ],
+    "xref": [
+        "Cf. A076304, A076306."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, Nov 12 2009",
+    "references": 3,
+    "revision": 12,
+    "time": "2017-06-01T10:18:50-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

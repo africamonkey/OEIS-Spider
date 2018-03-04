@@ -1,0 +1,43 @@
+{
+    "number": 258381,
+    "data": "1,11,181,4191,131241,5360883,275510493,17223156423,1272268864593,108480982129883,10481174173743109,1130938869235448879,134719322898080187129,17552325198110327173059,2482129971814696069384749,378542038806168341351484567,61920836368469049844434420897",
+    "name": "O.g.f. satisfies A^6(z) = 1/(1 - z)*( BINOMIAL(BINOMIAL(A(z))) )^5.",
+    "comment": [
+        "The binomial transform of an o.g.f. A(z) is given by BINOMIAL(A(z)) = 1/(1 - z)*A(z/(1 - z)). For general remarks on a solution to the functional equation A^(N+1)(z) = 1/(1 - z)*( BINOMIAL(BINOMIAL(A(z))) )^N for integer N, and the connection with triangle A145901 see A258377 (case N = 1). This is the case N = 5.",
+        "From _Peter Bala_, Dec 06 2017: (Start)",
+        "a(n) appears to be always odd. Calculation suggests that for k = 1,2,3,... the sequence a(n) (mod 2^k) is purely periodic with period 2^(k-1). For example, a(n) (mod 4) = (1,3,1,3,...) seems to be purely periodic with period 2 and a(n) (mod 8) = (1,3,5,7,1,3,5,7,...) seems to be purely periodic with period 4 (both checked up to n = 1000).",
+        "The sequences a(n) (mod k), for other values of k, appear to have interesting but more complicated patterns. An example is given below.",
+        "(End)"
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>."
+    ],
+    "formula": [
+        "a(0) = 1 and for n >= 1, a(n) = 1/n*Sum_{i = 0..n-1} R(i+1,5)*a(n-1-i), where R(n,x) denotes the n-th row polynomial of A145901.",
+        "O.g.f.: A(z) = 1 + 11*z + 181*z^2 + 4191*z^3 + 131241*z^4 + ... satisfies A^6(z) = 1/(1 - z)*1/(1 - 2*z)^5*A^5(z/(1 - 2*z)).",
+        "O.g.f.: A(z) = exp( Sum_{k >= 1} R(k,5)*z^k/k )."
+    ],
+    "example": [
+        "a(n) (mod 5) begins [1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1,...]. - _Peter Bala_, Dec 06 2017"
+    ],
+    "maple": [
+        "#A258381",
+        "with(combinat):",
+        "#recursively define the row polynomials R(n,x) of A145901",
+        "R := proc (n, x) option remember; if n = 0 then 1 else 1 + x*add(binomial(n, i)*2^(n-i)*R(i,x), i = 0..n-1) end if; end proc:",
+        "#define a family of sequences depending on an integer parameter k",
+        "a := proc (n, k) option remember; if n = 0 then 1 else 1/n*add(R(i+1,k)*a(n-1-i,k), i = 0..n-1) end if; end proc:",
+        "# display the case k = 5",
+        "seq(a(n,5), n = 0..16);"
+    ],
+    "xref": [
+        "Cf. A019538, A145901, A258377 (N = 1), A258378 (N = 2), A258379 (N = 3), A258380 (N = 4)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Peter Bala_, May 28 2015",
+    "references": 6,
+    "revision": 14,
+    "time": "2017-12-07T04:03:45-05:00",
+    "created": "2015-07-07T07:58:17-04:00"
+}

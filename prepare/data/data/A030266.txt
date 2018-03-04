@@ -1,0 +1,64 @@
+{
+    "number": 30266,
+    "data": "0,1,1,2,6,23,104,531,2982,18109,117545,808764,5862253,44553224,353713232,2924697019,25124481690,223768976093,2062614190733,19646231085928,193102738376890,1956191484175505,20401540100814142,218825717967033373,2411606083999341827",
+    "name": "Shifts left under COMPOSE transform with itself.",
+    "reference": [
+        "David Callan, A Combinatorial Interpretation of the Eigensequence for Composition, Journal of Integer Sequences, Vol. 9 (2006), Article 06.1.4."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A030266/b030266.txt\">Table of n, a(n) for n = 0..220</a>",
+        "D. Callan, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL14/Callan/callan2.html\">Lagrange Inversion Counts 3bar-5241-Avoiding Permutations</a>, J. Int. Seq. 14 (2011) # 11.9.4",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies the functional equation: A(x)-x = x*A(A(x)). - _Paul D. Hanna_, Aug 04 2002",
+        "G.f.: A(x/(1+A(x))) = x. - _Paul D. Hanna_, Dec 04 2003",
+        "Suppose the functions A=A(x), B=B(x), C=C(x), etc., satisfy: A = 1 + xAB, B = 1 + xABC, C = 1 + xABCD, D = 1 + xABCDE, etc., then B(x)=A(x*A(x)), C(x)=B(x*A(x)), D(x)=C(x*A(x)), etc., where A(x) = 1 + x*A(x)*A(x*A(x)) and x*A(x) is the g.f. of this sequence (see table A128325). - _Paul D. Hanna_, Mar 10 2007",
+        "G.f. A(x) = x*F(x,1) where F(x,n) satisfies: F(x,n) = F(x,n-1)*(1 + x*F(x,n+1)) for n>0 with F(x,0)=1. - _Paul D. Hanna_, Apr 16 2007",
+        "a(n) = [x^(n-1)] [1 + A(x)]^n/n for n>=1 with a(0)=0; i.e., a(n) equals the coefficient of x^(n-1) in [1+A(x)]^n/n for n>=1. - _Paul D. Hanna_, Nov 18 2008",
+        "From _Paul D. Hanna_, Jul 09 2009: (Start)",
+        "Let A(x)^m = Sum_{n>=0} a(n,m)*x^n with a(0,m)=1, then",
+        "a(n,m) = Sum_{k=0..n} m*C(n+m,k)/(n+m) * a(n-k,k).",
+        "(End)",
+        "G.f. satisfies:",
+        "* A(x) = x*exp( Sum_{m>=0} {d^m/dx^m A(x)^(m+1)/x} * x^(m+1)/(m+1)! );",
+        "* A(x) = x*exp( Sum_{m>=1} [Sum_{k>=0} C(m+k-1,k)*{[y^k] A(y)^m/y^m}*x^k]*x^m/m );",
+        "which are equivalent. [_Paul D. Hanna_, Dec 15 2010]",
+        "The g.f. satisfies:",
+        "log(A(x)/x) = A(x) + {d/dx A(x)^2/x}*x^2/2! + {d^2/dx^2 A(x)^3/x}*x^3/3! + {d^3/dx^3 A(x)^4/x}*x^4/4! +... [Paul D. Hanna, Dec 15 2010]"
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^2 + 2*x^3 + 6*x^4 + 23*x^5 + 104*x^6 +...",
+        "A(A(x)) = x + 2*x^2 + 6*x^3 + 23*x^4 + 104*x^5 + 531*x^6 +..."
+    ],
+    "maple": [
+        "A:= proc(n) option remember;",
+        "      unapply(`if`(n=0, x,",
+        "      A(n-1)(x)+coeff(A(n-1)(A(n-1)(x)), x, n) *x^(n+1)), x)",
+        "    end:",
+        "a:= n-> coeff(A(n)(x),x,n):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Feb 24 2012"
+    ],
+    "mathematica": [
+        "A[0] = Identity; A[n_] := A[n] = Function[x, Evaluate[A[n-1][x]+Coefficient[A[n-1][A[n-1][x]], x, n]*x^(n+1)]]; a[n_] := Coefficient[A[n][x], x, n]; Table[a[n], {n, 0, 22}] (* _Jean-Fran\u00e7ois Alcover_, Feb 17 2014, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x);for(i=0,n,A=1+x*A*subst(A,x,x*A+x*O(x^n)));polcoeff(A,n)} - _Paul D. Hanna_, Mar 10 2007",
+        "(PARI) {a(n)=local(A=sum(i=1,n-1,a(i)*x^i)+x*O(x^n));if(n==0,0,polcoeff((1+A)^n/n,n-1))} [From _Paul D. Hanna_, Nov 18 2008]",
+        "(PARI) {a(n,m=1)=if(n==0,1,if(m==0,0^n,sum(k=0,n,m*binomial(n+m,k)/(n+m)*a(n-k,k))))} [From _Paul D. Hanna_, Jul 09 2009]",
+        "(PARI) {a(n)=local(A=1+sum(i=1,n-1,a(i)*x^i+x*O(x^n)));",
+        "for(i=1,n,A=exp(sum(m=1,n,sum(k=0,n-m,binomial(m+k-1,k)*polcoeff(A^(2*m),k)*x^k)*x^m/m)+x*O(x^n)));polcoeff(A,n)} [From Paul D. Hanna, Dec 15 2010]"
+    ],
+    "xref": [
+        "Cf. A001028, A035049.",
+        "Cf. A110447.",
+        "Cf. A128325, A121687."
+    ],
+    "keyword": "nonn,nice,eigen",
+    "offset": "0,4",
+    "author": "_Christian G. Bower_",
+    "references": 35,
+    "revision": 40,
+    "time": "2017-09-14T14:43:15-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

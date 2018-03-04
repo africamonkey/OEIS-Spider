@@ -1,0 +1,57 @@
+{
+    "number": 95263,
+    "data": "1,3,7,16,37,86,200,465,1081,2513,5842,13581,31572,73396,170625,396655,922111,2143648,4983377,11584946,26931732,62608681,145547525,338356945,786584466,1828587033,4250949112,9882257736,22973462017,53406819691",
+    "name": "a(n+3) = 3*a(n+2) - 2*a(n+1) + a(n).",
+    "comment": [
+        "a(n+1) = number of n-tuples over {0,1,2} without consecutive digits. For the general case see A096261.",
+        "Diagonal sums of Riordan array (1/(1-x)^3, x/(1-x^3)), A127893. - _Paul Barry_, Jan 07 2008",
+        "The signed variant (-1)^(n+1)*a(n+1) is the bottom right entry of the n-th power of the matrix [[0,1,0],[0,0,1],[-1,-2,-3]]. - _Roger L. Bagula_, Jul 01 2007",
+        "a(n) is the number of generalized compositions of n+1 when there are i^2/2-i/2 different types of i, (i=1,2,...). - _Milan Janjic_, Sep 24 2010",
+        "Dedrickson (Section 4.1) gives a bijection between colored compositions of n, where each part k has one of binomial(k,2) colors, and 0,1,2 strings of length n-2 without sequential digits (i.e., avoiding 01 and 12). Cf. A052529. - _Peter Bala_, Sep 17 2013",
+        "Counts closed walks of length (n+2) from a vertex of a unidirectional triangle containing one and two loops on remaining vertices. Equivalently, the (1,1) or top left entry of A^n where A=(0,1,0;0,1,1;1,0,2) is the adjacency matrix of digraph. - _David Neil McGrath_, Sep 15 2014",
+        "Except for the initial 0, this is the p-INVERT of (1,1,1,1,1,...) for p(S) = 1 - S^2 - S^3; see A291000.  - _Clark Kimberling_, Aug 24 2017"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A095263/b095263.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "C. R. Dedrickson III, <a href=\"http://digitalcommons.georgiasouthern.edu/cgi/viewcontent.cgi?article=1015&amp;context=etd\">Compositions, Bijections, and Enumerations</a> Thesis, Jack N. Averitt College of Graduate Studies, Georgia Southern University, 2012.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-2,1)"
+    ],
+    "formula": [
+        "Let M = the 3 X 3 matrix [0 1 0 / 0 0 1 / 1 -2 3]; then M^n *[1 0 0] = [a(n-2) a(n-1) a(n)].",
+        "a(n)/a(n-1) tends to 2.3247179572..., an eigenvalue of M and a root of the characteristic polynomial. [Is that constant equal to 1 + A060006? - _Michel Marcus_, Oct 11 2014] [Yes, the limit is the root of the equation -1 + 2*x - 3*x^2 + x^3 = 0, after substitution x = y + 1 we have the equation for y: -1 - y + y^3 = 0, y = A060006. - _Vaclav Kotesovec_, Jan 27 2015]",
+        "Related to the Padovan sequence A000931 as follows : a(n)=A000931(3n+4). Also the binomial transform of A000931(n+4).",
+        "a(n)=sum{k=0..floor((n+1)/2), binomial(n+k, n-2k+1)}; a(n)=sum{k=0..floor((n+1)/2), binomial(n+k, 3k-1)}. - _Paul Barry_, Jul 06 2004",
+        "G.f.: x/(1-3x+2x^2-x^3); a(n)=sum{k=0..floor(n/2), C(n+k+2,3k+2)}=sum{k=0..n, C(n,k)*sum{j=0..floor((k+4)/2), C(j,k-2j+4)}}. - _Paul Barry_, Jan 07 2008",
+        "If p[i]=i(i-1)/2 and if A is Hessenberg matrix of order n defined by: A[i,j]=p[j-i+1], (i<=j), A[i,j]=-1, (i=j+1), and A[i,j]=0 otherwise. Then, for n>=2, a(n-1)=det A. - _Milan Janjic_, May 02 2010",
+        "a(n) = A000931(3*n + 4). - _Michael Somos_, Sep 18 2012"
+    ],
+    "example": [
+        "a(9) = 1081 = 3*465 - 2*200 + 86.",
+        "M^9 * [1 0 0] = [a(7) a(8) a(9)] = [200 465 1081].",
+        "x + 3*x^2 + 7*x^3 + 16*x^4 + 37*x^5 + 86*x^6 + 200*x^7 + ..."
+    ],
+    "maple": [
+        "A:= gfun:-rectoproc({a(n+3)=3*a(n+2)-2*a(n+1)+a(n),a(1)=1,a(2)=3,a(3)=7},a(n),remember):",
+        "seq(A(n),n=1..100); # _Robert Israel_, Sep 15 2014"
+    ],
+    "mathematica": [
+        "a[1] = 1; a[2] = 3; a[3] = 7; a[n_] := a[n] = 3a[n - 1] - 2a[n - 2] + a[n - 3]; Table[ a[n], {n, 22}] (* Or *)",
+        "a[n_] := (MatrixPower[{{0, 1, 2, 3}, {1, 2, 3, 0}, {2, 3, 0, 1}, {3, 0, 1, 2}}, n].{{1}, {0}, {0}, {0}})[[2, 1]]; Table[ a[n], {n, 22}] (* _Robert G. Wilson v_, Jun 16 2004 *)",
+        "a=0;b=0;c=1;lst={};Do[AppendTo[lst,a+=b];b+=c;c+=a,{n,5!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Jan 20 2009 *)"
+    ],
+    "xref": [
+        "Cf. A000931, A034943, A010912, A097550, A137531, A052921, A052529, A052530.",
+        "Column k=3 of A277666."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Gary W. Adamson_, May 31 2004",
+    "ext": [
+        "Edited by _Paul Barry_, Jul 06 2004",
+        "Corrected and extended by _Robert G. Wilson v_, Jun 05 2004"
+    ],
+    "references": 19,
+    "revision": 60,
+    "time": "2017-08-24T16:33:25-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

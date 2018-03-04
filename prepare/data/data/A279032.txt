@@ -1,0 +1,48 @@
+{
+    "number": 279032,
+    "data": "0,1,3,6,11,17,27,42,65,100,152,231,349,527,792,1186,1771,2639,3923,5817,8609,12715,18747,27595,40557,59522,87239,127704,186721,272717,397913,580029,844734,1229199,1787215,2596587,3769796,5469375,7930078,11490820,16640682",
+    "name": "a(n) is the greatest integer such that binomial(a(n),n)*2^(1 - binomial(n,2)) < 1.",
+    "comment": [
+        "a(n) is a lower bound on the Ramsey number R(n,n). In other words, a(n) is less than the least integer N such that every graph on N vertices contains an n clique or a size n independent set."
+    ],
+    "reference": [
+        "D. B. West, Introduction to Graph Theory, Pearson, 2015, page 385."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A279032/b279032.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) is asymptotic to n*2^(n/2)/(e*sqrt(2))."
+    ],
+    "maple": [
+        "f:= proc(n) local k,r,B;",
+        "  k:= max(floor(n*2^(n/2)/(exp(1)*sqrt(2))),n);",
+        "  r:= 2^(binomial(n,2)-1);",
+        "  B:= binomial(k,n);",
+        "  if B < r then",
+        "    while B*(k+1)/(k+1-n) < r do k:= k+1; B:= B*k/(k-n) od;",
+        "  else",
+        "    while B*(k-1)/k > r do B:= B*(k-1)/k; k:= k-1 od;",
+        "    k:= k-1;",
+        "  fi;",
+        "  k",
+        "end proc:",
+        "map(f, [$1..40]); # _Robert Israel_, Dec 07 2016"
+    ],
+    "mathematica": [
+        "Table[Position[Table[Binomial[m, n] < 2^(Binomial[n, 2] - 1), {m, 1, 50000}],False][[1]] - 1, {n, 1, 25}] // Flatten"
+    ],
+    "xref": [
+        "Cf. A212954."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Geoffrey Critzer_, Dec 03 2016",
+    "ext": [
+        "More terms from _Robert Israel_, Dec 07 2016"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2016-12-10T03:28:20-05:00",
+    "created": "2016-12-07T14:13:51-05:00"
+}

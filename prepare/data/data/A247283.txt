@@ -1,0 +1,41 @@
+{
+    "number": 247283,
+    "data": "5,7,9,15,18,27,36,54,72,108,144,216,288,432,576,864,1152,1728,2304,3456,4608,6912,9216,13824,18432,27648,36864,55296,73728,110592,147456,221184,294912,442368,589824,884736,1179648,1769472,2359296,3538944,4718592,7077888",
+    "name": "Positions of subrecords in A048673.",
+    "comment": [
+        "Odd bisection seems to be A116453 (i.e. A005010, 9*2^n from a(3)=9 onward).",
+        "After terms 7 and 15, even bisection from a(6)=27 onward seems to be A175806 (27*2^n)."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A247283/b247283.txt\">Table of n, a(n) for n = 1..60</a>"
+    ],
+    "formula": [
+        "a(n) = A064216(A247284(n))."
+    ],
+    "example": [
+        "The fourth (A246360(4) = 5) and the fifth (A246360(5) = 8) record of A048673 (1, 2, 3, 5, 4, 8, ...) occur at A029744(4) = 4 and A029744(5) = 6 respectively. In range between, the maximum must occur at 5, thus a(4-3) = a(1) = 5. (All the previous records of A048673 are in consecutive positions, 1, 2, 3, 4, thus there are no previous subrecords).",
+        "The ninth (A246360(9) = 68) and the tenth (A246360(10) = 122) record of A048673 occur at A029744(9) = 24 and A029744(10) = 32 respectively. For n in range 25 .. 31 the values of A048673 are: 25, 26, 63, 50, 16, 53, 19, of which 63 is the maximum, and because it occurs at n = 27, we have a(9-3) = a(6) = 27."
+    ],
+    "program": [
+        "(PARI)",
+        "\\\\ Compute A245449, A246360, A247283 and A247284 at the same time:",
+        "default(primelimit,(2^31)+(2^30));",
+        "A003961(n) = my(f = factor(n)); for (i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); \\\\ From _Michel Marcus_",
+        "A048673(n) = (A003961(n)+1)/2;",
+        "n = 0; i2 = 0; i3 = 0; ir = 0; prevmax = 0; submax = 0; while(n < 2^32, n++; a_n = A048673(n); if((A048673(a_n) == n), i2++; write(\"b245449.txt\", i2, \" \", n)); if((a_n > prevmax), if(submax > 0, i3++; write(\"b247283.txt\", i3, \" \", submaxpt); write(\"b247284.txt\", i3, \" \", submax)); prevmax = a_n; submax = 0; ir++; write(\"b029744_empirical.txt\", ir, \" \", n); write(\"b246360_empirical.txt\", ir, \" \", a_n), if((a_n > submax), submax = a_n; submaxpt = n)));",
+        "(Scheme)",
+        "(definec (A247283 n) (max_pt_in_range A048673 (+ (A029744 (+ n 3)) 1) (- (A029744 (+ n 4)) 1)))",
+        "(define (max_pt_in_range intfun lowlim uplim) (let loop ((i (+ 1 lowlim)) (maxnow (intfun lowlim)) (maxpt lowlim)) (cond ((> i uplim) maxpt) (else (let ((v (intfun i))) (if (> v maxnow) (loop (+ 1 i) v i) (loop (+ 1 i) maxnow maxpt)))))))"
+    ],
+    "xref": [
+        "A247284 gives the corresponding values.",
+        "Cf. A005010 (A116453), A175806, A029744, A048673, A064216, A246360, A245449."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Sep 11 2014",
+    "references": 4,
+    "revision": 13,
+    "time": "2014-09-23T11:03:21-04:00",
+    "created": "2014-09-23T11:03:21-04:00"
+}

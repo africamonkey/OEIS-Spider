@@ -1,0 +1,35 @@
+{
+    "number": 119767,
+    "data": "8,36,144,216,1764,2304,5184,7056,8100,30276,41616,69696,93636,138384,166464,207936,224676,279936,298116,352836,360000,412164,562500,725904,777924,876096,944784,956484,1077444,1299600,1468944,1617984,1920996,2160900,2286144,2304324,2509056",
+    "name": "Perfect powers which are the sum of twin prime pairs.",
+    "comment": [
+        "Since twin primes greater than (3,5) are either occur as (5,7) mod 12 or (11,1) mod 12, all sums of such twin primes are divisible by 12. Thus all powers are divisible by 12 and are best looked at in base 12. For example, a(3) = 5E + 61 = 100, where E is eleven."
+    ],
+    "link": [
+        "Jens Kruse Andersen, <a href=\"/A119767/b119767.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "8 = 2^3 = 3 + 5 (twin primes). Thus 8 is a member of this sequence.",
+        "36 = 6^2 = 17 + 19 (twin primes). Thus 36 is a member of this sequence.",
+        "a(3) = 71 + 73 = 144."
+    ],
+    "maple": [
+        "egcd := proc(n::nonnegint) local L; if n=0 or n=1 then n else L:=ifactors(n)[2]; L:=map(z->z[2],L); igcd(op(L)) fi end: L:=[]: for w to 1 do for x from 1 to 2*12^2 do s:=6*x; for r from 2 to 79 do t:=s^r; if egcd(s)=1 and andmap(isprime,[(t-2)/2,(t+2)/2]) then print((t-2)/2,(t+2)/2,t)); L:=[op(L),[(t-2)/2,(t+2)/2,t]]; fi; od od od; L:=sort(L,(a,b)->a[1]<b[1]); map(z->z[3],L);"
+    ],
+    "program": [
+        "(PARI) a(N) = for(n=1,N,if(ispower(n),if(nextprime(n/2)-precprime(n/2)==2&&precprime(n/2)+nextprime(n/2)==n,print1(n,\", \")))) \\\\ vary the program's range for any N; _Derek Orr_, Jul 27 2014"
+    ],
+    "xref": [
+        "Cf. A037072, A245591."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Walter Kehowski_, Jun 18 2006",
+    "ext": [
+        "_R. J. Mathar_ pointed out that 8 was missing. Once corrected, the old A245592 could be merged into this entry. - _N. J. A. Sloane_, Jul 30 2014"
+    ],
+    "references": 1,
+    "revision": 20,
+    "time": "2015-02-11T04:12:34-05:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

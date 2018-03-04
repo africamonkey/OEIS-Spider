@@ -1,0 +1,56 @@
+{
+    "number": 83652,
+    "data": "1,2,4,6,9,12,15,18,22,26,30,34,38,42,46,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,136,142,148,154,160,166,172,178,184,190,196,202,208,214,220,226,232,238,244,250,256,262,268,274,280,286,292",
+    "name": "Sum of lengths of binary expansions of 0 through n.",
+    "comment": [
+        "a(n) = A001855(n)+1 for n>0;",
+        "a(0) = A070939(0)=1, n>0: a(n) = a(n-1) + A070939(n).",
+        "A030190(a(k))=1; A030530(a(k)) = k + 1.",
+        "Partial sums of A070939. - _Hieronymus Fischer_, Jun 12 2012",
+        "Young writes \"If n = 2^i + k [...] the maximum is (i+1)(2^i+k)-2^{i+1}+2.\" - _Michael Somos_, Sep 25 2012"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A083652/b083652.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Hsien-Kuei Hwang, S. Janson, T. H. Tsai, <a href=\"http://140.109.74.92/hk/wp-content/files/2016/12/aat-hhrr-1.pdf\">Exact and asymptotic solutions of the recurrence f(n) = f(floor(n/2)) + f(ceiling(n/2)) + g(n): theory and applications</a>, Preprint 2016.",
+        "Hsien-Kuei Hwang, S. Janson, T. H. Tsai, <a href=\"https://doi.org/10.1145/3127585\">Exact and Asymptotic Solutions of a Divide-and-Conquer Recurrence Dividing at Half: Theory and Applications</a>, ACM Transactions on Algorithms, 13:4 (2017), #47; DOI: 10.1145/3127585.",
+        "Alfred Young, <a href=\"http://dx.doi.org/10.1098/rspl.1903.0068\">The Maximum Order of an Irreducible Covariant of a System of Binary Forms</a>, Proc. Roy. Soc. 72 (1903), 399-400 = The Collected Papers of Alfred Young, 1977, 136-137.",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "formula": [
+        "a(n) = 2 + (n+1)*ceiling(log_2(n+1)) - 2^ceiling(log_2(n+1)).",
+        "G.f.: g(x) = 1/(1-x) + (1/(1-x)^2)*Sum_{j>=0} x^2^j. - _Hieronymus Fischer_, Jun 12 2012; corrected by _Ilya Gutkovskiy_, Jan 08 2017",
+        "a(n) = A123753(n) - n. - _Peter Luschny_, Nov 30 2017"
+    ],
+    "example": [
+        "G.f. = 1 + 2*x + 4*x^2 + 6*x^3 + 9*x^4 + 12*x^5 + 15*x^6 + 18*x^7 + 22*x^8 + ..."
+    ],
+    "mathematica": [
+        "Accumulate[Length/@(IntegerDigits[#,2]&/@Range[0,60])] (* _Harvey P. Dale_, May 28 2013 *)",
+        "a[n_] := (n + 1) IntegerLength[n + 1, 2] - 2^IntegerLength[n + 1, 2] + 2;Table[a[n], {n, 0, 58}] (* _Peter Luschny_, Dec 02 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a083652 n = a083652_list !! n",
+        "a083652_list = scanl1 (+) a070939_list",
+        "-- _Reinhard Zumkeller_, Jul 05 2012",
+        "(PARI) {a(n) = my(i); if( n<0, 0, n++; i = length(binary(n)); n*i - 2^i + 2)}; /* _Michael Somos_, Sep 25 2012 */",
+        "(PARI) a(n)=my(i=#binary(n++));n*i-2^i+2 \\\\ equivalent to the above",
+        "(Python)",
+        "def A083652(n):",
+        "    s, i, z = 1, n, 1",
+        "    while 0 <= i: s += i; i -= z; z += z",
+        "    return s",
+        "print([A083652(n) for n in range(0, 59)]) # _Peter Luschny_, Nov 30 2017"
+    ],
+    "xref": [
+        "Cf. A000120, A007088, A023416, A059015, A070939 (base 2), A123753.",
+        "A296349 is an essentially identical sequence."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "0,2",
+    "author": "_Reinhard Zumkeller_, May 01 2003",
+    "references": 13,
+    "revision": 54,
+    "time": "2017-12-16T23:59:16-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

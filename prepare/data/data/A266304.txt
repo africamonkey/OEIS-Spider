@@ -1,0 +1,38 @@
+{
+    "number": 266304,
+    "data": "0,1,5,6,14,15,27,28,44,45,65,66,90,91,119,120,152,153,189,190,230,231,275,276,324,325,377,378,434,435,495,496,560,561,629,630,702,703,779,780,860,861,945,946,1034,1035,1127,1128,1224,1225,1325,1326,1430",
+    "name": "Total number of OFF (white) cells after n iterations of the \"Rule 15\" elementary cellular automaton starting with a single ON (black) cell.",
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 55."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A266304/b266304.txt\">Table of n, a(n) for n = 0..999</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2,-1,1)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Dec 28 2015: (Start)",
+        "a(n) = n*(n+(-1)^n+2)/2.",
+        "a(n) = a(n-1)+2*a(n-2)-2*a(n-3)-a(n-4)+a(n-5) for n>4.",
+        "G.f.: x*(1+4*x-x^2) / ((1-x)^3*(1+x)^2). (End)",
+        "a(n) = Sum_{i=1..n} (n-i-1) mod 2. - _Wesley Ivan Hurt_, Sep 15 2017"
+    ],
+    "mathematica": [
+        "rule=15; rows=20; ca=CellularAutomaton[rule,{{1},0},rows-1,{All,All}]; (* Start with single black cell *) catri=Table[Take[ca[[k]],{rows-k+1,rows+k-1}],{k,1,rows}]; (* Truncated list of each row *) nbc=Table[Total[catri[[k]]],{k,1,rows}]; (* Number of Black cells in stage n *) nwc=Table[Length[catri[[k]]]-nbc[[k]],{k,1,rows}]; (* Number of White cells in stage n *) Table[Total[Take[nwc,k]],{k,1,rows}] (* Number of White cells through stage n *)"
+    ],
+    "program": [
+        "(PARI) concat(0, Vec(x*(1+4*x-x^2)/((1-x)^3*(1+x)^2) + O(x^100))) \\\\ _Colin Barker_, Dec 28 2015"
+    ],
+    "xref": [
+        "Cf. A266300."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Robert Price_, Dec 26 2015",
+    "references": 1,
+    "revision": 15,
+    "time": "2017-09-17T22:31:49-04:00",
+    "created": "2015-12-27T08:59:48-05:00"
+}

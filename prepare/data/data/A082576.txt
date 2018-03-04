@@ -1,0 +1,49 @@
+{
+    "number": 82576,
+    "data": "1,5,6,9,11,16,21,25,31,36,41,49,51,56,57,61,71,75,76,81,91,93,96,99,101,125,151,176,193,201,249,251,301,351,375,376,401,451,499,501,551,557,576,601,625,651,693,701,749,751,776,801,851,875,901,951,976,999",
+    "name": "Numbers n such that n^n has final digits the same as all digits of n.",
+    "comment": [
+        "n^n^n also has the same final digits as n. - _Ed Pegg Jr_, Jun 27 2013",
+        "For any positive integer r the sequence contains 10^r-1. - _Reiner Moewald_, Feb 14 2016",
+        "From _Robert Israel_, Mar 04 2016: (Start)",
+        "All terms > 96 end in 01, 25, 49, 51, 57, 75, 76, 93 or 99.",
+        "It appears that except for 1, 5, 6, 9, 57 and 93, if n is a term then so is the number obtained from n by deleting its first digit. (End)"
+    ],
+    "reference": [
+        "Suggested by _Herb Conn_"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A082576/b082576.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Ar#automorphic\">Index entries for sequences related to automorphic numbers</a>"
+    ],
+    "example": [
+        "9^9 = 387420489 ends in 9; 31^31 = 17069174130723235958610643029059314756044734431 ends in 31."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k; for k from 1+",
+        "      a(n-1) while k&^k mod (10^length(k))<>k do od; k",
+        "    end: a(1):=1:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Jun 27 2013",
+        "select(n -> n&^n mod 10^(1+ilog10(n)) = n, [$1..1000]); # _Robert Israel_, Mar 04 2016"
+    ],
+    "mathematica": [
+        "Select[Range@ 1000, Function[k, Take[IntegerDigits[#^#], -Length@ k] == k]@ IntegerDigits@ # &] (* _Michael De Vlieger_, Mar 04 2016 *)"
+    ],
+    "program": [
+        "(PARI) for (d = 1, 4, for (i = 10^(d - 1), 10^d - 1, x = Mod(i, 10^d); if (x^i == x, print(i)))) \\\\ _David Wasserman_, Oct 27 2006",
+        "(PARI) is(n)=my(d=digits(n));Mod(n,10^#d)^n==n \\\\ _Charles R Greathouse IV_, Jan 02 2013"
+    ],
+    "xref": [
+        "Cf. A002283."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Gary W. Adamson_, May 07 2003",
+    "ext": [
+        "More terms from _David Wasserman_, Oct 27 2006"
+    ],
+    "references": 1,
+    "revision": 32,
+    "time": "2016-03-10T05:48:25-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

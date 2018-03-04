@@ -1,0 +1,56 @@
+{
+    "number": 128588,
+    "data": "1,2,4,6,10,16,26,42,68,110,178,288,466,754,1220,1974,3194,5168,8362,13530,21892,35422,57314,92736,150050,242786,392836,635622,1028458,1664080,2692538,4356618,7049156,11405774,18454930,29860704,48315634,78176338",
+    "name": "A007318 * A128587.",
+    "comment": [
+        "a(n)/a(n-1) tends to phi, 1.618...",
+        "Regardless of initial two terms, any linearly recurring sequence with signature (1,1) will yield an a(n)/a(n+1) ratio tending to phi (the Golden Ratio). - _Harvey P. Dale_, Mar 29 2017",
+        "Apart from the initial term, double the Fibonacci numbers. O.g.f.: x*(1+x+x^2)/(1-x-x^2). a(n) gives the number of binary strings of length n-1 avoiding the substrings 000 and 111. a(n) also gives the number of binary strings of length n-1 avoiding the substrings 010 and 101. - _Peter Bala_, Jan 22 2008",
+        "From A014217=1,1,2,4,6,. Which leads to A153819=16,34,88,. Inverse binomial transform of A069403=1,3,9,25,67. - _Paul Curtz_, Jan 03 2009",
+        "Variation on \"Narayana's Cows\". One cow at step n=1. At any subsequent step any cow generates another one but after two steps dies. The sequence gives the total number of cows at any steps. - _Paolo P. Lava_, Oct 07 2009",
+        "Row lengths of triangle A232642. - _Reinhard Zumkeller_, May 14 2015"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A128588/b128588.txt\">Table of n, a(n) for n = 1..2500</a>",
+        "J.-P. Allouche and T. Johnson, <a href=\"http://www.math.jussieu.fr/~allouche/johnson2.pdf\"> Narayana's Cows and Delayed Morphisms</a>.",
+        "Elena Barcucci, Antonio Bernini, Stefano Bilotta, Renzo Pinzani, <a href=\"http://arxiv.org/abs/1601.07723\">Non-overlapping matrices</a>, arXiv:1601.07723 [cs.DM], 2016. See 1st column of Table 2 p. 11.",
+        "P. Flajolet and R. Sedgewick, <a href=\"http://algo.inria.fr/flajolet/Publications/AnaCombi/anacombi.html\">Analytic Combinatorics</a>, 2009, page 52.",
+        "B. Winterfjord, <a href=\"http://www.math.chalmers.se/~einar/exjobb/winterfjord.pdf\">Binary strings and substring avoidance</a>.",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1)."
+    ],
+    "formula": [
+        "G.f.: x(1+x+x^2)/(1-x-x^2).",
+        "Binomial transform of A128587; a(n+2) = a(n+1) + a(n), n>3.",
+        "a(n) = A068922(n-1), n>2. - _R. J. Mathar_, Jun 14 2008",
+        "For n > 1: a(n+1) = a(n) + if a(n) odd then max{a(n),a(n-1)} else min{a(n),a(n-1)}, see also A038754. - _Reinhard Zumkeller_, Oct 19 2015"
+    ],
+    "example": [
+        "a(4) = 6 = 1*1 + 3*1 + 3*1 + 1*(-1); where A128587 = (1, 1, 1, -1, 3, -5, 9,...).",
+        "G.f. = x + 2*x^2 + 4*x^3 + 6*x^4 + 10*x^5 + 16*x^6 + 26*x^7 + 42*x^8 + ..."
+    ],
+    "mathematica": [
+        "nn=20;a=(1-x^3)/(1-x);b=x (1-x^2)/(1-x);CoefficientList[Series[a^2 /(1-b^2),{x,0,nn}],x]  (* _Geoffrey Critzer_, Sep 01 2012 *)",
+        "LinearRecurrence[{1,1},{1,2,4},40] (* _Harvey P. Dale_, Mar 29 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a128588 n = a128588_list !! (n-1)",
+        "a128588_list = 1 : cows where",
+        "                   cows = 2 : 4 : zipWith (+) cows (tail cows)",
+        "-- _Reinhard Zumkeller_, May 14 2015",
+        "(PARI) {a(n) = if( n<2, n==1, 2 * fibonacci(n))}; /* _Michael Somos_, Jul 18 2015 */"
+    ],
+    "xref": [
+        "Cf. A128587, A128586, A007318.",
+        "Cf. A006355, A055389.",
+        "Cf. A232642, A242593.",
+        "Cf. A038754."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Gary W. Adamson_, Mar 11 2007",
+    "references": 12,
+    "revision": 53,
+    "time": "2017-03-29T13:07:35-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

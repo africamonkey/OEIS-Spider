@@ -1,0 +1,49 @@
+{
+    "number": 91299,
+    "data": "2,8,144,91392,187499658240",
+    "name": "Number of (directed) Hamiltonian paths (or Gray codes) on the n-cube.",
+    "comment": [
+        "More precisely, this is the number of ways of making a list of the 2^n nodes of the n-cube, with a distinguished starting position and a direction, such that each node is adjacent to the previous one. The final node may or may not be adjacent to the first."
+    ],
+    "reference": [
+        "M. Gardner, Knotted Doughnuts and Other Mathematical Entertainments. Freeman, NY, 1986, p. 24."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HamiltonianPath.html\">Hamiltonian Path</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HypercubeGraph.html\">Hypercube Graph</a>"
+    ],
+    "example": [
+        "a(1) = 2: we have 1,2 or 2,1. a(2) = 8: label the nodes 1, 2, ..., 4. Then the 8 possibilities are 1,2,3,4; 1,3,4,2; 2,3,4,1; 2,1,4,3; etc."
+    ],
+    "program": [
+        "# A Python function that calculates A091299[n] from Janez Brank. (Replace leading dots by spaces!)",
+        ".def CountGray(n):",
+        ".. def Recurse(unused, lastVal, nextSet):",
+        ".... count = 0",
+        ".... for changedBit in range(0, min(nextSet + 1, n)):",
+        "...... newVal = lastVal ^ (1 << changedBit)",
+        "...... mask = 1 << newVal",
+        "...... if unused & mask:",
+        "........ if unused == mask: count += 1",
+        "........ else: count += Recurse(unused & ~mask, newVal,",
+        "............................... max(nextSet, changedBit + 1))",
+        ".... return count",
+        ".. count = Recurse((1 << (1 << n)) - 2, 0, 0)",
+        ".. for i in range(1, n + 1): count *= 2 * i",
+        ".. return max(1, count)"
+    ],
+    "xref": [
+        "Equals A006069 + A006070. Divide by 2^n to get A003043.",
+        "Cf. A003042, A066037, A091302, A284673."
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Feb 20 2004",
+    "ext": [
+        "a(5) from Janez Brank (janez.brank(AT)ijs.si), Mar 02 2005"
+    ],
+    "references": 8,
+    "revision": 20,
+    "time": "2017-05-09T22:38:43-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

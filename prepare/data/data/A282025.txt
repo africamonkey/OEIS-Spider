@@ -1,0 +1,56 @@
+{
+    "number": 282025,
+    "data": "3,8,13,18,23,27,32,37,42,47,52,57,62,67,72,77,82,86,91,96,101,106,111,116,121,126,131,136,141,146,150,155,160,165,170,175,180,185,190,195,200,205,210,214,219,224,229,234,239,244,249,254,259,264,269,273,278,283",
+    "name": "a(r) is the maximum number of secretaries for which the first r should be rejected, if selecting the one with the highest or lowest ranking are both considered a success.",
+    "comment": [
+        "According to Bayon et al, the probability P(n,r) = 2*r*((r/n-1)+sum_{i=r..n-1} 1/i)/n of success in a generalized Secretary problem for a given number n of applicants has a maximum at some value of r, 1<=r<n. These best values are r=1 for n<=8, r=2 for n<=13, r=3 for n<=18 and so on.",
+        "The Beatty sequence of A106533, b(n) = floor(n*A106533), is a good approximation to r for large n. So the indices n-1 of the steps where b(n) = b(n+1)-1 are an approximation to this sequence.",
+        "We added numbers 27, 86 and 91 that are apparently missing in the preprint. _R. J. Mathar_, Feb 22 2017"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A282025/b282025.txt\">Table of n, a(n) for n = 0..202</a>",
+        "L. Bayon, J. Grau, A. M. Oller-Marcen, M. Ruiz, P. M. Suarez, <a href=\"https://arxiv.org/abs/1603.03928\">A variant of the Secretary Problem: the Best or the Worst</a>, arXiv preprint arXiv:1603.03928 [math.PR], 2016."
+    ],
+    "maple": [
+        "P := proc(n,",
+        "    option remember;",
+        "    local i;",
+        "    2*r/n*((r/n-1)+add(1/i,i=r..n-1)) ;",
+        "end proc:",
+        "Pmax := proc(n)",
+        "    option remember;",
+        "    local r;",
+        "    for r from 1 to n-1 do",
+        "        if P(n,r+1) < P(n,r) then",
+        "            return r ;",
+        "        end if;",
+        "    end do:",
+        "end proc:",
+        "A282025 := proc(r)",
+        "    local n ;",
+        "    if r = 0 then",
+        "        return 3;",
+        "    end if;",
+        "    for n from r+1 do",
+        "        if Pmax(n+1) = r+1 then",
+        "            return n;",
+        "        end if;",
+        "    end do:",
+        "    return -1 ;",
+        "end proc:",
+        "seq(A282025(r),r=0..80) ; # _R. J. Mathar_, Feb 22 2017"
+    ],
+    "mathematica": [
+        "P[n_, r_] := 2 r ((r/n - 1) + Sum[ 1/i, {i, r, n - 1}])/n; Function[s, {3}~Join~Map[-1 + Position[s, #][[1, 1]] &, Range@ Max@ s]]@ Map[Length@ TakeWhile[#, # == 0 &] &, Table[If[P[n, k + 1] < P[n, k], k, 0], {n, 300}, {k, n - 1}]] (* _Michael De Vlieger_, Feb 22 2017, after Maple *)"
+    ],
+    "xref": [
+        "Cf. A106533, A054404."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_, Feb 11 2017",
+    "references": 1,
+    "revision": 32,
+    "time": "2017-02-24T02:52:06-05:00",
+    "created": "2017-02-11T02:50:48-05:00"
+}

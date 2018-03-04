@@ -1,0 +1,40 @@
+{
+    "number": 69119,
+    "data": "3,7,15,23,31,47,63,79,87,95,127,143,151,159,186,191,215,223,255,271,279,287,319,343,351,383,415,447,471,511,527,535,543,575,599,607,639,671,698,703,727,767,799,831,895,959,964,1023,1039,1047,1055,1087,1111",
+    "name": "Numbers n such that n!*sum(i=1..n, 1/(i*2^i) ) is an integer.",
+    "comment": [
+        "m is in this list if and only if v_2(d) + s_2(m) <= m where v_2(d) is the 2-adic valuation of the denominator of sum(i=1..n, 1/(i*2^i)) and s_2(m) is the sum of the digits in the expansion of m in base 2. - _Peter Luschny_, May 19 2014"
+    ],
+    "link": [
+        "Robert Israel and Charles R Greathouse IV, <a href=\"/A069119/b069119.txt\">Table of n, a(n) for n = 1..10000</a> (first 220 terms from Israel)",
+        "A. Straub, V. H. Moll, T. Amdeberhan, <a href=\"http://arxiv.org/abs/0811.2028\">The p-adic valuation of k-central binomial coefficients</a>, arXiv:0811.2028, 2008.arXiv:0811.2028",
+        "Nicolas Wider, <a href=\"http://user.math.uzh.ch/dehaye/thesis_students/Nicolas_Wider-Integrality_of_factorial_ratios.pdf\">Integrality of factorial ratios</a>, Master Thesis ETH Z\u00fcrich, 2012.",
+        "Wadim Zudilin, <a href=\"http://mathoverflow.net/questions/26336/\">Integer-valued factorial ratios</a>, MathOverflow question 26336, 2010."
+    ],
+    "example": [
+        "3 is in the sequence because 3!*(1/1/2^1 + 1/2/2^2 + 1/3/2^3) = 4 is an integer. - _Robert Israel_, May 18 2014"
+    ],
+    "maple": [
+        "select(k -> type(k!*add(1/i/2^i,i=1..k),integer),[$1..10000]); # _Robert Israel_, May 18 2014"
+    ],
+    "program": [
+        "(Sage)",
+        "def is_A069119(n):",
+        "    s = add(1/(i*2^i) for i in (1..n))",
+        "    vf = n - sum(ZZ(n).digits(base=2))",
+        "    return valuation(denominator(s),2) <= vf",
+        "filter(is_A069119, range(1112)) # _Peter Luschny_, May 19 2014",
+        "(PARI) sm(n)=my(s,o);forstep(i=n,1,-1,o=-valuation(s+=1/(i<<i),2);if(i+#binary(i)-1<o,return(o)));o",
+        "is(n)=hammingweight(n)+sm(n) <= n \\\\ _Charles R Greathouse IV_, May 19 2014"
+    ],
+    "xref": [
+        "Cf. A069120."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Benoit Cloitre_, Apr 07 2002",
+    "references": 2,
+    "revision": 32,
+    "time": "2014-05-23T11:48:36-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

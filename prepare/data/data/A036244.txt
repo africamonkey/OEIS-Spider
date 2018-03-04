@@ -1,0 +1,58 @@
+{
+    "number": 36244,
+    "data": "1,3,16,115,1051,11676,152839,2304261,39325276,749484505,15778499881,363654981768,9107153044081,246256787171955,7150553981030776,221913430199126011,7330293750552189139,256782194699525745876,9508271497633004786551,371079370602386712421365",
+    "name": "Denominator of continued fraction given by C(n) = [ 1; 3, 5, 7, ...(2n-1)].",
+    "comment": [
+        "Denominators of convergents to coth(1) = 1.313035... = A073747.",
+        "Convergents: 1/1, 4/3, 21/16, 151/115, ... - _Michael Somos_, Sep 27 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A036244/b036244.txt\">Table of n, a(n) for n = 1..369</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1)*(2*n-1) + a(n-2); a(0) = 0, a(1) = 1.",
+        "E.g.f.: sinh(1-(1-2*x)^(1/2))/(1-2*x)^(1/2). - _Vladeta Jovovic_, Jan 30 2004",
+        "E.g.f.: cosh(1-(1-2*x)^(1/2))/(1-2*x) + sinh(1-(1-2*x)^(1/2))/((1-2*x)^(3/2)).",
+        "E.g.f. G(0)/(1-2*x) where G(k)= 1 + 2*x/((2*k+1)*(1-2*x+sqrt(1-2*x))+(2*k+1)*(4*x^2-2*x)/(-1+2*x+sqrt(1-2*x) + (2*k+2)/G(k+1))); (continued fraction, 3rd kind, 3-step). - _Sergei N. Gladkovskii_, Jul 01 2012",
+        "a(n) = Sum_{k=0..floor((n-1)/2)} 2^(n-2*k-1)*(n-2*k-1)!*binomial(n-k-1,k)*binomial(n-k-1/2,k+1/2). Cf. A058798. - _Peter Bala_, Aug 01 2013",
+        "a(n) ~ (exp(2)-1)*2^(n-1/2)*n^n/exp(n+1). - _Vaclav Kotesovec_, Oct 05 2013",
+        "a(n) = A001147(n)*hypergeometric([1/2-n/2, 1-n/2], [3/2, 1/2-n, 1-n], 1) for n >= 2. - _Peter Luschny_, Sep 11 2014",
+        "a(n) = i*(BesselK[1/2,1]*BesselI[n+1/2,-1] - BesselI[1/2,-1]*BesselK[n+1/2,1]) for n>=0 (where a(0) = 0). - _G. C. Greubel_, Apr 18 2015",
+        "a(n) = A025164(-1-n) for all n in Z. - _Michael Somos_, Sep 27 2017"
+    ],
+    "example": [
+        "G.f. = x + 3*x^2 + 16*x^3 + 115*x^4 + 1051*x^5 + 11676*x^6 + 152839*x^7 + ..."
+    ],
+    "maple": [
+        "seq(denom(numtheory:-cfrac([seq(2*i-1,i=1..n)])),n=1..50); # _Robert Israel_, Apr 19 2015"
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[Series[(E^(1-(1-2*x)^(1/2))/2 - E^(-1+(1-2*x)^(1/2))/2) / (1-2*x)^(1/2), {x, 0, 20}], x]* Range[0, 20]!] (* _Vaclav Kotesovec_, Oct 05 2013 *)",
+        "a[ n_ ] := a[n] =a[n-2]+(2 n-1) a[n-1]; a[0] := 0; a[1] := 1.  RecurrenceTable[{a[0]==0, a[1]==1, a[n]==a[n-2]+(2n-1)a[n-1]}, a, {n, 20}] (* _G. C. Greubel_,Apr 23 2015 *)",
+        "a[ n_] := (BesselK[ 1/2, 1] BesselI[ n + 1/2, -1] - BesselI[ 1/2, -1] BesselK[n + 1/2, 1])  I // FunctionExpand // Simplify; (* _Michael Somos_, Sep 27 2017 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A036244(n):",
+        "    if n == 1: return 1",
+        "    return 2^n*gamma(n+1/2)*hypergeometric([1/2-n/2, 1-n/2], [3/2, 1/2-n, 1-n], 1)/sqrt(pi)",
+        "[round(A036244(n).n(100)) for n in (1..20)] # _Peter Luschny_, Sep 11 2014",
+        "(MAGMA) I:=[1,3]; [n le 2 select I[n] else (2*n-1)*Self(n-1)+Self(n-2): n in [1..30]]; // _Vincenzo Librandi_, Apr 19 2015"
+    ],
+    "xref": [
+        "Cf. A001040, A001053, A073747.",
+        "Numerators are sequence A025164. A058798."
+    ],
+    "keyword": "nonn,easy,frac",
+    "offset": "1,2",
+    "author": "_Jeff Burch_",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org), May 15 2001",
+        "More terms from _Benoit Cloitre_, Dec 20 2002",
+        "More terms from _Vladeta Jovovic_, Jan 30 2004"
+    ],
+    "references": 4,
+    "revision": 56,
+    "time": "2017-09-27T15:06:20-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

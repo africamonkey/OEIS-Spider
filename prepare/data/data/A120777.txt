@@ -1,0 +1,40 @@
+{
+    "number": 120777,
+    "data": "1,4,8,64,128,512,1024,16384,32768,131072,262144,2097152,4194304,16777216,33554432,1073741824,2147483648,8589934592,17179869184,137438953472,274877906944,1099511627776,2199023255552",
+    "name": "One half of denominators of partial sums of a series for sqrt(2).",
+    "comment": [
+        "Also denominators of partial sums sum(C(k)/(-4)^k, k=0..n) = A120788(n)/A120777(n).",
+        "One half of denominators of partial sums which involve Catalan numbers A000108(k) divided by 4^k with alternating signs.",
+        "The listed numbers coincide with the denominators of sum(C(k)/4^k, k=0..n). See numerators A120778. In general these denominators may be different. See e.g. A120783 versus A120793 and A120787 versus A120796."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A120777/b120777.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = denominator(r(n)), with the rationals r(n) defined under A120088.",
+        "Contribution from _Johannes W. Meijer_, Jul 06 2009: (Start)",
+        "a(n) = denom(C(2*n+2,n+1)/2^(2*n+1)).",
+        "If b(n) = log(a(n))/log(2) then c(n) = b(n+1)-b(n) = A001511(n+1) i.e. the ruler function.",
+        "(End)"
+    ],
+    "maple": [
+        "a := n -> denom(binomial(2*n+2, n+1) / 2^(2*n+1)):",
+        "seq(a(n), n=0..22); # _Johannes W. Meijer_, Sep 23 2012",
+        "Conjecture: The following Maple program appears to generate this sequence! Z[0]:=0: for k to 30 do Z[k]:=simplify(1/(2-z*Z[k-1])) od: g:=sum((Z[j]-Z[j-1]), j=1..30): gser:=series(g, z=0, 27): seq(denom(coeff(gser, z, n))/2, n=0..22); # _Zerinvary Lajos_, May 21 2008",
+        "a := proc(n) option remember: if n = 0 then b(0):=0 else b(n) := b(n-1) + A001511(n+1) fi: a(n) := 2^b(n) end proc: A001511 := proc(n) option remember: if n = 1 then 1 else procname(n-1) + (-1)^n * procname(floor(n/2)) fi: end proc:",
+        "seq(a(n), n=0..22); # _Johannes W. Meijer_, Jul 06 2009, revised Sep 23 2012"
+    ],
+    "mathematica": [
+        "Table[ Denominator[ CatalanNumber[k]/(-4)^k], {k, 0, 22}] (* _Jean-Fran\u00e7ois Alcover_, Jun 21 2013 *)"
+    ],
+    "xref": [
+        "Appears in A162446. [_Johannes W. Meijer_, Jul 06 2009]"
+    ],
+    "keyword": "nonn,easy,frac",
+    "offset": "0,2",
+    "author": "_Wolfdieter Lang_, Jul 20 2006",
+    "references": 10,
+    "revision": 16,
+    "time": "2013-10-09T02:24:28-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

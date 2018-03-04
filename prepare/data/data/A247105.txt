@@ -1,0 +1,48 @@
+{
+    "number": 247105,
+    "data": "1,5,25,109,385,1373,4645,16009,48817,159757,488377,1571425,4560901,14482393,43408013,130394125,380755429,1118740741,3326930413,9931863461,28466058257,84243573797,240453967777,706827067045,2009065808473,5913933615149,16711898903281",
+    "name": "Variation of Flavius Josephus's sieve: Start with the natural numbers; at the k-th sieving step, make k passes removing every k-th term of the sequence remaining after the previous sieving step; iterate.",
+    "comment": [
+        "Starting with the natural numbers, make 2 passes removing every 2nd number, 3 passes removing every 3rd number, etc.",
+        "Is the limiting value of a(n+1)/a(n)=3?",
+        "Since 1/(1-1/n)^n converges to e (as n -> inf), a(n+1)/a(n) converges to e. - _Hiroaki Yamanouchi_, Nov 27 2014"
+    ],
+    "link": [
+        "Hiroaki Yamanouchi, <a href=\"/A247105/b247105.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "The 1st pass removes 2, 4, 6, 8, 10, etc. The 2nd pass (also with 2) removes 3, 7, 11, 15, 19, etc. Then there are 3 passes removing every 3rd number, of which the 1st pass removes 9, 21, 33, 45, ..., the 2nd removes 13, 29, 49, ..., and the 3rd removes 17, 41, 73, ...; then there are 4 passes with 4; 5 passes with 5; etc."
+    ],
+    "mathematica": [
+        "A247105 = Reap[Quiet @ For[n=1, n<28, n++, m = n; For[i=n, i >= 1, i--, For[j=1, j <= i, j++, t = Floor[(m*i)/(i-1)]; While[t - Floor[t/i] >= m, t -= 1];  om = m; m = t+1]]; Sow[om]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Nov 28 2014, translated and adapted from _Hiroaki Yamanouchi_'s Python script *)"
+    ],
+    "program": [
+        "(PARI) copydropmult(v,m)=vector(#v-#v\\m,i,v[(i-1)*m\\(m-1)+1])",
+        "alim(n)=my(r=vector(n,i,i),j=2,k=1);while(j<#r,r=copydropmult(r,j);if(k++>j,j++;k=1));r",
+        "(Python)",
+        "for n in range(1, 101):",
+        "..m = n",
+        "..for i in range(n, 1, -1):",
+        "....for j in range(i):",
+        "......t = m * i // (i - 1)",
+        "......while t - t // i >= m:",
+        "........t -= 1",
+        "......m = t + 1",
+        "..print(\"%d %d\" % (n, m)) # _Hiroaki Yamanouchi_, Nov 28 2014"
+    ],
+    "xref": [
+        "Cf. A000960, A056533, A099204."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Sergio Pimentel_, Nov 18 2014",
+    "ext": [
+        "More values from _Franklin T. Adams-Watters_, Nov 21 2014",
+        "a(12)-a(20) from _Alois P. Heinz_, Nov 26 2014",
+        "a(21)-a(27) from _Hiroaki Yamanouchi_, Nov 27 2014"
+    ],
+    "references": 1,
+    "revision": 46,
+    "time": "2014-11-28T23:42:05-05:00",
+    "created": "2014-11-26T21:17:41-05:00"
+}

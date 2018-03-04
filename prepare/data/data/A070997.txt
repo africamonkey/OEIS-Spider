@@ -1,0 +1,68 @@
+{
+    "number": 70997,
+    "data": "1,7,55,433,3409,26839,211303,1663585,13097377,103115431,811826071,6391493137,50320119025,396169459063,3119035553479,24556114968769,193329884196673,1522082958604615,11983333784640247,94344587318517361",
+    "name": "a(n) = 8*a(n-1) - a(n-2), a(0)=1, a(-1)=1.",
+    "comment": [
+        "A Pellian sequence.",
+        "In general, Sum_{k=0..n} binomial(2n-k,k)j^(n-k) = (-1)^n*U(2n,i*sqrt(j)/2), i=sqrt(-1). - _Paul Barry_, Mar 13 2005",
+        "a(n) = L(n,8), where L is defined as in A108299; see also A057080 for L(n,-8). - _Reinhard Zumkeller_, Jun 01 2005",
+        "Number of 01-avoiding words of length n on alphabet {0,1,2,3,4,5,6,7} which do not end in 0. - _Tanya Khovanova_, Jan 10 2007",
+        "Hankel transform of A158197. - _Paul Barry_, Mar 13 2009",
+        "For positive n, a(n) equals the permanent of the (2n) X (2n) tridiagonal matrix with sqrt(6)'s along the main diagonal, and 1's along the superdiagonal and the subdiagonal. - _John M. Campbell_, Jul 08 2011",
+        "Values of x (or y) in the solutions to x^2 - 8xy + y^2 + 6 = 0. - _Colin Barker_, Feb 05 2014"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A070997/b070997.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "J.-C. Novelli, J.-Y. Thibon, <a href=\"https://arxiv.org/abs/1403.5962\">Hopf Algebras of m-permutations,(m+1)-ary trees, and m-parking functions</a>, arXiv preprint arXiv:1403.5962 [math.CO], 2014.",
+        "<a href=\"/index/Ch#Cheby\">Index entries for sequences related to Chebyshev polynomials.</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (8,-1)."
+    ],
+    "formula": [
+        "For all members x of the sequence, 15*x^2 - 6 is a square. Lim_{n->infinity} a(n)/a(n-1) = 4 + sqrt(15). - _Gregory V. Richardson_, Oct 12 2002",
+        "a(n) = (5+sqrt(15))/10 * (4+sqrt(15))^n + (5-sqrt(15))/10 * (4-sqrt(15))^n.",
+        "a(n) ~ 1/10*sqrt(10)*(1/2*(sqrt(10)+sqrt(6)))^(2*n+1)",
+        "a(n) = U(n, 4)-U(n-1, 4) = T(2*n+1, sqrt(5/2))/sqrt(5/2), with Chebyshev's U and T Polynomials and U(-1, x) := 0. U(n, 4)=A001090(n+1), n>=-1.",
+        "Let q(n, x) = Sum_{i=0..n} x^(n-i)*binomial(2*n-i, i); then q(n, 6) = a(n) - _Benoit Cloitre_, Nov 10 2002",
+        "a(n)a(n+3) = 48 + a(n+1)a(n+2). - _Ralf Stephan_, May 29 2004",
+        "a(n) = (-1)^n*U(2n, i*sqrt(6)/2), U(n, x) Chebyshev polynomial of second kind, i=sqrt(-1). - _Paul Barry_, Mar 13 2005",
+        "G.f.: (1-x)/(1-8*x+x^2).",
+        "a(n) = a(-1-n).",
+        "a(n) = Jacobi_P(n,-1/2,1/2,4)/Jacobi_P(n,-1/2,1/2,1). - _Paul Barry_, Feb 03 2006",
+        "[a(n), A001090(n+1)] = [1,6; 1,7]^(n+1) * [1,0]. - _Gary W. Adamson_, Mar 21 2008"
+    ],
+    "example": [
+        "1 + 7*x + 55*x^2 + 433*x^3 + 3409*x^4 + 26839*x^5 + ..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1 - x)/(1 - 8*x + x^2), {x, 0, 30}], x] (* _Vincenzo Librandi_, Jan 26 2013 *)",
+        "a[c_, n_] := Module[{},",
+        "   p := Length[ContinuedFraction[ Sqrt[ c]][[2]]];",
+        "   d := Denominator[Convergents[Sqrt[c], n p]];",
+        "   t := Table[d[[1 + i]], {i, 0, Length[d] - 1, p}];",
+        "   Return[t];",
+        "   ] (* Complement of A041023 *)",
+        "a[15, 20] (* _Gerry Martens_, Jun 07 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = subst( 9*poltchebi(n) - poltchebi(n-1), x, 4) / 5} /* _Michael Somos_, Jun 07 2005 */",
+        "(PARI) {a(n) = if( n<0, n=-1-n); polcoeff( (1 - x) / (1 - 8*x + x^2) + x * O(x^n), n)} /* _Michael Somos_, Jun 07 2005 */",
+        "(Sage) [lucas_number1(n,8,1)-lucas_number1(n-1,8,1) for n in xrange(1, 21)]# [From _Zerinvary Lajos_, Nov 10 2009]",
+        "(MAGMA) I:=[1, 7]; [n le 2 select I[n] else 8*Self(n-1) - Self(n-2): n in [1..30]]; // _Vincenzo Librandi_, Jan 26 2013"
+    ],
+    "xref": [
+        "a(n) = sqrt((3*A057080(n)^2+2)/5) (cf. Richardson comment).",
+        "Cf. A057080, A001090, A001091.",
+        "Row 8 of array A094954.",
+        "Cf. A001090.",
+        "Cf. similar sequences listed in A238379.",
+        "Cf. A041023."
+    ],
+    "keyword": "nonn,easy,changed",
+    "offset": "0,2",
+    "author": "Joe Keane (jgk(AT)jgk.org), May 18 2002",
+    "references": 27,
+    "revision": 64,
+    "time": "2018-02-19T10:39:38-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 187018,
+    "data": "1,1,5,19,145,851,7741,58605,600769,5420035,61026901,628076153,7648488145,87388647373,1138801242125,14182492489651,196218339243777,2628971539313875,38377805385510181,547815690902283225,8395817775835635601",
+    "name": "Coefficient of x^n in (1 + x + n*x^2)^n.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A187018/b187018.txt\">Table of n, a(n) for n = 0..122</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n] (1 + x + n*x^2)^n.",
+        "a(n) = n^(n/2)*GegenbauerPoly(n,-n,-1/(2*sqrt(n))). - _Emanuele Munarini_, Oct 20 2016",
+        "a(n) = sum(binomial(n, k)*binomial(n-k, n-2*k)*n^k, k=0..floor(n/2)).",
+        "a(n) ~ 2^(n-1/2) * exp(sqrt(n)/2-1/8) * n^(n/2-1/2) / sqrt(Pi). - _Vaclav Kotesovec_, Apr 17 2014",
+        "a(n) = [x^n] 1/sqrt(1 - 2*x - (4*n-1)*x^2). - _Paul D. Hanna_, Dec 12 2014"
+    ],
+    "example": [
+        "G.f. = 1 + x + 5*x^2 + 19*x^3 + 145*x^4 + 851*x^5 + 7741*x^6 + 58605*x^7 + ..."
+    ],
+    "mathematica": [
+        "Flatten[{1,Table[Sum[Binomial[n, k]*Binomial[n-k, n-2*k]*n^k, {k,0,Floor[n/2]}],{n,1,20}]}] (* _Vaclav Kotesovec_, Apr 17 2014 *)",
+        "a[ n_] := SeriesCoefficient[ (1 + x + x^2)^n, {x, 0, n}]; (* _Michael Somos_, Dec 12 2014 *)",
+        "Table[If[n == 0, 1,",
+        "Simplify[n^(n/2) GegenbauerC[n, -n, -1/(2 Sqrt[n])]]], {n, 0, 12}] (* _Emanuele Munarini_, Oct 20 2016 *)"
+    ],
+    "program": [
+        "(Maxima) a(n):=coeff(expand((1+x+n*x^2)^n),x,n);",
+        "makelist(a(n),n,0,20);",
+        "(MAGMA) P<x>:=PolynomialRing(Integers()); [ Coefficients((1+x+n*x^2)^n)[n+1]: n in [0..22] ]; // Klaus Brockhaus, Mar 03 2011",
+        "(PARI) {a(n)=polcoeff(1/sqrt(1 - 2*x - (4*n-1)*x^2 +x*O(x^n)),n)}",
+        "for(n=0,25,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Dec 12 2014"
+    ],
+    "xref": [
+        "Cf. A092366, A186925, A187019, A187021."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Emanuele Munarini_, Mar 02 2011",
+    "references": 5,
+    "revision": 23,
+    "time": "2016-10-20T06:40:38-04:00",
+    "created": "2011-03-02T03:32:08-05:00"
+}

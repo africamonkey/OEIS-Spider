@@ -1,0 +1,46 @@
+{
+    "number": 162655,
+    "data": "1,1,4,33,416,7100,153234,4004000,122919208,4336955424,172946624880,7692618593352,377615317473624,20278301717340888,1182581903027279832,74428445506232769240,5028336618916834615104,362962785521720282899200",
+    "name": "E.g.f. satisfies: A(x) = (1 + x*A(x))^A(x).",
+    "comment": [
+        "Contribution from _Paul D. Hanna_, Jul 19 2009: (Start)",
+        "More generally, if G(x) = (1 + x*G(x)^p)^(G(x)^q), then",
+        "[x^n/n! ] G(x)^m = Sum_{k=0..n} m*(pn+qk+m)^(k-1) * Stirling1(n,k), and",
+        "[x^n/n! ] log(G(x)) = Sum_{k=1..n} (pn+qk)^(k-1) * Stirling1(n,k). (End)"
+    ],
+    "formula": [
+        "(1) a(n) = Sum_{k=0..n} (n+k+1)^(k-1) * Stirling1(n,k).",
+        "Let A(x)^m = Sum_{n>=0} a(n,m)*x^n/n!, then",
+        "(2) a(n,m) = Sum_{k=0..n} m*(n+k+m)^(k-1) * Stirling1(n,k) ;",
+        "which is equivalent to the following:",
+        "(3) a(n,m) = Sum_{k=0..n} m*(n+k+m)^(k-1) * {[x^(n-k)] Product_{j=1..n-1} (1-j*x) };",
+        "(4) a(n,m) = n!*Sum_{k=0..n} m*(n+k+m)^(k-1) * {[x^(n-k)] (log(1+x)/x)^k/k!}.",
+        "a(n) ~ s^2*sqrt(r*(1+r*s)/(1+r*s*(1+s)*(2+r*s))) * n^(n-1) / (exp(n)*r^n), where r = 0.21551711955114319212... and s = 1.7128732151580576508... are roots of the system of equations s*(r*s/(1+r*s) + log(1+r*s)) = 1, (1+r*s)^s = s. - _Vaclav Kotesovec_, Jul 15 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 4*x^2/2! + 33*x^3/3! + 416*x^4/4! + 7100*x^5/5! +...",
+        "log(A(x)) = A(x)*log(1 + x*A(x)) where",
+        "log(A(x)) = x + 3*x^2/2! + 23*x^3/3! + 278*x^4/4! + 4624*x^5/5! + 98064*x^6/6! +...",
+        "log(1 + x*A(x)) = x + x^2/2! + 8*x^3/3! + 90*x^4/4! + 1444*x^5/5! + 29880*x^6/6! +..."
+    ],
+    "mathematica": [
+        "Table[Sum[(n+k+1)^(k-1) * StirlingS1[n,k],{k,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Jul 15 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n,m=1)=sum(k=0,n,m*(n+k+m)^(k-1)*polcoeff(prod(j=1,n-1,1-j*x),n-k))}",
+        "(PARI) {a(n,m=1)=sum(k=0,n,m*(n+k+m)^(k-1)*n!/k!*polcoeff((log(1+x+x*O(x^n))/x)^k,n-k))}",
+        "(PARI) {Stirling1(n,k)=n!*polcoeff(binomial(x,n),k)}",
+        "{a(n,m=1)=sum(k=0,n,m*(n+k+m)^(k-1)*Stirling1(n,k))}"
+    ],
+    "xref": [
+        "Cf. A008275 (Stirling1), A141209 (variant).",
+        "Cf. A162863. [From _Paul D. Hanna_, Jul 19 2009]"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jul 08 2009",
+    "references": 3,
+    "revision": 5,
+    "time": "2014-07-15T12:44:49-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

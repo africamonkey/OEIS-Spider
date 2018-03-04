@@ -1,0 +1,47 @@
+{
+    "number": 192464,
+    "data": "2,4,7,16,38,95,242,624,1619,4216,11002,28747,75170,196652,514607,1346880,3525566,9229063,24160402,63250168,165586907,433505384,1134920882,2971243731,7778788418,20365086100,53316412567,139584058864,365435613974",
+    "name": "Constant term of the reduction by x^2->x+1 of the polynomial p(n,x)=1+x^n+x^(2n).",
+    "comment": [
+        "For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232.  The coefficient of x in the reduction by x^2->x+1 of the polynomial p(n,x)=1+x^n+x^(2n) is 2*A051450."
+    ],
+    "link": [
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (5,-7,1,3,-1)."
+    ],
+    "formula": [
+        "G.f.: -x*(3*x^4-7*x^3-x^2+6*x-2)/((x-1)*(x^2-3*x+1)*(x^2+x-1)). [_Colin Barker_, Nov 12 2012]"
+    ],
+    "example": [
+        "The first four polynomials p(n,x) and their reductions are as follows:",
+        "p(1,x)=1+x+x^2 -> 2+2x",
+        "p(2,x)=1+x^2+x^4 -> 4+4x",
+        "p(3,x)=1+x^3+x^6 -> 7+10x",
+        "p(4,x)=1+x^4+x^8 -> 16+24x.",
+        "From these, read",
+        "A192464=(2,4,7,16,...) and 2*A051450=(2,4,10,24,...)"
+    ],
+    "mathematica": [
+        "Remove[\"Global`*\"];",
+        "q[x_] := x + 1; p[n_, x_] := 1 + x^n + x^(2 n);",
+        "Table[Simplify[p[n, x]], {n, 1, 5}]",
+        "reductionRules = {x^y_?EvenQ -> q[x]^(y/2),",
+        "   x^y_?OddQ -> x q[x]^((y - 1)/2)};",
+        "t = Table[FixedPoint[Expand[#1 /. reductionRules] &, p[n, x]], {n, 1, 30}]",
+        "Table[Coefficient[Part[t, n], x, 0], {n, 1, 30}]",
+        "(* A192464 *)",
+        "Table[Coefficient[Part[t, n], x, 1], {n, 1, 30}]",
+        "(* 2*A051450 *)",
+        "Table[Coefficient[Part[t, n]/2, x, 1], {n, 1, 30}]",
+        "(* A051450 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A051450."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jul 01 2011",
+    "references": 4,
+    "revision": 12,
+    "time": "2015-06-13T00:53:53-04:00",
+    "created": "2011-07-05T13:06:20-04:00"
+}

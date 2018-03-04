@@ -1,0 +1,53 @@
+{
+    "number": 240563,
+    "data": "2,23,2311,231131,23113147,23113147229,23113147229251,23113147229251577,23113147229251577857,23113147229251577857859,23113147229251577857859911,231131472292515778578599111123,2311314722925157785785991111231223",
+    "name": "Primes formed from concatenation of higher primes onto the previous entry until prime, starting from 2.",
+    "comment": [
+        "This generates a monotonically increasing sequence, nicely spread out, likely infinite. By altering the starting prime value, a family of such sequences can easily be generated.",
+        "Derived from A080155. - _T. D. Noe_, Apr 11 2014",
+        "From the first 155 points, with x = #digits, y = sequence pointer y~ A*x^B with (A, B) = (0.6624, 0.8106). This indicates a 100-digit prime in the vicinity of y = 28 for example. - _Bill McEachen_, Apr 13 2014",
+        "Only from the first 100 entries, it would appear that an upper bound on the number of digits in a(n) is A092777(n). - _Bill McEachen_, Sep 15 2015"
+    ],
+    "link": [
+        "Bill McEachen, <a href=\"/A240563/b240563.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "example": [
+        "Begin from 2.",
+        "Next we try 23 - it is prime, this sets next iteration (23 is the \"constant\" part), upon which we try higher primes.",
+        "Next we try 235 - composite; next we try 237 - composite; next we try 2311 - prime, this sets next iteration (2311 now becomes the \"constant\" part), upon which we try higher primes.",
+        "Next we try 231113 - composite; next we try 231117 - composite; ...; next we try 231131 - prime, this sets next iteration (231131 now becomes the \"constant\" part), upon which we try higher primes.",
+        "Next we try 23113147 - prime, this sets next iteration (23113147 now becomes the \"constant\" part), upon which we try higher primes."
+    ],
+    "maple": [
+        "X:= 2: p:= 3: a[1]:= 2:",
+        "for i from 2 to 30 do",
+        "  while not isprime(X*10^(1+ilog10(p))+p) do",
+        "     p:= nextprime(p)",
+        "  od:",
+        "  X:= X*10^(1+ilog10(p))+p;",
+        "  a[i]:= X;",
+        "  p:= nextprime(p);",
+        "od:",
+        "seq(a[i],i=1..30); # _Robert Israel_, Sep 15 2015"
+    ],
+    "mathematica": [
+        "s[1] = 2; s[n_] := s[n] = Block[{d = Flatten[IntegerDigits /@ Array[s, n-1]], p = NextPrime@s[n - 1]}, While[! PrimeQ@ FromDigits@ Join[d, IntegerDigits@p], p = NextPrime@p]; p]; a[n_] := FromDigits@ Flatten[ IntegerDigits /@ Array[s, n]]; Array[a, 10] (* _Giovanni Resta_, Apr 09 2014 *)"
+    ],
+    "program": [
+        "(PARI) print1(N=2); p=3; for(n=2,10, while(!isprime(eval(Str(N,p))), p=nextprime(p+1)); N=eval(Str(N,p)); p=nextprime(p+1); print1(\", \"N)) \\\\ _Charles R Greathouse IV_, Apr 09 2014"
+    ],
+    "xref": [
+        "Cf. A069151 (variant).",
+        "Cf. A080155 (primes used in concatenation)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bill McEachen_, Apr 07 2014",
+    "ext": [
+        "a(7)-a(13) from _Giovanni Resta_, Apr 09 2014"
+    ],
+    "references": 3,
+    "revision": 59,
+    "time": "2015-10-16T17:35:43-04:00",
+    "created": "2014-05-05T04:21:16-04:00"
+}

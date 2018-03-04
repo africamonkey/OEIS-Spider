@@ -1,0 +1,51 @@
+{
+    "number": 100471,
+    "data": "1,1,2,2,4,4,7,8,11,13,18,20,27,32,40,44,60,67,82,93,114,129,161,175,209,239,285,315,372,416,484,545,631,698,811,890,1027,1146,1304,1437,1631,1805,2042,2252,2539,2785,3143,3439,3846,4226,4722,5159",
+    "name": "Number of partitions whose sequence of frequencies is increasing.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A100471/b100471.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "a(4) = 4 because of the 5 unrestricted partitions of 4, only one, 3+1 uses each of its summands just once and 1,1 is not an increasing sequence."
+    ],
+    "maple": [
+        "b:= proc(n,i,t) option remember;",
+        "      if n<0 then 0",
+        "    elif n=0 then 1",
+        "    elif i=1 then `if`(n>t, 1, 0)",
+        "    elif i=0 then 0",
+        "    else      b(n, i-1, t)",
+        "         +add(b(n-i*j, i-1, j), j=t+1..floor(n/i))",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n, n, 0):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Feb 21 2011"
+    ],
+    "mathematica": [
+        "b[n_, i_, t_] := b[n, i, t] = Which[n<0, 0, n==0, 1, i==1, If[n>t, 1, 0], i == 0, 0 , True, b[n, i-1, t] + Sum[b[n-i*j, i-1, j], {j, t+1, Floor[n/i]}]]; a[n_] := b[n, n, 0]; Table[a[n], {n, 0, 60}] (* _Jean-Fran\u00e7ois Alcover_, Mar 16 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a100471 n = p 0 (n + 1) 1 n where",
+        "   p m m' k x | x == 0    = if m < m' || m == 0 then 1 else 0",
+        "              | x < k     = 0",
+        "              | m == 0    = p 1 m' k (x - k) + p 0 m' (k + 1) x",
+        "              | otherwise = p (m + 1) m' k (x - k) +",
+        "                            if m < m' then p 0 m (k + 1) x else 0",
+        "-- _Reinhard Zumkeller_, Dec 27 2012"
+    ],
+    "xref": [
+        "Cf. A100881, A100882, A100883.",
+        "Cf. A098859."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_David S. Newman_, Nov 21 2004",
+    "ext": [
+        "Corrected and extended by _Vladeta Jovovic_, Nov 24 2004"
+    ],
+    "references": 5,
+    "revision": 20,
+    "time": "2015-03-16T09:42:07-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 213212,
+    "data": "1,1,1,2,3,5,6,10,12,17,20,26,29,38,44,52,59,72,78,94,104,118,130,149,160,182,198,221,237,263,278,308,330,361,383,416,438,480,509,546,574,620,646,699,734,777,816,872,907,969,1012,1071,1117,1190,1233,1307,1361",
+    "name": "Number of distinct products i*j*k over all triples (i,j,k) with i,j,k>=0 and i+j+k <= n and GCD{i,j,k} <= 1.",
+    "comment": [
+        "This sequence is in reply to an extension request made in A100450.",
+        "Note that GCD{0,m} = m for any m."
+    ],
+    "link": [
+        "Robert Price and Alois P. Heinz, <a href=\"/A213212/b213212.txt\">Table of n, a(n) for n = 0..1000</a> (terms n = 0..200 from Robert Price)"
+    ],
+    "formula": [
+        "a(n) = (A213208(n)+1)/2."
+    ],
+    "maple": [
+        "h:= proc() true end:",
+        "b:= proc(n) local c, i, j, p;",
+        "      c:=0;",
+        "      for i to iquo(n, 3) do",
+        "        for j from i to iquo(n-i, 2) do",
+        "          if igcd(i, j, n-i-j)=1 then p:= i*j*(n-i-j);",
+        "            if h(p) then h(p):= false; c:=c+1 fi",
+        "          fi",
+        "        od",
+        "      od; c",
+        "    end:",
+        "a:= proc(n) a(n):= `if`(n=0, 1, a(n-1) +b(n)) end:",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Mar 02 2013"
+    ],
+    "mathematica": [
+        "f[n_] := Length[ Union[ Flatten[ Table[ If[ i+j+k <= n&& GCD[i, j, k] <= 1, i*j*k, 0], {i, 0, n}, {j, 0, n}, {k, 0, n}], 2]]]; Table[ f[n], {n, 0, 200}]"
+    ],
+    "xref": [
+        "Cf. A018805, A027430, A100448, A100449, A100450, A213207, A213208, A213213."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Robert Price_, Mar 02 2013",
+    "references": 7,
+    "revision": 17,
+    "time": "2013-03-03T01:59:24-05:00",
+    "created": "2013-03-02T15:47:53-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 192365,
+    "data": "1,3,22,165,1327,10950,92045,783579,6733966,58294401,507579829,4440544722,39000863629,343677908223,3037104558574,26904952725061,238854984979423,2124492829796598,18927927904130617,168888613467092895,1508973226894216106,13498652154574126523,120886709687492946083",
+    "name": "Number of lattice paths from (0,0) to (n,n) using steps (1,0),(2,0),(0,1),(0,2),(1,1),(2,2).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A192365/b192365.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.:  ogf^2 = ((2*x^2+6*x-3)/p4 - 2/sqrt(p4))/(4*x^2-4*x-5) where p4 = x^4+6*x^3+7*x^2-10*x+1. - _Mark van Hoeij_, Apr 16 2013"
+    ],
+    "maple": [
+        "p4 := x^4+6*x^3+7*x^2-10*x+1;",
+        "ogf := sqrt( ((2*x^2+6*x-3)/p4 - 2/sqrt(p4))/(4*x^2-4*x-5) );",
+        "series(ogf, x=0, 30);  # _Mark van Hoeij_, Apr 16 2013",
+        "# second Maple program:",
+        "b:= proc(x, y) option remember; `if`(min(x, y)<0, 0,",
+        "      `if`(max(x, y)=0, 1, add(b(x, y-j)+",
+        "         b(x-j, y)+b(x-j, y-j), j=1..2)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, May 16 2017"
+    ],
+    "mathematica": [
+        "b[x_, y_] := b[x, y] = If[Min[x, y] < 0, 0, If[Max[x, y] == 0, 1, Sum[b[x, y - j] + b[x - j, y] + b[x - j, y - j], {j, 1, 2}]]];",
+        "a[n_] := b[n, n];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Jun 23 2017, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) /* same as in A092566 but use */",
+        "steps=[[0,1], [0,2], [1,0], [2,0], [1,1], [2,2]];",
+        "/* _Joerg Arndt_, Jun 30 2011 */"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Eric Werley_, Jun 29 2011",
+    "ext": [
+        "Terms >507579829 by _Joerg Arndt_, Jun 30 2011."
+    ],
+    "references": 8,
+    "revision": 17,
+    "time": "2017-06-23T09:48:07-04:00",
+    "created": "2011-06-30T12:54:38-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 86854,
+    "data": "0,0,0,0,2,16,120,888,7198,64968,650644,7165200,86059242,1119549472,15682257872,235336043976,3766695159030,64052134910168,1153211148654348,21915344800505888,438380075974889154,9207290871553008240,202585136417883766472,4659950328485470292632",
+    "name": "Number of permutations of length n with exactly 3 rising or falling successions.",
+    "comment": [
+        "Permutations of 12...n such that exactly 3 of the following occur: 12, 23, ..., (n-1)n, 21, 32, ..., n(n-1)."
+    ],
+    "reference": [
+        "F. N. David, M. G. Kendall and D. E. Barton, Symmetric Function and Allied Tables, Cambridge, 1966, p. 263.",
+        "J. Riordan, A recurrence for permutations without rising or falling successions. Ann. Math. Statist. 36 (1965), 708-710."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A086854/b086854.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "Coefficient of t^3 in S[n](t) defined in A002464.",
+        "Recurrence (for n>4): (n-4)*(2*n^6 - 52*n^5 + 557*n^4 - 3136*n^3 + 9740*n^2 - 15727*n + 10242)*a(n) = (n-4)*(2*n^7 - 50*n^6 + 511*n^5 - 2693*n^4 + 7450*n^3 - 9041*n^2 - 157*n + 6666)*a(n-1) - (2*n^8 - 58*n^7 + 735*n^6 - 5289*n^5 + 23430*n^4 - 64575*n^3 + 106105*n^2 - 92312*n + 30900)*a(n-2) - (2*n^7 - 54*n^6 + 615*n^5 - 3795*n^4 + 13554*n^3 - 27681*n^2 + 29473*n - 12330)*(n-2)*a(n-3) + (2*n^6 - 40*n^5 + 327*n^4 - 1388*n^3 + 3184*n^2 - 3675*n + 1626)*(n-2)^2*a(n-4). - _Vaclav Kotesovec_, Aug 11 2013",
+        "a(n) ~ 4/3*exp(-2) * n! = n! * 0.45231366335478... - _Vaclav Kotesovec_, Aug 11 2013"
+    ],
+    "maple": [
+        "S:= proc(n) option remember; `if`(n<4, [1, 1, 2*t, 4*t+2*t^2]",
+        "       [n+1], expand((n+1-t)*S(n-1) -(1-t)*(n-2+3*t)*S(n-2)",
+        "       -(1-t)^2*(n-5+t)*S(n-3) +(1-t)^3*(n-3)*S(n-4)))",
+        "    end:",
+        "a:= n-> coeff(S(n), t, 3):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jan 11 2013"
+    ],
+    "mathematica": [
+        "S[n_] := S[n] = If[n < 4, {1, 1, 2*t, 4*t+2*t^2}[[n+1]], Expand[(n+1-t)*S[n-1] - (1-t)*(n-2+3*t)*S[n-2] - (1-t)^2*(n-5+t)*S[n-3] + (1-t)^3*(n-3)*S[n-4]]]; a[n_] := Coefficient[S[n], t, 3]; Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Apr 09 2014, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A002464, A000130, A000349, A001267, A086852, A086853. A diagonal of A001100."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_, Aug 19 2003",
+    "references": 6,
+    "revision": 13,
+    "time": "2014-04-09T09:51:19-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

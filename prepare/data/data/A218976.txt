@@ -1,0 +1,66 @@
+{
+    "number": 218976,
+    "data": "6,16,116,241,242,491,991,2491,3331,14966,15556,62491,78116,83331,249991,264866,546841,1109366,2265491,4999861,4999991,5837041,12499996,25249861,26011861,36249091,80070866,190999991,242090611,365038621,976562241,1210466866,1830622801",
+    "name": "a(n) is the smallest positive integer such that 10^(2 + floor(k/a(1)) + floor(k/a(2)) + ... + floor(k/a(n))) divides (k+9)! for all k > 0.",
+    "comment": [
+        "Every factorial of the form (k+9)! for every integer k > 0 ends at least in two zeros. This sequence gives a lower bound on the number of zeros.",
+        "This sequence is infinite and increasing, with 1/a(1) + 1/a(2) + ... = 1/4.",
+        "Conjecture: All terms except a(5) are 1 mod 5. - _R. J. Cano_, Nov 11 2012"
+    ],
+    "link": [
+        "<a href=\"/A218976/b218976.txt\">Table of n, a(n) for n = 1..33</a>",
+        "Dickson, Leonard Eugene (2005) [1919], History of the theory of numbers. Vol. I: Divisibility and primality., New York: Dover Publications, ISBN 978-0-486-44232-7, <a href=\"http://ams.org/mathscinet-getitem?mr=0245499\">[MR]</a>, page 263. De Polignac's formula",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/De_Polignac%27s_formula\">De Polignac's formula</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Trailing_zero\">Trailing zero</a>"
+    ],
+    "formula": [
+        "Let Psi(k) = 2 + sum_{n >= 1} floor(k/a(n)). Then 10^Psi(k) divides (k+9)!."
+    ],
+    "example": [
+        "10^(2 + floor(5/5)) does not divide 14!, so a(1) > 5. But 10^(2 + floor(k/6)) divides (k+9)! for all k > 0, so a(1) = 6."
+    ],
+    "program": [
+        "(PARI) searchLimit(s1)={",
+        "    my(e,s2,f=(e,s)->(e+2-9*s)/(s-s1));",
+        "    while(s2<=s1, s2 += 1/5^e++);",
+        "    min(f(e,s2), f(e++,s2+=1/5^e))\\1",
+        "};",
+        "v5(n)=my(s);while(n\\=5,s+=n);s;",
+        "nxt(v=[6])={",
+        "    my(S=sum(i=1,#v,1/v[i]), candidate=max(v[#v],1\\(1/4-S))+1, k=candidate, lm=searchLimit(S+1/candidate));",
+        "    while(k<=lm,",
+        "        if(v5(k+9)<2+sum(i=1,#v,k\\v[i])+k\\candidate,",
+        "            candidate++;",
+        "            lm=searchLimit(S+1/candidate)",
+        "        ,",
+        "            k++",
+        "        )",
+        "    );",
+        "    candidate",
+        "};",
+        "steps(n)={",
+        "    my(v=[6],t);",
+        "    print1(6);",
+        "    for(i=2,n,",
+        "        t=nxt(v);",
+        "        print1(\", \"t);",
+        "        v=concat(v,t)",
+        "    );",
+        "    v",
+        "};",
+        "steps(20)"
+    ],
+    "xref": [
+        "Cf. A027868, A217626."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. J. Cano_ and _Charles R Greathouse IV_, Nov 08 2012",
+    "ext": [
+        "a(32)-a(33) from _Charles R Greathouse IV_, Nov 19 2012"
+    ],
+    "references": 1,
+    "revision": 61,
+    "time": "2016-04-17T07:19:47-04:00",
+    "created": "2012-11-16T13:27:35-05:00"
+}

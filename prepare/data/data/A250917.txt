@@ -1,0 +1,35 @@
+{
+    "number": 250917,
+    "data": "1,1,7,73,1033,18541,403831,10351237,305355793,10192132153,379819484551,15634219476481,704566985120857,34506514429777573,1825081888365736183,103685565729559782781,6297505655719537293601,407233553972252986277617,27935786938445348562454663",
+    "name": "E.g.f.: exp( x*C(x)^3 ) where C(x) = (1 - sqrt(1-4*x))/(2*x) is the g.f. of the Catalan numbers, A000108.",
+    "comment": [
+        "In general, if k>0 and e.g.f. = exp(x*C(x)^k) where C(x) = (1 - sqrt(1-4*x))/(2*x) is the g.f. of the Catalan numbers, then a(n) ~ k * 2^(2*n + k - 5/2) * n^(n-1) / exp(n - 2^(k-2)). - _Vaclav Kotesovec_, Aug 22 2017"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} n!/k! * binomial(2*n+k-1, n-k) * 3*k/(n+2*k)  for n>0 with a(0)=1.",
+        "a(n) ~ 3 * 2^(2*n+1/2) * n^(n-1) / exp(n-2). - _Vaclav Kotesovec_, Aug 22 2017"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 7*x^2/2! + 73*x^3/3! + 1033*x^4/4! + 18541*x^5/5! +...",
+        "such that log(A(x)) = x*C(x)^3,",
+        "log(A(x)) = x + 3*x^2 + 9*x^3 + 28*x^4 + 90*x^5 + 297*x^6 + 1001*x^7 +...",
+        "where C(x) = 1 + x*C(x)^2 is the g.f. of A000108."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(C=1); for(i=1, n, C=1+x*C^2 +x*O(x^n));",
+        "n!*polcoeff(exp(x*C^3), n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n) = if(n==0, 1, sum(k=0, n, n!/k! * binomial(2*n+k-1, n-k) * 3*k/(n+2*k) ))}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A251568, A000108, A001517."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 06 2014",
+    "references": 1,
+    "revision": 8,
+    "time": "2017-08-22T12:23:26-04:00",
+    "created": "2014-12-06T23:24:31-05:00"
+}

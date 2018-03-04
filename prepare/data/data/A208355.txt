@@ -1,0 +1,49 @@
+{
+    "number": 208355,
+    "data": "1,1,1,2,2,5,5,14,14,42,42,132,132,429,429,1430,1430,4862,4862,16796,16796,58786,58786,208012,208012,742900,742900,2674440,2674440,9694845,9694845,35357670,35357670,129644790,129644790,477638700,477638700,1767263190",
+    "name": "Right edge of the triangle in A208101.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A208355/b208355.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "D. Levin, L. Pudwell, M. Riehl, A. Sandberg, <a href=\"http://www.etsu.edu/cas/math/pp2014/documents/talks/riehl.pdf\">Pattern Avoidance on k-ary Heaps</a>, Slides of Talk, 2014."
+    ],
+    "formula": [
+        "a(n) = A000108(floor((n+1)/2)), where A000108 = Catalan numbers.",
+        "a(n) = A208101(n,n).",
+        "a(n) = abs(A099363(n)).",
+        "Conjecture: -(n+3)*(n-2)*a(n) -4*a(n-1) +4*(n-1)^2*a(n-2)=0. - _R. J. Mathar_, Aug 04 2015"
+    ],
+    "maple": [
+        "A208355_list := proc(len) local D, b, h, R, i, k;",
+        "    D := [seq(0, j=0..len+2)]; D[1] := 1; b := true; h := 2; R := NULL;",
+        "    for i from 1 to 2*len do",
+        "        if b then",
+        "            for k from h by -1 to 2 do D[k] := D[k] - D[k-1] od;",
+        "            h := h + 1; R := R, abs(D[2]);",
+        "        else",
+        "            for k from 1 by 1 to h do D[k] := D[k] + D[k+1] od;",
+        "        fi;",
+        "        b := not b:",
+        "    od;",
+        "    return R",
+        "end:",
+        "A208355_list(38); # _Peter Luschny_, Dec 19 2017"
+    ],
+    "mathematica": [
+        "T[_, 0] = 1; T[n_, 1] := n; T[n_, n_] := T[n - 1, n - 2]; T[n_, k_] /; 1 < k < n := T[n, k] = T[n - 1, k] + T[n - 1, k - 2];",
+        "a[n_] := T[n, n];",
+        "Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Feb 03 2018, from A208101 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a208355 n = a208101 n n",
+        "a208355_list = map last a208101_tabl",
+        "(MAGMA) [Ceiling(Catalan(n div 2)): n in [1..40]]; // _Vincenzo Librandi_, Feb 18 2014"
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Reinhard Zumkeller_, Mar 04 2012",
+    "references": 6,
+    "revision": 25,
+    "time": "2018-02-03T09:55:48-05:00",
+    "created": "2012-03-05T15:41:18-05:00"
+}

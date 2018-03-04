@@ -1,0 +1,43 @@
+{
+    "number": 219560,
+    "data": "1,5,40,364,2897,21369,148257,970246,6032341,35850410,204646488,1126463948,5999145787,30999381232,155798366059,763194776551,3650648583934,17079277343463,78262895082681,351708874155894,1551843168854346",
+    "name": "Number of tripartite partitions of (n,n,n) into distinct triples.",
+    "comment": [
+        "Number of factorizations of (p*q*r)^n into distinct factors where p, q, r are distinct primes."
+    ],
+    "formula": [
+        "a(n) = [(x*y*z)^n] 1/2 * Product_{i,j,k>=0} (1+x^i*y^j*z^k)."
+    ],
+    "example": [
+        "a(0) = 1: [].",
+        "a(1) = 5: [(1,1,1)], [(1,1,0),(0,0,1)], [(1,0,1),(0,1,0)], [(0,1,1),(1,0,0)], [(0,0,1),(0,1,0),(1,0,0)]."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n, k) option remember;",
+        "      `if`(n>k, 0, 1) +`if`(isprime(n), 0,",
+        "      add(`if`(d>k, 0, b(n/d, d-1)), d=divisors(n) minus {1, n}))",
+        "    end:",
+        "a:= n-> b(30^n$2):",
+        "seq(a(n), n=0..10);  # _Alois P. Heinz_, May 26 2013"
+    ],
+    "mathematica": [
+        "b[n_, k_] := b[n, k] = If[n > k, 0, 1] + If[PrimeQ[n], 0, Sum[If[d > k, 0, b[n/d, d - 1]], {d, Divisors[n][[2 ;; -2]]}]]; a[0] = 1; a[n_] := b[30^n, 30^n];  Table[an = a[n]; Print[\"a(\", n, \") = \", an]; an, {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Jan 15 2016, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=3 of A219585.",
+        "Cf. A002774, A219554, A219561, A219565, A219678."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Nov 23 2012",
+    "ext": [
+        "a(16) from _Alois P. Heinz_, May 26 2013",
+        "a(17) from _Alois P. Heinz_, Sep 24 2014",
+        "More terms from _Jean-Fran\u00e7ois Alcover_, Jan 15 2016"
+    ],
+    "references": 6,
+    "revision": 21,
+    "time": "2016-01-15T04:02:19-05:00",
+    "created": "2012-11-23T13:03:24-05:00"
+}

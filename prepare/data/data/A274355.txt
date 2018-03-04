@@ -1,0 +1,38 @@
+{
+    "number": 274355,
+    "data": "0,1,2,5,9,15,27,42,65,99,148,214,308,435,605,839,1145,1548,2080,2769,3659,4812,6278,8145,10518,13506,17257,21961,27821,35095,44117,55243,68928,85735,106285,131357,161893,198944,243817,298060,363446",
+    "name": "Convolution of A048272 and A022567.",
+    "comment": [
+        "Also the convolution of A015723 and A000009."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A274355/b274355.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Mircea Merca, <a href=\"http://dx.doi.org/10.1016/j.jnt.2015.08.014\">Combinatorial interpretations of a recent convolution for the number of divisors of a positive integer</a>, Journal of Number Theory, Volume 160, March 2016, Pages 60-75, corollary 3.5."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} A048272(k)*A022567(n-k) = Sum_{k=0..n} A015723(k)*A000009(n-k)."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1, add(add(d*[0, 1][1+",
+        "      irem(d, 2)], d=numtheory[divisors](j))*b(n-j), j=1..n)/n)",
+        "    end:",
+        "g:= proc(n, i) option remember; `if`(i*(i+1)/2<n, 0, `if`(n=0, [1, 0],",
+        "      add((l->[l[1], l[2]+l[1]*j])(g(n-i*j, i-1)), j=0..min(n/i, 1))))",
+        "    end:",
+        "a:= n-> add(b(n-j)*g(j$2)[2], j=0..n):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Jun 18 2016"
+    ],
+    "mathematica": [
+        "Table[Sum[Count[#, _?OddQ] - Count[#, _?EvenQ] &@ Divisors@ k SeriesCoefficient[QPochhammer[q, q^2]^-2, {q, 0, #}] &[n - k], {k, n}], {n, 0, 40}] (* _Michael De Vlieger_, Jun 18 2016, after _Michael Somos_ at A022567 *)"
+    ],
+    "xref": [
+        "Cf. A048272, A022567, A015723, A000009."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_R. J. Mathar_, Jun 18 2016",
+    "references": 1,
+    "revision": 10,
+    "time": "2016-06-19T07:37:39-04:00",
+    "created": "2016-06-19T07:37:39-04:00"
+}

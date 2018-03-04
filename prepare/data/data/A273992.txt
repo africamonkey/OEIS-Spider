@@ -1,0 +1,37 @@
+{
+    "number": 273992,
+    "data": "11,22,33,65,82,140,218,228,483,537,616,1184,2889,6430,10216,15849,21541,59620,112590,117818,130356,483153,3028671,3589646,7231219,8515767",
+    "name": "Numbers whose sum of anti-divisors is equal to the sum of its unitary divisors.",
+    "example": [
+        "Sum of anti-divisors of 11 is 12. Unitary divisors of 11 are 1, 11 and their sum is 12."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,b,c,j,k,n;",
+        "for n from 1 to q do k:=0; j:=n;",
+        "while j mod 2 <> 1 do k:=k+1; j:=j/2; od;",
+        "a:=sigma(2*n+1)+sigma(2*n-1)+sigma(n/2^k)*2^(k+1)-6*n-2;",
+        "c:=ifactors(n)[2]; b:=mul(c[j][1]^c[j][2]+1,j=1..nops(c));",
+        "if a=b then print(n); fi; od; end: P(10^6);"
+    ],
+    "mathematica": [
+        "Select[Range[5000], Function[n, Total[Cases[Range[2, n - 1], _?(Abs[Mod[n, #] - #/2] < 1 &)]] == Plus @@ Select[Divisors@ n, GCD[#, n/#] == 1 &]]] (* _Michael De Vlieger_, Jun 06 2016, after _Robert G. Wilson v_ at A034448 and _Harvey P. Dale_ at A066272 *)"
+    ],
+    "program": [
+        "(PARI) sud(n) = sumdiv(n, d, if(gcd(d, n/d)==1, d));",
+        "sad(n) = my(k); if(n>1, k=valuation(n, 2); sigma(2*n+1)+sigma(2*n-1)+sigma(n/2^k)*2^(k+1)-6*n-2, 0);",
+        "isok(n) = sad(n) == sud(n); \\\\ _Michel Marcus_, Jun 12 2016"
+    ],
+    "xref": [
+        "Cf. A034448, A066417, A074751, A178029."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jun 06 2016",
+    "ext": [
+        "a(23)-a(26) from _Michel Marcus_, Jun 12 2016"
+    ],
+    "references": 0,
+    "revision": 9,
+    "time": "2016-06-17T02:20:36-04:00",
+    "created": "2016-06-17T02:20:36-04:00"
+}

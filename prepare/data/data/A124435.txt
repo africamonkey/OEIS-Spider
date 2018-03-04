@@ -1,0 +1,66 @@
+{
+    "number": 124435,
+    "data": "1,5,67,1109,20251,391355,7847155,161476565,3387271675,72114452255,1553475100717,33786532319435,740681494769659,16346552430326123,362830907979309067,8093356178498583509,181311959402343288955,4077310062938894133623,91999289732199733092601",
+    "name": "Number of effective multiple alignments of three equal-length sequences.",
+    "comment": [
+        "This counts effective alignments rather than standard alignments, so that for example the following two alignments are equivalent:",
+        "-A A-",
+        "-T T-",
+        "C- -C",
+        "See Dress, Morgenstern and Stoye for more information."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A124435/b124435.txt\">Table of n, a(n) for n = 0..720</a>",
+        "A. Bostan, S. Boukraa, J.-M. Maillard, J.-A. Weil, <a href=\"http://arxiv.org/abs/1507.03227\">Diagonals of rational functions and selected differential Galois groups</a>, arXiv preprint arXiv:1507.03227 [math-ph], 2015.",
+        "A. Dress, B. Morgenstern and J. Stoye, <a href=\"http://dx.doi.org/10.1016/S0893-9659(98)00054-8\">On the number of standard and of effective multiple alignments</a>,  Applied Mathematics Letters, Vol. 11, No. 4, 1998, pp. 43-49.",
+        "Jacques-Arthur Weil, <a href=\"http://www.unilim.fr/pages_perso/jacques-arthur.weil/diagonals/\">Supplementary Material for the Paper \"Diagonals of rational functions and selected differential Galois groups\"</a>"
+    ],
+    "formula": [
+        "The recurrence is three dimensional with the order of the three parameters immaterial. That is, a(i,j,k)=a(i,k,j)=a(j,i,k)=a(j,k,i)=a(k,i,j)=a(k,j,i). a(i, j, 0) = (i+j)! / i! / j! a(i, j, k) = a(i-1,j,k) + a(i,j-1,k) + a(i,j,k-1) - a(i-1,j-1,k-1).",
+        "a(n) = Sum_{k=0..n} (-1)^(n-k)*binomial(n,k)*binomial(n+2*k,n)*binomial(2*k,k). - _Wadim Zudilin_, Nov 26 2015",
+        "Diagonal of 1/(1 - x - y - z + x*y*z). - _Mark van Hoeij_, Dec 20 2013",
+        "G.f.: hypergeom([1/3, 2/3],[1],27*x/(1+x)^3)/(1+x). - _Mark van Hoeij_, Dec 20 2013",
+        "(3*n-1)*(n+1)^2*a(n+1)-(3*n+1)*(24*n^2+8*n-5)*a(n)+(9*n^3-3*n^2-4*n+2)*a(n-1)+(3*n+2)*(n-1)^2*a(n-2)=0. - _Robert Israel_, Nov 26 2015",
+        "0 = (2*x-1)*(x^3+3*x^2-24*x+1)*x*y'' + (6*x^4+8*x^3-57*x^2+48*x-1)*y' + (x+1)*(2*x^2-2*x+5)*y, where y is g.f. - _Gheorghe Coserea_, Jul 06 2016"
+    ],
+    "example": [
+        "a(1) = 5 because the five alignments are",
+        "A-- A- A- A- A",
+        "-C- C- -C -C C",
+        "--T -T T- -T T"
+    ],
+    "maple": [
+        "G := series( hypergeom([1/3, 2/3],[1],27*x/(1+x)^3)/(1+x), x=0, 31);",
+        "seq(coeff(G,x,i),i=0..30);  # _Mark van Hoeij_, Dec 20 2013"
+    ],
+    "program": [
+        "(PARI)",
+        "my(x='x, y='y, z='z);",
+        "R = 1/(1 - x - y - z + x*y*z);",
+        "diag(n, expr, var) = {",
+        "  my(a = vector(n));",
+        "  for (i = 1, #var, expr = taylor(expr, var[#var - i + 1], n));",
+        "  for (k = 1, n, a[k] = expr;",
+        "       for (i = 1, #var, a[k] = polcoeff(a[k], k-1)));",
+        "  return(a);",
+        "};",
+        "diag(10, R, [x, y, z])",
+        "(PARI) \\\\ system(\"wget http://www.jjj.de/pari/hypergeom.gpi\");",
+        "read(\"hypergeom.gpi\");",
+        "N = 20; x = 'x + O('x^N);",
+        "Vec(hypergeom([1/3, 2/3],[1],27*x/(1+x)^3, N)/(1+x)) \\\\ _Gheorghe Coserea_, Jul 06 2016"
+    ],
+    "xref": [
+        "Cf. A268545-A268555."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Lee A. Newberg_, Dec 15 2006",
+    "ext": [
+        "More terms from _Mark van Hoeij_, Dec 21 2013"
+    ],
+    "references": 1,
+    "revision": 38,
+    "time": "2016-07-06T17:49:49-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 211171,
+    "data": "1,6,84,420,26040,78120,9921240,168661080,24624517680,270869694480,554470264600560,7208113439807280,59041657185461430480,2538791258974841510640,383357480105201068106640,98522872387036674503406480,25826982813282567927671981480160",
+    "name": "Exponent of general linear group GL(n,2).",
+    "comment": [
+        "a(n) is the smallest integer for which x^a(n) = 1 for any x in GL(n,2)."
+    ],
+    "link": [
+        "Alexander Gruber, <a href=\"/A211171/b211171.txt\">Table of n, a(n) for n = 1..100</a>",
+        "<a href=\"http://math.stackexchange.com/a/294524/12952\">StackExchange thread</a> on the exponent of GL(n,q)"
+    ],
+    "formula": [
+        "a(n) = 2^ceiling(Log_2(n)) * ( product from k=1 to n of the k-th cyclotomic polynomial evaluated at 2 )."
+    ],
+    "example": [
+        "n = 2: GL(2,2) is isomorphic to S3 which has exponent 6 (see: A003418).",
+        "n = 3: The set of element orders of GL(3,2) is {1,2,3,4,7} so the exponent is 84.",
+        "n = 5: The set of element orders of GL(5,2) is {1,2,3,4,5, 6,7,8,12,14, 15,21,31} so the exponent is 26040 (see: A053651)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "a:= proc(n) local t; t:= 2^ilog2(n);",
+        "      `if`(t<n, 2, 1)*t*mul(cyclotomic(k, 2), k=1..n)",
+        "    end:",
+        "seq(a(n), n=1..20);  # _Alois P. Heinz_, Feb 04 2013"
+    ],
+    "mathematica": [
+        "f[q_, n_] := With[{p = Sort[Divisors[q]][[2]]},",
+        "  p^Ceiling[Log[p, n]] Product[Cyclotomic[k, q], {k, n}]]; f[2,#]&/@Range[100]"
+    ],
+    "program": [
+        "(MAGMA)",
+        "for n in [1..18] do",
+        "Exponent(GL(n,2));",
+        "end for;"
+    ],
+    "xref": [
+        "Cf. A003418, A053651.",
+        "Cf. A006951 (number of conjugacy classes in GL(n,2))."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alexander Gruber_, Jan 31 2013",
+    "references": 1,
+    "revision": 25,
+    "time": "2013-02-08T17:40:24-05:00",
+    "created": "2013-02-08T17:40:24-05:00"
+}

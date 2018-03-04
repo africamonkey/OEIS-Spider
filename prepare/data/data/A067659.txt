@@ -1,0 +1,52 @@
+{
+    "number": 67659,
+    "data": "0,1,1,1,1,1,2,2,3,4,5,6,8,9,11,14,16,19,23,27,32,38,44,52,61,71,82,96,111,128,148,170,195,224,256,293,334,380,432,491,557,630,713,805,908,1024,1152,1295,1455,1632,1829,2048,2291,2560,2859,3189,3554,3958,4404",
+    "name": "Number of partitions of n into distinct parts such that number of parts is odd.",
+    "comment": [
+        "Ramanujan theta functions: phi(q) := Sum_{k=-oo..oo} q^(k^2) (A000122), chi(q) := Prod_{k>=0} (1+q^(2k+1)) (A000700)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A067659/b067659.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>, end of section 16.4.2 \"Partitions into distinct parts\", pp.348ff",
+        "Mircea Merca, <a href=\"http://dx.doi.org/10.1016/j.jnt.2015.08.014\">Combinatorial interpretations of a recent convolution for the number of divisors of a positive integer</a>, Journal of Number Theory, Volume 160, March 2016, Pages 60-75, function q_o(n).",
+        "M. Somos, <a href=\"http://cis.csuohio.edu/~somos/multiq.pdf\">Introduction to Ramanujan theta functions</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RamanujanThetaFunctions.html\">Ramanujan Theta Functions</a>"
+    ],
+    "formula": [
+        "For g.f. see under A067661.",
+        "(A000009(n)-A010815(n))/2. - _Vladeta Jovovic_, Feb 24 2002",
+        "Expansion of (1-phi(-q))/(2*chi(-q)) in powers of q where phi(),chi() are Ramanujan theta functions. - _Michael Somos_, Feb 14 2006",
+        "G.f.: sum(n>=1, q^(2*n^2-n) / prod(k=1..2*n-1, 1-q^k ) ). [_Joerg Arndt_, Apr 01 2014]",
+        "a(n) = A067661(n) + A010815(n). - _Andrey Zabolotskiy_, Apr 12 2017"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n>i*(i+1)/2, 0,",
+        "      `if`(n=0, t, add(b(n-i*j, i-1, abs(t-j)), j=0..min(n/i, 1))))",
+        "    end:",
+        "a:= n-> b(n$2, 0):",
+        "seq(a(n), n=0..80);  # _Alois P. Heinz_, Apr 01 2014"
+    ],
+    "mathematica": [
+        "b[n_, i_, t_] := b[n, i, t] = If[n > i*(i + 1)/2, 0, If[n == 0, t, Sum[b[n - i*j, i - 1, Abs[t - j]], {j, 0, Min[n/i, 1]}]]]; a[n_] := b[n, n, 0]; Table[a[n], {n, 0, 80}] (* _Jean-Fran\u00e7ois Alcover_, Jan 16 2015, after _Alois P. Heinz_ *)",
+        "CoefficientList[Normal[Series[(QPochhammer[-x, x]-QPochhammer[x])/2, {x, 0, 100}]], x] (* _Andrey Zabolotskiy_, Apr 12 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A); if(n<0, 0, A=x*O(x^n); polcoeff( (eta(x^2+A)/eta(x+A) - eta(x+A))/2, n))} /* _Michael Somos_, Feb 14 2006 */",
+        "(PARI) N=66;  q='q+O('q^N);  S=1+2*sqrtint(N);",
+        "gf=sum(n=1,S, (n%2!=0) * q^(n*(n+1)/2) / prod(k=1,n, 1-q^k ) );",
+        "concat( [0], Vec(gf) )  /* _Joerg Arndt_, Oct 20 2012 */",
+        "(PARI) N=66;  q='q+O('q^N);  S=1+sqrtint(N);",
+        "gf=sum(n=1, S, q^(2*n^2-n) / prod(k=1, 2*n-1, 1-q^k ) );",
+        "concat( [0], Vec(gf) )  \\\\ _Joerg Arndt_, Apr 01 2014"
+    ],
+    "xref": [
+        "Cf. A067661 (even number of parts)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,7",
+    "author": "_Naohiro Nomoto_, Feb 23 2002",
+    "references": 24,
+    "revision": 43,
+    "time": "2017-04-12T04:43:19-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

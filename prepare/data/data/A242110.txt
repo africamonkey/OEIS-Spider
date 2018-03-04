@@ -1,0 +1,46 @@
+{
+    "number": 242110,
+    "data": "1,1,2,3,4,6,8,11,13,21,23,33,39,54,63,88,98,132,157,200,237,303,356,440,526,643,767,931,1103,1317,1581,1860,2215,2615,3100,3631,4302,4999,5907,6865,8059,9322,10950,12613,14744,16988,19756,22694,26344,30192",
+    "name": "Number of partitions of n whose different summands alternate in parity.",
+    "comment": [
+        "If the largest part is even (odd ), then the second largest part must be odd (even), the third largest part even (odd),..."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A242110/b242110.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "The first of the unrestricted partitions not to be counted is 3+1, because the largest part, 3, is odd and the next largest part, 1, is also odd."
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      b(n, i-1, t) +`if`(irem(i+t, 2)=0, 0,",
+        "      add(b(n-i*j, i-1, 1-t), j=1..n/i))))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, add(b(n$2, j), j=0..1)):",
+        "seq(a(n), n=0..80);  # _Alois P. Heinz_, Aug 17 2014"
+    ],
+    "mathematica": [
+        "<<Combinatorica`;",
+        "For[n=1,n<=20,n++,count[n]=1;",
+        "p={n};",
+        "For[index=1,index<=PartitionsP[n]-1,index++,",
+        "p=NextPartition[p];",
+        "condition=True;",
+        "For[i=1,i<=Length[p]-1,i++,",
+        "If[((p[[i]]!=p[[i+1]])&&EvenQ[p[[i]]]&&EvenQ[p[[i+1]]])||",
+        "((p[[i]]!=p[[i+1]]&&OddQ[p[[i]]])&&OddQ[p[[i+1]]]),condition=False]];",
+        "If[condition,count[n]++]];",
+        "];",
+        "Print[Table[count[i],{i,1,n-1}]]"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_David S. Newman_, Aug 15 2014",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Aug 17 2014"
+    ],
+    "references": 1,
+    "revision": 12,
+    "time": "2014-08-17T16:21:58-04:00",
+    "created": "2014-08-15T22:26:02-04:00"
+}

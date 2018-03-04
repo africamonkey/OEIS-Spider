@@ -1,0 +1,55 @@
+{
+    "number": 211158,
+    "data": "20,84,528,1040,3060,4788,10304,14400,26100,34100,55440,69264,104468,126420,180480,213248,291924,338580,448400,512400,660660,745844,940608,1051200,1301300,1441908,1756944,1932560,2322900,2538900,3015680,3277824,3852948,4167380",
+    "name": "Number of 2 X 2 matrices having all terms in {-n,...,0,..,n} and positive odd determinant.",
+    "comment": [
+        "For a guide to related sequences, see A210000."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A211158/b211158.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "From _Chai Wah Wu_, Dec 13 2016: (Start)",
+        "For n >= 0:",
+        "a(n) = A211155(n)/2.",
+        "a(n) = n*(n + 1)*(3*n + 1 + 3*n^2 - (-1)^n*(2*n + 1)). Therefore:",
+        "a(n) = n^2*(n + 1)*(3*n + 1) if n is even,",
+        "a(n) = n*(n + 1)^2*(3*n + 2) if n is odd.",
+        "a(n) = a(n-1) + 4*a(n-2) - 4*a(n-3) - 6*a(n-4) + 6*a(n-5) + 4*a(n-6) - 4*a(n-7) - a(n-8) + a(n-9) for n > 9.",
+        "G.f.: x*(-20*x^6 - 64*x^5 - 364*x^4 - 256*x^3 - 364*x^2 - 64*x - 20)/((x - 1)^5*(x + 1)^4). (End)",
+        "a(n) = a(-n-1). - _Bruno Berselli_, Dec 14 2016"
+    ],
+    "mathematica": [
+        "a = -n; b = n; z1 = 25;",
+        "t[n_] := t[n] = Flatten[Table[w*z - x*y, {w, a, b}, {x, a, b}, {y, a, b}, {z, a, b}]]",
+        "c[n_, k_] := c[n, k] = Count[t[n], k]",
+        "u[n_] := u[n] = Sum[c[n, 2 k], {k, 0, 2*n^2}]",
+        "v[n_] := v[n] = Sum[c[n, 2 k], {k, 1, 2*n^2}]",
+        "w[n_] := w[n] = Sum[c[n, 2 k - 1], {k, 1, 2*n^2}]",
+        "u1 = Table[u[n], {n, 1, z1}] (* A211156 *)",
+        "v1 = Table[v[n], {n, 1, z1}] (* A211157 *)",
+        "w1 = Table[w[n], {n, 1, z1}] (* A211158 *)",
+        "(u1 - 1)/4 (* integers *)",
+        "v1/4 (* integers *)",
+        "w1/4 (* integers *)",
+        "Table[n*(n+1)*(3*n+1+3*n^2-(-1)^n*(2*n+1)),{n,35}] (* _Vincenzo Librandi_, Dec 14 2016 *)",
+        "CoefficientList[ Series[-(( 4(5 + 16x + 91x^2 + 64x^3 + 91x^4 + 16x^5 + 5x^6))/((x -1)^5 (x +1)^4)), {x, 0, 35}], x] (* or *)",
+        "LinearRecurrence[{1, 4, -4, -6, 6, 4, -4, -1, 1}, {20, 84, 528, 1040, 3060, 4788, 10304, 14400, 26100}, 36] (* _Robert G. Wilson v_, Dec 14 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def A211158(n):",
+        "    return n*(n+1)*(3*n+1+3*n**2-(-1)**n*(2*n+1)) # _Chai Wah Wu_, Dec 13 2016",
+        "(MAGMA) [n*(n+1)*(3*n+1+3*n^2-(-1)^n*(2*n+1)): n in [1..35]]; // _Vincenzo Librandi_, Dec 14 2016"
+    ],
+    "xref": [
+        "Cf. A210000."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Apr 05 2012",
+    "references": 4,
+    "revision": 28,
+    "time": "2016-12-24T11:06:13-05:00",
+    "created": "2012-04-10T18:58:05-04:00"
+}

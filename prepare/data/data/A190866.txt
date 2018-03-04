@@ -1,0 +1,51 @@
+{
+    "number": 190866,
+    "data": "1,8,46,234,1110,5050,22334,96874,414238,1752634,7355118,30670346,127243678,525730394,2164795918,8888836906,36411649918,148852878458,607462498670,2475300829258,10073160450270,40945074731674,166262166593486,674512144772970,2734211624758846,11075312596363962,44832399690121262,181370501947392138,733336266094313886,2963615247763178714",
+    "name": "Let E(n) be the average number of steps required for the addition of two binary numbers of length n; sequence gives a(n) = 2^(2n-1)*E(n).",
+    "comment": [
+        "The addition is carried out by a parallel adder as described by J. von Neumann. Pippenger describes E(n) as the expected number of times that a \"carry-save\" adder must be used to clear all carries."
+    ],
+    "link": [
+        "Volker Claus, <a href=\"http://dx.doi.org/10.1007/BF00289501\">Die mittlere Additionsdauer eines Paralleladdierwerks</a>, Acta Informat. 2 (1973), 283-291.",
+        "D. E. Knuth, <a href=\"http://dx.doi.org/10.1016/1385-7258(78)90041-0\">The average time for carry propagation</a>, Nederl. Akad. Wetensch. Indag. Math., 81 (2) (1978), 238-242.",
+        "Nicholas Pippenger, <a href=\"http://dx.doi.org/10.1006/jagm.2002.1216\">Analysis of carry propagation in addition: an elementary approach</a>, J. Algorithms 42 (2002), 317-333."
+    ],
+    "formula": [
+        "The formulas used in the Maple program are due to Claus. Knuth gives an asymptotic expansion for E(n)."
+    ],
+    "example": [
+        "Values of E(n), n>=1: 1/2, 1, 23/16, 117/64, 555/256, 2525/1024, 11167/4096, 48437/16384, ..."
+    ],
+    "maple": [
+        "q := proc(n,i)",
+        "        option remember ;",
+        "        if i > n then",
+        "                0 ;",
+        "        elif i = 0 then",
+        "                1;",
+        "        elif i = 1 then",
+        "                if n >= 2 then",
+        "                        (procname(n-1,1)+1)/2 ;",
+        "                else",
+        "                        1/2 ;",
+        "                end if;",
+        "        elif i >=2 then",
+        "                procname(n-1,i)+(1-procname(n-i+1,i))/2^i ;",
+        "        end if;",
+        "end proc:",
+        "E := proc(n)",
+        "        add( q(n,i),i=1..n) ;",
+        "end proc:",
+        "[seq(2^(2*n-1)*E(n),n=1..30)];"
+    ],
+    "xref": [
+        "See A190868 for a closely related sequence."
+    ],
+    "keyword": "nonn,frac",
+    "offset": "1,2",
+    "author": "_R. J. Mathar_ and _N. J. A. Sloane_, May 22 2011",
+    "references": 1,
+    "revision": 23,
+    "time": "2012-03-30T17:40:29-04:00",
+    "created": "2011-05-22T04:13:21-04:00"
+}

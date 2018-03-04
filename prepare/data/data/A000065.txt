@@ -1,0 +1,55 @@
+{
+    "number": 65,
+    "id": "M1012 N0379",
+    "data": "0,0,1,2,4,6,10,14,21,29,41,55,76,100,134,175,230,296,384,489,626,791,1001,1254,1574,1957,2435,3009,3717,4564,5603,6841,8348,10142,12309,14882,17976,21636,26014,31184,37337,44582,53173,63260,75174,89133,105557,124753",
+    "name": "-1 + number of partitions of n.",
+    "comment": [
+        "a(n+1) is the number of noncongruent n-dimensional integer-sided simplices with diameter n. - _Sascha Kurz_, Jul 26 2004",
+        "Also, the number of partitions of n into parts each less than n.",
+        "Also, the number of distinct types of equation which can be derived from the equation [n,0,0] not including itself. (Ince)",
+        "Also, the number of rooted trees on n+1 nodes with height exactly 2.",
+        "Also, the number of partitions (of any positive integer) whose sum + length is <= n. Example: a(5) = 6 counts 4, 3, 21, 2, 11, 1. Proof: Given a partition of n other than the all 1s partition, subtract 1 from each part and then drop the zeros. This is a bijection to the partitions with sum + length <= n. - _David Callan_, Nov 29 2007",
+        "a(n) = A026820(n,n-1) for n>1. - _Reinhard Zumkeller_, Jan 21 2010"
+    ],
+    "reference": [
+        "E. L. Ince, Ordinary Differential Equations, Dover Publications, New York, 1944, p. 498; MR0010757.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "N. J. A. Sloane and Vincenzo Librandi, <a href=\"/A000065/b000065.txt\">Table of n, a(n) for n = 0..1000</a> (first 199 terms from N. J. A. Sloane)",
+        "V. Modrak, D. Marton, <a href=\"http://dx.doi.org/10.3390/e15104285\">Development of Metrics and a Complexity Scale for the Topology of Assembly Supply Chains</a>, Entropy 2013, 15, 4285-4299",
+        "J. Riordan, <a href=\"http://dx.doi.org/10.1147/rd.45.0473\">Enumeration of trees by height and diameter</a>, IBM J. Res. Dev. 4 (1960), 473-478.",
+        "J. Riordan, <a href=\"/A007401/a007401_8.pdf\">The enumeration of trees by height and diameter</a>, IBM Journal 4 (1960), 473-478. (Annotated scanned copy)"
+    ],
+    "formula": [
+        "G.f.: x*G(0)/(x-1) where G(k) =  1 - 1/(1-x^(k+1))/(1-x/(x-1/G(k+1) )); (recursively defined continued fraction). - _Sergei N. Gladkovskii_, Jan 23 2013"
+    ],
+    "example": [
+        "G.f. = x^2 + 2*x^3 + 4*x^4 + 6*x^5 + 10*x^6 + 14*x^7 + 21*x^8 + 29*x^9 + ..."
+    ],
+    "maple": [
+        "with (combstruct):ZL:=proc(m) local i; [T0,{seq(T.i=Prod(Z,Set(T.(i+1))),i=0..m-1), T.m=Z}, unlabeled] end:A:=n -> count(ZL(2),size=n)-count(ZL(1),size=n): seq(A(n),n=1..46); # _Zerinvary Lajos_, Dec 05 2007",
+        "ZL :=[S, {S = Set(Cycle(Z),1 < card)}, unlabelled]: seq(combstruct[count](ZL, size=n), n=0..45); # _Zerinvary Lajos_, Mar 25 2008"
+    ],
+    "mathematica": [
+        "nn=40;CoefficientList[Series[Product[1/(1-x^i),{i,1,nn}]-1/(1-x),{x,0,nn}],x]  (* _Geoffrey Critzer_, Oct 28 2012 *)",
+        "PartitionsP[Range[0,50]]-1 (* _Harvey P. Dale_, Aug 24 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( 1 / eta(x + x*O(x^n)), n) - 1)};",
+        "(PARI) {a(n) = if( n<0, 0, numbpart(n) - 1)};",
+        "(MAGMA) [NumberOfPartitions(n)-1: n in [0..50]]; // _Vincenzo Librandi_, Aug 25 2013"
+    ],
+    "xref": [
+        "A000041 - 1. A diagonal of A058716.",
+        "Column h=2 of A034781."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "references": 28,
+    "revision": 53,
+    "time": "2018-02-09T21:42:47-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

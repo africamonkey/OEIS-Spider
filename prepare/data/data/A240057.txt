@@ -1,0 +1,57 @@
+{
+    "number": 240057,
+    "data": "0,2,3,4,6,10,14,21,28,40,53,74,97,131,171,225,290,377,480,616,779,987,1238,1556,1935,2411,2981,3685,4527,5562,6793,8295,10081,12241,14805,17890,21538,25906,31062,37201,44429,53004,63070,74964,88898,105297",
+    "name": "Number of partitions of n such that (greatest part) is not = (multiplicity of greatest part).",
+    "comment": [
+        "Let # denote \"number of\" and c(p) = conjugate of partitionp.  Then",
+        "A240057(n) = # p such that min(p) not = max(c(p));",
+        "A039899(n) = # p such that min(p) < max(c(p));",
+        "A039900(n) = # p such that min(p) <= max(c(p));",
+        "A006141(n) = # p such that min(p) = max(c(p));",
+        "A003114(n) = # p such that min(p) > max(c(p));",
+        "A003016(n) = # p such that min(p) >= max(c(p));",
+        "A064173(n) = # p such that max(p) < max(c(p));",
+        "A064174(n) = # p such that max(p) <= max(c(p));",
+        "A047993(n) = # p such that max(p) = max(c(p)).",
+        "See A240178 for related sequences. - _Clark Kimberling_, Apr 11 2014"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A240057/b240057.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) + A006141(n) = A000041(n) for n > 0."
+    ],
+    "example": [
+        "a(9) = 28 counts all the 30 partitions of 9 except 333 and 2211111."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n<0, 0, `if`(n=0, 1,",
+        "      `if`(i<1, 0, b(n, i-1)+`if`(i>n, 0, b(n-i, i)))))",
+        "    end:",
+        "a:= n->combinat[numbpart](n)-add(b(n-j^2, j-1), j=0..isqrt(n)):",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Apr 03 2014"
+    ],
+    "mathematica": [
+        "z = 60; f[n_] := f[n] = IntegerPartitions[n];",
+        "t1 = Table[Count[f[n], p_ /; Max[p] < Count[p, Max[p]]], {n, 0, z}]  (* A003106 *)",
+        "t2 = Table[Count[f[n], p_ /; Max[p] <= Count[p, Max[p]]], {n, 0, z}] (* A003114 *)",
+        "t3 = Table[Count[f[n], p_ /; Max[p] == Count[p, Max[p]]], {n, 0, z}] (* A006141 *)",
+        "tt = Table[Count[f[n], p_ /; Max[p] != Count[p, Max[p]]], {n, 0, z}] (* A240057 *)",
+        "t4 = Table[Count[f[n], p_ /; Max[p] > Count[p, Max[p]]], {n, 0, z}] (* A039899 *)",
+        "t5 = Table[Count[f[n], p_ /; Max[p] >= Count[p, Max[p]]], {n, 0, z}] (* A039900 *)",
+        "(* second program: *)",
+        "b[n_, i_] := b[n, i] = If[n < 0, 0, If[n == 0, 1, If[i < 1, 0, b[n, i - 1] + If[i > n, 0, b[n - i, i]]]]];",
+        "a[n_] := PartitionsP[n] - Sum[b[n - j^2, j - 1], {j, 0, Sqrt[n]}];",
+        "Table[a[n], {n, 1, 50}] (* _Jean-Fran\u00e7ois Alcover_, Aug 30 2016, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A003106, A003114, A006141, A039899, A039900."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Apr 02 2014",
+    "references": 3,
+    "revision": 14,
+    "time": "2016-08-30T10:31:52-04:00",
+    "created": "2014-04-04T11:02:54-04:00"
+}

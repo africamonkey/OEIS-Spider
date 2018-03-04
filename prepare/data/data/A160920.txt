@@ -1,0 +1,26 @@
+{
+    "number": 160920,
+    "data": "236429,1108477,1829801,2073263,2191513,2192789,3236267,3990031,4248947,4485683,4986061,6869969,7711079,8473811,8480911,9282173,9327277,9350123,9547303,9730649,12077909,12993917,13165441,13398611,14129761,14785907",
+    "name": "Primes which are at the same time balanced primes of order 2, 3 and 4.",
+    "comment": [
+        "The intersection of A082077, A082078 and A082079."
+    ],
+    "maple": [
+        "isBalPr := proc(p,o) local r,s,i ; r := p ; if isprime(p) then s := p ; for i from 1 to o do r := nextprime(r) ; s := s+r ; end do: r := p ; for i from 1 to o do r := prevprime(r) ; s := s+r ; end do: s := s/(2*o+1) ; if s = p then true; else false; end if; else false; end if; end proc:",
+        "isA160920 := proc(p) isBalPr(p,2) and isBalPr(p,3) and isBalPr(p,4) ; end proc:",
+        "for i from 10 do p := ithprime(i) ; if isA160920(p) then printf(\"%d,\\n\",p); end if; end do: # _R. J. Mathar_, Dec 15 2010"
+    ],
+    "mathematica": [
+        "PrimeNext[n_]:=Module[{k},k=n+1;While[ !PrimeQ[k],k++ ];k];PrimePrev[n_]:=Module[{k},k=n-1;While[ !PrimeQ[k],k-- ];k];lst={};Do[p=Prime[n];a1=PrimePrev[p];a2=PrimePrev[a1];a3=PrimePrev[a2];a4=PrimePrev[a3];a5=PrimePrev[a4];b1=PrimeNext[p];b2=PrimeNext[b1];b3=PrimeNext[b2];b4=PrimeNext[b3];b5=PrimeNext[b4];If[(a1+a2+a3+a4+b1+b2+b3+b4)/8==p&&(a1+a2+a3+b1+b2+b3)/6==p&&(a1+a2+b1+b2)/4==p,AppendTo[lst,p]],{n,2*9!}];lst"
+    ],
+    "xref": [
+        "Cf. A040040, A051795, A082077 - A082079"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladimir Joseph Stephan Orlovsky_, May 30 2009",
+    "references": 0,
+    "revision": 7,
+    "time": "2012-03-31T12:38:24-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

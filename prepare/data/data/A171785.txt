@@ -1,0 +1,38 @@
+{
+    "number": 171785,
+    "data": "1,2,3,5,10,12,15,20,25,30,39,44,50,100,101,125,150,188,200,220,230,250,272,304,320,370,376,400,500,525,600,615,625,1000,1250,1487,1500,1590,1696,1750,2000,2245,2500,3000,3090,3125,3800,4000,5000,5725,6122,7025",
+    "name": "Start with a(1) = 1; then a(n) = smallest number > a(n-1) such that a(n) divides concat(a(1), a(2), ..., a(n)).",
+    "comment": [
+        "Primes appearing so far are 2, 3, 5, 101, 1487."
+    ],
+    "link": [
+        "R. G. Wilson v, <a href=\"/A171785/b171785.txt\">Table of n, a(n) for n = 1..584</a>"
+    ],
+    "example": [
+        "1: 1 divides 1",
+        "1,2: 2 divides 12",
+        "1,2,3: 3 divides 123",
+        "1,2,3,4: 4 does NOT divide 1234, so",
+        "1,2,3,5: 5 divides 1235",
+        "etc."
+    ],
+    "maple": [
+        "with(numtheory); P:=proc(q) local a,n; a:=0;",
+        "for n from 1 to q do if type((a*10^(1+ilog10(n))+n)/n,integer)",
+        "then a:=a*10^(1+ilog10(n))+n; print(n); fi; od; end: P(10^5); # _Paolo P. Lava_, Nov 27 2014"
+    ],
+    "mathematica": [
+        "f[s_List] := Block[{k = s[[ -1]] + 1, conc = FromDigits[Flatten@ IntegerDigits@s]}, While[ Mod[conc*10^Floor[ Log[10, k] + 1] + k, k] != 0, k++ ]; Append[s, k]]; Nest[f, {1}, 51] (* _Robert G. Wilson v_, Oct 14 2010 *)",
+        "nxt[{a_,c_}]:=Module[{k=a+1},While[!Divisible[c*10^IntegerLength[k]+ k, k], k++];{k,c*10^IntegerLength[k]+k}]; Transpose[NestList[nxt,{1,1},60]][[1]] (* _Harvey P. Dale_, Mar 08 2015 *)"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_David Scambler_, Sep 30 2010",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Oct 14 2010"
+    ],
+    "references": 7,
+    "revision": 14,
+    "time": "2015-03-08T13:50:21-04:00",
+    "created": "2010-10-20T03:00:00-04:00"
+}

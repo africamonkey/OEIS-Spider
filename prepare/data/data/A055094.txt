@@ -1,0 +1,49 @@
+{
+    "number": 55094,
+    "data": "0,1,2,4,9,22,52,72,146,313,738,1156,2829,6772,9520,18496,53643,75154,162438,312328,600116,1513186,4023888,4737152,9741609,23182093,38478994,76286020,166236537,311977264,921787428,1212203072,2962424994",
+    "name": "Binary encoding of quadratic residue set of n. L(1/n) is the most significant bit, L(n-1/n) is the least significant bit, i.e., the rows of A055088 interpreted as binary numbers.",
+    "comment": [
+        "L(a/n) stands for generalized Legendre symbol, with value = 1 only if a is a quadratic residue of n."
+    ],
+    "formula": [
+        "a(n) = qrs2bincode(n)"
+    ],
+    "maple": [
+        "A055094 := proc(n)",
+        "    local i, z;",
+        "    z := 0;",
+        "    for i from 1 to n-1 do",
+        "        z := z*2;",
+        "        if (1 = numtheory[quadres](i, n)) then",
+        "            z := z + 1;",
+        "        fi;",
+        "    od;",
+        "    return z;",
+        "end proc:"
+    ],
+    "mathematica": [
+        "a[n_] := With[{rr = Table[Mod[k^2, n], {k, 1, n - 1}] // Union}, Boole[ MemberQ[rr, #]]& /@ Range[n - 1]] // FromDigits[#, 2]&; Array[a, 40] (* _Jean-Fran\u00e7ois Alcover_, Mar 05 2016*)"
+    ],
+    "program": [
+        "(PARI) {a(n)=sum(k=1, n-1, 2^(k-1)*(0<sum(i=1, n-1, i^2%n==n-k)))} /* _Michael Somos_, Oct 14 2006 */",
+        "(Sage)",
+        "def A055094(n) :",
+        "    Q = quadratic_residues(n)",
+        "    z = 0",
+        "    for i in (1..n-1)  :",
+        "        z = z*2",
+        "        if i in Q : z += 1",
+        "    return z",
+        "[A055094(n) for n in (1..33)] # _Peter Luschny_, Aug 08 2012"
+    ],
+    "xref": [
+        "Cf. A055088, A054432, A055095."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Antti Karttunen_, Apr 04 2000",
+    "references": 10,
+    "revision": 19,
+    "time": "2016-03-05T06:04:12-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

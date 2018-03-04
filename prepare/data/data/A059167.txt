@@ -1,0 +1,40 @@
+{
+    "number": 59167,
+    "data": "1,1,1,2,15,314,13757,1142968,178281041,52610850316,29702573255587,32446427369694348,69254848513798160815,291053505824567573585744,2421830049319361003822380177,40050220743831370293688592267252",
+    "name": "Number of n-node labeled graphs without endpoints.",
+    "reference": [
+        "F. Harary and E. Palmer, Graphical Enumeration, (1973), p. 31, problem 1.16(a)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A059167/b059167.txt\">Table of n, a(n) for n = 0..81</a>",
+        "Marko R. Riedel, Geoffrey Critzer, Math.Stackexchange.com, <a href=\"http://math.stackexchange.com/questions/1930410/\">Proof of the closed form of the e.g.f. by combinatorial species</a>. - _Marko Riedel_, Sep 18 2016"
+    ],
+    "formula": [
+        "a(n) = Sum_{i=0..n-1} binomial(n-1, i)*b(i+1)*a(n-i-1), n>0, a(0)=1, where b(n) is number of n-node connected labeled graphs without endpoints (Cf. A059166).",
+        "E.g.f.: exp(1/2*x^2)*Sum(2^binomial(n, 2)*(x/exp(x))^n/n!, n = 0 .. infinity). - _Vladeta Jovovic_, Mar 23 2004",
+        "a(n) ~ 2^(n*(n-1)/2). - _Vaclav Kotesovec_, Sep 22 2016"
+    ],
+    "maple": [
+        "F:= proc(N) local S;",
+        "   S:= series(exp(1/2*x^2)*Sum(2^binomial(n, 2)*(x/exp(x))^n/n!, n = 0 .. N),x,N+1);",
+        "   seq(coeff(S,x,i)*i!,i=0..N)",
+        "end proc:",
+        "F(20); # _Robert Israel_, Sep 18 2016"
+    ],
+    "mathematica": [
+        "b[n_] := If[n < 3, Boole[n == 1], n!*Sum[(-1)^(n - j) * SeriesCoefficient[1 + Log[Sum[2^(k*(k - 1)/2)*x^k/k!, {k, 0, j}]], {x, 0, j}] * j^(n - j)/(n - j)!, {j, 0, n}]]; a[0] = 1; a[n_] := a[n] = Sum[Binomial[n - 1, i] b[i + 1] a[n - i - 1], {i, 0, n - 1}]; Table[a@ n, {n, 0, 15}] (* _Michael De Vlieger_, Sep 19 2016, after _Vaclav Kotesovec_ at A059166 *)"
+    ],
+    "xref": [
+        "Cf. A059166 (n-node connected labeled graphs without endpoints), A004108 (n-node connected unlabeled graphs without endpoints), A004110 (n-node unlabeled graphs without endpoints)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,4",
+    "author": "_Vladeta Jovovic_, Jan 12 2001",
+    "ext": [
+        "More terms from John Renze (jrenze(AT)yahoo.com), Feb 01 2001"
+    ],
+    "references": 15,
+    "revision": 17,
+    "time": "2016-09-22T10:04:39-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 46358,
+    "data": "4,16,27,308,440,528,594,627,1122,1276,3432,3861,4070,4543,5445,5808,6248,6534,7881,8085,8096,9108,9306,9702,11550,13860,14784,16500,16632,17556,18711,19800,19866,20900,21091,21120,22275,22308,23463,23474",
+    "name": "Composite numbers divisible by the palindromic sum of their prime factors (counted with multiplicity).",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A046358/b046358.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "1122 = 2 * 3 * 11 * 17 -> Sum of factors is palindrome 33 -> 1122 / 33 = 34 exactly."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,nL; L:= convert(n,base,10); nL:= nops(L); add(L[i]*10^(nL-i),i=1..nL) end proc:",
+        "filter:= proc(n) local f;",
+        "if n = 1 or isprime(n) then return false fi;",
+        "f:= add(t[1]*t[2],t=ifactors(n)[2]);",
+        "f = revdigs(f) and n mod f = 0",
+        "end proc:",
+        "select(filter, [$1..24000]); # _Robert Israel_, Aug 12 2014"
+    ],
+    "mathematica": [
+        "palQ[n_]:= Reverse[x=IntegerDigits[n]] == x; Select[Range[4, 23480], !PrimeQ[#] && palQ[y=Total[Times@@@FactorInteger[#]]] && IntegerQ[#/y]&](* _Jayanta Basu_, Jun 05 2013 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, factorint",
+        "A046358 = [n for n in xrange(2,10**6) if not isprime(n) and not n % sum([p*e for p,e in factorint(n).items()]) and str(sum([p*e for p,e in factorint(n).items()])) == str(sum([p*e for p,e in factorint(n).items()]))[::-1]] # _Chai Wah Wu_, Aug 12 2014",
+        "(PARI)",
+        "rev(n)=my(r=\"\");d=digits(n);for(i=1,#d,r=concat(Str(d[i]),r));return(eval(r))",
+        "sumfact(n)=my(v=Vec(factor(n)));p=0;for(j=1,#v[1],p+=v[1][j]*v[2][j]);return(p)",
+        "forcomposite(n=1,10^5,if(rev(sumfact(n))==sumfact(n)&&n%sumfact(n)==0,print1(n,\", \"))) \\\\ _Derek Orr_, Aug 12 2014"
+    ],
+    "xref": [
+        "Cf. A046359, A046360."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Jun 15 1998",
+    "ext": [
+        "Definition, offset and a(24) corrected by _Chai Wah Wu_, Aug 12 2014"
+    ],
+    "references": 5,
+    "revision": 24,
+    "time": "2014-08-13T09:31:32-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

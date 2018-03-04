@@ -1,0 +1,33 @@
+{
+    "number": 281555,
+    "data": "351,621,886,1641,1901,2401,4122,4322,5101,6568,23913,30591,46649,60291,90877,199001,216322,223471,237391,297498,394391,405278,420552,425322,430762,456478,470149,546649,861226,910001,920781,1740821,2008541,2329876,2348812,2414722",
+    "name": "Consider any concatenation of the type n = concat(a,b). Sequence lists numbers whose reverses are the sum of the products of some of such couples a and b.",
+    "example": [
+        "3*51 = 153;",
+        "6*21 = 126;",
+        "8*86 = 688;",
+        "1*641 + 16*41 + 164*1 = 1461;",
+        "1*901 + 190*1 = 1091."
+    ],
+    "maple": [
+        "with(combinat): with(numtheory): T:=proc(w) local x, y, z; x:=w; y:=0;",
+        "for z from 1 to ilog10(x)+1 do y:=10*y+(x mod 10); x:=trunc(x/10); od; y; end:",
+        "P:=proc(q) local a, j, k,n; for n from 1 to q do a:={};",
+        "for k from 1 to ilog10(n) do a:=a union {(n mod 10^k)*trunc(n/10^k)}; od; a:=choose(a);",
+        "for k from 2 to nops(a) do if T(n)=add(a[k][j], j=1..nops(a[k])) then print(n); break; fi; od;",
+        "od; end: P(10^9);"
+    ],
+    "mathematica": [
+        "Select[Range[10^5], Function[w, MemberQ[Total /@ Rest@ Subsets@ Map[Times @@ Map[FromDigits@ # &, TakeDrop[w, #]] &, Range[Length@ w - 1]], FromDigits@ Reverse@ w]]@ IntegerDigits@ # &] (* _Michael De Vlieger_, Jan 24 2017, Version 10.3 *)"
+    ],
+    "xref": [
+        "Cf. A265737, A267939."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jan 24 2017",
+    "references": 0,
+    "revision": 9,
+    "time": "2017-01-25T08:40:40-05:00",
+    "created": "2017-01-25T08:40:40-05:00"
+}

@@ -1,0 +1,24 @@
+{
+    "number": 108505,
+    "data": "0,3,7,36,50,269,367,2181,2816,18391,23617,160773,203733,1429749,1788486,12808711,15889727",
+    "name": "Number of palindromic semiprimes less than 10^n.",
+    "comment": [
+        "Does the limit n-> inf. a(n+2)/a(n) =~ 8*Pi^2/9?"
+    ],
+    "mathematica": [
+        "NextPalindrome[n_] := Block[ {l = Floor[ Log[10, n] + 1], idn = IntegerDigits[n]}, If[ Union[ idn] == {9}, Return[n + 2], If[l < 2, Return[n + 1], If[ FromDigits[ Reverse[ Take[ idn, Ceiling[l/2]]]] > FromDigits[ Take[ idn, -Ceiling[l/2]]], FromDigits[ Join[ Take[ idn, Ceiling[l/2]], Reverse[ Take[ idn, Floor[l/2]]] ]], idfhn = FromDigits[ Take[ idn, Ceiling[l/2]]] + 1; idp = FromDigits[ Join[ IntegerDigits[ idfhn], Drop[ Reverse[ IntegerDigits[ idfhn]], Mod[l, 2]]]] ]]]]; fQ[n_] := Plus @@ Last /@ FactorInteger[n] == 2; c = np = 0; Do[ While[np < 10^n, If[ fQ[np], c++ ]; np = NextPalindrome[np]]; Print[c], {n, 0, 12}]"
+    ],
+    "xref": [
+        "Cf. A046328."
+    ],
+    "keyword": "base,nonn",
+    "offset": "0,2",
+    "author": "_Robert G. Wilson v_, Jun 06 2005",
+    "ext": [
+        "a(15)-a(16) from _Donovan Johnson_, Mar 14 2010"
+    ],
+    "references": 1,
+    "revision": 4,
+    "time": "2012-03-30T17:34:55-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

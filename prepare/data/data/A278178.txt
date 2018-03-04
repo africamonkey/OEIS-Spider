@@ -1,0 +1,43 @@
+{
+    "number": 278178,
+    "data": "7,1225,1816871,7723802625,8591613499103635,23107999588635836875,446563431744711553183786875,17418085137491657842253233328125,1311214792748795041469921338623972253125,169160593483166517029276275055903719700625000,9261817633933021190882924368962406588490587588265625",
+    "name": "a(n) is the numerator of intersection number <tau_2^(3n-3)>, n>=2.",
+    "comment": [
+        "For 'intersection numbers' see Section 1 in Itzykson and Zuber paper."
+    ],
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A278178/b278178.txt\">Table of n, a(n) for n = 2..101</a>",
+        "Stavros Garoufalidis, Marcos Marino, <a href=\"https://arxiv.org/abs/0812.1195v4\">Universality and asymptotics of graph counting problems in nonorientable surfaces</a>, arXiv:0812.1195 [math.CO], 2008.",
+        "C. Itzykson, J.-B. Zuber, <a href=\"https://arxiv.org/abs/hep-th/9201001\">Combinatorics of the Modular Group II: the Kontsevich integrals</a>, arXiv:hep-th/9201001, 1991."
+    ],
+    "formula": [
+        "a(n) = numerator((3*n-3)!*4^n/((5*n-5)*(5*n-3)) * A269418(n)/A269419(n)) for n >= 2."
+    ],
+    "example": [
+        "7/240, 1225/144, 1816871/48, 7723802625/8, 8591613499103635/96, ..."
+    ],
+    "program": [
+        "(PARI)",
+        "A269418_seq(N) = {",
+        "  my(y  = vector(N)); y[1] = 1/48;",
+        "  for (n = 2, N,",
+        "       y[n] = (25*(n-1)^2-1)/48 * y[n-1] + 1/2*sum(k = 1, n-1, y[k]*y[n-k]));",
+        "  concat(-1, y);",
+        "};",
+        "seq(N) = {",
+        "  my(y = A269418_seq(N+2));",
+        "  vector(N, g, (3*g)! * 4^(g+1) / ((5*g)*(5*g+2)) * y[g+2]);",
+        "};",
+        "apply(numerator, seq(12))"
+    ],
+    "xref": [
+        "Cf. A269418, A269419, A278179 (denominator)."
+    ],
+    "keyword": "nonn,frac",
+    "offset": "2,1",
+    "author": "_Gheorghe Coserea_, Nov 13 2016",
+    "references": 2,
+    "revision": 17,
+    "time": "2016-11-24T09:33:13-05:00",
+    "created": "2016-11-24T09:33:13-05:00"
+}

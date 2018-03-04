@@ -1,0 +1,46 @@
+{
+    "number": 110819,
+    "data": "1089,2178,4356,6534,8712,9801,10989,21978,24024,26208,42042,43956,48048,61248,65934,80262,84084,84216,87912,98901,109989,219978,231504,234234,242424,253344,255528,264264,272646,275184,277816,288288,405132,424242,432432,439956",
+    "name": "Non-palindromes in A110751; that is, non-palindromic numbers n such that n and R(n) have the same prime divisors, where R(n) = digit reversal of n.",
+    "comment": [
+        "Trivially, if integer k is a term of this sequence, then R(k) is a term as well.",
+        "If n is in the sequence, then so is (10^m+1)*n where 10^m > n.  In particular, the sequence is infinite. - _Robert Israel_, Aug 14 2014"
+    ],
+    "link": [
+        "Donovan Johnson, <a href=\"/A110819/b110819.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "The prime divisors of 87912 and R(87912) = 21978 are both {2, 3, 11, 37}, so 87912 and 21978 are both in the sequence."
+    ],
+    "maple": [
+        "revdigs:= proc(n)",
+        "local L,nL,i;",
+        "L:= convert(n,base,10);",
+        "nL:= nops(L);",
+        "add(L[i]*10^(nL-i),i=1..nL);",
+        "end:",
+        "filter:= proc(n) local r;",
+        "  r:= revdigs(n);",
+        "  r <> n and numtheory:-factorset(r) = numtheory:-factorset(n)",
+        "end proc:",
+        "select(filter, [$10 .. 10^6]); # _Robert Israel_, Aug 14 2014"
+    ],
+    "mathematica": [
+        "r[n_] := FromDigits[Reverse[IntegerDigits[n]]]; Do[If[r[n] != n && Select[Divisors[n], PrimeQ] == Select[Divisors[r[n]], PrimeQ], Print[n]], {n, 1, 10^6}]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import primefactors",
+        "A110819 = [n for n in xrange(1,10**6) if str(n) != str(n)[::-1] and primefactors(n) == primefactors(int(str(n)[::-1]))] # _Chai Wah Wu_, Aug 14 2014"
+    ],
+    "xref": [
+        "Cf. A110751."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Ryan Propper_, Sep 15 2005",
+    "references": 8,
+    "revision": 13,
+    "time": "2014-08-15T05:40:50-04:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

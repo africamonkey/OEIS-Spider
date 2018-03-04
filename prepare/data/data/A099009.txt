@@ -1,0 +1,79 @@
+{
+    "number": 99009,
+    "data": "0,495,6174,549945,631764,63317664,97508421,554999445,864197532,6333176664,9753086421,9975084201,86431976532,555499994445,633331766664,975330866421,997530864201,999750842001,8643319766532,63333317666664",
+    "name": "Fixed points of the Kaprekar mapping f(n) = n' - n'', where in n' the digits of n are arranged in descending, in n'' in ascending order.",
+    "comment": [
+        "There are no seven-digit fixed points.",
+        "Let d(n) denote n repetitions of the digit d. The sequence includes the following for all n>=0: 5(n)499(n)4(n)5, 63(n)176(n)4, 8643(n)1976(n)532. - _Jens Kruse Andersen_, Oct 04 2004",
+        "0's in n giving leading 0's in n'' is allowed.",
+        "For every natural number n let n' and n\" be the numbers obtained by arranging the digits of n into decreasing and increasing order, and let f(n)=n'-n\". It is known that the number 6174 is invariant under this transformation and that applying f a certain number of times to a number n with four digits the numbers 0, 495 or 6174 are always reached. - _Vincenzo Librandi_, Nov 17 2010",
+        "Each term of A055162(n) corresponds to A099009(n+1), with its digits being reordered in the ascending manner. - _Alexander R. Povolotsky_, Apr 27 2012",
+        "All terms of this sequence are divisible by nine, a(n)/9 = A132155(n). - _Alexander R. Povolotsky_, Apr 29 2012",
+        "A055160 differs from this sequence only at the positions of two terms in it: 554999445 and 555499994445. - _Alexander R. Povolotsky_, May 01 2012",
+        "The union of the sequences A214555, A214556, A214557, A214558, A214559 and the element 0 gives the sequence A099009. - _Syed Iddi Hasan_, Jul 24 2012",
+        "The comment made by Jens Kruse Andersen is missing one more family of terms (which starts with one or more digits \"9\" and ends with the digit \"1\"): 97508421, 9753086421, 9975084201, 975330866421, 997530864201, 999750842001, ... This family could be generalized (using the same method as in Andersen's comment) and it is actually covered by _Syed Iddi Hasan_ in A214559. Also A214557 and A214558 (both - by _Syed Iddi Hasan_) are variants of Andersen's 8643(n)1976(n)532. - _Alexander R. Povolotsky_, Mar 14 2015",
+        "Fixed points of A151949. - _Reinhard Zumkeller_, Mar 23 2015"
+    ],
+    "link": [
+        "Syed Iddi Hasan, <a href=\"/A099009/b099009.txt\">Table of n, a(n) for n = 1..8924</a>",
+        "Mauro Fiorentini, <a href=\"http://www.bitman.name/math/article/654\">Kaprekar (costante di)</a> (in Italian)",
+        "Joseph Myers, <a href=\"/A099009/a099009.txt\">List of cycles under Kaprekar map</a> (all numbers with <= 60 digits; cycles are represented by their smallest value)",
+        "Conrad Roche, <a href=\"http://kaprekar.sourceforge.net\">Kaprekar Series Generator</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/KaprekarRoutine.html\">Kaprekar Routine</a>",
+        "<a href=\"/index/K#Kaprekar_map\">Index entries for the Kaprekar map</a>"
+    ],
+    "example": [
+        "6174 is a fixed point of the mapping and hence a term: 6174 -> 7641 - 1467 = 6174."
+    ],
+    "mathematica": [
+        "f[n_] := Block[{d = IntegerDigits@ n, a, b}, a = FromDigits@ Sort@ d; b = FromDigits@ Reverse@ Sort@ d; n == b - a]; Select[Range@ 1000000, f] (* _Michael De Vlieger_, Mar 20 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "# (version 2.4) from Tim Peters (Replace leading dots by blanks before running)",
+        ".def extend(base, start, n):",
+        "... if n == 0:",
+        "....... yield base",
+        "....... return",
+        "... for i in range(start, 10):",
+        "....... for x in extend(base + str(i), i, n-1):",
+        "........... yield x",
+        ".def drive(n):",
+        "... result = []",
+        "... for lo in extend(\"\", 0, n):",
+        "....... ilo = int(lo)",
+        "....... if ilo == 0 and n > 1:",
+        "........... continue",
+        "....... hi = lo[::-1]",
+        "....... diff = str(int(hi) - ilo)",
+        "....... diff = \"0\" * (n - len(diff)) + diff",
+        "....... if sorted(diff) == list(lo):",
+        "........... result.append(diff)",
+        "... return sorted(result)",
+        ".for n in range(1, 17):",
+        "... print \"Length\", n",
+        "... print '-' * 40",
+        "... for r in drive(n):",
+        "....... print r",
+        "(Haskell)",
+        "a099009 n = a099009_list !! (n-1)",
+        "a099009_list = [x | x <- [0..], a151949 x == x]",
+        "-- _Reinhard Zumkeller_, Mar 23 2015"
+    ],
+    "xref": [
+        "Cf. A090429, A069746, A099010, A151959, A055162, A132155, A055160, A214557, A214558, A214559",
+        "In other bases: A163205 (base 2), A164997 (base 3), A165016 (base 4), A165036 (base 5), A165055 (base 6), A165075 (base 7), A165094 (base 8), A165114 (base 9).",
+        "Cf. A151949, A004185, A004186."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Klaus Brockhaus_, Sep 22 2004",
+    "ext": [
+        "More terms from _Jens Kruse Andersen_ and Tim Peters (tim(AT)python.org), Oct 04 2004",
+        "Corrected by _Jens Kruse Andersen_, Oct 25 2004"
+    ],
+    "references": 38,
+    "revision": 72,
+    "time": "2015-03-23T14:41:14-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

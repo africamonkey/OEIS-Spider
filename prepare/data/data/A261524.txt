@@ -1,0 +1,41 @@
+{
+    "number": 261524,
+    "data": "3,7,9,15,21,27,31,33,35,39,45,49,51,57,63,69,73,75,77,81,85,87,91,93,99,105,111,117,119,123,127,129,133,135,141,147,153,155,159,161,165,171,175,177,183,189,195,201,203,207,213,217,219,225,231,237,243,245,249,255,259,261,267,273,279,285,287,291,297,301",
+    "name": "Odd numbers n such that degree(gcd( 1 + x^n, 1 + (1+x)^n )) > 1, where the polynomials are over GF(2).",
+    "comment": [
+        "From the Golomb/Lee reference: \"Theorem 7 (Welch\u2019s Criterion): For any odd integer t, the irreducible polynomials of primitivity t divide trinomials iff gcd( 1 + x^n, 1 + (1+x)^n ) has degree greater than 1.\"",
+        "All Mersenne numbers (A000225) >= 3 are terms, as all primitive polynomials (over GF(2)) divide some trinomial.",
+        "All numbers of the form (2j-1)*(2^k-1); j>=1, k>=2 (A261871), are in the sequence. - _Bob Selcoe_, Sep 03 2015",
+        "From _Robert Israel_, Sep 03 2015: (Start)",
+        "If n is in the sequence, then so is every odd multiple of n, because 1+x^n divides 1+x^(k*n) and 1+(1+x)^n divides 1+(1+x)^(k*n).",
+        "The first few members of the sequence that are not multiples of other members are 3, 7, 31, 73, 85, 127, 2047, 3133, 4369, 8191, 11275 (see A261862). (End)"
+    ],
+    "link": [
+        "Joerg Arndt, <a href=\"/A261524/b261524.txt\">Table of n, a(n) for n = 1..23300</a>",
+        "Solomon W. Golomb, Pey-Feng Lee, <a href=\"http://dx.doi.org/10.1109/TIT.2006.889714\">Irreducible Polynomials Which Divide Trinomials over GF(2)</a>, IEEE Transactions on Information Theory, vol.53, no.2, pp.768-774 (February-2007)."
+    ],
+    "maple": [
+        "filter:= proc(n) degree(Gcd(1+x^n, 1+(1+x)^n) mod 2)>1 end proc:",
+        "select(filter, [2*i+1 $ i=1..200]); # _Robert Israel_, Sep 03 2015"
+    ],
+    "program": [
+        "(PARI) W(n)=my(e=Mod(1,2)); poldegree(gcd(e*(1+x^n), e*(1+(1+x)^n))) > 1;",
+        "forstep(n=1,301,2, if( W(n) , print1(n,\", \") ) );",
+        "(Sage)",
+        "for n in xrange(1, 10^3, 2):",
+        "    if gcd( 1+x^n, 1+(1+x)^n ).degree() > 1:",
+        "        print(n)",
+        "# _Joerg Arndt_, Sep 08 2015"
+    ],
+    "xref": [
+        "Cf. A261871, A261862.",
+        "Note that A191131, A261524, A261871, and A282572 are very similar and easily confused with each other."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Joerg Arndt_, Aug 23 2015",
+    "references": 5,
+    "revision": 34,
+    "time": "2017-12-15T14:28:22-05:00",
+    "created": "2015-08-23T10:33:25-04:00"
+}

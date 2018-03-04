@@ -1,0 +1,40 @@
+{
+    "number": 60503,
+    "data": "2,29,37,43,71,103,109,113,131,181,191,211,257,263,269,283,349,353,359,367,373,397,439,449,461,487,509,563,599,617,619,631,641,647,653,701,739,743,773,797,839,857,863,883,887,907,919,947,971,983,1019,1031",
+    "name": "Primes p that have a primitive root between 0 and p that is not a primitive root of p^2.",
+    "comment": [
+        "The smallest primitive roots of p that is not a primitive root of p^2 are in A060504.",
+        "Except for the initial term 2, this is a subset of A134307. - _Jeppe Stig Nielsen_, Jul 31 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A060503/b060503.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "14 is a primitive root of 29 but not of 29^2."
+    ],
+    "maple": [
+        "filter:= proc(p) local x;",
+        "  if not isprime(p) then return false fi;",
+        "  x:= 0;",
+        "do",
+        "    x:= numtheory:-primroot(x,p);",
+        "    if x = FAIL then return false fi;",
+        "    if x &^ (p-1) mod p^2 = 1 then return true fi;",
+        "od",
+        "end proc:",
+        "select(filter, [2, seq(i,i=3..2000,2)]); # _Robert Israel_, Dec 01 2016"
+    ],
+    "program": [
+        "(PARI) forprime(p=2,,for(a=1,p-1,if(znorder(Mod(a,p))==p-1&Mod(a,p^2)^(p-1)==1,print1(p,\", \");break()))) \\\\ _Jeppe Stig Nielsen_, Jul 31 2015"
+    ],
+    "xref": [
+        "Cf. A055578, A060504, A134307."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jud McCranie_, Mar 22 2001",
+    "references": 8,
+    "revision": 19,
+    "time": "2018-02-17T13:35:19-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

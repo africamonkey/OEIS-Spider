@@ -1,0 +1,33 @@
+{
+    "number": 272948,
+    "data": "1,2,3,4,5,7,9,12,16,21,27,35,44,56,70,87,108,133,163,199,242,292,352,421",
+    "name": "Positions of Fibonacci numbers in ordered sequence A160009 of all products of Fibonacci numbers.",
+    "link": [
+        "<a href=\"http://mathoverflow.net/questions/238505/distinctness-of-products-of-fibonacci-numbers\">Distinctness of Fibonacci products</a>"
+    ],
+    "example": [
+        "A160009 = (0,1,2,3,5,6,8,10,13,15,16,21,...), so that a = (1,2,3,4,5,7,9,12,...)."
+    ],
+    "mathematica": [
+        "s = {1}; nn = 60; f = Fibonacci[2 + Range[nn]]; Do[s = Union[s, Select[s*f[[i]], # <= f[[nn]] &]], {i, nn}]; s =  Prepend[s, 0]; Take[s, 100]  (* A160009 *)",
+        "isFibonacciQ[n_] := Apply[Or, Map[IntegerQ, Sqrt[{# + 4, # - 4} &[5 n^2]]]];",
+        "ans = Join[{{0}}, {{1}}, Table[#[[Flatten[Position[Map[Apply[Times, #] &, #], s[[n]]]][[1]]]] &[Rest[Subsets[Rest[Map[#[[1]] &, Select[Map[{#, isFibonacciQ[#]} &, Divisors[s[[n]]]], #[[2]] &]]]]]], {n, 3, 500}]]",
+        "Map[Length, ans] (* A272947 *)",
+        "Flatten[Position[Map[Length, ans], 1]]  (* A272948 *)",
+        "Map[Apply[Times, #] &, Select[ans, Length[#] == 1 &]]  (* A000045 *)",
+        "Map[Apply[Times, #] &, Select[ans, Length[#] == 2 &]]  (* A271354 *)",
+        "Map[Apply[Times, #] &, Select[ans, Length[#] == 3 &]]  (* A272949 *)",
+        "Map[Apply[Times, #] &, Select[ans, Length[#] == 4 &]]  (* A272950 *)",
+        "(* _Peter J. C. Moses_, May 11 2016 *)"
+    ],
+    "xref": [
+        "Cf. A000045, A160009, A272947, A271354, A272949, A273950."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, May 13 2016",
+    "references": 4,
+    "revision": 6,
+    "time": "2016-05-14T16:27:38-04:00",
+    "created": "2016-05-14T16:26:26-04:00"
+}

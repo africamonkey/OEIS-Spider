@@ -1,0 +1,50 @@
+{
+    "number": 247068,
+    "data": "2,5,17,37,41,73,137,149,257,277,293,337,521,577,593,641,661,673,677,1033,1061,1093,1097,1109,1153,1193,1289,1297,1301,1321,1361,2053,2069,2081,2089,2113,2129,2213,2309,2341,2377,2389,2593,2633,2689,2693,2729,4129,4133,4177,4229,4241,4261,4357,4373,4421,4649,4673,5153,5189",
+    "name": "Primes whose base-2 expansion have no two consecutive 1's.",
+    "comment": [
+        "Also: numbers appearing in both A000040 and A003714. Is it known to be infinite?"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A247068/b247068.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Estelle Basor, Brian Conrey, Kent E. Morrison, <a href=\"https://arxiv.org/abs/1703.00990\">Knots and ones</a>, arXiv:1703.00990 [math.GT], 2017. See page 1."
+    ],
+    "maple": [
+        "M:= 16: # to get all terms < 2^M",
+        "B1:= {1}:",
+        "B2:= {}:",
+        "for n from 2 to M-1 do",
+        "   B3:= map(`+`,B1,2^n);",
+        "   B1:= B1 union B2;",
+        "   B2:= B3;",
+        "od:",
+        "select(isprime,{2} union B1 union B2);",
+        "# if using Maple 11 or earlier, uncomment the next line",
+        "# sort(convert(%,list));   # _Robert Israel_, Nov 16 2014"
+    ],
+    "program": [
+        "(Sage)",
+        "def a_list(M):  # All terms < 2^M. After Robert Israel.",
+        "    A = [1]; B = [2]; s = 4",
+        "    for n in range(M-2):",
+        "        C = [a + s for a in A]",
+        "        A.extend(B)",
+        "        B = C",
+        "        s <<= 1",
+        "    A.extend(B)",
+        "    return filter(is_prime, A)",
+        "a_list(13) # _Peter Luschny_, Nov 16 2014",
+        "(PARI) my(t=bitand(n++,2*n));if(t==0,return(n));my(o=#binary(t)-1);((n>>o)+1)<<o",
+        "n=0;while(n<1e6,if(isprime(n=step(n)), print1(n\", \"))) \\\\ _Charles R Greathouse IV_, Nov 16 2014"
+    ],
+    "xref": [
+        "Cf. A000040, A003714."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Nov 16 2014",
+    "references": 1,
+    "revision": 23,
+    "time": "2017-03-26T07:22:05-04:00",
+    "created": "2014-11-16T21:31:44-05:00"
+}

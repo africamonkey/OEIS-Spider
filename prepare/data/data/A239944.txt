@@ -1,0 +1,34 @@
+{
+    "number": 239944,
+    "data": "2,2,2,2,460724,610357585,37748311920",
+    "name": "Smallest b > 0 making b^(2k) + b^k - 1 prime for k=1 through n.",
+    "comment": [
+        "This sequence is a natural companion to A172994, which holds numbers b 'outperforming' 10 in this polynomial (relative to the sequence A096594). a(8) is known to exceed 4*10^12.",
+        "Note that a(n) exists for all n under Schinzel's hypothesis H. - _Charles R Greathouse IV_, Apr 24 2014"
+    ],
+    "example": [
+        "a(5)=460724 means that for no integer k from 2 through 460723 does it hold that k^2n + k^n - 1 is prime for all n from 1 through 5, but for k=460724 this prime simultaneity occurs."
+    ],
+    "program": [
+        "(PARI) ok(b,n)=my(bk=1);for(k=1,n,bk*=b;if(!ispseudoprime(bk^2+bk-1),return(0)));b>0",
+        "a(n)=my(b=2); while(!is(b,n), b++); b \\\\ _Charles R Greathouse IV_, Apr 24 2014",
+        "(PARI) \\\\ Reasonably efficient code, using precomputed modulus tables to speed the searches.",
+        "diff(v)=vector(#v-1,i,v[i+1]-v[i])",
+        "ok(b,n)=my(bk=1);for(k=1,n,bk*=b;if(!ispseudoprime(bk^2+bk-1),return(0)));b>0",
+        "okMod(b,p,n)=for(k=1,n,my(m=Mod(b,p)^k);if(m^2+m==1,return(0)));1",
+        "lst(p,n)=select(b->okMod(b,p,n),[0..p-1])",
+        "makeU(lim,n)=my(v=[0],m=1,t);forprime(p=5,lim,t=lst(p);if(#t<p,my(V=vector(#v*#t),idx);for(i=1,#v,my(vim=Mod(v[i],m));for(j=1,#t,V[idx++]=lift(chinese(vim,Mod(t[j],p)))));v=V;m*=p));v=Set(v);diff(concat(v,m+v[1]))",
+        "a(n)=forstep(b=0,9e99,makeU(31,n),if(ok(b),return(b)))",
+        "\\\\ _Charles R Greathouse IV_, Apr 24 2014"
+    ],
+    "xref": [
+        "Cf. A096594, A172994."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_James G. Merickel_, Mar 31 2014",
+    "references": 0,
+    "revision": 38,
+    "time": "2014-05-10T10:02:12-04:00",
+    "created": "2014-05-10T10:02:12-04:00"
+}

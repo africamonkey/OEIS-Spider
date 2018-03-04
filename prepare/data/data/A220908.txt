@@ -1,0 +1,42 @@
+{
+    "number": 220908,
+    "data": "0,2,8,20,42,80,140,238,380,602,910,1372,1996,2900,4102,5790,8002,11046,14980,20282,27090,36092,47546,62510,81374,105700,136210,175084,223510,284694,360410,455244,572054,717160,894964,1114470,1382032,1710262,2108750,2594704,3182120",
+    "name": "The second rank moment function N_2(n).",
+    "comment": [
+        "N_2(n) is also called the second Atkin-Garvan moment (see Andrews' paper). - _Omar E. Pol_, Oct 23 2013"
+    ],
+    "reference": [
+        "F. G. Garvan, Higher-order spt functions, Adv. Math. 228 (2011), no. 1, 241-265; http://www.math.ufl.edu/~fgarvan/papers/hspt.pdf. See Eq. (1.1)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A220908/b220908.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "G. E. Andrews, <a href=\"http://www.math.psu.edu/vstein/alg/antheory/preprint/andrews/17.pdf\">The number of smallest parts in the partitions of n</a>, p. 3",
+        "F. G. Garvan, <a href=\"http://www.math.ufl.edu/~fgarvan/papers/hspt.pdf\">Higher-order spt functions</a>, Adv. Math. 228 (2011), no. 1, 241-265. See Eq. (1.1)."
+    ],
+    "formula": [
+        "a(n) = 2*A220907(n) = 2*(n*A000041(n)-A092269(n)).",
+        "a(n) = 2*(A066186(n) - A092269(n)). - _Omar E. Pol_, Jan 09 2013",
+        "a(n) = A220909(n) - A211982(n). - _Omar E. Pol_, Jan 16 2013",
+        "a(n) ~ exp(Pi*sqrt(2*n/3))/(2*sqrt(3)) * (1 - (3*sqrt(6)/(2*Pi) + Pi/(24*sqrt(6)))/sqrt(n) + (5/48 + Pi^2/6912)/n). - _Vaclav Kotesovec_, Jul 31 2017"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0 or i<1, 0,",
+        "      `if`(irem(n, i, 'r')=0, r, 0)+add(b(n-i*j, i-1), j=0..n/i))",
+        "    end:",
+        "a:= n-> 2*(n*combinat[numbpart](n)- b(n, n)):",
+        "seq(a(n), n=1..60);  # _Alois P. Heinz_, Jan 09 2013"
+    ],
+    "mathematica": [
+        "terms = 41; gf = Sum[x^n/(1 - x^n)*Product[1/(1 - x^k), {k, n, terms}], {n, 1, terms}]; spt = CoefficientList[ Series[gf, {x, 0, terms}], x] // Rest; a[n_] := 2*(n*PartitionsP[n] - spt[[n]]); Table[a[n], {n, 1, terms}] (* _Jean-Fran\u00e7ois Alcover_, Jan 17 2013, after g.f. of spt(n) *)"
+    ],
+    "xref": [
+        "Cf. A000041, A092269, A220907."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jan 02 2013",
+    "references": 11,
+    "revision": 31,
+    "time": "2017-07-31T08:15:22-04:00",
+    "created": "2013-01-02T22:34:10-05:00"
+}

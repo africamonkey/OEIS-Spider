@@ -1,0 +1,45 @@
+{
+    "number": 254007,
+    "data": "1,2,4,7,13,22,40,66,118,192,338,546,948,1526,2618,4208,7146,11482,19332,31070,51938,83520,138786,223330,369284,594662,979306,1578064",
+    "name": "Cardinality of the set of equivalence classes of the set X_n of finite integer sequences {x_1 = 0, x_2, ..., x_n} satisfying |x_k - x_{k+1}| = 1, where two such sequences are deemed equivalent if they are permutations of each other.",
+    "formula": [
+        "G.f.: x*(-1-x+3*x^2+3*x^3-2*x^4-2*x^5-x^6)/((-1+x+x^2)*(-1+2x^2)^2) (conjectured). - _David Radcliffe_, May 03 2015"
+    ],
+    "example": [
+        "a(2)=2: {0,1}, {0,-1}.",
+        "a(3)=4: {0,1,2}, {0,1,0}, {0,-1,0}, {0,-1,-2}.",
+        "a(4)=7: There are two choices for each successive x_k, but {0,1,0,-1} and {0,-1,0,1} are equivalent, so a(4)=7 rather than 8.",
+        "a(5)=13: Now there are 3 pairs of equivalences, namely (writing a for -1, b for -2) 01210 ~ 01012, 010a0 ~ 0a010, 0aba0 ~ 0a0ab. So a(5) = 16 - 3 = 13. - _N. J. A. Sloane_, May 03 2015"
+    ],
+    "program": [
+        "(Python)def generate_paths(n):",
+        "....if n == 0:",
+        "........yield (), 0",
+        "....else:",
+        "........results = set()",
+        "........for p, last in generate_paths(n-1):",
+        "............q = tuple(sorted(p + (last,)))",
+        "............results.add((q, last+1))",
+        "............results.add((q, last-1))",
+        "........for p, last in results:",
+        "............yield p, last",
+        "def count_paths(n):",
+        "....results = set()",
+        "....for p, last in generate_paths(n):",
+        "........q = tuple(sorted(p + (last,)))",
+        "........if not (q in results):",
+        "............results.add(q)",
+        "....return len(results)",
+        "print [count_paths(n) for n in range(25)]"
+    ],
+    "keyword": "nonn,nice,more",
+    "offset": "1,2",
+    "author": "_John J. Harrison_, May 02 2015",
+    "ext": [
+        "More terms from _David Radcliffe_, May 03 2015"
+    ],
+    "references": 0,
+    "revision": 57,
+    "time": "2015-05-04T01:37:30-04:00",
+    "created": "2015-05-02T22:52:06-04:00"
+}

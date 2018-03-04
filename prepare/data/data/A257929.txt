@@ -1,0 +1,39 @@
+{
+    "number": 257929,
+    "data": "5,19,37,139,262880929,1551042113,64548518479,1573353619909",
+    "name": "Primes equal to the sum of the prime factors, with multiplicity, of the next k numbers, for some k.",
+    "comment": [
+        "Values of k are 1, 2, 2, 3, 17, 10, 25, 51, ...",
+        "a(9) > 3*10^12. - _Giovanni Resta_, May 16 2015"
+    ],
+    "example": [
+        "For 5, consider the prime factors of the next number, 6: 2, 3. Their sum is 2 + 3 = 5.",
+        "For 19, consider the prime factors of the next 2 numbers, 20, 21: 2, 2, 5; 3, 7. Their sum is 2 + 2 + 5 + 3 + 7 = 19."
+    ],
+    "maple": [
+        "with(numtheory): P:= proc(q) local a,d,j,k,n;",
+        "for n from 2 to q do if isprime(n) then a:=0; k:=0;",
+        "while a<n do k:=k+1; d:=ifactors(n+k)[2];",
+        "d:=add(d[j][1]*d[j][2],j=1..nops(d));",
+        "a:=a+d; od; if a=n then print(n);",
+        "fi; fi; od; end: P(10^9);"
+    ],
+    "program": [
+        "(PARI) sopfr(n) = my(f=factor(n)); sum(k=1, #f~, f[k, 1]*f[k, 2]);",
+        "isok(n) = {my(s = 0); my(k = 1); while (s < n, s += sopfr(n+k); k++); s == n;}",
+        "lista(nn) = {forprime(n=2, nn, if (isok(n), print1(n, \", \")););} \\\\ _Michel Marcus_, May 27 2015"
+    ],
+    "xref": [
+        "Cf. A257524, A257525."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, May 13 2015",
+    "ext": [
+        "a(6)-a(8) from _Giovanni Resta_, May 16 2015"
+    ],
+    "references": 3,
+    "revision": 21,
+    "time": "2015-05-28T03:45:40-04:00",
+    "created": "2015-05-28T03:45:40-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 72000,
+    "data": "0,0,0,1,1,2,2,2,3,4,4,4,4,5,6,6,6,6,6,6,7,8,8,8,9,10,10,10,10,10,10,10,11,12,13,13,13,14,15,15,15,15,15,15,15,16,16,16,17,17,18,18,18,18,19,19,20,21,21,21,21,22,22,22,23,23,23,23,24,24,24,24,24,25,25,25,26",
+    "name": "Number of semiprimes (A001358) <= n.",
+    "comment": [
+        "Number of k <= n such that bigomega(k) = 2."
+    ],
+    "reference": [
+        "A. Hildebrand, On the number of prime factors of an integer, in Ramanujan Revisited (Urbana-Champaign, Ill., 1987), pp. 167-185, Academic Press, Boston, MA, 1988.",
+        "E. Landau, Handbuch der Lehre von der Verteilung der Primzahlen, vol. 1, Teubner, Leipzig, 1909; third edition : Chelsea, New York (1974).",
+        "G. Tenenbaum, Introduction \u00e0 la th\u00e9orie analytique et probabiliste des nombres, p. 203, Publications de l'Institut Cartan, 1990."
+    ],
+    "link": [
+        "Daniel Forgues, <a href=\"/A072000/b072000.txt\">Table of n, a(n) for n = 1..40882</a>",
+        "E. Landau, Handbuch der Lehre von der Verteilung der Primzahlen, <a href=\"http://name.umdl.umich.edu/ABV2766.0001.001\">vol. 1</a> and <a href=\"http://name.umdl.umich.edu/ABV2766.0002.001\">vol. 2</a>, Leipzig, Berlin, B. G. Teubner, 1909.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Semiprime.html\">Semiprime</a>"
+    ],
+    "formula": [
+        "Let pi(x) denote the number of primes <= x (cf. A000720). Then 2*a(n) = Sum_{ primes p <= n/2 } Pi(n/p) + Pi(sqrt(n)). [Landau, p. 211]",
+        "Let pi(x) denote the number of primes <= x (cf. A000720). Then a(n) = Sum_{i=1..Pi(sqrt(n))} (Pi(n/prime(i)) - i + 1). - _Robert G. Wilson v_, Feb 07 2006",
+        "a(n) = card{ x <= n : bigomega(x) = 2 }.",
+        "Asymptotically a(n) ~ n*log(log(n))/log(n). [Landau, p. 211]",
+        "Let A be a positive integer. Then card{ x <= n : bigomega(x) = A } ~ (n/log(n))*log(log(n))^(A-1)/(A-1)! [Landau, p. 211]",
+        "a(n) = A072613(n)+A056811(n). - _R. J. Mathar_, Jun 10 2007",
+        "a(n) = sum_{i=1..n} A064911(i). - _Jonathan Vos Post_, Dec 30 2007",
+        "a(n)*A064911(n) = A174956(n). - _Reinhard Zumkeller_, Apr 03 2010"
+    ],
+    "maple": [
+        "A072000 := proc(n) local sp,t ; sp := 0 ; for t from 1 to n do if numtheory[bigomega](t) = 2 then sp := sp+1 ; fi ; od ; sp ; end proc: # _R. J. Mathar_, Jun 10 2007"
+    ],
+    "mathematica": [
+        "semiPrimePi[n_] := Sum[ PrimePi[n/Prime@i] -i + 1, {i, PrimePi@Sqrt@n}]; Array[semiPrimePi, 78] (* _Robert G. Wilson v_, Jan 03 2006 *)",
+        "(* If version >= 7 *) a[n_] := Select[Range[n], PrimeOmega[#] == 2 &] // Length; Table[a[n], {n, 1, 77}] (* _Jean-Fran\u00e7ois Alcover_, Jun 29 2013 *)",
+        "Accumulate[Table[If[PrimeOmega[n]==2,1,0],{n,100}]] (* _Harvey P. Dale_, Jun 14 2014 *)"
+    ],
+    "program": [
+        "(PARI) for(n=1,100,print1(sum(i=1,n,if(bigomega(i)-2,0,1)),\",\"))",
+        "(PARI) a(n)=my(s=0,i=0); forprime(p=2, sqrt(n), s+=primepi(n\\p); i++); s - i * (i-1)/2 \\\\ _Charles R Greathouse IV_, Apr 21 2011"
+    ],
+    "xref": [
+        "Cf. A000720, A001358, A066265, A064911."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,6",
+    "author": "_Benoit Cloitre_, Jun 19 2002",
+    "ext": [
+        "Edited by _Robert G. Wilson v_, Feb 15 2006"
+    ],
+    "references": 29,
+    "revision": 48,
+    "time": "2015-03-02T02:32:36-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 223545,
+    "data": "2,3,5,10,27,95,447,2795,22616,230244,2878355,43253538,767188892,15813815440,373816159742,10018819334375,301465449259275,10097316273301640,373656009129456297,15176615488012528682,672638507261177844871",
+    "name": "a(n+1) = Sum_{i=1..a(n)} floor(a(n)/i); a(1) = 2.",
+    "comment": [
+        "Equivalently, a(n+1) = Sum_{i=1..infinity} floor(a(n)/i).",
+        "The corresponding sequence with a(1) = 0 or 1 is a constant sequence. This is also true with a(1) = -1 for a(n+1) = Sum_{i=1..|a(n)|} floor(a(n)/i), but when a(1) = -2 that sequence begins -2, -3, -6, -16, -61, -322, -2227, .... The PARI program below uses the fact mentioned in the example; it calculates the first 15 terms over 16000 times faster than a brute force program simply using s = sum(i = 1, s, s\\i). In particular, for any positive integer j, j is a summand exactly floor(a(n)/j) - floor(a(n)/(j+1)) times when calculating a(n+1)."
+    ],
+    "example": [
+        "a(5) = 10 + 5 + 3 + 2 + 2 + 1 + 1 + 1 + 1 + 1 = 27 since a(4) = 10. In general, this preponderance of relatively large numbers of each of the smallest summands simplifies these calculations. (This pattern is somewhat different when the terms are negative.)"
+    ],
+    "program": [
+        "(PARI)",
+        "{a(n, s = 2) =",
+        "local(j, ss, t);",
+        "if(s < 0,",
+        "  print(\"This function only accepts nonnegative starting\");",
+        "  print(\"terms, for which it is (partially) optimized.\");",
+        "  return());",
+        "for(k = 1, n, print1(s, \", \");",
+        "  if(k == n, return(s));",
+        "  ss = s; j = 1;",
+        "  while((t = s\\j - s\\(j+1)) > 1,",
+        "    ss += t*j;",
+        "    j++);",
+        "  s = ss + sum(i = 2, s\\j, s\\i))}",
+        "a(21)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Rick L. Shepherd_, Jul 19 2013",
+    "references": 0,
+    "revision": 10,
+    "time": "2016-08-16T22:21:39-04:00",
+    "created": "2013-07-20T15:32:53-04:00"
+}

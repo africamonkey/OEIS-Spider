@@ -1,0 +1,41 @@
+{
+    "number": 213282,
+    "data": "1,1,6,36,236,1656,12192,92960,727824,5817696,47281472,389533056,3245867136,27308274688,231654031104,1979205694464,17016094611712,147104972637696,1277988764697600,11151534242977792,97692088569096192,858890594909048832,7575804347863105536",
+    "name": "G.f. satisfies: A(x) = G(x/(1-x)^3) where G(x) = 1 + x*G(x)^3 is the g.f. of A001764.",
+    "comment": [
+        "Compare to the g.f. B(x) of A006319 where B(x) = C(x/(1-x)^2) such that C(x) = 1 + x*C(x)^2 is the g.f. of the Catalan numbers (A000108)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A213282/b213282.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = F(x*A(x)^3) where F(x) = 1 + x/F(-x)^3 is the g.f. of A213281.",
+        "G.f. A(x) satisfies: A(1 - G(-x)) = G(x) = 1 + x*G(x)^3 is the g.f. of A001764."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 6*x^2 + 36*x^3 + 236*x^4 + 1656*x^5 + 12192*x^6 +...",
+        "G.f.: A(x) = G(x/(1-x)^3) where G(x) = 1 + x*G(x)^3 is g.f. of A001764:",
+        "G(x) = 1 + x + 3*x^2 + 12*x^3 + 55*x^4 + 273*x^5 + 1428*x^6 +..."
+    ],
+    "maple": [
+        "series(RootOf(G = 1 + G^3*x/(1-x)^3, G),x=0,30); # _Mark van Hoeij_, Apr 18 2013"
+    ],
+    "program": [
+        "(PARI) /* G.f. A(x) = G(x/(1-x)^3) where G(x) = 1 + x*G(x)^3: */",
+        "{a(n)=local(A,G=1+x);for(i=1,n,G=1+x*G^3+x*O(x^n));A=subst(G,x,x/(1-x+x*O(x^n))^3);polcoeff(A,n)}",
+        "for(n=0,25,print1(a(n),\", \"))",
+        "(PARI) /* G.f. A(x) = F(x*A(x)^3) where F(x) = 1 + x/F(-x)^3: */",
+        "{a(n)=local(F=1+x+x*O(x^n), A=1); for(i=1, n+1, F=1+x/subst(F^3, x, -x+x*O(x^n))); A=(serreverse(x/F^3)/x)^(1/3); polcoeff(A, n)}",
+        "for(n=0, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A213281, A001764; variants: A006319 (royal paths in a lattice), A213336."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jun 08 2012",
+    "references": 3,
+    "revision": 24,
+    "time": "2013-04-19T08:13:10-04:00",
+    "created": "2012-06-08T15:57:10-04:00"
+}

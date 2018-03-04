@@ -1,0 +1,40 @@
+{
+    "number": 286302,
+    "data": "1,2,3,4,5,7,8,9,10,13,16,17,22,24,25,26,31,36,58,64,76,82,120,170,193,196,214,324,328,370,412,562,676,730,10404",
+    "name": "Numbers n such that A133364(n) <= 1.",
+    "comment": [
+        "Numbers n such that there is at most one representation n = m+p with m in A001694 and p prime.",
+        "There are no more terms <= 10^7.",
+        "The only n <= 10^7 for which A133364(n) = 0 are 1, 2, and 5.",
+        "Conjecture: 10404 is the last term."
+    ],
+    "link": [
+        "Math Overflow, <a href=\"https://mathoverflow.net/questions/269080/is-every-powerful-number-the-sum-of-a-powerful-number-and-a-prime#comment665409_269080\">Is every powerful number the sum of a powerful number and a prime?</a>."
+    ],
+    "maple": [
+        "N:= 10^7: # to get all terms <= N",
+        "q:= proc(x,N) local p,R;",
+        "      R:= {x};",
+        "      for p in numtheory:-factorset(x) do",
+        "        R:= map(t -> seq(t*p^i,i=0..floor(log[p](N/t))), R)",
+        "      od;",
+        "      R",
+        "end proc:",
+        "Pow:= `union`(seq(q(n^2,N),n=1..isqrt(N))):",
+        "Primes:= select(isprime, [2,seq(i,i=3..N,2)]):",
+        "CPow:= Vector(N): CPow[convert(Pow,list)]:= 1:",
+        "CPrimes:= Vector(N): CPrimes[Primes]:= 1:",
+        "Conv:= SignalProcessing:-Convolution(CPow,CPrimes):",
+        "select(t -> Conv[t-1] < 1.5, [$2..N]);"
+    ],
+    "xref": [
+        "Cf. A001694, A133364."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Robert Israel_, May 05 2017",
+    "references": 0,
+    "revision": 6,
+    "time": "2017-05-06T10:23:48-04:00",
+    "created": "2017-05-06T10:23:48-04:00"
+}

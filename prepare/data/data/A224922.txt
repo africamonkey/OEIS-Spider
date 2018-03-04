@@ -1,0 +1,32 @@
+{
+    "number": 224922,
+    "data": "1,1,3,12,56,288,1586,9201,55675,349159,2260209,15063260,103201968,726380164,5252083746,39029442336,298340012448,2348365289852,19058365017840,159659978176454,1382148854813222,12373696834781918,114606230432935860,1098199966940781258",
+    "name": "O.g.f. satisfies: A(x) = Sum_{n>=0} A000110(n)*x^n*A(x)^n, where A000110 are the Bell numbers.",
+    "formula": [
+        "O.g.f. satisfies: A(x) = Sum_{n>=0} x^n*A(x)^n / Product_{k=1..n} (1 - k*x*A(x)).",
+        "O.g.f. satisfies: A(x) = 1/(1 - x*A(x)/(1 - 1*x*A(x)/(1 - x*A(x)/(1 - 2*x*A(x)/(1 - x*A(x)/(1 - 3*x*A(x)/(1 - x*A(x)/(1 - 4*x*A(x)/1 - ... ))))))))), a continued fraction.",
+        "a(n) = [x^n] ( Sum_{k>=0} A000110(k)*x^k )^(n+1) / (n+1)."
+    ],
+    "example": [
+        "O.g.f.: A(x) = 1 + x + 3*x^2 + 12*x^3 + 56*x^4 + 288*x^5 + 1586*x^6 +...",
+        "The o.g.f. satisfies:",
+        "(1) A(x) = 1 + x*A(x) + 2*x^2*A(x)^2 + 5*x^3*A(x)^3 + 15*x^4*A(x)^4 + 52*x^5*A(x)^5 + 203*x^6*A(x)^6 +...+ A000110(n)*x^n*A(x)^n +...",
+        "(2) A(x) = 1 + x*A(x)/(1-x*A(x)) + x^2*A(x)^2/((1-x*A(x))*(1-2*x*A(x))) + x^3*A(x)^3/((1-x*A(x))*(1-2*x*A(x))*(1-3*x*A(x))) + x^4*A(x)^4/((1-x*A(x))*(1-2*x*A(x))*(1-3*x*A(x))*(1-4*x*A(x))) +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n<0, 0, polcoeff( 1/x*serreverse(x/serlaplace(exp(exp(x+x*O(x^n))-1))), n))}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=sum(m=0, n, x^m*A^m/prod(k=1, m,1-k*x*A +x*O(x^n)) )); polcoeff(A, n)}",
+        "for(n=0,30,print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A099947, A000110."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 19 2013",
+    "references": 2,
+    "revision": 5,
+    "time": "2013-04-19T22:13:04-04:00",
+    "created": "2013-04-19T18:51:32-04:00"
+}

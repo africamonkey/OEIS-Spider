@@ -1,0 +1,50 @@
+{
+    "number": 280717,
+    "data": "3,7,43,1693,2864557,8205572225569,67331415548799635795058613,4533519519805137360312930667312809111343819483374997,20552799236454203238557860425684304712780972342513397945121797314302926172950212696842909492430773376197",
+    "name": "Given a prime number p, let b = -p and c = p^2. Assuming that the polynomial P(x) := x^2+b*x+c takes at least one prime value for some positive integer x<p, we define the next term of the sequence to be the maximal element in the set S := {P(x) : x is an integer, 0 < x < p, and P(x) is a prime number}. The first term of the present sequence is p=3.",
+    "comment": [
+        "The next term is only defined if the set S above is not empty.",
+        "Conjecture: the sequence is well defined.",
+        "a(13) has 1654 digits. If S is not empty, then its maximal element is P(x) where x is the least positive integer x <= p/2 such that P(x) is prime. - _Chai Wah Wu_, Jan 09 2017"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A280717/b280717.txt\">Table of n, a(n) for n = 1..12</a>"
+    ],
+    "example": [
+        "a(2) = 7, since 7 = max S_3, where S_3 = {x^2-3x+9 : x is an integer with 0<x<2, and x^2-3x+9 is a prime number}. Clearly, S_3={7}, thus a(2)=7. Now we explain why a(3)=43. We have 43 = max S_7. S_7 := {x^2-7x+49 : x is an integer, 0 <x<7, and x^2-7x+49 is a prime number}. By computations S_7 = {37,43}. Thus a(3) = max S_7 = 43. We explain also why a(4) = 1693. One has 1693 = max S_43, where S_43 = {x^2-43x+43^2 : x is an integer, 0 <x < 43, and x^2-43x+43^2 is a prime number}. By computations S_43 = {1399,1429,1459,1543,1597,1627,1693}. Thus a(3) = max S_43 = 1693."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "xa := proc(aa) local P,x,a,a2,mi,mm; a:= aa; a2 := a^2; mi := 0; for x from 1 to a-1 do P := x^2-a*x+a2; if isprime(P) then mi := max(P,mi); fi; od;; mi; end;",
+        "F := proc(n) option remember if n=1 then return(3); fi; if n=2 then xa(3); else xa(F(n-1)); fi; end;"
+    ],
+    "mathematica": [
+        "P[p_, x_] := x^2 - p x + p^2;",
+        "A280717[1] = 3;",
+        "A280717[n_] := A280717[n] = P[A280717[n - 1], NestWhile[# - 1 &, A280717[n - 1] - 1, # > A280717[n - 1]/2 && ! PrimeQ@P[A280717[n - 1], #] &]];",
+        "A280717 /@ Range[5] (* _Davin Park_, Feb 06 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from __future__ import division",
+        "from sympy import isprime",
+        "A280717_list, n = [3], 3",
+        "for _ in range(10):",
+        "    for i in range(1,n//2+1):",
+        "        j = i**2+n*(n-i)",
+        "        if isprime(j):",
+        "            n = j",
+        "            A280717_list.append(n)",
+        "            break # _Chai Wah Wu_, Jan 09 2017"
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "1,1",
+    "author": "_Luis H. Gallardo_, Jan 07 2017",
+    "ext": [
+        "a(5) corrected and a(6)-a(9) added by _Chai Wah Wu_, Jan 09 2017"
+    ],
+    "references": 1,
+    "revision": 28,
+    "time": "2017-02-08T02:31:43-05:00",
+    "created": "2017-01-09T10:01:45-05:00"
+}

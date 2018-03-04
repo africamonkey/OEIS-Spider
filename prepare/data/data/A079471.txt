@@ -1,0 +1,59 @@
+{
+    "number": 79471,
+    "data": "0,1,6,10,18,34,60,66,92,108,116,130,156,172,180,204,212,228,258,284,300,308,332,340,356,396,404,420,452,514,540,556,564,588,596,612,652,660,676,708,780,788,804,836,900,1026,1052,1068,1076,1100,1108,1124",
+    "name": "Fixed points of reversed binary words in reversed lexicographic order.",
+    "comment": [
+        "These are 0 and the words where the bit count is 2^i where i is the index of the lowest set bit."
+    ],
+    "link": [
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/fxtpage.html#fxtbook\">Fxtbook</a>, section 1.26.4 \"The sequence of fixed points\", p.73-74"
+    ],
+    "example": [
+        "Zero is a fixed point: 0: ...........",
+        "The next few in decimal and binary form (dots for zeros), lowest (rightmost) bit has index zero are:",
+        "1: ............1",
+        "6: ..........11.",
+        "10: ........1.1.",
+        "18: .......1..1.",
+        "34: ......1...1.",
+        "60: ......1111..",
+        "66: .....1....1.",
+        "92: .....1.111..",
+        "108: ....11.11..",
+        "116: ....111.1..",
+        "130: ...1.....1."
+    ],
+    "program": [
+        "(C++):",
+        "/* Generate the binary words lex order:",
+        "  start with zero and get successive elements via */",
+        "inline ulong prev_lexrev(ulong x)",
+        "/* Return previous word in (reversed) lex order. */",
+        "{",
+        "  ulong x0 = x & -x;",
+        "  if ( x & (x0<<1) ) x ^= x0;",
+        "  else { x0 ^= (x0<<1); x ^= x0; x |= 1; }",
+        "  return x;",
+        "}",
+        "/* To extract the fixed points, select those where",
+        "   the following function returns a nonzero value: */",
+        "ulong is_lexrev_fixed_point(ulong x)",
+        "/* Return whether x is a fixed point in the prev_lexrev() - sequence */",
+        "{",
+        "  if ( x & 1 ) { if ( 1==x ) return 1; else return 0; }",
+        "  else",
+        "  {",
+        "    ulong w = bit_count(x);",
+        "    if ( w != (w & -w) ) return 0;",
+        "    if ( 0==x ) return 1; return ( (x & -x) & w );",
+        "  }",
+        "}"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Joerg Arndt_, Jan 15 2003",
+    "references": 1,
+    "revision": 10,
+    "time": "2012-03-30T17:36:32-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

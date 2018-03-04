@@ -1,0 +1,33 @@
+{
+    "number": 115625,
+    "data": "1,1,2,4,11,31,106,372,1500,6220,28696,136016,702802,3727946,21253324,124231096,772458367,4918962479,33061095118,227303570524,1639389365201,12082068856285,92951844299150,729991789222972,5960617085224012,49637008114202876",
+    "name": "Number of partitions of {1,...,n} into block sizes a power of 2.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A115625/b115625.txt\">Table of n, a(n) for n = 0..604</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp(x+x^2/2+x^4/4!+x^8/8!+x^16/16!+...)."
+    ],
+    "maple": [
+        "with(combinat):",
+        "b:= proc(n, i) option remember; `if`(n=0, 1,",
+        "      `if`(i<1, 0, add(multinomial(n, n-i*j, i$j)/j!*",
+        "      b(n-i*j, i/2), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n, 2^ilog2(n)):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Sep 17 2015"
+    ],
+    "mathematica": [
+        "multinomial[n_, k_List] := n!/Times @@ (k!); b[n_, i_] := b[n, i] = If[n == 0, 1, If[i<1, 0, Sum[multinomial[n, Join[{n-i*j}, Array[i&, j]]]/j!*b[n - i*j, i/2], {j, 0, n/i}]]]; a[n_] := b[n, 2^Floor[Log[2, n]]]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Oct 29 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A018819, A115626."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Christian G. Bower_, Jan 26 2006",
+    "references": 3,
+    "revision": 10,
+    "time": "2015-10-29T08:05:59-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

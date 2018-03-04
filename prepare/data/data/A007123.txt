@@ -1,0 +1,70 @@
+{
+    "number": 7123,
+    "id": "M1218",
+    "data": "1,1,2,4,10,26,76,232,750,2494,8524,29624,104468,372308,1338936,4850640,17685270,64834550,238843660,883677784,3282152588,12233309868,45741634536,171530482864,644953425740,2430975800876",
+    "name": "Number of connected unit interval graphs with n nodes; also number of bracelets (turn over necklaces) with n black beads and n-1 white beads.",
+    "comment": [
+        "Also number of rooted planar general trees (of n vertices or n-1 edges) up to reflection. - _Antti Karttunen_, Aug 09 2002 (for the correspondence with bracelets, start by considering Raney's lemma as explained by Graham, Knuth & Patashnik).",
+        "Number of connected lattice path matroids on n elements up to isomorphism.",
+        "a(n) = number of noncrossing set partitions of [n] up to reflection (i<->n+1-i). Example: a(4) counts 123, 1-23, 13-2, 1-2-3 but not 12-3 because it is the reflection of 1-23. - _David Callan_, Oct 08 2005",
+        "From _Vladimir Shevelev_, Apr 23 2011: (Start)",
+        "Also number of non-equivalent necklaces of n beads, each of which is painted by one of 2*n-1 colors.",
+        "The sequence solves the so-called Reis problem about convex k-gons in case N=2*n-1, k=n. H. Gupta (1979) gave a full solution; I gave a short proof of Gupta's result and showed an equivalence of this problem and each of the following problems: the problem of enumerating the bracelets of n beads of 2 colors, k of them black, and the problem of enumerating the necklaces of k beads, each painted by one of n colors.",
+        "a(n) is an essentially unimprovable upper estimate for the number of distinct values of the permanent in (0,1)-circulants of order 2*n-1 with n 1's in every row.",
+        "(End)"
+    ],
+    "reference": [
+        "S. R. Finch, Mathematical Constants, Cambridge, 2003, Section 5.6.7.",
+        "R. L. Graham, D. E. Knuth and O. Patashnik, Concrete Mathematics. Addison-Wesley, Reading, MA, 1990, p. 345 & 346.",
+        "R. W. Robinson, personal communication.",
+        "R. W. Robinson, Numerical implementation of graph counting algorithms, AGRC Grant, Math. Dept., Univ. Newcastle, Australia, 1980.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "R. W. Robinson, <a href=\"/A007123/b007123.txt\">Table of n, a(n) for n = 1..190</a>",
+        "J. E. Bonin, A. de Mier and M. Noy, <a href=\"http://arXiv.org/abs/math.CO/0211188\">Lattice path matroids: enumerative aspects and Tutte polynomials</a>, arXiv:math/0211188 [math.CO], 2002.",
+        "P. J. Cameron, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/groups.html\">Sequences realized by oligomorphic permutation groups</a>, J. Integ. Seqs. Vol. 3 (2000), #00.1.5.",
+        "H. Gupta, <a href=\"http://www.dli.gov.in/data_copy/upload/INSA/INSA_2/20005a66_964.pdf\">Enumeration of incongruent cyclic k-gons</a>, Indian J. Pure and Appl. Math., 10 (1979), no.8, 964-999.",
+        "F. Ruskey, <a href=\"http://www.theory.cs.uvic.ca/~cos/inf/neck/NecklaceInfo.html\">Necklaces, Lyndon words, De Bruijn sequences, etc.</a>",
+        "V. Shevelev, <a href=\"http://www.insa.nic.in/writereaddata/UpLoadedFiles/IJPAM/2000c4e8_629.pdf\">Necklaces and convex k-gons</a>, Indian J. Pure and Appl. Math., 35 (2004), no. 5, 629-638.",
+        "V. Shevelev, <a href=\"http://arxiv.org/abs/1104.4051\">Spectrum of permanent's values and its extremal magnitudes in Lambda_n^3 and Lambda_n(alpha,beta,gamma)</a>, arXiv:1104.4051 [math.CO], 2011. (Cf. Section 5).",
+        "<a href=\"/index/Br#bracelets\">Index entries for sequences related to bracelets</a>"
+    ],
+    "formula": [
+        "a(n+1) = (Cat(n)+binomial(n, floor(n/2)))/2 = (A000108(n)+A001405(n))/2. - _Antti Karttunen_, Aug 09 2002",
+        "G.f.: (1+2*x-sqrt(1-4*x)*sqrt(1-4*x^2))/(4*sqrt(1-4*x^2)).",
+        "G.f.: (sqrt((1 + 2*x) / (1 - 2*x)) - sqrt(1 - 4*x)) / 4. - _Michael Somos_, Apr 16 2012",
+        "a(n) = (A063886(n) - A002420(n)) / 4. - _Michael Somos_, Apr 16 2012"
+    ],
+    "example": [
+        "x + x^2 + 2*x^3 + 4*x^4 + 10*x^5 + 26*x^6 + 76*x^7 + 232*x^8 + 750*x^9 + ..."
+    ],
+    "mathematica": [
+        "f[k_Integer, n_] := (Plus @@ (EulerPhi[ # ]Binomial[n/#, k/# ] & /@ Divisors[GCD[n, k]])/n + Binomial[(n - If[OddQ@n, 1, If[OddQ@k, 2, 0]])/2, (k - If[OddQ@k, 1, 0])/2])/2 - _Robert A. Russell_, Sep 27 2004",
+        "Table[ f[n, 2n - 1], {n, 10}]",
+        "(* Comment from _Wouter Meeussen_, Feb 02 2013, added by _N. J. A. Sloane_, Feb 02 2013: To get lists of the necklaces in Mathematica, use (if n=4, say):",
+        "<<Combinatorica`;",
+        "ListNecklaces[2*4- 1, {0, 1}, Dihedral] *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<1, 0, (2 * binomial(n-1, (n-1)\\2) + binomial(2*n, n) / (2*n - 1)) / 4)} /* _Michael Somos_, Apr 16 2012 */",
+        "(Python)",
+        "from sympy import catalan, binomial, floor",
+        "def a(n): return 1 if n==1 else (catalan(n - 1) + binomial(n - 1, floor((n - 1)/2)))/2 # _Indranil Ghosh_, Jun 03 2017"
+    ],
+    "xref": [
+        "Cf. A002420, A007595, A063886, A073201.",
+        "Occurs as row 164 in A073201. Next-to-center columns of triangle A052307."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Extended by _Christian G. Bower_",
+        "Edited by _Jon E. Schoenfield_, Feb 14 2015"
+    ],
+    "references": 12,
+    "revision": 49,
+    "time": "2017-06-03T19:03:31-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

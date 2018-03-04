@@ -1,0 +1,35 @@
+{
+    "number": 213679,
+    "data": "0,0,3,11,36,79,186,345,672,1163,2026,3273,5388,8301,12912,19349,28961,42071,61253,86921,123404,171972,239020,327386,447743,604255,813645,1084657,1441643,1899450,2496510,3255653,4234822,5472953,7053217,9038784,11554020",
+    "name": "Total sum of parts <= n of multiplicity 0 in all partitions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A213679/b213679.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A000217(n)*A000041(n)-A014153(n-1)."
+    ],
+    "example": [
+        "The partitions of n=4 are [1,1,1,1], [2,1,1], [2,2], [3,1], [4].  Parts <= 4 with multiplicity m=0 sum up to (2+3+4)+(3+4)+(1+3+4)+(2+4)+(1+2+3) = 36, thus a(4) = 36."
+    ],
+    "maple": [
+        "b:= proc(n, p) option remember; `if`(n=0 and p=0, [1, 0], `if`(p<1, [0$2],",
+        "      add((l->`if`(m=0, l+[0, l[1]*p], l))(b(n-p*m, p-1)), m=0..n/p)))",
+        "    end:",
+        "a:= n-> b(n, n)[2]:",
+        "seq(a(n), n=0..55);"
+    ],
+    "mathematica": [
+        "b[n_, p_] := b[n, p] = If[n == 0 && p == 0, {1, 0}, If[p == 0, Array[0&, n+2], Sum[Function[l, ReplacePart[l, m+2 -> p*l[[1]] + l[[m+2]]]][Join[b[n-p*m, p-1], Array[0&, p*m]]], {m, 0, n/p}]]]; a[n_] := b[n, n][[2]]; Table[a[n], {n, 0, 55}] (* _Jean-Fran\u00e7ois Alcover_, Jan 24 2014, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=0 of A222730.",
+        "Cf. A000041, A000217, A014153."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Mar 04 2013",
+    "references": 2,
+    "revision": 13,
+    "time": "2014-01-24T09:49:20-05:00",
+    "created": "2013-03-04T14:50:01-05:00"
+}

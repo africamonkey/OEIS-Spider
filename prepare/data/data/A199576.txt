@@ -1,0 +1,34 @@
+{
+    "number": 199576,
+    "data": "1,2,8,54,528,7690,159360,4158014,124676608,4135694994,150596213760,6039479167942,267570859708416,13065427748191130,697795440530685952,40363581479632997070,2506569447568159211520,166039728985388864259874,11683091140202632175419392",
+    "name": "E.g.f. satisfies: A(x) = 1 + Sum_{n>=1} 2*cosh(n*x) * (x*A(x))^(n^2).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A199576/b199576.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "E.g.f. satisfies: A(x) = Product_{n>=1} (1 - (x*A(x))^(2*n))*(1 + (x*A(x))^(2*n-1)*exp(x))*(1 + (x*A(x))^(2*n-1)/exp(x)), due to the Jacobi triple product identity.",
+        "a(n) ~ c * d^n * n! / n^(3/2), where d = 4.245909... and c = 0.72689... - _Vaclav Kotesovec_, Sep 04 2017"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + 2*x + 8*x^2/2! + 54*x^3/3! + 528*x^4/4! + 7690*x^5/5! +...",
+        "The e.g.f. A = A(x) may be expressed by the series:",
+        "A(x) = 1 + 2*cosh(x)*x*A + 2*cosh(2*x)*(x*A)^4 + 2*cosh(3*x)*(x*A)^9 + 2*cosh(4*x)*(x*A)^16 + 2*cosh(5*x)*(x*A)^25 +...",
+        "and by the Jacobi triple product:",
+        "A(x) = (1-(x*A)^2)*(1+x*A*exp(x))*(1+x*A/exp(x)) * (1-(x*A)^4)*(1+(x*A)^3*exp(x))*(1+(x*A)^3/exp(x)) * (1-(x*A)^6)*(1+(x*A)^5*exp(x))*(1+(x*A)^5/exp(x)) * (1-(x*A)^8)*(1+(x*A)^7*exp(x))*(1+(x*A)^7/exp(x)) *..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=1,n,A=1+sum(m=1, sqrtint(n+1), 2*cosh(m*x+x*O(x^n))*(x*A)^(m^2))); n!*polcoeff(A, n)}",
+        "(PARI) /* By Jacobi's Triple Product Identity: */",
+        "{a(n)=local(A=1+x); for(i=1,n,A=prod(m=1, n\\2+1, (1-(x*A)^(2*m))*(1+exp(x+x*O(x^n))*(x*A)^(2*m-1))*(1+exp(-x+x*O(x^n))*(x*A)^(2*m-1)+x*O(x^n)))); n!*polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A196354."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 09 2011",
+    "references": 2,
+    "revision": 21,
+    "time": "2017-09-04T04:33:56-04:00",
+    "created": "2011-11-09T18:33:17-05:00"
+}

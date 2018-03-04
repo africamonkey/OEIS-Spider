@@ -1,0 +1,50 @@
+{
+    "number": 104646,
+    "data": "9,10,21,34,51,58,77,106,129,166,201,262,287,334,381,454,501,586,669,718,791,922,989,1082,1167,1282,1371,1486,1623,1754,1851,2018,2127,2326,2427,2638,2747,2974,3093,3274,3459,3694,3831,4034,4227,4534,4661,4894,5123,5366",
+    "name": "Smallest semiprime equal to the sum of n distinct primes.",
+    "comment": [
+        "The sequence is monotonic for its first million terms.  Does there exist n with a(n) < a(n-1)? [_Charles R Greathouse IV_, Aug 24 2011]"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A104646/b104646.txt\">Table of n, a(n) for n = 2..10000</a>"
+    ],
+    "example": [
+        "a(2) = 9 because 9 = 2+7=9 = 3*3;",
+        "a(3) = 10 because 10 = 2+3+5 = 2*5;",
+        "a(4) = 21 because 21 = 2+3+5+11 = 3*7."
+    ],
+    "program": [
+        "(PARI) issemi(n)=bigomega(n)==2",
+        "a(n)={",
+        "    my(v=primes(n+3),s=sum(i=1,n+1,v[i]),m,t,t1);",
+        "    m=s+v[n+2]-5;",
+        "    forstep(i=n+1,1,-1,",
+        "        t=s-v[i];",
+        "        if(t >= m, break);",
+        "        if(issemi(t),return(t))",
+        "    );",
+        "    s+=v[n+2];",
+        "    m=s+v[n+3]-10;",
+        "    for(i=2,n+2,",
+        "        t=s-v[i];",
+        "        for(j=1,i-1,",
+        "            t1=t-v[j];",
+        "            if(t1 >= m, break);",
+        "            if(issemi(t1),m=t1)",
+        "        )",
+        "    );",
+        "    if(issemi(m), return(m));",
+        "    error(\"could not find a(\"n\")\")",
+        "}; \\\\ _Charles R Greathouse IV_, Aug 24 2011"
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Giovanni Teofilatto_, Apr 21 2005",
+    "ext": [
+        "a(6) corrected, a(7)-a(50) by _Charles R Greathouse IV_, Aug 24 2011"
+    ],
+    "references": 1,
+    "revision": 14,
+    "time": "2013-05-13T01:54:08-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 243007,
+    "data": "1,81,14641,3272481,806616801,210358905201,56912554609681,15800522430616641,4471485120646226881,1284238494711502355601,373195323236525968732401,109489964937514282794301281,32378265673661271315300820641,9639042117142706280223219663281",
+    "name": "a(n) = A084769(n)^2.",
+    "comment": [
+        "In general, we have the binomial identity:",
+        "if b(n) = Sum_{k=0..n} t^k * C(2*k, k) * C(n+k, n-k),",
+        "then b(n)^2 = Sum_{k=0..n} (t^2+t)^k * C(2*k, k)^2 * C(n+k, n-k),",
+        "where the g.f. of b(n) is 1/sqrt(1 - (4*t+2)*x + x^2),",
+        "and the g.f. of b(n)^2 is 1 / AGM(1-x, sqrt((1+x)^2 - (4*t+2)^2*x)), where AGM(x,y) = AGM((x+y)/2,sqrt(x*y)) is the arithmetic-geometric mean.",
+        "Note that the g.f. of A084769 is 1/sqrt(1 - 18*x + x^2).",
+        "Limit a(n+1)/a(n) = (9 + 4*sqrt(5))^2 = 161 + 72*sqrt(5)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A243007/b243007.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "G.f.: 1 / AGM(1-x, sqrt(1- 322*x + x^2)).  - _Paul D. Hanna_, Aug 30 2014",
+        "a(n) = Sum_{k=0..n} 20^k * C(2*k, k)^2 * C(n+k, n-k).",
+        "a(n)^(1/2) = Sum_{k=0..n} 4^k * C(2*k, k) * C(n+k, n-k)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 81*x + 14641*x^2 + 3272481*x^3 + 806616801*x^4 +..."
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[1 / Sqrt[1 - 18 x + x^2], {x, 0, n}], {n, 0, 20}]^2 (* _Vincenzo Librandi_, Feb 14 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = sum(k=0, n, 20^k * binomial(2*k, k)^2 * binomial(n+k, n-k) )}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n) = sum(k=0, n, 4^k * binomial(2*k, k) * binomial(n+k, n-k) )^2}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "{a(n)=polcoeff( 1 / agm(1-x, sqrt((1+x)^2 - 18^2*x +x*O(x^n))), n)}",
+        "for(n=0, 20, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Aug 30 2014"
+    ],
+    "xref": [
+        "Cf. A084769, A243949, A243943, A243944."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Aug 18 2014",
+    "references": 4,
+    "revision": 18,
+    "time": "2018-02-14T03:33:17-05:00",
+    "created": "2014-08-18T00:32:21-04:00"
+}

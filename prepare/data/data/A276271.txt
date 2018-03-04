@@ -1,0 +1,42 @@
+{
+    "number": 276271,
+    "data": "1,1,1,1,6,46,2206,4870846,3954191749561,339905052007042640998641,52373274877565894156748130733610185904753361,563138297002425210235477817802336090254190075906443582099838858026136728896536841",
+    "name": "a(0) = a(1) = a(2) = a(3) = 1; for n > 3, a(n) = (a(n-1)^2+a(n-2)^2+a(n-3)^2+a(n-1)+a(n-2)+a(n-3))/a(n-4).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A276271/b276271.txt\">Table of n, a(n) for n = 0..15</a>"
+    ],
+    "formula": [
+        "a(n) = 8*a(n-1)*a(n-2)*a(n-3)-a(n-4)-1.",
+        "a(n) ~ 2^(-3/2) * c^(d^n), where c = 1.2578918597... and d = A058265 = 1.83928675521416... = (1 + (19 + 3*sqrt(33))^(1/3) + (19 - 3*sqrt(33))^(1/3))/3. - _Vaclav Kotesovec_, Mar 20 2017"
+    ],
+    "mathematica": [
+        "nxt[{a_,b_,c_,d_}]:={b,c,d,(b^2+c^2+d^2+b+c+d)/a}; NestList[nxt,{1,1,1,1},12][[All,1]] (* _Harvey P. Dale_, Mar 10 2017 *)"
+    ],
+    "program": [
+        "(Ruby)",
+        "def A(m, n)",
+        "  a = Array.new(m, 1)",
+        "  ary = [1]",
+        "  while ary.size < n + 1",
+        "    i = a[1..-1].inject(0){|s, i| s += i * i} + a[1..-1].inject(:+)",
+        "    break if i % a[0] > 0",
+        "    a = *a[1..-1], i / a[0]",
+        "    ary << a[0]",
+        "  end",
+        "  ary",
+        "end",
+        "def A276271(n)",
+        "  A(4, n)",
+        "end"
+    ],
+    "xref": [
+        "Cf. A101879, A276122."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Seiichi Manyama_, Aug 26 2016",
+    "references": 2,
+    "revision": 14,
+    "time": "2017-03-20T12:03:13-04:00",
+    "created": "2016-08-26T09:45:33-04:00"
+}

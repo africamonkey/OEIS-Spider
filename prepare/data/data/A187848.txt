@@ -1,0 +1,41 @@
+{
+    "number": 187848,
+    "data": "1,4,20,120,836,6608,58324,568296,6060340,70245856,879937892,11853424536,170963881892,2629912684784,42995842035316,744683072665416,13624184625098644,262594854417561856,5319099368762699012,112977659152942035192,2511041582408699358980",
+    "name": "a(n) is the moment of order n for the probability density function defined by rho(x)=exp(x-1)/((Ei(x-1))^2+Pi^2) over the interval 1..infinity, with Ei the exponential integral.",
+    "comment": [
+        "a(n) is also the binomial transform of A003319(n+1)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A187848/b187848.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "Let c(n)=A000522(n) and An the square matrix of order n+2 defined by: if j<=i A[i,j]=c(i-j+1); A(i,i+1)=1; if j>i+1 A[i,j]=0; then a(n)=(-1)^(n+1)*det(An).",
+        "G.f.: (1 - 2*x - U(0))/x^2 where U(k)=  1 - x - x*(k+1)/(1 - x*(k+1)/U(k+1)) ; (continued fraction, 2-step). - _Sergei N. Gladkovskii_, Oct 14 2012",
+        "G.f.: 1/x^2 - 1/x  -1/(x^2*W(0)) , where W(k) = 1 - x*(k+1)/( x*(k+1) - 1/(1 - x*(k+1)/( x*(k+2) - 1/W(k+1) ))); (continued fraction). - _Sergei N. Gladkovskii_, Aug 25 2013",
+        "G.f.: W(0)/x - 1/x, where W(k) = 1 - x*(k+1)/( x*(k+2) - 1/(1 - x*(k+1+R)/( x*(k+1+R) - 1/W(k+1) ))); R=1 (continued fraction). - _Sergei N. Gladkovskii_, Aug 26 2013",
+        "a(n) ~ exp(1) * n! * n^2 * (1 - 1/n - 4/n^3 - 23/n^4 - 175/n^5 - 1615/n^6 - 17375/n^7 - 212607/n^8 - 2909007/n^9 - 43953071/n^10). - _Vaclav Kotesovec_, Sep 02 2014, updated Aug 01 2015"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "c:= proc(n) option remember; add(n!/k!, k=0..n) end:",
+        "a:= n-> (-1)^(n+1) *Determinant(Matrix(n+2,",
+        "        (i, j)-> `if`(0<=i+1-j, c(i+1-j), 0))):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Mar 24 2011",
+        "# second Maple program:",
+        "b:= proc(n) option remember;",
+        "      `if`(n<0, -1, -add(b(n-i)*i!, i=1..n+1))",
+        "    end:",
+        "a:= n-> add(b(k+1)*binomial(n, k), k=0..n):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Aug 26 2013"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n<0, -1, -Sum[b[n-i]*i!, {i, 1, n+1}]]; a[n_] := Sum[b[k+1] * Binomial[n, k], {k, 0, n}]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Jun 30 2015, after _Alois P. Heinz_ *)"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Groux Roland_, Mar 14 2011",
+    "references": 2,
+    "revision": 29,
+    "time": "2015-08-01T14:34:32-04:00",
+    "created": "2011-03-14T05:37:03-04:00"
+}

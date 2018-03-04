@@ -1,0 +1,42 @@
+{
+    "number": 182987,
+    "data": "2,3,5,11,29,97,347,1429,6229,29873,160879,895681,5448239,34885673,228759799,1568299433,11417382973,87698582693,684947829299,5606539600699,47241542381273,403631914511993,3587558929043927,32684217334524347,308342289648328511,3036819365023723883",
+    "name": "Least a+b such that ab=A002110(n), the product of the first n primes; a,b being positive integers.",
+    "comment": [
+        "Original definition (not applicable for n=0 and n=1, but equivalent for n>=2):",
+        "Let p(S) be product of integers in S. a(n) is minimum of p(S_1) + p(S_2) over all partitions of first n primes into sets S_1 and S_2.",
+        "Also: Least integer such that a(n)^2-4*A002110(n) is a square. [_David Broadhurst_, Sep 20 2011]",
+        "The integers a,b are the two median divisors of primorial(n), a=A060795(n)=A060775(A002110(n)) and b=A060796(n)=A033677(A002110(n)). (For n=0, a=b=1 of course.) - _M. F. Hasler_, Sep 20 2011"
+    ],
+    "link": [
+        "D. Broadhurst, <a href=\"http://tech.groups.yahoo.com/group/primenumbers/message/23128\">Re: adding to prime number [primes in A182987]</a>, primenumbers group, Sep 20 2011."
+    ],
+    "formula": [
+        "a(n) = A060795(n) + A060796(n). - _M. F. Hasler_, Sep 20 2011"
+    ],
+    "example": [
+        "a(3) = 11 = min{ 2*3 + 5 = 11, 2*5 + 3 = 13, 3*5 + 2 = 17 }",
+        "Or, a(3) = 11 = min { 1+30, 2+15, 3+10, 5+6 } because A002110(3) = 2*3*5 = 30 = 2*15 = 3*10 = 5*6."
+    ],
+    "mathematica": [
+        "a[0] = 2; a[n_] := Module[{m = Times @@ Prime[Range[n]]}, For[an = 2 Floor[Sqrt[m]] + 1, an <= m + 2, an += 2, If[IntegerQ[Sqrt[an^2 - 4 m]], Return[an]]]]; Table[an = a[n]; Print[an]; an, {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Oct 20 2016, adapted from PARI *)"
+    ],
+    "program": [
+        "(PARI) A182987(n)={n=divisors(prod(i=1,n,prime(i)));n[max(#n\\2,1)]+n[#n\\2+1]}  \\\\ _M. F. Hasler_, Sep 20 2011",
+        "(PARI) A182987(n)={ n||return(2); my(m=prod(k=1,n,prime(k))); forstep(a=2*sqrtint(m)+1,m+2,2, issquare(a^2-4*m) & return(a)) }  \\\\ _M. F. Hasler_, following an idea from _David Broadhurst_, Sep 20 2011"
+    ],
+    "xref": [
+        "Cf. A173631."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Risto Kauppila_, Feb 06 2011",
+    "ext": [
+        "First term and example corrected, as empty sets have product 1, by _Phil Carmody_, Sep 20 2011",
+        "Simpler definition and extension to n=0 by _M. F. Hasler_, Sep 20 2011"
+    ],
+    "references": 5,
+    "revision": 36,
+    "time": "2016-10-20T05:10:08-04:00",
+    "created": "2010-12-17T14:40:17-05:00"
+}

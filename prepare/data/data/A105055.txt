@@ -1,0 +1,41 @@
+{
+    "number": 105055,
+    "data": "1,1,2,3,4,8,20,33,64,64,192,256,768,1024,2304,4353,8192,16384,32768,65536,131072,262144,524288,1048576,2097152,4194034,8388608,16777216,33554432,67108864,134217728,268435457,536870912,1073741824,2147483648",
+    "name": "a(n) = bitwise AND operation applied between every term of the n-th row of Pascal's triangle, with the stipulation that all bits left of the last significant bit in each element are turned \"on\" until all elements of a row contain the same number of bits (see example). Results represented in decimal notation.",
+    "comment": [
+        "For many n, a(n) = 2^k, where k = floor(log_2(A001405(n))). For n from 9 through 40, k = n-3, but it is smaller thereafter; no formula of the form k = n-c will work for sufficiently large n. There are infinitely many exceptions to this formula, since a(2^m-1) is always odd, hence not equal to 2^k for m > 1. - _Franklin T. Adams-Watters_, Mar 29 2014, replacing assertions by the author."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PascalsTriangle.html\">Pascal's Triangle</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/AND.html\">Bitwise AND</a>"
+    ],
+    "example": [
+        "Consider the n = 7 row of Pascal's Triangle:",
+        "in decimal notation: 1-7-21-35-35-21-7-1;",
+        "in binary notation: 1-111-10101-100011-...",
+        "Note: only distinct digits are of any importance.",
+        "Now add 1's to the left of the most significant digit and \"AND\" all terms:",
+        "111111 AND 111111 AND 110101 AND 100011 = 100001",
+        "which is 33 in decimal, thus a(7)=33."
+    ],
+    "program": [
+        "(PARI) nexttwo(n)=local(r=1);while(r<=n,r*=2);r",
+        "a(n)={local(v=vector(ceil(n/2),i,binomial(n,i)),r);",
+        "   r=nexttwo(v[#v])-1;",
+        "   for(i=1,#v,r=bitand(r,nexttwo(v[#v])-nexttwo(v[i])+v[i]));",
+        "r} \\\\ _Franklin T. Adams-Watters_, Mar 29 2014"
+    ],
+    "xref": [
+        "Cf. A001405."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "Andrew G. West (WestA(AT)wlu.edu), Apr 04 2005",
+    "ext": [
+        "Edited by _Franklin T. Adams-Watters_, Mar 29 2014"
+    ],
+    "references": 0,
+    "revision": 15,
+    "time": "2016-11-25T05:29:05-05:00",
+    "created": "2005-04-09T03:00:00-04:00"
+}

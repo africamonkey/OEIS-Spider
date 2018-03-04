@@ -1,0 +1,41 @@
+{
+    "number": 244613,
+    "data": "1,8,28,328,1328,11328",
+    "name": "Least number k > 0 such that 2^k ends in exactly n consecutive increasing digits.",
+    "comment": [
+        "For n = {1, 2, 3, 4, 5, 6}, the n consecutive increasing digits, given by 2^a(n)%10^n, are {2, 56, 456, 3456, 23456, 123456}, respectively.",
+        "There are 12500 possible 6-digit endings for 2^k. There are no k-values such that 2^k ends in '234567', '345678', or '456789'. The k-values for which 2^k ends in '123456' are given by 11328 mod 12500. For k = 11328 + 12500*x, the digit immediately before the run of '123456' is {1, 3, 5, 7, 9, 1, 3, 5, 7, 9, 1, 3, ...} for x = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...}, respectively. Thus, we see the digit before will never be 0. So, this sequence is full."
+    ],
+    "example": [
+        "2^8 = 256 ends in '56'. Thus a(2) = 8.",
+        "2^28 ends in '456'. Thus a(3) = 28."
+    ],
+    "program": [
+        "(PARI) a(n)=for(k=1,10^6,st=2^k;c=0;if(#Str(st)>n,for(i=1,n,if(((st-(st%10^(i-1)))/10^(i-1))%10==((st-(st%10^i))/10^i)%10+1,c++));if(c==n,return(k))))",
+        "n=0;while(n<10,print1(a(n),\", \");n++)",
+        "(Python)",
+        "def a(n):",
+        "..for k in range(1,10**5):",
+        "....st = str(2**k)",
+        "....if len(st) > n:",
+        "......count = 0",
+        "......for i in range(len(st)):",
+        "........if int(st[len(st)-1-i]) == int(st[len(st)-2-i])+1:",
+        "..........count += 1",
+        "........else:",
+        "..........break",
+        "......if count == n:",
+        "........return k",
+        "n = 0",
+        "while n < 10:",
+        "..print(a(n),end=', ')",
+        "..n += 1"
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,2",
+    "author": "_Derek Orr_, Jul 02 2014",
+    "references": 1,
+    "revision": 17,
+    "time": "2014-07-08T00:19:38-04:00",
+    "created": "2014-07-03T16:26:15-04:00"
+}

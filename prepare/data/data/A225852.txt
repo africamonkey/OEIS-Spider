@@ -1,0 +1,47 @@
+{
+    "number": 225852,
+    "data": "3,4,5,6,7,7,8,9,9,10,10,11,11,12,12,13,13,14,14,14,15,15,16,16,16,17,17,18,18,18,19,19,19,20,20,20,21,21,21,22,22,22,23,23,23,24,24,24,25,25,25,26,26,26,26,27,27,27,28,28,28,29,29,29,29,30,30",
+    "name": "The number of people required for there to be at least a 50% chance that at least 3 share a birthday in a year with n days.",
+    "comment": [
+        "a(365) = 88.",
+        "For n <= 1000, a(n) = 1.436 + 1.812*n^0.654 - 0.817/n^3 provides an estimate accurate to 0.6 units."
+    ],
+    "link": [
+        "Christian N. K. Anderson, <a href=\"/A225852/b225852.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Christian N. K. Anderson, <a href=\"/A225852/a225852.txt\">Table of n and exact probabilities of a(n)-1 and a(n)</a> for n = 1..1000",
+        "P. Le Conte, <a href=\"http://www.people.fas.harvard.edu/~sfinch/csolve/coincid.pdf\">Coincident Birthdays</a>"
+    ],
+    "example": [
+        "The probability that out of 87 people 3 share a birthday in a year with 365 days is 0.4994549. The corresponding probability for 88 people is 0.5110651. Therefore a(365)=88."
+    ],
+    "program": [
+        "(R) library(gmp);#prob of a maximum of exactly k coincident birthdays is",
+        "BigQ<-function(nday,p,k) { #nday=days in a year; p=people",
+        "    if(p<k | nday<1) return(0)",
+        "    if(k==1) return(prod(1-(1:p-1)/nday))",
+        "    tot=0;",
+        "    for(i in 1:floor(p/k)) {",
+        "        q=(1-as.bigz(i)/nday)^(p-k*i) * prod((p-as.bigz(1:(k*i))+1)/nday) * prod((nday-as.bigz(1:i)+1)/((1:i)*factorialZ(k)))",
+        "        tot=tot+as.numeric(q)*ifelse(k*i<p & k>1,sum(sapply(2:k-1,function(j) BigQ(nday-i,p-k*i,j))),1)",
+        "    }",
+        "    tot",
+        "}",
+        "BDaySharedByAtLeast<-function(nday,people,k) {",
+        "    if(nday<1 | people<k) return(0)",
+        "    if(k==1) return(prod(1-(1:people-1)/nday))",
+        "    prob=1; for(j in 2:k-1) prob=prob-BigQ(nday,people,j); prob",
+        "}",
+        "y=rep(0,100); for(i in 1:100) { j=ifelse(i==1,3,y[i-1]); while(BDaySharedByAtLeast(i,j,3)<.5) j=j+1; y[i]=j}; y"
+    ],
+    "xref": [
+        "Cf. A014088 (n people on 365 days), A033810 (2 people on n days), A225871 (4 people on n days).",
+        "Cf. A088141, A182008, A182009, A182010."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Kevin L. Schwartz_ and _Christian N. K. Anderson_, May 17 2013",
+    "references": 4,
+    "revision": 17,
+    "time": "2013-05-21T12:20:21-04:00",
+    "created": "2013-05-21T12:20:21-04:00"
+}

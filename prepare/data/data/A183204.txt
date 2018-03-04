@@ -1,0 +1,61 @@
+{
+    "number": 183204,
+    "data": "1,4,48,760,13840,273504,5703096,123519792,2751843600,62659854400,1451780950048,34116354472512,811208174862904,19481055861877120,471822589361293680,11511531876280913760,282665135367572129040",
+    "name": "Central terms of triangle A181544.",
+    "comment": [
+        "The g.f. for row n of triangle A181544 is (1-x)^(3n+1)*Sum_{k>=0}C(n+k-1,k)^3*x^k.",
+        "This sequence is s_7 in Cooper's paper. - _Jason Kimberley_, Nov 06 2012",
+        "Diagonal of the rational function R(x,y,z,w) = 1/(1 - (w*x*y + w*x*z + w*y*z + x*y + x*z + y + z)). - _Gheorghe Coserea_, Jul 14 2016",
+        "This is one of the Apery-like sequences - see Cross-references. - _Hugo Pfoertner_, Aug 06 2017",
+        "Every prime eventually divides some term of this sequence. - Amita Malik, Aug 20 2017"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A183204/b183204.txt\">Table of n, a(n) for n = 0..702</a> (terms 0..499 from Jason Kimberley)",
+        "S. Cooper, <a href=\"http://dx.doi.org/10.1007/s11139-011-9357-3\">Sporadic sequences, modular forms and new series for 1/pi</a>, Ramanujan J., December 2012, Volume 29, Issue 1, pp 163-183.",
+        "Shaun Cooper, Jes\u00fas Guillera, Armin Straub, Wadim Zudilin, <a href=\"http://arxiv.org/abs/1604.01106\">Crouching AGM, Hidden Modularity</a>, arXiv:1604.01106 [math.NT], 5-April-2016.",
+        "Amita Malik and Armin Straub, <a href=\"https://doi.org/10.1007/s40993-016-0036-8\">Divisibility properties of sporadic Ap\u00e9ry-like numbers</a>, Research in Number Theory, 2016, 2:5",
+        "Robert Osburn, Armin Straub, Wadim Zudilin, <a href=\"https://arxiv.org/abs/1701.04098\">A modular supercongruence for 6F5: an Ap\u00e9ry-like story</a>, arXiv:1701.04098 [math.NT], 2017.",
+        "Wadim Zudilin, <a href=\"http://arxiv.org/abs/1210.2493\">A generating function of the squares of Legendre polynomials</a>, preprint arXiv:1210.2493 [math.CA], 2012."
+    ],
+    "formula": [
+        "a(n) = [x^n] (1-x)^(3n+1) * Sum_{k>=0} C(n+k-1,k)^3*x^k.",
+        "a(n) = Sum_{j=0}^{n} C(n,j)^2 * C(2*j,n) * C(j+n,j). [Formula of Wadim Zudilin provided by _Jason Kimberley_, Nov 06 2012]",
+        "1/Pi = sqrt(7) Sum_{n>=0} (-1)^n a(n) (11895n + 1286)/22^(3n+3). [Cooper, equation (41)] - _Jason Kimberley_, Nov 06 2012",
+        "G.f.: sqrt((1-13*x+(1-26*x-27*x^2)^(1/2))/(1-21*x+8*x^2+(1-8*x)*(1-26*x-27*x^2)^(1/2)))*hypergeom([1/12,5/12],[1],13824*x^7/(1-21*x+8*x^2+(1-8*x)*(1-26*x-27*x^2)^(1/2))^3)^2. - _Mark van Hoeij_, May 07 2013",
+        "a(n) ~ 3^(3*n+3/2) / (4 * (Pi*n)^(3/2)). - _Vaclav Kotesovec_, Apr 05 2015",
+        "G.f. A(x) satisfies 1/(1+4*x)^2 * A( x/(1+4*x)^3 ) = 1/(1+2*x)^2 * A( x^2/(1+2*x)^3 ) [see Cooper, Guillera, Straub, Zudilin]. - _Joerg Arndt_, Apr 08 2016",
+        "a(n)=(-1)^n*binomial(3n+1,n)* 4F3({-n,n+1,n+1,n+1};{1,1,2(n+1)}; 1). - _M. Lawrence Glasser_, May 15 2016",
+        "Conjecture: n^3*a(n) - (2*n-1)*(13*n^2-13*n+4)*a(n-1) - 3*(n-1)*(3*n-4)*(3*n-2)*a(n-2) = 0. - _R. J. Mathar_, May 15 2016",
+        "0 = (-x^2+26*x^3+27*x^4)*y''' + (-3*x+117*x^2+162*x^3)*y'' + (-1+86*x+186*x^2)*y' + (4+24*x)*y, where y is g.f. - _Gheorghe Coserea_, Jul 14 2016"
+    ],
+    "example": [
+        "Triangle A181544 begins:",
+        "(1);",
+        "1, (4), 1;",
+        "1, 20, (48), 20, 1;",
+        "1, 54, 405, (760), 405, 54, 1;",
+        "1, 112, 1828, 8464, (13840), 8464, 1828, 112, 1; ..."
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[n,j]^2 * Binomial[2*j,n] * Binomial[j+n,j],{j,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Apr 05 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff((1-x)^(3*n+1)*sum(j=0, 2*n, binomial(n+j, j)^3*x^j), n)}",
+        "(MAGMA) P<x>:=PolynomialRing(Integers()); C:=Binomial;",
+        "A183204:=func<n|Coefficient((1-x)^(3*n+1)*&+[C(n+j,j)^3*x^j:j in[0..2*n]],n)>; // or directly:",
+        "A183204:=func<k|&+[C(k,j)^2*C(2*j,k)*C(j+k,j):j in[0..k]]>;",
+        "[A183204(n):n in[0..16]]; // _Jason Kimberley_, Oct 29 2012"
+    ],
+    "xref": [
+        "Cf. A181544, A183205.",
+        "Related to diagonal of rational functions: A268545-A268555.",
+        "The Ap\u00e9ry-like numbers [or Ap\u00e9ry-like sequences, Apery-like numbers, Apery-like sequences] include A000172, A000984, A002893, A002895, A005258, A005259, A005260, A006077, A036917, A063007, A081085, A093388, A125143 (apart from signs), A143003, A143007, A143413, A143414, A143415, A143583, A183204, A214262, A219692,A226535, A227216, A227454, A229111 (apart from signs), A260667, A260832, A262177, A264541, A264542, A279619, A290575, A290576. (The term \"Apery-like\" is not well-defined.)"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 30 2010",
+    "references": 38,
+    "revision": 80,
+    "time": "2017-08-21T17:54:21-04:00",
+    "created": "2010-12-30T03:48:42-05:00"
+}

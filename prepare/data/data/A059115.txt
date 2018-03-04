@@ -1,0 +1,32 @@
+{
+    "number": 59115,
+    "data": "1,2,9,58,485,4986,60877,861554,13878153,250854130,5030058161,110837000682,2662669300909,69270266115818,1940260799150325,58220372514830626,1863293173842259217,63356877145370671074",
+    "name": "Expansion of ((1-x)/(1-2*x))*exp(x/(1-x)).",
+    "comment": [
+        "L'(n,i) are unsigned Lah numbers (Cf. A008297):L'(n,i)=n!/i!*binomial(n-1,i-1) for i >= 1, L'(0,0)=1, L'(n,0)=0 for n>0."
+    ],
+    "formula": [
+        "Sum_{m=0..n} Sum_{i=0..n} L'(n, i)*Product_{j=1..m} (i-j+1).",
+        "Given g.f. A(x), then g.f. A000522 = A(x/(1+x)). - _Michael Somos_, Aug 03 2006"
+    ],
+    "example": [
+        "(1-x)/(1-2*x)*exp(x/(1-x)) = 1 + 2*x + 9/2*x^2 + 29/3*x^3 + 485/24*x^4 + 831/20*x^5 + ..."
+    ],
+    "maple": [
+        "s := series((1-x)/(1-2*x)*exp(x/(1-x)), x, 21): for i from 0 to 20 do printf(`%d,`,i!*coeff(s,x,i)) od:"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n<0, 0, n!*polcoeff( (1-x)/(1-2*x)*exp(x/(1-x)+x*O(x^n)), n))} /* _Michael Somos_, Aug 03 2006 */",
+        "(PARI) {a(n)=local(A); if(n<0,0, n++; A=vector(n); A[n]=1; for(k=1,n-1, A[n-k]=1; if(k>1, A[n-k+1]=A[n-k+2]); for(i=n-k+1,n, A[i]=A[i-1]+k*A[i])); A[n])} /* _Michael Somos_, Aug 03 2006 */"
+    ],
+    "xref": [
+        "Row sums of A059114, A059110, A049020, A001861, A059099, A052897."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Vladeta Jovovic_, Jan 06 2001",
+    "references": 3,
+    "revision": 11,
+    "time": "2014-05-09T12:11:44-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

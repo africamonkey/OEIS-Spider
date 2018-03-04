@@ -1,0 +1,39 @@
+{
+    "number": 213705,
+    "data": "1,2,3,5,9,17,33,66,134,277,579,1224,2610,5609,12135,26408,57770,126962,280192,620674,1379586,3075943,6877611,15417934,34646156,78027146,176087292,398143230,901827322,2046112299,4649558191,10581041518,24112473412,55019560650,125696393844,287494670302",
+    "name": "a(n)=n if n <= 3, otherwise a(n) = A007477(n-1)+A007477(n).",
+    "comment": [
+        "a(n) gives the number of \"plausible parsings\" of the sentence \"Etsiv\u00e4t^(n+1)\" in Finnish (with the most common word order, SV & SVO), that is, sentences which consist only of n+1 copies of the word \"etsiv\u00e4t\". See the OEIS Wiki page.",
+        "See A007477 for the number of plausible parsings of \"Buffalo^n\" sentences in English.",
+        "In my view the value of a(0) should be 0 in this context (single word \"Etsiv\u00e4t.\" is not a valid Finnish sentence, except as an answer to a question), although this is arguable. However, it is probably that this sequence occurs in other (combinatorial) contexts as well, and there a(0) might be something else than 0, so I left it off, and made the sequence start from offset 1."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A213705/b213705.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Antti Karttunen, <a href=\"http://oeis.org/wiki/User:Antti_Karttunen/Etsiv%C3%A4t_etsiv%C3%A4t_etsiv%C3%A4t\">Etsiv\u00e4t etsiv\u00e4t etsiv\u00e4t...</a>, OEIS Wiki."
+    ],
+    "maple": [
+        "b:= n-> coeff(series(RootOf(A=(A*x)^2+x+1, A), x, n+1), x, n):",
+        "a:= n-> `if`(n<2, n, b(n-1) +b(n)):",
+        "seq(a(n), n=1..40);  # _Alois P. Heinz_, Sep 14 2012"
+    ],
+    "mathematica": [
+        "(* b = A007477 *) b[n_] := Sum[Binomial[2*k+2, n-k-2]*Binomial[n-k-2, k]/(k + 1), {k, 0, n-2}]; a[n_] := b[n-1] + b[n]; a[1] = 1; a[2] = 2; Array[a, 40] (* _Jean-Fran\u00e7ois Alcover_, Mar 04 2016 *)"
+    ],
+    "program": [
+        "(Scheme): (define (A213705 n) (if (< n 2) n (+ (A007477 (- n 1)) (A007477 n))))",
+        "(PARI) b(n) = sum(k=0, n - 2, binomial(2*k + 2, n - k - 2)*binomial(n - k - 2, k)/(k + 1));",
+        "a(n) = if(n<3, n, b(n - 1) + b(n)); \\\\ _Indranil Ghosh_, Apr 11 2017",
+        "(Python)",
+        "from sympy import binomial",
+        "def b(n): return sum([binomial(2*k + 2, n - k - 2)*binomial(n - k - 2, k)/(k + 1) for k in xrange(n - 1)])",
+        "def a(n): return n if n<3 else b(n - 1) + b(n)",
+        "print [a(n) for n in xrange(1, 51)] # _Indranil Ghosh_, Apr 11 2017"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Sep 14 2012",
+    "references": 2,
+    "revision": 37,
+    "time": "2017-04-12T14:25:13-04:00",
+    "created": "2012-09-14T13:42:22-04:00"
+}

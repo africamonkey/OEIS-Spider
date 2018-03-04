@@ -1,0 +1,53 @@
+{
+    "number": 7534,
+    "id": "M1306",
+    "data": "2,4,94,96,98,400,402,404,514,516,518,784,786,788,904,906,908,1114,1116,1118,1144,1146,1148,1264,1266,1268,1354,1356,1358,3244,3246,3248,4204,4206,4208",
+    "name": "Even numbers that are not the sum of a pair of twin primes.",
+    "comment": [
+        "Conjectured to be complete (although if this were proved it would prove the \"twin primes conjecture\"!).",
+        "No other n < 10^9. - _T. D. Noe_, Apr 10 2007",
+        "Of these 35, the only 5 which are two times a prime (or in A001747) are 4 = 2 * 2, 94 = 2 * 47, 514 = 2 * 257, 1114 = 2 * 557, 1354 = 2 * 677. - _Jonathan Vos Post_, Mar 06 2010"
+    ],
+    "reference": [
+        "Harvey Dubner, Twin Prime Conjectures, Journal of Recreational Mathematics, Vol. 30 (3), 1999-2000.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "D. Wells, The Penguin Dictionary of Curious and Interesting Numbers. Penguin Books, NY, 1986, 132."
+    ],
+    "link": [
+        "Harvey Dubner, <a href=\"/A007534/a007534.pdf\">Twin Prime Conjectures</a>, Journal of Recreational Mathematics, Vol. 30 (3), 1999-2000.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TwinPrimes.html\">Twin Primes</a>",
+        "Dan Zwillinger, <a href=\"http://www.ams.org/journals/mcom/1979-33-147/S0025-5718-1979-0528060-5/S0025-5718-1979-0528060-5.pdf\">A Goldbach Conjecture Using Twin Primes</a>, Math. Comp. 33, No.147 (1979), p.1071.",
+        "<a href=\"/index/Go#Goldbach\">Index entries for sequences related to Goldbach conjecture</a>"
+    ],
+    "example": [
+        "The twin primes < 100 are 3, 5, 7, 11, 13, 17, 19, 29, 31, 41, 43, 59, 61, 71, 73. 94 is in the sequence because no combination of any two numbers from the set just enumerated can be summed to make 94."
+    ],
+    "mathematica": [
+        "p = Select[ Range[ 4250 ], PrimeQ[ # ] && PrimeQ[ # + 2 ] & ]; q = Union[ Join[ p, p + 2 ] ]; Complement[ Table[ n, {n, 2, 4250, 2} ], Union[ Flatten[ Table[ q[ [ i ] ] + q[ [ j ] ], {i, 1, 223}, {j, 1, 223} ] ] ] ]",
+        "Complement[Range[2,4220,2],Union[Total/@Tuples[Union[Flatten[ Select[ Partition[ Prime[ Range[500]],2,1],#[[2]]-#[[1]]==2&]]],2]]] (* _Harvey P. Dale_, Oct 09 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import qualified Data.Set as Set (map, null)",
+        "import Data.Set (empty, insert, intersection)",
+        "a007534 n = a007534_list !! (n-1)",
+        "a007534_list = f [2,4..] empty 1 a001097_list where",
+        "   f xs'@(x:xs) s m ps'@(p:ps)",
+        "     | x > m = f xs' (insert p s) p ps",
+        "     | Set.null (s `intersection` Set.map (x -) s) = x : f xs s m ps'",
+        "     | otherwise = f xs s m ps'",
+        "-- _Reinhard Zumkeller_, Nov 27 2011"
+    ],
+    "xref": [
+        "Cf. A051345.",
+        "Cf. A129363 (number of partitions of 2n into the sum of two twin primes).",
+        "Cf. A179825."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, _Robert G. Wilson v_",
+    "references": 16,
+    "revision": 50,
+    "time": "2015-03-09T05:33:50-04:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

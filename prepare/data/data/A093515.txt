@@ -1,0 +1,38 @@
+{
+    "number": 93515,
+    "data": "2,3,4,5,6,7,8,11,12,13,14,17,18,19,20,23,24,29,30,31,32,37,38,41,42,43,44,47,48,53,54,59,60,61,62,67,68,71,72,73,74,79,80,83,84,89,90,97,98,101,102,103,104,107,108,109,110,113,114,127,128,131,132,137,138,139",
+    "name": "Transform of the prime sequence by the Rule110 cellular automaton.",
+    "comment": [
+        "As described in A051006, a monotonic sequence can be mapped into a fractional real. Then the binary digits of that real can be treated (transformed) by an elementary cellular automaton. Taken resulted sequence of binary digits as a fractional real, it can be mapped back into a sequence, as in A092855.",
+        "The \"Rule110\" transform as used here involves a right-shift of the sequence before applying the transform as described at http://mathworld.wolfram.com/Rule110.html. - _M. F. Hasler_, Mar 01 2008",
+        "_Robert G. Wilson v_ observed that this sequence contains exactly the indices for which A121561 equals 1. - _M. F. Hasler_, Mar 01 2008"
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A093515/b093515.txt\">Table of n, a(n) for n=1,...,19998</a> (using prime(1..10^4)).",
+        "Ferenc Adorjan, <a href=\"http://web.axelero.hu/fadorjan/aronsf.pdf\">Binary mapping of monotonic sequences - the Aronson and the CA functions</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Rule110.html\">Rule110 Elementary Cellular Automaton</a>"
+    ],
+    "program": [
+        "(PARI) {ca_tr(ca,v)= /* Calculates the Cellular Automaton transform of the vector v by the rule ca */",
+        "local(cav=vector(8),a,r=[],i,j,k,l,po,p=vector(3));",
+        "a=binary(min(255,ca));k=matsize(a)[2];forstep(i=k,1,- 1,cav[k-i+1]=a[i]);",
+        "j=0;l=matsize(v)[2];k=v[l];po=1;",
+        "for(i=1,k+2,j*=2;po=isin(i,v,l,po);j=(j+max(0,sign(po)))% 8;if(cav[j+1],r=concat(r,i)));",
+        "return(r) /* See the function \"isin\" at A092875 */}",
+        "(PARI) A093515=seqruletrans(vector(10^4,i,prime(i)),110) \\\\ _M. F. Hasler_, Mar 01 2008",
+        "(PARI) /* transform a sequence v by the rule r - Note: v could be replaced by a function, e.g. v[c] => prime(c) here */ seqruletrans(v,r)={local(c=1,t); r=vecextract(binary(r+256),\"-1..-8\"); t=List(vector(v[ #v],i,v[c]<i & c++; if(r[1+t=t%4*2+(v[c]==i)],i))); listsort(t,1); v=Vec(t); listkill(t); if( v[1], v, vecextract( Vec(v), \"^1\"))} \\\\ _M. F. Hasler_, Mar 01 2008",
+        "(PARI) A121561_is_1(n)=vector(n+n=0,i, while(!isprime(n++)&!isprime(n-1),);n) \\\\ _M. F. Hasler_, Mar 01 2008"
+    ],
+    "xref": [
+        "Cf. A092855, A051006, A093510, A093511, A093512, A093513, A093514, A093516, A093517.",
+        "Cf. A121561."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "Ferenc Adorjan (fadorjan(AT)freemail.hu)",
+    "references": 11,
+    "revision": 9,
+    "time": "2015-03-14T16:05:09-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

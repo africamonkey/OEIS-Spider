@@ -1,0 +1,45 @@
+{
+    "number": 62729,
+    "data": "1,2,4,8,16,23,32,37,46,47,53,64,67,74,79,83,89,92,94,97,106,113,127,128,131,134,148,157,158,163,166,167,173,178,184,188,194,211,212,223,226,233,251,254,256,257,262,263,268,277,293,296",
+    "name": "n not divisible by any prime=p, where either p-2 or p+2 is prime.",
+    "comment": [
+        "Complement of A062506.",
+        "n divisible only by single primes A007510. - Zak Seidov, May 11 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A062729/b062729.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "46 is included because 46 = 2 * 23 and all (2+2), (2-2), (23+2), (23-2) are composite. (* edited by _Zak Seidov_, May 11 2015 *)"
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "Primes:= select(isprime, {2,(2*i+1)$i=1..ceil((N+1)/2)}):",
+        "LTwins:= Primes intersect map(`-`,Primes,2):",
+        "A:= Vector(N):",
+        "for p in LTwins do",
+        "   A[p*[$1..floor(N/p)]]:= 1;",
+        "   A[(p+2)*[$1..floor(N/(p+2))]]:= 1;",
+        "od:",
+        "select(t -> A[t]<>1, [$1..N]); # _Robert Israel_, May 11 2015"
+    ],
+    "mathematica": [
+        "Select[Range@296, #==1 || (p = First /@ FactorInteger@#; Nor @@ Flatten@ PrimeQ@ {p+2, p-2}) &] (* _Giovanni Resta_, May 12 2015 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {my(f = factor(n)); for (i=1, #f~, p = f[i, 1]; if (isprime(p-2) || isprime(p+2), return (0));); return (1);} \\\\ _Michel Marcus_, May 20 2014"
+    ],
+    "xref": [
+        "Cf. A062506, A007510. - _Zak Seidov_, May 11 2015"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Jul 11 2001",
+    "ext": [
+        "Offset changed to 1 by _Michel Marcus_, May 20 2014"
+    ],
+    "references": 5,
+    "revision": 27,
+    "time": "2015-05-12T10:54:35-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

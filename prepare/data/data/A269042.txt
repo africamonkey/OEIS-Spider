@@ -1,0 +1,42 @@
+{
+    "number": 269042,
+    "data": "0,0,1,132,15767,2190688,370531683,77182248916,19835792076675,6266271456118776,2413632612087046844,1120958514818713738544,619918692943471064695593,403190647991638511052901232,304867528413299672718870216538,265248225675908889875489731636920",
+    "name": "Number of permutations of [2n] avoiding the pattern 12...n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A269042/b269042.txt\">Table of n, a(n) for n = 0..30</a>"
+    ],
+    "formula": [
+        "a(n) = (2n)! - A269021(n).",
+        "a(n) = A214015(2n,n-1) for n>0.",
+        "a(n) ~ (2*n)!. - _Vaclav Kotesovec_, Mar 26 2016"
+    ],
+    "example": [
+        "a(2) = 1: 4321.",
+        "a(3) = 132: 165432, 216543, 261543, 265143, 265413, 265431, 316542, ..., 653412, 653421, 654132, 654213, 654231, 654312, 654321."
+    ],
+    "maple": [
+        "h:= proc(l) (n-> add(i, i=l)!/mul(mul(1+l[i]-j+add(`if`(",
+        "      l[k]>=j, 1, 0), k=i+1..n), j=1..l[i]), i=1..n))(nops(l))",
+        "    end:",
+        "g:= (n, i, l)-> `if`(n=0 or i=1, h([l[], 1$n])^2, `if`(i<1, 0,",
+        "                 add(g(n-i*j, i-1, [l[], i$j]), j=0..n/i))):",
+        "a:= n-> `if`(n=0, 0, g(2*n, n-1, [])):",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "h[l_] := Function[n, Total[l]!/Product[Product[1+l[[i]]-j+Sum[If[l[[k]] >= j, 1, 0], { k, i+1, n}], {j, 1, l[[i]]}], {i, 1, n}]][Length[l]];",
+        "g[n_, i_, l_] := If[n == 0 || i == 1, h[Join[l, Table[1, {n}]]]^2, If[i < 1, 0, Sum[g[n - i*j, i-1, Join[l, Table[i, {j}]]], {j, 0, n/i}]]];",
+        "a[n_] := If[n == 0, 0, g[2n, n-1, {}]];",
+        "Table[a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Apr 01 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A010050, A214015, A267532, A269021."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Feb 18 2016",
+    "references": 4,
+    "revision": 18,
+    "time": "2017-04-01T19:13:26-04:00",
+    "created": "2016-02-18T09:18:20-05:00"
+}

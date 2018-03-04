@@ -1,0 +1,43 @@
+{
+    "number": 191827,
+    "data": "1,2,4,9,20,46,105,244,568,1332,3130,7385,17459,41382,98245,233663,556471,1327008,3167876,7570263,18106445,43342551,103826992,248886102,596973191,1432699552,3440164442,8264411848,19862617439,47757332813",
+    "name": "Number of n-step three-sided prudent self-avoiding walks ending at the southwest corner of their box.",
+    "reference": [
+        "E. Duchi, On some classes of prudent walks, in: FPSAC'05, Taormina, Italy, 2005."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A191827/b191827.txt\">Table of n, a(n) for n = 0..100</a>",
+        "M. Bousquet-M\u00e9lou, <a href=\"http://www.dmtcs.org/dmtcs-ojs/index.php/proceedings/article/viewArticle/dmAJ0115\">Families of prudent self-avoiding walks</a>, DMTCS proc. AJ, 2008, 167-180."
+    ],
+    "example": [
+        "a(4) = 20: NWWS, NWSW, NWSS, WNWS, WWWW, WWWS, WWSW, WWSS, WSWW, WSWS, WSSW, WSSS, SWWW, SWWS, SWSW, SWSS, SSWW, SSWS, SSSW, SSSS."
+    ],
+    "maple": [
+        "b:= proc(d, i, n, x, y, w, s) option remember;",
+        "      `if`(s+w>n, 0, `if`(n=0, `if`(s=0 and w=0, 1, 0),",
+        "         `if`(d in [0, 1] or d in [2, 4] and x=0 or d=2 and i,",
+        "              b(1, evalb(x=0), n-1, max(x-1, 0), y, w+1, s), 0) +",
+        "         `if`(d in [0, 2] or d in [1, 3] and (y=0 or i),",
+        "              b(2, evalb(y=0), n-1, x, max(y-1, 0), w, s+1), 0) +",
+        "         `if`(d in [0, 3] or d in [2, 4] and w=0 or d=2 and i,",
+        "              b(3, evalb(w=0), n-1, x+1, y, max(w-1, 0), s), 0) +",
+        "         `if`(d in [0, 4] or d in [1, 3] and (s=0 or i),",
+        "              b(4, evalb(s=0), n-1, x, y+1, w, max(s-1, 0)), 0)))",
+        "    end:",
+        "a:= n-> b(0, true, n, 0, 0, 0, 0):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "b[d_, i_, n_, x_, y_, w_, s_] := b[d, i, n, x, y, w, s] = If[s+w > n, 0, If[n == 0, If[s == 0 && w == 0, 1, 0], If[MatchQ[d, 0|1] || d != 3 && x == 0 || d == 2 && i, b[1, x == 0, n-1, Max[x-1, 0], y, w+1, s], 0] + If[MatchQ[d, 0|2] || d != 4 && (y == 0 || i), b[2, y == 0, n-1, x, Max[y-1, 0], w, s+1], 0]+If[MatchQ[d, 0|3] || d != 1 && w == 0 || d == 2 && i, b[3, w == 0, n-1, x+1, y, Max[w-1, 0], s], 0] + If[MatchQ[d, 0|4] || d != 2 && i, b[4, s == 0, n-1, x, y+1, w, Max[s-1, 0]], 0]]]; a[n_] := b[0, True, n, 0, 0, 0, 0]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Dec 22 2014, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A191823, A191824, A191825, A191826, A191828."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Jun 17 2011",
+    "references": 6,
+    "revision": 18,
+    "time": "2017-08-01T15:10:33-04:00",
+    "created": "2011-06-17T11:36:37-04:00"
+}

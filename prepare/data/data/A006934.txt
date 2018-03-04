@@ -1,0 +1,64 @@
+{
+    "number": 6934,
+    "id": "M5119",
+    "data": "1,1,21,671,180323,20898423,7426362705,1874409467055,5099063967524835,2246777786836681835,2490122296790918386363,1694873049836486741425113,5559749161756484280905626951,5406810236613380495234085140851,12304442295910538475633061651918089",
+    "name": "A series for Pi.",
+    "comment": [
+        "Formula (21) in Luke (see ref.): Let y = 4*n+1. Then for n -> oo",
+        "Pi ~ 4*(n!)^4*2^(4*n)/(y*((2*n)!)^2)*(sum_{k>=0}((-1)^k*y^(-2*k)* A006934(k)/A123854(k)))^2. (Luke does not reference the sequences in this form.) - _Peter Luschny_, Mar 23 2014",
+        "This might be related to the numerators of eq. (18) in N. Elezovic' \"Asymptotic Expansions of Central Binomial...\", J. Int. Seq. 17 (2014) # 14.2.1. - _R. J. Mathar_, Mar 23 2014",
+        "Several references give an erroneous value of 1874409465055 instead of a(7) in the formula for pi. - _M. F. Hasler_, Mar 23 2014"
+    ],
+    "reference": [
+        "J. L. Fields, A note on the asymptotic expansion of a ratio of gamma functions. Proc. Edinburgh Math. Soc. (15), 43-45, 1966",
+        "Y. L. Luke, The Special Functions and their Approximation, Vol. 1, Academic Press, NY, 1969, see p. 36.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "A. Gil, J. Segura, N. M. Temme, <a href=\"http://dx.doi.org/10.1093/imanum/drq012\">Fast and accurate computation of the Weber parabolic cylinder function W(a,x)</a>, IMA J. Num. Anal. 31 (2011), 1194-1216, eq (3.8).",
+        "A. Lupas, <a href=\"http://mathforum.org/kb/message.jspa?messageID=457303\">Re: Pi Calculation ?</a>, on mathforum.org, Feb 15 2003.",
+        "C. Mortici, <a href=\"http://www.emis.de/journals/BMAA/repository/docs/BMAA2-4-17.pdf\">On some accurate estimates of pi</a>, Bull. Math. Anal. Appl. 2(4) (2010) 137-139. (Formula (1.5), same typo as in Luke)",
+        "<a href=\"/index/Ph#Pi314\">Index entries for sequences related to the number Pi</a>"
+    ],
+    "formula": [
+        "Let p(n,x) = sum(k=0..n, x^k*A220412(n,k))/A220411(n) then a(n) = (-1)^n*p(n,1/4)*A123854(n)*A001448(n). - _Peter Luschny_, Mar 23 2014",
+        "Pi = lim_{n->oo} 2^{4n+2}/((4n+1)*C(2n,n)^2)*(sum_{k=0..oo} (-1)^k*a(k)/(A123854(k)*(4n+1)^{2k}))^2. - _M. F. Hasler_, Mar 23 2014"
+    ],
+    "maple": [
+        "A006934_list := proc(n) local k, f, bp;",
+        "bp := proc(n,x) option remember; local k; if n = 0 then 1 else -x*add(binomial(n-1,2*k+1)*bernoulli(2*k+2)/(k+1)*bp(n-2*k-2,x), k=0..n/2-1) fi end:",
+        "f := n -> 2^(3*n-add(i, i=convert(n,base,2)));",
+        "add(bp(2*k,1/4)*binomial(4*k,2*k)*x^(2*k), k=0..n-1);",
+        "seq((-1)^k*f(k)*coeff(%,x,2*k), k=0..n-1) end:",
+        "A006934_list(15);  # _Peter Luschny_, Mar 23 2014",
+        "# Second solution, without using N\u00f6rlund's generalized Bernoulli polynomials, based on Euler numbers:",
+        "A006934_list := proc(n) local a,c,j;",
+        "c := n -> 4^n/2^add(i, i=convert(n,base,2));",
+        "a := [seq((-4)^j*euler(2*j)/(4*j), j=1..n)];",
+        "expand(exp(add(a[j]*x^(-j), j=1..n))); taylor(%, x=infinity, n+2);",
+        "subs(x=1/x, convert(%,polynom)): seq(c(iquo(j,2))*coeff(%,x,j), j=0..n) end:",
+        "A006934_list(14); # _Peter Luschny_, Apr 08 2014"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def p(n):",
+        "    if n < 2: return 1",
+        "    return -add(binomial(n-1,k-1)*bernoulli(k)*p(n-k)/k for k in range(2,n+1,2))/2",
+        "def A006934(n): return (-1)^n*p(2*n)*binomial(4*n,2*n)*2^(3*n-sum(n.digits(2)))",
+        "[A006934(n) for n in (0..14)]  # _Peter Luschny_, Mar 24 2014"
+    ],
+    "xref": [
+        "Cf. A088802, A123854, A220412."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Simon Plouffe_ and _N. J. A. Sloane_.",
+    "ext": [
+        "a(7) corrected, a(8)-a(14) from _Peter Luschny_, Mar 23 2014"
+    ],
+    "references": 2,
+    "revision": 43,
+    "time": "2014-04-08T09:05:40-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

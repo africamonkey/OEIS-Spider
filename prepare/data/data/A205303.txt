@@ -1,0 +1,39 @@
+{
+    "number": 205303,
+    "data": "1,1,1,1,1,1,1,1,1,1,2,3,5,8,18,21,44,60,174,372,1344,2556,12984,24048,82224,160848,904032,1967328,14812992,43671744,374004864,1108847232,8442489600,18677267712,211090572288,612702392832,6883734979584",
+    "name": "a(n) where a(n) * a(n-5) * a(n-10) = a(n-1) * a(n-6) * a(n-8) + a(n-2) * a(n-4) * a(n-9), with a(1) = ... = a(10) = 1.",
+    "comment": [
+        "The recursion has the Laurent property. If a(1), ..., a(10) are variables, then a(n) is a Laurent polynomial -- a rational function with a monomial denominator.",
+        "Similar to the Somos-5 sequence, the sequence a(n) can be expressed in terms of the Jacobi theta_3(u, q) function as a(n) = c1 * c2^(n - c6)^2 * theta_3( c4*n - c5, c3 ) where c1 and c5 depends on the residue class of n modulo 12 and c6 on the parity of n. Here c2 = 1.0303784..., and q = c3 = .11675525... = exp(Pi i tau) with corresponding j invariant = 3 * (72961 / 432)^3 / 1367."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A205303/b205303.txt\">Table of n, a(n) for n = 1..282</a>",
+        "S. Fomin and A. Zelevinsky, <a href=\"http://arxiv.org/abs/math/0104241\">The Laurent phenomenon</a>, arXiv:math/0104241.",
+        "B. Grammaticos, A. Ramani and T. Tamizhmani, <a href=\"http://iopscience.iop.org/1751-8121/42/45/454009\">Investigating the integrability of the Lyness mappings</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/LaurentPolynomial.html\">Laurent Polynomial</a>"
+    ],
+    "formula": [
+        "u(n) = (a(n) * a(n+7)) / (a(n+3) * a(n+4)) = A185332(n) / A185341(n) where u(n) = (u(n-1) + u(n-2)) / u(n-3), u(1) = u(2) = u(3) = 1.",
+        "a(11-n) = a(n).",
+        "a(n+7) * a(n-6) = -a(n+6) * a(n-5) + 13 * a(n+3) * a(n-2). [see Grammaticos et al., Equation (3.2) for the general form of this equation.]",
+        "a(n+7) * a(n-7) = a(n+5) * a(n-5) + 13 * a(n+1) * a(n-1)."
+    ],
+    "mathematica": [
+        "nxt[{a10_,a9_,a8_,a7_,a6_,a5_,a4_,a3_,a2_,a1_}]:={a9,a8,a7,a6,a5,a4,a3,a2,a1,(a1*a6*a8+a2*a4*a9)/(a5*a10)}; Transpose[ NestList[ nxt,Table[1, {10}],40]][[1]] (* _Harvey P. Dale_, Mar 27 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(v); if( n<1, n = 11-n); v = vector( n, k, 1); for( k=11, n, v[k] = (v[k-1] * v[k-6] * v[k-8] + v[k-2] * v[k-4] * v[k-9]) / (v[k-5] * v[k-10])); v[n]};",
+        "(PARI) {a(n) = my(v); if( n<1, n = 11-n); v = vector( n, k, 1); for( k=11, n, v[k] = ( -v[k-3] * v[k-4] + v[k-1] * v[k-6] * [2, 2, 2, 3] [k%4 + 1]) / v[k-7]); v[n]};",
+        "(PARI) {a(n) = my(v); if( n<1, n = 11-n); v = vector( n, k, 1); for( k=11, n, v[k] = ( v[k-1] * v[k-4] * [3, 3, 4] [k%3 + 1] - v[k-2] * v[k-3] * [3, 2, 2, 2] [k%4 + 1]) / v[k-5]); v[n]};"
+    ],
+    "xref": [
+        "Cf. A185332, A185341."
+    ],
+    "keyword": "nonn",
+    "offset": "1,11",
+    "author": "_Michael Somos_, Jan 28 2012",
+    "references": 3,
+    "revision": 35,
+    "time": "2015-09-01T22:46:21-04:00",
+    "created": "2012-01-28T13:27:35-05:00"
+}

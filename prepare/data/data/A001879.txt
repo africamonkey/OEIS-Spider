@@ -1,0 +1,67 @@
+{
+    "number": 1879,
+    "id": "M4251 N1775",
+    "data": "1,6,45,420,4725,62370,945945,16216200,310134825,6547290750,151242416325,3794809718700,102776096548125,2988412653476250,92854250304440625,3070380543400170000,107655217802968460625,3989575718580595893750,155815096120119939628125",
+    "name": "a(n) = (2n+2)!/(n!2^(n+1)).",
+    "comment": [
+        "From _Wolfdieter Lang_, Oct 06 2008: (Start)",
+        "a(n) is the denominator of the n-th approximant to the continued fraction 1^2/(6+3^2/(6+5^2/(6+... for Pi-3. W. Lang, Oct 06 2008, after an e-mail from R. Rosenthal. Cf. A142970 for the corresponding numerators.",
+        "The e.g.f. g(x)=(1+x)/(1-2*x)^(5/2) satisfies (1-4*x^2)*g''(x) - 2*(8*x+3)*g'(x) -9*g(x) = 0 (from the three term recurrence given below). Also g(x)=hypergeom([2,3/2],[1],2*x). (End)",
+        "Number of descents in all fixed-point-free involutions of {1,2,...,2(n+1)}. A descent of a permutation p is a position i such that p(i)>p(i+1). Example: a(1)=6 because the fixed-point-free involutions 2143, 3412, and 4321 have 2, 1, and 3 descents, respectively. [_Emeric Deutsch_, Jun 05 2009]",
+        "First differences of A193651. - _Vladimir Reshetnikov_, Apr 25 2016"
+    ],
+    "reference": [
+        "J. Riordan, Combinatorial Identities, Wiley, 1968, p. 77 (Problem 10, values of Bessel polynomials).",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A001879/b001879.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Selden Crary, Richard Diehl Martinez, Michael Saunders, <a href=\"https://arxiv.org/abs/1707.00705\">The Nu Class of Low-Degree-Truncated Rational Multifunctions. Ib. Integrals of Matern-correlation functions for all odd-half-integer class parameters</a>, arXiv:1707.00705 [stat.ME], 2017, Table 1.",
+        "Alexander Kreinin, <a href=\"https://www.researchgate.net/publication/294260037_Integer_Sequences_and_Laplace_Continued_Fraction\">Integer Sequences and Laplace Continued Fraction</a>, Preprint 2016.",
+        "J. Riordan, <a href=\"/A001820/a001820.pdf\">Notes to N. J. A. Sloane, Jul. 1968</a>"
+    ],
+    "formula": [
+        "E.g.f.: (1+x)/(1-2*x)^(5/2).",
+        "a(n)*n = a(n-1)*(2n+1)*(n+1); a(n) = a(n-1)*(2n+4)-a(n-2)*(2n-1), if n>0. - _Michael Somos_, Feb 25 2004",
+        "From _Wolfdieter Lang_, Oct 06 2008: (Start)",
+        "a(n) = (n+1)*(2*n+1)!! with the double factorials (2*n+1)!!=A001147(n+1).",
+        "Three term recurrence a(n) = 6*a(n-1) + ((2*n-1)^2)*a(n-2), a(-1)=0, a(0)=1. (End)",
+        "With interpolated 0's, E.g.f.:B(A(x)) where B(x)= x exp(x) and A(x)=x^2/2",
+        "G.f.: - G(0)/2 where G(k) =  1 - (2*k+3)/(1 - x/(x - (k+1)/G(k+1) )); (recursively defined continued fraction). - _Sergei N. Gladkovskii_, Dec 06 2012",
+        "G.f.: (1-x)/(2*x^2*Q(0)) - 1/(2*x^2), where Q(k)= 1 - x*(k+1)/Q(k+1)); (continued fraction). - _Sergei N. Gladkovskii_, May 20 2013",
+        "From _Karol A. Penson_, Jul 12 2013: (Start)",
+        "Integral representation as n-th moment of a signed function w(x) of bounded variation on (0,infinity),",
+        "  w(x) = -(1/4)*sqrt(2)*sqrt(x)*(1-x)*exp(-x/2)/sqrt(Pi):",
+        "  a(n) = int(x^n*w(x),x=0..infinity), n>=0.",
+        "  For x>1, w(x)>0. w(0)=w(1)=limit(w(x),x=infinity)=0. For x<1, w(x)<0.",
+        "Asymptotics: a(n)->(1/576)*2^(1/2+n)*(1152*n^2+1680*n+505)*exp(-n)*(n)^(n), for n->infinity. (end)",
+        "G.f.: 2F0(3/2,2;;2x). - _R. J. Mathar_, Aug 08 2015"
+    ],
+    "maple": [
+        "restart: G(x):=(1-x)/(1-2*x)^(1/2): f[0]:=G(x): for n from 1 to 29 do f[n]:=diff(f[n-1],x) od:x:=0:seq(f[n],n=2..20); # _Zerinvary Lajos_, Apr 04 2009"
+    ],
+    "mathematica": [
+        "Table[(2n+2)!/(n!2^(n+1)),{n,0,20}] (* _Vincenzo Librandi_, Nov 22 2011 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,(2*n+2)!/n!/2^(n+1))",
+        "(MAGMA) [Factorial(2*n+2)/(Factorial(n)*2^(n+1)): n in [0..20]]; // _Vincenzo Librandi_, Nov 22 2011"
+    ],
+    "xref": [
+        "Cf. A002544, A001814, A001876-A001878.",
+        "Second column of triangle A001497. Equals (A001147(n+1)-A001147(n))/2.",
+        "Equals row sums of A163938."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "Entry revised Aug 31 2004 (thanks to _Ralf Stephan_ and _Michael Somos_).",
+        "E.g.f. in comment line corrected by _Wolfdieter Lang_, Nov 21 2011"
+    ],
+    "references": 17,
+    "revision": 68,
+    "time": "2018-01-10T19:04:55-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

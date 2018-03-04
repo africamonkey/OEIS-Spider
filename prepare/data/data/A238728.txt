@@ -1,0 +1,41 @@
+{
+    "number": 238728,
+    "data": "1,1,2,3,7,14,41,107,337,1066,3691,12962,49061,188894,766845,3182844,13758383,60858842,278312475,1301323108,6258671365,30742575588,154785692507,794888735945,4173162573277,22318859784416,121767607626621,676010926754742",
+    "name": "Number of standard Young tableaux with n cells where the largest value n is contained in the last row.",
+    "comment": [
+        "a(0) = 1 by convention.",
+        "Also number of ballot sequences of length n where the last position has a maximal value.",
+        "Main diagonal of A238727."
+    ],
+    "link": [
+        "Joerg Arndt and Alois P. Heinz, <a href=\"/A238728/b238728.txt\">Table of n, a(n) for n = 0..60</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau\">Young tableau</a>"
+    ],
+    "example": [
+        "a(4) = 7 counts the following tableaux:",
+        "  [1]  [1 2]  [1 3]  [1 2 3]  [1 2]  [1 3]  [1 2 3 4]",
+        "  [2]  [3]    [2]    [4]      [3 4]  [2 4]",
+        "  [3]  [4]    [4]",
+        "  [4]",
+        "corresponding to the following ballot sequences: [1,2,3,4], [1,1,2,3], [1,2,1,3], [1,1,1,2], [1,1,2,2], [1,2,1,2], [1,1,1,1]."
+    ],
+    "maple": [
+        "h:= proc(l) local n; n:=nops(l); add(i, i=l)!/mul(mul(1+l[i]-j+",
+        "      add(`if`(l[k]>=j, 1, 0), k=i+1..n), j=1..l[i]), i=1..n) end:",
+        "g:= l->`if`(l=[], 1, h(subsop(-1=`if`(l[-1]=1, [][], l[-1]-1), l))):",
+        "b:= proc(n, i, l) `if`(n=0 or i=1, g([l[], 1$n]),",
+        "      add(b(n-i*j, i-1, [l[], i$j]), j=0..n/i)) end:",
+        "a:= n-> b(n, n, []):",
+        "seq(a(n), n=0..28);"
+    ],
+    "mathematica": [
+        "h[l_List] := With[{n=Length[l]}, Total[l]!/Product[Product[1+l[[i]]-j+Sum[If[l[[k]] >= j, 1, 0], {k, i+1, n}], {j, 1, l[[i]]}], {i, 1, n}]]; g[l_List] := If[l == {}, 1, h[If[Last[l] == 1, Most[l], Append[Most[l], Last[l]-1]]]]; b[n_, i_, l_List] := If[n == 0 || i == 1, g[Join[l, Array[1&, n]]], Sum[b[n-i*j, i-1, Join[l, Array[i&, j]]], {j, 0, n/i}]]; a[n_] := b[n, n, {}]; Table[a[n], {n, 0, 28}] (* _Jean-Fran\u00e7ois Alcover_, Feb 12 2015, after Maple *)"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Joerg Arndt_ and _Alois P. Heinz_, Mar 03 2014",
+    "references": 2,
+    "revision": 16,
+    "time": "2017-02-07T10:24:10-05:00",
+    "created": "2014-03-04T11:27:14-05:00"
+}

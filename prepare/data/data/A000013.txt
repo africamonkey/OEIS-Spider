@@ -1,0 +1,73 @@
+{
+    "number": 13,
+    "id": "M0313 N0115",
+    "data": "1,1,2,2,4,4,8,10,20,30,56,94,180,316,596,1096,2068,3856,7316,13798,26272,49940,95420,182362,349716,671092,1290872,2485534,4794088,9256396,17896832,34636834,67110932,130150588,252648992,490853416",
+    "name": "Definition (1): Number of n-bead binary necklaces with beads of 2 colors where the colors may be swapped but turning over is not allowed.",
+    "comment": [
+        "Definition (2): Equivalently, number of different output sequences from an n-stage pure cycling shift register when 2 sequences are considered the same if one is the complement of the other.",
+        "Definition (3): Also number of different output sequences from an n-stage pure cycling shift register constrained so contents have even weight.",
+        "Definition (4): Also number of output sequences from (n-1)-stage shift register which feeds back the mod 2 sum of the contents of the register.",
+        "The equivalence of definitions (1) and (2) follows at once from the definitions.",
+        "If u is an output sequence of type (2) then its derivative is of type (3) - so (2) and (3) count the same things.",
+        "If we have a shift register of type (4), append a new cell which contains the mod 2 sum of the contents to get a shift register of type (3). So (3) and (4) count the same things.",
+        "If n is even, a(n) = A000116(n/2). If 2^(n+1)-1 is prime, then a(n) = A128976(n+1), the number of cycles in the digraph of the Lucas-Lehmer operator LL(x)=x^2-2 acting on Z/(2^(n+1)-1). - _M. F. Hasler_, May 19 2007",
+        "Also number of 2n-bead balanced binary necklaces that are equivalent to their complements. - _Andrew Howroyd_, Sep 29 2017"
+    ],
+    "reference": [
+        "S. W. Golomb, Shift-Register Sequences, Holden-Day, San Francisco, 1967, p. 172.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe and Seiichi Manyama, <a href=\"/A000013/b000013.txt\">Table of n, a(n) for n = 0..3334</a> (first 201 terms from T. D. Noe)",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>, p.151, p.408",
+        "H. Bottomley, <a href=\"/A000011/a000011_a000013.gif\">Initial terms of A000011 and A000013</a>",
+        "N. J. Fine, <a href=\"http://projecteuclid.org/euclid.ijm/1255381350\">Classes of periodic sequences</a>, Illinois J. Math., 2 (1958), 285-302.",
+        "E. N. Gilbert and J. Riordan, <a href=\"http://projecteuclid.org/euclid.ijm/1255631587\">Symmetry types of periodic sequences</a>, Illinois J. Math., 5 (1961), 657-665.",
+        "Karyn McLellan, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v20i4p32\">Periodic coefficients and random Fibonacci sequences</a>, Electronic Journal of Combinatorics, 20(4), 2013, #P32.",
+        "F. Ruskey, <a href=\"http://www.theory.cs.uvic.ca/~cos/inf/neck/NecklaceInfo.html\">Necklaces, Lyndon words, De Bruijn sequences, etc.</a>",
+        "N. J. A. Sloane, <a href=\"http://neilsloane.com/doc/dijen.txt\">On single-deletion-correcting codes</a>",
+        "N. J. A. Sloane, <a href=\"http://arxiv.org/abs/math/0207197\">On single-deletion-correcting codes</a>, in Codes and Designs (Columbus, OH, 2000), 273-291, Ohio State Univ. Math. Res. Inst. Publ., 10, de Gruyter, Berlin, 2002.",
+        "N. J. A. Sloane, <a href=\"/A000013/a000013.txt\">Maple code for this and related sequences</a>",
+        "<a href=\"/index/Ne#necklaces\">Index entries for sequences related to necklaces</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{ d divides n } (phi(2d)*2^(n/d))/(2n) for n>0. - _Michael Somos_, Oct 20 1999",
+        "G.f.: 1-Sum_{i>=1} phi(2*i)*log(1-2*x^i)/(2*i). - _Herbert Kociemba_, Nov 01 2016"
+    ],
+    "example": [
+        "G.f. = 1 + x + 2*x^2 + 2*x^3 + 4*x^4 + 4*x^5 + 8*x^6 + 10*x^7 + 20*x^8 + ..."
+    ],
+    "maple": [
+        "with(numtheory): A000013 := proc(n) local s,d; if n = 0 then RETURN(1) else s := 0; for d in divisors(n) do s := s+(phi(2*d)*2^(n/d))/(2*n); od; RETURN(s); fi; end;"
+    ],
+    "mathematica": [
+        "a[n_] := Fold[ #1 + EulerPhi[2#2]2^(n/#2)/(2n) &, 0, Divisors[n]]",
+        "a[ n_] := If[ n < 1, Boole[n == 0], DivisorSum[ n, EulerPhi[2 #] 2^(n/#) &] / (2 n)]; (* _Michael Somos_, Dec 19 2014 *)",
+        "mx=40;CoefficientList[Series[1-Sum[EulerPhi[2i] Log[1-2*x^i]/(2i),{i,1,mx}],{x,0,mx}],x] (* _Herbert Kociemba_, Nov 01 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<1, n==0, sumdiv(n, k, eulerphi(2*k) * 2^(n/k)) / (2*n))}; /* _Michael Somos_, Oct 20 1999 */",
+        "(Haskell)",
+        "a000013 0 = 1",
+        "a000013 n = sum (zipWith (*)",
+        "   (map (a000010 . (* 2)) ds) (map (2 ^) $ reverse ds)) `div` (2 * n)",
+        "   where ds = a027750_row n",
+        "-- _Reinhard Zumkeller_, Jul 08 2013",
+        "(Python)",
+        "from sympy import divisors, totient",
+        "def a(n): return 1 if n<1 else sum([totient(2*d)*2**(n/d) for d in divisors(n)])/(2*n) # _Indranil Ghosh_, Apr 28 2017"
+    ],
+    "xref": [
+        "Cf. A000031, A000016, A000116.",
+        "Cf. A128976.",
+        "Cf. A000010, A027750."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "references": 31,
+    "revision": 57,
+    "time": "2017-09-29T17:13:58-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

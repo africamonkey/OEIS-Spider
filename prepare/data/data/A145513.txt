@@ -1,0 +1,45 @@
+{
+    "number": 145513,
+    "data": "1,2,12,562,195812,515009562,10837901390812,1899421190329234562,2851206628197445401265812,37421114946843687272702534859562,4362395890943439751990308572939648140812,4573514084633441973328831327010967245403925484562,43557001521047571730475817291330175020887917015964570015812",
+    "name": "Number of partitions of 10^n into powers of 10.",
+    "comment": [
+        "a(n) = A179051(10^n); for n>0: a(n) = A179052(10^(n-1)). - _Reinhard Zumkeller_, Jun 27 2010"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A145513/b145513.txt\">Table of n, a(n) for n = 0..45</a>"
+    ],
+    "formula": [
+        "a(n) = [x^(10^n)] 1/Product_{j>=0} (1-x^(10^j))."
+    ],
+    "example": [
+        "a(1) = 2, because there are 2 partitions of 10^1 into powers of 10: [1,1,1,1,1,1,1,1,1,1], [10]."
+    ],
+    "maple": [
+        "g:= proc(b,n,k) option remember; local t; if b<0 then 0 elif b=0 or n=0 or k<=1 then 1 elif b>=n then add(g(b-t, n, k) *binomial(n+1, t) *(-1)^(t+1), t=1..n+1); else g(b-1, n, k) +g(b*k, n-1, k) fi end: a:= n-> g(1,n,10): seq(a(n), n=0..13);"
+    ],
+    "mathematica": [
+        "g[b_, n_, k_] := g[b, n, k] = Module[{t}, Which[b < 0, 0, b == 0 || n == 0 || k <= 1, 1, b >= n, Sum[g[b - t, n, k]*Binomial[n + 1, t] *(-1)^(t + 1), {t, 1, n + 1}], True, g[b - 1, n, k] + g[b*k, n - 1, k]]]; a[n_] := g[1, n, 10]; Table[a[n], {n, 0, 13}] (* _Jean-Fran\u00e7ois Alcover_, Feb 01 2017, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.MemoCombinators (memo2, list, integral)",
+        "a145513 n = a145513_list !! n",
+        "a145513_list = f [1] where",
+        "   f xs = (p' xs $ last xs) : f (1 : map (* 10) xs)",
+        "   p' = memo2 (list integral) integral p",
+        "   p _ 0 = 1; p [] _ = 0",
+        "   p ks'@(k:ks) m = if m < k then 0 else p' ks' (m - k) + p' ks m",
+        "-- _Reinhard Zumkeller_, Nov 27 2015"
+    ],
+    "xref": [
+        "Cf. 10th column of A145515, A007318.",
+        "Cf. A011557, A002577, A078125."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Oct 11 2008",
+    "references": 6,
+    "revision": 21,
+    "time": "2017-02-01T12:46:02-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

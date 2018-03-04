@@ -1,0 +1,53 @@
+{
+    "number": 276368,
+    "data": "1,3,9,36,135,567,2268,9720,40095,173745,729729,3184272,13533156,59337684,254304360,1118939184,4825425231,21288640725,92250776475,407845538100,1774128090735,7856852973255,34284449337840,152044079672160,665192848565700,2953456247631708,12949769701154412,57554532005130720,252828837022538520,1124652412962326520,4948470617034236688,22028675650023376224",
+    "name": "G.f. A(x) satisfies: A(x - 3*x^3) = 1/(1 - 3*x).",
+    "comment": [
+        "Compare with the o.g.f. G(x) = (1 - sqrt(1 - 8*x))/(4*x) of A151374, which satisfies G(x - 2*x^2) = 1/(1 - 2*x). - _Peter Bala_, Oct 29 2017"
+    ],
+    "reference": [
+        "R. L. Graham, D.E. Knuth & O. Patashnik, Concrete Mathematics (1989), Addison-Wesley, Reading, MA. Sections 5.4 & 7.5."
+    ],
+    "link": [
+        "N. D. Elkies, <a href=\"http://www.math.harvard.edu/~elkies/Misc/catalan.pdf\">The power series for the inverse function of y(1-y)^t</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x) * A(-x) = (A(x) + A(-x))/2.",
+        "(2) A(x) = 1/(1 - F(x)^2) where F(x) = sqrt(3) * G(sqrt(3)*x) where G(x) = x + G(x)^3 is the g.f. of A001764.",
+        "(3) (A(x) - A(-x)) / (A(x) + A(-x)) = sqrt(3) * G(sqrt(3)*x) such that G(x) = x + G(x)^3 is the g.f. of A001764.",
+        "(4) A'(x) = 3*A(x)^3 * A(-x).",
+        "(5) A(x) = exp( Integral 3*A(x)^2 * A(-x) dx ).",
+        "From _Peter Bala_, Oct 29 2017: (Start)",
+        "a(2*n) = 3^n*binomial(3*n, n).",
+        "a(2*n+1) = 3^(n+1)*binomial(3*n+1, n).",
+        "The proof uses the properties of Lambert's generalized binomial series B_t(z) at t = 3 - see Graham et al., sections 5.4 and 7.5 and also Elkies. (End)"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 3*x + 9*x^2 + 36*x^3 + 135*x^4 + 567*x^5 + 2268*x^6 + 9720*x^7 + 40095*x^8 + 173745*x^9 +...",
+        "such that A(x - 3*x^3) = 1/(1 - 3*x).",
+        "RELATED SERIES.",
+        "A(x) * A(-x) = 1 + 9*x^2 + 135*x^4 + 2268*x^6 + 40095*x^8 + 729729*x^10 + 13533156*x^12 + 254304360*x^14 + 4825425231*x^16 +...",
+        "which equals (A(x) + A(-x))/2.",
+        "(A(x) - A(-x))/2 = 3*x + 36*x^3 + 567*x^5 + 9720*x^7 + 173745*x^9 + 3184272*x^11 + 59337684*x^13 + 1118939184*x^15 + 21288640725*x^17 +...",
+        "(A(x) - A(-x)) / (A(x) + A(-x)) = sqrt(3) * G(sqrt(3)*x) where",
+        "G(x) = x + x^3 + 3*x^5 + 12*x^7 + 55*x^9 + 273*x^11 + 1428*x^13 + 7752*x^15 +...+ binomial(3*n,n)/(2*n+1)*x^(2*n+1) +...",
+        "such that G(x) = x + G(x)^3 is the g.f. of A001764."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=1); A = 1/(1 - 3*serreverse(x - 3*x^3 +x^2*O(x^n))); polcoeff(A,n)}",
+        "for(n=0,35,print1(a(n),\", \"))",
+        "(PARI) {a(n) = my(A=1); for(i=1,n, A = exp(intformal( 3*A^2*subst(A,x,-x) +x*O(x^n)))); polcoeff(A,n)}",
+        "for(n=0,35,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A001764, A151374."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Sep 02 2016",
+    "references": 0,
+    "revision": 13,
+    "time": "2017-10-30T03:55:36-04:00",
+    "created": "2016-09-02T22:02:46-04:00"
+}

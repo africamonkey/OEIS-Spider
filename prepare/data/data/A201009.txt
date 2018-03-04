@@ -1,0 +1,46 @@
+{
+    "number": 201009,
+    "data": "1,4,16,27,108,144,256,432,500,784,972,1323,1728,2700,2916,3125,3456,5292,8788,11664,12500,13068,15376,16875,19683,20736,23328,25000,27648,28125,31212,34300,47916,54000,57132,65536,72000,78732,97556,102400,103788,104544",
+    "name": "Numbers n such that the set of distinct prime divisors of n is equal to the set of distinct prime divisors of the arithmetic derivative n'.",
+    "comment": [
+        "A027748(n,k) = A027748(A003415(n),k) for k=1..A001221(n). - _Reinhard Zumkeller_, Jan 16 2013",
+        "A051674 is a subset of this sequence."
+    ],
+    "link": [
+        "Paolo P. Lava and Donovan Johnson, <a href=\"/A201009/b201009.txt\">Table of n, a(n) for n = 1..500</a> (first 100 terms from Paolo P. Lava)"
+    ],
+    "example": [
+        "n = 1728 = 2^6*3^3, n' = 6912 = 2^8*3^3 have the same prime factors 2 and 3."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A201009:=proc(q)",
+        "local a,b,k,n;",
+        "for n from 1 to q do",
+        "  a:=ifactors(n)[2]; b:=ifactors(n*add(op(2,p)/op(1,p),p=ifactors(n)[2]))[2];",
+        "  if nops(a)=nops(b) then",
+        "    if product(a[k][1],k=1..nops(a))=product(b[k][1],k=1..nops(a)) then print(n);",
+        "fi; fi; od; end:",
+        "A201009(100000); # _Paolo P. Lava_, Jan 09 2013"
+    ],
+    "program": [
+        "(Haskell)",
+        "a201009 = a201009_list",
+        "a201009_list = 1 : filter",
+        "   (\\x -> a027748_row x == a027748_row (a003415 x)) [2..]",
+        "-- _Reinhard Zumkeller_, Jan 16 2013",
+        "(Python)",
+        "from sympy import primefactors, factorint",
+        "A201009 = [n for n in range(1,10**5) if primefactors(n) == primefactors(sum([int(n*e/p) for p,e in factorint(n).items()]) if n > 1 else 0)] # _Chai Wah Wu_, Aug 21 2014"
+    ],
+    "xref": [
+        "Cf. A003415, A055744, A081377, A110751, A110819."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Jan 09 2013",
+    "references": 1,
+    "revision": 24,
+    "time": "2014-08-21T17:53:26-04:00",
+    "created": "2013-01-15T19:22:39-05:00"
+}

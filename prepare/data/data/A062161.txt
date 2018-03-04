@@ -1,0 +1,52 @@
+{
+    "number": 62161,
+    "data": "0,1,2,4,12,36,142,624,3192,18256,116282,814144,6219972,51475776,458790022,4381112064,44625674352,482962852096,5534347077362,66942218896384,852334810990332,11394877025289216",
+    "name": "Boustrophedon transform of n mod 2.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A062161/b062161.txt\">Table of n, a(n) for n = 0..400</a>",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>",
+        "J. Millar, N. J. A. Sloane and N. E. Young, A new operation on sequences: the Boustrophedon transform, J. Combin. Theory, 17A 44-54 1996 (<a href=\"http://neilsloane.com/doc/bous.txt\">Abstract</a>, <a href=\"http://neilsloane.com/doc/bous.pdf\">pdf</a>, <a href=\"http://neilsloane.com/doc/bous.ps\">ps</a>).",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Boustrophedon_transform\">Boustrophedon_transform</a>",
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "formula": [
+        "a(2n) = A009747(n), a(2n+1) = A002084(n).",
+        "E.g.f.: (sec(x)+tan(x))sinh(x); a(n)=(A000667(n)-A062162(n))/2. - _Paul Barry_, Jan 21 2005",
+        "a(n) = Sum{k, k>=0} binomial(n, 2k+1)*A000111(n-2k-1). - _Philippe Del\u00e9ham_, Aug 28 2005",
+        "a(n) = sum(A109449(n,k) * (n mod 2). - _Reinhard Zumkeller_, Nov 03 2013"
+    ],
+    "mathematica": [
+        "With[{nn=30},CoefficientList[Series[(Sec[x]+Tan[x])Sinh[x],{x,0,nn}],x] Range[ 0,nn]!] (* _Harvey P. Dale_, Feb 16 2013 *)"
+    ],
+    "program": [
+        "(Sage) # Generalized algorithm of L. Seidel (1877)",
+        "def A062161_list(n) :",
+        "    R = []; A = {-1:0, 0:0}",
+        "    k = 0; e = 1",
+        "    for i in range(n) :",
+        "        Am = 1 if e == -1 else 0",
+        "        A[k + e] = 0",
+        "        e = -e",
+        "        for j in (0..i) :",
+        "            Am += A[k]",
+        "            A[k] = Am",
+        "            k += e",
+        "        # print [A[z] for z in (-i//2..i//2)]",
+        "        R.append(A[e*i//2])",
+        "    return R",
+        "A062161_list(10) # _Peter Luschny_, Jun 02 2012",
+        "(Haskell)",
+        "a062161 n = sum $ zipWith (*) (a109449_row n) $ cycle [0,1]",
+        "-- _Reinhard Zumkeller_, Nov 03 2013"
+    ],
+    "xref": [
+        "Cf. A000035, A062272."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Frank Ellermann_, Jun 10 2001",
+    "references": 5,
+    "revision": 25,
+    "time": "2014-02-15T02:39:19-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

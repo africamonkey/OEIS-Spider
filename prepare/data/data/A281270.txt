@@ -1,0 +1,45 @@
+{
+    "number": 281270,
+    "data": "0,0,1,2,3,9,30,81,242,838,2799,9365,33616,122937,449698,1696724,6558855,25559806,101294687,409363758,1673735259,6928460475,29115833976,123835124242,532449210893,2317382872404,10199542298725,45345006540851,203704505953902,924427259637953,4234544300812834",
+    "name": "a(n) is the number of closed BCK (aka affine) lambda terms of size n.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A281270/b281270.txt\">Table of n, a(n) for n = 0..201</a>",
+        "Katarzyna Grygiel, Pawel M. Idziak and Marek Zaionc, <a href=\"http://arxiv.org/abs/1112.0643\">How big is BCI fragment of BCK logic</a>, arXiv preprint arXiv:1112.0643 [cs.LO], 2011.(the authors of the paper incorrectly identified this sequence as being A073950)",
+        "Pierre Lescanne, <a href=\"https://arxiv.org/abs/1702.03085\">Quantitative aspects of linear and affine closed lambda term</a>, arXiv:1702.03085 [cs.DM], 2017."
+    ],
+    "formula": [
+        "a(n) = 1 + a(n-1) + 2*Sum_{k=2..n-3} k*a(k) + Sum_{k=2..n-3} a(k)*a(n-1-k) for n>=2.",
+        "0 = 2*x^4*y' + (x-x^2)*y^2 - (1-x)^2*y + x^2, where y(x) is the g.f.",
+        "a(3*n+1) = Sum_{k=0..n-1} binomial(3*n,3*k+1)*A062980(k)."
+    ],
+    "example": [
+        "A(x) = x^2 + 2*x^3 + 3*x^4 + 9*x^5 + 30*x^6 + 81*x^7 + 242*x^8 + ..."
+    ],
+    "mathematica": [
+        "a[0] = a[1] = 0; a[n_] := a[n] = 1 + a[n - 1] + 2 Sum[ k a[k], {k, 2, n - 3}] + Sum[a[k] a[n - 1 - k], {k, 2, n - 3}]; Table[a@ n, {n, 0, 30}] (* _Michael De Vlieger_, Apr 02 2017 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "seq(N) = {",
+        "  my(a = vector(N));",
+        "  for (n=2, N, my(s1 = sum(k=2, n-3, k*a[k]));",
+        "    a[n] = 1 + a[n-1] + 2*s1 + sum(k=2, n-3, a[k]*a[n-1-k]));",
+        "  concat(0,a);",
+        "};",
+        "seq(30)",
+        "\\\\ test: y = Ser(seq(201)); 0 == 2*x^4*y' + (x-x^2)*y^2 - (1-x)^2*y + x^2"
+    ],
+    "xref": [
+        "Cf. A062980, A262301, A267827."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gheorghe Coserea_, Apr 02 2017",
+    "ext": [
+        "Name clarified by _Pierre Lescanne_, May 19 2017"
+    ],
+    "references": 5,
+    "revision": 37,
+    "time": "2017-05-21T07:30:44-04:00",
+    "created": "2017-04-07T03:07:09-04:00"
+}

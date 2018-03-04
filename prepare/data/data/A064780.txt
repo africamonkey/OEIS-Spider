@@ -1,0 +1,50 @@
+{
+    "number": 64780,
+    "data": "2,5,13,34,94,255,693,1884,5123,13923,37848,102880,279659,760191,2066413,5617093,15268842,41505017,112822331,306682895,833650539,2266097112,6159890600,16744318683,45515777208,123724710091",
+    "name": "Number of times n occurs in A000195.",
+    "comment": [
+        "Lim_{n->infinity} a(n+1)/a(n) = e. - _Franz Vrabec_, Nov 29 2014",
+        "e^(n+1)-e^n-1 < A248873(n) <= a(n) < e^(n+1)-e^n+1. - _Danny Rorabaugh_, Mar 13 2015"
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A064780/b064780.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = floor(exp(n+1))-floor(exp(n)), n>0."
+    ],
+    "maple": [
+        "floorexp:= proc(n) local j,s,t;",
+        "  s:= 0;",
+        "  t:= 1;",
+        "  for j from 0 do",
+        "    s:= s+t;",
+        "    if j > n and t*n/(j+1-n) < 1 - frac(s) then",
+        "       return floor(s)",
+        "    fi;",
+        "    t:= t*n/(j+1);",
+        "  od",
+        "end proc:",
+        "B:= [0, seq(floorexp(i),i=1..101)]:",
+        "B[2..-1] - B[1..-2]; # _Robert Israel_, Mar 03 2016"
+    ],
+    "mathematica": [
+        "lista = Table[Floor[Log[n]], {n, 10000000}]; Table[Length@Cases[lista, i], {i, 0, 15}] (* _Jos\u00e9 Mar\u00eda Grau Ribas_, May 16 2013 *)",
+        "f[n_] := Floor[ Exp[n + 1]] - Floor[ Exp[ n]]; f[0] = 2; Array[f, 26, 0] (* _Robert G. Wilson v_, Mar 15 2015 *)"
+    ],
+    "program": [
+        "(PARI) { default(realprecision, 100); for (n=0, 200, if (n, a=floor(exp(n + 1)) - floor(exp(n)), a=2); write(\"b064780.txt\", n, \" \", a) ) } \\\\ _Harry J. Smith_, Sep 25 2009"
+    ],
+    "xref": [
+        "Cf. A000195, A248873."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Santi Spadaro_, Oct 19 2001",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Oct 20 2001"
+    ],
+    "references": 3,
+    "revision": 28,
+    "time": "2016-03-03T22:46:43-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 252699,
+    "data": "0,6,30,150,870,5070,30270,180750,1083630,6496710,38975190,233820870,1402894950,8417188950,50502952950,303016634070,1818098720790,10908585828030,65451508471470,392709011853630,2356254032146590,14137523959058670,84825143520531150",
+    "name": "Number of strings of length n over a 6-letter alphabet that do not begin with a palindrome.",
+    "comment": [
+        "6 divides a(n) for all n.",
+        "lim n -> infinity a(n)/6^n ~ 0.644461670963043 is the probability that a random, infinite string over a 6-letter alphabet does not begin with a palindrome.",
+        "This sequence gives the number of walks on K_6 with loops that do not begin with a palindromic sequence."
+    ],
+    "link": [
+        "Peter Kagey, <a href=\"/A252699/b252699.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = 6^n - A249639(n) for n > 0."
+    ],
+    "example": [
+        "For n = 3, the first 10 of the a(3) = 150 solutions are (in lexicographic order) 011, 012, 013, 014, 015, 021, 022, 023, 024, 025."
+    ],
+    "mathematica": [
+        "a252699[n_] := Block[{f}, f[0] = f[1] = 0;",
+        "  f[x_] := 6*f[x - 1] + 6^Ceiling[(x)/2] - f[Ceiling[(x)/2]];",
+        "Prepend[Rest@Table[6^i - f[i], {i, 0, n}], 0]]; a252699[22] (* _Michael De Vlieger_, Dec 26 2014 *)"
+    ],
+    "program": [
+        "(Ruby) seq = [1, 0]; (2..N).each { |i| seq << 6 * seq[i-1] + 6**((i+1)/2) - seq[(i+1)/2] }; seq = seq.each_with_index.collect { |a, i| 6**i - a }"
+    ],
+    "xref": [
+        "A249639 gives the number of strings of length n over a 6-letter alphabet that DO begin with a palindrome.",
+        "Analogous sequences for k-letter alphabets: A252696 (k=3), A252697 (k=4), A252698 (k=5), A252700 (k=7), A252701 (k=8), A252702 (k=9), A252703 (k=10)."
+    ],
+    "keyword": "easy,nonn,walk",
+    "offset": "0,2",
+    "author": "_Peter Kagey_, Dec 20 2014",
+    "references": 8,
+    "revision": 17,
+    "time": "2017-03-24T00:47:57-04:00",
+    "created": "2015-01-15T13:07:44-05:00"
+}

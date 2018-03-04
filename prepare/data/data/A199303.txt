@@ -1,0 +1,27 @@
+{
+    "number": 199303,
+    "data": "3,11,13,31,101,113,131,311,313,1031,1033,1103,1301,3011,3301,10301,10333,11003,11311,13331,30011,30103,31013,31033,33013,33301,101333,110311,113011,113131,131311,133033,133103,301331,301333,330331,333101,333103,1000033,1001003,1001303,1003001",
+    "name": "Palindromic primes in the sense of A007500 with digits '0', '1' and '3' only.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A199303/b199303.txt\">Table of n, a(n) for n = 1..6114</a>"
+    ],
+    "program": [
+        "(PARI) allow=Vec(\"013\"); forprime(p=1, default(primelimit), setminus( Set( Vec( Str( p ))), allow)&next; isprime(A004086(p))&print1(p\", \")) /* for illustrative purpose only: better use the code below */",
+        "(PARI) a(n=50,list=0,L=[0,1,3],needpal=1)={ for(d=1,1e9, u=vector(d,i,10^(d-i))~; forvec(v=vector(d,i,[1+(i==1&!L[1]),#L]), isprime(t=vector(d,i,L[v[i]])*u) || next; needpal & !isprime(A004086(t)) & next; list & print1(t\",\"); n-- || return(t)))}  \\\\ _M. F. Hasler_, Nov 06 2011",
+        "(MAGMA) [p: p in PrimesUpTo(10^8) | Set(Intseq(p)) subset [0, 1, 3] and IsPrime(Seqint(Reverse(Intseq(p))))];  // Bruno Berselli, Nov 07 2011",
+        "(Python)",
+        "from itertools import product",
+        "from sympy import isprime",
+        "A199303_list = [n for n in (int(''.join(s)) for s in product('013',repeat=12)) if isprime(n) and isprime(int(str(n)[::-1]))] # _Chai Wah Wu_, Dec 17 2015"
+    ],
+    "xref": [
+        "Cf. A020449 - A020472, A199325 - A199329, A199302 - A199306."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_M. F. Hasler_, Nov 04 2011",
+    "references": 2,
+    "revision": 15,
+    "time": "2015-12-18T03:38:05-05:00",
+    "created": "2011-11-07T07:49:10-05:00"
+}

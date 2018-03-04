@@ -1,0 +1,44 @@
+{
+    "number": 174419,
+    "data": "0,1,3,29,213,36361,5004267,161159569259,1604875494550299,700591444676447407855,272366765005761133289834097",
+    "name": "Numerators T(0,k) of a top row sequence which generates a signed variant (-1)^n*T(n,0) of itself in the column k=0 under repeated application of the Akiyama-Tanigawa transform.",
+    "comment": [
+        "The sequence contains the numerators of the top row in the following table, where successive rows are constructed by iteration of the Akiyama-Tanigawa transform:",
+        "0, 1, 3, 29/5, 213/23,...",
+        "-1, -4, -42/5, -1592/115, -55070/2737,..",
+        "3, 44/5, 1878/115, 343608/13685, 68612650/1967903,..",
+        "-29/5, -1732/115, -360378/13685, -22590376/578795, -74842810298/1416609031,...",
+        "213/23, 61708/2737, 74954766/1967903, 2737355924568/49581316085,...",
+        "The associated denominators in the first row are 1, 1, 1, 5, 23, 2737, 281129, 7083045155,...",
+        "The top row is designed to reproduce itself (up to alternating sign) in the leftmost column under the transformation.",
+        "There are other examples of sequences quasi-preserved under the Akiyama-Tanigawa transform: if the first row were T(0,k)= A054977(k), the first column would be identical to the first row (no sign flips in this example).",
+        "Another (trivial) example is the all-0 sequence, which produces a table containing only zeros."
+    ],
+    "reference": [
+        "D. Merlini, R. Sprugnoli, M. C. Verri, The Akiyama-Tanigawa Transformation, Integers, 5 (1) (2005) #A05"
+    ],
+    "maple": [
+        "nmax := 10 ;",
+        "T := array(0..nmax,0..nmax) ;",
+        "T[0,0] := 0 ; T[0,1] := 1 ; T[1,0] := -1 ;",
+        "for n from 2 to nmax do",
+        "        T[0,n] := x ;",
+        "        for r from 1 to n do k := n-r ; T[r,k] := (k+1)*(T[r-1,k]-T[r-1,k+1]) ;",
+        "        end do:",
+        "        y := solve( T[n,0] = (-1)^n*T[0,n]) ; T[0,n] :=  y;",
+        "        for r from 1 to n do k := n-r ; T[r,k] := (k+1)*(T[r-1,k]-T[r-1,k+1]) ;",
+        "        end do:",
+        "end do:",
+        "seq( numer(T[0,i]),i=0..nmax) ; # _R. J. Mathar_, Dec 02 2010"
+    ],
+    "program": [
+        "nmax=10; t[0,0]=0; t[0,1]=1; t[1,0]=-1; For[n=2, n<= nmax, n++, t[0,n]=x; For[r=1, r<=n, r++, k=n-r; t[r,k]=(k+1)*(t[r-1,k]-t[r-1,k+1]);]; y=x/.Solve[t[n,0]==(-1)^n*t[0,n]]//First; t[0,n]=y; For[r=1, r<=n, r++, k=n-r; t[r,k]=(k+1)*(t[r-1,k]-t[r-1,k+1]);]]; Table[ t[0,i],{i,0,nmax}] // Numerator (* _Jean-Fran\u00e7ois Alcover_, Sep 18 2012, translated from Maple *)"
+    ],
+    "keyword": "nonn,frac,eigen",
+    "offset": "0,3",
+    "author": "_Paul Curtz_, Mar 19 2010",
+    "references": 1,
+    "revision": 14,
+    "time": "2013-03-28T14:30:03-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

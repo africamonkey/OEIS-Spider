@@ -1,0 +1,31 @@
+{
+    "number": 149365,
+    "data": "1,1,4,12,44,171,683,2816,11893,51350,224098,991506,4437757,20006333,90924488,415980396,1913682104,8847746238,41091054180,191607760032,896578541595,4209023017990,19817896294387,93556842240115,442750975652565,2100004692492617,9981048900376549,47529264968202643",
+    "name": "Number of walks within N^3 (the first octant of Z^3) starting at (0,0,0) and consisting of n steps taken from {(-1, 0, 0), (-1, 0, 1), (0, 1, -1), (1, -1, 1), (1, 0, 1)}",
+    "link": [
+        "Robert Israel, <a href=\"/A149365/b149365.txt\">Table of n, a(n) for n = 0..168</a>",
+        "A. Bostan and M. Kauers, 2008. Automatic Classification of Restricted Lattice Walks, <a href=\"http://arxiv.org/abs/0811.2899\">ArXiv 0811.2899</a>."
+    ],
+    "maple": [
+        "f:= proc(a,b,c,n) option remember;",
+        "   local t;",
+        "   if n = 0 then return 1 fi;",
+        "   t:= procname(a+1,b,c+1,n-1);",
+        "   if a >= 1 then t:= t + procname(a-1,b,c,n-1) + procname(a-1,b,c+1,n-1) fi;",
+        "   if c >= 1 then t:= t + procname(a,b+1,c-1,n-1) fi;",
+        "   if b >= 1 then t:= t + procname(a+1,b-1,c+1,n-1) fi;",
+        "   t;",
+        "end proc:",
+        "seq(f(0,0,0,n),n=0..50); # _Robert Israel_, Nov 07 2017"
+    ],
+    "mathematica": [
+        "aux[i_Integer, j_Integer, k_Integer, n_Integer] := Which[Min[i, j, k, n] < 0 || Max[i, j, k] > n, 0, n == 0, KroneckerDelta[i, j, k, n], True, aux[i, j, k, n] = aux[-1 + i, j, -1 + k, -1 + n] + aux[-1 + i, 1 + j, -1 + k, -1 + n] + aux[i, -1 + j, 1 + k, -1 + n] + aux[1 + i, j, -1 + k, -1 + n] + aux[1 + i, j, k, -1 + n]]; Table[Sum[aux[i, j, k, n], {i, 0, n}, {j, 0, n}, {k, 0, n}], {n, 0, 10}]"
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Manuel Kauers_, Nov 18 2008",
+    "references": 1,
+    "revision": 5,
+    "time": "2017-11-07T21:05:55-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

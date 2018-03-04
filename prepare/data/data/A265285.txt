@@ -1,0 +1,46 @@
+{
+    "number": 265285,
+    "data": "46657,2433601,67371265,351596817937,422240040001,18677955240001,458631349862401",
+    "name": "Carmichael numbers (A002997) n such that n-1 is a square.",
+    "comment": [
+        "This sequence contains all Carmichael numbers n such that for all primes p dividing n, p-1 divides n-1 and furthermore, n-1 is a square.",
+        "Subsequence of A265237.",
+        "a(8) > 10^16 if it exists."
+    ],
+    "link": [
+        "G. Tarry, I. Franel, A. Korselt, and G. Vacca, <a href=\"https://oeis.org/wiki/File:Probl%C3%A8me_chinois.pdf\">Probl\u00e8me chinois</a>, L'interm\u00e9diaire des math\u00e9maticiens 6 (1899), pp. 142-144.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CarmichaelNumber.html\">Carmichael Number</a>",
+        "<a href=\"/index/Ca#Carmichael\">Index entries for sequences related to Carmichael numbers</a>"
+    ],
+    "example": [
+        "46657 is a term because 46657 - 1 = 46656 = 216^2.",
+        "2433601 is a term because 2433601 - 1 = 2433600 = 1560^2."
+    ],
+    "maple": [
+        "isA002997:= proc(n) local F,p;",
+        "         if n::even or isprime(n)  then return false fi;",
+        "         F:= ifactors(n)[2];",
+        "         if max(seq(f[2],f=F)) > 1 then return false fi;",
+        "         andmap(f -> (n-1) mod (f[1]-1) = 0,  F)",
+        "end proc:",
+        "select(isA002997, [seq(4*i^2+1,i=1..10^6)]); # _Robert Israel_, Dec 08 2015"
+    ],
+    "program": [
+        "(PARI) is_c(n) = { my(f); bittest(n, 0) && !for(i=1, #f=factor(n)~, (f[2, i]==1 && n%(f[1, i]-1)==1)||return) && #f>1 }",
+        "for(n=1, 1e10, if(is_c(n) && issquare(n-1), print1(n, \", \")))"
+    ],
+    "xref": [
+        "Cf. A002997, A265237."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,1",
+    "author": "_Altug Alkan_, Dec 06 2015",
+    "ext": [
+        "a(4)-a(5), using A002997 b-file, from _Michel Marcus_, Dec 07 2015",
+        "a(6) and a(7) from _Robert Israel_, Dec 08 2015"
+    ],
+    "references": 1,
+    "revision": 29,
+    "time": "2015-12-20T14:01:14-05:00",
+    "created": "2015-12-20T14:01:14-05:00"
+}

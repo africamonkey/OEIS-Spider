@@ -1,0 +1,34 @@
+{
+    "number": 176354,
+    "data": "1,1,3,9,17,46,153,338,935,3067,7182,20064,64819,156968,441084,1408612,3488489,9840608,31145791,78388512,221722954,696757333,1775204952,5031253931,15718503073,40435757688,114779701466,356852697226,925209496348,2629513384131",
+    "name": "The number of words of length n created with the letters a, b, c with at least as many a's as b's and at least as many b's as c's and no adjacent letters forming the pattern aba.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A176354/b176354.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "maple": [
+        "a:= n-> add (add (w (na, nb, n-na-nb, 0),",
+        "        nb=ceil((n-na)/2)..min(n-na, na)), na=ceil(n/3)..n):",
+        "w:= proc(a, b, c, x) option remember;",
+        "      `if`([a, b, c]=[0$3], 1, `if`(a>0 and x<2, w(a-1, b, c, 1), 0)+",
+        "      `if`(b>0, w(a, b-1, c, `if`(x=1, 2, 0)), 0)+",
+        "      `if`(c>0, w(a, b, c-1, 0), 0))",
+        "    end:",
+        "seq (a(n), n=0..40);  # _Alois P. Heinz_, May 22 2012"
+    ],
+    "program": [
+        "(Sage) def atleastcond(w): return w.count(0)>=w.count(1) and w.count(1)>=w.count(2) def avoidsaba(w): for i in range(len(w)-2): if w[ i ]==0 and w[i+1]==1 and w[i+2]==0: return False return True Words([0,1,2], length=6).filter(atleastcond).filter(avoidsaba).cardinality() # Jenny Li (jiemi2007(AT)yahoo.ca), Apr 17 2010"
+    ],
+    "xref": [
+        "Cf. A176148, A206701."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "Jenny Li (jiemi2007(AT)yahoo.ca), Apr 15 2010, Apr 17 2010",
+    "ext": [
+        "Extended beyond a(15) by _Alois P. Heinz_, May 22 2012"
+    ],
+    "references": 2,
+    "revision": 11,
+    "time": "2018-02-01T03:31:50-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

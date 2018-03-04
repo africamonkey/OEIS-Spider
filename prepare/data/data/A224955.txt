@@ -1,0 +1,60 @@
+{
+    "number": 224955,
+    "data": "2,3,5,6,8,10,12,14,19,21,22,24,28,29,32,40,41,44,48,52,56,57,61,62,67,69,72,76,78,84,89,90,96,102,108,115,116,122,129,136,152,156,160,168,176,184,193,202,209,211,216,220,230,240,241,249,250,260,270,280",
+    "name": "Numbers that are not squares, but can become squares by prepending or appending one additional digit.",
+    "comment": [
+        "There are potentially 15 ways for each number to become a square--by prepending a digit between 1 and 9, or appending one of {0,1,4,5,6,9}. However, only 74 of the first 10000 terms can become a square in more than one way."
+    ],
+    "link": [
+        "Christian N. K. Anderson, <a href=\"/A224955/b224955.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Christian N. K. Anderson, <a href=\"/A224955/a224955.txt\">List of squares</a> that can be formed by concatenating one digit to the first 10,000 terms.",
+        "Christian N. K. Anderson, <a href=\"/A224955/a224955.gif\">Ulam spiral</a> of a(n), with brighter colors corresponding to the number of ways a term may become a square."
+    ],
+    "example": [
+        "a(4)=6 because, though 6 is not a square, it can become a square by prepending a 1 to become 16. We can also obtain 36 and 64."
+    ],
+    "maple": [
+        "isA224955 := proc(n)",
+        "    local p,ndgs;",
+        "    if issqr(n) then",
+        "        return false;",
+        "    else",
+        "        ndgs := convert(n,base,10) ;",
+        "        for p from 1 to 9 do",
+        "            [op(ndgs),p] ;",
+        "            add(op(i,%)*10^(i-1),i=1..nops(%)) ;",
+        "            if issqr(%) then",
+        "                return true;",
+        "            end if;",
+        "        end do:",
+        "        for p in {0,1,4,5,6,9} do",
+        "            [p,op(ndgs)] ;",
+        "            add(op(i,%)*10^(i-1),i=1..nops(%)) ;",
+        "            if issqr(%) then",
+        "                return true;",
+        "            end if;",
+        "        end do:",
+        "        return false;",
+        "    end if;",
+        "end proc:",
+        "n := 1;",
+        "c := 1;",
+        "while n <= 10000 do",
+        "    if isA224955(c) then",
+        "        printf(\"%d %d\\n\",n,c) ;",
+        "        n := n+1 ;",
+        "    end if;",
+        "    c := c+1 ;",
+        "end do: # _R. J. Mathar_, Mar 14 2016"
+    ],
+    "xref": [
+        "Cf. A023110, A000290."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Kevin L. Schwartz_ and _Christian N. K. Anderson_, Apr 21 2013",
+    "references": 1,
+    "revision": 18,
+    "time": "2016-03-14T12:14:16-04:00",
+    "created": "2013-04-21T23:25:28-04:00"
+}

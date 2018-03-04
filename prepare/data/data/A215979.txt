@@ -1,0 +1,52 @@
+{
+    "number": 215979,
+    "data": "1,1,3,6,13,26,56,115,247,533,1175,2636,6040,14078,33401,80524,196897,487781,1222279,3094507,7905992,20364597,52838720,138001953,362565398,957687474,2542056376,6777855755,18146153182,48766704695,131517773945,355842838357",
+    "name": "Number of simple unlabeled graphs on 2*n nodes with exactly n connected components that are trees or cycles.",
+    "comment": [
+        "Limiting sequence of reversed rows of A215977.  Also central elements of rows of A215977."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A215979/b215979.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = A215977(2*n,n).",
+        "a(n) ~ c * d^n / n^(5/2), where d = A051491 = 2.9557652856..., c = 4.034813602... . - _Vaclav Kotesovec_, Aug 31 2014"
+    ],
+    "example": [
+        "a(3) = 6: .o-o o.  .o-o o.  .o-o o.  .o-o o.  .o-o o.  .o o o.",
+        "          .| |  .  .|    .  .|\\   .  .|/   .  .|    .  .| | |.",
+        "          .o-o o.  .o-o o.  .o o o.  .o o-o.  .o o-o.  .o o o."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; local d, j; `if`(n<=1, n,",
+        "      (add(add(d*b(d), d=divisors(j)) *b(n-j), j=1..n-1))/(n-1))",
+        "    end:",
+        "g:= proc(n) option remember; local k; `if`(n>2, 1, 0)+ b(n)-",
+        "      (add(b(k)*b(n-k), k=0..n) -`if`(irem(n, 2)=0, b(n/2), 0))/2",
+        "    end:",
+        "p:= proc(n, i, t) option remember; `if`(n<t, 0, `if`(n=t, 1,",
+        "      `if`(min(i, t)<1, 0, add(binomial(g(i)+j-1, j)*",
+        "       p(n-i*j, i-1, t-j), j=0..min(n/i,t)))))",
+        "    end:",
+        "a:= n-> p(2*n, 2*n, n):",
+        "seq(a(n), n=0..35);"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n <= 1, n, (Sum[DivisorSum[j, #*b[#]&]*b[n-j], {j, 1, n-1}])/(n-1)];",
+        "g[n_] := g[n] = If[n > 2, 1, 0] + b[n] - (Sum[b[k]*b[n-k], {k, 0, n}] - If[EvenQ[n], b[n/2], 0])/2;",
+        "p[n_, i_, t_] := p[n, i, t] = If[n < t, 0, If[n == t, 1, If[Min[i, t]<1, 0, Sum[Binomial[g[i]+j-1, j]*p[n-i*j, i-1, t-j], {j, 0, Min[n/i, t]}]]]];",
+        "a[n_] := p[2*n, 2*n, n];",
+        "Table[a[n], {n, 0, 35}] (* _Jean-Fran\u00e7ois Alcover_, Feb 26 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A215977, A051491."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 29 2012",
+    "references": 2,
+    "revision": 17,
+    "time": "2017-02-26T05:43:27-05:00",
+    "created": "2012-08-29T23:06:46-04:00"
+}

@@ -1,0 +1,56 @@
+{
+    "number": 61256,
+    "data": "1,1,4,8,21,39,92,170,360,667,1316,2393,4541,8100,14824,26071,46422,80314,139978,238641,408201,686799,1156062,1920992,3189144,5238848,8589850,13963467,22641585,36447544,58507590,93334008,148449417,234829969,370345918",
+    "name": "Euler transform of sigma(n), cf. A000203.",
+    "comment": [
+        "This is also the number of ordered triples of permutations f, g, h in Symm(n) which all commute, divided by n!. This was conjectured by _Franklin T. Adams-Watters_, Jan 16 2006, and proved by J. R. Britnell in 2012.",
+        "According to a message on a blog page by \"Allan\" (see http://sbseminar.wordpress.com/2010/10/06/a-peculiar-numerical-coincidence/#comments) it appears that a(n) = number of conjugacy classes of commutative ordered pairs in Symm(n).",
+        "John McKay (email to _N. J. A. Sloane_, Apr 23 2013) observes that A061256 and A006908 coincide for a surprising number of terms, and asks for an explanation. - _N. J. A. Sloane_, May 19 2013"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A061256/b061256.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "J. R. Britnell, <a href=\"http://arXiv.org/abs/1203.5079\">A formal identity involving commuting triples of permutations</a>, arXiv:1203.5079 [math.CO], 2012.",
+        "J. R. Britnell, <a href=\"http://www.maths.bris.ac.uk/~majrb/CommTrip.pdf\">A formal identity involving commuting triples of permutations</a>, Journal of Combinatorial Theory, Series A, Volume 120, Issue 4, May 2013, Preprint 2012. - _N. J. A. Sloane_, Jun 13 2012",
+        "E. Marberg, <a href=\"http://arxiv.org/abs/1202.1311\">How to compute the Frobenius-Schur indicator of a unipotent character of a finite Coxeter system</a>, arXiv preprint arXiv:1202.1311 [math.RT], 2012. -  _N. J. A. Sloane_, Jun 10 2012",
+        "Tad White, <a href=\"http://arxiv.org/abs/1304.2830\">Counting Free Abelian Actions</a>, arXiv:1304.2830 [math.CO], 2013.",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "a(n) = A072169(n) / n!.",
+        "G.f.: Product_{k=1..infinity} (1 - x^k)^(-sigma(k)). a(n)=1/n*Sum_{k=1..n} a(n-k)*b(k), n>1, a(0)=1, b(k)=Sum_{d|k} d*sigma(d), cf. A001001.",
+        "G.f.: exp( Sum_{n>=1} sigma(n)*x^n/(1-x^n)^2 /n ). [_Paul D. Hanna_, Mar 28 2009]",
+        "G.f.: exp( Sum_{n>=1} sigma_2(n)*x^n/(1-x^n)/n ). [_Vladeta Jovovic_, Mar 28 2009]",
+        "G.f.: prod(n>=1, E(x^n)^n ) where E(x) = prod(k>=1, 1-x^k). [_Joerg Arndt_, Apr 12 2013]"
+    ],
+    "example": [
+        "1 + x + 4*x^2 + 8*x^3 + 21*x^4 + 39*x^5 + 92*x^6 + 170*x^7 + 360*x^8 + ..."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(add(",
+        "      d*sigma(d), d=divisors(j)) *a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jun 08 2017"
+    ],
+    "mathematica": [
+        "nn = 30; b = Table[DivisorSigma[1, n], {n, nn}]; CoefficientList[Series[Product[1/(1 - x^m)^b[[m]], {m, nn}], {x, 0, nn}], x] (* _T. D. Noe_, Jun 18 2012 *)",
+        "nmax = 40; CoefficientList[Series[Product[1/QPochhammer[x^k]^k, {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Nov 29 2015 *)"
+    ],
+    "program": [
+        "(PARI) N=66; x='x+O('x^N); gf=1/prod(j=1,N, eta(x^j)^j); Vec(gf) /* _Joerg Arndt_, May 03 2008 */",
+        "(PARI) {a(n)=if(n==0,1,polcoeff(exp(sum(m=1,n,sigma(m)*x^m/(1-x^m+x*O(x^n))^2/m)),n))} /* _Paul D. Hanna_, Mar 28 2009 */"
+    ],
+    "xref": [
+        "Cf. A000203, A001001, A006171, A001970, A053529, A061255, A061257, A006908."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Vladeta Jovovic_, Apr 21 2001",
+    "ext": [
+        "Entry revised by _N. J. A. Sloane_, Jun 13 2012"
+    ],
+    "references": 17,
+    "revision": 41,
+    "time": "2017-06-08T21:43:14-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

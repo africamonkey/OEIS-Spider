@@ -1,0 +1,51 @@
+{
+    "number": 91406,
+    "data": "1,744,750420,872769632,1102652742882,1470561136292880,2037518752496883080,2904264865530359889600,4231393254051181981976079,6273346050902229242859370584,9433668720359866477436486024652",
+    "name": "Reversion of series for j-function.",
+    "comment": [
+        "From _Peter Bala_, Dec 17 2013: (Start)",
+        "Given a formal Laurent series L(z) = 1/z + a + b*z + c*z^2 + ..., there exists a formal series L^<-1>(z) = 1/z + A/z^2 + B/z^3 + ... such that L(L^<-1>(z)) = L^<-1>(L(z)) = z. The series L^<-1>(z) is called the reversion of the series L(z).",
+        "To find L^<-1>(z), first find the series reversion of the reciprocal series 1/L(z) = z - a*z^2 + z^3*(a^2 - b) - ... with respect to z, and then replace the variable z with the variable 1/z. This is the approach used in the Maple program below. (End)",
+        "Invert j = 1/q + 744 + 196884*q + 21493760*q^2 + ... to get q = 1/j + 744/j^2 + 750420/j^3 + ...."
+    ],
+    "reference": [
+        "J. H. Silverman, Advanced Topics in the Arithmetic of Elliptic Curves, Springer, see p. 482."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A091406/b091406.txt\">Table of n, a(n) for n = 1..300</a>",
+        "Y Abdelaziz, JM Maillard, <a href=\"http://arxiv.org/abs/1611.08493\">Modular forms, Schwarzian conditions, and symmetries of differential equations in physics</a>, arXiv preprint arXiv:1611.08493, 2016",
+        "Y.-H. He and V. Jejjala, <a href=\"http://arXiv.org/abs/hep-th/0307293\">Modular Matrix Models</a>, arXiv:hep-th/0307293, 2003."
+    ],
+    "formula": [
+        "a(n) ~ c * 1728^n / n^(3/2), where c = 0.000873226754634291459391356302898297243945046378336447143... - _Vaclav Kotesovec_, Jun 28 2017"
+    ],
+    "maple": [
+        "#A091406",
+        "with(numtheory):",
+        "Order := 12:",
+        "g2 := 4/3*(1 + 240*add(sigma[3](n)*q^n, n = 1..Order)):",
+        "g3 := 8/27*(1 - 504*add(sigma[5](n)*q^n, n = 1..Order)):",
+        "delta := series(g2^3 - 27*g3^2, q, Order):",
+        "#define the reciprocal of Klein's j_invariant",
+        "j_reciprocal := series(delta/(1728*g2^3), q, Order):",
+        "#find series reversion of j_reciprocal",
+        "j_inv := solve(series(j_reciprocal, q) = y, q):",
+        "seq(coeff(j_inv,y,n), n = 1..11); - _Peter Bala_, Dec 17 2013"
+    ],
+    "mathematica": [
+        "max = 9; s1 = 1728*Series[ KleinInvariantJ[t], {t, 0, 2*max} ] /. t -> -2*I*(Pi/Log[q]); s2 = Normal[InverseSeries[ Series[ s1, {q, 0, max} ], j]] /. j -> 1/x; Rest[ CoefficientList[ s2, x ] ] (* _Jean-Fran\u00e7ois Alcover_, Feb 16 2012, fixed by _Vaclav Kotesovec_, Jun 28 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = local(A); if( n<1, 0, A = O(x^n); A = x * (eta(x^2 + A) / eta(x + A))^24; polcoeff( serreverse( A / (1 + 256*A)^3), n))} /* _Michael Somos_, Jul 13 2004 */"
+    ],
+    "xref": [
+        "Cf. A000521, A178451. See A066396 for another version."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Mar 03 2004",
+    "references": 5,
+    "revision": 33,
+    "time": "2018-01-20T11:39:45-05:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

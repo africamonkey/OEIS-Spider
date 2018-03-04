@@ -1,0 +1,59 @@
+{
+    "number": 248701,
+    "data": "3,7,359,7853,96401,2812099,294276293",
+    "name": "Smallest prime such that the preceding n prime gaps are increasing and the following n prime gaps are decreasing.",
+    "link": [
+        "Abhiram R Devesh, <a href=\"/A248701/a248701.py.txt\">Python Code for Generating the Peak Primes</a>"
+    ],
+    "example": [
+        "a(3)=359; [347, 349, 353, 359, 367, 373, 379]; prime gaps [2, 4, 6, 8, 6, 6] which are monotonically increasing 2 <= 4 <= 6 and decreasing 8 >= 6 >=6."
+    ],
+    "maple": [
+        "A248701 := proc(n)",
+        "    local glist, p, wrks, s ;",
+        "    if n = 0 then",
+        "        return ;",
+        "    else",
+        "        s := n+1 ;",
+        "        p := ithprime(s) ;",
+        "        glist := [seq(ithprime(i+1)-ithprime(i), i=1..2*n)] ;",
+        "        while true do",
+        "            wrks := true;",
+        "            for i from 1 to n-1 do",
+        "                if glist[i] > glist[i+1] then",
+        "                    wrks := false;",
+        "                    break;",
+        "                end if;",
+        "            end do:",
+        "            for i from n+1 to 2*n-1 do",
+        "                if glist[i] < glist[i+1] then",
+        "                    wrks := false;",
+        "                    break;",
+        "                end if;",
+        "            end do:",
+        "            if wrks then",
+        "                return p;",
+        "            end if;",
+        "            p := nextprime(p) ;",
+        "            s := s+1 ;",
+        "            glist := subsop(1=NULL, glist) ;",
+        "            glist := [op(glist), ithprime(s+n)-ithprime(s+n-1)] ;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Dec 17 2014"
+    ],
+    "program": [
+        "(PARI) isoka(i, n, vgp) = {for (k=0, n-2, if (vgp[i-k-1] > vgp[i-k], return(0)); if (vgp[i+k+1] < vgp[i+k+2], return(0));); return(1);}",
+        "a(n) = {nb = 10000; pa = prime(1); pb = prime(nb); vp = primes([pa, pb]); nbp = #vp; vgp = vector(nbp-1, k, vp[k+1] - vp[k]); ok = 0; while (!ok, for (i=1+n, nbp-n-1, if (isoka(i-1, n, vgp), ok = vp[i]; break);); if (! ok, pa = prime(primepi(pb)-nb+n+1); pb = prime(primepi(pa)+nb); vp = primes([pa, pb]); nbp = #vp; vgp = vector(nbp-1, k, vp[k+1] - vp[k]););); return (ok);} \\\\ _Michel Marcus_, Oct 17 2014"
+    ],
+    "xref": [
+        "Cf. A248702 - A248704."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Abhiram R Devesh_, Oct 12 2014",
+    "references": 4,
+    "revision": 33,
+    "time": "2016-04-11T08:36:05-04:00",
+    "created": "2014-12-17T17:25:40-05:00"
+}

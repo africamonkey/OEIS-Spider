@@ -1,0 +1,36 @@
+{
+    "number": 257278,
+    "data": "4,8,16,27,32,64,81,128,243,256,512,729,1024,2048,2187,3125,4096,6561,8192,15625,16384,19683,32768,59049,65536,78125,131072,177147,262144,390625,524288,531441,823543,1048576,1594323,1953125,2097152,4194304,4782969,5764801,8388608,9765625",
+    "name": "Prime powers p^m with p <= m.",
+    "comment": [
+        "Might be called \"high\" powers of primes. Motivated by challenges for which low powers of large primes provide somewhat trivial solutions, cf. A257279. The definition also avoids the question of the whether prime itself is to be considered as a prime power or not, cf. A000961 vs. A025475. In view of the condition p <= n, up to 10^10, only powers of the primes 2, 3, 5 and 7 (namely, less than 10) can occur.",
+        "a(n) = A257572(n) ^ A257573(n). - _Reinhard Zumkeller_, May 01 2015"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A257278/b257278.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "program": [
+        "(PARI) L=List();lim=10;forprime(p=1,lim,for(n=p,lim*log(lim)\\log(p),listput(L,p^n)));listsort(L);L",
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert)",
+        "a257278 n = a257278_list !! (n-1)",
+        "a257278_list = f (singleton (4, 2)) 27 (tail a000040_list) where",
+        "   f s pp ps@(p:ps'@(p':_))",
+        "     | qq > pp   = pp : f (insert (pp * p, p) s) (p' ^ p') ps'",
+        "     | otherwise = qq : f (insert (qq * q, q) s') pp ps",
+        "     where ((qq, q), s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, May 01 2015"
+    ],
+    "xref": [
+        "Cf. A000961, A025475, A257279.",
+        "Cf. A000040, A051674 (subsequence), subsequence of A122494.",
+        "Cf. A257572, A257573."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_M. F. Hasler_, Apr 28 2015",
+    "references": 5,
+    "revision": 10,
+    "time": "2015-05-01T12:42:40-04:00",
+    "created": "2015-04-30T22:15:54-04:00"
+}

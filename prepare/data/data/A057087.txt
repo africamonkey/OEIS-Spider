@@ -1,0 +1,59 @@
+{
+    "number": 57087,
+    "data": "1,4,20,96,464,2240,10816,52224,252160,1217536,5878784,28385280,137056256,661766144,3195289600,15428222976,74494050304,359689093120,1736732573696,8385686667264,40489676963840,195501454524416",
+    "name": "Scaled Chebyshev U-polynomials evaluated at i. Generalized Fibonacci sequence.",
+    "comment": [
+        "a(n) gives the length of the word obtained after n steps with the substitution rule 0->1111, 1->11110, starting from 0. The number of 1's and 0's of this word is 4*a(n-1) and 4*a(n-2), respectively.",
+        "Inverse binomial transform of odd Pell bisection A001653. With a leading zero, inverse binomial transform of even Pell bisection A001542, divided by 2. - _Paul Barry_, May 16 2003",
+        "For positive n, a(n) equals the permanent of the n X n tridiagonal matrix with 4's along the main diagonal, and 2's along the superdiagonal and the subdiagonal. - _John M. Campbell_, Jul 19 2011",
+        "Pisano period lengths: 1, 1, 8, 1, 3, 8, 6, 1, 24, 3, 120, 8, 21, 6, 24, 1, 16, 24, 360, 3, ... . - _R. J. Mathar_, Aug 10 2012",
+        "Exponential convolution of Pell numbers (A000129) and companion Pell numbers (A002203), divided by 2 and leading zero dropped. - _Vladimir Reshetnikov_, Oct 07 2016"
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A057087/b057087.txt\">Table of n, a(n) for n = 0..1459</a>",
+        "Martin Burtscher, Igor Szczyrba, Rafa\u0142 Szczyrba, <a href=\"http://www.emis.de/journals/JIS/VOL18/Szczyrba/sz3.html\">Analytic Representations of the n-anacci Constants and Generalizations Thereof</a>, Journal of Integer Sequences, Vol. 18 (2015), Article 15.4.5.",
+        "A. F. Horadam, <a href=\"http://www.fq.math.ca/Scanned/5-5/horadam.pdf\">Special properties of the sequence W_n(a,b; p,q)</a>, Fib. Quart., 5.5 (1967), 424-434. Case n->n+1, a=0,b=1; p=4, q=4.",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>.",
+        "W. Lang, <a href=\"http://www.fq.math.ca/Scanned/38-5/lang.pdf\">On polynomials related to powers of the generating function of Catalan's numbers</a>, Fib. Quart. 38 (2000) 408-419; Eqs.(39) and (45),rhs, m=4.",
+        "<a href=\"/index/Ch#Cheby\">Index entries for sequences related to Chebyshev polynomials.</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (4,4)"
+    ],
+    "formula": [
+        "a(n) = 4*(a(n-1) + a(n-2)), a(-1)=0, a(0)=1.",
+        "G.f.: 1/(1 - 4*x - 4*x^2).",
+        "a(n) = S(n, 2*i)*(-2*i)^n with S(n, x) := U(n, x/2), Chebyshev's polynomials of the 2nd kind, A049310.",
+        "a(n) = Sum_{k=0..n} 3^k*A063967(n,k). - _Philippe Del\u00e9ham_, Nov 03 2006",
+        "a(n) = -(1/8)*sqrt(2)*(2 - 2*sqrt(2))^(n+1)+(1/8)*(2 + 2*sqrt(2))^(n+1)*sqrt(2). - _Paolo P. Lava_, Nov 20 2008",
+        "a(n) = A000129(n+1)*A000079(n). - _R. J. Mathar_, Jul 08 2009",
+        "From _Johannes W. Meijer_, Aug 01 2010: (Start)",
+        "Limit(a(n+k)/a(k), k=infinity) = A084128(n) + 2*A057087(n-1)*sqrt(2);",
+        "Limit(A084128(n)/A057087(n-1), n=infinity) = sqrt(2).",
+        "(End)",
+        "a(n) = 4^n*hypergeom([1/2-n/2, -n/2], [-n], -1)) for n>=1. - _Peter Luschny_, Dec 17 2015"
+    ],
+    "maple": [
+        "A057087 := n -> `if`(n=0, 1, 4^n*hypergeom([1/2-n/2, -n/2], [-n], -1)):",
+        "seq(simplify(A057087(n)), n=0..21); # _Peter Luschny_, Dec 17 2015"
+    ],
+    "mathematica": [
+        "Table[Fibonacci[n + 1, 2] 2^n, {n, 0, 20}] (* _Vladimir Reshetnikov_, Oct 08 2016 *)",
+        "LinearRecurrence[{4,4},{1,4},30] (* _Harvey P. Dale_, Aug 17 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0, 0, (2*I)^n*subst(I*poltchebi(n+1)+poltchebi(n),'x,-I)/2) /* _Michael Somos_, Sep 16 2005 */",
+        "(PARI) Vec(1/(1-4*x-4*x^2) + O(x^100)) \\\\ _Altug Alkan_, Dec 17 2015",
+        "(Sage) [lucas_number1(n,4,-4) for n in xrange(1, 23)] # _Zerinvary Lajos_, Apr 23 2009",
+        "(MAGMA) I:=[1,4]; [n le 2 select I[n] else 4*Self(n-1) + 4*Self(n-2): n in [1..30]]; // _G. C. Greubel_, Jan 16 2018"
+    ],
+    "xref": [
+        "Pairwise sums are in A086347.",
+        "Appears in A086346, A086347 and A086348. - _Johannes W. Meijer_, Aug 01 2010"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Wolfdieter Lang_, Aug 11 2000",
+    "references": 34,
+    "revision": 72,
+    "time": "2018-01-17T03:30:25-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

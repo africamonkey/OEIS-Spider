@@ -1,0 +1,32 @@
+{
+    "number": 34302,
+    "data": "23,37,53,73,113,131,137,173,179,197,311,317,431,617,719,1499,1997,2239,2293,3137,4919,6173,7433,9677,19973,23833,26833,47933,73331,74177,91733,93491,94397,111731,166931,333911,355933,477797,477977",
+    "name": "Primes which remains prime if any digit is deleted (zeros not allowed).",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A034302/b034302.txt\">Table of n, a(n) for n = 1..103</a> (first 79 from T. D. Noe)",
+        "StackExchange, <a href=\"http://math.stackexchange.com/questions/33094\">Deleting any digit yields a prime</a>"
+    ],
+    "mathematica": [
+        "rpnzQ[n_]:=Module[{idn=IntegerDigits[n]},Count[idn,0]==0 && And@@ PrimeQ[FromDigits/@Subsets[IntegerDigits[n], {Length[idn]-1}]]]; Select[Prime[Range[40000]],rpnzQ]  (* _Harvey P. Dale_, Mar 24 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (inits, tails)",
+        "a034302 n = a034302_list !! (n-1)",
+        "a034302_list = filter f $ drop 4 a038618_list where",
+        "   f x = all (== 1) $ map (a010051 . read) $",
+        "             zipWith (++) (inits $ show x) (tail $ tails $ show x)",
+        "-- _Reinhard Zumkeller_, Dec 17 2011",
+        "(PARI) is(n)=my(d=digits(n),t=2^#d-1); if(vecmin(d)==0, return(0)); for(i=0,#d-1, if(!isprime(fromdigits(vecextract(d,t-2^i))), return(0))); isprime(n) \\\\ _Charles R Greathouse IV_, Jun 23 2017"
+    ],
+    "xref": [
+        "Cf. A034303, A034304, A034305, A051362, A010051, A038618."
+    ],
+    "keyword": "base,nonn,nice",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "references": 15,
+    "revision": 26,
+    "time": "2017-06-24T12:35:49-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

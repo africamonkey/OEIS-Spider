@@ -1,0 +1,37 @@
+{
+    "number": 97910,
+    "data": "1,1,5,5,9,27,31,49,71,185,207,339,457,685,1421,1745,2577,3615,5143,6877,13439,15965,23823,31983,45553,59425,83549,139013,173769,244803,330391,452257,597935,810929,1052559,1692723,2074321,2890333,3783821,5178041,6658377",
+    "name": "Number of parts in all compositions of n into distinct parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A097910/b097910.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Sum(k >= 0; k*k! x^((k^2+k)/2) / Prod(1<=j<=k; 1-x^j))."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1,",
+        "      `if`(n>i*(i+1)/2, [][], zip((x, y)->x+y, [b(n, i-1)],",
+        "      `if`(i>n, [], [0, b(n-i, i-1)]), 0)[]))",
+        "    end:",
+        "a:= proc(n) local l; l:=[b(n, n)];",
+        "      add(i*l[i+1]*i!, i=1..nops(l)-1)",
+        "    end:",
+        "seq (a(n), n=1..50);  # _Alois P. Heinz_, Nov 20 2012"
+    ],
+    "mathematica": [
+        "Drop[ CoefficientList[ Series[ Sum[ k*k!*x^((k^2 + k)/2)/Product[1 - x^j, {j, 1, k}], {k, 1, 45}], {x, 0, 40}], x], 1] (* _Robert G. Wilson v_, Sep 08 2004 *)"
+    ],
+    "xref": [
+        "Cf. A001792, A015723, A032020."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,3",
+    "author": "_Vladeta Jovovic_, Sep 04 2004",
+    "ext": [
+        "More terms from _Robert G. Wilson v_ and _John W. Layman_, Sep 08 2004"
+    ],
+    "references": 3,
+    "revision": 14,
+    "time": "2015-07-26T01:50:54-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

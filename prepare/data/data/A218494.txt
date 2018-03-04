@@ -1,0 +1,48 @@
+{
+    "number": 218494,
+    "data": "1,1,3,21,220,2846,41621,670568,11570877,210605770,3998468431,78556582448,1587757499592,32866068149376,694307793698105,14927522659021682,325895131806047690,7211436102222542901,161493494674514291108,3655277488432342084426",
+    "name": "Number of partitions of n^3 into squares.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A218494/b218494.txt\">Table of n, a(n) for n = 0..80</a>"
+    ],
+    "formula": [
+        "a(n) = A001156(A000578(n)).",
+        "a(n) ~ 3^(-1/2) * (4*Pi)^(-7/6) * Zeta(3/2)^(2/3) * n^(-7/2) * exp(2^(-4/3) * 3 * Pi^(1/3) * Zeta(3/2)^(2/3) * n) [after Hardy & Ramanujan]. - _Vaclav Kotesovec_, Apr 10 2017",
+        "a(n) = [x^(n^3)] Product_{k>=1} 1/(1 - x^(k^2)). - _Ilya Gutkovskiy_, Jan 29 2018"
+    ],
+    "example": [
+        "n=2: number of partitions of 8 into parts of {1, 4}:",
+        "a(2) = #{4+4, 4+1+1+1+1, 8x1} = 3;",
+        "n=3: number of partitions of 27 into parts of  {1, 4, 9, 16, 25}:",
+        "a(3) = #{25+1+1, 16+9+1+1, 16+4+4+1, 16+4+5x1, 16+9x1, 9+9+9, 9+9+4+4+1, 9+9+4+5x1, 9+9+9x1, 9+4x4+1+1, 9+3x4+6x1, 9+4+4+10x1, 9+4+14x1, 9+18x1, 6x4+3x1, 5x4+7x1, 4x4+11x1, 3x4+15x1, 4+4+19x1, 4+23x1, 27x1} = 21."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, 1,",
+        "       b(n, i-1)+`if`(i^2>n, 0, b(n-i^2, i)))",
+        "    end:",
+        "a:= n-> b(n^3, isqrt(n^3)):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Nov 08 2012"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n == 0 || i == 1, 1, b[n, i-1] + If[i^2>n, 0, b[n - i^2, i]]]; a[n_] := b[n^3, Sqrt[n^3] // Floor]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Nov 11 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a218494 = p (tail a000290_list) . (^ 3) where",
+        "   p _          0 = 1",
+        "   p ks'@(k:ks) m = if m < k then 0 else p ks' (m - k) + p ks m"
+    ],
+    "xref": [
+        "Cf. A000290, A001156, A218495."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Reinhard Zumkeller_, Oct 31 2012",
+    "ext": [
+        "Extended beyond a(7) by _Alois P. Heinz_, Nov 08 2012"
+    ],
+    "references": 6,
+    "revision": 20,
+    "time": "2018-01-29T21:11:45-05:00",
+    "created": "2012-10-31T03:08:41-04:00"
+}

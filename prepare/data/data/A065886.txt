@@ -1,0 +1,36 @@
+{
+    "number": 65886,
+    "data": "1,1,4,36,144,3600,3600,176400,2822400,25401600,25401600,3073593600,110649369600,18699743462400,74798973849600,1869974346240000,29919589539840000,8646761377013760000,77820852393123840000",
+    "name": "Smallest square divisible by n!.",
+    "link": [
+        "Robert Israel, <a href=\"/A065886/b065886.txt\">Table of n, a(n) for n = 0..407</a>"
+    ],
+    "formula": [
+        "a(n) = A053143(A000142(n)) = A065887(n)^2 = A000142(n)*A055204(n) = A001044(n)/A055071(n)"
+    ],
+    "example": [
+        "a(10) = 25401600 since 10! = 3628800 and the smallest square divisible by this is 25401600 = 3628800*7 = 5040^2"
+    ],
+    "maple": [
+        "N:= 50: # to get a(0)..a(N)",
+        "P:= select(isprime, [$2..N]):",
+        "nP:= nops(P):",
+        "V:= Vector(nP):",
+        "A[0]:= 1:",
+        "for n from 1 to N do",
+        "  for i from 1 to nP do V[i]:= V[i] + padic:-ordp(n,P[i]) od;",
+        "  A[n]:= mul(P[i]^(2*ceil(V[i]/2)),i=1..nP)",
+        "od:",
+        "seq(A[n],n=0..N); # _Robert Israel_, Jan 30 2017"
+    ],
+    "mathematica": [
+        "ssd[n_]:=Module[{nf=n!,k=1},While[!IntegerQ[Sqrt[k*nf]],k++];k*nf]; Array[ssd,20,0] (* _Harvey P. Dale_, Apr 29 2012 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Henry Bottomley_, Nov 27 2001",
+    "references": 2,
+    "revision": 9,
+    "time": "2017-01-30T02:49:22-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

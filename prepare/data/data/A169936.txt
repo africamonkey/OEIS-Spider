@@ -1,0 +1,49 @@
+{
+    "number": 169936,
+    "data": "67,69,76,79,96,97,102,103,104,105,106,107,108,109,112,122,123,124,125,126,127,128,129,132,133,134,135,136,137,138,139,142,143,144,145,146,147,148,149,152,153,154,155,156,157,158,159,162,163,164",
+    "name": "Numbers whose name in English is an anagram of the name of another number.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A169936/b169936.txt\">Table of n, a(n) for n = 1..680</a>, all terms < 1000.",
+        "Roel and Bas van Dijk, <a href=\"http://hackage.haskell.org/package/numerals\">Numerals package</a>, Hackage (Haskell packages)",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Anagram\">Anagram</a>"
+    ],
+    "example": [
+        "SIXTY-SEVEN <-> SEVENTY-SIX",
+        "SIXTY-NINE <-> NINETY-SIX",
+        "SEVENTY-SIX <-> SIXTY-SEVEN",
+        "NINETY-SIX <-> SIXTY-NINE",
+        "ONE HUNDRED TWO <-> TWO HUNDRED ONE",
+        "ONE HUNDRED THREE <-> THREE HUNDRED ONE",
+        "...",
+        "ONE HUNDRED TWELVE <-> TWO HUNDRED ELEVEN",
+        "...",
+        "SIX HUNDRED SEVENTY-NINE <-> SIX HUNDRED NINETY-SEVEN <-> SEVEN HUNDRED SIXTY-NINE <-> SEVEN HUNDRED NINETY-SIX <-> NINE HUNDRED SIXTY-SEVEN <-> NINE HUNDRED SEVENTY-SIX"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Map (empty, insertWith, elems)",
+        "import Data.Text (unpack); import Data.Maybe (fromJust)",
+        "import Data.List (sort)",
+        "import Text.Numeral.Grammar.Reified (defaultInflection)",
+        "import qualified Text.Numeral.Language.EN as EN  -- see link",
+        "a169936 n = a169936_list !! (n-1)",
+        "a169936_list = sort $ concat $ filter ((> 1) . length) $",
+        "   elems $ fill [1..999] empty where",
+        "      fill [] m = m",
+        "      fill (z:zs) m = fill zs $ insertWith (++) (sort $ engl z) [z] m",
+        "      engl :: Integer -> String",
+        "      engl = unpack . fromJust . EN.us_cardinal defaultInflection",
+        "-- _Reinhard Zumkeller_, Feb 18 2015"
+    ],
+    "keyword": "nonn,word,nice",
+    "offset": "1,1",
+    "author": "Eric Angelini, Jul 21 2010",
+    "ext": [
+        "Terms 102 through 112 from Andrew Weimholt, Jul 21 2010",
+        "Terms beyond 112 from Sean A. Irvine, Jul 22 2010"
+    ],
+    "references": 1,
+    "revision": 4,
+    "time": "2015-02-18T15:11:32-05:00",
+    "created": "2010-07-31T03:00:00-04:00"
+}

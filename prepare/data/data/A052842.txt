@@ -1,0 +1,43 @@
+{
+    "number": 52842,
+    "data": "0,1,3,23,290,5104,115374,3185972,103946688,3912527016,166884627360,7955159511672,419106982360560,24182042474691984,1516563901865906880,102717031449780063360,7472238163167018081024",
+    "name": "E.g.f. A(x) = series reversion of (1-x)*(1-exp(-x)).",
+    "comment": [
+        "A simple grammar."
+    ],
+    "link": [
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=809\">Encyclopedia of Combinatorial Structures 809</a>",
+        "Vladimir Kruchinin, <a href=\"http://arxiv.org/abs/1211.3244\">The method for obtaining expressions for coefficients of reverse generating functions</a>, arXiv:1211.3244"
+    ],
+    "formula": [
+        "E.g.f. satisfies: A(x) = -log(1 - x/(1-A(x))). [From Encyclopedia of Combinatorial Structures]",
+        "a(n) = sum(k=0..n-1, (sum(j=0..k, (sum(i=0..j, (stirling2(i+n-1,j)*C(j,j-i))/ (i+n-1)!))*(-1)^(n+j-1)/(k-j)!))*(n+k-1)!), n>0. - _Vladimir Kruchinin_, Feb 06 2012",
+        "a(n) ~ n^(n-1) * c^n / (sqrt(1+c) * exp(n) * (c-1)^(2*n-1)), where c = LambertW(exp(2)) = 1.5571455989976114... (see A226571). - _Vaclav Kotesovec_, Jan 08 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 3*x^2/2! + 23*x^3/3! + 290*x^4/4! + 5104*x^5/5! +... which satisfies: A(x) = -log(1 - x/(1-A(x)))."
+    ],
+    "maple": [
+        "spec := [S,{C=Prod(Z,B),S=Cycle(C),B=Sequence(S)},labeled]: seq(combstruct[count](spec,size=n), n=0..20);"
+    ],
+    "mathematica": [
+        "CoefficientList[InverseSeries[Series[(-1 + E^(-x))*(x-1),{x,0,20}],x],x] * Range[0,20]! (* _Vaclav Kotesovec_, Jan 08 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(serreverse((1-exp(-x+O(x^(n+2))))*(1-x)),n)} /* _Paul D. Hanna_ */",
+        "(Maxima) a(n):=sum((sum((sum((stirling2(i+n-1,j)*binomial(j,j-i))/(i+n-1)!,i,0,j))*(-1)^(n+j-1)/(k-j)!,j,0,k))*(n+k-1)!,k,0,n-1); [_Vladimir Kruchinin_, Feb 06 2012]"
+    ],
+    "xref": [
+        "Cf. A226571."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "ext": [
+        "Name from a comment by _Paul D. Hanna_, Jun 22 2011"
+    ],
+    "references": 0,
+    "revision": 32,
+    "time": "2017-04-18T07:04:10-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

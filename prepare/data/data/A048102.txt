@@ -1,0 +1,45 @@
+{
+    "number": 48102,
+    "data": "1,4,27,108,3125,12500,84375,337500,823543,3294172,22235661,88942644,2573571875,10294287500,69486440625,277945762500,285311670611,1141246682444,7703415106497,30813660425988,302875106592253,891598970659375,1211500426369012",
+    "name": "Numbers n such that if n = Product p_i^e_i then p_i=e_i for all i.",
+    "link": [
+        "T. D. Noe, <a href=\"/A048102/b048102.txt\">Table of n, a(n) for n = 1..1038</a>"
+    ],
+    "formula": [
+        "A027748(a(n),k) = A124010(a(n),k) for k = 1 .. A001221(a(n)). - _Reinhard Zumkeller_, Jan 21 2012"
+    ],
+    "example": [
+        "3^3*5^5 = 84375."
+    ],
+    "mathematica": [
+        "s=Subsets[{2,3,5,7,11,13,17}];t={};Do[u=s[[n]];AppendTo[t,Product[u[[i]]^u[[i]],{i,1,Length[u]}]],{n,Length[s]}];Select[Union[t],#<19^19&] (* _Vladimir Joseph Stephan Orlovsky_, Jan 26 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (empty, fromList, deleteFindMin, union)",
+        "import qualified Data.Set as Set (null, map)",
+        "a048102 n = a048102_list !! (n-1)",
+        "a048102_list = 1 : f empty [1] a051674_list where",
+        "  f s ys pps'@(pp:pps)",
+        "    | Set.null s = f (fromList (map (* pp) ys)) (pp:ys) pps",
+        "    | pp < m     = f (s `union` Set.map (* pp) s `union`",
+        "                      fromList (map (* pp) ys)) ys pps",
+        "    | otherwise  = m : f s' (m:ys) pps'",
+        "    where (m,s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Jan 21 2012",
+        "(PARI) isok(n) = my(f = factor(n)); for (k=1, #f~, if (f[k,1] != f[k,2], return(0))); 1; \\\\ _Michel Marcus_, Apr 29 2016"
+    ],
+    "xref": [
+        "Cf. A048103, A048104, A051674, A072873."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Naohiro Nomoto_, Jun 28 2001"
+    ],
+    "references": 9,
+    "revision": 26,
+    "time": "2016-09-08T14:34:08-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

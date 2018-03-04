@@ -1,0 +1,49 @@
+{
+    "number": 35134,
+    "data": "6,22,33,55,66,77,111,141,161,202,222,262,282,303,323,393,434,454,474,494,505,515,535,545,555,565,595,606,626,646,707,717,737,767,777,818,838,858,878,898,939,949,959,969,979,989,1001,1111,1221,1441,1551,1661",
+    "name": "Squarefree composite palindromes.",
+    "comment": [
+        "Palindromes with at least two and all distinct prime factors."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A035134/b035134.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Squarefree.html\">Squarefree</a>"
+    ],
+    "maple": [
+        "N:= 4: # to get all terms with <= N digits",
+        "revdigs:= proc(n) local L, j, nL;",
+        "  L:= convert(n, base, 10); nL:= nops(L);",
+        "  add(L[j]*10^(nL-j), j=1..nL);",
+        "end proc:",
+        "palis:= $0..9:",
+        "for d from 2 to N do",
+        "  if d::even then",
+        "    palis:= palis, seq(x*10^(d/2)+revdigs(x), x=10^(d/2-1)..10^(d/2)-1)",
+        "  else",
+        "    palis:= palis, seq(seq(x*10^((d+1)/2)+y*10^((d-1)/2)+revdigs(x), y=0..9), x=10^((d-3)/2)..10^((d-1)/2)-1);",
+        "  fi",
+        "od:",
+        "select(t -> not(isprime(t)) and numtheory:-issqrfree(t), [palis][3..-1]): # _Robert Israel_, Sep 18 2016"
+    ],
+    "mathematica": [
+        "sqfQ[n_]:=Max[Transpose[FactorInteger[n]][[2]]]<=1; palQ[n_]:=FromDigits[Reverse[IntegerDigits[n]]]==n; Select[Range[2,1662],!PrimeQ[#] && sqfQ[#] && palQ[#] &] (* _Jayanta Basu_, May 12 2013 *)"
+    ],
+    "program": [
+        "(PARI) isA002113(n)=n=digits(n);for(i=1, #n\\2, if(n[i]!=n[#n+1-i], return(0))); 1;",
+        "is(n) = n>1 && isA002113(n) && issquarefree(n) && !isprime(n) \\\\ _Altug Alkan_, Sep 19 2016",
+        "\\\\ in and output digits as a vector.",
+        "(PARI) nxtA002113(n)={my(d=n); i=(#d+1)\\2; while(i&&d[i]==9, d[i]=0; d[#d+1-i]=0; i--); if(i, d[i]++; d[#d+1-i]=d[i], d=vector(#d+1); d[1]=d[#d]=1); d}\\\\sum(i=1, #d, 10^(#d-i)*d[i])}",
+        "\\\\ all terms up to n digits",
+        "lista(n) = {my(p = [6],l=List(), sp, i); while(#p <= n, sp = sum(i=1,#p,p[i]*10^(#p-i)); if(issquarefree(sp)&&!isprime(sp), listput(l,sp)); p=nxtA002113(p));l} \\\\ _David A. Corneth_, Sep 19 2016"
+    ],
+    "xref": [
+        "Cf. A002113, A005117, A035132, A035135."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Nov 15 1998",
+    "references": 2,
+    "revision": 30,
+    "time": "2017-06-24T02:13:04-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

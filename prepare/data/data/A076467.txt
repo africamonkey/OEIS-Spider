@@ -1,0 +1,56 @@
+{
+    "number": 76467,
+    "data": "1,8,16,27,32,64,81,125,128,216,243,256,343,512,625,729,1000,1024,1296,1331,1728,2048,2187,2197,2401,2744,3125,3375,4096,4913,5832,6561,6859,7776,8000,8192,9261,10000,10648,12167,13824,14641,15625,16384,16807",
+    "name": "Perfect powers m^k where m is a positive integer and k > 2.",
+    "comment": [
+        "If p|n with p prime then p^3|n."
+    ],
+    "link": [
+        "Reinhard Zumkeller and Alois P. Heinz, <a href=\"/A076467/b076467.txt\">Table of n, a(n) for n = 1..10000</a> (terms n = 1..250 from Reinhard Zumkeller)"
+    ],
+    "formula": [
+        "For n > 1: GCD(exponents in prime factorization of a(n)) > 2, cf. A124010. - _Reinhard Zumkeller_, Apr 13 2012"
+    ],
+    "maple": [
+        "N:= 10^5: # to get all terms <= N",
+        "S:= {1, seq(seq(m^k, m = 2 .. floor(N^(1/k))),k=3..ilog2(N))}:",
+        "sort(convert(S,list)); # _Robert Israel_, Sep 30 2015"
+    ],
+    "mathematica": [
+        "a = {1}; Do[ If[ Apply[ GCD, Last[ Transpose[ FactorInteger[n]]]] > 2, a = Append[a, n]; Print[n]], {n, 2, 17575}]; a",
+        "(* Second program: *)",
+        "n = 10^5; Join[{1}, Table[m^k, {k, 3, Floor[Log[2, n]]}, {m, 2, Floor[n^(1/k)]}] // Flatten // Union] (* _Jean-Fran\u00e7ois Alcover_, Feb 13 2018, after _Robert Israel_ *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a076467 n = a076467_list !! (n-1)",
+        "a076467_list = 1 : filter ((> 2) . foldl1 gcd . a124010_row) [2..]",
+        "-- _Reinhard Zumkeller_, Apr 13 2012",
+        "(Haskell)",
+        "import qualified Data.Set as Set (null)",
+        "import Data.Set (empty, insert, deleteFindMin)",
+        "a076467 n = a076467_list !! (n-1)",
+        "a076467_list = 1 : f [2..] empty where",
+        "   f xs'@(x:xs) s | Set.null s || m > x ^ 3 = f xs $ insert (x ^ 3, x) s",
+        "                  | m == x ^ 3  = f xs s",
+        "                  | otherwise = m : f xs' (insert (m * b, b) s')",
+        "                  where ((m, b), s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Jun 18 2013",
+        "(PARI) is(n)=ispower(n)>2 \\\\ _Charles R Greathouse IV_, Sep 03 2015",
+        "(PARI) A076467(lim)={my(L=List(1),lim2=logint(lim,2),m,k);for(k=3,lim2, for(m=2,sqrtnint(lim,k),listput(L, m^k);));listsort(L,1); print(L);} \\\\ _Anatoly E. Voevudko_, Sep 29 2015",
+        "(PARI) b076467(lim)={my(L=List(1),lim2=logint(lim,2),m,k,ln,i); for(k=3,lim2, for(m=2,sqrtnint(lim,k),listput(L, m^k);)); listsort(L,1); ln=#L;for(i=1,ln,print(i ,\" \",L[i]));} \\\\ _Anatoly E. Voevudko_, Sep 29 2015"
+    ],
+    "xref": [
+        "Cf. A001597, A076468, A076469, A076470."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Robert G. Wilson v_, Oct 14 2002",
+    "ext": [
+        "Edited by _Robert Israel_, Sep 30 2015"
+    ],
+    "references": 10,
+    "revision": 27,
+    "time": "2018-02-13T05:22:49-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

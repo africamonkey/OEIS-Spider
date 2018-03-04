@@ -1,0 +1,69 @@
+{
+    "number": 128546,
+    "data": "17,21,25,42,63,84,143,286,2355,5821,6618,11709,12482,33747,39571,129109,466957,1162248,1565166,1968084,3636638,3853951,4898376,6065280,13443745,13933175,17118698,22421197,24153462377",
+    "name": "Inrepfigit (INverse REPetitive FIbonacci-like diGIT) numbers (or Htiek numbers).",
+    "comment": [
+        "This sequence is similar to A007629 (Keith numbers). It consists of the numbers n>9 with the following property: n is a term of the sequence S whose k first terms are the k digits of n (with the first term equal to the units digit) and with S(n+1)=sum of the k previous terms."
+    ],
+    "example": [
+        "42 is in the sequence because the terms of the sequence it creates are 2, 4, 6, 10, 16, 26, 42, ..."
+    ],
+    "mathematica": [
+        "iKeithQ[n_Integer] := Module[{b = Reverse[IntegerDigits[n]], s, k = 0}, s = Total[b]; While[s < n, AppendTo[b, s]; k++; s = 2*s - b[[k]]]; s == n]; Select[Range[10, 100000], iKeithQ] (* _T. D. Noe_, Mar 15 2011 *)"
+    ],
+    "program": [
+        "Here is a (messy) C++ code which finds the terms of the sequence below 100000000",
+        "#include <stdio.h>",
+        "int main()",
+        "{",
+        "int k2;",
+        "for ( int k = 10 ; k < 100000000 ; k++ )",
+        "{",
+        "k2 = k;",
+        "int array [9];",
+        "for ( int i = 0 ; i <= 8; i++ )",
+        "{",
+        "array[i] = k2 % 10;",
+        "k2 /= 10;",
+        "}",
+        "bool c = true;",
+        "int check=8;",
+        "for ( int i = 0; i <=8; i++ )",
+        "{",
+        "if ((array[8-i]==0)&&c)",
+        "check--;",
+        "else",
+        "c=false;",
+        "}",
+        "bool b = false;",
+        "int n = 0;",
+        "while ( n <= k && !b )",
+        "{",
+        "n = 0;",
+        "for ( int i = 0; i <= check; i++ )",
+        "n += array[i];",
+        "if ( n == k )",
+        "b = true;",
+        "for ( int i = 0 ; i < check ; i++ )",
+        "array[i] = array[i+1];",
+        "array[check] = n;",
+        "}",
+        "if ( b )",
+        "printf(\"%d",
+        "\", k);",
+        "}",
+        "return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A007629.",
+        "Cf. A097060 (reverse of these numbers)."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "Pierre Karpman (pierre.karpman(AT)laposte.net), Oct 23 2007",
+    "references": 2,
+    "revision": 6,
+    "time": "2014-08-03T14:01:23-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

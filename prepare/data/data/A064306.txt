@@ -1,0 +1,41 @@
+{
+    "number": 64306,
+    "data": "1,1,7,33,191,1153,7295,47617,318463,2170881,15028223,105365505,746651647,5339185153,38478839807,279201841153,2037998419967,14954803494913,110255315877887,816299567480833,6066679566041087",
+    "name": "Convolution of A052701 (Catalan numbers multiplied by powers of 2) with powers of -1.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A064306/b064306.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "W. Lang, <a href=\"http://www.fq.math.ca/Scanned/40-4/lang.pdf\">On polynomials related to derivatives of the generating function of Catalan numbers</a>, Fib. Quart. 40,4 (2002) 299-313; Eq.(31) with lambda=-1/2."
+    ],
+    "formula": [
+        "a(n) = (-1)^n*Sum_{k=0,..,n} (C(k)/(-1/2)^k) with C(k)=A000108(k) (Catalan).",
+        "a(n) = -a(n-1) + C(n)*2^n, n >= 0, a(-1) := 0, with C(n)=A000108(n).",
+        "G.f.: A(2*x)/(1+x), with A(x) g.f. of Catalan numbers A000108.",
+        "Recurrence: (n+1)*a(n) = (7*n-5)*a(n-1) + 4*(2*n-1)*a(n-2). - _Vaclav Kotesovec_, Dec 09 2013",
+        "a(n) ~ 2^(3*n+3)/(9*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Dec 09 2013"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1-Sqrt[1-8*x])/(4*x*(1+x)), {x, 0, 20}], x] (* _Vaclav Kotesovec_, Dec 09 2013 *)",
+        "Table[FullSimplify[2^(n+1)*(2*n+2)! * Hypergeometric2F1Regularized[1, n+3/2, n+3, -8]/(n+1)! + (-1)^n/2],{n,0,20}] (* _Vaclav Kotesovec_, Dec 09 2013 *)",
+        "Table[(-1)^n*Sum[(-2)^k * CatalanNumber[k], {k,0,n}], {n,0,50}] (* _G. C. Greubel_, Jan 27 2017 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A064306():",
+        "    f, c, n = 1, 1, 1",
+        "    while True:",
+        "        yield f",
+        "        n += 1",
+        "        c = c * (8*n - 12) // n",
+        "        f = c - f",
+        "a = A064306()",
+        "print [a.next() for _ in range(21)] # _Peter Luschny_, Nov 30 2016",
+        "(PARI) for(n=0, 25, print1((-1)^n*sum(k=0,n, (-2)^k*binomial(2*k,k)/(k+1)), \", \")) \\\\ _G. C. Greubel_, Jan 27 2017"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Wolfdieter Lang_, Sep 13 2001",
+    "references": 5,
+    "revision": 16,
+    "time": "2017-01-28T00:26:20-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

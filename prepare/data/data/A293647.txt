@@ -1,0 +1,44 @@
+{
+    "number": 293647,
+    "data": "91,152,189,217,513,721,728,999,1027,1729,3087,3367,4104,4706,4921,4977,5256,5859,6832,7657,8587,8911,9919,10621,10712,12663,12691,12824,14911,15093,15561,16120,16263,20683,21014,23058,23877,25669,27937,28063,31519,32984",
+    "name": "Positive numbers that are the sum of two (possibly negative) cubes in at least 2 ways (primitive solutions).",
+    "comment": [
+        "Primitive means that the 4 summands are coprime.",
+        "Not every term is the sum of two coprime cubes.",
+        "a(1) = A047696(2)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A293647/b293647.txt\">Table of n, a(n) for n = 1..1000</a> (first 352 terms from Rosalie Fay)"
+    ],
+    "example": [
+        "189 = 4^3 + 5^3 = 6^3 + (-3)^3 and 4, 5, 6, -3 are coprime, so 189 is in the sequence.",
+        "35208 = 34^3 + (-16)^3 = 33^3 + (-9)^3 and 34, -16, 33, -9 are coprime, so 35208 is in the sequence."
+    ],
+    "maple": [
+        "g:= proc(s,n) local x;",
+        "  x:= s/2 + sqrt(12*n/s-3*s^2)/6;",
+        "  if not x::integer then return NULL fi;",
+        "  [x,s - x];",
+        "end proc:",
+        "filter:= proc(n)",
+        "  local pairs, i,j;",
+        "  pairs:= map(g, numtheory:-divisors(n),n);",
+        "  for i from 2 to nops(pairs) do",
+        "    for j from 1 to i-1 do",
+        "      if igcd(op(pairs[i]),op(pairs[j]))=1 then return true fi",
+        "  od od;",
+        "  false",
+        "end proc:",
+        "select(filter, [seq(seq(9*i+j,j=[1,2,7,8,9]),i=0..4000)]); # _Robert Israel_, Oct 22 2017"
+    ],
+    "xref": [
+        "Cf. A051347 (all solutions); A018850 (positive cubes); A293648 (only coprime); A293645, A293650"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Rosalie Fay_, Oct 16 2017",
+    "references": 4,
+    "revision": 18,
+    "time": "2018-02-06T13:05:48-05:00",
+    "created": "2017-10-22T12:53:34-04:00"
+}

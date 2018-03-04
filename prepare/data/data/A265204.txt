@@ -1,0 +1,45 @@
+{
+    "number": 265204,
+    "data": "1,2,4,4,8,10,16,16,16,20,30,30,42,48,56,56,72,72,90,90,102,112,134,134,134,146,146,146,174,182,212,212,232,248,272,272,308,326,350,350,390,402,444,444,444,466,512,512,512,512,544,544,596,596,636,636,672,700,758,758,818,848,848,848,896,916,982,982,1026,1050",
+    "name": "Sum of phi(i) over squarefree numbers i <= n.",
+    "comment": [
+        "Partial sums of absolute values of A097945. - _Robert Israel_, Dec 10 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A265204/b265204.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "a:= proc(n) option remember; `if`(n=0, 0, a(n-1))+",
+        "      `if`(issqrfree(n), phi(n), 0)",
+        "    end:",
+        "seq(a(n), n=1..70);  # _Alois P. Heinz_, Dec 04 2015",
+        "N:= 1000: # to get a(1) to a(N)",
+        "V:= Vector(N, 1):",
+        "Primes:= select(isprime, [2,seq(i,i=3..N,2)]):",
+        "for p in Primes do",
+        "  J1:= [seq(i,i=p..N,p)];",
+        "  J2:= [seq(i,i=p^2..N,p^2)];",
+        "  V[J1]:= V[J1] * (p-1);",
+        "  V[J2]:= 0;",
+        "od:",
+        "ListTools[PartialSums](convert(V,list)); # _Robert Israel_, Dec 10 2015"
+    ],
+    "mathematica": [
+        "Table[Sum[EulerPhi@ i, {i, Select[Range@ n, SquareFreeQ]}], {n, 70}] (* _Michael De Vlieger_, Dec 10 2015 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(i=1, n, eulerphi(i)*issquarefree(i)) \\\\ _Anders Hellstr\u00f6m_, Dec 04 2015",
+        "(Perl) use ntheory \":all\"; sub an { vecsum(map { is_square_free($_) ? euler_phi($_) : () } 1..shift); } say an($_) for 1..70; # _Dana Jacobsen_, Dec 10 2015"
+    ],
+    "xref": [
+        "Cf. A000010, A097945."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jeffrey Shallit_, Dec 04 2015",
+    "references": 1,
+    "revision": 26,
+    "time": "2015-12-24T10:18:53-05:00",
+    "created": "2015-12-04T19:35:17-05:00"
+}

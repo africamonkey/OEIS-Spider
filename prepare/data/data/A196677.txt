@@ -1,0 +1,54 @@
+{
+    "number": 196677,
+    "data": "30,42,330,462,681,772,824,890,989,2180,3030,4242,4542,4722,8074,9775,17331,23980,33330,35823,36213,43263,46662,47324,55805,62121,62421,65301,65451,66441,66741,68181,68331,68631,68781,69171,71215,71452,73565,74391,74417,74572,74972",
+    "name": "Numbers n such that sum of the divisors of n equals the sum of the reversals of the divisors of n. Numbers with all palindrome divisors are not in the sequence.",
+    "comment": [
+        "Subset of A080716.",
+        "The numbers that are not considered here belong to A062687, numbers all of whose divisors are palindromic. - _Michel Marcus_, Oct 10 2014"
+    ],
+    "link": [
+        "R. J. Mathar, <a href=\"/A196677/b196677.txt\">Table of n, a(n) for n = 1..57</a>"
+    ],
+    "example": [
+        "Divisors of 989 are 1, 23, 43, 989 and 1+23+43+989=1+32+34+989=1056.",
+        "Divisors of 8074 are 1, 2, 11, 22, 367, 734, 4037, 8074 and 1+2+11+22+367+734+4037+8074=1+2+11+22+763+437+7304+4708=13248."
+    ],
+    "maple": [
+        "Rev:=proc(n)",
+        "local a,i,k;",
+        "i:=convert(n,base,10); a:=0;",
+        "for k from 1 to nops(i) do a:=a*10+i[k]; od;",
+        "a;",
+        "end:",
+        "P:=proc(j)",
+        "local h,m,n,ok,p,r,t;",
+        "for m from 1 to j  do",
+        "  p:=divisors(m); t:=0; ok:=0;",
+        "  for r from 1 to nops(p) do t:=t+Rev(p[r]); if p[r]<>Rev(p[r]) then ok:=1; fi;     od;",
+        "  if ok=1 and sigma(m)=t then print(m); fi;",
+        "od;",
+        "end:",
+        "P(100000);",
+        "# alternative",
+        "isA196677 := proc(n)",
+        "    isA080716(n) and not isA062687(n) ;",
+        "end proc:",
+        "n := 1;",
+        "for i from 1 do",
+        "    if isA196677(i) then",
+        "        printf(\"%d %d\\n\",n,i) ;",
+        "        n := n+1 ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Sep 09 2015"
+    ],
+    "xref": [
+        "Cf. A080716."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Oct 05 2011",
+    "references": 3,
+    "revision": 15,
+    "time": "2015-09-09T10:33:43-04:00",
+    "created": "2011-10-05T14:23:52-04:00"
+}

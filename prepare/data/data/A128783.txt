@@ -1,0 +1,39 @@
+{
+    "number": 128783,
+    "data": "7,10,12,13,19,20,21,30,35,37,38,40,41,44,50,57,60,65,70,80,90,95,97,100,102,105,107,108,110,112,119,120,121,125,129,130,138,140,150,160,170,180,190,191,200,201,204,205,209,210,212,220,223,230,240,250",
+    "name": "Numbers whose square is a nontrivial concatenation of other squares.",
+    "comment": [
+        "a(n) = sqrt(A019547(n)); the sequence A019547 gives the squares themselves and this sequence gives the numbers whose squares yield the numbers in A019547. All multiples of 10 are included, because for any value of x, (x*10)^2 = x^2*100, which is x^2 followed by two zeros. Every digit except 6 is used as the last digit of a number in this sequence before 50. 6 is not used as the last digit of a number in this sequence until 306."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A128783/b128783.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "13 is included because 13^2 = 169, which includes 16 and 9, two perfect squares."
+    ],
+    "program": [
+        "(Haskell)",
+        "a128783 n = a128783_list !! (n-1)",
+        "a128783_list = filter (f . show . (^ 2)) [1..] where",
+        "   f zs = g (init $ tail $ inits zs) (tail $ init $ tails zs)",
+        "   g (xs:xss) (ys:yss)",
+        "     | a010052 (read xs) == 1 = a010052 (read ys) == 1 || f ys || g xss yss",
+        "     | otherwise              = g xss yss",
+        "   g _ _ = False",
+        "-- _Reinhard Zumkeller_, Oct 11 2011"
+    ],
+    "xref": [
+        "Cf. A019547.",
+        "Cf. A010052, A000290; A048653 is a subsequence."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "Jonathan R. Love (japanada11(AT)yahoo.ca), Apr 07 2007",
+    "ext": [
+        "Missing terms 205 and 209 inserted by _Reinhard Zumkeller_, Oct 11 2011"
+    ],
+    "references": 2,
+    "revision": 10,
+    "time": "2013-07-13T12:03:28-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

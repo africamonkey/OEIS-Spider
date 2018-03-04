@@ -1,0 +1,71 @@
+{
+    "number": 14574,
+    "data": "4,6,12,18,30,42,60,72,102,108,138,150,180,192,198,228,240,270,282,312,348,420,432,462,522,570,600,618,642,660,810,822,828,858,882,1020,1032,1050,1062,1092,1152,1230,1278,1290,1302,1320,1428,1452,1482,1488,1608",
+    "name": "Average of twin prime pairs.",
+    "comment": [
+        "With an initial 1 added, this is the complement of the closure of {2} under a*b+1 and a*b-1. - _Franklin T. Adams-Watters_, Jan 11 2006",
+        "Also the square root of the product of twin prime pairs + 1. Two consecutive odd numbers can be written as 2k+1,2k+3. Then (2k+1)(2k+3)+1 = 4(k^2+2k+1) = 4(k+1)^2, a perfect square. Since twin prime pairs are two consecutive odd numbers, the statement is true for all twin prime pairs. - _Cino Hilliard_, May 03 2006",
+        "Or, single (or isolated) composites. Nonprimes k such that neither k-1 nor k+1 is nonprime. - _Juri-Stepan Gerasimov_, Aug 11 2009",
+        "Numbers n such that sigma(n-1) = phi(n+1). - _Farideh Firoozbakht_, Jul 04 2010",
+        "Solutions of the equation (n-1)'+(n+1)'=2, where n' is the arithmetic derivative of n. - _Paolo P. Lava_, Dec 18 2012",
+        "Subsequence of A217259 - numbers n such that antisigma(n+1) - antisigma(n-1) = 2*n - 1, where antisigma(m) = A024816(m) = sum of nondivisors of m. If n = average of twin prime pairs (q < p) then antisigma(p) - antisigma(q) = 2*n - 1 = p + q - 1. - _Jaroslav Krizek_, Mar 17 2013",
+        "Aside from the first term in the sequence, all remaining terms have digital root 3, 6, or 9. - _J. W. Helkenberg_, Jul 24 2013",
+        "Numbers n such that n^2-1 is a semiprime. - _Thomas Ordowski_, Sep 24 2015"
+    ],
+    "reference": [
+        "Archimedeans Problems Drive, Eureka, 30 (1967)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A014574/b014574.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "C. K. Caldwell, <a href=\"http://primes.utm.edu/glossary/page.php?sort=TwinPrime\">The Prime Glossary: Twin primes</a>",
+        "C. K. Caldwell, <a href=\"http://primes.utm.edu/top20/page.php?id=1\">The Top Twenty: Twin Primes</a>",
+        "Y. Fujiwara, <a href=\"http://dx.doi.org/10.1109/TIT.2013.2272695\">Parsing a Sequence of Qubits</a>, IEEE Trans. Information Theory, 59 (2013), 6796-6806.",
+        "Y. Fujiwara, <a href=\"http://arxiv.org/abs/1207.1138\">Parsing a Sequence of Qubits</a>, arXiv:1207.1138 [quant-ph], 2012-2013.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TwinPrimes.html\">Twin Primes</a>"
+    ],
+    "formula": [
+        "a(n) = (A001359(n) + A006512(n))/2 = 2*A040040(n) = A054735(n)/2 = A111046(n)/4.",
+        "a(n) = A129297(n+4). - _Reinhard Zumkeller_, Apr 09 2007",
+        "a(n) = A141515(k) iff A141515(k) -/+1 are both prime. - _Giovanni Teofilatto_, Sep 19 2008",
+        "A010051(a(n) - 1) * A010051(a(n) + 1) = 1. _Reinhard Zumkeller_, Apr 11 2012",
+        "a(n) = 6*A002822(n-1), n>=2. - _Ivan N. Ianakiev_, Aug 19 2013",
+        "a(n)^4 - 4*a(n)^2 = A062354(a(n)^2 - 1). - _Raphie Frank_, Oct 17 2013"
+    ],
+    "maple": [
+        "P := select(isprime,[$1..1609]): map(p->p+1,select(p->member(p+2,P),P)); # _Peter Luschny_, Mar 03 2011",
+        "A014574 := proc(n) option remember; local p ; if n = 1 then 4 ; else p := nextprime( procname(n-1) ) ; while not isprime(p+2) do p := nextprime(p) ; od ; return p+1 ; end if ; end proc: # _R. J. Mathar_, Jun 11 2011"
+    ],
+    "mathematica": [
+        "Select[Table[Prime[n] + 1, {n, 260}], PrimeQ[ # + 1] &] (* _Ray Chandler_, Oct 12 2005 *)",
+        "Mean/@Select[Partition[Prime[Range[300]],2,1],Last[#]-First[#]==2&] (* _Harvey P. Dale_, Jan 16 2014 *)"
+    ],
+    "program": [
+        "(PARI) p=2;forprime(q=3,1e4,if(q-p==2,print1(p+1\", \"));p=q) \\\\ _Charles R Greathouse IV_, Jun 10 2011",
+        "(Maxima) A014574(n) := block(",
+        "    if n = 1 then",
+        "        return(4),",
+        "    p : A014574(n-1) ,",
+        "    for k : 2 step 2 do (",
+        "        if primep(p+k-1) and primep(p+k+1) then",
+        "            return(p+k)",
+        "    )",
+        ")$ /* _R. J. Mathar_, Mar 15 2012 */",
+        "(Haskell)",
+        "a014574 n = a014574_list !! (n-1)",
+        "a014574_list = [x | x <- [2,4..], a010051 (x-1) == 1, a010051 (x+1) == 1]",
+        "-- _Reinhard Zumkeller_, Apr 11 2012"
+    ],
+    "xref": [
+        "Cf. A001359, A002822, A006512, A037074, A040040, A054735, A077800, A111046."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,1",
+    "author": "_R. K. Guy_, _N. J. A. Sloane_, _Eric W. Weisstein_",
+    "ext": [
+        "Offset changed to 1 by _R. J. Mathar_, Jun 11 2011"
+    ],
+    "references": 283,
+    "revision": 128,
+    "time": "2017-10-16T22:24:25-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

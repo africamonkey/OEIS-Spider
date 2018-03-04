@@ -1,0 +1,39 @@
+{
+    "number": 215188,
+    "data": "1,2,12,120,1680,30360,672000,17599680,532224000,18248660640,699512647680,29642193060480,1375922515968000,69427962935210880,3783838462038835200,221509040567970355200,13862292728701236019200,923523471334492405977600,65257265823541297938432000",
+    "name": "E.g.f.: A(x) = x + sinh(A(x)^2).",
+    "formula": [
+        "E.g.f.: Series_Reversion(x - sinh(x^2)).",
+        "E.g.f.: x + Sum_{n>=1} d^(n-1)/dx^(n-1) sinh(x^2)^n/n!.",
+        "E.g.f.: x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) (1/x)*sinh(x^2)^n/n! ).",
+        "a(n) ~ n^(n-1) / (sqrt(1/s + 4*s^2*sinh(s^2)) * (s-sinh(s^2))^(n-1/2) * exp(n)), where s = 0.4863332989938055129629... is the root of the equation 2*s*cosh(s^2) = 1. - _Vaclav Kotesovec_, Jan 23 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 12*x^3/3! + 120*x^4/4! + 1680*x^5/4! +...",
+        "where A(x - sinh(x^2)) = x and A(x) = x + sinh(A(x)^2).",
+        "Series expansions:",
+        "A(x) = x + sinh(x^2) + d/dx sinh(x^2)^2/2! + d^2/dx^2 sinh(x^2)^3/3! + d^3/dx^3 sinh(x^2)^4/4! +...",
+        "log(A(x)/x) = sinh(x^2)/x + d/dx (sinh(x^2)^2/x)/2! + d^2/dx^2 (sinh(x^2)^3/x)/3! + d^3/dx^3 (sinh(x^2)^4/x)/4! +..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[x - Sinh[x^2],{x,0,20}],x],x] * Range[0,20]!] (* _Vaclav Kotesovec_, Jan 23 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(serreverse(x-sinh(x^2+x^2*O(x^n))), n)}",
+        "for(n=1, 25, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, sinh(x^2+x*O(x^n))^m)/m!); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, sinh(x^2+x*O(x^n))^m/x)/m!)+x*O(x^n)); n!*polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A226758, A226759, A226760, A236357."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Aug 05 2012",
+    "references": 4,
+    "revision": 14,
+    "time": "2014-01-23T08:27:04-05:00",
+    "created": "2012-08-05T06:27:56-04:00"
+}

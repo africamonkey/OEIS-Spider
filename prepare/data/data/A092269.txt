@@ -1,0 +1,70 @@
+{
+    "number": 92269,
+    "data": "1,3,5,10,14,26,35,57,80,119,161,238,315,440,589,801,1048,1407,1820,2399,3087,3998,5092,6545,8263,10486,13165,16562,20630,25773,31897,39546,48692,59960,73423,89937,109553,133439,161840,196168,236843,285816,343667,412950,494702,592063,706671",
+    "name": "Spt function: total number of smallest parts in all partitions of n.",
+    "comment": [
+        "Row sums of triangle A220504. - _Omar E. Pol_, Jan 19 2013"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A092269/b092269.txt\">Table of n, a(n) for n = 1..10000</a> (terms n=1..550 from Joerg Arndt)",
+        "F. G. Garvan, <a href=\"http://www.math.ufl.edu/~fgarvan/data/sptcofs.txt\">Table of a(n) for n=1..10000</a> (Coefficients of Andrews spt-function) [broken link]",
+        "G. E. Andrews, <a href=\"http://www.math.psu.edu/vstein/alg/antheory/preprint/andrews/17.pdf\">The number of smallest parts in the partitions of n</a>",
+        "Scott Ahlgren, Nickolas Andersen, <a href=\"https://arxiv.org/abs/1402.5366\">Euler-like recurrences for smallest parts functions</a>, arXiv:1402.5366",
+        "George E. Andrews, Song Heng Chan and Byungchan Kim, <a href=\"http://www.math.psu.edu/vstein/alg/antheory/preprint/andrews/292.pdf\">The Odd Moments of Ranks and Cranks</a>, 2012. - From _N. J. A. Sloane_, Sep 04 2012",
+        "G. E. Andrews, F. G. Garvan, and J. Liang, <a href=\"http://www.math.psu.edu/andrews/pdf/287.pdf\">Combinatorial interpretation of congruences for the spt-function</a>",
+        "G. E. Andrews, F. G. Garvan, and J. Liang, <a href=\"http://www.math.psu.edu/andrews/pdf/289.pdf\">Self-conjugate vector partitions and the parity of the spt-function</a>",
+        "William Y.C. Chen, <a href=\"https://arxiv.org/abs/1707.04369\">The spt-Function of Andrews</a>, arXiv:1707.04369 [math.CO], Jul 14 2017",
+        "A. Folsom and K. Ono, <a href=\"http://www.math.wisc.edu/~ono/reprints/111.pdf\">The spt-function of Andrews</a>",
+        "F. G. Garvan, <a href=\"http://www.math.ufl.edu/~fgarvan/papers/spt.pdf\">Congruences for Andrews' smallest parts partition function and new congruences for Dyson's rank</a>",
+        "F. G. Garvan, <a href=\"http://www.math.ufl.edu/~fgarvan/papers/spt2.pdf\">Congruences for Andrews' spt-function modulo powers of 5, 7 and 13</a>",
+        "F. G. Garvan, <a href=\"https://arxiv.org/abs/1011.1957\">Congruences for Andrews' spt-function modulo 32760 and extension of Atkin's Hecke-type partition congruences</a>",
+        "F. G. Garvan, <a href=\"http://www.math.ufl.edu/~fgarvan/papers/hspt.pdf\">Higher Order Spt-functions</a>, Adv. Math. 228 (2011), no. 1, 241-265; . - From _N. J. A. Sloane_, Jan 02 2013",
+        "F. G. Garvan, <a href=\"http://carma.newcastle.edu.au/alfcon/pdfs/Frank_Garvan-alfcon.pdf\">The smallest parts partition function</a>, 2012",
+        "F. G. Garvan, <a href=\"http://www.combinatorics.net/conf/A75/Slides/02_03_Garvan.pdf\">Dyson's rank function and Andrews's SPT-function</a>, slides 11, 12.",
+        "K. Ono, <a href=\"http://www.mathcs.emory.edu/~ono/publications-cv/pdfs/131.pdf\">Congruences for the Andrews spt-function</a>",
+        "Omar E. Pol, <a href=\"http://www.polprimos.com/imagenespub/polpa407.jpg\">Illustration of initial terms</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Spt_function\">Spt function</a>"
+    ],
+    "formula": [
+        "G.f.: sum(n>=1, x^n/(1-x^n) * prod(k>=n, 1/(1-x^k) ).",
+        "a(n) = A000070(n-1) + A195820(n). - _Omar E. Pol_, Oct 19 2011",
+        "a(n) = n*p(n) - N_2(n)/2 = n*A000041(n) - A220908(n)/2 = A066186(n) - A220907(n) = (A220909(n) - A220908(n))/2 = A211982(n)/2. (from Andrews's paper and Garvan's paper). - _Omar E. Pol_, Jan 03 2013",
+        "a(n) = A000041(n) + A000070(n-2) + A220479(n), n>=2. - _Omar E. Pol_, Feb 16 2013",
+        "Asymptotics (Bringmann-Mahlburg, 2009): a(n) ~ exp(Pi*sqrt(2*n/3)) / (Pi*sqrt(8*n)) ~ sqrt(6*n)*A000041(n)/Pi. - _Vaclav Kotesovec_, Jul 30 2017"
+    ],
+    "example": [
+        "Partitions of 4 are [1,1,1,1], [1,1,2], [2,2], [1,3], [4]. 1 appears 4 times in the first, 1 twice in the second, 2 twice in the third, etc.; thus a(4)=4+2+2+1+1=10."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, n,",
+        "      `if`(irem(n, i, 'r')=0, r, 0)+add(b(n-i*j, i-1), j=0..n/i))",
+        "    end:",
+        "a:= n-> b(n, n):",
+        "seq(a(n), n=1..60);  # _Alois P. Heinz_, Jan 16 2013"
+    ],
+    "mathematica": [
+        "terms = 47; gf = Sum[x^n/(1 - x^n)*Product[1/(1 - x^k), {k, n, terms}], {n, 1, terms}]; CoefficientList[ Series[gf, {x, 0, terms}], x] // Rest (* _Jean-Fran\u00e7ois Alcover_, Jan 17 2013 *)",
+        "b[n_, i_] := b[n, i] = If[n==0 || i==1, n, {q, r} = QuotientRemainder[n, i]; If[r==0, q, 0] + Sum[b[n-i*j, i-1], {j, 0, n/i}]]; a[n_] := b[n, n]; Table[a[n], {n, 1, 60}] (* _Jean-Fran\u00e7ois Alcover_, Nov 23 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N = 66;  x = 'x + O('x^N);",
+        "gf = sum(n=1,N, x^n/(1-x^n) * prod(k=n,N, 1/(1-x^k) )  );",
+        "v = Vec(gf)",
+        "/* _Joerg Arndt_, Jan 12 2013 */"
+    ],
+    "xref": [
+        "Cf. A092314, A092322, A092309, A092321, A092313, A092310, A092311, A092268, A006128, A195053.",
+        "For higher-order spt functions see A221140-A221144."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vladeta Jovovic_, Feb 16 2004",
+    "ext": [
+        "More terms from Pab Ter (pabrlos(AT)yahoo.com), May 25 2004"
+    ],
+    "references": 61,
+    "revision": 124,
+    "time": "2017-07-30T12:15:58-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

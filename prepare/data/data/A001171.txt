@@ -1,0 +1,51 @@
+{
+    "number": 1171,
+    "id": "M3570 N1447",
+    "data": "1,1,4,20,148,1348,15104,198144,2998656,51290496,979732224,20661458688,476936766720,11959743432960,323764901314560,9410647116349440,292316310979706880,9663569062008422400,338760229843058688000",
+    "name": "From least significant term in expansion of E( tr (X'*X)^n ), X rectangular and Gaussian. Also number of types of sequential n-swap moves for traveling salesman problem.",
+    "comment": [
+        "Let X be a p X q rectangular matrix with random Gaussian entries. Expand E( tr (X'*X)^n ) as a polynomial in p and q for fixed n. Sequence gives coefficient of least significant term in polynomial.",
+        "There should be a reference to a paper by Guy et al. (?) that gives a formula.",
+        "An n-swap move consists of the removal of n edges and addition of n different edges which result in a new tour. A sequential n-swap is one in which the union of the n removed and n added edges forms a single cycle. The type can be characterized by how the n segments of the original tour formed by the removal are reassembled."
+    ],
+    "reference": [
+        "David L. Applegate, Robert E. Bixby, Vasek Chvatal and William J. Cook, The Traveling Salesman Problem: A Computational Study, Princeton UP, 2006, Table 17.1, p. 535 (has 1358 instead of 1348 for n = 6)",
+        "P. J. Hanlon, R. P. Stanley and J. R. Stembridge, Some combinatorial aspects of the spectra of normally distributed random matrices. Hypergeometric functions on domains of positivity, Jack polynomials and applications (Tampa, FL, 1991), 151-174, Contemp. Math., 138, Amer. Math. Soc., Providence, RI, 1992.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A001171/b001171.txt\">Table of n, a(n) for n = 1..100</a>",
+        "Freddy Cachazo, Humberto Gomez, <a href=\"http://arxiv.org/abs/1505.03571\">Computation of Contour Integrals on M_{0,n}</a>, arXiv preprint, 2015.",
+        "S. Grusea and A. Labarre, The distribution of cycles in breakpoint graphs of signed permutations, arXiv:<a href=\"http://arxiv.org/abs/1104.3353\">1104.3353</a>",
+        "P. J. Hanlon, R. P. Stanley and J. R. Stembridge, <a href=\"http://www-math.mit.edu/~rstan/pubs/pubfiles/92.pdf\">Some combinatorial aspects of the spectra of normally distributed random matrices</a>, In Hypergeometric functions on domains of positivity, Jack polynomials and applications(Tampa, FL, 1991), 151-174, Contemp. Math., 138, Amer. Math. Soc., Providence, RI, 1992. [From Herman Jamke (hermanjamke(AT)fastmail.fm), Aug 01 2010]",
+        "Keld Helsgaun, <a href=\"http://www.akira.ruc.dk/~keld/research/LKH/KoptReport.pdf\">An Effective Implementation of K-opt Movesfor the Lin-Kernighan TSP Heuristic</a>.",
+        "O. A. Kadubovskyi, <a href=\"http://www.researchgate.net/publication/275956844_Enumeration_of_2-color_chord_diagrams_of_maximal_genus_under_rotation_and_reflection\">Enumeration of 2-color chord diagrams of maximal genus under rotation and reflection</a>,Conference: Sixteenth International Scientific Mykhailo Kravchuk Conference at Kyiv, vol 2, 2015."
+    ],
+    "formula": [
+        "Hanlon et al. give a formula (it would be nice to give it here).",
+        "A complicated formula from Hanlon is given on page 23 of Helsgaun. - _Rob Pratt_, Mar 30 2007",
+        "Hanlon et al. provide the correct formula for these coefficients at the end of Section 5 of their paper (see p. 168) but the one given by Helsgaun in his paper (see p. 23) is wrong: the term (k-a+b-1) in the inner sum should be replaced by (k-a-b+1)!. - Herman Jamke (hermanjamke(AT)fastmail.fm), Aug 01 2010",
+        "Conjecture (for n>=5): (n+1)*a(n) =  -(4*n-1)*a(n-1) + (5*n^3 - 16*n^2 + 13*n - 1)*a(n-2) + (10*n^3 - 68*n^2 + 150*n - 107)*a(n-3) - (n-4)*(n-2)^2*(2*n-7)^2*a(n-4). - _Vaclav Kotesovec_, Aug 07 2013"
+    ],
+    "maple": [
+        "c:=(a,b,k)->(-1)^k*((-2)^(a-b+1)*k*(2*a-2*b+1)*(a-1)!)/((k+a-b+1)*(k+a-b)*(k-a+b)*(k-a+b-1)*(k-a-b)!*(2*a-1)!*(b-1)!);SPMT:=k->2^(3*k-2)*k!*(k-1)!^2/(2*k)!+add(add(c(a,b,k)*(2^(a-b-1)*(2*b)!*(a-1)!*(k-a-b+1)!/((2*b-1)*b!))^2,b=1..min(a,k-a)),a=1..k-1);seq(SPMT(k),k=1..30); # Herman Jamke (hermanjamke(AT)fastmail.fm), Aug 01 2010"
+    ],
+    "mathematica": [
+        "c[a_, b_, n_] := (-1)^ n*((-2)^(a-b+1)*n*(2a-2b+1)*(a-1)!) / ((n+a-b+1)*(n+a-b)*(n-a+b)*(n-a+b-1)*(n-a-b)!*(2a-1)!*(b-1)!); A001171[n_] := 2^(3n-2)*n!*(n-1)!^2/(2n)! + Sum[ c[a, b, n]*(2^(a-b-1)*(2b)!*(a-1)!*(n-a-b+1)! / ((2b-1)*b!))^2, {a, 1, n-1}, {b, 1, Min[a, n-a]}]; Table[ A001171[n], {n, 1, 19}] (* _Jean-Fran\u00e7ois Alcover_, Dec 06 2011, after Maple program by Herman Jamke *)"
+    ],
+    "xref": [
+        "Cf. A061714."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,3",
+    "author": "_Colin Mallows_",
+    "ext": [
+        "Additional comments from _David Applegate_, Jun 21 2001",
+        "More terms from Herman Jamke (hermanjamke(AT)fastmail.fm), Aug 01 2010"
+    ],
+    "references": 3,
+    "revision": 39,
+    "time": "2017-08-06T22:43:25-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 277351,
+    "data": "5,14,19,44,53,62,71,152,169,186,203,220,237,254,271,560,593,626,659,692,725,758,791,824,857,890,923,956,989,1022,1055,2144,2209,2274,2339,2404,2469,2534,2599,2664,2729,2794,2859,2924,2989,3054,3119,3184,3249,3314",
+    "name": "Value of (n+1,n) concatenated in binary representation.",
+    "link": [
+        "Paolo P. Lava, <a href=\"/A277351/b277351.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = (n+1) * 2^A070939(n) + n.",
+        "G.f.: (1-x)^(-2)*(5*x - 2*x^2 + Sum_{m>=1} ((2^(2*m)+2^m)*x^(2^m) - 2^(2*m)*x^(2^m+1))). - _Robert Israel_, Oct 14 2016"
+    ],
+    "example": [
+        "Binary representation of 12 and 13 are 1100 and 1101. Then, concat(1101,1100) = 11011100 converted in decimal representation is 220"
+    ],
+    "maple": [
+        "P:= proc(q) local a,b,n;",
+        "for n from 1 to q do a:=convert(n,binary); b:=convert((n+1),binary);",
+        "print(convert(a+b*10^(ilog10(a)+1),decimal,binary)); od; end: P(100);",
+        "# alternative:",
+        "f:= n -> (n+1)*2^(1+ilog2(n))+n:",
+        "map(f, [$1..100]); # _Robert Israel_, Oct 14 2016"
+    ],
+    "mathematica": [
+        "Table[FromDigits[Join @@ Map[IntegerDigits[#, 2] &, {n + 1, n}], 2], {n, 50}] (* _Michael De Vlieger_, Oct 14 2016 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = subst(Pol(concat(binary(n+1), binary(n))), x, 2); \\\\ _Michel Marcus_, Oct 10 2016",
+        "(PARI) a(n) = (n+1)*2^(1+logint(n,2)) + n; \\\\ after 2nd Maple; _Michel Marcus_, Oct 15 2016"
+    ],
+    "xref": [
+        "Cf. A007088, A070939, A087737, A127423."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Oct 10 2016",
+    "references": 2,
+    "revision": 18,
+    "time": "2016-10-19T08:01:42-04:00",
+    "created": "2016-10-19T08:01:42-04:00"
+}

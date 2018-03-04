@@ -1,0 +1,46 @@
+{
+    "number": 82301,
+    "data": "1,5,30,205,1530,12130,100380,857405,7503330,66931030,606337380,5563370130,51594699780,482860844580,4554484964280,43252833007005,413224841606130,3968768817574030,38297678538914580,371128975862945030",
+    "name": "G.f.: (1 - 4*x - sqrt(16*x^2 - 12*x + 1))/(2*x).",
+    "comment": [
+        "More generally, coefficients of (1 - m*x - sqrt(m^2*x^2 - (2*m + 4)*x + 1))/(2*x) are given by a(0)=1 and, for n > 0, a(n) = (1/n)*Sum_{k=0..n} (m+1)^k*C(n,k)*C(n,k-1).",
+        "Hankel transform is 5^C(n+1,2). - _Philippe Del\u00e9ham_, Feb 11 2009",
+        "Series reversion of x(1-x)/(1+4x). - _Paul Barry_, Oct 22 2009",
+        "a(n) is the number of Schroder paths of semilength n in which the (2,0)-steps come in 4 colors. Example: a(2)=30 because, denoting U=(1,1), H=(2,0), D=(1,-1), we have 4^2=16 paths of shape HH, 4 paths of shape HUD, 4 paths of shape UDH, 4 paths of shape UHD, and 1 path of each of the shapes UDUD, UUDD. - _Emeric Deutsch_, May 02 2011"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A082301/b082301.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Paul Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL9/Barry/barry91.html\">On Integer-Sequence-Based Constructions of Generalized Pascal Triangles</a>, Journal of Integer Sequences, Vol. 9 (2006), Article 06.2.4."
+    ],
+    "formula": [
+        "a(0)=1; for n > 0, a(n) = (1/n)*Sum_{k=0..n} 5^k*C(n, k)*C(n, k-1).",
+        "From _Paul Barry_, Oct 22 2009: (Start)",
+        "a(n) = if(n=0, 1, if(n=1, 5, 6*((2n-1)/(n+1))*a(n-1)-16*((n-2)/(n+1))*a(n-2))).",
+        "a(n) = A078009(n)*(5 - 4*0^n). (End)",
+        "a(n) ~ sqrt(10 + 6*sqrt(5))*(6 + 2*sqrt(5))^n/(2*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Oct 14 2012",
+        "a(n) = 5*hypergeom([1 - n, -n], [2], 5) for n > 0. - _Peter Luschny_, May 22 2017"
+    ],
+    "maple": [
+        "A082301_list := proc(n) local j, a, w; a := array(0..n); a[0] := 1;",
+        "for w from 1 to n do a[w] := 5*a[w-1]+add(a[j]*a[w-j-1], j=1..w-1) od;convert(a,list)end: A082301_list(19); # _Peter Luschny_, May 19 2011",
+        "a := n -> `if`(n=0, 1, 5*hypergeom([1 - n, -n], [2], 5)):",
+        "seq(simplify(a(n)), n=0..19); # _Peter Luschny_, May 22 2017"
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[(1-4*x-Sqrt[16*x^2-12*x+1])/(2*x),{x,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Oct 14 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,1,sum(k=0,n,5^k*binomial(n,k)*binomial(n,k-1))/n)",
+        "(MAGMA) Q:=Rationals(); R<x>:=PowerSeriesRing(Q, 40); Coefficients(R!((1 -4*x-Sqrt(16*x^2-12*x+1))/(2*x))) // _G. C. Greubel_, Feb 10 2018"
+    ],
+    "xref": [
+        "Cf. A006318, A047891."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Benoit Cloitre_, May 10 2003",
+    "references": 6,
+    "revision": 38,
+    "time": "2018-02-11T03:13:23-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

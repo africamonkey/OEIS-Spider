@@ -1,0 +1,42 @@
+{
+    "number": 8351,
+    "data": "1,2,21,212,21221,21221212,2122121221221,212212122122121221212,2122121221221212212122122121221221,2122121221221212212122122121221221212212122122121221212",
+    "name": "Concatenate a(n-1) and a(n-2).",
+    "comment": [
+        "A \"non-commutative Fibonacci\" sequence. Often written as: a, b, ba, bab, babba, babbabab, babbababbabba, babbababbabbababbabab, ...",
+        "Converges in the appropriate topology. - _Dylan Thurston_, Jan 28 2005",
+        "Do a web search on babbababbabbababbabab to get further links.",
+        "a(n) has Fibonacci(n) digits d_i where 1 <= i <= n and n > 2. If i is in A001950 then d_i = 1, otherwise it is 2 [See Stolarsky]. - _David A. Corneth_, May 14 2017"
+    ],
+    "reference": [
+        "D. E. Knuth, \"The Art of Programming\", Volume 1, \"Fundamental Algorithms\", third edition, problem 36 on page 86."
+    ],
+    "link": [
+        "K. B. Stolarsky, <a href=\"http://dx.doi.org/10.4153/CMB-1976-071-6\">Beatty sequences, continued fractions, and certain shift operators</a>, Canadian Math. Bull. 19 (1976) pp. 473-482.",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Lindenmayer_system\">Lindenmayer system</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1)*10^floor{log10[a(n-2)]+1}+a(n-2), with a(1)=1, a(2)=2. - _Paolo P. Lava_, Mar 05 2010"
+    ],
+    "mathematica": [
+        "a[1] = 1; a[2] = 2; a[n_] := 10^Floor[ Log[10, a[n - 2]] +1]*a[n - 1] + a[n - 2] (* _Robert G. Wilson v_, Jan 26 2006 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = if (n<=2, n, eval(concat(Str(a(n-1)), Str(a(n-2))))); \\\\ _Michel Marcus_, May 14 2017",
+        "(PARI) a(n) = {if(n<=2, return(n));",
+        "my(v=vector(fibonacci(n),i,2), phi2 = (3+sqrt(5))/2, b = vector(fibonacci(n-2), i, (i*(sqrt(5)+3)/2))\\1); for(i=1, fibonacci(n-2), v[(i*(3+sqrt(5))/2)\\1] = 1); sum(i=1,#v,10^(#v-i) * v[i])}",
+        "a(n) = my(v=vector(n)); if(n <= 2, return(n)); v[1] = 1; v[2] = 2; for(i=3, n, v[i]=eval(concat(Str(v[i-1]), Str(v[i-2])))); v[#v] \\\\ _David A. Corneth_, May 14 2017"
+    ],
+    "xref": [
+        "See A008352 for another version.",
+        "Cf. A014675: 1->2, 2->21.",
+        "Cf. A001950."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_ and _J. H. Conway_",
+    "references": 3,
+    "revision": 34,
+    "time": "2017-05-14T22:53:20-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

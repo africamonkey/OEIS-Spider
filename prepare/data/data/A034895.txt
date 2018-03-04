@@ -1,0 +1,52 @@
+{
+    "number": 34895,
+    "data": "22,23,25,27,32,33,35,37,52,53,55,57,72,73,75,77,111,113,117,119,131,137,171,173,179,197,311,317,371,411,413,417,431,437,471,473,611,617,671,711,713,719,731,1013,1031,1037,1073,1079,1097,1379,1397,1499,1673",
+    "name": "Dropping any digit gives a prime number.",
+    "comment": [
+        "The prime terms are in A051362.",
+        "The number of terms < 10^n: 0, 16, 43, 101, 159, 267, 350, 476, 582, 751, ..., . - _Robert G. Wilson v_, Oct 09 2014",
+        "Includes 10*x+1 for x in A004022. - _Robert Israel_, Jan 14 2016"
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A034895/b034895.txt\">Table of n, a(n) for n = 1..752</a>, first 485 terms from T. D. Noe."
+    ],
+    "example": [
+        "1379 is in the sequence since 379, 179, 139 & 137 are all primes. - _Robert G. Wilson v_, Oct 07 2014"
+    ],
+    "maple": [
+        "P:=proc(q) local d,k,n;",
+        "for n from 1 to q do d:=ilog10(n); for k from 0 to d do",
+        "if not isprime(trunc(n/10^(k+1))*10^k+(n mod 10^k)) then break; fi;",
+        "od; if k=d+1 then print(n); fi; od; end: P(10^4); # _Paolo P. Lava_, Jul 16 2014"
+    ],
+    "mathematica": [
+        "fQ[n_] := Union[ PrimeQ[ Table[ Quotient[n, 10^k]*10^(k - 1) + Mod[n, 10^(k - 1)], {k, 1 + Floor@ Log10@ n}] ]] == {True}; Select[ Range@ 1675, fQ] (* _Robert G. Wilson v_, Oct 07 2014 *)",
+        "ddpnQ[n_]:=With[{id=IntegerDigits[n]},AllTrue[Table[FromDigits[Drop[id,{i}]],{i,Length[id]}],PrimeQ]]; Select[Range[2000],ddpnQ] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Apr 12 2017 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {d = digits(n); for (i=1, #d, nd = []; for (k=1, #d, if (k != i, nd = concat(nd, d[k]));); if (! isprime(subst(Pol(nd), x, 10)), return (0));); return (1);} \\\\ _Michel Marcus_, Jul 17 2014",
+        "(PARI) DroppingAnyDigitGivesAPrime(N,b) = {",
+        "\\\\ Property-testing function; returns 1 if true for N, 0 otherwise",
+        "\\\\ Works with any base b. Here usable with b=10.",
+        "  my(k=b,m); if(N<b,return(0));",
+        "  while(N>=(k\\b), m=(N\\k)*(k\\b)+(N%(k\\b));",
+        "    if ((m<2)||(!isprime(m)),return(0)); k*=b);",
+        "  return(1);",
+        "} \\\\ _Stanislav Sykora_, Jan 14 2016",
+        "(Python) from sympy import isprime",
+        "def is_A034895(n):",
+        "....s = str(n)",
+        "....return n>9 and all(isprime(int(s[:i]+s[i+1:])) for i in range(len(s)))",
+        "# _David Radcliffe_, Dec 11 2017"
+    ],
+    "xref": [
+        "Cf. A267413."
+    ],
+    "keyword": "nonn,base,nice",
+    "offset": "1,1",
+    "author": "_Erich Friedman_",
+    "references": 7,
+    "revision": 46,
+    "time": "2017-12-13T03:01:28-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

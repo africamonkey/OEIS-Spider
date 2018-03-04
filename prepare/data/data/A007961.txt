@@ -1,0 +1,49 @@
+{
+    "number": 7961,
+    "data": "1,2,3,10,11,12,13,20,100,101,102,103,110,111,112,1000,1001,1002,1003,1010,1011,1012,1013,1020,10000,10001,10002,10003,10010,10011,10012,10013,10020,10100,10101,100000,100001,100002,100003,100010,100011",
+    "name": "n written in base where place values are positive squares.",
+    "comment": [
+        "For n>1: A000196(n) = number of digits of a(n); A190321(n) = number of nonzero digits of a(n); A053610(n) = sum of digits of a(n). [_Reinhard Zumkeller_, May 08 2011]"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A007961/b007961.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "F. Smarandache, <a href=\"http://www.gallup.unm.edu/~smarandache/OPNS.pdf\">Only Problems, Not Solutions!</a>."
+    ],
+    "maple": [
+        "A007961 := proc(n)",
+        "    local k,nrem,L,b,d;",
+        "    k := floor(sqrt(n)) ;",
+        "    nrem := n ;",
+        "    L := [] ;",
+        "    for b from k to 1 by -1 do",
+        "        d := floor(nrem/b^2) ;",
+        "        L := [d,op(L)] ;",
+        "        nrem := nrem -d*b^2 ;",
+        "    end do:",
+        "    add( op(i,L)*10^(i-1),i=1..nops(L)) ;",
+        "end proc: # _R. J. Mathar_, Jul 25 2015"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Char (intToDigit)",
+        "a007961 :: Integer -> Integer",
+        "a007961 n = read $ map intToDigit $",
+        "  t n $ reverse $ takeWhile (<= n) $ tail a000290_list where",
+        "    t _ []          = []",
+        "    t m (x:xs)",
+        "        | x > m     = 0 : t m xs",
+        "        | otherwise = (fromInteger m') : t r xs",
+        "        where (m',r) = divMod m x",
+        "-- _Reinhard Zumkeller_, May 08 2011"
+    ],
+    "xref": [
+        "Cf. A000290, A000433."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "R. Muller",
+    "references": 8,
+    "revision": 15,
+    "time": "2015-07-25T15:52:48-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

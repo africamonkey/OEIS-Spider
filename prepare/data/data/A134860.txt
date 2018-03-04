@@ -1,0 +1,48 @@
+{
+    "number": 134860,
+    "data": "4,12,17,25,33,38,46,51,59,67,72,80,88,93,101,106,114,122,127,135,140,148,156,161,169,177,182,190,195,203,211,216,224,232,237,245,250,258,266,271,279,284,292,300,305,313,321,326,334,339,347,355,360,368,373",
+    "name": "Wythoff AAB numbers; also, Fib101 numbers: those n for which the Zeckendorf expansion A014417(n) ends with 1,0,1.",
+    "comment": [
+        "The lower and upper Wythoff sequences, A and B, satisfy the complementary equations AAB=AA+AB and AAB=A+2B-1."
+    ],
+    "link": [
+        "Aviezri S. Fraenkel, <a href=\"http://dx.doi.org/10.1137/090758994\">Complementary iterated floor words and the Flora game</a>, SIAM J. Discrete Math. 24 (2010), no. 2, 570-588. - _N. J. A. Sloane_, May 06 2011",
+        "Clark Kimberling, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL11/Kimberling/kimberling719a.html\">Complementary equations and Wythoff Sequences</a>, Journal of Integer Sequences, 11 (2008) Article 08.3.3."
+    ],
+    "formula": [
+        "a(n) = A(A(B(n))), n>=1, with A=A000201, the lower Wythoff sequence and B=A001950, the upper Wythoff sequence."
+    ],
+    "mathematica": [
+        "With[{r = Map[Fibonacci, Range[2, 14]]}, Position[#, {1, 0, 1}][[All, 1]] &@ Table[If[Length@ # < 3, {}, Take[#, -3]] &@ IntegerDigits@ Total@ Map[FromDigits@ PadRight[{1}, Flatten@ #] &@ Reverse@ Position[r, #] &,Abs@ Differences@ NestWhileList[Function[k, k - SelectFirst[Reverse@ r, # < k &]], n + 1, # > 1 &]], {n, 373}]] (* _Michael De Vlieger_, Jun 09 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import fibonacci",
+        "def a(n):",
+        "k=0",
+        "x=0",
+        "while n>0:",
+        "k=0",
+        "while fibonacci(k)<=n: k+=1",
+        "x+=10**(k - 3)",
+        "n-=fibonacci(k - 1)",
+        "return x",
+        "def ok(n): return 1 if str(a(n))[-3:]==\"101\" else 0",
+        "print [n for n in xrange(12, 501) if ok(n)] # _Indranil Ghosh_, Jun 08 2017"
+    ],
+    "xref": [
+        "Cf. A000201, A001950, A003622, A003623, A035336, A101864, A134859, A035337, A134861, A134862, A134863, A035338, A134864, A035513.",
+        "Let A = A000201, B = A001950. Then AA = A003622, AB = A003623, BA = A035336, BB = A101864. The eight triples AAA, AAB, ..., BBB are A134859, A134860, A035337, A134862, A134861, A134863, A035338, A134864, resp.",
+        "Set-wise difference A003622 \\ A095098. Cf. A095089 (fib101 primes)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Jun 01 2004 and _Clark Kimberling_, Nov 14 2007",
+    "ext": [
+        "This is the result of merging two sequences which were really the same. - _N. J. A. Sloane_, Jun 10 2017"
+    ],
+    "references": 13,
+    "revision": 23,
+    "time": "2017-06-10T23:23:52-04:00",
+    "created": "2007-12-09T03:00:00-05:00"
+}

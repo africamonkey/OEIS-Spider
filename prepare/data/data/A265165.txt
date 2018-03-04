@@ -1,0 +1,48 @@
+{
+    "number": 265165,
+    "data": "0,1,2,7,32,179,1182,8993,77440,744425,7901410,91774375,1157782560,15764338315,230416499390,3598316747905,59792454064640,1053360827319185,19610513077334850,384703418451703175,7931544941793536800,171459202078545968675,3877969156687438765150",
+    "name": "a(n) = sum of the n-th column of the array A265163(n,k). See Comments for more details.",
+    "comment": [
+        "A right-jump in a permutation consists in taking an element and moving it somewhere to its right.",
+        "The set P(k) of permutations reachable from the identity after at most k right-jumps is a permutation-pattern avoiding set: it coincides with the set of permutation avoiding a set of patterns.",
+        "We define B(k) to be the smallest such set of \"forbidden patterns\" (the permutation pattern community calls such a set a \"basis\" for P(k), and its elements can be referred to as \"right-jump basis permutations\").",
+        "The number b(n,k) of permutations of size n in B(k) is given by the array A265163.",
+        "The row sums give the sequence A265164 (i.e. this counts the permutations of any size in the basis B(k)).",
+        "The column sums give the present sequence (i.e. this counts the permutations of size n in any B(k))."
+    ],
+    "link": [
+        "Cyril Banderier, Jean-Luc Baril, C\u00e9line Moreira Dos Santos, <a href=\"https://lipn.univ-paris13.fr/~banderier/Papers/rightjump.pdf\">Right jumps in permutations</a>, Permutation Patterns 2015."
+    ],
+    "formula": [
+        "a(n+2) = 2n*a(n+1) - (n^2-n-1)*a(n) if n>0.",
+        "E.g.f.: -1 + (w * (1 - x)^(1 - w) - (1 - w) * (1 - x)^w) / sqrt(5) where w = (1 + sqrt(5))/2. - _Michael Somos_, Jan 27 2017",
+        "E.g.f. A(x) satisfies 0 == 1 + A(x) - (1 - x)^2 * A''(x). - _Michael Somos_, Jan 27 2017",
+        "0 = a(n)*(+4*a(n+1) + 2*a(n+2) - 6*a(n+3) + a(n+4)) + a(n+1)*(+4*a(n+1) + 6*a(n+2) - 4*a(n+3)) + a(n+2)*(+3*a(n+2)) if n>0. - _Michael Somos_, Jan 27 2017"
+    ],
+    "example": [
+        "G.f. = x^2 + 2*x^3 + 7*x^4 + 32*x^5 + 179*x^6 + 1182*x^7 + 8993*x^8 + ...",
+        "The basis permutations of size 2 are 21 thus a(2)=1.",
+        "The basis permutations of size 3 are 312 and 321 thus a(3)=2.",
+        "The basis permutations of size 4 are 2143, 4123, 4132, 4213, 4231, 4312, 4321, thus a(4)=7."
+    ],
+    "maple": [
+        "gfun[rectoproc]({(n^2+3*n+1)*a(n)+(-2*n-4)*a(n+1)+a(n+2), a(0)=0, a(1)=0, a(2)=1}, a(n), remember);"
+    ],
+    "mathematica": [
+        "a[ n_] := If[ n < 1, 0, With[ {w = (1 + Sqrt[5])/2}, n! SeriesCoefficient[ w (1 - x)^(1 - w) - (1 - w) (1 - x)^w, {x, 0, n}]/Sqrt[5] // Simplify]]; (* _Michael Somos_, Jan 27 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A); if( n<3, n==2, A = vector(n); A[2] = 1; for(k = 1, n-2, A[k + 2] = 2*k*A[k + 1] - (k^2 - k - 1)*A[k]); A[n])}; /* _Michael Somos_, Jan 27 2017 */",
+        "(PARI) {a(n) = my(w); if( n<1, 0, w = quadgen(5); n! * polcoeff( imag( w * (1 - x + x * O(x^n))^(1 - w) ), n))}; /* _Michael Somos_, Jan 27 2017 */"
+    ],
+    "xref": [
+        "Cf. A265163, A265164."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Cyril Banderier_, Dec 07 2015; revised Feb 06 2017",
+    "references": 2,
+    "revision": 48,
+    "time": "2017-02-06T19:43:29-05:00",
+    "created": "2016-05-01T16:40:01-04:00"
+}

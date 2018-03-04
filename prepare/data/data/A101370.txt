@@ -1,0 +1,55 @@
+{
+    "number": 101370,
+    "data": "1,4,24,196,2016,24976,361792,5997872,111969552,2324081728,53089540992,1323476327488,35752797376128,1040367629940352,32441861122796672,1079239231677587264,38151510015777089280,1428149538870997774080,56435732691153773665280",
+    "name": "Number of zero-one matrices with n ones and no zero rows or columns.",
+    "comment": [
+        "a(n) = (1/(4n!)) * Sum_{r, s>=0} (rs)_n / 2^(r+s) }, where (m)_n is the falling factorial m * (m-1) * ... * (m-n+1). [Maia and Mendez]"
+    ],
+    "reference": [
+        "Georg Cantor, Gesammelte Abhandlungen mathematischen und philosophischen Inhalts, p. 435 (IV, 4. Mitteilungen zur Lehre vom Transfiniten, VIII Nr. 13), Springer, Berlin."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A101370/b101370.txt\">Table of n, a(n) for n = 1..400</a>",
+        "P. J. Cameron, D. A. Gewurz and F. Merola, <a href=\"http://www.maths.qmw.ac.uk/~pjc/preprints/product.pdf\">Product action</a>, Discrete Math., 308 (2008), 386-394.",
+        "M. Maia and M. Mendez, <a href=\"http://arXiv.org/abs/math.CO/0503436\">On the arithmetic product of combinatorial species</a>"
+    ],
+    "formula": [
+        "a(n) = (Sum s(n, k) * P(k)^2)/n!, where P(n) is the number of labeled total preorders on {1, ..., n} (A000670), s are signed Stirling numbers of the first kind.",
+        "G.f.: Sum_{m>=0,n>=0} Sum_{j=0..n} (-1)^(n-j)*binomial(n,j)*((1+x)^j-1)^m. - _Vladeta Jovovic_, Mar 25 2006",
+        "Inverse binomial transform of A007322. - _Vladeta Jovovic_, Aug 17 2006",
+        "G.f.: Sum_{n>=0} 1/(2-(1+x)^n)/2^(n+1). - _Vladeta Jovovic_, Sep 23 2006",
+        "G.f.: Sum_{n>=0} A000670(n)^2*log(1+x)^n/n! where 1/(1-x) = Sum_{n>=0} A000670(n)*log(1+x)^n/n!. - _Paul D. Hanna_, Nov 07 2009",
+        "a(n) ~ n! / (2^(2+log(2)/2) * (log(2))^(2*(n+1))). - _Vaclav Kotesovec_, Dec 31 2013"
+    ],
+    "example": [
+        "a(2)=4:",
+        "[1 1] [1] [1 0] [0 1]",
+        "..... [1] [0 1] [1 0]"
+    ],
+    "mathematica": [
+        "m = 17; a670[n_] = Sum[ StirlingS2[n, k]*k!, {k, 0, n}]; Rest[ CoefficientList[ Series[ Sum[ a670[n]^2*(Log[1 + x]^n/n!), {n, 0, m}], {x, 0, m}], x]] (* _Jean-Fran\u00e7ois Alcover_, Sep 02 2011, after g.f.  *)"
+    ],
+    "program": [
+        "(GAP) P:=function(n) return Sum([1..n],x->Stirling2(n,x)*Factorial(x)); end;",
+        "(GAP) F:=function(n) return Sum([1..n],x->(-1)^(n-x)*Stirling1(n,x)*P(x)^2)/Factorial(n); end;",
+        "(PARI) Stirling2(n, k)=if(k<0 || k>n,0, sum(i=0,k,(-1)^i*binomial(k, i)/k!*(k-i)^n))",
+        "{A000670(n)=sum(k=0,n,Stirling2(n, k)*k!)}",
+        "{a(n)=polcoeff(sum(m=0,n,A000670(m)^2*log(1+x+x*O(x^n))^m/m!),n)}",
+        "/* _Paul D. Hanna_, Nov 07 2009 */"
+    ],
+    "xref": [
+        "Cf. A000670 (the sequence (P(n)).",
+        "Cf. A049311 (row and column permutations allowed).",
+        "Cf. A122725."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Peter J. Cameron_, Jan 14 2005",
+    "ext": [
+        "Cantor reference from _Rainer Rosenthal_, Apr 10 2007"
+    ],
+    "references": 10,
+    "revision": 30,
+    "time": "2017-10-08T17:35:43-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

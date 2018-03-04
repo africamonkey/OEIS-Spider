@@ -1,0 +1,50 @@
+{
+    "number": 33181,
+    "data": "1729,2465,15841,41041,46657,75361,162401,172081,399001,449065,488881,530881,656601,670033,838201,997633,1050985,1615681,1773289,1857241,2113921,2433601,2455921,2704801,3057601,3224065,3581761,3664585,3828001,4463641,4903921",
+    "name": "Absolute Euler pseudoprimes: composite n such that abs(a^((n-1)/2) mod n) = 1 for all a with (a,n) = 1.",
+    "comment": [
+        "These numbers c have the property that for each prime divisor p, p-1 divides (c-1)/2. E.g., 2465 = 5*17*29; 1232/4 = 308; 1232/16 = 77; 1232/28 = 44. - _Karsten Meyer_, Nov 08 2005",
+        "All these numbers are Carmichael numbers (A002997). - _Daniel Lignon_, Sep 12 2015"
+    ],
+    "link": [
+        "Daniel Lignon and Dana Jacobsen, <a href=\"/A033181/b033181.txt\">Table of n, a(n) for n = 1..10000</a> (first 124 terms from Daniel Lignon)",
+        "<a href=\"/index/Ps#pseudoprimes\">Index entries for sequences related to pseudoprimes</a>"
+    ],
+    "maple": [
+        "filter:=  proc(n)",
+        "  local q;",
+        "  if isprime(n) then return false fi;",
+        "  if 2 &^ (n-1) mod n <> 1 then return false fi;",
+        "  if not numtheory:-issqrfree(n) then return false fi;",
+        "  for q in numtheory:-factorset(n) do",
+        "    if (n-1)/2 mod (q-1) <> 0 then return false fi",
+        "  od:",
+        "  true;",
+        "end proc:",
+        "select(filter, [seq(i,i=3..10^7,2)]); # _Robert Israel_, Nov 24 2015"
+    ],
+    "mathematica": [
+        "absEulerpspQ[n_Integer?PrimeQ]:=False;",
+        "absEulerpspQ[n_Integer?EvenQ]:=False;",
+        "absEulerpspQ[n_Integer?OddQ]:=Module[{a=2},",
+        "While[a<n&&(GCD[a,n]!=1||!Unequal[PowerMod[a,(n-1)/2,n],1,n-1]),a++];",
+        "(a==n)];",
+        "Select[Range[1,1000000,2],absEulerpspQ] (* _Daniel Lignon_, Sep 09 2015 *)"
+    ],
+    "program": [
+        "(Perl) use ntheory \":all\"; my $n; foroddcomposites { say if is_carmichael($_) && vecall { (($n-1)>>1) % ($_-1) == 0 } factor($n=$_); } 1e6; # _Dana Jacobsen_, Dec 27 2015"
+    ],
+    "xref": [
+        "Cf. A002997."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Dec 11 1999",
+    "ext": [
+        "\"Absolute Euler pseudoprimes\" added to name by _Daniel Lignon_, Sep 09 2015"
+    ],
+    "references": 3,
+    "revision": 44,
+    "time": "2016-08-05T12:49:46-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

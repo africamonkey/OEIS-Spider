@@ -1,0 +1,44 @@
+{
+    "number": 138000,
+    "data": "2,3,7,11,29,53,107,211,431,853,1709,3433,6857,13709,27427,54851,109717,219409,438827,877651,1755319,3510623,7021249,14042491,28084997,56169977,112339957,224679913,449359829,898719707",
+    "name": "Least prime such that the subsets of { a(1), ..., a(n) } sum up to 2^n different values.",
+    "comment": [
+        "Obviously one must exclude previously used primes. Here this is done by requiring 2^n subsets; equivalently, one could require a(n) to be different from preceding terms, or larger than a(n-1). (If a value smaller than a(n-1) were possible, then a(n-1) would not have been the minimal choice.)",
+        "If we replace \"prime\" with \"noncomposite\", the sequence starts 1, 2, 5, 11, 23, 43, 89, 179, 359, 719, 1433, 2879, ... and seems to coincide with A064934, having a different definition, though.",
+        "The present sequence clearly (cf. a(4)) would not be the same if the definition be changed to \"least prime larger than the sum of preceding terms\" (as in A064934).",
+        "It can be seen that a(n) is always very close to Sum_{i=1..n-1} a(i). As a consequence, the sequence grows like a(n) ~ 2^(n-0.256...) and thus is not a counter-example to Erd\u0151s's conjecture mentioned in the cited paper.",
+        "The sequence of partial sums, s(n) = Sum_{i=1..n} a(i) =",
+        "(2,5,12,23,52,105,...) is of alternating parity. If s(n)-1 is prime, this is an upper bound for a(n+1), since the smallest element of the sequence is 2; e.g., a(4) = s(3)-1. Thus if s(n) is even, a(n+1) <= nextprime(s(n)-1). If s(n) is odd, then a(n+1) may be nextprime(s(n)+2) (since the value of s(n) itself is never admissible), as in the case of a(3) = 5 + 2 > s(2) = 5, which is prime."
+    ],
+    "link": [
+        "S. J. Benkoski and P. Erd\u0151s, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1974-0347726-9\">On weird and pseudoperfect numbers</a>, Math. Comp., 28 (1974), pp. 617-623. <a href=\"http://www.renyi.hu/~p_erdos/1974-24.pdf\">Alternate link</a>; <a href=\"http://dx.doi.org/10.1090/S0025-5718-1975-0360452-6\">1975 corrigendum</a>"
+    ],
+    "formula": [
+        "a(n) > a(n-1) and a(n) <= nextprime((Sum_{i=1..n-1}a(i))-(-1)^n); but in fact a(n) ~ Sum_{i=1..n-1}a(i) and thus a(n) ~ constant*2^n."
+    ],
+    "example": [
+        "a(1) = 2, the smallest prime, since subsets of {2} are {},{2} summing to 0 resp. 2.",
+        "a(2) = 3, the second smallest prime, since subsets",
+        "{},{2},{3},{2,3} have sums 0, 2, 3, 5 which are all different.",
+        "Then, 5 is not allowed for a(3), since for {2,3,5}, the sum of the subset {2,3} would be the same than that of {5}.",
+        "For a(3)=7, however, the set of the previously possible sums, {0,2,3,5} and the set of possible sums using the new element, 7 + {0,2,3,5} = {7,9,10,12} are disjoint.",
+        "Obviously this is always true for a(n) larger than the sum of all preceding terms.",
+        "However, a(4) = 11 is smaller than this sum (7 + 3 + 2 = 12), yet {0,2,3,5,7,9,10,12} and 11 + {0,2,3,5,7,9,10,12} are disjoint."
+    ],
+    "program": [
+        "(PARI) s=p=1; for( n=1,30, while( bitand(s,s>>p=nextprime(p+1)),); s+=s<<p; print1(p\",\"))"
+    ],
+    "xref": [
+        "Cf. A064934."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_M. F. Hasler_, Apr 08 2008",
+    "ext": [
+        "a(23)-a(30) from _Donovan Johnson_, Feb 18 2009"
+    ],
+    "references": 5,
+    "revision": 13,
+    "time": "2015-12-08T13:41:42-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

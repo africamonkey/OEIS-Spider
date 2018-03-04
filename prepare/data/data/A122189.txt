@@ -1,0 +1,48 @@
+{
+    "number": 122189,
+    "data": "0,0,0,0,0,0,1,1,2,4,8,16,32,64,127,253,504,1004,2000,3984,7936,15808,31489,62725,124946,248888,495776,987568,1967200,3918592,7805695,15548665,30972384,61695880,122895984,244804400,487641600,971364608,1934923521",
+    "name": "Heptanacci numbers: each term is the sum of the preceding 7 terms, with a(0),...,a(6) = 0,0,0,0,0,0,1.",
+    "comment": [
+        "See A066178 (essentially the same sequence) for more about the heptanacci numbers and other generalizations of the Fibonacci numbers (A000045)."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A122189/b122189.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Martin Burtscher, Igor Szczyrba, Rafa\u0142 Szczyrba, <a href=\"http://www.emis.de/journals/JIS/VOL18/Szczyrba/sz3.pdf\">Analytic Representations of the n-anacci Constants and Generalizations Thereof</a>, Journal of Integer Sequences, Vol. 18 (2015), Article 15.4.5.",
+        "T.-X. He, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL16/He/he13.html\">Impulse Response Sequences and Construction of Number Sequence Identities</a>, J. Int. Seq. 16 (2013) #13.8.2",
+        "F. T. Howard and Curtis Cooper, <a href=\"http://www.math-cs.ucmo.edu/~curtisc/articles/howardcooper/genfib4.pdf\">Some identities for r-Fibonacci numbers</a>.",
+        "B. E. Merkel, <a href=\"http://rave.ohiolink.edu/etdc/view?acc_num=ucin1307442290\">Probabilities of Consecutive Events in Coin Flipping</a>, Master's Thesis, Univ. Cincinatti, May 11 2011.",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,1,1,1,1,1)."
+    ],
+    "formula": [
+        "G.f.: x^6/(1-x-x^2-x^3-x^4-x^5-x^6-x^7). - _R. J. Mathar_, Feb 13 2009",
+        "G.f.: sum_{n >= 0} x^(n+5) *[ product_{k = 1..n} (k + k*x + k*x^2 + k*x^3 + k*x^4 + k*x^5 + x^6)/(1 + k*x + k*x^2 + k*x^3 + k*x^4 + k*x^5 + k*x^6) ]. - _Peter Bala_, Jan 04 2015",
+        "Another form of the g.f.: f(z)=(z^6-z^7)/(1-2*z+z^8), then a(n) = sum_{i=0..floor((n-6)/8)} (-1)^i*binomial(n-6-7*i,i)*2^(n-6-8*i) - sum_{i=0..floor((n-7)/8)} (-1)^i*binomial(n-7-7*i,i)*2^(n-7-8*i) with sum_{i=m..n} alpha(i) = 0 for m>n. - _Richard Choulet_, Feb 22 2010",
+        "sum_{k=0..6*n} a(k+b)*A063265(n,k) = a(7*n+b), b>=0."
+    ],
+    "maple": [
+        "for n from 0 to 50 do k(n):=sum((-1)^i*binomial(n-6-7*i,i)*2^(n-6-8*i),i=0..floor((n-6)/8))-sum((-1)^i*binomial(n-7-7*i,i)*2^(n-7-8*i),i=0..floor((n-7)/8)):od:seq(k(n),n=0..50); a:=taylor((z^6-z^7)/(1-2*z+z^8),z=0,51);for p from 0 to 50 do j(p):=coeff(a,z,p):od :seq(j(p),p=0..50); # _Richard Choulet_, Feb 22 2010"
+    ],
+    "mathematica": [
+        "a=0;b=0;c=0;d=0;e=0;f=0;g=1;lst={a, b, c, d, e, f, g};Do[h=a+b+c+d+e+f+g;AppendTo[lst, h];a=b;b=c;c=d;d=e;e=f;f=g;g=h, {n, 5!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Sep 30 2008 *)",
+        "LinearRecurrence[{1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 1}, 50] (* _Vladimir Joseph Stephan Orlovsky_, May 25 2011 *)",
+        "a={0,0,0,0,0,0,1} For[n=7, n\u2264100, n++, sum=Plus@@a; Print[sum]; a=RotateLeft[a]; a[[7]]=sum] (* _Robert Price_, Dec 04 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=([0,1,0,0,0,0,0; 0,0,1,0,0,0,0; 0,0,0,1,0,0,0; 0,0,0,0,1,0,0; 0,0,0,0,0,1,0; 0,0,0,0,0,0,1; 1,1,1,1,1,1,1]^n*[0;0;0;0;0;0;1])[1,1] \\\\ _Charles R Greathouse IV_, Jun 20 2015"
+    ],
+    "xref": [
+        "Cf. A000045 (k=2, Fibonacci numbers), A000073 (k=3, tribonacci) A000078 (k=4, tetranacci) A001591 (k=5, pentanacci) A001592 (k=6, hexanacci), A122189 (k=7, heptanacci).",
+        "Cf. A066178, A000322, A248700."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,9",
+    "author": "_Roger L. Bagula_ and _Gary W. Adamson_, Oct 18 2006",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Nov 20 2007",
+        "Wrong Binet-type formula removed by _R. J. Mathar_, Feb 13 2009"
+    ],
+    "references": 12,
+    "revision": 57,
+    "time": "2018-01-21T14:44:37-05:00",
+    "created": "2006-12-06T03:00:00-05:00"
+}

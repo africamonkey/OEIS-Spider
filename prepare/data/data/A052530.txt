@@ -1,0 +1,71 @@
+{
+    "number": 52530,
+    "data": "0,2,8,30,112,418,1560,5822,21728,81090,302632,1129438,4215120,15731042,58709048,219105150,817711552,3051741058,11389252680,42505269662,158631825968,592022034210,2209456310872,8245803209278,30773756526240",
+    "name": "a(0)=0, a(1)=2; for n >= 2, a(n) = 4*a(n-1) - a(n-2).",
+    "comment": [
+        "a(n-1) and a(n+1) are the solutions for c if b=a(n) in (b^2 + c^2)/(b*c + 1) = 4 and there are no other pairs of solutions apart from consecutive pairs of terms in this sequence. Cf. A061167. - _Henry Bottomley_, Apr 18 2001",
+        "a(n)^2 for n >= 1 gives solutions to A007913(3x+4) = A007913(x). - _Benoit Cloitre_, Apr 07 2002",
+        "For all elements n of the sequence, 3*n^2 + 4 is a perfect square. Lim_{n->inf} a(n)/a(n-1) = 2 + sqrt(3). - _Gregory V. Richardson_, Oct 06 2002",
+        "a(n) = the number of compositions of the integer 2*n into even parts, where each part 2*i comes in 2*i colors. (Dedrickson, Theorem 3.2.6) An example is given below. Cf. A052529, A095263. - _Peter Bala_, Sep 17 2013",
+        "Except for an initial 1, this is the p-INVERT of (1,1,1,1,1,...) for p(S) = 1 - 2 S - 2 S^2; see A291000.  - _Clark Kimberling_, Aug 24 2017"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A052530/b052530.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Daniel Birmajer, Juan B. Gil, Michael D. Weiner, <a href=\"https://arxiv.org/abs/1707.07798\">(an + b)-color compositions</a>, arXiv:1707.07798 [math.CO], 2017.",
+        "C. R. Dedrickson III, <a href=\"http://digitalcommons.georgiasouthern.edu/cgi/viewcontent.cgi?article=1015&amp;context=etd\">Compositions, Bijections, and Enumerations</a> Thesis, 2012, Jack N. Averitt College of Graduate Studies, Georgia Southern University",
+        "J.-P. Ehrmann et al., <a href=\"http://forumgeom.fau.edu/POLYA/ProblemCenter/POLYA002.html\">Problem POLYA002</a>, Integer pairs (x,y) for which (x^2+y^2)/(1+pxy) is an integer.",
+        "F. Goebel, A. A. Jagers, <a href=\"http://dx.doi.org/10.1016/0095-8956(79)90010-8\">On a conjecture of Tutte concerning minimal tree numbers</a>, J. Combin. Theory Ser. B 26 (1979), no. 3, 346-348. MR0535948 (80m:05064). [From _N. J. A. Sloane_, Feb 20 2012]",
+        "A. F. Horadam, <a href=\"http://www.fq.math.ca/Scanned/3-3/horadam.pdf\">Basic Properties of a Certain Generalized Sequence of Numbers</a>, Fibonacci Quarterly, Vol. 3, No. 3, 1965, pp. 161-176.",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=460\">Encyclopedia of Combinatorial Structures 460</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-1)."
+    ],
+    "formula": [
+        "G.f.: 2*x/(1 - 4*x + x^2).",
+        "Invert transform of even numbers: a(n) = 2*Sum_{k=1..n} k*a(n-k). - _Vladeta Jovovic_, Apr 27 2001",
+        "a(n) = sum(-(1/3)*(-1+2*_alpha)*_alpha^(-1-n), _alpha=RootOf(1-4*_Z+_Z^2)), i.e.: a(n) = (((2+sqrt(3))^(n+1)-(2-sqrt(3))^(n+1))-((2+sqrt(3))^(n)-(2-sqrt(3))^(n))+((2+sqrt(3))^(n-1)-(2-sqrt(3))^(n-1)))/(3*sqrt(3)). - _Gregory V. Richardson_, Oct 06 2002",
+        "a(n) = A071954(n) - 2. - _N. J. A. Sloane_, Feb 20 2005",
+        "a(n) = (2*sinh(2n*arcsinh(1/sqrt(2))))/sqrt(3). - _Herbert Kociemba_, Apr 24 2008",
+        "a(n) = 2*A001353(n). - _R. J. Mathar_, Oct 26 2009",
+        "a(n) = ((3-2*sqrt(3))/3)*(2-sqrt(3))^(n-1)+((3+2*sqrt(3))/3)*(2+sqrt(3))^(n-1). - _Vincenzo Librandi_, Nov 20 2010",
+        "a(n) = floor((2+sqrt(3))^n/sqrt(3)). - _Zak Seidov_, Mar 31 2011",
+        "a(n) = ((2+sqrt(3))^n-(2-sqrt(3))^n)/sqrt(3). (See Horadam for construction.) - _Johannes Boot_, Jan 08 2012",
+        "a(n) = A217233(n) + A217233(n-1) with A217233(-1) = -1. - _Bruno Berselli_, Oct 01 2012"
+    ],
+    "example": [
+        "Colored compositions. a(2) = 8: There are two compositions of 4 into even parts, namely 4 and 2 + 2. Using primes to indicate the coloring of parts, the 8 colored compositions are 4, 4', 4'', 4''', 2 + 2, 2 + 2', 2' + 2 and 2' + 2'. - _Peter Bala_, Sep 17 2013"
+    ],
+    "maple": [
+        "spec := [S,{S=Sequence(Prod(Union(Z,Z),Sequence(Z),Sequence(Z)))},unlabeled]: seq(combstruct[count](spec, size=n), n=0..20);"
+    ],
+    "mathematica": [
+        "a[0]=0; a[1] = c; a[n_] := a[n] = p*c^2*a[n - 1] - a[n - 2]; p = 1; c = 2; Table[ a[n], {n, 0, 20} ]",
+        "NestList[2 # + Sqrt[4 + 3 #^2]&, 0, 200] (* _Zak Seidov_, Mar 31 2011 *)",
+        "LinearRecurrence[{4, -1}, {0, 2}, 25] (* _T. D. Noe_, Jan 09 2012 *)"
+    ],
+    "program": [
+        "(PARI): { polya002(p,c,m) = local(v,w,j,a); w=0; print1(w,\", \"); v=c; print1(v,\", \"); j=1; while(j<=m,a=p*c^2*v-w; print1(a,\", \"); w=v; v=a; j++) } polya002(1,2,25)",
+        "(Haskell)",
+        "a052530 n = a052530_list !! n",
+        "a052530_list =",
+        "   0 : 2 : zipWith (-) (map (* 4) $ tail a052530_list) a052530_list",
+        "-- _Reinhard Zumkeller_, Sep 29 2011"
+    ],
+    "xref": [
+        "Cf. A007913, A003699, A217233.",
+        "A052529, A095263."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,2",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "ext": [
+        "More terms from _James A. Sellers_, Jun 06 2000",
+        "Edited by _N. J. A. Sloane_, Nov 11 2006",
+        "a(0) changed to 0 and entry revised accordingly by _Max Alekseyev_, Nov 15 2007",
+        "Signs in definition corrected by _John W. Layman_, Nov 20 2007"
+    ],
+    "references": 27,
+    "revision": 78,
+    "time": "2017-12-09T19:23:06-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

@@ -1,0 +1,65 @@
+{
+    "number": 7148,
+    "id": "M0774",
+    "data": "1,2,3,6,10,20,37,74,143,284,559,1114,2206,4394,8740,17418,34696,69194,137971,275280,549258,1096286,2188333,4369162,8724154,17422652,34797199,69505908,138845926,277383872,554189329,1107297290,2212558942",
+    "name": "Number of self-complementary 2-colored bracelets (turn over necklaces) with 2n beads.",
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A007148/b007148.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "E. M. Palmer and R. W. Robinson, <a href=\"http://projecteuclid.org/euclid.pjm/1102711113\">Enumeration of self-dual configurations</a> Pacific J. Math., 110 (1984), 203-221.",
+        "F. Ruskey, <a href=\"http://www.theory.cs.uvic.ca/~cos/inf/neck/NecklaceInfo.html\">Necklaces, Lyndon words, De Bruijn sequences, etc.</a>",
+        "<a href=\"/index/Br#bracelets\">Index entries for sequences related to bracelets</a>"
+    ],
+    "formula": [
+        "a(n) = 2^(n-2) + (1/(4n)) * Sum_{d|n} phi(2d)*2^(n/d). - _N. J. A. Sloane_, Sep 25 2012",
+        "a(n) = (1/2)*(A000079(n-1) + A000013(n))."
+    ],
+    "maple": [
+        "# see A245558",
+        "L := proc(n,k)",
+        "    local a,j ;",
+        "    a := 0 ;",
+        "    for j in numtheory[divisors](igcd(n,k)) do",
+        "        a := a+numtheory[mobius](j)*binomial(n/j,k/j) ;",
+        "    end do:",
+        "    a/n ;",
+        "end proc:",
+        "A007148 := proc(n)",
+        "    local a,k,l;",
+        "    a := 0 ;",
+        "    for k from 1 to n do",
+        "        for l in numtheory[divisors](igcd(n,k)) do",
+        "            a := a+L(n/l,k/l)*ceil(k/2/l) ;",
+        "        end do:",
+        "    end do:",
+        "    a;",
+        "end proc:",
+        "seq(A007148(n),n=1..20) ; # _R. J. Mathar_, Jul 23 2017"
+    ],
+    "mathematica": [
+        "a[n_] := (1/2)*(2^(n-1) + Total[ EulerPhi[2*#]*2^(n/#) &  /@ Divisors[n]]/(2*n)); Table[ a[n], {n, 1, 33}] (* _Jean-Fran\u00e7ois Alcover_, Oct 25 2011 *)"
+    ],
+    "program": [
+        "(PARI) a(n)= (1/2) *(2^(n-1)+sumdiv(n,k,eulerphi(2*k)*2^(n/k))/(2*n))",
+        "(Python)",
+        "from sympy import divisors, totient",
+        "def a(n): return 2**(n - 2) + sum([totient(2*d)*2**(n/d) for d in divisors(n)])/(4*n)",
+        "print map(a, xrange(1, 51)) # _Indranil Ghosh_, Jul 24 2017"
+    ],
+    "xref": [
+        "Cf. A000013, A000079, A007147.",
+        "Different from, but easily confused with, A045690 and A093371."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Description corrected by _Christian G. Bower_"
+    ],
+    "references": 8,
+    "revision": 38,
+    "time": "2017-07-25T02:43:17-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

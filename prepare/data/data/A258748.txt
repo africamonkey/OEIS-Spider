@@ -1,0 +1,42 @@
+{
+    "number": 258748,
+    "data": "1,96,120,240,600,672,1560,1680,2016,2160,2400,2520,2640,2976,3120,4200,4320,4560,5040,5160,5400,5520,6600,6960,7320,7680,7800,8736,9840,10080,10320,11400,12600,13800,14112,14160,16800,17400,17640,19560,19920,21600,22176",
+    "name": "Numbers n such that sigma(n) divides Fibonacci(n).",
+    "comment": [
+        "It appears that a(n) is divisible by 24 for n > 1. - _Robert Israel_, Jun 09 2015"
+    ],
+    "link": [
+        "Paolo P. Lava and Robert Israel, <a href=\"/A258748/b258748.txt\">Table of n, a(n) for n = 1..1000</a> (n = 1..150 from Paolo P. Lava)"
+    ],
+    "example": [
+        "Fibonacci(1) / sigma(1) = 1 / 1 = 1;",
+        "Fibonacci(96) / sigma(96) = 51680708854858323072 / 252 = 205082177995469536."
+    ],
+    "maple": [
+        "with(numtheory): with(combinat): P:=proc(q) local n;",
+        "for n from 1 to q do if type(fibonacci(n)/sigma(n),integer)",
+        "then print(n); fi; od; end: P(10^6);",
+        "# Alternative:",
+        "filter:= proc(n)",
+        "  local s,M;",
+        "  uses LinearAlgebra[Modular];",
+        "  s:= numtheory:-sigma(n);",
+        "  M:= Mod(s, Matrix([[1,1],[1,0]]),integer[]);",
+        "  MatrixPower(s,M,n)[1,2] = 0",
+        "end proc:",
+        "1, op(select(filter, [$2..10^5])); # _Robert Israel_, Jun 09 2015"
+    ],
+    "mathematica": [
+        "Select[Range[10^4], 0==Mod[Fibonacci@# , DivisorSigma[1, #]] &] (* _Giovanni Resta_, Jun 09 2015 *)"
+    ],
+    "xref": [
+        "Cf. A000045, A000203."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Jun 09 2015",
+    "references": 2,
+    "revision": 16,
+    "time": "2015-06-11T04:51:31-04:00",
+    "created": "2015-06-11T04:51:31-04:00"
+}

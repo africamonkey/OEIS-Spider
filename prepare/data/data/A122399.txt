@@ -1,0 +1,53 @@
+{
+    "number": 122399,
+    "data": "1,1,9,211,9285,658171,68504709,9837380491,1863598406805,450247033371451,135111441590583909,49300373690091496171,21495577955682021043125,11037123350952586270549531,6591700149366720366704735109",
+    "name": "a(n) = Sum_{k=0..n} k^n * k! * Stirling2(n,k).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A122399/b122399.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "E.g.f.: Sum((exp(n*x) - 1)^n, n=0..infinity). - _Vladeta Jovovic_, Sep 03 2006",
+        "E.g.f.: Sum_{n>=0} exp(n^2*x) / (1 + exp(n*x))^(n+1). - _Paul D. Hanna_, Oct 26 2014",
+        "E.g.f.: Sum_{n>=0} exp(-n*x) / (1 + exp(-n*x))^(n+1). - _Paul D. Hanna_, Oct 30 2014",
+        "O.g.f.: Sum_{n>=0} n^n * n! * x^n / Product_{k=1..n} (1 - n*k*x). - _Paul D. Hanna_, Jan 05 2013",
+        "Limit n->infinity (a(n)/n!)^(1/n)/n = ((1+exp(1/r))*r^2)/exp(1) = 1.162899527477400818845..., where r = 0.87370243323966833... is the root of the equation 1/(1+exp(-1/r)) = -r*LambertW(-exp(-1/r)/r). - _Vaclav Kotesovec_, Jun 21 2013"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 9*x^2/2! + 211*x^3/3! + 9285*x^4/4! + 658171*x^5/5! +...",
+        "such that",
+        "A(x) = 1 + (exp(x)-1) + (exp(2*x)-1)^2 + (exp(3*x)-1)^3 + (exp(4*x)-1)^4 +...",
+        "The e.g.f. is also given by the series:",
+        "A(x) = 1/2 + exp(x)/(1+exp(x))^2 + exp(4*x)/(1+exp(2*x))^3 + exp(9*x)/(1+exp(3*x))^4 + exp(16*x)/(1+exp(4*x))^5 + exp(25*x)/(1+exp(5*x))^6 +...",
+        "or, equivalently,",
+        "A(x) = 1/2 + exp(-x)/(1+exp(-x))^2 + exp(-2*x)/(1+exp(-2*x))^3 + exp(-3*x)/(1+exp(-3*x))^4 + exp(-4*x)/(1+exp(-4*x))^5 + exp(-5*x)/(1+exp(-5*x))^6 +..."
+    ],
+    "maple": [
+        "a := n -> add(k^n*k!*combinat[stirling2](n,k),k=0..n); # _Max Alekseyev_, Feb 01 2007"
+    ],
+    "mathematica": [
+        "Flatten[{1,Table[Sum[k^n*k!*StirlingS2[n,k],{k,0,n}],{n,1,20}]}] (* _Vaclav Kotesovec_, Jun 21 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(m=0, n, m^m*m!*x^m/prod(k=1, m, 1-m*k*x+x*O(x^n))), n)}",
+        "for(n=0, 20, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Jan 05 2013",
+        "(PARI) {a(n)=n!*polcoeff(sum(k=0, n, (exp(k*x +x*O(x^n)) - 1)^k), n)}",
+        "for(n=0,25,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Oct 26 2014",
+        "(PARI) /* From e.g.f. infinite series: */",
+        "\\p100 \\\\ set precision",
+        "{A=Vec(serlaplace(sum(n=0, 500, 1.*exp(n^2*x +O(x^26))/(1 + exp(n*x +O(x^26)))^(n+1)) ))}",
+        "for(n=0, #A-1, print1(round(A[n+1]), \", \")) \\\\ _Paul D. Hanna_, Oct 30 2014"
+    ],
+    "xref": [
+        "Cf. A122400, A220181."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Vladeta Jovovic_, Aug 31 2006",
+    "ext": [
+        "More terms from _Max Alekseyev_, Feb 01 2007"
+    ],
+    "references": 20,
+    "revision": 30,
+    "time": "2014-10-30T22:03:11-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

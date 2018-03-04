@@ -1,0 +1,37 @@
+{
+    "number": 266918,
+    "data": "1,4,9,16,25,27,36,49,64,81,100,121,144,169,196,225,243,256,289,324,343,361,400,441,484,529,576,625,676,729,784,841,900,961,1024,1089,1156,1225,1296,1369,1444,1521,1600,1681,1728,1764,1849,1936,2025,2116,2187,2197,2209,2304,2401,2500",
+    "name": "Perfect power L\u00f6schian numbers.",
+    "comment": [
+        "Inspired by A266836. See first comment in A266836.",
+        "Intersection of A001597 and A003136.",
+        "Obviously, this sequence contains all positive squares.",
+        "Perfect powers that are not the L\u00f6schian numbers are 8, 32, 125, 128, 216, 512, 1000, 1331, 2048, 2744, 3125, 3375, 4913, 5832, 7776, ..."
+    ],
+    "example": [
+        "25 is a term because 25 = 5^2 = 5^2 + 5*0 + 0^2.",
+        "27 is a term because 27 = 3^3 = 3^2 + 3*3 + 3^2.",
+        "243 is a term because 243 = 3^5 = 9^2 + 9*9 + 9^2.",
+        "343 is a term because 343 = 7^3 = 18^2 + 18*1 + 1^2."
+    ],
+    "mathematica": [
+        "fQ[n_] := n == 1 || GCD @@ FactorInteger[n][[All, 2]] > 1; gQ[n_] := Resolve[Exists[{x, y}, Reduce[n == x^2 + x y + y^2, {x, y}, Integers]]]; Select[Range@ 2500, fQ@# && gQ@# &] (* _Michael De Vlieger_, Jan 06 2016, after _Ant King_ at A001597 and _Jean-Fran\u00e7ois Alcover_ at A003136 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^10^4); p=eta(x)^3/eta(x^3); for(n=0, 9999, if(polcoeff(p, n) != 0 && (ispower(n) || n==1), print1(n, \", \")));",
+        "(PARI) is(n) = (ispower(n) || n==1) && #bnfisintnorm(bnfinit(z^2+z+1), n);",
+        "for(n=0, 1e4, if(is(n), print1(n, \", \")));"
+    ],
+    "xref": [
+        "Cf. Loeschian numbers: A003136 (all), A266836 (2*k+1), A202822 (3*k+1)",
+        ", A260682 (6*k+1).",
+        "Cf. A001597."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Altug Alkan_, Jan 06 2016",
+    "references": 0,
+    "revision": 14,
+    "time": "2016-01-09T19:36:05-05:00",
+    "created": "2016-01-09T19:36:05-05:00"
+}

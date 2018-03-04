@@ -1,0 +1,89 @@
+{
+    "number": 6943,
+    "id": "M4802",
+    "data": "1,11,101,1111,10001,110011,1010101,11111111,100000001,1100000011,10100000101,111100001111,1000100010001,11001100110011,101010101010101,1111111111111111,10000000000000001,110000000000000011",
+    "name": "Rows of Sierpi\u0144ski's triangle (Pascal's triangle mod 2).",
+    "comment": [
+        "The rows of Sierpi\u0144ski's triangle, read as numbers in binary representation, are products of distinct Fermat numbers, row 0 being the empty product. (See also the comment in A080176.)",
+        "Rows 1 to 31 are the binary representation of the 31 (2^5-1) nonempty products of distinct Fermat primes, giving the number of sides of constructible (with straightedge and compass) odd-sided polygons. - _Daniel Forgues_, Jun 21 2011",
+        "Sierpi\u0144ski's triangles typically refer to any finite triangle with rows 0 to 2^n-1 so as to get complete triangles, with n at least 4 so as to show the fractal-like pattern of nested triangles. We may consider these finite Sierpi\u0144ski's triangles as finite parts of \"the\" infinite Sierpi\u0144ski's triangle, so to speak. - _Daniel Forgues_, Jun 22 2011",
+        "Also, binary representation of the n-th iteration of the \"Rule 60\" elementary cellular automaton starting with a single ON (black) cell. - _Robert Price_, Feb 21 2016"
+    ],
+    "reference": [
+        "C. Pickover, Mazes for the Mind, St. Martin's Press, NY, 1992, p. 353.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 55."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A006943/b006943.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Antti Karttunen, <a href=\"http://www.fq.math.ca/Papers1/42-1/quartkarttunen01_2004.pdf\">On Pascal's Triangle Modulo 2 in Fibonacci Representation</a> (Abstract). (For Denton Hewgill's identity)",
+        "OEIS Wiki, <a href=\"/wiki/Sierpinski&#39;s_triangle\">Sierpinski's triangle</a>",
+        "V. Shevelev, <a href=\"http://arxiv.org/abs/1011.6083\">On Stephan's conjectures concerning Pascal triangle modulo 2 and their polynomial generalization</a>, J. of Algebra Number Theory: Advances and Appl., 7 (2012), no.1, 11-29.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "S. Wolfram, <a href=\"http://wolframscience.com/\">A New Kind of Science</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>"
+    ],
+    "formula": [
+        "From _Daniel Forgues_, Jun 20-21 2011: (Start)",
+        "In the following formulas, [...]_2 means converted to base 2.",
+        "a(n) = [Sum_{i=0..n} (binomial(n,i) mod 2) 2^i]_2, n >= 0.",
+        "From row n, 0 <= n <= 2^k - 1, k >= 0, being",
+        "  a(n) = [Product_{i=0..k-1} (F_i)^(alpha_i)]_2, alpha_i in {0, 1},",
+        "where for k = 0, we get the empty product, i.e., 1, giving a(0) = 1,",
+        "we induce from the triangle that row 2^k + n, 0 <= n <= 2^k - 1, is",
+        "  a(2^k + n) = a(n)*[F_k]_2, k >= 0.",
+        "Denton Hewgill's identity: (Cf. links)",
+        "a(n) = [Product_{i>=0} (F_i)^(floor(n/2^i) mod 2)]_2, F_i = 2^(2^i)+1.",
+        "a(0) = 1; a(n) = [Product_{i=0..floor(log_2(n))} (F_i)^(floor(n/2^i) mod 2)]_2, F_i = 2^(2^i)+1, n >= 1. (End)",
+        "From _Vladimir Shevelev_, Dec 26-27 2013: (Start)",
+        "sum_{n>=0} 1/a(n)^r = Product_{k>=0} (1 + 1/(10^(2^k)+1)^r),",
+        "sum_{n>=0} (-1)^A000120(n)/a(n)^r = Product_{k>=0} (1 - 1/(10^(2^k)+1)^r), where r>0 is a real number.",
+        "In particular,",
+        "sum_{n>=0} 1/a(n) = Product_{k>=0} (1 + 1/(10^(2^k)+1)) = 1.10182034...;",
+        "sum_{n>=0} (-1)^A000120(n)/a(n) = 0.9",
+        "a(2^n) = 10^(2^n)+1, n>=0.",
+        "Note that analogs of Stephan's limit formulas (see Shevelev link) reduce to the relations a(2^t*n+2^(t-1)) = 99*(10^(2^(t-1)+1))/(10^(2^(t-1))-1) * a(2^t*n+2^(t-1)-2), t>=2. In particular, for t=2,3,4, we have the following formulas:",
+        "  a(4*n+2) = 101*a(4*n);",
+        "  a(8*n+4) = 10001/101*a(8*n+2);",
+        "  a(16*n+8)= 100000001/1010101*(16*n+6), etc. (End)",
+        "From _Tom Edgar_, Oct 11 2015: (Start)",
+        "a(2*n+1) = 11*a(2*n).",
+        "a(n) = Product_{b_j != 0}a(2^j) where n = Sum_{j>=0}b_j*2^j is the binary representation of n.",
+        "(End)"
+    ],
+    "example": [
+        "From _Daniel Forgues_, Jun 20 2011: (Start)",
+        "Terms as products of distinct Fermat numbers in binary representation (Cf. A080176 comment) (Cf. Sierpi\u0144ski's triangle on OEIS Wiki):",
+        "a(0) = 1 = (empty product);",
+        "a(1) = 11 = F_0;",
+        "a(2) = 101 = F_1;",
+        "a(3) = 1111 = 11*101 = F_0*F_1;",
+        "a(4) = 10001 = F_2;",
+        "a(5) = 110011 = 11*10001 = F_0*F_2;",
+        "a(6) = 1010101 = 101*10001 = F_1*F_2;",
+        "a(7) = 11111111 = 11*101*10001 = F_0*F_1*F_2. (End)"
+    ],
+    "maple": [
+        "A006943 := proc(n) local k; add((binomial(n,k) mod 2)*10^k, k=0..n); end;"
+    ],
+    "mathematica": [
+        "f[n_] := FromDigits@ Mod[Binomial[n, Range[0, n]], 2]; Array[f, 17, 0] (* _Robert G. Wilson v_, Jun 26 2011 *)"
+    ],
+    "xref": [
+        "Cf. A080176 for Fermat numbers in binary representation.",
+        "Cf. A001317 for the decimal representation of A006943.",
+        "Cf. A249183."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _James A. Sellers_, Aug 21 2000",
+        "Edited by _Daniel Forgues_, Jun 20 2011"
+    ],
+    "references": 7,
+    "revision": 81,
+    "time": "2016-06-16T23:27:16-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

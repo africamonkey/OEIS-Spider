@@ -1,0 +1,45 @@
+{
+    "number": 72133,
+    "data": "1,1,2,6,24,120,720,5040,40320,362880,3628799,39916699,478995537,6226736369,87166698628,1307240982000,20907446718225,355162464899601,6384776070987990,121061600999380138,2413632612087046844,50453964720806671644,1102844526263334763556",
+    "name": "T_9(n) in the notation of Bergeron et al., u_k(n) in the notation of Gessel: Related to Young tableaux of bounded height.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A072133/b072133.txt\">Table of n, a(n) for n = 0..561</a>",
+        "F. Bergeron and F. Gascon, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL3/CYT/cyt.html\">Counting Young tableaux of bounded height</a>, J. Integer Sequences, Vol. 3 (2000), #00.1.7.",
+        "Shalosh B. Ekhad, Nathaniel Shar, and Doron Zeilberger, <a href=\"http://arxiv.org/abs/1504.02513\">The number of 1...d-avoiding permutations of length d+r for SYMBOLIC d but numeric r</a>, arXiv:1504.02513 [math.CO], 2015.",
+        "Ira M. Gessel, <a href=\"http://dx.doi.org/10.1016/0097-3165(90)90060-A\">Symmetric functions and P-recursiveness</a>, J. Combin. Theory Ser. A 53 (1990), no. 2, 257-285.",
+        "Nathaniel Shar, <a href=\"https://pdfs.semanticscholar.org/98e3/71b675789ed6ec4f9c9cd82e2dee9ca79399.pdf\">Experimental methods in permutation patterns and bijective proof</a>, PhD Dissertation, Mathematics Department, Rutgers University, May 2016."
+    ],
+    "formula": [
+        "a(n) ~ 30625 * 3^(4*n + 90) / (2097152 * n^40 * Pi^4). - _Vaclav Kotesovec_, Sep 10 2014"
+    ],
+    "maple": [
+        "a:= proc(n) option remember;",
+        "      `if`(n<5, n!, ((-1110790863+(1520978576+(1772290401+(607308786+",
+        "       (101671498+(9464664+(500874+(14124+165*n)*n)*n)*n)*n)*n)*n)*n)*a(n-1)",
+        "       -(1129886062*n+559908333*n^2+111239576*n^3+10655238*n^4+8778*n^6",
+        "       +491700*n^5 +353895381)*(n-1)^2*a(n-2) +(258011271+234066216*n",
+        "       +58221266*n^2+5463876*n^3 +172810*n^4)*(n-1)^2*(n-2)^2*a(n-3)",
+        "       -9*(4070430+1504292*n+117469*n^2)* (n-1)^2*(n-2)^2*(n-3)^2*a(n-4)",
+        "       +893025*(n-1)^2*(n-2)^2*(n-3)^2*(n-4)^2*a(n-5)) /",
+        "       ((n+20)^2*(n+8)^2*(n+18)^2*(n+14)^2))",
+        "    end:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Oct 10 2012"
+    ],
+    "mathematica": [
+        "h[l_] := With[{n = Length[l]}, Sum[i, {i, l}]!/Product[Product[1 + l[[i]] - j + Sum[If[l[[k]] >= j, 1, 0], {k, i+1, n}], {j, 1, l[[i]]}], {i, 1, n}]]; g[n_, i_, l_] := If[n==0 || i==1, h[Join[l, Array[1 &, n]]]^2, If[i < 1, 0, Sum[g[n - i*j, i - 1, Join[l, Array[i &, j]]], {j, 0, n/i}]]]; a[n_] := If[n <= 9, n!, g[n, 9, {}]]; Table[a[n], {n, 1, 30}] (* _Jean-Fran\u00e7ois Alcover_, Feb 24 2016, after _Alois P. Heinz_ (A214015) *)"
+    ],
+    "xref": [
+        "Cf. A052399 for T_6(n), A047890 for T_5(n), A047889 for T_4(n).",
+        "Column k=9 of A214015."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "Jesse Carlsson (j.carlsson(AT)physics.unimelb.edu.au), Jun 25 2002",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Feb 09 2017"
+    ],
+    "references": 3,
+    "revision": 30,
+    "time": "2017-03-17T23:30:43-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

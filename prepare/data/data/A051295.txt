@@ -1,0 +1,65 @@
+{
+    "number": 51295,
+    "data": "1,1,2,5,15,54,235,1237,7790,57581,489231,4690254,49986715,585372877,7463687750,102854072045,1522671988215,24093282856182,405692082526075,7242076686885157,136599856992122366,2714409550073698925",
+    "name": "a(0)=1; thereafter, a(m+1) = Sum_{k=0 to m} k!*a(m-k).",
+    "comment": [
+        "a(n) = number of permutations on [n] that contain a 132 pattern only as part of a 4132 pattern. For example, a(4) = 15 counts the 14 132-avoiding permutations on [4] (Catalan numbers A000108) and 4132.",
+        "a(n) is the number of permutations on [n] that contain a (scattered) 342 pattern only as part of a 1342 pattern. For example, 412635 fails because 463 is an offending 342 pattern (= 231 pattern).",
+        "This sequence gives the number of permutations of {1,2,...,n} such that the elements of each cycle of the permutation form an interval. - _Michael Albert_, Dec 14 2004",
+        "Starting (1, 2, 5, 15,...) = row sums of triangle A143965. - _Gary W. Adamson_, Apr 10 2009",
+        "Number of compositions of n where there are (k-1)! sorts of part k. - _Joerg Arndt_, Aug 04 2014"
+    ],
+    "link": [
+        "Vincenzo Librandi and Vaclav Kotesovec, <a href=\"/A051295/b051295.txt\">Table of n, a(n) for n = 0..448</a> (first 100 terms from Vincenzo Librandi)",
+        "David Callan, <a href=\"http://arxiv.org/abs/math/0507169\">A combinatorial interpretation of the eigensequence for composition</a>, arXiv:math/0507169 [math.CO]",
+        "David Callan, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL9/Callan/callan96.html\">A Combinatorial Interpretation of the Eigensequence for Composition</a>, Journal of Integer Sequences, Vol. 9 (2006), Article 06.1.4.",
+        "Stefan Forcey, Aaron Lauve and Frank Sottile, <a href=\"http://www.combinatorics.net/Annals/Abstract/17_1_105.aspx\">Cofree compositions of coalgebras</a>, Annals of Combinatorics 17 (1) pp. 105-130 March, 2013.",
+        "Richard J. Martin, and Michael J. Kearney, <a href=\"http://dx.doi.org/10.1007/s00493-014-3183-3\">Integral representation of certain combinatorial recurrences</a>, Combinatorica: 35:3 (2015), 309-315."
+    ],
+    "formula": [
+        "It appears that the INVERT transform of factorial numbers A000142 gives 1, 2, 5, 15, 54, 235, 1237, ... - _Antti Karttunen_, May 30 2003",
+        "This is true: translating the defining recurrence to a generating function identity yields A(x)=1/(1-(0!x+1!x^2+2!x^3+...)) which is the INVERT formula.",
+        "In other words: let F(x) = sum(n>=0, n!*x^n) then the g.f. is 1/(1-x*F(x)), cf. A052186 (g.f. F(x)/(1+x*F(x))). - _Joerg Arndt_, Apr 25 2011",
+        "a(n) = Sum_{k>=0} A084938(n, k). - _Philippe Del\u00e9ham_, Feb 05 2004",
+        "G.f. A(x) satisfies: A(x) = (1-x)*A(x)^2 - x^2*A'(x). - _Paul D. Hanna_, Aug 02 2008",
+        "G.f.: A(x) = 1/(1-x/(1-1*x/(1-1*x/(1-2*x/(1-2*x/(1-3*x/(1-3*x...))))))))) (continued fraction). - _Paul Barry_, Sep 25 2008",
+        "From _Gary W. Adamson_, Jul 22 2011: (Start)",
+        "a(n) = upper left term in M^n, M = an infinite square production matrix in which a column of 1's is prepended to Pascal's triangle, as follows:",
+        "1, 1, 0, 0, 0,...",
+        "1, 1, 1, 0, 0,...",
+        "1, 1, 2, 1, 0,...",
+        "1, 1, 3, 3, 1,...",
+        "... Also, a(n+1) = sum of top row terms of M^n. (End)",
+        "G.f.: 1+x/(U(0)-x) where U(k) = 1 + x*k - x*(k+1)/U(k+1); (continued fraction, 1-step). - _Sergei N. Gladkovskii_, Oct 10 2012",
+        "G.f.: 1/(U(0) - x) where U(k) = 1 - x*(k+1)/(1 - x*(k+1)/U(k+1)); (continued fraction, 2-step). - _Sergei N. Gladkovskii_, Nov 12 2012",
+        "a(n) ~ (n-1)! * (1 + 2/n + 7/n^2 + 31/n^3 + 165/n^4 + 1025/n^5 + 7310/n^6 + 59284/n^7 + 543702/n^8 + 5618267/n^9 + 65200918/n^10), for coefficients see A260532. - _Vaclav Kotesovec_, Jul 28 2015"
+    ],
+    "example": [
+        "a[ 4 ]=15=a[ 3 ]*0!+a[ 2 ]*1!+a[ 1 ]*2!+a[ 0 ]*3!=5*1+2*1+1*2+1*6.",
+        "As to matrix M, a(3) = 5 since the top row of M^n = (5, 5, 4, 1), with a(4) = 15 = (5 + 5 + 4 + 1)."
+    ],
+    "maple": [
+        "a := proc(n) option remember; `if`(n<2, 1, add(a(n-j-1)*j!, j=0..n-1)) end proc: seq(a(n), n=0..30); # _Vaclav Kotesovec_, Jul 28 2015"
+    ],
+    "mathematica": [
+        "Table[Coefficient[Series[E^x/(E^x-ExpIntegralEi[x]),{x,Infinity,20}],x,-n],{n,0,20}] (* _Vaclav Kotesovec_, Feb 22 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=(1+x^2*deriv(A)/A)/(1-x));polcoeff(A,n)} \\\\ _Paul D. Hanna_, Aug 02 2008"
+    ],
+    "xref": [
+        "Cf. A051296, A260532.",
+        "Row sums of A084938.",
+        "Cf. A143965. - _Gary W. Adamson_, Apr 10 2009"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Leroy Quet_",
+    "ext": [
+        "More terms from _Vincenzo Librandi_, Feb 23 2013"
+    ],
+    "references": 12,
+    "revision": 73,
+    "time": "2017-06-02T10:14:35-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

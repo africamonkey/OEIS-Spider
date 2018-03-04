@@ -1,0 +1,30 @@
+{
+    "number": 260524,
+    "data": "468950021,493108481,659846021,5936122901,8144063621,11408333333,12601267541,14252656133,18074903681,27223783841,30633711701,31093792133,31797754721,61426533761,65085388961,86610942881,91945013333,92380393121,102538073177",
+    "name": "Pseudoprimes to bases 2, 3, 5 and 7 that are congruent to 5 (modulo 6) but are not Carmichael numbers (A002997).",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A260524/b260524.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "fQ[n_] := !PrimeQ[n] && PowerMod[2, n - 1, n] == 1 &&",
+        "> PowerMod[3, n - 1, n] == 1 && PowerMod[5, n - 1, n] == 1 && PowerMod[7, n - 1, n] == 1 && Mod[n, CarmichaelLambda[n]] != 1; k = 1; lst = {}; While[k < 25000000001, If[ fQ@ k, AppendTo[lst, k]; Print@ k]; k += 6]; lst"
+    ],
+    "program": [
+        "(PARI) Korselt(n)=my(f=factor(n)); for(i=1, #f[, 1], if(f[i, 2]>1||(n-1)%(f[i, 1]-1), return(0))); 1",
+        "is(n)=n%6==5 && Mod(2,n)^n==2 && Mod(3,n)^n==3 && Mod(5,n)^(n-1)==1 && Mod(7,n)^(n-1)==1 && !isprime(n) && !Korselt(n) \\\\ _Charles R Greathouse IV_, Jul 29 2015",
+        "(Perl) use ntheory \":all\"; foroddcomposites { say if $_%6 == 5 && is_pseudoprime($_,2,3,5,7) && $_ % carmichael_lambda($_) != 1; } 1e9; # _Dana Jacobsen_, Sep 07 2015"
+    ],
+    "xref": [
+        "Cf. A153581."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ray Chandler_, _Artur Jasinski_ and _Robert G. Wilson v_, Jul 28 2015",
+    "ext": [
+        "a(9)-a(19) from _Charles R Greathouse IV_, Jul 29 2015"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2015-09-07T14:43:05-04:00",
+    "created": "2015-08-14T04:05:54-04:00"
+}

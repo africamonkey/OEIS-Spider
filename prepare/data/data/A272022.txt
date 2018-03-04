@@ -1,0 +1,46 @@
+{
+    "number": 272022,
+    "data": "13,14,16,17,20,30,31,32,34,35,37,38,50,70,71,73,74,76,79,91,92,95,97,98,110,113,118,119,131,133,199,311,337,373,733,772,775,778,779,919,991,1118,3337,7771,77779",
+    "name": "Look at the set of numbers obtained by permuting the digits of n in all possible ways, then remove n itself from the set. If the remaining numbers are all primes, then n is in the sequence.",
+    "example": [
+        "119 is in the sequence because every permutation of its digits excluding 119 (i.e., 191 and 911) is a prime.",
+        "11 is not in the sequence, because when 11 is removed from the set, no numbers are left."
+    ],
+    "maple": [
+        "lis := [];",
+        "for n from 1 to 10000 do",
+        "  nn := convert(n, base, 10);",
+        "  pp := combinat[permute](nn);",
+        "  if nops(pp) = 1 then",
+        "    next",
+        "  end if;",
+        "  lOk := true;",
+        "  for p in pp do",
+        "    if p = nn then",
+        "      next: #exclude n",
+        "    end if;",
+        "    if `not`(isprime(convert(p, base, 10, 10^nops(p))[])) then",
+        "      lOk := false; break",
+        "    end if",
+        "  end do;",
+        "  if lOk then",
+        "    lis := [op(lis), n]",
+        "  end if",
+        "end do:",
+        "lis := lis;"
+    ],
+    "program": [
+        "(PARI) isok(n) = {v = []; d = digits(n); for (k=0, (#d)!-1, p = numtoperm(#d, k); dp = vector(#d, j, d[p[j]]); np = subst(Pol(dp), x, 10); v = Set(concat(v, np));); v = setminus(v, Set(n)); if (#v == 0, return (0)); for (k=1, #v, if (!isprime(v[k]), return (0));); return (1);} \\\\ _Michel Marcus_, Apr 18 2016"
+    ],
+    "xref": [
+        "Cf. A095179, A111347.",
+        "Cf. A003459. - _Altug Alkan_, Apr 18 2016"
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_C\u00e9sar Eliud Lozada_, Apr 18 2016",
+    "references": 0,
+    "revision": 19,
+    "time": "2016-04-20T01:38:12-04:00",
+    "created": "2016-04-20T00:49:46-04:00"
+}

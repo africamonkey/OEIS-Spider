@@ -1,0 +1,34 @@
+{
+    "number": 292530,
+    "data": "3,53,157,173,211,257,263,373,509,541,563,593,607,653,733,947,977,997,1069,1103,1123,1187,1223,1237,1367,1459,1499,1511,1543,1747,1753,1759,1777,1901,1907,1913,2069,2179,2287,2399,2411,2417,2447,2677,2903,2963,3061,3067,3181,3203,3307,3313,3511",
+    "name": "Primes prime(k) such that neither prime(k) + prime(k-1) nor prime(k) + prime(k+1) is divisible by 3.",
+    "comment": [
+        "Prime(k) is the k-th prime. It seems to be rare that the sum of two consecutive primes is not divisible by 3. For each prime(k) in this sequence (other than prime(2) = 3), the three numbers prime(k-1), prime(k), and prime(k+1) are all of the form 6*x+1 or all of the form 6*x-1."
+    ],
+    "example": [
+        "3 is a term, because 3+2 = 5 and 3+5 = 8; neither 5 nor 8 is divisible by 3.",
+        "53 is a term as well, because 53+47 = 100 and 53+59 = 112, and neither 100 nor 112 is divisible by 3, and neither 100 nor 112 is divisible by 3."
+    ],
+    "maple": [
+        "Primes:= select(isprime,[2,seq(i,i=3..10000,2)]):",
+        "R:= select(k -> Primes[k]+Primes[k-1] mod 3 <> 0, {$2..nops(Primes)}):",
+        "R:= R intersect map(`-`,R,1);",
+        "Primes[sort(convert(R,list))]; # _Robert Israel_, Sep 18 2017"
+    ],
+    "mathematica": [
+        "Select[Prime@ Range@ 500, NoneTrue[# + {NextPrime[#, -1], NextPrime@ #}, Divisible[#, 3] &] &] (* _Michael De Vlieger_, Sep 19 2017 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = isprime(p) && ((p + precprime(p-1)) % 3) && ((p + nextprime(p+1)) % 3) \\\\ _Michel Marcus_, Sep 18 2017"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Marc Morgenegg_, Sep 18 2017",
+    "ext": [
+        "More terms from _Robert Israel_, Sep 18 2017"
+    ],
+    "references": 0,
+    "revision": 27,
+    "time": "2017-10-01T00:32:24-04:00",
+    "created": "2017-10-01T00:32:24-04:00"
+}

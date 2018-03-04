@@ -1,0 +1,43 @@
+{
+    "number": 193653,
+    "data": "1,2,6,20,70,248,882,3140,11182,39824,141834,505148,1799110,6407624,22821090,81278516,289477726,1030990208,3671926074,13077758636,46577128054,165886901432,590814960402,2104218684068,7494285973006,26691295287152,95062457807466",
+    "name": "Q-residue of the Delannoy triangle A008288, where Q is the triangular array (t(i,j)) given by t(i,j)=1.",
+    "comment": [
+        "For the definition of Q-residue, see A193649.",
+        "This sequence gives the number of closed walks from the two vertices having loops in the digraph defined by its adjacency matrix A=(2,1,1;1,2,1;1,1,0). - _David Neil McGrath_, Aug 22 2014"
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A193653/b193653.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-1,-2)."
+    ],
+    "formula": [
+        "a(n)=4*a(n-1)-a(n-2)-2*a(n-3); a(n-1)=(1,1) and (2,2) elements of A^(n-1) where A=(2,1,1;1,2,1;1,1,0) and n>1. - _David Neil McGrath_, Aug 22 2014",
+        "G.f.: (1-2*t-t^2)/(1-4*t+t^2+2*t^3). - _Robert Israel_, Aug 22 2014",
+        "a(n) = (34+(17-3*sqrt(17))*((3-sqrt(17))/2)^n+((3+sqrt(17))/2)^n*(17+3*sqrt(17)))/68. - _Colin Barker_, Sep 02 2016"
+    ],
+    "mathematica": [
+        "q[n_, k_] := 1;",
+        "r[0] = 1; r[k_] := Sum[q[k - 1, i] r[k - 1 - i], {i, 0, k - 1}]",
+        "p[n_, 0] := 1; p[n_, n_] := 1;",
+        "p[n_, k_] := p[n - 1, k - 1] + p[n - 2, k - 1] +  p[n - 1, k]  (* A008288, Delannoy *)",
+        "v[n_] := Sum[p[n, k] r[n - k], {k, 0, n}]",
+        "Table[v[n], {n, 0, 16}]    (* A193653 *)",
+        "TableForm[Table[q[i, k], {i, 0, 4}, {k, 0, i}]]",
+        "Table[r[k], {k, 0, 8}]  (* 2^k *)",
+        "TableForm[Table[p[n, k], {n, 0, 4}, {k, 0, n}]]"
+    ],
+    "program": [
+        "(PARI) Vec((1-2*t-t^2)/(1-4*t+t^2+2*t^3) + O(t^40)) \\\\ _Michel Marcus_, Aug 23 2014",
+        "(PARI) a(n) = round((34+(17-3*sqrt(17))*((3-sqrt(17))/2)^n+((3+sqrt(17))/2)^n*(17+3*sqrt(17)))/68) \\\\ _Colin Barker_, Sep 02 2016"
+    ],
+    "xref": [
+        "Cf. A193649, A008288."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, Aug 02 2011",
+    "references": 2,
+    "revision": 31,
+    "time": "2017-03-24T00:47:53-04:00",
+    "created": "2011-08-02T15:44:47-04:00"
+}

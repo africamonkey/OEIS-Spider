@@ -1,0 +1,61 @@
+{
+    "number": 259834,
+    "data": "0,0,1,2,5,20,97,574,3973,31520,281825,2803418,30704101,367114252,4757800705,66432995030,994204132517,15875195019224,269397248811073,4841453414347570,91856764780324165,1834779993945449348,38485629141294791201,845788826477292504302",
+    "name": "Number of permutations of [n] with no fixed points where the maximal displacement of an element equals n-1.",
+    "comment": [
+        "a(n) counts permutations p of [n] such that p(i) <> i and (p(1) = n or p(n) = 1)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A259834/b259834.txt\">Table of n, a(n) for n = 0..450</a>"
+    ],
+    "formula": [
+        "a(n) = ((2*n^2 - 11*n + 13)*a(n-1) + (2*n-5)*(n-3)*a(n-2))/(2*n-7) for n > 2.",
+        "a(n) = (n-2)! * [x^(n-2)] exp(-x)*(x+1)/(x-1)^2 for n > 1.",
+        "a(n) ~ 2 * (n-1)! / exp(1). - _Vaclav Kotesovec_, Jul 07 2015",
+        "a(n) = y(n,n), n > 1, where y(m+1,n) = (n-m)*y(m,n) + (n-m)*y(m-1,n), with y(0,n)=0, y(1,n)=y(2,n)=1 for all n. - _Benedict W. J. Irwin_, Nov 03 2016",
+        "From _Peter Luschny_, Oct 05 2017: (Start)",
+        "a(n) = (Gamma(n-1, -1) + 2*Gamma(n, -1)) / e for n >= 2.",
+        "a(n) = A000166(n-2) + 2*A000166(n-1) for n >= 2.",
+        "a(n) = (2*n-1)*A000166(n-2) - 2*(-1)^n for n >= 2.",
+        "a(n) = A000255(n-2) + A000166(n-1) for n >= 2.",
+        "a(n+2) = (-1)^n*(-hypergeom([1,1-n], [], 1) + hypergeom([2,2-n], [], 1)) = A292898(2, n) for n >= 0.",
+        "a(n) ~ 2*sqrt(2*Pi)*exp(-n-1)*n^(n-1/2). (End)"
+    ],
+    "example": [
+        "a(2) = 1: 21.",
+        "a(3) = 2: 231, 312.",
+        "a(4) = 5: 2341, 3421, 4123, 4312, 4321."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<3, [0, 0, 1][n+1],",
+        "     ((2*n^2-11*n+13)*a(n-1) +(2*n-5)*(n-3)*a(n-2))/(2*n-7))",
+        "    end:",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "Join[{0, 0}, Table[DifferenceRoot[Function[{y, m}, {y[1 + m] == (n - m)*y[m] + (n - m) y[m - 1], y[0] == 0, y[1] == 1, y[2] == 1}]][n], {n, 2, 30}]] (* _Benedict W. J. Irwin_, Nov 03 2016 *)",
+        "Table[If[n<2, 0, Subfactorial[n-2]+2*Subfactorial[n-1]], {n,0,23}] (* _Peter Luschny_, Oct 04 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def A259834_list(len):",
+        "    L, u, x, y = [0], 1, 0, 0",
+        "    for n in range(len):",
+        "        y, x, u = x, x*n + u, -u",
+        "        L.append(y + 2*x)",
+        "    L[1] = 0",
+        "    return L",
+        "print(A259834_list(23)) # _Peter Luschny_, Oct 04 2017"
+    ],
+    "xref": [
+        "A diagonal of A259784.",
+        "Cf. A000166, A000255, A292897, A292898."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Jul 06 2015",
+    "references": 4,
+    "revision": 30,
+    "time": "2017-10-06T08:35:24-04:00",
+    "created": "2015-07-06T11:17:57-04:00"
+}

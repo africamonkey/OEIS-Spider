@@ -1,0 +1,76 @@
+{
+    "number": 186241,
+    "data": "1,1,3,12,54,262,1337,7072,38426,213197,1202795,6879160,39794416,232429030,1368806610,8118934656,48458809586,290832756606,1754059333738,10625545472716,64620970743082,394409682103262,2415084675723048,14832185219521152,91339478577683664",
+    "name": "G.f. satisfies: A(x) = 1 + x*A(x)^2 + x^2*A(x)^4 + x^3*A(x)^6.",
+    "link": [
+        "Robert Israel, <a href=\"/A186241/b186241.txt\">Table of n, a(n) for n = 0..1108</a>",
+        "Nathan Gabriel, Katherine Peske, Lara Pudwell, and Samuel Tay, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL15/Pudwell/pudwell.html\">Pattern avoidance in ternary trees</a> J. Integer Seq. 15 (2012), no. 1, Article 12.1.5, 20 pp.",
+        "Vladimir Kruchinin, D. V. Kruchinin, <a href=\"http://arxiv.org/abs/1103.2582\">Composita and their properties</a>, arXiv:1103.2582 [math.CO], 2011-2013."
+    ],
+    "formula": [
+        "a(n) = 1/(2*n-1)*Sum_{j=0..2*n-1} binomial(2*n-1,j)*Sum_{i=j..n+j-1} binomial(j,i-j)*binomial(2*n-j-1,3*j-3*n-i+1))), n>0.",
+        "From _Paul D. Hanna_, Nov 11 2011: (Start)",
+        "G.f. A(x) satisfies:",
+        "(1) A(x) = sqrt( (1/x)*Series_Reversion( x/(1 + x + x^2 + x^3)^2 ) ).",
+        "(2) A( x/(1 + x + x^2 + x^3)^2 ) = 1 + x + x^2 + x^3.",
+        "(3) A(x) = G(x*A(x)) where G(x) = A(x/G(x)) = g.f. of A036765 (number of rooted trees with a degree constraint).",
+        "(4) a(n) = [x^n] (1 + x + x^2 + x^3)^(2*n+1) / (2*n+1).",
+        "(5) A(x) = exp( Sum_{n>=1} x^n*A(x)^n/n * [Sum_{k=0..n} C(n,k)^2 * x^k*A(x)^(2*k)] ).",
+        "(6) A(x) = exp( Sum_{n>=1} x^n*A(x)^n/n * [(1-x*A(x)^2)^(2*n+1)*Sum_{k>=0} C(n+k,k)^2*x^k*A(x)^(2*k) )] ).",
+        "(End)",
+        "From _Peter Bala_, Jun 21 2015: (Start)",
+        "a(n) = 1/(2*n + 1)*Sum_{k = 0..floor(n/2)} binomial(2*n + 1,k)*binomial(2*n + 1,n - 2*k).",
+        "More generally, the coefficient of x^n in A(x)^r equals r/(2*n + r)*Sum_{k = 0..floor(n/2)} binomial(2*n + r,k)*binomial(2*n + r,n - 2*k) by the Lagrange-B\u00fcrmann formula.",
+        "O.g.f. A(x) = exp(Sum_{n >= 1} 1/2*b(n)*x^n/n), where b(n) = Sum_{k = 0..floor(n/2)} binomial(2*n,k)*binomial(2*n,n - 2*k). Cf. A036765, A198951, A200731. (End)",
+        "Recurrence: 5*n*(5*n - 1)*(5*n + 1)*(5*n + 2)*(5*n + 3)*(13144*n^4 - 57784*n^3 + 90149*n^2 - 59354*n + 13980)*a(n) = 8*(2*n - 1)*(16259128*n^8 - 71478808*n^7 + 108653137*n^6 - 60530902*n^5 - 2811173*n^4 + 12694433*n^3 - 2398482*n^2 - 352503*n + 78570)*a(n-1) + 128*(n-1)*(2*n - 3)*(2*n - 1)*(52576*n^6 - 178560*n^5 + 136156*n^4 + 22938*n^3 - 16067*n^2 - 3138*n - 405)*a(n-2) + 2048*(n-2)*(n-1)*(2*n - 5)*(2*n - 3)*(2*n - 1)*(13144*n^4 - 5208*n^3 - 4339*n^2 + 168*n + 135)*a(n-3). - _Vaclav Kotesovec_, Nov 17 2017"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 3*x^2 + 12*x^3 + 54*x^4 + 262*x^5 + 1337*x^6 +...",
+        "where A(x) = (1 + x*A(x)^2)*(1 + x^2*A(x)^4).",
+        "Related expansions:",
+        "A(x)^2 = 1 + 2*x + 7*x^2 + 30*x^3 + 141*x^4 + 704*x^5 + 3666*x^6 +...",
+        "A(x)^4 = 1 + 4*x + 18*x^2 + 88*x^3 + 451*x^4 + 2392*x^5 + 13022*x^6 +...",
+        "A(x)^6 = 1 + 6*x + 33*x^2 + 182*x^3 + 1014*x^4 + 5718*x^5 + 32623*x^6 +...",
+        "where A(x) = 1 + x*A(x)^2 + x^2*A(x)^4 + x^3*A(x)^6.",
+        "From _Paul D. Hanna_, Nov 11 2011: (Start)",
+        "The logarithm of the g.f. A = A(x) equals the series:",
+        "log(A(x)) = (1 + x*A^2)*x*A + (1 + 2^2*x*A^2 + x^2*A^4)*x^2*A^2/2 +",
+        "(1 + 3^2*x*A^2 + 3^2*x^2*A^4 + x^3*A^6)*x^3*A^3/3 +",
+        "(1 + 4^2*x*A^2 + 6^2*x^2*A^4 + 4^2*x^3*A^6 + x^4*A^8)*x^4*A^4/4 +",
+        "(1 + 5^2*x*A^2 + 10^2*x^2*A^4 + 10^2*x^3*A^6 + 5^2*x^4*A^8 + x^5*A^10)*x^5*A^5/5 + ...",
+        "which involves squares of binomial coefficients. (End)"
+    ],
+    "maple": [
+        "F:= proc(n) if n::even then",
+        "  simplify((1/2)*hypergeom([-(1/2)*n, -2*n-1, -(1/2)*n+1/2], [(1/2)*n+1, 3/2+(1/2)*n], -1)*(2*n+2)!/((2*n+1)*((n+1)!)^2))",
+        "  else",
+        "  simplify((1/2)*hypergeom([-(1/2)*n, -2*n-1, -(1/2)*n+1/2], [(1/2)*n+1, 3/2+(1/2)*n], -1)*(2*n+2)!/((2*n+1)*((n+1)!)^2))",
+        "  fi",
+        "end proc:",
+        "map(F, [$0..30]); # _Robert Israel_, Jun 22 2015"
+    ],
+    "mathematica": [
+        "a[n_] := 1/(2n + 1) Sum[Binomial[2n + 1, k] Binomial[2n + 1, n - 2k], {k, 0, n/2}];",
+        "(* or: *)",
+        "a[n_] := (Binomial[2n + 1, n] HypergeometricPFQ[{-2n - 1, 1/2 - n/2, -n/2}, {n/2 + 1, n/2 + 3/2}, -1])/(2n + 1);",
+        "Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Nov 17 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,A=(1+x*A^2)*(1+x^2*A^4)+x*O(x^n));polcoeff(A,n)} /* _Paul D. Hanna_ */",
+        "(PARI) {a(n)=polcoeff(sqrt((1/x)*serreverse(x/(1 + x + x^2 + x^3 +x*O(x^n))^2)), n)} /* _Paul D. Hanna_ */",
+        "(PARI) {a(n)=polcoeff( (1 + x + x^2 + x^3+x*O(x^n))^(2*n+1)/(2*n+1), n)} /* _Paul D. Hanna_ */",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=exp(sum(m=1, n, (x*A+x*O(x^n))^m/m*sum(j=0, m, binomial(m, j)^2*x^j*A^(2*j))))); polcoeff(A, n, x)} /* _Paul D. Hanna_ */",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=exp(sum(m=1, n,x^m*A^m/m*(1-x*A^2)^(2*m+1)*sum(j=0, n, binomial(m+j, j)^2*x^j*A^(2*j))))); polcoeff(A, n, x)} /* _Paul D. Hanna_ */"
+    ],
+    "xref": [
+        "Cf. A199874, A199876, A199877, A198951, A198953, A198957, A192415, A198888, A036765.",
+        "Cf. A200731."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Vladimir Kruchinin_, Feb 15 2011",
+    "references": 5,
+    "revision": 36,
+    "time": "2017-11-17T10:17:34-05:00",
+    "created": "2011-02-15T23:08:24-05:00"
+}

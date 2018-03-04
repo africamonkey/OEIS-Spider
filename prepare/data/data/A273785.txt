@@ -1,0 +1,44 @@
+{
+    "number": 273785,
+    "data": "17,26,33,37,49,65,73,80,81,82,97,99,101,109,113,129,145,146,161,163,168,170,177,181,182,193,197,199,201,209,217,224,225,226,239,241,242,244,251,253,257,268,273,289,293,301,305,321,323,325,337,353,360,361",
+    "name": "Numbers n where a composite c < n exists such that n^(c-1) == 1 (mod c^2), i.e., such that c is a \"base-n Wieferich pseudoprime\".",
+    "comment": [
+        "Contains n+1 for n in A048111. - _Robert Israel_, Apr 20 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A273785/b273785.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "example": [
+        "15 satisfies the congruence 26^(15-1) == 1 (mod 15^2) and 15 < 26, so 26 is a term of the sequence."
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "Res:= {}:",
+        "for c from 4 to N-1 do",
+        "  if not isprime(c) then",
+        "    for m in map(rhs@op, [msolve(x^(c-1)-1, c^2)]) do",
+        "       if m > c and m <= N then Res:= Res union {m, seq(k*c^2+m, k=1..(N-m)/c^2)}",
+        "       else Res:= Res union {seq(k*c^2+m, k=1..(N-m)/c^2)}",
+        "       fi",
+        "    od",
+        "  fi",
+        "od:",
+        "sort(convert(Res,list)); # _Robert Israel_, Apr 20 2017"
+    ],
+    "mathematica": [
+        "nn = 361; c = Select[Range@ nn, CompositeQ]; Select[Range@ nn, Function[n, Count[TakeWhile[c, # <= n &], k_ /; Mod[n^(k - 1), k^2] == 1] > 0]] (* _Michael De Vlieger_, May 30 2016 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = forcomposite(c=1, n-1, if(Mod(n, c^2)^(c-1)==1, return(1))); return(0)"
+    ],
+    "xref": [
+        "Cf. A048111, A240719, A244752, A255885, A256517, A267288, A268310, A273339, A273340."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, May 30 2016",
+    "references": 2,
+    "revision": 12,
+    "time": "2017-04-21T04:38:26-04:00",
+    "created": "2016-06-16T22:27:11-04:00"
+}

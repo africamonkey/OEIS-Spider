@@ -1,0 +1,51 @@
+{
+    "number": 33485,
+    "id": "N0236",
+    "data": "1,2,3,5,7,10,13,18,23,30,37,47,57,70,83,101,119,142,165,195,225,262,299,346,393,450,507,577,647,730,813,914,1015,1134,1253,1395,1537,1702,1867,2062,2257,2482,2707,2969",
+    "name": "a(n) = a(n-1) + a(floor(n/2)), a(1) = 1.",
+    "comment": [
+        "Sequence gives the number of partitions of 2n into \"strongly decreasing\" parts (see the function s*(n) in the paper by Bessenrodt, Olsson, and Sellers); see the example in A040039.",
+        "a(A036554(n)) is even, a(A003159(n)) is odd. - _Benoit Cloitre_, Oct 23 2002",
+        "Partial sums of the sequence a(1)=1, a(1), a(1), a(2), a(2), a(3), a(3), a(4), a(4), a(5), a(5), a(6), ... example : a(1) = 1, a(2) = 1+1 = 2, a(3) = 1+1+1 = 3, a(4) = 1+1+1+2 = 5, a(5) = 1+1+1+2+2 = 7, ... - _Philippe Del\u00e9ham_, Jan 02 2004",
+        "The number of odd numbers before the n-th even number in this sequence is A003156(n). - _Philippe Del\u00e9ham_, Mar 27 2004"
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A033485/b033485.txt\">Table of n, a(n) for n=1..1000</a>",
+        "J. Arkin, <a href=\"http://www.fq.math.ca/Scanned/9-2/advanced9-2-a.pdf\">Problem H-102: Gone but not forgotten</a>, Fibonacci Quarterly, Vol. 9 (1971), page 135.",
+        "Christine Bessenrodt, Jorn B. Olsson, and James A. Sellers, <a href=\"http://arxiv.org/abs/1107.1156\">Unique path partitions: Characterization and Congruences</a>, arXiv:1107.1156 [math.CO], 2011-2012.",
+        "Philippe Del\u00e9ham, <a href=\"/A033485/a033485.pdf\">Letter to N. J. A. Sloane, Apr 20 1998</a>"
+    ],
+    "formula": [
+        "Conjecture: lim_{n->infinity} a(2n)/a(n)*log(n)/n = c = 1.64.... and a(n)/A(n) is bounded where A(n)=1 if n is a power of 2, otherwise A(n)=sqrt(n)*Product_{k<log_2(n)} n/2^k/log(n/2^k)). - _Benoit Cloitre_, Jan 26 2003",
+        "G.f.: A(x) satisfies x + (1+x)*A(x^2) = (1-x)*A(x). a(n) modulo 2 = A035263(n). - _Philippe Del\u00e9ham_, Feb 25 2004",
+        "G.f.:(1/2)*(((1-x)*Product_{n>=0}(1-x^(2^n)))^(-1)-1). a(n) modulo 4 = A007413(n). - _Philippe Del\u00e9ham_, Feb 28 2004",
+        "Sum_{k=1..n} a(k) = (a(2n+1)-1)/2. - _Philippe Del\u00e9ham_, Mar 18 2004"
+    ],
+    "mathematica": [
+        "b[1]=1; b[n_] := b[n]=Sum[b[k], {k, 1, n/2}]; Table[b[n], {n, 3, 105, 2}] (* _Robert G. Wilson v_, Apr 22 2001 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<2,1,a(floor(n/2))+a(n-1))",
+        "(Haskell)",
+        "import Data.List (transpose)",
+        "a033485 n = a033485_list !! (n-1)",
+        "a033485_list = 1 : zipWith (+)",
+        "   a033485_list (concat $ transpose [a033485_list, a033485_list])",
+        "-- _Reinhard Zumkeller_, Nov 15 2012",
+        "(MAGMA) [n le 1 select 1 else Self(n-1) + Self(Floor(n/2)) : n in [1..60]]; // _Vincenzo Librandi_, Nov 20 2015"
+    ],
+    "xref": [
+        "Cf. A040039. Also half of A000123 (with first term omitted).",
+        "Cf. A022907."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_. This was in the 1973 \"Handbook\", but was then dropped from the database. Resubmitted by _Philippe Del\u00e9ham_. Entry revised by _N. J. A. Sloane_, Jun 10 2012",
+    "references": 28,
+    "revision": 53,
+    "time": "2015-11-20T04:12:06-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

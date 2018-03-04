@@ -1,0 +1,40 @@
+{
+    "number": 263924,
+    "data": "64,256,272,324,513,514,516,544,1026,1028,1032,1064,1088,1089,1216,1544,1552,1568,1569,2052,2056,2064,2188,2192,2193,2194,2208,2224,2244,2248,2304,2313,2314",
+    "name": "Numbers n such that there is a prime p > 3 and an exponent e such that the central binomial coefficient binomial(2n, n) is divisible by p^e but not by either 2^e or 3^e.",
+    "comment": [
+        "How quickly does this sequence grow asymptotically?",
+        "A263922(a(n)) > max{A000120(a(n)),A000989(an(n))}. - _Reinhard Zumkeller_, Nov 19 2015"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A263924/b263924.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) >> n^1.014. (This is surely not optimal.) - _Charles R Greathouse IV_, Jan 18 2016"
+    ],
+    "example": [
+        "64 is a member because binomial(128,64) = 2 * 3 * 5^3 * ..., where the exponent 3 of 5 is greater than the exponents 1 and 1 of 2 and 3, respectively."
+    ],
+    "program": [
+        "(PARI) f(n,p)=my(d=Vecrev(digits(n,p)),c);sum(i=1,#d,c=(2*d[i]+c>=p))",
+        "is(n)=my(r=max(hammingweight(n),f(n,3))); forprime(p=5,sqrtnint(n,r+1), if(f(n,p)>r, return(p))); 0",
+        "(Haskell)",
+        "import Math.NumberTheory.Primes.Factorisation (factorise)",
+        "a263924 n = a263924_list !! (n-1)",
+        "a263924_list = filter f [2..] where",
+        "   f x = not (null pe23s) && any ((> e23) . snd) pes' where",
+        "         e23 = maximum (map snd pe23s)",
+        "         (pe23s, pes') = span ((<= 3) . fst) $ factorise $ a000984 x",
+        "-- _Reinhard Zumkeller_, Nov 01 2015"
+    ],
+    "xref": [
+        "Cf. A263922, A000984, A000120, A000989."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Charles R Greathouse IV_, Oct 29 2015",
+    "references": 2,
+    "revision": 14,
+    "time": "2016-01-18T03:24:40-05:00",
+    "created": "2015-11-01T05:02:39-05:00"
+}

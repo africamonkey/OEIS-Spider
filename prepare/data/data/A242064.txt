@@ -1,0 +1,25 @@
+{
+    "number": 242064,
+    "data": "1,2,9,9,36,36,81,220,220,386,386,386,434,521,896,896,896,1167,1167,1695,2065,2096,2096,2968,2968,2968,2968,3341,4561,4561,4561,4561,4672,4672,5964,6203,7158,8294,8294,8294,8740,8740,10452,10452,11075,11075,12092",
+    "name": "Smallest k such that the union of {A242033(i): 1 <= i <= k} and {A242034(i): 1 <= i <= k} includes all primes {3, ..., prime(n)}.",
+    "mathematica": [
+        "lpf[n_]:=lpf[n]=First[First[FactorInteger[n]]];(*least prime factor*)",
+        "A242033=Map[lpf[#-1]&,Select[Range[6,100000,2],lpf[#-1]<lpf[#-3]&](*A245024*)];",
+        "A242034=Map[lpf[#-3]&,Select[Range[6,100000,2],lpf[#-1]>lpf[#-3]&](*A243937*)];",
+        "pos={};NestWhile[#+1&,2,(AppendTo[pos,Min[Position[A242033,Prime[#],1,1],Position[A242034,Prime[#],1,1]/.{}->0]];!Last[pos]==0)&];",
+        "A242064=Rest[FoldList[Max,-Infinity,Flatten[pos]]] (* _Peter J. C. Moses_, Aug 14 2014 *)"
+    ],
+    "xref": [
+        "Cf. A242033, A242034, A242036, A242037."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_Vladimir Shevelev_, Aug 13 2014",
+    "ext": [
+        "More terms from _Peter J. C. Moses_, Aug 14 2014"
+    ],
+    "references": 3,
+    "revision": 12,
+    "time": "2014-08-21T23:09:51-04:00",
+    "created": "2014-08-21T23:09:51-04:00"
+}

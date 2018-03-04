@@ -1,0 +1,40 @@
+{
+    "number": 243914,
+    "data": "16,24,792,1392",
+    "name": "Even numbers which are twice the sum of a twin prime pair, but cannot be expressed as the sum of 2 distinct twin prime pairs.",
+    "comment": [
+        "Subsequence of A111046 (twice A054735).",
+        "It seems that this sequence is probably finite (there are no further terms below 10^7)."
+    ],
+    "example": [
+        "a(1) = 16 = 2*(3+5).",
+        "16 is in the sequence since it is twice the sum of twin primes 3 and 5, but cannot be expressed as the sum of 2 distinct twin pairs.",
+        "36 is not in the sequence because although it is the sum of twin primes 17 and 19, it can also be expressed as the sum of pairs (5, 7) and (11, 13)."
+    ],
+    "maple": [
+        "with(SignalProcessing): # requires at least Maple 17",
+        "N:= 10^6; # to check primes up to N",
+        "Primes:= select(isprime,{seq(2*i+1,i=1..N)}):",
+        "Twins:= Primes intersect map(t-> t-2,Primes):",
+        "nT:= nops(Twins);",
+        "T:= Array(1..(Twins[nT]+1)/2, datatype=float[8]);",
+        "for i from 1 to nT do T[(Twins[i]+1)/2]:= 1 od:",
+        "TTwins:= Convolution(T,T);",
+        "map(t -> 4*(t+1), select(n -> round(TTwins[n])=1,[$1..(nT+1)/2])); # _Robert Israel_, Jun 15 2014"
+    ],
+    "program": [
+        "(PARI) isok(isum1, vsum2) = {for (k=1, #vsum2, ksum2 = vsum2[k]; if (ksum2 > one, break;); if (isum1 - ksum2 != ksum2, if (vecsearch(vsum2, isum1 - ksum2), return (0)););); return (1);}",
+        "lista() = {v = readvec(\"b014574.txt\"); vsum1 = 4*v; vsum2 = 2*v; maxs2 = vecmax(vsum2); for (i=1, #v, isum1 = vsum1[i]; if (isum1 < maxs2, if (isok(isum1, vsum2), print1(isum1, \", \"));););} \\\\ _Michel Marcus_, Jun 15 2014",
+        "(PARI) l1=l2=List();a=select(p->isprime(p+2),primes(1000));for(i=1,#a-1,if(i<#a/4,listput(l1,4*a[i]+4));for(j=i+1,#a,listput(l2,2*(a[i]+a[j])+4)));print(setminus(Set(l1),Set(l2))) \\\\ _Lear Young_, Jun 15 2014"
+    ],
+    "xref": [
+        "Cf. A054735, A111046."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Lear Young_, Jun 14 2014",
+    "references": 1,
+    "revision": 24,
+    "time": "2014-06-16T02:30:48-04:00",
+    "created": "2014-06-16T02:30:48-04:00"
+}

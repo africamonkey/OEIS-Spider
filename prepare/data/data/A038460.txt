@@ -1,0 +1,40 @@
+{
+    "number": 38460,
+    "data": "2,8,20,36,72,114,154,220,282,354,464,540,674,804,906,1132,1220,1442",
+    "name": "Maximal value of difference between successive primes among numbers < 10^n.",
+    "comment": [
+        "All terms are even, and the sequence is strictly increasing, and therefore also yields the maximal gap between n-digit primes (unless a gap containing 10^k would be larger than all gaps up to 10^(k+1), which does not happen). Therefore also a subsequence of A005250, which is a subsequence of A001223. - _M. F. Hasler_, Dec 29 2014",
+        "For 3 < n < 19, a(n) <= 6 (n - 1)(n - 2). Conjecture: for any n > 3, a(n) <= 6 (n - 1)(n - 2). Let q = 6 (n - 1)(n - 2) and d = (10^n) - (10^(n/2) - 1)^2. Since for any even n, d is the smallest difference between two consecutive squares of the form a^2 - b^2, where a^2 = 10^n, b = a - 1, for any even n > 2, d > 5q (where 3q is, according to the conjecture, not less than the sum of the three largest gaps between 4 consecutive primes p1...p4, or 3 * a(n), and 2q is, respectively, not less than the sum of the two largest gaps (p1 - p0) + (p5 - p4), or 2 * a(n)). In the same way, we can state that for any odd n > 3, if a^2 is the smallest square such that a^2 has (n+1) digits, b = a - 1, and d = a^2 - b^2, then d > 5q. The correctness of the above conjecture would establish the well-known Brocard's and Legendre's conjectures (see the link below for both definitions), since they are proved for the first 10000 primes. - _Sergey Pavlov_, Jan 30 2017"
+    ],
+    "reference": [
+        "Enoch Haga, Exploring Prime Numbers on Your PC, 2nd edition, 1998, ISBN 1-885794-16-9, Table 3."
+    ],
+    "link": [
+        "C. K. Caldwell, <a href=\"http://www.utm.edu/research/primes/notes/gaps.html\">Prime gaps</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Brocard%27s_conjecture\">Brocard's conjecture</a>"
+    ],
+    "example": [
+        "Of the 25 primes less than 100, the maximum difference between two consecutive primes is 8 (at 97 - 89), so a(2)=8."
+    ],
+    "mathematica": [
+        "a[1] = 2; a[n_] := a[n] = Module[{m, p, q}, m = a[n-1]; p = NextPrime[10^(n - 1), -1]; For[q = NextPrime[p], q < 10^n, q = NextPrime[q], m = Max[m, q - p]; p = q]; m]; Table[an = a[n]; Print[\"a(\", n, \") = \", an]; an, {n, 1, 10}] (* _Jean-Fran\u00e7ois Alcover_, May 16 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = {dmax = 0; minp = 2; forprime(p=3, 10^n, if ((d = (p - minp)) > dmax, dmax = d); minp = p;); dmax;} \\\\ _Michel Marcus_, May 25 2014",
+        "(PARI) m=0;L=1;o=2;forprime(p=3,10^9,m+o>=(o=p)&&next;#Str(p)>L&&!print1(m\" /*\"L\"*/, \")&&L=#Str(p);m=p-precprime(p-1)) \\\\ Too slow for n>9. _M. F. Hasler_, Dec 29 2014"
+    ],
+    "xref": [
+        "Cf. A038343. See A053303 for another version."
+    ],
+    "keyword": "nonn,more,nice",
+    "offset": "1,1",
+    "author": "_Enoch Haga_, Dec 11 1999",
+    "ext": [
+        "Two more terms (282, 354) from _Jud McCranie_",
+        "Terms 464 through 1442 from Manfred W. K. Huppertz (huppi-manni(AT)hesit.de), Aug 18 2009"
+    ],
+    "references": 6,
+    "revision": 42,
+    "time": "2017-05-16T04:29:18-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

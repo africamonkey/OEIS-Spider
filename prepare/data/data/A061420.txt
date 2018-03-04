@@ -1,0 +1,58 @@
+{
+    "number": 61420,
+    "data": "0,1,2,3,3,4,4,4,5,5,5,5,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10",
+    "name": "a(n) = a([(n-1)*2/3])+1 with a(0) = 0 and [ ] = ceiling.",
+    "comment": [
+        "Least k such that f^(k)(n) = 0 where f(x) = floor(2/3*x) and f^(k+1)(x) = f(f^(k)(x)). - _Benoit Cloitre_, May 26 2007"
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A061420/b061420.txt\">Table of n, a(n) for n = 0..2000</a>",
+        "William J. Gilbert, <a href=\"https://doi.org/10.1016/0022-247X(81)90262-6\">Radix Representations of Quadratic Fields</a>, Journal of Mathematical Analysis and Applications 83 (1981) pp 264-274.  Gilbert (page 273) cites Wang and Washburn (below) in connection with the length of the base 3/2 expansion of the even positive integers.",
+        "A. M. Odlyzko and H. S. Wilf, <a href=\"https://doi.org/10.1017/S0017089500008272\">Functional iteration and the Josephus problem</a>, Glasgow Math. J. 33, 235-240, 1991.",
+        "E. T. H. Wang, Phillip C. Washburn, <a href=\"http://www.jstor.org/stable/2322068\">Problem E2604</a>, American Mathematical Monthly 84 (1977) pp. 821-822."
+    ],
+    "formula": [
+        "a(n) = a(n-1)+1 if n is in A061419; a(n) = a(n-1) otherwise.",
+        "From _Clark Kimberling_, Oct 19 2012: (Start)",
+        "a(n) = a(floor(2*n/3))+1, where a(0) = 0 (alternative definition).",
+        "Washburn's solution of Problem E2604 (see References) shows that (for n>0), a(n)=-floor(-L((n+1)/c)), where L is the logarithm with base 3/2 and c = lim((2/3)^n*s(n)) where s(n) = floor(3*s(n-1)/2)+1 and s(0)=0.  The editors state that \"It may be interesting to know whether c is irrational or even transcendental\"; c = 1.62227050288476731595695098289932... .",
+        "Odlyzko and Wilf also discuss the defining recurrence, and they, after Washburn, give a formula for the sequence using c, as in the third Mathematica program below.",
+        "(End)"
+    ],
+    "example": [
+        "a(10) = a(ceiling(9*2/3))+1 = a(6)+1 = 4+1 = 5."
+    ],
+    "maple": [
+        "a:= n-> `if`(n=0, 0, a(ceil((n-1)*2/3))+1):",
+        "seq(a(n), n=0..100);  # _Alois P. Heinz_, Oct 29 2012"
+    ],
+    "mathematica": [
+        "(* 1st program, using the alternative definition *)",
+        "a[0] = 0; a[n_] := a[Floor[2 n/3]] + 1;",
+        "Table[a[n], {n, 0, 120}]",
+        "(* 2nd program, using Cloitre's recurrence *)",
+        "f[x_] := Floor[2 x/3]; g[0, x_] := f[x];",
+        "g[k_, x_] := f[g[k - 1, x]];",
+        "u[n_] := Flatten[Table[g[k, n], {k, 0, 12}]]",
+        "v[n_] := First[Position[u[n], 0]];",
+        "Flatten[Table[v[n], {n, 1, 120}]]",
+        "(* 3rd program, using the constant c *)",
+        "f[n_] := -Floor[-Log[3/2, (n + 1)/1.62227050288476731595695098289932]]",
+        "Table[f[n], {n, 1, 120}]",
+        "(* _Clark Kimberling_, Oct 23 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = if(n<0, 0, s=n; c=0; while(floor(s)>0, s=floor(2/3*s); c++); c) \\\\ _Benoit Cloitre_, May 26 2007",
+        "(MAGMA) [IsZero(n) select 0 else Self(Floor(2*n/3)+1)+1: n in [0..90]]; // _Bruno Berselli_, Oct 31 2012"
+    ],
+    "xref": [
+        "Cf. A029837, A061419, A083286 (the constant c)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Henry Bottomley_, May 02 2001",
+    "references": 2,
+    "revision": 46,
+    "time": "2017-07-10T05:53:28-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

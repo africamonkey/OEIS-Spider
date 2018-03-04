@@ -1,0 +1,43 @@
+{
+    "number": 109641,
+    "data": "4,9,15,25,27,34,36,49,51,57,63,68,75,81,87,93,111,121,125,129,132,138,141,153,155,159,169,177,237,249,258,261,264,267,274,276,279,289,298,303,324,339,343,357,361,375,381,387,393,411,417,423,441,447,453,477",
+    "name": "Composite n such that binomial(3n, n) == 3^k (mod n) for some integer k > 0.",
+    "comment": [
+        "Includes p^k for k >= 2 and p > 2 in A019334 but not in A014127, as binomial(3n,n) is coprime to p and 3 is a primitive root mod p^k. - _Robert Israel_, Nov 12 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A109641/b109641.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "Binomial(3*34,34) == 3^6 (mod 34), so 34 is a member."
+    ],
+    "maple": [
+        "filter:= proc(n) local p,m,k,t;",
+        "  if isprime(n) then return false fi;",
+        "  p:= padic:-ordp(n,3);",
+        "  p:= p + numtheory:-order(3, n/3^p);",
+        "  m:= binomial(3*n,n) mod n;",
+        "  t:= 1;",
+        "  for k from 1 to p do",
+        "    t:= t*3 mod n;",
+        "    if t = m then return true fi;",
+        "  od:",
+        "false",
+        "end proc;",
+        "select(filter, [$2..1000]); # _Robert Israel_, Nov 12 2017"
+    ],
+    "xref": [
+        "Cf. A019334, A080469, A014127, A109642."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ryan Propper_, Aug 05 2005",
+    "ext": [
+        "Corrected and extended by _Max Alekseyev_, Sep 13 2009",
+        "Edited by _Max Alekseyev_, Sep 20 2009"
+    ],
+    "references": 5,
+    "revision": 10,
+    "time": "2017-11-13T06:28:46-05:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

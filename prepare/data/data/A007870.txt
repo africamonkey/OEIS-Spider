@@ -1,0 +1,40 @@
+{
+    "number": 7870,
+    "data": "1,1,2,6,96,2880,9953280,100329062400,10651768002183168000,150283391703941024789299200000,9263795272057860957392207640004657152000000000,16027108137650009941734148595388542471170145479274004480000000000000",
+    "name": "Determinant of character table of symmetric group S_n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A007870/b007870.txt\">Table of n, a(n) for n = 0..18</a>",
+        "F. W. Schmidt and R. Simion, <a href=\"http://dx.doi.org/10.1016/0097-3165(84)90012-8\">On a partition identity</a>, J. Combin. Theory, A 36 (1984), 249-252.",
+        "D. Vaintrob, <a href=\"http://mathoverflow.net/questions/99271/\">A product identity for partitions</a>"
+    ],
+    "formula": [
+        "Product of all parts of all partitions of n."
+    ],
+    "example": [
+        "1 + x + 2*x^2 + 6*x^3 + 96*x^4 + 2880*x^5 + 9953280*x^6 + 100329062400*x^7 + ..."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, [1$2], ((f, g)->",
+        "       [f[1]+g[1], f[2]*g[2]*i^g[1]])(`if`(i<2, [0, 1],",
+        "       b(n, i-1)), `if`(i>n, [0, 1], b(n-i, i))))",
+        "    end:",
+        "a:= n-> b(n, n)[2]:",
+        "seq(a(n), n=0..12);  # _Alois P. Heinz_, Jul 30 2013"
+    ],
+    "mathematica": [
+        "Needs[\"Combinatorica`\"]; Table[Times@@Flatten[Partitions[n]], {n, 10}]",
+        "a[ n_] := If[n < 0, 0, Times @@ Flatten @ IntegerPartitions @ n] (* _Michael Somos_, Jun 11 2012 *)",
+        "Table[Exp[Total[Map[Log, IntegerPartitions [n]], 2]], {n, 1, 25}] (* _Richard R. Forberg_, Dec 08 2014 *)",
+        "b[n_, i_] := b[n, i] = If[n == 0, {1, 1}, Function[{f, g}, {f[[1]] + g[[1]], f[[2]]*g[[2]]*i^g[[1]]}][If[i < 2, {0, 1}, b[n, i - 1]], If[i > n, {0, 1}, b[n - i, i]]]]; a[n_] := b[n, n][[2]]; Table[a[n], {n, 0, 12}] (* _Jean-Fran\u00e7ois Alcover_, Aug 29 2016, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A086644, A006906."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter J. Cameron_, G\u00f6tz Pfeiffer [ goetz(AT)dcs.st-and.ac.uk ]",
+    "references": 5,
+    "revision": 25,
+    "time": "2016-08-29T07:29:45-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

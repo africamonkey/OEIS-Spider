@@ -1,0 +1,63 @@
+{
+    "number": 6886,
+    "id": "M4625",
+    "data": "1,9,45,55,99,297,703,999,2223,2728,4879,4950,5050,5292,7272,7777,9999,17344,22222,38962,77778,82656,95121,99999,142857,148149,181819,187110,208495,318682,329967,351352,356643,390313,461539,466830,499500,500500,533170",
+    "name": "Kaprekar numbers: positive numbers n such that n = q+r and n^2 = q*10^m+r, for some m >= 1, q >= 0 and 0 <= r < 10^m, with n != 10^a, a >= 1.",
+    "comment": [
+        "4879 and 5292 are in this sequence but not in A053816.",
+        "The Mathematica code computes five additional powers in order to be sure that all the Kaprekar numbers have been computed. This fix works for mx <= 50, which includes terms computed by Gerbicz. - _T. D. Noe_, Aug 18 2011"
+    ],
+    "reference": [
+        "D. R. Kaprekar, On Kaprekar numbers, J. Rec. Math., 13 (1980-1981), 81-82.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "D. Wells, The Penguin Dictionary of Curious and Interesting Numbers. Penguin Books, NY, 1986, 151."
+    ],
+    "link": [
+        "Robert Gerbicz, <a href=\"/A006886/b006886.txt\">Table of n, a(n) for n = 1..51514</a> [T. D. Noe computed terms 1 - 1019, Nov 10 2007; R. Gerbicz computed the first 51514 terms, Jul 28 2011]",
+        "Hans Havermann, <a href=\"http://chesswanks.com/seq/b006886/\">The first 11 million Kaprekar numbers (plus the region around the billionth)</a>",
+        "D. E. Iannucci, Journal of Integer Sequences, Vol. 3, 2000, #1.2, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/iann2a.html\">The Kaprekar Numbers</a>",
+        "Douglas E. Iannucci and Bertrum Foster, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL8/Iannucci/iannucci45.html\">Kaprekar Triples</a>, Journal of Integer Sequences, Vol. 8 (2005), Article 05.4.8.",
+        "R. Munafo, <a href=\"http://www.mrob.com/pub/math/seq-kaprekar.html\">Kaprekar Sequences</a>",
+        "W. Schneider, <a href=\"http://web.archive.org/web/2004/www.wschnei.de/digit-related-numbers/kaprekar-numbers.html\">Kaprekar Numbers</a>",
+        "G. Villemin's Almanach of Numbers, <a href=\"http://villemin.gerard.free.fr/Wwwgvmm/Iteration/Kaprekar.htm#Nombre\">Nombres de Kaprekar</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/KaprekarNumber.html\">Kaprekar Number</a>",
+        "Rosetta Code, <a href=\"http://rosettacode.org/wiki/Kaprekar_numbers\">Kaprekar numbers</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Kaprekar_number\">Kaprekar number</a>",
+        "<a href=\"/index/Coi#Colombian\">Index entries for Colombian or self numbers and related sequences</a>"
+    ],
+    "formula": [
+        "a(n) = A194218(n) + A194219(n) and A194218(n) concatenated with A194219(n) gives a(n)^2. - _Reinhard Zumkeller_, Aug 19 2011"
+    ],
+    "example": [
+        "703 is a Kaprekar number because 703 = 494 + 209, 703^2 = 494209."
+    ],
+    "mathematica": [
+        "Inv[a_, b_] := PowerMod[a, -1, b]; mx = 20; t = {1}; Do[h = 10^k - 1; d = Divisors[h]; d2 = Select[d, GCD[#, h/#] == 1 &]; If[Log[10, h] < mx, AppendTo[t, h]]; Do[q = d2[[i]]*Inv[d2[[i]], h/d2[[i]]]; If[Log[10, q] < mx, AppendTo[t, q]], {i, 2, Length[d2] - 1}], {k, mx + 5}]; t = Union[t] (* _T. D. Noe_, Aug 17 2011, Aug 18 2011 *)"
+    ],
+    "program": [
+        "(Haskell) -- See A194218 for another version",
+        "a006886 n = a006886_list !! (n-1)",
+        "a006886_list = 1 : filter chi [4..] where",
+        "   chi n = read (reverse us) + read (reverse vs) == n where",
+        "       (us,vs) = splitAt (length $ show n) (reverse $ show (n^2))",
+        "-- _Reinhard Zumkeller_, Aug 18 2011"
+    ],
+    "xref": [
+        "See A053816 for another version.",
+        "Cf. A037042, A053394, A053395, A053396, A053397, A045913, A003052.",
+        "Cf. A193992 (where 10^n-1 occurs in A006886), A194232 (first differences).",
+        "Subsequence of A248353."
+    ],
+    "keyword": "nonn,nice,base,easy",
+    "offset": "1,2",
+    "author": "_Robert Munafo_",
+    "ext": [
+        "More terms from Michel ten Voorde (seqfan(AT)tenvoorde.org), Apr 11 2001",
+        "4879 and 5292 added by Larry Reeves (larryr(AT)acm.org), Apr 24 2001",
+        "38962 added by Larry Reeves (larryr(AT)acm.org), May 23 2002"
+    ],
+    "references": 24,
+    "revision": 93,
+    "time": "2017-08-06T00:27:54-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

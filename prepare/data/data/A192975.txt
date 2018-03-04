@@ -1,0 +1,39 @@
+{
+    "number": 192975,
+    "data": "1,1,8,19,41,78,141,245,416,695,1149,1886,3081,5017,8152,13227,21441,34734,56245,91053,147376,238511,385973,624574,1010641,1635313,2646056,4281475,6927641,11209230,18136989,29346341,47483456,76829927",
+    "name": "Constant term of the reduction by x^2->x+1 of the polynomial p(n,x) defined at Comments.",
+    "comment": [
+        "The titular polynomials are defined recursively:  p(n,x) = x*p(n-1,x) - 1 + 2*n^2, with p(0,x)=1.  For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232 and A192744."
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-2,-1,1)."
+    ],
+    "formula": [
+        "a(n) = 3*a(n-1) - 2*a(n-2) - a(n-3) + a(n-4).",
+        "G.f.: ( -1+2*x-7*x^2+2*x^3 ) / ( (x^2+x-1)*(x-1)^2 ). - _R. J. Mathar_, May 11 2014"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 40;",
+        "p[0, x] := 1;",
+        "p[n_, x_] := x*p[n - 1, x] + 2 n^2 - 1;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "  (* A192975 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "  (* A192976 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192744, A192951, A192976."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 13 2011",
+    "references": 3,
+    "revision": 11,
+    "time": "2015-06-13T00:53:55-04:00",
+    "created": "2011-07-13T20:17:06-04:00"
+}

@@ -1,0 +1,59 @@
+{
+    "number": 182962,
+    "data": "1,1,3,25,433,12501,529531,30495613,2272643745,211761416233,24055076979091,3267213865097601,522451410607362193,97120159467079471165,20765771676360919883403,5060640084128464622069221",
+    "name": "E.g.f. satisfies: A(x) = exp( x/(1 - x*A'(x)/A(x)) ).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A182962/b182962.txt\">Table of n, a(n) for n = 0..250</a>"
+    ],
+    "formula": [
+        "E.g.f.: A(x) = exp(x*F(x)) where F(x) = 1 + x*F(x)*d/dx[x*F(x)] is the o.g.f. of A088716.",
+        "E.g.f. satisfies: [x^n/n!] A(x)^n = n^2*[x^(n-1)/(n-1)!] A(x)^n for n>=1.",
+        "E.g.f. satisfies: [x^n/n!] A(x)^(n+1) = (n+1)*A156326(n) for n>=0.",
+        "E.g.f.: A(x) = x/Series_Reversion(x*G(x)) where A(x*G(x)) = G(x) is the e.g.f. of A156326, which satisfies:",
+        ". G(x) = exp( Sum_{n>=1} n^2 * A156326(n-1)*x^n/n! ).",
+        "a(n) ~ c * (n!)^2 * n, where c = 0.21795078944715106549... (see A238223). - _Vaclav Kotesovec_, Feb 22 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 3*x^2/2! + 25*x^3/3! + 433*x^4/4! +...",
+        "The logarithm of the e.g.f. is the integer series:",
+        "log(A(x)) = x + x^2 + 3*x^3 + 14*x^4 + 85*x^5 + 621*x^6 + 5236*x^7 + 49680*x^8 +...+ A088716(n)*x^(n+1) +...",
+        "...",
+        "The coefficients of [x^n/n!] in the powers of e.g.f. A(x) begin:",
+        "A^1: [(1),(1), 3, 25, 433, 12501, 529531, 30495613, ...];",
+        "A^2: [1,(2),(8), 68, 1120, 30832, 1260544, 70737536, ...];",
+        "A^3: [1, 3,(15),(135), 2169, 57303, 2261439, 123523515, ...];",
+        "A^4: [1, 4, 24,(232),(3712), 94944, 3622336, 192461056, ...];",
+        "A^5: [1, 5, 35, 365, (5905),(147625), 5460475, 282185825, ...];",
+        "A^6: [1, 6, 48, 540, 8928, (220176),(7926336), 398625408, ...];",
+        "A^7: [1, 7, 63, 763, 12985, 318507,(11210479),(549313471), ...];",
+        "A^8: [1, 8, 80, 1040, 18304, 449728, 15551104,(743759360), ...];",
+        "...",
+        "In the above table, the coefficients in parenthesis are related by:",
+        "1*1 = 1; 8 = 2^2*2; 135 = 3^2*15; 3712 = 4^2*232; 147625 = 5^2*5905;",
+        "this illustrates: [x^n/n!] A(x)^n = n^2*[x^(n-1)/(n-1)!] A(x)^n.",
+        "...",
+        "Also note that the main diagonal in the above table begins:",
+        "[1*1, 2*1, 3*5, 4*58, 5*1181, 6*36696, 7*1601497, 8*92969920, ...];",
+        "this illustrates: [x^n/n!] A(x)^(n+1) = (n+1)*A156326(n).",
+        "...",
+        "Let G(x) denote the e.g.f. of A156326:",
+        "G(x) = 1 + x + 5*x^2/2! + 58*x^3/3! + 1181*x^4/4! + 36696*x^5/5! +...",
+        "then G(x) satisfies: G(x) = A(x*G(x)) and A(x) = G(x/A(x)) where",
+        "G(x) = exp( Sum_{n>=1} n^2 * A156326(n-1)*x^n/n! ).",
+        "..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,A=exp(x/(1 - x*deriv(A)/A+x*O(x^n))));n!*polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=[1,1]);for(i=2,n,A=concat(A,0);A[#A]=((#A-1)*Vec(Ser(A)^(#A-1))[#A-1]-Vec(Ser(A)^(#A-1))[#A])/(#A-1));n!*A[n+1]}"
+    ],
+    "xref": [
+        "Cf. A088716, A156326, A238223."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jan 01 2011",
+    "references": 5,
+    "revision": 8,
+    "time": "2014-02-22T06:32:12-05:00",
+    "created": "2010-12-15T21:20:24-05:00"
+}

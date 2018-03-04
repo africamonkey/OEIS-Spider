@@ -1,0 +1,35 @@
+{
+    "number": 39899,
+    "data": "0,0,1,2,3,5,8,12,18,25,36,49,68,91,123,162,214,278,362,464,596,757,961,1209,1521,1897,2366,2931,3627,4463,5487,6711,8200,9976,12121,14672,17738,21371,25716,30852,36964,44168,52709,62746,74600,88497",
+    "name": "Number of partitions satisfying 0 < cn(0,5) + cn(2,5) + cn(3,5).",
+    "comment": [
+        "For a given partition cn(i,n) means the number of its parts equal to i modulo n.",
+        "Short: o < 0 + 2 + 3 (OMZBBp).",
+        "Number of partitions of n such that (greatest part) > (multiplicity of greatest part), for n >= 1.  For example, a(6) counts these 8 partitions:  6, 51, 42, 411, 33, 321, 3111, 21111.  See the Mathematica program at A240057 for the sequence as a count of partitions defined in this manner, and related sequences.  - _Clark Kimberling_, Apr 02 2014"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A039899/b039899.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, t,",
+        "      `if`(i<1, 0, b(n, i-1, t)+ `if`(i>n, 0, b(n-i, i,",
+        "      `if`(irem(i, 5) in {1, 4}, t, 1)))))",
+        "    end:",
+        "a:= n-> b(n$2, 0):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Apr 03 2014"
+    ],
+    "mathematica": [
+        "Table[Count[IntegerPartitions[n], p_ /; Min[p] < Length[p]], {n, 24}] (* _Clark Kimberling_, Feb 13 2014 *)",
+        "b[n_, i_, t_] := b[n, i, t] = If[n==0, t, If[i<1, 0, b[n, i-1, t] + If[i > n, 0, b[n-i, i, If[MemberQ[{1, 4}, Mod[i, 5]], t, 1]]]]]; a[n_] := b[n, n, 0]; Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Nov 16 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A003106, A003114, A039900."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 5,
+    "revision": 19,
+    "time": "2015-11-16T09:29:31-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

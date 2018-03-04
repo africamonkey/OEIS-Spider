@@ -1,0 +1,76 @@
+{
+    "number": 667,
+    "data": "1,2,4,9,24,77,294,1309,6664,38177,243034,1701909,13001604,107601977,959021574,9157981309,93282431344,1009552482977,11568619292914,139931423833509,1781662223749884,23819069385695177,333601191667149054,4884673638115922509",
+    "name": "Boustrophedon transform of all-1's sequence.",
+    "comment": [
+        "Fill in a triangle, like Pascal's triangle, beginning each row with a 1 and filling in rows alternately right to left and left to right.",
+        "a(n) = A227862(n, n * (n mod 2)). - _Reinhard Zumkeller_, Nov 01 2013",
+        "Row sums of triangle A109449. - _Reinhard Zumkeller_, Nov 04 2013"
+    ],
+    "reference": [
+        "C. K. Cook, M. R. Bacon, and R. A. Hillman, Higher-order Boustrophedon transforms ..., Fib. Q., 55 (No. 3, 2017), 201-208.",
+        "L. Seidel, \u00dcber eine einfache Entstehungsweise der Bernoulli'schen Zahlen und einiger verwandten Reihen, Sitzungsberichte der mathematisch-physikalischen Classe der k\u00f6niglich bayerischen Akademie der Wissenschaften zu M\u00fcnchen, volume 7 (1877), 157-187."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A000667/b000667.txt\">Table of n, a(n) for n = 0..485</a> (first 101 terms from T. D. Noe)",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>",
+        "J. Millar, N. J. A. Sloane and N. E. Young, A new operation on sequences: the Boustrophedon on transform, J. Combin. Theory, 17A 44-54 1996 (<a href=\"http://neilsloane.com/doc/bous.txt\">Abstract</a>, <a href=\"http://neilsloane.com/doc/bous.pdf\">pdf</a>, <a href=\"http://neilsloane.com/doc/bous.ps\">ps</a>).",
+        "N. J. A. Sloane, <a href=\"http://neilsloane.com/doc/sg.txt\">My favorite integer sequences</a>, in Sequences and their Applications (Proceedings of SETA '98).",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Boustrophedon_transform\">Boustrophedon_transform</a>",
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp(x) * (tan(x) + sec(x)).",
+        "Lim n->infinity 2*n*a(n-1)/a(n) = Pi; lim n->infinity a(n)*a(n-2)/a(n-1)^2 = 1 + 1/(n-1). - _Gerald McGarvey_, Aug 13 2004",
+        "a(n) = Sum_{k, k>=0} binomial(n, k)*A000111(n-k). a(2n) = A000795(n) + A009747(n), a(2n+1) = A002084(n) + A003719(n). - _Philippe Del\u00e9ham_, Aug 28 2005",
+        "G.f.: E(0)*x/(1-x)/(1-2*x) + 1/(1-x), where E(k) = 1 - x^2*(k+1)*(k+2)/(x^2*(k+1)*(k+2) - 2*(x*(k+2)-1)*(x*(k+3)-1)/E(k+1) ); (continued fraction). - _Sergei N. Gladkovskii_, Jan 16 2014",
+        "a(n) ~ n! * exp(Pi/2) * 2^(n+2) / Pi^(n+1). - _Vaclav Kotesovec_, Jun 12 2015"
+    ],
+    "example": [
+        "...............1..............",
+        "............1..->..2..........",
+        ".........4..<-.3...<-..1......",
+        "......1..->.5..->..8...->..9.."
+    ],
+    "mathematica": [
+        "With[{nn=30},CoefficientList[Series[Exp[x](Tan[x]+Sec[x]),{x,0,nn}], x]Range[0,nn]!] (* _Harvey P. Dale_, Nov 28 2011 *)",
+        "t[_, 0] = 1; t[n_, k_] := t[n, k] = t[n, k-1] + t[n-1, n-k];",
+        "a[n_] := t[n, n];",
+        "Array[a, 30, 0] (* _Jean-Fran\u00e7ois Alcover_, Feb 12 2016 *)"
+    ],
+    "program": [
+        "(Sage) # Algorithm of L. Seidel (1877)",
+        "def A000667_list(n) :",
+        "    R = []; A = {-1:0, 0:0}",
+        "    k = 0; e = 1",
+        "    for i in range(n) :",
+        "        Am = 1",
+        "        A[k + e] = 0",
+        "        e = -e",
+        "        for j in (0..i) :",
+        "            Am += A[k]",
+        "            A[k] = Am",
+        "            k += e",
+        "        # print [A[z] for z in (-i//2..i//2)]",
+        "        R.append(A[e*i//2])",
+        "    return R",
+        "A000667_list(10)  # _Peter Luschny_, Jun 02 2012",
+        "(Haskell)",
+        "a000667 n = if x == 1 then last xs else x",
+        "            where xs@(x:_) = a227862_row n",
+        "-- _Reinhard Zumkeller_, Nov 01 2013",
+        "(PARI) x='x+O('x^33); Vec(serlaplace( exp(x)*(tan(x) + 1/cos(x)) ) ) \\\\ _Joerg Arndt_, Jul 30 2016"
+    ],
+    "xref": [
+        "Absolute value of pairwise sums of A009337.",
+        "Column k=1 of A292975."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, _Simon Plouffe_",
+    "references": 33,
+    "revision": 65,
+    "time": "2017-09-27T16:03:41-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

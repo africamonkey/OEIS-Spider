@@ -1,0 +1,55 @@
+{
+    "number": 220638,
+    "data": "1,1,10,369,92801,128171936,1040315976961,48590896359378961,13140746227808545282304,20540255065209806005525289313,185661218973084382181156348510614065,9703072851259276652446200332793680010752000,2932144456272256572796083896528773941130429279461761",
+    "name": "Number of ways to reciprocally link elements of an n X n array either to themselves or to exactly one king-move neighbor.",
+    "comment": [
+        "Main diagonal of A220644.",
+        "Row sums of A243424. - _Alois P. Heinz_, Jun 04 2014",
+        "Number of matchings (i.e., Hosoya index) in the n X n kings graph. - _Andrew Howroyd_, Apr 07 2016"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A220638/b220638.txt\">Table of n, a(n) for n = 0..16</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/IndependentEdgeSet.html\">Independent Edge Set</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/KingGraph.html\">King Graph</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Matching.html\">Matching</a>"
+    ],
+    "example": [
+        "Some solutions for n=3 0=self 1=nw 2=n 3=ne 4=w 6=e 7=sw 8=s 9=se (reciprocal directions total 10)",
+        "..8..6..4....0..9..7....6..4..0....0..6..4....9..0..8....6..4..0....8..0..0",
+        "..2..7..0....9..3..1....8..6..4....6..4..7....0..1..2....0..0..8....2..6..4",
+        "..3..6..4....0..1..0....2..0..0....0..3..0....0..0..0....0..0..2....6..4..0"
+    ],
+    "maple": [
+        "b:= proc(n, l) option remember; local d, f, k;",
+        "      d:= nops(l)/2; f:=false;",
+        "      if n=0 then 1",
+        "    elif l[1..d]=[f$d] then b(n-1, [l[d+1..2*d][], true$d])",
+        "    else for k to d while not l[k] do od; b(n, subsop(k=f, l))+",
+        "         `if`(k<d and n>1 and l[k+d+1],",
+        "                            b(n, subsop(k=f, k+d+1=f, l)), 0)+",
+        "         `if`(k>1 and n>1 and l[k+d-1],",
+        "                            b(n, subsop(k=f, k+d-1=f, l)), 0)+",
+        "         `if`(n>1 and l[k+d], b(n, subsop(k=f, k+d=f, l)), 0)+",
+        "         `if`(k<d and l[k+1], b(n, subsop(k=f, k+1=f, l)), 0)",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n, [true$(n*2)]):",
+        "seq(a(n), n=0..10);  # _Alois P. Heinz_, Jun 03 2014"
+    ],
+    "mathematica": [
+        "b[n_, l_] := b[n, l] = Module[{d, f, k}, d = Length[l]/2; f = False; Which[ n == 0, 1, l[[1 ;; d]] == Array[f&, d], b[n - 1, Join [l[[d+1 ;; 2d]], Array[True&, d]]], True, For[k = 1, !l[[k]], k++]; b[n, ReplacePart[l, k -> f]] + If[k < d && n > 1 && l[[k + d + 1]], b[n, ReplacePart[l, k | k + d + 1 -> f]], 0] + If[k > 1 && n > 1 && l[[k + d - 1]], b[n, ReplacePart[l, k | k + d - 1 -> f]], 0] + If[n > 1 && l[[k + d]], b[n, ReplacePart[l, k | k + d -> f]], 0] + If[k < d && l[[k + 1]], b[n, ReplacePart[l, k | k + 1 -> f]], 0]]]; a[n_] := b[n, Array[True&, 2n]]; Table[Print[\"a(\", n, \") = \", a[n]]; a[n], {n, 0, 12}] (* _Jean-Fran\u00e7ois Alcover_, Feb 01 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A239273 (perfect matchings), A063443 (independent vertex sets), A234622 (cycles)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_R. H. Hardin_, Dec 17 2012",
+    "ext": [
+        "a(10)-a(12) from _Alois P. Heinz_, Jun 03 2014"
+    ],
+    "references": 5,
+    "revision": 36,
+    "time": "2017-05-22T10:15:48-04:00",
+    "created": "2012-12-17T09:45:43-05:00"
+}

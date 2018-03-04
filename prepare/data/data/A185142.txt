@@ -1,0 +1,34 @@
+{
+    "number": 185142,
+    "data": "1,3,85,6727,1045161,268614731,103164046973,55349799523215,39541660762919761,36286594559417097619,41598050801794414418085,58257277349451323696625623,97872074004750264647795154425",
+    "name": "E.g.f. A(x) = Sum_{n>=0} a(n)*x^(2*n+1)/(2*n+1)! is inverse function to x*cos(x).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A185142/b185142.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Vladimir Kruchinin, <a href=\"http://arxiv.org/abs/1211.3244\">The method for obtaining expressions for coefficients of reverse generating functions</a>, arXiv:1211.3244 [math.CO], 2012."
+    ],
+    "formula": [
+        "a(n) = 2*Sum_{k=1..2*n} binomial(2*n+k,2*n)*(Sum_{j=1..k} ((Sum_{i=0..(j-1)/2)} (j-2*i)^(2*n)*binomial(j,i))*binomial(k,j)*(-1)^(n-j))/2^j))), n>0, a(0)=1.",
+        "a(n) = [x^(2*n)/(2*n)!] 1/cos(x)^(2*n+1). - _Paul D. Hanna_, Jan 23 2012",
+        "a(n) = (2*n+1) * A196873(n) for n>=1, where e.g.f. G(x) of A196873 satisfies: G(x*cos(x)) = 1/cos(x). - _Paul D. Hanna_, Jan 23 2012",
+        "a(n) = Sum_{k=1..2*n} (binomial(2*n+k,2*n)*Sum_{i=0..k-1} (i-k)^(2*n)*binomial(2*k,i)*(-1)^(n+k-i)))/2^(k-1), with n>0, a(0)=1. - _Vladimir Kruchinin_, Oct 08 2012"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[ (Binomial[2*n + k, 2*n]*Sum[ (i - k)^(2*n)*Binomial[2*k, i]*(-1)^(n + k - i), {i, 0, k - 1}])/2^(k - 1), {k, 1, 2*n}]; a[0] = 1; Table[a[n], {n, 0, 12}] (* _Jean-Fran\u00e7ois Alcover_, Feb 21 2013, translated from Maxima *)"
+    ],
+    "program": [
+        "(Maxima) a(n):=if n=0 then 1 else 2*sum(binomial(2*n+k,2*n)*sum(((sum((j-2*i)^(2*n)*binomial(j,i),i,0,(j-1)/2))*binomial(k,j)*(-1)^(n-j))/2^j,j,1,k),k,1,2*n)/(2*n+1)!;",
+        "(PARI) {a(n)=if(n==0,1,2*sum(k=1,2*n,binomial(2*n+k,2*n)*sum(j=1,k,sum(i=0,floor((j-1)/2),(j-2*i)^(2*n)*binomial(j,i))*binomial(k,j)*(-1)^(n-j)/2^j))))}",
+        "(PARI) {a(n)=(2*n)!*polcoeff(1/cos(x+x*O(x^(2*n+1)))^(2*n+1),2*n)}",
+        "(Maxima) a(n):=if n=0 then 1 else (sum((binomial(2*n+k,2*n)*sum((i-k)^(2*n)*binomial(2*k,i)*(-1)^(n+k-i),i,0,k-1))/2^(k-1),k,1,2*n));"
+    ],
+    "xref": [
+        "Cf. A196873."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Vladimir Kruchinin_, Jan 23 2012",
+    "references": 2,
+    "revision": 30,
+    "time": "2017-06-23T18:33:40-04:00",
+    "created": "2012-01-24T14:06:31-05:00"
+}

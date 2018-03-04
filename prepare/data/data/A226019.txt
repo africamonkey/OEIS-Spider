@@ -1,0 +1,58 @@
+{
+    "number": 226019,
+    "data": "2,19,79,149,569,587,1237,2129,2153,2237,2459,2549,4129,4591,4657,4999,8369,8999,9587,9629,9857,10061,17401,17659,17737,18691,20149,20479,33161,33347,34631,35117,35447,39023,40427,40709,66403,68539,74707,75703,79063,79333,80071",
+    "name": "Primes whose binary reversal is a square.",
+    "comment": [
+        "The sequence of corresponding squares begins: 1, 25, 121, 169, 625, 841, 1369, 2209, 2401, 3025, 3481, 2809, 4225, 7921, ...",
+        "For n>1 the second and third most significant bits of a(n) are \"0\" because all odd squares are equal to 1 mod 8. - _Andres Cicuttin_, May 12 2016"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A226019/b226019.txt\">Table of n, a(n) for n = 1..6182</a>"
+    ],
+    "mathematica": [
+        "Select[Table[Prime[j],{j,1,10000}],Element[Sqrt[FromDigits[Reverse[IntegerDigits[#,2]],2]],Integers]&] (* _Andres Cicuttin_, May 12 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "primes = []",
+        "def addPrime(k):",
+        "  for p in primes:",
+        "    if k%p==0:  return",
+        "    if p*p > k:  break",
+        "  primes.append(k)",
+        "  r = 0",
+        "  p = k",
+        "  while k:",
+        "    r = r*2 + (k&1)",
+        "    k>>=1",
+        "  s = int(math.sqrt(r))",
+        "  if s*s == r:  print str(p)+',',",
+        "addPrime(2)",
+        "addPrime(3)",
+        "for i in xrange(5, 1000000000, 6):",
+        "  addPrime(i)",
+        "  addPrime(i+2)",
+        "(Python)",
+        "from sympy import isprime",
+        "A226019_list, i, j = [2], 0, 0",
+        "while j < 2**34:",
+        "    p = int(format(j,'b')[::-1],2)",
+        "    if j % 2 and isprime(p):",
+        "        A226019_list.append(p)",
+        "    j += 2*i+1",
+        "    i += 1",
+        "A226019_list = sorted(A226019_list) # _Chai Wah Wu_, Dec 20 2015"
+    ],
+    "xref": [
+        "Cf. A007488, A074832.",
+        "Subsequence of A204219. Cf. also A235027."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, May 23 2013",
+    "references": 1,
+    "revision": 24,
+    "time": "2016-05-20T08:58:06-04:00",
+    "created": "2013-05-23T14:58:52-04:00"
+}

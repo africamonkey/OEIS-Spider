@@ -1,0 +1,38 @@
+{
+    "number": 212543,
+    "data": "0,0,1,1,3,4,8,10,17,22,33,42,60,75,103,128,169,209,271,331,421,513,642,777,963,1158,1421,1703,2070,2471,2985,3546,4257,5043,6019,7105,8443,9933,11752,13790,16247,19012,22326,26052,30492,35500,41420,48108,55980",
+    "name": "Number of partitions of n containing at least one part m-3 if m is the largest part.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A212543/b212543.txt\">Table of n, a(n) for n = 3..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{i>0} x^(2*i+3) / Product_{j=1..3+i} (1-x^j)."
+    ],
+    "example": [
+        "a(5) = 1: [4,1].",
+        "a(6) = 1: [4,1,1].",
+        "a(7) = 3: [4,1,1,1], [4,2,1], [5,2].",
+        "a(8) = 4: [4,1,1,1,1], [4,2,1,1], [4,3,1], [5,2,1].",
+        "a(9) = 8: [4,1,1,1,1,1], [4,2,1,1,1], [4,2,2,1], [4,3,1,1], [4,4,1], [5,2,1,1], [5,2,2], [6,3]."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember;",
+        "      `if`(n=0 or i=1, 1, b(n, i-1)+`if`(i>n, 0, b(n-i, i)))",
+        "    end:",
+        "a:= n-> add(b(n-2*m-3, min(n-2*m-3, m+3)), m=1..(n-3)/2):",
+        "seq(a(n), n=3..60);"
+    ],
+    "mathematica": [
+        "Table[Count[IntegerPartitions[n],_?(MemberQ[#,#[[1]]-3]&)],{n,3,60}] (* _Harvey P. Dale_, Mar 01 2015 *)"
+    ],
+    "xref": [
+        "Column k=3 of A212551."
+    ],
+    "keyword": "nonn",
+    "offset": "3,5",
+    "author": "_Alois P. Heinz_, May 20 2012",
+    "references": 2,
+    "revision": 12,
+    "time": "2015-03-01T14:14:14-05:00",
+    "created": "2012-05-22T02:42:44-04:00"
+}

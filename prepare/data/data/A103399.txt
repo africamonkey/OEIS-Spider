@@ -1,0 +1,70 @@
+{
+    "number": 103399,
+    "data": "4,9,15,21,33,38,58,65,86,106,121,129,265,511,2047,2049,4097,4109,17855,19857,32663,34709,104739,130393,131889,140474,220918,262978,266174,274759,540933,568083,1312526,1665242,1833203,2179101,2295571",
+    "name": "Semiprimes in A103379.",
+    "comment": [
+        "These semiprimes are elements of the k=11 case of the family of sequences whose k=1 case is the Fibonacci sequence A000045, k=2 case is the Padovan sequence A000931. The general case for integer k>1 is defined: a(1) = a(2) = ... = a(k+1)= 1 and for n>(k+1) a(n) = a(n-k) + a(n-[k+1]). For this k=11 case, the ratio of successive terms a(n)/a(n-1) approaches the unique positive root of the characteristic polynomial: x^12 - x - 1 = 0. This is the real constant 1.06216916786425514845894427614312692314655740712180429816794549579... . Note that x = (1 + (1 + (1 + (1 + (1 + ...)^(1/12))^(1/12)))^(1/12))))^(1/12)))))^(1/12))))). The sequence of prime values in this k=11 case is A103389; This sequence of semiprime values in this k=11 case is this sequence."
+    ],
+    "reference": [
+        "A. J. van Zanten, The golden ratio in the arts of painting, building and mathematics, Nieuw Archief voor Wiskunde, vol 17 no 2 (1999) 229-245."
+    ],
+    "link": [
+        "J.-P. Allouche and T. Johnson, <a href=\"http://www.math.jussieu.fr/~allouche/johnson2.pdf\">Narayana's Cows and Delayed Morphisms</a>",
+        "Richard Padovan, <a href=\"http://www.nexusjournal.com/conferences/N2002-Padovan.html\">Dom Hans van der Laan and the Plastic Number</a>.",
+        "E. S. Selmer, <a href=\"http://www.mscand.dk/article/view/10478/8499\">On the irreducibility of certain trinomials</a>, Math. Scand., 4 (1956) 287-302.",
+        "J. Shallit, <a href=\"http://dx.doi.org/10.1016/0304-3975(88)90103-X\">A generalization of automatic sequences</a>, Theoretical Computer Science, 61 (1988), 1-16."
+    ],
+    "formula": [
+        "Intersection of A103379 and A001358, where A103379 is: for n>12: a(n) = a(n-11) + a(n-12). a(1) = a(2) = a(3) = a(4) = a(5) = a(6) = a(7) = a(8) = a(9) = a(10) = a(11) = a(12) = 1."
+    ],
+    "example": [
+        "A103379(21) = 4 = 2 * 2, which is semiprime, hence 4 is in this sequence."
+    ],
+    "maple": [
+        "isA103379 := proc(n)",
+        "    option remember ;",
+        "    local i ;",
+        "    for i from 1 do",
+        "        if A103379(i) = n then",
+        "            return true ;",
+        "        elif A103379(i) > n then",
+        "            return false ;",
+        "        fi;",
+        "    od:",
+        "end proc:",
+        "A103399 := proc(n)",
+        "    option remember ;",
+        "    local a, i ;",
+        "    if n = 1 then",
+        "        4;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if numtheory[bigomega](a) = 2 then",
+        "                if isA103379(a) then",
+        "                    return a ;",
+        "                fi;",
+        "            fi;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "for n from 1 do",
+        "    printf(\"%d,\\n\",A103399(n)) ;",
+        "end do: # _R. J. Mathar_, Aug 30 2008"
+    ],
+    "mathematica": [
+        "SemiprimeQ[n_]:=Plus@@FactorInteger[n][[All, 2]]?2; Clear[a]; k11; Do[a[n]=1, {n, k+1}]; a[n_]:=a[n]=a[n-k]+a[n-k-1]; A103379=Array[a, 100] A103389=Union[Select[Array[a, 1000], PrimeQ]] A103399=Union[Select[Array[a, 300], SemiprimeQ]] N[Solve[x^12 - x - 1 == 0, x], 111][[2]] (* Program, edit and extension by _Ray Chandler_ and _Robert G. Wilson v_ *)"
+    ],
+    "xref": [
+        "Cf. A001358, A000931, A079398, A103372-103381, A103379, A103389."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_, Feb 15 2005",
+    "ext": [
+        "Corrected from a(15) on by _R. J. Mathar_, Aug 30 2008"
+    ],
+    "references": 4,
+    "revision": 24,
+    "time": "2017-05-06T13:29:11-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

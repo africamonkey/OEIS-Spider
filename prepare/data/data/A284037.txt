@@ -1,0 +1,55 @@
+{
+    "number": 284037,
+    "data": "11,13,19,23,37,47,53,73,97,107,163,193,383,487,577,863,1153,2593,2917,4373,8747,995327,1492993,1990657,5308417,28311553,86093443,6879707137,1761205026817,2348273369087,5566277615617,7421703487487,21422803359743,79164837199873",
+    "name": "Primes p such that p-1 and p+1 have two distinct prime factors.",
+    "comment": [
+        "Either p-1 or p+1 must be of the form 2^i * 3^j, since among three consecutive numbers exactly one is a multiple of 3. - _Giovanni Resta_, Mar 29 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A284037/b284037.txt\">Table of n, a(n) for n = 1..51</a> (all terms < 10^75)"
+    ],
+    "formula": [
+        "A001222(a(n)) = 1 and A001221(a(n)) - 1) = A001221(a(n)) + 1) = 2."
+    ],
+    "example": [
+        "7 is not a term because n + 1 = 8 has only one prime factor.",
+        "23 is a term because it is prime and n - 1 = 22 has two distinct prime factors (2, 11) and n + 1 = 24 has two distinct prime factors (2, 3).",
+        "43 is not a term because n - 1 = 42 has three distinct prime factors (2, 3, 7)."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q);",
+        "if nops(ifactors(ithprime(q)-1)[2])=2 and nops(ifactors(ithprime(q)+1)[2])=2",
+        "then ithprime(q); fi; end: seq(P(i),i=1..10^5); # _Paolo P. Lava_, Mar 29 2017",
+        "# Alternative:",
+        "N:= 10^20: # To get all terms <= N",
+        "Res:= {}:",
+        "for i from 1 to ilog2(N) do",
+        "  for j from 1 to floor(log[3](N/2^i)) do",
+        "    q:= 2^i*3^j;",
+        "    if isprime(q-1) and nops(numtheory:-factorset((q-2)/2^padic:-ordp(q-2,2)))=1 then Res:= Res union {q-1} fi;",
+        "    if isprime(q+1) and nops(numtheory:-factorset((q+2)/2^padic:-ordp(q+2,2)))=1 then Res:= Res union {q+1} fi",
+        "od od:",
+        "sort(convert(Res,list)); # _Robert Israel_, Apr 16 2017"
+    ],
+    "mathematica": [
+        "mx = 10^30; ok[t_] := PrimeQ[t] && PrimeNu[t-1]==2==PrimeNu[t+1]; Sort@ Reap[Do[ w = 2^i 3^j; Sow /@ Select[ w+ {1,-1}, ok], {i, Log2@ mx}, {j, 1, Log[3, mx/2^i]}]][[2, 1]] (* terms up to mx, _Giovanni Resta_, Mar 29 2017 *)"
+    ],
+    "program": [
+        "(Sage) omega=sloane.A001221; [n for n in prime_range(10^6) if 2==omega(n-1)==omega(n+1)]",
+        "(Sage) sorted([2^i*3^j+k for i in (1..40) for j in (1..20) for k in (-1,1) if is_prime(2^i*3^j+k) and sloane.A001221(2^i*3^j+2*k)==2])",
+        "(PARI) isok(n) = isprime(n) && (omega(n-1)==2) && (omega(n+1)==2); \\\\ _Michel Marcus_, Apr 17 2017"
+    ],
+    "xref": [
+        "Cf. A000668, A001221, A005105, A005109, A033845, A058383, A067386, A092506, A215504, A275598."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Giuseppe Coppoletta_, Mar 28 2017",
+    "ext": [
+        "a(33)-a(34) from _Giovanni Resta_, Mar 29 2017"
+    ],
+    "references": 1,
+    "revision": 31,
+    "time": "2017-04-17T04:20:51-04:00",
+    "created": "2017-04-07T03:07:41-04:00"
+}

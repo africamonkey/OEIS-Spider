@@ -1,0 +1,47 @@
+{
+    "number": 249941,
+    "data": "1,13,4683,7087261,28091567595,230283190977853,3385534663256845323,81124824998504073881821,2958279121074145472650648875,155897763918621623249276226253693,11403568794011880483742464196184901963,1120959742203056268267494209293006882589981",
+    "name": "E.g.f.: Sum_{n>=0} exp(n^3*x) / 2^(n+1).",
+    "comment": [
+        "Number of ordered partitions of 3*n."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..3*n} k! * Stirling2(3*n, k) for n>=0.",
+        "a(n) = Sum_{k=1..[(3*n+1)/2]} (2*k-1)! * Stirling2(3*n+1, 2*k) for n>0 with a(0)=1.",
+        "a(n) = A000670(3*n), where A000670 is the Fubini numbers.",
+        "a(n) ~ (3*n)! / (2 * (log(2))^(3*n+1)). - _Vaclav Kotesovec_, May 04 2015"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + 13*x + 4683*x^2/2! + 7087261*x^3/3! + 28091567595*x^4/4! +...",
+        "where the e.g.f. equals the infinite series:",
+        "A(x) = 1/2 + exp(x)/2^2 + exp(8*x)/2^3 + exp(27*x)/2^4 + exp(64*x)/2^5 + exp(125*x)/2^6 + exp(216*x)/2^7 + exp(343*x)/2^8 +..."
+    ],
+    "mathematica": [
+        "Table[Sum[k! * StirlingS2[3*n, k],{k,0,3*n}],{n,0,20}] (* _Vaclav Kotesovec_, May 04 2015 *)",
+        "Fubini[n_, r_] := Sum[k!*Sum[(-1)^(i+k+r)*(i+r)^(n-r)/(i!*(k-i-r)!), {i, 0, k-r}], {k, r, n}]; a[n_] := Fubini[3n, 1]; a[0] = 1; Table[a[n], {n, 0, 11}] (* _Jean-Fran\u00e7ois Alcover_, Mar 30 2016 *)"
+    ],
+    "program": [
+        "(PARI) /* E.g.f.: Sum_{n>=0} exp(n^3*x)/2^(n+1) */",
+        "\\p100 \\\\ set precision",
+        "{a(n) = round( n!*polcoeff(sum(m=0,600,exp(m^3*x +x*O(x^n))/2^(m+1)*1.),n) )}",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(PARI) /* Formula for a(n): */",
+        "{Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)}",
+        "{a(n) = sum(k=0, 3*n, k! * Stirling2(3*n, k) )}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) /* Formula for a(n): */",
+        "{Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)}",
+        "{a(n) = if(n==0,1, sum(k=1,(3*n+1)\\2, (2*k-1)! * Stirling2(3*n+1,2*k) ))}",
+        "for(n=0,20,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A249940, A000670."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 19 2014",
+    "references": 2,
+    "revision": 22,
+    "time": "2016-03-30T06:57:27-04:00",
+    "created": "2014-11-19T18:07:32-05:00"
+}

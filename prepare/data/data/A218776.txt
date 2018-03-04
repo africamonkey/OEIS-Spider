@@ -1,0 +1,52 @@
+{
+    "number": 218776,
+    "data": "2,12,50,204,818,3298,13202,52834,211346,845586,3382418,13531282,54125714,216503058,866012306,3464049426,13856197778,55424792722,221699171474,886796698770,3547186799762,14188747200658,56754988803218,227019955225746,908079820907666",
+    "name": "A014486-codes for the Beanstalk-tree growing one natural number at time, starting from the tree of one internal node (1), with the \"lesser numbers to the left hand side\" construction.",
+    "comment": [
+        "The active middle region of the triangle (see attached \"Wolframesque\" illustration) corresponds to the area where the growing tip(s) of the beanstalk are located. Successively larger \"turbulences\" occurring in that area appear approximately at the row numbers given by A218548. The larger tendrils (the finite side-trees) are, the longer there is vacillation in the direction of the growing region, which lasts until the growing tip of the infinite stem (A179016) has passed the topmost tips of the tendril. See also A218612.",
+        "These are the mirror-images (in binary tree sense) of the terms in sequence A218778. For more compact versions, see A218780 & A218782."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A218776/b218776.txt\">Table of n, a(n) for n = 1..256</a>",
+        "Antti Karttunen, <a href=\"/A218776/a218776.png\">Terms a(1)-a(4096) drawn as binary strings, in Wolframesque fashion.</a>"
+    ],
+    "example": [
+        "Illustration how the growing beanstalk-tree produces the first four terms of this sequence. In this variant, the lesser numbers come to the left hand side:",
+        "..........",
+        "...\\1/.... Coded by A014486(A218777(1)) = A014486(1) = 2 (binary 10).",
+        "..........",
+        "..........",
+        ".\\2/......",
+        "...\\1/.... Coded by A014486(A218777(2)) = A014486(3) = 12 (bin. 1100).",
+        "..........",
+        "..........",
+        ".\\2/ \\3/..",
+        "...\\1/.... Coded by A014486(A218777(3)) = A014486(6) = 50 (110010).",
+        "..........",
+        "..........",
+        "....\\4/...",
+        ".\\2/.\\3/..",
+        "...\\1/.... Coded by A014486(A218777(4)) = A014486(15) = 204 (11001100).",
+        "..........",
+        "Thus the first four terms of this sequence are 2, 12, 50 and 204."
+    ],
+    "program": [
+        "(Scheme with memoization macro definec from _Antti Karttunen_'s Intseq-library):",
+        "(definec (A218776 n) (parenthesization->A014486 (tree_for_A218776 n)))",
+        "(definec (tree_for_A218776 n) (cond ((zero? n) (list)) ((= 1 n) (list (list))) (else (let ((new-tree (copy-tree (tree_for_a218776 (-1+ n))))) (add-bud-for-the-n-th-unbranching-tree-with-car-cdr-code! new-tree (A218615 n))))))",
+        "(define (add-bud-for-the-n-th-unbranching-tree-with-car-cdr-code! tree n) (let loop ((n n) (t tree)) (cond ((zero? n) (list)) ((= n 1) (list (list))) ((= n 2) (set-cdr! t (list (list)))) ((= n 3) (set-car! t (list (list)))) ((even? n) (loop (/ n 2) (cdr t))) (else (loop (/ (- n 1) 2) (car t))))) tree)",
+        "(define (copy-tree bt) (cond ((not (pair? bt)) bt) (else (cons (copy-tree (car bt)) (copy-tree (cdr bt))))))",
+        "(define (parenthesization->a014486 p) (let loop ((s 0) (p p)) (if (null? p) s (let* ((x (parenthesization->a014486 (car p))) (w (binwidth x))) (loop (+ (* s (expt 2 (+ w 2))) (expt 2 (1+ w)) (* 2 x)) (cdr p))))))",
+        "(define (binwidth n) (let loop ((n n) (i 0)) (if (zero? n) i (loop (floor->exact (/ n 2)) (1+ i))))) ;; (binwidth n) = A029837(n+1)."
+    ],
+    "xref": [
+        "a(n) = A014486(A218777(n)). Cf. A014486, A218615, A218780, A218782, A218787, A218778."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Nov 17 2012",
+    "references": 6,
+    "revision": 12,
+    "time": "2014-11-02T12:18:35-05:00",
+    "created": "2012-11-17T23:48:36-05:00"
+}

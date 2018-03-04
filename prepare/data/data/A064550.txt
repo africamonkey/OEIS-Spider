@@ -1,0 +1,43 @@
+{
+    "number": 64550,
+    "data": "1,2,4,7,9,12,16,19,23,26,28,33,37,40,46,49,53,58,62,67,71,74,76,85,89,92,98,103,107,110,120,123,125,132,140,143,147,154,158,163,169,174,180,185,189,192,194,211,211,212,222,227,227,234,240,241",
+    "name": "Define Hofstadter's batrachian Q-sequence (A005185) by Q(0) = Q(1) = 1, Q(n)=Q(n-Q(n-1))+Q(n-Q(n-2)), n > 1; then a(1) = 2, a(n)=a(n-1)+2*Q(n)-n, n > 1.",
+    "comment": [
+        "Prime-like simulation using Hofstadter's Batrachian sequence as difference generator."
+    ],
+    "reference": [
+        "Simone Caramel, personal communication, also postings to newsgroups.",
+        "Clifford Pickover, article on the crying of Batrachian sequences"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A064550/b064550.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Roger L. Bagula, <a href=\"http://victorian.fortunecity.com/carmelita/435/hofstadterintegers.html\">A Simulation of a Prime Type of Sequence: The Hofstadter Integers</a>"
+    ],
+    "maple": [
+        "A064550 := proc(n) option remember; if n=0 then 1 else A064550(n-1)+2*A005185(n-1)(n) - n; fi; end;"
+    ],
+    "mathematica": [
+        "q[0] = q[1] = 1; q[n_] := q[n - q[n - 1]] + q[n - q[n - 2]]; a[1] = 2; a[n_] := a[n] = a[n - 1] + 2*(q[n] - n/2); Table[ a[n], {n, 1, 70} ]"
+    ],
+    "program": [
+        "(ARIBAS): function a064550(maxarg: integer); var n,r,rm,q: integer; qar: array; begin qar := alloc(array,maxarg + 1); qar[0] := 1; for n := 1 to maxarg do if n < 2 then q := 1; else q := qar[n - qar[n - 1]] + qar[n - qar[n - 2]]; end; qar[n] := q; if n = 1 then r := 2; else r := rm + round(2*(q - n/2)); end; rm := r; write(r,\" \"); end; end; a064550(65).",
+        "(Haskell)",
+        "a064550 n = a064550_list !! n",
+        "a064550_list = 1 : 2 : zipWith3 (\\a q n -> a + 2 * q - n)",
+        "    (tail a064550_list) (drop 2 a005185_list) [2..]",
+        "-- _Reinhard Zumkeller_, May 13 2012"
+    ],
+    "xref": [
+        "Cf. A064551, A064552, A005185."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,2",
+    "author": "_Roger L. Bagula_, Oct 08 2001",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, _Klaus Brockhaus_ and _Matthew Conroy_, Oct 09 2001"
+    ],
+    "references": 3,
+    "revision": 16,
+    "time": "2014-10-02T18:01:10-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

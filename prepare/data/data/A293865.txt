@@ -1,0 +1,85 @@
+{
+    "number": 293865,
+    "data": "0,0,0,1,1,2,3,5,8,13,21,37,56,90,144,239,374,592,948,1558,2431,3848,6127,9972,15602,24658,39158,63265,99110,156505,248040,398675,625024,986241,1560763,2498832,3919561,6180914,9770162,15594972,24470070,38567903,60907330",
+    "name": "Number of self-intersecting walks of length n on a square lattice such that at each point the angle turns 90 degrees.",
+    "comment": [
+        "It is assumed that the first walk turns left and that all walks end when they intersect themselves."
+    ],
+    "link": [
+        "MathStackExchange, <a href=\"https://math.stackexchange.com/questions/2471391/expected-number-of-steps-before-intersection\">Expected Number of Steps Before Intersection</a>, Oct 2017."
+    ],
+    "formula": [
+        "For n>2, a(n) = 2*A189722(n-1) - A189722(n). - _Jens Randrup Rasmussen_, Oct 29 2017"
+    ],
+    "example": [
+        "For n = 4 we have the simplest self-intersecting walk, which is a square.",
+        "For n = 5 we have the walk:",
+        "(0,0), (0,1), (-1,1), (-1, 2), (0,2), (0,1)",
+        "For n = 6 we have the walks:",
+        "(0,0), (0,1), (-1,1), (-1, 0), (-2,0), (-2,1), (-1,1)",
+        "(0,0), (0,1), (-1,1), (-1, 2), (-2,2), (-2,1), (-1,1)"
+    ],
+    "program": [
+        "(Visual Basic for Excel)",
+        "Const N = 50",
+        "Const MaxSteps = 43",
+        "Dim BeenHere() As Boolean",
+        "Dim LoopBacks(MaxSteps) As Long",
+        "Dim PosX As Integer, PosY As Integer",
+        "Sub Macro1()",
+        "  ReDim BeenHere(N, N)",
+        "  PosX = N / 2: PosY = N / 2",
+        "  BeenHere(PosX, PosY) = True",
+        "  PosX = PosX + 1",
+        "  BeenHere(PosX, PosY) = True",
+        "  PosY = PosY - 1",
+        "  BeenHere(PosX, PosY) = True",
+        "  DoSteps 2, 3, PosX, PosY, BeenHere()",
+        "  For i = 4 To MaxSteps",
+        "    Cells(i - 1, 3).Value = i",
+        "    Cells(i - 1, 4).Value = LoopBacks(i)",
+        "  Next i",
+        "End Sub",
+        "Sub DoSteps(ByVal StepNo As Integer, Dir As Integer, X As Integer, Y As Integer, BH() As Boolean)",
+        "Dim BH2() As Boolean",
+        "Dim X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer",
+        "Dim Dir1 As Integer, Dir2 As Integer",
+        "  BH2 = BH",
+        "  StepNo = StepNo + 1",
+        "  Select Case Dir",
+        "  Case 1, 3 ' North or South",
+        "      Dir1 = 2: X1 = X + 1: Y1 = Y",
+        "      Dir2 = 4: X2 = X - 1: Y2 = Y",
+        "  Case 2, 4 ' East or West",
+        "      Dir1 = 1: Y1 = Y + 1: X1 = X",
+        "      Dir2 = 3: Y2 = Y - 1: X2 = X",
+        "  End Select",
+        "  If BH2(X1, Y1) Then",
+        "    LoopBacks(StepNo) = LoopBacks(StepNo) + 1",
+        "  ElseIf StepNo < MaxSteps Then",
+        "    BH2(X1, Y1) = True",
+        "    DoSteps StepNo, Dir1, X1, Y1, BH2()",
+        "    BH2(X1, Y1) = False",
+        "  End If",
+        "  If BH2(X2, Y2) Then",
+        "    LoopBacks(StepNo) = LoopBacks(StepNo) + 1",
+        "  ElseIf StepNo < MaxSteps Then",
+        "    BH2(X2, Y2) = True",
+        "    DoSteps StepNo, Dir2, X2, Y2, BH2()",
+        "  End If",
+        "End Sub"
+    ],
+    "xref": [
+        "This sequence gives the number of self-intersecting walks while A189722 gives the number of self-avoiding walks."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "1,6",
+    "author": "_Jens Randrup Rasmussen_, Oct 18 2017",
+    "ext": [
+        "The terms starting from a(11) and the program corrected by _Jens Randrup Rasmussen_, Oct 29 2017"
+    ],
+    "references": 0,
+    "revision": 26,
+    "time": "2017-10-30T22:59:41-04:00",
+    "created": "2017-10-20T15:37:27-04:00"
+}

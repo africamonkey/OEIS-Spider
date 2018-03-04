@@ -1,0 +1,43 @@
+{
+    "number": 192313,
+    "data": "1,2,5,13,34,91,247,680,1893,5319,15056,42867,122605,351898,1012729,2920521,8435362,24392655,70599403,204472264",
+    "name": "Constant term of the reduction of n-th polynomial at A157751 by x^2->x+1.",
+    "comment": [
+        "For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232."
+    ],
+    "formula": [
+        "Empirical G.f.: x*(x+1)*(x^2-3*x+1)/(x^4+6*x^3+x^2-4*x+1). [_Colin Barker_, Nov 13 2012]"
+    ],
+    "example": [
+        "The first five polynomials at A157751 and their reductions are as follows:",
+        "p0(x)=1 -> 1",
+        "p1(x)=2+x -> 2+x",
+        "p2(x)=4+2x+x^2 -> 5+3x",
+        "p3(x)=8+4x+4x^2+x^3 -> 13+10x",
+        "p4(x)=16+8x+12x^2+4x^3+x^4 -> 34+31x.",
+        "From these, we read",
+        "A192313=(1,2,5,13,34,...) and A192314=(0,1,3,19,31,...)"
+    ],
+    "mathematica": [
+        "q[x_] := x + 1;",
+        "p[0, x_] := 1;",
+        "p[n_, x_] := (x + 1)*p[n - 1, x] + p[n - 1, -x] /; n > 0  (* A157751 *)",
+        "Table[Simplify[p[n, x]], {n, 0, 5}]",
+        "reductionRules = {x^y_?EvenQ -> q[x]^(y/2), x^y_?OddQ -> x q[x]^((y - 1)/2)};",
+        "t = Table[Last[Most[FixedPointList[Expand[#1 /. reductionRules] &, p[n, x]]]], {n, 0, 20}]",
+        "Table[Coefficient[Part[t, n], x, 0], {n, 1, 20}]",
+        "  (* A192313 *)",
+        "Table[Coefficient[Part[t, n], x, 1], {n, 1, 20}]",
+        "  (* A192337 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192337."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Jun 28 2011",
+    "references": 3,
+    "revision": 7,
+    "time": "2012-11-13T12:46:02-05:00",
+    "created": "2011-06-30T11:41:03-04:00"
+}

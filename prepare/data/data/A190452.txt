@@ -1,0 +1,39 @@
+{
+    "number": 190452,
+    "data": "1,1,2,4,11,31,106,372,1499,6211,28606,135356,697357,3688049,20935006,121837276,753159801,4767863657,31807384354,217048147396,1551200297291,11327527814191,86206555248122,669666314150164,5399592811359331,44398500646885851",
+    "name": "E.g.f. exp(x+x^2/2+x^4/24).",
+    "link": [
+        "Harvey P. Dale, <a href=\"/A190452/b190452.txt\">Table of n, a(n) for n = 0..600</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp(x+x^2/2+x^4/24).",
+        "a(n) = n!*sum(k=1..n, sum(j=floor((4*k-n)/3)..floor((4*k-n)/2), binomial(j,n-4*k+3*j)*12^(j-k)*binomial(k,j)*2^(-n+3*k-2*j))/k!), n>0, a(0)=1.",
+        "Recurrence: 6*a(n) = 6*a(n-1) + 6*(n-1)*a(n-2) + (n-3)*(n-2)*(n-1)*a(n-4). - _Vaclav Kotesovec_, Oct 09 2013",
+        "a(n) ~ 1/2*exp((6*n)^(1/4) + sqrt(6*n)/2 - 3*n/4 - 3/4) * n^(3*n/4) * 6^(-n/4) * (1 + 3^(5/4)/(16*(2*n)^(3/4)) + 7*sqrt(3/2)/(8*sqrt(n)) - 3^(3/4)/(2*(2*n)^(1/4))). - _Vaclav Kotesovec_, Oct 09 2013"
+    ],
+    "mathematica": [
+        "With[{nn=30},CoefficientList[Series[Exp[x+x^2/2+x^4/24],{x,0,nn}], x]Range[0,nn]!] (* _Harvey P. Dale_, Jun 21 2012 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=n!*sum(sum(binomial(j,n-4*k+3*j)*12^(j-k)*binomial(k,j)*2^(-n+3*k-2*j),j,floor((4*k-n)/3),floor((4*k-n)/2))/k!,k,1,n);",
+        "(PARI)",
+        "N=33;  x='x+O('x^N);",
+        "egf=exp(x+x^2/2+x^4/4!);",
+        "Vec(serlaplace(egf))",
+        "/* _Joerg Arndt_, Sep 15 2012 */"
+    ],
+    "xref": [
+        "Column k=4 of A275422."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Vladimir Kruchinin_, May 24 2011",
+    "ext": [
+        "More terms from _Harvey P. Dale_, Jun 21 2012"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2016-07-27T11:42:06-04:00",
+    "created": "2011-05-27T02:33:52-04:00"
+}

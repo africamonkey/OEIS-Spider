@@ -1,0 +1,74 @@
+{
+    "number": 70939,
+    "data": "1,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7",
+    "name": "Length of binary representation of n.",
+    "comment": [
+        "Zero is assumed to be represented as 0.",
+        "For n>1, n appears 2^(n-1) times. - _Lekraj Beedassy_, Apr 12 2006",
+        "a(n) is the permanent of the n X n 0-1 matrix whose (i,j) entry is 1 iff i=1 or i=j or i=2*j. For example, a(4)=3 is per([[1, 1, 1, 1], [1, 1, 0, 0], [0, 0, 1, 0], [0, 1, 0, 1]]). - _David Callan_, Jun 07 2006",
+        "a(n) is the number of different contiguous palindromic bit patterns in the binary representation of n; for examples, for 5=101_2 the bit patterns are 0, 1, 101; for 7=111_2 the corresponding patterns are 1, 11, 111; for 13=1101_2 the patterns are 0, 1, 11, 101. - _Hieronymus Fischer_, Mar 13 2012",
+        "A103586(n) = a(n + a(n)); a(A214489(n)) = A103586(A214489(n)). - _Reinhard Zumkeller_, Jul 21 2012"
+    ],
+    "reference": [
+        "G. Everest, A. van der Poorten, I. Shparlinski and T. Ward, Recurrence Sequences, Amer. Math. Soc., 2003; see esp. p. 255.",
+        "L. Levine, Fractal sequences and restricted Nim, Ars Combin. 80 (2006), 113-127."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A070939/b070939.txt\">Table of n, a(n) for n = 0..1024</a>",
+        "K. Hessami Pilehrood, T. Hessami Pilehrood, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL13/Pilehrood/pilehrood2.html\">Vacca-Type Series for Values of the Generalized Euler Constant Function and its Derivative</a>, J. Integer Sequences, 13 (2010), #10.7.3.",
+        "L. Levine, <a href=\"http://arXiv.org/abs/math.CO/0409408\">Fractal sequences and restricted Nim</a>, arXiv:math/0409408 [math.CO], 2004.",
+        "R. Stephan, <a href=\"/somedcgf.html\">Some divide-and-conquer sequences ...</a>",
+        "R. Stephan, <a href=\"/A079944/a079944.ps\">Table of generating functions</a>",
+        "R. Stephan, <a href=\"http://arXiv.org/abs/math.CO/0307027\">Divide-and-conquer generating functions. I. Elementary sequences</a>",
+        "<a href=\"/index/Cor#core\">Index entries for \"core\" sequences</a>",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "formula": [
+        "a(0) = 1; for n >= 1, a(n) = 1 + floor(log_2(n)) = 1 + A000523(n).",
+        "G.f.: 1 + 1/(1-x) * Sum(k>=0, x^2^k). - _Ralf Stephan_, Apr 12 2002",
+        "a(0)=1, a(1)=1 and a(n) = 1+a(floor(n/2)). - _Benoit Cloitre_, Dec 02 2003",
+        "a(n) = A000120(n) + A023416(n). - _Lekraj Beedassy_, Apr 12 2006",
+        "a(2^m + k) = m + 1, m >= 0, 0 <= k < 2^m. - _Yosu Yurramendi_, Mar 14 2017"
+    ],
+    "example": [
+        "8 = 1000 in binary has length 4."
+    ],
+    "maple": [
+        "A070939 := n -> `if`(n=0, 1, ilog2(2*n)):",
+        "seq(A070939(n), n=0..104); # revised by _Peter Luschny_, Aug 10 2017"
+    ],
+    "mathematica": [
+        "Table[Length[IntegerDigits[n, 2]], {n, 0, 50}] (* _Stefan Steinerberger_, Apr 01 2006 *)",
+        "Join[{1},IntegerLength[Range[110],2]] (* _Harvey P. Dale_, Aug 18 2013 *)"
+    ],
+    "program": [
+        "(MAGMA) A070939:=func< n | n eq 0 select 1 else #Intseq(n, 2) >; [ A070939(n): n in [0..104] ]; // _Klaus Brockhaus_, Jan 13 2011",
+        "(PARI) {a(n) = if( n<1, n==0, #binary(n))} /* _Michael Somos_, Aug 31 2012 */",
+        "(PARI) A070939 = n->#binary(n)+!n \\\\ 25% faster than the preceding code. - _M. F. Hasler_, Jan 04 2014",
+        "(Haskell)",
+        "a070939 n = if n < 2 then 1 else a070939 (n `div` 2) + 1",
+        "a070939_list = 1 : 1 : l [1] where",
+        "   l bs = bs' ++ l bs' where bs' = map (+ 1) (bs ++ bs)",
+        "-- _Reinhard Zumkeller_, Jul 19 2012, Jun 07 2011",
+        "(Sage)",
+        "def A070939(n) : return (2*n).exact_log(2) if n <> 0 else 1",
+        "[A070939(n) for n in range(100)] # _Peter Luschny_, Aug 08 2012"
+    ],
+    "xref": [
+        "Cf. A070940, A070941, A001511, A000523.",
+        "A029837(n+1) gives the length of binary representation of n without the leading zeros (i.e., when zero is represented as the empty sequence). For n>0 this is equal to a(n).",
+        "This is Guy Steele's sequence GS(4, 4) (see A135416).",
+        "Cf. A000120, A007088, A023416, A059015.",
+        "Cf. A083652 (partial sums)."
+    ],
+    "keyword": "nonn,easy,nice,core",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, May 18 2002",
+    "ext": [
+        "a(4) corrected by _Antti Karttunen_, Feb 28 2003"
+    ],
+    "references": 204,
+    "revision": 82,
+    "time": "2017-08-10T07:48:59-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

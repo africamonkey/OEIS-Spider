@@ -1,0 +1,65 @@
+{
+    "number": 1169,
+    "id": "M1636 N0639",
+    "data": "1,2,6,19,61,196,629,2017,6466,20727,66441,212980,682721,2188509,7015418,22488411,72088165,231083620,740754589,2374540265,7611753682,24400004911,78215909841,250726529556,803721298537,2576384425157,8258779154250,26474089989299",
+    "name": "Number of board-pile polyominoes with n cells.",
+    "comment": [
+        "The inverse binomial transform is 1,1,3,6,..., i.e., the unsigned version of A077926. - _R. J. Mathar_, May 15 2008",
+        "a(n+1)/a(n) tends to a limit which is equal to the largest real root of the denominator of the g.f., 3.20556943040... . - _Robert G. Wilson v_, Feb 01 2015"
+    ],
+    "reference": [
+        "W. F. Lunnon, Counting polyominoes, pp. 347-372 of A. O. L. Atkin and B. J. Birch, editors, Computers in Number Theory. Academic Press, NY, 1971.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "R. P. Stanley, Enumerative Combinatorics I, p. 259."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A001169/b001169.txt\">Table of n, a(n) for n = 1..200</a>",
+        "I. G. Enting and A. J. Guttmann, <a href=\"http://dx.doi.org/10.1007/BF01112757\">On the area of square lattice polygons</a>, J. Statist. Phys., 58 (1990), 475-484.",
+        "P. Flajolet and R. Sedgewick, <a href=\"http://algo.inria.fr/flajolet/Publications/books.html\">Analytic Combinatorics</a>, 2009; see page 367",
+        "Dean Hickerson, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/HICK2/chcp.html\">Counting Horizontally Convex Polyominoes</a>, J. Integer Sequences, Vol. 2 (1999), #99.1.8.",
+        "David A. Klarner, <a href=\"http://www.fq.math.ca/Scanned/3-1/klarner.pdf\">Some results concerning polyominoes</a>, Fibonacci Quarterly 3 (1965), 9-20.",
+        "David A. Klarner, <a href=\"http://dx.doi.org/10.1016/S0021-9800(69)80100-6\">The number of graded partially ordered sets</a>, Journal of Combinatorial Theory, vol.6, no.1, pp.12-19, (January-1969).",
+        "R. Pemantle and M. C. Wilson, <a href=\"http://dx.doi.org/10.1137/050643866\">Twenty Combinatorial Examples of Asymptotics Derived from Multivariate Generating Functions, SIAM Rev., 50 (2008), no. 2, 199-272. See p. 239",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "G. P\u00f3lya, <a href=\"http://dx.doi.org/10.1016/S0021-9800(69)80113-4\">On the number of certain lattice polygons</a>, J. Combinatorial Theory 6 1969 102--105. MR0236031 (38 #4329) - From _N. J. A. Sloane_, Jun 05 2012",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Column-ConvexPolyomino.html\">Column-Convex Polyomino.</a>",
+        "D. Zeilberger, <a href=\"http://arXiv.org/abs/math.CO/9801016\">Automated counting of LEGO towers</a>, arXiv:math/9801016 [math.CO], 1998.",
+        "V. M. Zhuravlev, <a href=\"http://www.mccme.ru/free-books/matpros/mph.pdf\">Horizontally-convex polyiamonds and their generating functions</a>, Mat. Pros. 17 (2013), 107-129 (in Russian).",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (5, -7, 4)."
+    ],
+    "formula": [
+        "G.f.: x*(1-x)^3/(1 - 5*x + 7*x^2 - 4*x^3).",
+        "a(n) = 5a(n-1) - 7a(n-2) + 4a(n-3) for n >= 5.",
+        "a(n) = sum(k=0..n-1, sum(i=0..k, binomial(k,i)*binomial(n+2*i-1,4*k-i))). - _Emanuele Munarini_, May 19 2011",
+        "a(n) = a(n-1) + A049219(n) + A049220(n) for n >= 2.",
+        "Row sums of A273895. - _Michael Somos_, Jun 02 2016"
+    ],
+    "maple": [
+        "A001169:=(z-1)**3/(-1+5*z-7*z**2+4*z**3); # conjectured (correctly) by _Simon Plouffe_ in his 1992 dissertation"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n<5, {1, 2, 6, 19}[[n]], 5a[n-1] - 7a[n-2] + 4a[n-3]]; Table[a[n], {n, 30}]",
+        "Join[{1},LinearRecurrence[{5,-7,4},{2,6,19},40]] (* _Harvey P. Dale_, Sep 11 2014 *)",
+        "Rest@ CoefficientList[ Series[x (1 - x)^3/(1 - 5x + 7x^2 - 4x^3), {x, 0, 28}], x] (* _Robert G. Wilson v_, Feb 01 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( x * (1 - x)^3 / (1 - 5*x + 7*x^2 - 4*x^3) + x * O(x^n), n))}; /* _Michael Somos_, Jun 02 2016 */",
+        "(Maxima) makelist(sum(sum(binomial(k,i)*binomial(n+2*i-1,4*k-i),i,0,k),k,0,n-1),n,0,24); /* _Emanuele Munarini_, May 19 2011 */",
+        "(MAGMA) I:=[1,2,6,19,61]; [n le 5 select I[n] else 5*Self(n-1)-7*Self(n-2)+4*Self(n-3): n in [1..30]]; // _Vincenzo Librandi_, Feb 15 2015"
+    ],
+    "xref": [
+        "Cf. A049219, A049220, A049221, A049222, A246773, A273895."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Dean Hickerson_"
+    ],
+    "references": 9,
+    "revision": 80,
+    "time": "2016-08-24T12:31:03-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

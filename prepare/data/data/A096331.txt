@@ -1,0 +1,50 @@
+{
+    "number": 96331,
+    "data": "1,10,237,10707,774924,78702536,10273189176,1631331753120,304206135619160,65030138045062272,15659855107404275280,4191800375194003211360,1234179902360142341550240,396280329098426228719121280,137779269467538258010671193472",
+    "name": "Number of 2-connected planar graphs on n labeled nodes.",
+    "comment": [
+        "Recurrence known, see Bodirsky et al."
+    ],
+    "reference": [
+        "Miklos Bona, Handbook of Enumerative Combinatorics, CRC Press, 2015, p. 419."
+    ],
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A096331/b096331.txt\">Table of n, a(n) for n = 3..126</a>",
+        "E. A. Bender, Z. Gao and N. C. Wormald, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v9i1r43\">The number of labeled 2-connected planar graphs</a>, Electron. J. Combin., 9 (2002), #R43.",
+        "M. Bodirsky, C. Groepl and M. Kang, <a href=\"http://dx.doi.org/10.1007/3-540-45061-0_84\">Generating Labeled Planar Graphs Uniformly At Random</a>, ICALP03 Eindhoven, LNCS 2719, Springer Verlag (2003), 1095 - 1107.",
+        "O. Gimenez and M. Noy, <a href=\"http://arXiv.org/abs/math.CO/0501269\">Asymptotic enumeration and limit laws of planar graphs</a>, arXiv:math/0501269 [math.CO], 2005."
+    ],
+    "formula": [
+        "a(n) ~ g * n^(-7/2) * r^n * n!, where g=0.00000370445941594... (A291835) and r=26.1841125556... (A291836) (see Bender link). - _Gheorghe Coserea_, Sep 03 2017"
+    ],
+    "program": [
+        "(PARI)",
+        "Q(n,k) = { \\\\ c-nets with n-edges, k-vertices",
+        "  if (k < 2+(n+2)\\3 || k > 2*n\\3, return(0));",
+        "  sum(i=2, k, sum(j=k, n, (-1)^((i+j+1-k)%2)*binomial(i+j-k,i)*i*(i-1)/2*",
+        "  (binomial(2*n-2*k+2,k-i)*binomial(2*k-2, n-j) -",
+        "  4*binomial(2*n-2*k+1, k-i-1)*binomial(2*k-3, n-j-1))));",
+        "};",
+        "A100960_ser(N) = {",
+        "my(x='x+O('x^(3*N+1)), t='t+O('t^(N+4)),",
+        "   q=t*x*Ser(vector(3*N+1, n, Polrev(vector(min(N+3, 2*n\\3), k, Q(n,k)),'t))),",
+        "   d=serreverse((1+x)/exp(q/(2*t^2*x) + t*x^2/(1+t*x))-1),",
+        "   g2=intformal(t^2/2*((1+d)/(1+x)-1)));",
+        "   serlaplace(Ser(vector(N, n, subst(polcoeff(g2, n,'t),'x,'t)))*'x);",
+        "};",
+        "Vec(subst(A100960_ser(20),'t,1)) \\\\ _Gheorghe Coserea_, Aug 10 2017"
+    ],
+    "xref": [
+        "Cf. A066537. Row sums of A100960."
+    ],
+    "keyword": "nonn",
+    "offset": "3,2",
+    "author": "_Steven Finch_, Aug 02 2004",
+    "ext": [
+        "More terms from _Gheorghe Coserea_, Aug 05 2017"
+    ],
+    "references": 8,
+    "revision": 39,
+    "time": "2017-09-03T17:12:50-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

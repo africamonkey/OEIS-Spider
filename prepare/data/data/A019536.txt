@@ -1,0 +1,43 @@
+{
+    "number": 19536,
+    "data": "1,2,5,20,109,784,6757,68240,787477,10224812,147512053,2340964372,40527565261,760095929840,15352212731933,332228417657960,7668868648772701,188085259070219000,4884294069438337429",
+    "name": "a(n) = number of necklaces of n beads with up to n unlabeled colors.",
+    "comment": [
+        "The Moebius transform of this sequence is A060223."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A019536/b019536.txt\">Table of n, a(n) for n = 1..420</a>",
+        "M. Goebel, <a href=\"http://www.informatik.uni-trier.de/~ley/db/journals/aaecc/aaecc8.html\">On the number of special permutation-invariant orbits and terms</a>, in Applicable Algebra in Engin., Comm. and Comp. (AAECC 8), Volume 8, Number 6, 1997, pp. 505-509 (Lect. Notes Comp. Sci.)",
+        "F. Ruskey, <a href=\"http://www.theory.csc.uvic.ca/~cos/inf/neck/NecklaceInfo.html\">Necklaces with Fixed Density </a>",
+        "Eric Weisstein's world of Mathematics, <a href=\"http://mathworld.wolfram.com/Necklace.html\">Necklaces</a>"
+    ],
+    "formula": [
+        "See Mathematica code"
+    ],
+    "example": [
+        "a(3)=5 since the partitions of the 3 (unlabeled) colors are {3}:RRR, {2,1}:RRG and {1,1,1}:RGB, with multiplicities resp. *1, *2, *1, ( *2 since partitioning 3 beads over a bin of 2 and a bin of 1), so the necklaces are {R,R,R},{R,R,G},{R,G,G},{R,G,B},{R,B,G}."
+    ],
+    "mathematica": [
+        "Needs[\"DiscreteMath`Combinatorica`\"]; mult[li:{__Integer}] := Multinomial @@ Length /@ Split[Sort[li]]; neck[li:{__Integer}] := Module[{n, d}, n=Plus @@ li; d=n-First[li];Fold[ #1+(EulerPhi[ #2]*(n/#2)!)/Times @@ ((li/#2)!)&, 0, Divisors[GCD @@ li]]/n]; Table[(mult /@ Partitions[n]).(neck /@ Partitions[n]), {n, 24}]",
+        "(* second program: *)",
+        "a[n_] := Sum[DivisorSum[n, EulerPhi[#]*StirlingS2[n/#, k] k! &]/n, {k, 1, n}]; Table[a[n], {n, 1, 20}] (* _Jean-Fran\u00e7ois Alcover_, Mar 31 2016, after _Philippe Del\u00e9ham_ *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n, sumdiv(n, d, eulerphi(d)*stirling(n/d, k, 2)*k!)/n); \\\\ _Michel Marcus_, Mar 31 2016"
+    ],
+    "xref": [
+        "Cf. A000670, A019537.",
+        "Row sums of A087854. - _Philippe Del\u00e9ham_"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "Manfred Goebel (goebel(AT)informatik.uni-tuebingen.de)",
+    "ext": [
+        "Edited by _Wouter Meeussen_, Aug 06 2002",
+        "Corrected by _T. D. Noe_, Oct 31 2006"
+    ],
+    "references": 10,
+    "revision": 32,
+    "time": "2017-12-13T02:45:55-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

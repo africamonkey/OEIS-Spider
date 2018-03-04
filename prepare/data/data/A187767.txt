@@ -1,0 +1,56 @@
+{
+    "number": 187767,
+    "data": "0,2,3,10,15,35,63,138,255,527,1023,2083,4095,8255,16383,32906,65535,131327,262143,524815,1048575,2098175,4194303,8390691,16777215,33558527,67108863,134225983,268435455,536887295,1073741823,2147516554,4294967295,8590000127,17179869183",
+    "name": "Number of bicolored cyclic patterns n X n.",
+    "comment": [
+        "A bicolored cyclic pattern is a 0-1 n x n matrix where the j-th row is equal to the first row rotated to the left by (j-1)*k places, with 1 <= k <= n a parameter. For example, with first row = 0110 we have",
+        ".",
+        ". (k=1) 0 1 1 0  (k=2) 0 1 1 0  (k=3) 0 1 1 0  (k=4) 0 1 1 0",
+        ".       1 1 0 0        1 0 0 1        0 0 1 1        0 1 1 0",
+        ".       1 0 0 1        0 1 1 0        1 0 0 1        0 1 1 0",
+        ".       0 0 1 1        1 0 0 1        1 1 0 0        0 1 1 0",
+        "The (2^n-2)*n matrices so obtained are reduced considering equivalent those obtained exchanging 0's and 1's and those which produce the same pattern, apart translation."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A187767/b187767.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Giovanni Resta, <a href=\"/A187767/a187767.png\">Picture explaining sequence definition.</a>",
+        "Giovanni Resta, <a href=\"/A187767/a187767_1.png\">Pictures for a(2)-a(7).</a>",
+        "Giovanni Resta, <a href=\"/A187767/a187767_2.png\">Pictures for a(8) and a(9).</a>"
+    ],
+    "formula": [
+        "a(1) = 0; a(n) = 2^(n-1)-1 if n is odd, 2^(n-1)+a(n/2) if n is even (conjectured).",
+        "a(n) = -1 + Sum_{d|n} d*A000048(d). - _Andrew Howroyd_, Jun 02 2017"
+    ],
+    "example": [
+        "a(4)=10 is represented below. See Links for more examples.",
+        ". 1000 0100 0010 0001 0101 1010 1001 0110 1100 0011",
+        ". 0100 0001 0100 0001 0101 0101 1100 1100 0011 0011",
+        ". 0010 0100 1000 0001 0101 1010 0110 1001 1100 0011",
+        ". 0001 0001 0001 0001 0101 0101 0011 0011 0011 0011"
+    ],
+    "mathematica": [
+        "cyPatt[n_]:=Block[{b,c},c[v_,q_:1]:=Table[RotateLeft[v,i q],{i,n}]; b=Union[(First@Union[c@#,c[1-#]])& /@ IntegerDigits[Range[2^n/2-1], 2,n]]; Union@Flatten[Table[c[e,j],{j,n},{e,b}],1]];",
+        "(*count*) a[n_] := Length@cyPatt@n; Print[\"Seq = \",a/@Range[12]];",
+        "(*show*) showP[p_] := GraphicsGrid@Partition[ArrayPlot/@p,8,8,1,Null];",
+        "showP[cyPatt[6]]"
+    ],
+    "program": [
+        "(PARI)",
+        "b(n)=sumdiv(n,d,(d%2)*(moebius(d)*2^(n/d)))/(2*n);",
+        "a(n)=sumdiv(n,d,d*b(d)) - 1; \\\\ _Andrew Howroyd_, Jun 02 2017"
+    ],
+    "xref": [
+        "The number of patterns made of vertical stripes only is A056295(n).",
+        "Cf. A000048, A056303, A127804."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Giovanni Resta_, Jan 04 2013",
+    "ext": [
+        "a(22)-a(35) from _Andrew Howroyd_, Jun 02 2017"
+    ],
+    "references": 2,
+    "revision": 14,
+    "time": "2017-06-02T12:28:59-04:00",
+    "created": "2013-01-04T12:56:32-05:00"
+}

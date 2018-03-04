@@ -1,0 +1,52 @@
+{
+    "number": 61247,
+    "data": "11,101,181,811,881,1181,1801,1811,8011,8081,8101,8111,10111,10181,11801,18181,80111,81001,81101,81181,88001,88801,88811,100801,100811,101081,101111,108011,108881,110881,118081,118801,180001,180181,180811",
+    "name": "Prime numbers with every digit a perfect cube, i.e., consisting of only digits 0, 1 and 8.",
+    "comment": [
+        "The intersection with A007500 is listed in A199328. - _M. F. Hasler_, Nov 05 2011"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A061247/b061247.txt\">Table of n, a(n) for n = 1..17482</a>"
+    ],
+    "example": [
+        "a(6) = 1801, 1801 is a prime and consists of only 1, 8 and 0."
+    ],
+    "maple": [
+        "N:= 1000: # to get the first N entries",
+        "count:= 0:",
+        "allowed:= {0,1,8}:",
+        "nallowed:= nops(allowed):",
+        "subst:= seq(i=allowed[i+1],i=0..nallowed-1);",
+        "for d from 1 while count < N do",
+        "  for x1 from 1 to nallowed-1 while count < N do",
+        "    for t from 0 to nallowed^d-1  while count < N do",
+        "      L:= subs(subst,convert(x1*nallowed^d+t,base,nallowed));",
+        "      X:= add(L[i]*10^(i-1),i=1..d+1);",
+        "      if isprime(X) then",
+        "          count:= count+1;",
+        "          A[count]:= X;",
+        "      fi",
+        "od od od:",
+        "seq(A[n],n=1..N); # _Robert Israel_, Apr 20 2014"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[50000]],Length[Union[{0,1,8},IntegerDigits[ # ]]] == 3&] (* _Stefan Steinerberger_, Jun 10 2007 *)",
+        "Select[FromDigits/@Tuples[{0,1,8},6],PrimeQ] (* _Harvey P. Dale_, Jan 12 2016 *)"
+    ],
+    "program": [
+        "(PARI) a(n=50, L=[0, 1, 8], show=0)={my(t); for(d=1, 1e9, u=vector(d, i, 10^(d-i))~; forvec(v=vector(d, i, [1+(i==1 && !L[1]), #L]), ispseudoprime(t=vector(d, i, L[v[i]])*u) || next; show && print1(t\", \"); n-- || return(t)))} \\\\ _M. F. Hasler_, Nov 05 2011"
+    ],
+    "xref": [
+        "Cf. A061246, A020449-A020472, A199325-A199329."
+    ],
+    "keyword": "nonn,base,less",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Apr 23 2001",
+    "ext": [
+        "Corrected and extended by _Stefan Steinerberger_, Jun 10 2007"
+    ],
+    "references": 11,
+    "revision": 25,
+    "time": "2017-07-30T23:00:14-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

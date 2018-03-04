@@ -1,0 +1,70 @@
+{
+    "number": 282727,
+    "data": "2,35,108,567,1073,1386,2132,3551,5330,6003,8262,9968,13860,16046,19625,24957,29376,34155,37541,44793,54758,61217,68036,75215,77688,85347,93366,98912,101745,107531,119583,129042,135548,145607,149040,170478,193356,205335,213521,230373,243432,256851,280016,294395",
+    "name": "Let p = n-th prime == 3 mod 8; a(n) = (sum of quadratic residues mod p that are < p/2) + (sum of all quadratic residues mod p).",
+    "comment": [
+        "This is also the (sum of quadratic nonresidues mod p that are < p/2) + (sum of all quadratic nonresidues mod p) (= A282721 + A282723 = A282724 + A282726)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A282727/b282727.txt\">Table of n, a(n) for n = 1..4000</a>",
+        "Christian Aebi, Grant Cairns, <a href=\"http://arxiv.org/abs/1512.00896\">Sums of Quadratic residues and nonresidues</a>, arXiv:1512.00896 [math.NT], 2015."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "Ql:=[]; Qu:=[]; Q:=[]; Nl:=[]; Nu:=[]; N:=[]; Th:=[];",
+        "for i1 from 1 to 300 do",
+        "p:=ithprime(i1);",
+        "if (p mod 8) = 3 then",
+        "ql:=0; qu:=0; q:=0; nl:=0; nu:=0; n:=0;",
+        "for j from 1 to p-1 do",
+        "if legendre(j,p)=1 then",
+        "q:=q+j;",
+        "if j<p/2 then ql:=ql+j; else qu:=qu+j; fi;",
+        "else",
+        "n:=n+j;",
+        "if j<p/2 then nl:=nl+j; else nu:=nu+j; fi;",
+        "fi;",
+        "od;",
+        "Ql:=[op(Ql),ql];",
+        "Qu:=[op(Qu),qu];",
+        "Q:=[op(Q),q];",
+        "Nl:=[op(Nl),nl];",
+        "Nu:=[op(Nu),nu];",
+        "N:=[op(N),n];",
+        "Th:=[op(Th),q+ql];",
+        "fi;",
+        "od:",
+        "Ql; Qu; Q; Nl; Nu; N; Th; # A282721 - A282727",
+        "# Alternative:",
+        "v:= proc(x,r) if x <= r then 2*x else x fi end proc:",
+        "f:= proc(p) local q, r, j;",
+        "  r:= (p-1)/2;",
+        "  add(v(j^2 mod p, r), j=1..r)",
+        "end proc:",
+        "map(f, select(isprime, [seq(i,i=3..1000,8)])); # _Robert Israel_, Mar 27 2017"
+    ],
+    "mathematica": [
+        "v[x_, r_] := If[x <= r, 2*x, x];",
+        "f[p_] := Module[{r}, r = (p-1)/2; Sum[v[PowerMod[j, 2, p], r], {j, 1, r}]];",
+        "f /@ Select[Range[3, 1000, 8], PrimeQ] (* _Jean-Fran\u00e7ois Alcover_, Nov 27 2017, after _Robert Israel_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def v(x, r): return 2*x if x<=r else x",
+        "def a(p):",
+        "....r=(p - 1)/2",
+        "....return sum([v((j**2)%p, r) for j in xrange(1, r + 1)])",
+        "print [a(p) for p in xrange(3, 2001, 8) if isprime(p)] # _Indranil Ghosh_, Mar 27 2017 translated from  _Robert Israel_'s Maple program"
+    ],
+    "xref": [
+        "Cf. A282035-A282043 and A282721-A282726."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Feb 20 2017",
+    "references": 12,
+    "revision": 26,
+    "time": "2017-11-27T11:35:49-05:00",
+    "created": "2017-02-20T22:13:00-05:00"
+}

@@ -1,0 +1,29 @@
+{
+    "number": 287478,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,33,34,35,36,37,38,39,40,44,45,46,47,48,49,50,55,56,57,58,59,60,66,67,68,69,70,77,78,79,80,88,89,90,99,100,101,102,103,104,105,106,107,108,109,111,112,113,114,115,116,117,118,119,120",
+    "name": "Numbers m with the property that m is the least cyclic permutation of its digits with the same number of digits as m.",
+    "comment": [
+        "First differs from A179239 at n = 83; a(83) = 120 and A179239(83) = 122. This sequence is a supersequence of A179239.",
+        "If there is a zero digit, then we do not consider the cyclic shift which begins with the zero digit."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A287478/b287478.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "Select[Range@ 120, Function[d, First@ Sort@ Map[FromDigits, DeleteCases[ NestList[RotateLeft, d, Length@ d - 1], _?(First@ # == 0 &)]] == #]@ IntegerDigits@ # &] (* _Michael De Vlieger_, May 27 2017 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = my(d=digits(n), v=vector(#d), no=n, nn=n, l=List(n)); for(i=2,#d, no = nn\\10; no = no+(nn-no*10)*10^(#d-1); if(#digits(no)==#d,listput(l, no)); nn=no); listsort(l); n==l[1]",
+        "is(n) = {my(d = digits(n), dd = concat(d, d)); for(i=2,#d, c=vector(#d, j, dd[i+j-1]); if(fromdigits(c) < n, if(c[1]!=0, return(0)))); 1}"
+    ],
+    "xref": [
+        "Cf. A179239, A287198."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_David A. Corneth_, May 25 2017",
+    "references": 1,
+    "revision": 19,
+    "time": "2017-06-01T07:21:04-04:00",
+    "created": "2017-05-31T23:06:20-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 62289,
+    "data": "2,4,5,6,8,9,10,11,12,13,14,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,64,65,66,67,68,69,70,71,72,73,74,75,76,77",
+    "name": "Numbers n such that n-th row in Pascal triangle contains an even number, i.e., A048967(n) > 0.",
+    "comment": [
+        "Numbers n such that binary representation contains the bit string \"10\". Union of A043569 and A101082. - _Rick L. Shepherd_, Nov 29 2004",
+        "A036987(a(n)) = 0. - _Reinhard Zumkeller_, Mar 06 2012",
+        "A007461(a(n)) mod 2 = 0. - _Reinhard Zumkeller_, Apr 02 2012",
+        "A102370(n) = A105027(a(n)). - _Reinhard Zumkeller_, Jul 21 2012",
+        "A261461(a(n)) = A261922(a(n)). - _Reinhard Zumkeller_, Sep 17 2015"
+    ],
+    "link": [
+        "R. Zumkeller, <a href=\"/A062289/b062289.txt\">Table of n, a(n) for n = 1..10001</a>",
+        "Oliver Kullmann, Xishun Zhao, <a href=\"http://arxiv.org/abs/1010.5756\">On variables with few occurrences in conjunctive normal forms.",
+        "Oliver Kullmann and Xishun Zhao, <a href=\"http://arxiv.org/abs/1505.02318\">Parameters for minimal unsatisfiability: Smarandache primitive numbers and full clauses</a>, arXiv preprint, 2015."
+    ],
+    "formula": [
+        "a(n) = A057716(n+1) - 1.",
+        "a(n) = if n=1 then 2 else max{min{2*i, a(n-i+1) + i}: 1 < i <= n}."
+    ],
+    "mathematica": [
+        "ok[n_] := MatchQ[ IntegerDigits[n, 2], {___, 1, 0, ___}]; Select[ Range[100], ok] (* _Jean-Fran\u00e7ois Alcover_, Dec 12 2011, after _Rick L. Shepherd_ *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a062289 n = a062289_list !! (n-1)",
+        "a062289_list = 2 : g 2 where",
+        "   g n = nM n : g (n+1)",
+        "   nM k = maximum $ map (\\i -> i + min i (a062289 $ k-i+1)) [2..k]",
+        "   -- Cf. link [Oliver Kullmann, Xishun Zhao], Def. 3.1, page 3.",
+        "-- _Reinhard Zumkeller_, Feb 21 2012, Dec 31 2010"
+    ],
+    "xref": [
+        "Complement of A000225, so these might be called non-Mersenne numbers.",
+        "A132782 is a subsequence.",
+        "Cf. A048967, A057716, A043569, A101082.",
+        "Cf. A007461, A036987, A102370, A105027.",
+        "Cf. A261461, A261922."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Ahmed Fares (ahmedfares(AT)my-deja.com), Jul 02 2001",
+    "ext": [
+        "More terms from _Rick L. Shepherd_, Nov 29 2004"
+    ],
+    "references": 18,
+    "revision": 33,
+    "time": "2017-07-30T23:08:55-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

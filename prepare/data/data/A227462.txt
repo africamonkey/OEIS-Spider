@@ -1,0 +1,53 @@
+{
+    "number": 227462,
+    "data": "1,2,12,144,2400,50760,1310400,39984000,1407490560,56143130400,2502730137600,123302540148480,6653043673436160,390182090889951360,24713127865269043200,1681180295452142284800,122252619549518954496000,9463442426016057083404800,776944497581062575154790400",
+    "name": "E.g.f. equals the series reversion of x - x^2*exp(x^2).",
+    "comment": [
+        "Limit n->infinity (a(n)/n!)^(1/n) = Limit n->infinity a(n+1)/a(n)/n = 4.6910715... = 2*(1+s^2)/(s*(1+2*s^2)), where s is defined below. - _Vaclav Kotesovec_, added Jul 28 2013, updated Jan 07 2014"
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A(x) = x + A(x)^2*exp(A(x)^2).",
+        "(2) A(x) = x*Catalan( x*exp(A(x)^2) ) where Catalan(x) = (1-sqrt(1-4*x))/(2*x).",
+        "(3) A(x) = x*Sum_{n>=0} binomial(2*n+1,n)/(2*n+1) * x^n * exp(n*A(x)^2).",
+        "(4) A(x) = x*exp( Sum_{n>=1} binomial(2*n-1,n) * x^n/n * exp(n*A(x)^2) ).",
+        "(5) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) x^(2*n) * exp(n*x^2) / n!.",
+        "(6) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(2*n-1) * exp(n*x^2) / n! ).",
+        "a(n) ~ n^(n-1) * s * sqrt((1+2*s^2)/(2+10*s^2+4*s^4)) / (exp(n) * ((s*(1+2*s^2))/(2*(1+s^2)))^n), where s = 0.3788063540000847107637564... is the root of the equation 2*s*(1+s^2)*exp(s^2) = 1. - _Vaclav Kotesovec_, Jan 07 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 12*x^3/3! + 144*x^4/4! + 2400*x^5/5! +...",
+        "where A(x) = x + A(x)^2*exp(A(x)^2).",
+        "The e.g.f. satisfies:",
+        "(3) A(x) = x + x^2*exp(A(x)^2) + 2*x^3*exp(2*A(x)^2) + 5*x^4*exp(3*A(x)^2) + 14*x^5*exp(4*A(x)^2) + 42*x^6*exp(5*A(x)^2) +...",
+        "(4) log(A(x)/x) = x*exp(A(x)^2) + 3*x^2*exp(2*A(x)^2)/2 + 10*x^3*exp(3*A(x)^2)/3 + 35*x^4*exp(4*A(x)^2)/4 + 126*x^5*exp(5*A(x)^2)/5 +...",
+        "(5) A(x) = x + x^2/2*exp(x^2) + d/dx x^4/4*exp(2*x^2)/2! + d^2/dx^2 x^6/8*exp(3*x^2)/3! + d^3/dx^3 x^8/16*exp(4*x^2)/4! +...",
+        "(6) log(A(x)/x) = x*exp(x^2)/2 + d/dx x*exp(2*x^2)/2! + d^2/dx^2 x^2*exp(3*x^2)/3! + d^3/dx^3 x^3*exp(4*x^2)/4! +..."
+    ],
+    "mathematica": [
+        "Table[(n-1)!*SeriesCoefficient[(x/(x-x^2*E^(x^2)))^n,{x,0,n-1}],{n,1,20}] (* _Vaclav Kotesovec_, Jul 28 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(serreverse(x-x^2*exp(x^2 +x*O(x^n))), n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) /* E.g.f. A(x) = x*Catalan( x*exp(A(x)^2) ): */",
+        "{a(n)=local(A=x); for(i=1,n,A=(1-sqrt(1-4*x*exp(A^2 +x^2*O(x^n)) ))/2*exp(-A^2 +x*O(x^n)) ); n!*polcoeff(A,n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, x^(2*m)*exp(x^2+x*O(x^n))^m/m!)); n!*polcoeff(A, n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, x^(2*m-1)*exp(x^2+x*O(x^n))^m/m!)+x*O(x^n))); n!*polcoeff(A, n)}",
+        "for(n=1,25,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A213643, A227463, A000108."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jul 13 2013",
+    "references": 0,
+    "revision": 15,
+    "time": "2014-01-07T13:15:17-05:00",
+    "created": "2013-07-13T13:14:15-04:00"
+}

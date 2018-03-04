@@ -1,0 +1,37 @@
+{
+    "number": 158099,
+    "data": "1,2,19,548,66749,33695574,68787981855,563088066184424,18447871299903970005,2417888543453357864445634,1267655436282309648681395304255,2658458526916981532120588021462151100",
+    "name": "Euler transform of square powers of 2: [2,2^4,2^9,...,2^(n^2),...].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A158099/b158099.txt\">Table of n, a(n) for n = 0..35</a>"
+    ],
+    "formula": [
+        "G.f.: A(x) = 1/Product_{n>=1} (1 - x^n)^(2^(n^2)).",
+        "G.f.: exp( Sum_{n>=1} L(n)*x^n/n ) where L(n) = Sum_{d|n} d*2^(d^2). [_Paul D. Hanna_, Oct 18 2009]"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 19*x^2 + 548*x^3 + 66749*x^4 +...",
+        "A(x) = 1/[(1-x)^2*(1-x^2)^(2^4)*(1-x^3)^(2^9)*(1-x^4)^(2^16)*...]."
+    ],
+    "maple": [
+        "with(numtheory): etr:= proc(p) local b; b:= proc(n) option remember; `if`(n=0, 1, add(add(d*p(d), d=divisors(j)) *b(n-j), j=1..n)/n) end end: a:= etr(n->2^(n^2)):",
+        "seq(a(n), n=0..15);  # _Alois P. Heinz_, Sep 03 2012"
+    ],
+    "mathematica": [
+        "etr[p_] := Module[{b}, b[n_] := b[n] = If[n == 0, 1, Sum[Sum[d*p[d], {d, Divisors[ j]}]*b[n-j], {j, 1, n}]/n]; b]; a = etr[Function[{n}, 2^(n^2)]]; Table[a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Mar 05 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) a(n)=polcoeff(1/prod(k=1,n,(1-x^k+x*O(x^n))^(2^(k^2))),n)",
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1,n,sumdiv(m,d,d*2^(d^2))*x^m/m)+x*O(x^n)),n)} \\\\ _Paul D. Hanna_, Oct 18 2009"
+    ],
+    "xref": [
+        "Cf. A002416, A034899, A158098."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 20 2009",
+    "references": 3,
+    "revision": 11,
+    "time": "2015-03-05T06:22:05-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

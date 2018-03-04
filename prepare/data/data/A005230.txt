@@ -1,0 +1,51 @@
+{
+    "number": 5230,
+    "id": "M0785",
+    "data": "1,1,2,3,6,11,20,40,77,148,285,570,1120,2200,4323,8498,16996,33707,66844,132568,262936,521549,1043098,2077698,4138400,8243093,16419342,32706116,65149296,130298592,260075635,519108172,1036138646,2068138892,4128034691",
+    "name": "Stern's sequence: a(1) = 1, a(n+1) is the sum of the m preceding terms, where m*(m-1)/2 < n <= m*(m+1)/2 or equivalently m = ceiling((sqrt(8*n+1)-1)/2) = A002024(n).",
+    "comment": [
+        "A002487 is THE Stern's sequence!",
+        "The subsequence of primes in this partial sum begins: 2, 3, 11, a(41) = 262364233421, and no more through a(200). - _Jonathan Vos Post_, Feb 18 2010",
+        "The next few primes are a(568), a(657), a(17765), ... with no further primes below a(50000). - _Charles R Greathouse IV_, Sep 19 2011",
+        "Lim_{n->inf} a(n)/2^n = 0.11756264240558743281779408719593950494049225979176... - _Jon E. Schoenfield_, Dec 17 2016"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A005230/b005230.txt\">Table of n, a(n) for n = 1..1000</a> [extending prior submission by T. D. Noe]",
+        "Jaegug Bae, Sungjin Choi, <a href=\"http://www.mathnet.or.kr/mathnet/kms_content.php?no=365440\">A generalization of a subset-sum-distinct sequence</a>, J. Korean Math. Soc. 40 (2003), no. 5, 757-768. MR1996839 (2004d:05198). See d_1(n).",
+        "G. Kreweras, <a href=\"http://www.numdam.org/item?id=MSH_1983__84__45_0\">Sur quelques probl\u00e8mes relatifs au vote pond\u00e9r\u00e9</a>, [Some problems of weighted voting], Math. Sci. Humaines No. 84 (1983), 45-63.",
+        "M. A. Stern, <a href=\"http://dx.doi.org/10.1515/crll.1838.18.100\">Aufgaben</a>, J. Reine Angew. Math., 18 (1838), 100.",
+        "<a href=\"/index/St#Stern\">Index entries for sequences related to Stern's sequences</a>",
+        "<a href=\"/index/Cor#core\">Index entries for \"core\" sequences</a>"
+    ],
+    "formula": [
+        "Partial sums give Conway-Guy sequence A005318. Cf. A066777.",
+        "2*a(n*(n+1)/2 + 1) = a(n*(n+1)/2 + 2) for n>=1; limit_{n->infty} a(n+1)/a(n) = 2. - _Paul D. Hanna_, Aug 28 2006"
+    ],
+    "maple": [
+        "A005230[1] := 1: n := 50: for k from 1 to n-1 do: A005230[k+1] := sum('A005230[j]','j'=k+1-(ceil((sqrt(8*k+1)-1)/2))..k): od: [seq(A005230[k],k=1..n)]; # UlrSchimke(AT)aol.com, Mar 16 2002"
+    ],
+    "mathematica": [
+        "Module[{lst={1,1},n=2},While[n<40,AppendTo[lst,Total[ Take[lst, -Ceiling[ (Sqrt[8n+1]-1)/2]]]];n++];lst] (* _Harvey P. Dale_, Apr 02 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n==1,1,sum(k=1,ceil((sqrt(8*n-7)-1)/2),a(n-k))) \\\\ _Paul D. Hanna_, Aug 28 2006",
+        "(PARI) v=vector(10^3);v[1]=v[2]=1;v[3]=2;v[4]=3;u=vector(#v,i,if(i>4,0,sum(j=1,i,v[j])));for(i=5,#v,m=ceil((sqrt(8*i-7)-1)/2);v[i]=u[i-1]-u[i-m-1];u[i]=u[i-1]+v[i]);u=0;v \\\\ _Charles R Greathouse IV_, Sep 19 2011"
+    ],
+    "xref": [
+        "Cf. A002487."
+    ],
+    "keyword": "core,easy,nonn,nice",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, _Simon Plouffe_",
+    "ext": [
+        "Name corrected by Mario Szegedy, Sep 15 1996",
+        "Name revised by Ulrich Schimke (ulrschimke(AT)aol.com), Mar 16 2002"
+    ],
+    "references": 8,
+    "revision": 55,
+    "time": "2016-12-17T21:22:34-05:00",
+    "created": "1991-05-20T03:00:00-04:00"
+}

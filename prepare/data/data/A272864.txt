@@ -1,0 +1,32 @@
+{
+    "number": 272864,
+    "data": "7,55,111,151,191,252,303,343,383,444,535,575,636,727,767,828,919,959,999,1111,1551,1991,2332,3223,3663,4444,5335,5775,6556,7007,7447,7887,8668,9119,9559,9999,11111,11311,11511,11711,11911,13031,13231,13431,13631,13831,15151,15351,15551,15751",
+    "name": "Palindromes that are not of the form x^2 + y^2 + z^2 where x, y, z are integers.",
+    "comment": [
+        "First differences are 48, 56, 40, 40, 61, 51, 40, 40, 61, 91, 40, 61, 91, 40, 61, 91, 40, 40, 112, 440, 440, ...",
+        "This sequence is obviously infinite. (10^n - 1)/9 is a member of this sequence for all n > 2.",
+        "Proof : A004215 lists numbers of the form 4^i*(8*j+7) where i,j >= 0. So numbers of the form 8*j+7 is always in A004215 for i = 0, j >= 0. Since (10^n - 1)/9 - 7 = (10^n - 2^6)/9 = (2^n*5^n - 2^6)/9 = 2^3*(2^(n-3)*5^n - 2^3)/9, (10^n - 1)/9 - 7 is always divisible by 2^3 for n > 2, that means (10^n - 1)/9 is number of the form 8*j + 7 for n > 2. Trivially, (10^n - 1)/9 is always a palindrome for positive n, that is (10^n - 1)/9 is member of this sequence for all n > 2."
+    ],
+    "example": [
+        "44 is not a term because 44 = 2^2 + 2^2 + 6^2.",
+        "55 is a term because 55 = x^2 + y^2 + z^2 has no solution for integer values of x, y, z."
+    ],
+    "mathematica": [
+        "Select[Range[16000], And[! SquaresR[3, #] > 0, Reverse@ # == # &@ IntegerDigits@ #] &] (* _Michael De Vlieger_, May 08 2016 *)"
+    ],
+    "program": [
+        "(PARI) isA002113(n) = {my(d = digits(n)); (subst(Polrev(d), x, 10) == n);}",
+        "isA004215(n) = {n\\4^valuation(n, 4)%8==7}",
+        "lista(nn) = for(n=1, nn, if(isA002113(n) && isA004215(n), print1(n, \", \")));"
+    ],
+    "xref": [
+        "Cf. A002113, A004215."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Altug Alkan_, May 08 2016",
+    "references": 0,
+    "revision": 21,
+    "time": "2016-05-21T22:37:39-04:00",
+    "created": "2016-05-21T22:37:39-04:00"
+}

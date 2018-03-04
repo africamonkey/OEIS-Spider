@@ -1,0 +1,39 @@
+{
+    "number": 263102,
+    "data": "0,0,1,3,12,40,225,1071,8848,56232,616185,4880755,66475596,629398848,10238194057,112690225935,2130537219840,26719024870576,575573407212753,8099650628337987,195807849389362540,3054957193416951480,81892400673047263761,1402819397613793354063,41294565798306731368272,770446268109598573215000",
+    "name": "Number of distinct cycles without repeated edges on the multigraph with 2 vertices connected by n edges.",
+    "comment": [
+        "The multigraph has no loops. Cycles have length at least 2, and may repeat vertices but not edges. Cycles p,q are equivalent if the vertex-edge sequence of q can be made by rotating or reversing that of p. Because no edge can be repeated, the maximum length of a cycle is n."
+    ],
+    "link": [
+        "Simon R. Donnelly, <a href=\"/A263102/b263102.txt\">Table of n, a(n) for n = 0..448</a>",
+        "Eric W. Weisstein, <a href=\"http://mathworld.wolfram.com/Multigraph.html\">Multigraph</a>"
+    ],
+    "formula": [
+        "a(n) = n*(n-1)/2 + Sum_{k=4..n:2 divides k} (n!/((n-k)!*k))."
+    ],
+    "example": [
+        "For n=3, there are C(3,2) = 3 edge pairs, each forming a distinct cycle. a(3) = 3.",
+        "For n=4, there are C(4,2) = 6 edge pairs forming cycles of length 2, and 6 cycles of length 4: a0b1a2b3a, a0b1a3b2a, a0b2a1b3a, a0b2a3b1a, a0b3a1b2a, a0b3a2b1a. a(4) = 12."
+    ],
+    "program": [
+        "(Python)",
+        "def trfact(n, k):",
+        "    return reduce(lambda x, y: x*y, range(k+1,n+1),1)",
+        "def a(n):",
+        "    return sum(trfact(n,n-k)/k for k in range(2, n+1, 2))",
+        "(PARI) a(n) = n*(n-1)/2 + sum(k=4,n, if(k%2==0, (n!/((n-k)!*k)),0)); \\\\ _Joerg Arndt_, Oct 11 2015"
+    ],
+    "xref": [
+        "A178061 uses a different (incorrect) definition of equivalence for cycles.",
+        "Equals 2 times A178061 minus C(n,2).",
+        "A263103, A263104, A263105 concern the number of cycles on multigraphs with 3 vertices."
+    ],
+    "keyword": "nonn,easy,walk",
+    "offset": "0,4",
+    "author": "_Simon R. Donnelly_, Oct 09 2015",
+    "references": 3,
+    "revision": 19,
+    "time": "2015-11-20T16:44:36-05:00",
+    "created": "2015-11-20T16:44:36-05:00"
+}

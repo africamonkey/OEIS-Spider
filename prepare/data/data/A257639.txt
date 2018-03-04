@@ -1,0 +1,50 @@
+{
+    "number": 257639,
+    "data": "1,1,1,1,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7",
+    "name": "a(n) is the minimal position at which the maximal value of row n appears in row n of triangle A008289.",
+    "comment": [
+        "Except rows 3, 4, 10, 11, 21 of triangle A008289, all the other rows up to row number 50000 contain a single maximal value.",
+        "Conjecture: for n >= 22 there is a unique maximal value in row n of triangle A008289."
+    ],
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A257639/b257639.txt\">Table of n, a(n) for n = 1..50000</a>",
+        "B. Richmond and A. Knopfmacher, <a href=\"http://gdz.sub.uni-goettingen.de/dms/load/img/?PPN=PPN356261603_0049&amp;IDDOC=178900\">Compositions with distinct parts</a>, Aequationes Mathematicae 49 (1995), pp. 86-97.",
+        "G. Szekeres, <a href=\"http://qjmath.oxfordjournals.org/content/4/1/96.extract\">Some asymptotic formulas in the theory of partitions (II)</a>, Quart. J. Math. Oxford (2), 4(1953), 96-111."
+    ],
+    "formula": [
+        "a(n) = min argmax(k->Q(n,k), k=1..m), that is a(n) = min{k, Q(n,k) = max{Q(n,p), p=1..m}}, where m = A003056(n) and Q(n,k) is defined by A008289.",
+        "a(n) ~ K*sqrt(n) + O(1), where K = 2*sqrt(3)*log(2)/Pi = 0.7643...(see A131266)."
+    ],
+    "example": [
+        "For n=9, a(9)=2 because A003056(9)=3 and max{Q(9,p), p=1..3}=4 and Q(9,2)=4."
+    ],
+    "program": [
+        "(PARI)",
+        "Q(n) = {",
+        "  my(q = vector(n));",
+        "  q[1] = [1,0,0,0];",
+        "  for (i = 2, n,",
+        "       my(m = floor((sqrt(8*i+1) - 1)/2));",
+        "       q[i] = vector((1 + (m>>2)) << 2);",
+        "       q[i][1] = 1;",
+        "       for (j = 2, m, q[i][j] = q[i-j][j] + q[i-j][j-1]));",
+        "  return(q);",
+        "};",
+        "seq(n) = {",
+        "  my(v = vector(n), q = Q(n));",
+        "  for (i = 1, n, vecmax(q[i], &v[i]));",
+        "  return(v);",
+        "};",
+        "seq(86)"
+    ],
+    "xref": [
+        "Cf. A003056, A008289, A030699, A131266."
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "_Gheorghe Coserea_, Nov 04 2015",
+    "references": 3,
+    "revision": 26,
+    "time": "2016-06-16T23:27:56-04:00",
+    "created": "2015-11-28T19:09:28-05:00"
+}

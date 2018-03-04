@@ -1,0 +1,55 @@
+{
+    "number": 118101,
+    "data": "1,7,27,119,427,1879,6827,30039,109227,480599,1747627,7689559,27962027,123032919,447392427,1968526679,7158278827,31496426839,114532461227,503942829399,1832519379627,8063085270359,29320310074027,129009364325719,469124961184427",
+    "name": "Decimal representation of n-th iteration of the Rule 94 elementary cellular automaton starting with a single ON cell.",
+    "link": [
+        "Colin Barker, <a href=\"/A118101/b118101.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "A. J. Macfarlane, <a href=\"http://www.damtp.cam.ac.uk/user/ajm/Papers2016/GFsForCAsOfEvenRuleNo.ps\">Generating functions for integer sequences defined by the evolution of cellular automata...</a>, Fig. 10.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Rule94.html\">Rule 94</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (0,17,0,-16).",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>"
+    ],
+    "formula": [
+        "a(0)=1, a(1)=7, a(n odd) = (10+11*4^n)/6, a(n even) = (1+5*4^n)/3.",
+        "From _Colin Barker_, Oct 08 2015: (Start)",
+        "a(n) = (12-(-4)^n-8*(-1)^n+21*4^n)/12 for n>1.",
+        "a(n) = 17*a(n-2) - 16*a(n-4) for n>5.",
+        "G.f.: -(2*x+1)*(16*x^4-5*x-1) / ((x-1)*(x+1)*(4*x-1)*(4*x+1)).",
+        "(End)"
+    ],
+    "example": [
+        "From _Michael De Vlieger_, Oct 08 2015: (Start)",
+        "First 8 rows, representing ON cells as \"1\", OFF cells within the bounds of ON cells as \"0\", interpreted as a binary number at left, the decimal equivalent appearing at right:",
+        "                    1 =       1",
+        "                  111 =       7",
+        "               1 1011 =      27",
+        "             111 0111 =     119",
+        "          1 1010 1011 =     427",
+        "        111 0101 0111 =   1 879",
+        "     1 1010 1010 1011 =   6 827",
+        "   111 0101 0101 0111 =  30 039",
+        "1 1010 1010 1010 1011 = 109 227",
+        "(End)"
+    ],
+    "mathematica": [
+        "clip[lst_] := Block[{p = Flatten@ Position[lst, 1]}, Take[lst, {Min@ p, Max@ p}]]; FromDigits[#, 2] & /@ Map[clip, CellularAutomaton[94, {{1}, 0}, 24]] (* or *)",
+        "{1, 7}~Join~Table[(12 - (-4)^n - 8 (-1)^n + 21*4^n)/12, {n, 2, 24}] (* _Michael De Vlieger_, Oct 08 2015 *)",
+        "Join[{1, 7}, LinearRecurrence[{0, 17, 0, -16}, {27, 119, 427, 1879}, 30]] (* _Vincenzo Librandi_, Oct 09 2015 *)"
+    ],
+    "program": [
+        "(PARI) Vec(-(2*x+1)*(16*x^4-5*x-1) / ((x-1)*(x+1)*(4*x-1)*(4*x+1)) + O(x^30)) \\\\ _Colin Barker_, Oct 08 2015",
+        "(PARI) vector(100, n, n--; if(n<2, 7^n, (12-(-4)^n-8*(-1)^n+21*4^n)/12)) \\\\ _Altug Alkan_, Oct 08 2015",
+        "(MAGMA) [1,7] cat [(12-(-4)^n-8*(-1)^n+21*4^n) div 12: n in [2..25]]; // _Vincenzo Librandi_, Oct 09 2015"
+    ],
+    "xref": [
+        "This sequence, A071033 and A118102 are equivalent descriptions of the Rule 94 automaton."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "0,2",
+    "author": "_Eric W. Weisstein_, Apr 12 2006",
+    "references": 3,
+    "revision": 30,
+    "time": "2016-07-28T10:15:29-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

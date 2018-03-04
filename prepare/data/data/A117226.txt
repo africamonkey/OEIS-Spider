@@ -1,0 +1,46 @@
+{
+    "number": 117226,
+    "data": "1,1,2,6,23,110,630,4204,32054,274914,2619692,27459344,313990182,3889585408,51888955808,741668212080,11307669002720,183174676857608,3141820432768752,56882461258572976,1084056190235653304,21692744773505849952,454758269790599361968",
+    "name": "Number of permutations avoiding the consecutive pattern 1243.",
+    "comment": [
+        "a(n) is the number of permutations on [n] that avoid the consecutive pattern 1243. It is the same as the number of permutations which avoid 3421, 4312 or 2134."
+    ],
+    "reference": [
+        "Sergi Elizalde and Marc Noy, Consecutive patterns in permutations, Adv. Appl. Math. 30 (2003) 110-125.",
+        "Sergi Elizalde, Asymptotic enumeration of permutations avoiding generalized patterns, Adv. Appl. Math. 36 (2006) 138-155."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A117226/b117226.txt\">Table of n, a(n) for n = 0..200</a> (terms n = 0..60 from Ray Chandler)",
+        "A. Baxter, B. Nakamura, and D. Zeilberger, <a href=\"http://www.math.rutgers.edu/~zeilberg/mamarim/mamarimhtml/auto.html\">Automatic generation of theorems and proofs on enumerating consecutive Wilf-classes</a>",
+        "Steven Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/csolve/av.pdf\">Pattern-Avoiding Permutations</a> [Broken link?]",
+        "Steven Finch, <a href=\"/A240885/a240885.pdf\">Pattern-Avoiding Permutations</a> [Cached copy, with permission]"
+    ],
+    "formula": [
+        "a(n) ~ c * d^n * n!, where d = 0.952891423325053197208702817349165942637814..., c = 1.169657787464830219717093446929792145316... . - _Vaclav Kotesovec_, Aug 23 2014"
+    ],
+    "maple": [
+        "b:= proc(u, o, t) option remember; `if`(u+o=0, 1,",
+        "      add(b(u-j, o+j-1, 0), j=`if`(t<0, -t, 1)..u)+",
+        "      add(b(u+j-1, o-j, `if`(t=0, j, -j)), j=1..o))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Nov 07 2013"
+    ],
+    "mathematica": [
+        "A[x_]:=Integrate[AiryAi[ -t],{t,0,x}]; B[x_]:=Integrate[AiryBi[ -t],{t,0,x}]; c=-3^(2/3)*Gamma[2/3]/2; d=-3^(1/6)*Gamma[2/3]/2; a[n_]:=SeriesCoefficient[1/(c*A[x]+d*B[x]+1),{x,0,n}]*n!; Table[a[n],{n,0,10}]",
+        "(* constant d: *) 1/x/.FindRoot[3^(2/3)*Gamma[2/3]/2 * Integrate[AiryAi[-t],{t,0,x}] + 3^(1/6)*Gamma[2/3]/2 * Integrate[AiryBi[-t],{t,0,x}]==1,{x,1},WorkingPrecision->50] (* _Vaclav Kotesovec_, Aug 23 2014 *)"
+    ],
+    "xref": [
+        "Cf. A113228, A113229, A117156, A117158, A201692, A201693, A231166."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Steven Finch_, Apr 26 2006",
+    "ext": [
+        "Mathematica program fixed by _Vaclav Kotesovec_, Aug 23 2014"
+    ],
+    "references": 9,
+    "revision": 29,
+    "time": "2017-05-04T14:48:11-04:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

@@ -1,0 +1,25 @@
+{
+    "number": 113677,
+    "data": "3,30,840,37800,2328480,181621440,17124307200,1892235945600,239683219776000,34226763784012800,5438943917677670400,951815185593592320000,181869917001114101760000",
+    "name": "a(n) = (2*n+1)!*(2*n-2)!/(2*((n-1)!)*(n!)^2), n=1,2,... .",
+    "comment": [
+        "If the sequence is defined by the gamma function, which extends the factorial, then the limit as z approaches zero of a(z) is -1/4 and so a(0)=-1/4 in that sense. - _Michael Somos_, Sep 02 2006"
+    ],
+    "formula": [
+        "E.g.f., in Maple notation: sum(a(n)*x^n/n!, n=1..infinity)= 1/2*(EllipticK(4*x^(1/2))-2*EllipticE(4*x^(1/2)))/Pi; Integral representation as n-th moment of a positive function on a positive half axis: a(n)=int(x^n*(1/16)*1/Pi^(3/2)/x^(1/2)*exp(-1/32*x)*BesselK(1, 1/32*x), x=0..infinity), n=1, 2, ... . Note that a(0) is not defined.",
+        "G.f.: A(x)=y, with A(0)=-1/4, satisfies 0 = 12*y +(1 -32*x)*y' -16*x^2*y''. - _Michael Somos_, Sep 02 2006",
+        "E.g.f.: A(x)=y, with A(0)=-1/4, satisfies 0 = 12*y +(1 -32*x)*y' +(x -16*x^2)*y''. - _Michael Somos_, Sep 02 2006",
+        "E.g.f.: A(x), with A(0)=-1/4, satisfies 0 = 120*(s6*s0 +54*s5*s1 -945*s4*s2 +1050*s3*s3) +(s6*s2 -16*s5*s3 +18*s4*s4) where s0=A(x), s1=s0', s2=s1', ..., s6=s5'. - _Michael Somos_, Sep 02 2006"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n<1, 0, (2*n+1)!*(2*n-2)!/2/(n-1)!/n!^2)} /* _Michael Somos_, Sep 02 2006 */",
+        "(PARI) {a(n)=local(A, B, C); if(n<1, 0, A = sum(k=1, sqrtint(n), 2*x^k^2,1+x*O(x^n))^2; B = sum(k=1, n, (k%2)*k*x^k/(1-x^(2*k)), x*O(x^n))/A^2; C = sum(k=1, n, 8*x^(2*k)/(1+x^(2*k))^2, 1+x*O(x^n))/A; n!*polcoeff(subst((A-2*C)/4, x, serreverse(B)), n))} /* _Michael Somos_, Sep 23 2006 */"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Karol A. Penson_, Nov 04 2005",
+    "references": 0,
+    "revision": 15,
+    "time": "2014-05-21T15:40:23-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

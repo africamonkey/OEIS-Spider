@@ -1,0 +1,52 @@
+{
+    "number": 375,
+    "data": "0,1,2,4,7,10,16,22,30,38,51,65,80,101,113,139,159",
+    "name": "Topswops (1): start by shuffling n cards labeled 1..n. If top card is m, reverse order of top m cards, then repeat. a(n) is the maximal number of steps before top card is 1.",
+    "comment": [
+        "Knuth's algorithm can be extended by considering unsorted large unmovable segments: xxx645, e.g. will never move 6, 4, or 5. - Quan T. Nguyen, William Fahle (waf013000(AT)utdallas.edu), Oct 12 2010",
+        "For n=17, there are two longest-winded permutations (or orders of cards) that take 159 steps of \"topswopping moves\" before the top card is 1. (8 15 17 13 9 4 6 3 2 12 16 14 11 5 10 1 7) terminates at (1 6 2 4 9 3 7 8 5 10 11 12 13 14 15 16 17), and (2 10 15 11 7 14 5 16 6 4 17 13 1 3 8 9 12) terminates in sorted order, i.e., (1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17). - Quan T. Nguyen, William Fahle (tuongquan.nguyen(AT)utdallas.edu), Oct 21 2010",
+        "Lower bounds for the next terms are a(18)>=191, a(19)>=221, a(20)>=249, a(21)>=282, a(22)>=335, a(23)>=382. - _Hugo Pfoertner_, May 21 2011; updated Oct 08 2016"
+    ],
+    "reference": [
+        "Martin Gardner, Time Travel and Other Mathematical Bewilderments (Freeman, 1988), Chapter 6 [based on a column that originally appeared in Scientific American, November 1974].",
+        "M. Klamkin, ed., Problems in Applied Mathematics: Selections from SIAM Review, SIAM, 1990; see p. 115-117.",
+        "D. E. Knuth, TAOCP, Section 7.2.1.2, Problems 107-109."
+    ],
+    "link": [
+        "Kenneth Anderson and Duane Rettig, <a href=\"http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.35.5124\">Performing Lisp Analysis of the FANNKUCH Benchmark</a>",
+        "David Berman, M. S. Klamkin and D. E. Knuth, <a href=\"http://www.jstor.org/stable/2030263\">Problem 76-17. A reverse card shuffle</a>, SIAM Review 19 (1977), 739-741.",
+        "Brent Fulgham, <a href=\"http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=fannkuchredux\">fannkuch-redux benchmark</a>, The Computer Language Benchmarks Game",
+        "D. E. Knuth, <a href=\"http://www-cs-faculty.stanford.edu/~knuth/programs.html\">Downloadable programs</a>",
+        "Klaus Nagel, <a href=\"http://www.nagel-seite.de/Topswop/\">Vau</a>, Java applet for Topswops visualization. - _Hugo Pfoertner_, May 21 2011",
+        "Andy Pepperdine, <a href=\"http://www.jstor.org/stable/3619674\">Topswops</a>, Mathematical Gazette 73 (1989), 131-133."
+    ],
+    "example": [
+        "From _R. K. Guy_, Jan 24 2007: (Start)",
+        "With 4 cards there are just two permutations which require 4 flips:",
+        "3142 --> 4132 --> 2314 --> 3214 --> 1234",
+        "2413 --> 4213 --> 3124 --> 2134 --> 1234",
+        "In these cases the deck finishes up sorted. But this is not always the case - see A000376. (End)"
+    ],
+    "mathematica": [
+        "Table[Max@ Map[Length@ NestWhileList[Flatten@{Reverse@Take[#, First@ #], Take[#, -(Length@ # - First@ #)]} &, #, First@ # != 1 &] - 1 &, Permutations@ Range@ n], {n, 8}] (* _Michael De Vlieger_, Oct 08 2016 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=my(s,t,v);for(i=1,n!,v=numtoperm(n,i);t=0;while(v[1]>1,v=if(v[1]<n,concat(Vecrev(v[1..v[1]]),v[v[1]+1..n]),Vecrev(v));t++);s=max(s,t));s \\\\ _Charles R Greathouse IV_, Oct 14 2013"
+    ],
+    "xref": [
+        "Cf. A000376 (a variation), A123398 (number of solutions)."
+    ],
+    "keyword": "nonn,hard,nice,more",
+    "offset": "1,3",
+    "author": "_Bill Blewett_ and Mike Toepke [mtoepke(AT)microsoft.com]",
+    "ext": [
+        "One more term from James Kilfiger (mapdn(AT)csv.warwick.ac.uk), July 1997",
+        "113 from _William Rex Marshall_, Mar 27 2001",
+        "139 from _Don Knuth_, Aug 25 2001",
+        "Added one new term by improved branch and bound using various new insights. - Quan T. Nguyen, William Fahle (waf013000(AT)utdallas.edu), Oct 12 2010"
+    ],
+    "references": 2,
+    "revision": 49,
+    "time": "2016-10-08T21:56:03-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

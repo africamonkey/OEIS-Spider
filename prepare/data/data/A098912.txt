@@ -1,0 +1,44 @@
+{
+    "number": 98912,
+    "data": "1,5,16,54,180,607,2098,7397,26452,95821,350554,1292634,4797694,17904220,67125898,252679320,954505718,3616951513,13744169104,52358244166,199912298266,764879838343,2932035371786,11259007784430,43303859981236,166800020984581",
+    "name": "Number of ways angles from Pi/n to (n-1)Pi/n can tile around a vertex, where rotations and reflections of an angle sequence are not counted.",
+    "comment": [
+        "Sequence can be interpreted as a tiling of rhombs (with appropriate angles) around a vertex. E.g.. a(5) is the number of ways Penrose rhombs can tile around a vertex.",
+        "Also, the number of nonequivalent compositions of 2*n with maximum part size n-1 up to rotation and reflection. - _Andrew Howroyd_, Sep 06 2017"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A098912/b098912.txt\">Table of n, a(n) for n = 2..200</a>"
+    ],
+    "formula": [
+        "From _Andrew Howroyd_, Sep 06 2017: (Start)",
+        "a(n) = A091696(2*n) - 1 - Sum_{1..n} A005418(n).",
+        "a(n) = 2^(n-2) - 2^(floor(n/2)) - 2^(floor((n-1)/2)) + (1/(4*n)) * (Sum_{d | 2*n} phi(2*n/d) * 2^d).",
+        "(End)"
+    ],
+    "example": [
+        "a(3) = 5 because we can write 2pi = 2'+2'+2' or 2'+1'+2'+1' or 2'+2'+1'+1' or 2'+1'+1'+1'+1' or 1'+1'+1'+1'+1'+1' where k' = k pi/3."
+    ],
+    "mathematica": [
+        "b[n_] := (1/n)*DivisorSum[n, EulerPhi[n/#] * 2^# &];",
+        "a[n_] := b[2*n]/2 + 2^(n-2) - 2^Quotient[n, 2] - 2^Quotient[n-1, 2];",
+        "Table[a[n], {n, 2, 27}] (* _Jean-Fran\u00e7ois Alcover_, Oct 08 2017, translated from PARI *)"
+    ],
+    "program": [
+        "(PARI)",
+        "b(n) = (1/n)*sumdiv(n, d, eulerphi(n/d) * 2^d);",
+        "a(n) = b(2*n)/2 + 2^(n-2) - 2^(n\\2) - 2^((n-1)\\2); \\\\ _Andrew Howroyd_, Sep 06 2017"
+    ],
+    "xref": [
+        "Cf. A005418, A091696, A098913."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_Stuart E Anderson_, Oct 17 2004",
+    "ext": [
+        "Terms a(8) and beyond from _Andrew Howroyd_, Sep 06 2017"
+    ],
+    "references": 2,
+    "revision": 13,
+    "time": "2017-10-08T10:40:53-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 33075,
+    "data": "1,2,3,4,5,6,7,8,9,10,12,21,23,32,34,43,45,54,56,65,67,76,78,87,89,98,101,121,123,210,212,232,234,321,323,343,345,432,434,454,456,543,545,565,567,654,656,676,678,765,767,787,789,876",
+    "name": "Positive numbers n such that all pairs of consecutive decimal digits differ by 1.",
+    "comment": [
+        "Number of n-digit terms: 9, 17, 32, 61, 116, 222, 424 (= A090994)."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A033075/b033075.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) >> n^3.53267..., where the exponent is log 10/log k and k is the largest root of x^5 - x^4 - 4x^3 + 3x^2 + 3x - 1. - _Charles R Greathouse IV_, Mar 11 2014"
+    ],
+    "mathematica": [
+        "Join[Range[9],Select[Range[2000],Union[Abs[Differences[IntegerDigits[#]]]]=={1}&]] (* _Harvey P. Dale_, Dec 28 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "-- import Data.Set (fromList, deleteFindMin, insert)",
+        "a033075 n = a033075_list !! (n-1)",
+        "a033075_list = f (fromList [1..9]) where",
+        "   f s | d == 0    = m : f (insert (10*m+1) s')",
+        "       | d == 9    = m : f (insert (10*m+8) s')",
+        "       | otherwise = m : f (insert (10*m+d-1) (insert (10*m+d+1) s'))",
+        "       where (m,s') = deleteFindMin s",
+        "             d = mod m 10",
+        "-- _Reinhard Zumkeller_, Feb 21 2012",
+        "(PARI) diff(v)=vector(#v-1,i,v[i+1]-v[i])",
+        "is(n)=if(n>9, Set(abs(diff(digits(n))))==[1], n>0) \\\\ _Charles R Greathouse IV_, Mar 11 2014"
+    ],
+    "xref": [
+        "Cf. A090994, A048398 (primes), A048411 (squares), A207954 (palindromes)."
+    ],
+    "keyword": "nonn,base,easy,changed",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_",
+    "references": 19,
+    "revision": 35,
+    "time": "2018-02-19T08:51:41-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

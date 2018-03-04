@@ -1,0 +1,64 @@
+{
+    "number": 82582,
+    "data": "1,1,1,2,5,13,35,97,275,794,2327,6905,20705,62642,190987,586219,1810011,5617914,17518463,54857506,172431935,543861219,1720737981,5459867166,17369553427,55391735455,177040109419,567019562429,1819536774089",
+    "name": "Expansion of (1 + x^2 - sqrt( 1 - 4*x + 2*x^2 + x^4)) / (2*x) in powers of x.",
+    "comment": [
+        "a(n) = number of Dyck paths of semilength n with no UUDD. See A025242 for a bijection between paths avoiding DDUU versus UUDD.",
+        "Also number of lattice paths from (0,0) to (n,n) which do not go above the diagonal x=y using steps (1,k), (k,1) with k>=1. - _Alois P. Heinz_, Oct 07 2015",
+        "a(n) = number of bargraphs of semiperimeter n (n>=2). Example: a(4) = 5; the 5 bargraphs correspond to the compositions [1,1,1], [1,2], [2,1], [2,2], [3]. - _Emeric Deutsch_, May 20 2016"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A082582/b082582.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "A. Blecher, C. Brennan, and A. Knopfmacher, <a href=\"http://dx.doi.org/10.1080/0035919X.2015.1059905\">Peaks in bargraphs</a>, Trans. Royal Soc. South Africa, 71, No. 1, 2016, 97-103.",
+        "M. Bousquet-M\u00e9lou and A. Rechnitzer, <a href=\"http://www.labri.fr/Perso/~bousquet/Articles/convexes.html\">The site-perimeter of bargraphs</a>, Adv. in Appl. Math. 31 (2003), 86-112.",
+        "Emeric Deutsch, Sergi Elizalde, <a href=\"http://arxiv.org/abs/1609.00088\">Statistics on bargraphs viewed as cornerless Motzkin paths</a>, arXiv:1609.00088 [math.CO], (September 2016)"
+    ],
+    "formula": [
+        "G.f.: (1 + x^2 - sqrt( 1 - 4*x + 2*x^2 + x^4)) / (2*x) = 2 /(1 + x^2 + sqrt( 1 - 4*x + 2*x^2 + x^4)).",
+        "G.f. A(x) satisfies the equation 0 = 1 - (1 + x^2) * A(x) + x * A(x)^2. - _Michael Somos_, Jul 22 2003",
+        "G.f. A(x) satisfies A(x) = 1 / (1 + x^2 - x * A(x)). - _Michael Somos_, Mar 28 2011",
+        "G.f. A(x) = 1 / (1 + x^2 - x / (1 + x^2 - x / (1 + x^2 - ... ))) continued fraction. - _Michael Somos_, Jul 01 2011",
+        "Series reversion of x * A(x) is x * A007477(-x). - _Michael Somos_, Jul 22 2003",
+        "a(n+1) = a(n) + Sum(a(k)*a(n-k): k=2..n), a(0) = a(1) = 1. - _Reinhard Zumkeller_, Nov 13 2012",
+        "G.f.: 1 + x - x*G(0), where G(k)= 1 - 1/(1 - x/(1 - x/(1 - x/(1 - x/(x - 1/G(k+1) ))))); (continued fraction). - _Sergei N. Gladkovskii_, Jul 12 2013",
+        "(n-1)*a(n)+(2*n+4)*a(n+2)+(-14-4*n)*a(n+3)+(5+n)*a(n+4) = 0. - _Robert Israel_, May 20 2016"
+    ],
+    "example": [
+        "1 + x + x^2 + 2*x^3 + 5*x^4 + 13*x^5 + 35*x^6 + 97*x^7 + 275*x^8 + ...",
+        "a(3)=2 because the only Dyck paths of semilength 3 with no UUDD in them are UDUDUD and UUDUDD (the nonqualifying ones being UDUUDD, UUDDUD and UUUDDD). - _Emeric Deutsch_, Jan 27 2003"
+    ],
+    "maple": [
+        "f:= gfun:-rectoproc({(n-1)*a(n)+(2*n+4)*a(n+2)+(-14-4*n)*a(n+3)+(5+n)*a(n+4), a(0) = 1, a(1) = 1, a(2) = 1, a(3) = 2},a(n),remember):",
+        "map(f,[$0..100]); # _Robert Israel_, May 20 2016"
+    ],
+    "mathematica": [
+        "a[0]=1;a[n_Integer]:=a[n]=a[n-1]+Sum[a[k]*a[n-1-k],{k,2,n-1}];Table[a[n],{n,0,40}] (* _Vladimir Joseph Stephan Orlovsky_, Mar 30 2011 *)",
+        "a[ n_] := SeriesCoefficient[ 2 / (1 + x^2 + Sqrt[1 - 4 x + 2 x^2 + x^4]), {x, 0, n}] (* _Michael Somos_, Jul 01 2011 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoeff( (1 + x^2 - sqrt( 1 - 4*x + 2*x^2 + x^4 + x^2 * O(x^n))) / 2, n+1)} /* _Michael Somos_, Jul 22 2003 */",
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( 2 /(1 + x^2 + sqrt( 1 - 4*x + 2*x^2 + x^4 + x * O(x^n))),n))} /* _Michael Somos_, Jul 01 2011 */",
+        "(PARI) {a(n) = local(A); if( n<0, 0, A = O(x); for( k = 0, n, A = 1 / (1 + x^2 - x * A)); polcoeff( A, n))} /* _Michael Somos_, Mar 28 2011 */",
+        "(Haskell)",
+        "a082582 n = a082582_list !! n",
+        "a082582_list = 1 : 1 : f [1,1] where",
+        "   f xs'@(x:_:xs) = y : f (y : xs') where",
+        "     y = x + sum (zipWith (*) xs' $ reverse xs)",
+        "-- _Reinhard Zumkeller_, Nov 13 2012"
+    ],
+    "xref": [
+        "Apart from initial term, same as A025242.",
+        "See A086581 for Dyck paths avoiding DDUU.",
+        "Cf. A218321, A263316."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,4",
+    "author": "_Emanuele Munarini_, May 07 2003",
+    "ext": [
+        "Example moved from A086581 to here."
+    ],
+    "references": 60,
+    "revision": 50,
+    "time": "2016-09-02T08:45:51-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

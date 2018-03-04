@@ -1,0 +1,44 @@
+{
+    "number": 11774,
+    "data": "1,312,560,588,1400,23760,59400,85632,147492,153720,556160,569328,1590816,2013216,3343776,4563000,4695456,9745728,12558912,22013952,23336172,30002960,45326160,52021242,75007400,113315400,137617728,153587720,402831360,699117024",
+    "name": "Nonprimes n that divide sigma(n) + phi(n).",
+    "comment": [
+        "2n = sigma(n) + phi(n) if and only if n is 1 or a prime.",
+        "If 7*2^n-1 is prime then m=2^(n+2)*3*(7*2^n-1) is in the sequence. Because phi(m)=2^(n+2)*(7*2^n-2); sigma(m)=7*2^(n+2)*(2^(n+3)-1) so phi(m)+sigma(m)=2^(n+2)*((7*2^n-2)+(7*2^(n+3)-7))=2^(n+2)* (63*2^(n+2)-9)=3*(2^(n+2)*3*(7*2^n-1))=3*m, hence m is a term of A011251 and consequently m is a term of A011774. A112729 gives such m's. - _Farideh Firoozbakht_, Dec 01 2005"
+    ],
+    "reference": [
+        "Richard K. Guy, Unsolved Problems in Number Theory, 3rd Edition, Springer, 2004. See Section B42, p. 151.",
+        "Zhang Ming-Zhi (typescript submitted to Unsolved Problems section of Monthly, 96-01-10)"
+    ],
+    "link": [
+        "Donovan Johnson and Giovanni Resta, <a href=\"/A011774/b011774.txt\">Table of n, a(n) for n = 1..63</a> (terms < 10^13, first 53 terms from Donovan Johnson)",
+        "Richard K. Guy, <a href=\"http://www.jstor.org/stable/2974586\">Divisors and desires</a>, Amer. Math. Monthly, 104 (1997), 359-360.",
+        "Q.-X. Jin, M. Tang, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL14/Tang2/tang72.html\">The 4-Nicol Numbers Having Five Different Prime Divisors</a>, J. Int. Seq. 14 (2011) # 11.7.2",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PrimeNumber.html\">Prime Number</a>"
+    ],
+    "example": [
+        "a(26)=113315400: sigma=426535200 phi=26726400 quotient=4"
+    ],
+    "mathematica": [
+        "Do[If[Mod[DivisorSigma[1, n]+EulerPhi[n], n]==0, Print[n]], {n, 1, 2*10^7}]",
+        "Do[ If[ ! PrimeQ[n] && Mod[ DivisorSigma[1, n] + EulerPhi[n], n] == 0, Print[n] ], {n, 1, 10^8} ]"
+    ],
+    "program": [
+        "(PARI) sp(n)=my(f=factor(n));n*prod(i=1, #f[,1], 1-1/f[i,1]) + prod(i=1, #f[,1], (f[i,1]^(f[i,2]+1)-1)/(f[i,1]-1))",
+        "p=2;forprime(q=3, 1e6, for(n=p+1, q-1, if(sp(n)%n==0, print1(n\", \")));p=q) \\\\ _Charles R Greathouse IV_, Mar 19 2012"
+    ],
+    "xref": [
+        "Cf. A065387, A011251, A011254, A055681, A001771, A112729."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_R. K. Guy_",
+    "ext": [
+        "More terms from _David W. Wilson_",
+        "Corrected by _Labos Elemer_, Feb 12 2004"
+    ],
+    "references": 7,
+    "revision": 41,
+    "time": "2017-10-02T11:57:47-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

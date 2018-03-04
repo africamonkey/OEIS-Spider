@@ -1,0 +1,90 @@
+{
+    "number": 5101,
+    "id": "M4825",
+    "data": "12,18,20,24,30,36,40,42,48,54,56,60,66,70,72,78,80,84,88,90,96,100,102,104,108,112,114,120,126,132,138,140,144,150,156,160,162,168,174,176,180,186,192,196,198,200,204,208,210,216,220,222,224,228,234,240,246,252,258,260,264,270",
+    "name": "Abundant numbers (sum of divisors of n exceeds 2n).",
+    "comment": [
+        "A number n is abundant if sigma(n) > 2n (this entry), perfect if sigma(n) = 2n (cf. A000396), deficient if sigma(n) < 2n (cf. A005100), where sigma(n) is the sum of the divisors of n (A000203).",
+        "While the first even abundant number is 12 = 2^2*3, the first odd abundant is 945 = 3^3*5*7, the 232nd abundant number!",
+        "It appears that for n abundant and > 23, the result of (2*A001055)-A101113 is NOT 0. - _Eric Desbiaux_, Jun 01 2009",
+        "If n is a member so is every positive multiple of n. \"Primitive\" members are in A091191.",
+        "If n=6k (k>=2), then sigma(n) >= 1 + k + 2*k + 3*k + 6*k > 12*k = 2*n. Thus all such n are in the sequence.",
+        "According to Del\u00e9glise (1998), the abundant numbers have natural density 0.2474 < A(2) < 0.2480. Thus the n-th abundant number is asymptotic to 4.0322 n < n/A(2) < 4.0421 n. - _Daniel Forgues_, Oct 11 2015",
+        "From _Bob Selcoe_, Mar 28 2017 (prompted by correspondence with Peter Seymour): (Start)",
+        "Applying similar logic as the proof that all multiples of 6 >= 12 appear in the sequence, for all odd primes p:",
+        "i) all numbers of the form j*p*2^k (j >= 1) appear in the sequence when p < 2^(k+1) - 1;",
+        "ii) no numbers appear when p > 2^(k+1) - 1 (i.e., are deficient and are in A005100);",
+        "iii) when p = 2^(k+1) - 1 (i.e., perfect numbers, A000396), j*p*2^k (j >= 2) appear.",
+        "Note that redundancies are eliminated when evaluating p only in the interval [2^k, 2^(k+1)].",
+        "The first few even terms not of the forms i or iii are {70, 350, 490, 550, 572, 650, 770, ...}. (End)"
+    ],
+    "reference": [
+        "L. E. Dickson, Theorems and tables on the sum of the divisors of a number, Quart. J. Pure Appl. Math., 44 (1913), 264-296.",
+        "R. K. Guy, Unsolved Problems in Number Theory, B2.",
+        "Clifford A. Pickover, A Passion for Mathematics, Wiley, 2005; see p. 59.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005101/b005101.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "J. Britton, <a href=\"http://britton.disted.camosun.bc.ca/perfect/jbperfect.htm\">Perfect Number Analyser</a>",
+        "C. K. Caldwell, The Prime Glossary, <a href=\"http://primes.utm.edu/glossary/page.php/AbundantNumber.html\">abundant number</a>",
+        "Marc Del\u00e9glise, <a href=\"http://projecteuclid.org/euclid.em/1048515661\">Bounds for the density of abundant integers</a>, Experiment. Math. Volume 7, Issue 2 (1998), 137-143.",
+        "Christian Kassel and Christophe Reutenauer, <a href=\"http://arxiv.org/abs/1505.07229\">On the zeta functions of punctual Hilbert schemes of a two-dimensional torus</a>, arXiv:1505.07229 [math.AG] [Note that version 1 mentions the OEIS 16 times. Later versions of this paper have a different title and different contents.]",
+        "Walter Nissen, <a href=\"http://upforthecount.com/math/abundance.html\">Abundancy : Some Resources </a>",
+        "P. Pollack, C. Pomerance, <a href=\"https://math.dartmouth.edu/~carlp/reversal12.pdf\">Some problems of Erdos on the sum-of-divisors function</a>, For Richard Guy on his 99th birthday: May his sequence be unbounded, 2015, to appear.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/AbundantNumber.html\">Abundant Number</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Abundance.html\">Abundance</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Abundant_number\">Abundant number</a>",
+        "<a href=\"/index/Cor#core\">Index entries for \"core\" sequences</a>"
+    ],
+    "formula": [
+        "a(n) is asymptotic to C*n with C=4.038... (Deleglise 1998). - _Benoit Cloitre_, Sep 04 2002",
+        "A005101 = { n | A033880(n) > 0 }. - _M. F. Hasler_, Apr 19 2012",
+        "A001065(a(n)) > a(n). - _Reinhard Zumkeller_, Nov 01 2015"
+    ],
+    "maple": [
+        "with(numtheory): for n from 1 to 270 do if sigma(n)>2*n then printf(`%d,`,n) fi: od:",
+        "isA005101 := proc(n)",
+        "    simplify(numtheory[sigma](n) > 2*n) ;",
+        "end proc: # _R. J. Mathar_, Jun 18 2015",
+        "A005101 := proc(n)",
+        "    option remember ;",
+        "    local a ;",
+        "    if n =1 then",
+        "        12 ;",
+        "    else",
+        "        a := procname(n-1)+1 ;",
+        "        while numtheory[sigma](a) <= 2*a do",
+        "            a := a+1 ;",
+        "        end do ;",
+        "        a ;",
+        "    end if ;",
+        "end proc: # _R. J. Mathar_, Oct 11 2017"
+    ],
+    "mathematica": [
+        "abQ[n_] := DivisorSigma[1, n] > 2n; A005101 = Select[ Range[270], abQ[ # ] &] (* _Robert G. Wilson v_, Sep 15 2005 *)",
+        "Select[Range[300], DivisorSigma[1, #] > 2 # &] (* _Vincenzo Librandi_, Oct 12 2015 *)"
+    ],
+    "program": [
+        "(PARI) isA005101(n) = (sigma(n) > 2*n) \\\\ _Michael B. Porter_, Nov 07 2009",
+        "(Haskell)",
+        "a005101 n = a005101_list !! (n-1)",
+        "a005101_list = filter (\\x -> a001065 x > x) [1..]",
+        "-- _Reinhard Zumkeller_, Nov 01 2015, Jan 21 2013"
+    ],
+    "xref": [
+        "Cf. A005835, A005100, A091194, A091196, A080224, A091191 (primitive).",
+        "Cf. A005231 and A006038 (odd abundant numbers).",
+        "Cf. A094268 (n consecutive abundant numbers).",
+        "Cf. A173490 (even abundant numbers).",
+        "Cf. A001065.",
+        "Cf. A000396 (perfect numbers)."
+    ],
+    "keyword": "nonn,easy,core,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "references": 195,
+    "revision": 122,
+    "time": "2018-01-20T09:07:21-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

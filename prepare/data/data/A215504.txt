@@ -1,0 +1,37 @@
+{
+    "number": 215504,
+    "data": "11,13,19,23,31,37,47,53,73,97,107,127,163,193,257,383,487,577,863,1153,2593,2917,4373,8747,995327,1492993,1990657,5308417,28311553,86093443,6879707137,1761205026817,2348273369087,5566277615617,7421703487487,21422803359743",
+    "name": "Prime numbers p(n) such that p(n)^2 - 1 has only one prime factor other than 2 and 3.",
+    "comment": [
+        "a) Only primes 2, 3, 5, 7 and 17 are known with the property that p^2 - 1 has no prime factors other than 2 and/or 3.",
+        "b) These prime numbers have p+-1 in the form of 2^m*3^n and 2^j*q^k respectively, where q is a prime number other than 2 and 3.",
+        "c) Up to the 100000000th prime number (2038074743), first 30 terms were confirmed using first mathematica program.",
+        "d) Based on comment b), the second mathematica program checked up to the 12000th term of A003586, 54 terms were found.",
+        "e) So far only 97 and 577 have their prime factor repeated."
+    ],
+    "link": [
+        "Lei Zhou, <a href=\"/A215504/b215504.txt\">Table of n, a(n) for n = 1..53</a>"
+    ],
+    "example": [
+        "11^2 - 1 = 120 = 2^3*3*5, 5 is the only prime factor other than 2 and 3.  And for any primes less than 11, p^2 - 1 does not have factors other than 2 or 3. So p(1) = 11;",
+        "13^2 - 1 = 168 = 2^3*3*5, so p(2) = 13;",
+        "17^2 - 1 = 288 = 2^5*3^2, not counted;",
+        "19^2 - 1 = 360 = 2^3*3^2*5, so p(3) = 19."
+    ],
+    "mathematica": [
+        "(* Method a *)",
+        "Table[While[p = Prime[i++]; Length[Delete[Delete[FactorInteger[p^2 - 1], 1], 1]] != 1]; p, {k, 1, 30}]",
+        "(* Method b *)",
+        "f[n_] := Block[{p2, p3 = 3^Range[0, Floor@ Log[3, n] + 1]}, p2 = 2^Floor[ Log[2, n/p3] + 1]; Min[ Select[ p2*p3, IntegerQ]]]; fQ[n_] := Block[{pq = n}, While[ Mod[pq, 2] == 0, pq /= 2]; While[ Mod[pq, 3] == 0, pq /= 3]; PrimeNu@ pq == 1]; k = 1; lst = {}; While[k < 10^50, If[ PrimeQ[k - 1] && fQ[k - 2], AppendTo[lst, k - 1]]; If[ PrimeQ[k + 1] && fQ[k + 2], AppendTo[lst, k + 1]]; k = f@ k]; lst (* _Robert G. Wilson v_, Aug 23 2012 *)"
+    ],
+    "xref": [
+        "Cf. A003586."
+    ],
+    "keyword": "nonn,hard",
+    "offset": "1,1",
+    "author": "_Lei Zhou_, Aug 13 2012",
+    "references": 2,
+    "revision": 34,
+    "time": "2015-03-14T13:54:22-04:00",
+    "created": "2012-08-14T00:01:48-04:00"
+}

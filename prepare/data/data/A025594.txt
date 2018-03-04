@@ -1,0 +1,30 @@
+{
+    "number": 25594,
+    "data": "0,1,6,43,324,2565,21202,181071,1583440,14074121,126458750,1144310003,10401799580,94825890253,866041203690,7918632503383,72456324725928,663284620905297,6073618350612502,55625356328239995,509503126813055092,4667146731457616789",
+    "name": "Number of n-move bishop paths on 8x8 board from given corner to opposite corner.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A025594/b025594.txt\">Table of n, a(n) for n = 0..320</a>"
+    ],
+    "formula": [
+        "G.f.: -(32*x^6 +56*x^5 -214*x^4 -17*x^3 +61*x^2 -15*x+1) *x / ((x+1) *(192*x^7 +184*x^6-1066*x^5 -113*x^4+468*x^3 -166*x^2+22*x-1)). - _Alois P. Heinz_, Jun 26 2012"
+    ],
+    "maple": [
+        "b:= proc(n, i, j) option remember;",
+        "      `if`(n<0 or i<0 or i>7 or j<0 or j>7, 0, `if`({n, i, j}={0},",
+        "      1, add (add (b(n-1, i+t*r[1], j+t*r[2]), r=[[1, 1], [1, -1],",
+        "      [-1, 1], [-1, -1]]), t=1..7)))",
+        "    end:",
+        "a:= n-> b (n, 7, 7):",
+        "seq (a(n), n=0..30);  # _Alois P. Heinz_, Jun 26 2012"
+    ],
+    "mathematica": [
+        "b[n_, i_, j_] := b[n, i, j] = If[n<0 || i<0 || i>7 || j<0 || j>7, 0, If[Union[{n, i, j}] == {0}, 1, Sum[Sum[b[n-1, i + t*r[[1]], j + t*r[[2]]], {r, {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}}}], {t, 1, 7}]]]; a[n_] := b[n, 7, 7]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, May 28 2015, after _Alois P. Heinz_ *)"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_David W. Wilson_",
+    "references": 1,
+    "revision": 14,
+    "time": "2015-05-28T06:12:16-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

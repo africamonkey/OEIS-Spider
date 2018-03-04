@@ -1,0 +1,59 @@
+{
+    "number": 271485,
+    "data": "1,2,3,5,7,11,16,25,36,56,81,126,182,283,409,636,919,1429,2065,3211,4640,7215,10426,16212,23427,36428,52640,81853,118281,183922,265775,413269,597191,928607,1341876,2086561,3015168,4688460,6775021,10534874,15223334",
+    "name": "Maximal term of TRIP-Stern sequence of level n corresponding to permutation triple (e,13,e).",
+    "link": [
+        "Ilya Amburg, Krishna Dasaratha, Laure Flapan, Thomas Garrity, Chansoo Lee, Cornelia Mihaila, Nicholas Neumann-Chun, Sarah Peluse, Matthew Stoffregen, <a href=\"http://arxiv.org/abs/1509.05239\">Stern Sequences for a Family of Multidimensional Continued Fractions: TRIP-Stern Sequences</a>, arXiv:1509.05239 [math.CO], 2015. See Conjecture 5.8."
+    ],
+    "formula": [
+        "Conjectures from _Colin Barker_, Apr 16 2016: (Start)",
+        "a(n) = 2*a(n-2)+a(n-4)-a(n-6) for n>5.",
+        "G.f.: (1+x)*(1+x-x^2)*(1+x^2) / (1-2*x^2-x^4+x^6).",
+        "(End)"
+    ],
+    "maple": [
+        "A271485T := proc(n)",
+        "    option remember;",
+        "    local an ;",
+        "    if n = 1 then",
+        "        [1,1,1] ;",
+        "    else",
+        "        an := procname(floor(n/2)) ;",
+        "        if type(n,'even') then",
+        "            # apply F0",
+        "            [op(1,an)+op(3,an),op(3,an),op(2,an)] ;",
+        "        else",
+        "            # apply F1",
+        "            [op(1,an),op(2,an),op(1,an)+op(3,an)] ;",
+        "        end if;",
+        "    end if;",
+        "end proc:",
+        "A271485 := proc(n)",
+        "    local a,l,nmax;",
+        "    a := 0 ;",
+        "    for l from 2^n to 2^(n+1)-1 do",
+        "        nmax := max( op(A271485T(l)) );",
+        "        a := max(a,nmax) ;",
+        "    end do:",
+        "    a ;",
+        "end proc: # _R. J. Mathar_, Apr 16 2016"
+    ],
+    "mathematica": [
+        "A271487T[n_] := A271487T[n] = Module[{an}, If[n == 1, {1, 1, 1}, an = A271487T[Floor[n/2]]; If[EvenQ[n], {an[[1]] + an[[3]], an[[3]], an[[2]]}, {an[[1]], an[[2]], an[[1]] + an[[3]]}]]];",
+        "a[n_] := a[n] = Module[{a = 0, l, nMax}, For[l = 2^n, l <= 2^(n + 1) - 1, l++, nMax = Max[A271487T[l]]; a = Max[a, nMax]]; a];",
+        "Table[Print[\"a(\", n, \") = \", a[n]]; a[n], {n, 0, 19}] (* _Jean-Fran\u00e7ois Alcover_, Nov 17 2017, after _R. J. Mathar_ *)"
+    ],
+    "xref": [
+        "For sequences mentioned in Conjecture 5.8 of Amburg et al. (2015) see A271485, A000930, A271486, A271487, A271488, A164001, A000045, A271489."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Apr 13 2016",
+    "ext": [
+        "a(20)-a(40) from _Lars Blomberg_, Jan 08 2018"
+    ],
+    "references": 5,
+    "revision": 24,
+    "time": "2018-01-08T09:20:29-05:00",
+    "created": "2016-04-13T14:45:38-04:00"
+}

@@ -1,0 +1,33 @@
+{
+    "number": 279935,
+    "data": "3,4,75,112,2057,9178,29818,73813,138992,240469,531002,661489,716856,763648,905474,1033909,1395554,1572001,1605519,1643372,1661030,1692277,1705724,2312593,2864773,2911839,2928193,2977676,3114366,3744951,4035647,4122178,4227036,5716177",
+    "name": "Numbers n such that n + sopf(n) + rad(n) = m and m - sopf(m) - rad(m) = n, where sopf(n) is the sum of the distinct primes dividing n and rad(n) is the squarefree kernel of n.",
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A279935/b279935.txt\">Table of n, a(n) for n = 1..145</a>"
+    ],
+    "example": [
+        "Prime factors of 9178 are 2, 13, 353:",
+        "sopf(9178) = 2 + 13 + 353 = 368, rad(9178) = 2 * 13 * 353 = 9178 and 9178 + 368 + 9178 = 18724.",
+        "Prime factors of 18724 are 2, 2, 31, 151:",
+        "sopf(18724) = 2 + 31 + 151 = 184, rad(18724) = 2 * 31 * 151 = 9362 and 18724 - 184 - 9362 = 9178."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,b,c,k,n; for n from 1 to q do",
+        "a:=ifactors(n)[2]; b:=mul(a[k][1],k=1..nops(a))+add(a[k][1],k=1..nops(a));",
+        "c:=n+b; a:=ifactors(c)[2]; b:=mul(a[k][1],k=1..nops(a))+add(a[k][1],k=1..nops(a));",
+        "d:=c-b; if d=n then print(n); fi; od; end: P(10^9);"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{pd = First@# & /@ FactorInteger@n}, Times @@ pd + Plus @@ pd]; fQ[n_] :=  n + f[n] - f[n + f[n]] == n; Select[ Range@ 1000000, fQ] (* _Robert G. Wilson v_, Dec 24 2016 *)"
+    ],
+    "xref": [
+        "Cf. A008472, A007947, A050780, A050781, A175760."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Dec 23 2016",
+    "references": 1,
+    "revision": 11,
+    "time": "2016-12-24T11:20:57-05:00",
+    "created": "2016-12-24T09:24:52-05:00"
+}

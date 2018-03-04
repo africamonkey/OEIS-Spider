@@ -1,0 +1,57 @@
+{
+    "number": 255892,
+    "data": "101,10111,10133,10177,10313,10331,10771,11909,13103,14401,16061,17107,20233,20323,20929,22303,23203,29209,30113,30223,30553,30773,31013,32203,34403,35053,37307,38083,38803,40343,40433,40499,40949,43403,44101,44909,47407",
+    "name": "Primes p such that each decimal digit of p is equal to the difference of two other digits of p.",
+    "comment": [
+        "Let x(1)x(2)...x(q-1)x(q) denote the decimal expansion of a prime number p. The sequence lists the primes p such that, for each index i, x(i) = x(u) - x(v) for some indices u and v.",
+        "Subsequence of A255966.",
+        "Each term of the sequence contains at least two identical decimal digits and at least one 0 digit.",
+        "The number 112345678909 is the smallest element of the sequence containing 10 distinct digits.",
+        "Number of terms < 10^n: 0, 0, 1, 1, 64, 1100, 20799, 340324, ... . - _Robert G. Wilson v_, Mar 10 2015"
+    ],
+    "link": [
+        "Michel Lagneau, <a href=\"/A255892/b255892.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "101 is in the sequence because 1 = 1 - 0 and 0 = 1 - 1."
+    ],
+    "maple": [
+        "for n from 100 to 100000 do:",
+        "  x:=convert(n,base,10):n1:=nops(x):c:=0:T:=array(1..n1-1):",
+        "    for nn from 1 to n1 do:",
+        "     z:=x[nn]:",
+        "     k:=0:",
+        "      for j from 1 to n1 do:",
+        "       if nn<>j",
+        "       then",
+        "       k:=k+1:T[k]:=x[j]:",
+        "       else",
+        "       fi:",
+        "      od:",
+        "      ii:=0:",
+        "        for a from 1 to n1-1 while(ii=0) do:",
+        "         for b from a+1 to n1-1 while(ii=0) do:",
+        "         if z=abs(T[a]-T[b]) then ii:=1:c:=c+1:",
+        "         else",
+        "         fi:",
+        "        od:od:",
+        "      od:",
+        "      if c=n1 and type(n,prime)=true then printf(`%d, `,n):",
+        "      else",
+        "      fi:",
+        "  od:"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{id = IntegerDigits@ n, lng = 1 + Floor@ Log10@ n}, Union@ Table[c = Complement[ Range@ lng, {i}]; MemberQ[ Union@ Flatten@ Table[ Abs[id[[j]] - id[[k]]], {j, c}, {k, c}], id[[i]]], {i, lng}] == {True}]; Select[ Prime@ Range@ 5000, fQ] (* _Robert G. Wilson v_, Mar 10 2015 *)"
+    ],
+    "xref": [
+        "Cf. A000040, A255893, A255917, A255966."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Mar 09 2015",
+    "references": 4,
+    "revision": 29,
+    "time": "2015-03-27T09:23:11-04:00",
+    "created": "2015-03-27T09:23:11-04:00"
+}

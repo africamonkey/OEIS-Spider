@@ -1,0 +1,78 @@
+{
+    "number": 275,
+    "id": "M3065 N1242",
+    "data": "1,1,3,19,211,3651,90921,3081513,136407699,7642177651,528579161353,44237263696473,4405990782649369,515018848029036937,69818743428262376523,10865441556038181291819,1923889742567310611949459,384565973956329859109177427",
+    "name": "Coefficients of a Bessel function (reciprocal of J_0(z)); also pairs of permutations with rise/rise forbidden.",
+    "comment": [
+        "a(n) has the Lucas property, namely a(n) is congruent to a(n_0)a(n_1)...a(n_k) modulo p for any prime p where n_0,n_1,... are the base p digits of n. (Carlitz via McIntosh)"
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A000275/b000275.txt\">Table of n, a(n) for n = 0..100</a>",
+        "L. Carlitz, <a href=\"http://dx.doi.org/10.1007/BF01900214\">The coefficients of the reciprocal of J_0(x)</a>, Archiv. Math., 6 (1955), 121ff.",
+        "L. Carlitz, R. Scoville and T. Vaughan, <a href=\"http://projecteuclid.org/euclid.bams/1183535825\">Enumeration of pairs of permutations and sequences</a>, Bull. Amer. Math. Soc., 80 (1974), 881-884.",
+        "Carlitz, L., Richard Scoville, and Theresa Vaughan, <a href=\"/A259465/a259465.pdf\">Enumeration of pairs of permutations and sequences</a>, Bulletin of the American Mathematical Society 80.5 (1974): 881-884. [Annotated scanned copy]",
+        "L. Carlitz, N. J. A. Sloane, and C. L. Mallows, <a href=\"/A259465/a259465_1.pdf\">Correspondence, 1975</a>",
+        "Gunnar Thor Magn\u00fasson, <a href=\"http://arxiv.org/abs/1401.4048\">The inner product on exterior powers of a complex vector space</a>, arXiv preprint arXiv:1401.4048, 2014",
+        "R. McIntosh, <a href=\"http://www.jstor.org/stable/2325058\">A generalization of a congruential property of Lucas</a>, Amer. Math. Monthly 99 (1992), no. 3, 231-238. see page 232. MR1216210 (95b:11008)",
+        "J. Riordan, <a href=\"http://www.jstor.org/stable/2312584\">Inverse relations and combinatorial identities</a>, Amer. Math. Monthly, 71 (1964), 485-498.",
+        "Jonathan D. H. Smith, <a href=\"http://dx.doi.org/10.1007/BF01393379\">Commutative Moufang loops and Bessel functions</a>, Invent. Math. 67 (1982), no. 1, 173-187.",
+        "<a href=\"/index/Be#Bessel\">Index entries for sequences related to Bessel functions or polynomials</a>"
+    ],
+    "formula": [
+        "a(n) = Sum (-1)^(r+n+1) binomial(n, r)^2 a(r), r=0..n-1, if n>0.",
+        "Sum_{n>=0} a(n) * x^n / n!^2 = 1 / J_0(sqrt(4*x)). - _Michael Somos, May 17 2004",
+        "From _Peter Bala_, Aug 08 2011: (Start)",
+        "Conjectural formula: 1 = sum {n>=0} a(n)*x^n*sum{k>=0} binomial(n+k,k)^2*(-x)^k.",
+        "Apart from the initial term, first column of A192721. (End)",
+        "E.g.f.: 1/J_0(sqrt(4*x))= 1 + x/Q(0), where Q(k) = (k+1)^2 - x + (k+1)^2*x/Q(k+1); (continued fraction). - _Sergei N. Gladkovskii_, Dec 06 2013",
+        "a(n) ~ c * (n!)^2 / r^n, where r = 1/4*BesselJZero[0,1]^2 = 1.4457964907366961302939989396139517587678604516 and c = 1.60197469692804662664846689139151227422675123376219... - _Vaclav Kotesovec_, Mar 02 2014"
+    ],
+    "example": [
+        "a(2) = 19: The 19 pairs of permutations in the group S_3 x S_3 with",
+        "no common rises correspond to the zero entries in the table below.",
+        "======================================",
+        ".Number of common rises in S_3 x S_3..",
+        "======================================",
+        "...|.123...132...213...231...312...321",
+        "======================================",
+        "123|..2.....1.....1.....1.....1.....0",
+        "132|..1.....1.....0.....1.....0.....0",
+        "213|..1.....0.....1.....0.....1.....0",
+        "231|..1.....1.....0.....1.....0.....0",
+        "312|..1.....1.....0.....1.....0.....0",
+        "321|..0.....0.....0.....0.....0.....0",
+        "- _Peter Bala_, Aug 08 2011",
+        "G.f. = 1 + x + 3*x^2 + 19*x^3 + 211*x^4 + 3651*x^5 + 90921*x^6 + ..."
+    ],
+    "maple": [
+        "A000275 := proc(n) sum(z^k/k!^2, k = 0..infinity);",
+        "series(%^x, z=0, n+1): n!^2*coeff(%,z,n); add(abs(coeff(%,x,k)), k=0..n) end:",
+        "seq(A000275(n), n=0..17); # _Peter Luschny_, May 27 2017"
+    ],
+    "mathematica": [
+        "a[0] = 1; a[n_] := a[n] = Sum[(-1)^(r+n+1)*Binomial[n, r]^2 a[r], {r, 0, n-1}]; Table[a[n], {n, 0, 17}] (* _Jean-Fran\u00e7ois Alcover_, Aug 05 2013 *)",
+        "CoefficientList[Series[1/BesselJ[0,Sqrt[4*x]], {x, 0, 20}], x]* Range[0, 20]!^2 (* _Vaclav Kotesovec_, Mar 02 2014 *)",
+        "a[ n_] := If[ n < 0, 0, (n! 2^n)^2 SeriesCoefficient[ 1 / BesselJ[ 0, x], {x, 0, 2 n}]]; (* _Michael Somos_, Aug 20 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, n!^2 * 4^n * polcoeff( 1 / besselj(0, x + x * O(x^(2*n))), 2*n))}; /* _Michael Somos_, May 17 2004 */"
+    ],
+    "xref": [
+        "Row 2 of A212855.",
+        "Cf. A055133 (absolute value of column 0 of triangle), A192721 (column 1), A115368."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Christian G. Bower_, Apr 25 2000"
+    ],
+    "references": 12,
+    "revision": 54,
+    "time": "2017-05-27T09:40:53-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

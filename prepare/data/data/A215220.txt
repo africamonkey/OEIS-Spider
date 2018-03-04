@@ -1,0 +1,40 @@
+{
+    "number": 215220,
+    "data": "1,4,456,143164,75965484,55824699632,51274161733160,55418842406649988,67819708829687672202,91539069926354814114556,133752944758581353219955762,208673064320580765981337783096,343997162091593719562479905281938,594344377404793356460064021706935470",
+    "name": "Number of solid standard Young tableaux of shape [[n,n,n,n],[n]].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A215220/b215220.txt\">Table of n, a(n) for n = 0..40</a>",
+        "S. B. Ekhad, D. Zeilberger, <a href=\"https://arxiv.org/abs/1202.6229\">Computational and Theoretical Challenges on Counting Solid Standard Young Tableaux</a>, arXiv:1202.6229v1 [math.CO], 2012",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau\">Young tableau</a>"
+    ],
+    "maple": [
+        "b:= proc(w, x, y, z, u) option remember;",
+        "     `if`({w, x, y, z, u}={0}, 1, `if`(w>x and w>u, b(w-1, x, y, z, u), 0)+",
+        "     `if`(x>y, b(w, x-1, y, z, u), 0)+ `if`(y>z, b(w, x, y-1, z, u), 0)+",
+        "     `if`(z>0, b(w, x, y, z-1, u), 0)+ `if`(u>0, b(w, x, y, z, u-1), 0))",
+        "    end:",
+        "a:= n-> b(n$5):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "b[w_, x_, y_, z_, u_] := b[w, x, y, z, u] =",
+        "  If[Union@{w, x, y, z, u} == {0}, 1,",
+        "  If[w > x && w > u, b[w - 1, x, y, z, u], 0] +",
+        "  If[x > y, b[w, x - 1, y, z, u], 0] +",
+        "  If[y > z, b[w, x, y - 1, z, u], 0] +",
+        "  If[z > 0, b[w, x, y, z - 1, u], 0] +",
+        "  If[u > 0, b[w, x, y, z, u - 1], 0]];",
+        "a[n_] :=  b[n, n, n, n, n];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Nov 08 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Column k=4 of A214722."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Aug 06 2012",
+    "references": 3,
+    "revision": 15,
+    "time": "2017-11-08T09:53:15-05:00",
+    "created": "2012-08-06T23:40:29-04:00"
+}

@@ -1,0 +1,61 @@
+{
+    "number": 124123,
+    "data": "5,19,61,73,83,103,107,109,113,139,151,167,173,191,199,229,269,271,277,313,337,349,359,379,397,439,463,503,523,563,571,601,607,619,733,773,823,827,829,859,883,887,911,971,983,997,1013,1031,1063,1091,1093,1103",
+    "name": "Primes not of the form nextprime(f(p)) with p prime, where f(p)=p/2 if p=2 (mod 3), f(p)=2p otherwise.",
+    "comment": [
+        "These are the [first] primes which cannot be part of a gb-sequence (except as seed).",
+        "Is this sequence finite or infinite ?",
+        "GNU-GMP was used to generate the sequence.",
+        "[Editor's note: This probably refers not to this sequence but to the \"gb-sequences\" themselves, e.g. the one starting with 4499221 reaches a peak of approximately 10^110. - M.H.]",
+        "Comments from _M. F. Hasler_, Mar 27 2008 (Start) The function f(p)=p/2 if p=2 (mod 3), f(p)=2p else, yields a half-integer for primes p=6k-1 and an even number for primes p=6k+1; in all cases nextprime(f(p)) is defined without ambiguity.",
+        "This sequence lists primes p' not in the range of the map p->nextprime(f(p)) (defined on the primes).",
+        "Equivalently, p' is listed iff: (1) no even number between p' and the next lower prime is of the form 2p with p=0 or p=1 (mod 3), AND (2) no half-integer between p' and the next lower prime is of the form p/2 with p=2 (mod 3) and p prime (in both conditions).",
+        "This characterization allows us to compute the sequence easily, cf. PARI code.",
+        "Experimentally, it does not appear that this sequence is finite. Instead, its (local) density within the primes seems to increase, from roughly 25% for the first terms to nearly 50% at 10^30. The average density seems to remain stable around 40%. (End)"
+    ],
+    "reference": [
+        "Communication paper by Georges Brougnard."
+    ],
+    "link": [
+        "Georges Brougnard, <a href=\"http://www.echolaliste.com/gbnums/gb0.jpg\">Definition of GB-sequences</a>.",
+        "Georges Brougnard, <a href=\"http://www.echolaliste.com/gbnums/gb1.jpg\">GB-sequence of length 96, obtained for gb[0]=1381</a>.",
+        "Georges Brougnard, <a href=\"http://www.echolaliste.com/gbnums/gb4.jpg\">GB-sequence of length 63337, obtained for gb[0]=4499221</a>."
+    ],
+    "formula": [
+        "A124123 = complement of A007918( A138750( A000040 )) = nextprime( f( { primes } ))",
+        "Recurrence for a gb-sequence starting with gb[0] = a prime > 2 (the seed):",
+        "| If gb[n] = 2 (mod 3) Then gb[n+1] := least prime > gb[n]/2,",
+        "| Else gb[n+1] := least prime > gb[n]*2.",
+        "A gb-sequence of length L ends in the loop 7, 17, 11, 7,.. ; gb[L-1]=7."
+    ],
+    "example": [
+        "Example: a(1) = 5 because there is no prime gb[n] such that gb[n+1] = 5."
+    ],
+    "mathematica": [
+        "lim = PrimePi[1000]; f[p_ /; Mod[p, 3] == 2] := p/2; f[p_] := 2*p; Complement[Prime[Range[lim]], Table[ NextPrime[ f[Prime[k]]], {k, 1, 2*lim}]] (* _Jean-Fran\u00e7ois Alcover_, Sep 20 2011 *)"
+    ],
+    "program": [
+        "From _M. F. Hasler_, Mar 27 2008: (Start)",
+        "(PARI) forprime( p=3,10^3, { for( i=precprime(p-1)+1,p, (2*i)%3==0 & isprime(2*i-1) & next(2); i%2==0 & ( i/2 )%3!=2 & isprime( i/2 ) & next(2)); print1( p\", \" )) }",
+        "(PARI) nextA124123(p)={ while( p=nextprime(p+1), for( i=precprime(p-1)+1,p, (2*i)%3==0 & isprime(2*i-1) & next(2); i%2==0 & ( i/2 )%3!=2 & isprime( i/2 ) & next(2)); return( p )) }",
+        "t=2;vector(200,i,t=nextA124123(t)) \\\\ 3/5 = 60% of the first 200 terms are in 1+3Z:",
+        "t=[0,0];vector(#%,i,t[%[i]%3]++);t \\\\ yields [120, 80]",
+        "t=10^11;vector(200,i,t=nextA124123(t)) \\\\ exactly 50% of these terms are in 1+3Z:",
+        "t=[0,0];vector(#%,i,t[%[i]%3]++);t \\\\ yields [100, 100]",
+        "t=10^30;vector(200,i,t=nextA124123(t+1));t-10^30 \\\\ yields 31773 = distance of 200th term beyond 10^30",
+        "t=10^30;vector(200,i,t=nextprime(t+1));(t-1e30)/% \\\\ yields 0.52..., approx. local density in the primes. (End)"
+    ],
+    "xref": [
+        "Cf. A007918, A138750-A138753."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Jacques Tramu_, Dec 13 2006",
+    "ext": [
+        "Edited by _M. F. Hasler_, Mar 27 2008"
+    ],
+    "references": 9,
+    "revision": 19,
+    "time": "2015-08-17T18:21:08-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

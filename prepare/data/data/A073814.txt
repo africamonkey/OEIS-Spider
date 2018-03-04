@@ -1,0 +1,30 @@
+{
+    "number": 73814,
+    "data": "2,4,15,33,90,129,227,288,429,694,798,1149,1417,1565,1879,2399,2993,3201,3879,4365,4623,5429,6002,6920,8245,8948,9314,10067,10457,11245,14251,15184,16627,17130,19711,20253,21919,23653,24845,26687,28604,29248,32612,33303,34719,35436,39893,44622,46254",
+    "name": "a(n) is the smallest number k such that A073813(k) = prime(n).",
+    "formula": [
+        "Min{x; c[x]-Max[URS[c[x]]]=p(n)}, p(n)=n-th prime. See program."
+    ],
+    "example": [
+        "a(6)=129 means that c[129]-Max[URS[c[129]]=Prime[6]: c[129]=169, Max[URS[169]]=Max{26,39,...,143,156}=156; difference=169-156=13=6th prime. Suspicion: A073813(n) is always prime number!"
+    ],
+    "mathematica": [
+        "c[x_] := FixedPoint[x+PrimePi[ # ]+1&, x]; tn[x_] := Table[j, {j, 1, x}]; di[x_] := Divisors[x]; rrs[x_] := Flatten[Position[GCD[tn[x], x], 1]]; rs[x_] := Union[rrs[x], di[x]]; urs[x_] := Complement[tn[x], rs[x]]; Do[s=c[n]-Max[urs[c[n]]]; If[s<101&&t[[s]]==0, t[[s]]=n], {n, 1, 10}]; t",
+        "nn = 6 * 10^4; s = Function[k, k - SelectFirst[Range[k - 2, 2, -1], 1 < GCD[#, k] < # &]] /@ Select[Range[6, nn], ! PrimeQ@ # &]; Table[SelectFirst[Range@ Length@ s, s[[# - 1]] == Prime@ n &], {n, 49}] (* _Michael De Vlieger_, Mar 28 2016, Version 10 *)"
+    ],
+    "xref": [
+        "Cf. A045763, A073759, A002808, A073813.",
+        "Cf. A120389. [From _R. J. Mathar_, Aug 07 2008]"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Labos Elemer_, Aug 15 2002",
+    "ext": [
+        "Definition corrected by _Gionata Neri_, Mar 28 2016",
+        "More terms from _Michael De Vlieger_, Mar 28 2016"
+    ],
+    "references": 0,
+    "revision": 20,
+    "time": "2016-03-29T08:43:16-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

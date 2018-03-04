@@ -1,0 +1,47 @@
+{
+    "number": 4798,
+    "data": "1,4,10,22,45,88,167,310,566,1020,1819,3216,5645,9848,17090,29522,50793,87080,148819,253610,431086,731064,1237175,2089632,3523225,5930668,9968122,16730830,28045221,46954360,78524159,131181406,218933030,365044788,608135635,1012268592",
+    "name": "Convolution of Fibonacci numbers 1,2,3,5,... with themselves.",
+    "comment": [
+        "From _Emeric Deutsch_, Feb 15 2010: (Start)",
+        "a(n) is the number of subwords of the form 0000 in all binary words of length n+3 that have no pair of adjacent 1's. Example: a(2)=4 because in the 13 (=A000045(7)) binary words of length 5 that have no pair of adjacent 1's, namely 00000, 00001, 00010, 00100, 00101, 01000, 01001, 01010, 10000, 10001, 10010, 10100, 10101, we have 2 + 1 + 0 + 0 + 0 + 0 + 0 + 0 + 1 + 1 + 0 + 0 + 0 = 4 subwords of the form 0000.",
+        "a(n) = Sum(k*A171855(n + 3,k),k>=0). (End)",
+        "a(n) is the total number of 0's in all binary words of length n that have no pair of adjacent 1's. Example: a(5) = 45 because in the binary words listed in the above example there are respectively 5 + 4 + 4 + 4 + 3 + 4 + 3 + 3 + 4 + 3 + 3 + 3 + 2 = 45. - _Geoffrey Critzer_, Jul 22 2013"
+    ],
+    "link": [
+        "\u00c9. Czabarka, R. Fl\u00f3rez, L. Junes, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Florez/florez12.html\">A Discrete Convolution on the Generalized Hosoya Triangle</a>, Journal of Integer Sequences, 18 (2015), #15.1.6.",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (2,1,-2,-1)."
+    ],
+    "formula": [
+        "O.g.f.: (x+1)^2*x/(1-x-x^2)^2. - _Len Smiley_, Dec 11 2001",
+        "a(n) = a(n-1) + a(n-2) + Fibonacci(n+2). - _Philippe Del\u00e9ham_, Jan 22 2012",
+        "O.g.f. is the derivative of A(x,y) with respect to y and then evaluated at y = 1, where A(x,y) is the o.g.f. for A030528. - _Geoffrey Critzer_, Jul 22 2013",
+        "a(n) = A001629(n+1)+A001629(n-1)+2*A001629(n). - _R. J. Mathar_, Oct 30 2015",
+        "a(n) = n*Fibonacci(n) + (2/5)*(n*Lucas(n) - Fibonacci(n)) = A045925(n) + 2*A001629(n), where Lucas = A000032, Fibonacci = A000045. - _Vladimir Reshetnikov_, Sep 27 2016"
+    ],
+    "example": [
+        "a(6) = 45 + 22 + A000045(6+2) = 45 + 22 + 21 = 88 . - _Philippe Del\u00e9ham_, Jan 22 2012"
+    ],
+    "maple": [
+        "a:= n-> (<<0|1|0|0>, <0|0|1|0>, <0|0|0|1>, <-1|-2|1|2>>^n. <<0, 1, 4, 10>>)[1, 1]: seq(a(n), n=1..40);  # _Alois P. Heinz_, Jul 04 2013"
+    ],
+    "mathematica": [
+        "nn=36;Drop[CoefficientList[Series[D[(1+x)/(1-y x -y x^2),y]/.y->1,{x,0,nn}],x],1] (* _Geoffrey Critzer_, Jul 22 2013 *)",
+        "Table[n Fibonacci[n] + 2/5 (n LucasL[n] - Fibonacci[n]), {n, 20}] (* _Vladimir Reshetnikov_, Sep 27 2016 *)",
+        "a[n_] := ListConvolve[f = Fibonacci[Range[2, n+1]], f][[1]]; Array[a, 36] (* _Jean-Fran\u00e7ois Alcover_, Feb 15 2018 *)"
+    ],
+    "program": [
+        "(PARI) Vec(((1+x)/(1-x-x^2))^2+O(x^66)) \\\\ _Joerg Arndt_, Jul 04 2013"
+    ],
+    "xref": [
+        "Cf. A171855, A000045. - _Emeric Deutsch_, Feb 15 2010",
+        "Cf. A001629. - _Alois P. Heinz_, Jul 04 2013"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_",
+    "references": 10,
+    "revision": 33,
+    "time": "2018-02-15T05:07:18-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

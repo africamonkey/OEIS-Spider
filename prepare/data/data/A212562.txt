@@ -1,0 +1,39 @@
+{
+    "number": 212562,
+    "data": "0,1,15,73,228,551,1137,2097,3568,5701,8675,12681,17940,24683,33173,43681,56512,71977,90423,112201,137700,167311,201465,240593,285168,335661,392587,456457,527828,607251,695325,792641,899840,1017553,1146463,1287241,1440612",
+    "name": "Number of (w,x,y,z) with all terms in {1,...,n} and w+x<2y+2z.",
+    "comment": [
+        "For a guide to related sequences, see A211795."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A212562/b212562.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-1,-5,5,1,-3,1)."
+    ],
+    "formula": [
+        "a(n) = 3*a(n-1) - a(n-2) - 5*a(n-3) + 5*a(n-4) + a(n-5) - 3*a(n-6) + a(n-7).",
+        "From _Colin Barker_, Dec 05 2015: (Start)",
+        "a(n) = 1/96*(82*n^4 + 12*n^3 + 8*n^2 + 6*((-1)^n-1)*n - 3*(-1)^n + 3).",
+        "G.f.: x*(1 + 12*x + 29*x^2 + 29*x^3 + 10*x^4 + x^5) / ((1-x)^5*(1+x)^2). (End)"
+    ],
+    "mathematica": [
+        "t = Compile[{{n, _Integer}}, Module[{s = 0},",
+        "(Do[If[w + x < 2 y + 2 z, s = s + 1],",
+        "{w, 1, #}, {x, 1, #}, {y, 1, #}, {z, 1, #}] &[n]; s)]];",
+        "Map[t[#] &, Range[0, 40]]   (* A212562 *)",
+        "CoefficientList[Series[x (1 + 12 x + 29 x^2 + 29 x^3 + 10 x^4 + x^5)/((1 - x)^5 (1 + x)^2), {x, 0, 33}], x] (* _Vincenzo Librandi_, Dec 05 2015 *)"
+    ],
+    "program": [
+        "(PARI) concat(0, Vec(x*(1+12*x+29*x^2+29*x^3+10*x^4+x^5)/((1-x)^5*(1+x)^2) + O(x^100))) \\\\ _Colin Barker_, Dec 05 2015",
+        "(MAGMA) I:=[0,1,15,73,228,551,1137]; [n le 7 select I[n] else 3*Self(n-1)-Self(n-2)-5*Self(n-3)+5*Self(n-4)+Self(n-5)-3*Self(n-6)+Self(n-7): n in [1..40]]; // _Vincenzo Librandi_, Dec 05 2015"
+    ],
+    "xref": [
+        "Cf. A211795."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, May 21 2012",
+    "references": 2,
+    "revision": 10,
+    "time": "2015-12-05T16:37:26-05:00",
+    "created": "2012-06-05T13:35:11-04:00"
+}

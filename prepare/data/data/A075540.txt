@@ -1,0 +1,48 @@
+{
+    "number": 75540,
+    "data": "5,53,157,173,211,257,263,373,511,537,563,593,607,653,733,947,977,999,1073,1103,1123,1187,1223,1239,1367,1461,1501,1511,1541,1747,1753,1763,1773,1899,1907,1917,2071,2181,2287,2401,2409,2417,2449,2677,2903,2963",
+    "name": "Integers that are the average of three successive primes.",
+    "comment": [
+        "Not every three successive primes have an integer average. The integer averages are in the sequence.",
+        "Not all of these 3-averages are prime: the prime 3-averages are in A006562 (balanced primes). There are surprisingly many prime 3-averages: among the first 10000 terms of the sequence there are 2417 primes. Indices i(n) of first prime in sequence of three primes with integer average are in A075541, for prime 3-averages i(n) are in A064113. Interprimes (s-averages with s=2) are all composite, see A024675. (Edited by _Zak Seidov_, Sep 01 2015 )"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A075540/b075540.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = (1/3) (p(i)+p(i+1)+p(i+2)), for some i(n)."
+    ],
+    "example": [
+        "a(1) = 5 = (1/3)(3+5+7), first integer average of three successive primes; next is: a(2) = 53 = (1/3)(47 + 53 + 59); up to n=8 all a(n) are themselves prime; while a(9) = 511 = (1/3)( 503 + 509 + 521) is the first nonprime 3-average: 511=7*73."
+    ],
+    "maple": [
+        "N:= 10^4: # to get all terms using primes <= N",
+        "Primes:= select(isprime,[2,seq(2*i+1, i=1..(N-1)/2)]):",
+        "select(type,(Primes[1..-3] + Primes[2..-2] + Primes[3..-1])/3,integer); # _Robert Israel_, Sep 01 2015"
+    ],
+    "mathematica": [
+        "Select[MovingAverage[Prime[Range[500]],3],IntegerQ] (* _Harvey P. Dale_, Aug 10 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a075540 n = a075540_list !! (n-1)",
+        "a075540_list = map fst $ filter ((== 0) . snd) $",
+        "   zipWith3 (\\x y z -> divMod (x + y + z) 3)",
+        "            a000040_list (tail a000040_list) (drop 2 a000040_list)",
+        "-- _Reinhard Zumkeller_, Jan 20 2012"
+    ],
+    "xref": [
+        "Cf. A006562, A024675, A075541, A064113.",
+        "Cf. A102655."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, Sep 21 2002",
+    "ext": [
+        "Comment and example edited, inefficient Mma removed by _Zak Seidov_, Sep 01 2015"
+    ],
+    "references": 7,
+    "revision": 33,
+    "time": "2015-09-01T16:06:56-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

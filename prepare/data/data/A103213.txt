@@ -1,0 +1,37 @@
+{
+    "number": 103213,
+    "data": "1,5,29,206,1774,18204,218868,3036144,47928816,850514400,16783812000,364865040000,8666747625600,223351748524800,6206847295622400,185007996436838400,5887506932836300800,199216094254423142400",
+    "name": "a(n) = n! * Sum_{k=1..n} C(n,k)/k.",
+    "comment": [
+        "a(n) = the sum of all terms in the rows of permutations of the powers of 2. For k=1...n, term(k) can be all powers of 2 from 0 to k-1; thus for term(3) it may be 1 or 2 or 4. Find all n! rows of permutations and the sum of the terms in all these rows. This sum will be a(n). - _J. M. Bergot_, Jun 18 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A103213/b103213.txt\">Table of n, a(n) for n = 1..369</a>"
+    ],
+    "formula": [
+        "E.g.f.: log((1-2*x)/(1-x))/(x-1). a(n) = n! * Sum_{k=1..n} (2^k-1)/k. - _Vladeta Jovovic_, Jan 29 2005",
+        "a(n) ~ 2^(n+1)*(n-1)!. - _Jean-Fran\u00e7ois Alcover_, Nov 28 2013",
+        "a(n+4) = 2*(n+3)*(n+2)^2*a(n+1)-(n+3)*(13+5*n)*a(n+2)+(4*n+13)*a(n+3). - _Robert Israel_, Jun 19 2015",
+        "a(n) = -n!*log(2) + Sum_{k>=1} (k+n)!/(2^k*k*k!). - Roland Groux, Dec 18 2010",
+        "From _Vladimir Reshetnikov_, Apr 24 2016: (Start)",
+        "a(n) = n!*((n+1)*hypergeom([1, 1, n+2], [2, 2], 1/2)/2 - log(2)).",
+        "a(n) = n!*(-H(n) - Re(Beta(2; n+1, 0))).",
+        "a(n) = n!*(-H(n) - 2^(n+1)*Re(LerchPhi(2, 1, n+1))), where H(n) is the harmonic number, Beta(z; a, b) is the incomplete Beta function, LerchPhi(z, s, a) is the Lerch transcendent.",
+        "(End)"
+    ],
+    "maple": [
+        "S:= series(log((1-2*x)/(1-x))/(x-1), x, 41):",
+        "seq(coeff(S,x,j)*j!,j=1..40); # _Robert Israel_, Jun 19 2015"
+    ],
+    "mathematica": [
+        "a[n_] := n*n!*HypergeometricPFQ[{1, 1, 1-n}, {2, 2}, -1]; Table[a[n], {n, 1, 18}] (* _Jean-Fran\u00e7ois Alcover_, Nov 28 2013 *)",
+        "Table[n! (-HarmonicNumber[n] - 2^(n+1) Re[LerchPhi[2, 1, n+1]]), {n, 1, 20}] (* _Vladimir Reshetnikov_, Apr 24 2016 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ralf Stephan_, Jan 28 2005",
+    "references": 4,
+    "revision": 29,
+    "time": "2016-04-24T22:33:39-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

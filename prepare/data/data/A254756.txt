@@ -1,0 +1,52 @@
+{
+    "number": 254756,
+    "data": "34,35,37,39,43,45,50,51,53,55,59,61,82,83,85,87,91,93,114,115,117,119,123,125,178,179,181,183,187,189,210,211,213,215,219,221,595,661,663,669,691,693,763,851,947,949,979,1333,1339,1341,1429",
+    "name": "Numbers such that all their proper hexadecimal prefixes and suffixes represent primes.",
+    "comment": [
+        "A proper prefix (or suffix) of a number m is one which is neither void, nor identical to m.",
+        "Alternative definition: Slicing the hexadecimal expansion of a(n) in any way into two nonempty parts, each part represents a prime number.",
+        "Every proper hexadecimal prefix of each member a(n) must be a member of A237600. Since the latter is a finite sequence, a(n) is also finite. It has exactly 100 members, the largest of which is 39441303 (not a prime; the largest of the 16 primes occurring in this sequence is 3389).",
+        "The relation of a(n) to A237600 leads to the fastest way to reliably enumerate all its members."
+    ],
+    "link": [
+        "Stanislav Sykora, <a href=\"/A254756/b254756.txt\">Table of n, a(n) for n = 1..100</a>",
+        "Stanislav Sykora, <a href=\"https://oeis.org/wiki/File:GeneticThreads.txt\">PARI/GP scripts for genetic threads</a>"
+    ],
+    "example": [
+        "13 is not a member because its expansion in base 16 (0xD) cannot be sliced in two. 33 (equal to 0x21) is also not a member because 1 is not a prime, while 34 (equal to 0x22) is a member because 2 is a prime.",
+        "1339, equal to 0x53B, is a member because all its proper hexadecimal prefixes and postfixes (0x5, 0x53, 0x3B, and 0xB) are prime.",
+        "The largest member is 0x259D397."
+    ],
+    "program": [
+        "(PARI) \\\\ For the function GT_Trunc1 see A237600 and/or the link.",
+        "slicesIntoPrimes(n, b=10) = { \\\\ Same function as in A254751.",
+        "my(k=b); if(n<b, return(0); ); while(n\\k>0, if(!isprime(n\\k)||!isprime(n%k), return(0); ); k*=b; ); return(1); }",
+        "NumbersSlicingIntoPrimes(nmax,b=10) = {",
+        "my(rtp=GT_Trunc1(nmax,isprime,b)); \\\\ rtp right-truncatable primes",
+        "my(a=vector(b*#rtp),irtp,d,an,n=0);",
+        "for(irtp=1,#rtp, \\\\ For each rtp, append a digit and test",
+        "   for(d=0,b-1,an=b*rtp[irtp]+d;",
+        "     if(slicesIntoPrimes(an,b),n++;a[n]=an)););",
+        "return(a[1..n]);} v = NumbersSlicingIntoPrimes(1000000,16) \\\\ Call with nmax>>414,base 16",
+        "(Python)",
+        "from gmpy2 import is_prime",
+        "A254756_list = []",
+        "for n in range(16,10**6):",
+        "....s = format(n,'x')",
+        "....for i in range(1,len(s)):",
+        "........if not (is_prime(int(s[i:],16)) and is_prime(int(s[:-i],16))):",
+        "............break",
+        "....else:",
+        "........A254756_list.append(n) # _Chai Wah Wu_, Apr 16 2015"
+    ],
+    "xref": [
+        "Cf. A237600, A254751."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,1",
+    "author": "_Stanislav Sykora_, Mar 05 2015",
+    "references": 3,
+    "revision": 20,
+    "time": "2015-04-17T05:27:42-04:00",
+    "created": "2015-04-16T12:50:16-04:00"
+}

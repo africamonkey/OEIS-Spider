@@ -1,0 +1,43 @@
+{
+    "number": 5195,
+    "id": "M0776",
+    "data": "1,1,2,3,6,10,20,37,76,153,329,710,1601,3658,8599,20514,49905,122963,307199,775529,1977878,5086638,13184156,34402932,90328674,238474986,632775648,1686705630,4514955632,12132227370,32717113805,88519867048,240235675303",
+    "name": "Number of forests with n unlabeled nodes.",
+    "comment": [
+        "Same as \"Number of forests with n nodes that are perfect graphs\" [see Hougardy]. - _N. J. A. Sloane_, Dec 04 2015"
+    ],
+    "reference": [
+        "F. Harary and E. M. Palmer, Graphical Enumeration, Academic Press, NY, 1973, pp. 58-59.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A005195/b005195.txt\">Table of n, a(n) for n = 0..1000</a> (first 201 terms from T. D. Noe)",
+        "S. Hougardy, <a href=\"http://dx.doi.org/10.1016/j.disc.2006.05.021\">Classes of perfect graphs</a>, Discr. Math. 306 (2006), 2529-2571.",
+        "E. M. Palmer and A. J. Schwenk, <a href=\"http://dx.doi.org/10.1016/0095-8956(79)90073-X\">On the number of trees in a random forest</a>, J. Combin. Theory, B 27 (1979), 109-121.",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "Peter Steinbach, <a href=\"/A000055/a000055_12.pdf\">Field Guide to Simple Graphs, Volume 3</a>, Part 12 (For Volumes 1, 2, 3, 4 of this book see A000088, A008406, A000055, A000664, respectively.)",
+        "Peter Steinbach, <a href=\"/A000664/a000664_5.pdf\">Field Guide to Simple Graphs, Volume 4</a>, Part 5 (For Volumes 1, 2, 3, 4 of this book see A000088, A008406, A000055, A000664, respectively.)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Forest.html\">Forest.</a>"
+    ],
+    "formula": [
+        "Euler transform of A000055: Product_{n>0} (1-x^n)^(-A000055(n)). a(n) = 1/n*Sum_{k=1..n} b(k)*a(n-k), where b(k) = Sum_{d divides k} d*A000055(d). - _Vladeta Jovovic_, Sep 05 2002",
+        "G.f.: exp(sum_{k>0} B(x^k)/k ), where B(x) = x + x^2 + x^3 + 2*x^4 + 3*x^5 + 6*x^6 + 11*x^7 + ... = (C(x)-1)/x and C is the g.f. for A000055.",
+        "a(n) ~ c * d^n / n^(5/2), where d = A051491 = 2.9557652856519949747148..., c = 1.023158422... . - _Vaclav Kotesovec_, Nov 16 2014"
+    ],
+    "mathematica": [
+        "EulerTransform[ seq_List ] := With[{m = Length[seq]}, CoefficientList[ Series[ Times @@ (1/(1 - x^Range[m])^seq), {x, 0, m}], x]]; b[n_] := b[n] = If[n <= 1, n, Sum[ Sum[ d*b[d], {d, Divisors[j]}]*b[n - j], {j, 1, n - 1}]/(n - 1)]; a55[n_] := a55[n] = If[n == 0, 1, b[n] - (Sum[ b[k]*b[n - k], {k, 0, n}] - If[Mod[n, 2] == 0, b[n/2], 0])/2]; A000055 = Table[ a55[n], {n, 1, 31}]; EulerTransform[ A000055 ] (* _Jean-Fran\u00e7ois Alcover_, Mar 15 2012 *)"
+    ],
+    "xref": [
+        "Cf. A000055. Row sums of A136605. A diagonal of A144215."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Sep 05 2002"
+    ],
+    "references": 21,
+    "revision": 39,
+    "time": "2017-10-02T02:19:40-04:00",
+    "created": "1991-05-20T03:00:00-04:00"
+}

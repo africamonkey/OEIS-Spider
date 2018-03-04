@@ -1,0 +1,56 @@
+{
+    "number": 7675,
+    "id": "M3824",
+    "data": "1,5,13,21,29,33,37,41,57,65,69,77,85,93,101,105,109,113,129,137,141,157,165,177,181,185,193,201,209,213,217,221,229,237,253,257,265,281,285,301,309,317,321,329,345,353,357,365,381,389,393,397,401,409,417,429,433,437,445,453",
+    "name": "Numbers n such that n, n+1 and n+2 are squarefree.",
+    "comment": [
+        "There cannot be four consecutive squarefree numbers as one of them is divisible by 2^2 = 4. - _Amarnath Murthy_, Feb 18 2002",
+        "Numbers n such that n^3 + 3n^2 + 2n is squarefree. See proof below. - _Charles R Greathouse IV_, Mar 05 2013",
+        "There are kx + O(x/log x) members of this sequence below x, where k =",
+        "  A206256. - _Charles R Greathouse IV_, Mar 05 2013",
+        "Proof: n^3 + 3n^2 + 2n = n(n+1)(n+2) and the factors are pairwise relatively prime, because (n+1) is even. - _Thomas Ordowski_, Apr 20 2013",
+        "Conjecture: for every prime p, the numbers p# - 1, p#, p# + 1 are squarefree, where primorial p# = product of all primes <= p. - _Thomas Ordowski_, Apr 21 2013",
+        "Let f(n) = abs(mu(n*(n+1)*(n+2))), where mu(n) is Moebius function, then the sum S(n) = f(1) + f(2) + ... + f(n) ~ k*n with the constant k = A206256 = 0.12548698.... - _Thomas Ordowski_, Apr 22 2013",
+        "All terms are congruent to 1 mod 4. - _Zak Seidov_, Dec 22 2014"
+    ],
+    "reference": [
+        "P. R. Halmos, Problems for Mathematicians Young and Old. Math. Assoc. America, 1991, p. 28.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe and Zak Seidov, <a href=\"/A007675/b007675.txt\">Table of n, a(n) for n = 1..10000</a>. First 1000 terms from T. D. Noe."
+    ],
+    "formula": [
+        "Numbers x such that m(x)*m(x+1)*m(x+2) = 1, where m(w) = abs(mu(w)). - _Labos Elemer_",
+        "a(n) ~ cn with c = 7.96895... = 1/A206256. - _Charles R Greathouse IV_, Mar 05 2013"
+    ],
+    "example": [
+        "Four categories: all terms are composites like {33, 34, 35}; first term only is prime like {37, 38, 39}; third term only is prime like {57, 58, 59}; first and third are primes like {29, 30, 31}. - _Labos Elemer_",
+        "85 is a term as 85 = 17*5, 86 = 43*2, 87 = 29*3."
+    ],
+    "mathematica": [
+        "Select[Range[1000], SquareFreeQ[#(# + 1)(# + 2)] &] (* _Vladimir Joseph Stephan Orlovsky_, Mar 30 2011 *)",
+        "Transpose[Select[Partition[Select[Range[400], SquareFreeQ], 3, 1], Differences[#] == {1, 1} &]][[1]] (* _Harvey P. Dale_, Apr 11 2012 *)",
+        "Select[Range[1, 499, 2], MoebiusMu[#^3 + 3#^2 + 2#] != 0 &] (* _Alonso del Arte_, Jan 16 2014 *)",
+        "SequencePosition[Table[If[SquareFreeQ[n],1,0],{n,500}],{1,1,1}][[All,1]] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Dec 14 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a007675 n = a007675_list !! (n-1)",
+        "a007675_list = f 1 a008966_list where",
+        "   f n (u:xs'@(v:w:x:xs)) | u == 1 && w == 1 && v == 1 = n : f (n+4) xs",
+        "                          | otherwise = f (n+1) xs'",
+        "-- _Reinhard Zumkeller_, Nov 05 2011",
+        "(PARI) is(n)=issquarefree(n)&&issquarefree(n+1)&&issquarefree(n+2) \\\\ _Charles R Greathouse IV_, Mar 05 2013"
+    ],
+    "xref": [
+        "Cf. A005117, A013929, A008966, A007531."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, _Robert G. Wilson v_",
+    "references": 17,
+    "revision": 84,
+    "time": "2018-01-08T02:11:46-05:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

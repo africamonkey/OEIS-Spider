@@ -1,0 +1,32 @@
+{
+    "number": 11768,
+    "data": "0,1,1,1,1,2,3,6,7,16,21,43,63,129,203,404,685,1343,2385,4625,8492,16409,30735,59290,112530,217182,415620,803076,1545463,2990968,5778267,11201472,21702686,42140890,81830744,159139498,309590883,602935713,1174779333,2290915478",
+    "name": "Number of Barlow packings that repeat after exactly n layers.",
+    "reference": [
+        "E. Estevez-Rams, C. Azanza-Ricardo, J. Martinez-Garcia and B. Argon-Frenadez, On the algebra of binary codes representing closed-packed staking sequences, Acta Cryst. A61 (2006), 201-208.",
+        "T. J. McLarnan, The numbers of polytypes ..., Zeits. Krist. 155, 269-291 (1981)."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A011768/b011768.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "maple": [
+        "with(numtheory); read transforms; M:=200;",
+        "A:=proc(N,d) if d mod 3 = 0 then 2^(N/d) else (1/3)*(2^(N/d)+2*cos(Pi*N/d)); fi; end;",
+        "E:=proc(N) if N mod 2 = 0 then N*2^(N/2) + add( did(N/2,d)*phi(2*d)*2^(N/(2*d)),d=1..N/2) else (N/3)*(2^((N+1)/2)+2*cos(Pi*(N+1)/2)); fi; end;",
+        "PP:=proc(N) (1/(4*N))*(add(did(N,d)*phi(d)*A(N,d), d=1..N)+E(N)); end; for N from 1 to M do t1[N]:=PP(N); od:",
+        "P:=proc(N) local s,d; s:=0; for d from 1 to N do if N mod d = 0 then s:=s+mobius(N/d)*t1[d]; fi; od: s; end; for N from 1 to M do lprint(N,P(N)); od: # _N. J. A. Sloane_, Aug 10 2006"
+    ],
+    "xref": [
+        "Cf. A114438."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,6",
+    "author": "_N. J. A. Sloane_, MOKeeffe(AT)asu.edu (Michael OKeeffe)",
+    "ext": [
+        "More terms from _N. J. A. Sloane_, Aug 10 2006"
+    ],
+    "references": 2,
+    "revision": 11,
+    "time": "2017-08-07T23:45:55-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

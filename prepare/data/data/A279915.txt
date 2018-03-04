@@ -1,0 +1,39 @@
+{
+    "number": 279915,
+    "data": "6,28,84,120,234,360,496,588,600,1080,1638,2016,3000,3042,3240,3276,4116,4680,6048,7440,8128,9720,11466,14040,15000,18144,22320,22932,23400,28812,29160,30240,32640,32760,37200,39546,42120,42588,54432,55800,60480,60840,65520,66960",
+    "name": "Numbers m that can be written as x*y with phi(x)*sigma(y) = 2*x*y, where x and y are positive integers, phi(.) is Euler's totient function and sigma(y) is the sum of all positive divisors of y.",
+    "comment": [
+        "Conjecture: (i) All the terms are even. Moreover, if x and y are positive integers with phi(x)*sigma(y) = 2*x*y, then y must be even.",
+        "(ii) If x and y are positive integers with phi(x)*sigma(y) = 2*x*y, then x = 1 or 3 | y. Thus, any term of the sequence is either a perfect number or a multiple of three.",
+        "As phi(1) = 1, the sequence contains all perfect numbers, and part (i) of the above conjecture implies the well-known conjecture that there are no odd perfect numbers.",
+        "We consider the terms of this sequence as natural extensions of perfect numbers. There are a total of 433 terms not exceeding 10^8, and they are all even.",
+        "It is easy to see that a positive integer n with sigma(n) odd must be a square or twice a square.",
+        "See also A279894 for a similar sequence."
+    ],
+    "link": [
+        "Zhi-Wei Sun, <a href=\"/A279915/b279915.txt\">Table of n, a(n) for n = 1..433</a>"
+    ],
+    "example": [
+        "a(1) = 6 since 6 = 1*6 with phi(1)*sigma(6) = 2*6.",
+        "a(3) = 84 since 84 = 7*12 with phi(7)*sigma(12) = 2*84."
+    ],
+    "mathematica": [
+        "sigma[n_]:=sigma[n]=DivisorSigma[1,n];",
+        "phi[n_]:=phi[n]=EulerPhi[n];",
+        "Dv[m_]:=Dv[m]=Divisors[m];",
+        "Ld[m_]:=Ld[m]=Length[Dv[m]];",
+        "n=0;Do[Do[If[sigma[Part[Dv[m],i]]phi[m/Part[Dv[m],i]]==2m,n=n+1;Print[n,\" \",m];Goto[aa]],{i,1,Ld[m]}];Label[aa];Continue,{m,1,70000}]",
+        "(* Second program *)",
+        "Select[Range[10^5], Function[n, Total@ Boole@ Map[EulerPhi[#1] DivisorSigma[1, #2] == 2 #1 #2 & @@ {#, n/#} &, Divisors@ n] > 0]] (* _Michael De Vlieger_, Dec 23 2016 *)"
+    ],
+    "xref": [
+        "Cf. A000010, A000203, A000396, A279894."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zhi-Wei Sun_, Dec 22 2016",
+    "references": 1,
+    "revision": 32,
+    "time": "2016-12-23T21:15:42-05:00",
+    "created": "2016-12-22T23:30:26-05:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 247293,
+    "data": "1,1,2,4,8,16,35,77,172,391,899,2085,4877,11490,27236,64916,155483,374027,903286,2189219,5322965,12980660,31740404,77804885,191160040,470662449,1161123461,2869754099,7104856781,17618234456,43754467510,108816781175",
+    "name": "Number of weighted lattice paths B(n) having no uHd strings.",
+    "comment": [
+        "B(n) is the set of lattice paths of weight n that start in (0,0), end on the horizontal axis and never go below this axis, whose steps are of the following four kinds: h = (1,0) of weight 1, H = (1,0) of weight 2, u = (1,1) of weight 2, and d = (1,-1) of weight 1. The weight of a path is the sum of the weights of its steps.",
+        "a(n) = A247292(n,0)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A247293/b247293.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "M. Bona and A. Knopfmacher, <a href=\"http://dx.doi.org/10.1007/s00026-010-0060-7\">On the probability that certain compositions have the same number of parts</a>, Ann. Comb., 14 (2010), 291-306."
+    ],
+    "formula": [
+        "G.f. G = G(z) satisfies G = 1 + z*G + z^2*G + z^3*G*(G - z^2)."
+    ],
+    "example": [
+        "a(6)=35 because among the 37 (=A004148(7)) members of B(6) only huHd and uHdh contain uHd."
+    ],
+    "maple": [
+        "eq := G = 1+z*G+z^2*G+z^3*(G-z^2)*G: G := RootOf(eq, G): Gser := series(G, z = 0, 37): seq(coeff(Gser, z, n), n = 0 .. 35);",
+        "# second Maple program:",
+        "b:= proc(n, y, t) option remember; `if`(y<0 or y>n or t=3, 0,",
+        "      `if`(n=0, 1, b(n-1, y, 0)+`if`(n>1, b(n-2, y, `if`(t=1,",
+        "      2, 0))+b(n-2, y+1, 1), 0)+b(n-1, y-1, `if`(t=2, 3, 0))))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(T(n), n=0..40);  # _Alois P. Heinz_, Sep 16 2014"
+    ],
+    "mathematica": [
+        "b[n_, y_, t_] := b[n, y, t] = If[y<0 || y>n || t == 3, 0, If[n == 0, 1, b[n-1, y, 0] + If[n>1, b[n-2, y, If[t == 1, 2, 0]] + b[n-2, y+1, 1], 0] + b[n-1, y-1, If[t == 2, 3, 0]]]]; a[n_] := b[n, 0, 0]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, May 27 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A004148, A247291, A247292, A247295."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Emeric Deutsch_, Sep 16 2014",
+    "references": 4,
+    "revision": 14,
+    "time": "2015-05-27T08:40:54-04:00",
+    "created": "2014-09-16T19:26:57-04:00"
+}

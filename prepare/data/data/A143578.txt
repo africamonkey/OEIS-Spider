@@ -1,0 +1,33 @@
+{
+    "number": 143578,
+    "data": "1,2,3,5,7,11,13,15,17,19,23,29,31,35,37,41,43,47,53,59,61,67,71,73,79,83,89,95,97,101,103,107,109,113,119,127,131,137,139,143,149,151,157,163,167,173,179,181,191,193,197,199,209,211,223,227,229,233,239,241,251,257,263,269,271,277,281,283,287,293",
+    "name": "A positive integer n is included if j+n/j divides k+n/k for every divisor k of n, where j is the largest divisor of n that is <= sqrt(n).",
+    "comment": [
+        "This sequence trivially contains all the primes.",
+        "There is no term <= 5*10^7 with bigomega(n)>2, i.e., with more than 2 prime factors. - _M. F. Hasler_, Aug 25 2008. Compare A142591.",
+        "If it is always true that the terms have <= 2 prime divisors, then this sequence is equal to {1} U primes U {pq: p, q prime, p+q | p^2-1}. - _David W. Wilson_, Aug 25 2008"
+    ],
+    "example": [
+        "The divisors of 35 are 1,5,7,35. The sum of the two middle divisors is 5+7 = 12. 12 divides 7 + 35/7 = 5+35/5 = 12, of course. And 12 divides 1 + 35/1 = 35 +35/35 = 36. So 35 is in the sequence."
+    ],
+    "mathematica": [
+        "a = {}; For[n = 1, n < 200, n++, b = Max[Select[Divisors[n], # <= Sqrt[n] &]]; If[ Length[Union[Mod[Divisors[n] + n/Divisors[n], b + n/b]]] == 1, AppendTo[a, n]]]; a (* _Stefan Steinerberger_, Aug 29 2008 *)"
+    ],
+    "program": [
+        "(PARI) isA143578(n)={ local( d=divisors(n), j=(1+#d)\\2, r=d[ j ]+d[ 1+#d-j ]); for( k=1, j, ( d[k]+d[ #d+1-k] ) % r & return ); 1 }",
+        "for(n=1,300,isA143578(n) && print1(n\",\")) \\\\ _M. F. Hasler_, Aug 25 2008"
+    ],
+    "xref": [
+        "Cf. A063655, A142591."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Aug 24 2008",
+    "ext": [
+        "More terms from _M. F. Hasler_, Aug 25 2008 and _Stefan Steinerberger_, Aug 29 2008"
+    ],
+    "references": 2,
+    "revision": 13,
+    "time": "2015-09-16T13:57:16-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

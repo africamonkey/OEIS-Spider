@@ -1,0 +1,28 @@
+{
+    "number": 189238,
+    "data": "1,2,6,28,120,726,4424,31928,249984,2131690,20027392,199240020,2162269824,24676708798,302660939520,3897794538864,53264941301760,763279034957010,11499327153704960,181271619624350860",
+    "name": "E.g.f. x/cos(x)*exp(x/cos(x))",
+    "comment": [
+        "A(x)=A009843(x)*exp(A009843(x))."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A189238/b189238.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "formula": [
+        "a(n)=sum(k=1..n-1, binomial(n,k)*k*(1+(-1)^(n-k))*sum(j=1..m, sum(i=0..floor((j-1)/2), binomial(m,j)/2^(j)*sum((-1)^((n-k)/2-j)*binomial(j,i)*(j-2*i)^(n-k)))*binomial(k+m-1,k-1),m,1,n-k))+n."
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum(binomial(n,k)*k*(1+(-1)^(n-k))*sum(sum(binomial(m,j)/2^(j)*sum((-1)^((n-k)/2-j)*binomial(j,i)*(j-2*i)^(n-k),i,0,floor((j-1)/2)),j,1,m)*binomial(k+m-1,k-1),m,1,n-k),k,1,n-1)+n;",
+        "(PARI) x='x+O('x^66); /* that many terms */",
+        "egf=x/cos(x)*exp(x/cos(x)); /* = x + x^2 + x^3 + 7/6*x^4 + x^5 + 121/120*x^6+ ... */",
+        "Vec(serlaplace(egf)) /* show terms */ /* Joerg Arndt, Apr 21 2011 */"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vladimir Kruchinin_, Apr 19 2011",
+    "references": 1,
+    "revision": 12,
+    "time": "2016-04-25T11:45:32-04:00",
+    "created": "2011-04-21T12:16:47-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 196376,
+    "data": "1,2,3,3,4,4,4,5,5,5,6,6,7,7,7,8,8,8,8,8,9,9,9,10,10,10,11,11,11,12,12,12,12,12,12,13,13,13,14,14,14,15,15,15,15,15,15,16,16,16,16,16,16,16,17,17,17,18,18,18,19,19,19,20,20,20,20,20,20,20,20,20,21,21",
+    "name": "Positive integers a for which there is a (-4)-Pythagorean triple (a,b,c) satisfying a<=b.",
+    "comment": [
+        "See A195770 for definitions of k-Pythagorean triple, primitive k-Pythagorean triple, and lists of related sequences."
+    ],
+    "mathematica": [
+        "z8 = 900; z9 = 250; z7 = 200;",
+        "pIntegerQ := IntegerQ[#1] && #1 > 0 &;",
+        "k = -4; c[a_, b_] := Sqrt[a^2 + b^2 + k*a*b];",
+        "d[a_, b_] := If[pIntegerQ[c[a, b]], {a, b, c[a, b]}, 0]",
+        "t[a_] := Table[d[a, b], {b, a, z8}]",
+        "u[n_] := Delete[t[n], Position[t[n], 0]]",
+        "Table[u[n], {n, 1, 15}]",
+        "t = Table[u[n], {n, 1, z8}];",
+        "Flatten[Position[t, {}]]",
+        "u = Flatten[Delete[t, Position[t, {}]]];",
+        "x[n_] := u[[3 n - 2]];",
+        "Table[x[n], {n, 1, z7}]  (* A196376 *)",
+        "y[n_] := u[[3 n - 1]];",
+        "Table[y[n], {n, 1, z7}]  (* A196377 *)",
+        "z[n_] := u[[3 n]];",
+        "Table[z[n], {n, 1, z7}]  (* A196378 *)",
+        "x1[n_] := If[GCD[x[n], y[n], z[n]] == 1, x[n], 0]",
+        "y1[n_] := If[GCD[x[n], y[n], z[n]] == 1, y[n], 0]",
+        "z1[n_] := If[GCD[x[n], y[n], z[n]] == 1, z[n], 0]",
+        "f = Table[x1[n], {n, 1, z9}];",
+        "x2 = Delete[f, Position[f, 0]]  (* A196379 *)",
+        "g = Table[y1[n], {n, 1, z9}];",
+        "y2 = Delete[g, Position[g, 0]]  (* A196380 *)",
+        "h = Table[z1[n], {n, 1, z9}];",
+        "z2 = Delete[h, Position[h, 0]]  (* A196381 *)"
+    ],
+    "xref": [
+        "Cf. A195770, A196377, A196378, A196379."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Oct 01 2011",
+    "references": 7,
+    "revision": 8,
+    "time": "2012-03-30T18:57:49-04:00",
+    "created": "2011-10-01T20:15:58-04:00"
+}

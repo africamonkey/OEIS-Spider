@@ -1,0 +1,64 @@
+{
+    "number": 72873,
+    "data": "1,4,16,27,64,108,256,432,729,1024,1728,2916,3125,4096,6912,11664,12500,16384,19683,27648,46656,50000,65536,78732,84375,110592,186624,200000,262144,314928,337500,442368,531441,746496,800000,823543",
+    "name": "Numbers n such that Sum_i ( e(i)/p(i) ) is an integer, where the prime factorization of n is Prod_i ( p(i)^e(i) ).",
+    "comment": [
+        "Also, numbers n such that n divides n', the arithmetic derivative of n. As shown by Ufnarovski and Ahlander, all terms in this sequence have the form Prod_{k=1..r} (pk^pk)^ek, where the pk are primes. The quotient n'/n equals Sum_{k=1..r} ek. - _T. D. Noe_, Jan 04 2006",
+        "Multiplicative closure of A051674. - _Reinhard Zumkeller_, Jan 21 2012",
+        "Where records occur in A085731. - _Paolo P. Lava_, Oct 02 2012",
+        "The number of terms < 10^k: 2, 5, 9, 15, 25, 36, 52, 73, 98, 128, 167, 213, 270, 338, 421, 517, 632, 768, 920, 1101, ..., . - _Robert G. Wilson v_, Jan 19 2016"
+    ],
+    "reference": [
+        "See A003415."
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A072873/b072873.txt\">Table of n, a(n) for n = 1..10000</a> First 2500 from Nathaniel Johnston."
+    ],
+    "formula": [
+        "A124010(a(n),k) mod A027748(a(n),k) = 0 for k = 1 .. A001221(a(n)). - _Reinhard Zumkeller_, Jan 21 2012"
+    ],
+    "example": [
+        "108 is in the sequence because 108 = 2^2*3^3 and 2/2 + 3/3 = 2 is an integer."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A072873:= proc(i)",
+        "local a,n,p;",
+        "for n from 1 to i do",
+        "  a:=n*add(op(2,p)/op(1,p),p=ifactors(n)[2]);",
+        "  if trunc(a/n)=a/n then print(n); fi;",
+        "od; end:",
+        "A072873(100000000); # _Paolo P. Lava_, Oct 18 2012"
+    ],
+    "mathematica": [
+        "Select[Range[1000000],IntegerQ[Total[#[[2]]/#[[1]]&/@FactorInteger[#]]]&] (* _Harvey P. Dale_, Jul 04 2014 *)",
+        "lst = {}; Do[n = 2^e2*3^e3*5^e5*7^e7; If[n < 10^11, AppendTo[lst, n]], {e2, 0, 36, 2}, {e3, 0, 23, 3}, {e5, 0, 15, 5}, {e7, 0, 13, 7}]; Take[ Sort@ lst, 40] (* _Robert G. Wilson v_, Jan 19 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (empty, fromList, deleteFindMin, union)",
+        "import qualified Data.Set as Set (null)",
+        "a072873 n = a072873_list !! (n-1)",
+        "a072873_list = 1 : h empty [1] a051674_list where",
+        "   h s mcs xs'@(x:xs)",
+        "    | Set.null s || x < m = h (s `union` fromList (map (* x) mcs)) mcs xs",
+        "    | otherwise = m : h (s' `union` fromList (map (* m) $ init (m:mcs)))",
+        "                        (m:mcs) xs'",
+        "    where (m, s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Jan 21 2012",
+        "(PARI) is(n)=my(f=factor(n)); for(i=1,#f~,if(f[i,2]%f[i,1], return(0))); 1 \\\\ _Charles R Greathouse IV_, Oct 28 2014"
+    ],
+    "xref": [
+        "Cf. A003415, A051674, A027748, A085731, A048102, A124010."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Benoit Cloitre_, Jul 28 2002",
+    "ext": [
+        "More terms from _T. D. Noe_, Jan 04 2006"
+    ],
+    "references": 12,
+    "revision": 43,
+    "time": "2016-02-10T23:23:34-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

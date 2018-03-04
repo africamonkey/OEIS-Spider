@@ -1,0 +1,42 @@
+{
+    "number": 57880,
+    "data": "6173,12239,16673,19531,19973,21613,22397,22937,34613,36137,47933,51193,54493,56519,56531,56591,69491,69497,72937,76873,93497,96419,96479,96497,98837,112939,118213,131779,143419,144497,159319,163337",
+    "name": "Primes with 4 distinct digits that remain prime (no leading zeros allowed) after deleting all occurrences of its digits d.",
+    "link": [
+        "Robert Israel, <a href=\"/A057880/b057880.txt\">Table of n, a(n) for n = 1..653</a>"
+    ],
+    "maple": [
+        "filter:= proc(L) local d,Lp,i;",
+        "      if L[-1]=0 then return false fi;",
+        "      if not isprime(add(L[i]*10^(i-1),i=1..nops(L))) then return false fi;",
+        "      for d in convert(L,set) do",
+        "        Lp:= remove(`=`,L,d);",
+        "        if Lp[-1] = 0 or not isprime(add(Lp[i]*10^(i-1),i=1..nops(Lp))) then return false fi;",
+        "      od;",
+        "      true",
+        "end proc:",
+        "getCands:= proc(n, m) option remember;",
+        "   if m = 1 then return [seq([d$n], d=0..9)] fi;",
+        "   if n < m then return [] fi;",
+        "   [seq(seq([i,op(L)],i= {$0..9} minus convert(L,set)),L = procname(n-1,m-1)),",
+        "    seq(seq([i,op(L)],i=convert(L,set)),L = procname(n-1,m))]",
+        "end proc:",
+        "[seq(op(sort(map(t->add(t[i]*10^(i-1),i=1..nops(t)),select(filter,getCands(d,4))))),d=4..6)]; # _Robert Israel_, Jan 19 2017"
+    ],
+    "mathematica": [
+        "p4dQ[n_]:=Module[{idn=IntegerDigits[n]},Count[idn,0]==0 && Count[ DigitCount[ n],0]==6&&AllTrue[FromDigits/@Table[DeleteCases[idn,k],{k,Union[idn]}],PrimeQ]]; Select[Prime[Range[15000]],p4dQ] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Sep 30 2017 *)"
+    ],
+    "xref": [
+        "Cf. A057876-A057883, A051362, A034302-A034305."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Oct 15 2000",
+    "ext": [
+        "Offset changed by _Robert Israel_, Jan 19 2017"
+    ],
+    "references": 2,
+    "revision": 13,
+    "time": "2017-09-30T16:48:55-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

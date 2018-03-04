@@ -1,0 +1,54 @@
+{
+    "number": 41025,
+    "data": "1,8,65,528,4289,34840,283009,2298912,18674305,151693352,1232221121,10009462320,81307919681,660472819768,5365090477825,43581196642368,354014663616769,2875698505576520,23359602708228929,189752520171407952,1541379764079492545",
+    "name": "Denominators of continued fraction convergents to sqrt(17).",
+    "comment": [
+        "a(2*n+1) with b(2*n+1) := A041024(2*n+1), n>=0, give all (positive integer) solutions to Pell equation b^2 - 17*a^2 = +1, a(2*n) with b(2*n) := A041024(2*n), n>=0, give all (positive integer) solutions to Pell equation b^2 - 17*a^2 = -1 (cf. Emerson reference).",
+        "Bisection: a(2*n)= T(2*n+1,sqrt(17))/sqrt(17)= A078988(n), n>=0 and a(2*n+1)=8*S(n-1,66),n>=0, with T(n,x), resp. S(n,x), Chebyshev's polynomials of the first, resp. second kind. S(-1,x)=0. See A053120, resp. A049310. - _Wolfdieter Lang_, Jan 10 2003",
+        "Sqrt(17) = 8/2 + 8/65 + 8/(65*4289) + 8/(4289*283009) + ... . - _Gary W. Adamson_, Dec 26 2007",
+        "a(p) == ((p-1)/2)) mod p for odd primes p. - _Gary W. Adamson_, Feb 22 2009",
+        "For positive n, a(n) equals the permanent of the n X n tridiagonal matrix with 8's along the main diagonal and 1's along the superdiagonal and the subdiagonal. - _John M. Campbell_, Jul 08 2011",
+        "De Moivre's formula: a(n) = (r^n-s^n)/(r-s), for r>s, gives sequences with integers if r and s are conjugates. With r=4+sqrt(17) and s=4-sqrt(17), a(n+1)/a(n) converges to r=4+sqrt(17). - _Sture Sj\u00f6stedt_, Nov 11 2011",
+        "a(n) equals the number of words of length n on alphabet {0,1,...,8} avoiding runs of zeros of odd lengths. - _Milan Janjic_, Jan 28 2015"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A041025/b041025.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "E. I. Emerson, <a href=\"http://www.fq.math.ca/Scanned/7-3/emerson.pdf\">Recurrent Sequences in the Equation DQ^2=R^2+N</a>, Fib. Quart., 7 (1969), pp. 231-242, Thm. 1, p. 233.",
+        "Sergio Falc\u00f3n and \u00c1ngel Plaza, <a href=\"http://dx.doi.org/10.1016/j.chaos.2006.10.022\">The k-Fibonacci sequence and the Pascal 2-triangle</a>, Chaos, Solitons & Fractals 2007; 33(1): 38-49.",
+        "S. Falc\u00f3n & \u00c1. Plaza, <a href=\"http://dx.doi.org/10.1016/j.chaos.2007.03.007\">On k-Fibonacci sequences and polynomials and their derivatives</a>, Chaos, Solitons & Fractals (2007).",
+        "M. Janjic, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Janjic/janjic63.html\">On Linear Recurrence Equations Arising from Compositions of Positive Integers</a>, Journal of Integer Sequences, Vol. 18 (2015), Article 15.4.7.",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "<a href=\"/index/Ch#Cheby\">Index entries for sequences related to Chebyshev polynomials</a>.",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (8,1)."
+    ],
+    "formula": [
+        "G.f.: 1/(1 - 8*x - x^2).",
+        "a(n) = ((-i)^n)*S(n, 8*i), with S(n, x) := U(n, x/2) Chebyshev's polynomials of the second kind and i^2 = -1. See A049310.",
+        "a(n) = F(n, 8), the n-th Fibonacci polynomial evaluated at x=8. - _T. D. Noe_, Jan 19 2006",
+        "a(n) = ((4 + sqrt(17))^n - (4 - sqrt(17))^n)/(2*sqrt(17)); a(n) = sum_{i=0..floor((n-1)/2)} binomial(n-1-i,i)*8^(n-1-2i). - _Sergio Falcon_, Sep 24 2007",
+        "Let T = the 2 X 2 matrix [0, 1; 1, 8]. Then T^n * [1, 0] = [a(n-2), a(n-1)]. - _Gary W. Adamson_, Dec 26 2007",
+        "a(n) = 8*a(n-1) + a(n-2), n>1; a(0)=1, a(1)=8. - _Philippe Del\u00e9ham_, Nov 20 2008",
+        "sum_{n>=0} (-1)^n/(a(n)*a(n+1)) = sqrt(17)-4. - _Vladimir Shevelev_, Feb 23 2013"
+    ],
+    "mathematica": [
+        "a=0;lst={};s=0;Do[a=s-(a-1);AppendTo[lst,a];s+=a*8,{n,3*4!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Oct 27 2009 *)",
+        "CoefficientList[Series[1/(-z^2 - 8 z + 1), {z, 0, 200}], z] (* _Vladimir Joseph Stephan Orlovsky_, Jun 23 2011 *)",
+        "Denominator[Convergents[Sqrt[17],30]] (* _Harvey P. Dale_, Aug 15 2011 *)",
+        "LinearRecurrence[{8,1}, {1,8}, 50] (* _Sture Sj\u00f6stedt_, Nov 11 2011 *)"
+    ],
+    "program": [
+        "(Sage) [lucas_number1(n,8,-1) for n in xrange(1, 20)] # _Zerinvary Lajos_, Apr 25 2009",
+        "(MAGMA) I:=[1, 8]; [n le 2 select I[n] else 8*Self(n-1)+Self(n-2): n in [1..25]]; // _Vincenzo Librandi_, Feb 23 2013",
+        "(PARI) Vec(1/(1-8*x-x^2)+O(x^99)) \\\\ _Charles R Greathouse IV_, Dec 09 2014"
+    ],
+    "xref": [
+        "Cf. A041024, A000045, A000129, A006190, A001076, A052918, A005668, A054413, A243399."
+    ],
+    "keyword": "nonn,cofr,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 17,
+    "revision": 84,
+    "time": "2017-06-26T08:18:44-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

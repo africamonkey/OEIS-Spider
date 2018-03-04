@@ -1,0 +1,44 @@
+{
+    "number": 213193,
+    "data": "1,3124,191757120,49208861869440,33030777426968816640,45829974166034718596428800,114009204539207742166715857223680,462192193445890293982679086838571270144,2851153321165202191241172917762717987236478976",
+    "name": "O.g.f.: Sum_{n>=0} (4*n+1)^(4*n+1) * exp(-(4*n+1)^4*x) * x^n / n!.",
+    "comment": [
+        "From _Vaclav Kotesovec_, May 13 2014: (Start)",
+        "Generally, for p>1, a(n) = 1/n! * Sum_{k=0..n} (-1)^(n-k)*binomial(n,k) * (p*k+1)^(p*n+1) = Sum_{k=0..(p-1)*n+1} p^(n+k) * binomial(p*n+1,n+k) * stirling2(n+k,n).",
+        "a(n) ~ n^(n*p-n+1/2) * p^(2*p*n+2+1/p) / (sqrt(2*Pi*(1-r)) * exp((p-1)*n) * r^(n+1/p) * (p-r)^(n*p-n+1)), where r = -LambertW(-p*exp(-p)).",
+        "(End)"
+    ],
+    "formula": [
+        "a(n) = 1/n! * [x^n] Sum_{k>=0} (4*k+1)^(4*k+1) * x^k / (1 + (4*k+1)^4*x)^(k+1).",
+        "a(n) = 1/n! * Sum_{k=0..n} (-1)^(n-k)*binomial(n,k) * (4*k+1)^(4*n+1).",
+        "a(n) ~ n^(3*n+1/2) * 2^(16*n+9/2) / (sqrt(2*Pi*(1-r)) * exp(3*n) * r^(n+1/4) * (4-r)^(3*n+1)), where r = -LambertW(-4*exp(-4)) = 0.0793096051271136564391... . - _Vaclav Kotesovec_, May 13 2014"
+    ],
+    "example": [
+        "O.g.f.: A(x) = 1 + 3124*x + 191757120*x^2 + 49208861869440*x^3 +...",
+        "where",
+        "A(x) = exp(-x) + 5^5*x*exp(-5^4*x) + 9^9*exp(-9^4*x)*x^2/2! + 13^13*exp(-13^4*x)*x^3/3! + 17^17*exp(-17^4*x)*x^4/4! + 21^21*exp(-21^4*x)*x^5/5! +...",
+        "is a power series in x with integer coefficients."
+    ],
+    "mathematica": [
+        "Table[1/n!*Sum[(-1)^(n-k)*Binomial[n,k]*(4*k+1)^(4*n+1),{k,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, May 13 2014 *)",
+        "Table[Sum[Binomial[4*n+1,n+k]*4^(n+k)*StirlingS2[n+k,n],{k,0,3*n+1}],{n,0,20}] (* _Vaclav Kotesovec_, May 13 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(k=0, n, (4*k+1)^(4*k+1)*exp(-(4*k+1)^4*x +x*O(x^n))*x^k/k!), n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n)=(1/n!)*polcoeff(sum(k=0, n, (4*k+1)^(4*k+1)*x^k/(1+(4*k+1)^4*x +x*O(x^n))^(k+1)), n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n)=1/n!*sum(k=0, n, (-1)^(n-k)*binomial(n, k)*(4*k+1)^(4*n+1))}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A222525, A220955, A221214, A217900, A007820, A242449."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 01 2013",
+    "references": 3,
+    "revision": 13,
+    "time": "2014-05-14T16:47:17-04:00",
+    "created": "2013-03-01T01:24:50-05:00"
+}

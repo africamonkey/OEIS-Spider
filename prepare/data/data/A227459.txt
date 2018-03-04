@@ -1,0 +1,47 @@
+{
+    "number": 227459,
+    "data": "1,2,12,116,1560,26934,568064,14155560,406944000,13257282090,482667389952,19421597033244,855882382817280,40996140612918750,2120732798100848640,117829899317371274064,6998139300214559047680,442442520059710968274770,29667507117025014218096640",
+    "name": "E.g.f. equals the series reversion of x - x*asinh(x).",
+    "comment": [
+        "Note that asinh(x) = log(sqrt(1+x^2) + x)."
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A(x - x*asinh(x)) = x.",
+        "(2) A(x) = x/(1 - asinh(A(x))).",
+        "(3) A(x) = sinh( (A(x) - x) / A(x) ).",
+        "(4) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) x^n * asinh(x)^n / n!.",
+        "(5) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(n-1) * asinh(x)^n / n! ).",
+        "a(n) ~ n^(n-1) * s*sqrt((1+s^2)/(2+s^2)) / (exp(n) * (s^2/sqrt(1+s^2))^n), where s = 0.54523200963327675622... is the root of the equation s = sqrt(1+s^2)*(1-arcsinh(s)). - _Vaclav Kotesovec_, Jan 13 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 12*x^3/3! + 116*x^4/4! + 1560*x^5/5! +...",
+        "where A(x) = x/(1 - asinh(A(x))).",
+        "The e.g.f. satisfies:",
+        "(4) A(x) = x + x*asinh(x) + d/dx x^2*asinh(x)^2/2! + d^2/dx^2 x^3*asinh(x)^3/3! + d^3/dx^3 x^4*asinh(x)^4/4! +...",
+        "(5) log(A(x)/x) = asinh(x) + d/dx x*asinh(x)^2/2! + d^2/dx^2 x^2*asinh(x)^3/3! + d^3/dx^3 x^3*asinh(x)^4/4! +..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[x - x*ArcSinh[x], {x, 0, 20}], x],x] * Range[0, 20]!] (* _Vaclav Kotesovec_, Jan 13 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(serreverse(x-x*asinh(x +x*O(x^n))), n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, x^m*asinh(x+x*O(x^n))^m/m!)); n!*polcoeff(A, n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, x^(m-1)*asinh(x+x*O(x^n))^m/m!)+x*O(x^n))); n!*polcoeff(A, n)}",
+        "for(n=1,25,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A227458."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jul 13 2013",
+    "references": 1,
+    "revision": 7,
+    "time": "2014-01-13T11:06:02-05:00",
+    "created": "2013-07-13T10:42:55-04:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 166953,
+    "data": "1,6,144,23400,26620002,216778910040,13069351570163616,6019308484501930839936,21708290476794620365667887680,624502420526473667139055032092300382",
+    "name": "Number of ways of writing n as the sum of 3^n squares.",
+    "formula": [
+        "a(n) equals the coefficient of x^n in the (3^n)-th power of Jacobi theta_3(x).",
+        "G.f.: A(x) = Sum_{n>=0} log( theta_3(3^n*x) )^n/n! where theta_3(x) = 1 + 2*Sum_{n>=1} x^(n^2)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 6*x + 144*x^2 + 23400*x^3 + 26620002*x^4 +...",
+        "Let F(x) = theta_3(x) = 1 + 2*Sum_{n>=1} x^(n^2),",
+        "then A(x) = 1 + log(F(3*x)) + log(F(9*x))^2/2! + log(F(27*x))^3/3! + log(F(81*x))^4/4! + ...",
+        "Illustrate a(n) = [x^n] F(x)^(3^n) by forming a table of",
+        "coefficients in powers F(x)^(3^n), which begin:",
+        "F^(3^0): [(1), 2, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, ...];",
+        "F^(3^1): [1, (6), 12, 8, 6, 24, 24, 0, 12, 30, 24, 24, 8, 24, ...];",
+        "F^(3^2): [1, 18, (144), 672, 2034, 4320, 7392, 12672, 22608, ...];",
+        "F^(3^3): [1, 54, 1404, (23400), 280854, 2586168, 19014840, ...];",
+        "F^(3^4): [1, 162, 12960, 682560, (26620002), 819916992, ...];",
+        "F^(3^5): [1, 486, 117612, 18896328, 2267559846, (216778910040), ...]; ...",
+        "and noting that the coefficients along the diagonal (in parenthesis)",
+        "form the initial terms of this sequence."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(THETA3=1+2*sum(k=1,sqrtint(n),x^(k^2))+x*O(x^n));polcoeff(THETA3^(3^n),n)}",
+        "(PARI) {a(n)=local(THETA3=1+2*sum(k=1,sqrtint(n),x^(k^2))+x*O(x^n)); polcoeff(sum(k=0,n,log(subst(THETA3,x,3^k*x))^k/k!),n)}"
+    ],
+    "xref": [
+        "Cf. A000122, A005875, A008452, variants: A166947, A158113."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Oct 26 2009",
+    "references": 1,
+    "revision": 2,
+    "time": "2012-03-30T18:37:18-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

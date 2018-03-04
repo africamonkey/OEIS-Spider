@@ -1,0 +1,46 @@
+{
+    "number": 144853,
+    "data": "1,1,21,2541,1023561,1036809081,2219782435101,8923051855107621,61797392100611962641,690766390156657904866161,11839493254591562294152214181,298556076626963858753929987732701,10706038142052878970311146962646277721,530588758323899225681861502684757146635241",
+    "name": "Coefficients in the expansion of the sine lemniscate function.",
+    "comment": [
+        "Denoted \\alpha_n by Lomont and Brillhart on page xii."
+    ],
+    "reference": [
+        "J. S. Lomont and J. Brillhart, Elliptic Polynomials, Chapman and Hall, 2001; see p. 87."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A144853/b144853.txt\">Table of n, a(n) for n = 0..100</a>",
+        "P. Bala, <a href=\"/A144853/a144853.pdf\">A triangle for calculating A144853</a>"
+    ],
+    "formula": [
+        "E.g.f.: sl(x) = Sum_{k>=0} (-12)^k * a(k) * x^(4*k + 1) / (4*k + 1)! where sl(x) = sin lemn(x) is the sine lemniscate function of Gauss. - _Michael Somos_, Apr 25 2011",
+        "a(0) = 1, a(n + 1) = (1 / 3) * Sum_{j=0..n} binomial( 4*n + 3, 4*j + 1) * a(j) * b(n - j) where b() is A144849.",
+        "G.f.: 1 / (1 - b(1)*x / (1 - b(2)*x / (1 - b(3)*x / ... ))) where b = A187756. - _Michael Somos_, Jan 03 2013"
+    ],
+    "example": [
+        "G.f. = 1 + x + 21*x^2 + 2541*x^3 + 1023561*x^4 + 1036809081*x^5 + ..."
+    ],
+    "maple": [
+        "for n from 1 to 15 do b[n]:=add(binomial(4*n,4*j+2)*b[j]*b[n-1-j],j=0..n-1);",
+        "a[n]:=(1/3)*add(binomial(4*n-1,4*j+1)*a[j]*b[n-1-j],j=0..n-1); od:",
+        "ta:=[seq(a[n],n=0..15)];"
+    ],
+    "mathematica": [
+        "a[ n_] := If[ n < 0, 0, With[ {m = 4 n + 1}, m! SeriesCoefficient[ JacobiSD[ x, 1/2], {x, 0, m}] / (-3)^n]]; (* _Michael Somos_, Apr 25 2011 *)",
+        "a[ n_] := If[ n < 0, 0, With[ {m = 4 n + 1}, m! SeriesCoefficient[ InverseSeries[ Integrate[ Series[ (1 + x^4 / 12) ^ (-1/2), {x, 0, m + 1}], x]], {x, 0, m}]]]; (* _Michael Somos_, Apr 25 2011 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(m); if( n<0, 0, m = 4*n + 1; m! * polcoeff( serreverse( intformal( (1 + x^4 / 12 + x * O(x^m)) ^ (-1/2))), m))}; /* _Michael Somos_, Apr 25 2011 */",
+        "(PARI) {a(n) = my(A, m); if( n<0, 0, m = 4*n + 1; A = O(x); for( k=0, n, A = x + intformal( intformal( A^3 / 6))); m! * polcoeff( A, m))}; /* _Michael Somos_, Apr 25 2011 */"
+    ],
+    "xref": [
+        "Cf. A144849, A187756."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Feb 12 2009",
+    "references": 6,
+    "revision": 26,
+    "time": "2017-04-25T12:11:39-04:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

@@ -1,0 +1,83 @@
+{
+    "number": 181360,
+    "data": "1,1,3,7,19,47,127,330,889,2378,6450,17510,47907,131388,362081,1000665,2774857,7714695,21505455,60084062,168234804,471977022,1326558625,3734804268,10531738149,29742332548,84111212892,238176473946,675269414372,1916715819186",
+    "name": "Number of forests of rooted trees containing n nodes not counting the root nodes.",
+    "comment": [
+        "Every tree in the forest must have at least 2 nodes, i.e. at least one more node besides the root. - _N. J. A. Sloane_, Nov 26 2010",
+        "First, T(n), the number of rooted trees with n+1 nodes A000081(n+1) can be computed using partitions of n as follows: let n = (q1*1 + q2*2 + q3*3 + ... + qn*n) be a nonnegative integer partition of n (the \"q\"s are the multiplicities of the part sizes), and define a^b to be (a+b-1)! / (a-1)! / b! (the number of ways to color b identical items with a colors), then compute the sum of T(0)^q1 * T(1)^q2 * ... * T(n-1)^qn over all such partitions of n.",
+        "Then F(n), the number of forests of rooted trees containing N nodes not counting the roots, can be similarly computed as the sum of T(1)^q1 * T(2)^q2 * ... * T(n)^qn over all such partitions of n.",
+        "These are the diagonal sums of the triangle in A174135. - _N. J. A. Sloane_, Nov 26 2010."
+    ],
+    "link": [
+        "N. J. A. Sloane and Alois P. Heinz, <a href=\"/A181360/b181360.txt\">Table of n, a(n) for n = 0..2133</a>",
+        "R. J. Mathar, <a href=\"http://arxiv.org/abs/1603.00077\">Topologically Distinct Sets of Non-intersecting Circles in the Plane</a>, arXiv:1603.00077, 2016."
+    ],
+    "formula": [
+        "a(n) ~ c * d^n / n^(3/2), where d = 2.955765285651994974714817524... is the Otter's rooted tree constant (see A051491), and c = 10.088029891871277227771831767... . - _Vaclav Kotesovec_, May 09 2014",
+        "a(n) = A033185(2n,n). - _Alois P. Heinz_, Feb 15 2016"
+    ],
+    "example": [
+        "Trees for example (leaving out the \"^0\" factors for clarity):",
+        "T(0) = 1, T(1) = 1",
+        "T(2) = T(1)^1 + T(0)^2 = 2,",
+        "T(3) = T(2)^1 + T(1)^1*T(0)^1 + T(0)^3 = 4,",
+        "T(4) = T(3)^1 + T(2)^1*T(0)^1 + T(1)^2 + T(1)^1*T(0)^2 +T(0)^4 = 9,",
+        "T(5) = T(4)^1 + T(3)^1*T(0)^1 + T(2)^1*T(1)^1 + T(2)^1*T(0)^2 + T(1)^2*T(0)^1 + T(1)^1*T(0)^3 + T(0)^5 = 20.",
+        "Forests for example (leaving out the \"^0\" factors for clarity):",
+        "F(2) = T(2)^1 + T(1)^2 = 3,",
+        "F(3) = T(3)^1 + T(2)^1*T(1)^1 + T(1)^3 = 7,",
+        "F(4) = T(4)^1 + T(3)^1*T(1)^1 + T(2)^2 + T(2)*T(1)^2 + T(1)^4 = 19,",
+        "F(5) = T(5)^1 + T(4)^1*T(1)^1 + T(3)^1*T(2)^1 + T(3)^1*T(1)^2 + T(2)^2*T(1)^1 + T(2)^1*T(1)^3 + T(1)^5 = 47.",
+        "{Examples of this a^b definition:",
+        "2^1 = 2, 2^2 = 3, 2^3 = 4, 2^4 = 5,",
+        "3^1 = 3, 3^2 = 6, 3^3 = 10, 3^4 = 15, (triangular numbers)",
+        "4^1 = 4, 4^2 = 10, 4^3 = 20, 4^4 = 35, (tetrahedral numbers)",
+        "equivalently a^b = (b == 0 ? 1 : (a == 1 || b == 1 ? a : (a * (a+1)^(b-1) / b))) }"
+    ],
+    "maple": [
+        "(From _N. J. A. Sloane_, Nov 26 2010) First read 110 terms of A000081 into array b1",
+        "M:=100;",
+        "t1:=1/mul((1-x*y^i)^b1[i+1],i=2..M):",
+        "t2:=series(t1,y,M):",
+        "t3:=series(t2,x,M):",
+        "a:=(n,k)->coeff(coeff(t3,x,k),y,n);",
+        "g:=n->add(a(n-1+i,i),i=1..n-1);",
+        "[seq(g(n),n=1..48)];",
+        "# second Maple program:",
+        "g:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(binomial(T(i-1)+j-1, j) *g(n-i*j, i-1), j=0..n/i)))",
+        "    end:",
+        "T:= n-> g(n, n):",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(binomial(T(i)+j-1, j) *b(n-i*j, i-1), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n, n):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jul 20 2012",
+        "# third Maple program:",
+        "g:= proc(n) option remember; `if`(n<=1, n, (add(add(d*",
+        "      g(d), d=numtheory[divisors](j))*g(n-j), j=1..n-1))/(n-1))",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(add(d*",
+        "      g(d+1), d=numtheory[divisors](j))*a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Sep 19 2017"
+    ],
+    "mathematica": [
+        "g[n_, i_] := g[n, i] = If[n==0, 1, If[i<1, 0, Sum[Binomial[T[i-1]+j-1, j]*g[n-i*j, i-1], {j, 0, n/i}]]]; T[n_] := g[n, n]; b[n_, i_] := b[n, i] = If[n==0, 1, If[i<1, 0, Sum[Binomial[T[i]+j-1, j]*b[n-i*j, i-1], {j, 0, n/i}]]]; a[n_] := b[n, n] // FullSimplify; Table[a[n], {n, 1, 40}] (* _Jean-Fran\u00e7ois Alcover_, Mar 30 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000081 \"rooted trees\".",
+        "Cf. A093637 \"products of partition numbers\".",
+        "Cf. A033185."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter A. Lawrence_, Oct 15 2010",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Sep 19 2017"
+    ],
+    "references": 3,
+    "revision": 48,
+    "time": "2017-09-19T22:50:58-04:00",
+    "created": "2010-10-20T03:00:00-04:00"
+}

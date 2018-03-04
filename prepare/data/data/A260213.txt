@@ -1,0 +1,41 @@
+{
+    "number": 260213,
+    "data": "114,120,147,198,264,420,500,506,513,525,533,550,558,568,581,648,1102,1116,1168,1302,1320,1377,1680,1692,1710,1720,1734,1755,1771,1872,2106,2132,2310,2332,2380,2664,2714,2736,2790,2914,2940,3312",
+    "name": "Numbers n such that n = (c_1 + k)*(c_2 + k)*...*(c_m + k) for some k > 0 where c_1, c_2,..., c_m is the centesimal expansion of n.",
+    "comment": [
+        "k cannot be larger than 99, because in that case the product of the terms c_i+k is larger than the number n itself. For n up to 10^12, the highest value for k is 71, for 910602 = (71+91)*(71+6)*(71+2).",
+        "All terms n<10000 have the following property. n = c_1//c_2, so n = (c_1 + k)*(c_2 + k). Let kk = c_1 + c_2 + k then n = (kk - c_1)*(kk - c_2). For example, 513 = (5 + 14)*( 13 + 14), kk= 5 + 13 + 14 = 32, so 513 = (32 - 5)*(32 - 13)."
+    ],
+    "link": [
+        "Pieter Post and Giovanni Resta, <a href=\"/A260213/b260213.txt\">Table of n, a(n) for n = 1..295</a> (terms < 10^12, first 141 terms from Pieter Post)"
+    ],
+    "example": [
+        "114 = (1 + 5)*(14 + 5) and 114 = (20 - 1)*(20 - 14).",
+        "1710 = (17 + 28)*(10 + 28) and 1710 = (55 - 17)*(55 - 10)."
+    ],
+    "program": [
+        "(Python)",
+        "def pod(n,m,a):",
+        "....kk = 1",
+        "....while n > 0:",
+        "........kk= kk*(n%m+a)",
+        "........n =int(n//m)",
+        "....return kk",
+        "for c in range (1,1000000):",
+        "....for a in range (1,100):",
+        "........if c==pod(c,100,a):",
+        "............print (c)",
+        "(PARI) vecprod(v)=prod(i=1,#v,v[i])",
+        "is(n)=my(d=digits(n,100),t); while((t=vecprod(d))<n, d+=vector(#d,i,1)); t==n && n>99 \\\\ _Charles R Greathouse IV_, Aug 28 2015"
+    ],
+    "xref": [
+        "Cf. A055482."
+    ],
+    "keyword": "base,nonn,less",
+    "offset": "1,1",
+    "author": "_Pieter Post_, Jul 19 2015",
+    "references": 1,
+    "revision": 33,
+    "time": "2015-08-28T17:20:30-04:00",
+    "created": "2015-08-28T17:20:30-04:00"
+}

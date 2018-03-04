@@ -1,0 +1,56 @@
+{
+    "number": 261000,
+    "data": "1,3,189,68607,82908441,251944606683,1618221395188629,19514714407120367127,405452689572115086887601,13596354857453497541480646963,699110237190377161907394095173869,52888313306236766686682435536884784047",
+    "name": "Unordered even-degree bilabelled increasing trees on 2n+1 nodes.",
+    "link": [
+        "Markus Kuba, Alois Panholzer, <a href=\"http://arxiv.org/abs/1411.4587\">Combinatorial families of multilabelled increasing trees and hook-length formulas</a>, arXiv:1411.4587 [math.CO], 2014. See p. 18"
+    ],
+    "formula": [
+        "Kuba et al. (2014) gives a recurrence (see Theorem 7).",
+        "a(n) = A258659(2*n). - _Michael Somos_, Jun 17 2017"
+    ],
+    "maple": [
+        "A261000aer := proc(n)",
+        "    option remember;",
+        "    local a,nloc,j,k,l;",
+        "    if n = 1 then",
+        "        1;",
+        "    else",
+        "        nloc := n-2 ;",
+        "        a :=0 ;",
+        "        for j from 0 to nloc-1 do",
+        "            for k from 0 to nloc-1-j do",
+        "                l := nloc-1-j-k ;",
+        "                if l >= 0 then",
+        "                    a := a+procname(j+1)*procname(k+1)*procname(l+1) * (2*nloc+1)!/(2*j+1)!/(2*k+1)!/(2*l+1)! ;",
+        "                end if;",
+        "            end do:",
+        "        end do:",
+        "        %/2 ;",
+        "    end if;",
+        "end proc:",
+        "A261000 := proc(n)",
+        "    A261000aer(2*n+1) ;",
+        "end proc:",
+        "seq(A261000(n),n=0..15) ; # _R. J. Mathar_, Aug 18 2015"
+    ],
+    "mathematica": [
+        "terms = 12; nmax = 4 terms; A = 1; Do[A = Exp[Integrate[A^(1/2)*Integrate[1/A^(3/2), x], x] + O[x]^nmax], nmax]; A258659 = CoefficientList[A, x^2]*Range[0, nmax - 2, 2]!;",
+        "a[n_] := A258659[[2 n + 1]];",
+        "Table[a[n], {n, 0, terms - 1}] (* _Jean-Fran\u00e7ois Alcover_, Nov 27 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, my(m = 4*n + 1); m! * polcoeff( serreverse( intformal( 1 / sqrt(1 + x^4/4 + x * O(x^m)) ) ), m))}; /* _Michael Somos_, Jun 17 2017 */"
+    ],
+    "xref": [
+        "Closely related to A104203.",
+        "Cf. A258659."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Aug 09 2015",
+    "references": 2,
+    "revision": 14,
+    "time": "2017-11-27T05:49:19-05:00",
+    "created": "2015-08-09T11:40:21-04:00"
+}

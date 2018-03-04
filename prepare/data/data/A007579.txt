@@ -1,0 +1,56 @@
+{
+    "number": 7579,
+    "id": "M1217",
+    "data": "1,1,2,4,10,26,76,231,756,2556,9096,33231,126060,488488,1948232,7907185,32831370,138321690,593610420,2579109780,11377862340,50726936820,229078351992,1043999256966,4810194384348,22340617618860,104742353862360,494547143860035",
+    "name": "Number of Young tableaux of height <= 6.",
+    "comment": [
+        "Also the number of n-length words w over 6-ary alphabet {a1,a2,...,a6} such that for every prefix z of w we have #(z,a1) >= #(z,a2) >= ... >= #(z,a6), where #(z,x) counts the letters x in word z. - _Alois P. Heinz_, May 30 2012"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A007579/b007579.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "F. Bergeron, L. Favreau and D. Krob, <a href=\"/A007578/a007578.pdf\">Conjectures on the enumeration of tableaux of bounded height</a>, Preprint. (Annotated scanned copy)",
+        "F. Bergeron, L. Favreau and D. Krob, <a href=\"http://dx.doi.org/10.1016/0012-365X(94)00148-C\">Conjectures on the enumeration of tableaux of bounded height</a>, Discrete Math, vol. 139, no. 1-3 (1995), 463-468.",
+        "Alon Regev, Amitai Regev, Doron Zeilberger, <a href=\"http://arxiv.org/abs/1507.03499\">Identities in character tables of S_n</a>, arXiv preprint arXiv:1507.03499 [math.CO], 2015.",
+        "<a href=\"/index/Y#Young\">Index entries for sequences related to Young tableaux.</a>"
+    ],
+    "formula": [
+        "a(n) ~ 3/4 * 6^(n+15/2)/(Pi^(3/2)*n^(15/2)). - _Vaclav Kotesovec_, Sep 11 2013"
+    ],
+    "maple": [
+        "h:= proc(l) local n; n:=nops(l); add(i, i=l)! /mul(mul(1+l[i]-j",
+        "      +add(`if`(l[k]>=j, 1, 0), k=i+1..n), j=1..l[i]), i=1..n)",
+        "    end:",
+        "g:= proc(n, i, l) option remember;",
+        "      `if`(n=0, h(l), `if`(i=1, h([l[], 1$n]), `if`(i<1, 0,",
+        "        g(n, i-1, l) +`if`(i>n, 0, g(n-i, i, [l[], i])))))",
+        "    end:",
+        "a:= n-> g(n, 6, []):",
+        "seq(a(n), n=0..30); # _Alois P. Heinz_, Apr 18 2012",
+        "# second Maple program:",
+        "a:= proc(n) option remember;",
+        "      `if`(n<4, [1, 1, 2, 4][n+1], ((20*n^2+184*n+336)*a(n-1)",
+        "       +4*(n-1)*(10*n^2+58*n+33)*a(n-2) -144*(n-1)*(n-2)*a(n-3)",
+        "       -144*(n-1)*(n-2)*(n-3)*a(n-4))/ ((n+5)*(n+8)*(n+9)))",
+        "    end:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Oct 12 2012"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{144 (-3+n) (-2+n) (-1+n) a[-4+n]+144 (-2+n) (-1+n) a[-3+n]-4 (-1+n) (33+58 n+10 n^2) a[-2+n]-4 (84+46 n+5 n^2) a[-1+n]+(5+n) (8+n) (9+n) a[n]==0,a[1]==1,a[2]==2,a[3]==4,a[4]==10}, a, {n, 20}] (* _Vaclav Kotesovec_, Sep 11 2013 *)"
+    ],
+    "xref": [
+        "Column k=6 of A182172. - _Alois P. Heinz_, May 30 2012"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Simon Plouffe_",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Apr 10 2012"
+    ],
+    "references": 14,
+    "revision": 59,
+    "time": "2017-12-20T23:28:50-05:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

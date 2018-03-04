@@ -1,0 +1,38 @@
+{
+    "number": 121353,
+    "data": "0,1,4,27,266,3431,54630,1034539,22705228,566596161,15841987280,490535009519,16662348336366,616016353436023,24623991789104554,1058215630578059799,48653295014801646200,2382953240094702604001,123864915189909733761852,6810187382204940654297859",
+    "name": "a(n) = (3*n - 2)*a(n-1) - a(n-2) starting a(0)=0, a(1)=1.",
+    "comment": [
+        "In the hypergeometric family a(n) = (a0*n+c0)*a(n-1)+b0*a(n-2) we have A053984, A058797, A121323, A121351, and this here with a0=3, where a(n) can be expressed in a characteristic cross-product of Bessel functions."
+    ],
+    "link": [
+        "S. Janson, <a href=\"http://www.dmtcs.org/dmtcs-ojs/index.php/dmtcs/article/view/1305\">A divergent generating function that can be summed and analysed analytically</a>, Discrete Mathematics and Theoretical Computer Science; 2010, Vol. 12, No. 2, 1-22."
+    ],
+    "formula": [
+        "3*a(n)= Pi * BesselJ(1/3+n,2/3) * BesselY(1/3,2/3) - Pi*BesselJ(1/3,2/3) )*  BesselY(1/3+n,2/3).",
+        "a(n) = sum {k = 0..floor((n-1)/2)} (-1)^k*3^(n-2*k-1)*(n-2*k-1)!*binomial(n-k-1,k)*binomial(n-k-2/3,k+1/3), cf. A058798. - _Peter Bala_, Aug 01 2013",
+        "a(n) ~ n! * BesselJ(1/3, 2/3) * 3^(n-2/3) * n^(-2/3). - _Vaclav Kotesovec_, Jul 31 2014",
+        "a(n) = 3^n*Gamma(n+1/3)*hypergeometric([1/2-n/2, 1-n/2], [4/3, 2/3-n, 1-n], -4/9)/Gamma(1/3) for n >= 2. - _Peter Luschny_, Sep 10 2014"
+    ],
+    "mathematica": [
+        "f[n_Integer] = Module[{a}, a[n] /. RSolve[{a[n] == (3*n - 2)*a[n - 1] - a[n - 2], a[0] == 0, a[1] == 1}, a[n], n][[1]] // FullSimplify] Rationalize[N[Table[f[n], {n, 0, 25}], 100], 0]",
+        "RecurrenceTable[{a[0]==0, a[1]==1, a[n]==(3n-2)*a[n-1]-a[n-2]}, a, {n, 20}]  (* _Vaclav Kotesovec_, Jul 31 2014 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A121353(n):",
+        "    if n < 2: return n",
+        "    return 3^n*gamma(n+1/3)*hypergeometric([1/2-n/2,1-n/2], [4/3, 2/3 -n, 1-n], -4/9)/gamma(1/3)",
+        "[round(A121353(n).n(100)) for n in (0..19)] # _Peter Luschny_, Sep 10 2014"
+    ],
+    "xref": [
+        "Cf. A053984, A058798, A121351, A121323."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Roger L. Bagula_ and Bob Hanlon (hanlonr(AT)cox.net), Sep 05 2006",
+    "references": 4,
+    "revision": 26,
+    "time": "2014-09-10T11:10:54-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

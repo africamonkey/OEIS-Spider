@@ -1,0 +1,32 @@
+{
+    "number": 285113,
+    "data": "1,2,3,8,11,24,52,108,207,448,720,1376,2892,5544,12532,23448,47239,98112,186672,377896,743656,1519816,2983160,6354536,11975324,25917040,48312920,100406048,196868844,397726592,788233496,1578253728,3225757559,6275638528,13012144160,25792000088,51825463000,104303846272,206598440472",
+    "name": "Row sums of A285116: a(n) = 2 + Sum_{k=1..(n-1)} (C(n-1,k-1) bitwise-or C(n-1,k)), a(0) = 1, a(1) = 2.",
+    "link": [
+        "Antti Karttunen, <a href=\"/A285113/b285113.txt\">Table of n, a(n) for n = 0..256</a>"
+    ],
+    "formula": [
+        "a(0) = 1, a(1) = 2, for n > 1, a(n) = 2 + Sum_{k=1..(n-1)} C(n-1,k-1) OR C(n-1,k), where C(n,k) is binomial coefficient and OR is bitwise-OR (A003986).",
+        "a(n) = A285114(n) + A285115(n).",
+        "a(n) = A000079(n) - A285115(n)."
+    ],
+    "mathematica": [
+        "a[n_]:=If[n<2, n + 1, 2 + Sum[BitOr[Binomial[n - 1,k - 1], Binomial[n - 1, k]], {k, n - 1}]]; Table[a[n], {n, 0, 100}] (* _Indranil Ghosh_, Apr 16 2017 *)"
+    ],
+    "program": [
+        "(PARI) A285113(n) = if(n<2,n+1,2+sum(k=1,(n-1),bitor(binomial(n-1,k-1),binomial(n-1,k))));",
+        "(Scheme)",
+        "(define (A285113 n) (add A285116 (A000217 n) (+ -1 (A000217 (+ 1 n)))))",
+        "(define (add intfun lowlim uplim) (let sumloop ((i lowlim) (res 0)) (cond ((> i uplim) res) (else (sumloop (+ 1 i) (+ res (intfun i)))))))"
+    ],
+    "xref": [
+        "Cf. A000079, A003986, A007318, A285114, A285115, A285116."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Antti Karttunen_, Apr 16 2017",
+    "references": 4,
+    "revision": 10,
+    "time": "2017-04-17T09:02:39-04:00",
+    "created": "2017-04-17T09:02:39-04:00"
+}

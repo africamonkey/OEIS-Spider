@@ -1,0 +1,35 @@
+{
+    "number": 262530,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,112,113,114,115,116,117,118,119,120,121",
+    "name": "Numbers such that digits occur at most twice in decimal representation.",
+    "comment": [
+        "a(n) = n for n <= 110; a(111) = 112."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A262530/b262530.txt\">Table of n, a(n) for n = 1..91953</a>, all terms <= 10^5"
+    ],
+    "mathematica": [
+        "nonDigRepQ[n_] := Max[{Take[Flatten[Tally[IntegerDigits[n]]], {2, -1, 2}]}] < 3; Select[Range[1111], nonDigRepQ[#] &] (* _Ivan N. Ianakiev_, Sep 25 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (delete)",
+        "a262530 n = a262530_list !! (n-1)",
+        "a262530_list = filter f [1..] where",
+        "   f = g d10' . show where",
+        "     g _ [] = True",
+        "     g ts (d:ds) = elem d ts && g (delete d ts) ds",
+        "   d10' = d10 ++ d10; d10 = \"0123456789\"",
+        "(PARI) isok(n) = {my(v = vecsort(digits(n))); my(d = -1); for(i=1, #v, if (v[i] == d, rl++; if (rl > 2, return (0)); , d = v[i]; rl = 1);); return (1);} \\\\ _Michel Marcus_, Sep 29 2015"
+    ],
+    "xref": [
+        "Cf. A010784."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Sep 24 2015",
+    "references": 1,
+    "revision": 13,
+    "time": "2015-09-29T07:20:02-04:00",
+    "created": "2015-09-24T17:14:05-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 247333,
+    "data": "1,1,2,4,11,31,92,283,893,2875,9407,31189,104555,353794,1206821,4145350,14326184,49778473,173794610,609392578,2145057797,7577098816,26850456704,95425761829,340047930692,1214738997142,4349231444405,15604726428805,56098211626478",
+    "name": "Number of Dyck paths of semilength n avoiding the consecutive step pattern UDUDU, where U=(1,1) and D=(1,-1).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A247333/b247333.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "Recursion: see Maple program.",
+        "a(n) ~ sqrt(42-6*sqrt(21)) * ((3+sqrt(21))/2)^n / (4 * sqrt(Pi) * n^(3/2)). - _Vaclav Kotesovec_, Sep 16 2014",
+        "G.f.: (1+x+x^2-sqrt(-3*x^4-6*x^3-5*x^2-2*x+1))/(2*x^2+2*x). - _Vladimir Kruchinin_, Mar 03 2016",
+        "a(n) = Sum_{k=1..n} binomial(k,n-k)*M(k+1), a(0)=1, where M(k) is Motzkin numbers (A001006). - _Vladimir Kruchinin_, Mar 03 2016",
+        "A(x)=B(x)+1, where B(x) satisfies of B(x)=(x+x^2)*(1+B(x)+B(x)^2). - _Vladimir Kruchinin_, Mar 03 2016"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<5, [1$2, 2, 4, 11][n+1],",
+        "      ((n-2)*a(n-1) +(7*n-11)*a(n-2) +(11*n-31)*a(n-3)",
+        "      +(9*n-36)*a(n-4) +(3*n-15)*a(n-5)) / (n+1))",
+        "    end:",
+        "seq(a(n), n=0..40);"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1 + x + x^2 - Sqrt[-3 x^4 - 6 x^3 - 5 x^2 - 2 x + 1])/(2 x^2 + 2 x), {x, 0, 28}], x] (* or *)",
+        "{1}~Join~Table[Sum[(Binomial[k, n - k] Sum[Binomial[j, -k + 2 j - 1] Binomial[k, j], {j, 0, k}])/k, {k, 1, n}], {n, 1, 28}] (* _Michael De Vlieger_, Mar 03 2016, the latter after Maxima by _Vladimir Kruchinin_ *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=if n=0 then 1 else sum((binomial(k,n-k)*sum(binomial(j,-k+2*j-1)*binomial(k,j),j,0,k))/k,k,1,n); /* _Vladimir Kruchinin_, Mar 03 2016 */"
+    ],
+    "xref": [
+        "Cf. A001006.",
+        "Column k=0 of A246188.",
+        "Column k=21 of A243753."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 13 2014",
+    "references": 3,
+    "revision": 27,
+    "time": "2016-03-05T09:46:26-05:00",
+    "created": "2014-09-13T17:58:08-04:00"
+}

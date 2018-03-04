@@ -1,0 +1,58 @@
+{
+    "number": 6521,
+    "id": "M2806",
+    "data": "1,3,9,27,81,171,243,513,729,1539,2187,3249,4617,6561,9747,13203,13851,19683,29241,39609,41553,59049,61731,87723,97641,118827,124659,177147,185193,250857,263169,292923,354537,356481,373977,531441,555579,752571",
+    "name": "Numbers n such that n divides 2^n + 1.",
+    "comment": [
+        "Closed under multiplication: if x and y are terms then so is x*y.",
+        "More is true: 1. If n is in the sequence then so is any multiple of n having the same prime factors as n. 2. If n and m are in the sequence then so is lcm(n,m). For a proof see the Bailey-Smyth reference. Elements of the sequence that cannot be generated from smaller elements of the sequence using either of these rules are called *primitive*. The sequence of primitive solutions of n|2^n+1 is A136473. 3. The sequence satisfies various congruences, which enable it to be generated quickly. For instance, every element of this sequence not a power of 3 is divisible either by 171 or 243 or 13203 or 2354697 or 10970073 or 22032887841. See the Bailey-Smyth reference. - Toby Bailey and _Christopher J. Smyth_, Jan 13 2008",
+        "A000051(a(n)) mod a(n) = 0. - _Reinhard Zumkeller_, Jul 17 2014",
+        "The number of terms < 10^n: 3, 5, 9, 15, 25, 40, 68, 114, 188, 309, 518, 851, .... - _Robert G. Wilson v_, May 03 2015",
+        "Also known as Nov\u00e1k numbers after B\u0159etislav Nov\u00e1k who was apparently the first to study this sequence. - _Charles R Greathouse IV_, Nov 03 2016"
+    ],
+    "reference": [
+        "J.-M. De Koninck, Ces nombres qui nous fascinent, Entry 243, p. 68, Ellipses, Paris 2008.",
+        "R. Honsberger, Mathematical Gems, M.A.A., 1973, p. 142.",
+        "Sierpi\u0144ski, W. 250 Problems in Elementary Number Theory. New York: American Elsevier, 1970. Problem #16.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A006521/b006521.txt\">Table of n, a(n) for n = 1..1064</a>",
+        "Toby Bailey and Chris Smyth, <a href=\"http://www.maths.ed.ac.uk/~chris/papers/n_divides_2to_nplus1.pdf\">Primitive solutions of n|2^n+1</a>.",
+        "Alexander Kalmynin, <a href=\"https://arxiv.org/abs/1611.00417\">On Nov\u00e1k numbers</a>, arXiv:1611.00417 [math.NT], 2016.",
+        "V. Meally, <a href=\"/A006516/a006516.pdf\">Letter to N. J. A. Sloane, May 1975</a>",
+        "C. Smyth, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL13/Smyth/smyth2.html\">The terms in Lucas Sequences divisible by their indices</a>, JIS 13 (2010) #10.2.4."
+    ],
+    "maple": [
+        "for n from 1 to 1000 do if 2^n +1 mod n = 0 then lprint(n); fi; od;",
+        "S:=1,3,9,27,81:C:={171,243,13203,2354697,10970073,22032887841}: for c in C do for j from c to 10^8 by 2*c do if 2&^j+1 mod j = 0 then S:=S, j;fi;od;od; S:=op(sort([op({S})])); # Toby Bailey and _Christopher J. Smyth_, Jan 13 2008"
+    ],
+    "mathematica": [
+        "Do[If[PowerMod[2, n, n] + 1 == n, Print[n]], {n, 1, 10^6}]",
+        "k = 9; lst = {1, 3}; While[k < 1000000, a = PowerMod[2, k, k]; If[a + 1 == k, AppendTo[lst, k]]; k += 18]; lst (* _Robert G. Wilson v_, Jul 06 2009 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a006521 n = a006521_list !! (n-1)",
+        "a006521_list = filter (\\x -> a000051 x `mod` x == 0) [1..]",
+        "-- _Reinhard Zumkeller_, Jul 17 2014",
+        "(PARI) for(n=1,10^9,if(Mod(2,n)^n==-1,print1(n,\", \"))); \\\\ _Joerg Arndt_, Nov 30 2014",
+        "(Python)",
+        "A006521_list = [n for n in range(1,10**6) if pow(2,n,n) == n-1] # _Chai Wah Wu_, Jul 25 2017"
+    ],
+    "xref": [
+        "Subsequence of A014945.",
+        "Cf. A057719 (prime factors), A136473 (primitive n such that n divides 2^n+1).",
+        "Cf. A000051, A006517."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _David W. Wilson_, Jul 06 2009"
+    ],
+    "references": 24,
+    "revision": 60,
+    "time": "2017-08-10T18:25:39-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 5221,
+    "id": "M2371",
+    "data": "0,0,1,1,3,4,12,22,61,128,335,756,1936,4580,11652,28402,72209,179460,457274,1151725,2945129,7489680,19228598,49256157,126958030,327072560,846173899,2190012371,5685200054,14770728584,38463268482,100259225816",
+    "name": "Number of Dyck paths of knight moves.",
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A005221/b005221.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Vaclav Kotesovec, <a href=\"/A005221/a005221.txt\">Recurrence (of order 11)</a>",
+        "J. Labelle and Y.-N. Yeh, <a href=\"http://dx.doi.org/10.1016/0166-218X(92)90286-J\">Dyck paths of knight moves</a>, Discrete Applied Math., 24 (1989), 213-221."
+    ],
+    "formula": [
+        "G.f.: z^2*A^2/(1-z*A), where A = (1+2*z+sqrt(1-4*z+4*z^2-4*z^4) -sqrt(2)*sqrt(1-4*z^2-2*z^4+(2*z+1)*sqrt(1-4*z+4*z^2-4*z^4)))/(4*z^2).",
+        "a(n) ~ c * (1+sqrt(3))^n / n^(3/2), where c = 4/sqrt(Pi*(27 + 17*sqrt(3) - sqrt(2*(730 + 929*sqrt(3))/3))) = 0.5480566813380593118... - _Vaclav Kotesovec_, Feb 29 2016",
+        "a(n) = Sum_{m=2..n} (m*Sum_{i=0..n-m }((Sum_{j=0..i+m }(binomial(i+m,j)*binomial(j,i-j)))*Sum_{k=0..n-i-m }((binomial(2*k+i+m-1,k)*Sum_{l=0..k}(binomial(k,l)*binomial(k-l,n-3*l-k-i-m)*(-1)^(n-l-k-m)))/(k+i+m)))). - _Vladimir Kruchinin_, Mar 06 2016",
+        "A(x) = x^2*A005220(x)^2/(1-x*A005220(x)). - _Gheorghe Coserea_, Jan 16 2017"
+    ],
+    "mathematica": [
+        "a = (2*z + Sqrt[-4*z^4 + 4*z^2 - 4*z + 1] - Sqrt[2]*Sqrt[-2*z^4 - 4*z^2 + (2*z + 1)*Sqrt[-4*z^4 + 4*z^2 - 4*z + 1] + 1] + 1)/(4*z^2); gf = z^2*a^2/(1 - z*a); CoefficientList[Series[gf, {z, 0, 31}], z] (* _Jean-Fran\u00e7ois Alcover_, Dec 21 2012, from g.f. *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum(m*sum((sum(binomial(i+m,j)*binomial(j,i-j),j,0,i+m))*sum((binomial(2*k+i+m-1,k)*sum(binomial(k,l)*binomial(k-l,n-3*l-k-i-m)*(-1)^(n-l-k-m),l,0,k))/(k+i+m),k,0,n-i-m),i,0,n-m),m,2,n); /* _Vladimir Kruchinin_, Mar 06 2016 */"
+    ],
+    "keyword": "nonn,easy,nice,walk",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Emeric Deutsch_, Dec 17 2003"
+    ],
+    "references": 2,
+    "revision": 36,
+    "time": "2017-01-16T14:22:09-05:00",
+    "created": "1991-05-20T03:00:00-04:00"
+}

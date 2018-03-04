@@ -1,0 +1,48 @@
+{
+    "number": 249915,
+    "data": "255465,652244,665256,2534665,2536656,2554262,6523462,6524235,6652242,23352656,23354365,23523462,23546665,23565325,25346665,25425256,25624665,25625465,65226242,65234535,235442656,254234662,255465525,255645525,256246665,256254665",
+    "name": "Numbers n such that the decimal expansions of both n and n^2 have 2 as smallest digit and 6 as largest digit.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A249915/b249915.txt\">Table of n, a(n) for n = 1..2000</a> (n = 1..42 from Robert Israel)."
+    ],
+    "maple": [
+        "M:= 10:",
+        "B:= [[2],[3],[4],[5],[6]]:",
+        "A:= NULL:",
+        "for d from 2 to M do",
+        "  B:= map(b -> seq([op(b), i],i=2..6), B);",
+        "  C:= select(b -> max(b)=6 and min(b) = 2, B);",
+        "  X:= map(b -> add(b[i]*10^(d-i),i=1..d),C);",
+        "  X:= select(proc(x) local L; L:= convert(x^2,base,10); max(L) = 6 and min(L) = 2 end proc, X);",
+        "  A:= A, op(X);",
+        "od:",
+        "A; # _Robert Israel_, Apr 27 2015"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{d = DigitCount@ n}, Plus @@ Prepend[Take[d, -4], First@ d] == 0 && d[[2]] > 0 && d[[6]] > 0]; Select[Range@ 2600000, fQ@ # && fQ[#^2] &] (* _Michael De Vlieger_, Apr 27 2015 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = vecmin(digits(n))==2 && vecmin(digits(n^2))==2 && vecmax(digits(n))==6 && vecmax(digits(n^2))==6",
+        "(Python)",
+        "from itertools import product",
+        "A249915_list = []",
+        "for l in range(10):",
+        "....for a in product('23456',repeat = l):",
+        "........for b in ('2','4','5','6'):",
+        "............s = ''.join(a)+b",
+        "............if '2' in s and '6' in s:",
+        "................n = int(s)",
+        "................if {'2','6'} <= set(str(n**2)) <= {'2','3','4','5','6'}:",
+        "....................A249915_list.append(n) # _Chai Wah Wu_, Apr 29 2015"
+    ],
+    "xref": [
+        "Cf. A137067, A137079, A137093, A256630, A256631, A256633, A256634, A256708, A256709, A256889, A257197, A257210, A257211, A256601, A257310."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, Apr 21 2015",
+    "references": 10,
+    "revision": 43,
+    "time": "2017-09-22T20:44:58-04:00",
+    "created": "2015-04-27T20:41:49-04:00"
+}

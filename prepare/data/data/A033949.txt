@@ -1,0 +1,50 @@
+{
+    "number": 33949,
+    "data": "8,12,15,16,20,21,24,28,30,32,33,35,36,39,40,42,44,45,48,51,52,55,56,57,60,63,64,65,66,68,69,70,72,75,76,77,78,80,84,85,87,88,90,91,92,93,95,96,99,100,102,104,105,108,110,111,112,114,115,116,117,119,120,123",
+    "name": "Positive integers that do not have a primitive root.",
+    "comment": [
+        "Numbers n such that the cyclotomic polynomial Phi(n,x) is reducible over Zp for all primes p. Harrison shows that this is equivalent to n>2 and the discriminant of Phi(n,x), A004124(n), being a square. - _T. D. Noe_, Nov 06 2007",
+        "The multiplicative group modulo n is non-cyclic. See the complement A033948. - _Wolfdieter Lang_, Mar 14 2012. See A281854 for the groups. - _Wolfdieter Lang_, Feb 04 2017",
+        "Numbers n with the property that there exists a natural number m with 1<m<n-1 and m^2 == 1 mod n. - _Reinhard Muehlfeld_, May 27 2014",
+        "Also, numbers n for which A000010(n)>A002322(n), or equivalently A034380(n)>1. - _Ivan Neretin_, Mar 28 2015"
+    ],
+    "reference": [
+        "I. Niven and H. S. Zuckerman, An Introduction to the Theory of Numbers, 4th edition, page 62, Theorem 2.25."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A033949/b033949.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Brett A. Harrison, <a href=\"http://www.jstor.org/stable/27642336\">On the reducibility of cyclotomic polynomials over finite fields</a>, Amer. Math. Monthly, Vol 114, No. 9 (2007), 813-818",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Primitive_root_modulo_n\">Primitive root modulo n</a>"
+    ],
+    "formula": [
+        "Positive integers except 1, 2, 4 and numbers of the form p^i and 2p^i, where p is an odd prime and i >= 1."
+    ],
+    "maple": [
+        "m := proc(n) local k, r; r := 1; if n = 2 then return false fi;",
+        "for k from 1 to n do if igcd(n,k) = 1 then r := modp(r*k,n) fi od; r end:",
+        "select(n -> m(n) = 1, [$1..123]); # _Peter Luschny_, May 25 2017"
+    ],
+    "mathematica": [
+        "Select[Range[2,130],!IntegerQ[PrimitiveRoot[#]]&] (* _Harvey P. Dale_, Oct 25 2011 *)"
+    ],
+    "program": [
+        "(Sage) print [n for n in range(1,100) if not Integers(n).multiplicative_group_is_cyclic()] # _Ralf Stephan_, Mar 30 2014",
+        "(Haskell)",
+        "a033949 n = a033949_list !! (n-1)",
+        "a033949_list = filter",
+        "               (\\x -> any ((== 1) . (`mod` x) . (^ 2)) [2 .. x-2]) [1..]",
+        "-- _Reinhard Zumkeller_, Dec 10 2014",
+        "(PARI) is(n)=n>7 && (!isprimepower(if(n%2,n,n/2)) || n>>valuation(n,2)==1) \\\\ _Charles R Greathouse IV_, Oct 08 2016"
+    ],
+    "xref": [
+        "Cf. A033948. A193305 (composites with primitive root).",
+        "Column k=1 of A277915, A281854."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Calculated by _Jud McCranie_",
+    "references": 34,
+    "revision": 61,
+    "time": "2017-05-25T07:56:22-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

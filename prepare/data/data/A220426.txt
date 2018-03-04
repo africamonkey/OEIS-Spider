@@ -1,0 +1,55 @@
+{
+    "number": 220426,
+    "data": "2,5,5,6,8,8,8,18,18,18,1652,2135,40332,40332,78740,80661,165389,165389,239008,686015,4260196,5018507,5018507,5018507,5018507,43624023,43624023,43624023,43624023,43624023",
+    "name": "Least nonsquare whose square root starts with at least n even decimal digits.",
+    "example": [
+        "a(0) = 2 because sqrt(2) = 1.41... starts with 0 even digits, and is the smallest nonsquare for which this is the case.",
+        "a(1) = a(2) = 5 because sqrt(5) = 2.23... starts with at least 1 even digit, in fact 2 even digits, whereas sqrt(3) starts off with an odd digit.",
+        "a(3) = 6 because sqrt(6) = 2.449... starts off with 3 even digits."
+    ],
+    "maple": [
+        "nexteven:= proc(x)",
+        "   local d;",
+        "   for d from 0 while x mod 10^(d+1) = 8*(10^(d+1)-1)/9 do od:",
+        "   x - 8*(10^(d)-1)/9 + 2*10^(d)",
+        "end proc;",
+        "evendigits:= proc(x)",
+        "local n0, n, d, s;",
+        "n0:= ilog10(x);",
+        "if type(n0,odd) then n0:= n0-1 end if;",
+        "for n from 0 do",
+        "   d:= floor(x/10^(n0-2*n));",
+        "   s:= floor(sqrt(d));",
+        "   while not type(s,integer) do",
+        "    Digits:= Digits+2; s:= floor(sqrt(d))",
+        "   end do;",
+        "   if type(s mod 10,odd) then return n end if;",
+        "end do;",
+        "end proc;",
+        "y:= 2: bsf:= 0: R[0]:= 2:",
+        "while bsf < 20 do",
+        "   for x from y^2+1 to (y+1)^2-1 do",
+        "      v:= evendigits(x);",
+        "      if v > bsf then",
+        "        for j from bsf+1 to v do R[j]:= x end do;",
+        "        bsf:= v;",
+        "      end if;",
+        "    end do;",
+        "   y:= nexteven(y);",
+        "end do:",
+        "  seq(R[n],n=0..bsf);"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{s = Split[ Boole[ EvenQ@# & /@ RealDigits[Sqrt@ n, 10, 32][[1]]]][[1]]}, If[IntegerQ@ Sqrt@ n || Union@ s == {0}, -1, Length@ s]] (* _Robert G. Wilson v_, Dec 15 2012 *)"
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "0,1",
+    "author": "_Robert Israel_, Dec 14 2012",
+    "ext": [
+        "a(21)-a(29) from _Robert G. Wilson v_, Dec 15 2012"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2015-12-11T12:34:21-05:00",
+    "created": "2012-12-15T13:55:55-05:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 203853,
+    "data": "1,4,5,10,24,50,120,270,640,1500,3600,8610,20880,50700,124024,304290,750120,1854400,4600200,11440548,28527320,71289000,178526880,447910470,1125750120,2833885800,7144449920,18036373140,45591631800,115381697740,292329067800,741410800830",
+    "name": "a(n) = (1/n) * Sum_{d|n} moebius(n/d) * Lucas(d)^2, where Lucas(n) = A000204(n).",
+    "comment": [
+        "Apparently the same as A032170, if n > 2. - _R. J. Mathar_, Jan 11 2012"
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A203853/b203853.txt\">Table of n, a(n) for n = 1..640</a>"
+    ],
+    "formula": [
+        "G.f.: 1/Product_{n>=1} (1 - Lucas(n)*x^n + (-1)^n*x^(2*n))^a(n) = exp(Sum_{n>=1} Lucas(n)^3 * x^n/n), which is the g.f. of A203803.",
+        "a(n) ~ phi^(2*n) / n, where phi = A001622 = (1+sqrt(5))/2 is the golden ratio. - _Vaclav Kotesovec_, Sep 02 2017"
+    ],
+    "example": [
+        "G.f.: F(x) = 1/((1-x-x^2) * (1-3*x^2+x^4)^4 * (1-4*x^3-x^6)^5 * (1-7*x^4+x^8)^10 * (1-11*x^5-x^10)^24 * (1-18*x^6+x^12)^50 * (1-29*x^7-x^14)^120 * ... * (1 - Lucas(n)*x^n + (-1)^n*x^(2*n))^a(n) * ...)",
+        "where F(x) = exp( Sum_{n>=1} Lucas(n)^3 * x^n/n ) = g.f. of A203803:",
+        "F(x) = 1 + x + 14*x^2 + 35*x^3 + 205*x^4 + 744*x^5 + 3414*x^6 + ...",
+        "where",
+        "log(F(x)) = x + 3^3*x^2/2 + 4^3*x^3/3 + 7^3*x^4/4 + 11^3*x^5/5 + 18^3*x^6/6 + 29^3*x^7/7 + 47^3*x^8/8 + ... + Lucas(n)^3*x^n/n + ..."
+    ],
+    "mathematica": [
+        "a[n_]:= 1/n DivisorSum[n, MoebiusMu[n/#] LucasL[#]^2 &]; Array[a, 30] (* _G. C. Greubel_, Dec 25 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n<1, 0, sumdiv(n, d, moebius(n/d)*(fibonacci(d-1)+fibonacci(d+1))^2)/n)}",
+        "(PARI) {Lucas(n)=fibonacci(n-1)+fibonacci(n+1)}",
+        "{a(n)=local(F=exp(sum(m=1, n, Lucas(m)^3*x^m/m)+x*O(x^n)));if(n==1,1,polcoeff(F*prod(k=1,n-1,(1 - Lucas(k)*x^k + (-1)^k*x^(2*k) +x*O(x^n))^a(k)),n)/Lucas(n))}"
+    ],
+    "xref": [
+        "Cf. A001254, A203803, A006206, A203854, A203855, A203856, A203857, A203858, A203859, A203800."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jan 07 2012",
+    "references": 9,
+    "revision": 19,
+    "time": "2017-12-26T03:15:28-05:00",
+    "created": "2012-01-09T03:57:55-05:00"
+}

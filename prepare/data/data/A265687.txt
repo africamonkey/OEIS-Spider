@@ -1,0 +1,58 @@
+{
+    "number": 265687,
+    "data": "3,5,7,11,27,31,47,63,71",
+    "name": "Numbers n such that the concave polygon formed by the trajectory of n in the \"3n+1\" problem and the straight line between the coordinate points (0,n) and (r,1) where r is the number of iterations needed to reach 1 is not a self-intersecting polygon.",
+    "comment": [
+        "This sequence is included in A266796 and considers only the polygons located above the line connecting (0,n) and (r,1).",
+        "Consider the 3n+1 function iterates (n, T(n), T(T(n)),...,4,2,1) plotted on standard vertical and horizontal scales. Each coordinate point (0,n), (1,T(n)), (2, T(T(n)),...,(r,1), where r is the number of iterations needed to reach 1, is connected by a straight line, and the two points (0,n) and (r,1) are also connected by a straight line in order to form a polygon. The sequence lists the numbers n such that all the points of the polygon are located above the line connecting (0,n) and (r,1).",
+        "In other words, the sequence lists the numbers n such that the concave polygons are entirely contained in a half-plane defined by the line passing through the points (0,n) and (r,1), of equation f(x)= x*(1-n)/r + n. We must have f(0)= n, f(1)<T(n), f(2)<T(T(n)),...,f(r-1)<2, f(r)=1.",
+        "Conjecture: the sequence is finite.",
+        "From _David Consiglio, Jr._, Jan 07 2016: (Start)",
+        "Any additional terms must be congruent to either 3 or 7 mod 8 and larger than 10^8.",
+        "Even terms are reduced in just one step, and so immediately fall below the line for any initial number > 2.",
+        "Odd terms that are 1 mod 8 or 5 mod 8 reduce to just over 3/4ths their original size in 3 steps.  This eliminates any term of this type that requires more than 12 steps from consideration (since 9/12 = 3/4). Since the last number which requires 12 steps or fewer to reduce is 341, and all numbers up to that have been checked, all numbers 1 mod 8 cannot be members of this sequence.",
+        "It may be able to further disqualify groups of numbers using this modulus approach."
+    ],
+    "link": [
+        "Michel Lagneau, <a href=\"/A265687/a265687.pdf\">Examples</a>"
+    ],
+    "example": [
+        "See the links."
+    ],
+    "maple": [
+        "T:=array(1..1000):nn:=1000:",
+        "for n from 3 to 10000 do:",
+        "  kk:=1:m:=n:T[kk]:=n:it:=0:",
+        "    for i from 1 to nn while(m<>1) do:",
+        "     if irem(m,2)=0",
+        "      then",
+        "      m:=m/2:kk:=kk+1:T[kk]:=m:it:=it+1:",
+        "      else",
+        "      m:=3*m+1:kk:=kk+1:T[kk]:=m:it:=it+1:",
+        "     fi:",
+        "    od:",
+        "   jj:=0:",
+        "    for j from 1 to it+1 do:",
+        "     z:=((1-n)/it)*(j-1)+n:",
+        "      if z>T[j] then jj:=1:",
+        "      else",
+        "      fi:",
+        "    od:",
+        "      if jj=0",
+        "       then",
+        "       printf(`%d, `,n):",
+        "       else",
+        "      fi:",
+        "od:"
+    ],
+    "xref": [
+        "Cf. A006577, A266796."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Dec 20 2015",
+    "references": 2,
+    "revision": 38,
+    "time": "2016-01-09T14:58:59-05:00",
+    "created": "2016-01-02T04:27:29-05:00"
+}

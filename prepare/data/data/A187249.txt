@@ -1,0 +1,41 @@
+{
+    "number": 187249,
+    "data": "0,1,3,11,48,248,1504,10560,84544,761024,7610496,83715968,1004592640,13059706368,182835893248,2742538406912,43880614526976,745970446991360,13427468045910016,255121892872421376,5102437857448689664,107151195006423007232,2357326290141307207680",
+    "name": "Number of cycles with at most 2 alternating runs in all permutations of [n] (it is assumed that the smallest element of the cycle is in the first position).",
+    "comment": [
+        "a(n) = Sum_{k>=0} k * A187247(n,k)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A187249/b187249.txt\">Table of n, a(n) for n = 0..450</a>"
+    ],
+    "formula": [
+        "E.g.f.: g(z) = (1/4)[exp(2z) - 1 +2z]/(1-z).",
+        "a(n) ~ (exp(2)+1)/4 * n! = 2.09726402473266... * n!. - _Vaclav Kotesovec_, Mar 15 2014"
+    ],
+    "example": [
+        "a(3)=11 because in (1)(2)(3), (1)(23), (12)(3), (13)(2), (123), and (132) all cycles have at most  2 alternating runs."
+    ],
+    "maple": [
+        "g := (1/4*(exp(2*z)-1+2*z))/(1-z): gser := series(g, z = 0, 25): seq(factorial(n)*coeff(gser, z, n), n = 0 .. 22);",
+        "# second Maple program:",
+        "b:= proc(n) option remember; expand(",
+        "      `if`(n=0, 1, add(b(n-j)*binomial(n-1, j-1)*",
+        "      `if`(j=1, x, (j-1)!+2^(j-2)*(x-1)), j=1..n)))",
+        "    end:",
+        "a:= n-> (p-> add(coeff(p, x, i)*i, i=0..n))(b(n)):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Apr 15 2017"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(E^(2*x)-1+2*x)/(4*(1-x)), {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Mar 15 2014 *)"
+    ],
+    "xref": [
+        "Cf. A187247."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Emeric Deutsch_, Mar 07 2011",
+    "references": 3,
+    "revision": 13,
+    "time": "2017-04-15T15:54:26-04:00",
+    "created": "2011-03-07T12:20:17-05:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 84993,
+    "data": "0,1,1,2,3,5,6,9,12,16,20,27,33,42,53,64,80,96,117,141,169,201,239,282,333,390,456,532,617,715,826,951,1094,1253,1435,1636,1864,2119,2404,2723,3078,3473,3915,4403,4947,5549,6215,6952,7767,8665,9656,10748",
+    "name": "Total number of parts in all partitions of n into prime parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A084993/b084993.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "G.f.: sum(x^p(j)/(1-x^p(j)),j=1..infinity)/product(1-x^p(j), j=1..infinity), where p(j) is the j-th prime. - _Emeric Deutsch_, Mar 07 2006"
+    ],
+    "example": [
+        "Partitions of 9 into primes are 2+2+2+3=3+3+3=2+2+5=2+7; thus a(9)=4+3+3+2=12."
+    ],
+    "maple": [
+        "g:=sum(x^ithprime(j)/(1-x^ithprime(j)),j=1..20)/product(1-x^ithprime(j),j=1..20): gser:=series(g,x=0,60): seq(coeff(gser,x^n),n=1..57); # _Emeric Deutsch_, Mar 07 2006",
+        "# second Maple program:",
+        "with(numtheory):",
+        "b:= proc(n, i) option remember; local g;",
+        "      if n=0 then [1, 0]",
+        "    elif i<1 then [0, 0]",
+        "    elif i=1 then `if`(irem(n, 2)=0, [1, n/2], [0, 0])",
+        "    else g:= `if`(ithprime(i)>n, [0$2], b(n-ithprime(i), i));",
+        "         b(n, i-1) +g +[0, g[1]]",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n, pi(n))[2]:",
+        "seq(a(n), n=1..60);  # _Alois P. Heinz_, Oct 30 2012"
+    ],
+    "mathematica": [
+        "nn=40;a=Product[1/(1-y x^i),{i,Table[Prime[n],{n,1,nn}]}];Drop[CoefficientList[Series[D[a,y]/.y->1,{x,0,nn}],x],1]  (* _Geoffrey Critzer_, Oct 30 2012 *)",
+        "b[n_, i_] := b[n, i] = Module[{g}, Which[n == 0, {1, 0}, i < 1, {0, 0}, i == 1, If[EvenQ[n], {1, n/2}, {0, 0}], True, g = If[Prime[i] > n, {0, 0}, b[n - Prime[i], i]]; b[n, i - 1] + g + {0, g[[1]]}]];",
+        "a[n_] := b[n, PrimePi[n]][[2]];",
+        "Array[a, 52] (* _Jean-Fran\u00e7ois Alcover_, Dec 30 2017, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "sumparts(n, pred)={sum(k=1, n, 1/(1-pred(k)*x^k) - 1 + O(x*x^n))/prod(k=1, n, 1-pred(k)*x^k + O(x*x^n))}",
+        "{my(n=60); Vec(sumparts(n, isprime), -n)} \\\\ _Andrew Howroyd_, Dec 28 2017"
+    ],
+    "xref": [
+        "Cf. A000607, A024938."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Vladeta Jovovic_, Jul 17 2003",
+    "references": 13,
+    "revision": 20,
+    "time": "2017-12-30T09:46:07-05:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

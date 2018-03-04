@@ -1,0 +1,41 @@
+{
+    "number": 291460,
+    "data": "16,128,384,512,1024,1536,1792,2176,2560,2912,3072,5120,7168,8192,9216,11264,13312,15360,15616,16384,17408,19456,21504,23552,25600,27648,28672,29696,31744,33792,35840,37376,37888,39936,41984,43392,57344,66560,90112,98304",
+    "name": "Even numbers n such that the decimal expansion of n contains the decimal expansion of the greatest odd divisor of n as a substring.",
+    "comment": [
+        "43392 and 443392 are both in this sequence because 43392 = 2^7*339 and 443392 = 2^10*433. Removing the first digit of 443392 gives 43392. Are there any other numbers in this sequence such that removing the first digit gives another number in the sequence?",
+        "Every number of the form 29090...90912 is in this sequence because 2912 = 2^5*91, 290912 = 2^5*9091, 29090912 = 2^5*909091, and so on.",
+        "Sequence is infinite since it contains infinite subsequences, like the numbers of the form 7*2^(20*k-5) for k>0. - _Giovanni Resta_, Aug 25 2017",
+        "Trivially all powers of two which contain the digit 1 are members, see A035057. - _Robert G. Wilson v_, Aug 25 2017",
+        "Number of terms less than 10^k: 0, 1, 4, 15, 40, 57, 76, 108, 146, 194, 258, 336, 447, etc. - _Robert G. Wilson v_, Aug 25 2017"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A291460/b291460.txt\">Table of n, a(n) for n = 1..1567</a> (terms < 10^20)"
+    ],
+    "example": [
+        "The greatest odd divisor of 1792 = 2^8*7 is 7, which is in 1(7)92. Therefore, 1792 is in this sequence.",
+        "2^10*x = 1024*x contains x as a substring for all x from 1 to 41. Therefore, 1024*x is in this sequence for all odd x from 1 to 41."
+    ],
+    "mathematica": [
+        "inQ[n_] := StringPosition[ToString[n], ToString[n/2^IntegerExponent[n, 2]]] != {}; Select[2 Range[50000], inQ] (* _Giovanni Resta_, Aug 24 2017 and slightly modified by _Robert G. Wilson v_, Aug 25 2017 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=if(n%2, return(0)); my(r=n>>valuation(n, 2), m=Mod(r, 10^#digits(r))); while(n>=r, if(n==m, return(1)); n\\=10); 0 \\\\ _Charles R Greathouse IV_, Aug 26 2017",
+        "(Python)",
+        "A291460_list = [2*x for x in range(1,10**6) if str(int(bin(x).rstrip('0'),2)) in str(2*x)] # _Chai Wah Wu_, Aug 31 2017"
+    ],
+    "xref": [
+        "Cf. A000265, A035057, A291555."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Bobby Jacobs_, Aug 24 2017",
+    "ext": [
+        "More terms from _Giovanni Resta_, Aug 24 2017",
+        "Name edited by _Felix Fr\u00f6hlich_, Aug 24 2017"
+    ],
+    "references": 2,
+    "revision": 57,
+    "time": "2017-08-31T21:49:16-04:00",
+    "created": "2017-08-26T01:55:13-04:00"
+}

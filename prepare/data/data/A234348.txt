@@ -1,0 +1,52 @@
+{
+    "number": 234348,
+    "data": "0,1,152,189,513,728,5859,6832,64008,68913,150605,155736,345744,355167,1062936,1090999,1481571,1520848,6653933,6742008,7665056,7742709,9667693,9796248,15253056,15438185,16582104,16592023,16766568,16776487,26201448,26460217,28672299",
+    "name": "Numbers k such that both distances from k to two nearest cubes are perfect cubes.",
+    "comment": [
+        "Except a(1)=0, a(n) are numbers k such that both k-x and y-k are perfect cubes, where x and y are two nearest to k cubes: x < k <= y."
+    ],
+    "link": [
+        "Donovan Johnson, <a href=\"/A234348/b234348.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "152 is in the sequence because the following are cubes: 152-125=27 and 216-152=64, where 125 and 216 are the nearest to 152 cubes."
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#include <gmp.h>   // gcc -O3 A234348.c -lgmp",
+        "int main() {",
+        "  long long in=0;",
+        "  mpz_t n, r, i;",
+        "  mpz_init(r);",
+        "  mpz_init(i);",
+        "  mpz_init_set_ui(n, in);",
+        "  while (in < (1ULL<<32)) {",
+        "    if (mpz_root(r, n, 3) && in)  mpz_sub_ui(r, r, 1);",
+        "    mpz_mul(i, r, r);",
+        "    mpz_mul(i, i, r);",
+        "    mpz_sub(i, n, i);",
+        "    if (mpz_root(i, i, 3)) {",
+        "      mpz_add_ui(r, r, 1);",
+        "      mpz_mul(i, r, r);",
+        "      mpz_mul(i, i, r);",
+        "      mpz_sub(i, i, n);",
+        "      if (mpz_root(i, i, 3))  printf(\"%llu, \", in);",
+        "    }",
+        "    mpz_add_ui(n, n, 1);",
+        "    if ((++in&0xfffff)==0)  printf(\".\");",
+        "  }",
+        "  return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A000578, A234334."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Alex Ratushnyak_, Dec 24 2013",
+    "references": 2,
+    "revision": 10,
+    "time": "2014-01-08T13:47:26-05:00",
+    "created": "2013-12-27T02:57:45-05:00"
+}

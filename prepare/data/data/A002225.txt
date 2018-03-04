@@ -1,0 +1,50 @@
+{
+    "number": 2225,
+    "id": "M5224 N2274",
+    "data": "31,307,643,5113,21787,39199,360007,360007,4775569,10318249,10318249,65139031,387453811,913900417,2278522747,2741702809,25147657981",
+    "name": "a(n) is the smallest prime p such that each of the first n primes has three cube roots mod p.",
+    "comment": [
+        "a(n) is the smallest prime p == 1 (mod 3) such that each of the first n primes is a cubic residue mod p. - _Robert Israel_, Aug 02 2016"
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "A. E. Western and J. C. P. Miller, Tables of Indices and Primitive Roots. Royal Society Mathematical Tables, Vol. 9, Cambridge Univ. Press, 1968, p. XVI."
+    ],
+    "link": [
+        "A. E. Western and J. C. P. Miller, <a href=\"/A002223/a002223.pdf\">Tables of Indices and Primitive Roots</a>, Royal Society Mathematical Tables, Vol. 9, Cambridge Univ. Press, 1968 [Annotated scans of selected pages]"
+    ],
+    "example": [
+        "For n=2, the first two primes 2 and 3 each have three cube roots mod 307: 2 has cube roots 52, 270, 292 and 3 has cube roots 192, 194, 228. - _Robert Israel_, Aug 02 2016"
+    ],
+    "maple": [
+        "Primes:= [2]: pp:= 7:",
+        "for n from 1 to 12 do",
+        "  for p from pp by 6 while",
+        "    not(isprime(p) and andmap(t -> t &^ ((p-1)/3) mod p = 1, Primes))",
+        "  do od:",
+        "  A[n]:= p;",
+        "  pp:= p;",
+        "  Primes:= [op(Primes), nextprime(Primes[-1])];",
+        "od:",
+        "seq(A[i],i=1..12); # _Robert Israel_, Aug 02 2016"
+    ],
+    "mathematica": [
+        "(* This naive program being very slow, limit is set to 8 terms *) lim=8; np[] := While[p=NextPrime[p]; Mod[p,3]!=1]; crQ[n_, p_] := Reduce[ 0<x<p && Mod[x^3, p]==n, x, Integers]=!=False; p=2; pp={p}; A002225={}; While[Length[A002225] < lim, If[And @@ (crQ[#,p]& /@ pp), AppendTo[pp, NextPrime[ Last[pp]]]; Print[p]; AppendTo[A002225,p], np[] ] ]; A002225 (* _Jean-Fran\u00e7ois Alcover_, Sep 09 2011 *)"
+    ],
+    "xref": [
+        "Cf. A002223, A002224, A002226.",
+        "Subset of A014752.  Except for a(1), subset of A014753.  Except for a(1) and a(2), subset of A040044."
+    ],
+    "keyword": "nonn,nice,more",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Don Reble_, Oct 09 2001",
+        "Name corrected by _Robert Israel_, Aug 02 2016"
+    ],
+    "references": 4,
+    "revision": 29,
+    "time": "2017-10-19T03:13:43-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

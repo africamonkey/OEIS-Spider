@@ -1,0 +1,47 @@
+{
+    "number": 75702,
+    "data": "2160,3048,27094,251712,505768,936240,2182656,2582372,487568736,1261336587,1424530096",
+    "name": "n-th prime divides the n-th Fibonacci number.",
+    "comment": [
+        "a(12) > 2*10^9. - _Giovanni Resta_, Jul 20 2013",
+        "Let r be a root of X^2 + 3*X + 1 in GF(prime(n)^2). Then n is in the sequence if and only if r^n = 1. - _Robert Israel_, Dec 24 2014"
+    ],
+    "maple": [
+        "f:= proc(n)",
+        "  local p, m, r, t, F;",
+        "  p:= ithprime(n);",
+        "  if member(p mod 5, {1,4}) then",
+        "  m:= igcd(n,p-1);",
+        "    r:= (numtheory:-msqrt(5,p)-3)/2 mod p;",
+        "    r &^ m mod p = 1",
+        "  else",
+        "    F:= GF(p,2,t^2+3*t+1);",
+        "    m:= igcd(n,p^2-1);",
+        "    r:= F:-ConvertIn(t);",
+        "    F:-ConvertOut(F:-`^`(r,m)) = 1",
+        "  fi",
+        "end proc:",
+        "select(f, [$4 .. 10^5]); # _Robert Israel_, Dec 24 2014"
+    ],
+    "mathematica": [
+        "(* Mathematica's Fibonacci function is not used so as to speed up the search. *) fibo = {1, 1}; divFiboNPrimes = {}; Do[len = Length[fibo]; n = fibo[[len]] + fibo[[len - 1]]; fibo = Append[fibo, n]; If[Mod[n, Prime[i]] == 0, divFiboNPrimes = Append[divFiboNPrimes, i]], {i, 3, 10^7}]; divFiboNPrimes"
+    ],
+    "program": [
+        "(PARI) v=0; w=1; for(n=2,m,f=v+w; if(f%prime(n)==0,print1(n,\",\")); v=w; w=f)"
+    ],
+    "xref": [
+        "Cf. A000040, A000045, A072123."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Joseph L. Pe_, Oct 02 2002",
+    "ext": [
+        "Three more terms from _Klaus Brockhaus_, Oct 04 2002",
+        "a(7,8) = 2182656, 2582372 from _Zak Seidov_, Nov 03 2009",
+        "a(9)-a(11) from _Giovanni Resta_, Jul 20 2013"
+    ],
+    "references": 4,
+    "revision": 22,
+    "time": "2014-12-25T03:58:01-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

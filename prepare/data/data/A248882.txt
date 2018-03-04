@@ -1,0 +1,39 @@
+{
+    "number": 248882,
+    "data": "1,1,8,35,119,433,1476,4962,16128,51367,160105,490219,1476420,4378430,12805008,36962779,105417214,297265597,829429279,2291305897,6270497702,17008094490,45744921052,122052000601,323166712109,849453194355,2217289285055,5749149331789",
+    "name": "Expansion of Product_{k>=1} (1+x^k)^(k^3).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A248882/b248882.txt\">Table of n, a(n) for n = 0..5510</a> (terms 0..1000 from Vaclav Kotesovec)",
+        "Vaclav Kotesovec, <a href=\"http://arxiv.org/abs/1509.08708\">A method of finding the asymptotics of q-series based on the convolution of generating functions</a>, arXiv:1509.08708 [math.CO], Sep 30 2015, p. 22."
+    ],
+    "formula": [
+        "a(n) ~ Zeta(5)^(1/10) * 3^(1/5) * exp(2^(-11/5) * 3^(2/5) * 5^(6/5) * Zeta(5)^(1/5) * n^(4/5)) / (2^(71/120) * 5^(2/5)* sqrt(Pi) * n^(3/5)), where Zeta(5) = A013663.",
+        "a(0) = 1, a(n) = (1/n)*Sum_{k=1..n} A284900(k)*a(n-k) for n > 0. - _Seiichi Manyama_, Apr 06 2017"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; add(",
+        "      (-1)^(n/d+1)*d^4, d=numtheory[divisors](n))",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n=0, 1,",
+        "      add(b(k)*a(n-k), k=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..35);  # _Alois P. Heinz_, Oct 16 2017"
+    ],
+    "mathematica": [
+        "nmax=50; CoefficientList[Series[Product[(1+x^k)^(k^3),{k,1,nmax}],{x,0,nmax}],x]"
+    ],
+    "program": [
+        "(PARI) x = 'x + O('x^50); Vec(prod(k=1, 50, (1 + x^k)^(k^3))) \\\\ _Indranil Ghosh_, Apr 06 2017"
+    ],
+    "xref": [
+        "Cf. A026007, A027998, A248883, A248884.",
+        "Column k=3 of A284992."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Vaclav Kotesovec_, Mar 05 2015",
+    "references": 19,
+    "revision": 26,
+    "time": "2017-10-16T10:44:21-04:00",
+    "created": "2015-03-05T17:01:09-05:00"
+}

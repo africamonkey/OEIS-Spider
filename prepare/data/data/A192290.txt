@@ -1,0 +1,58 @@
+{
+    "number": 192290,
+    "data": "14,16,92,114,5566,6596,1077378,1529394,3098834,3978336,70774930,92974314",
+    "name": "Anti-amicable numbers.",
+    "comment": [
+        "Like A063990 but using anti-divisors. sigma*(a)=b and sigma*(b)=a, where sigma*(n) is the sum of  the anti-divisors of n. Anti-perfect numbers A073930 are not included in the sequence.",
+        "There are also chains of 3 or more anti-sociable numbers.",
+        "With 3 numbers the first chain is: 1494, 2056, 1856.",
+        "sigma*(1494) = 4+7+12+29+36+49+61+103+332+427+996 = 2056.",
+        "sigma*(2056) = 3+9+16+1371+457 = 1856.",
+        "sigma*(1856) = 3+47+79+128+1237 = 1494.",
+        "With 4 numbers the first chain is: 46, 58, 96, 64.",
+        "sigma*(46) = 3+4+7+13+31 = 58.",
+        "sigma*(58) = 3+4+5+9+13+23+39 = 96.",
+        "sigma*(96) = 64.",
+        "sigma*(64) = 3+43 = 46."
+    ],
+    "example": [
+        "sigma*(14) = 3+4+9 = 16; sigma*(16) = 3+11 = 14.",
+        "sigma*(92) = 3+5+8+37+61= 114; sigma*(114) = 4+12+76 = 92.",
+        "sigma*(5566) = 3+4+9+44+92+484+1012+1237+3711= 6596; sigma*(6596) = 3+8+79+136+776+167+4397 = 5566."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A192290 := proc(q)",
+        "local a,b,c,k,n;",
+        "for n from 1 to q do",
+        "  a:=0;",
+        "  for k from 2 to n-1 do if abs((n mod k)-k/2)<1 then a:=a+k; fi; od;",
+        "  b:=a; c:=0;",
+        "  for k from 2 to b-1 do if abs((b mod k)-k/2)<1 then c:=c+k; fi; od;",
+        "  if n=c and not a=c then print(n); fi;",
+        "od; end:",
+        "A192290(1000000000);"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "def sigma_s(n):",
+        "....return sum([2*d for d in divisors(n) if n > 2*d and n % (2*d)] +",
+        "...........[d for d in divisors(2*n-1) if n > d >=2 and n % d] +",
+        "...........[d for d in divisors(2*n+1) if n > d >=2 and n % d])",
+        "A192290 = [n for n in xrange(1,10**4) if sigma_s(n) != n and sigma_s(sigma_s(n)) == n] # _Chai Wah Wu_, Aug 14 2014"
+    ],
+    "xref": [
+        "Cf. A063990, A066272, A192291, A192292, A192293."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jun 29 2011",
+    "ext": [
+        "a(7)-a(12) from _Donovan Johnson_, Sep 12 2011"
+    ],
+    "references": 4,
+    "revision": 18,
+    "time": "2014-08-15T10:30:36-04:00",
+    "created": "2011-07-13T15:20:58-04:00"
+}

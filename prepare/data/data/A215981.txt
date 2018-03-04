@@ -1,0 +1,43 @@
+{
+    "number": 215981,
+    "data": "1,1,2,3,4,7,12,24,48,107,236,552,1302,3160,7742,19321,48630,123868,317956,823066,2144506,5623757,14828075,39299898,104636891,279793451,751065461,2023443033,5469566586,14830871803,40330829031,109972410222,300628862481",
+    "name": "Number of simple unlabeled graphs on n nodes with exactly 1 connected component that is a tree or a cycle.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A215981/b215981.txt\">Table of n, a(n) for n = 1..700</a>"
+    ],
+    "formula": [
+        "a(1) = a(2) = 1, a(n) = 1 + A000055(n) for n>=3."
+    ],
+    "example": [
+        "a(5) = 4: .o-o-o.  .o-o-o.  .o-o-o.  .o-o-o.",
+        "          .|  / .  .|    .  .| |  .  . /|  .",
+        "          .o-o  .  .o-o  .  .o o  .  .o o  ."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; local d, j; `if`(n<=1, n,",
+        "      (add(add(d*b(d), d=divisors(j)) *b(n-j), j=1..n-1))/(n-1))",
+        "    end:",
+        "a:= proc(n) option remember; local k; `if`(n>2, 1, 0)+ b(n)-",
+        "      (add(b(k)*b(n-k), k=0..n) -`if`(irem(n, 2)=0, b(n/2), 0))/2",
+        "    end:",
+        "seq(a(n), n=1..40);"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n <= 1, n, (Sum[Sum[d*b[d], {d, Divisors[j]}]*b[n - j], {j, 1, n - 1}])/(n - 1)];",
+        "a[n_] := a[n] = If[n > 2, 1, 0] + b[n] - (Sum[b[k]*b[n - k], {k, 0, n}] - If[Mod[n, 2] == 0, b[n/2], 0])/2;",
+        "Array[a, 40] (* _Jean-Fran\u00e7ois Alcover_, Mar 21 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Column k=1 of A215977.",
+        "The labeled version is A215851.",
+        "Cf. A000055."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Alois P. Heinz_, Aug 29 2012",
+    "references": 3,
+    "revision": 14,
+    "time": "2017-03-21T13:08:41-04:00",
+    "created": "2012-08-29T23:07:45-04:00"
+}

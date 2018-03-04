@@ -1,0 +1,52 @@
+{
+    "number": 104502,
+    "data": "1,1,2,3,5,7,11,15,22,29,41,54,74,96,128,165,216,275,354,447,569,712,896,1113,1388,1712,2117,2595,3186,3882,4735,5739,6959,8392,10121,12150,14582,17429,20823,24789,29494,34979,41456,48993,57856,68148,80204",
+    "name": "Coefficients of the B-Dyson Mod 27 identity.",
+    "comment": [
+        "Number of partitions where no part is a multiple of 9. - _Joerg Arndt_, May 13 2011",
+        "Also partitions where parts are repeated at most 8 times. - _Joerg Arndt_, Dec 31 2012"
+    ],
+    "reference": [
+        "F. J. Dyson, A walk through Ramanujan's garden, pp. 7-28 of G. E. Andrews et al., editors, Ramanujan Revisited. Academic Press, NY, 1988, see p. 15, eq. (11)."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A104502/b104502.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Vaclav Kotesovec, <a href=\"http://arxiv.org/abs/1509.08708\">A method of finding the asymptotics of q-series based on the convolution of generating functions</a>, arXiv:1509.08708 [math.CO], Sep 30 2015, p. 15.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/BDysonMod27Identities.html\">BDyson Mod 27 Identities</a>"
+    ],
+    "formula": [
+        "Expansion of q^(-1/3) * eta(q^9) / eta(q) in powers of q. - _Michael Somos_, Jan 09 2006",
+        "Euler transform of period 9 sequence [1, 1, 1, 1, 1, 1, 1, 1, 0, ...]. - _Michael Somos_, Jan 09 2006",
+        "Given g.f. A(x), then B(q) = q * A(q^3) satisfies 0 = f(B(q), B(q^2)) where f(u, v) = u^3 + v^3 - u*v - 3*(u*v)^2. - _Michael Somos_, Jan 09 2006",
+        "G.f.: Product_{k>0} (1-x^(9k))/(1-x^k) = 1 + 1/(1-x)*(Sum_{k>0} x^(k^2+k) Product_{i=1..k} (1+x^i+x^(2i))/((1-x^(2i))*(1-x^(2i+1))))",
+        "G.f. A(x) = 1/g.f. A062246.",
+        "Logarithmic derivative yields A116607 (sum of the divisors of n which are not divisible by 9). - _Paul D. Hanna_, Jun 13 2011",
+        "a(n) ~ 2*Pi * BesselI(1, 4*sqrt(3*n + 1) * Pi/9) / (9*sqrt(3*n + 1)) ~ exp(4*Pi*sqrt(n/3)/3) / (sqrt(2) * 3^(7/4) * n^(3/4)) * (1 + (2*Pi/(9*sqrt(3)) - 9*sqrt(3)/(32*Pi)) / sqrt(n) + (2*Pi^2/243 - 405/(2048*Pi^2) - 5/16) / n). - _Vaclav Kotesovec_, Aug 31 2015, extended Jan 14 2017",
+        "a(n) = (1/n)*Sum_{k=1..n} A116607(k)*a(n-k), a(0) = 1. - _Seiichi Manyama_, Mar 25 2017",
+        "G.f. is a period 1 Fourier series that satisfies f(-1 / (81 t)) = 1/3 g(t) where g() is the g.f. for A062246. - _Michael Somos_, Jun 27 2017"
+    ],
+    "example": [
+        "G.f. = 1 + q + 2*q^2 + 3*q^3 + 5*q^4 + 7*q^5 + 11*q^6 + 15*q^7 + 22*q^8 + 29*q^9 + ...",
+        "B(q) = q + q^4 + 2*q^7 + 3*q^10 + 5*q^13 + 7*q^16 + 11*q^19 + 15*q^22 + ..."
+    ],
+    "mathematica": [
+        "nmax = 50; CoefficientList[Series[Product[(1 - x^(9*k))/(1 - x^k), {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Aug 31 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A); if( n<0, 0, A = x * O(x^n); polcoeff( eta(x^9 + A) / eta(x + A), n))}; /* _Michael Somos_, Jan 09 2006 */",
+        "(PARI) {A116607(n)=sigma(n)-if(n%9==0, 9*sigma(n/9))}",
+        "{a(n)=polcoeff(exp(sum(k=1, n+1, A116607(k)*x^k/k+x*O(x^n))), n)} /* _Paul D. Hanna_, Jun 13 2011 */"
+    ],
+    "xref": [
+        "Cf. A062246, A104501, A104503, A104504.",
+        "Cf. A000009 (m=2), A000726 (m=3), A001935 (m=4), A035959 (m=5), A219601 (m=6), A035985 (m=7), A261775 (m=8), A261776 (m=10).",
+        "Cf. A112193, A261733."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Eric W. Weisstein_, Mar 11 2005",
+    "references": 12,
+    "revision": 39,
+    "time": "2017-06-28T00:58:00-04:00",
+    "created": "2005-04-09T03:00:00-04:00"
+}

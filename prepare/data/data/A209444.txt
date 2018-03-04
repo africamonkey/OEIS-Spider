@@ -1,0 +1,39 @@
+{
+    "number": 209444,
+    "data": "1,16,224,2240,13632,58464,219520,930176,3805824,11930320,33558336,122352192,440858880,1176756448,3112368896,11008771200,35248366848,89371035936,232665100640,727171963840,2289378446208,5950875374080,13907284255872,43816224486528",
+    "name": "a(n) = Pell(n)*A000143(n) for n>=1 with a(0)=1, where A000143(n) is the number of ways of writing n as a sum of 8 squares.",
+    "comment": [
+        "Compare g.f. to the Lambert series of A000143: 1 + 16*Sum_{n>=1} n^3*x^n/(1 - (-x)^n)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A209444/b209444.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: 1 + 16*Sum_{n>=1} Pell(n)*n^3*x^n/(1 - A002203(n)*(-x)^n + (-1)^n*x^(2*n)), where A002203(n) = Pell(n-1) + Pell(n+1)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 16*x + 112*x^2 + 896*x^3 + 3408*x^4 + 10080*x^5 +...",
+        "where A(x) = 1 + 1*16*x + 2*112*x^2 + 5*448*x^3 + 12*1136*x^4 + 29*2016*x^5 + 70*3136*x^6 + 169*5504*x^7 + 408*9328*x^8 +...+ Pell(n)*A000143(n)*x^n +...",
+        "The g.f. is also given by the identity:",
+        "A(x) = 1 + 16*( 1*1*x/(1+2*x-x^2) + 2*8*x^2/(1-6*x^2+x^4) + 5*27*x^3/(1+14*x^3-x^6) + 12*64*x^4/(1-34*x^4+x^8) + 29*125*x^5/(1+82*x^5-x^10) + 70*216*x^6/(1-198*x^6+x^12) + 169*343*x^7/(1+478*x^7-x^14) +...)."
+    ],
+    "mathematica": [
+        "A000143:= Table[SquaresR[8, n], {n, 0, 200}]; Join[{1}, Table[Fibonacci[n, 2]*A000143[[n + 1]], {n, 1, 50}]] (* _G. C. Greubel_, Jan 02 2018 *)"
+    ],
+    "program": [
+        "(PARI) {Pell(n)=polcoeff(x/(1-2*x-x^2+x*O(x^n)),n)}",
+        "{A002203(n)=Pell(n-1)+Pell(n+1)}",
+        "{a(n)=polcoeff(1+16*sum(m=1,n,Pell(m)*m^3*x^m/(1-A002203(m)*(-x)^m+(-1)^m*x^(2*m)+x*O(x^n))),n)}",
+        "for(n=0,31,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A000143, A205964, A205508, A209443, A204270."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 09 2012",
+    "references": 4,
+    "revision": 8,
+    "time": "2018-01-03T17:54:06-05:00",
+    "created": "2012-03-09T19:59:04-05:00"
+}

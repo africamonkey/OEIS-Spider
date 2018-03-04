@@ -1,0 +1,37 @@
+{
+    "number": 143426,
+    "data": "1,1,2,7,32,175,1086,7429,54994,435120,3647686,32192596,297654824,2872372828,28841766844,300592170551,3244942353856,36219458512421,417365572999944,4958429472475171,60659660219655616,763325035692109389",
+    "name": "G.f. satisfies: A(x) = 1 + x*A(x*A(x))^2.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A143426/b143426.txt\">Table of n, a(n) for n = 0..235</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: x - G(x) = G(x)^2*A(x)^2 where G(x*A(x)) = x.",
+        "G.f. satisfies: A(x) = exp( Sum_{n>=0} [d^n/dx^n x^(2n+1)*A(x)^(2n+2)]*A(x)^(-2n-2)/(n+1)! ). [Paul D. Hanna, Dec 18 2010]"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 7*x^3 + 32*x^4 + 175*x^5 + 1086*x^6 +...",
+        "A(x*A(x)) = 1 + x + 3*x^2 + 13*x^3 + 70*x^4 + 434*x^5 + 2986*x^6 +...",
+        "A(x*A(x))^2 = 1 + 2*x + 7*x^2 + 32*x^3 + 175*x^4 + 1086*x^5 +...",
+        "Logarithmic series:",
+        "log(A(x)) = x + [d/dx x^3*A(x)^4]*A(x)^(-4)/2! + [d^2/dx^2 x^5*A(x)^6]*A(x)^(-6)/3! + [d^3/dx^3 x^7*A(x)^8]*A(x)^(-8)/4! +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=0,n,A=1+x*subst(A^2,x,x*A));polcoeff(A,n)}",
+        "(PARI) /* n-th Derivative: */",
+        "{Dx(n,F)=local(D=F);for(i=1,n,D=deriv(D));D}",
+        "/* G.f.: [Paul D. Hanna, Dec 18 2010] */",
+        "{a(n)=local(A=1+x+x*O(x^n));for(i=1,n,",
+        "A=exp(sum(m=0,n,Dx(m,x^(2*m+1)*A^(2*m+2))*A^(-2*m-2)/(m+1)!)+x*O(x^n)));polcoeff(A,n)}"
+    ],
+    "xref": [
+        "Cf. A139702, A087949, A143435, A182969."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Aug 14 2008",
+    "references": 8,
+    "revision": 7,
+    "time": "2014-08-08T16:33:21-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

@@ -1,0 +1,52 @@
+{
+    "number": 117158,
+    "data": "1,1,2,6,23,111,642,4326,33333,288901,2782082,29471046,340568843,4263603891,57482264322,830335952166,12793889924553,209449977967081,3630626729775362,66429958806679686,1279448352687538463,25874432578888440471,548178875969847203202",
+    "name": "Number of permutations avoiding the consecutive pattern 1234.",
+    "comment": [
+        "a(n) is the number of permutations on [n] that avoid the consecutive pattern 1234. It is the same as the number of permutations which avoid 4321."
+    ],
+    "reference": [
+        "F. N. David and D. E. Barton, Combinatorial Chance, Hafner, New York, 1962, pages 156-157."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A117158/b117158.txt\">Table of n, a(n) for n = 0..450</a>  (terms n = 0..60 from Ray Chandler)",
+        "A. Baxter, B. Nakamura, and D. Zeilberger, <a href=\"http://www.math.rutgers.edu/~zeilberg/mamarim/mamarimhtml/auto.html\">Automatic generation of theorems and proofs on enumerating consecutive Wilf-classes</a>",
+        "Sergi Elizalde, <a href=\"http://dx.doi.org/10.1016/j.aam.2005.05.006\">Asymptotic enumeration of permutations avoiding generalized patterns</a>, Adv. Appl. Math. 36 (2006) 138-155.",
+        "Sergi Elizalde and Marc Noy, <a href=\"http://dx.doi.org/10.1016/S0196-8858(02)00527-4\">Consecutive patterns in permutations</a>, Adv. Appl. Math. 30 (2003) 110-125.",
+        "Steven Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/csolve/av.pdf\">Pattern-Avoiding Permutations</a> [Broken link?]",
+        "Steven Finch, <a href=\"/A240885/a240885.pdf\">Pattern-Avoiding Permutations</a> [Cached copy, with permission]",
+        "I. Gessel, <a href=\"http://dx.doi.org/10.1016/0097-3165(90)90060-A\">Symmetric functions and P-recursiveness</a>, J. Combin. Theory A 53 (1990), 257-285.",
+        "Ira M. Gessel, Yan Zhuang, <a href=\"https://arxiv.org/abs/1408.1886\">Counting permutations by alternating descents</a>, arXiv:1408.1886 [math.CO], 2014. See displayed equation before Eq. (3), and set m=4. - _N. J. A. Sloane_, Aug 11 2014"
+    ],
+    "formula": [
+        "E.g.f.: 2/(exp(-x)+cos(x)-sin(x)) = 1/W(0) with continued fraction",
+        "W(k) = 1+(x^(2*k))/(f+f*x/(4*k+1-x-(4*k+1)*b/R)) where R := x^(2*k)+b-(x^(4*k+1))/(c+(x^(2*k+1))+x*c/T); T := 4*k+3-x-(4*k+3)*d/(d+(x^(2*k+1))/W(k+1));",
+        "f:=(4*k)!/(2*k)!; b:=(4*k+1)!/(2*k+1)!; c:=(4*k+2)!/(2*k+1)!; d:=(4*k+3)!/(2*k+2)!. - _Sergei N. Gladkovskii_, Nov 30 2011",
+        "a(n) ~ n! / (sin(r)*r^(n+1)), where r = 1.0384156372665563... is the root of the equation exp(-r)+cos(r)=sin(r). - _Vaclav Kotesovec_, Dec 11 2013"
+    ],
+    "maple": [
+        "b:= proc(u, o, t) option remember; `if`(u+o=0, 1,",
+        "      `if`(t<2, add(b(u+j-1, o-j, t+1), j=1..o), 0)+",
+        "      add(b(u-j, o+j-1, 0), j=1..u))",
+        "    end:",
+        "a:= n-> b(n, 0, 0):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Oct 07 2013"
+    ],
+    "mathematica": [
+        "a[n_]:=Coefficient[Series[2/(Cos[x]-Sin[x]+Exp[ -x]),{x,0,30}],x^n]*n!",
+        "(* second program: *)",
+        "b[u_, o_, t_] := b[u, o, t] = If[u+o==0, 1, If[t<2, Sum[b[u+j-1, o-j, t+1], {j, 1, o}], 0] + Sum[b[u-j, o+j-1, 0], {j, 1, u}]]; a[n_] := b[n, 0, 0]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Nov 23 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A022558, A049774, A111004, A113228, A113229, A117156, A117226, A177523, A177533, A201692, A201693, A230051.",
+        "Column k=0 of A220183.",
+        "Column k=7 of A242784."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Steven Finch_, Apr 26 2006",
+    "references": 20,
+    "revision": 50,
+    "time": "2017-07-19T19:48:22-04:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

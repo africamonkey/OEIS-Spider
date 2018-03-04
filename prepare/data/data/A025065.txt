@@ -1,0 +1,76 @@
+{
+    "number": 25065,
+    "data": "1,1,2,2,4,4,7,7,12,12,19,19,30,30,45,45,67,67,97,97,139,139,195,195,272,272,373,373,508,508,684,684,915,915,1212,1212,1597,1597,2087,2087,2714,2714,3506,3506,4508,4508,5763,5763,7338,7338,9296,9296,11732,11732,14742,14742,18460,18460,23025,23025,28629,28629",
+    "name": "Number of palindromic partitions of n.",
+    "comment": [
+        "That is, the number of partitions of n into parts which can be listed in palindromic order.",
+        "Alternatively, number of partitions of n into parts from the set {1,2,4,6,8,10,12,...}. - _T. D. Noe_, Aug 05 2005",
+        "Also, partial sums of A035363.",
+        "a(n) = A000070(A004526(n)). - _Reinhard Zumkeller_, Jan 23 2010",
+        "Also number of partitions of n with at most one part occurring an odd number of times. - _Reinhard Zumkeller_, Dec 18 2013",
+        "The first Mathematica program computes terms of A025065; the second computes the k palindromic partitions of user-chosen n. - _Clark Kimberling_, Jan 20 2014",
+        "a(n) = number of partitions p of n such that 2*max(p) > n, for n >= 1; also, a(n+1) = number of partitions p of n such that 2*max(p) > n, for n >= 1. - _Clark Kimberling_, Apr 20 2014."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A025065/b025065.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "formula": [
+        "G.f.: 1/((1-q)*prod(n>=1, 1-q^(2*n))). [_Joerg Arndt_, Mar 11 2014]"
+    ],
+    "example": [
+        "The partitions for the first few values of n are as follows:",
+        "n: partitions .......................... number",
+        "1: 1 ................................... 1",
+        "2: 2 11 ................................ 2",
+        "3: 3 111 ............................... 2",
+        "4: 4 22 121 1111 ....................... 4",
+        "5: 5 131 212 11111 ..................... 4",
+        "6: 6 141 33 222 1221 11211 111111 ...... 7",
+        "7: 7 151 313 11311 232 21112 1111111 ... 7",
+        "From _Reinhard Zumkeller_, Jan 23 2010: (Start)",
+        "Partitions into 1,2,4,6,... for the first values of n:",
+        "1: 1 ....................................... 1",
+        "2: 2 11 .................................... 2",
+        "3: 21 111 .................................. 2",
+        "4: 4 22 211 1111 ........................... 4",
+        "5: 41 221 2111 11111 ....................... 4",
+        "6: 6 42 4211 222 2211 21111 111111.......... 7",
+        "7: 61 421 42111 2221 22111 211111 1111111 .. 7. (End)"
+    ],
+    "mathematica": [
+        "Map[Length[Select[IntegerPartitions[#], Count[OddQ[Transpose[Tally[#]][[2]]], True] <= 1 &]] &, Range[40]] (* _Peter J. C. Moses_, Jan 20 2014 *)",
+        "n = 8; Select[IntegerPartitions[n], Count[OddQ[Transpose[Tally[#]][[2]]], True] <= 1 &] (* _Peter J. C. Moses_, Jan 20 2014 *)",
+        "CoefficientList[Series[1/((1 - x) Product[1 - x^(2 n), {n, 1, 50}]), {x, 0, 60}], x] (* _Clark Kimberling_, Mar 14 2014 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a025065 = p (1:[2,4..]) where",
+        "   p [] _ = 0",
+        "   p _  0 = 1",
+        "   p ks'@(k:ks) m | m < k     = 0",
+        "                  | otherwise = p ks' (m - k) + p ks m",
+        "-- _Reinhard Zumkeller_, Aug 12 2011",
+        "(Haskell)",
+        "import Data.List (group)",
+        "a025065 = length . filter (<= 1) .",
+        "                   map (sum . map ((`mod` 2) . length) . group) . ps 1",
+        "   where ps x 0 = [[]]",
+        "         ps x y = [t:ts | t <- [x..y], ts <- ps t (y - t)]",
+        "-- _Reinhard Zumkeller_, Dec 18 2013",
+        "(PARI) N=66; q='q+O('q^N); Vec( 1/((1-q)*eta(q^2)) ) \\\\ _Joerg Arndt_, Mar 11 2014"
+    ],
+    "xref": [
+        "Cf. A172033, A004277. - _Reinhard Zumkeller_, Jan 23 2010"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Dec 29 2007",
+        "Prepended a(0)=1, added more terms, _Joerg Arndt_, Mar 11 2014"
+    ],
+    "references": 24,
+    "revision": 38,
+    "time": "2015-11-02T06:37:27-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

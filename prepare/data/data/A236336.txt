@@ -1,0 +1,46 @@
+{
+    "number": 236336,
+    "data": "1,2,4,5,9,12,16,22,26,33,38,45,53,60,61,76,86,91,92,97,111,112,121,134,135,147,148,150,153,157,167,180,200,212,223,227,228,238,246,264,269,282,286,305,312,313,321,322,327,328,360,374,389,393,395,420,421",
+    "name": "Lexicographically earliest increasing sequence of positive integers such that its graph has no three collinear points.",
+    "comment": [
+        "An increasing version of A236335."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A236336/b236336.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "Consider a(5). The previous terms are 1,2,4,5. The value of a(5) can't be 6 because points (3,4),(4,5),(5,6) (corresponding to values a(3),a(4),a(5)) are on the same line: y=x+1. Points (1,1),(3,4),(5,7) are on the same line y=3x/2-1/2, so a(5) can't be 7. Points (2,2),(3,4),(5,8) are on the same line: y=2x-2, so a(5) can't be 8. Thus a(5)=5."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local i, j, k, ok;",
+        "      if n<3 then n",
+        "    else for k from 1+a(n-1) do ok:=true;",
+        "           for j from n-1 to 2 by -1 while ok do",
+        "             for i from j-1 to 1 by -1 while ok do",
+        "               ok:= (n-j)*(a(j)-a(i))<>(j-i)*(k-a(j)) od",
+        "           od; if ok then return k fi",
+        "         od",
+        "      fi",
+        "    end:",
+        "seq(a(n), n=1..70);  # _Alois P. Heinz_, Jan 23 2014"
+    ],
+    "mathematica": [
+        "g[1] = 1;",
+        "g[n_] := g[n] =",
+        "  Min[Complement[Range[g[n - 1] + 1, 500],",
+        "    Select[Flatten[",
+        "      Table[g[k] + (n - k) (g[j] - g[k])/(j - k), {k, n - 2}, {j,",
+        "        k + 1, n - 1}]], IntegerQ[#] &]]]",
+        "Table[g[k], {k, 50}]"
+    ],
+    "xref": [
+        "Cf. A229037, A185256, A236335."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Tanya Khovanova_, Jan 22 2014",
+    "references": 2,
+    "revision": 18,
+    "time": "2015-04-04T21:46:57-04:00",
+    "created": "2014-01-22T17:39:36-05:00"
+}

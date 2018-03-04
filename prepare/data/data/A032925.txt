@@ -1,0 +1,51 @@
+{
+    "number": 32925,
+    "data": "1,2,5,6,9,10,21,22,25,26,37,38,41,42,85,86,89,90,101,102,105,106,149,150,153,154,165,166,169,170,341,342,345,346,357,358,361,362,405,406,409,410,421,422,425,426,597,598,601,602,613",
+    "name": "Numbers whose set of base 4 digits is {1,2}.",
+    "comment": [
+        "Intersection of A023705 and A023717; A179888 is the intersection of this sequence and A053754. - _Reinhard Zumkeller_, Jul 31 2010"
+    ],
+    "link": [
+        "R. Zumkeller, <a href=\"/A032925/b032925.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(2n) = 4a(n-1) + 2, a(2n+1) = 4a(n) + 1. - _Ralf Stephan_, Oct 07 2003, corrected _R. J. Mathar_, Sep 07 2016"
+    ],
+    "maple": [
+        "A032925 := proc(n)",
+        "    option remember;",
+        "    if n <= 2 then",
+        "        n;",
+        "    else",
+        "        if type(n,'even') then",
+        "            2+4*procname(n/2-1) ;",
+        "        else",
+        "            1+4*procname(floor(n/2)) ;",
+        "        end if;",
+        "    end if;",
+        "end proc:",
+        "seq(A032925(n),n=1..100) ;  # _R. J. Mathar_, Sep 07 2016"
+    ],
+    "mathematica": [
+        "Flatten[Table[FromDigits[#,4]&/@Tuples[{1,2},n],{n,5}]] (* _Vincenzo Librandi_, Jun 05 2012 *)"
+    ],
+    "program": [
+        "(MAGMA) [n: n in [1..1000] | Set(IntegerToSequence(n, 4)) subset {1, 2}]; // _Vincenzo Librandi_, Jun 05 2012",
+        "(Haskell)",
+        "import Data.List (transpose)",
+        "a032925 n = a032925_list !! (n-1)",
+        "a032925_list = 1 : 2 : (concat $ transpose [map (+ 1) fs, map (+ 2) fs])",
+        "               where fs = map (* 4) a032925_list",
+        "-- _Reinhard Zumkeller_, Apr 18 2015"
+    ],
+    "xref": [
+        "Cf. A023705, A023717, A179888, A053754."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_",
+    "references": 7,
+    "revision": 25,
+    "time": "2016-09-07T04:37:22-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

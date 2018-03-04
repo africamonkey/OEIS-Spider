@@ -1,0 +1,39 @@
+{
+    "number": 182224,
+    "data": "1,1,2,7,35,220,1622,13480,123212,1218694,12898292,144890911,1717072304,21367220392,278174617499,3777454890226,53372573914742,783004637781214,11905653060557285,187325244287570431,3045651218248945454,51103551998888439679,883901254149820933025",
+    "name": "G.f. satisfies: A(x) = 1 + x*A(x) * A(A(x) - 1).",
+    "formula": [
+        "Given g.f. A(x), define G(x) by G(x)/x = g.f. of A088717, then G(x) satisfies:",
+        "(1) G(x) = x + x*G(G(x)^2/x),",
+        "(2) G(x) = Series_Reversion(x/A(x)),",
+        "(3) G(x) = x/Series_Reversion(x*A(x)) - 1,",
+        "(4) G(x) = x*A(G(x)),",
+        "(5) G(x) = A(x/(1+G(x))) - 1,",
+        "(6) A(x) = 1 + G(x*A(x))."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 7*x^3 + 35*x^4 + 220*x^5 + 1622*x^6 +...",
+        "such that A(x) = 1 + x*A(x)*A(A(x)-1) where:",
+        "A(A(x)-1) = 1 + x + 4*x^2 + 22*x^3 + 148*x^4 + 1147*x^5 + 9901*x^6 +...",
+        "Let G(x) satisfy G(x/A(x)) = x, then G(x)/x = g.f. of A088717, where",
+        "G(x) = x + x^2 + 3*x^3 + 14*x^4 + 84*x^5 + 596*x^6 + 4785*x^7 +...",
+        "A(G(x)) = 1 + x + 3*x^2 + 14*x^3 + 84*x^4 + 596*x^5 + 4785*x^6 +...",
+        "A(x/(1+G(x))) = 1 + x + x^2 + 3*x^3 + 14*x^4 + 84*x^5 + 596*x^6 + 4785*x^7 +...",
+        "G(x*A(x)) = x + 2*x^2 + 7*x^3 + 35*x^4 + 220*x^5 + 1622*x^6 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=1+x*A*subst(A,x,A-1)+x*O(x^n));polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=1+subst(serreverse(x/A),x,x*A)+x*O(x^n));polcoeff(A,n)}",
+        "for(n=0,25,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A088717."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 19 2012",
+    "references": 2,
+    "revision": 9,
+    "time": "2012-04-20T09:59:46-04:00",
+    "created": "2012-04-19T19:23:06-04:00"
+}

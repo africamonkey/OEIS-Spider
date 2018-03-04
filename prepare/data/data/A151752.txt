@@ -1,0 +1,43 @@
+{
+    "number": 151752,
+    "data": "5,75,375,9375,59375,359375,3359375,93359375,193359375,3193359375,73193359375,773193359375,3773193359375,73773193359375,773773193359375,5773773193359375,15773773193359375,515773773193359375,7515773773193359375,97515773773193359375",
+    "name": "a(n) = the unique n-digit number with all digits odd that is divisible by 5^n.",
+    "comment": [
+        "Another way to phrase the proof of uniqueness: after we take the last n-1 digits to be the previous number in the sequence, all odd possibilities for the first digit give different remainders mod 5. By pigeon hole principle, exactly one of them generates the required number. - _Tanya Khovanova_, Jun 18 2009"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A151752/b151752.txt\">Table of n, a(n) for n = 1..300</a>"
+    ],
+    "formula": [
+        "a(n) = d(n)*10^(n-1) + a(n-1), where d(n), the leading digit of a(n), is one of the odd digits 1, 3, 5, 7, or 9 (forming the complete set of residues modulo 5) and is uniquely defined by the congruence: d(n) == (- a(n-1) / 10^(n-1)) (mod 5). - _Max Alekseyev_"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k, l;",
+        "      if n=1 then 5",
+        "    else l:= a(n-1);",
+        "         for k from 1 to 9 by 2",
+        "           while (parse(cat(k, l)) mod 5^n)<>0 do od;",
+        "         parse(cat(k, l))",
+        "      fi",
+        "    end:",
+        "seq(a(n), n=1..30); # _Alois P. Heinz_, Jun 18 2009"
+    ],
+    "mathematica": [
+        "nxt[n_]:=Module[{x=FromDigits/@(Prepend[IntegerDigits[n],# ]&/@{1,3,5,7,9}),l},l=IntegerLength[n]+1;First[Select[x,Mod[ #,5^l]==0&]]]; NestList[nxt, 5, 25] (* _Harvey P. Dale_, Jul 06 2009 *)"
+    ],
+    "xref": [
+        "Cf. A151753, A151754."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_David W. Wilson_, Jun 16 2009",
+    "ext": [
+        "More terms from _Max Alekseyev_, Jun 17 2009",
+        "Further terms from _Alois P. Heinz_, Jun 18 2009",
+        "More terms from _Harvey P. Dale_, Jul 06 2009"
+    ],
+    "references": 3,
+    "revision": 19,
+    "time": "2015-08-22T19:53:26-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

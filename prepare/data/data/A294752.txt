@@ -1,0 +1,54 @@
+{
+    "number": 294752,
+    "data": "53295,119301,229245,399993,608235,623645,1462731,2324495,3696189,3973145,4482879,5356445,5920971,6249633,7588977,8270385,10160943,10450121,10505373,13185969,13630011,13760929,14935029,19095395,20280795,22566271,23131549,23408259,24778401",
+    "name": "Squarefree products of k primes that are symmetrically distributed around their average. Case k = 5.",
+    "link": [
+        "Robert Israel, <a href=\"/A294752/b294752.txt\">Table of n, a(n) for n = 1..3560</a>"
+    ],
+    "example": [
+        "53295 = 3*5*11*17*19. Prime factors average is (3 + 5 + 11 + 17 + 19)/5 = 11 and 3 + 8 = 11 = 19 - 8, 5 + 6 = 11 = 17 - 6."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q,h) local a,b,k,n,ok;",
+        "for n from 2*3*5*7*11 to q do if not isprime(n) and issqrfree(n) then a:=ifactors(n)[2];",
+        "if nops(a)=h then b:=2*add(a[k][1],k=1..nops(a))/nops(a); ok:=1;",
+        "for k from 1 to trunc(nops(a)/2) do if a[k][1]+a[nops(a)-k+1][1]<>b then ok:=0; break; fi; od; if ok=1 then print(n); fi; fi; fi; od; end: P(10^9,5);",
+        "# Alternative:",
+        "N:= 10^8: # to get all terms <= N",
+        "M:= floor((8*N/15)^(1/3)):",
+        "P:= select(isprime, [seq(i,i=3..M,2)]): nP:= nops(P):",
+        "Res:= NULL:",
+        "for i3 from 3 to nP-2 do",
+        "  p3:= P[i3];",
+        "  for i1 from 1 to i3-2 do",
+        "    if isprime(2*p3 - P[i1]) then",
+        "      for i2 from i1+1 to i3-1 do",
+        "        if isprime(2*p3 - P[i2]) then",
+        "          v:=P[i1]*P[i2]*p3*(2*p3-P[i2])*(2*p3-P[i1]);",
+        "          if v <= N then Res:= Res, v fi",
+        "        fi",
+        "      od",
+        "     fi",
+        "   od",
+        "od:",
+        "sort([Res]): # _Robert Israel_, Nov 10 2017"
+    ],
+    "program": [
+        "(PARI) isok(n, nb=5) = {if (issquarefree(n) && (omega(n)==nb), f = factor(n)[, 1]~; avg = vecsum(f)/#f; for (k=1, #f\\2, if (f[k] + f[#f-k+1] != 2*avg, return(0));); return (1););} \\\\ _Michel Marcus_, Nov 10 2017"
+    ],
+    "xref": [
+        "Subsequence of A046387, A203614.",
+        "Cf. A006881 (k=2), A262723 (k=3), A294751 (k=4), A294776 (k=6)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Nov 08 2017",
+    "ext": [
+        "More terms from _Giovanni Resta_, Nov 09 2017",
+        "Missing term 23131549 inserted by _Robert Israel_, Nov 10 2017"
+    ],
+    "references": 4,
+    "revision": 22,
+    "time": "2017-11-10T21:47:10-05:00",
+    "created": "2017-11-10T03:11:44-05:00"
+}

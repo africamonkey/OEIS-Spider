@@ -1,0 +1,56 @@
+{
+    "number": 281150,
+    "data": "1,1000,1001,10100,10101,10110,10111,11000000,11000001,11000010,11000011,11000100,11000101,11000110,11000111,110010000,110010001,110010010,110010011,110010100,110010101,110010110,110010111,110011000,110011001,110011010",
+    "name": "Elias delta code for n.",
+    "comment": [
+        "The number of bits of a(n) is equal to A140341(n).",
+        "Unary(n) = A105279(n-1)."
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A281150/b281150.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "J. Nelson Raja, P. Jaganathan and S. Domnic, <a href=\"http://dx.doi.org/10.17485/ijst/2015/v8i24/80242\">A New Variable-Length Integer Code for Integer Representation and Its Application to Text Compression</a>, Indian Journal of Science and Technology, Vol 8(24), September 2015."
+    ],
+    "formula": [
+        "For a given integer n, it is stored in two parts. The first part equals 1+floor(log_2 n) and the second part equals n-2^(floor(log_2 n)). The first part is stored in Elias Gamma Code and the second part is stored in binary using floor(log_2 n) bits. Now the first and the second parts are concatenated to give the answer."
+    ],
+    "example": [
+        "For n = 9, the first part is \"11000\" and the second part is \"001\". So, a(9) = 11000001."
+    ],
+    "program": [
+        "(Python)",
+        "def unary(n):",
+        "....return \"1\"*(n-1)+\"0\"",
+        "def elias_gamma(n):",
+        "....if n==1:",
+        "........return \"1\"",
+        "....k=int(math.log(n, 2))",
+        "....fp=unary(1+k)    #fp is the first part",
+        "....sp=n-2**(k)      #sp is the second part",
+        "....nb=k             #nb is the number of bits used to store sp in binary",
+        "....sp=bin(sp)[2:]",
+        "....if len(sp)<nb:",
+        "........sp=(\"0\"*(nb-len(sp)))+sp",
+        "....return fp+sp",
+        "def elias_delta(n):",
+        "....if n==1:",
+        "........return \"1\"",
+        "....k=int(math.log(n, 2))",
+        "....fp=elias_gamma(1+k)#fp is the first part",
+        "....sp=n-2**(k)        #sp is the second part",
+        "....nb=k               #nb is the number of bits used to store sp in binary",
+        "....sp=bin(sp)[2:]",
+        "....if len(sp)<nb:",
+        "........sp=(\"0\"*(nb-len(sp)))+sp",
+        "....return fp+sp"
+    ],
+    "xref": [
+        "Cf. A105279(unary code for n), A140341, A281149."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Indranil Ghosh_, Jan 16 2017",
+    "references": 6,
+    "revision": 10,
+    "time": "2017-01-17T23:49:17-05:00",
+    "created": "2017-01-16T14:45:44-05:00"
+}

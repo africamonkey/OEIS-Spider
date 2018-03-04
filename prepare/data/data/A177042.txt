@@ -1,0 +1,57 @@
+{
+    "number": 177042,
+    "data": "1,2,22,604,31238,2620708,325024572,55942352184,12765597850950,3730771315561300,1359124435588313876,603916464771468176392,321511316149669476991132,202039976682357297272094824,147980747895225006590333244088,124963193751534047864734415925360",
+    "name": "Eulerian version of the Catalan numbers, a(n) = A008292(2*n+1,n+1)/(n+1).",
+    "comment": [
+        "According to the Bidkhori and Sullivant reference's abstract, authors show \"that the Eulerian-Catalan numbers enumerate Dyck permutations, [providing] two proofs for this fact, the first using the geometry of alcoved polytopes and the second a direct combinatorial proof via an Eulerian-Catalan analog of the Chung-Feller theorem.\" - _Jonathan Vos Post_, Jan 07 2011",
+        "Twice the number of permutations of {1,2,..,2n} with n ascents. - _Peter Luschny_, Jan 11 2011"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A177042/b177042.txt\">Table of n, a(n) for n = 0..220</a>",
+        "F. Ardila, <a href=\"http://dx.doi.org/10.1016/S0097-3165(03)00121-3\"> The Catalan matroid</a>, J. Combin. Theory Ser. A 104 (2003) 49-62.",
+        "Hoda Bidkhori, Seth Sullivant, <a href=\"http://arxiv.org/abs/1101.1108\">Eulerian-Catalan Numbers</a>, arXiv:1101.1108 [math.CO], Jan 05 2011.",
+        "Digital Library of Mathematical Functions, <a href=\"http://dlmf.nist.gov/26.14#T1\">Table 26.14.1</a>"
+    ],
+    "formula": [
+        "a(n) = 2*A180056(n) for n > 0, A180056 the central Eulerian numbers in the sense of A173018.",
+        "a(n) = A025585(n+1)/(n+1), A025585 the central Eulerian numbers in the sense of A008292.",
+        "a(n) = 2 Sum_{k=0..n} (-1)^k binomial(2n+1,k) (n-k+1)^(2n)",
+        "a(n) = (n+1)^(-1) Sum_{k=0..n} (-1)^k binomial(2n+2,k)(n+1-k)^(2n+1). - _Peter Luschny_, Jan 11 2011",
+        "a(n) = A008518(2n,n). - _Alois P. Heinz_, Jun 12 2017"
+    ],
+    "maple": [
+        "A177042 := proc(n) A008292(2*n+1,n+1)/(n+1) ; end proc:",
+        "seq(A177042(n),n=0..10) ; # _R. J. Mathar_, Jan 08 2011",
+        "A177042 := n -> A025585(n+1)/(n+1):",
+        "A177042 := n -> `if`(n=0,1,2*A180056(n)):",
+        "# The A173018 based recursion below needs no division!",
+        "A := proc(n, k) option remember;",
+        "       if n = 0 and k = 0 then 1",
+        "     elif k > n  or k < 0 then 0",
+        "     else (n-k) *A(n-1, k-1) +(k+1) *A(n-1, k)",
+        "       fi",
+        "     end:",
+        "A177042 := n-> `if`(n=0, 1, 2*A(2*n, n)):",
+        "seq(A177042(n), n=0..30);",
+        "# - _Peter Luschny_, Jan 11 2011"
+    ],
+    "mathematica": [
+        "<< DiscreteMath`Combinatorica`",
+        "Table[(Eulerian[2*n + 1, n])/(n + 1), {n, 0, 20}]",
+        "(* Second program: *)",
+        "A[n_, k_] := A[n, k] = Which[n == 0 && k == 0, 1, k > n || k < 0, 0, True, (n - k)*A[n - 1, k - 1] + (k + 1)*A[n - 1, k]]; A177042[n_] := If[n == 0, 1, 2*A[2*n, n]]; Table[A177042[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Jul 13 2017, after _Peter Luschny_ *)"
+    ],
+    "xref": [
+        "Cf. A000108, A008518, A025585, A180056."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Roger L. Bagula_, May 01 2010",
+    "ext": [
+        "Edited by _Alois P. Heinz_, Jan 14 2011"
+    ],
+    "references": 4,
+    "revision": 41,
+    "time": "2017-07-13T02:42:28-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

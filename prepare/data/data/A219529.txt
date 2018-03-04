@@ -1,0 +1,53 @@
+{
+    "number": 219529,
+    "data": "1,5,11,16,21,27,32,37,43,48,53,59,64,69,75,80,85,91,96,101,107,112,117,123,128,133,139,144,149,155,160,165,171,176,181,187,192,197,203,208,213,219,224,229,235,240,245,251,256,261,267,272,277,283,288,293,299",
+    "name": "Coordination sequence for 3.3.4.3.4 Archimedean tiling.",
+    "comment": [
+        "a(n) is the number of vertices of the 3.3.4.3.4 tiling (which has three triangles and two squares, in the given cyclic order, meeting at each vertex) whose shortest path connecting them to a given origin vertex contains n edges.",
+        "First few terms provided by _Allan C. Wechsler_; Fred Lunnon and Fred Helenius gave the next few; Fred Lunnon suggested that the recurrence was a(n+3) = a(n) + 16 for n > 1. [This conjecture is true - see the CGS-NJAS link in A296368 for a proof. - _N. J. A. Sloane_, Dec 31 2017]"
+    ],
+    "link": [
+        "Joseph Myers, <a href=\"/A219529/b219529.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Branko Gr\u00fcnbaum and Geoffrey C. Shephard, <a href=\"http://www.jstor.org/stable/2689529\">Tilings by regular polygons</a>, Mathematics Magazine, 50 (1977), 227-247.",
+        "Kival Ngaokrajang, <a href=\"/A219529/a219529.pdf\">Illustration of initial terms</a>",
+        "Reticular Chemistry Structure Resource, <a href=\"http://rcsr.net/layers/tts\">tts</a>",
+        "N. J. A. Sloane, <a href=\"/A008576/a008576.png\">The uniform planar nets and their A-numbers</a> [Annotated scanned figure from Gruenbaum and Shephard (1977)]"
+    ],
+    "formula": [
+        "Conjectured to be a(n) = floor((16n+1)/3) for n>0; a(0) = 1; this is a consequence of the suggested recurrence due to Lunnon (see comments). [This conjecture is true - see the CGS-NJAS link in A296368 for a proof. - _N. J. A. Sloane_, Dec 31 2017]",
+        "G.f.: (x+1)^4/((x^2+x+1)*(x-1)^2). - _N. J. A. Sloane_, Feb 07 2018"
+    ],
+    "program": [
+        "(Haskell)",
+        "-- Very slow, could certainly be accelerated.  SST stands for Snub Square Tiling.",
+        "setUnion [] l2 = l2",
+        "setUnion (a:rst) l2 = if (elem a l2) then doRest else (a:doRest)",
+        "  where doRest = setUnion rst l2",
+        "setDifference [] l2 = []",
+        "setDifference (a:rst) l2 = if (elem a l2) then doRest else (a:doRest)",
+        "  where doRest = setDifference rst l2",
+        "adjust k = (if (even k) then 1 else -1)",
+        "weirdAdjacent (x,y) = (x+(adjust y),y+(adjust x))",
+        "sstAdjacents (x,y) = [(x+1,y),(x-1,y),(x,y+1),(x,y-1),(weirdAdjacent (x,y))]",
+        "sstNeighbors core = foldl setUnion core (map sstAdjacents core)",
+        "sstGlob n core = if (n == 0) then core else (sstGlob (n-1) (sstNeighbors core))",
+        "sstHalo core = setDifference (sstNeighbors core) core",
+        "origin = [(0,0)]",
+        "a219529 n = length (sstHalo (sstGlob (n-1) origin))",
+        "-- _Allan C. Wechsler_, Nov 30 2012"
+    ],
+    "xref": [
+        "List of coordination sequences for uniform planar nets: A008458 (the planar net 3.3.3.3.3.3), A008486 (6^3), A008574 (4.4.4.4 and 3.4.6.4), A008576 (4.8.8), A008579 (3.6.3.6), A008706 (3.3.3.4.4), A072154 (4.6.12), A219529 (3.3.4.3.4), A250120 (3.3.3.3.6), A250122 (3.12.12)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Allan C. Wechsler_, Nov 21 2012",
+    "ext": [
+        "Corrected attributions and epistemological status in Comments; provided slow Haskell code - _Allan C. Wechsler_, Nov 30 2012",
+        "Extended by _Joseph Myers_, Dec 04 2014"
+    ],
+    "references": 20,
+    "revision": 41,
+    "time": "2018-02-07T13:55:14-05:00",
+    "created": "2012-11-21T15:44:00-05:00"
+}

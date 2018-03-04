@@ -1,0 +1,29 @@
+{
+    "number": 234970,
+    "data": "284,1210,1336,2122,2362,2924,5234,5564,6368,10856,12458,13923,14595,18416,34586,36843,66992,71145,74385,76084,80745,85939,87633,88730,89228,90153,91322,91792,123152,124155,139815,153176,156122,163148,168730,171428,172166",
+    "name": "Deficient numbers whose aliquot sequence is deficient, abundant, deficient, ..., etc.",
+    "comment": [
+        "All larger members of an amicable pair (A002046) belong to this sequence.",
+        "Also deficient members of the sociable quadruple represented in A222977 are here.",
+        "Starting at k=3, I found 1, 9, 28, 93, 266, 774, 2821 terms up to 10^k."
+    ],
+    "example": [
+        "The aliquot sequence 284->220->284->... has the requested form, so 284 is here.",
+        "2122 is here too, since its aliquot sequence is 2122->1064->1336->1184->1210->... ."
+    ],
+    "program": [
+        "(PARI) isAmicable(n)={my(a=sigma(n)-n); (a<>n) && (sigma(a)-a)==n;} \\\\ from A063990",
+        "isSociableADAD(n)={my(a=sigma(n)-n); if (!a, return (0)); my(b=sigma(a)-a); if(! b, return (0)); my(c=sigma(b)-b); if (!c, return (0)); my(d=sigma(c)-c); if (d != n, return (0)); ((n>a) && (a<b) && (b>c) && (c<n)) || ((n<a) && (a>b) && (b<c) && (c>n));}",
+        "isok(n) = {my(oldn = n); my(newn = sigma(oldn) - oldn); my(dir = sign(newn - oldn)); if (!dir || (dir > 0), return (0)); oldn = newn; while (1, newn = sigma(oldn) - oldn; ndir = sign(newn - oldn); if (!ndir || (ndir == dir), return (0)); if (isAmicable(oldn), return(1)); if (isSociableADAD(oldn), return(1)); oldn = newn; dir = ndir;);}"
+    ],
+    "xref": [
+        "Cf. A002025, A002046, A063990, A222977, A234969."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Jan 02 2014",
+    "references": 1,
+    "revision": 10,
+    "time": "2014-01-05T05:15:46-05:00",
+    "created": "2014-01-05T05:15:46-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 53266,
+    "data": "0,1,1,1,1,2,2,2,2,3,3,4,4,5,5,6,6,8,8,9,10,12,12,14,15,17,18,20,21,25,26,29,31,35,36,41,43,48,51,56,59,66,70,76,81,89,94,103,109,119,126,137,144,158,167,180,191,207,218,236,250,269,285,306,323,349,368",
+    "name": "Coefficients of the '5th order' mock theta function Phi(q).",
+    "comment": [
+        "In Ramanujan's lost notebook the generating function is denoted by phi(q) on pages 18 and 20, however on page 18 there is no minus one first term. - _Michael Somos_, Jul 07 2015"
+    ],
+    "reference": [
+        "G. E. Andrews and B. C. Berndt, Ramanujan's lost notebook, Part III, Springer, New York, 2012, MR2952081, See p. 12, Equation (2.1.18) and also page 26 equation (2.4.8).",
+        "George E. Andrews and Frank G. Garvan, Ramanujan's \"lost\" notebook VI: The mock theta conjectures, Advances in Mathematics, 73 (1989) 242-255",
+        "Dean Hickerson, A proof of the mock theta conjectures, Inventiones Mathematicae, 94 (1988) 639-660",
+        "Srinivasa Ramanujan, The Lost Notebook and Other Unpublished Papers, Narosa Publishing House, New Delhi, 1988, pp. 18, 20, 23"
+    ],
+    "formula": [
+        "G.f.: -1 + Sum_{k>=0} q^(5k^2)/((1-q)(1-q^4)(1-q^6)(1-q^9)...(1-q^(5k+1))).",
+        "3*a(n) = A053262(n) + A259910(n) unless n=0. - _Michael Somos_, Jul 07 2015"
+    ],
+    "example": [
+        "G.f. = x + x^2 + x^3 + x^4 + 2*x^5 + 2*x^6 + 2*x^7 + 2*x^8 + 3*x^9 + ..."
+    ],
+    "mathematica": [
+        "Series[Sum[q^(5n^2)/Product[1-q^Abs[5k+1], {k, -n, n}], {n, 0, 4}], {q, 0, 100}]-1",
+        "a[ n_] := If[ n < 0, 0, SeriesCoefficient[ -1 + Sum[ x^(5 k^2) / (QPochhammer[ x, x^5, k + 1] QPochhammer[ x^4, x^5, k]), {k, 0, Sqrt[n/5]}], {x, 0, n}]]; (* _Michael Somos_, Jul 07 2015 *)",
+        "a[ n_] := If[ n < 0, 0, With[ {m = Sqrt[1 + 24 n/5]}, SeriesCoefficient[ -1 + Sum[ (-1)^k x^(5 k (3 k + 1)/2) / (1 - x^(5 k + 1)), {k, Quotient[m + 1, -6], Quotient[m - 1, 6]}] / QPochhammer[ x^5], {x, 0, n}]]]; (* _Michael Somos_, Jul 07 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( sum(k=0, sqrtint(n\\5), x^(5*k^2) / prod(i=1, 5*k+1, 1 - if( i%5==1 || i%5==4, x^i), 1 + x * O(x^(n - 5*k^2)))) - 1, n))}; /* _Michael Somos_, Jul 07 2015 */",
+        "(PARI) {a(n) = my(A, m); if( n<0, 0, m = sqrtint(1 + 24*n\\5); A = x * O(x^n); polcoeff( sum(k=(m + 1)\\-6, (m - 1)\\6, (-1)^k * x^(5*k*(3*k + 1)/2) / (1 - x^(5*k + 1)), A) / eta(x^5 + A) - 1, n))}; /* _Michael Somos_, Jul 07 2015 */"
+    ],
+    "xref": [
+        "Other '5th order' mock theta functions are at A053256, A053257, A053258, A053259, A053260, A053261, A053262, A053263, A053264, A053265, A053267.",
+        "Cf. A259910."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,6",
+    "author": "_Dean Hickerson_, Dec 19 1999",
+    "references": 16,
+    "revision": 13,
+    "time": "2016-12-09T10:21:14-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

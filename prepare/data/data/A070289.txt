@@ -1,0 +1,46 @@
+{
+    "number": 70289,
+    "data": "1,1,2,3,5,7,11,14,20,27,36,47,64,79,102,125,157,193,243,296,366,441,538,639,773,911,1092,1294,1532,1799,2131,2475,2901,3369,3935,4554,5292,6084,7033,8087,9292,10617,12198,13880,15874,18039,20541,23263,26414,29838",
+    "name": "Number of distinct values of multinomial coefficients ( n / (p1, p2, p3,...) ) where (p1, p2, p3,...) runs over all partitions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A070289/b070289.txt\">Table of n, a(n) for n = 0..92</a>",
+        "Sergei Viznyuk, <a href=\"http://phystech.com/ftp/A070289.c\">C-Program</a>, <a href=\"/A070289/a070289_1.c.txt\">C-Program, local copy</a>"
+    ],
+    "formula": [
+        "a(n) = A215520(n,n) = A215521(2*n,n). - _Alois P. Heinz_, Nov 08 2012"
+    ],
+    "maple": [
+        "b:= proc(n,i) option remember;",
+        "      if n=0 then {1} elif i<1 then {} else {b(n, i-1)[],",
+        "         seq(map(x-> x*i!^j, b(n-i*j, i-1))[], j=1..n/i)} fi",
+        "    end:",
+        "a:= n-> nops(b(n, n)):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Aug 14 2012"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n == 0, {1}, If[i<1, {}, Union[Join[b[n, i-1], Flatten[ Table[Function[{x}, x*i!^j] /@ b[n-i*j, i-1], {j, 1, n/i}]]]]]]; a[n_] := Length[b[n, n]]; Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Mar 23 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A070289(n):",
+        "    P=Partitions(n);",
+        "    M=[multinomial(list(x)) for x in P]",
+        "    M=uniq(M)",
+        "    return len(M)",
+        "[A070289(n) for n in range(50)]",
+        "# _Joerg Arndt_, Aug 14 2012"
+    ],
+    "xref": [
+        "Cf. A036038."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Naohiro Nomoto_, May 12 2002",
+    "ext": [
+        "Corrected terms a(n) for n>=45, _Joerg Arndt_ and _Alois P. Heinz_, Aug 14 2012."
+    ],
+    "references": 9,
+    "revision": 44,
+    "time": "2017-08-19T16:08:04-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

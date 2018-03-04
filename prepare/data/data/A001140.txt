@@ -1,0 +1,53 @@
+{
+    "number": 1140,
+    "data": "4,14,1114,3114,132114,1113122114,311311222114,13211321322114,1113122113121113222114,31131122211311123113322114,132113213221133112132123222114,11131221131211132221232112111312111213322114,31131122211311123113321112131221123113111231121123222114",
+    "name": "Describe the previous term! (method A - initial term is 4).",
+    "comment": [
+        "Method A = 'frequency' followed by 'digit'-indication.",
+        "A001155, A001140, A001141, A001143, A001145, A001151 and A001154 are all identical apart from the last digit of each term (the seed). This is because digits other than 1, 2 and 3 never arise elsewhere in the terms (other than at the end of each of them) of look-and-say sequences of this type (as is mentioned by _Carmine Suriano_ in A006751). - _Chayim Lowen_, Jul 16 2015",
+        "a(n+1) - a(n) is divisible by 10^5 for n > 5. - _Altug Alkan_, Dec 04 2015"
+    ],
+    "reference": [
+        "S. R. Finch, Mathematical Constants, Cambridge, 2003, pp. 452-455.",
+        "I. Vardi, Computational Recreations in Mathematica. Addison-Wesley, Redwood City, CA, 1991, p. 4."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A001140/b001140.txt\">Table of n, a(n) for n=1..20</a>",
+        "J. H. Conway, <a href=\"http://dx.doi.org/10.1007/978-1-4612-4808-8_53\">The weird and wonderful chemistry of audioactive decay</a>, in T. M. Cover and Gopinath, eds., Open Problems in Communication and Computation, Springer, NY 1987, pp. 173-188.",
+        "S. R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/constant/cnwy/cnwy.html\">Conway's Constant</a> [Broken link]"
+    ],
+    "example": [
+        "The term after 3114 is obtained by saying \"one 3, two 1's, one 4\", which gives 132114."
+    ],
+    "mathematica": [
+        "RunLengthEncode[ x_List ] := (Through[ {First, Length}[ #1 ] ] &) /@ Split[ x ]; LookAndSay[ n_, d_:1 ] := NestList[ Flatten[ Reverse /@ RunLengthEncode[ # ] ] &, {d}, n - 1 ]; F[ n_ ] := LookAndSay[ n, 4 ][ [ n ] ]; Table[ FromDigits[ F[ n ] ], {n, 1, 11} ] (* _Zerinvary Lajos_, Mar 21 2007 *)"
+    ],
+    "program": [
+        "(Haskell) cf. Josh Triplett's program for A005051.",
+        "import Data.List (group)",
+        "a001140 n = a001140_list !! (n-1)",
+        "a001140_list = 4 : map say a001140_list where",
+        "   say = read . concatMap saygroup . group . show",
+        "         where saygroup s = (show $ length s) ++ [head s]",
+        "-- _Reinhard Zumkeller_, Dec 15 2012",
+        "(Perl)",
+        "# This outputs the first n elements of the sequence, where n is given on the command line.",
+        "$s = 4;",
+        "for (2..shift @ARGV) {",
+        "    print \"$s, \";",
+        "    $s =~ s/(.)\\1*/(length $&).$1/eg;",
+        "}",
+        "print \"$s\\n\";",
+        "## Arne 'Timwi' Heizmann (timwi(AT)gmx.net), Mar 12 2008)"
+    ],
+    "xref": [
+        "Cf. A001155, A005150, A006751, A006715, A001141, A001143, A001145, A001151, A001154."
+    ],
+    "keyword": "nonn,base,easy,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "references": 15,
+    "revision": 50,
+    "time": "2015-12-12T13:15:56-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

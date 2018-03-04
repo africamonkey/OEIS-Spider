@@ -1,0 +1,63 @@
+{
+    "number": 214415,
+    "data": "2,4,6,8,12,15,16,23,25,30,37,53,55,57,67,75,76,81,82,84,95,108,129,132,135,139,143,155,160,163,180,181,188,192,203,204,210,222,244,263,273,277,280,287,289,295,297,308,315,319,325,330,341,367,370,393,394,406",
+    "name": "Numbers n such that prevprime(2^n) AND nextprime(2^n) = 1, where AND is the bitwise AND operator.",
+    "comment": [
+        "A007053(a(n)) are indices of 1's in A175330. That is, A175330(A007053(a(n)))=1.",
+        "Conjecture: the sequence is infinite."
+    ],
+    "example": [
+        "4 is in the sequence because (prevprime(2^4) AND nextprime(2^4)) = 13 AND 17 = 1."
+    ],
+    "mathematica": [
+        "ba1Q[n_]:=Module[{c=2^n},BitAnd[NextPrime[c],NextPrime[c,-1]]==1]; Select[ Range[ 450],ba1Q] (* _Harvey P. Dale_, Dec 25 2012 *)"
+    ],
+    "program": [
+        "(Java)",
+        "import java.math.BigInteger;",
+        "public class A214415 {",
+        "  public static void main (String[] args) {",
+        "    BigInteger b1 = BigInteger.valueOf(1);",
+        "    BigInteger b2 = BigInteger.valueOf(2);",
+        "    for (int n=2; ; n++) {",
+        "      BigInteger pwr = b1.shiftLeft(n);",
+        "      BigInteger pm  = pwr.subtract(b1);",
+        "      BigInteger pp  = pwr.add(b1);",
+        "      while (true) {",
+        "        if (pm.isProbablePrime(2)) {",
+        "            if (pm.isProbablePrime(80)) break;",
+        "        }",
+        "        pm  = pm.subtract(b2);",
+        "      }",
+        "      while (true) {",
+        "        if (pp.isProbablePrime(2)) {",
+        "            if (pp.isProbablePrime(80)) break;",
+        "        }",
+        "        pp  = pp.add(b2);",
+        "      }",
+        "      if (pm.and(pp).equals(b1)) {",
+        "        System.out.printf(\"%d, \",n);",
+        "      }",
+        "    }",
+        "  }",
+        "}",
+        "(PARI)",
+        "{ for (n=2,1000,  N = 2^n;",
+        "    p1 = precprime(N-1);",
+        "    p2 = nextprime(N+1);",
+        "    ba = bitand(p1, p2);",
+        "    if ( bitand( ba, ba-1 ) == 0, print1(n,\", \"));",
+        "); }",
+        "/* _Joerg Arndt_, Aug 16 2012 */"
+    ],
+    "xref": [
+        "Cf. A007053, A175330."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,1",
+    "author": "_Alex Ratushnyak_, Aug 07 2012",
+    "references": 1,
+    "revision": 27,
+    "time": "2012-12-25T19:03:27-05:00",
+    "created": "2012-08-08T12:53:18-04:00"
+}

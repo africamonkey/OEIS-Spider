@@ -1,0 +1,45 @@
+{
+    "number": 188666,
+    "data": "1,2,2,3,3,4,4,5,5,7,7,7,7,8,8,9,9,11,11,11,11,13,13,13,13,16,16,16,16,16,16,17,17,19,19,19,19,23,23,23,23,23,23,23,23,25,25,25,25,27,27,27,27,29,29,29,29,31,31,31,31,32,32,37,37,37,37,37,37",
+    "name": "Largest m <= n such that LCM {m, m+1, ..., n} = LCM {1, 2, ..., n}.",
+    "comment": [
+        "By definition: A003418(n) = LCM {a(n), a(n)+1, ... n}",
+        "and LCM {m, m+1, ... n} < A003418(n) for m > a(n);",
+        "all terms are prime powers, cf. A000961: A010055(a(n)) = 1;",
+        "a(A110654(n)) = A000015(n);",
+        "floor(n/2)+1 <= a(n) < a(2*(a(n));",
+        "A000961(n+1) = a(2*A000961(n)) = a(A138929(n)), cf. formula.",
+        "A237709 gives number of occurrences of n-th prime power. - _Reinhard Zumkeller_, Feb 12 2014"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A188666/b188666.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/LeastCommonMultiple.html\">Least Common Multiple</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Least_common_multiple\">Least Common Multiple</a>",
+        "<a href=\"/index/Lc#lcm\">Index entries for sequences related to lcm's</a>"
+    ],
+    "formula": [
+        "a(k) = A000961(k+1) for k: 2*A000961(k) <= k < 2*A000961(k+1), k > 0."
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (elemIndices)",
+        "a188666 n = a188666_list !! (n-1)",
+        "a188666_list = g 1 a000961_list where",
+        "   g n pps'@(pp:pp':pps) | n < 2*pp  = pp  : g (n+1) pps'",
+        "                         | otherwise = pp' : g (n+1) (pp':pps)",
+        "-- Alternative, rewriting the definition, but less efficient:",
+        "a188666' n = last $ elemIndices (f 1) $ map f [0..n] where",
+        "   f from = foldl lcm 1 [from..n]",
+        "(PARI) A188666(n)=L=lcm(n=vector(n-1,k,k+1));!for(m=1,#n,lcm(n[-m..-1])==L&&return(#n+2-m))\\\\ Rather illustrative than efficient. - _M. F. Hasler_, Jul 25 2015"
+    ],
+    "xref": [
+        "Cf. A051173, A099996."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Apr 25 2011",
+    "references": 6,
+    "revision": 17,
+    "time": "2015-07-25T22:01:26-04:00",
+    "created": "2011-04-27T14:40:13-04:00"
+}

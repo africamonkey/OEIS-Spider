@@ -1,0 +1,40 @@
+{
+    "number": 2569,
+    "id": "M0283 N0101",
+    "data": "1,1,1,1,2,2,3,4,5,7,9,11,15,18,23,30,37,47,58,71,90,110,136,164,201,248,300,364,436,525,638,764,919,1090,1297,1549,1845,2194,2592,3060,3590,4242,5013,5888,6912,8070,9418,11004,12866,15021,17475,20298,23501,27169",
+    "name": "Max_{k=0..n} { Number of partitions of n into exactly k parts }.",
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A002569/b002569.txt\">Table of n, a(n) for n = 0..3000</a> (n = 0..97 from Robert G. Wilson v)",
+        "F. C. Auluck, S. Chowla and H. Gupta, <a href=\"/A002569/a002569.pdf\">On the maximum value of the number of partitions into k parts</a>, J. Indian Math. Soc., 6 (1942), 105-112. [Annotated scanned copy. But the last page is in a separate file: see the next link.]",
+        "F. C. Auluck, S. Chowla and H. Gupta, <a href=\"/A002569/a002569_1.pdf\">On the maximum value of the number of partitions into k parts</a>, [Annotated scanned copy of page 112 only]",
+        "Victor Meally, <a href=\"/A002868/a002868.pdf\">Comparison of several sequences given in Motzkin's paper \"Sorting numbers for cylinders...\", letter to N. J. A. Sloane, N. D.</a>",
+        "T. S. Motzkin, <a href=\"/A000262/a000262.pdf\">Sorting numbers for cylinders and other classification numbers</a>, in Combinatorics, Proc. Symp. Pure Math. 19, AMS, 1971, pp. 167-176 (p. 172, gives a(9) incorrectly as 6). [Annotated, scanned copy]",
+        "OEIS Wiki, <a href=\"http://oeis.org/wiki/Sorting_numbers\">Sorting numbers</a>"
+    ],
+    "maple": [
+        "1, seq(max(seq(combinat:-numbpart(n,k)-combinat:-numbpart(n,k-1),k=1..n)),n=1..100); # _Robert Israel_, Nov 24 2014"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{k = 1, mx = 0}, While[k < n + 1, a = Length@ IntegerPartitions[n, {k}]; If[a > mx, mx = a]; k++ ]; mx]; Array[f, 53] (* _Robert G. Wilson v_, Jul 20 2010 *)",
+        "t[0, k_] := 1; t[1, k_] := 1 /; k > 0; t[n_, k_] := 0 /; n < 0; t[n_, 0] := 0 /; n > 0; t[n_, 1] := 1 /; n > 0; t[n_, k_] := t[n, k] = Sum[t[n - k + i, k - i], {i, 0, k - 1}];",
+        "f[n_] := Max[ Table[ t[n - k, k], {k, 0, n}]]; Array[f, 54, 0] (* _Robert G. Wilson v_, Nov 24 2014 *)",
+        "Max[CoefficientList[#, a]] & /@ (1/QPochhammer[a q, q] + O[q]^60)[[3]] (* _Vladimir Reshetnikov_, Nov 17 2016 *)"
+    ],
+    "xref": [
+        "Cf. A000041, A008284, A026819, A046155."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _David W. Wilson_"
+    ],
+    "references": 6,
+    "revision": 68,
+    "time": "2017-10-22T22:08:25-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

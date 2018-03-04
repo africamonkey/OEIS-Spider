@@ -1,0 +1,81 @@
+{
+    "number": 36718,
+    "data": "1,1,1,2,4,9,19,45,106,260,643,1624,4138,10683,27790,72917,192548,511624,1366424,3666930,9881527,26730495,72556208,197562840,539479354,1477016717,4053631757,11149957667,30732671572,84871652538,234802661446,650684226827",
+    "name": "Number of rooted trees where each node has at most 4 children.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A036718/b036718.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "F. Ruskey, <a href=\"http://www.theory.cs.uvic.ca/~cos/inf/tree/RootedTree.html\">Information on Rooted Trees</a>"
+    ],
+    "formula": [
+        "G.f. satisfies A(x) = 1 + x*cycle_index(Sym(4), A(x)).",
+        "a(n) = Sum_{j=1..4} A244372(n,j) for n>0, a(0) = 1. - _Alois P. Heinz_, Sep 19 2017"
+    ],
+    "example": [
+        "From _Joerg Arndt_, Feb 25 2017: (Start)",
+        "The a(5) = 9 rooted trees with 5 nodes and out-degrees <= 4 are:",
+        ":         level sequence    out-degrees (dots for zeros)",
+        ":     1:  [ 0 1 2 3 4 ]    [ 1 1 1 1 . ]",
+        ":  O--o--o--o--o",
+        ":",
+        ":     2:  [ 0 1 2 3 3 ]    [ 1 1 2 . . ]",
+        ":  O--o--o--o",
+        ":        .--o",
+        ":",
+        ":     3:  [ 0 1 2 3 2 ]    [ 1 2 1 . . ]",
+        ":  O--o--o--o",
+        ":     .--o",
+        ":",
+        ":     4:  [ 0 1 2 3 1 ]    [ 2 1 1 . . ]",
+        ":  O--o--o--o",
+        ":  .--o",
+        ":",
+        ":     5:  [ 0 1 2 2 2 ]    [ 1 3 . . . ]",
+        ":  O--o--o",
+        ":     .--o",
+        ":     .--o",
+        ":",
+        ":     6:  [ 0 1 2 2 1 ]    [ 2 2 . . . ]",
+        ":  O--o--o",
+        ":     .--o",
+        ":  .--o",
+        ":",
+        ":     7:  [ 0 1 2 1 2 ]    [ 2 1 . 1 . ]",
+        ":  O--o--o",
+        ":  .--o--o",
+        ":",
+        ":     8:  [ 0 1 2 1 1 ]    [ 3 1 . . . ]",
+        ":  O--o--o",
+        ":  .--o",
+        ":  .--o",
+        ":",
+        ":     9:  [ 0 1 1 1 1 ]    [ 4 . . . . ]",
+        ":  O--o",
+        ":  .--o",
+        ":  .--o",
+        ":  .--o",
+        "(End)"
+    ],
+    "maple": [
+        "A := 1; f := proc(n) global A; local A2,A3,A4; A2 := subs(x=x^2,A); A3 := subs(x=x^3,A); A4 := subs(x=x^4,A);",
+        "coeff(series( 1+x*( (A^4+3*A2^2+8*A*A3+6*A^2*A2+6*A4)/2 ), x, n+1), x,n); end;",
+        "for n from 1 to 50 do A := series(A+f(n)*x^n,x,n +1); od: A;"
+    ],
+    "mathematica": [
+        "a = 1; f[n_] := Module[{a2, a3, a4}, a2 = a /. x -> x^2; a3 = a /. x -> x^3; a4 = a /. x -> x^4; Coefficient[ Series[ 1 + x*(a^4 + 3*a2^2 + 8*a*a3 + 6*a^2*a2 + 6*a4)/24, {x, 0, n + 1}] // Normal, x, n]]; For[n = 1, n <= 30, n++, a = Series[a + f[n]*x^n, {x, 0, n + 1}] // Normal]; CoefficientList[a, x] (* _Jean-Fran\u00e7ois Alcover_, Jan 16 2013, after Maple *)"
+    ],
+    "xref": [
+        "Cf. A000081, A036717, A036719, A036720, A036721, A036722, A182378, A244372.",
+        "Cf. A292553, A292554, A292555, A292556.",
+        "Column k=4 of A299038."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "Better description from _Frank Ruskey_, Sep 23 2000"
+    ],
+    "references": 12,
+    "revision": 28,
+    "time": "2018-02-12T09:45:35-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,32 @@
+{
+    "number": 64314,
+    "data": "1,3,12,55,299,1900,13942,115932,1078361,11092265,125040100,1532995992,20310212672,289186696338,4404156016584,71441907922793,1229835421590959,22393298253477006,430019590699868644,8685717780508953928",
+    "name": "Total length of longest increasing runs in all permutations of n elements.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A064314/b064314.txt\">Table of n, a(n) for n = 1..200</a> (first 100 terms from Max Alekseyev)"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} k*A008304(n,k). - _Max Alekseyev_, May 22 2012"
+    ],
+    "maple": [
+        "b:= proc(u, o, t, k) option remember; `if`(t=k, (u+o)!,",
+        "      `if`(max(t, u)+o<k, 0, add(b(u+j-1, o-j, t+1, k), j=1..o)+",
+        "      add(b(u-j, o+j-1, 1, k), j=1..u)))",
+        "    end:",
+        "a:= n-> add(b(0, n, 0, k), k=1..n) -n*b(0, n, 0, n+1):",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Oct 16 2013"
+    ],
+    "mathematica": [
+        "nn=30;f[list_]:=Total[Table[list[[i]]*i,{i,1,Length[list]}]];a[r_]:=Apply[Plus,Table[Normal[Series[y x^(r+1)/(1-Sum[y x^i,{i,1,r}]),{x,0,nn}]][[n]]/(n+r)!,{n,1,nn-r}]]/.y->-1;Map[f,Map[Select[#,#>0&]&,Transpose[Prepend[Table[Drop[Range[0,nn]! CoefficientList[Series[1/(1-x-a[n+1])-1/(1-x-a[n]),{x,0,nn}],x],1],{n,1,28}],Table[1,{nn}]]]]] (* _Geoffrey Critzer_, Feb 25 2014 *)"
+    ],
+    "xref": [
+        "This sequence treats runs of adjacent elements, A003316 treats subsequences of not necessarily adjacent elements."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_David W. Wilson_, Sep 07 2001",
+    "references": 2,
+    "revision": 19,
+    "time": "2017-09-15T17:49:33-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 97597,
+    "data": "1,1,1,2,7,25,102,531,3141,20218,146215,1174889,10225678,96226363,978420285,10657592850,123672458583,1525420453945,19929519469558,274771355003651,3987385414116085,60764250319690666,970085750385722631",
+    "name": "Number of permutations of [n] with no increasing runs of even length.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A097597/b097597.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Ira M. Gessel, <a href=\"http://people.brandeis.edu/~gessel/homepage/papers/thesis.pdf\">Generating Functions and Enumeration of Sequences</a>, Ph.D. thesis, MIT, 1977, p. 52."
+    ],
+    "formula": [
+        "E.g.f.: sqrt(5)/[sqrt(5)-2exp(-x/2)sinh(sqrt(5)x/2)].",
+        "E.g.f.: (1+sum_{i=1}^infinity (-1)^n F_n x^n/n!)^(-1), where F_n is the n-th Fibonacci number. - _Ira M. Gessel_, Jul 27 2014",
+        "a(n) ~ n! * sinh(r*sqrt(5)) / (2^n*r^(n+1)*(sqrt(5)*cosh(r*sqrt(5))-sinh(r*sqrt(5)))), where r = 0.68903745689226... is the root of the equation 1-exp(-2*sqrt(5)*r) = sqrt(5)*exp((1-sqrt(5))*r). - _Vaclav Kotesovec_, Sep 29 2013"
+    ],
+    "example": [
+        "a(4) = 7 because 2/134, 3/124, 4/123, 234/1, 134/2, 124/3 and 4/3/2/1 are the only permutations of [4] with no increasing runs of even length."
+    ],
+    "maple": [
+        "G:=sqrt(5)/(sqrt(5)-2*exp(-x/2)*sinh(sqrt(5)*x/2)): Gser:=simplify(series(G,x=0,25)): 1,seq(n!*coeff(Gser,x^n),n=1..24);",
+        "# second Maple program:",
+        "b:= proc(u, o, t) option remember; `if`(u+o=0, `if`(t<>0, 1, 0),",
+        "      add(b(u+j-1, o-j, irem(t+1, 2)), j=1..o)+",
+        "      `if`(t=0, 0, add(b(u-j, o+j-1, 1), j=1..u)))",
+        "    end:",
+        "a:= n-> b(n, 0, 1):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Nov 19 2013"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Sqrt[5]/(Sqrt[5]-2*E^(-x/2)*(E^(Sqrt[5]*x/2)/2 - E^(-Sqrt[5]*x/2)/2)), {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Sep 29 2013 *)"
+    ],
+    "xref": [
+        "Column k=0 of A097592."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Emeric Deutsch_, Aug 29 2004",
+    "references": 2,
+    "revision": 19,
+    "time": "2014-08-05T09:39:22-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

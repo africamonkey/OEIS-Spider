@@ -1,0 +1,84 @@
+{
+    "number": 258109,
+    "data": "1,5,18,57,169,482,1341,3669,9922,26609,70929,188226,497845,1313501,3459042,9096393,23895673,62721698,164531565,431397285,1130708866,2962826465,7761964833,20331456642,53249182309,139449644717,365166860706,956185155129,2503657040137",
+    "name": "Number of balanced parenthesis expressions of length 2n and depth 3.",
+    "comment": [
+        "a(n) is the number of Dyck paths of length 2n and height 3. For example, a(3) = 1 because there is only one such Dyck path which is UUUDDD. - _Ran Pan_, Sep 26 2015",
+        "a(n) is the number of rooted plane trees with n+1 nodes and height 3 (see example for correspondence). - _Gheorghe Coserea_, Feb 04 2016"
+    ],
+    "reference": [
+        "S. S. Skiena and M. A. Revilla, Programming Challenges: The Programming Contest Training Manual, Springer, 2006, page 140."
+    ],
+    "link": [
+        "Gheorghe Coserea and Alois P. Heinz, <a href=\"/A258109/b258109.txt\">Table of n, a(n) for n = 3..1000</a> (first 40 terms from Gheorghe Coserea)",
+        "Kyu-Hwan Lee, Se-jin Oh, <a href=\"http://arxiv.org/abs/1601.06685\">Catalan triangle numbers and binomial coefficients</a>, arXiv:1601.06685 [math.CO], 2016.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (5,-7,2)."
+    ],
+    "formula": [
+        "a(n) = 2^(n-3) + 3 * a(n-1) - a(n-2).",
+        "a(n) = 5*a(n-1) - 7*a(n-2) + 2*a(n-3) for n>5. - _Colin Barker_, May 24 2015",
+        "G.f.: -x^3 / ((2*x-1)*(x^2-3*x+1)). - _Colin Barker_, May 24 2015",
+        "a(n) = A000045(2n-1) - A000079(n-1). - _Gheorghe Coserea_, Feb 04 2016",
+        "a(n) = 2^(-1-n)*(-5*4^n - (-5+sqrt(5))*(3+sqrt(5))^n + (3-sqrt(5))^n*(5+sqrt(5))) / 5. - _Colin Barker_, Jun 05 2017"
+    ],
+    "example": [
+        "For n=4, the a(4) = 5 solutions are",
+        "                /\\       /\\",
+        "               /  \\        \\",
+        "LRLLLRRR    /\\/    \\        \\",
+        "................................",
+        "                /\\        |",
+        "             /\\/  \\      / \\",
+        "LLRLLRRR    /      \\        \\",
+        "................................",
+        "              /\\/\\        |",
+        "             /    \\       |",
+        "LLLRLRRR    /      \\     / \\",
+        "................................",
+        "              /\\          |",
+        "             /  \\/\\      / \\",
+        "LLLRRLRR    /      \\    /",
+        "................................",
+        "              /\\          /\\",
+        "             /  \\        /",
+        "LLLRRRLR    /    \\/\\    /"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<3, 0,",
+        "      `if`(n=3, 1, 2^(n-3) +3*a(n-1) -a(n-2)))",
+        "    end:",
+        "seq(a(n), n=3..30);  # _Alois P. Heinz_, May 20 2015"
+    ],
+    "mathematica": [
+        "Join[{1, 5}, LinearRecurrence[{5, -7, 2}, {18, 57, 169}, 30]] (* _Vincenzo Librandi_, Sep 26 2015 *)"
+    ],
+    "program": [
+        "(C)",
+        "typedef long long unsigned Integer;",
+        "Integer a(int n)",
+        "{",
+        "    int i;",
+        "    Integer pow2 = 1, a[3] = {0};",
+        "    for (i = 3; i <= n; ++i) {",
+        "        a[ i%3 ] = pow2 + 3 * a[ (i-1)%3 ] - a[ (i-2)%3 ];",
+        "        pow2 = pow2 * 2;",
+        "    }",
+        "    return a[ (i-1)%3 ];",
+        "}",
+        "(PARI) Vec(-x^3/((2*x-1)*(x^2-3*x+1)) + O(x^100)) \\\\ _Colin Barker_, May 24 2015",
+        "(MAGMA) I:=[1,5,18,57,169]; [n le 5 select I[n] else 5*Self(n-1) - 7*Self(n-2) + 2*Self(n-3): n in [1..40]]; // _Vincenzo Librandi_, Sep 26 2015",
+        "(PARI) a(n) = fibonacci(2*n-1) - 2^(n-1)  \\\\ _Gheorghe Coserea_, Feb 04 2016"
+    ],
+    "xref": [
+        "Column k=3 of A080936.",
+        "Column k=2 of A287213.",
+        "Cf. A000045, A000079, A262600."
+    ],
+    "keyword": "nonn,walk,easy",
+    "offset": "3,2",
+    "author": "_Gheorghe Coserea_, May 20 2015",
+    "references": 6,
+    "revision": 58,
+    "time": "2017-06-05T17:37:42-04:00",
+    "created": "2015-05-20T17:13:29-04:00"
+}

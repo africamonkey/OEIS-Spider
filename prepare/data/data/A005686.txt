@@ -1,0 +1,55 @@
+{
+    "number": 5686,
+    "id": "M0267",
+    "data": "0,1,1,1,1,1,2,2,3,3,4,5,6,8,9,12,14,18,22,27,34,41,52,63,79,97,120,149,183,228,280,348,429,531,657,811,1005,1240,1536,1897,2347,2902,3587,4438,5484,6785,8386,10372,12824,15856,19609,24242,29981,37066,45837",
+    "name": "Number of Twopins positions.",
+    "comment": [
+        "Appears to be the pairwise sums of A001687. - _Ralf Stephan_, Apr 21 2004"
+    ],
+    "reference": [
+        "R. K. Guy, \"Anyone for Twopins?\" in D. A. Klarner, editor, The Mathematical Gardner. Prindle, Weber and Schmidt, Boston, 1981, pp. 2-15.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A005686/b005686.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "S. Falcon, <a href=\"http://www.geman.in/yahoo_site_admin/assets/docs/13_GMN-5642-V25N2.4320911.pdf\">Generalized (k,r)-Fibonacci Numbers</a>, Gen. Math. Notes, 25(2), 2014, 148-158.",
+        "R. K. Guy, <a href=\"/A005251/a005251_1.pdf\">Anyone for Twopins?</a>, in D. A. Klarner, editor, The Mathematical Gardner. Prindle, Weber and Schmidt, Boston, 1981, pp. 2-15. [Annotated scanned copy, with permission]",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "I. Wloch, U. Bednarz, D. Br\u00f3d, A Wloch and M. Wolowiec-Musial, <a href=\"http://dx.doi.org/10.1016/j.dam.2013.05.029\">On a new type of distance Fibonacci numbers</a>, Discrete Applied Math., Volume 161, Issues 16-17, November 2013, Pages 2695-2701.",
+        "<a href=\"/index/Tu#2wis\">Index entries for two-way infinite sequences</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..floor(n/2)} binomial(floor((n+3k-3)/5), k). - _Paul Barry_, Jul 10 2004",
+        "G.f.: (x+x^2)/(1-x^2-x^5). - _Ralf Stephan_, Apr 21 2004",
+        "a(n) = a(n-2) + a(n-5). - _Michael Somos_, Jul 15 2004",
+        "a(n+1) = Sum_{k=0..floor(n/5)} A065941(n-4*k, n-5*k). - _Johannes W. Meijer_, Aug 05 2013"
+    ],
+    "maple": [
+        "A005686 := -(z+1)*(z**3+z+1)/(-1+z**2+z**5); # conjectured by _Simon Plouffe_ in his 1992 dissertation; gives sequence except for the initial 1's",
+        "a := proc(n): if n = 0 then 0 else add(binomial(floor((n+3*k-4)/5), k), k=0..floor((n-1)/2)) fi: end: seq(a(n), n=0..54); # _Johannes W. Meijer_, Aug 05 2013"
+    ],
+    "mathematica": [
+        "nn=54; CoefficientList[Series[(x+x^2)/(1-x^2-x^5),{x,0,nn}],x]  (* _Geoffrey Critzer_, Apr 28 2013 *)",
+        "m = 5; For[n = 0, n < m, n++, a[n] = 1]; For[n = m, n < 51, n++, a[n] = a[n - m] + a[n - 2]]; Table[a[n], {n, 0, 50}] (*_Sergio Falcon_, Nov 12 2015 *)",
+        "Join[{0}, LinearRecurrence[{0, 1, 0, 0, 1}, {1, 1, 1, 1, 1}, 60]] (* _Vincenzo Librandi_, Jan 19 2016 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,polcoeff((x^3+x^4)/(1+x^3-x^5)+x^-n*O(x),-n),polcoeff((x+x^2)/(1-x^2-x^5)+x^n*O(x),n)) /* _Michael Somos_, Jul 15 2004 */",
+        "(PARI) a(n)=sum(k=0,(n-1)\\2,binomial((n+3*k-4)\\5,k))",
+        "(MAGMA) I:=[1,1,1,1,1]; [0] cat [n le 5 select I[n] else Self(n-2)+Self(n-5): n in [1..60]]; // _Vincenzo Librandi_, Jan 19 2016"
+    ],
+    "xref": [
+        "Cf. A001687."
+    ],
+    "keyword": "nonn",
+    "offset": "0,7",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Paul Barry_, Jul 10 2004"
+    ],
+    "references": 3,
+    "revision": 63,
+    "time": "2017-11-10T14:08:39-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

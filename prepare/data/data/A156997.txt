@@ -1,0 +1,70 @@
+{
+    "number": 156997,
+    "data": "3,6,9,12,18,24,27,36,48,54,56,60,72,81,96,108,112,120,144,162,180,192,216,224,240,243,288,300,319,324,360,384,392,399,432,448,480,486,504,540,576,600,638,648,720,728,729,768,784,798,864,896,900,957,972,1008,1152,1176,1276,1296,1400,1456,1458",
+    "name": "Smaller of a and b if a^2+b^2=c^2 and the sum of the distinct prime divisors of a and b is the sum of the distinct prime divisors of c.",
+    "comment": [
+        "15 divides abc. Since we define a=2mu and b=m^2-b^2, the order of the triple that generates a(n) can have the first term greater than the second term. For this reason I chose to list the smaller of a and b. The idea for this sequence comes from a post in the Yahoo group mathforfun which is in the link."
+    ],
+    "link": [
+        "MathForFun, <a href=\"http://tech.groups.yahoo.com/group/mathforfun/message/13635\">Pythagorean triple digital sums</a>"
+    ],
+    "formula": [
+        "Let a,b,c, m > u,k be positive integers. If a^2 + b^2 = c^2 then",
+        "a = k*2mu,b=k*(m^2-u^2) and c=k*(m^2+u^2)."
+    ],
+    "example": [
+        "360^2+319^2=481^2. 360=2^3*3^2*5,319=11*29 and 481=13*37. 2+3+5+11+29=13+37.",
+        "So 319 is in the sequence."
+    ],
+    "program": [
+        "(PARI) pythsum(n) =",
+        "{",
+        "local(v,x,a,b,cm,k,u,s,ct=0);",
+        "v=vector(400);",
+        "for(m=1,n+n,",
+        "for(u=1,n,",
+        "for(k=1,n,",
+        "a=2*m*u*k;",
+        "if(u>m,b=k*(u^2-m^2),b=k*(m^2-u^2));",
+        "c=k*(m^2+u^2);",
+        "fa=ifactord(a);",
+        "fb=ifactord(b);",
+        "fc=ifactord(c);",
+        "s=0;",
+        "s2=0;",
+        "for(a1=1, length(fa), s+=fa[a1]);",
+        "for(b1=1, length(fb), s+=fb[b1]);",
+        "for(c1=1, length(fc), s2+=fc[c1]);",
+        "if(s==s2&&b>0,",
+        "\\\\print(m\",\"u\",\"k\",\"a\", \"b\", \"c\", \" fa\" + \"fb\" = \"fc);",
+        "ct++;",
+        "if(a<b,v[ct]=a,v[ct]=b)",
+        ")",
+        ")",
+        ")",
+        ");",
+        "y=vecsort(v);",
+        "for(x=1,399,if(y[x]>0&&y[x]<>y[x+1],print1(y[x]\",\")));",
+        "}",
+        "ifactord(n) = /* The vector of the distinct integer factors of n. */",
+        "{",
+        "local(f,j,k,flist);",
+        "flist=[];",
+        "f=Vec(factor(n));",
+        "for(j=1,length(f[1]),",
+        "flist = concat(flist,f[1][j])",
+        ");",
+        "return(flist)",
+        "}"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Feb 20 2009",
+    "ext": [
+        "Based on suggestions from _Robert G. Wilson v_, corrected sequence, definition, comments, formula and Pari program. - _Cino Hilliard_, Apr 03 2009"
+    ],
+    "references": 0,
+    "revision": 9,
+    "time": "2015-03-14T16:03:18-04:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

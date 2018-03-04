@@ -1,0 +1,45 @@
+{
+    "number": 4202,
+    "data": "2,5,6,10,11,12,17,18,19,20,26,27,28,29,30,37,38,39,40,41,42,50,51,52,53,54,55,56,65,66,67,68,69,70,71,72,82,83,84,85,86,87,88,89,90,101,102,103,104,105,106,107,108,109,110,122,123,124,125,126,127,128,129,130,131,132",
+    "name": "Skip 1, take 1, skip 2, take 2, skip 3, take 3, etc.",
+    "comment": [
+        "a(n) are the numbers satisfying m < sqrt(a(n)) < m + 0.5 for some integer m. - _Floor van Lamoen_, Jul 24 2001",
+        "a(A000217(n)) = A002378(n). [_Reinhard Zumkeller_, Feb 12 2011]",
+        "Complement of A004201. Upper s(n)-Wythoff sequence (as defined in A184117), for s(n)=A002024(n)=floor[1/2+sqrt(2n)]. I.e., A004202(n) = A002024(n) + A004201(n), with A004201(1)=1 and for n>1, A004201(n) = least positive integer not yet in (A004201(1..n-1) union A004202(1..n-1)). - M. F. Hasler (following observations from R. J. Mathar), Feb 13 2011",
+        "Positions of record values in A256188 that are greater than 1: A014132(n) = A256188(a(n)). - _Reinhard Zumkeller_, Mar 26 2015"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A004202/b004202.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = n + A000217(A002024(n)). - M. F. Hasler, Feb 13 2011"
+    ],
+    "example": [
+        "Interpretation as  Wythoff sequence (from _Clark Kimberling_):",
+        "s = (1,2,2,3,3,3,4,4,4,4...) = A002024 (n n's);",
+        "a = (1,3,4,7,8,9,13,14,...) = A004201 = least number > 0 not yet in a or b;",
+        "b = (2,5,6,10,11,12,17,18,...) = A004202 = a+s."
+    ],
+    "mathematica": [
+        "a = Table[n, {n, 1, 210} ]; b = {}; Do[a = Drop[a, {1, n} ]; b = Append[b, Take[a, {1, n} ]]; a = Drop[a, {1, n} ], {n, 1, 14} ]; Flatten[b]"
+    ],
+    "program": [
+        "(Haskell)",
+        "a004202 n = a004202_list !! (n-1)",
+        "a004202_list = skipTake 1 [1..] where",
+        "   skipTake k xs = take k (drop k xs) ++ skipTake (k + 1) (drop (2*k) xs",
+        "-- _Reinhard Zumkeller_, Feb 12 2011",
+        "(PARI) A004202(n) = n+0+(n=(sqrtint(8*n-7)+1)\\2)*(n+1)\\2  \\\\ - M. F. Hasler, Feb 13 2011"
+    ],
+    "xref": [
+        "Cf. A004201, A007606, A064801.",
+        "Cf. A014132, A256188."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Alexander Stasinski",
+    "references": 11,
+    "revision": 20,
+    "time": "2015-03-26T11:37:49-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

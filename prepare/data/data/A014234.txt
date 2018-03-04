@@ -1,0 +1,92 @@
+{
+    "number": 14234,
+    "data": "2,3,7,13,31,61,127,251,509,1021,2039,4093,8191,16381,32749,65521,131071,262139,524287,1048573,2097143,4194301,8388593,16777213,33554393,67108859,134217689,268435399,536870909,1073741789,2147483647,4294967291,8589934583,17179869143,34359738337,68719476731,137438953447",
+    "name": "Largest prime <= 2^n.",
+    "comment": [
+        "Calculated by computing all primes < 2^32 via Sieve of Eratosthenes over 2^28 bytes, omitting evens. Final two terms added (n=31,n=32) agree with Smith (see existing on known-math link); values of pi(2^n) calculated as by-product agree with A007053. - Fred Curtis (fred(AT)f2.org), Dec 08 2009"
+    ],
+    "reference": [
+        "D. E. Knuth, The Art of Computer Programming. Addison-Wesley, Reading, MA, Vol. 2, p. 390."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A014234/b014234.txt\">Table of n, a(n) for n=1..1000</a>",
+        "Harry J. Smith, <a href=\"http://www.math.niu.edu/~rusin/known-math/98/pi_x\">PrimePi2 - Computes the Prime Pi(x) counting function</a> [Broken link]",
+        "Harry J. Smith, <a href=\"/A014234/a014234.txt\">PrimePi2 - Computes the Prime Pi(x) counting function</a> [Cached copy]"
+    ],
+    "mathematica": [
+        "PrevPrim[n_] := Block[{k = n - 1}, While[ !PrimeQ[k], k-- ]; k]; Table[ Abs[ PrevPrim[2^n]], {n, 1, 30} ]",
+        "Join[{2},NextPrime[2^Range[2,40],-1]] (* _Harvey P. Dale_, Jun 26 2011 *)"
+    ],
+    "program": [
+        "(C++)",
+        ".// Calculate number of primes pi(2^n) for n=2..32 (see A007053)",
+        ".// Calculate max prime <= 2^n for n=2..32 (see A014234)",
+        ".",
+        ".// C++ source. Compiles happily under g++. Assumes int >= 32 bits.",
+        ".",
+        ".#include <stdio.h>",
+        ".",
+        ".#define sieve_log2_bits_per_word 5",
+        ".#define sieve_root_bits 16",
+        ".#define sieve_bits (sieve_root_bits * 2)",
+        ".#define sieve_square_root (1 << sieve_root_bits)",
+        ".#define sieve_word_index(odd_x) ((odd_x) >> (sieve_log2_bits_per_word + 1))",
+        ".#define sieve_bit_mask(odd_x) (1 << (((odd_x) >> 1) & ((1 << sieve_log2_bits_per_word) - 1)))",
+        ".#define sieve_test(odd_x) (sieve_words[sieve_word_index(odd_x)] & sieve_bit_mask(odd_x))",
+        ".#define sieve_clear(odd_x) (sieve_words[sieve_word_index(odd_x)] &= ~sieve_bit_mask(odd_x))",
+        ".",
+        ".unsigned int sieve_words[1 << (sieve_bits - sieve_log2_bits_per_word - 1)];",
+        ".",
+        ".int main(int argc, char *argv[]) {",
+        "...for (int i = sizeof(sieve_words) / sizeof(sieve_words[0]); --i >= 0; ) {",
+        ".....sieve_words[i] = (unsigned int) -1;",
+        "...}",
+        ".",
+        "...sieve_clear(1);",
+        "...for (int i = 3; i < sieve_square_root; i += 2) {",
+        ".....if (((i + 1) & i) == 0) {",
+        ".......int log2i = 0;",
+        ".......for (int j = i; j > 0; j>>=1) { log2i++; }",
+        ".......printf(\"Initializing sieve -- 2^%d\\n\", log2i);",
+        ".....}",
+        ".....if (sieve_test(i)) {",
+        ".......unsigned int delta = i * 2;",
+        ".......for (unsigned int j = i + delta; j > delta; j += delta) {",
+        ".........sieve_clear(j);",
+        ".......}",
+        ".....}",
+        "...}",
+        "...int prime_pi = 1; // 2",
+        "...unsigned int i;",
+        "...unsigned int last_p;",
+        "...for (i = 3; i > 1; i += 2) {",
+        ".....if (sieve_test(i)) {",
+        ".......prime_pi++;",
+        ".......last_p = i;",
+        ".....}",
+        ".... if (((i + 1) & i) == 0) {",
+        ".......int log2i = 0;",
+        ".......for (unsigned int j = i; j > 0; j>>=1) { log2i++; }",
+        ".......printf(\"%d primes < 2^%d -- last prime %u\\n\", prime_pi, log2i, last_p);",
+        ".....}",
+        "...}",
+        "...return 0;",
+        ".}",
+        "./* Fred Curtis (fred(AT)f2.org), Dec 08 2009*/",
+        "(PARI) a(n) = precprime(2^n) \\\\ _Michel Marcus_, Aug 08 2013"
+    ],
+    "xref": [
+        "Cf. A000079.",
+        "Cf. A013603 (2^n - a(n))."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "1,1",
+    "author": "_Jud McCranie_",
+    "ext": [
+        "Terms for n=31, n=32 added by Fred Curtis (fred(AT)f2.org), Dec 08 2009"
+    ],
+    "references": 16,
+    "revision": 33,
+    "time": "2018-02-26T06:12:16-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

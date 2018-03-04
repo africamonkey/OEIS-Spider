@@ -1,0 +1,35 @@
+{
+    "number": 30009,
+    "data": "1,2,6,15,37,85,192,414,879,1816,3694,7362,14480,28037,53644,101379,189587,350874,643431,1169388,2108045,3770430,6694894,11804968,20679720,35999794,62298755,107198541,183462856,312357002,529173060,892216829,1497454396,2502190992",
+    "name": "Euler transform of primes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A030009/b030009.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{n=1..inf} (1-x^n)^-ithprime(n)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(add(",
+        "      d*ithprime(d), d=divisors(j))*a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..40);  #  _Alois P. Heinz_, Sep 06 2008"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[d*Prime[d], {d, Divisors[j]}]*a[n-j], {j, 1, n}]/n]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Apr 16 2014, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,polcoeff(prod(i=1,n,(1-x^i)^-prime(i),1+x*O(x^n)),n))"
+    ],
+    "xref": [
+        "Cf. A007441."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_.",
+    "references": 6,
+    "revision": 17,
+    "time": "2017-07-28T08:16:51-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

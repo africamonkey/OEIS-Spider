@@ -1,0 +1,45 @@
+{
+    "number": 80114,
+    "data": "3,5,7,11,13,23,31,37,47,59,71,79,83,103,131,151,167,191,199,239,251,263,271,311,359,383,419,431,439,479,503,563,599,607,647,659,719,743,751,839,863,887,911,919,971,983,991,1031,1039,1063,1091,1103,1151,1223",
+    "name": "Odd primes p for which all sums Sum_{j=1..u} L(j/p) (with u ranging from 1 to (p-1)/2) are nonnegative, where L(j/p) is Legendre symbol of j and p, which is defined to be 1 if j is a quadratic residue (mod p) and -1 if j is a quadratic non-residue (mod p).",
+    "comment": [
+        "This sequence contains those 4k+1 primes p for which the first half (the (p-1)/2 most significant bits) of A055094(p) is in A014486 and those 4k+3 primes q, for which the whole A055094(q) is in A014486.",
+        "Are the 2nd, 5th and 8th primes (5,13,37) only terms of this sequence that are of the form 4k+1? [Searched up to a(211)=7927 by AK.]"
+    ],
+    "link": [
+        "A. Karttunen, <a href=\"/A080120/a080120.pdf\">Illustration of Legendre's candelabras</a>"
+    ],
+    "maple": [
+        "with(numtheory); # For ithprime and legendre.",
+        "A080114 := n -> ithprime(A080112(n));",
+        "A080114v2 := proc(upto_n) local j,a,p,i,s; a := []; for i from 2 to upto_n do p := ithprime(i); s := 0; for j from 1 to (p-1)/2 do s := s + legendre(j,p); if(s < 0) then break; fi; od; if(s >= 0) then a := [op(a),p]; fi; od; RETURN(a); end;"
+    ],
+    "mathematica": [
+        "s[p_, u_] := Sum[JacobiSymbol[j, p], {j, 1, u}]; Select[Prime[Range[2, 200] ], (p = #; AllTrue[Range[(p - 1)/2], s[p, #] >= 0 &]) &] (* _Jean-Fran\u00e7ois Alcover_, Mar 04 2016 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A080114_list(n) :",
+        "    a = []",
+        "    for i in (2..n) :",
+        "        s = 0",
+        "        p = nth_prime(i)",
+        "        for j in (1..(p-1)/2) :",
+        "            s += legendre_symbol(j, p)",
+        "            if s < 0 : break",
+        "        if s >= 0 : a.append(p)",
+        "    return a",
+        "A080114_list(200) # _Peter Luschny_, Aug 08 2012"
+    ],
+    "xref": [
+        "A080112, A080115. These are the primes for which a \"Legendre's candelabra\" can be constructed, see A080120.",
+        "Supersequence of A095102."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_ Feb 11 2003",
+    "references": 7,
+    "revision": 16,
+    "time": "2016-03-04T09:49:59-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 273050,
+    "data": "0,5,6,45,54,365,438,2925,3510,23405,28086,187245,224694,1497965,1797558,11983725,14380470,95869805,115043766,766958445,920350134,6135667565,7362801078,49085340525,58902408630,392682724205,471219269046",
+    "name": "Numbers n such that ror(n) XOR rol(n) = n, where ror(x)=A038572(x) is x rotated one binary place to the right, rol(x)=A006257(x) is x rotated one binary place to the left, and XOR is the binary exclusive-or operator.",
+    "formula": [
+        "Conjectures from _Colin Barker_, May 22 2016: (Start)",
+        "a(n) = (-11+(-1)^n+2^(-1/2+(3*n)/2)*(3-3*(-1)^n+5*sqrt(2)+5*(-1)^n*sqrt(2)))/14.",
+        "a(n) = 5*(2^(3*n/2)-1)/7 for n even.",
+        "a(n) = 3*(2^((3*n)/2-1/2)-2)/7 for n odd.",
+        "a(n) = 9*a(n-2)-8*a(n-4) for n>4.",
+        "G.f.: x^2*(5+6*x) / ((1-x)*(1+x)*(1-8*x^2)).",
+        "(End)"
+    ],
+    "mathematica": [
+        "ok[n_] := Block[{x = IntegerDigits[n, 2]}, x == BitXor @@@ Transpose@ {RotateLeft@ x, RotateRight@ x}]; Select[ Range[0, 10^5], ok] (* _Giovanni Resta_, May 14 2016 *)",
+        "ok[n_] := Block[{x = IntegerDigits[n, 2]}, x == BitXor @@@ Transpose[ {RotateLeft[x], RotateRight[x]}]]; Select[LinearRecurrence[{0, 9, 0, -8}, {0, 5, 6, 45}, 100], ok] (* _Jean-Fran\u00e7ois Alcover_, May 22 2016, after _Giovanni Resta_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "def ROR(n):                # returns A038572(n)",
+        "    BL = len(bin(n))-2",
+        "    return (n>>1) + ((n&1) << (BL-1))",
+        "def ROL(n):                # returns A006257(n) for n>0",
+        "    BL = len(bin(n))-2",
+        "    return (n*2) - (1<<BL) + 1",
+        "print '0,',",
+        "for n in xrange(1,100000000):",
+        "    if  ROR(n) ^ ROL(n) == n: print str(n)+',',"
+    ],
+    "xref": [
+        "Cf. A006257, A038572, A088163, A125836 (bisection?), A125837 (bisection?).",
+        "Cf. A020988 (numbers n such that ror(n) + rol(n) = n)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, May 13 2016",
+    "ext": [
+        "a(19)-a(27) from _Giovanni Resta_, May 14 2016"
+    ],
+    "references": 0,
+    "revision": 30,
+    "time": "2016-10-07T10:40:19-04:00",
+    "created": "2016-05-21T22:40:22-04:00"
+}

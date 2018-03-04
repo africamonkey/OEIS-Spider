@@ -1,0 +1,56 @@
+{
+    "number": 101695,
+    "data": "2,6,18,40,108,224,480,1296,2688,5632,11520,25600,53248,124416,258048,540672,1105920,2228224,4587520,9830400,19922944,40894464,95551488,192937984,396361728,822083584,1660944384,3397386240,6845104128",
+    "name": "a(n) = n-th n-almost prime.",
+    "comment": [
+        "A k-almost-prime is a positive integer that has exactly k prime factors, counted with multiplicity.",
+        "This is the diagonalization of the set of sequences {j-almost prime(k)}. The cumulative sums of this sequence are in A101696. This is the diagonal just below A078841."
+    ],
+    "link": [
+        "Robert G. Wilson v and Charles R Greathouse IV, <a href=\"/A101695/b101695.txt\">Table of n, a(n) for n = 1..1000</a> (first 229 terms from Robert G. Wilson)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/AlmostPrime.html\">Almost Prime</a>."
+    ],
+    "formula": [
+        "Conjecture: lim_{ n->inf.} a(n+1)/a(n) = 2. - _Robert G. Wilson v_, Oct 07 2007, Nov 13 2007",
+        "Stronger conjecture: a(n)/(n * 2^n) is polylogarithmic in n. That is, there exist real numbers b < c such that (log n)^b < a(n)/(n * 2^n) < (log n)^c for large enough n. Probably b and c can be chosen close to 0. - _Charles R Greathouse IV_, Aug 28 2012"
+    ],
+    "example": [
+        "a(1) = first 1-almost prime = first prime = A000040(1) = 2.",
+        "a(2) = 2nd 2-almost prime = 2nd semiprime = A001358(2) = 6.",
+        "a(3) = 3rd 3-almost prime = A014612(3) = 18.",
+        "a(4) = 4th 4-almost prime = A014613(4) = 40.",
+        "a(5) = 5th 5-almost prime = A014614(5) = 108."
+    ],
+    "maple": [
+        "A101695 := proc(n)",
+        "    local s,a ;",
+        "    s := 0 ;",
+        "    for a from 2^n do",
+        "        if numtheory[bigomega](a) = n then",
+        "            s := s+1 ;",
+        "            if s = n then",
+        "                return a;",
+        "            end if;",
+        "        end if;",
+        "    end do:",
+        "end proc: # _R. J. Mathar_, Aug 09 2012"
+    ],
+    "mathematica": [
+        "AlmostPrimePi[k_Integer, n_] := Module[{a, i}, a[0] = 1; If[k == 1, PrimePi[n], Sum[PrimePi[n/Times @@ Prime[Array[a, k - 1]]] - a[k - 1] + 1, Evaluate[ Sequence @@ Table[{a[i], a[i - 1], PrimePi[(n/Times @@ Prime[Array[a, i - 1]])^(1/(k - i + 1))]}, {i, k - 1}]]]]]; (* _Eric W. Weisstein_ Feb 07 2006 *)",
+        "AlmostPrime[k_, n_] := Block[{e = Floor[ Log[2, n] + k], a, b}, a = 2^e; Do[b = 2^p; While[ AlmostPrimePi[k, a] < n, a = a + b]; a = a - b/2, {p, e, 0, -1}]; a + b/2]; AlmostPrime[1, 1] = 2; lst = {}; Do[ AppendTo[lst, AlmostPrime[n, n]], {n, 30}]; lst (* _Robert G. Wilson v_, Oct 07 2007 *)"
+    ],
+    "xref": [
+        "Cf. A000040, A001358, A014612, A014613, A046314, A046306, A046308, A046310, A046312, A046314, A069272, A069273, A069274, A069275, A069276, A069277, A069278, A069279, A069280, A069281, A101637, A101638, A101605, A101606."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_, Dec 12 2004",
+    "ext": [
+        "a(21)-a(30) from _Robert G. Wilson v_, Feb 11 2006",
+        "a(12) corrected by _N. J. A. Sloane_, Nov 23 2007"
+    ],
+    "references": 12,
+    "revision": 30,
+    "time": "2015-03-20T18:03:09-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

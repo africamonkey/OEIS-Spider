@@ -1,0 +1,31 @@
+{
+    "number": 225704,
+    "data": "6,10,14,15,30,35,66,266,455,806,4154,4686,6665,10370,16646,22781,31146,36305,72086,205871,246506,473711,570011,653666,733586,900581,904046,1422410,1941971,1969565,2023010,2807255,2821269,3009821,3043274,3355271,3880301",
+    "name": "Composite squarefree numbers n such that p(i)-4 divides n+4, where p(i) are the prime factors of n.",
+    "example": [
+        "Prime factors of 205871 are 29, 31 and 229. We have that (205871+4)/(29-4) = 8235, (205871+4)/(31-4) = 7625 and (205871+4)/(229-4) = 915."
+    ],
+    "maple": [
+        "with(numtheory); A225704:=proc(i,j) local c, d, n, ok, p, t;",
+        "for n from 1 to i do if not isprime(n) then p:=ifactors(n)[2]; ok:=1;",
+        "for d from 1 to nops(p) do if p[d][2]>1 or p[d][1]=j then ok:=0; break; fi;",
+        "if  not type((n+j)/(p[d][1]-j),integer) then ok:=0; break; fi; od;",
+        "if ok=1 then print(n); fi; fi; od; end: A225704(10^9,4);"
+    ],
+    "mathematica": [
+        "t = {}; n = 0; len = -2; While[len <= 262, n++; {p, e} = Transpose[FactorInteger[n]]; If[Length[p] > 1 && Union[e] == {1} && Union[Mod[n + 4, p - 4]] == {0}, AppendTo[t, n]; len = len + Length[IntegerDigits[n]] + 2]]; t (* _T. D. Noe_, May 17 2013 *)"
+    ],
+    "xref": [
+        "Cf. A208728, A225702, A225703, A225705-A225720."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, May 13 2013",
+    "ext": [
+        "Extended by _T. D. Noe_, May 17 2013"
+    ],
+    "references": 3,
+    "revision": 14,
+    "time": "2013-05-17T14:03:21-04:00",
+    "created": "2013-05-17T11:26:59-04:00"
+}

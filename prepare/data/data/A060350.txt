@@ -1,0 +1,45 @@
+{
+    "number": 60350,
+    "data": "1,1,2,10,88,1216,24176,654424,23136128,1035227008,57186502912,3822411268864,304059285928960,28385946491599360,3073391215118186496,381995951933025287680,54020316243835807039488,8624091617045072628121600,1543536018434416280510332928",
+    "name": "The sum over all subsets S of [n] of the squares of the number of permutations with descent set = S.",
+    "comment": [
+        "a(n) = number of ordered pairs of permutations of [n] such that the first has an ascent wherever the second has a descent and vice versa. For example, the pair of permutations (1243, 4123) does not qualify because they have a common ascent starting at location 2, and a(2) = 2 counts (12, 21), (21, 12). - _David Callan_, Sep 15 2013"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A060350/b060350.txt\">Table of n, a(n) for n = 0..150</a>"
+    ],
+    "formula": [
+        "a(n) = A137782(2n) / A000984(n)."
+    ],
+    "example": [
+        "a(1)=1^2; a(2)=1^2+1^2; a(3)=1^2+2^2+2^2+1^2; a(4)=1^2+3^2+5^2+3^2+3^2+5^2+3^2+1^2."
+    ],
+    "maple": [
+        "ct := proc(k) option remember; local i,out,n; if k=0 then RETURN(1); fi; n := floor(evalf(log[2](k)))+1; if k=2^n or k=2^(n+1)-1 then RETURN(1); fi; out := 0; for i from 1 to n do if irem(iquo(k, 2^(i-1)), 2) = 1 and irem(iquo(2*k,2^(i-1)),2) =0 then out := out+(n-1)!/(i-1)!/(n-i)!* ct(floor(irem(k,2^(i-1))+2^(i-2)))*ct(iquo(k,2^i)); fi; od; out; end: seq(add(ct(i)^2,i=2^(n-1)..2^n-1), n=1..15);",
+        "# second Maple program:",
+        "b:= proc(u, o, h) option remember; `if`(u+o=0, 1,",
+        "      add(add(b(u-j, o+j-1, h+i-1), i=1..u+o-h), j=1..u)+",
+        "      add(add(b(u+j-1, o-j, h-i), i=1..h), j=1..o))",
+        "    end:",
+        "a:= n-> b(0, n$2):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Jul 02 2015"
+    ],
+    "mathematica": [
+        "b[u_, o_, h_] := b[u, o, h] = If[u + o == 0, 1, Sum[Sum[b[u - j, o + j - 1, h + i - 1], {i, 1, u + o - h}], {j, 1, u}] + Sum[Sum[b[u + j - 1, o - j, h - i], {i, 1, h}], {j, 1, o}]]; a[n_] := b[0, n, n]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Nov 11 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A060351, A262233, A262234, A262241, A262372.",
+        "Row sums of A259465."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Mike Zabrocki_, Mar 31 2001",
+    "ext": [
+        "Two more terms from _Max Alekseyev_, May 06 2009",
+        "a(0) prepended, a(18) from _Alois P. Heinz_, Jul 02 2015"
+    ],
+    "references": 12,
+    "revision": 31,
+    "time": "2015-11-11T08:53:45-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,62 @@
+{
+    "number": 3593,
+    "data": "1,3,5,9,15,25,27,45,75,81,125,135,225,243,375,405,625,675,729,1125,1215,1875,2025,2187,3125,3375,3645,5625,6075,6561,9375,10125,10935,15625,16875,18225,19683,28125,30375,32805,46875,50625,54675,59049",
+    "name": "Numbers of the form 3^i*5^j with i, j >= 0.",
+    "comment": [
+        "Odd 5-smooth numbers (A051037). - _Reinhard Zumkeller_, Sep 18 2005"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A003593/b003593.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) ~ 1/sqrt(15)*exp(sqrt(2*log(3)*log(5)*n)) asymptotically. - _Benoit Cloitre_, Jan 22 2002"
+    ],
+    "maple": [
+        "isA003593 := proc(n)",
+        "    if n = 1 then",
+        "        true;",
+        "    else",
+        "        return (numtheory[factorset](n) minus {3, 5} = {} );",
+        "    end if;",
+        "end proc:",
+        "A003593 := proc(n)",
+        "    option remember;",
+        "    if n = 1 then",
+        "        1;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if isA003593(a) then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "seq(A003593(n),n=1..30) ; # _R. J. Mathar_, Aug 04 2016"
+    ],
+    "mathematica": [
+        "fQ[n_] := PowerMod[15, n, n] == 0; Select[Range[60000], fQ] (* _Bruno Berselli_, Sep 24 2012 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List(),N);for(n=0,log(lim)\\log(5),N=5^n;while(N<=lim,listput(v,N);N*=3));vecsort(Vec(v)) \\\\ _Charles R Greathouse IV_, Jun 28 2011",
+        "(PARI) is(n)=n==3^valuation(n,3)*5^valuation(n,5) \\\\ _Charles R Greathouse IV_, Apr 23 2013",
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert)",
+        "a003593 n = a003593_list !! (n-1)",
+        "a003593_list = f (singleton 1) where",
+        "   f s = m : f (insert (3*m) $ insert (5*m) s') where",
+        "     (m,s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Sep 13 2011",
+        "(MAGMA) [n: n in [1..60000] | PrimeDivisors(n) subset [3,5]]; // _Bruno Berselli_, Sep 24 2012"
+    ],
+    "xref": [
+        "Cf. A033849, A112751-A112756, A143202.",
+        "Cf. A264997 (partitions into), see also A264998."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 31,
+    "revision": 39,
+    "time": "2016-08-04T16:04:25-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

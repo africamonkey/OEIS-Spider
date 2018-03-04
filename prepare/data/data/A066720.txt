@@ -1,0 +1,48 @@
+{
+    "number": 66720,
+    "data": "1,2,3,5,7,8,11,13,17,18,19,23,29,31,37,41,43,47,50,53,59,60,61,67,71,73,79,81,83,89,97,98,101,103,105,107,109,113,127,128,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,211,223,227,229,233,239",
+    "name": "The greedy rational packing sequence: a(1) = 1; for n > 1, a(n) is smallest number such that the ratios a(i)/a(j) for 1 <= i < j <= n are all distinct.",
+    "comment": [
+        "Sequence was apparently invented by Jeromino Wannhoff - see the Rosenthal link.",
+        "If you replace the word \"ratio\" with \"difference\" and start from 1 using the same greedy algorithm you get A005282. - Sharon Sela (sharonsela(AT)hotmail.com), Jan 15, 2002",
+        "Does every rational number appear as a ratio? See A066657, A066658."
+    ],
+    "link": [
+        "David Applegate, <a href=\"/A066721/a066721.txt\">First 48186 terms of A066721 and their factorizations</a> (implies first 8165063 terms of current sequence)",
+        "Rainer Rosenthal, <a href=\"http://makeashorterlink.com/?B28F238A8\">Posting to de.rec.denksport, Jan 15 2002</a>",
+        "Robert E. Sawyer, <a href=\"http://groups.google.com/groups?hl=en&amp;th=a534bab788d7ec46&amp;rnum=1\">Posting to sci.math newsgroup, Jan 12, 2002</a>"
+    ],
+    "mathematica": [
+        "s={1}; xok := Module[{}, For[i=1, i<=n, i++, For[j=1; k=Length[dl=Divisors[s[[i]]x]], j<=k, j++; k--, If[MemberQ[s, dl[[j]]]&&MemberQ[s, dl[[k]]], Return[False]]]]; True]; For[n=1, True, n++, Print[s[[n]]]; For[x=s[[n]]+1, True, x++, If[xok, AppendTo[s, x]; Break[]]]] (* _Dean Hickerson_ *)",
+        "a[1] = 1; a[n_] := a[n] = Block[{k = a[n - 1] + 1, b = c = Table[a[i], {i, 1, n - 1}], d}, While[c = Append[b, k]; Length[ Union[ Flatten[ Table[ c[[i]]/c[[j]], {i, 1, n}, {j, 1, n}]]]] != n^2 - n + 1, k++ ]; Return[k]]; Table[ a[n], {n, 1, 75} ] (* _Robert G. Wilson v_ *)"
+    ],
+    "program": [
+        "(PARI) {a066720(m) = local(a,rat,n,s,new,b,i,k,j); a=[]; rat=Set([]); n=0; s=0; while(s<m,s++; new=Set([]); b=1; i=1; while(b&&i<=n,k=s/a[i]; if(setsearch(rat,k),b=0,new=setunion(new,Set(k)); k=a[i]/s; if(setsearch(rat,k),b=0,new=setunion(new,Set(k)))); i++); if(b,rat=setunion(rat,new); a=concat(a,s); n++; print1(s,\",\")))} a066720(240) \\\\ _Klaus Brockhaus_, Feb 23 2002",
+        "(Haskell)",
+        "import qualified Data.Set as Set (null)",
+        "import Data.Set as Set (empty, insert, member)",
+        "a066720 n = a066720_list !! (n-1)",
+        "a066720_list = f [] 1 empty where",
+        "   f ps z s | Set.null s' = f ps (z + 1) s",
+        "            | otherwise   = z : f (z:ps) (z + 1) s'",
+        "     where s' = g (z:ps) s",
+        "           g []     s                      = s",
+        "           g (x:qs) s | (z * x) `member` s = empty",
+        "                      | otherwise          = g qs $ insert (z * x) s",
+        "-- _Reinhard Zumkeller_, Nov 19 2013"
+    ],
+    "xref": [
+        "Consists of the primes together with A066721. Cf. A005282, A066775.",
+        "For the rationals that are produced see A066657/A066658 and A066848, A066849."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jan 15 2002",
+    "ext": [
+        "More terms from _Dean Hickerson_, _Klaus Brockhaus_ and _David Applegate_, Jan 15 2002"
+    ],
+    "references": 8,
+    "revision": 16,
+    "time": "2015-03-04T21:04:46-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

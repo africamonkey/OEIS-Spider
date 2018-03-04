@@ -1,0 +1,44 @@
+{
+    "number": 248787,
+    "data": "20,26,36531,42814,4513010,63033577",
+    "name": "Numbers x such that sigma(x) = rev(sigma*(x)), where sigma(x) is the sum of the divisors of x, sigma*(x) the sum of the anti-divisors of x and rev(x) the reverse of x.",
+    "comment": [
+        "No further terms up to 10^6.",
+        "a(7) > 10^10. - _Hiroaki Yamanouchi_, Mar 18 2015"
+    ],
+    "link": [
+        "Diana Mecum, <a href=\"/A130799/a130799.txt\">Anti-divisors from 3 to 500</a>"
+    ],
+    "example": [
+        "Antidivisors of 20 are 3,8,13 and their sum is 24, while sigma(20) = 42.",
+        "Antidivisors of 26 are 3,4,17 and their sum is 24, while sigma(26) = 42.",
+        "Antidivisors of 36531 are 2, 6, 18, 22, 54, 66, 82, 162, 198, 246, 594, 738, 902, 1782, 2214, 2706, 6642, 8118, 24354 and their sum is sigma*(36531) = 48906, while sigma(36531) = 60984."
+    ],
+    "maple": [
+        "with(numtheory):T:=proc(w) local x,y,z; y:=w; z:=0;",
+        "for x from 1 to ilog10(w)+1 do z:=10*z+(y mod 10); y:=trunc(y/10); od; z; end:",
+        "P:=proc(q) local a,j,k,n; for n from 1 to q do",
+        "k:=0; j:=n; while j mod 2 <> 1 do k:=k+1; j:=j/2; od;",
+        "a:=sigma(2*n+1)+sigma(2*n-1)+sigma(n/2^k)*2^(k+1)-6*n-2;",
+        "if T(a)=sigma(n) then print(n); fi; od; end: P(10^10);"
+    ],
+    "program": [
+        "(PARI) rev(n) = subst(Polrev(digits(n)), x, 10);",
+        "sad(n) = k=valuation(n, 2); sigma(2*n+1)+sigma(2*n-1)+sigma(n/2^k)*2^(k+1)-6*n-2;",
+        "isok(n) = sigma(n) == rev(sad(n)); \\\\ _Michel Marcus_, Dec 07 2014"
+    ],
+    "xref": [
+        "Cf. A000203, A066417, A178029."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Oct 14 2014",
+    "ext": [
+        "a(5) from _Chai Wah Wu_, Dec 06 2014",
+        "a(6) from _Hiroaki Yamanouchi_, Mar 18 2015"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2015-03-18T02:34:14-04:00",
+    "created": "2014-10-28T05:11:56-04:00"
+}

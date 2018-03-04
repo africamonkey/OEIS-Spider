@@ -1,0 +1,64 @@
+{
+    "number": 18885,
+    "data": "0,1,4,9,16,25,36,49,64,81,100,121,144,225,400,441,484,676,900,1444,7744,10000,11881,29929,40000,44944,55225,69696,90000,1000000,4000000,9000000,9696996,100000000,400000000,900000000,6661661161,10000000000",
+    "name": "Squares using no more than two distinct digits.",
+    "comment": [
+        "Is 6661661161 the largest term not of the form 10^k, 4*10^k or 9*10^k? Any larger ones must have >= 22 digits. - _Robert Israel_, Dec 03 2015"
+    ],
+    "link": [
+        "Shawn A. Broyles, <a href=\"/A018885/b018885.txt\">Table of n, a(n) for n = 1..85</a>",
+        "Alexandru Gica and Laurentiu Panaitopol, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL6/Panaitopol/panaitopol41.html\">On Oblath's Problem</a>, J. Integer Seqs., Vol. 6(3), 2003, article 03.3.5.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SquareNumber.html\">Square Number</a>"
+    ],
+    "formula": [
+        "For n > 4, a(n) = A016069(n-4)^2."
+    ],
+    "maple": [
+        "F:= proc(r, a, b, m)",
+        "# get all squares starting with r, with at most m further digits, all from {a,b} where a < b",
+        "local res,Ls,Us,L,U,looking;",
+        "if issqr(r) then res:= r else res:= NULL fi;",
+        "if m = 0 then return res fi;",
+        "Ls:= r*10^m + a*(10^m-1)/9;",
+        "Us:= r*10^m + b*(10^m-1)/9;",
+        "L:= isqrt(Ls);",
+        "if L^2 > Ls then L:= L-1 fi;",
+        "U:= isqrt(Us);",
+        "if U^2 < Us then U:= U+1 fi;",
+        "if L > U then res",
+        "else res, procname(10*r+a,a,b,m-1), procname(10*r+b,a,b,m-1)",
+        "fi",
+        "end proc:",
+        "S2:= {seq(i^2 mod 100, i=0..99)}:",
+        "prs:= map(t -> `if`(t < 10, {0,t},{(t mod 10),(t - (t mod 10))/10}), S2):",
+        "prs:= map(p -> `if`(nops(p)=1, seq(p union {s},s={$0..9} minus p), p), prs):",
+        "Res:= NULL:",
+        "for p in prs do",
+        "  a:= min(p); b:= max(p);",
+        "  if a > 0 then",
+        "     Res:= Res, F(a,a,b,14);",
+        "  fi;",
+        "  Res:= Res, F(b,a,b,14);",
+        "od:",
+        "sort(convert({0,Res},list)); # _Robert Israel_, Dec 03 2015"
+    ],
+    "mathematica": [
+        "Select[Range[0, 10^5]^2, Length@ Union@ IntegerDigits@ # <= 2 &] (* _Michael De Vlieger_, Dec 03 2015 *)"
+    ],
+    "program": [
+        "(PARI) for (n=0, 10^6, if ( #Set(digits(n^2))<=2, print1(n^2, \", \") ) ); \\\\ _Michel Marcus_, May 21 2015"
+    ],
+    "xref": [
+        "Cf. A016069, A016070, A018884."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "0 inserted and definition edited by _Jon E. Schoenfield_, Jan 15 2014"
+    ],
+    "references": 5,
+    "revision": 47,
+    "time": "2017-11-27T03:21:15-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

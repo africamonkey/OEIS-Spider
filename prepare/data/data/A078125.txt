@@ -1,0 +1,55 @@
+{
+    "number": 78125,
+    "data": "1,2,5,23,239,5828,342383,50110484,18757984046,18318289003448,47398244089264547,329030840161393127681,6190927493941741957366100,318447442589056401640929570896,45106654667152833836835578059359839",
+    "name": "First column of matrix A078123, which is the square of the infinite lower triangular matrix A078122 that shifts left and up when cubed.",
+    "comment": [
+        "a(n) = sum of the n-th row of lower triangular matrix of A078122. Conjecture: a(n) = the partitions of 3^n into powers of 3.",
+        "Number of partitions of 3^n into powers of 3. - Valentin Bakoev (v_bakoev(AT)yahoo.com), Feb 22 2009"
+    ],
+    "reference": [
+        "Bakoev V., Algorithmic approach to counting of certain types m-ary partitions, Discrete Mathematics, 275 (2004) pp.17-41. - Valentin Bakoev (v_bakoev(AT)yahoo.com), Feb 22 2009"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A078125/b078125.txt\">Table of n, a(n) for n = 0..40</a>",
+        "V. Bakoev, <a href=\"http://www.uni-vt.bg/showfullpub.asp?u=32&amp;fn=AACCTMP.pdf\">Algorithmic approach to counting of certain types m-ary partitions</a>, Discrete Mathematics, 275 (2004) pp. 17-41."
+    ],
+    "formula": [
+        "Denote the sum: m^n+m^n+...+m^n, k times, by k.m^n (m>1, n>0 and k are natural numbers). The general formula for the number of all partitions of the sum k.m^n into powers of m is: t_m(n, k)= k+1 if n=1, t_m(n, k)= 1 if k=0, and t_m(n, k)= t_m(n, k-1) + t_m(n-1, k.m) if n>1 and k>0. A078125 is obtained for m=3 and n=1,2,3,... - Valentin Bakoev (v_bakoev(AT)yahoo.com), Feb 22 2009",
+        "a(n) = [x^(3^n)] 1/Product_{j>=0}(1-x^(3^j)). - _Alois P. Heinz_, Sep 27 2011"
+    ],
+    "example": [
+        "Square of A078122 = A078123 as can be seen by 4 X 4 submatrix:",
+        "[1,_0,_0,0]^2=[_1,_0,_0,_0]",
+        "[1,_1,_0,0]___[_2,_1,_0,_0]",
+        "[1,_3,_1,0]___[_5,_6,_1,_0]",
+        "[1,12,_9,1]___[23,51,18,_1]",
+        "To obtain t_3(5,2) we use the table T, defined as T[i,j]= t_3(i,j), for i=1,2,...,5(=n), and j= 0,1,2,...,162(= k.m^{n-1}). It is: 1,2,3,4,5,6,7,8,...,162; 1,5,12,22,35,51,...,4510; (This row contains the first 55 members of A000326 - the pentagonal numbers) 1,23,93,238,485,...,29773; 1,239,1632,5827,15200,32856,62629; 1,5828,68457; Column 1 contains the first 5 members of A078125. - Valentin Bakoev (v_bakoev(AT)yahoo.com), Feb 22 2009"
+    ],
+    "mathematica": [
+        "m[i_, j_] := m[i, j]=If[j==0||i==j, 1, m3[i-1, j-1]]; m2[i_, j_] := m2[i, j]=Sum[m[i, k]m[k, j], {k, j, i}]; m3[i_, j_] := m3[i, j]=Sum[m[i, k]m2[k, j], {k, j, i}]; a[n_] := m2[n, 0]"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.MemoCombinators (memo2, list, integral)",
+        "a078125 n = a078125_list !! n",
+        "a078125_list = f [1] where",
+        "   f xs = (p' xs $ last xs) : f (1 : map (* 3) xs)",
+        "   p' = memo2 (list integral) integral p",
+        "   p _ 0 = 1; p [] _ = 0",
+        "   p ks'@(k:ks) m = if m < k then 0 else p' ks' (m - k) + p' ks m",
+        "-- _Reinhard Zumkeller_, Nov 27 2015"
+    ],
+    "xref": [
+        "Cf. A078121, A078122 (matrix shift when cubed), A078123, A078124.",
+        "1) Subtracting 1 from the members of A078125 we obtain A125801. 2) For given m, the general formula for t_m(n, k) and the corresponding tables T, computed as in the example, determine a family of related sequences (placed in the rows or in the columns of T). For example, the sequences from the III, IV, etc. rows of the given table are not represented in OEIS till now. - Valentin Bakoev (v_bakoev(AT)yahoo.com), Feb 22 2009",
+        "Column k=3 of A145515. - _Alois P. Heinz_, Sep 27 2011",
+        "Cf. A000244, A002577, A145513."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 18 2002",
+    "references": 19,
+    "revision": 19,
+    "time": "2015-11-27T20:47:34-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

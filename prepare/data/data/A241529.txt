@@ -1,0 +1,70 @@
+{
+    "number": 241529,
+    "data": "2887,2969,3056,3220,3365,3464,3565,3611,3719,3746,3814,3836,3874,3879,3955,4142,4147,4211,4277,4371,4403,4483,4564,4572,4661,4730,4813,4881,4888,4902,4906,4965,4982,5132,5175,5208,5410,5431,5509,5527,5564,5624,5669",
+    "name": "Positive numbers n such that n^2 + n + 41 is composite and there are no positive integers a,c,d such that n = c*a*z^2+((((d+2)*(1/3))*c-2)*a/d+1)*z+((((367*d^2+d+1)*(1/9))*c^2-((d+2)*(1/3))*c+1)*a/d^2-(((d-1)*(1/3))*c+1)/d)/c; for an integer z.",
+    "comment": [
+        "This sequence has a restriction involving 4 variables. More composite cases are described with a better restrictive expression.  The expression for n(a,c,d,z) will force n^2 + n + 41 to be either a fraction or a composite number.",
+        "The condition on n(a,c,d,z) was determined by quadratic curve fitting.  It has been automated with the Maple Interactive() command.  The ultimate motivation is to try to find a closed from expression that generates all the composite cases of n^2 + n + 41 for integer n."
+    ],
+    "reference": [
+        "John Stillwell, Elements of Number Theory, Springer, 2003, page 3."
+    ],
+    "link": [
+        "Matt C. Anderson, <a href=\"/A241529/a241529.pdf\">Graph of composite values for n^2 + n + 41 with a modular symmetry.</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Prime-GeneratingPolynomial.html\">Prime-Generating Polynomial</a>"
+    ],
+    "maple": [
+        "# Euler considered the prime values for n^2 + n + 41;",
+        "# This is a 76 second calculation on a 2.93 GHz machine",
+        "h := n^2+n+41;",
+        "y := c*a*z^2+((((d+2)*(1/3))*c-2)*a/d+1)*z+((((367*d^2+d+1)*(1/9))*c^2-((d+2)*(1/3))*c+1)*a/d^2-(((d-1)*(1/3))*c+1)/d)/c;",
+        "y2 := subs(n = y, h);",
+        "y3 := factor(y2);",
+        "# note that y is an expression in 4 variables.",
+        "# After a composition of functions, an algebraic factorization",
+        "# can be observed in y3.  As long as y3 is an integer, it will",
+        "# be composite.  This is because y3 factors and both factors",
+        "# are integers bigger than one.",
+        "maxn := 6000;",
+        "A := {}:",
+        "for n to maxn do",
+        "g := n^2+n+41:",
+        "if isprime(g) = false then A := `union`(A, {n}) end if :",
+        "end do:",
+        "# now the A set contains composite values of the form",
+        "# n^2 + n + 41 less than maxn.",
+        "c := 1: a := 1: d := 1: z := -1: p := 41:",
+        "q := c*a*z^2+((((d+2)*(1/3))*c-2)*a/d+1)*z+((((367*d^2+d+1)*(1/9))*c^2-((d+2)*(1/3))*c+1)*a/d^2-(((d-1)*(1/3))*c+1)/d)/c:",
+        "A2 := A:",
+        "while q < maxn do",
+        "while `and`(q < maxn, d < 100) do",
+        "while q < maxn do while",
+        "q < maxn do",
+        "A2 := `minus`(A2, {q});",
+        "A2 := `minus`(A2, {c*a*z^2+((((d+2)*(1/3))*c-2)*a/d+1)*z+((((367*d^2+d+1)*(1/9))*c^2-((d+2)*(1/3))*c+1)*a/d^2-(((d-1)*(1/3))*c+1)/d)/c});",
+        "z := z+1;",
+        "A2 := `minus`(A2, {c*a*z^2-((((d+2)*(1/3))*c-2)*a/d+1)*(1*z)+((((367*d^2+d+1)*(1/9))*c^2-((d+2)*(1/3))*c+1)*a/d^2-(((d-1)*(1/3))*c+1)/d)/c}); q := c*a*z^2+((((d+2)*(1/3))*c-2)*a/d+1)*z+((((367*d^2+d+1)*(1/9))*c^2-((d+2)*(1/3))*c+1)*a/d^2-(((d-1)*(1/3))*c+1)/d)/c",
+        "end do;",
+        "a := a+1; z := -1;",
+        "q := c*a*z^2+((((d+2)*(1/3))*c-2)*a/d+1)*z+((((367*d^2+d+1)*(1/9))*c^2-((d+2)*(1/3))*c+1)*a/d^2-(((d-1)*(1/3))*c+1)/d)/c :",
+        "end do;",
+        "d := d+1: a := 1:",
+        "q := c*a*z^2+((((d+2)*(1/3))*c-2)*a/d+1)*z+((((367*d^2+d+1)*(1/9))*c^2-((d+2)*(1/3))*c+1)*a/d^2-(((d-1)*(1/3))*c+1)/d)/c :",
+        "end do:",
+        "c := c+1: d := 1:",
+        "q := c*a*z^2+((((d+2)*(1/3))*c-2)*a/d+1)*z+((((367*d^2+d+1)*(1/9))*c^2-((d+2)*(1/3))*c+1)*a/d^2-(((d-1)*(1/3))*c+1)/d)/c :",
+        "end do:",
+        "A2;",
+        "# _Matt Anderson_, May 13 2014"
+    ],
+    "xref": [
+        "Cf. A007634, A055390, A201998, and with division, A235381."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Matt C. Anderson_, Apr 27 2014",
+    "references": 2,
+    "revision": 60,
+    "time": "2014-05-24T17:37:17-04:00",
+    "created": "2014-05-24T17:37:17-04:00"
+}

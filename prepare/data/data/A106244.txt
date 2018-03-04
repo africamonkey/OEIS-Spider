@@ -1,0 +1,50 @@
+{
+    "number": 106244,
+    "data": "1,1,1,2,2,3,3,4,5,6,7,8,10,11,13,14,17,19,21,24,27,30,33,37,41,46,50,56,62,68,75,82,91,99,108,118,129,141,152,166,180,196,211,229,248,267,288,310,335,360,387,415,447,479,513,549,589,630,672,719,768,820,873,930",
+    "name": "Number of partitions into distinct prime powers.",
+    "comment": [
+        "A054685(n) < a(n) < A023893(n) for n>2."
+    ],
+    "link": [
+        "T. D. Noe and Reinhard Zumkeller, <a href=\"/A106244/b106244.txt\">Table of n, a(n) for n = 0..10000</a>, first 1000 terms from T. D. Noe"
+    ],
+    "formula": [
+        "a(n) = A054685(n-1)+A054685(n). - _Vladeta Jovovic_, Apr 28 2005",
+        "G.f.=(1+x)*Product(Product(1+x^(p(k)^j), j=1..infinity),k=1..infinity), where p(k) is the k-th prime (offset 0). - _Emeric Deutsch_, Aug 27 2007"
+    ],
+    "example": [
+        "a(10) = #{3^2+1,2^3+2,7+3,7+2+1,5+2^2+1,5+3+2,2^2+3+2+1} = 7."
+    ],
+    "maple": [
+        "g:=(1+x)*(product(product(1+x^(ithprime(k)^j),j=1..5),k=1..20)): gser:=series(g,x=0,68): seq(coeff(gser,x,n),n=1..63); - _Emeric Deutsch_, Aug 27 2007"
+    ],
+    "program": [
+        "(PARI) isprimepower(n)= {ispower(n, , &n); isprime(n)}",
+        "lista(m) = {x = t + t*O(t^m); gf = (1+x)*prod(k=1, m, if (isprimepower(k),(1+x^k), 1)); for (n=1, m, print1(polcoeff(gf, n, t), \", \"));}",
+        "\\\\ _Michel Marcus_, Mar 09 2013",
+        "(Haskell)",
+        "import Data.MemoCombinators (memo2, integral)",
+        "a106244 n = a106244_list !! n",
+        "a106244_list = map (p' 1) [0..] where",
+        "   p' = memo2 integral integral p",
+        "   p _ 0 = 1",
+        "   p k m = if m < pp then 0 else p' (k + 1) (m - pp) + p' (k + 1) m",
+        "           where pp = a000961 k",
+        "-- _Reinhard Zumkeller_, Nov 24 2015"
+    ],
+    "xref": [
+        "Cf. A000586, A000607, A000961.",
+        "Cf. A062051, A105420, A131996.",
+        "Cf. A023893, A051613, A054685."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Reinhard Zumkeller_, Apr 26 2005",
+    "ext": [
+        "Offset corrected and a(0)=1 added by _Reinhard Zumkeller_, Nov 24 2015"
+    ],
+    "references": 11,
+    "revision": 21,
+    "time": "2018-01-08T02:11:49-05:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

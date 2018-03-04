@@ -1,0 +1,41 @@
+{
+    "number": 100847,
+    "data": "1,2,3,7,10,17,28,42,62,93,137,193,276,383,532,734,997,1342,1807,2400,3177,4190,5478,7130,9245,11923,15305,19591,24957,31673,40075,50518,63460,79523,99296,123664,153616,190271,235072,289776,356302,437107,535112,653626",
+    "name": "Number of partitions of 2n in which each odd part has even multiplicity and each even part has odd multiplicity.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A100847/b100847.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{i>0} (1+x^i-x^(2*i))/(1-x^i).",
+        "a(n) ~ sqrt(Pi^2/3 + 4*log(phi)^2) * exp(sqrt((2*Pi^2/3 + 8*log(phi)^2)*n)) / (4*Pi*n), where phi = A001622 = (1+sqrt(5))/2 is the golden ratio. - _Vaclav Kotesovec_, Jan 03 2016"
+    ],
+    "example": [
+        "a(3) = 7 because we have 6, 42, 411, 33, 222, 21111 and 111111."
+    ],
+    "maple": [
+        "g:=product((1+x^i-x^(2*i))/(1-x^i),i=1..50): gser:=series(g,x=0,40): seq(coeff(gser,x,n),n=0..35); # _Emeric Deutsch_, Aug 25 2007",
+        "# second Maple program:",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(`if`(irem(i+j, 2)=0, 0, b(n-i*j, i-1)), j=1..n/i)",
+        "       +b(n, i-1)))",
+        "    end:",
+        "a:= n-> b(2*n$2):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, May 31 2014"
+    ],
+    "mathematica": [
+        "nmax = 50; CoefficientList[Series[Product[(1+x^k-x^(2*k))/(1-x^k), {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Jan 03 2016 *)"
+    ],
+    "xref": [
+        "Cf. A055922, A117958, A130126, A131942, A102247, A263401."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Vladeta Jovovic_, Aug 16 2007",
+    "ext": [
+        "More terms from _Emeric Deutsch_, Aug 25 2007"
+    ],
+    "references": 3,
+    "revision": 18,
+    "time": "2016-01-03T06:31:01-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

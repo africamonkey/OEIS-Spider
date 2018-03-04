@@ -1,0 +1,49 @@
+{
+    "number": 280011,
+    "data": "30,60,66,70,90,102,120,132,138,140,150,170,174,180,195,198,204,240,246,264,270,276,280,282,286,300,306,318,322,340,345,348,350,354,357,360,370,390,396,408,414,426,450,470,480,490,492,498,518,522,528,534,540",
+    "name": "Let d(1) < d(2) < ... < d(q) be the q distinct prime divisors of an integer m. The sequence lists the numbers m such that d(k) == d(k+2) mod d(k+1) for k = 1,2,...,q-2.",
+    "comment": [
+        "The subsequence for q = 3 begins with {30, 60, 66, 70, 90, 102, 120, ...}",
+        "The subsequence for q = 4 begins with {390, 690, 780, 1170, 1290, ...}",
+        "The subsequence for q = 5 begins with {12090, 24180, 32370, 36270, ...}",
+        "The subsequence for q = 6 begins with {1656330, 2405910, 3312660, ...}",
+        "The subsequence for q = 7 begins with {1412849490, 1989687570, ...}",
+        "Number of terms < 10^k: 0, 5, 103, 1001, 7861, 60088, 476156, 3920881, 33312469, ..., . _Robert G. Wilson v_, Jan 06 2017"
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A280011/b280011.txt\">Table of n, a(n) for n = 1..1002</a>"
+    ],
+    "example": [
+        "390 is in the sequence because the prime factors are {2, 3, 5, 13} and we have 2 == 5 (mod 3) and 3 == 13 (mod 5).",
+        "1656330 is in the sequence because the prime factors are {2, 3, 5, 13, 31, 137} and we have 2 == 5 (mod 3), 3 == 13 (mod 5), 5 == 31 (mod 13) and 13 == 137 mod 31."
+    ],
+    "maple": [
+        "with(numtheory):nn:=1000:",
+        "for n from 2 to nn do:",
+        "lst2:={}:x:=factorset(n):n0:=nops(x):lst1:={}:",
+        "   for m from 1 to n0-2 do:",
+        "    lst1:=lst1 union {x[m]}:",
+        "     if x[m]=irem(x[m+2], x[m+1])",
+        "      then",
+        "       lst2:=lst2 union {x[m]}:",
+        "       else",
+        "     fi:",
+        "  od:",
+        "   if lst2=lst1 and lst2 <> {}",
+        "    then",
+        "    printf(`%d, `,n):",
+        "    else",
+        "  fi:",
+        "od:"
+    ],
+    "mathematica": [
+        "fQ[n_] := If[ PrimeNu@ n > 2, Block[{d = First@# & /@ FactorInteger@ n}, Union[ Mod[d[[# + 2]], d[[# + 1]]] == d[[#]] & /@ Range[ Length@ d - 2]] == {True}], False]; Select[Range@550, fQ] (* _Robert G. Wilson v_, Jan 02 2017 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Jan 02 2017",
+    "references": 1,
+    "revision": 23,
+    "time": "2017-09-13T02:15:11-04:00",
+    "created": "2017-01-03T05:42:02-05:00"
+}

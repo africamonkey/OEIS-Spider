@@ -1,0 +1,37 @@
+{
+    "number": 253202,
+    "data": "0,0,0,4,7,71,2555,24897,970556",
+    "name": "Number of essentially different ways of arranging the numbers 1 through 2n around a circle so that the sum of each pair of adjacent numbers is semiprime.",
+    "comment": [
+        "Conjecture: a(n) > 0 for all n > 3.",
+        "This implies the semiprime conjecture, and it is similar to the prime circle problem mentioned in A051252."
+    ],
+    "example": [
+        "Four arrangements for 2n = 8 are:",
+        "{1,3,6,8,7,2,4,5},",
+        "{1,3,7,2,8,6,4,5},",
+        "{1,5,4,2,7,3,6,8},",
+        "{1,5,4,6,3,7,2,8}, so a(4) = 4;",
+        "Seven arrangements for 2n = 10 are:",
+        "{1,3,6,8,7,2,4,10,5,9},",
+        "{1,3,6,9,5,10,4,2,7,8},",
+        "{1,3,7,2,4,10,5,9,6,8},",
+        "{1,3,7,2,8,6,4,10,5,9},",
+        "{1,5,10,4,2,8,7,3,6,9},",
+        "{1,8,2,7,3,6,4,10,5,9},",
+        "{1,8,6,3,7,2,4,10,5,9}, so a(5) = 7;"
+    ],
+    "mathematica": [
+        "$RecursionLimit=500; try[lev_] := Module[{t, j}, If[lev>2n, (*then make sure the sum of the first and last is semiprime*) If[Plus@@Last/@FactorInteger [soln[[1]]+soln[[2n]]]==2&&soln[[2]]<=soln[[2n]], (*Print[soln]; *) cnt++ ], (*else append another number to the soln list*) t=soln[[lev-1]]; For[j=1, j<=Length[s[[t]]], j++, If[ !MemberQ[soln, s[[t]][[j]]], soln[[lev]]=s[[t]][[j]]; try[lev+1]; soln[[lev]]=0]]]]; For[lst={}; n=1, n<=7, n++, s=Table[{}, {2n}]; For[i=1, i<=2n, i++, For[j=1, j<=2n, j++, If[i!=j&& Plus@@Last/@FactorInteger [i+j]==2, AppendTo[s[[i]], j]]]]; soln=Table[0, {2n}]; soln[[1]]=1; cnt=0; try[2]; AppendTo[lst, cnt]]; lst"
+    ],
+    "xref": [
+        "Cf. A051252."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,4",
+    "author": "_Michel Lagneau_, Mar 25 2015",
+    "references": 0,
+    "revision": 10,
+    "time": "2015-03-27T09:20:51-04:00",
+    "created": "2015-03-27T09:20:51-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 56294,
+    "data": "1,2,3,7,12,43,126,539,2304,11023,54682,284071,1509852,8195029,45080666,250641895,1404374248,7917211349,44848645458,255055231763,1455247360128,8326191290585,47752990403134",
+    "name": "Number of n-bead necklace structures using a maximum of six different colored beads.",
+    "comment": [
+        "Turning over the necklace is not allowed. Colors may be permuted without changing the necklace structure.",
+        "The second Mathematica program uses Gilbert and Riordan's recurrence formula, which they recommend for calculations. - _Robert A. Russell_, Feb 24 2018"
+    ],
+    "reference": [
+        "M. R. Nester (1999). Mathematical investigations of some plant interaction designs. PhD Thesis. University of Queensland, Brisbane, Australia. [See A056391 for pdf file of Chap. 2]"
+    ],
+    "link": [
+        "E. N. Gilbert and J. Riordan, <a href=\"http://projecteuclid.org/euclid.ijm/1255631587\">Symmetry types of periodic sequences</a>, Illinois J. Math., 5 (1961), 657-665.",
+        "N. J. A. Sloane, <a href=\"/A000013/a000013.txt\">Maple code for this and related sequences</a>"
+    ],
+    "formula": [
+        "Use de Bruijn's generalization of Polya's enumeration theorem as discussed in reference."
+    ],
+    "mathematica": [
+        "Adn[d_, n_] := Module[{ c, t1, t2}, t2 = 0; For[c = 1, c <= d, c++, If[Mod[d, c] == 0 , t2 = t2 + (x^c/c)*(E^(c*z) - 1)]]; t1 = E^t2; t1 = Series[t1, {z, 0, n+1}]; Coefficient[t1, z, n]*n!]; Pn[n_] := Module[{ d, e, t1}, t1 = 0; For[d = 1, d <= n, d++, If[Mod[n, d] == 0, t1 = t1 + EulerPhi[d]*Adn[d, n/d]/n]]; t1/(1 - x)]; Pnq[n_, q_] := Module[{t1}, t1 = Series[Pn[n], {x, 0, q+1}] ; Coefficient[t1, x, q]]; a[n_] := Pnq[n, 6]; Table[Print[an = a[n]]; an, {n, 1, 23}] (* _Jean-Fran\u00e7ois Alcover_, Oct 04 2013, after _N. J. A. Sloane_'s Maple code *)",
+        "Adn[d_, n_] :=  Adn[d, n] = Which[0==n, 1, 1==n, DivisorSum[d, x^# &],",
+        "  1 == d, Sum[StirlingS2[n, k] x^k, {k, 0, n}], True,",
+        "  Expand[Adn[d, 1] Adn[d, n - 1] + D[Adn[d, n - 1], x] x]];",
+        "Table[SeriesCoefficient[DivisorSum[n, EulerPhi[#] Adn[#, n/#] &]",
+        "/(n (1 - x)), {x, 0, 6}], {n, 1, 40}] (* _Robert A. Russell_, Feb 24 2018 *)"
+    ],
+    "xref": [
+        "Cf. A000013, A054625."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "1,2",
+    "author": "_Marks R. Nester_",
+    "references": 4,
+    "revision": 19,
+    "time": "2018-02-25T02:04:32-05:00",
+    "created": "2000-07-22T03:00:00-04:00"
+}

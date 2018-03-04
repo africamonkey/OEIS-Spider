@@ -1,0 +1,55 @@
+{
+    "number": 225440,
+    "data": "378,630,990,3240,4095,4950,5460,9180,15400,19110,25200,31878,37128,37950,39060,52650,61425,79800,97020,103740,105570,122265,145530,157080,161028,176715,192510,221445,265356,288420,304590,306936,346528,437580,500500,545490,583740",
+    "name": "Triangular numbers that are the product of three distinct triangular numbers greater than 1.",
+    "comment": [
+        "Triangular numbers of the form triangular(x) * triangular(y) * triangular(z), x > y > z > 1."
+    ],
+    "link": [
+        "Donovan Johnson, <a href=\"/A225440/b225440.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "378 = 3 * 6 * 21.",
+        "630 = 3 * 10 * 21.",
+        "990 = 3 * 6 * 55."
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "typedef unsigned long long U64;",
+        "U64 isTriangular(U64 a) {  // ! Must be a < (1<<63)",
+        "    U64 s = sqrt(a*2);",
+        "    if (a>=(1ULL<<63)) exit(1);",
+        "    return (s*(s+1)/2 == a);",
+        "}",
+        "int compare64(const void *p1, const void *p2) {",
+        "  if (*(U64*)p1 == *(U64*)p2) return 0;",
+        "  if (*(U64*)p1 < *(U64*)p2) return -1;",
+        "  return 1;",
+        "}",
+        "#define TOP (1<<21)",
+        "U64 d[TOP];",
+        "int main() {",
+        "  U64 c, x, tx, y, ty, z, tz, p = 0;",
+        "    for (x = tx = 3; tx <= TOP; tx+=x, ++x) {",
+        "    for (y = ty = 3; ty < tx;   ty+=y, ++y) {",
+        "    for (z = tz = 3; tz < ty;   tz+=z, ++z) {",
+        "    c = tx*ty*tz;",
+        "    if (c <= TOP*18 && isTriangular(c))  d[p++] = c;",
+        "  }}}",
+        "  qsort(d, p, 8, compare64);",
+        "  for (x=c=0; c<p; ++c) if ((y=d[c])>x) printf(\"%llu, \", y), x=y;",
+        "  return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A000217, A085780, A140089, A188630, A225390."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, May 08 2013",
+    "references": 2,
+    "revision": 6,
+    "time": "2013-05-08T11:45:57-04:00",
+    "created": "2013-05-08T11:45:57-04:00"
+}

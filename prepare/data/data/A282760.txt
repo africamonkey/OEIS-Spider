@@ -1,0 +1,35 @@
+{
+    "number": 282760,
+    "data": "2,4,6,8,9,10,12,14,16,18,19,28,56,147,566,1301,4288,8576,13088,119396,518800,634825,654780,993476,2109420,3034105,6466772,17838948,80148824",
+    "name": "5*n analog to Keith numbers.",
+    "comment": [
+        "Like Keith numbers but starting from 5*n digits to reach n.",
+        "Consider the digits of 5*n. Take their sum and repeat the process deleting the first addend and adding the previous sum. The sequence lists the numbers that after some iterations reach a sum equal to themselves."
+    ],
+    "example": [
+        "5*14 = 70:",
+        "7 + 0 = 7;",
+        "0 + 7 = 7;",
+        "7 + 7 = 14."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q, h,w) local a, b, k, n, t, v; v:=array(1..h);",
+        "for n from 1 to q do a:=w*n; b:=ilog10(a)+1; if b>1 then",
+        "for k from 1 to b do v[b-k+1]:=(a mod 10); a:=trunc(a/10); od; t:=b+1; v[t]:=add(v[k], k=1..b); while v[t]<n do t:=t+1; v[t]:=add(v[k], k=t-b..t-1); od;",
+        "if v[t]=n then print(n); fi; fi; od; end: P(10^6, 1000,5);"
+    ],
+    "mathematica": [
+        "Select[Range[10^6], Function[n, Module[{d = IntegerDigits[5 n], s, k = 0}, s = Total@ d; While[s < n, AppendTo[d, s]; k++; s = 2 s - d[[k]]];",
+        "s == n]]] (* _Michael De Vlieger_, Feb 22 2017, after _T. D. Noe_ at A007629 *)"
+    ],
+    "xref": [
+        "Cf. A282757 - A282759, A282761 - A282765."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Feb 22 2017",
+    "references": 2,
+    "revision": 7,
+    "time": "2017-02-23T22:54:11-05:00",
+    "created": "2017-02-23T22:54:11-05:00"
+}

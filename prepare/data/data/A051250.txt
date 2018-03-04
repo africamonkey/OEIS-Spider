@@ -1,0 +1,39 @@
+{
+    "number": 51250,
+    "data": "1,2,3,4,5,6,8,9,10,12,14,18,20,24,30,42,60",
+    "name": "Numbers whose reduced residue system consists of 1 and prime powers only.",
+    "comment": [
+        "From _Reinhard Zumkeller_, Oct 27 2010: (Start)",
+        "Conjecture: the sequence is finite and 60 is the largest term, empirically verified up to 10^7;",
+        "A139555(a(n)) = A000010(a(n)). (End)",
+        "The sequence is indeed finite. Let pi*(x) denote the number of prime powers (including 1) up to x.  Dusart's bounds plus finite checking [up to 60184] shows that pi*(x) <= x/(log(x) - 1.1) + sqrt(x) for x >= 4.  phi(n) > n/(e^gamma log log n + 3/(log log n)) for n >= 3.  Convexity plus finite checking [up to 1096] allows a quick proof that phi(n) > pi*(n) for n > 420.  So if n > 420, the reduced residue system mod n must contain at least one number that is neither 1 nor a prime power. Hence 60 is the last term in the sequence. - _Charles R Greathouse IV_, Jul 14 2011"
+    ],
+    "link": [
+        "O. Ore and N. J. Fine, <a href=\"http://www.jstor.org/stable/2309817\">Reduced Residue Systems</a>, American Mathematical Monthly Vol. 66, No. 10 (Dec., 1959), pp. 926-927."
+    ],
+    "example": [
+        "RRS[ 60 ] = {1,7,11,13,17,19,23,29,31,37,41,43,47,49,53,59}."
+    ],
+    "mathematica": [
+        "fQ[n_] := Union[# == 1 || Mod[#, # - EulerPhi[#]] == 0 & /@ Select[ Range@ n, GCD[#, n] == 1 &]] == {True}; Select[ Range@ 100, fQ] (* _Robert G. Wilson v_, Jul 11 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a051250 n = a051250_list !! (n-1)",
+        "a051250_list = filter (all ((== 1) . a010055) . a038566_row) [1..]",
+        "-- _Reinhard Zumkeller_, May 27 2015, Dec 18 2011, Oct 27 2010",
+        "(PARI) isprimepower(n)=ispower(n,,&n);isprime(n)",
+        "is(n)=for(k=2,n-1,if(gcd(n,k)==1&&!isprimepower(k),return(0)));1 \\\\ _Charles R Greathouse IV_, Jul 14 2011"
+    ],
+    "xref": [
+        "Cf. A048597, A048862-A048869.",
+        "Cf. A010055, A038566."
+    ],
+    "keyword": "nice,nonn,fini,full",
+    "offset": "1,2",
+    "author": "_Labos Elemer_",
+    "references": 9,
+    "revision": 33,
+    "time": "2015-06-05T03:18:55-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

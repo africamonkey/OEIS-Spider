@@ -1,0 +1,52 @@
+{
+    "number": 123029,
+    "data": "1,1,2,3,10,24,130,504,4420,27720,393380,3991680,91657540,1504863360,55911099400,1485300136320,89290025741800,3838015552250880,373321597626465800,25964175210977203200,4086378207619294646800",
+    "name": "a(2*n-1) = prod(i=1..n, fibonacci(2*i-1)) and a(2*n) = prod(i=1..n, fibonacci(2*i)).",
+    "comment": [
+        "From _Johannes W. Meijer_, Aug 21 2011: (Start)",
+        "An appropriate name for this sequence is Fibonacci double factorial, cf. A006882.",
+        "In Parks' article \"A new proof of the Routh-Hurwitz stability criterion using the second method of Liapunov\" in appendix 2 a number triangle T(n,k) with T(n,n) = a(n+1), n>=0, appears if we assume that b(r) = fibonacci(r); see A103631 and A194005. (End)",
+        "The original name of this sequence was: A000045 inside a second linear differential equation recursion: b(n) = b(n-1) + b(n-2) --> Binet(n) of A000045 a(n) = b(n)*a(n-2)/(n*(n-1)).",
+        "Bagula also stated that using the solutions to these second order differential equations Markov/ linear recursions can be encoded as analog functions.",
+        "Partial products of the odd-indexed Fibonacci numbers interleaved with the partial products of the even-indexed Fibonacci numbers.  - _Harvey P. Dale_, Mar 14 2012"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A123029/b123029.txt\">Table of n, a(n) for n = 1..100</a>",
+        "P.C. Parks, <a href=\"http://journals.cambridge.org/action/displayAbstract;jsessionid=683439027E2555C7434CDC62776FEEE0.tomcat1?fromPage=online&amp;aid=2060360\"> A new proof of the Routh-Hurwitz stability criterion using the second method of Liapunov </a>, Math. Proc. of the Cambridge Philosophical Society, Vol. 58, Issue 04 (1962) p. 694-702.",
+        "Eric Weisstein, <a href=\"http://mathworld.wolfram.com/Fibonorial.html\"> Fibonorial </a> Mathworld."
+    ],
+    "formula": [
+        "a(n) = n!*a1(n) with a1(n) = b(n)*a1(n-2)/(n*(n-1)), a1(0) = 1, a1(1) = 1; b(n) = b(n-1) + b(n-2), b(0) = 0, b(1) = 1 and b(n) = F(n) with F(n) = A000045(n).",
+        "From _Johannes W. Meijer_, Aug 21 2011: (Start)",
+        "a(n) = F(n)*a(n-2).",
+        "a(2*n) = A194157(n) and a(2*n-1) = A194158(n). (End)",
+        "a(n) = 1 by convention since empty products equal 1. - _Michael Somos_, Oct 07 2014",
+        "0 = a(n)*(a(n+2)*a(n+3) - a(n+1)*a(n+4)) + a(n+1)*(+a(n+2)^2) for all n>=0. - _Michael Somos_, Oct 07 2014"
+    ],
+    "example": [
+        "G.f. = 1 + x + x^2 + 2*x^3 + 3*x^4 + 10*x^5 + 24*x^6 + 130*x^7 + 504*x^8 + ..."
+    ],
+    "maple": [
+        "with(combinat): A123029 :=proc(n): if type(n,even) then mul(fibonacci(2*i), i=1..n/2) else mul(fibonacci(2*i-1), i= 1..(n+1)/2) fi: end: seq(A123029(n), n=1..21); # _Johannes W. Meijer_, Aug 21 2011"
+    ],
+    "mathematica": [
+        "f[n_Integer] = Module[{a}, a[n] /. RSolve[{a[n] == a[n - 1] + a[n - 2], a[0] == 0, a[1] == 1}, a[n], n][[1]] // FullSimplify] ; Clear[a] a[n_] := a[n] = f[n]*a[n - 2]/(n*(n - 1)); a[0] = 1; a[1] = 1; Table[ExpandAll[a[n]*n! ], {n, 0, 30}]",
+        "With[{nn=21},Riffle[FoldList[Times,1,Fibonacci[Range[3,nn,2]]],FoldList[ Times,1, Fibonacci[ Range[4,nn+1,2]]]]] (* _Harvey P. Dale_, Mar 14 2012 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, prod(k=0, (n-1)\\2, fibonacci(n - 2*k)))}; /* _Michael Somos_, Oct 07 2014 */"
+    ],
+    "xref": [
+        "Cf. A000045, A003266, A194157 and A194158."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Roger L. Bagula_, Sep 25 2006",
+    "ext": [
+        "Edited and information added by _Johannes W. Meijer_, Aug 21 2011"
+    ],
+    "references": 4,
+    "revision": 24,
+    "time": "2014-10-07T15:13:54-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

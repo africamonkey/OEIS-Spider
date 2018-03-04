@@ -1,0 +1,43 @@
+{
+    "number": 215716,
+    "data": "1,1,2,6,24,96,576,4032,32256,290304,2612736,28740096,344881152,4483454976,62768369664,878757175296,14060114804736,239021951680512,4302395130249216,81745507474735104,1553164642019966976,32616457482419306496,717562064613224742912",
+    "name": "Number of permutations on n points admitting a fifth root.",
+    "comment": [
+        "a(n) is the number of permutations of n points such that for all positive m, the number of (5m)-cycles is a multiple of 5."
+    ],
+    "link": [
+        "Eric M. Schmidt, <a href=\"/A215716/b215716.txt\">Table of n, a(n) for n = 0..200</a>",
+        "H. S. Wilf, <a href=\"http://www.math.upenn.edu/~wilf/DownldGF.html\">Generatingfunctionology</a>, 2nd edn., Academic Press, NY, 1994, p. 148-149, Thms. 4.8.2 and 4.8.3."
+    ],
+    "formula": [
+        "E.g.f.: (1 - x^5)^(1/5)/(1 - x) * Product(E_5(x^(5m)/(5m)), m = 1 .. infinity), where E_5(x) = 1 + x^5/5! + x^10/10! + ... ."
+    ],
+    "maple": [
+        "with(combinat):",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(`if`(irem(j, igcd(i, 5))<>0, 0, (i-1)!^j*",
+        "      multinomial(n, n-i*j, i$j)/j!*b(n-i*j, i-1)), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Sep 08 2014"
+    ],
+    "mathematica": [
+        "multinomial[n_, k_List] := n!/Times @@ (k!); b[n_, i_] := b[n, i] = If[n == 0, 1, If[i<1, 0, Sum[If[Mod[j, GCD[i, 5]] != 0, 0, (i-1)!^j*multinomial[n, Prepend[Table[i, {j}], n-i*j]]/j!*b[n-i*j, i-1]], {j, 0, n/i}]]]; a[n_] := b[n, n]; Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Oct 21 2016, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "{ A215716_list(numterms) = Vec(serlaplace((1 - x^5 + O(x^numterms))^(1/5)/(1-x) * prod(m=1, numterms\\5, exp5(x^(5*m)/(5*m), numterms\\(5*m)+1)))); }",
+        "{ exp5(y, prec) = subst(serconvol(exp(x + O(x^prec)), 1/(1-x^5) + O(x^prec)), x, y); }"
+    ],
+    "xref": [
+        "Cf. A003483, A103619, A103620, A215717, A215718.",
+        "Column k=5 of A247005."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Eric M. Schmidt_, Aug 22 2012",
+    "references": 7,
+    "revision": 25,
+    "time": "2016-10-21T07:49:09-04:00",
+    "created": "2012-08-22T23:43:03-04:00"
+}

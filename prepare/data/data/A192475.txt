@@ -1,0 +1,43 @@
+{
+    "number": 192475,
+    "data": "2,5,11,26,63,157,398,1021,2639,6854,17855,46601,121770,318421,833027,2179906,5705471,14934533,39094934,102345101,267932007,701437390,1836358271,4807602001,12586390418,32951476517,86267889083,225851947946",
+    "name": "Coefficient of x in the reduction by x^2->x+1 of the polynomial p(n,x)=1+x^(n+1)+x^(2n).",
+    "comment": [
+        "For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232."
+    ],
+    "formula": [
+        "Empirical G.f.: -x*(x^3-3*x^2-3*x+2)/((x^2-3*x+1)*(x^2+x-1)). - _Colin Barker_, Nov 12 2012",
+        "a(n) = F(2n) + F(n+1), where F(n) is A000045. - _Carl Najafi_, May 06 2014"
+    ],
+    "example": [
+        "The first four polynomials p(n,x) and their reductions are as follows:",
+        "p(1,x)=1+2x^2 -> 3+2x",
+        "p(2,x)=1+x^3+x^4 -> 4+5x",
+        "p(3,x)=1+x^4+x^6 -> 8+11x",
+        "p(4,x)=1+x^5+x^8 -> 17+26x.",
+        "From these, read",
+        "A192474=(3,4,8,17,...) and A192475=(2,5,11,26,...)"
+    ],
+    "mathematica": [
+        "q[x_] := x + 1;",
+        "p[n_, x_] := 1 + x^(n + 1) + x^(2 n);",
+        "Table[Simplify[p[n, x]], {n, 1, 5}]",
+        "reductionRules = {x^y_?EvenQ -> q[x]^(y/2),",
+        "   x^y_?OddQ -> x q[x]^((y - 1)/2)};",
+        "t = Table[FixedPoint[Expand[#1 /. reductionRules] &, p[n, x]], {n, 1, 30}]",
+        "Table[Coefficient[Part[t, n], x, 0], {n, 1, 30}]",
+        "  (* A192474 *)",
+        "Table[Coefficient[Part[t, n], x, 1], {n, 1, 30}]",
+        "  (* A192475 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192475."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jul 01 2011",
+    "references": 2,
+    "revision": 14,
+    "time": "2014-05-07T00:58:51-04:00",
+    "created": "2011-07-05T13:10:19-04:00"
+}

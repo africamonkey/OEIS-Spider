@@ -1,0 +1,55 @@
+{
+    "number": 97613,
+    "data": "1,2,7,25,91,336,1254,4719,17875,68068,260338,999362,3848222,14858000,57500460,222981435,866262915,3370764540,13135064250,51250632510,200205672810,782920544640,3064665881940,12007086477750,47081501377326,184753963255176,725510446350004",
+    "name": "Binomial(2n-3,n-1) + binomial(2n-2,n-2).",
+    "comment": [
+        "a(n) = number of Dyck (2n-1)-paths with maximum pyramid size = n. A pyramid in a Dyck path is a maximal subpath of the form k upsteps immediately followed by k downsteps and its size is k.",
+        "a(n) = total number of runs of peaks in all Dyck (n+1)-paths. A run of peaks is a maximal subpath of the form (UD)^k with k>=1. For example, a(2)=7 because the 5 Dyck 3-paths contain a total of 7 runs of peaks (in uppercase type): uuUDdd, uUDUDd, uUDdUD,UDuUDd,UDUDUD. - _David Callan_, Jun 07 2006",
+        "Binomial transform of A113682. - _Paul Barry_, Aug 21 2007",
+        "If Y is a fixed 2-subset of a (2n+1)-set X then a(n+1) is the number of n-subsets of X intersecting Y. - _Milan Janjic_, Oct 21 2007",
+        "Equals the Catalan sequence, A000108, convolved with A051924 prefaced with a 1: (1, 1, 4, 14, 50,...). - _Gary W. Adamson_, May 15 2009",
+        "Central terms of triangle A209561. - _Reinhard Zumkeller_, Dec 26 2012"
+    ],
+    "link": [
+        "G.-S. Cheon, H. Kim, L. W. Shapiro, <a href=\"http://arxiv.org/abs/1410.1249\">Mutation effects in ordered trees</a>, arXiv preprint arXiv:1410.1249, 2014",
+        "Milan Janjic, <a href=\"http://www.pmfbl.org/janjic/\">Two Enumerative Functions</a>"
+    ],
+    "formula": [
+        "G.f. (x-1)(1-1/sqrt[1-4x])/2.",
+        "a(n) = ceil(A051924/2). - _Zerinvary Lajos_, Jan 16 2007",
+        "Conjecture: n*a(n) +(-5*n+4)*a(n-1) +2*(2*n-5)*a(n-2)=0. - _R. J. Mathar_, Nov 26 2012",
+        "Integral representation as n-th moment of a signed weight function W(x) = W_a(x) + W_c(x), where W_a(x) = Dirac(x)/2 is the discrete (atomic) part, and  W_c(x) = (1/(2*Pi))*((x-1))*sqrt(1/(x*(4-x))) is the continuous part of W(x) defined on (0,4): a(n) = int(x^n*W_a(x),x=-eps..eps) + int(x^n*W_c(x), x = 0..4) for any eps>0, n>=0. W_c(0)=-infinity, W_c(1)=0 and W_c(4)=infinity. For 0<x<1, W_c(x)<0, and for 1<x<4, W_c(x)>0. - _Karol A. Penson_, Aug 05 2013",
+        "a(n) = ((2-3*n)/(4-8*n))*binomial(2*n,n) for n >= 2. - _Peter Luschny_, Sep 06 2014",
+        "Recurrence: a(n) = (6*n-4)*(2*n-3)*a(n-1)/(n*(3*n-5)) for n >= 3. - _Peter Luschny_, Sep 06 2014"
+    ],
+    "example": [
+        "a(2) = 2 because UUDDUD and UDUUDD each have maximum pyramid size = 2."
+    ],
+    "maple": [
+        "Z:=(1-z-sqrt(1-4*z))/sqrt(1-4*z)/2: Zser:=series(Z, z=0, 32): seq (ceil(coeff(Zser, z, n)), n=1..22); # _Zerinvary Lajos_, Jan 16 2007",
+        "a := n -> `if`(n=1, 1, (2-3*n)/(4-8*n)*binomial(2*n, n)):",
+        "seq(a(n), n=1..27); # _Peter Luschny_, Sep 06 2014"
+    ],
+    "program": [
+        "(Haskell)",
+        "a097613 n = a209561 (2 * n - 1) n  -- _Reinhard Zumkeller_, Dec 26 2012",
+        "(PARI) a(n)=binomial(2*n-3,n-1)+binomial(2*n-2,n-2) \\\\ _Charles R Greathouse IV_, Aug 05 2013",
+        "(Sage)",
+        "@CachedFunction",
+        "def A097613(n):",
+        "    if n < 3: return n",
+        "    return (6*n-4)*(2*n-3)*A097613(n-1)/(n*(3*n-5))",
+        "[A097613(n) for n in (1..27)] # _Peter Luschny_, Sep 06 2014"
+    ],
+    "xref": [
+        "Same as A024482 except for first term.",
+        "Cf. A051924."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_David Callan_, Sep 20 2004",
+    "references": 10,
+    "revision": 34,
+    "time": "2015-05-10T18:17:44-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

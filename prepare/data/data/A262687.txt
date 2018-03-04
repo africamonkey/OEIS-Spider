@@ -1,0 +1,33 @@
+{
+    "number": 262687,
+    "data": "0,1,4,169,324,1521,125316,126025,425104,1713481,1716100,4959529,24760576",
+    "name": "a(n) = index of first n in A262680; positions of records in A262680.",
+    "comment": [
+        "All terms are squares (A262688 gives the square roots).",
+        "The even and odd terms alternate."
+    ],
+    "program": [
+        "(PARI)",
+        "allocatemem((2^31)+(2^30));",
+        "uplim = 2^25;",
+        "v262680 = vector(uplim);",
+        "v262680[1] = 1; v262680[2] = 0;",
+        "for(i=3, uplim, v262680[i] = issquare(i) + v262680[i-numdiv(i)];",
+        "if(!(i%65536),print1(i,\", \")););",
+        "A262680 = n -> if(!n,n,v262680[n]);",
+        "n=0; k=0; while(n*n <= uplim, if(A262680(n*n)==k, write(\"b262687.txt\", k, \" \", n*n); k++); n++;);",
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A262687 (RECORD-POS 0 0 A262680))"
+    ],
+    "xref": [
+        "Cf. A262680, A261088, A262514.",
+        "Cf. A262688 (square roots of these terms)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Antti Karttunen_, Oct 03 2015",
+    "references": 4,
+    "revision": 8,
+    "time": "2015-10-03T08:46:29-04:00",
+    "created": "2015-10-03T08:46:29-04:00"
+}

@@ -1,0 +1,30 @@
+{
+    "number": 229900,
+    "data": "1,1,3,7,22,54,192,496,1722,4799,17013,48362,169458,498733,1776570,5331037,18608396,57109292,201213331,625146398,2176243724,6873338754,24052502138,76626395556,265774736523,856909651252,2979519037203,9675077715466,33455355338926,109591055905415",
+    "name": "G.f. satisfies: A(x) = x*exp( Sum_{n>=1} A(Lucas(n)*x^n) / n ).",
+    "comment": [
+        "Compare to: G(x) = x*exp( Sum_{n>=1} G(x^n)/n ), which is the g.f. of A000081, the number of rooted trees with n nodes.",
+        "Compare to: exp( Sum_{n>=1} Lucas(n)*x^n/n ) = 1/(1-x-x^2), which is the g.f. of the Fibonacci numbers.",
+        "The limit a(n+1)/a(n) seems to exist (near 3.5...); is this true?"
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^2 + 3*x^3 + 7*x^4 + 22*x^5 + 54*x^6 + 192*x^7 + 496*x^8 +...",
+        "where",
+        "A(x) = x*exp(A(x) + A(3*x^2)/2 + A(4*x^3)/3 + A(7*x^4)/4 + A(11*x^5)/5 + A(18*x^6)/6 + A(29*x^7)/7 + A(47*x^8)/8 + A(76*x^9)/9 + A(123*x^10)/10 +...)."
+    ],
+    "program": [
+        "(PARI) {Lucas(n)=fibonacci(n-1)+fibonacci(n+1)}",
+        "{a(n)=local(A=x);for(i=1,n,A=x*exp(sum(k=1,n,subst(A,x,Lucas(k)*x^k +x*O(x^n))/k)));polcoeff(A,n)}",
+        "for(n=1,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A000032 (Lucas), A229807, A229901."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Oct 02 2013",
+    "references": 2,
+    "revision": 10,
+    "time": "2013-10-03T01:13:51-04:00",
+    "created": "2013-10-02T23:37:00-04:00"
+}

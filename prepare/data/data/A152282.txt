@@ -1,0 +1,35 @@
+{
+    "number": 152282,
+    "data": "1,1,4,43,1076,58746,6772360,1619251271,794625904404,795206398610710,1615965837952912216,6649024230536100958062,55277445682961080929146824,927088288759058912165347148404,31329256772332779793923906186541200",
+    "name": "Coefficients in a q-analog of the LambertW function at q=2: A(x) = Sum_{n>=0} a(n)*x^n/faq(n,2) where faq(n,q) = q-factorial of n.",
+    "formula": [
+        "G.f. satisfies: A(x) = e_q( x*A(x), 2) and A( x/e_q(x,2) ) = e_q(x,2) where e_q(x,q) = Sum_{n>=0} x^n/faq(n,q) is the q-exponential function.",
+        "G.f.: A(x) = (1/x)*Series_Reversion( x/e_q(x,2) ).",
+        "G.f. satisfies: A(x) = exp( Sum_{n>=1} -A(x)^n*(-x)^n/(n*(2^n-1)) ). [_Paul D. Hanna_, Oct 24 2011]",
+        "a(n) = Sum_{k=0..n(n-1)/2} A152290(n,k)*2^k.",
+        "a(n) = faq(n,2)*Sum_{pi} n!/((n-k+1)!*Product_{i=1..n} (e(i)!*faq(i,2)^e(i))), where pi runs through all nonnegative integer solutions of e(1)+2*e(2)+...+n*e(n)=n and k=e(1)+e(2)+...+e(n). [_Vladeta Jovovic_, Dec 03 2008]"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 4/3*x^2 + 43/21*x^3 + 1076/315*x^4 + 58746/9765*x^5 +...",
+        "G.f. satisfies: A(x) = e_q( x*A(x), 2) where the q-exponential series is:",
+        "e_q(x,q) = 1 + x + x^2/faq(2,q) + x^3/faq(3,q) +...+ x^n/faq(n,q) +...",
+        "The q-factorial of n is faq(n,q) = Product_{k=1..n} (q^k-1)/(q-1):",
+        "faq(0,q)=1, faq(1,q)=1, faq(2,q)=(1+q), faq(3,q)=(1+q)*(1+q+q^2), faq(4,q)=(1+q)*(1+q+q^2)*(1+q+q^2+q^3), ...",
+        "Also, the logarithm of the g.f. begins:",
+        "log(A(x)) =  A(x)*x/(2-1) - A(x)^2*x^2/(2*(2^2-1)) + A(x)^3*x^3/(3*(2^3-1)) - A(x)^4*x^4/(4*(2^4-1)) + A(x)^5*x^5/(5*(2^5-1)) +..."
+    ],
+    "program": [
+        "(PARI) {a(n,q=2)=local(e_q=1+sum(j=1,n,x^j/prod(i=1,j,(q^i-1)/(q-1))),LW_q=serreverse(x/e_q+x^2*O(x^n))/x); polcoeff(LW_q+x*O(x^n),n,x)*prod(i=1,n,(q^i-1)/(q-1))}",
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,A=exp(sum(m=1,n,-(A+x*O(x^n))^m*(-x)^m/(m*(2^m-1)))));prod(k=1,n,2^k-1)*polcoeff(A,n)}"
+    ],
+    "xref": [
+        "Cf. A152290, A152283 (q=3)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 02 2008",
+    "references": 2,
+    "revision": 11,
+    "time": "2016-04-07T02:11:37-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

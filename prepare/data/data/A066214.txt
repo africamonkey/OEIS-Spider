@@ -1,0 +1,33 @@
+{
+    "number": 66214,
+    "data": "20,30,80,90,120,126,130,150,180,195,210,252,264,270,272,280,294,300,315,320,330,336,350,360,378,390,396,414,420,450,468,480,500,504,520,525,540,600,630,650,660,690,693,696,700,720,750,756,780,792",
+    "name": "Nonsquare numbers which are sums of squares of some subset of divisors.",
+    "link": [
+        "Robert Israel and Charles R Greathouse IV, <a href=\"/A066214/b066214.txt\">Table of n, a(n) for n = 1..10000</a> (first 2667 terms from Israel)"
+    ],
+    "example": [
+        "20 is in the list since 20 = 2^2 + 4^2 and 2 and 4 are divisors of 20"
+    ],
+    "maple": [
+        "N:= 10000; # to get entries up to N",
+        "filter:= proc(t)",
+        "  local L;",
+        "  L:= select(d -> (d^2<t), numtheory[divisors](t));",
+        "  evalb(coeff(mul(1+x^(d^2), d=L),x,t) <> 0);",
+        "end proc;",
+        "A066214:= select(filter, [$2..N]); # _Robert Israel_, Apr 17 2014"
+    ],
+    "program": [
+        "(PARI) is(n)=if(issquare(n), return(0)); my(d=divisors(n), v=[0], t); d=apply(sqr, select(k->k^2<n, d)); t=vecsum(d); if(t<n, return(0)); forstep(i=#d,1,-1, v=concat(apply(k->k+d[i],v),v); t-=d[i]; v=Set(select(k->k<=n && k+t>=n, v)); if(setsearch(v,n), return(1))); 0 \\\\ _Charles R Greathouse IV_, Aug 28 2016"
+    ],
+    "xref": [
+        "Cf. A066213, A066215, A066216."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Erich Friedman_, Dec 17 2001",
+    "references": 4,
+    "revision": 13,
+    "time": "2016-08-28T03:46:05-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

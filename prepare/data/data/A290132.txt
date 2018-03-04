@@ -1,0 +1,48 @@
+{
+    "number": 290132,
+    "data": "1,6,24,74,170,362,642,1110,1766,2706,3894,5558,7602,10326,13562,17510,22178,28006,34634,42722,51922,62570,74450,88462,103994,121862,141482,163610,187886,215578,245430,279198,315958,356390,399830,447542,498626,555278,615698,681206",
+    "name": "The number of edges in a graph induced by a regular drawing of K_{n,n}.",
+    "link": [
+        "M. Griffiths, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL13/Griffiths2/griffiths.html\">Counting the regions in a regular drawing of K_{n,n}</a>, J. Int. Seq. 13 (2010) # 10.8.5, Table 2."
+    ],
+    "formula": [
+        "a(n) = 2*n + A290131(n) + A159065(n) - 1."
+    ],
+    "maple": [
+        "A290132 := proc(n)",
+        "    2*n+A290131(n)+A159065(n)-1 ;",
+        "end proc:",
+        "seq(A290132(n),n=1..40);"
+    ],
+    "program": [
+        "(Python)",
+        "from fractions import gcd",
+        "def a115004(n):",
+        "    r=0",
+        "    for a in xrange(1, n + 1):",
+        "        for b in xrange(1, n + 1):",
+        "            if gcd(a, b)==1:r+=(n + 1 - a)*(n + 1 - b)",
+        "    return r",
+        "def a159065(n):",
+        "    c=0",
+        "    for a in xrange(1, n):",
+        "        for b in xrange(1, n):",
+        "            if gcd(a, b)==1:",
+        "                c+=(n - a)*(n - b)",
+        "                if 2*a<n and 2*b<n:c-=(n - 2*a)*(n - 2*b)",
+        "    return c",
+        "def a290131(n): return a115004(n - 1) + (n - 1)**2",
+        "def a(n): return 2*n + a290131(n) + a159065(n) - 1",
+        "print map(a, xrange(1, 51)) # _Indranil Ghosh_, Jul 20 2017"
+    ],
+    "xref": [
+        "Cf. A159065, A290131."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_R. J. Mathar_, Jul 20 2017",
+    "references": 1,
+    "revision": 11,
+    "time": "2017-07-21T03:50:48-04:00",
+    "created": "2017-07-21T03:50:48-04:00"
+}

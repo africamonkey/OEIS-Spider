@@ -1,0 +1,42 @@
+{
+    "number": 211624,
+    "data": "0,4,30,104,245,485,837,1339,1998,2858,3920,5234,6795,8659,10815,13325,16172,19424,23058,27148,31665,36689,42185,48239,54810,61990,69732,78134,87143,96863,107235,118369,130200,142844,156230,170480,185517,201469,218253",
+    "name": "Number of ordered triples (w,x,y) with all terms in {-n,...-1,1,...,n} and w+2x+2y>0.",
+    "comment": [
+        "For a guide to related sequences, see A211422."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A211624/b211624.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (2,1,-4,1,2,-1)."
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1) + a(n-2) - 4*a(n-3) + a(n-4) + 2*a(n-5) - a(n-6).",
+        "From _Colin Barker_, Aug 23 2017: (Start)",
+        "G.f.: x*(4 + 22*x + 40*x^2 + 23*x^3 + 7*x^4) / ((1 - x)^4*(1 + x)^2).",
+        "a(n) = (64*n^3 - 14*n^2 + 12*n) / 16 for n even.",
+        "a(n) = (64*n^3 - 14*n^2 + 24*n - 10) / 16 for n odd. (End)"
+    ],
+    "mathematica": [
+        "t = Compile[{{u, _Integer}},",
+        "   Module[{s = 0}, (Do[If[w + 2 x + 2 y > 0,",
+        "         s = s + 1], {w, #}, {x, #}, {y, #}] &[",
+        "      Flatten[{Reverse[-#], #} &[Range[1, u]]]]; s)]];",
+        "Map[t[#] &, Range[0, 60]]  (* A211624 *)",
+        "FindLinearRecurrence[%]",
+        "(* _Peter J. C. Moses_, Apr 13 2012 *)",
+        "LinearRecurrence[{2, 1, -4, 1, 2, -1},{0, 4, 30, 104, 245, 485},36] (* _Ray Chandler_, Aug 02 2015 *)"
+    ],
+    "program": [
+        "(PARI) concat(0, Vec(x*(4 + 22*x + 40*x^2 + 23*x^3 + 7*x^4) / ((1 - x)^4*(1 + x)^2) + O(x^50))) \\\\ _Colin Barker_, Aug 23 2017"
+    ],
+    "xref": [
+        "Cf. A211422."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, Apr 17 2012",
+    "references": 2,
+    "revision": 13,
+    "time": "2017-08-23T06:22:43-04:00",
+    "created": "2012-04-26T14:54:00-04:00"
+}

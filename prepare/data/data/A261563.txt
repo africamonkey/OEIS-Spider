@@ -1,0 +1,30 @@
+{
+    "number": 261563,
+    "data": "1,4,16,60,192,596,1744,4892,13248,34868,89296,223660,548928,1323060,3137520,7332332,16907584,38517444,86777328,193523404,427562816,936555044,2035286576,4390850268,9409096576,20037827876,42429318480,89369282460,187325508288",
+    "name": "Expansion of Product_{k>=1} ((1 + 2*x^k)/(1 - 2*x^k))^k.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A261563/b261563.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * 2^n, where c = 2 * Product_{j>=1} ((1 + 1/2^j)/(1 - 1/2^j))^(j+1) = 1021.5383556752320172813996404366861329314041364322798995039038143325883...",
+        "G.f.: exp( Sum_{n>=1} x^n/n * Sum_{d|n} (2^d - (-2)^d) * n^2/d^2 ). - _Paul D. Hanna_, Sep 30 2015"
+    ],
+    "mathematica": [
+        "nmax = 50; CoefficientList[Series[Product[((1 + 2*x^k)/(1 - 2*x^k))^k, {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 50; CoefficientList[Series[Exp[Sum[2^(2*k)/(2*k-1)*x^(2*k-1)/(1 - x^(2*k-1))^2, {k, 1, nmax}]], {x, 0, nmax}], x]"
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoeff( exp( sum(m=1, n, x^m/m * sumdiv(m, d, (2^d - (-2)^d) * m^2/d^2) ) +x*O(x^n)), n)}",
+        "for(n=0,40,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Sep 30 2015"
+    ],
+    "xref": [
+        "Cf. A156616, A261561, A261562, A261584."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Vaclav Kotesovec_, Aug 24 2015",
+    "references": 4,
+    "revision": 14,
+    "time": "2015-10-01T04:10:36-04:00",
+    "created": "2015-08-25T08:14:57-04:00"
+}

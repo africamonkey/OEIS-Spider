@@ -1,0 +1,57 @@
+{
+    "number": 274230,
+    "data": "0,0,1,3,9,21,49,105,225,465,961,1953,3969,8001,16129,32385,65025,130305,261121,522753,1046529,2094081,4190209,8382465,16769025,33542145,67092481,134193153,268402689,536821761,1073676289,2147385345",
+    "name": "Number of holes in a sheet of paper when you fold it n times and cut off the four corners.",
+    "comment": [
+        "The folds are always made so the longer side becomes the shorter side.",
+        "We could have counted not only the holes but also all the notches: 4,6,9,15,25,45,81,153,289 ... which has the formula a(n) = (2^ceiling(n/2) + 1) * (2^floor(n/2) + 1) and appears to match the sequence A183978. - _Philippe Gibone_, Jul 06 2016",
+        "The same sequence (0,0,1,3,9,21,49,...) turns up when you start with an isosceles right triangular piece of paper and repeatedly fold it in half, snipping corners as you go. Is there an easy way to see why the two questions have the same answer? - _James Propp_, Jul 05 2016",
+        "Reply from Tom Karzes, Jul 05 2016: (Start)",
+        "This case seems a little more complicated than the rectangular case, since with the triangle you alternate between horizontal/vertical folds vs. diagonal folds, and the resulting fold pattern is more complex, but I think the basic argument is essentially the same.",
+        "Note that with the triangle, the first hole doesn't appear until after you've made 3 folds, so if you start counting at zero folds, you have three leading zeros in the sequence:  0,0,0,1,3,9,21,... (End)"
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A274230/b274230.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Philippe Gibone, <a href=\"/A274230/a274230.pdf\">Illustration of a(0)-a(4) (idealized).</a>",
+        "N. J. A. Sloane, <a href=\"/A274230/a274230.jpg\">Illustration for a(4) = 9 (scan of an actual cut-up piece of paper)</a>",
+        "N. J. A. Sloane, <a href=\"/A274230/a274230_1.jpg\">Illustration for a(5) = 21 (scan of an actual cut-up piece of paper)</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (3,0,-6,4)."
+    ],
+    "formula": [
+        "u(0) = 0; v(0) = 0; u(n+1) = v(n); v(n+1) = 2u(n) + 1; a(n) = u(n)*v(n).",
+        "a(n) = (2^ceiling(n/2) - 1)*(2^floor(n/2) - 1).",
+        "Proof from _Tom Karzes_, Jul 05 2016: (Start)",
+        "Let r be the number of times you fold along one axis and s be the number of times you fold along the other axis. So r is ceiling(n/2) and s is floor(n/2), where n is the total number of folds.",
+        "When unfolded, the resulting paper has been divided into a grid of (2^r) by (2^s) rectangles. The interior grid lines will have diamond-shaped holes where they intersect (assuming diagonal cuts).",
+        "There are (2^r-1) internal grid lines along one axis and (2^s-1) along the other. The total number of internal grid line intersections is therefore (2^r-1)*(2^s-1), or (2^ceiling(n/2)-1)*(2^floor(n/2)-1) as claimed. (End)",
+        "From _Colin Barker_, Jun 22 2016, revised by _N. J. A. Sloane_, Jul 05 2016: (Start)",
+        "It follows that:",
+        "a(n) = (2^(n/2)-1)^2 for n even, a(n) = 2^n+1-3*2^((n-1)/2) for n odd.",
+        "a(n) = 3*a(n-1)-6*a(n-3)+4*a(n-4) for n>3.",
+        "G.f.: x^2 / ((1-x)*(1-2*x)*(1-2*x^2)).",
+        "a(n) = (1+2^n-2^((n-3)/2)*(3-3*(-1)^n+2*sqrt(2)+2*(-1)^n*sqrt(2))). (End)"
+    ],
+    "maple": [
+        "A274230:=n->(1+2^n-2^((n-3)/2)*(3-3*(-1)^n+2*sqrt(2)+2*(-1)^n*sqrt(2))): seq(A274230(n), n=0..50); # _Wesley Ivan Hurt_, Jul 07 2016"
+    ],
+    "mathematica": [
+        "Table[(2^Ceiling@ # - 1) (2^Floor@ # - 1) &[n/2], {n, 0, 31}] (* _Michael De Vlieger_, Jun 30 2016 *)"
+    ],
+    "program": [
+        "(MAGMA) [(2^Ceiling(n/2)-1)*(2^Floor(n/2)-1 ): n in [0..35]]; // _Vincenzo Librandi_, Jul 02 2016",
+        "(PARI) a(n)=2^n+1-(n%2+2)<<(n\\2) \\\\ _Charles R Greathouse IV_, Jul 05 2016"
+    ],
+    "xref": [
+        "Cf. A000225, A183978.",
+        "See A274626, A274627 for the three- and higher-dimensional analogs.",
+        "This is the main diagonal of A274635.",
+        "Subset of A054686. - _Paolo P. Lava_, Jul 07 2016"
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,4",
+    "author": "_Philippe Gibone_, Jun 15 2016",
+    "references": 5,
+    "revision": 92,
+    "time": "2016-12-22T22:07:15-05:00",
+    "created": "2016-07-05T07:48:39-04:00"
+}

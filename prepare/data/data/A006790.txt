@@ -1,0 +1,36 @@
+{
+    "number": 6790,
+    "data": "1,2,5,15,53,211,938,4582,24349,139671,858745,5628789,39145021,287667582,2226033629,18082308403,153770703339,1365631349757,12638233544989,121640399661294,1215438543434225,12587691428792115",
+    "name": "Exponentiation of e.g.f. for trees A000055(n-1).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A006790/b006790.txt\">Table of n, a(n) for n = 0..500</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; `if`(n<=1, n, add(add(d*",
+        "      b(d), d=divisors(j))*b(n-j), j=1..n-1)/(n-1))",
+        "    end:",
+        "t:= proc(n) option remember; `if`(n=0, 1, b(n)-(add(b(k)",
+        "      *b(n-k), k=0..n)-`if`(irem(n, 2)=0, b(n/2), 0))/2)",
+        "    end:",
+        "g:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      binomial(n-1, j-1) *t(j-1) *g(n-j), j=1..n))",
+        "    end:",
+        "a:= n-> g(n+1):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Mar 16 2015"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n <= 1, n, Sum[Sum[d*b[d], {d, Divisors[j]}]*b[n-j], {j, 1, n-1}]/(n-1)]; t[n_] := t[n] = If[n==0, 1, b[n] - (Sum[b[k]*b[n-k], {k, 0, n}] - If[ Mod[n, 2] == 0, b[n/2], 0])/2]; g[n_] := g[n] = If[n==0, 1, Sum[Binomial[n-1, j-1] *t[j-1]*g[n-j], {j, 1, n}]]; a[n_] := g[n+1]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Mar 30 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000055."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_.",
+    "references": 1,
+    "revision": 14,
+    "time": "2015-03-30T06:44:33-04:00",
+    "created": "1991-07-25T03:00:00-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 225563,
+    "data": "3,5,7,9,11,13,15,17,25,27,31,33,35,39,41,49,51,55,61,65,69,77,81,85,87,91,95,97,103,111,115,119,121,123,125,133,137,141,143,145,153,155,159,161,175,183,185,187,193,201,203,205,209,213,215,217,219,221",
+    "name": "Numbers whose totient-trajectory can be partitioned into two sets with the same sum.",
+    "comment": [
+        "The \"totient-trajectory\" of a number m is the sequence obtained by starting with m and repeatedly applying the map x -> phi(x) (cf. A000010) until reaching 1.",
+        "Because all totient-trajectories contain only even numbers apart from the final 1 and (perhaps) the initial term ending in 1, only odd numbers will be in the sequence.",
+        "Conjecture: No totient-trajectory can be partitioned into an odd number of sets with the same sum.",
+        "Observation: for the first 1000 terms, numbers ending in 5 are more than twice as frequent as those ending in any other number."
+    ],
+    "link": [
+        "Christian N. K. Anderson, <a href=\"/A225563/b225563.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Christian N. K. Anderson, <a href=\"/A225563/a225563.txt\">Decomposition of the first 1000 terms.</a>"
+    ],
+    "example": [
+        "17 is in the sequence because its totient-trajectory is {17,16,8,4,2,1}, which can be partitioned into 17+4+2+1 = 16+8."
+    ],
+    "program": [
+        "(R)library(numbers); totseq<-function(x) { while(x[length(x)]>1) x[length(x)+1]=eulersPhi(x[length(x)]); x };",
+        "eqsum<-function(xvec) {",
+        "mkgrp<-function(grp) {",
+        "    if(length(grp)==length(xvec)) {",
+        "        tapply(xvec,grp,sum)->tot;",
+        "        if(length(tot)==2) if(tot[1]==tot[2]) {faxp<<-grp; return(T)}; return(F);",
+        "    }",
+        "    ifelse(mkgrp(c(grp,1)),T,mkgrp(c(grp,2)));",
+        "}",
+        "ifelse(length(xvec)<2,F,mkgrp(c()));",
+        "}",
+        "which(sapply(2*(1:100)-1,function(x) eqsum(totseq(x))))*2-1"
+    ],
+    "xref": [
+        "Cf. A008683, A003434, A007755, A049108, A002202, A000010, A083207."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Kevin L. Schwartz_ and _Christian N. K. Anderson_, May 10 2013",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, May 17 2013"
+    ],
+    "references": 1,
+    "revision": 15,
+    "time": "2013-05-17T18:16:02-04:00",
+    "created": "2013-05-16T16:29:36-04:00"
+}

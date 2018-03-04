@@ -1,0 +1,39 @@
+{
+    "number": 134449,
+    "data": "0,2,5,29,39,129,150,374,410,860,915,1707,1785,3059,3164,5084,5220,7974,8145,11945,12155,17237,17490,24114,24414,32864,33215,43799,44205,57255,57720,73592,74120,93194,93789,116469,117135,143849,144590,175790",
+    "name": "Sum of even products minus sum of odd products of different pairs of numbers from 1 to n.",
+    "link": [
+        "Colin Barker, <a href=\"/A134449/b134449.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "formula": [
+        "Empirical g.f.: x^2*(x^5-6*x^4+2*x^3-16*x^2-3*x-2) / ((x-1)^5*(x+1)^4). - _Colin Barker_, Sep 03 2013",
+        "Conjectures from _Colin Barker_, Mar 20 2015: (Start)",
+        "a(n) = (n^4+4*n^3-2*n^2-4*n)/16 for n even.",
+        "a(n) = (n^4-1)/16 for n odd.",
+        "(End)"
+    ],
+    "example": [
+        "{1,2,3} -> 1*2-1*3+2*3 = 5.",
+        "{1,2,3,4} -> 1*2-1*3+1*4+2*3+2*4+3*4 = 29.",
+        "{1,2,3,4,5} -> 1*2-1*3+1*4-1*5+2*3+2*4+2*5+3*4-3*5+4*5 = 39."
+    ],
+    "maple": [
+        "P:=proc(n) local a,i,j,k,w; for i from 1 by 1 to n do a:=0; for j from 1 by 1 to i do w:=j; k:=i; while k>w do a:=a+w*k*(-1)^(w*k); k:=k-1; od; od; print(a); od; end: P(100);"
+    ],
+    "mathematica": [
+        "epop[n_]:=Module[{f=Times@@@Subsets[n,{2}]},Total[Select[f,EvenQ]]-Total[ Select[ f,OddQ]]]; Table[epop[Range[n]],{n,40}] (* _Harvey P. Dale_, Sep 17 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = {s = 0; for (i=1, n, for (j=i+1, n, p = i*j; if (p % 2, s -= p, s += p););); s;} \\\\ _Michel Marcus_, Mar 20 2015"
+    ],
+    "xref": [
+        "Cf. A000914, A000915."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_ and _Giorgio Balzarotti_, Jan 31 2008",
+    "references": 1,
+    "revision": 21,
+    "time": "2017-09-17T11:06:42-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

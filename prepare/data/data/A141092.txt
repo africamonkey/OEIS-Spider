@@ -1,0 +1,45 @@
+{
+    "number": 141092,
+    "data": "1,64,46080,111974400,662171811840,310393036800000,7230916185292800,108238138194410864640000,23835710455777670400935290994688000000000,1104077556971139123493322971152384000000000",
+    "name": "Product of first k composite numbers divided by their sum, when the result is an integer.",
+    "comment": [
+        "Find the products and sums of first k composites, k = 1, 2, 3, .... When the products divided by the sums produce integral quotients, add terms to sequence."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A141092/b141092.txt\">Table of n, a(n) for n = 1..90</a>"
+    ],
+    "formula": [
+        "a(n) = A036691(A196415(n)) / A053767(A196415(n)). [_Reinhard Zumkeller_, Oct 03 2011]"
+    ],
+    "example": [
+        "a(3)=46080 because 4*6*8*9*10*12*14=2903040 and 4+6+8+9+10+12+14=63; 2903040/63=46080, which is an integer, so 46080 is a term."
+    ],
+    "mathematica": [
+        "With[{cnos=Select[Range[50],CompositeQ]},Select[Table[Fold[ Times,1,Take[ cnos,n]]/ Total[Take[cnos,n]],{n,Length[cnos]}],IntegerQ]] (* _Harvey P. Dale_, Jan 14 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Maybe (catMaybes)",
+        "a141092 n = a141092_list !! (n-1)",
+        "a141092_list = catMaybes $ zipWith div' a036691_list a053767_list where",
+        "   div' x y | m == 0    = Just x'",
+        "            | otherwise = Nothing where (x',m) = divMod x y",
+        "-- _Reinhard Zumkeller_, Oct 03 2011",
+        "(PARI) s=0;p=1;forcomposite(n=4,100,p*=n;s+=n;if(p%s==0,print1(p/s\", \"))) \\\\ _Charles R Greathouse IV_, Apr 04 2013"
+    ],
+    "xref": [
+        "Cf. A196415, A141089, A141090, A141091.",
+        "Compare with A140761, A159578, A140763, A116536.",
+        "Cf. A116536."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Enoch Haga_, Jun 01 2008",
+    "ext": [
+        "Checked by _N. J. A. Sloane_, Oct 02 2011."
+    ],
+    "references": 12,
+    "revision": 25,
+    "time": "2015-01-14T15:48:37-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

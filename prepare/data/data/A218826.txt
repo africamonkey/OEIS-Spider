@@ -1,0 +1,33 @@
+{
+    "number": 218826,
+    "data": "1,1,4,25,217,2470,35647,637129,13843948,360022957,11054457253,396003680518,16377463914091,774714094061221,41572230979229284,2512149910125036865,169831839578092130017,12769241823369505582150,1062122471116082751430087,97264621940872013476357969",
+    "name": "Number of indecomposable (by concatenation) alternating n-anagrams.",
+    "comment": [
+        "Alternating anagrams enumeration is related to A000366 by a(n) = A000366(n+1).",
+        "For all n, a(n) are periodically congruent to 1, 1 and 4 modulo 6."
+    ],
+    "link": [
+        "G. Kreweras and J. Barraud, <a href=\"http://dx.doi.org/10.1006/eujc.1997.0161\">Anagrammes altern\u00e9s</a>, European Journal of Combinatorics,Volume 18, Issue 8, November 1997, Pages 887-891.",
+        "G. Kreweras and D. Dumont, <a href=\"http://dx.doi.org/10.1016/S0012-365X(99)00238-1\">Sur les anagrammes altern\u00e9s</a>, Discrete Mathematics, Volume 211, Issues 1-3, 28 January 2000, Pages 103-110."
+    ],
+    "formula": [
+        "G.f.: (1-Q(0))/x, where Q(k)= 1 - 1/2*(k+1)*(k+2)*x/(1 - 1/2*(k+1)*(k+2)*x/Q(k+1)); (continued fraction). - _Sergei N. Gladkovskii_, May 03 2013",
+        "G.f.: 1/Q(0), where Q(k) = 1 - (k+1)*(k+2)/2*x/(1 - (k+2)*(k+3)/2*x/Q(k+1) ; (continued fraction). - _Sergei N. Gladkovskii_, Nov 17 2013"
+    ],
+    "program": [
+        "(PARI) a000366(n)= {return((-1/2)^(n-2)*sum(k=0, n, binomial(n, k)*(1-2^(n+k+1))*bernfrac(n+k+1)));}",
+        "bi(n,k) = {if (matb[n,k] == 0, if (n==k, v=1, if (k==1, v = b(n),v = sum(i=1, n-k+1, b(i)*bi(n-i,k-1)););); matb[n,k] = v;); return (matb[n,k]);}",
+        "b(n) = {if (n==1, return(a000366(n+1)), return(a000366(n+1) - sum(i=2, n, bi(n,i))));}",
+        "allb(m) = {matb = matrix(m,m); for (i=1, m, print1(b(i), \", \"););}"
+    ],
+    "xref": [
+        "Cf. A000366, A218827. First column of A239894."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Michel Marcus_, Nov 07 2012",
+    "references": 2,
+    "revision": 19,
+    "time": "2014-04-04T00:44:01-04:00",
+    "created": "2012-11-08T11:15:49-05:00"
+}

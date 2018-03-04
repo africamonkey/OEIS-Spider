@@ -1,0 +1,44 @@
+{
+    "number": 3044,
+    "id": "M0506",
+    "data": "1,2,3,4,5,6,8,10,12,15,17,19,29,31,33,43,44,47,51,54,58,68,69,78,79,86,95,99,110,113,117,133,134,135,145,151,156,159,173,180,183,193,197,204,211,229,232,236,239,243,250,256,264,270,281,284",
+    "name": "For n > 4, a(n) is the least integer > a(n-1) with precisely two representations a(n) = a(i) + a(j), 1 <= i < j < n; and a(n) = n for n=1..4.",
+    "comment": [
+        "First differs from A060470 at a(13) = 29. - _Peter Munn_, Dec 10 2017"
+    ],
+    "reference": [
+        "S. R. Finch, Mathematical Constants, Cambridge, 2003, pp. 145-151.",
+        "R. K. Guy, Unsolved Problems in Number Theory, Section C4.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A003044/b003044.txt\">Table of n, a(n) for n = 1..5440</a>",
+        "S. R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/constant/stlrsky/sadd/sadd.html\">Ulam s-Additive Sequences</a>",
+        "R. Queneau, <a href=\"http://dx.doi.org/10.1016/0097-3165(72)90083-0\">Sur les suites s-additives</a>, J. Combin. Theory, A12 (1972), 31-71. Queneau left out 44."
+    ],
+    "mathematica": [
+        "a[n_ /; n <= 4] = n; a[n_] := a[n] = Catch[ For[an = a[n-1] + 1, True, an++, cnt = 0; Do[If[an == a[i] + a[j], cnt++], {i, 1, n-1}, {j, i+1, n-1}]; If[cnt == 2, Throw[an]]]]; Table[a[n], {n, 1, 56}](* _Jean-Fran\u00e7ois Alcover_, Apr 30 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a003044 n = a003044_list !! (n-1)",
+        "a003044_list = 1 : 2 : 3 : 4 : f [4,3..1] where",
+        "   f xs@(x:_) = y : f (y : xs) where",
+        "     y = head [w | w <- [x + 1 ..],",
+        "         length [() | v <- xs, (w - v) `elem` dropWhile (>= v) xs] == 2]",
+        "-- _Reinhard Zumkeller_, Mar 17 2013"
+    ],
+    "xref": [
+        "Cf. A060470."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Name edited by _Michel Marcus_, Dec 11 2017"
+    ],
+    "references": 3,
+    "revision": 31,
+    "time": "2017-12-19T02:43:01-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 276260,
+    "data": "5,13,17,53,61,107,251,283,1367",
+    "name": "Odd primes p such that p is in the trajectory of p+1 under the Collatz 3x+1 map (A014682).",
+    "comment": [
+        "a(10) > 10^7 if it exists. - _Felix Fr\u00f6hlich_, Aug 26 2016",
+        "a(10) > 10^9 if it exists. - _Charles R Greathouse IV_, Aug 26 2016",
+        "a(10) > 10^12 if it exists. - _Charles R Greathouse IV_, Sep 07 2016"
+    ],
+    "link": [
+        "<a href=\"/index/3#3x1\">Index entries for sequences related to 3x+1 (or Collatz) problem</a>"
+    ],
+    "mathematica": [
+        "Select[Prime@ Range[2, 10^5], MemberQ[NestWhileList[If[EvenQ[#], #/2, 3 # + 1] &, # + 1, # > 1 &], #] &] (* _Michael De Vlieger_, Aug 26 2016 *)"
+    ],
+    "program": [
+        "(Javascript) function isit_collatz_prime(p)",
+        "{",
+        "    var cur = p+1;",
+        "    while(cur != p && cur != 2)",
+        "    {",
+        "       if(cur%2!=0)",
+        "       {",
+        "           cur = 3*cur + 1;",
+        "       }else",
+        "       {",
+        "        cur = cur/2;",
+        "       }",
+        "    }",
+        "    if(cur === p ){return \"p is a Collatz prime\";}",
+        "    else {return \"p is not a Collatz prime\";}",
+        "}",
+        "(PARI) next_collatz_iteration(n) = if(n%2==1, return(3*n+1), return(n/2))",
+        "is(n) = if(n%2==1 && ispseudoprime(n), my(k=n+1); while(k > 1, k=next_collatz_iteration(k); if(k==n, return(1)))); 0 \\\\ _Felix Fr\u00f6hlich_, Aug 26 2016",
+        "(PARI) has(n)=my(k=n+1); k>>=valuation(k,2); while(k>1, k+=(k+1)>>1; k>>=valuation(k,2); if(k==n, return(1))); 0",
+        "forprime(p=3,1e9, if(has(p), print1(p\", \"))) \\\\ _Charles R Greathouse IV_, Aug 26 2016"
+    ],
+    "xref": [
+        "Cf. A014682, A276290."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Marina Ibrishimova_, Aug 26 2016",
+    "references": 1,
+    "revision": 25,
+    "time": "2016-09-07T02:26:56-04:00",
+    "created": "2016-09-04T00:21:03-04:00"
+}

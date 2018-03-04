@@ -1,0 +1,46 @@
+{
+    "number": 275573,
+    "data": "11,1386327162,1644167162,98457031244,138632716794,164416716794,215332031244,3164184570305,9845703124994,13863271679994,16441671679994,21533203124994,35992309570305,984570312499994,1386327167999994,1644167167999994,2153320312499994,80783157348632805,98457031249999994,138632716799999994,164416716799999994,215332031249999994,243634719848632805",
+    "name": "Consider the function G(n) that adds to n a decimal part equal to the reverse of n. Sequence lists integers that are equal to Sum_{i=1..k}{G(i)} for some k.",
+    "comment": [
+        "E.g.: G(54627) = 54627.72645",
+        "All terms are multiples of 11.",
+        "Values of k for the terms here listed are 4, 52655, 57343, 443749, 526559, 573439, 656249, 2515624, 4437499, 5265599, 5734399, 6562499, 8484374, 44374999, 52655999, 57343999, 65624999, ...",
+        "The sequence is infinite. Since Sum_{i=1..57343}G(i) and Sum_{i=57344..573439}G(i) are both integers, this implies that Sum_{i=1..57344*10^j - 1}G(i) is a term for j >= 0. In particular, if Sum_{i=1..a-1}G(i) and Sum_{i=1..10a-1}G(i) are both terms of the sequence and a is even, then Sum_{i=1..a*10^j-1}G(i) are terms for j >= 0 and Sum_{i=a..10a-1}(G(i)-i) + 81*a/2 = Sum_{i=10a..100a-1}(G(i)-i). Thus Sum_{i=1..52656*10^j - 1}G(i), Sum_{i=1..443750*10^j - 1}G(i) and Sum_{i=1..656250*10^j - 1}G(i) are also terms for j >= 0. - _Chai Wah Wu_, Aug 24 2016"
+    ],
+    "example": [
+        "1.1 + 2.2 + 3.3 + 4.4 = 11;",
+        "1.1 + 2.2 + ... + 52654.45625 + 52655.55625 = 1386327162."
+    ],
+    "maple": [
+        "P:= proc(q) local a,b,k,n; b:=0; for n from 1 to q do",
+        "a:=convert(n,base,10); a:=n+add(a[k]*10^(-k),k=1..nops(a));",
+        "b:=b+a; if type(b,integer) then print(b); fi; od; end: P(10^12);"
+    ],
+    "mathematica": [
+        "Select[Accumulate@ Map[# + FromDigits[Reverse@ IntegerDigits@ #]/10^IntegerLength@ # &, Range[10^7]], IntegerQ] (* _Michael De Vlieger_, Aug 02 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from __future__ import division",
+        "from fractions import Fraction",
+        "A275573_list, q = [], 0",
+        "for i in range(1,10**6):",
+        "    q += Fraction(int(str(i)[::-1]),10**len(str(i)))",
+        "    if q.denominator == 1:",
+        "        A275573_list.append(q + i*(i+1)//2) # _Chai Wah Wu_, Aug 24 2016"
+    ],
+    "xref": [
+        "Cf. A275572."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Aug 02 2016",
+    "ext": [
+        "a(18)-a(23) from _Chai Wah Wu_, Aug 24 2016"
+    ],
+    "references": 2,
+    "revision": 25,
+    "time": "2016-08-25T09:26:26-04:00",
+    "created": "2016-08-23T13:10:20-04:00"
+}

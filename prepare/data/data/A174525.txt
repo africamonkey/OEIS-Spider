@@ -1,0 +1,49 @@
+{
+    "number": 174525,
+    "data": "9,12,17,19,24,25,28,33,40,49,51,52,57,60,64,67,72,73,79,81,84,88,89,96,97,99,103,105,108,112,115,116,121,124,129,134,136,144,145,148,156,161,163,168,169,172,177,180,184,192,193,199",
+    "name": "Bases N in which ab and ba are different squares, for some a and b.",
+    "comment": [
+        "From _Robert Israel_, Mar 14 2016: (Start)",
+        "Leading 0's are not allowed.",
+        "Conjecture: all odd squares (A016754) except 1 are terms of the sequence. (End)",
+        "N=(2n+1)^2, a=n^2, b=4n^2+2n+1 shows that (2n+1)^2 is a term, so this sequence is infinite. - _Michael R Peake_, Mar 21 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A174525/b174525.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "17_9 and 71_9 are squares. 14_12 and 41_12 are squares."
+    ],
+    "maple": [
+        "filter:= proc(n) local x,a,b,R;",
+        "    for x from ceil(sqrt(n)) to n-1 do",
+        "      a:= x^2 mod n;",
+        "      if a=0 then next fi;",
+        "      b:= (x^2-a)/n;",
+        "      if assigned(R[b,a]) then return true fi;",
+        "      R[a,b]:= 1;",
+        "    od;",
+        "    false",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Mar 14 2016"
+    ],
+    "program": [
+        "(MATLAB)",
+        "Match = zeros(1,100);",
+        "for N=2:200, Tens=zeros(1,N-1);Units=zeros(1,N-1); for a=N-1:-1:sqrt(N),c=a^2;Tens(a)=floor(c/N);Units(a)=rem(c,N);end; for a=N-1:-1:sqrt(N),h=find((Units==Tens(a))&([1:N-1]~=a)); if length(h),Match=any(Units(a)==Tens(h)); if Match,Sol(N)=Sol(N)+1;end;end;end;end;",
+        "find(Match > 0)"
+    ],
+    "xref": [
+        "Cf. A016754."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,1",
+    "author": "_Michael R Peake_, Mar 21 2010",
+    "ext": [
+        "MATLAB program corrected by _Robert Israel_, Mar 14 2016"
+    ],
+    "references": 2,
+    "revision": 20,
+    "time": "2017-12-17T08:02:57-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

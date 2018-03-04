@@ -1,0 +1,43 @@
+{
+    "number": 200743,
+    "data": "1,1,2,4,10,24,70,192,576,1890,6300,21600,78624,294840,1140480,4561920,18849600,79968000,348566400,1559376000,7147140000,33522128640,160745472000,787652812800,3938264064000,20080974513600,104348244639744,552160113120000,2973491173785600,16286186592000000",
+    "name": "Divide integers 1..n into two sets, minimizing the difference of their products. This sequence is the smaller product.",
+    "example": [
+        "For n=1, we put 1 in one set and the other is empty; with the standard convention for empty products, both products are 1.",
+        "For n=13, the central pair of divisors of n! are 78975 and 78848. Since neither is divisible by 10, these values cannot be obtained. The next pair of divisors are 79200 = 12*11*10*6*5*2*1 and 78624 = 13*9*8*7*4*3, so a(13) = 78624."
+    ],
+    "maple": [
+        "a:= proc(n) local l, ll, g, p, i; l:= [i$i=1..n]; ll:= [i!$i=1..n]; g:= proc(m, j, b) local mm, bb, k; if j=1 then m else mm:= m; bb:= b; for k to 2 while (mm<p) do if j=2 or k=2 or k=1 and ll[j-1]*mm>bb then bb:= max(bb, g(mm, j-1, bb)) fi; mm:= mm*l[j] od; bb fi end; Digits:= 700; p:= ceil(sqrt(ll[n])); g(1, nops(l), 1) end: seq(a(n), n=1..23);  # _Alois P. Heinz_, Nov 22 2011"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import combinations",
+        ".",
+        "def prod(l):",
+        "...t=1",
+        "...for x in l:",
+        "......t *= x",
+        "...return t",
+        ".",
+        "def a200743(n):",
+        "...nums = list(range(1,n+1))",
+        "...widths = combinations(nums,n//2)",
+        "...dimensions = [(prod(width),prod(x for x in nums if x not in width)) for width in widths]",
+        "...best = min(dimensions,key=lambda x:max(*x)-min(*x))",
+        "...return min(best)",
+        "# _Christian Perfect_, Feb 04 2015"
+    ],
+    "xref": [
+        "Cf. A061055, A060776, A200744, A038667."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Franklin T. Adams-Watters_, Nov 21 2011",
+    "ext": [
+        "a(24)-a(30) from _Alois P. Heinz_, Nov 22 2011"
+    ],
+    "references": 4,
+    "revision": 27,
+    "time": "2015-02-04T04:48:36-05:00",
+    "created": "2011-11-22T18:46:05-05:00"
+}

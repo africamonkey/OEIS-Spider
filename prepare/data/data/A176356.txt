@@ -1,0 +1,68 @@
+{
+    "number": 176356,
+    "data": "1,2,5,10,11,20,50,100,101,110,115,118,121,125,152,158,181,185,188,200,500,1000,1010,1012,1018,1022,1028,1051,1081,1082,1085,1100,1102,1105,1108,1115,1118,1121,1150,1180,1181,1201,1202,1210,1211,1225,1250,1255,1282,1285,1501,1502,1520,1522",
+    "name": "Numbers which when seen in a mirror are primes (or 1), using calculator-style 7-segment numerals.",
+    "comment": [
+        "We construct mirror images of numbers by placing a mirror parallel to the baseline at an acute angle and looking at them from the top of the sheet they are written on.",
+        "This defines the mirror images by fixing digits 0, 1 and 8, exchanging 2 and 5, reversing the order of the digits and ignoring leading zeros that may result.",
+        "Only entries of A080228 are admitted, because 3's, 4's, 6's, 7's and 9's do not have calculator style images.",
+        "If this combined operation on n generates an entry in A008578, n is in this sequence here."
+    ],
+    "reference": [
+        "P. Giannopoulos, The Brainteasers, unpublished."
+    ],
+    "example": [
+        "110 is in the sequence because the mirror is 011 = 11 and prime.",
+        "152 is in the sequence because the mirror is 521 = A000040(98), a prime.",
+        "31 is not in the sequence because the 3 cannot be mirrored.",
+        "115 is in the sequence because the mirror is 211 = A000040(47), a prime."
+    ],
+    "maple": [
+        "calcmirr := proc(n)",
+        "        local L,Lm,i ;",
+        "        L := convert(n,base,10) ;",
+        "        Lm := [] ;",
+        "        for i from 1 to nops(L) do",
+        "                if op(i,L) = 2 then",
+        "                        Lm := [5,op(Lm)] ;",
+        "                elif op(i,L) = 5 then",
+        "                        Lm := [2,op(Lm)] ;",
+        "                elif op(i,L) in {0,1,8} then",
+        "                        Lm := [op(i,L),op(Lm)] ;",
+        "                else",
+        "                        return 0 ;",
+        "                end if;",
+        "        end do:",
+        "        add(op(i,Lm)*10^(i-1),i=1..nops(Lm)) ;",
+        "end proc:",
+        "isA176356 := proc(n)",
+        "        local m;",
+        "        m := calcmirr(n) ;",
+        "        isprime(m) or (m = 1) ;",
+        "end proc:",
+        "for n from 1 to 2001 do",
+        "        if isA176356(n) then",
+        "                printf(\"%d,\",n);",
+        "        end if;",
+        "end do: # R. J. Mathar, Sep 24 2011"
+    ],
+    "program": [
+        "(PARI program from Franklin T. Adams-Watters. Produces sequence except for initial 1.)",
+        "isa(n)=local(r,d);while(n>0,d=n%10;if(d==2,d=5,if(d==5,d=2,if(d==3||d==4|",
+        "|d==6||d==7||d==9,return(0))));r=r*10+d;n\\=10);isprime(r)"
+    ],
+    "xref": [
+        "Cf. A080228, A080792, A008578"
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,2",
+    "author": "P. Giannopoulos (pgiannop1(AT)yahoo.com), Apr 15 2010, Apr 22 2010",
+    "ext": [
+        "Sequence reconstructed with a consistent interpretation of the definition. - R. J. Mathar, Sep 24 2011",
+        "Edited by _N. J. A. Sloane_, Oct 24 2011"
+    ],
+    "references": 0,
+    "revision": 13,
+    "time": "2013-05-01T21:13:45-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

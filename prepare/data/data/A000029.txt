@@ -1,0 +1,69 @@
+{
+    "number": 29,
+    "id": "M0563 N0202",
+    "data": "1,2,3,4,6,8,13,18,30,46,78,126,224,380,687,1224,2250,4112,7685,14310,27012,50964,96909,184410,352698,675188,1296858,2493726,4806078,9272780,17920860,34669602,67159050,130216124,252745368,490984488",
+    "name": "Number of necklaces with n beads of 2 colors, allowing turning over (these are also called bracelets).",
+    "comment": [
+        "\"Necklaces with turning over allowed\" are usually called bracelets. - _Joerg Arndt_, Jun 10 2016"
+    ],
+    "reference": [
+        "J. L. Fisher, Application-Oriented Algebra (1977) ISBN 0-7002-2504-8, circa p. 215.",
+        "Martin Gardner, \"New Mathematical Diversions from Scientific American\" (Simon and Schuster, New York, 1966), pages 245-246.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A000029/b000029.txt\">Table of n, a(n) for n = 0..300</a>",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>, p. 151",
+        "H. Bottomley, <a href=\"/A000029/a000029.gif\">Illustration of initial terms</a>",
+        "Emanuele Brugnoli, <a href=\"https://dx.doi.org/10.1002/jcd.21558\">Enumerating the Walecki-Type Hamiltonian Cycle Systems</a>, Journal of Combinatorial Designs, Volume 25, Issue 11, November 2017, pp. 481-493.",
+        "P. J. Cameron, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/groups.html\">Sequences realized by oligomorphic permutation groups</a>, J. Integ. Seqs. Vol. 3 (2000), #00.1.5.",
+        "S. N. Ethier and J. Lee, <a href=\"http://arxiv.org/abs/1202.2609\">Parrondo games with spatial dependence</a>, arXiv preprint arXiv:1202.2609 [math.PR], 2012. - From _N. J. A. Sloane_, Jun 10 2012",
+        "S. N. Ethier, <a href=\"http://arxiv.org/abs/1301.2352\">Counting toroidal binary arrays</a>, arXiv preprint arXiv:1301.2352 [math.CO], 2013.",
+        "N. J. Fine, <a href=\"http://projecteuclid.org/euclid.ijm/1255381350\">Classes of periodic sequences</a>, Illinois J. Math., 2 (1958), 285-302.",
+        "E. N. Gilbert and J. Riordan, <a href=\"http://projecteuclid.org/euclid.ijm/1255631587\">Symmetry types of periodic sequences</a>, Illinois J. Math., 5 (1961), 657-665.",
+        "Jia Liu, L. Lalouat, E. Drouard, R. Orobtchouk, <a href=\"https://doi.org/10.1364/OE.24.001133\">Binary coded patterns for photon control using necklace problem concept</a>, Optics Express Vol. 24, Issue 2, pp. 1133-1142 (2016).",
+        "F. Ruskey, <a href=\"https://web.archive.org/web/20170113110237/http://www.theory.cs.uvic.ca/~cos/inf/neck/NecklaceInfo.html\">Necklaces, Lyndon words, De Bruijn sequences, etc.</a>",
+        "Zhe Sun, T. Suenaga, P. Sarkar, S. Sato, M. Kotani, H. Isobe, <a href=\"https://doi.org/10.1073/pnas.1606530113\">Stereoisomerism, crystal structures, and dynamics of belt-shaped cyclonaphthylenes</a>, Proc. Nat. Acad. Sci. USA, vol. 113 no. 29, pp. 8109-8114, doi: 10.1073/pnas.1606530113.",
+        "A. M. Uludag, A. Zeytin and M. Durmus, <a href=\"http://math.gsu.edu.tr/uludag/CHARKSANDDESSINS.pdf\">Binary Quadratic Forms as Dessins</a>, 2012. - From _N. J. A. Sloane_, Dec 31 2012",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Necklace.html\">Necklace</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/e.html\">e</a>",
+        "<a href=\"/index/Cor#core\">Index entries for \"core\" sequences</a>",
+        "<a href=\"/index/Br#bracelets\">Index entries for sequences related to bracelets</a>",
+        "<a href=\"/index/Ne#necklaces\">Index entries for sequences related to necklaces</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{ d divides n } phi(d)*2^(n/d)/(2*n) + either 2^((n-1)/2) if n odd or 2^(n/2-1)+2^(n/2-2) if n even.",
+        "G.f.: (1 - Sum_{n>=1} phi(n)*log(1 - 2*x^n)/n + (1+x)^2/(1-2*x^2))/2. - _Herbert Kociemba_, Nov 02 2016"
+    ],
+    "maple": [
+        "with(numtheory): A000029 := proc(n) local d,s; if n = 0 then RETURN(1); else if n mod 2 = 1 then s := 2^((n-1)/2) else s := 2^(n/2-2)+2^(n/2-1); fi; for d in divisors(n) do s := s+phi(d)*2^(n/d)/(2*n); od; RETURN(s); fi; end;"
+    ],
+    "mathematica": [
+        "a[0] := 1; a[n_] := Fold[ # 1 + EulerPhi[ # 2]2^(n/ # 2)/(2n) &, If[OddQ[n], 2^((n - 1)/2), 2^(n/2 - 1) + 2^(n/2 - 2)], Divisors[n]]",
+        "mx=40;CoefficientList[Series[(1-Sum[ EulerPhi[n]*Log[1-2*x^n]/n,{n,mx}]+(1+x)^2/(1-2*x^2))/2,{x,0,mx}],x] (* _Herbert Kociemba_, Nov 02 2016 *)",
+        "a[0] = 1; a[n_] := (1/4)*(Mod[n, 2] + 3)*2^Quotient[n, 2] + DivisorSum[n, EulerPhi[#]*2^(n/#)&]/(2*n); Array[a, 36, 0] (* _Jean-Fran\u00e7ois Alcover_, Nov 05 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,!n,(n%2+3)/4*2^(n\\2)+sumdiv(n,d,eulerphi(n/d)*2^d)/2/n)",
+        "(Python)",
+        "from sympy import divisors, totient",
+        "def a(n): return 1 if n<1 else (n%2 + 3)/4*2**int(n/2) + sum([totient(n/d)*2**d for d in divisors(n)])/(2*n)",
+        "print [a(n) for n in xrange(51)] # _Indranil Ghosh_, Apr 23 2017"
+    ],
+    "xref": [
+        "Row sums of triangle in A052307.",
+        "Cf. A001371 (primitive necklaces), A000031 (if cannot turn necklace over), A000011, A000013.",
+        "Cf. second column of A081720. - _Wolfdieter Lang_, Jun 03 2012"
+    ],
+    "keyword": "nonn,easy,nice,core",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Christian G. Bower_"
+    ],
+    "references": 36,
+    "revision": 100,
+    "time": "2018-01-10T04:57:37-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 199325,
+    "data": "5,11,101,151,1051,1151,1511,5011,5051,5101,5501,10111,10151,10501,11551,15101,15511,15551,50051,50101,50111,50551,51001,51151,51511,51551,55001,55051,55501,55511,100151,100501,100511,101051,101111,101501,110051,110501,115001,115151,150001,150011,150151,150551",
+    "name": "Primes with digits '0', '1' and '5' only.",
+    "link": [
+        "Robert Israel, <a href=\"/A199325/b199325.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Pri#PrimesWithDigits\">Index to entries about primes with digits in a given set</a>"
+    ],
+    "maple": [
+        "N:= 10000: # to get the first N terms",
+        "count:= 0:",
+        "allowed:= {0,1,5}:",
+        "nallowed:= nops(allowed):",
+        "subst:= seq(i=allowed[i+1],i=0..nallowed-1):",
+        "for d from 0 while count < N do",
+        "  for x1 from 1 to nallowed-1 while count < N do",
+        "    for t from 0 to nallowed^d-1 while count < N do",
+        "      L:= subs(subst,convert(x1*nallowed^d+t,base,nallowed));",
+        "      X:= add(L[i]*10^(i-1),i=1..d+1);",
+        "      if isprime(X) then",
+        "          count:= count+1;",
+        "          A[count]:= X;",
+        "      fi",
+        "od od od:",
+        "seq(A[n],n=1..N); # _Robert Israel_, Apr 20 2014"
+    ],
+    "program": [
+        "(PARI) L=[0,1,5];for(d=1,6,u=vector(d,i,10^(d-i))~;forvec(v=vector(d,i,[1+(i==1 & !L[1]),#L]),ispseudoprime(t=vector(d,i,L[v[i]])*u)&print1(t\",\")))  /* see A199327 for a function a(n) */",
+        "(MAGMA) [p: p in PrimesUpTo(160000) | Set(Intseq(p)) subset [0, 1, 5]]; // _Vincenzo Librandi_, Apr 22 2014"
+    ],
+    "xref": [
+        "Cf. A020449 - A020472, A199326 - A199329, A061247, A199340 - A199349."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_M. F. Hasler_, Nov 05 2011",
+    "references": 25,
+    "revision": 20,
+    "time": "2015-07-26T02:01:58-04:00",
+    "created": "2011-11-05T11:56:26-04:00"
+}

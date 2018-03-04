@@ -1,0 +1,50 @@
+{
+    "number": 225841,
+    "data": "1,2,4,523,1046,2092",
+    "name": "Numbers n such that the sum of first n primorial numbers is divisible by n.",
+    "comment": [
+        "The k-th primorial number is defined as the product of the first k primes.",
+        "The next term, if it exists, is greater than 14000000. - _Alex Ratushnyak_, Jun 13 2013",
+        "If a prime p | a(n) for some n, then p = 2, p = 523, or p > 10^8. Any such prime is itself a member of this sequence. From this (and a small amount of additional calculation) it follows that any other terms below 10^10 are of the form 2^k * p for p > 10^8. - _Charles R Greathouse IV_, Feb 09 2014"
+    ],
+    "example": [
+        "2 + 2*3 + 2*3*5 + 2*3*5*7 = 2 + 6 + 30 + 210 = 248, because 248 is divisible by 4, the latter is in the sequence."
+    ],
+    "program": [
+        "(Python)",
+        "primes = []",
+        "n = 1",
+        "sum = 2",
+        "primorial = 6",
+        "def addPrime(k):",
+        "  global n, sum, primorial",
+        "  for p in primes:",
+        "    if k%p==0:  return",
+        "    if p*p > k:  break",
+        "  primes.append(k)",
+        "  sum += primorial",
+        "  primorial *= k",
+        "  n += 1",
+        "  if sum % n == 0:  print n,",
+        "print 1,",
+        "for p in xrange(5, 1000000000, 6):",
+        "  addPrime(p)",
+        "  addPrime(p+2)",
+        "(PARI) list(maxx)={n=prime(1); cnt=1;summ=0;scnt=0;",
+        "while(n<=maxx,summ=summ+prodeuler(x=1,prime(cnt),x);",
+        "if(summ%cnt==0,scnt++;print(scnt,\"  \",cnt) );cnt++;n=nextprime(n+1) ); }",
+        "\\\\note MUST increase precision to 10000+ digits \\\\_Bill McEachen_, Feb 04 2014",
+        "(PARI) P=1;S=n=0;forprime(p=2,1e4,S+=P*=p;if(S%n++==0,print1(n\", \"))) \\\\ _Charles R Greathouse IV_, Feb 05 2014",
+        "(PARI) is(n)=my(q=prime(n),P=Mod(1,n),S);forprime(p=2,q,S+=P*=p);!S \\\\ _Charles R Greathouse IV_, Feb 05 2014"
+    ],
+    "xref": [
+        "Cf. A060389, A002110, A045345, A143293, A225727."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, May 21 2013",
+    "references": 0,
+    "revision": 46,
+    "time": "2014-02-09T17:30:37-05:00",
+    "created": "2013-05-22T09:28:13-04:00"
+}

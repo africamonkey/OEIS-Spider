@@ -1,0 +1,89 @@
+{
+    "number": 2048,
+    "id": "M0972 N0363",
+    "data": "1,2,4,5,8,10,14,15,16,21,22,25,26,28,33,34,35,36,38,40,42,46,48,49,50,53,57,60,62,64,65,70,77,80,81,83,85,86,90,91,92,100,104,107,108,116,119,124,127,132,133,137,141,144,145,148,150,151,154,158,159,163,165",
+    "name": "Segmented numbers, or prime numbers of measurement.",
+    "reference": [
+        "R. K. Guy, Unsolved Problems in Number Theory, E30.",
+        "P. A. MacMahon, The prime numbers of measurement on a scale, Proc. Camb. Phil. Soc. 21 (1923), 651-654; reprinted in Coll. Papers I, pp. 797-800.",
+        "\u0160. Porubsk\u00fd, On MacMahon's segmented numbers and related sequences. Nieuw Arch. Wisk. (3) 25 (1977), no. 3, 403--408. MR0485763 (58 #5575)",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "R. J. Mathar, <a href=\"/A002048/b002048.txt\">Table of n, a(n) for n = 1..7836</a>",
+        "G. E. Andrews, <a href=\"http://www.jstor.org/stable/2318498\">MacMahon's prime numbers of measurement</a>, Amer. Math. Monthly, 82 (1975), 922-923.",
+        "R. L. Graham and C. B. A. Peck, <a href=\"http://www.jstor.org/stable/2315138\">Problem E1910</a>, Amer. Math. Monthly, 75 (1968), 80-81.",
+        "R. K. Guy, <a href=\"/A002048/a002048.pdf\">Letter to G. E. Andrews, Apr 14 1975</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PrimeNumberofMeasurement.html\">Prime Number of Measurement.</a>"
+    ],
+    "formula": [
+        "Andrews conjectures that lim_{n -> oo} n log n / (a(n) loglog n) = 1. - _N. J. A. Sloane_, Dec 01 2013"
+    ],
+    "maple": [
+        "A002048 := proc(anmax::integer,printlist::boolean)",
+        "local a, asum,su,i,piv,j;",
+        "a := [];",
+        "for i from 1 to anmax do",
+        "a := [op(a),i];",
+        "od:",
+        "if printlist then",
+        "printf(\"%d %d\\n\",1,a[1]);",
+        "printf(\"%d %d\\n\",2,a[2]);",
+        "fi;",
+        "asum := [a[1]+a[2],a[2]];",
+        "for i from 3 to anmax do",
+        "asum := [op(asum),0];",
+        "od:",
+        "piv := 3;",
+        "while piv <= nops(a) do",
+        "for i from 1 to piv-2 do",
+        "a := remove(has,a, asum[i]);",
+        "od:",
+        "if printlist then",
+        "printf(\"%a %a\\n\",piv,a[piv]);",
+        "fi;",
+        "for i from 1 to piv do",
+        "asum := subsop(i=asum[i]+a[piv], asum);",
+        "od:",
+        "piv := piv+1;",
+        "od;",
+        "RETURN(a);",
+        "end:",
+        "A002048(40000,true);",
+        "# _R. J. Mathar_, Jun 04 2006"
+    ],
+    "mathematica": [
+        "A002048[anmax_] := (a = {}; Do[ AppendTo[a, i], {i, 1, anmax}]; asum = {a[[1]] + a[[2]], a[[2]]}; Do[AppendTo[asum, 0], {i, 3, anmax}]; piv = 3; While[ piv <= Length[a], Do[a = DeleteCases[a, asum[[i]]], {i, 1, piv-2}]; Do[ asum[[i]] += a[[piv]] , {i, 1, piv}]; piv = piv+1;]; a); A002048[63] (* _Jean-Fran\u00e7ois Alcover_, Jul 28 2011, converted from _R. J. Mathar_'s Maple prog. *)"
+    ],
+    "program": [
+        "(C++)",
+        "#include <iostream>",
+        "#include <vector>",
+        "#include <algorithm>",
+        "#define NMAX 400",
+        "using namespace std;",
+        "int main(int argc, char *argv[])",
+        "{ vector<int> a; for(int i=0; i< NMAX; i++) a.push_back(i+1); for(int piv=2; piv < a.size(); piv++) for(int i=0; i < piv-1 && i < a.size()-1; i++) { int su= a[i]+a[i+1]; remove(a.begin(),a.end(),su); for(int j=i+2; j < piv && j < a.size(); j++) { su += a[j]; remove(a.begin(),a.end(),su); if(su > NMAX) break; } } for(int i=0; i < a.size() && a[i] < NMAX; i++) cout << a[i] << \",\"; return 0;",
+        "} /* _R. J. Mathar_, May 31 2006 */",
+        "(Haskell)",
+        "import Data.List ((\\\\))",
+        "a002048 n = a002048_list !! (n-1)",
+        "a002048_list = f [1..] [] where",
+        "   f (x:xs) ys = x : f (xs \\\\ scanl (+) x ys) (x : ys)",
+        "-- _Reinhard Zumkeller_, May 23 2013"
+    ],
+    "xref": [
+        "Cf. A002049 (partial sums), A004978, A005242, A033627."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _R. J. Mathar_, May 31 2006"
+    ],
+    "references": 7,
+    "revision": 45,
+    "time": "2016-08-25T03:05:58-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 274783,
+    "data": "1,1,1,25,121,361,3361,24361,116425,790441,6060121,36888721,238815721,1760983225,11968188961,79763351305,570661612585,4040282139625,27901708614985,198090585115105,1420583920034161,10056659775872161,71730482491962361,517012699162717825,3713833648541268121",
+    "name": "Diagonal of the rational function 1/(1-(wxyz + wxy + wxz + wyz + xyz)).",
+    "link": [
+        "A. Bostan, S. Boukraa, J.-M. Maillard, J.-A. Weil, <a href=\"http://arxiv.org/abs/1507.03227\">Diagonals of rational functions and selected differential Galois groups</a>, arXiv preprint arXiv:1507.03227 [math-ph], 2015.",
+        "S. Eger, <a href=\"http://arxiv.org/abs/1511.00622\">On the Number of Many-to-Many Alignments of N Sequences</a>, arXiv:1511.00622 [math.CO], 2015.",
+        "Jacques-Arthur Weil, <a href=\"http://www.unilim.fr/pages_perso/jacques-arthur.weil/diagonals/\">Supplementary Material for the Paper \"Diagonals of rational functions and selected differential Galois groups\"</a>"
+    ],
+    "formula": [
+        "0 = x^2*(x+3)^2*(x^4-260*x^3+6*x^2-4*x+1)*y''' + 3*x*(x+3)*(2*x^5-381*x^4-1944*x^3+34*x^2-18*x+3)*y'' + (7*x^6-764*x^5-9101*x^4-27264*x^3+381*x^2-132*x+9)*y' + (x^5-13*x^4-246*x^3-5946*x^2+69*x-9)*y, where y is the g.f.",
+        "a(n) = Sum_{k = 0..floor(n/3)} (n+k)!/(k!^4*(n-3*k)!) = Sum_{k = 0..floor(n/3)} binomial(n,3*k)*binomial(n+k,k)*(3*k)!/k!^3 (apply Eger, Theorem 3 to the set of column vectors S = {[1,1,1,1], [1,1,0,1], [1,0,1,1], [0,1,1,1], [1,1,1,0]}). - _Peter Bala_, Jan 27 2018"
+    ],
+    "maple": [
+        "with(combinat):",
+        "seq(add((n+k)!/(k!^4*(n-3*k)!), k = 0..floor(n/3)), n = 0..20); # _Peter Bala_, Jan 27 2018"
+    ],
+    "program": [
+        "(PARI)",
+        "my(x='x, y='y, z='z, w='w);",
+        "R = 1/(1-(w*x*y*z+w*x*y+w*x*z+w*y*z+x*y*z));",
+        "diag(n, expr, var) = {",
+        "  my(a = vector(n));",
+        "  for (i = 1, #var, expr = taylor(expr, var[#var - i + 1], n));",
+        "  for (k = 1, n, a[k] = expr;",
+        "       for (i = 1, #var, a[k] = polcoeff(a[k], k-1)));",
+        "  return(a);",
+        "};",
+        "diag(20, R, [x,y,z,w])"
+    ],
+    "xref": [
+        "Cf. A268545-A268555."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Gheorghe Coserea_, Jul 13 2016",
+    "references": 0,
+    "revision": 15,
+    "time": "2018-02-10T01:52:30-05:00",
+    "created": "2016-07-14T08:34:39-04:00"
+}

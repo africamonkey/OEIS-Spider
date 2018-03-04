@@ -1,0 +1,60 @@
+{
+    "number": 228968,
+    "data": "3,5,41,59,101,2729,3251,9719,11549,12251,19211,28619,41201,47711,49391,55439,58229,61979,63029,63311,79631,81371,85331,103391,122039,135719,153509,157349,164249,167441,178601,188861,197711,208001,209819,216779,219311,226451",
+    "name": "Prime p such that p and p+2 are twin primes and p^2+p-1 p^2+p+1 are also twin primes.",
+    "comment": [
+        "Subsequence of A088483."
+    ],
+    "link": [
+        "Pierre CAMI, <a href=\"/A228968/b228968.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "3 and 5 twin primes as 3*3+3-1=11 and 13, a(2)=3.",
+        "5 and 7 twin primes as 5*5+5-1=29 and 31, a(3)=5."
+    ],
+    "mathematica": [
+        "Select[Transpose[Select[Partition[Prime[Range[21000]],2,1],#[[2]]-#[[1]] == 2&]][[1]],AllTrue[#^2+#+{1,-1},PrimeQ]&] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Nov 10 2014 *)"
+    ],
+    "program": [
+        "PFGW & SCRIPTIFY",
+        "SCRIPT",
+        "DIM n,0",
+        "DIM m",
+        "DIM k,0",
+        "DIMS ta",
+        "OPENFILEOUT myf,a(n).txt",
+        "OPENFILEIN maf,twin.txt",
+        "LABEL loop1",
+        "SET n,n+1",
+        "IF n>2999999 THEN END",
+        "GETNEXT m,maf",
+        "SETS ta,%d\\,;n",
+        "PRP m^2+m-1,ta",
+        "IF ISPRP THEN GOTO a",
+        "GOTO loop1",
+        "LABEL a",
+        "PRP m^2+m+1,ta",
+        "IF ISPRP THEN GOTO b",
+        "GOTO loop1",
+        "LABEL b",
+        "WRITE myf,m",
+        "GOTO loop1",
+        "The file twin.txt has the first 3000000 of first of twin primes",
+        "(PFGW) ABC2 $a & $a+2 & $a^2+$a-1 & $a^2+$a+1",
+        "a: 1 to 3000000",
+        "_Charles R Greathouse IV_, Sep 10 2013",
+        "(PARI) is(n)=isprime(n)&&isprime(n+2)&&isprime(n^2+n-1)&&isprime(n^2+n+1) \\\\ _Charles R Greathouse IV_, Sep 10 2013",
+        "(Sage)",
+        "[x for x in primes_first_n(5000000) if x+2 in Primes() and x^2+x-1 in Primes() and x^2+x+1 in Primes()] #_Tom Edgar_, Sep 10 2013"
+    ],
+    "xref": [
+        "Cf. A088483."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Pierre CAMI_, Sep 10 2013",
+    "references": 4,
+    "revision": 24,
+    "time": "2014-11-10T16:15:51-05:00",
+    "created": "2013-09-11T14:33:28-04:00"
+}

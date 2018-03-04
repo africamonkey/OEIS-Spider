@@ -1,0 +1,47 @@
+{
+    "number": 200318,
+    "data": "1,1,3,16,120,1156,13608,189316,3039060,55291336,1124309208,25268818576,622008616320,16642670404816,480923246983728,14926731083999296,495243684302520000,17491488288340789696,655224017429959987968,25947019896579324410176,1083050878686674070676800",
+    "name": "E.g.f. satisfies: A(x) = x-1 + cosh(A(x)).",
+    "comment": [
+        "a(n) is the number of leaf labeled rooted trees with n leaves in which the outdegrees of the root and all internal nodes are positive even integers. - _Geoffrey Critzer_, Jul 31 2016"
+    ],
+    "link": [
+        "Philippe Flajolet and Robert Sedgewick, <a href=\"http://algo.inria.fr/flajolet/Publications/AnaCombi/anacombi.html\">Analytic Combinatorics</a>, Cambridge Univ. Press, 2009, page 128,(labeled hierarchies)."
+    ],
+    "formula": [
+        "E.g.f. satisfies:",
+        "(1) A(x) = Series_Reversion(1+x - cosh(x)).",
+        "(2) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) (cosh(x) - 1)^n / n!.",
+        "(3) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) (cosh(x) - 1)^n/x / n! ).",
+        "a(n) ~ n^(n-1) / (2^(1/4) * exp(n) * (1-sqrt(2)+log(1+sqrt(2)))^(n-1/2)). - _Vaclav Kotesovec_, Jan 10 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + x^2/2! + 3*x^3/3! + 16*x^4/4! + 120*x^5/5! +...",
+        "where A(1+x - cosh(x)) = x and A(x) = x-1 + cosh(A(x)).",
+        "The e.g.f. satisfies:",
+        "A(x) = x + (cosh(x)-1) + d/dx (cosh(x)-1)^2/2! + d^2/dx^2 (cosh(x)-1)^3/3! + d^3/dx^3 (cosh(x)-1)^4/4! +...",
+        "as well as the logarithmic series:",
+        "log(A(x)/x) = (cosh(x)-1)/x + d/dx (cosh(x)-1)^2/x/2! - d^2/dx^2 (cosh(x)-1)^3/x/3! + d^3/dx^3 (cosh(x)-1)^4/x/4! +..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[1 + x - Cosh[x],{x,0,20}],x],x] * Range[0,20]!] (* _Vaclav Kotesovec_, Jan 10 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(serreverse(1+x-cosh(x+x^2*O(x^n))),n)}",
+        "for(n=1, 21, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); for(i=1, n, A=x+sum(m=1, n, Dx(m-1, (cosh(x+x*O(x^n))-1)^m)/m!)+x*O(x^n)); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); for(i=1, n, A=x*exp(sum(m=1, n, Dx(m-1, (cosh(x+x*O(x^n))-1)^m/x)/m!)+x*O(x^n))); n!*polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A200317, A000311, A052526."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Nov 15 2011",
+    "references": 1,
+    "revision": 29,
+    "time": "2016-08-01T09:52:47-04:00",
+    "created": "2011-11-16T11:07:11-05:00"
+}

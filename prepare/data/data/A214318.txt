@@ -1,0 +1,41 @@
+{
+    "number": 214318,
+    "data": "1,4,9,19,40,81,164,329,659,1320,2641,5283,10568,21137,42276,84553,169107,338216,676433,1352868,2705737,5411475,10822952,21645905,43291811,86583624,173167249,346334500,692669001,1385338003,2770676008,5541352017,11082704035",
+    "name": "Replace the word A214317(n) with its position in A007931.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A214318/b214318.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A182028(n-1)+2^n-1.",
+        "a(n) = 2*a(n-1) + A003842(n-1) for n>1, a(1) = 1. - _Alois P. Heinz_, Jul 19 2012"
+    ],
+    "example": [
+        "A214317(5) = 12112 is the 40th term of A007931, so a(5)=40."
+    ],
+    "maple": [
+        "S:= proc(n) option remember;",
+        "      `if`(n<2, [2-n], [S(n-1)[], S(n-2)[]])",
+        "    end:",
+        "a:= proc(n) option remember; local k;",
+        "      for k while nops(S(k))<n do od;",
+        "      `if`(n=1, 1, 2*a(n-1) +S(k)[n])",
+        "    end:",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Jul 19 2012"
+    ],
+    "mathematica": [
+        "nesting = 6; A003849 = Flatten[Nest[{#, #[[1]]}&, {0, 1}, nesting]]; A182028[n_] := FromDigits[Take[A003849, n+1], 2]; a[n_] := A182028[n-1] + 2^n - 1; Table[a[n], {n, 1, Length[A003849]}] (* _Jean-Fran\u00e7ois Alcover_, Feb 13 2016 *)"
+    ],
+    "xref": [
+        "Cf. A003842, A214317, A007931."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jul 12 2012",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jul 19 2012"
+    ],
+    "references": 4,
+    "revision": 26,
+    "time": "2017-03-31T00:34:30-04:00",
+    "created": "2012-07-12T13:17:47-04:00"
+}

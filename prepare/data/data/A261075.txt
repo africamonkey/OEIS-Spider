@@ -1,0 +1,36 @@
+{
+    "number": 261075,
+    "data": "527,551,1591,2173,2491,2623,3127,5183,5963,6059,6557,6767,6887,7031,7373,7571,7597,7739,7979,8051,8249,8549,8633,8881,9017,9523,9701,10541,10807,11303,11639,12091,12317,12827,14351,19519,20413,20989,21823,22331,23213,24047,24613,24881,24883,25777,25807,26549,26671,26827,26989,27661,28199,28459,28757,29329",
+    "name": "Semiprimes whose prime factors are of equal binary length and which differ from each other in exactly three bit positions.",
+    "link": [
+        "Antti Karttunen, <a href=\"/A261075/b261075.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "N. S. Dattani & N.  Bryans, <a href=\"http://arxiv.org/abs/1411.6758\">Quantum factorization of 56153 with only 4 qubits</a>, arXiv:1411.6758 [quant-ph], 2014."
+    ],
+    "example": [
+        "291311 = 523 * 557 is included (as term a(334)) because 523 (\"1000001011\" in binary) and 557 (\"1000101101\" in binary) differ in exactly three bit-positions."
+    ],
+    "mathematica": [
+        "Select[Range@ 30000, And[Length@ # == 2, IntegerLength[#1, 2] == IntegerLength[#2, 2] & @@ #, Total@ BitXor[IntegerDigits[#1, 2], IntegerDigits[#2, 2]] == 3 & @@ #] &@ Flatten@ Map[ConstantArray[#1, #2] & @@ # &, FactorInteger@ #] &] (* _Michael De Vlieger_, Oct 08 2016 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A000523 = n -> logint(n, 2);",
+        "A020639(n) = if(1==n,n,vecmin(factor(n)[, 1]));",
+        "isA261075(n) = { my(a,b); if(bigomega(n)!=2, 0, a = A020639(n); b = (n/a); ((A000523(a) == A000523(b)) && (3 == norml2(binary(bitxor(a,b)))))); };",
+        "i=0; n=0; while(i < 10000, n++; if(isA261075(n), i++; write(\"b261075.txt\", i, \" \", n)));",
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A261075 (MATCHING-POS 1 1 (lambda (n) (and (= 2 (A001222 n)) (= (A000523 (A020639 n)) (A000523 (A006530 n))) (= 3 (A101080bi (A020639 n) (A006530 n)))))))"
+    ],
+    "xref": [
+        "Cf. A000523, A001222, A006530, A020639, A101080.",
+        "Cf. also A261073, A261074.",
+        "Subsequence of A085721."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Sep 22 2015",
+    "references": 5,
+    "revision": 12,
+    "time": "2016-10-08T17:01:00-04:00",
+    "created": "2015-09-24T01:39:00-04:00"
+}

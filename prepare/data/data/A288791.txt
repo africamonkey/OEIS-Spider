@@ -1,0 +1,43 @@
+{
+    "number": 288791,
+    "data": "1,11,122,1245,12325,121136,1195147,11915997,120572790,1241499241,13030331671,139549798524,1525923634907,17041290249637,194394900237176,2264977282222371,26951265841776186,327445918493429897,4060993235341162405,51396034231430455550",
+    "name": "Number of blocks of size >= nine in all set partitions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A288791/b288791.txt\">Table of n, a(n) for n = 9..575</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "formula": [
+        "a(n) = Bell(n+1) - Sum_{j=0..8} binomial(n,j) * Bell(n-j).",
+        "a(n) = Sum_{j=0..n-9} binomial(n,j) * Bell(j)."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      b(n-j)*binomial(n-1, j-1), j=1..n))",
+        "    end:",
+        "g:= proc(n, k) option remember; `if`(n<k, 0,",
+        "      g(n, k+1) +binomial(n, k)*b(n-k))",
+        "    end:",
+        "a:= n-> g(n, 9):",
+        "seq(a(n), n=9..30);"
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[n, j] BellB[j], {j, 0, n - 9}], {n, 9, 30}] (* _Indranil Ghosh_, Jul 06 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import bell, binomial",
+        "def a(n): return sum([binomial(n, j)*bell(j) for j in xrange(n - 8)])",
+        "print [a(n) for n in xrange(9, 31)] # _Indranil Ghosh_, Jul 06 2017"
+    ],
+    "xref": [
+        "Column k=9 of A283424.",
+        "Cf. A000110."
+    ],
+    "keyword": "nonn",
+    "offset": "9,2",
+    "author": "_Alois P. Heinz_, Jun 15 2017",
+    "references": 2,
+    "revision": 8,
+    "time": "2017-07-07T06:02:59-04:00",
+    "created": "2017-06-15T21:06:02-04:00"
+}

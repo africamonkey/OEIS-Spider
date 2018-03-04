@@ -1,0 +1,56 @@
+{
+    "number": 275050,
+    "data": "1,36,5580,1209600,305127900,83936348496,24422566424256,7391145688692480,2302861234904415900,733755111903173646000,237987702318837667276080,78313025454309175928186880,26080521003090619899885979200,8773677817145303533293886560000",
+    "name": "Diagonal of the rational function 1/(1-(wxz + wyz + xyz + wy + xy + z)) [even-indexed terms only].",
+    "comment": [
+        "Odd-order terms are zero since R(x,y,z,w) = R(-x,-y,z,-w), where R(x,y,z,w) = 1/(1-(w*x*z+w*y*z+x*y*z+w*y+x*y+z))."
+    ],
+    "link": [
+        "Gheorghe Coserea and Alois P. Heinz, <a href=\"/A275050/b275050.txt\">Table of n, a(n) for n = 0..389</a> (first 34 terms from Gheorghe Coserea)",
+        "A. Bostan, S. Boukraa, J.-M. Maillard, J.-A. Weil, <a href=\"http://arxiv.org/abs/1507.03227\">Diagonals of rational functions and selected differential Galois groups</a>, arXiv preprint arXiv:1507.03227 [math-ph], 2015.",
+        "Jacques-Arthur Weil, <a href=\"http://www.unilim.fr/pages_perso/jacques-arthur.weil/diagonals/\">Supplementary Material for the Paper \"Diagonals of rational functions and selected differential Galois groups\"</a>"
+    ],
+    "formula": [
+        "a(n) = [(xyzw)^(2n)] 1/(1-(w*x*z+w*y*z+x*y*z+w*y+x*y+z)).",
+        "0 = (-50*x^3+19341*x^5-155898*x^7-95256*x^9)*y'''' + (-200*x^2+170982*x^4-1015686*x^6-1143072*x^8)*y''' + (-50*x+353295*x^3-1068420*x^5-3513888*x^7)*y'' + (50+141777*x^2+282540*x^4-2709504*x^6)*y' + (66816*x^3-254016*x^5)*y, where y(x) = A(x^2).",
+        "a(n) ~ sqrt(1 + 2*sqrt(3/11)) * (189 + 33*sqrt(33))^n / (2*Pi^(3/2)*n^(3/2)). - _Vaclav Kotesovec_, Aug 03 2016"
+    ],
+    "example": [
+        "1 + 36*x^2 + 5580*x^4 + 1209600*x^6 + ..."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<2, 36^n, (9*(n-1)*",
+        "       (2*n-1)*(693*n^3-1554*n^2+989*n-160)*a(n-1)+",
+        "       (6*(33*n-8))*(3*n-4)*(2*n-1)*(2*n-3)*(3*n-5)*",
+        "        a(n-2)) / ((n-1)*(33*n-41)*n^3))",
+        "    end:",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Jul 26 2016"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n < 2, 36^n, (9*(n - 1)*(2*n - 1)*(693*n^3 - 1554*n^2 + 989*n - 160)*a[n - 1] + (6*(33*n - 8))*(3*n - 4)*(2*n - 1)*(2*n - 3)*(3*n - 5)*a[n - 2])/((n - 1)*(33*n - 41)*n^3)];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Sep 07 2017, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "my(x='x, y='y, z='z, w='w);",
+        "R = 1/(1-(w*x*z+w*y*z+x*y*z+w*y+x*y+z));",
+        "diag(n, expr, var) = {",
+        "  my(a = vector(n));",
+        "  for (i = 1, #var, expr = taylor(expr, var[#var - i + 1], n));",
+        "  for (k = 1, n, a[k] = expr;",
+        "       for (i = 1, #var, a[k] = polcoeff(a[k], k-1)));",
+        "  return(a);",
+        "};",
+        "diag(22, R, [x,y,z,w])"
+    ],
+    "xref": [
+        "Cf. A268545-A268555."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gheorghe Coserea_, Jul 19 2016",
+    "references": 1,
+    "revision": 24,
+    "time": "2017-09-07T08:57:47-04:00",
+    "created": "2016-07-26T17:36:18-04:00"
+}

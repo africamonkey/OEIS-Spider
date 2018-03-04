@@ -1,0 +1,42 @@
+{
+    "number": 143342,
+    "data": "1,1,6,40,374,3215,34298,326360,3710278,37289620,440121880,4577214736,55375589594,589530372890,7258264793564,78597770766160,980423896907046,10754940952651740,135521929778850952,1501817992511869280",
+    "name": "G.f. satisfies: A(x) = 1 + x*A(x)^5/A(-x).",
+    "comment": [
+        "More generally, if A(x) = 1 + x*A(x)^n/A(-x)",
+        "then A(x) - x*A(x)^n = 1 + x^2*[A(x)*A(-x)]^(n-1)",
+        "so that a bisection of A(x) equals a bisection of A(x)^n."
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) - x*A(x)^5 = 1 + x^2*[A(x)*A(-x)]^4.",
+        "G.f. satisfies:",
+        "_ A(x) = Sum_{n>=1} x^n * A(x)^(4*n)/A(-x)^n;",
+        "_ A(x) = exp( Sum_{n>=1} x^n/n * A(x)^(4*n)/A(-x)^n ). [From Paul D. Hanna, Sep 30 2011]"
+    ],
+    "example": [
+        "A bisection of g.f. A(x) equals a bisection of A(x)^5:",
+        "A(x) = 1 + x + 6*x^2 + 40*x^3 + 374*x^4 + 3215*x^5 + 34298*x^6 + 326360*x^7 +...",
+        "A(x)^5 = 1 + 5*x + 40*x^2 + 330*x^3 + 3215*x^4 + 30756*x^5 + 326360*x^6 +...",
+        "so that A(x) - x*A(x)^5 = 1 + x^2*[A(x)*A(-x)]^4, where",
+        "[A(x)*A(-x)]^4 = 1 + 44*x^2 + 3542*x^4 + 358468*x^6 + 40846025*x^8 + +...",
+        "A(x)*A(-x) = 1 + 11*x^2 + 704*x^4 + 65054*x^6 + 7062088*x^8 +...",
+        "Related expressions.",
+        "A(x) = 1 + x*A(x)^4/A(-x) + x^2*A(x)^8/A(-x)^2 + x^3*A(x)^12/A(-x)^3 +...",
+        "log(A(x)) = x*A(x)^4/A(-x) + x^2/2*A(x)^8/A(-x)^2*x^2 + x^3/3*A(x)^12/A(-x)^3 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=0,n,A=1+x*A^5/subst(A,x,-x));polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=sum(m=0,n,x^m*A^(4*m)/subst(A^m,x,-x+x*O(x^n))));polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=exp(sum(m=1,n,A^(4*m)*subst(A^-m,x,-x)*x^m/m)+x*O(x^n)));polcoeff(A,n)}"
+    ],
+    "xref": [
+        "Cf. A143339, A143340, A143341."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Aug 09 2008",
+    "references": 0,
+    "revision": 5,
+    "time": "2012-03-30T18:37:11-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

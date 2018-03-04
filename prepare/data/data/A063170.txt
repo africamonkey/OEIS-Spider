@@ -1,0 +1,66 @@
+{
+    "number": 63170,
+    "data": "1,2,10,78,824,10970,176112,3309110,71219584,1727242866,46602156800,1384438376222,44902138752000,1578690429731402,59805147699103744,2428475127395631750,105224992014096760832,4845866591896268695010,236356356027029797011456",
+    "name": "Schenker sums with n-th term.",
+    "comment": [
+        "Urn, n balls, with replacement: how many selections if we stop after a ball is chosen that was chosen already? Expected value is a(n)/n^n.",
+        "Conjectures: The exponent in the power of 2 in the prime factorization of a(n) (its 2-adic valuation) equals 1 if n is odd and equals n - A000120(n) if n is even. - _Gerald McGarvey_, Nov 17 2007, Jun 29 2012",
+        "Amdeberhan, Callan, and Moll (2012) have proved McGarvey's conjectures. - _Jonathan Sondow_, Jul 16 2012"
+    ],
+    "reference": [
+        "D. E. Knuth, The Art of Computer Programming, 3rd ed. 1997, Vol. 1, Addison-Wesley, p. 123, Exercise Section 1.2.11.3 18."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A063170/b063170.txt\">Table of n, a(n) for n = 0..385</a>",
+        "T. Amdeberhan, D. Callan, and V. Moll, <a href=\"http://dauns.math.tulane.edu/~vhm/papers_html/schenker.pdf\">p-adic analysis and combinatorics of truncated exponential sums</a>, preprint, 2012.",
+        "T. Amdeberhan, D. Callan and V. Moll, <a href=\"http://www.emis.de/journals/INTEGERS/papers/n21/n21.Abstract.html\">Valuations and combinatorics of truncated exponential sums</a>, INTEGERS 13 (2013), #A21.",
+        "Helmut Prodinger, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v20i3p7/0\">An identity conjectured by Lacasse via the tree function</a>, Electronic Journal of Combinatorics, 20(3) (2013), #P7.",
+        "David M. Smith, Geoffrey Smith, <a href=\"https://doi.org/10.1109/CSF.2017.18\">Tight Bounds on Information Leakage from Repeated Independent Runs</a>, 2017 IEEE 30th Computer Security Foundations Symposium (CSF).",
+        "Marijke van Gans, <a href=\"http://www.silicon-alley.com/amp/cbi/seq/schenker.html\">Schenker sums</a>",
+        "Eric Weisstein, <a href=\"http://mathworld.wolfram.com/ExponentialSumFunction.html\">Exponential Sum Function</a>."
+    ],
+    "formula": [
+        "a(n) = Sum_k=0..n} n^k n!/k!.",
+        "a(n)/n! = Sum_{k=0..n} n^k/k!. (first n+1 terms of e^n power series).",
+        "a(n) = A063169(n) + n^n.",
+        "E.g.f.: 1/(1-T)^2, where T=T(x) is Euler's tree function (see A000169).",
+        "E.g.f.: 1 / (1 - F), where F = F(x) is the e.g.f. of A003308. - _Michael Somos_, May 27 2012",
+        "a(n) = Sum_{k=0..n} binomial(n,k)*(n+k)^k*(-k)^(n-k). - _Vladeta Jovovic_, Oct 11 2007",
+        "Asymptotics of the coefficients: sqrt(Pi*n/2)*n^n. - _N-E. Fahssi_, Jan 25 2008",
+        "a(n) = A120266(n)*A214402(n) for n > 0. - _Jonathan Sondow_, Jul 16 2012",
+        "a(n) = Integral_{0..infty} exp(-x) * (n + x)^n dx. - _Michael Somos_, May 18 2004",
+        "a(n) = Integral_{0..infty} exp(-x)*(1+x/n)^n dx * n^n = A090878(n)/A036505(n-1) * n^n. - _Gerald McGarvey_, Nov 17 2007",
+        "EXP-CONV transform of A000312. - _Tilman Neumann_, Dec 13 2008",
+        "a(n) = n! * [x^n] exp(n*x)/(1 - x). - _Ilya Gutkovskiy_, Sep 23 2017"
+    ],
+    "example": [
+        "E.g. a(4) = (1*2*3*4) + 4*(2*3*4) + 4*4*(3*4) + 4*4*4*(4) + 4*4*4*4",
+        "G.f. = 1 + 2*x + 10*x^2 + 78*x^3 + 824*x^4 + 10970*x^5 + 176112*x^6 + ..."
+    ],
+    "maple": [
+        "seq(simplify(GAMMA(n+1,n)*exp(n)),n=0..20); # _Vladeta Jovovic_, Jul 21 2005"
+    ],
+    "mathematica": [
+        "a[n_] := Round[ Gamma[n+1, n]*Exp[n]]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Feb 16 2012, after _Vladeta Jovovic_ *)",
+        "a[ n_] := If[ n < 1, Boole[n == 0], n! Sum[ n^k / k!, {k, 0, n}]]; (* _Michael Somos_, Jun 05 2014 *)",
+        "a[ n_] := If[ n < 0, 0, n! Normal[ Exp[x] + x O[x]^n] /. x -> n]; (* _Michael Somos_, Jun 05 2014 *)"
+    ],
+    "program": [
+        "(UBASIC) 10 for N=1 to 42: T=N^N: S=T",
+        "(UBASIC) 20 for K=N to 1 step -1: T/=N: T*=K: S+=T: next K",
+        "(UBASIC) 30 print N,S: next N",
+        "(PARI) {a(n) = if( n<0, 0, n! * sum( k=0, n, n^k / k!))};",
+        "(PARI) {a(n) = sum( k=0, n, binomial(n, k) * k^k * (n - k)^(n - k))}; /* _Michael Somos_, Jun 09 2004 */",
+        "(PARI) for(n=0,17,print1(round(intnum(x=0,[oo,1],exp(-x)*(n+x)^n)),\", \")) \\\\ _Gerald McGarvey_, Nov 17 2007"
+    ],
+    "xref": [
+        "Cf. A134095, A090878, A036505, A120266, A214402, A219546 (Schenker primes)."
+    ],
+    "keyword": "nonn,easy,changed",
+    "offset": "0,2",
+    "author": "Marijke van Gans (marijke(AT)maxwellian.demon.co.uk)",
+    "references": 16,
+    "revision": 69,
+    "time": "2018-03-02T22:13:18-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

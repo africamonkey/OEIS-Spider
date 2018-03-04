@@ -1,0 +1,40 @@
+{
+    "number": 194231,
+    "data": "561,1103,2465,2819,6599,29339,41039,52631,62743,172079,188459,278543,340559,488879,656599,656601,670031,1033667,1909001,2100899,3146219,5048999,6049679,8719307,10024559,10402559,10877579,11119103,12261059,14913989,15247619",
+    "name": "Numbers n such that at least one of n and n+2 is composite, while for every b coprime to n*(n+2), b^(n-1)==1 (mod n) and b^(n+1)==1 (mod n+2).",
+    "comment": [
+        "These might be called \"Carmichael pseudo-twin-primes\"."
+    ],
+    "formula": [
+        "For every b coprime to a(n)*(a(n)+2), 2*b^(a(n)+1)==(b^2-1)*(a(n)+2) (mod a(n)*(a(n)+2)). Conversely (_Max Alekseyev_), if for every b coprime to N*(N+2), 2*b^(N+1)==(b^2-1)*(N+2) (mod N*(N+2)), then N is in the sequence. - Vladimir Shevelev, Oct 14 2011"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "ic:= proc(n) local p;",
+        "       if not issqrfree(n) then false",
+        "     else for p in factorset(n) do",
+        "            if irem (n-1, p-1)<>0 then return false fi",
+        "          od; true",
+        "       fi",
+        "     end:",
+        "a:= proc(n) option remember; local k;",
+        "      for k from 2 +`if`(n=1, 1, a(n-1)) by 2 while",
+        "        isprime(k) and isprime(k+2) or not (ic(k) and ic(k+2))",
+        "      do od; k",
+        "    end:",
+        "seq(a(n), n=1..10);  # _Alois P. Heinz_, Oct 12 2011"
+    ],
+    "mathematica": [
+        "terms = 31; bMax = 20(* sufficient for 31 terms *); coprimes[n_] := Select[ Range[bMax], CoprimeQ[#, n]&]; Reap[For[n = m = 1, m <= terms, n += 2, If[CompositeQ[n] || CompositeQ[n+2], If[AllTrue[coprimes[n(n+2)], PowerMod[#, n-1, n] == 1 && PowerMod[#, n+1, n+2] == 1&], Print[\"a(\", m, \") = \", n]; Sow[n]; m++]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Mar 28 2017 *)"
+    ],
+    "xref": [
+        "Cf. A002997, A001567, A141232."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladimir Shevelev_, Oct 12 2011",
+    "references": 1,
+    "revision": 39,
+    "time": "2017-03-28T08:17:48-04:00",
+    "created": "2011-10-13T13:12:12-04:00"
+}

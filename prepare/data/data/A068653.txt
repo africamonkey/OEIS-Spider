@@ -1,0 +1,49 @@
+{
+    "number": 68653,
+    "data": "14,16,20,30,32,34,35,38,50,70,74,76,91,92,95,98,110,118,119,133,170,176,194,310,316,398,710,712,715,730,731,736,772,775,778,779,790,793,794,914,935,970,973,1118,1130,1195,1312,1336,1370,1774,1937,3110,3112",
+    "name": "Composite number such that every cyclic permutation (other than the number itself) gives a prime.",
+    "comment": [
+        "Single digit numbers are excluded. There are only 144 terms up through 10 million. - _Harvey P. Dale_, Sep 12 2014"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A068653/b068653.txt\">Table of n, a(n) for n = 1..148</a> a(n) for n = 1..144 from Harvey P. Dale."
+    ],
+    "example": [
+        "176 is a member as the two cyclic permutations other than the number itself 761 and 617 are primes."
+    ],
+    "mathematica": [
+        "LiQ[n_] := Module[{s=0}, li1=IntegerDigits[n]; k=Length[li1]; t={li1}; Do[li1=RotateLeft[li1]; AppendTo[t,li1], {i,k-1}]; If[Length[Select[Table[FromDigits[p],{p,t}], PrimeQ]] == k-1, s=1]; s]; t1={}; Do[If[!PrimeQ[i] && LiQ[i]==1, AppendTo[t1,i]], {i,10,3112}]; t1 (* _Jayanta Basu_, May 03 2013 *)",
+        "cppQ[n_]:=Module[{c=FromDigits/@NestList[RotateLeft[#]&,IntegerDigits[n], IntegerLength[ n]-1]},CompositeQ[c[[1]]]&&AllTrue[Rest[c],PrimeQ]]; Select[ Range[10,5000],cppQ] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Sep 12 2014 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "from sympy import isprime",
+        "A068653_list = []",
+        "for l in range(1,9):",
+        "    for m in product(('1379' if l > 1 else '123579'),repeat=l):",
+        "        for d in '0123456789':",
+        "            s = ''.join(m)+d",
+        "            n = int(s)",
+        "            if not isprime(n):",
+        "                for k in range(len(s)-1):",
+        "                    s = s[1:]+s[0]",
+        "                    if not isprime(int(s)):",
+        "                        break",
+        "                else:",
+        "                    A068653_list.append(n) # _Chai Wah Wu_, May 06 2017"
+    ],
+    "xref": [
+        "Cf. A003459, A068652."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Feb 28 2002",
+    "ext": [
+        "Corrected and extended by Larry Reeves (larryr(AT)acm.org), Jun 21 2002"
+    ],
+    "references": 6,
+    "revision": 20,
+    "time": "2017-05-07T00:44:35-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 88932,
+    "data": "1,2,4,6,10,14,20,26,36,46,60,74,94,114,140,166,201,236,280,324,380,436,504,572,656,740,840,940,1060,1180,1320,1460,1625,1790,1980,2170,2390,2610,2860,3110,3396,3682,4004,4326,4690,5054,5460,5866,6321,6776,7280,7784",
+    "name": "G.f.: 1/((1-x)^2*(1-x^2)*(1-x^4)*(1-x^8)).",
+    "comment": [
+        "a(n) is the number of partitions of 2*n into powers of 2 less than or equal to 2^4.  First differs from A000123 at n=16. - _Alois P. Heinz_, Apr 02 2012"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A088932/b088932.txt\">Table of n, a(n) for n = 0..2000</a>",
+        "N. J. A. Sloane and J. A. Sellers, <a href=\"http://arXiv.org/abs/math.CO/0312418\">On non-squashing partitions</a>, Discrete Math., 294 (2005), 259-274.",
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (2,0,-2,2,-2,0,2,0,-2,0,2,-2,2,0,-2,1)."
+    ],
+    "maple": [
+        "f := proc(n,k) option remember; if k > n then RETURN(0); fi; if k= 0 then if n=0 then RETURN(1) else RETURN(0); fi; fi; if k = 1 then RETURN(1); fi; if n mod 2 = 1 then RETURN(f(n-1,k)); fi; f(n-1,k)+f(n/2,k-1); end; # present sequence is f(2m,5)",
+        "GFF := k->x^(2^(k-2))/((1-x)*mul((1-x^(2^j)),j=0..k-2)); # present g.f. is GFF(5)/x^8",
+        "a:= proc(n) local m, r; m := iquo(n, 8, 'r'); r:= r+1; [1, 2, 4, 6, 10, 14, 20, 26][r]+ (((8/3*m +(4*r +28)/3)*m +[0, 4, 9, 14, 20, 26, 33, 40][r] +43/3)*m +[22, 33, 50, 67, 93, 119, 154, 189][r]/3)*m end: seq(a(n), n=0..60); # _Alois P. Heinz_, Apr 17 2009"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/((1-x)^2(1-x^2)(1-x^4)(1-x^8)), {x,0,60}], x]  (* _Harvey P. Dale_, Apr 22 2011 *)"
+    ],
+    "program": [
+        "(PARI) Vec(1/((1-x)^2*(1-x^2)*(1-x^4)*(1-x^8))+O(x^99)) \\\\ _Charles R Greathouse IV_, Sep 03 2011"
+    ],
+    "xref": [
+        "See A000027, A002620, A008804, A088954, A000123 for similar sequences.",
+        "Column k=4 of A181322."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Dec 02 2003",
+    "references": 4,
+    "revision": 24,
+    "time": "2015-10-09T17:09:24-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

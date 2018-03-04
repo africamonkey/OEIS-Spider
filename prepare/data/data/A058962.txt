@@ -1,0 +1,49 @@
+{
+    "number": 58962,
+    "data": "1,12,80,448,2304,11264,53248,245760,1114112,4980736,22020096,96468992,419430400,1811939328,7784628224,33285996544,141733920768,601295421440,2542620639232,10720238370816,45079976738816,189115999977472,791648371998720",
+    "name": "a(n) = 2^(2*n)*(2*n+1).",
+    "comment": [
+        "Denominators in expansion of -1/2*i*Pi+i*arcsin((1+1/4*x^2)/(1-1/4*x^2)), where i=sqrt(-1); numerators are all 1.",
+        "Bisection of A001787. That is, a(n) = A001787(2n+1). - _Graeme McRae_, Jul 12 2006",
+        "Denominators of odd terms in expansion of 2*arctanh(s/2); numerators are all 1. - _Gerry Martens_, Jul 26 2015",
+        "Reciprocals of coefficients of Taylor series expansion of sinh(x/2) / (x/2). - _Tom Copeland_, Feb 03 2016"
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A058962/b058962.txt\">Table of n, a(n) for n = 0..200</a>",
+        "G. A. Campbell, <a href=\"https://archive.org/details/bstj1-2-1\">Physical theory of the electric wave-filter</a>, Bell Syst. Tech. J., 1 (1922), 1-32, see Eq. (15d). Also reprinted in M. E. Van Valkebburg, ed., Circuit Theory, Dowden, Hutchinson and Ross, 1974.",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (8,-16)."
+    ],
+    "formula": [
+        "Central terms of the triangle in A118413: a(n) = A118413(2*n+1,n+1). - _Reinhard Zumkeller_, Apr 27 2006",
+        "Sum_{n>=0} 1/a(n) = log(3). - _Jaume Oliver Lafont_, May 22 2007; corrected by _Jaume Oliver Lafont_, Jan 26 2009",
+        "a(n) = 4((2n+1)/(2n-1))*a(n-1) = 4*a(n-1)+2^(2n+1) = 8*a(n-1)-16*a(n-2). - _Jaume Oliver Lafont_, Dec 09 2008",
+        "G.f.: (1+4*x)/(1-4*x)^2. - _Jaume Oliver Lafont_, Jan 29 2009",
+        "E.g.f.: exp(4*x)*(1+8*x). - _Robert Israel_, Aug 10 2015",
+        "a(n) = -a(-1-n) * 4^(2*n+1) for all n in Z. - _Michael Somos_, Jun 18 2017"
+    ],
+    "mathematica": [
+        "a[n_] := 1/SeriesCoefficient[2 ArcTanh[s/2],{s,0,n}]",
+        "Table[a[n], {n, 1, 40, 2}] (* _Gerry Martens_, Jul 26 2015 *)",
+        "Table[2^(2 n) (2 n + 1), {n, 0, 40}] (* _Vincenzo Librandi_, Aug 08 2015 *)",
+        "a[ n_] := With[{m = 2 n + 2}, If[ n < 0, -a[-1 - n] 4^(m - 1), m! SeriesCoefficient[ x^2 D[x Sinc[I x]^2, x]/2, {x, 0, m}]]]; (* _Michael Somos_, Jun 18 2017 *)"
+    ],
+    "program": [
+        "(PARI) { for (n = 0, 200, write(\"b058962.txt\", n, \" \", 2^(2*n)*(2*n+1)); ) } \\\\ _Harry J. Smith_, Jun 24 2009",
+        "(PARI) first(m)=vector(m, n, n--; 2^(2*n)*(2*n+1)) /* _Anders Hellstr\u00f6m_, Aug 10 2015 */",
+        "(MAGMA) [2^(2*n)*(2*n+1) : n in [0..30]]; // _Wesley Ivan Hurt_, Aug 07 2015",
+        "(PARI) A058962(n)=2^(2*n)*(2*n+1) \\\\ _M. F. Hasler_, Aug 11 2015",
+        "(PARI) {a(n) = my(m = 2*n + 2); if( n<0, -a(-1 - n) * 4^(m - 1), m! * polcoeff( x^2 * deriv(x * sinc(I*x + x * O(x^m))^2, x) / 2, m))}; /* _Michael Somos_, Jun 18 2017 */"
+    ],
+    "xref": [
+        "Cf. A001787, A002391, A118413, A118415.",
+        "Cf. A154920. - _Jaume Oliver Lafont_, Jan 29 2009",
+        "Factor of the LS1[-2,n] matrix coefficients in A160487. - _Johannes W. Meijer_, May 24 2009"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Jan 13 2001",
+    "references": 17,
+    "revision": 56,
+    "time": "2017-07-14T05:38:30-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

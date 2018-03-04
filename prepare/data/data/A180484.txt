@@ -1,0 +1,45 @@
+{
+    "number": 180484,
+    "data": "1,2,3,4,5,6,7,8,9,11,12,15,24,36,111,112,115,128,132,135,144,175,212,216,224,312,315,384,432,612,624,672,735,816,1111,1112,1113,1114,1115,1116,1121,1122,1124,1125,1127,1128,1131,1134,1144,1161,1164,1176,1184",
+    "name": "Numbers n such that r*(n/k)^2 is an integer. n=(x_1 x_2 ... x_r) where x_i are digits of n, k = x_1 * x_2 * ... * x_r.",
+    "comment": [
+        "A007602 is a subsequence, with 1114 the first nonmember of A007602. [_D. S. McNeil_, Sep 09 2010]"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A180484/b180484.txt\">Table of n, a(n) for n = 1..19985</a>"
+    ],
+    "example": [
+        "n=36, r=2, 2*(36/3*6)^2=8, n=36 belongs to the sequence."
+    ],
+    "maple": [
+        "A055642 := proc(n) max(1, ilog10(n)+1) ; end proc:",
+        "A007954 := proc(n) mul(d, d= convert(n,base,10)) : end proc:",
+        "isA180484 := proc(n) r := A055642(n) ; k := A007954(n) ; if k <> 0 then type(r*n^2/k^2,'integer') ; else false; end if; end proc:",
+        "for n from 1 to 2200 do if isA180484(n) then printf(\"%d,\",n) ; end if; end do:",
+        "# _R. J. Mathar_, Sep 08 2010"
+    ],
+    "program": [
+        "(Python)",
+        "from gmpy2 import t_mod, mpz",
+        "from operator import mul",
+        "from functools import reduce",
+        "A180484 = [mpz(n) for n in (str(x) for x in range(1,10**9)) if not",
+        "..........(n.count('0') or t_mod(mpz(n)**2*len(n),",
+        "..........reduce(mul, (mpz(d) for d in n))**2))]",
+        "# _Chai Wah Wu_, Aug 26 2014"
+    ],
+    "xref": [
+        "Cf. A007602"
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,2",
+    "author": "_Ctibor O. Zizka_, Sep 07 2010",
+    "ext": [
+        "More terms from _R. J. Mathar_ and _D. S. McNeil_, Sep 08 2010",
+        "Updated an A-number in a comment _R. J. Mathar_, Oct 18 2010"
+    ],
+    "references": 2,
+    "revision": 17,
+    "time": "2014-08-27T16:28:58-04:00",
+    "created": "2010-09-12T03:00:00-04:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 156147,
+    "data": "1,1,6,58,5829,58292915,5829291479146458,58292914791464577914645739573229,5829291479146457791464573957322929146457395732288957322869786615",
+    "name": "a(n+1) = round( c(n)/2 ), where c(n) is the concatenation of all preceding terms a(1)...a(n) and a(1)=1.",
+    "comment": [
+        "Originally, round( c/2 ) was formulated as \"rank of c in the sequence of odd resp. even (positive) numbers\".",
+        "The sequence has some characteristics reminiscent of Thue-Morse type sequences. It \"converges\" to a non-periodic sequence of digits: all but the last digit of a given term will remain the initial digits of all subsequent terms. - _M. F. Hasler_",
+        "It's interesting that the number of digits of a(k) for k>2 equals to 2^(k-3). - _Farideh Firoozbakht_"
+    ],
+    "link": [
+        "M. F. Hasler et al., <a href=\"/A156147/b156147.txt\">Table of n, a(n) for n = 1..12</a>",
+        "E. Angelini, <a href=\"http://www.cetteadressecomportecinquantesignes.com/ThueMorseRank.htm\">Rang dans les Pairs/Impairs</a>",
+        "E. Angelini, <a href=\"/A156146/a156146.pdf\">Rang dans les Pairs/Impairs</a> [Cached copy, with permission]",
+        "E. Angelini et al., <a href=\"http://list.seqfan.eu/pipermail/seqfan/2009-February/000740.html\">Rank of n in the Odd/Even sequence</a> and follow-up messages on the SeqFan list, Feb 03 2009"
+    ],
+    "maple": [
+        "rank:= n-> `if`(irem(n,2)=0, n/2, (n+1)/2): a:= proc(n) option remember; if n=1 then 1 else rank(parse(cat(seq(a(j), j=1..n-1)))) fi end: seq(a(n), n=1..10);  # _Alois P. Heinz_"
+    ],
+    "mathematica": [
+        "a[1]=1; a[n_]:=a[n]=(v={};Do[v= Join[v,IntegerDigits[a[k]]],{k,n-1}]; Floor[(1+FromDigits[v])/2]) (* _Farideh Firoozbakht_ *)"
+    ],
+    "program": [
+        "(PARI) A156147(n)={local(a=1,t=1); while(n-->1,t=round(1/2*a=eval(Str(a,t))));t} /* _M. F. Hasler_ */"
+    ],
+    "xref": [
+        "Cf. A156146 (other starting values)."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,3",
+    "author": "_Eric Angelini_, _Alois P. Heinz_, _Farideh Firoozbakht_ and _M. F. Hasler_, Feb 04 2009",
+    "ext": [
+        "Typos fixed by _Charles R Greathouse IV_, Oct 28 2009"
+    ],
+    "references": 4,
+    "revision": 28,
+    "time": "2016-06-09T21:37:37-04:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

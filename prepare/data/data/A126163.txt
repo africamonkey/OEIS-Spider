@@ -1,0 +1,36 @@
+{
+    "number": 126163,
+    "data": "0,1,8,27,102,375,1134",
+    "name": "Number of super unitary amicable pairs (i,j) with i<j and i<=10^n.",
+    "link": [
+        "Weisstein, E., <a href=\"http://mathworld.wolfram.com/SuperUnitaryAmicablePair.html\">Super unitary amicable pairs</a>"
+    ],
+    "formula": [
+        "Integer pairs (m,n) with m<n and for which usigma(usigma(m))=usigma(usigma(n))=m+n."
+    ],
+    "example": [
+        "a(6)=375 because there are 375 super unitary (m,n) pairs with m<n and for which m<=10^6"
+    ],
+    "mathematica": [
+        "UnitaryDivisors[n_Integer?Positive] := Select[Divisors[n], GCD[ #, n/# ] == 1 \\ &];",
+        "UnitaryDivisorSum[n_Integer?Positive] := Plus @@ UnitaryDivisors[n];",
+        "f[ k_] := Nest[UnitaryDivisorSum, k, 2] - k;",
+        "g[ k_] := Nest[UnitaryDivisorSum, f[k], 2] - f[k];",
+        "m = 10^7;",
+        "data1 = Select[Range[m], g[ # ] == # &];",
+        "data2 = Nest[UnitaryDivisorSum, #, 2] - # & /@ data1;",
+        "data3 = Table[{data1[[k]], data2[[k]]}, {k, 1, Length[data1]}];",
+        "data4 = DeleteCases[Table[If[Nest[UnitaryDivisorSum, First[data3[[k]]], 2] == Nest[UnitaryDivisorSum, Last[data3[[k]]], 2] \\ && ! First[data3[[k]]] >= Last[data3[[k]]], data3[[k]], 0], {k, 1, Length[data3]}], 0];",
+        "data5 = Table[Length[Select[data4, First[ # ] < 10^k \\ &]], {k, 1, 7}]"
+    ],
+    "xref": [
+        "Cf. A045613, A045614."
+    ],
+    "keyword": "hard,nonn",
+    "offset": "1,3",
+    "author": "_Ant King_, Dec 20 2006",
+    "references": 0,
+    "revision": 3,
+    "time": "2012-03-30T18:41:04-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

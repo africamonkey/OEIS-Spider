@@ -1,0 +1,40 @@
+{
+    "number": 243996,
+    "data": "7,9,20,25,80,143,825,3117,3216,22774,52026,55804,138276,187733,228384,265545,320766,549540,830814,839784,901376,1293552,1315776,2635866,6771114,11126800,12087848,24351460,49382242,52344292,60063744,65980038,78279016,97638080",
+    "name": "Numbers n such that phi(sigma*(n)) = sigma*(phi(n)), where sigma*(n) is the sum of anti-divisors of n and phi(n) is the Euler totient function.",
+    "comment": [
+        "a(70) > 10^10. - _Hiroaki Yamanouchi_, Sep 28 2015"
+    ],
+    "link": [
+        "Hiroaki Yamanouchi, <a href=\"/A243996/b243996.txt\">Table of n, a(n) for n = 1..69</a>"
+    ],
+    "example": [
+        "sigma*(phi(25)) = sigma*(20) = 24, phi(sigma*(25)) = phi(39) = 24."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,b,c,d,j,k,n;",
+        "for n from 1 to q do",
+        "k:=0; j:=n; while j mod 2<>1 do k:=k+1; j:=j/2; od;",
+        "a:=sigma(2*n+1)+sigma(2*n-1)+sigma(n/2^k)*2^(k+1)-6*n-2;",
+        "k:=0; c:=phi(n); j:=phi(n); while j mod 2<>1 do k:=k+1; j:=j/2; od;",
+        "b:=sigma(2*c+1)+sigma(2*c-1)+sigma(c/2^k)*2^(k+1)-6*c-2;",
+        "if b=phi(a) then print(n); fi; od; end: P(10^10);"
+    ],
+    "mathematica": [
+        "antiDivisors[n_] := Select[ Union[ Join[ Select[ Divisors[2 n - 1], OddQ[#] && # != 1 &], Select[ Divisors[ 2n + 1], OddQ[#] && # != 1 &], 2n/Select[ Divisors[ 2n], OddQ[#] && # != 1 &]]], # < n &]; fQ[n_] := EulerPhi@ Total@ antiDivisors@ n == Total@ antiDivisors@ EulerPhi@ n; k = 3; lst = {}; While[k < 10000001, If[ fQ@ k, AppendTo[lst, k]]; k++]; lst (* _Robert G. Wilson v_, Jun 21 2014 *)"
+    ],
+    "xref": [
+        "Cf. A000203, A066417, A230373, A033632."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jun 18 2014",
+    "ext": [
+        "a(22)-a(25) from _Robert G. Wilson v_, Jun 21 2014",
+        "a(26)-a(34) from _Hiroaki Yamanouchi_, Sep 28 2015"
+    ],
+    "references": 1,
+    "revision": 22,
+    "time": "2015-09-28T03:31:24-04:00",
+    "created": "2014-06-22T02:08:48-04:00"
+}

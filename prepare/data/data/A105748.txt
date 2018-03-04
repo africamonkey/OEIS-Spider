@@ -1,0 +1,45 @@
+{
+    "number": 105748,
+    "data": "1,3,10,47,313,2744,29751,383273,5713110,96673861,1830257967,38326484944,879473289521,21944639630923,591545277653354,17131028946645255,530424623323416617,17485652721425863464,611431929749388274471,22604399407882099928577",
+    "name": "Number of ways to use the elements of {1,..,k}, 0<=k<=2n, once each to form a collection of n (possibly empty) sets, each with at most 2 elements.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A105748/b105748.txt\">Table of n, a(n) for n = 0..400</a>",
+        "R. A. Proctor, <a href=\"http://arXiv.org/abs/math.CO/0606404\">Let's Expand Rota's Twelvefold Way for Counting Partitions!</a>, arXiv:math.CO.0606404.",
+        "<a href=\"/index/Par#partN\">Index entries for related partition-counting sequences</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{0<=i<=k<=n} (k+i)!/i!/(k-i)!/2^i.",
+        "G.f.: 1/U(0)  where U(k)= 1 - 3*x + x^2 - x*4*k - x^2*(2*k+1)*(2*k+2)/U(k+1) ; (continued fraction, 1-step). - _Sergei N. Gladkovskii_, Oct 06 2012",
+        "G.f.: 1/(1-x)/Q(0), where Q(k)= 1 - x - x*(k+1)/Q(k+1); (continued fraction). - _Sergei N. Gladkovskii_, May 19 2013",
+        "a(n) = 2*n*a(n-1) -(2*n-2)*a(n-2) -a(n-3) for n>2. - _Alois P. Heinz_, Mar 11 2015"
+    ],
+    "example": [
+        "a(2) = 10 = |{ {{},{}}, {{},{1}}, {{},{1,2}}, {{1},{2}}, {{1},{2,3}}, {{2},{1,3}}, {{3},{1,2}}, {{1,2},{3,4}}, {{1,3},{2,4}}, {{1,4},{2,3}} }|."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<3, [1, 3, 10][n+1],",
+        "      2*n*a(n-1)-(2*n-2)*a(n-2)-a(n-3))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Mar 11 2015"
+    ],
+    "mathematica": [
+        "Sum[(k+i)!/i!/(k-i)!/2^i, {k, 0, n}, {i, 0, k}]",
+        "(* Second program: *)",
+        "a[n_] := E*Sqrt[2/Pi]*Sum[BesselK[k + 1/2, 1], {k, 0, n}]; Table[a[n] // Round, {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Jul 15 2017 *)"
+    ],
+    "program": [
+        "(PARI) A105748(n) = sum(k=0,n,sum(i=0,k, binomial(k+i,k-i)*binomial(2*i,i)*i!>>i))  \\\\ _M. F. Hasler_, Oct 09 2012"
+    ],
+    "xref": [
+        "First differences: A001515.",
+        "Replacing \"collection\" by \"sequence\" gives A003011.",
+        "Replacing \"sets\" by \"lists\" gives A105747."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "Robert A. Proctor (www.math.unc.edu/Faculty/rap/), Apr 18 2005",
+    "references": 4,
+    "revision": 26,
+    "time": "2017-07-15T11:07:29-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

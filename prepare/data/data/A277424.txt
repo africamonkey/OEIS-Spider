@@ -1,0 +1,39 @@
+{
+    "number": 277424,
+    "data": "1,5,39,379,4457,61503,974107,17412317,346662981,7605810685,182298744203,4738700778123,132767583248917,3988244997744743,127859570155253607,4357113615504651565,157266354405499307369,5993377455733610208885,240479249123008267155343",
+    "name": "Total number of nodes summed over all self-avoiding planar walks starting at (0,0), ending at (n,0), remaining in the first quadrant and using steps (0,1), (1,0), (1,1), (-1,1), and (1,-1).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A277424/b277424.txt\">Table of n, a(n) for n = 0..400</a>"
+    ],
+    "formula": [
+        "From _Vaclav Kotesovec_, Oct 14 2016: (Start)",
+        "Recurrence: (n^3 + n^2 - 6*n + 1)*a(n) = (4*n^4 + 6*n^3 - 28*n^2 + 3*n + 4)*a(n-1) - (4*n^5 + 2*n^4 - 42*n^3 + 50*n^2 - 13)*a(n-2) - (n-2)*(4*n^4 + 8*n^3 - 34*n^2 - n + 16)*a(n-3) - (n-3)*(n-2)*(n^3 + 4*n^2 - n - 3)*a(n-4).",
+        "a(n) ~ sqrt(Pi) * 2^(n+3/2) * n^(n+11/4) / (3 * Gamma(1/4) * exp(n+1/4)).",
+        "(End)"
+    ],
+    "maple": [
+        "b:= proc(x, y, t) option remember; `if`(x<0 or y<0, 0,",
+        "      `if`(x=0 and y=0, [1$2], (p-> p+ [0, p[1]])(",
+        "       b(x-1, y, 0)+ b(x, y-1, 0)+ b(x-1, y-1, 0)+",
+        "      `if`(t<>2, b(x+1, y-1, 1), 0)+",
+        "      `if`(t<>1, b(x-1, y+1, 2), 0))))",
+        "    end:",
+        "a:= n-> b(n, 0$2)[2]:",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[x_, y_, t_] := b[x, y, t] = If[x < 0 || y < 0, 0, If[x == 0 && y == 0, {1, 1}, Function[p, p + {0, p[[1]]}][b[x - 1, y, 0] + b[x, y - 1, 0] + b[x - 1, y - 1, 0] + If[t != 2, b[x + 1, y - 1, 1], 0] + If[t != 1, b[x - 1, y + 1, 2], 0]]]];",
+        "a[n_] := b[n, 0, 0][[2]];",
+        "Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Jun 19 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A277358, A284231, A285673."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Oct 14 2016",
+    "references": 4,
+    "revision": 23,
+    "time": "2017-06-19T08:20:11-04:00",
+    "created": "2016-10-14T14:56:49-04:00"
+}

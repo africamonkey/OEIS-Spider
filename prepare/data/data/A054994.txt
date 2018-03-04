@@ -1,0 +1,59 @@
+{
+    "number": 54994,
+    "data": "1,5,25,65,125,325,625,1105,1625,3125,4225,5525,8125,15625,21125,27625,32045,40625,71825,78125,105625,138125,160225,203125,274625,359125,390625,528125,690625,801125,1015625,1185665,1221025,1373125,1795625",
+    "name": "Numbers of the form (q1^b1)(q2^b2)(q3^b3)(q4^b4)(q5^b5)... where q1=5, q2=13, q3=17, q4=29, q5=37, ... [A002144] and b1>=b2>=b3>=b4>=b5...",
+    "comment": [
+        "This sequence is related to Pythagorean triples regarding the number of hypotenuses which are in a particular number of total Pythagorean triples and a particular number of primitive Pythagorean triples.",
+        "Least integer \"mod 4 prime signature\" values that are the hypotenuse of at least one primitive Pythagorean triple - _Ray Chandler_, Aug 26 2004",
+        "See A097751 for definition of \"mod 4 prime signature\"; terms of A097752 with all prime factors of form 4k+1."
+    ],
+    "link": [
+        "Ray Chandler, <a href=\"/A054994/b054994.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PythagoreanTriple.html\">Pythagorean Triple</a>"
+    ],
+    "example": [
+        "1=5^0, 5=5^1, 25=5^2, 65=(5)(13), 125=5^3, 325=(5^2)(13), 625=5^4, etc."
+    ],
+    "mathematica": [
+        "maxTerm = 10^15;(* this limit gives ~ 500 terms *) maxNumberOfExponents = 9;(* this limit has to be increased until the number of reaped terms no longer changes *) bmax = Ceiling[ Log[ maxTerm]/Log[q]]; q = Reap[For[k = 0 ; cnt = 0, cnt <= maxNumberOfExponents, k++, If[PrimeQ[4*k + 1], Sow[4*k + 1]; cnt++]]][[2, 1]]; Clear[b]; b[maxNumberOfExponents + 1] = 0; iter = Sequence @@ Table[{b[k], b[k + 1], bmax[[k]]}, {k, maxNumberOfExponents, 1, -1}]; Reap[ Do[an = Product[q[[k]]^b[k], {k, 1, maxNumberOfExponents}]; If[an <= maxTerm, Print[an]; Sow[an]], Evaluate[iter]]][[2, 1]] // Flatten // Union (* _Jean-Fran\u00e7ois Alcover_, Jan 18 2013 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=",
+        "{",
+        "  my(u=[1], v=List(), w=v, pr, t=1);",
+        "  forprime(p=5,,",
+        "    if(p%4>1, next);",
+        "    t*=p;",
+        "    if(t>lim, break);",
+        "    listput(w,t)",
+        "  );",
+        "  for(i=1,#w,",
+        "    pr=1;",
+        "    for(e=1,logint(lim\\=1,w[i]),",
+        "      pr*=w[i];",
+        "      for(j=1,#u,",
+        "        t=pr*u[j];",
+        "        if(t>lim, break);",
+        "        listput(v,t)",
+        "      )",
+        "    );",
+        "    if(w[i]^2<lim, u=Set(concat(Vec(v),u)); v=List());",
+        "  );",
+        "  Set(concat(Vec(v),u));",
+        "} \\\\ _Charles R Greathouse IV_, Dec 11 2016"
+    ],
+    "xref": [
+        "Subsequence of A097752.",
+        "Cf. A002144, A097751-A097756."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "Bernard Altschuler (Altschuler_B(AT)bls.gov), May 30 2000",
+    "ext": [
+        "More terms from _Henry Bottomley_, Mar 14 2001"
+    ],
+    "references": 9,
+    "revision": 22,
+    "time": "2016-12-11T02:29:18-05:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

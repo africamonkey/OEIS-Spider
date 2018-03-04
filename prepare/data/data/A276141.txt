@@ -1,0 +1,36 @@
+{
+    "number": 276141,
+    "data": "2,3,5,7,17,19,23,37,53,61,71,97,113,127,167,223,227,229,233,277,353,397,419,421,449,463,503,547,563,571,599,613,641,691,701,709,719,769,773,787,797,823,827,877,929,1021,1187,1249,1409,1423,1427,1429",
+    "name": "a(1)=2; thereafter a(n) is the least prime > a(n-1) such that 2*a(n-1)+a(n) is a prime.",
+    "comment": [
+        "Corresponding values of p: 7, 11, 17, 31, 53, 61, 83, 127, 167, 193, 239, 307, 353, 421, 557, 673, 683, 691, 743, 907, 1103, ...",
+        "a(n) == (-1)^n (mod 3) for n <> 2. - _Robert Israel_, Sep 02 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A276141/b276141.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "A[1]:= 2:",
+        "for n from 2 to 100 do",
+        "  p:= nextprime(A[n-1]);",
+        "  while not isprime(2*A[n-1]+p) do p:= nextprime(p) od:",
+        "  A[n]:= p",
+        "od:",
+        "seq(A[i],i=1..100); # _Robert Israel_, Sep 02 2016"
+    ],
+    "mathematica": [
+        "s={2,3}; a=3; Do[k=2; While[!PrimeQ[2a+a+k]||!PrimeQ[a+k],k=2+k]; a=a+k; AppendTo[s,a],{50}]; s"
+    ],
+    "program": [
+        "(PARI) terms(n) = my(x=2, i=0); while(1, if(n==0, break({2}), print1(x, \", \"); if(n==1, break({2}), forprime(p=x+1, , if(i==n-1, break({2})); if(ispseudoprime(2*x+p), print1(p, \", \"); x=p; i++)))))",
+        "/* The following function call prints the initial 50 terms */",
+        "terms(50) \\\\ _Felix Fr\u00f6hlich_, Aug 22 2016"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, Aug 22 2016",
+    "references": 1,
+    "revision": 17,
+    "time": "2016-09-02T20:36:35-04:00",
+    "created": "2016-08-23T22:21:31-04:00"
+}

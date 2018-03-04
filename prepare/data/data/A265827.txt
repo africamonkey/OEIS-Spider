@@ -1,0 +1,32 @@
+{
+    "number": 265827,
+    "data": "63973,126217,748657,4463641,6054985,9890881,10837321,19384289,26921089,31146661,34901461,41471521,53711113,76595761,140241361,144218341,150846961,151530401,169057801,171454321,171679561,172430401,228842209,277241401,280761481",
+    "name": "Carmichael numbers n such that n-1 is not a practical number.",
+    "comment": [
+        "Most Carmichael numbers (odd) have practical number companions (even) that are 1 less. This sequence identifies the exceptions. However Carmichael numbers appear to have no practical number companions that are 1 more."
+    ],
+    "example": [
+        "a(1)=63973=7*13*19*37. It is a Carmichael number because its prime factors less 1 are 6, 12, 18, 36 and this set are all divisors of 63973-1=2^2*3^2*1777 that is not a practical number. It is the first such occurrence."
+    ],
+    "mathematica": [
+        "CarmichaelQ[n_] := If[Mod[n, CarmichaelLambda[n]]==1&&!PrimeQ[n], True, False]; PracticalQ[n_] := Module[{f, p, e, prod=1, ok=True}, If[n<1||(n>1&&OddQ[n]), False, If[n==1, True, f=FactorInteger[n]; {p, e}=Transpose[f]; Do[If[p[[i]]>1+DivisorSigma[1, prod], ok=False; Break[]]; prod=prod*p[[i]]^e[[i]], {i, Length[p]}]; ok]]]; Select[2Range[10^7]+1, CarmichaelQ[#]&&!PracticalQ[#-1] &]"
+    ],
+    "program": [
+        "(PARI) is_c(n) = {my(f); bittest(n, 0) && !for(i=1, #f=factor(n)~, (f[2, i]==1 && n%(f[1, i]-1)==1)||return) && #f>1}",
+        "isok(n) = bittest(n, 0) && return(n==1); my(P=1); n && !for(i=2, #n=factor(n)~, n[1, i]>1+(P*=sigma(n[1, i-1]^n[2, i-1])) && return);",
+        "forcomposite(n=561, 1e10, if(is_c(n) && !isok(n-1), print1(n, \", \"))) \\\\ _Altug Alkan_, Dec 16 2015"
+    ],
+    "xref": [
+        "Cf. A002997, A261614."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Frank M Jackson_, Dec 16 2015",
+    "ext": [
+        "More terms from _Altug Alkan_, Dec 16 2015"
+    ],
+    "references": 0,
+    "revision": 13,
+    "time": "2016-01-09T14:42:57-05:00",
+    "created": "2016-01-09T14:42:57-05:00"
+}

@@ -1,0 +1,56 @@
+{
+    "number": 267755,
+    "data": "1,3,4,5,9,12,14,15,16,20,23,25,26,27,31,34,36,37,38,42,45,47,48,49,53,56,58,59,60,64,67,69,70,71,75,78,80,81,82,86,89,91,92,93,97,100,102,103,104,108,111,113,114,115,119,122,124,125,126,130,133,135,136,137",
+    "name": "Expansion of (1 + 2*x + x^2 + x^3 + 4*x^4 + 2*x^5)/(1 - x - x^5 + x^6).",
+    "comment": [
+        "(m^k-1)/11 is a nonnegative integer when",
+        ". m is a member of this sequence and k is an odd multiple of 5 (A017329),",
+        ". m is a member of A017401 and k is odd but not multiple of 5 (A045572),",
+        ". m is a member of A175885 and k is even but not multiple of 5 (A217562),",
+        ". m is a member of A160542 and k is a positive multiple of 10 (A008592),",
+        "apart from the trivial case in which k=0.",
+        "Also, numbers that are congruent to {1, 3, 4, 5, 9} mod 11. Therefore, the product of two terms belongs to the sequence.",
+        "Union of this sequence and A267541 is A160542.",
+        "a(n) is prime for n = 1, 3, 10, 14, 17, 21, 24, 27, 30, 33, 40, 44, 47, ..."
+    ],
+    "link": [
+        "Bruno Berselli, <a href=\"/A267755/b267755.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,0,0,1,-1)."
+    ],
+    "formula": [
+        "G.f.: (1 + 2*x + x^2 + x^3 + 4*x^4 + 2*x^5)/((1 - x)^2*(1 + x + x^2 + x^3 + x^4)).",
+        "a(n) = a(n-1) + a(n-5) - a(n-6).",
+        "a(-n) = -A267541(n-1)."
+    ],
+    "example": [
+        "From the linear recurrence:",
+        "(-A267541) ..., -13, -10, -8, -7, -6, -2, 1, 3, 4, 5, 9, 12, ... (A267755)"
+    ],
+    "maple": [
+        "gf := (1 + 2*x + x^2 + x^3 + 4*x^4 + 2*x^5)/(1 - x - x^5 + x^6): deg := 64: series(gf, x, deg): seq(coeff(%, x, n), n=0..deg-1); # _Peter Luschny_, Jan 21 2016"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1 + 2 x + x^2 + x^3 + 4 x^4 + 2 x^5)/(1 - x - x^5 + x^6), {x, 0, 70}], x]",
+        "LinearRecurrence[{1, 0, 0, 0, 1, -1}, {1, 3, 4, 5, 9, 12}, 70]",
+        "Select[Range[140], MemberQ[{1, 3, 4, 5, 9}, Mod[#, 11]]&]"
+    ],
+    "program": [
+        "(PARI) Vec((1+2*x+x^2+x^3+4*x^4+2*x^5)/(1-x-x^5+x^6)+O(x^70))",
+        "(MAGMA) m:=70; R<x>:=PowerSeriesRing(Integers(), m); Coefficients(R!((1+2*x+x^2+x^3+4*x^4+2*x^5)/(1-x-x^5+x^6)));",
+        "(Sage)",
+        "gf = (1 + 2*x + x^2 + x^3 + 4*x^4 + 2*x^5)/(1 - x - x^5 + x^6)",
+        "print taylor(gf, x, 0, 63).list() # _Peter Luschny_, Jan 21 2016",
+        "(MAGMA) I:=[1,3,4,5,9,12]; [n le 6 select I[n] else Self(n-1)+Self(n-5)-Self(n-6): n in [1..70]]; // _Vincenzo Librandi_, Jan 21 2016"
+    ],
+    "xref": [
+        "Cf. A160542, A017329, A267541.",
+        "Related sequences (see the first comment): A017401, A160542, A175885."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Bruno Berselli_, Jan 20 2016",
+    "references": 2,
+    "revision": 23,
+    "time": "2016-01-22T11:14:33-05:00",
+    "created": "2016-01-22T09:48:58-05:00"
+}

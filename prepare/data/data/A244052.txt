@@ -1,0 +1,35 @@
+{
+    "number": 244052,
+    "data": "1,2,4,6,10,12,18,24,30,42,60,84,90,120,150,180,210,330,390,420,630,840,1050,1260,1470,1680,1890,2100,2310,2730,3570,3990,4620,5460,6930,8190,9240,10920,11550,13650,13860",
+    "name": "Highly regular numbers a(n) defined as positions of records in A010846: a(1) = 1 and a(n) is the least number k > a(n-1) such that A010846(k) > A010846(a(n-1)).",
+    "comment": [
+        "Analogous to highly divisible numbers (A002182)."
+    ],
+    "link": [
+        "Michael De Vlieger and David A. Corneth, <a href=\"/A244052/b244052.txt\">Table of n, a(n) for n = 1..563</a> (terms 55-149 from David A. Corneth), Mar 08 2017"
+    ],
+    "example": [
+        "a(2) = 2 because already for k = 2 A010846(2) = 2 > A010846(1) = 1.",
+        "a(3) = 4 because for k = 3  A010846(3) = 2 = A010846(2), but",
+        "for k = 4 A010846(4) = 3 > A010846(2) = 2.",
+        "a(4) = 6 because for k = 5 A010846(5) = 2 < A010846(4) = 3, but",
+        "A010846(6) = 5 > A010846(4) = 3."
+    ],
+    "mathematica": [
+        "Function[w, Map[Position[w, #][[1, 1]] &, Union@ Rest@ FoldList[Max, 0, w]]]@ Table[Count[Range@ n, k_ /; PowerMod[n, Floor@ Log2@ n, k] == 0], {n, 10^3}] (* simplest, or *)",
+        "f[n_] := If[n == 1, 1, Length@ Function[w, ToExpression@ StringJoin[\"Module[{n = \", ToString@ n, \", k = 0}, Flatten@ Table[k++, \",  Most@ Flatten@ Map[{#, \", \"} &, #], \"]]\"] &@ MapIndexed[Function[p, StringJoin[\"{\", ToString@ Last@ p, \", 0, Log[\", ToString@ First@ p, \", n/(\", ToString@ InputForm[Times @@ Map[Power @@ # &, Take[w, First@ #2 - 1]]], \")]}\"]]@ w[[First@ #2]] &, w]]@Map[{#, ToExpression[\"p\" <> ToString@ PrimePi@ #]} &, FactorInteger[n][[All, 1]]]]; Function[w, Map[Position[w, #][[1, 1]] &, Union@ Rest@ FoldList[Max, 0, w]]]@ Array[f, 14000] (* _Michael De Vlieger_, Mar 08 2017, more efficient *)"
+    ],
+    "xref": [
+        "Cf. A010846, A002182, A244053."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michael De Vlieger_, Jun 18 2014",
+    "ext": [
+        "Edited, giving new name and example. - _Wolfdieter Lang_, Jun 29 2014"
+    ],
+    "references": 8,
+    "revision": 41,
+    "time": "2017-03-09T05:27:14-05:00",
+    "created": "2014-07-12T12:12:23-04:00"
+}

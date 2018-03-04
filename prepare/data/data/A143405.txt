@@ -1,0 +1,42 @@
+{
+    "number": 143405,
+    "data": "1,1,4,17,89,552,3895,30641,265186,2497551,25373097,276105106,3199697517,39297401197,509370849148,6943232742493,99217486649933,1482237515573624,23093484367004715,374416757914118941,6304680593346141746,110063311977033807187",
+    "name": "Number of forests of labeled rooted trees of height at most 1, with n labels, where any root may contain >= 1 labels, also row sums of A143395, A143396 and A143397.",
+    "comment": [
+        "a(n) is the number of the partitions of an n-set where each block is endowed with a nonempty subset. - _Emanuele Munarini_, Sep 15 2016"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A143405/b143405.txt\">Table of n, a(n) for n = 0..504</a>",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} Sum_{t=k..n} C(n,t) * stirling2(t,k)*k^(n-t).",
+        "a(n) = Sum_{k=0..n} Sum_{t=0..k} C(n,k) * stirling2(k,t)*t^(n-k).",
+        "a(n) = Sum_{k=0..n} Sum_{t=0..k} C(n,k-t) * stirling2(n-(k-t),t)*t^(k-t).",
+        "E.g.f.: exp(exp(x)*(exp(x)-1)). - _Vladeta Jovovic_, Dec 08 2008",
+        "a(n) = sum(binomial(n,k)*2^k*bell(k)*S(n-k,-1),k=0..n), where bell(n) are the Bell numbers (A000110) and S(n,x) = sum(stirling2(n,k)*x^k,k=0..n) are the Stirling (or exponential) polynomials. - _Emanuele Munarini_, Sep 15 2016",
+        "Identity: sum(binomial(n,k)*a(k)*bell(n-k),k=0..n) = 2^n*bell(n). - _Emanuele Munarini_, Sep 15 2016"
+    ],
+    "example": [
+        "a(2) = 4, because there are 4 forests for 2 labels: {1,2}, {1}{2}, {1}<-2, {2}<-1."
+    ],
+    "maple": [
+        "a:= n-> add(add(binomial(n, t)*Stirling2(t, k)*k^(n-t), t=k..n), k=0..n):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Exp[Exp[t] (Exp[t] - 1)], {t, 0, 12}], t] Range[0, 12]! (* _Emanuele Munarini_, Sep 15 2016 *)",
+        "Table[Sum[Binomial[n, k] 2^k BellB[k] BellB[n - k, -1], {k, 0, n}], {n, 0, 12}] (* _Emanuele Munarini_, Sep 15 2016 *)",
+        "Table[Sum[BellY[n, k, 2^Range[n] - 1], {k, 0, n}], {n, 0, 20}] (* _Vladimir Reshetnikov_, Nov 09 2016 *)"
+    ],
+    "xref": [
+        "Cf. A143395, A143396, A143397, A048993, A008277, A007318, A000110."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 12 2008",
+    "references": 4,
+    "revision": 36,
+    "time": "2016-11-10T03:49:30-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

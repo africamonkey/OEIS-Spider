@@ -1,0 +1,45 @@
+{
+    "number": 95791,
+    "data": "1,1,2,2,3,3,3,4,4,4,4,4,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,9",
+    "name": "Number of digits in lazy-Fibonacci-binary representation of n.",
+    "comment": [
+        "The lazy Fibonacci representation of n >= 0 is obtained by replacing every string of 0's in the binary representation of n by a single 0, thus obtaining a finite zero-one sequence (d(2), d(3), d(4), ..., d(k)), and then forming d(2)*F(2) + d(3)*F(3) + ... + d(k)*F(k), as in the Mathematica program. The lazy Fibonacci representation is often called the maximal Fibonacci representation, in contrast to the Zeckendorf representation, also called the minimal Fibonacci representation. - _Clark Kimberling_, Mar 04 2015",
+        "Regarding the References, the lazy Fibonacci representation is sometimes attributed to Erd\u0151s and Joo, but it is also found in Brown and Ferns. - _Clark Kimberling_, Mar 04 2015"
+    ],
+    "link": [
+        "J. L. Brown, Jr., <a href=\"http://www.fq.math.ca/Scanned/3-1/brown.pdf\">A new characterization of the Fibonacci numbers</a>, Fibonacci Quarterly 3, no. 1 (1965) 1-8.",
+        "P. Erd\u0151s and I. Joo, <a href=\"http://dx.doi.org/10.1007/BF02260391\">On the Expansion of 1 = Sum{q^(-n_i)}</a>, Period. Math. Hung. 23 (1991), no. 1, 25-28.",
+        "H. H. Ferns, <a href=\"http://www.fq.math.ca/Scanned/3-1/ferns.pdf\">On the representation of integers as sums of distinct Fibonacci numbers</a>, Fibonacci Quarterly 3, no. 1 (1965) 21-29.",
+        "W. Steiner, <a href=\"http://www.fq.math.ca/Papers1/43-1/paper43-1-8.pdf\">The joint distribution of greedy and lazy Fibonacci expansions</a>, Fib. Q., 43 (No. 1, 2005), 60-69."
+    ],
+    "formula": [
+        "1, 1, then F(3) 2's, then F(4) 3's, then F(5) 4's, ..., then F(k+1) k's, ...",
+        "a(0)=a(1)=1 then a(n) = a(floor(n/tau))+1 where tau=(1+sqrt(5))/2. - _Benoit Cloitre_, Dec 17 2006",
+        "a(n) = least k such that f^(k)(n)=0 where f^(k+1)(x)=f(f^(k)(x)) and f(x)=floor(x/Phi) where Phi=(1+sqrt(5))/2 (see pari-gp program). - _Benoit Cloitre_, May 24 2007"
+    ],
+    "example": [
+        "The lazy Fibonacci representation of 14 is 8+3+2+1, which in binary notation is 10111, which consists of 5 digits."
+    ],
+    "mathematica": [
+        "t=DeleteCases[IntegerDigits[-1+Range[200],2],{___,0,0,___}];",
+        "A181632=Flatten[t]",
+        "A095791=Map[Length,t]",
+        "A112309=Map[DeleteCases[Reverse[#] Fibonacci[Range[Length[#]]+1],0]&,t]",
+        "A112310=Map[Length,A112309]",
+        "(* _Peter J. C. Moses_, Mar 03 2015 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<2,1,a(floor(n*(-1+sqrt(5))/2))+1) \\\\ _Benoit Cloitre_, Dec 17 2006",
+        "(PARI) a(n)=if(n<0,0,c=1;s=n;while(floor(s*2/(1+sqrt(5)))>0,c++;s=floor(s*2/(1+sqrt(5))));c) \\\\ _Benoit Cloitre_, May 24 2007"
+    ],
+    "xref": [
+        "Cf. A000045, A072649, A095791, A095792, A181632, A112309, A112310."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jun 05 2004",
+    "references": 10,
+    "revision": 29,
+    "time": "2015-03-05T13:45:42-05:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

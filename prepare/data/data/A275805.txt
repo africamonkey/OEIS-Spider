@@ -1,0 +1,50 @@
+{
+    "number": 275805,
+    "data": "5,11,14,15,17,19,21,22,23,29,35,38,39,41,43,45,46,47,53,54,55,56,57,58,59,62,63,65,67,69,70,71,74,75,77,80,81,83,84,85,86,87,88,89,91,92,93,94,95,97,99,100,101,103,105,106,107,109,110,111,112,113,114,115,116,117,118,119,125,131,134,135,137,139,141,142,143,149,155",
+    "name": "Indices of nonsquarefree terms in A275734; numbers with at least one digit slope (in their factorial base representation) with multiple nonzero digits. (See comments for the exact definition).",
+    "comment": [
+        "Numbers n for which A008683(A275734(n)) = 0.",
+        "Numbers n for which A275811(n) > 1.",
+        "Numbers n in whose factorial base representation (A007623) there exists at least one pair of digit positions i_1 and i_2 with nonzero digits d_1 and d_2 such that (i_1 - d_1) = (i_2 - d_2)."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A275805/b275805.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Fa#facbase\">Index entries for sequences related to factorial base representation</a>"
+    ],
+    "example": [
+        "For n=5, \"21\" in factorial base (A007623), the pair 2 (in position 2) and 1 (in position 1) satisfies the condition, as (2-2) = (1-1), thus 5 is included.",
+        "For n=55, \"2101\" in factorial base, the pair 2 (in position 4) and 1 (in position 3) satisfies the condition, as (4-2) = (3-1), thus 55 is included.",
+        "For n=67, \"2301\" in factorial base, the pair 3 (in position 3) and 1 (in position 1) satisfies the condition, as (3-3) = (1-1), thus 67 is included in the sequence."
+    ],
+    "program": [
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library, two alternatives)",
+        "(define A275805 (ZERO-POS 1 1 (COMPOSE A008683 A275734)))",
+        "(define A275805 (MATCHING-POS 1 1 (lambda (n) (< 1 (A275811 n)))))",
+        "(Python)",
+        "from operator import mul",
+        "from sympy import prime, factorial as f, mobius",
+        "def a007623(n, p=2): return n if n<p else a007623(int(n/p), p+1)*10 + n%p",
+        "def a275732(n):",
+        "    x=str(a007623(n))[::-1]",
+        "    return 1 if n==0 or x.count(\"1\")==0 else reduce(mul, [prime(i + 1) for i in xrange(len(x)) if x[i]=='1'])",
+        "def a257684(n):",
+        "    x=str(a007623(n))[:-1]",
+        "    y=\"\".join([str(int(i) - 1) if int(i)>0 else '0' for i in x])[::-1]",
+        "    return 0 if n==1 else sum([int(y[i])*f(i + 1) for i in xrange(len(y))])",
+        "def a(n): return 1 if n==0 else a275732(n)*a(a257684(n))",
+        "print [n for n in xrange(201) if mobius(a(n))==0] # _Indranil Ghosh_, Jun 19 2017"
+    ],
+    "xref": [
+        "Complement: A275804.",
+        "Cf. A007623, A008683, A275734, A275811.",
+        "Cf. A275809 (a subsequence apart from its initial 0-term).",
+        "Subsequence of A115945."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Aug 10 2016",
+    "references": 7,
+    "revision": 19,
+    "time": "2017-06-19T13:52:31-04:00",
+    "created": "2016-08-11T23:46:13-04:00"
+}

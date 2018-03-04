@@ -1,0 +1,90 @@
+{
+    "number": 24614,
+    "data": "3,7,12,13,19,21,27,28,31,37,39,43,48,49,52,57,61,63,67,73,75,76,79,84,91,93,97,103,108,109,111,112,117,124,127,129,133,139,147,148,151,156,157,163,169,171,172,175,181,183,189,192,193,196,199,201,208,211,217,219,223,228",
+    "name": "Numbers of the form x^2+y^2+xy, where x and y are positive integers.",
+    "comment": [
+        "Equivalently, sequence A024612 with duplicates removed; i.e., numbers of the form i^2 - i*j + j^2, where 1 <= i < j.",
+        "A subsequence of A135412, which consists of multiples (by squarefree factors) of the numbers listed here. It appears that this lists numbers > 1 which have in their factorization: (a) no even power of 3 unless there is a factor == 1 (mod 6); (b) no odd power of 2 or of a prime == 5 (mod 6) and no even power unless there is a factor 3 or == 1 (mod 6). However, x = y = 275 yields the counter-example 3*5*5*11. - _M. F. Hasler_, Aug 17 2016, completed Mar 02 2018 following an observation by _Altug Alkan_",
+        "If we regroup the entries in a triangle with row lengths A004526",
+        "3,",
+        "7,",
+        "12,13,",
+        "19,21,",
+        "27,28,31,",
+        "37,39,43,",
+        "... it seems that the j-th row of the triangle contains the numbers i^2+j^2-i*j in row j>=2 and column i = floor((j+1)/2) .. j-1. - _R. J. Mathar_, Aug 21 2016"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A024614/b024614.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from Peter Luschny)"
+    ],
+    "example": [
+        "3 = 1^2 + 1^2 + 1*1, 7 = 2^2 + 1^2 + 2*1, ..."
+    ],
+    "maple": [
+        "isA024614 := proc(n)",
+        "    local i,j,disc;",
+        "    # n=i^2+j^2-i*j = (j-i)^2+i*j, 1<=i<j",
+        "    # so (j-i)>=1 and i*j>=j and i^2+j^2-i*j >= 1+j max search radius",
+        "    for j from 2 to n-1 do",
+        "        # i=(j +- sqrt(4n-3j^2))/2",
+        "        disc := 4*n-3*j^2 ;",
+        "        if disc >= 0 then",
+        "            if issqr(disc) then",
+        "                i := (j+sqrt(disc))/2 ;",
+        "                if type(i,'integer') and i >= 1 and i<j then",
+        "                    return true;",
+        "                end if;",
+        "                i := (j-sqrt(disc))/2 ;",
+        "                if type(i,'integer') and i >= 1 and i<j then",
+        "                     return true;",
+        "                end if;",
+        "            end if;",
+        "        end if;",
+        "    end do:",
+        "    return false;",
+        "end proc:",
+        "n := 1 :",
+        "for t from 1 to 228 do",
+        "    if  isA024614(t) then",
+        "        printf(\"%d %d\\n\",n,t) ;",
+        "        n := n+1 ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Aug 21 2016",
+        "# second Maple program:",
+        "a:= proc(n) option remember; local k, x;",
+        "      for k from a(n-1)+1 do for x while x^2<k do",
+        "        if (y-> x^2+(x+y)*y=k)((isqrt(4*k-3*x^2)-x)/2) then return k fi",
+        "      od od",
+        "    end: a(0):=0:",
+        "seq(a(n), n=1..200);  # _Alois P. Heinz_, Mar 02 2018"
+    ],
+    "program": [
+        "(Julia)",
+        "function isA024614(n)",
+        "    n % 3 >= 2 && return false",
+        "    n == 3 && return true",
+        "    K = Int(floor(5.383*log(n)^1.161))",
+        "    M = Int(floor(2*sqrt(n/3)))",
+        "    for k in 3:K",
+        "        for y in 2:M, x in 1:y",
+        "            n == x^2 + y^2 + x*y && return true",
+        "    end end",
+        "    return false",
+        "end",
+        "A024614list(upto) = [n for n in 1:upto if isA024614(n)]",
+        "println(A024614list(228)) # _Peter Luschny_, Mar 02 2018"
+    ],
+    "xref": [
+        "Cf. A003136, A024612, A135412."
+    ],
+    "keyword": "nonn,easy,changed",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Edited by _M. F. Hasler_, Aug 17 2016"
+    ],
+    "references": 5,
+    "revision": 48,
+    "time": "2018-03-02T22:07:40-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

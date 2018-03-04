@@ -1,0 +1,37 @@
+{
+    "number": 229229,
+    "data": "1,1,10,12644,6631556521,3282701194678476257,3025262978042089315465899013351,9292286146024114784457467780130028866860171013,158655194198118596873150397161518177395553186289541468458000908304",
+    "name": "Number of set partitions of {1,...,n^2} into sets of size at most n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A229229/b229229.txt\">Table of n, a(n) for n = 0..24</a>"
+    ],
+    "formula": [
+        "a(n) = (n^2)! * [x^(n^2)] exp(Sum_{j=1..n} x^j/j!).",
+        "a(n) = A229223(n^2,n)."
+    ],
+    "example": [
+        "a(2) = 10: 1/2/3/4, 12/3/4, 13/2/4, 14/2/3, 1/23/4, 1/24/3, 1/2/34, 12/34, 13/24, 14/23."
+    ],
+    "maple": [
+        "G:= proc(n, k) option remember; local j; if k>n then G(n, n)",
+        "      elif n=0 then 1 elif k<1 then 0 else G(n-k, k);",
+        "      for j from k-1 to 1 by -1 do %*(n-j)/j +G(n-j, k) od; % fi",
+        "    end:",
+        "a:= n-> G(n^2, n):",
+        "seq(a(n), n=0..10);"
+    ],
+    "mathematica": [
+        "G[n_, k_] := G[n, k] = Module[{j, pc}, Which[k>n, G[n, n], n==0, 1, k<1, 0, True, pc = G[n-k, k]; For[j = k-1, j >= 1, j--, pc = pc*(n-j)/j + G[n-j, k]]; pc]]; a[n_] := G[n^2, n]; Table[a[n], {n, 0, 10}] (* _Jean-Fran\u00e7ois Alcover_, Feb 15 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Main diagonal of A229243.",
+        "Cf. A229223."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 16 2013",
+    "references": 3,
+    "revision": 15,
+    "time": "2017-02-15T11:08:10-05:00",
+    "created": "2013-09-16T22:02:43-04:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 36059,
+    "data": "1,1,21,1221,3231,233231,533221,15534221,3514334231,3534533241,3544832231,183544733221,28172544634231,2827162554535241,2827265554337241,2837267544338231,3847264544637221,3847362564636221",
+    "name": "The summarize Fibonacci sequence: summarize the previous two terms!.",
+    "comment": [
+        "After the 23rd term the sequence goes into a cycle of 16 terms."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A036059/b036059.txt\">Table of n, a(n) for n = 0..181</a> 10 periods.",
+        "<a href=\"/index/Sa#swys\">Index to sequences related to say what you see</a>"
+    ],
+    "example": [
+        "a(20) = 3837564524538221;",
+        "a(21) = 4837265534637221;",
+        "a(22+16*k) = 3837365544636221, k >= 0;",
+        "a(36) = a(20+16) = 3837265554834221 <> a(20);",
+        "a(37) = a(21+16) = 3837266544735221 <> a(21);",
+        "a(38) = a(22+16) = 3837365544636221 = a(22). - _Reinhard Zumkeller_, Aug 10 2014"
+    ],
+    "mathematica": [
+        "a[0] = a[1] = 1; a[n_] := a[n] = FromDigits @ Flatten @ Reverse @ Select[ Transpose @ { DigitCount[a[n-1]] + DigitCount[a[n-2]], Append[ Range[9], 0]}, #[[1]] > 0&];",
+        "Table[a[n], {n, 0, 18}] (* _Jean-Fran\u00e7ois Alcover_, Dec 30 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (sort, group)",
+        "a036059 n = a036059_list !! n",
+        "a036059_list = map (read . concatMap show) fss :: [Integer] where",
+        "   fss = [1] : [1] : zipWith h (tail fss) fss where",
+        "         h vs ws = concatMap (\\us -> [length us, head us]) $",
+        "                   group $ reverse $ sort $ vs ++ ws",
+        "-- _Reinhard Zumkeller_, Aug 10 2014"
+    ],
+    "xref": [
+        "Cf. A036058, A036066."
+    ],
+    "keyword": "nonn,base,nice,easy",
+    "offset": "0,3",
+    "author": "_Floor van Lamoen_",
+    "references": 17,
+    "revision": 12,
+    "time": "2017-12-30T10:01:55-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

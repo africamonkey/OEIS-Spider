@@ -1,0 +1,30 @@
+{
+    "number": 83470,
+    "data": "2,23,257,2357,235723,23571143,2357111371,235711131767,23571113172367,2357111317192343,235711131719233171,23571113171923296797,2357111317192329314189,235711131719232931375979,23571113171923293137414371,2357111317192329313741436167",
+    "name": "Smallest prime which is the concatenation of n distinct primes in increasing order.",
+    "comment": [
+        "Perhaps the n-th term begins with the concatenation of first (n-1) primes. except for n = 3.",
+        "The 9th, 11th, 12th, 13th,.... terms are other counter-examples to the above \"conjecture\". OTOH, it seems almost sure that the n-th term starts with the concatenation of the first (n-2) primes. - M. F. Hasler, Mar 20 2011"
+    ],
+    "program": [
+        "(PARI) A083470(n)={ my( t=vector(n,i,if(i>1,prime(i),\"2\")), p);",
+        "while( ! isprime( eval( concat( t ))), t[n]=nextprime(t[n]+1));",
+        "p = eval( concat( t )); #Str( t[ max( 1,n-1 )]) < #Str( t[n] ) &&",
+        "forprime( p1 = nextprime( t[ n-1 ]+1 ), 10^#Str( t[ n-1 ]), t[n-1]=p1;",
+        "forprime( p2 = nextprime( p1+1 ), 10^#Str( t[ n-1 ]), t[n]=p2;",
+        "isprime( eval( concat( t ))) && return( eval( concat( t ))))); p} /* algorithm based on conjecture that the last prime of the concatenation has at most one digit more than the preceding one */ \\\\ _M. F. Hasler_, Mar 20 2011"
+    ],
+    "xref": [
+        "Cf. A069837, A083427."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_ and Meenakshi Srikanth (menakan_s(AT)yahoo.com), May 02 2003",
+    "ext": [
+        "More terms from _David Wasserman_, Nov 02 2004"
+    ],
+    "references": 1,
+    "revision": 17,
+    "time": "2017-06-13T21:47:55-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

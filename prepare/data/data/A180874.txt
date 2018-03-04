@@ -1,0 +1,41 @@
+{
+    "number": 180874,
+    "data": "1,1,5,56,1092,32670,1387815,79389310,5882844968,548129834616,62720089624920,8646340208462880,1413380381699497200,270316008395632253340,59800308109377016336155,15151722444639718679892150,4359147487054262623576455600",
+    "name": "Lassalle's sequence connected with Catalan numbers and Narayana polynomials.",
+    "comment": [
+        "Defined by the recurrence formula in Theorem 1, page 2 of Lasalle.",
+        "From _Tom Copeland_, Jan 26 2016: (Start)",
+        "Let G(t) = Sum{n>=0} t^(2n)/(n!(n+1)!) = exp(c.t) be the e.g.f. of the aerated Catalan numbers c_n of A126120.",
+        "R = x + H(D) = x + d/dD log[G(D)] = x + D - D^3/3! + 5 D^5/5! - 56 D^7/7! + ... = x + e^(r. D) generates a signed, aerated version of this entry's sequence a(n), (r.)^(2n+1) = r(2n+1) = (-1)^n a(n+1) for n>=0 and r(0) = a(0) = 0, and is, with D = d/dx, the raising operator for the Appell polynomials P(n,x) of A097610, where P(n,x) = (c. + x)^n = Sum{k=0 to n} binomial(n,k) c_k x^(n-k) with c_k = A126120(k), i.e., R P(n,x) = P(n+1,x).",
+        "d/dt log[G(t)] = e^(r.t) = e^(q.t) / e^(c.t) = Ev[c. e^(c.t)] / Ev[e^(c.t)] = e^(q.t) e^(d.t) = [Sum{n>=0} 2n t^(2n-1)/(n!(n+1)!)] / [Sum{n>=0} t^(2n)/(n!(n+1)!)] with Ev[..] denoting umbral evaluation, so q(n) = c(n+1) = A126120(n+1) and d(2n) =  (-1)^n A238390(n) and vanishes otherwise. Then (r. + c.)^n = q(n) = Sum{k = 0 to n} binomial(n,k) r(k) c(n-k) and (q. + d.)^n = r(n), relating A180874, A126120 (A000108), and A238390 through binomial convolutions.",
+        "The sequence can also be represented in terms of the Faber polynomials of A263916 as a(n) = |(2n-1)! F(2n,0,b(2),0,b(4),0,..)| = |h(2n)| where b(2n) = 1/(n!(n + 1)!) = A126120(2n)/(2n)! = A000108(n)/(2n)!, giving h(0) = 1, h(1) = 0, h(2) = 1, h(3) = 0, h(4) = -1, h(5) = 0, h(6) = 5, h(7) = 0, h(8) = -56, ... , implying, among other relations, that A000108(n/2)= A126120(n) = Bell(n,0,h(2),0,h(4),..), the Bell polynomials of A036040 which reduce to A257490 in this case.",
+        "(End)"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A180874/b180874.txt\">Table of n, a(n) for n = 1..250</a>",
+        "Michel Lassalle, <a href=\"http://arxiv.org/abs/1009.4225\">Catalan numbers and a new integer sequence</a>, arXiv:1009.4225 [math.CO], 2010-2012."
+    ],
+    "formula": [
+        "a(n) = (-1)^(n-1) * (C(n)+sum_{j=1..n-1} (-1)^j *binomial(2n-1,2j-1) * a(j) *C(n-j)), where C() = A000108(). - _R. J. Mathar_, Apr 17 2011, corrected by _Vaclav Kotesovec_, Feb 28 2014",
+        "E.g.f.: sum_{k=0..infinity} a(k)*x^(2*k+2)/(2*k+2)!=log(x/BesselJ(1,2*x)). - _Sergei N. Gladkovskii_, Dec 28 2011",
+        "a(n) ~ (n!)^2 / (sqrt(Pi) * n^(3/2) * r^n), where r = BesselJZero[1, 1]^2/16 = 0.917623165132743328576236110539381686855099186384686... - _Vaclav Kotesovec_, added Feb 28 2014, updated Mar 01 2014"
+    ],
+    "maple": [
+        "A000108 := proc(n) binomial(2*n,n)/(1+n) ; end proc:",
+        "A180874 := proc(n) option remember; if n = 1 then 1; else A000108(n)+add((-1)^j*binomial(2*n-1,2*j-1)*procname(j)*A000108(n-j),j=1..n-1) ;   %*(-1)^(n-1) ; end if; end proc: # _R. J. Mathar_, Apr 16 2011"
+    ],
+    "mathematica": [
+        "nmax=20; a = ConstantArray[0,nmax]; a[[1]]=1; Do[a[[n]] = (-1)^(n-1)*(Binomial[2*n,n]/(n+1) + Sum[(-1)^j*Binomial[2n-1,2j-1]*a[[j]]* Binomial[2*(n-j),n-j]/(n-j+1),{j,1,n-1}]),{n,2,nmax}]; a (* _Vaclav Kotesovec_, Feb 28 2014 *)"
+    ],
+    "xref": [
+        "Cf. A000108, A001263, A188664, A115369.",
+        "Cf. A036040, A097610, A126120, A238390, A263916, A257490."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Jonathan Vos Post_, Sep 22 2010",
+    "references": 8,
+    "revision": 38,
+    "time": "2017-01-24T15:19:13-05:00",
+    "created": "2010-10-02T03:00:00-04:00"
+}

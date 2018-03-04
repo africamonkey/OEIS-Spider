@@ -1,0 +1,46 @@
+{
+    "number": 97054,
+    "data": "8,27,32,125,128,216,243,343,512,1000,1331,1728,2048,2187,2197,2744,3125,3375,4913,5832,6859,7776,8000,8192,9261,10648,12167,13824,16807,17576,19683,21952,24389,27000,29791,32768,35937,39304,42875,50653",
+    "name": "Nonsquare perfect powers.",
+    "comment": [
+        "Terms of A001597 that are not in A000290.",
+        "All terms of this sequence are also in A070265 (odd powers), but omitting those odd powers that are also a square (e.g. 64=4^3=8^2)."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A097054/b097054.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PerfectPower.html\">Perfect Power.</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/OddPower.html\">Odd Power.</a>"
+    ],
+    "formula": [
+        "A052409(a(n)) is odd. - _Reinhard Zumkeller_, Mar 28 2014"
+    ],
+    "mathematica": [
+        "nn = 50653; Select[Union[Flatten[Table[n^i, {i, Prime[Range[2, PrimePi[Log[2, nn]]]]}, {n, 2, nn^(1/i)}]]], ! IntegerQ[Sqrt[#]] &] (* _T. D. Noe_, Apr 19 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Map (singleton, findMin, deleteMin, insert)",
+        "a097054 n = a097054_list !! (n-1)",
+        "a097054_list = f 9 (3, 2) (singleton 4 (2, 2)) where",
+        "   f zz (bz, be) m",
+        "    | xx < zz && even be =",
+        "                f zz (bz, be+1) (insert (bx*xx) (bx, be+1) $ deleteMin m)",
+        "    | xx < zz = xx :",
+        "                f zz (bz, be+1) (insert (bx*xx) (bx, be+1) $ deleteMin m)",
+        "    | xx > zz = f (zz+2*bz+1) (bz+1, 2) (insert (bz*zz) (bz, 3) m)",
+        "    | otherwise = f (zz + 2 * bz + 1) (bz + 1, 2) m",
+        "    where (xx, (bx, be)) = findMin m",
+        "-- _Reinhard Zumkeller_, Mar 28 2014",
+        "(PARI) is(n)=ispower(n)%2 \\\\ _Charles R Greathouse IV_, Aug 28 2016"
+    ],
+    "xref": [
+        "Cf. A001597 perfect powers, A000290 the squares, A070265 odd powers, A097055, A097056, A239870, A239728, A093771."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Hugo Pfoertner_, Jul 21 2004",
+    "references": 7,
+    "revision": 17,
+    "time": "2016-08-28T03:03:32-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

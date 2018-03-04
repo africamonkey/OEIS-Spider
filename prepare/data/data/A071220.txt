@@ -1,0 +1,49 @@
+{
+    "number": 71220,
+    "data": "2,28,1332,3928,16886,157576,192181,369440,378904,438814,504718,539873,847252,1291597,1708511,1837979,3416685,3914319,5739049,6021420,7370101,7634355,8608315,9660008,10378270,14797144,15423070,18450693",
+    "name": "Numbers n such that prime(n) + prime(n+1) is a cube.",
+    "comment": [
+        "The corresponding primes are in A061308; n^3 is a sum of two successive primes in A074925.",
+        "Prime(n)+ Prime(n+1) is a square in A064397; n^2 is a sum of two successive primes in A074924;"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A071220/b071220.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "A001043(x)=m^3 for some m; if p(x+1)+p(x) is a cube, then x is here.",
+        "a(n) = primepi(A061308(n)). - _Michel Marcus_, Oct 24 2014"
+    ],
+    "example": [
+        "28 is in the list because prime(28)+prime(29) = 107+109 =216 = 6^3.",
+        "n=1291597: prime(1291597)+prime(1291598) = 344*344*344."
+    ],
+    "mathematica": [
+        "PrevPrim[n_] := Block[{k = n - 1}, While[ !PrimeQ[k], k-- ]; k]; NextPrim[n_] := Block[{k = n + 1}, While[ !PrimeQ[k], k++ ]; k]; Do[ If[ n^3 == PrevPrim[Floor[(n^3)/2]] + NextPrim[Floor[(n^3)/2]], Print[ PrimePi[ Floor[(n^3)/2]]]], {n, 2, 10^4}]",
+        "Flatten[Position[Total/@Partition[Prime[Range[20000000]],2,1],_?(IntegerQ[ Surd[ #,3]]&)]] (* _Harvey P. Dale_, May 28 2014 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from __future__ import division",
+        "from sympy import isprime, prevprime, nextprime, primepi",
+        "A071220_list, i = [], 2",
+        "while i < 10**6:",
+        "    n = i**3",
+        "    m = n//2",
+        "    if not isprime(m) and prevprime(m) + nextprime(m) == n:",
+        "        A071220_list.append(primepi(m))",
+        "    i += 1 # _Chai Wah Wu_, May 31 2017"
+    ],
+    "xref": [
+        "Cf. A064397, A074925, A074924, A001043."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Labos Elemer_, May 17 2002",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, Oct 07 2002"
+    ],
+    "references": 5,
+    "revision": 17,
+    "time": "2017-05-31T22:54:39-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

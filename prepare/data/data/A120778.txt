@@ -1,0 +1,49 @@
+{
+    "number": 120778,
+    "data": "1,5,11,93,193,793,1619,26333,53381,215955,436109,3518265,7088533,28539857,57414019,1846943453,3711565741,14911085359,29941580393,240416274739,482473579583,1936010885087,3883457090629,62306843256889",
+    "name": "Numerators of partial sums of Catalan numbers scaled by powers of 1/4.",
+    "comment": [
+        "For denominators see A120777.",
+        "From the expansion of 0 = sqrt(1-1) = 1-(1/2)*Sum(C(k)/4^k,k=0..infinity) one has r:=limit(r(n),n to infinity)=2, with the partial sums r(n) defined below.",
+        "The series a(n)/A046161(n+1) is absolutely convergent to 1. - _Ralf Steiner_, Feb 16 2017"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A120778/b120778.txt\">Table of n, a(n) for n = 0..100</a>",
+        "W. Lang, <a href=\"http://www.itp.kit.edu/~wl/EISpub/A120778.text\">Rationals r(n) and limit 2.</a>"
+    ],
+    "formula": [
+        "a(n) = numerator(r(n)), with the rationals r(n):=sum(C(k)/4^k,k=0..n) with C(k):=A000108(k) (Catalan numbers). Rationals r(n) are taken in lowest terms.",
+        "r(n) = (4/Pi)*(n+1)*int(x^n*arcsin(sqrt(x)),x=0..1). - Roland Groux, Jan 03 2011",
+        "r(n) = 2*[1-binomial(2*n+2,n+1)/4^(n+1)]. - Roland Groux, Jan 04 2011",
+        "a(n) = A141244(2n+2) = A141244(2n+3) (conjectural). - _Greg Martin_, Aug 16 2014, corrected by _M. F. Hasler_, Aug 18 2014",
+        "From _Peter Luschny_, Dec 21 2017: (Start)",
+        "a(n) = numerator(1-((n+1/2)!)/(sqrt(Pi)*(n+1)!)).",
+        "a(n) = 2^(2*(n+1) - HammingWeight(n+1))*(1 - ((n+1/2)!)/(sqrt(Pi)*(n+1)!)). (End)"
+    ],
+    "example": [
+        "Rationals r(n): [1, 5/4, 11/8, 93/64, 193/128, 793/512, 1619/1024, 26333/16384, ...]."
+    ],
+    "maple": [
+        "a := n -> 2^(2*(n+1) - add(i, i=convert(n+1, base, 2)))* (1-((n+1/2)!)/(sqrt(Pi)*(n+1)!)): seq(simplify(a(n)), n=0..23); # _Peter Luschny_, Dec 21 2017"
+    ],
+    "mathematica": [
+        "f[n_] := f[n] = Numerator[(4/Pi) (n + 1) Integrate[x^n*ArcSin[Sqrt[x]], {x, 0, 1}]]; Array[f, 23, 0] (* _Robert G. Wilson v_, Jan 03 2011 *)",
+        "a[n_] := 2^(2(n+1) - DigitCount[n+1,2,1])(1 - ((n+1/2)!)/(Sqrt[Pi](n+1)!));",
+        "Table[a[n], {n, 0, 23}] (* _Peter Luschny_, Dec 21 2017 *)"
+    ],
+    "program": [
+        "(MAGMA) [Numerator(2*(1-Binomial(2*n+2,n+1)/4^(n+1))): n in [0..25]]; // _Vincenzo Librandi_, Feb 17 2017"
+    ],
+    "xref": [
+        "Factor of A160481. - _Johannes W. Meijer_, May 24 2009",
+        "Cf. A141244. - _Greg Martin_, Aug 16 2014",
+        "Cf. A120777 (denominators)."
+    ],
+    "keyword": "nonn,easy,frac",
+    "offset": "0,2",
+    "author": "_Wolfdieter Lang_, Jul 20 2006",
+    "references": 6,
+    "revision": 45,
+    "time": "2017-12-22T06:48:06-05:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

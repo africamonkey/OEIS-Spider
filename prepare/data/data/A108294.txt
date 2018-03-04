@@ -1,0 +1,52 @@
+{
+    "number": 108294,
+    "data": "5,11,17,29,29,37,41,53,59,59,67,71,79,89",
+    "name": "a(n) = the least prime p such that p-6n-3 is a power of 2 and 2p-6n-3 is prime, or -1 if no such prime exists.",
+    "comment": [
+        "The value of a(14) is presently unknown.",
+        "A108295 has the 2p-6n-3 values.",
+        "From _Robert Israel_, Aug 04 2016: (Start)",
+        "If a(n) is not -1, it is 2^k+6n+3 where both 2^k+6n+3 and 2^(k+1)+6n+3 are prime, and k is the least number with this property.",
+        "Heuristically, the probability that 2^k+6n+3 is prime should be on the order of k^(-1), and the probability that both 2^k+6n+3 and 2^(k+1)+6n+3 are prime should be on the order of k^(-2).  Thus we should expect only finitely many such k for a given n, and if it does not occur for fairly small k it is unlikely to ever occur.  However, this is not a proof.",
+        "If it is not -1, a(14) > 2^10000+87. (End)",
+        "Values a(14) through a(60) for 2 <= p <= prime(10^6): {-1, 97, 101, 107, 239, 149, 127, 193, 137, 149, 149, 281, 163, 173, 32939, 179, 191, 191, 197, -1, 223, -1, 223, 227, 359, 239, -1, 281, 263, 269, 269, 277, 281, 317, 419, 809, 307, 311, 331, 337, -1, 397, -1, 347, 359, 373, 491}. Unknown values (-1) at n = 14, 33, 35, 40, 54, 56. - _Michael De Vlieger_, Aug 04 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A108294/a108294.txt\">Table of n, (conjectured) a(n) for n=1..100</a>.  Values > 0 are correct, values of -1 are conjectured (with k > 10000 if a(n) > 0)."
+    ],
+    "maple": [
+        "# values of -1 from this function indicate either a(n)=-1 or k > 10000",
+        "f:= proc(n) local j, k, p, q, state, goodk;",
+        "    state:= 0;",
+        "    goodk:= select(t -> igcd(6*n+3+2^t,6*n+3+2^(t+1),5*7*11*13*17)=1, [$0..119]);",
+        "    for k from 1 to 10000 do",
+        "        if (state = 0 and not member(k mod 120,goodk)) then state:= 0; next fi;",
+        "        p:= 6*n+3+2^k;",
+        "        if isprime(p) then",
+        "           state:= state+1;",
+        "           if state = 2 then return p - 2^(k-1) fi;",
+        "        else",
+        "           state:= 0;",
+        "        fi;",
+        "    od;",
+        "    -1;",
+        "end proc:",
+        "seq(f(n),n=0..30); # _Robert Israel_, Aug 04 2016"
+    ],
+    "mathematica": [
+        "Table[SelectFirst[Prime@ Range[10^5], IntegerQ@ Log2[# - 6 n - 3] && PrimeQ[2 # - 6 n - 3] &], {n, 0, 60}] /. k_ /; MissingQ@ k -> -1 (* _Michael De Vlieger_, Aug 04 2016, Version 10.2 *)"
+    ],
+    "xref": [
+        "Cf. A108295."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,1",
+    "author": "_Cino Hilliard_, Jun 29 2005",
+    "ext": [
+        "Edited by _Don Reble_, May 01 2007 and by _N. J. A. Sloane_, May 04 2007"
+    ],
+    "references": 2,
+    "revision": 15,
+    "time": "2017-10-19T03:14:41-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

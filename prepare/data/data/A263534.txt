@@ -1,0 +1,33 @@
+{
+    "number": 263534,
+    "data": "29,76,157,174,191,475,713,1085,1129,1961,3286,4424,7812,8973,19978,24317,35845,51712,146031,166838,274005,443275,444247,445219,908207,1189312,1933197,4249074,10723278,16450997,46224704,98322005",
+    "name": "Consider the 10's complements of the digits of a number. Take their sum and repeat the process deleting the first addend and adding the previous sum. The sequence lists the numbers that after some number of iterations reach a sum equal to themselves.",
+    "comment": [
+        "Like Keith numbers but using the ten's complements of their digits."
+    ],
+    "example": [
+        "For 29, the ten's complements of its digits are 8, 1. Then:",
+        "8 + 1 = 9;",
+        "1 + 9 = 10;",
+        "9 + 10 = 19;",
+        "10 + 19 = 29."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q,h) local a,b,c,k,n,t,v; v:=array(1..h);",
+        "for n from 10 to q do b:=ilog10(n)+1; c:=n; a:=[];",
+        "for k from 1 to b do a:=[(10-(c mod 10)),op(a)]; c:=trunc(c/10); od;",
+        "for k from 1 to b do v[k]:=a[k]; od; t:=b+1; v[t]:=add(v[k], k=1..b);",
+        "while v[t]<n do t:=t+1; v[t]:=add(v[k], k=t-b..t-1); od;",
+        "if v[t]=n then print(n); fi; od; end: P(10^9,1000);"
+    ],
+    "xref": [
+        "Cf. A007629."
+    ],
+    "keyword": "nonn,base,less",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Oct 20 2015",
+    "references": 9,
+    "revision": 12,
+    "time": "2015-11-10T04:26:42-05:00",
+    "created": "2015-10-31T14:15:50-04:00"
+}

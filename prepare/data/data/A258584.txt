@@ -1,0 +1,53 @@
+{
+    "number": 258584,
+    "data": "86,860,1975,2160,3575,19750,21600,35750,43614,51884,65625,479900,868688,967750,1435575,1548384,1696875,4799000,8686880,9677500,28874200,34095100,38748800,39214560,47613625,53415625,148385715,156293216,288742000,340951000,387488000",
+    "name": "Numbers n such that n = Sum_{j>=1} c(j) where c(0) = n, c(j) = floor((c(j-1)/10^k)*(c(j-1) mod 10^k) for j>0, and k is half the number of digits of n, rounded up if the number of digits of n is odd.",
+    "comment": [
+        "If n is an odd-digit decimal number, the first half is one digit smaller than the second half. For example, 43614 is in the sequence, because 43*614 = 26402, 26*402 = 10452, 10*452 = 4520, 4*520 = 2080, 2*80 = 160. Here the iteration stops because 160 has three digits, so the first half of the next multiplication is zero. 43614 = 26402 + 10452 + 4520 + 2080 + 160.",
+        "If n is an even-digit decimal number, the first half and the second half have the same length. For example, 868688 is in the sequence because 868*688 = 597184, 597*184 = 109848, 109*848 = 92432, 92*432 = 39744, 39*744 = 29016, 29*16 = 464, and here the iteration stops. 868688 = 597184 + 109848 + 92432 + 39744 + 29016 + 464.",
+        "If n is in the sequence and has an even number of digits, then 10*n is also in the sequence. - _Jon E. Schoenfield_, Nov 07 2015"
+    ],
+    "link": [
+        "Pieter Post, <a href=\"/A258584/b258584.txt\">Table of n, a(n) for n = 1..20</a>"
+    ],
+    "example": [
+        "86 is in the sequence because 8*6 = 48, 4*8 = 32 and 3*2 = 6. And 86 = 48 + 32 + 6."
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{i = Ceiling[IntegerLength[n]/2], g}, g[x_] := If[IntegerLength@ x <= i, x, Times @@ (FromDigits /@ {If[IntegerLength@ x - i == 0, Nothing, Take[IntegerDigits@ x, IntegerLength@ x - i]], Take[IntegerDigits@ x, -i]})]; Total@ Rest@ Most@ FixedPointList[g, n] == n]; Select[Range@ 500000, fQ] (* _Michael De Vlieger_, Nov 06 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def pod(n,m):",
+        "....kk = 1",
+        "....while n > 0:",
+        "........kk= kk*(n%m)",
+        "........n =int(n//m)",
+        "....return kk",
+        "for b in range(0,6):",
+        "....dd,bb=0,(b-1)//2+2",
+        "....j=10**bb",
+        "....for c in range (10*j,100*j):",
+        "........d,a,ca=0,0,pod(c,j)",
+        "........while ca>0:",
+        "............d,a=d+ca,a+1",
+        "............if ca<j:",
+        "................ca=j",
+        "............ca=pod(ca,j)",
+        "............if c==d and ca==0:",
+        "................print (a,c)"
+    ],
+    "xref": [
+        "Cf. A003001, A014553, A135385."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Pieter Post_, Nov 06 2015",
+    "ext": [
+        "a(21)-a(31) from _Jon E. Schoenfield_, Nov 07 2015"
+    ],
+    "references": 1,
+    "revision": 29,
+    "time": "2015-11-17T21:14:30-05:00",
+    "created": "2015-11-17T21:14:30-05:00"
+}

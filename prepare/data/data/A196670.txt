@@ -1,0 +1,56 @@
+{
+    "number": 196670,
+    "data": "5,7,17,19,31,37,41,43,53,59,67,73,79,83,101,103,107,127,131,149,157,163,179,181,197,199,211,223,227,257,269,277,281,317,331,337,347,353,379,389,419,421,439,461,463,467,479,491,499,509,541,563,569,577,617",
+    "name": "The Chebyshev primes of index 4.",
+    "comment": [
+        "The sequence consists of such odd prime numbers p that satisfy li(psi(p^4)) - li(psi(p^4-1)) < 1/4, where li(x) is the logarithmic integral and psi(x) is the Chebyshev psi function."
+    ],
+    "link": [
+        "Dana Jacobsen, <a href=\"/A196670/b196670.txt\">Table of n, a(n) for n = 1..75</a>",
+        "M. Planat and P. Sol\u00e9, <a href=\"http://arxiv.org/abs/1109.6489\">Efficient prime counting and the Chebyshev primes</a> arXiv:1109.6489 [math.NT], 2011."
+    ],
+    "maple": [
+        "# The function PlanatSole(n,r) is in A196667.",
+        "A196670 := n -> PlanatSole(n,4); # _Peter Luschny_, Oct 23 2011"
+    ],
+    "program": [
+        "(MAGMA)",
+        "Mangoldt:=function(n);",
+        "if #Factorization(n) eq 1 then return Log(Factorization(n)[1][1]); else return 0; end if;",
+        "end function;",
+        "tcheb:=function(n);",
+        "x:=0;",
+        "for i in [1..n] do",
+        "x:=x+Mangoldt(i);",
+        "end for;",
+        "return(x);",
+        "end function;",
+        "jump4:=function(n);",
+        "x:=LogIntegral(tcheb(NthPrime(n)^4))-LogIntegral(tcheb(NthPrime(n)^4-1));",
+        "return x;",
+        "end function;",
+        "Set4:=[];",
+        "for i in [2..1000] do",
+        "if jump4(i)-1/4 lt 0 then Set4:=Append(Set4,NthPrime(i)); NthPrime(i); end if;",
+        "end for;",
+        "Set4;",
+        "(Sage)",
+        "def A196670(n) : return PlanatSole(n,4)",
+        "# The function PlanatSole(n,r) is in A196667.",
+        "# _Peter Luschny_, Oct 23 2011",
+        "(Perl) use ntheory \":all\"; forprimes { say if 4 *(LogarithmicIntegral(chebyshev_psi($_**4)) - LogarithmicIntegral(chebyshev_psi($_**4-1))) < 1 } 3,100; # _Dana Jacobsen_, Dec 29 2015"
+    ],
+    "xref": [
+        "Cf. A196667, A196668, A196669."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Planat_, Oct 05 2011",
+    "ext": [
+        "More terms from _Dana Jacobsen_, Dec 29 2015"
+    ],
+    "references": 5,
+    "revision": 22,
+    "time": "2015-12-29T23:19:31-05:00",
+    "created": "2011-10-06T12:31:39-04:00"
+}

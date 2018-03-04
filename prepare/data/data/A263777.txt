@@ -1,0 +1,41 @@
+{
+    "number": 263777,
+    "data": "1,1,2,6,24,118,674,4306,29990,223668,1763468,14558588,124938648,1108243002,10115202962,94652608690,905339525594,8829466579404,87618933380020,883153699606024,9028070631668540,93478132393544988,979246950529815364,10368459385853924212",
+    "name": "Number of inversion sequences avoiding pattern 201 (or 210).",
+    "link": [
+        "Lars Blomberg and Gheorghe Coserea, <a href=\"/A263777/b263777.txt\">Table of n, a(n) for n = 0..777</a>, terms 1..100 from Lars Blomberg.",
+        "Sylvie Corteel, Megan A. Martinez, Carla D. Savage, Michael Weselcouch, <a href=\"http://arxiv.org/abs/1510.05434\">Patterns in Inversion Sequences I</a>, arXiv:1510.05434 [math.CO], 2015. See equations (4,5).",
+        "Megan A. Martinez and Carla D. Savage, <a href=\"https://arxiv.org/abs/1609.08106\">Patterns in Inversion Sequences II: Inversion Sequences Avoiding Triples of Relations</a>, arXiv:1609.08106 [math.CO], 2016."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n-1} Sum_{p=-1,k-1} T(n,k,p), where T(n,k,p) = Sum_{i=-1..p} T(n-1,k,i) + Sum_{j=p+1..k} T(n-1,j,p) with initial conditions T(n,k,p) = 0 if k >= n and T(n,k,-1) = (n-k)/n * binomial(n-1+k,k). (eqn. (4) and (5) in Corteel link) - _Gheorghe Coserea_, Sep 21 2017"
+    ],
+    "program": [
+        "(PARI)",
+        "seq(N) = {",
+        "  my(a=vector(N), t=vector(2, k, matrix(N, N)), s=matrix(N+1,N+1),",
+        "     C=(n,k)->(n-k)/n*binomial(n-1+k, k));",
+        "  for (n=1, N, for (k=1, n, for(p=1, k-1,",
+        "      s[k+1,p+1] = s[k+1,p] + t[1+n%2][k,p];",
+        "      s[p+1,k+1] = s[p+1,k] + t[1+n%2][k,p];",
+        "      t[1+(n+1)%2][k, p] = s[k+1,p+1] + s[p+1,k+1] + C(n-1,k-1)));",
+        "    a[n] = sum(k=1, n, sum(p=1, k-1, t[1+(n+1)%2][k, p])) + C(n+1, n));",
+        "  a;",
+        "};",
+        "concat(1, seq(23)) \\\\ _Gheorghe Coserea_, Nov 20 2017"
+    ],
+    "xref": [
+        "Cf. A263778, A263779, A263780."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Michel Marcus_, Oct 26 2015",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Dec 15 2016",
+        "More terms from _Lars Blomberg_, Jan 18 2017"
+    ],
+    "references": 28,
+    "revision": 37,
+    "time": "2017-11-22T03:24:08-05:00",
+    "created": "2015-10-26T04:08:39-04:00"
+}

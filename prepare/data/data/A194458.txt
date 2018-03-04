@@ -1,0 +1,46 @@
+{
+    "number": 194458,
+    "data": "1,3,6,10,15,17,21,27,35,45,48,54,63,75,90,94,102,114,130,150,155,165,180,200,225,227,231,237,245,255,259,267,279,295,315,321,333,351,375,405,413,429,453,485,525,535,555,585,625,675,678,684,693,705,720,726",
+    "name": "Total number of entries in rows 0,1,...,n of Pascal's triangle not divisible by 5.",
+    "comment": [
+        "The number of zeros in the first n rows is binomial(n+1,2) - a(n)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A194458/b194458.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "a(n) = ((C(d0+1,2)*15^0*(d1+1) + C(d1+1,2)*15^1)*(d1+1) + C(d1+1,2)*15^1)*(d2+1) + C(d2+1,2)*15^2 ..., where d_k...d_1d_0 is the base 5 expansion of n+1 and 15 = binomial(5+1,2). The formula generalizes to other prime bases p."
+    ],
+    "example": [
+        "n = 38: n+1 = 39 = 124_5, thus a(38) = (C(5,2)*15^0*3 + C(3,2)*15^1)*2 + C(2,2)*15^2 = (10*1*3 + 3*15)*2 + 1*225 = 375."
+    ],
+    "maple": [
+        "a:= proc(n) local l, m, h, j;",
+        "      m:= n+1;",
+        "      l:= [];",
+        "      while m>0 do l:= [l[], irem (m, 5, 'm')+1] od;",
+        "      h:= 0;",
+        "      for j to nops(l) do h:= h*l[j] +binomial (l[j], 2) *15^(j-1) od:",
+        "      h",
+        "    end:",
+        "seq (a(n), n=0..100);"
+    ],
+    "mathematica": [
+        "a[n_] := Module[{l, m, r, h, j}, m = n+1; l = {}; While[m>0, l = Append[l, {m, r} = QuotientRemainder[m, 5]; r+1]]; h = 0; For[j = 1, j <= Length[l], j++, h = h*l[[j]] + Binomial [l[[j]], 2] *15^(j-1)]; h]; Table [a[n], {n, 0, 100}] (* _Jean-Fran\u00e7ois Alcover_, Feb 26 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "A006046(n+1) = A006046(n) + A001316(n) for p=2.",
+        "A006048(n+1) = A006048(n) + A006047(n+1) for p=3.",
+        "a(n+1) = a(n) + A194459(n+1) for p=5."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul Weisenhorn_, Aug 24 2011",
+    "ext": [
+        "Edited by _Alois P. Heinz_, Sep 06 2011"
+    ],
+    "references": 2,
+    "revision": 35,
+    "time": "2017-02-27T21:50:45-05:00",
+    "created": "2011-09-06T10:42:41-04:00"
+}

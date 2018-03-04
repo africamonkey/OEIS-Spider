@@ -1,0 +1,42 @@
+{
+    "number": 254751,
+    "data": "22,23,25,27,32,33,35,37,52,53,55,57,72,73,75,77,237,297,313,317,373,537,597,713,717,737,797,2337,2397,2937,3113,3137,3173,3797,5937,5997,7197,7337,7397,29397,31373,37937,59397,73313,739397",
+    "name": "Numbers such that, in base 10, all their proper prefixes and suffixes represent primes.",
+    "comment": [
+        "A proper prefix (or suffix) of a number m is one which is neither void, nor identical to m.",
+        "Alternative definition: Slicing the decimal expansion of a(n) in any way into two nonempty parts, each part represents a prime number.",
+        "Every proper prefix of each member a(n) is a member of A024770, and every proper suffix is a member of A024785. Since these are finite sequences, a(n) is also finite. It has 45 members, the largest of which is 739397 and happens to be a prime.",
+        "The sequence is a union of A254753 and A020994.",
+        "A subsequence of A260181. - _M. F. Hasler_, Sep 16 2016"
+    ],
+    "example": [
+        "6 is not a member because its expansion cannot be sliced in two.",
+        "597 is a member because (5,97,59, and 7) are all primes.",
+        "2331 is excluded because 233 is prime, but 1 is not. - _Gordon Hamilton_, Feb 20 2015"
+    ],
+    "mathematica": [
+        "fQ[n_] := (p = {2, 3, 5, 7}; If[ Union@ Join[p, {Mod[n, 10]}] != p, {False}, Block[{idn = IntegerDigits@ n, lng = Floor@ Log10@ n}, Union@ PrimeQ@ Flatten@ Table[{FromDigits[ Take[idn, i]], FromDigits[ Take[idn, -lng + i - 1]]}, {i, lng}] == {True}]]); Select[ Range@1000000, fQ] (* _Robert G. Wilson v_, Feb 21 2015 *)"
+    ],
+    "program": [
+        "(PARI) slicesIntoPrimes(n,b=10) = {my(k=b);if(n<b,return(0););while(n\\k>0,if(!isprime(n\\k)||!isprime(n%k),return(0););k*=b;);return(1);}",
+        "(Sage) def breakIntoPrimes(n):",
+        "....D=n.digits()",
+        "....for i in [1..len(D)-1]:",
+        "........if not(is_prime(sum(D[i:][j]*10^j for j in range(len(D[i:])))) and is_prime(sum(D[:i][j]*10^j for j in range(len(D[:i]))))):",
+        "............return false",
+        "........else:",
+        "............continue",
+        "....return true R=[n for n in [10..1000000] if breakIntoPrimes(n)] # _Tom Edgar_, Feb 20 2015"
+    ],
+    "xref": [
+        "Cf. A020994, A024770, A024785, A254750, A254752, A254753, A254754, A254756.",
+        "Cf. A260181."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,1",
+    "author": "_Stanislav Sykora_, Feb 15 2015",
+    "references": 7,
+    "revision": 22,
+    "time": "2016-09-16T11:05:45-04:00",
+    "created": "2015-02-23T23:07:06-05:00"
+}

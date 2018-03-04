@@ -1,0 +1,41 @@
+{
+    "number": 134865,
+    "data": "1,2,4,6,12,24,36,48,120,240,360,720,2520,5040,7560,10080,15120,20160,45360,50400,100800,332640,352800,665280,705600,4324320,8648640,17297280,21621600,43243200,13492656777600",
+    "name": "Numbers n meeting the following criterion: if n is a multiple of d, then it is also a multiple of the smallest number with same number of divisors as d.",
+    "comment": [
+        "Note that this is not a subsequence of A002182: 100800 is in this sequence but not in A002182. - _J. Lowell_, Feb 22 2008",
+        "A subset of A005179. - Max Alekseyev, May 19 2008",
+        "A number n is in A134865 iff for every divisor d of n, A005179(A000005(d)) (= A140635(d)) is also a divisor of n. So the question of the finiteness of A134865 is closely related to the form of the elements of A005179. - _Max Alekseyev_, May 19 2008, May 20 2008",
+        "Rearrangement of this sequence, forming a subsequence of A005179, is given by A140753. Corresponding indices of elements of A005179 are given by A138394 and A140752. - _Max Alekseyev_, May 26 2008",
+        "A subsequence of A007416 which is a subsequence of A025487, so every term is primally tight and even (after the first term). Thus if d is a divisor of a term, then the least integer with the same prime signature as d (=A046523(d)) is also a divisor. So only the divisors that are in A025487 need be tested. - _Ray Chandler_"
+    ],
+    "formula": [
+        "a(n) = A005179(A140752(n)). - _Max Alekseyev_, May 26 2008"
+    ],
+    "example": [
+        "60 is a multiple of 30 with 8 divisors, but not of 24 (the smallest number with 8 divisors) so 60 does not qualify for this sequence."
+    ],
+    "mathematica": [
+        "a = {}; For[n = 1, n < 10000, n++, b = Divisors[n]; c = 1; For[i = 1, i < Length[b] + 1, i++, j = 1; While[Length[Divisors[j]] < Length[Divisors[b[[i]]]], j++ ]; If[ ! Mod[n, j] == 0, c = 0]]; If[c == 1, AppendTo[a, n]]]; a (* _Stefan Steinerberger_, Feb 05 2008 *)"
+    ],
+    "program": [
+        "(PARI) isA134865(n)={ n%2 & return(n==1); fordiv(n, d, bigomega(d)>1 || next; nd=numdiv(d); for(k=4, d, numdiv(k)==nd || next; n%k & return; break)); 1 }",
+        "for(n=1,10^7,if(isA134865(n),print1(n,\", \"))); \\\\ _R. J. Mathar_, May 17 2008"
+    ],
+    "xref": [
+        "Cf. A000005, A005179, A007416, A134865, A138394, A140752, A140753."
+    ],
+    "keyword": "more,nonn",
+    "offset": "1,2",
+    "author": "_J. Lowell_, Jan 29 2008",
+    "ext": [
+        "More terms from _Stefan Steinerberger_, Feb 05 2008",
+        "More terms from _J. Lowell_, Feb 22 2008",
+        "a(22)-a(30) from _Don Reble_, May 17 2008",
+        "a(31)=13492656777600 from _Ray Chandler_, Jun 30 2008"
+    ],
+    "references": 5,
+    "revision": 14,
+    "time": "2017-10-19T10:38:29-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

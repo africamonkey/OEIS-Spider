@@ -1,0 +1,53 @@
+{
+    "number": 37053,
+    "data": "2,101,1009,10007,100003,1000003,20000003,100000007,1000000007,30000000001,100000000003,2000000000003,40000000000001,1000000000000037,6000000000000001,20000000000000003,100000000000000003,1000000000000000003,60000000000000000007,500000000000000000003",
+    "name": "Smallest prime containing exactly n 0's.",
+    "comment": [
+        "Certain entries require n+3 digits such as a(13). Those which do not require three digits besides n zeros are in A085824. Conjecture: a prime of this form, A037053, requires at most three judiciously placed nonzero digits, two on the exterior and one inside. - _Robert G. Wilson v_",
+        "The zeros in a(n) do not need to be consecutive. If the zeros must be consecutive we get a new sequence which agrees with this one up though a(31), but then here we have a(32) = 10000000000000000000000000000000603, whereas the smallest prime with exactly 32 consecutive zeros is 19000000000000000000000000000000009 = 19*10^33+9. - _N. J. A. Sloane_, Feb 20 2016",
+        "Sequence A269230 lists the indices (32, 43, 46, 49, 50, 60, 69, ...) for which a(n) does not have n consecutive digits '0', and gives more information about the smallest prime which has n consecutive digits '0': Sequence A269260 lists the values a > 9 such that the least prime with n *consecutive* '0's equals nextprime(a*10^(n+1)), for these indices n. - _M. F. Hasler_, Feb 20 2016 and Feb 22 2016",
+        "Since the definition requires \"exactly\" and not \"at least\" n 0's, the sequence is not increasing, e.g., a(22) = 10^24 + 49 > a(23) = 10^24 + 7. However, it seems that no term has more digits than its successor. - _M. F. Hasler_, Feb 20 2016",
+        "From _Bob Selcoe_, Feb 20 2016 (start)",
+        "Conjecture 1: (following Robert G. Wilson v's conjecture above and insight provided by Hans Havermann): terms with two substrings of zeros have first digit of 1.",
+        "Conjecture 2: as n increases, there are more terms with two substrings of zeros than one consecutive string.",
+        "The logic is as follows: Let n = number of zeros and z = number of substrings of consecutive zeros contained in candidate primes. Candidates with two substrings of zeros (z=2) must be considered after only 72 smaller z=1 candidates have been considered and excluded, i.e., numbers of the form a[n zeros]b and 1[n zeros]ab, where a in {1..9}, b in {1,3,7,9}. After these 72 candidates are excluded, 36*n z=2 candidates are considered before having to consider only 36 additional z=1 candidates (i.e., 2[n zeros]ab), followed by 36*n additional z=2 candidates, etc. So as n increases, it becomes increasingly unlikely that any z=1 term appears. Additionally, the number of candidates increases as n increases for z>=3. For a given n, 1044 + 324*(n+1) candidates must be excluded before considering the smallest z=3: 1[n-2 zeros]10101. Since the probability p of n-digit primes occurring is p ~ 1/(n log 10) by the Prime Number Theorem, and the number of z in {1,2} candidates which must be excluded increases exponentially as n and z increase, it is unlikely that any z>=3 term appears in A037053 and that first digit will be > 1 for any z=2 term.",
+        "Sequence A269233 lists the number of candidate primes < a(n); i.e., the number of excluded candidates.",
+        "(End)"
+    ],
+    "link": [
+        "Robert Israel and Robert G. Wilson v, <a href=\"/A037053/b037053.txt\">Table of n, a(n) for n = 0..1000</a> a(0) - a(900) from Robert Israel.",
+        "Hans Havermann, <a href=\"http://chesswanks.com/seq/a037053.txt\">Compactly expressed table of n, a(n) for a large number of n</a>"
+    ],
+    "maple": [
+        "F:= proc(n)",
+        "local a,b,cands,p;",
+        "cands:= [seq(seq(10^(n+1)*a+b,b=[1,3,7,9]),a=1..9), seq(seq(seq(10^(n+2)+a*10^j+b,b=[1,3,7,9]),a=1..9),j=1..n+1)];",
+        "for p in cands do if isprime(p) then return p fi od;",
+        "error(\"No candidate is prime\");",
+        "end proc:",
+        "2, seq(F(n),n=1..40); # _Robert Israel_, Feb 19 2016"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{pc}, a = 1; While[a < 10, b = 1; While[b < 10, pc = a*10^(n + 1) + b; If[PrimeQ[pc], Goto[fini]]; b += 2]; a++]; e = 1; While[e < n + 2, b = 1; While[b < 10, c = 1; While[c < 10, pc = 10^(n + 2) + b*10^e + c; If[ PrimeQ[pc], Goto[ fini]]; c += 2]; b++]; e++]; Label[ fini]; pc]; f[0] = 2; Array[f, 25, 0] (* _Robert G. Wilson v_, Feb 21 2016 *)"
+    ],
+    "program": [
+        "(PARI) A037053(n)={n&&forstep(i=n=10^(n+1),9*n,n,nextprime(i)<i+10 && return(nextprime(i)))+forstep(i=n*=10,9*n,n,my(p=1);while(n>p*=10, forstep(j=i+p,i+9*p,p,nextprime(j)<j+10 && return(nextprime(j)))))+error(n\" requires more than 3 nonzero digits\");2} \\\\ _M. F. Hasler_, Feb 19 2016"
+    ],
+    "xref": [
+        "Cf. A037052, A034388, A085824. Least prime with n '1's,...,'9's: A037055, A037057, A037059, A037061, A037063, A037065, A037067, A037069, A037071. The indices of these primes are given in A037052 - A037070.",
+        "Cf. A269230, A269233 (number of candidate primes < a(n)), A269260."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,1",
+    "author": "_Patrick De Geest_, Jan 04 1999",
+    "ext": [
+        "More terms from Victoria A Sapko (vsapko(AT)canes.gsw.edu), Aug 16 2002",
+        "Edited by _Robert G. Wilson v_, Jul 04 2003",
+        "Sequence rechecked (by request) and edited by _Charles R Greathouse IV_, Aug 03 2010",
+        "Extended with a(0) = 2 and three lines of data completed by _M. F. Hasler_, Feb 19 2016"
+    ],
+    "references": 20,
+    "revision": 75,
+    "time": "2016-02-23T10:28:59-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

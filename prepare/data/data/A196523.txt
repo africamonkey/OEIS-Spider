@@ -1,0 +1,55 @@
+{
+    "number": 196523,
+    "data": "1,1,4,28,262,2944,37666,532276,8151322,133562194,2320621222,42475263136,814932467836,16326188799508,340479903535258,7373196169450312,165453350568966163,3840489521467649158,92072430090995120044,2276807696679096394552",
+    "name": "G.f. satisfies A(x) = x + x*A(A(A(A(x)))).",
+    "formula": [
+        "G.f.: A(x) = A(A(x))/(1 + A(A(A(A(A(x)))))).",
+        "G.f.: A(x) = Series_Reversion[ x/(1 + A(A(A(x)))) ].",
+        "G.f.: A(x) = x*F(x,1) where F(x,n) satisfies: F(x,n) = F(x,n-1)*(1 + x*F(x,n+3)) for n>0 with F(x,0)=1; further, x*F(x,n) is the n-th iteration of A(x).",
+        "G.f. satisfies: A(x) = Sum_{n>=0} Product_{k=0..n} A_{3*k}(x), where A_n(x) denotes the n-th iteration of A(x) with A_0(x)=x."
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^2 + 4*x^3 + 28*x^4 + 262*x^5 + 2944*x^6 + 37666*x^7 +...",
+        "Given g.f. A(x), A(x)/x is the unique solution to variable A in the infinite system of simultaneous equations:",
+        "A = 1 + x*D;",
+        "B = A*(1 + x*E);",
+        "C = B*(1 + x*F);",
+        "D = C*(1 + x*G);",
+        "E = D*(1 + x*H); ...",
+        "The solution to the variables in the system of equations are:",
+        "A=A(x)/x, B=A(A(x))/x, C=A(A(A(x)))/x, D=A(A(A(A(x))))/x, etc.,",
+        "where iterations begin:",
+        "A(x) = x + x^2 + 4*x^3 + 28*x^4 + 262*x^5 + 2944*x^6 + 37666*x^7 +...",
+        "A(A(x)) = x + 2*x^2 + 10*x^3 + 77*x^4 + 760*x^5 + 8846*x^6 + 116140*x^7 +...",
+        "A(A(A(x))) = x + 3*x^2 + 18*x^3 + 153*x^4 + 1608*x^5 + 19566*x^6 +...",
+        "A(A(A(A(x)))) = x + 4*x^2 + 28*x^3 + 262*x^4 + 2944*x^5 + 37666*x^6 +...",
+        "A(A(A(A(A(x))))) = x + 5*x^2 + 40*x^3 + 410*x^4 + 4930*x^5 + 66530*x^6 +...",
+        "A(A(A(A(A(A(x)))))) = x + 6*x^2 + 54*x^3 + 603*x^4 + 7752*x^5 + 110484*x^6 +...",
+        "ALTERNATE GENERATING METHOD.",
+        "The g.f. A(x) equals the sum of products of {3*k}-iterations of A(x):",
+        "A(x) = x + x*A_3(x) + x*A_3(x)*A_6(x) + x*A_3(x)*A_6(x)*A_9(x) + x*A_3(x)*A_6(x)*A_9(x)*A_12(x) +...+ Product_{k=0..n} A_{3*k}(x) +...",
+        "where A_n(x) = A_{n-1}(A(x)) is the n-th iteration of A(x) with A_0(x)=x.",
+        "Related expansions.",
+        "x*A_3(x) = x^2 + 3*x^3 + 18*x^4 + 153*x^5 + 1608*x^6 + 19566*x^7 +...",
+        "x*A_3(x)*A_6(x) = x^3 + 9*x^4 + 90*x^5 + 1026*x^6 + 13059*x^7 +...",
+        "x*A_3(x)*A_6(x)*A_9(x) = x^4 + 18*x^5 + 279*x^6 + 4320*x^7 +...",
+        "x*A_3(x)*A_6(x)*A_9(x)*A_12(x) = x^5 + 30*x^6 + 675*x^7 +..."
+    ],
+    "program": [
+        "(PARI) /* Define the n-th iteration of function F: */",
+        "{ITERATE(n, F, p)=local(G=x); for(i=1, n, G=subst(F, x, G+x*O(x^p))); G}",
+        "/* A(x) results from nested iterations of shifted series: */",
+        "(PARI) {a(n)=local(A=x); for(i=1,n, A=x+x*ITERATE(4,A, n)); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=x); for(i=1,n, A=x+x*sum(m=1,n,prod(k=1,m,ITERATE(3*k,A,n)))); polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A030266, A091713."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Oct 03 2011",
+    "references": 0,
+    "revision": 14,
+    "time": "2012-03-30T18:37:31-04:00",
+    "created": "2011-10-03T12:54:57-04:00"
+}

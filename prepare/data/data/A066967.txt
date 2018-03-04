@@ -1,0 +1,50 @@
+{
+    "number": 66967,
+    "data": "1,2,7,10,23,36,65,94,160,230,356,502,743,1030,1480,2006,2797,3760,5120,6780,9092,11902,15701,20350,26508,34036,43860,55822,71215,89988,113792,142724,179137,223230,278183,344602,426687,525616,647085,792950",
+    "name": "Total sum of odd parts in all partitions of n.",
+    "comment": [
+        "Partial sums of A206435. - _Omar E. Pol_, Mar 17 2012"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A066967/b066967.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "Sum_{k=1..n} b(k)*numbpart(n-k), where b(k)=A000593(k)=sum of odd divisors of k.",
+        "a(n) = sum(k*A113685(n,k), k=0..n). - _Emeric Deutsch_, Feb 19 2006",
+        "G.f.: sum((2i-1)x^(2i-1)/(1-x^(2i-1)), i=1..infinity)/product(1-x^j, j=1..infinity). - _Emeric Deutsch_, Feb 19 2006",
+        "a(n) = A066186(n) - A066966(n). - _Omar E. Pol_, Mar 10 2012"
+    ],
+    "example": [
+        "a(4) = 10 because in the partitions of 4, namely [4],[3,1],[2,2],[2,1,1],[1,1,1,1], the total sum of the odd parts is (3+1)+(1+1)+(1+1+1+1) = 10."
+    ],
+    "maple": [
+        "g:=sum((2*i-1)*x^(2*i-1)/(1-x^(2*i-1)),i=1..50)/product(1-x^j,j=1..50): gser:=series(g,x=0,50): seq(coeff(gser,x^n),n=1..47);",
+        "# _Emeric Deutsch_, Feb 19 2006",
+        "b:= proc(n, i) option remember; local f, g;",
+        "      if n=0 or i=1 then [1, n]",
+        "    else f:= b(n, i-1); g:= `if`(i>n, [0, 0], b(n-i, i));",
+        "         [f[1]+g[1], f[2]+g[2]+ (i mod 2)*g[1]*i]",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n, n)[2]:",
+        "seq (a(n), n=1..50);",
+        "# _Alois P. Heinz_, Mar 22 2012"
+    ],
+    "mathematica": [
+        "max = 50; g = Sum[(2*i-1)*x^(2*i-1)/(1-x^(2*i-1)), {i, 1, max}]/Product[1-x^j, {j, 1, max}]; gser = Series[g, {x, 0, max}]; a[n_] := SeriesCoefficient[gser, {x, 0, n}]; Table[a[n], {n, 1, max-1}] (* _Jean-Fran\u00e7ois Alcover_, Jan 24 2014, after _Emeric Deutsch_ *)",
+        "Map[Total[Select[Flatten[IntegerPartitions[#]], OddQ]] &, Range[30]] (* _Peter J. C. Moses_, Mar 14 2014 *)"
+    ],
+    "xref": [
+        "Cf. A000041, A000593, A066897, A066898, A113685, A206435."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vladeta Jovovic_, Jan 26 2002",
+    "ext": [
+        "More terms from _Naohiro Nomoto_ and _Sascha Kurz_, Feb 07 2002"
+    ],
+    "references": 9,
+    "revision": 37,
+    "time": "2014-08-03T23:08:28-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

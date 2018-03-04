@@ -1,0 +1,44 @@
+{
+    "number": 86043,
+    "data": "3,35,357,35711,3571113,357111317,35711131719,3571113171929,357111317192931,35711131719293141,3571113171929314143,357111317192931414359,35711131719293141435961,3571113171929314143596171,357111317192931414359617173,357111317192931414359617173101",
+    "name": "Concatenation of first n twin primes.",
+    "comment": [
+        "After 3, 357111317192931414359 is the only prime in the sequence for n up to 10000.",
+        "Although 5 appears in two twin prime pairs (3, 5) and (5, 7), 5 is concatenated only once in the sequence. - _Daniel Forgues_, Aug 23 2016",
+        "a(n) == 0 mod 3 for n odd, a(n) == 2 mod 3 for n even. - _Robert Israel_, Sep 01 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A086043/b086043.txt\">Table of n, a(n) for n = 1..270</a>",
+        "C. K. Caldwell, <a href=\"http://primes.utm.edu/glossary/page.php?sort=TwinPrime\">Twin Primes</a>.",
+        "Omar E. Pol, <a href=\"http://www.polprimos.com\">Determinacion geometrica de los numeros primos y perfectos</a>."
+    ],
+    "maple": [
+        "Primes:= select(isprime, {seq(i,i=1..100,2)}):",
+        "T1:= Primes intersect map(`+`,Primes,2):",
+        "Twins:= sort(convert(T1 union map(`-`,T1,2),list)):",
+        "dcat:= (a,b) -> a*10^(1+ilog10(b))+b:",
+        "A[1]:= 3:",
+        "for n from 2 to nops(Twins) do A[n]:= dcat(A[n-1],Twins[n]) od:",
+        "seq(A[i],i=1..nops(Twins)); # _Robert Israel_, Sep 01 2016"
+    ],
+    "mathematica": [
+        "Table[FromDigits@ Flatten@ Map[IntegerDigits, Take[#, n]], {n, Length@ #}] &[Union@ Join[#, # + 2] &@ Select[Prime@ Range@ 17, NextPrime@ # - 2 == # &]] (* _Michael De Vlieger_, Sep 01 2016 *)"
+    ],
+    "program": [
+        "(PARI) concattwprb(n) = { y=3; forprime(x=5,n, if(isprime(x+2) || isprime(x-2), y=eval(concat(Str(y),Str(x))); print1(y\",\") ) ) }"
+    ],
+    "xref": [
+        "Cf. A001097 (twin primes), A086080, A086158.",
+        "Cf. A007908, A019518, A059996, A078795, A089933, A092447."
+    ],
+    "keyword": "easy,nonn,base",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Sep 08 2003",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Jul 01 2008 at the suggestion of _R. J. Mathar_"
+    ],
+    "references": 3,
+    "revision": 27,
+    "time": "2016-10-02T21:34:33-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

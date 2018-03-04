@@ -1,0 +1,41 @@
+{
+    "number": 60345,
+    "data": "5,2875,4876875,8564575000,15517926796875,28663236110956000,53621944306062201000,101216230345800061125625,192323666400003538944396875,367299732093982242625847031250,704288164978454714776724365580000,1354842473951260627644461070753075500,2613295702542192770504516764304958585000",
+    "name": "An expansion related to Yukawa coupling.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A060345/b060345.txt\">Table of n, a(n) for n = 0..300</a>",
+        "P. Candelas et al., <a href=\"http://dx.doi.org/10.1016/0550-3213(91)90292-6\">A pair of Calabi-yau manifolds as an exactly soluble superconformal theory</a>, Nuclear Phys. B 359 (1991), 21-74.",
+        "Daniel B. Grunberg and Pieter Moree, with an Appendix by Don Zagier, <a href=\"http://arxiv.org/abs/math.NT/0610286\">Sequences of enumerative geometry: congruences and asymptotics</a>, arXiv:math/0610286 [math.NT], 2006."
+    ],
+    "formula": [
+        "Sum_{n >= 0} a(n)*q^n = 5 + Sum_{n >= 1} A060041(n)*n^3*q^n/(1-q^n)."
+    ],
+    "example": [
+        "a(10) = A060041(1) + 8*A060041(2) + 125*A060041(5) + 1000*A060041(10) = 704288164978454714776724365580000."
+    ],
+    "program": [
+        "(PARI) cumsum(v) = for(i=2, #v, v[i] += v[i-1]); v;",
+        "seq(N, {d=5}) = {",
+        "  my(x = 'x + O('x^(N+1)), h = cumsum(vector(d*N, n, 1/n)),",
+        "     y0 = sum(n=0, N, (d*n)!/n!^d * x^n),",
+        "     y1 = d * sum(n = 1, N, ((d*n)!/n!^d * (h[d*n] - h[n])) * x^n),",
+        "     Qx = x * exp(y1/y0), Xq = serreverse(Qx));",
+        "  Vec(d * (x * Xq'/Xq)^(d-2) / ((1 - d^d*Xq) * sqr(subst(y0, 'x, Xq))));",
+        "};",
+        "seq(20)  \\\\ _Gheorghe Coserea_, Jul 29 2016"
+    ],
+    "xref": [
+        "Cf. A060041."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_, Mar 30 2001",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Apr 01 2001",
+        "a(6) corrected and a(10)-a(12) added by _Gheorghe Coserea_, Jul 28 2016"
+    ],
+    "references": 3,
+    "revision": 27,
+    "time": "2016-08-01T04:55:27-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

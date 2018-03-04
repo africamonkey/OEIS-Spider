@@ -1,0 +1,43 @@
+{
+    "number": 273873,
+    "data": "1,1,2,3,6,12,28,65,166,412,1076,2806,7524,20020,54744,148417,410078,1126732,3144500,8728570,24555900,68713420,194469616,548088278,1559301428,4418131108,12628267512,35957541462,103150588492,294924202032,848878072440,2435729999665",
+    "name": "Number of strict trees of weight n.",
+    "comment": [
+        "A strict tree t is either (case 1) a positive integer t = n, or (case 2) a set t = {t1, t2, ..., tk} of two or more strict trees (i.e. branches) with distinct weights, where the weight of a strict tree in the second case is the sum of the weights of its branches; hence the multiset of weights is a strict integer partition of n. For example, {{{{{2,1},1},2},3},{4,{2,1}},{2,1},1} is a strict tree of weight 20."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A273873/b273873.txt\">Table of n, a(n) for n = 1..2000</a>",
+        "H. Gingold, A. Knopfmacher, <a href=\"http://dx.doi.org/10.4153/CJM-1995-062-9\">Analytic properties of power product expansions</a>, Canad. J. Math. 47(1995), 1219-1239",
+        "Gus Wiseman, <a href=\"https://docs.google.com/document/d/1m0s6DGTBkDW9gvMuFmJHvy6oLGRAbQ7okAZcOPZawp0/pub\">Comcategories and Multiorders</a>, <a href=\"http://www.nafindix.com/math/academic/ComcategoriesandMultiordersv7.pdf\">(pdf version)</a>",
+        "Gus Wiseman, <a href=\"/A273873/a273873.png\">All strict trees n=1..6.</a>"
+    ],
+    "formula": [
+        "Sum_{g(t)=y} (-1)^{d(t)} = mu(|y|<={y_1,...,y_k}), where mu is the Mobius function of the multiorder of integer partitions, g(t) is the multiset of leaves of a strict tree t, and d(t) is the number of branchings.",
+        "Strict trees are closely related to the coefficients appearing in a(i) = Sum_y c(y_1)*...*c(y_k) where Sum_i c(i)*x^i = Prod_i (1 + a(i)*x^i). The latter identity is the formal power product expansion (PPE) of an (ordinary) generating function."
+    ],
+    "example": [
+        "a(6) = 12: {6, (51), (42), ((41)1), (321), ((31)2), ((32)1), (((31)1)1), ((21)21), (((21)1)2), (((21)2)1), ((((21)1)1)1)}."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember;",
+        "      `if`(i*(i+1)/2<n, 0, `if`(n=0, 1, b(n, i-1)+",
+        "      `if`(i>n, 0, b(n-i, i-1)*(1+b(i, i-1)))))",
+        "    end:",
+        "a:= n-> 1+b(n, n-1):",
+        "seq(a(n), n=1..35);  # _Alois P. Heinz_, Jun 02 2016"
+    ],
+    "mathematica": [
+        "STE[n_Integer?Positive]:=STE[n]=1+Plus@@Map[Function[ptn,Times@@STE/@ptn],Select[IntegerPartitions[n],And[Length[#]>1,UnsameQ@@#]&]];",
+        "Array[STE,30]"
+    ],
+    "xref": [
+        "Cf. A196545 (weakly ordered plane trees); A220418, A220420 (power product expansions); A271619, A063834 (twice partitioned numbers)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Jun 01 2016",
+    "references": 27,
+    "revision": 14,
+    "time": "2016-06-04T09:41:32-04:00",
+    "created": "2016-06-04T09:41:32-04:00"
+}

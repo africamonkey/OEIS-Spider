@@ -1,0 +1,39 @@
+{
+    "number": 54921,
+    "data": "1,2,3,10,50,354,3883,67994,2038236,109141344,10693855251,1934271527050,648399961915988,404093642681273382,469756524755173254759,1022121472711196824292810,4176802133456105622904206409,32159648543645931290004658982846",
+    "name": "Number of connected unlabeled symmetric relations (graphs with loops) having n nodes.",
+    "comment": [
+        "Number of non-isomorphic connected antichains of two-element multisets spanning a set of n vertices. Connected antichains are also called clutters."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A054921/b054921.txt\">Table of n, a(n) for n = 0..86</a>",
+        "V. A. Liskovets, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/LISK/Derseq.html\">Some easily derivable sequences</a>, J. Integer Sequences, 3 (2000), #00.2.2.",
+        "Gus Wiseman, <a href=\"/A054921/a054921.png\">A picture of all unlabeled connected simple spanning multiclutters for a(4)=50</a>"
+    ],
+    "formula": [
+        "EULERi transform of A000666."
+    ],
+    "example": [
+        "A000666(n) = Number of increasing sequences of pairs ((x_1,y_1),...,(x_k,y_k)) such that: Sum(x_i)=n and 1<=y_i<=a(x_i+1) for all i. For example the A000666(3)=20 sequences are {((1,1),(1,1),(1,1)), ((1,1),(1,1),(1,2)), ((1,1),(1,2),(1,2)), ((1,2),(1,2),(1,2)); ((1,1),(2,1)), ((1,1),(2,2)), ((1,1),(2,3)), ((1,2),(2,1)), ((1,2),(2,2)), ((1,2),(2,3)); ((3,1)), ((3,2)), ((3,3)), ((3,4)), ((3,5)), ((3,6)), ((3,7)), ((3,8)), ((3,9)), ((3,10))}. - _Gus Wiseman_, Jul 21 2016"
+    ],
+    "mathematica": [
+        "nn=8;",
+        "unlabeledSimpleMluts[n_Integer]:=unlabeledSimpleMluts[n]=Total[Power[2,PermutationCycles[Ordering[Map[Sort,Select[Tuples[Range[n],2],OrderedQ]/.Table[i->Part[#,i],{i,n}]]],Length]]&/@Permutations[Range[n]]]/n!;",
+        "multing[t_,n_]:=Array[(t+#-1)/#&,n,1,Times];",
+        "ReplaceAll[a/@Range[0,nn],Solve[Table[unlabeledSimpleMluts[n]==If[n===0,a[0],Total[Function[ptn,Times@@(multing[a[First[#]],Length[#]]&/@Split[ptn])]/@IntegerPartitions[n]]],{n,0,nn}],a/@Range[0,nn]][[1]]] (* _Gus Wiseman_, Jul 21 2016 *)"
+    ],
+    "xref": [
+        "Cf. A000666."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, May 24 2000",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Jul 17 2000",
+        "Added a(0)=1 by _Gus Wiseman_, Jul 21 2016"
+    ],
+    "references": 9,
+    "revision": 22,
+    "time": "2016-07-21T17:14:24-04:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

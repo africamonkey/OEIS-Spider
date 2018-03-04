@@ -1,0 +1,44 @@
+{
+    "number": 208746,
+    "data": "1,2,3,3,4,5,6,7,7,8,9,10,11,12,13,13,14,14,15,15,16,17,18,19,19,20,21,21,22,23,24,24,25,26,27,27,28,29,30,31,32,33,34,34,35,36,37,38,38,38,39,39,40,41,42,43,44,45,46,46,47,48,49,49,50,51,52,52,53,54,55,55,56,57,57,57,58,59,60,61,61,62,63,64,65,66,67,68,69,70,71,71,72,73,74,74,75,75,75,75",
+    "name": "Size of largest subset of [1..n] containing no three terms in geometric progression.",
+    "comment": [
+        "All three-term geometric progressions must be avoided, even those such as 4,6,9 whose ratio is not an integer.",
+        "David Applegate's computation used a floating-point IP solver for the packing subproblems, so although it's almost certainly correct there is no proof. First he enumerated geometric progressions using",
+        "for (i=1;i<=N;i++) {",
+        "   for (j=2; j*j<=i; j++) {",
+        "     if (i % (j*j) != 0) continue;",
+        "     for (k=1; k<j; k++) {",
+        "       print i*k*k/(j*j), i*k/j, i;",
+        "     }",
+        "   }",
+        "}",
+        "and then solved the integer program of maximizing the subset of {1..N} subject to not taking all 3 of any progression."
+    ],
+    "link": [
+        "<a href=\"http://oeis.org/wiki/Index_to_OEIS:_Section_No#non_averaging\">Index entries for non-averaging sequences</a>"
+    ],
+    "maple": [
+        "# Maple program for computing the n-th term from _Robert Israel_:",
+        "A:= proc(n)",
+        "     local cons, x;",
+        "     cons:=map(op,{seq(map(t -> x[t]+x[b]+x[b^2/t]<=2,",
+        "          select(t -> (t<b) and (t>=b^2/n),",
+        "       numtheory:-divisors(b^2))),b=2..n-1)});",
+        "     Optimization:-Maximize(add(x[i],i=1..n),cons, assume=binary)[1]",
+        "end proc;"
+    ],
+    "xref": [
+        "Cf. A003002."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_David Applegate_ and _N. J. A. Sloane_, Mar 01 2012",
+    "ext": [
+        "a(1)-a(82) confirmed by Robert Israel and extended to a(100), Mar 01 2012"
+    ],
+    "references": 7,
+    "revision": 21,
+    "time": "2017-11-30T18:52:04-05:00",
+    "created": "2012-03-01T15:22:47-05:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 247009,
+    "data": "1,1,1,4,9,96,190,4320,11025,179200,805896,36288000,63155400,5748019200,18861448320,380872267776,4108830350625,334764638208000,778062273788800,115242726703104000,310526396168644656,15009607805018112000,208853182616336294400",
+    "name": "Number of permutations on [n] that are the n-th power of a permutation.",
+    "comment": [
+        "Number of permutations p on [n] such that a permutation q on [n] exists with p=q^n."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A247009/b247009.txt\">Table of n, a(n) for n = 0..200</a>",
+        "H. S. Wilf, <a href=\"http://www.math.upenn.edu/~wilf/DownldGF.html\">Generatingfunctionology</a>, 2nd edn., Academic Press, NY, 1994, Theorem 4.8.2."
+    ],
+    "example": [
+        "a(0) = 1: (), the empty permutation.",
+        "a(1) = 1: (1).",
+        "a(2) = 1: (1,2).",
+        "a(3) = 4: (1,2,3), (1,3,2), (2,1,3), (3,2,1).",
+        "a(4) = 9: (1,2,3,4), (1,3,4,2), (1,4,2,3), (2,3,1,4), (2,4,3,1), (3,1,2,4), (3,2,4,1), (4,1,3,2), (4,2,1,3)."
+    ],
+    "maple": [
+        "with(combinat): with(numtheory): with(padic):",
+        "b:= proc(n, i, k) option remember; `if`(n=0, 1, `if`(i<1, 0, add(",
+        "      `if`(irem(j, mul(p^ordp(k, p), p=factorset(i)))=0, (i-1)!^j*",
+        "      multinomial(n, n-i*j, i$j)/j!*b(n-i*j, i-1, k), 0), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$3):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "multinomial[n_, k_List] := n!/Times @@ (k!); b[_, 1, _] = 1;",
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0, 1, If[i < 1, 0, Sum[If[Mod[j, Product[p^IntegerExponent[k, p], {p, FactorInteger[i][[All, 1]]}]] == 0, (i-1)!^j*multinomial[n, Join[{n-i*j}, Array[i&, j]]]/j!*b[n-i*j, i-1, k], 0], {j, 0, n/i}]]];",
+        "a[n_] := b[n, n, n];",
+        "Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Mar 25 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Main diagonal of A247005."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Sep 09 2014",
+    "references": 2,
+    "revision": 17,
+    "time": "2017-03-25T06:40:09-04:00",
+    "created": "2014-09-09T07:57:08-04:00"
+}

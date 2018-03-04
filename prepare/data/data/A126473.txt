@@ -1,0 +1,55 @@
+{
+    "number": 126473,
+    "data": "1,5,23,107,497,2309,10727,49835,231521,1075589,4996919,23214443,107848529,501037445,2327695367,10813893803,50238661313,233396326661,1084301290583,5037394142315,23402480441009,108722104190981",
+    "name": "Number of strings over a 5 symbol alphabet with adjacent symbols differing by three or less.",
+    "comment": [
+        "[Empirical] a(base,n)=a(base-1,n)+7^(n-1) for base>=3n-2; a(base,n)=a(base-1,n)+7^(n-1)-2 when base=3n-3",
+        "From _Johannes W. Meijer_, Aug 01 2010: (Start)",
+        "The a(n) represent the number of n-move routes of a fairy chess piece starting in a given side square (m = 2, 4, 6 or 8) on a 3 X 3 chessboard. This fairy chess piece behaves like a king on the eight side and corner squares but on the central square the king goes crazy and turns into a red king, see A179596.",
+        "For the side squares the 512 red kings lead to 47 different red king sequences, see the cross-references for some examples.",
+        "The sequence above corresponds to four A[5] vectors with the decimal [binary] values 367 [1,0,1,1,0,1,1,1,1], 463 [1,1,1,0,0,1,1,1,1], 487 [1,1,1,1,0,0,1,1,1] and 493 [1,1,1,1,0,1,1,0,1]. These vectors lead for the corner squares to A179596 and for the central square to A179597.",
+        "This sequence belongs to a family of sequences with g.f. (1+x)/(1-4*x-k*x^2). Red king sequences that are members of this family are A003947 (k=0), A015448 (k=1), A123347 (k=2), A126473 (k=3; this sequence) and A086347 (k=4). Other members of this family are A000351 (k=5), A001834 (k=-1), A111567 (k=-2), A048473 (k=-3) and A053220 (k=-4)",
+        "Inverse binomial transform of A154244.",
+        "(End)",
+        "Equals the INVERT transform of A055099: (1, 4, 14, 50, 178,...). - _Gary W. Adamson_, Aug 14 2010",
+        "Number of one-sided n-step walks taking steps from {E, W, N, NE, NW}. - _Shanzhen Gao_, May 10 2011",
+        "For n>=1, a(n) equals the numbers of words of length n-1 on alphabet {0,1,2,3,4} containing no subwords 00 and 11. - _Milan Janjic_, Jan 31 2015"
+    ],
+    "reference": [
+        "S. Gao, H. Niederhausen, Sequences Arising From Prudent Self-Avoiding Walks (submitted to INTEGERS: The Electronic Journal of Combinatorial Number Theory)."
+    ],
+    "link": [
+        "Shanzhen Gao, Keh-Hsun Chen, <a href=\"http://worldcomp-proceedings.com/proc/p2014/FCS2696.pdf\">Tackling Sequences From Prudent Self-Avoiding Walks</a>, FCS'14, The 2014 International Conference on Foundations of Computer Science.",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (4,3)"
+    ],
+    "formula": [
+        "From _Johannes W. Meijer_, Aug 01 2010: (Start)",
+        "G.f.: (1+x)/(1-4*x-3*x^2).",
+        "a(n) = 4*a(n-1) + 3*a(n-2) with a(0) = 1 and a(1) = 5.",
+        "a(n) = ((1+3/sqrt(7))/2)*(A)^(-n) + ((1-3/sqrt(7))/2)*(B)^(-n) with A = (-2 + sqrt(7))/3 and B = (-2-sqrt(7))/3.",
+        "Limit(a(n+k)/a(k),k=infinity) = (-1)^(n+1)*A000244(n)/(A015530(n)*sqrt(7)-A108851(n))",
+        "(End)"
+    ],
+    "maple": [
+        "with(LinearAlgebra): nmax:=19; m:=2; A[5]:= [1,0,1,1,0,1,1,1,1]: A:=Matrix([[0,1,0,1,1,0,0,0,0],[1,0,1,1,1,1,0,0,0],[0,1,0,0,1,1,0,0,0],[1,1,0,0,1,0,1,1,0],A[5],[0,1,1,0,1,0,0,1,1],[0,0,0,1,1,0,0,1,0],[0,0,0,1,1,1,1,0,1],[0,0,0,0,1,1,0,1,0]]): for n from 0 to nmax do B(n):=A^n: a(n):= add(B(n)[m,k],k=1..9): od: seq(a(n), n=0..nmax); # _Johannes W. Meijer_, Aug 01 2010"
+    ],
+    "program": [
+        "(S/R) stvar $[N]:(0..M-1) init $[]:=0 asgn $[]->{*} kill +[i in 0..N-2](($[i]`-$[i+1]`>3)+($[i+1]`-$[i]`>3))",
+        "(PARI) a(n)=([0,1; 3,4]^n*[1;5])[1,1] \\\\ _Charles R Greathouse IV_, May 10 2016"
+    ],
+    "xref": [
+        "Cf. 5 symbol differing by two or less A126392, one or less A057960.",
+        "Cf. Red king sequences side squares [numerical value A[5]]: A086347 [495], A179598 [239], A126473 [367], A123347 [335], A179602 [95], A154964 [31], A015448 [327], A152187 [27], A003947 [325], A108981 [11], A007483 [2]. - _Johannes W. Meijer_, Aug 01 2010",
+        "Cf. A055099."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_R. H. Hardin_, Dec 27 2006",
+    "ext": [
+        "Edited by _Johannes W. Meijer_, Aug 10 2010"
+    ],
+    "references": 58,
+    "revision": 35,
+    "time": "2016-05-10T16:18:53-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

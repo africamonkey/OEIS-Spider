@@ -1,0 +1,40 @@
+{
+    "number": 201466,
+    "data": "1,3,30,498,11568,345432,12606240,543678672,27054328512,1525746223488,96167433279360,6699404849841408,511152613463843328,42391161255859802112,3796840836492517125120,365260399012767192102912,37561729737177160757133312,4111876748834828077514170368",
+    "name": "E.g.f. satisfies: A(x) = (x + 3*exp(A(x)) - 3)/4.",
+    "formula": [
+        "E.g.f. satisfies: x = A( 3 + 4*x - 3*exp(x) ).",
+        "E.g.f.: (x-3)/4 - LambertW(-3*exp((x-3)/4)/4). - _Vaclav Kotesovec_, Jan 10 2014",
+        "a(n) ~ n^(n-1) / (2 * (4*log(4/3)-1)^(n-1/2) * exp(n)). - _Vaclav Kotesovec_, Jan 10 2014",
+        "O.g.f.: Sum_{n>=0} 3^n / Product_{k=0..n} (4 - k*x). - _Paul D. Hanna_, Oct 27 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 3*x^2/2! + 30*x^3/3! + 498*x^4/4! + 11568*x^5/5! + 345432*x^6/6! +...",
+        "The exponential of the e.g.f. begins:",
+        "exp(A(x)) = 1 + x + 4*x^2/2! + 40*x^3/3! + 664*x^4/4! + 15424*x^5/5! + 460576*x^6/6! +...",
+        "where x = 3 + 4*A(x) - 3*exp(A(x)).",
+        "...",
+        "O.g.f.: G(x) = 1 + 3*x + 30*x^2 + 498*x^3 + 11568*x^4 + 345432*x^5 +...",
+        "where",
+        "G(x) = 1/4 + 3/(4*(4-x)) + 3^2/(4*(4-x)*(4-2*x)) + 3^3/(4*(4-x)*(4-2*x)*(4-3*x)) + 3^4/(4*(4-x)*(4-2*x)*(4-3*x)*(4-4*x)) + 3^5/(4*(4-x)*(4-2*x)*(4-3*x)*(4-4*x)*(4-5*x)) +..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[3 - 3*E^x + 4*x,{x,0,20}],x],x] * Range[0,20]!] (* _Vaclav Kotesovec_, Jan 10 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(serreverse(3+4*x - 3*exp(x+x^2*O(x^n))),n)}",
+        "(PARI) \\p100 \\\\ set precision",
+        "{A=Vec(sum(n=0, 600, 1.*3^n/prod(k=0, n, 4 - k*x + O(x^31))))}",
+        "for(n=0, 25, print1(round(A[n+1]), \", \")) \\\\ _Paul D. Hanna_, Oct 27 2014"
+    ],
+    "xref": [
+        "Cf. variants: A000311, A201465."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Dec 01 2011",
+    "references": 1,
+    "revision": 11,
+    "time": "2014-10-27T22:59:55-04:00",
+    "created": "2011-12-01T23:24:15-05:00"
+}

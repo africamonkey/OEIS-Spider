@@ -1,0 +1,40 @@
+{
+    "number": 214760,
+    "data": "1,2,8,40,224,1328,8128,51664,344864,2419808,17690624,133255936,1025049088,8010533504,63486137600,510583994560,4173502486400,34713858911872,293845548560384,2528481737709056,22072195485742080,194999285532239872,1739475973516343296",
+    "name": "G.f. satisfies: A(x) = 1/A(-x*A(x)^3).",
+    "comment": [
+        "Compare g.f. to: G(x) = 1/G(-x*G(x)^3) when G(x) = 1 + x*G(x)^2 (A000108).",
+        "An infinite number of functions G(x) satisfy (*) G(x) = 1/G(-x*G(x)^3); for example, (*) is satisfied by G(x) = C(m*x) = (1-sqrt(1-4*m*x))/(2*m*x) for all m, where C(x) is the Catalan function."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A214760/b214760.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "The g.f. of this sequence is the limit of the recurrence:",
+        "(*) G_{n+1}(x) = AGM(G_n(x), 1/G_n(-x*G_n(x)^3)) starting at G_0(x) = 1+2*x, where AGM(x,y) = AGM((x+y)/2,sqrt(x*y)) is the arithmetic-geometric mean of x and y."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 8*x^2 + 40*x^3 + 224*x^4 + 1328*x^5 + 8128*x^6 +...",
+        "A(x)^2 = 1 + 4*x + 20*x^2 + 112*x^3 + 672*x^4 + 4192*x^5 + 26752*x^6 +...",
+        "A(x)^3 = 1 + 6*x + 36*x^2 + 224*x^3 + 1440*x^4 + 9456*x^5 + 62912*x^6 +...",
+        "To illustrate the recurrence for the g.f., start with G_0(x) = 1+2*x, then",
+        "1/G_0(-x*G_0(x)^3) = 1/(1-2*x-12*x^2-24*x^3-16*x^4), and so",
+        "G_1(x) = AGM(1+2*x, 1/(1-2*x-12*x^2-24*x^3-16*x^4)):",
+        "G_1(x) =  1 + 2*x + 8*x^2 + 40*x^3 + 192*x^4 + 976*x^5 + 4944*x^6 +...;",
+        "continuing in this way yields the g.f. as a limit."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+2*x); for(i=0, n, A=agm(A,1/subst(A, x, -x*A^3+x*O(x^n)))); polcoeff(A, n)}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A214763."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jul 29 2012",
+    "references": 1,
+    "revision": 8,
+    "time": "2013-01-06T02:54:09-05:00",
+    "created": "2012-07-29T19:44:31-04:00"
+}

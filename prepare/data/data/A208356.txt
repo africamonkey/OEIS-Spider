@@ -1,0 +1,52 @@
+{
+    "number": 208356,
+    "data": "1,2,8,61,762,13204,300155,8950176",
+    "name": "Number of labeled star-like graphs on n vertices.",
+    "comment": [
+        "Graph G is called star-like if and only if one of its clique trees forms a star.",
+        "The first seven terms published in the Bina Ph.D. thesis."
+    ],
+    "reference": [
+        "V. Bina, Multidimensional probability distributions: Structure and learning, Ph.D. Thesis. Fac. of Management, University of Economics in Prague (2011)."
+    ],
+    "link": [
+        "V. Bina, <a href=\"https://www.vse.cz/vskp/show_file.php?soubor_id=920360\">Multidimensional probability distributions: Structure and learning</a>, Ph.D. Thesis. Fac. of Management, University of Economics in Prague (2011)"
+    ],
+    "program": [
+        "# R code",
+        "library(igraph)",
+        "bits <- function(x, n) { # decodes binary representation of graphs",
+        "  list <- NULL",
+        "  while (x > 0) {",
+        "     list <- c(list, x %% 2)",
+        "     x <- x %/% 2",
+        "  }",
+        "  while (length(list) < n) {list <- c(list,0)}",
+        "  return(list)",
+        "}",
+        "n<-5 # number of vertices",
+        "edges <- choose(n,2)",
+        "models <- 0:(2^edges-1) # all graphs on n vertices",
+        "mat <- matrix(rep(0,n^2),ncol=n) #adjacency matrix",
+        "nstar <- 0",
+        "for (m in models) {",
+        "    mat[lower.tri(mat)] <- bits(m,hran)",
+        "    l <- maximal.cliques(graph.adjacency(mat,mode=\"lower\"))",
+        "    aux <- factor(unlist(l))",
+        "    l <- lapply(l,setdiff, levels(aux)[tabulate(aux) == 1])",
+        "    l <- lapply(l,setdiff,l[[which.max(unlist(lapply(l,length)))]])",
+        "    if (sum(unlist(lapply(l,length))) < 1) nstar <- nstar + 1",
+        "}",
+        "nstar"
+    ],
+    "xref": [
+        "Cf. A179534, A006125, A058862 (sub- and superclasses)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vladislav Bina_, Feb 25 2012",
+    "references": 0,
+    "revision": 10,
+    "time": "2017-06-28T17:49:13-04:00",
+    "created": "2012-02-25T21:51:22-05:00"
+}

@@ -1,0 +1,64 @@
+{
+    "number": 90466,
+    "data": "6,9,10,12,15,16,18,21,22,24,25,27,28,30,33,34,35,36,39,40,42,45,46,48,49,51,52,54,55,57,58,60,63,64,65,66,69,70,72,75,76,78,81,82,84,85,87,88,90,91,92,93,94,95,96,99,100,102,105,106,108,111,112,114,115,117,118",
+    "name": "Regular figurative or polygonal numbers of order greater than 2.",
+    "comment": [
+        "The sorted k-gonal numbers of order greater than 2. If one were to include either the rank 2 or the 2-gonal numbers, then every number would appear.",
+        "Sequence A090428 (excluding 1) is a subset of this sequence. - _T. D. Noe_, Jun 14 2012",
+        "Number of terms less than or equal to 10^k for k = 1,2,3,...: 3, 57, 622, 6357, 63889, 639946, 6402325, 64032121, 640349979, 6403587409, 64036148166, 640362343980, ..., . - _Robert G. Wilson v_, May 29 2014"
+    ],
+    "reference": [
+        "Albert H. Beiler, Recreations In The Theory Of Numbers, The Queen Of Mathematics Entertains, Dover, NY, 1964, pps. 185-199."
+    ],
+    "link": [
+        "T. D. Noe and Robert G. Wilson v, <a href=\"/A090466/b090466.txt\">Table of n, a(n) for n = 1..10000</a> (only the first 1000 terms are from T. D. Noe).",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/FigurateNumber.html\">Figurate Number</a>",
+        "<a href=\"/index/Pol#polygonal_numbers\">Index to sequences related to polygonal numbers</a>"
+    ],
+    "formula": [
+        "The n-th k-gonal number is 1 + k*n(n-1)/2 - (n-1)^2 = A057145(k,n)."
+    ],
+    "maple": [
+        "isA090466 := proc(n)",
+        "    local nsearch,ksearch;",
+        "    for nsearch from 3 do",
+        "        if A057145(nsearch,3) > n then",
+        "            return false;",
+        "        end if;",
+        "        for ksearch from 3 do",
+        "            if A057145(nsearch,ksearch) = n then",
+        "                return true;",
+        "            elif A057145(nsearch,ksearch) > n then",
+        "                break;",
+        "            end if;",
+        "        end do:",
+        "    end do:",
+        "end proc:",
+        "for n from 1 to 1000 do",
+        "    if isA090466(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jul 28 2016"
+    ],
+    "mathematica": [
+        "Take[Union[Flatten[Table[1+k*n (n-1)/2-(n-1)^2,{n,3,100},{k,3,40}]]],67] (* corrected by _Ant King_, Sep 19 2011 *)",
+        "planeFigurative1[ngon_,rank_]:=(ngon-2) Binomial[rank,2]+rank; mx = 150; n = k = 3; lst = {}; While[n < Floor[mx/3]+2, a = planeFigurative1[n, k]; If[a < mx+1, AppendTo[ lst, a], (n++; k = 2)]; k++]; lst = Union@ lst (* _Robert G. Wilson v_, May 29 2014 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List()); lim\\=1; for(n=3,sqrtint(8*lim+1)\\2, for(k=3,2*(lim-2*n+n^2)\\n\\(n-1), listput(v, 1+k*n*(n-1)/2-(n-1)^2))); Set(v) \\\\ _Charles R Greathouse IV_, Jan 19 2017",
+        "(PARI) is(n)=for(s=3,n\\3+1,ispolygonal(n,s)&&return(s)) \\\\ _M. F. Hasler_, Jan 19 2017"
+    ],
+    "xref": [
+        "Cf. A057145. Complement is A090467."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Dec 01 2003",
+    "ext": [
+        "Verified by _Don Reble_, Mar 12 2006"
+    ],
+    "references": 8,
+    "revision": 56,
+    "time": "2017-10-19T03:14:27-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

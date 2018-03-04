@@ -1,0 +1,44 @@
+{
+    "number": 7769,
+    "data": "1,1,2,5,18,105,902,9749,127072,1915951,32743182,624999093,13176573910,304072048265,7623505722158,206342800616597,5996837126024824,186254702826289089,6156752656678674792,215810382466145354405,7995774669504366055054",
+    "name": "Number of chord diagrams with n chords; number of pairings on a necklace.",
+    "comment": [
+        "Place 2n points equally spaced on a circle. Draw lines to pair up all the points so that each point has exactly one partner."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A007769/b007769.txt\">Table of n, a(n) for n = 0..200</a>",
+        "D. Bar-Natan, <a href=\"http://dx.doi.org/10.1016/0040-9383(95)93237-2\">On the Vassiliev Knot Invariants</a>, Topology 34 (1995) 423-472.",
+        "D. Bar-Natan, <a href=\"http://www.pdmi.ras.ru/~duzhin/VasBib/\">Bibliography of Vassiliev Invariants</a>.",
+        "W. Y.-C. Chen, D. C. Torney, <a href=\"http://dx.doi.org/10.1016/j.dam.2004.02.013\">Equivalence classes of matchings and lattice-square designs</a>, Discr. Appl. Math. 145 (3) (2005) 349-357., table of C_2n.",
+        "Combinatorial Object Server, <a href=\"http://www.theory.cs.uvic.ca/~cos/inf/neck/chords.html\">Information on chord diagrams</a>",
+        "\u00c9tienne Ghys, <a href=\"http://arxiv.org/abs/1612.06373\">A Singular Mathematical Promenade</a>, arXiv:1612.06373 [math.GT], 2016. See p. 252.",
+        "A. Khruzin, <a href=\"https://arxiv.org/abs/math/0008209\">Enumeration of chord diagrams</a>, arXiv:math/0008209 [math.CO], 2000.",
+        "Joe Sawada, <a href=\"https://doi.org/10.1137/S0895480100377970\">A fast algorithm for generating nonisomorphic chord diagrams</a>, SIAM J. Discrete Math, Vol. 15, No. 4, 2002, pp. 546-561.",
+        "<a href=\"/index/Ne#necklaces\">Index entries for sequences related to necklaces</a>"
+    ],
+    "formula": [
+        "2n a_n = Sum_{2n=pq} alpha(p, q)phi(q), phi = Euler function, alpha(p, q) = Sum_{k >= 0} binomial(p, 2k) q^k (2k-1)!! if q even, = q^{p/2} (p-1)!! if q odd."
+    ],
+    "mathematica": [
+        "max = 20; alpha[p_, q_?EvenQ] := Sum[Binomial[p, 2k]*q^k*(2k-1)!!, {k, 0, max}]; alpha[p_, q_?OddQ] := q^(p/2)*(p-1)!!; a[0] = 1; a[n_] := Sum[q = 2n/p; alpha[p, q]*EulerPhi[q], {p, Divisors[2n]}]/(2n); Table[a[n], {n, 0, max}] (* _Jean-Fran\u00e7ois Alcover_, May 07 2012, after _R. J. Mathar_ *)"
+    ],
+    "program": [
+        "(PARI) doublefactorial(n)={ local(resul) ; resul=1 ; forstep(i=n,2,-2, resul *= i ;) ; return(resul) ; }",
+        "alpha(n,q)={ if(q %2, return( q^(p/2)*doublefactorial(p-1)), return( sum(k=0,p/2,binomial(p,2*k)*q^k*doublefactorial(2*k-1)) ) ;) ; }",
+        "A007769(n)={ local(resul,q) ; if(n==0, return(1), resul=0 ; fordiv(2*n,p, q=2*n/p ; resul += alpha(p,q)*eulerphi(q) ;); return(resul/(2*n)) ;) ; } { for(n=0,20, print(n,\" \",A007769(n)) ;) ; } \\\\ _R. J. Mathar_, Oct 26 2006"
+    ],
+    "xref": [
+        "Cf. A054499, A104255, A279207, A279208."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,3",
+    "author": "Jean.Betrema(AT)labri.u-bordeaux.fr",
+    "ext": [
+        "More terms from _Christian G. Bower_, Apr 06 2000",
+        "Corrected and extended by _R. J. Mathar_, Oct 26 2006"
+    ],
+    "references": 12,
+    "revision": 44,
+    "time": "2018-01-28T02:27:08-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

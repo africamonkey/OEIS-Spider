@@ -1,0 +1,108 @@
+{
+    "number": 27383,
+    "data": "1,2,4,6,10,14,22,30,46,62,94,126,190,254,382,510,766,1022,1534,2046,3070,4094,6142,8190,12286,16382,24574,32766,49150,65534,98302,131070,196606,262142,393214,524286,786430,1048574,1572862,2097150,3145726",
+    "name": "Number of balanced strings of length n: let d(S) = #(1's) - #(0's), # == count in S, then S is balanced if every substring T of S has -2 <= d(T) <= 2.",
+    "comment": [
+        "Number of \"fold lines\" seen when a rectangular piece of paper is folded n+1 times along alternate orthogonal directions and then unfolded. - Quim Castellsaguer (qcastell(AT)pie.xtec.es), Dec 30 1999",
+        "Also the number of binary strings with the property that, when scanning from left to right, once the first 1 is seen in position j, there must be a 1 in positions j+2, j+4, ... until the end of the string. (Positions j+1, j+3, ... can be occupied by 0 or 1.) - _Jeffrey Shallit_, Sep 02 2002",
+        "a(n-1) is also the Moore lower bound on the order of a (3,n)-cage. - _Eric W. Weisstein_, May 20 2003 and _Jason Kimberley_, Oct 30 2011",
+        "Partial sums of A016116. - _Hieronymus Fischer_, Sep 15 2007",
+        "Equals row sums of triangle A152201. - _Gary W. Adamson_, Nov 29 2008",
+        "From _John P. McSorley_, Sep 28 2010: (Start)",
+        "a(n) = DPE(n+1) is the total number of k-double-palindromes of n up to cyclic equivalence. See sequence A180918 for the definitions of a k-double-palindrome of n and of cyclic equivalence. Sequence A180918 is the 'DPE(n,k)' triangle read by rows where DPE(n,k) is the number of k-double-palindromes of n up to cyclic equivalence. For example, we have a(4) = DPE(5) = DPE(5,1) + DPE(5,2) + DPE(5,3) + DPE(5,4) + DPE(5,5) = 0 + 2 + 2 + 1 + 1 = 6.",
+        "The 6 double-palindromes of 5 up to cyclic equivalence are 14, 23, 113, 122, 1112, 11111. They come from cyclic equivalence classes {14,41}, {23,32}, {113,311,131}, {122,212,221}, {1112,2111,1211,1121}, and {11111}. Hence a(n)=DPE(n+1) is the total number of cyclic equivalence classes of n containing at least one double-palindrome.",
+        "(End)",
+        "From _Herbert Eberle_, Oct 02 2015: (Start)",
+        "For n > 0, there is a red-black tree of height n with a(n-1) internal nodes and none with less.",
+        "In order a red-black tree of given height has minimal number of nodes, it has exactly 1 path with strictly alternating red and black nodes. All nodes outside this height defining path are black.",
+        "Consider:",
+        "mrbt5                R",
+        "                    / \\",
+        "                   /   \\",
+        "                  /     \\",
+        "                 /       B",
+        "                /       / \\",
+        "mrbt4          B       /   B",
+        "              / \\     B   E E",
+        "             /   B   E E",
+        "mrbt3       R   E E",
+        "           / \\",
+        "          /   B",
+        "mrbt2    B   E E",
+        "        / E",
+        "mrbt1  R",
+        "      E E",
+        "(Red nodes shown as R, blacks as B, externals as E.)",
+        "Red-black trees mrbt1, mrbt2, mrbt3, mrbt4, mrbt5 of respective heights h = 1, 2, 3, 4, 5; all minimal in the number of internal nodes, namely 1, 2, 4, 6, 10.",
+        "Recursion (let n = h-1): a(-1) = 0, a(n) = a(n-1) + 2^floor(n/2), n >= 0.",
+        "(End)",
+        "Also the number of strings of length n with the digits 1 and 2 with the property that the sum of the digits of all substrings of uneven length is not divisible by 3. An example with length 8 is 21221121. - _Herbert Kociemba_, Apr 29 2017"
+    ],
+    "reference": [
+        "John P. McSorley: Counting k-compositions of n with palindromic and related structures. Preprint, 2010. [_John P. McSorley_, Sep 28 2010]"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A027383/b027383.txt\">Table of n, a(n) for n = 0..5000</a>",
+        "J. Jordan and R. Southwell, <a href=\"http://dx.doi.org/10.4236/am.2010.15045\">Further Properties of Reproducing Graphs</a>, Applied Mathematics, Vol. 1 No. 5, 2010, pp. 344-350. - From _N. J. A. Sloane_, Feb 03 2013",
+        "Leonard F. Klosinski, Gerald L. Alexanderson and Loren C. Larson, <a href=\"http://www.jstor.org/stable/2975240\">Under misprinted head B3</a>, Amer Math. Monthly, 104(1997) 753-754.",
+        "Laurent No\u00e9, <a href=\"http://www.lifl.fr/~noe/files/expose_JOV13.pdf\">Spaced seed design on profile HMMs for precise HTS read-mapping efficient sliding window product on the matrix semi-group</a>, in Rapide Bilan 2012-2013, LIFL, Universit\u00e9 Lille 1 - INRIA Journ\u00e9es au vert 11 et 12 juin 2013.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CageGraph.html\">Cage Graph</a>",
+        "<a href=\"/index/Fo#fold\">Index entries for sequences obtained by enumerating foldings</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2)."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} 2^min(k, n-k).",
+        "a(2n) = 3*2^n - 2 = A033484(n);",
+        "a(2n-1) = 2^(n+1) - 2 = A000918(n+1).",
+        "a(n+2) = 2*a(n) + 2.",
+        "a(n) = 2^floor((n+2)/2) + 2^floor((n+1)/2) - 2. - Quim Castellsaguer (qcastell(AT)pie.xtec.es)",
+        "a(n) = 2^(n/2)(3 + 2sqrt(2) + (3-2sqrt(2))(-1)^n)/2 - 2. - _Paul Barry_, Apr 23 2004",
+        "a(n) = A132340(A052955(n)). - _Reinhard Zumkeller_, Aug 20 2007",
+        "a(n) = A052955(n+1) - 1. - _Hieronymus Fischer_, Sep 15 2007",
+        "a(n) = A132666(a(n+1)) - 1. - _Hieronymus Fischer_, Sep 15 2007",
+        "a(n) = A132666(a(n-1)+1) for n > 0. - _Hieronymus Fischer_, Sep 15 2007",
+        "A132666(a(n)) = a(n-1) + 1 for n > 0. - _Hieronymus Fischer_, Sep 15 2007",
+        "G.f.: (1 + x)/((1 - x)*(1 - 2*x^2)). - _David Callan_, Jul 22 2008",
+        "a(n) = 2*( (a(n-2)+1) mod (a(n-1)+1) ), n > 1. - _Pierre Charland_, Dec 12 2010",
+        "a(n) = A136252(n-1) + 1, for n > 0. - _Jason Kimberley_, Nov 01 2011",
+        "G.f.: (1+x*R(0))/(1-x), where R(k)= 1 + 2*x/( 1 - x/(x + 1/R(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Aug 16 2013",
+        "a(n) = 2^((2*n + 3*(1-(-1)^n))/4)*3^((1+(-1)^n)/2) - 2. - _Luce ETIENNE_, Sep 01 2014"
+    ],
+    "example": [
+        "After 3 folds one sees 4 fold lines.",
+        "Example: a(3) = 6 because the strings 001, 010, 100, 011, 101, 110 have the property.",
+        "Binary: 1, 10, 100, 110, 1010, 1110, 10110, 11110, 101110, 111110, 1011110, 1111110, 10111110, 11111110, 101111110, 111111110, 1011111110, 1111111110, 10111111110, ... - _Jason Kimberley_, Nov 02 2011"
+    ],
+    "maple": [
+        "a[0]:=0:a[1]:=1:for n from 2 to 100 do a[n]:=2*a[n-2]+2 od: seq(a[n], n=1..41); # _Zerinvary Lajos_, Mar 16 2008"
+    ],
+    "mathematica": [
+        "a[n_?EvenQ] := 3*2^(n/2)-2; a[n_?OddQ] := 2^(2+(n-1)/2)-2; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Oct 21 2011, after Quim Castellsaguer *)",
+        "LinearRecurrence[{1, 2, -2}, {1, 2, 4}, 41] (* _Robert G. Wilson v_, Oct 06 2014 *)"
+    ],
+    "program": [
+        "(MAGMA) [2^Floor((n+2)/2)+2^Floor((n+1)/2)-2: n in [0..50]]; // _Vincenzo Librandi_, Aug 16 2011",
+        "(PARI) a(n)=2^(n\\2+1)+2^((n+1)\\2)-2 \\\\ _Charles R Greathouse IV_, Oct 21 2011",
+        "(Haskell)",
+        "import Data.List (transpose)",
+        "a027383 n = a027383_list !! n",
+        "a027383_list = concat $ transpose [a033484_list, drop 2 a000918_list]",
+        "-- _Reinhard Zumkeller_, Jun 17 2015"
+    ],
+    "xref": [
+        "Cf. A132666, A152201.",
+        "Moore lower bound on the order of a (k,g) cage: A198300 (square); rows: A000027 (k=2), this sequence (k=3), A062318 (k=4), A061547 (k=5), A198306 (k=6), A198307 (k=7), A198308 (k=8), A198309 (k=9), A198310 (k=10), A094626 (k=11); columns: A020725 (g=3), A005843 (g=4), A002522 (g=5), A051890 (g=6), A188377 (g=7). - _Jason Kimberley_, Oct 30 2011",
+        "Cf. A000066 (actual order of a (3,g)-cage).",
+        "Cf. A000918, A033484."
+    ],
+    "keyword": "nonn,nice,easy,base",
+    "offset": "0,2",
+    "author": "_R. K. Guy_",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org), Mar 24 2000"
+    ],
+    "references": 58,
+    "revision": 124,
+    "time": "2017-12-09T16:55:05-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

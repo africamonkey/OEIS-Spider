@@ -1,0 +1,52 @@
+{
+    "number": 5703,
+    "id": "M1151",
+    "data": "1,1,1,2,4,8,19,44,112,287,763,2041,5577,15300,42419,118122,330785,929469,2621272,7411706,21010378,59682057,169859257,484234165,1382567947,3952860475,11315775161,32430737380,93044797486,267211342954",
+    "name": "Number of n-node connected graphs with at most one cycle.",
+    "comment": [
+        "a(n) is the number of pseudotrees on n nodes. - _Eric W. Weisstein_, Jun 11 2012"
+    ],
+    "reference": [
+        "J. Riordan, An Introduction to Combinatorial Analysis, Wiley, 1958, p. 150.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "R. K. Guy, <a href=\"/A000123/a000123_1.pdf\">Letters to N. J. A. Sloane and J. W. Moon, 1988</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Pseudotree.html\">Pseudotree</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Pseudoforest\">Pseudoforest</a>"
+    ],
+    "formula": [
+        "a(n) = A000055(n)+A001429(n)."
+    ],
+    "mathematica": [
+        "Needs[\"Combinatorica`\"]; nn = 20; t[x_] := Sum[a[n] x^n, {n, 1, nn}];",
+        "a[0] = 0;",
+        "b = Drop[Flatten[",
+        "    sol = SolveAlways[",
+        "      0 == Series[",
+        "        t[x] - x Product[1/(1 - x^i)^a[i], {i, 1, nn}], {x, 0, nn}],",
+        "      x]; Table[a[n], {n, 0, nn}] /. sol], 1];",
+        "r[x_] := Sum[b[[n]] x^n, {n, 1, nn}]; c =",
+        "Drop[Table[",
+        "    CoefficientList[",
+        "     Series[CycleIndex[DihedralGroup[n], s] /.",
+        "       Table[s[i] -> r[x^i], {i, 1, n}], {x, 0, nn}], x], {n, 3,",
+        "     nn}] // Total, 1];",
+        "d[x_] := Sum[c[[n]] x^n, {n, 1, nn}]; CoefficientList[",
+        "Series[r[x] - (r[x]^2 - r[x^2])/2 + d[x] + 1, {x, 0, nn}], x] (* _Geoffrey Critzer_, Nov 17 2014 *)"
+    ],
+    "xref": [
+        "Cf. A134964 (number of pseudoforests)."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_, _R. K. Guy_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Apr 19 2000 and from _Michael Somos_, Apr 26 2000",
+        "a(27) corrected and a(28) and a(29) computed by _Washington Bomfim_, May 14 2008"
+    ],
+    "references": 5,
+    "revision": 34,
+    "time": "2017-10-12T19:02:50-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

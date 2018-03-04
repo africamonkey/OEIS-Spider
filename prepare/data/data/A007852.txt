@@ -1,0 +1,64 @@
+{
+    "number": 7852,
+    "data": "1,2,7,29,131,625,3099,15818,82595,439259,2371632,12967707,71669167,399751019,2247488837,12723799989,72474333715,415046380767,2388355096446,13803034008095,80082677184820,466263828731640,2723428895205210,15954063529603565,93711351580424391",
+    "name": "Antichains in rooted plane trees on n nodes.",
+    "comment": [
+        "Setting both offsets to zero, this is the Catalan transform of A007317. - _R. J. Mathar_, Jun 29 2009",
+        "a(n) is also the cumulated sizes of admissible cuts of general rooted trees of size n. - _Antoine Genitrini_, Mar 14 2013"
+    ],
+    "link": [
+        "O. Bodini, A. Genitrini and F. Peschanski, <a href=\"http://www-apr.lip6.fr/~genitrini/doc_ens/are/article1.pdf\">Enumeration and Random Generation of Concurrent Computations</a> In proc. 23rd International Meeting on Probabilistic, Combinatorial and Asymptotic Methods for the Analysis of Algorithms (AofA'12), Discrete Mathematics and Theoretical Computer Science, pp 83-96, 2012.",
+        "O. Bodini, A. Genitrini and F. Peschanski, <a href=\"http://www-apr.lip6.fr/~pesch/datas/bogepe-pure-merge-13-preprint.pdf\">A Quantitative Study of Pure Parallel Processes</a>, Preprint, 2013.",
+        "O. Bodini, A. Genitrini, F. Peschanski, <a href=\"http://arxiv.org/abs/1407.1873\">A Quantitative Study of Pure Parallel Processes</a>, arXiv preprint arXiv:1407.1873, 2014",
+        "G.-S. Cheon, H. Kim, L. W. Shapiro, <a href=\"http://arxiv.org/abs/1410.1249\">Mutation effects in ordered trees</a>, arXiv preprint arXiv:1410.1249, 2014",
+        "M. Klazar, <a href=\"http://dx.doi.org/10.1006/eujc.1995.0095\">Twelve countings with rooted plane trees</a>, European Journal of Combinatorics 18 (1997), 195-210; Addendum, 18 (1997), 739-740.",
+        "F. Ruskey, <a href=\"http://dx.doi.org/10.1137/0210011\">Listing and Counting Subtrees of a Tree</a>, SIAM J. Computing, 10 (1981) 141-150.",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>",
+        "<a href=\"/index/Res#revert\">Index entries for reversions of series</a>"
+    ],
+    "formula": [
+        "G.f.: A(z) = (1-B(z)-sqrt(1-5*z-B(z)))/2, where B(z) = (1-sqrt(1-4*z))/2.",
+        "a(1) = 1 and for n > 1 a(n) = sum( (a(j)+b(j))*a(n-j), j=1..n-1 ), where b(n) = C(2n-2, n-1)/n (Catalan number).",
+        "Also REVERT[A(x)] = x + 2*x^2 + x^3*(A007440(x) (Reversion of Fibonacci). - _Olivier G\u00e9rard_, Jul 05 2001",
+        "a(n+1) = Sum_{k, 0<=k<=n} A039599(n,k) * A000108(k). - _Philippe Del\u00e9ham_, Mar 12 2007",
+        "P-recurrence: (-500*n+2000*n^3)*a(n)+(120-220*n-1380*n^2-920*n^3)*a(n+1)+(-1488-1626*n-387*n^2+21*n^3)*a(n+2)+(1088*n+1104+351*n^2+37*n^3)*a(n+3)+(-42*n^2-146*n-168-4*n^3)*a(n+4); a(0)=0; a(1)=1; a(2)=2; a(3)=7. - _Antoine Genitrini_, Mar 14 2013",
+        "a(n) ~ (25/4)^n / (sqrt(15*Pi) * n^(3/2)). - _Vaclav Kotesovec_, Mar 08 2014",
+        "a(n) = sum(i=0..n, binomial(2*i+1,i)*binomial(2*n-1,n-i-1))/((2*n-1)). - _Vladimir Kruchinin_, Jun 09 2014",
+        "1 + 1/z*A(z)^2  = 1 + z + 4*z^2 + 18*z^3 + 86*z^4 + ... is the o.g.f. for A153294. - _Peter Bala_, Jul 21 2015"
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[Series[(1-(1-Sqrt[1-4*x])/2-Sqrt[1-5*x-(1-Sqrt[1-4*x])/2])/2, {x, 0, 20}], x]] (* _Vaclav Kotesovec_, Mar 08 2014 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def a(n):",
+        "   l = [0,1,2,7]",
+        "   if n < 4:",
+        "      return l[n]",
+        "   for i in range(n-3):",
+        "      l[i%4] = ( (-500*i+2000*i**3)*l[i%4]+(120-220*i-1380*i**2-920*i**3)*l[(i+1)%4]+(-1488-1626*i-387*i**2+21*i**3)*l[(i+2)%4]+(1088*i+1104+351*i**2+37*i**3)*l[(i+3)%4] ) / (+42*i**2+146*i+168+4*i**3)",
+        "   return l[i%4]",
+        "# _Antoine Genitrini_, Mar 14 2013",
+        "(PARI)",
+        "N = 33;  x = 'x + O('x^N);",
+        "B = (1-sqrt(1-4*x))/2;",
+        "gf = (1-B-sqrt(1-5*x-B))/2;",
+        "v = Vec(gf)",
+        "\\\\ _Joerg Arndt_, Mar 14 2013",
+        "(Maxima)",
+        "a(n):=sum(binomial(2*i+1,i)*binomial(2*n-1,n-i-1),i,0,n)/((2*n-1)); /* _Vladimir Kruchinin_, Jun 09 2014 */"
+    ],
+    "xref": [
+        "Cf. A007440, A153294."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Martin Klazar (klazar(AT)kam.mff.cuni.cz), Mar 15 1996",
+    "ext": [
+        "More terms and formulas from _Frank Ruskey_, Nov 15 1997"
+    ],
+    "references": 6,
+    "revision": 56,
+    "time": "2016-06-16T23:27:17-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

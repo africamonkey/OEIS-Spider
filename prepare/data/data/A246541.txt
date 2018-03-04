@@ -1,0 +1,69 @@
+{
+    "number": 246541,
+    "data": "1,2,6,30,180,1440,12960,142560,1995840",
+    "name": "Take the squares of all P_(n+2)-rough numbers less than the (n+1)th primorial and mod it by the (n+1)th primorial. There will be a(n) different results.",
+    "comment": [
+        "P_(n+2)-rough numbers less than the (n+1)th primorial is also the reduced residue system of the (n+1)th primorial."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Primorial.html\">Primorial</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RoughNumber.html\">Rough Number</a>"
+    ],
+    "example": [
+        "For n=2, P_(n+2) = 7.",
+        "The 7-rough numbers less than 2*3*5 are 1,7,11,13,17,19,23,29.",
+        "The squares of those numbers mod 2*3*5 are 1,19,1,19,19,1,19,1.",
+        "There are 2 different results: 1 and 19; so  a(2) = 2."
+    ],
+    "program": [
+        "(Java)",
+        "import java.util.TreeSet;",
+        "for(int z = 1; z < 10 ; z++) {",
+        "int n = z;",
+        "int numNumPerLine = 210;",
+        "int[] primes = {2,3,5,7,11,13,17,19,23,29,31,37,41,43};",
+        "int numRepeats = 1;",
+        "int numSpaces = 1;",
+        "for(int i = 0; i < n + 1; i++) {",
+        "numSpaces *= (primes[i] - 1);",
+        "}",
+        "int counter = 0;",
+        "long integerLength = 1;",
+        "for(int i = 0; i < n + 1; i++) {",
+        "integerLength *= primes[i];",
+        "}",
+        "TreeSet<Long> numResults = new TreeSet<Long>();",
+        "numSpaces/=2;",
+        "for(int i = 1; i < integerLength / 2; i+=2) {",
+        "boolean isInList = true;",
+        "for(int j = 1; j < n + 1; j++) {",
+        "if(i % primes[j] == 0) {",
+        "isInList = false;",
+        "}",
+        "}",
+        "if(isInList) {",
+        "long k = i % integerLength;",
+        "if(k != 0) {",
+        "long l = (k * k) % integerLength;",
+        "if(!numResults.contains(l)) {",
+        "numResults.add(l);",
+        "}",
+        "}",
+        "}",
+        "}",
+        "System.out.println(numResults.size());",
+        "}",
+        "(PARI) a(n) = {hp = prod(k=1, n+1, prime(k)); rp = prod(k=1, n+2, prime(k)); v = []; for (i=1, hp, if (gcd(i, rp) == 1, nv = i^2 % hp; if (! vecsearch(v, nv), v = vecsort(concat(v, nv))););); #v;} \\\\ _Michel Marcus_, Sep 06 2014"
+    ],
+    "xref": [
+        "Cf. A002110 (primorial).",
+        "Cf. k-rough numbers A007310 (k=5), A007775 (k=7), A008364 (k=11), A008365 (k=13), A008366 (k=17), A166061 (k=19), A166063 (k=23)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_John B. Yin_, Aug 29 2014",
+    "references": 0,
+    "revision": 15,
+    "time": "2014-10-14T11:11:48-04:00",
+    "created": "2014-10-14T11:11:48-04:00"
+}

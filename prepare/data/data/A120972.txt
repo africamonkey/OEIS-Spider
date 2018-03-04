@@ -1,0 +1,61 @@
+{
+    "number": 120972,
+    "data": "1,1,3,21,217,2814,42510,718647,13270944,263532276,5567092665,124143735663,2905528740060,71058906460091,1809695198254281,47861102278428198,1311488806252697283,37164457324943708739",
+    "name": "G.f. satisfies: A(x/A(x)^3) = 1 + x ; thus A(x) = 1 + series_reversion(x/A(x)^3).",
+    "comment": [
+        "More generally, if g.f. A(x) satisfies: A(x/A(x)^k) = 1 + x*A(x)^m, then",
+        "A(x) = 1 + x*G(x)^(m+k) where G(x) = A(x*G(x)^k) and G(x/A(x)^k) = A(x);",
+        "thus a(n) = [x^(n-1)] ((m+k)/(m+k*n))*A(x)^(m+k*n) for n>=1 with a(0)=1."
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = 1 + x*A(A(x) - 1)^3.",
+        "a(n) = [x^(n-1)] A(x)^(3*n)/n for n>=1 with a(0)=1; i.e., a(n) equals the coefficient of x^(n-1) in A(x)^(3*n)/n for n>=1 (see comment).",
+        "Let B(x) be the g.f. of A120973, then B(x) and g.f. A(x) are related by:",
+        "(a) B(x) = A(A(x)-1),",
+        "(b) B(x) = A(x*B(x)^3),",
+        "(c) A(x) = B(x/A(x)^3),",
+        "(d) A(x) = 1 + x*B(x)^3,",
+        "(e) B(x) = 1 + x*B(x)^3*B(A(x)-1)^3,",
+        "(f) A(B(x)-1) = B(A(x)-1) = B(x*B(x)^3)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 3*x^2 + 21*x^3 + 217*x^4 + 2814*x^5 + 42510*x^6 +...",
+        "Related expansions.",
+        "A(x)^3 = 1 + 3*x + 12*x^2 + 82*x^3 + 813*x^4 + 10212*x^5 + 150699*x^6 +...",
+        "A(A(x)-1) = 1 + x + 6*x^2 + 60*x^3 + 776*x^4 + 11802*x^5 + 201465*x^6 +...",
+        "A(A(x)-1)^3 = 1 + 3*x + 21*x^2 + 217*x^3 + 2814*x^4 + 42510*x^5 +...",
+        "x/A(x)^3 = x - 3*x^2 - 3*x^3 - 37*x^4 - 420*x^5 - 5823*x^6 -...",
+        "Series_Reversion(x/A(x)^3) = x + 3*x^2 + 21*x^3 + 217*x^4 + 2814*x^5 + 42510*x^6 +...",
+        "To illustrate the formula a(n) = [x^(n-1)] 3*A(x)^(3*n)/(3*n),",
+        "form a table of coefficients in A(x)^(3*n) as follows:",
+        "A^3: [(1), 3, 12, 82, 813, 10212, 150699, 2503233, ...];",
+        "A^6: [1, (6), 33, 236, 2262, 27270, 388906, 6289080, ...];",
+        "A^9: [1, 9, (63), 489, 4671, 54684, 756012, 11904813, ...];",
+        "A^12: [1, 12, 102, (868), 8445, 97260, 1310040, 20112516, ...];",
+        "A^15: [1, 15, 150, 1400, (14070), 161343, 2130505, 31961175, ...];",
+        "A^18: [1, 18, 207, 2112, 22113, (255060), 3324003, 48876264, ...];",
+        "A^21: [1, 21, 273, 3031, 33222, 388563, (5030529), 72769014, ...]; ...",
+        "in which the main diagonal forms the initial terms of this sequence:",
+        "[3/3*(1), 3/6*(6), 3/9*(63), 3/12*(868), 3/15*(14070), 3/18*(255060), ...]."
+    ],
+    "mathematica": [
+        "terms = 18; A[_] = 1; Do[A[x_] = 1 + x*A[A[x] - 1]^3 + O[x]^j // Normal, {j, terms}]; CoefficientList[A[x], x] (* _Jean-Fran\u00e7ois Alcover_, Jan 15 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=[1,1]);for(i=2,n,A=concat(A,0); A[ #A]=-Vec(subst(Ser(A),x,x/Ser(A)^3))[ #A]);A[n+1]}",
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=1+x*subst(A^3,x,A-1+x*O(x^n)));polcoeff(A,n)}",
+        "(PARI) /* This sequence is generated when k=3, m=0: A(x/A(x)^k) = 1 + x*A(x)^m */",
+        "{a(n, k=3, m=0)=local(A=sum(i=0, n-1, a(i, k, m)*x^i)); if(n==0, 1, polcoeff((m+k)/(m+k*n)*A^(m+k*n), n-1))}",
+        "for(n=0,25,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A120973; variants: A120970, A120974, A120976, A030266, A067145, A107096."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jul 20 2006",
+    "references": 8,
+    "revision": 13,
+    "time": "2018-01-15T08:52:38-05:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 211863,
+    "data": "1,1,2,2,4,5,7,10,13,14,20,26,28,40,49,53,71,89,95,125,136,160,192,235,248,313,348,409,458,558,592,729,785,921,1018,1205,1264,1511,1627,1888,2037,2382,2521,2961,3143,3660,3884,4502,4782,5510",
+    "name": "Number of partitions of n into parts <= 8 with the property that all parts have distinct multiplicities.",
+    "link": [
+        "Doron Zeilberger, <a href=\"http://www.math.rutgers.edu/~zeilberg/mamarim/mamarimhtml/dmp.html\">Using generatingfunctionology to enumerate distinct-multiplicity partitions</a>."
+    ],
+    "example": [
+        "For n=3 the a(3)=2 partitions are {3} and {1,1,1}. Note that {2,1} does not count, as 1 and 2 appear with the same nonzero multiplicity."
+    ],
+    "program": [
+        "(Haskell)",
+        "a211863 n = p 0 [] [1..8] n where",
+        "   p m ms _      0 = if m `elem` ms then 0 else 1",
+        "   p _ _  []     _ = 0",
+        "   p m ms ks'@(k:ks) x",
+        "     | x < k       = 0",
+        "     | m == 0      = p 1 ms ks' (x - k) + p 0 ms ks x",
+        "     | m `elem` ms = p (m + 1) ms ks' (x - k)",
+        "     | otherwise   = p (m + 1) ms ks' (x - k) + p 0 (m : ms) ks x",
+        "-- _Reinhard Zumkeller_, Dec 27 2012"
+    ],
+    "xref": [
+        "Cf. A026814, A098859.",
+        "Cf. A105637, A211858, A211859, A211860, A211861, A211862."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Matthew C. Russell_, Apr 25 2012",
+    "references": 7,
+    "revision": 7,
+    "time": "2012-12-27T23:46:53-05:00",
+    "created": "2012-04-27T21:37:42-04:00"
+}

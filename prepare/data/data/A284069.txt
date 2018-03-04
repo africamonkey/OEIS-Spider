@@ -1,0 +1,44 @@
+{
+    "number": 284069,
+    "data": "8,88,89,98,888,889,898,899,988,989,998,8888,8889,8898,8899,8988,8989,8998,8999,9888,9889,9898,9899,9988,9989,9998,88888,88889,88898,88899,88988,88989,88998,88999,89888,89889,89898,89899,89988,89989,89998,89999,98888",
+    "name": "Numbers whose smallest decimal digit is 8.",
+    "comment": [
+        "Numbers n such that A054054(n) = 8.",
+        "Prime terms are in A020472. - Corrected by _Robert Israel_, Apr 05 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A284069/b284069.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "From _Robert Israel_, Apr 05 2017: (Start)",
+        "a(2*j+2^(m+1)-m-3) = 10*a(j+2^m-m-1)+8 for j=1..2^m-1.",
+        "a(2*j+2^(m+1)-m-2) = 10*a(j+2^m-m-1)+9 for j=1..2^m-1.",
+        "a(2^(m+1)-m-2) = 10^m-2. (End)"
+    ],
+    "maple": [
+        "F:= proc(d) local r; # to get all terms with d digits",
+        "r:= 8*(10^d-1)/9;",
+        "op(sort(convert(map(t -> r + add(10^(j-1),j=t), combinat:-powerset(d) minus {{$1..d}}),list)))",
+        "end proc:",
+        "map(F, [$1..5]); # _Robert Israel_, Apr 05 2017"
+    ],
+    "mathematica": [
+        "Flatten@ Table[ Most[ FromDigits /@ Tuples[{8,9}, k]], {k,5}] (* _Giovanni Resta_, Mar 24 2017 *)"
+    ],
+    "program": [
+        "(MAGMA) [n: n in [1..100000] | Minimum(Setseq(Set(Sort(&cat[Intseq(n)])))) eq 8]",
+        "(PARI) isok(n) = vecmin(digits(n)) == 8; \\\\ _Michel Marcus_, Mar 25 2017",
+        "(Python) print[n for n in xrange(8, 10**6 + 1) if min(list(str(n)))=='8'] # _Indranil Ghosh_, Apr 06 2017"
+    ],
+    "xref": [
+        "Cf. Sequences of numbers whose smallest decimal digit is k (for k = 0..9): A011540 (k = 0), A284062 (k = 1), A284063 (k = 2), A284064 (k = 3), A284065 (k = 4), A284066 (k = 5), A284067 (k = 6), A284068 (k = 7), this sequence (k = 8), A002283 (k = 9).",
+        "Cf. A020472, A054054."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jaroslav Krizek_, Mar 24 2017",
+    "references": 9,
+    "revision": 32,
+    "time": "2017-04-06T23:45:05-04:00",
+    "created": "2017-03-24T22:03:36-04:00"
+}

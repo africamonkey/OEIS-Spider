@@ -1,0 +1,67 @@
+{
+    "number": 26671,
+    "data": "1,3,11,43,173,707,2917,12111,50503,211263,885831,3720995,15652239,65913927,277822147,1171853635,4945846997,20884526283,88224662549,372827899079,1576001732485,6663706588179,28181895551161,119208323665543",
+    "name": "Number of lattice paths from (0,0) to (n,n) with steps (0,1), (1,0) and, when on the diagonal, (1,1).",
+    "comment": [
+        "1, 1, 3, 11, 43, 173, ... is the unique sequence for which both the Hankel transform of the sequence itself and the Hankel transform of its left shift are the powers of 2 (A000079). For example, det[{{1, 1, 3}, {1, 3, 11}, {3, 11, 43}}] = det[{{1, 3, 11}, {3, 11, 43}, {11, 43, 173}}] = 4. - _David Callan_, Mar 30 2007",
+        "From _Paul Barry_, Jan 25 2009: (Start)",
+        "a(n) is the image of F(2n+2) under the Catalan matrix (1,xc(x)) where c(x) is the g.f. of A000108.",
+        "The sequence 1,1,3,... is the image of A001519 under (1,xc(x)). This sequence has g.f. given by",
+        "1/(1-x-2x^2/(1-3x-x^2/(1-2x-x^2/(1-2x-x^2/(1-..... (continued fraction). (End)",
+        "Binomial transform of A111961. [_Philippe Del\u00e9ham_, Feb 11 2009]",
+        "From _Paul Barry_, Nov 03 2010: (Start)",
+        "The sequence 1,1,3,... has g.f. 1/(1-x/sqrt(1-4x)), INVERT transform of A000984.",
+        "It is an eigensequence of the sequence array for A000984. (End)"
+    ],
+    "reference": [
+        "L. W. Shapiro and C. J. Wang, Generating identities via 2 X 2 matrices, Congressus Numerantium, 205 (2010), 33-46."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A026671/b026671.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Jean-Christophe Aval, Adrien Boussicault and Sandrine Dasse-Hartaut, <a href=\"http://arxiv.org/abs/1109.4907\">The tree structure in staircase tableaux</a>, arXiv:1109.4907 [math.CO], 2011-2013.",
+        "Miklos Bona, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v5i1r31/0\">The permutation classes equinumerous to the smooth class</a>, Electron. J. Combin., 5 (1998), no. 1, Research Paper 31, 12 pp.",
+        "David Callan, Toufik Mansour, <a href=\"http://arxiv.org/abs/1602.05182\">Five subsets of permutations enumerated as weak sorting permutations</a>, arXiv:1602.05182 [math.CO], 2016.",
+        "Aoife Hennessy, <a href=\"http://repository.wit.ie/1693/1/AoifeThesis.pdf\">A Study of Riordan Arrays with Applications to Continued Fractions, Orthogonal Polynomials and Lattice Paths</a>, Ph. D. Thesis, Waterford Institute of Technology, Oct. 2011.",
+        "J. W. Layman, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL4/LAYMAN/hankel.html\">The Hankel Transform and Some of its Properties</a>, J. Integer Sequences, 4 (2001), #01.1.5."
+    ],
+    "formula": [
+        "G.f.: 1/(sqrt(1-4*x)-x); a(n)= sum(a(i-1)*binomial(2*(n-i), n-i), i=1..n) + binomial(2*n, n), n >= 1, a(0)=1. - _Wolfdieter Lang_, Mar 21 2000",
+        "G.f.: 1/(1 -x -2*x*c(x)) where c(x) = g.f. for Catalan numbers A000108. - _Michael Somos_, Apr 20 2007",
+        "From _Paul Barry_, Jan 25 2009: (Start)",
+        "G.f.: 1/(1-3xc(x)+x^2*c(x)^2);",
+        "G.f.: 1/(1-3x-2x^2/(1-2x-x^2/(1-2x-x^2/(1-2x-x^2/(1-.... (continued fraction).",
+        "a(0) = 1, a(n) = sum{k=0..n, (k/(2n-k))*C(2n-k,n-k)*F(2k+2)}. (End)",
+        "a(n) = Sum_{k, 0<=k<=n} A039599(n,k)*A000045(k+2). [_Philippe Del\u00e9ham_, Feb 11 2009]",
+        "From _Paul Barry_, Feb 08 2009: (Start)",
+        "G.f.: 1/(1-x/(1-2x/(1-x/(1-x/(1-x/(1-x/(1-x/(1-.... (continued fraction);",
+        "G.f. of 1,1,3,... is 1/(1-x-2x/(1-x/(1-x/(1-x/(1-.... (continued fraction). (End)",
+        "a(n) = the upper left term in M^n, M = the infinite square production matrix:",
+        "3, 2, 0, 0, 0, 0,...",
+        "1, 1, 1, 0, 0, 0,...",
+        "1, 1, 1, 1, 0, 0,...",
+        "1, 1, 1, 1, 1, 0,...",
+        "1, 1, 1, 1, 1, 1,...",
+        "...",
+        "- _Gary W. Adamson_, Jul 14 2011",
+        "Recurrence: n*a(n) = 2*(4*n-3)*a(n-1) - 3*(5*n-8)*a(n-2) - 2*(2*n-3)*a(n-3). - _Vaclav Kotesovec_, Oct 08 2012",
+        "a(n) ~ (2+sqrt(5))^n/sqrt(5). - _Vaclav Kotesovec_, Oct 08 2012"
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[1/(Sqrt[1-4*x]-x),{x,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Oct 08 2012 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)= if(n<0, 0, polcoeff( 1/(sqrt(1 -4*x +x*O(x^n)) -x), n))} /* _Michael Somos_, Apr 20 2007 */",
+        "(PARI) x='x+O('x^66); Vec( 1/(sqrt(1-4*x)-x) ) \\\\ _Joerg Arndt_, May 04 2013"
+    ],
+    "xref": [
+        "a(n)=T(2n-1,n-1), T given by A026736, a(n)=T(2n,n), T given by A026670, a(n)=T(2n+1,n+1), T given by A026725. Row sums of triangle A054335.",
+        "Cf. A026781."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_; Miklos Bona (bona(AT)math.ufl.edu)",
+    "references": 20,
+    "revision": 58,
+    "time": "2016-09-14T16:31:52-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

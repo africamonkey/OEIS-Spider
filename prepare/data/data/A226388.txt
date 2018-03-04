@@ -1,0 +1,43 @@
+{
+    "number": 226388,
+    "data": "0,0,1,2,9,24,265,720,11025,62720,965601,3628800,130478425,479001600,19151042625,191132125184,4108830350625,20922789888000,1448301616386625,6402373705728000,466136852576275881,5675242696048640000,193688172394325870625",
+    "name": "Number of n-permutations such that all cycle lengths have a common divisor >= 2.",
+    "comment": [
+        "a(p) = (p-1)! for p a prime."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A226388/b226388.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "example": [
+        "a(6) = 265 counting permutations with cycle types: 6; 4-2; 3-3; 2-2-2; of which there are 120 + 90 + 40 + 15 = 265."
+    ],
+    "maple": [
+        "with(combinat):",
+        "b:= proc(n, i, g) option remember; `if`(n=0, `if`(g>1, 1, 0),",
+        "      `if`(i<2, 0, b(n, i-1, g) +`if`(igcd(g, i)<2, 0,",
+        "       add((i-1)!^j/j! *multinomial(n, i$j, n-i*j)*",
+        "         b(n-i*j, i-1, igcd(i, g)), j=1..n/i))))",
+        "    end:",
+        "a:= n-> b(n, n, 0):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Jun 06 2013"
+    ],
+    "mathematica": [
+        "f[list_] :=",
+        "Total[list]!/Apply[Times, Table[list[[i]], {i, 1, Length[list]}]]/",
+        "  Apply[Times,",
+        "   Select[Table[",
+        "      Count[list, i], {i, 1, Total[list]}], # > 0 &]!]; Table[",
+        "Total[Map[f, Select[Partitions[n], Apply[GCD, #] > 1 &]]], {n, 0,",
+        "  25}]"
+    ],
+    "xref": [
+        "Cf. A079128."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Geoffrey Critzer_, Jun 05 2013",
+    "references": 2,
+    "revision": 16,
+    "time": "2013-06-06T19:54:06-04:00",
+    "created": "2013-06-06T15:20:22-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 60833,
+    "data": "1,4,7,8,12,13,15,16,20,23,24,25,28,29,31,32,36,39,40,44,45,47,48,49,52,55,56,57,60,61,63,64,68,71,72,76,77,79,80,84,87,88,89,92,93,95,96,97,100,103,104,108,109,111,112,113,116,119,120,121,124,125,127,128",
+    "name": "Separate the natural numbers into disjoint sets A, B with 1 in A, such that the sum of any 2 distinct elements of the same set never equals 2^k + 2. Sequence gives elements of set A.",
+    "comment": [
+        "Can be constructed as follows: place of terms of (2^k+1,2^k+2,...,2^k) are the reflection from (2,3,4,...,2^k,1). [Comment not clear to me - _N. J. A. Sloane_]",
+        "If n == 0 mod 4, then n is in the sequence.  If n == 2 mod 4, then n is not in the sequence.  The number 2n - 1 is in the sequence if and only if n is in the sequence. For n > 1, n is in the sequence if and only if A038189(n-1) = 1. - _N. Sato_, Feb 12 2013",
+        "The set B contains all numbers 2^(k-1)+1 = (2^k+2)/2 (half of the \"forbidden sums\"), (2, 3, 5, 9, 17, 33, 65,...) = 1/2 * (4, 6, 10, 18, 34, 66, 130, 258,...). - _M. F. Hasler_, Feb 12 2013"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A060833/b060833.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(1) = 1; and for n > 1: a(n) = A091067(n-1)+1. - _Antti Karttunen_, Feb 20 2015, based on _N. Sato_'s Feb 12 2013 comment above."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k, t;",
+        "      if n=1 then 1",
+        "    else for k from 1+a(n-1) do t:= k-1;",
+        "           while irem(t, 2, 'r')=0 do t:=r od;",
+        "           if irem(t, 4)=3 then return k fi",
+        "         od",
+        "      fi",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Feb 12 2013"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = Module[{k, t, q, r}, If[n == 1, 1, For[k = 1+a[n-1], True, k++, t = k-1; While[{q, r} = QuotientRemainder[t, 2]; r == 0, t = q]; If[Mod[t, 4] == 3, Return[k]]]]]; Table[a[n], {n, 1, 100}] (* _Jean-Fran\u00e7ois Alcover_, Jan 30 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Essentially one more than A091067.",
+        "First differences: A106836.",
+        "A082410(a(n)) = 0."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Sen-Peng Eu_, May 01 2001",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org), May 10 2001"
+    ],
+    "references": 5,
+    "revision": 27,
+    "time": "2017-01-30T11:08:39-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

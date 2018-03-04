@@ -1,0 +1,46 @@
+{
+    "number": 251695,
+    "data": "1,4,175,16250,2348125,463050000,115966796875,35253537343750,12611991884765625,5191587030710937500,2417311348659677734375,1256208098030090332031250,720779749270420907470703125,452589644988876542822265625000,308707218248583408960223388671875",
+    "name": "a(n) = (3*n+1) * (4*n+1)^(n-2) * 5^n.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A251695/b251695.txt\">Table of n, a(n) for n = 0..268</a>"
+    ],
+    "formula": [
+        "Let G(x) = 1 + x*G(x)^5 be the g.f. of A002294, then the e.g.f. A(x) of this sequence satisfies:",
+        "(1) A(x) = exp( 5*x*A(x)^4 * G(x*A(x)^4)^4 ) / G(x*A(x)^4).",
+        "(2) A(x) = F(x*A(x)^4) where F(x) = exp(5*x*G(x)^4)/G(x) is the e.g.f. of A251665.",
+        "(3) A(x) = ( Series_Reversion( x*G(x)^4 / exp(20*x*G(x)^4) )/x )^(1/4).",
+        "E.g.f.: (-LambertW(-20*x)/(20*x))^(1/4) * (1 + LambertW(-20*x)/20). - _Vaclav Kotesovec_, Dec 07 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + 4*x + 175*x^2/2! + 16250*x^3/3! + 2348125*x^4/4! + 463050000*x^5/5! +...",
+        "such that A(x) = exp( 5*x*A(x)^4 * G(x*A(x)^4)^4 ) / G(x*A(x)^4),",
+        "where G(x) = 1 + x*G(x)^5 is the g.f. A002294:",
+        "G(x) = 1 + x + 5*x^2 + 35*x^3 + 285*x^4 + 2530*x^5 + 23751*x^6 +...",
+        "Also, e.g.f. A(x) satisfies A(x) = F(x*A(x)^4) where",
+        "F(x) = 1 + 4*x + 47*x^2/2! + 1034*x^3/3! + 34349*x^4/4! + 1540480*x^5/5! +...",
+        "F(x) = exp( 5*x*G(x)^4 ) / G(x) is the e.g.f. of A251665."
+    ],
+    "mathematica": [
+        "Table[(3*n + 1)*(4*n + 1)^(n - 2)*5^n, {n, 0, 50}] (* _G. C. Greubel_, Nov 13 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = (3*n+1) * (4*n+1)^(n-2) * 5^n}",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(PARI) {a(n)=local(G=1,A=1); for(i=0, n, G = 1 + x*G^5 +x*O(x^n));",
+        "A = ( serreverse( x*G^4 / exp(20*x*G^4) )/x )^(1/4); n!*polcoeff(A, n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(MAGMA) [(3*n + 1)*(4*n + 1)^(n - 2)*5^n: n in [0..50]]; // _G. C. Greubel_, Nov 13 2017"
+    ],
+    "xref": [
+        "Cf. A251665, A002294.",
+        "Cf. Variants: A127670, A251693, A251694, A251696, A251697, A251698, A251699, A251700."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 07 2014",
+    "references": 9,
+    "revision": 9,
+    "time": "2017-11-14T03:05:53-05:00",
+    "created": "2014-12-07T13:16:38-05:00"
+}

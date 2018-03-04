@@ -1,0 +1,41 @@
+{
+    "number": 148647,
+    "data": "1,1,3,6,23,62,263,815,3641,12300,56667,202971,954066,3564277,16985607,65498160,315209452,1245818035,6039009631,24343527621,118650810900,486056238279,2379084219687,9877543772753,48508370650463,203692718352749,1002991082498646,4252712706392436,20985613117596447",
+    "name": "Number of walks within N^3 (the first octant of Z^3) starting at (0,0,0) and consisting of n steps taken from {(-1, -1, 1), (-1, 0, 1), (-1, 1, 0), (1, 0, 0), (1, 1, -1)}",
+    "link": [
+        "A. Bostan and M. Kauers, <a href=\"http://arxiv.org/abs/0811.2899\">Automatic Classification of Restricted Lattice Walks</a>, arXiv:0811.2899 [math.CO], 2008."
+    ],
+    "maple": [
+        "N:= 30: # to get a(0) to a(N)",
+        "steps:= [[-1, -1, 1], [-1, 0, 1], [-1, 1, 0], [1, 0, 0], [1, 1, -1]]:",
+        "P[0]:= {[0, 0, 0]}:",
+        "A[0]:= 1:",
+        "B[0, [0, 0, 0]]:= 1:",
+        "for n from 1 to N do",
+        "  A[n]:= 0:",
+        "  P[n]:= {}:",
+        "  for p in P[n-1] do",
+        "    for s in steps do",
+        "      pp:= p + s;",
+        "      if min(pp) < 0 then next fi;",
+        "      P[n]:= P[n] union {pp};",
+        "      A[n]:= A[n] + B[n-1, p];",
+        "      if assigned(B[n, pp]) then B[n, pp]:= B[n, pp] + B[n-1, p]",
+        "      else B[n, pp]:= B[n-1, p]",
+        "      fi;",
+        "    od",
+        "  od",
+        "od:",
+        "seq(A[n], n=0..N); # _Robert Israel_, Nov 03 2014"
+    ],
+    "mathematica": [
+        "aux[i_Integer, j_Integer, k_Integer, n_Integer] := Which[Min[i, j, k, n] < 0 || Max[i, j, k] > n, 0, n == 0, KroneckerDelta[i, j, k, n], True, aux[i, j, k, n] = aux[-1 + i, -1 + j, 1 + k, -1 + n] + aux[-1 + i, j, k, -1 + n] + aux[1 + i, -1 + j, k, -1 + n] + aux[1 + i, j, -1 + k, -1 + n] + aux[1 + i, 1 + j, -1 + k, -1 + n]]; Table[Sum[aux[i, j, k, n], {i, 0, n}, {j, 0, n}, {k, 0, n}], {n, 0, 10}]"
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Manuel Kauers_, Nov 18 2008",
+    "references": 0,
+    "revision": 8,
+    "time": "2014-11-04T02:57:29-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

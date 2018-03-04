@@ -1,0 +1,39 @@
+{
+    "number": 216231,
+    "data": "0,1,1,2,3,5,7,12,19,31,43,74,79,153,227,239,313,552,631,643,1274,1427,1979,3253,5232,7211,7213,14424,14737,15289,20521,20533,41054,41281,82335,83609,83621,88853,90127,104551,194678,201889,207121,212353,226777,226789",
+    "name": "Fibonacci with priority for primes: a(0)=0, a(1)=1, for n>=2, a(n) = a(n-1)+a(k), where 0<k<=n-2 is maximal index such that a(n-1)+a(k) is prime. If there is no such k, then a(n) = a(n-1)+a(n-2).",
+    "comment": [
+        "Conjecture: There exist arbitrary long chains of consecutive prime terms."
+    ],
+    "link": [
+        "Peter J. C. Moses, <a href=\"/A216231/b216231.txt\">Table of n, a(n) for n = 0..9999</a>"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k;",
+        "      if n<2 then n",
+        "    else for k from n-2 to 1 by -1",
+        "           while not isprime(a(n-1) +a(k)) do od;",
+        "         a(n-1) +a(`if`(k=0, n-2, k))",
+        "      fi",
+        "    end:",
+        "seq(a(n), n=0..100);  # _Alois P. Heinz_, Mar 14 2013"
+    ],
+    "mathematica": [
+        "a216231[0]:=0;",
+        "a216231[1]:=1;",
+        "a216231[n_]:=a216231[n]=",
+        "Module[{k},(k=NestWhile[#-1&,n-1,(#>1)&&!PrimeQ[a216231[n-1]+a216231[#]]&];",
+        "If[k==1,k=n-2]);a216231[n-1]+a216231[k]];",
+        "Table[a216231[n],{n,0,100}] (* _Peter J. C. Moses_, Mar 14 2013 *)"
+    ],
+    "xref": [
+        "Cf. A000045."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Vladimir Shevelev_, Mar 14 2013",
+    "references": 3,
+    "revision": 29,
+    "time": "2015-03-26T15:26:40-04:00",
+    "created": "2013-03-15T08:41:54-04:00"
+}

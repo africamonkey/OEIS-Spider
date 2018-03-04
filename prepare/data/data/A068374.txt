@@ -1,0 +1,53 @@
+{
+    "number": 68374,
+    "data": "2,5,13,19,43,73,103,109,229,313,883,1093,1489,1699,1789,2143,3463,3853,5653,15649,21523,43789,47743,50053,51199,59473,86293,88819,93493,101533,176053,197299,205663,235009,257503,296509,325543,338413,347989",
+    "name": "Primes n such that positive values of n - A002110(k) are all primes (k>0).",
+    "link": [
+        "Robert Israel, <a href=\"/A068374/b068374.txt\">Table of n, a(n) for n = 1..121</a>"
+    ],
+    "maple": [
+        "primo:= proc(k) option remember; ithprime(k)*procname(k-1) end proc:",
+        "primo(1):= 2:",
+        "filter:= proc(p)",
+        "  local k;",
+        "  if not isprime(p) then return false fi;",
+        "  for k from 1 do",
+        "    if primo(k) >= p then return true",
+        "    elif not isprime(p - primo(k)) then return false",
+        "    fi",
+        "  od",
+        "end proc:",
+        "select(filter, [2,seq(i,i=3..10^6,2)]); # _Robert Israel_, Dec 14 2015"
+    ],
+    "mathematica": [
+        "s = Table[Product[Prime@ k, {k, n}], {n, 12}]; Select[Prime@ Range@ 30000, AllTrue[# - TakeWhile[s, Function[k, k < #]], PrimeQ@ # && # > 0 &] &] (* _Michael De Vlieger_, Dec 14 2015, Version 10 *)"
+    ],
+    "program": [
+        "(PARI) primo(n) = prod(k=1, n, prime(k));",
+        "isok(p) = {my(k=1); while ((pp=primo(k)) < p, if (! isprime(p-pp), return (0)); k++;); return (1);}",
+        "lista(nn) = forprime(p=2, nn, if (isok(p), print1(p, \", \"));); \\\\ _Michel Marcus_, Dec 14 2015",
+        "(MATLAB)",
+        "Primes = primes(10^8);",
+        "A = Primes;",
+        "primorial = 1;",
+        "for k =1:10",
+        "  primorial = primorial*Primes(k);",
+        "j = find(A > primorial,1,'first');",
+        "  if numel(j) == 0",
+        "    break",
+        "  end",
+        "  A = [A(1:j-1),intersect(A(j:end),Primes + primorial)];",
+        "end",
+        "A % _Robert Israel_, Dec 14 2015"
+    ],
+    "xref": [
+        "Cf. A002110."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Naohiro Nomoto_, Mar 01 2002",
+    "references": 2,
+    "revision": 22,
+    "time": "2016-04-25T12:05:00-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

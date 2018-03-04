@@ -1,0 +1,35 @@
+{
+    "number": 293184,
+    "data": "1,14,20,57,187,188,916,1603,93928,142891,432976",
+    "name": "Numbers n such that bphi(n) = bphi(n+1), where bphi(n) is the bi-unitary analog of Euler's totient function (A116550).",
+    "comment": [
+        "187 is the first solution to bphi(n) = bphi(n+1) = bphi(n+2)."
+    ],
+    "example": [
+        "14 is in the sequence since bphi(14) = bphi(15) = 9."
+    ],
+    "mathematica": [
+        "bphi[1] = 1; bphi[n_] := With[{pp = Power @@@ FactorInteger[n]},   Count[Range[n], m_ /; Intersection[pp, Power @@@ FactorInteger[m]] == {}]]; a={}; b1=0; Do[b2 = bphi[k];If[b1 == b2, a = AppendTo[a, k - 1]]; b1 = b2, {k, 1, 10^3}]; a (* after _Jean-Fran\u00e7ois Alcover_ at A116550 *)"
+    ],
+    "program": [
+        "(PARI) udivs(n) = {my(d = divisors(n)); select(x->(gcd(x, n/x)==1), d); }",
+        "gcud(n, m) = vecmax(setintersect(udivs(n), udivs(m)));",
+        "biuphi(n) = if (n==1, 1, sum(k=1, n-1, gcud(n, k) == 1));",
+        "isok(n) = biuphi(n) == biuphi(n+1);",
+        "lista(nn) = {x = biuphi(1); for (n=2, nn, y = biuphi(n); if (x==y, print1(n-1, \", \")); x = y;);} \\\\ _Michel Marcus_, Nov 09 2017"
+    ],
+    "xref": [
+        "Cf. A001274, A116550, A287055."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Oct 01 2017",
+    "ext": [
+        "a(10) from _Michel Marcus_, Nov 11 2017",
+        "a(11) from _Michel Marcus_, Nov 12 2017"
+    ],
+    "references": 1,
+    "revision": 22,
+    "time": "2017-11-13T02:59:15-05:00",
+    "created": "2017-10-13T05:04:56-04:00"
+}

@@ -1,0 +1,32 @@
+{
+    "number": 241151,
+    "data": "1,2,3,3,4,5,5,5,6,7,7,7,7,8,9,9,9,9,9,10,11,11,11,11,11,11,12,13,13,13,13,13,13,13,14,15,15,15,15,15,15,15,15,16,17,17,17,17,17,17,17,17,17,18,19,19,19,19,19",
+    "name": "Number of distinct degrees in the partition graph G(n) defined at A241150.",
+    "comment": [
+        "a(n) = number of numbers in row n of the array at A241150, counting the top row as row 2."
+    ],
+    "example": [
+        "(See the Example section of A241150.)"
+    ],
+    "mathematica": [
+        "    z = 25; spawn[part_] := Map[Reverse[Sort[Flatten[ReplacePart[part, {# - 1, 1}, Position[part, #, 1, 1][[1]][[1]]]]]] &, DeleteCases[DeleteDuplicates[part], 1]];",
+        "     unspawn[part_] := If[Length[Cases[part, 1]] > 0, Map[ReplacePart[Most[part], Position[Most[part], #, 1, 1][[1]][[1]] -> # + 1] &, DeleteDuplicates[Most[part]]], {}]; m = Map[Last[Transpose[Tally[Map[#[[2]] &, Tally[Flatten[{Map[unspawn, #], Map[spawn, #]}, 2] &[IntegerPartitions[#]]]]]]] &, 1 + Range[z]];",
+        "     Column[m] (* A241150 as an array *)",
+        "     Flatten[m] (* A241150 as a sequence *)",
+        "     Table[Length[m[[n]]], {n, 1, z}] (* A241151 *)",
+        "     Table[Max[m[[n]]], {n, 1, z}] (* A241152 *)",
+        "     Table[Last[m[[n]]], {n, 1, z}] (* A241153 *)",
+        "     (* Next, show the graph G(k) *)",
+        "     k = 8; graph = Flatten[Table[part = IntegerPartitions[k][[n]]; Map[FromDigits[part] -> FromDigits[#] &, spawn[part]], {n, 1, PartitionsP[k]}]]; Graph[graph, VertexLabels -> \"Name\", ImageSize -> 500, ImagePadding -> 20] (* _Peter J. C. Moses_, Apr 15 2014 *)"
+    ],
+    "xref": [
+        "Cf. A241150, A241152, A241153."
+    ],
+    "keyword": "nonn,easy,more",
+    "offset": "2,2",
+    "author": "_Clark Kimberling_ and _Peter J. C. Moses_, Apr 17 2014",
+    "references": 4,
+    "revision": 8,
+    "time": "2014-04-22T22:18:31-04:00",
+    "created": "2014-04-22T22:18:31-04:00"
+}

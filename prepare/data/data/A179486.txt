@@ -1,0 +1,54 @@
+{
+    "number": 179486,
+    "data": "1,1,3,12,56,285,1533,8571,49311,290019,1735845,10538550,64741482,401708636,2513837931,15847467276,100547976684,641571037002,4114313992851,26503239829953,171416342026944,1112726829455289",
+    "name": "G.f. A(x) satisfies A(x) = x + A(A(x)^3) where A(x) = Sum_{n>=1} a(n)*x^(2*n-1).",
+    "formula": [
+        "G.f. A(x) satisfies: A(x - A(x^3)) = x.",
+        "G.f.: A(x) = x + G(x) + G(G(x)) + G(G(G(x))) + G(G(G(G(x)))) +... where G(x) = A(x)^3 = g.f. of A179487.",
+        "Given g.f. A(x), define C(x) = A(x^3), then C(x) = x^3 + C(C(x)).",
+        "Derivative of g.f. A(x) satisfies: A'(x) = 1/(1 - 3*A(x)^2*A'(A(x)^3)).",
+        "Radius of convergence, r, and related values:",
+        "r = 0.378590868760339249702289974755919481665219504207137681721365...;",
+        "A(r) = 0.5510035125320818261355419567786182869427265480378585343298... where r = A(r) - A(A(r)^3);",
+        "A(r)^3 = 0.1672873502451522851544780724841939477291722823741494215...;",
+        "A(A(r)^3) = 0.1724126437717425764332519820226988052775070438307208...;",
+        "A'(A(r)^3) = 1.0979182660346808662695442970765885990300854399844658... where A'(A(r)^3) = 1/(3*A(r)^2);",
+        "Limit a(n+1)/a(n) = 1/r^2 = 6.9768555281242291444841704586123374638...",
+        "Let V(x) = x/(x - A(x^3)) then V'(A(r)) = 1/r, V(z) - z*V'(z) = 0 at z=A(r), and V(A(x)) = A(x)/x for all x."
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^3 + 3*x^5 + 12*x^7 + 56*x^9 + 285*x^11 +...",
+        "A(x)^3 = x^3 + 3*x^5 + 12*x^7 + 55*x^9 + 276*x^11 + 1470*x^13 +...",
+        "The series reversion of A(x) equals x - A(x^3), therefore",
+        "x = A(x - x^3 - x^9 - 3*x^15 - 12*x^21 - 56*x^27 - 285*x^33 -...).",
+        "Let G(x) = A(x)^3 be the g.f. of A179487, then",
+        "G(G(x)) = x^9 + 9*x^11 + 63*x^13 + 411*x^15 + 2619*x^17 +...,",
+        "G(G(G(x))) = x^27 + 27*x^29 + 432*x^31 + 5364*x^33 +..., and",
+        "G(G(G(G(x)))) = x^81 + 81*x^83 + 3483*x^85 +...",
+        "where A(x) = x + G(x) + G(G(x)) + G(G(G(x))) + G(G(G(G(x)))) +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x+x^3); for(i=0, n, A=serreverse(x-subst(A, x, x^3+x^2*O(x^(2*n))))); polcoeff(A, 2*n-1)}",
+        "(Maxima)",
+        "Co(n,k,F):=if k=1 then F(n) else sum(F(i+1)*Co(n-i-1, k-1, F),i,0,n-k);",
+        "b(n):=if n=1 then 1 else sum(if 3*k>n then 0 else Co(n,3*k,b)*b(k),k,1, n);",
+        "a(n):=b(2*n-1);",
+        "makelist(a(n),n,1,7); [_Vladimir Kruchinin_, Jun 28 2011]",
+        "(Maxima)",
+        "T(n,m):=if n=m then 1 else kron_delta(n,m)+sum(binomial(m,j)*sum(if 3*k<=n-j then T(n-j,3*k)*T(k,m-j) else 0,k,m-j,n-j),j,0,m-1);",
+        "makelist(T(n,1),n,1,12); [_Vladimir Kruchinin_, May 02 2012]"
+    ],
+    "xref": [
+        "Cf. A179487, A141200 (variant)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Aug 12 2010",
+    "ext": [
+        "Typo in example corrected by _Paul D. Hanna_, Aug 13 2010"
+    ],
+    "references": 3,
+    "revision": 16,
+    "time": "2012-05-14T22:57:23-04:00",
+    "created": "2010-08-27T03:00:00-04:00"
+}

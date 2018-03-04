@@ -1,0 +1,42 @@
+{
+    "number": 271235,
+    "data": "1,2,14,68,406,1820,10892,48008,266214,1248044,6454116,29642424,156638076,707729176,3551518936,16671232784,81685862790,375557689292,1843995831412,8437648295384,40779718859796,188104838512840,891508943457064,4091507664092016,19457793452994012,88760334081132280,415942096027738728,1905990594266105648,8875964207106121784,40416438507461834160",
+    "name": "G.f. equals the square root of P(4*x), where P(x) is the g.f. of the partition numbers (A000041).",
+    "comment": [
+        "More formulas and information can be derived from entry A000041."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A271235/b271235.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{n>=1} 1/sqrt(1 - (4*x)^n).",
+        "Sum_{k=0..n} a(k) * a(n-k)  =  4^n * A000041(n), for n>=0, where A000041(n) equals the number of partitions of n.",
+        "a(n) ~ 4^(n-1) * exp(sqrt(n/3)*Pi) / (3^(3/8) * n^(7/8)). - _Vaclav Kotesovec_, Apr 02 2016"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 14*x^2 + 68*x^3 + 406*x^4 + 1820*x^5 + 10892*x^6 + 48008*x^7 + 266214*x^8 + 1248044*x^9 + 6454116*x^10 +...",
+        "where A(x)^2 = P(4*x).",
+        "RELATED SERIES.",
+        "P(x) = 1 + x + 2*x^2 + 3*x^3 + 5*x^4 + 7*x^5 + 11*x^6 + 15*x^7 + 22*x^8 + 30*x^9 + 42*x^10 + 56*x^11 + 77*x^12 + 101*x^13 + 135*x^14 +...+ A000041(n)*x^n +...",
+        "1/A(x)^6 = 1 - 12*x + 320*x^3 - 28672*x^6 + 9437184*x^10 - 11811160064*x^15  + 57174604644352*x^21 +...+ (-1)^n*(2*n+1)*(4*x)^(n*(n+1)/2) +..."
+    ],
+    "mathematica": [
+        "nmax = 30; CoefficientList[Series[Product[1/Sqrt[1 - (4*x)^k], {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Apr 02 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoeff( prod(k=1,n, 1/sqrt(1 - (4*x)^k +x*O(x^n))),n)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( sum( k=1, sqrtint(n+1), (4*x)^(k^2) / prod(j=1, k, 1 - (4*x)^j, 1 + x*O(x^n))^2, 1)^(1/2), n))};",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A000041, A271236."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Apr 02 2016",
+    "references": 4,
+    "revision": 18,
+    "time": "2016-04-02T17:39:06-04:00",
+    "created": "2016-04-02T12:49:35-04:00"
+}

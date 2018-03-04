@@ -1,0 +1,51 @@
+{
+    "number": 33548,
+    "data": "131,263,457,1039,1049,1091,1301,1361,1433,1571,1913,1933,2141,2221,2273,2441,2591,2663,2707,2719,2729,2803,3067,3137,3229,3433,3559,3631,4091,4153,4357,4397,4703,4723,4903,5009,5507,5701,5711,5741,5801,5843",
+    "name": "Honaker primes: primes P(k) such that sum of digits of P(k) equals sum of digits of k.",
+    "comment": [
+        "A090431(A049084(a(n))) = 0."
+    ],
+    "reference": [
+        "Proposed by _G. L. Honaker, Jr._"
+    ],
+    "link": [
+        "T. D. Noe and Charles R Greathouse IV, <a href=\"/A033548/b033548.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from Noe)"
+    ],
+    "example": [
+        "131 is the 32nd prime and sum of digits of both is 5."
+    ],
+    "maple": [
+        "P:=proc(n) local a; a:=ithprime(n);",
+        "if convert(convert(n,base,10),`+`)=convert(convert(a,base,10),`+`) then a; fi; end:",
+        "seq(P(i),i=1..10^3); # _Paolo P. Lava_, Jun 29 2017"
+    ],
+    "mathematica": [
+        "Prime[ Select[ Range[ 2000 ], Apply[ Plus, IntegerDigits[ # ] ] == Apply[ Plus, IntegerDigits[ Prime[ # ] ] ] & ] ] (* _Santi Spadaro_, Oct 14 2001 *)",
+        "Select[ Prime@ Range@ 5927, Plus @@ IntegerDigits@ # == Plus @@ IntegerDigits@ PrimePi@ # &]  (* _Robert G. Wilson v_, Jun 07 2009 *)",
+        "nn=800;Transpose[Select[Thread[{Prime[Range[nn]],Range[nn]}],Total[IntegerDigits[First[#]]]== Total[ IntegerDigits[ Last[#]]]&]][[1]] (* _Harvey P. Dale_, Jun 13 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a033548 n = a033548_list !! (n-1)",
+        "a033548_list = filter ((== 0) . a090431 . a049084) a000040_list",
+        "-- _Reinhard Zumkeller_, Mar 16 2014",
+        "(PARI) is(n)=isprime(n) && sumdigits(n)==sumdigits(primepi(n)) \\\\ _Charles R Greathouse IV_, Jun 18 2015",
+        "(Python)",
+        "from sympy.ntheory.factor_ import digits",
+        "from sympy import primepi, primerange",
+        "print [n for n in primerange(1, 5901) if (sum(digits(n)[1:])==sum(digits(primepi(n))[1:]))] # _Indranil Ghosh_, Jun 27 2017, after _Charles R Greathouse IV_"
+    ],
+    "xref": [
+        "Cf. A033549, A049084, A072439, A090431."
+    ],
+    "keyword": "nonn,base,nice",
+    "offset": "1,1",
+    "author": "Calculated by _Jud McCranie_",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Jun 07 2009"
+    ],
+    "references": 28,
+    "revision": 38,
+    "time": "2017-06-29T19:29:58-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

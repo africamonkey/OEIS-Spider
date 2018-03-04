@@ -1,0 +1,60 @@
+{
+    "number": 436,
+    "id": "M4584 N1955",
+    "data": "1,8,352,38528,7869952,2583554048,1243925143552,825787662368768,722906928498737152,806875574817679474688,1118389087843083461066752,1884680130335630169428983808,3794717805092151129643367268352",
+    "name": "Generalized Euler numbers c(3,n).",
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A000436/b000436.txt\">Table of n, a(n) for n = 0..100</a>",
+        "Michael E. Hoffman, <a href=\"http://www.emis.ams.org/journals/EJC/Volume_6/Abstracts/v6i1r21.html\">Derivative polynomials, Euler Polynomials, and associated integer sequences</a>, El. J. Combinat. 6 (see Th. 3.3)",
+        "D. Shanks, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1967-0223295-5\">Generalized Euler and class numbers</a>. Math. Comp. 21 (1967) 663-688.",
+        "D. Shanks, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1968-0227093-9\">Corrigenda to: \"Generalized Euler and class numbers\"</a>, Math. Comp. 22 (1968), 699",
+        "D. Shanks, <a href=\"/A000003/a000003.pdf\">Generalized Euler and class numbers</a>, Math. Comp. 21 (1967), 689-694; 22 (1968), 699. [Annotated scanned copy]"
+    ],
+    "formula": [
+        "E.g.f.: cos(x) / cos(3*x) (even powers only).",
+        "For n>0, a(n) = A002114(n)*2^(2n+1) = (1/3)*A002112(n)*2^(2n+1). - _Philippe Del\u00e9ham_, Jan 17 2004",
+        "a(n) = Sum_{k=0..n} (-1)^k*9^(n-k)*A086646(n,k). - _Philippe Del\u00e9ham_, Oct 27 2006",
+        "(-1)^n a(n) = 1 - Sum_{i=0..n-1} (-1)^i*binomial(2n,2i)*3^(2n-2i)*a(i). - _R. J. Mathar_, Nov 19 2006",
+        "P_{2n}(sqrt(3))/sqrt(3) (where the polynomials P_n() are defined in A155100). - _N. J. A. Sloane_, Nov 05 2009",
+        "E.g.f.: E(x) = cos(x)/cos(3*x) = 1 + 4*x^2/(G(0)-2*x^2); G(k) = (2*k+1)*(k+1) - 2*x^2 + 2*x^2*(2*k+1)*(k+1)/G(k+1); (continued fraction, Euler's kind, 1-step). - _Sergei N. Gladkovskii_, Jan 02 2012",
+        "G.f.: 1 / (1 - 2*4*x / (1 - 6*6*x / (1 - 8*10*x / (1 - 12*12*x / (1 - 14*16*x / (1 - 18*18*x / ...)))))). - _Michael Somos_, May 12 2012",
+        "a(n) = | 3^(2*n)*2^(2*n+1)*lerchphi(-1,-2*n,1/3) |. - _Peter Luschny_, Apr 27 2013",
+        "a(n) = (-1)^n*6^(2*n)*E(2*n,1/3), where E(n,x) denotes the n-th Euler polynomial. Calculation suggests that the expansion exp( Sum_{n >= 1} a(n)*x^n/n ) = exp( 8*x + 352*x^2/2 + 38528*x^3/3 + ... ) = 1 + 8*x + 208*x^2 + 14336*x^3 + ... has integer coefficients. Cf. A255882. - _Peter Bala_, Mar 10 2015",
+        "a(n) = 2*(-144)^n*(zeta(-2*n,1/6)-zeta(-2*n,2/3)), where zeta(a,z) is the generalized Riemann zeta function. - _Peter Luschny_, Mar 11 2015"
+    ],
+    "example": [
+        "G.f. = 1 + 8*x + 352*x^2 + 38528*x^3 + 7869952*x^4 + 2583554048*x^5 + ..."
+    ],
+    "maple": [
+        "A000436 := proc(nmax) local a,n,an; a := [1] : n := 1 : while nops(a)< nmax do an := 1-sum(binomial(2*n,2*i)*3^(2*n-2*i)*(-1)^i*op(i+1,a),i=0..n-1) : a := [op(a),an*(-1)^n] ; n := n+1 ; od ; RETURN(a) ; end:",
+        "A000436(10) ; # _R. J. Mathar_, Nov 19 2006",
+        "a := n -> 2*(-144)^n*(Zeta(0,-2*n,1/6)-Zeta(0,-2*n,2/3)):",
+        "seq(a(n), n=0..12); # _Peter Luschny_, Mar 11 2015"
+    ],
+    "mathematica": [
+        "a[0] = 1; a[n_] := a[n] = (-1)^n*(1 - Sum[(-1)^i*Binomial[2n, 2i]*3^(2n - 2i)*a[i], {i, 0, n-1}]); Table[a[n], {n, 0, 12}] (* _Jean-Fran\u00e7ois Alcover_, Jan 31 2012, after _R. J. Mathar_ *)",
+        "With[{nn=30},Take[CoefficientList[Series[Cos[x]/Cos[3x],{x,0,nn}], x] Range[ 0,nn]!,{1,-1,2}]] (* _Harvey P. Dale_, May 22 2012 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "from mpmath import *",
+        "mp.dps = 32; mp.pretty = True",
+        "def A000436(n): return abs(3^(2*n)*2^(2*n+1)*lerchphi(-1,-2*n,1/3))",
+        "[A000436(n) for n in (0..12)]  # _Peter Luschny_, Apr 27 2013",
+        "(PARI) x='x+O('x^66); v=Vec(serlaplace( cos(x) / cos(3*x) ) ); vector(#v\\2,n,v[2*n-1]) \\\\ _Joerg Arndt_, Apr 27 2013"
+    ],
+    "xref": [
+        "Bisections: A156177 and A156178. Cf. A210657, A255882."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 13,
+    "revision": 66,
+    "time": "2018-02-18T11:51:38-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

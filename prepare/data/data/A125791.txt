@@ -1,0 +1,69 @@
+{
+    "number": 125791,
+    "data": "1,1,2,16,1024,1048576,34359738368,72057594037927936,19342813113834066795298816,1329227995784915872903807060280344576,46768052394588893382517914646921056628989841375232",
+    "name": "a(n) = 2^(n*(n-1)*(n-2)/6) for n>=1.",
+    "comment": [
+        "Table A125790 is related to partitions into powers of 2, with A002577 in column 1 of A125790; further, column k of A125790 equals row sums of matrix power A078121^k, where triangle A078121 shifts left one column under matrix square.",
+        "Also number of distinct instances of the one-in-three monotone 3SAT problem for n variables. - Paul Tarau (paul.tarau(AT)gmail.com), Jan 25 2008",
+        "Hankel transform of aerated 2-Catalan numbers (A015083). [From _Paul Barry_, Dec 15 2010]"
+    ],
+    "formula": [
+        "Determinant of n X n upper left corner submatrix of table A125790.",
+        "a(n)=2^(C(3+n,n)), n>=-2. - _Zerinvary Lajos_, Jun 16 2007"
+    ],
+    "example": [
+        "a(n) is a pyramidal power of 2; exponents of 2 in a(n) begin:",
+        "[0, 0, 1, 4, 10, 20, 35, 56, 84, 120, 165, ..., n(n-1)(n-2)/6, ...]."
+    ],
+    "maple": [
+        "seq(2^(binomial(3+n,n)), n=-2..8); - _Zerinvary Lajos_, Jun 16 2007"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,0,2^(n*(n-1)*(n-2)/6))",
+        "(PARI) /* As determinant of n X n matrix: */",
+        "{a(n)=local(q=2,A=Mat(1), B); for(m=1, n, B=matrix(m, m);",
+        "for(i=1, m, for(j=1, i, if(j==i|j==1, B[i, j]=1, B[i, j]=(A^q)[i-1, j-1]); )); A=B);",
+        "return(matdet(matrix(n,n,r,c,(A^c)[r,1])))}",
+        "for(n=1,15,print1(a(n),\", \"))",
+        "(Prolog program from Paul Tarau (paul.tarau(AT)gmail.com), Jan 25 2008) This generates all 3SAT problem instances",
+        "test:-test(4).",
+        "test(Max):-",
+        "between(1,Max,N),",
+        "nl,",
+        "one_in_three_monotone_3sat(N,Pss),",
+        "write(N:Pss),nl,",
+        "fail",
+        "; nl.",
+        "% generates all one-in-three monotone 3SAT problems involving N variables",
+        "one_in_three_monotone_3sat(N,Pss):-",
+        "ints(1,N,Is),",
+        "findall(Xs,ksubset(3,Is,Xs),Xss),",
+        "subset_of(Xss,Pss).",
+        "% subset generator",
+        "subset_of([],[]).",
+        "subset_of([X|Xs],Zs):-",
+        "subset_of(Xs,Ys),",
+        "add_element(X,Ys,Zs).",
+        "add_element(_,Ys,Ys).",
+        "add_element(X,Ys,[X|Ys]).",
+        "% subsets of K elements",
+        "ksubset(0,_,[]).",
+        "ksubset(K,[X|Xs],[X|Rs]):-K>0,K1 is K-1,ksubset(K1,Xs,Rs).",
+        "ksubset(K,[_|Xs],Rs):-K>0,ksubset(K,Xs,Rs).",
+        "% list of integers in [From..To]",
+        "ints(From,To,Is):-findall(I,between(From,To,I),Is)."
+    ],
+    "xref": [
+        "Cf. A125790, A078121; A002577, A000292 (pyramidal numbers)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 10 2006",
+    "ext": [
+        "Name simplified; determinant formula moved out of name into formula section by _Paul D. Hanna_, Oct 16 2013"
+    ],
+    "references": 2,
+    "revision": 12,
+    "time": "2013-10-16T09:30:18-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

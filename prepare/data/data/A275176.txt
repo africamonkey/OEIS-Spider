@@ -1,0 +1,46 @@
+{
+    "number": 275176,
+    "data": "1,1,1,1,1,1,4,7,10,22,43,202,370,547,1264,2521,11881,21781,32221,74521,148681,700744,1284667,1900450,4395442,8769643,41331982,75773530,112094287,259256524,517260241,2437886161,4469353561,6611662441,15291739441,30509584561",
+    "name": "a(n) = (3 * a(n-3) + a(n-1) * a(n-5)) / a(n-6), a(0) = a(1) = ... = a(5) = 1.",
+    "comment": [
+        "Inspired by A048736."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A275176/b275176.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_15\">Index entries for linear recurrences with constant coefficients</a>, signature (0,0,0,0,60,0,0,0,0,-60,0,0,0,0,1)."
+    ],
+    "formula": [
+        "G.f.: (1 +x +x^2 +x^3 +x^4 -59*x^5 -56*x^6 -53*x^7 -50*x^8 -38*x^9 +43*x^10 +22*x^11 +10*x^12 +7*x^13 +4*x^14) / ((1 -x)*(1 +x +x^2 +x^3 +x^4)*(1 -59*x^5 +x^10)). - _Colin Barker_, Jul 19 2016",
+        "a(n) = 60*a(n-5) - 60*a(n-10) + a(n-15)."
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[n] == (3 a[n - 3] + a[n - 1] a[n - 5])/a[n - 6], a[1] == 1, a[2] == 1, a[3] == 1, a[4] == 1, a[5] == 1, a[6] == 1}, a, {n, 36}] (* _Michael De Vlieger_, Jul 19 2016 *)"
+    ],
+    "program": [
+        "(Ruby)",
+        "def A(k, l, n)",
+        "  a = Array.new(k * 2, 1)",
+        "  ary = [1]",
+        "  while ary.size < n + 1",
+        "    break if (a[1] * a[-1] + a[k] * l) % a[0] > 0",
+        "    a = *a[1..-1], (a[1] * a[-1] + a[k] * l) / a[0]",
+        "    ary << a[0]",
+        "  end",
+        "  ary",
+        "end",
+        "def A275176(n)",
+        "  A(3, 3, n)",
+        "end",
+        "(PARI) Vec((1 +x +x^2 +x^3 +x^4 -59*x^5 -56*x^6 -53*x^7 -50*x^8 -38*x^9 +43*x^10 +22*x^11 +10*x^12 +7*x^13 +4*x^14) / ((1 -x)*(1 +x +x^2 +x^3 +x^4)*(1 -59*x^5 +x^10)) + O(x^50)) \\\\ _Colin Barker_, Jul 19 2016"
+    ],
+    "xref": [
+        "Cf. A048736, A275173, A275175."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,7",
+    "author": "_Seiichi Manyama_, Jul 19 2016",
+    "references": 3,
+    "revision": 21,
+    "time": "2016-08-08T23:50:45-04:00",
+    "created": "2016-08-07T22:01:17-04:00"
+}

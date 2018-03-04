@@ -1,0 +1,31 @@
+{
+    "number": 94589,
+    "data": "1,2,4,6,10,14,20,26,32,38,48,58,68,78,92,106,120,134,148,162,182,202,222,242,262,282,308,334,360,386,412,438,470,502,534,566,598,630,668,706,744,782,820,858,896,934,972,1010,1058,1106,1154,1202,1250,1298",
+    "name": "a(1) = 1; a(n+1) = a(n) + (largest element of {a} <= n).",
+    "comment": [
+        "a(n+1) = a(n) + a(k(n)), where k(n) is the number of elements of {a} which are <= n."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A094589/b094589.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{t = Table[0, {n}]}, t[[1]] = 1; For[i = 1, i < n, i++, t[[i + 1]] = t[[i]] + t[[Count[t, x_ /; 0 < x <= i]]]]; t]; f@ 54 (* _Michael De Vlieger_, Mar 23 2015 *)"
+    ],
+    "program": [
+        "(PARI) flargest(va, n) = {vsa = vecsort(va,,12); for (k=1, #vsa, if (vsa[k] < n, return (vsa[k])););}",
+        "lista(nn) = {va = [1]; print1(va[1], \", \"); for (n=2, nn, newa = flargest(va, n) + va[n-1]; print1(newa, \", \"); va = concat(va, newa););} \\\\ _Michel Marcus_, Mar 23 2015"
+    ],
+    "xref": [
+        "Cf. A094590, A250983 (first differences)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Jun 07 2004",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Jun 13 2004"
+    ],
+    "references": 8,
+    "revision": 18,
+    "time": "2015-03-30T04:30:35-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

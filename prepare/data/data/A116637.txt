@@ -1,0 +1,37 @@
+{
+    "number": 116637,
+    "data": "1,2,2,4,6,14,24,60,110,286,546,1456,2856,7752,15504,42636,86526,240350,493350,1381380,2861430,8064030,16829280,47682960,100134216,284997384,601661144,1719031840,3645533040,10450528048,22249511328,63967345068",
+    "name": "G.f. satisfies: A(x) = x/series_reversion(x/G(x)) where A(x) + A(-x) = 2*G(x^2) and G(x) is the g.f. of A046646.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A116637/b116637.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(2*n+1) = 2*(3*n+1)!/((n+1)!*(2*n+1)!) = 2*A006013(n), with a(0)=1 and a(2*n+2) = 2*(3*n+3)!/((n+1)!*(2*n+3)!) = 2*A001764(n+1).",
+        "G.f. satisfies: A(x) = G(x/A(x)) and A(x*G(x)) = G(x), where G(x) is the g.f. of A046646.",
+        "G.f. satisfies: A(x) = 1/A(-x) since log(A(x)) = Sum_{n>=0} 2*A006013(n)*(n+1)/(2n+1)*x^(2n+1) is an odd function.",
+        "G.f.: (1+v)/(1-v) where v=2*sqrt(3)*sin(asin(3*sqrt(3)*x/2)/3)/3. - _Paul Barry_, Jul 07 2007",
+        "Conjecture: 4*n*(n+1)*(3*n-1)*a(n) -36*n*a(n-1) -3*(3*n-5)*(3*n+2)*(3*n-4)*a(n-2)=0. - _R. J. Mathar_, Jun 22 2016"
+    ],
+    "example": [
+        "A(x) = 1 + 2*x + 2*x^2 + 4*x^3 + 6*x^4 + 14*x^5 + 24*x^6 + 60*x^7 +...",
+        "log(A(x)) = 1*2*x + 2*4/3*x^3 + 7*6/5*x^5 + 30*8/7*x^7 + 143*10/9*x^9 +..."
+    ],
+    "mathematica": [
+        "k := Floor[(n - 1)/2]; Table[If[n == 0, 1, If[Mod[n, 2] == 1, 2*(3*k + 1)!/((k + 1)!*(2*k + 1)!), 2*(3*k + 3)!/((k + 1)!*(2*k + 3)!)]], {n, 0, 50}] (* _G. C. Greubel_, Nov 21 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(k=(n-1)\\2);if(n==0,1,if(n%2==1, 2*(3*k+1)!/((k+1)!*(2*k+1)!), 2*(3*k+3)!/((k+1)!*(2*k+3)!)))}",
+        "for(n=0,40,print1(a(n),\", \"))",
+        "(PARI) {a(n)=if(n<1, n==0, 2*(n+n\\2)!/ (n\\2+n%2)!/ (n+1-(n%2))!)} /* _Michael Somos_, Feb 22 2006 */"
+    ],
+    "xref": [
+        "Cf. A046646, A001764, A006013."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Feb 19 2006",
+    "references": 2,
+    "revision": 16,
+    "time": "2017-11-21T18:14:41-05:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

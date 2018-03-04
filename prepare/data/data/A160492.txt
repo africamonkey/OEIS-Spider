@@ -1,0 +1,48 @@
+{
+    "number": 160492,
+    "data": "1,6,45,560,9795,223524,6284089,210208560,8156750283,360297117070,17853149451841,980844453593160,59179098916735213,3890176308574524934,276750779199166606705,21185250061147839785120,1736385140876356212244563,151719500906542020597450498",
+    "name": "a(n) = number of solutions to an equation x_1 + ... + x_j =0 with 1<=j<=n satisfying -n<=x_i<=n (1<=i<=j).",
+    "comment": [
+        "The number of variables in the equation can be from 1 to n and each variable can have a value of -n to n. See A286928 for the case of exactly n variables. - _Andrew Howroyd_, May 16 2017"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} Sum_{i=0..floor(k/2)} (-1)^i*binomial(k*(n+1)-i*(2*n+1)-1, k-1)*binomial(k, i). - _Andrew Howroyd_, May 16 2017"
+    ],
+    "example": [
+        "From _Andrew Howroyd_, May 16 2017 (Start)",
+        "Case n=3:",
+        "1 variable: {0} is only solution.",
+        "2 variables: {-3,3}, {-2,2}, {-1,1}, {0,0}, {1,-1}, {2,-2}, {3,-3}.",
+        "3 variables: {-3 0 3}x6, {-3 1 2}x6, {-2 -1 3}x6, {-2 0 2}x6,",
+        "             {-2 1 1}x3, {-1 -1 2}x3, {-1 0 1}x6, {0 0 0}x1",
+        "In the above, {-3 0 3}x6 means that the values can be expanded to 6 solutions by considering different orderings.",
+        "In total there are 1 + 7 + 37 = 45 solutions so a(3)=45.",
+        "(End)"
+    ],
+    "mathematica": [
+        "zerocompositionswithzero[p_] := Module[{united = {}, i, zerosums = {}, count = 0}, For[i = 1, i <= p, i = i + 1, united = Union[united, Tuples[Table[x, {x, -p, p}], i]] ]; For[i = 1, i <= Length[united], i = i + 1, If[Sum[united[[i, j]], {j, 1, Length[united[[i]]]}] == 0, zerosums = Append[zerosums, united[[i]]]; count = count + 1;]; ]; Return[{count, zerosums}]; ];"
+    ],
+    "program": [
+        "(PARI)",
+        "\\\\ nr compositions of r with max value m into exactly k parts.",
+        "compositions(r,m,k)=sum(i=0,floor((r-k)/m),(-1)^i*binomial(r-1-i*m, k-1)*binomial(k, i));",
+        "a(n)=sum(v=1,n,compositions(v*(n+1),2*n+1,v));  \\\\ _Andrew Howroyd_, May 16 2017",
+        "(Python)",
+        "from sympy import binomial",
+        "def C(r, m, k): return sum([(-1)**i*binomial(r - 1 - i*m, k - 1)*binomial(k, i) for i in xrange(int((r - k)/m) + 1)])",
+        "def a(n): return sum([C(v*(n + 1), 2*n + 1, v) for v in xrange(1, n + 1)]) # _Indranil Ghosh_, May 16 2017, after the PARI program by _Andrew Howroyd_"
+    ],
+    "xref": [
+        "Cf. A286928."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Srikanth K S_, May 15 2009",
+    "ext": [
+        "Name clarified and a(6)-a(18) from _Andrew Howroyd_, May 16 2017"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2017-05-17T08:55:48-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

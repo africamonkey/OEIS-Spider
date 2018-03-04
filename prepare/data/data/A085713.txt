@@ -1,0 +1,51 @@
+{
+    "number": 85713,
+    "data": "1,23,29,47,53,59,71,83,103,107,131,149,167,173,179,191,197,223,227,239,263,269,283,293,311,317,347,359,373,383,389,419,431,443,467,479,491,503,509,557,563,569,587,599,643,647,653,659,677,683,709,719",
+    "name": "Consider numbers k such that phi(x) = k has exactly 3 solutions and they are (3*p, 4*p, 6*p) where p is 1 or a prime. Sequence gives values of p.",
+    "comment": [
+        "Prime numbers in this sequence are called prime replicators of 2, by Stolarski and Greenbaum, (3, 4, 6) being the solutions of phi(x)=2. - _Michel Marcus_, Oct 20 2012"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A085713/b085713.txt\">Table of n, a(n) for n = 1..500</a>",
+        "K. B. Stolarski and S. Greenbaum, <a href=\"http://www.fq.math.ca/Scanned/23-3/stolarsky.pdf\">A Ratio Associated with phi(x) = n</a>, The Fibonacci Quarterly, Volume 23, Number 3, August 1985, pp. 265-269."
+    ],
+    "example": [
+        "83 is a term because the three solutions (249,332,498) to phi(x) = 164 can be written as (3*83, 4*83, 6*83)."
+    ],
+    "mathematica": [
+        "t = Table[ EulerPhi[n], {n, 1, 5000}]; u = Union[ Select[t, Count[t, # ] == 3 &]]; a = {}; Do[k = 1; While[ EulerPhi[3k] != u[[n]], k++ ]; AppendTo[a, k], {n, 1, 60}]; Sort[a]"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List.Ordered (insertBag)",
+        "import Data.List (groupBy); import Data.Function (on)",
+        "a085713 n = a085713_list !! (n-1)",
+        "a085713_list = 1 : r yx3ss where",
+        "   r (ps:pss) | a010051' cd == 1 &&",
+        "                map (flip div cd) ps == [3, 4, 6] = cd : r pss",
+        "              | otherwise = r pss  where cd = foldl1 gcd ps",
+        "   yx3ss = filter ((== 3) . length) $",
+        "       map (map snd) $ groupBy ((==) `on` fst) $",
+        "       f [1..] a002110_list []",
+        "       where f is'@(i:is) ps'@(p:ps) yxs",
+        "              | i < p = f is ps' $ insertBag (a000010' i, i) yxs",
+        "              | otherwise = yxs' ++ f is' ps yxs''",
+        "              where (yxs', yxs'') = span ((<= a000010' i) . fst) yxs",
+        "-- _Reinhard Zumkeller_, Nov 25 2015"
+    ],
+    "xref": [
+        "Cf. A000010, A002202, A007367, A007374, A032447, A058277, A064275.",
+        "Cf. A007614, A010051."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alford Arnold_, Jul 19 2003",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, Jul 19 2003",
+        "Nonprimes 343=7^3 and 361=19^2 deleted by _Reinhard Zumkeller_, Nov 25 2015"
+    ],
+    "references": 2,
+    "revision": 17,
+    "time": "2015-11-25T21:39:48-05:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

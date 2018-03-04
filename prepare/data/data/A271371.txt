@@ -1,0 +1,39 @@
+{
+    "number": 271371,
+    "data": "0,0,0,1,1,2,5,6,9,13,22,26,38,48,66,89,113,142,185,230,289,368,449,554,679,831,1003,1224,1474,1767,2117,2528,2996,3568,4206,4967,5855,6862,8027,9391,10943,12724,14785,17124,19807,22898,26376,30345,34893,40013",
+    "name": "Total number of inversions in all partitions of n into distinct parts.",
+    "link": [
+        "Alois P. Heinz and Vaclav Kotesovec, <a href=\"/A271371/b271371.txt\">Table of n, a(n) for n = 0..8950</a> (terms 0..5000 from Alois P. Heinz)",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Inversion_(discrete_mathematics)\">Inversion (discrete mathematics)</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k>=1} A161680(k) * A008289(n,k)."
+    ],
+    "example": [
+        "a(3) = 1: 21.",
+        "a(4) = 1: 31.",
+        "a(5) = 2: 32, 41.",
+        "a(6) = 5: 42, 51, 321 (three inversions)."
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n>i*(i+1)/2, 0,",
+        "     `if`(n=0, [1, 0], b(n, i-1, t)+`if`(i>n, 0,",
+        "      (p-> p+[0, p[1]*t])(b(n-i, i-1, t+1)))))",
+        "    end:",
+        "a:= n-> b(n$2, 0)[2]:",
+        "seq(a(n), n=0..60);"
+    ],
+    "mathematica": [
+        "b[n_, i_, t_] := b[n, i, t] = If[n > i*(i+1)/2, 0, If[n == 0, {1, 0}, b[n, i-1, t] + If[i>n, 0, Function[p, p+{0, p[[1]]*t}][b[n-i, i-1, t+1]]]]]; a[n_] := b[n, n, 0][[2]]; Table[a[n], {n, 0, 60}] (* _Jean-Fran\u00e7ois Alcover_, Feb 05 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A000009, A008289, A161680, A271370, A271372."
+    ],
+    "keyword": "nonn",
+    "offset": "0,6",
+    "author": "_Alois P. Heinz_, Apr 05 2016",
+    "references": 3,
+    "revision": 17,
+    "time": "2017-02-05T07:12:31-05:00",
+    "created": "2016-04-06T09:08:44-04:00"
+}

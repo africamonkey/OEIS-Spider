@@ -1,0 +1,69 @@
+{
+    "number": 5413,
+    "id": "M4445",
+    "data": "1,1,7,72,891,12672,202770,3602880,70425747,1503484416,34845294582,872193147840,23469399408510,676090493459712,20771911997290116,678287622406488192,23466105907996232835,857623856612704266240",
+    "name": "Number of non-vanishing Feynman diagrams of order 2n+1 for the electron-electron-photon proper vertex function in quantum electrodynamics (QED).",
+    "comment": [
+        "From _Robert Coquereaux_, Sep 12 2014: (Start)",
+        "QED diagrams are graphs with two kinds of edges (lines): a (non-oriented), f (oriented), and only one kind of (internal) vertex: aff.",
+        "They may have internal and external (ie pendant) lines.",
+        "QED diagrams containing loops of type f with an odd number of vertices are set to 0 (vanishing diagrams).",
+        "Proper diagrams also called one-particle-irreducible diagrams (1PI) are connected diagrams that remain connected when an arbitrary internal line is cut.",
+        "The proper vertex function of QED is described by proper (1PI) diagrams with one external line of type a (photon) and two external lines of type f (electron). Non-vanishing diagrams only exist if the number of vertices is odd.",
+        "The number of non-vanishing Feynman diagrams for the proper vertex function is obtained from  g*Gamma(g) = g (1 + 1 g^2 + 7 g^4 + 72 g^6 + ...) where the exponent p of g^p gives the number of (internal) vertices, p is called the order of the diagram.",
+        "Write g*Gamma(g) = g (1 + x + 7 x2 + 72 x3 + ...) with x = g^2.",
+        "The sequence a(n) gives the coefficient of x^n.",
+        "Relation with A005411: Gamma (g) =  (S(g) -1)/(g^2 S(g)^3) where S(g) = 1 + g^2 + 4 g^4+ 25 g^6+ ... is sum A005411(n) g^(2n), hence the G.f. in terms of modified Bessel functions.",
+        "(End)"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "C. Itzykson and J.-B. Zuber, Quantum Field Theory, McGraw-Hill, 1980, pages 466-467."
+    ],
+    "link": [
+        "Robert Coquereaux, <a href=\"/A005413/b005413.txt\">Table of n, a(n) for n = 0..250</a>",
+        "P. Cvitanovic, B. Lautrup and R. B. Pearson, <a href=\"http://www.nbi.dk/~predrag/papers/PRD18-78.pdf\">The number and weights of Feynman diagrams</a>, Phys. Rev. D18, pp. 1939-1949 (1978).",
+        "Kevin Hartnett, <a href=\"https://www.quantamagazine.org/20161115-strange-numbers-found-in-particle-collisions/\">Physicists uncover strange numbers in particle collisions</a>, Quanta Magazine, November 15 2016.",
+        "R. J. Martin and M. J. Kearney, <a href=\"http://dx.doi.org/10.1007/s00010-010-0051-0\">An exactly solvable self-convolutive recurrence</a>, Aequat. Math., 80 (2010), 291-318. see p. 310.",
+        "R. J. Martin and M. J. Kearney, <a href=\"http://arXiv.org/abs/1103.4936\">An exactly solvable self-convolutive recurrence</a>, arXiv:1103.4936 [math.CO], 2011.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Feynman_diagram\">Feynman diagram</a>"
+    ],
+    "formula": [
+        "See recurrence in Martin-Kearney paper.",
+        "a(n) = (n - 1) * (A005412(n) + 2 * n * A005412(n - 1)) if n>1.",
+        "From _Robert Coquereaux_, Sep 12 2014: (Start)",
+        "The G.f. for this sequence is  (U - 1)/(U^3 x) where U is G.f. for A005411.",
+        "G.f.: (4*x*(-2*x + (1 - K(1, -(1/(4*x))) / K(0, -(1/(4*x))))))/",
+        "   (1 - K(1, -(1/(4*x))) / K(0, -(1/(4*x))))^3",
+        "where K(p, z) denotes the modified Bessel function of the second kind (order p, argument z). This is a small improvement of a result obtained in the 1980 book \"Quantum Field Theory\".",
+        "(End)"
+    ],
+    "example": [
+        "G.f. = 1 + x + 7*x^2 + 72*x^3 + 891*x^4 + 12672*x^5 + 202770*x^6 + 3602880*x^7 + ..."
+    ],
+    "mathematica": [
+        "a[n_]:= SeriesCoefficient[(4*x*(-2*x + (1 - BesselK[1, -(1/(4*x))]/BesselK[0, -(1/(4*x))])))/ (1 - BesselK[1, -(1/(4*x))]/BesselK[0, -(1/(4*x))])^3, {x,0,n}] (* _Robert Coquereaux_, Sep 12 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A); if( n<2, n>=0, A = vector(n); A[1] = 1; for( k=2, n, A[k] = (2 * k - 2) * A[k-1] + sum( j=1, k-1, A[j] * A[k-j])); (n-1) * (A[n] + 2 * n * A[n-1]))}; /* _Michael Somos_, Jul 24 2011 */",
+        "(Haskell)",
+        "a005413 n = a005413_list !! (n-1)",
+        "a005413_list = 1 : zipWith (*) [1 ..]",
+        "                           (zipWith (+) (tail a005412_list)",
+        "                           (zipWith (*) [4, 6 ..] a005413_list))",
+        "-- _Reinhard Zumkeller_, Jan 24 2014"
+    ],
+    "xref": [
+        "Cvitanovic et al. relate this sequence to A000698 and A005411. - _Robert Munafo_, Jan 24 2010"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Name clarified and reference added by _Robert Coquereaux_, Sep 12 2014"
+    ],
+    "references": 6,
+    "revision": 68,
+    "time": "2017-03-24T00:47:49-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 196555,
+    "data": "1,2,6,28,186,1614,17332,222254,3317326,56532264,1083571422,23081180918,541047188936,13843339479298,383952455939662,11475711580482268,367729128426998450,12577206203908139494,457341567152354085700,17619050162270848917366",
+    "name": "O.g.f.: Sum_{n>=0} 2*(n+2)^(n-1) * x^n / Product_{k=1..n} (1+k*x).",
+    "formula": [
+        "E.g.f.: exp(-2*LambertW(exp(-x)-1)).",
+        "a(n) = Sum_{k=0..n} (-1)^(n-k)*Stirling2(n, k)*2*(k+2)^(k-1).",
+        "a(n) = Sum_{k=0..n} C(n,k)*A058864(n-k)*A058864(k); exponential convolution of A058864, which is the number of labeled chordal graphs (connected or not) on n nodes with no induced path P_4.",
+        "a(n) ~ 2*sqrt(exp(1)-1) * n^(n-1) / (exp(n-2) * (1-log(exp(1)-1))^(n-1/2)). - _Vaclav Kotesovec_, Jul 09 2013"
+    ],
+    "example": [
+        "O.g.f.: A(x) = 1 + 2*x + 6*x^2 + 28*x^3 + 186*x^4 + 1614*x^5 +...",
+        "where the o.g.f. is given by:",
+        "A(x) = 1 + 2*3^0*x/(1+x) + 2*4^1*x^2/((1+x)*(1+2*x)) + 2*5^2*x^3/((1+x)*(1+2*x)*(1+3*x)) + 2*6^3*x^4/((1+x)*(1+2*x)*(1+3*x)*(1+4*x)) +...",
+        "E.g.f.: A(x) = 1 + 2*x + 6*x^2/2! + 28*x^3/3! + 186*x^4/4! + 1614*x^5/5! +...",
+        "where the e.g.f. is given by:",
+        "A(x)^(1/2) = 1 + x + 2*x^2/2! + 8*x^3/3! + 49*x^4/4! + 402*x^5/5! + 4144*x^6/6! +...+ A058864(n)*x^n/n! +..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[E^(-2*LambertW[E^(-x)-1]), {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Jul 09 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(m=0, n, 2*(m+2)^(m-1)*x^m/prod(k=1, m, 1+k*x+x*O(x^n))), n)}",
+        "(PARI) {A058864(n)=polcoeff(sum(m=0, n, (m+1)^(m-1)*x^m/prod(k=1, m, 1+k*x+x*O(x^n))), n)}",
+        "{a(n) = sum(k=0,n,binomial(n,k)*A058864(n-k)*A058864(k))}",
+        "(PARI) {Stirling2(n, k)=if(k<0|k>n, 0, sum(i=0, k, (-1)^i*binomial(k, i)/k!*(k-i)^n))}",
+        "{a(n)=sum(k=0, n, (-1)^(n-k)*Stirling2(n, k)*2*(k+2)^(k-1))}"
+    ],
+    "xref": [
+        "Cf. A058864, A196556, A196557."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Oct 03 2011",
+    "references": 3,
+    "revision": 14,
+    "time": "2013-07-13T16:31:57-04:00",
+    "created": "2011-10-03T18:14:43-04:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 5417,
+    "id": "M1587",
+    "data": "2,6,12,30,60,120,210,420,840,1260,2520,2520,5040,9240,13860,27720,32760,55440,65520,120120,180180,360360,360360,720720,720720,942480,1113840",
+    "name": "Maximal period of an n-stage shift register.",
+    "comment": [
+        "Maximal order of an element of finite order in GL(2n, Z) or GL(2n+1, Z).",
+        "a(n) is the max of the first n numbers in A080742."
+    ],
+    "reference": [
+        "H. L\u00fcneburg, Galoisfelder, Kreisteilungsk\u00f6rper und Schieberegisterfolgen. B. I. Wissenschaftsverlag, Mannheim, 1979.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "J. Kuzmanovich and A. Pavlichenkov, <a href=\"http://www.jstor.org/stable/2695329\">Finite groups of matrices whose entries are integers</a>, Amer. Math. Monthly, 109 (2002), 173-186."
+    ],
+    "formula": [
+        "a(n) = max m such that A067240(m) <= 2n. E.g., a(2) = 12 since 12 is largest m such that A067240(m) <= 4."
+    ],
+    "mathematica": [
+        "(* b,c = a080737 *)",
+        "nmax = 26;",
+        "kmax = 1200000; (* kmax increased by 100000 until results do not change *)",
+        "b[1] = b[2] = 0; b[p_?PrimeQ] := b[p] = p-1; b[k_] := b[k] = If[Length[f = FactorInteger[k]]==1, EulerPhi[k], Total[b /@ (f[[All, 1]]^f[[All, 2]])] ];",
+        "orders = Table[{k, b[k]}, {k, 1, kmax}];",
+        "c[0] = 2; c[n_] := c[n] = Select[orders, 2n-1 <= #[[2]] <= 2n&][[-1, 1]];",
+        "a[n_] := Table[c[m], {m, 0, n}] // Max;",
+        "Table[a[n], {n, 0, nmax}] (* _Jean-Fran\u00e7ois Alcover_, Dec 17 2017 *)"
+    ],
+    "xref": [
+        "Cf. A000793, A080742, A080743."
+    ],
+    "keyword": "nonn,nice,more",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Entry revised by _N. J. A. Sloane_, Mar 10 2002"
+    ],
+    "references": 1,
+    "revision": 23,
+    "time": "2017-12-18T12:00:00-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

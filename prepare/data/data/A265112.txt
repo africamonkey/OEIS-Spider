@@ -1,0 +1,38 @@
+{
+    "number": 265112,
+    "data": "1,1,3,6,20,46,232,501,2352,24442,53243,550863,2616338,5701553,27077005,280237217,2900328380,6320545915,65414893802,310664269401,677015556295,7006815193063,33276323565116,344395408399372,7767597342090622,36889382062795742",
+    "name": "a(n) = A023360(A000040(n)): number of compositions of prime(n) into prime parts.",
+    "link": [
+        "Robert Israel, <a href=\"/A265112/b265112.txt\">Table of n, a(n) for n = 1..768</a>"
+    ],
+    "example": [
+        "prime(4) = 7; a(4) = A023360(7) = 6 because there are 6 compositions of 7 into prime parts {2,3,5,7}: {7}, {5+2}, {3+2+2}, {2+5}, {2+3+2} and {2+2+3}."
+    ],
+    "maple": [
+        "N:= 1000: # to get a(1) to a(A000720(N))",
+        "Primes:= select(isprime, [2,seq(i,i=3..N,2)]):",
+        "M:= nops(Primes);",
+        "F:= proc(x)",
+        "option remember;",
+        "local k;",
+        "add(procname(x-Primes[k]),k=1..numtheory:-pi(x));",
+        "end proc:",
+        "F(0):= 1:",
+        "seq(F(Primes[n]),n=1..M); # _Robert Israel_, Dec 02 2015"
+    ],
+    "mathematica": [
+        "Needs[\"Combinatorica`\"]; Table[Length@ Flatten[Permutations[#, {Length@ #}] & /@ Select[Combinatorica`Partitions@ Prime@ n, AllTrue[#, PrimeQ] &], 1], {n, 14}] (* Version 10, slow, or *)",
+        "lim = 101; t = Rest@ CoefficientList[Series[1/(1 - Sum[x^Prime[i], {i, 1, PrimePi@ lim}]), {x, 0, lim}], x]; t[[#]] &@ Prime@ Range@ PrimePi@ lim",
+        "(* _Michael De Vlieger_, Dec 01 2015, after _David W. Wilson_ at A023360 *)"
+    ],
+    "xref": [
+        "Cf. A000040 (prime numbers), A023360."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Bob Selcoe_, Dec 01 2015",
+    "references": 2,
+    "revision": 14,
+    "time": "2015-12-16T14:00:31-05:00",
+    "created": "2015-12-16T14:00:31-05:00"
+}

@@ -1,0 +1,62 @@
+{
+    "number": 262069,
+    "data": "0,1,2,3,4,5,6,7,8,9,11,22,33,44,55,55155,55455,55755,57075,57375,113311,148841,2796972,8372738,11166111,14033041,26233262,28933982,150050051,151141151,152070251,152232251,153161351,153323351,154252451,154414451,155343551,155505551",
+    "name": "Palindromes in base 10 that are also palindromes in base 60.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A262069/b262069.txt\">Table of n, a(n) for n = 1..82</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PalindromicNumber.html\">Palindromic Number</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Sexagesimal.html\">Sexagesimal</a>",
+        "Wikipedia, <a href=\"http://www.wikipedia.org/wiki/Palindromic_number\">Palindromic_number</a>",
+        "Wikipedia, <a href=\"http://www.wikipedia.org/wiki/Sexagesimal\">Sexagesimal</a>",
+        "<a href=\"/index/Pac#palindromes\">Index entries for sequences related to palindromes</a>"
+    ],
+    "example": [
+        "n = 22: 41*60^2 + 20*60^1 + 41*60^0 = A262065(2541) = A002113(1148) = 148841 = a(22);",
+        "n = 27: 2*60^4 + 1*60^3 + 27*60^2 + 1*60^1 + 2*60^0 = A262065(7348) = A002113(12623) = 26233262 = a(27)."
+    ],
+    "mathematica": [
+        "palQ[n_Integer, base_Integer]:=Module[{idn=IntegerDigits[n, base]}, idn==Reverse[idn]]; Select[Range[10^6], palQ[#, 10]&& palQ[#, 60] &] (* _Vincenzo Librandi_, Sep 11 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "-- import Data.List.Ordered (isect)",
+        "a262069 n = a262069_list !! (n-1)",
+        "a262069_list = isect a002113_list a262065_list",
+        "(Python)",
+        "def palgen(l,b=10): # generator of palindromes in base b of length <= 2*l",
+        "    if l > 0:",
+        "        yield 0",
+        "        for x in range(1,l+1):",
+        "            n = b**(x-1)",
+        "            n2 = n*b",
+        "            for y in range(n,n2):",
+        "                k, m = y//b, 0",
+        "                while k >= b:",
+        "                    k, r = divmod(k,b)",
+        "                    m = b*m + r",
+        "                yield y*n + b*m + k",
+        "            for y in range(n,n2):",
+        "                k, m = y, 0",
+        "                while k >= b:",
+        "                    k, r = divmod(k,b)",
+        "                    m = b*m + r",
+        "                yield y*n2 + b*m + k",
+        "A262069_list = [n for n in palgen(5,60) if str(n) == str(n)[::-1]] # _Chai Wah Wu_, Sep 10 2015",
+        "(MAGMA) [n: n in [0..2*10^7] | Intseq(n, 60) eq Reverse(Intseq(n, 60)) and Intseq(n, 10) eq Reverse(Intseq(n, 10))]; // _Vincenzo Librandi_, Sep 11 2015",
+        "(PARI) ispal(v) = v == Vecrev(v);",
+        "isok(n) = ispal(digits(n)) && ispal(digits(n,60)); \\\\ _Michel Marcus_, Sep 11 2015"
+    ],
+    "xref": [
+        "Intersection of A002113 and A262065."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Reinhard Zumkeller_, Sep 10 2015",
+    "ext": [
+        "More terms from _Chai Wah Wu_, Sep 10 2015"
+    ],
+    "references": 3,
+    "revision": 20,
+    "time": "2015-09-11T06:28:05-04:00",
+    "created": "2015-09-10T18:07:14-04:00"
+}

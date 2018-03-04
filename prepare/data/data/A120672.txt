@@ -1,0 +1,25 @@
+{
+    "number": 120672,
+    "data": "0,0,2,12,22,60,104,252,438,1020,1792,4092,7264,16380,29332,65532,118198,262140,475664,1048572,1912392,4194300,7683172,16777212,30850272,67108860,123817124,268435452,496754308,1073741820,1992366124,4294967292,7988854198",
+    "name": "Consider a set A containing at least n-1 elements of sort \"a\" and a set B containing at least n-1 elements of sort \"b\". From set A we take i elements, from set B we take (n-i) elements such that i + (n-i) = n. Then we distribute these n elements in two urns L (left) and R (right). The order of selection among the two sorts counts. Equivalently we can say: Then we form two sequences L and R from these n elements. The position of the sort of the elements within the sequences counts. Furthermore, the occupations of the urns are permuted. In other words, the order of the sequences L and R is swapped from L|R to R|L. For n=3 we have a(n=3)=12 configurations [L|R] and [R|L]: [aaa|b], [b|aaa], [baa|a], [a|baa], [aba|a], [a|aba], [aab|a], [a|aab].and [bbb|a], [a|bbb], [abb|b], [b|abb], [bab|b], [b|bab], [bba|b], [b|bba].",
+    "comment": [
+        "A028399(n) = 2*2^n-4 with n=1,2,3,... is an upper limit for A120672 because Sum(2*n!/i!/(n-i)!,i = 1 .. n-1) = 2*2^n-4. We have for A028399(n): 4,12,28,60,124,252,508,1020,2044, 4092,8188,16380, 32764,65532, 131068, 262140,524284,1048572,2097148, 4194300,8388604. A120672 follows from all distinct ordered 2-tuples of positive integers whose elements sum to n. See the following Maple program: A120672 := proc(n::integer) local i,k, cmpstnlst,cmpstn,NumberOfParts,liste, NumberOfDifferentParts,Result; k:=2; Result := 0; cmpstnlst := composition(n,k); NumberOfParts := 0; NumberOfDifferentParts := 0; for i from 1 to nops(cmpstnlst) do cmpstn := cmpstnlst[i]; NumberOfParts := nops(cmpstn); if NumberOfParts > 0 then liste := convert(cmpstn,multiset); else liste := NULL; fi; if liste <> NULL then NumberOfDifferentParts := nops(liste); else NumberOfDifferentParts := 0; fi; Result := Result + n!/mul(op(j,cmpstn)!, j=1..NumberOfParts)*(NumberOfParts!/ mul(op(2,op(j,liste))!, j=1..NumberOfDifferentParts)); od; print(Result); end proc;"
+    ],
+    "formula": [
+        "For the number a(n) of such [L|R] configurations we have a(n) = n! sum_{i=1}^{n-1} delta2(i,n-i)/(i!*(n-i)!) where delta2(n,n-i) = 2 if i <> (n-i) and 1 if i = (n-i).",
+        "a(n)=A028399(n)-A126869(n), n>0. [From _R. J. Mathar_, Aug 07 2008]"
+    ],
+    "maple": [
+        "A120672 := proc(n) local i,Term,Result; Result:=0; for i from 1 to n-1 do Term:=n!/(i!*(n-i)!); if i <> n-i then Term:=2*Term; fi; Result:=Result+Term; end do; print(Result); end proc;"
+    ],
+    "xref": [
+        "Cf. A028399."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Thomas Wieder_, Jun 24 2006",
+    "references": 1,
+    "revision": 7,
+    "time": "2015-11-24T18:28:59-05:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

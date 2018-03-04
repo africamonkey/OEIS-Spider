@@ -1,0 +1,68 @@
+{
+    "number": 160120,
+    "data": "0,1,4,7,16,19,28,37,58,67,76,85,106,121,142,169,220,247,256,265,286,301,322,349,400,433,454,481,532,583,640,709,826,907,928,937,958,973,994,1021,1072,1105,1126,1153,1204,1255,1312,1381,1498,1585,1618,1645",
+    "name": "Y-toothpick sequence (see Comments lines for definition).",
+    "comment": [
+        "A Y-toothpick (or Y-shaped toothpick) is formed from three toothpicks of length 1, like a star with three endpoints and only one middle-point.",
+        "On the infinite triangular grid, we start at round 0 with no Y-toothpicks.",
+        "At round 1 we place a Y-toothpick anywhere in the plane.",
+        "At round 2 we add three more Y-toothpicks. After round 2, in the structure there are three rhombuses and a hexagon.",
+        "At round 3 we add three more Y-toothpicks.",
+        "And so on ... (see illustrations).",
+        "The sequence gives the number of Y-toothpicks after n rounds. A160121 (the first differences) gives the number added at the n-th round.",
+        "The Y-toothpick pattern has a recursive, fractal (or fractal-like) structure.",
+        "Note that, on the infinite triangular grid, a Y-toothpick can be represented as a polyedge with three components. In this case, at the n-th round, the structure is a polyedge with 3*a(n) components.",
+        "This structure is more complex than the toothpick structure of A139250. For example, at some rounds we can see inward growth.",
+        "The structure contains distinct polygons which have side length equal to 1.",
+        "Observation: It appears that the region of the structure where all grid points are covered is formed only by three distinct polygons:",
+        "- Triangles",
+        "- Rhombuses",
+        "- Concave-convex hexagons",
+        "Holes in the structure: Also, we can see distinct concave-convex polygons which contains a region where there are no grid points that are covered, for example:",
+        "- Decagons   (with  1 non-covered grid point)",
+        "- Dodecagons (with  4 non-covered grid points)",
+        "- 18-gons    (with  7 non-covered grid points)",
+        "- 30-gons    (with 26 non-covered grid points)",
+        "- ...",
+        "Observation: It appears that the number of distinct polygons that contain non-covered grid points is infinite.",
+        "This sequence appears to be related to powers of 2. For example:",
+        "Conjecture: It appears that if n = 2^k, k>0, then, between the other polygons, there appears a new centered hexagon formed by three rhombuses with side length = 2^k/2 = n/2.",
+        "Conjecture: Consider the perimeter of the structure. It appears that if n = 2^k, k>0, then the structure is a triangle-shaped polygon with A000225(k)*6 sides and a half toothpick in each vertice of the \"triangle\".",
+        "Conjecture: It appears that if n = 2^k, k>0, then the ratio of areas between the Y-toothpick structure and the unitary triangle is equal to A006516(k)*6.",
+        "See the entry A139250 for more information about the growth of \"standard\" toothpicks.",
+        "See also A160715 for another version of this structure but without internal growth of Y-toothpicks. [From _Omar E. Pol_, May 31 2010]",
+        "For an alternative visualization replace every single toothpick with a rhombus, or in other words, replace every Y-toothpick with the \"three-diamond\" symbol, so we have a cellular automaton in which a(n) gives the total number of \"three-diamond\" symbols after n-th stage and A160167(n) counts the total number of \"ON\" diamonds in the structure after n-th stage. See also A253770. - _Omar E. Pol_, Dec 24 2015"
+    ],
+    "link": [
+        "JungHwan Min, <a href=\"/A160120/b160120.txt\">Table of n, a(n) for n = 0..5000</a>",
+        "David Applegate, Omar E. Pol and N. J. A. Sloane, <a href=\"http://neilsloane.com/doc/tooth.pdf\">The Toothpick Sequence and Other Sequences from Cellular Automata</a>",
+        "David Applegate, <a href=\"/A139250/a139250.anim.html\">The movie version</a>",
+        "Omar E. Pol, <a href=\"http://www.polprimos.com/imagenespub/poltpy58.jpg\"> Illustration of initial terms</a> [From _Omar E. Pol_, Jun 01 2009]",
+        "Omar E. Pol, <a href=\"http://www.polprimos.com/imagenespub/poltpy17.jpg\"> Illustration of the structure after 17 stages</a>",
+        "Omar E. Pol, <a href=\"http://www.polprimos.com/imagenespub/poltpy34.jpg\"> Illustration of the structure after 34 stages</a>, from Applegate's movie version.",
+        "Omar E. Pol, <a href=\"http://www.polprimos.com/imagenespub/poltpyf1.jpg\">Illustration: Fractal recursion, general step. (1)</a>",
+        "Omar E. Pol, <a href=\"http://www.polprimos.com/imagenespub/polca001.jpg\">Illustration of initial terms of A139250, A160120, A147562 (Overlapping figures)</a>",
+        "Omar E. Pol, <a href=\"http://www.polprimos.com/imagenespub/poltp120.jpg\">Illustration of initial terms of A160120, A161206, A161328, A161330 (Triangular grid and toothpicks)</a>",
+        "N. J. A. Sloane, <a href=\"/wiki/Catalog_of_Toothpick_and_CA_Sequences_in_OEIS\">Catalog of Toothpick and Cellular Automata Sequences in the OEIS</a>",
+        "<a href=\"/index/To#toothpick\">Index entries for sequences related to toothpick sequences</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>"
+    ],
+    "mathematica": [
+        "YTPFunc[lis_, step_] := With[{out = Extract[lis, {{1, 2}, {2, 1}, {-1, -1}}], in = lis[[2, 2]]}, Which[in == 0 && Count[out, 2] >= 2, 1, in == 0 && Count[out, 2] == 1, 2, True, in]]; A160120[0] = 0; A160120[n_] := With[{m = n - 1}, Count[CellularAutomaton[{YTPFunc, {}, {1, 1}}, {{{2}}, 0}, {{{m}}}], 2, 2]] (* _JungHwan Min_, Jan 28 2016 *)",
+        "A160120[0] = 0; A160120[n_] := With[{m = n - 1}, Count[CellularAutomaton[{435225738745686506433286166261571728070, 3, {{-1, 0}, {0, -1}, {0, 0}, {1, 1}}}, {{{2}}, 0}, {{{m}}}], 2, 2]] (* _JungHwan Min_, Jan 28 2016 *)"
+    ],
+    "xref": [
+        "Toothpick sequence: A139250.",
+        "Cf. A000079, A000225, A006516, A160121, A160123, A160715, A161206, A161328, A161330, A161430, A147562, A173066, A173068, A253770."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Omar E. Pol_, May 02 2009",
+    "ext": [
+        "More terms from _David Applegate_, Jun 14 2009, Jun 18 2009"
+    ],
+    "references": 76,
+    "revision": 53,
+    "time": "2016-03-04T13:06:19-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

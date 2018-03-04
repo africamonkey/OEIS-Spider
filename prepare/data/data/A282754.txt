@@ -1,0 +1,51 @@
+{
+    "number": 282754,
+    "data": "12,20,40,70,88,104,464,650,1504,1888,1952,4030,5830,7192,7912,8925,9555,10792,13736,17272,30555,30592,32128,32445,78975,130304,442365,521728,522752,1713592,1848964,4526272,8353792,8378368,8382464,9928792,11547352,17999992",
+    "name": "Admirable numbers such that the subtracted divisor is a Fibonacci number.",
+    "comment": [
+        "Subsequence of A111592.",
+        "The corresponding Fibonacci numbers are given by the sequence {b(n)} = 2, 1, 5, 2, 2, 1, 1, 1, 8, 2, 1, 2, 2, 8, 8, 3, 21, 8, 34, 8, 21, 8, 2, 3, 13, 1, 3, 2, 1, ...."
+    ],
+    "link": [
+        "T. Trotter, <a href=\"http://www.trottermath.net/numthry/admirabl.html\">Admirable Numbers</a>"
+    ],
+    "example": [
+        "40 is in the sequence because sigma(40) - 2*5 = 90 - 10 = 80 = 2*40, where 5 is a Fibonacci number, or 1 + 2 + 4 + 8 + 10 + 20 - 5 = 40 where the subtracted divisor is 5."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "   for n from 1 to 20000 do:",
+        "     x:=divisors(n):n0:=nops(x):",
+        "       for i from 1 to n0 do:",
+        "         u:=sqrt(5*x[i]^2-4):v:=sqrt(5*x[i]^2+4):",
+        "          if (floor(u)=u or floor(v)=v) and sigma(n)-2*x[i]=2*n",
+        "             then",
+        "             printf(`%d %d \\n`,n, x[i]):",
+        "             else",
+        "            fi:",
+        "         od:",
+        "   od:"
+    ],
+    "mathematica": [
+        "With[{nn = 10^6}, Function[s, Flatten@ Position[#, 1] &@ Table[Total@ Boole@ Map[MemberQ[s, #] &, Select[Most@ Divisors@ n, Function[d, DivisorSigma[1, n] - 2 d == 2 n]]], {n, nn}]]@ Fibonacci@ Range[2 + Floor@ Log[GoldenRatio, nn]]] (* _Michael De Vlieger_, Feb 24 2017 *) (* or *)",
+        "fibQ[n_] := IntegerQ@ Sqrt[5 n^2 + 4] || IntegerQ@ Sqrt[5 n^2 - 4]; ok[n_] := Block[{d = DivisorSigma[1, n] - 2 n}, d>0 && EvenQ@d && Mod[n, d/2] == 0 && fibQ[d/2]]; Select[Range[10^6], ok] (* faster, _Giovanni Resta_, Mar 10 2017 *)"
+    ],
+    "program": [
+        "(PARI) isadmirable(n)=if(issquare(n)||issquare(n/2), 0, my(d=sigma(n)/2-n); (d>0 && d!=n && n%d==0)*d);",
+        "isfib(n) = my(k=n^2); k+=(k+1)<<2; issquare(k) || (n>0 && issquare(k-8))",
+        "isok(n) = (d=isadmirable(n)) && isfib(d); \\\\ _Michel Marcus_, Mar 10 2017"
+    ],
+    "xref": [
+        "Cf. A010056, A111592."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Feb 21 2017",
+    "ext": [
+        "More terms from _Michel Marcus_, Mar 10 2017"
+    ],
+    "references": 0,
+    "revision": 16,
+    "time": "2017-03-19T06:48:32-04:00",
+    "created": "2017-03-19T06:48:32-04:00"
+}

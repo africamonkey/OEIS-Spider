@@ -1,0 +1,60 @@
+{
+    "number": 120847,
+    "data": "2,5,17,29,47,53,83,89,101,173,191,251,263,269,281,317,431,467,479,521,587,659,809,857,911,929,947,953,983,1019,1091,1163,1307,1439,1451,1493,1559,1601,1613,1667,1811,1847,1871,1901,1979,2027,2063,2099,2207,2243",
+    "name": "Klarner-Rado primes. Primes in A005658.",
+    "link": [
+        "R. J. Mathar and Robert Israel, <a href=\"/A120847/b120847.txt\">Table of n, a(n) for n = 1..7948</a> (1..493 from Mathar)"
+    ],
+    "formula": [
+        "A000040 INTERSECTION {sequence starting with 1 and such that if n appears so do 2n, 3n+2, 6n+3}."
+    ],
+    "maple": [
+        "N:= 3000: # to get all terms <= N",
+        "A:= Vector(N):",
+        "A[1]:= 1:",
+        "todo:= {1}:",
+        "while todo <> {} do",
+        "x:= todo[1];",
+        "todo:= todo[2..-1];",
+        "Y:= select(t -> (t <= N and A[t] = 0),[2*x,3*x+2, 6*x+3]);",
+        "  A[Y]:= 1;",
+        "  todo:= todo union convert(Y,set);",
+        "od:",
+        "select(t -> A[t]=1 and isprime(t), [$1..N]); # _Robert Israel_, Jun 17 2015"
+    ],
+    "program": [
+        "(C++) #include <stdio.h> #include <iostream> #include <set> using namespace std ; bool isprime(const int n) { for(int i=2; i*i <= n ; i++) if( n %i == 0) return false ; return true ; } int main(int argc, char *argv[]) { const int anmax= 40000 ; set<int> a ; a.insert(1) ; for(int i=0;i< anmax ;i++) { if( a.count(i) ) { if( 2*i<=anmax) a.insert(2*i) ; if( 3*i+2 <= anmax) a.insert(3*i+2) ; if( 6*i+3 <= anmax) a.insert(6*i+3) ; } } int n=1 ; for(int i=2; i < anmax; i++) { if( a.count(i) && isprime(i) ) { cout << n << \" \" << i << endl ; n++ ; } } return 0 ; } /* _R. J. Mathar_, Aug 20 2006 */",
+        "(MATLAB)",
+        "N = 10^4;",
+        "A = zeros(1,N);",
+        "todo = [1];",
+        "A(1) = 1;",
+        "while numel(todo) > 0",
+        "  x = todo(1);",
+        "  todo = todo(2:end);",
+        "  Y = [2*x,3*x+2,6*x+3];",
+        "  Y = Y(Y <= N);",
+        "  Y = Y(A(Y) == 0);",
+        "  A(Y) = 1;",
+        "  todo = [todo, Y];",
+        "end;",
+        "S = find(A==1);",
+        "S(isprime(S)) % _Robert Israel_, Jun 17 2015",
+        "(PARI) has(n)=if(n<3, return(n>0)); my(k=n%6); if(k==3, return(has(n\\6))); if(k==1, return(0)); if(k==5, return(has(n\\3))); if(k!=2, return(has(n/2))); has(n\\3) || has(n/2)",
+        "print1(2); forprime(p=5,1e5, if(p%3==2 && has(p\\3), print1(\", \"p))) \\\\ _Charles R Greathouse IV_, Sep 15 2015"
+    ],
+    "xref": [
+        "Subsequence of A003627.",
+        "Cf. A000040, A005658."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_, Aug 18 2006",
+    "ext": [
+        "More terms from _R. J. Mathar_, Aug 20 2006"
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2017-12-17T07:37:39-05:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

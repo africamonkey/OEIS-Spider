@@ -1,0 +1,73 @@
+{
+    "number": 136446,
+    "data": "12,18,24,30,36,40,42,48,54,56,60,66,72,78,80,84,90,96,100,102,108,112,114,120,126,132,138,140,144,150,156,160,162,168,174,176,180,186,192,196,198,200,204,208,210,216,220,222,224,228,234,240,246",
+    "name": "Numbers n such that some subset of the numbers { 1 < d < n : d divides n } adds up to n.",
+    "comment": [
+        "This is a subset of the pseudoperfect numbers A005835 and thus non-deficient (A023196), but in view of the definition actually abundant numbers (A005101). Sequence A122036 lists odd abundant numbers (A005231) which are not in this sequence. So far, 351351 is the only one we know. (As of today, no odd weird (A006037: abundant but not pseudoperfect) number is known.) - _M. F. Hasler_, Apr 13 2008",
+        "This sequence contains infinitely many odd elements: any proper multiple of any pseudoperfect number is in the sequence, so odd proper multiples of odd pseudoperfect numbers are in the sequence. The first such is 2835 = 3 * 945 (which is in the b-file). - _Franklin T. Adams-Watters_, Jun 18 2009",
+        "A211111(a(n)) > 1. - _Reinhard Zumkeller_, Apr 04 2012"
+    ],
+    "reference": [
+        "Mladen Vassilev, Two theorems concerning divisors, Bull. Number Theory Related Topics 12 (1988), pp. 10-19."
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A136446/b136446.txt\">Table of n, a(n) for n = 1..24491</a> (confirmed by _R. J. Mathar_, Mar 20 2011)."
+    ],
+    "maple": [
+        "isA136446a := proc(s,n) if n in s then return true; elif add(i,i=s) < n then return false; elif nops(s) = 1 then is(op(1,s)=n) ; else sl := sort(convert(s,list),`>`) ; for i from 1 to nops(sl) do m := op(i,sl) ; if n -m = 0 then return true; end if ; if n-m > 0 then sr := [op(i+1..nops(sl),sl)] ; if procname(convert(sr,set),n-m) then return true; end if; end if; end do; return false; end if; end proc:",
+        "isA136446 := proc(n) isA136446a( numtheory[divisors](n) minus {1,n},n) ; end proc:",
+        "for n from 1 to 400 do if isA136446(n) then printf(\"%d,\",n) ; end if; end do ; # _R. J. Mathar_, Mar 20 2011"
+    ],
+    "mathematica": [
+        "okQ[n_] := Module[{d}, If[PrimeQ[n], False, d = Most[Rest[Divisors[n]]]; MemberQ[Plus @@@ Subsets[d], n]]]; Select[Range[2, 246], okQ]",
+        "(* _T. D. Noe_, Jul 24 2012 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=72 \\\\ up to this value",
+        "vv=vector(N);",
+        "{ for(n=2, N,",
+        "if ( isprime(n), next() );",
+        "d=divisors(n);",
+        "d=vector(#d-2,j,d[j+1]); \\\\ not n, not 1",
+        "for (k=1, (1<<#d)-1, \\\\ all subsets",
+        "t=vecextract(d, k);",
+        "if ( n==sum(j=1,#t,t[j]),",
+        "vv[n] += 1;););); }",
+        "for (j=1, #vv, if (vv[j]>0, print1(j,\", \"))) \\\\ A005835 (after correction)",
+        "(PARI) is_A136446(n,d=divisors(n))={#d>2 && is_A005835(n,d[2..-2])} \\\\ Replaced old code not conforming to current PARI syntax. - _M. F. Hasler_, Jul 28 2016",
+        "for( n=1,10^4, is_A136446(n) & print1(n\", \")) \\\\ _M. F. Hasler_, Apr 13 2008",
+        "(Haskell)",
+        "a136446 n = a136446_list !! (n-1)",
+        "a136446_list = map (+ 1) $ findIndices (> 1) a211111_list",
+        "-- _Reinhard Zumkeller_, Apr 04 2012",
+        "(Sage)",
+        "def isa(s, n) : # After R. J. Mathar's Maple code",
+        "    if n in s : return true",
+        "    if sum(s) < n : return false",
+        "    if len(s) == 1 : return s[0] == n",
+        "    for i in srange(len(s)-1,-1,-1) :",
+        "        d = n - s[i]",
+        "        if d == 0 : return true",
+        "        if d >  0 :",
+        "            if isa(s[i+1:], d) : return true",
+        "    return false",
+        "isA136446 = lambda n : isa(divisors(n)[1:-1], n)",
+        "[n for n in (1..246) if isA136446(n)]",
+        "# _Peter Luschny_, Jul 23 2012"
+    ],
+    "xref": [
+        "See A005835 (allowing for divisor 1).",
+        "Cf. A122036 = A005231 \\ A136446."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Joerg Arndt_, Apr 06 2008",
+    "ext": [
+        "More terms from _M. F. Hasler_, Apr 13 2008"
+    ],
+    "references": 7,
+    "revision": 36,
+    "time": "2016-12-09T22:53:41-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

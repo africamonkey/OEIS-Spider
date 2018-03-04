@@ -1,0 +1,48 @@
+{
+    "number": 191647,
+    "data": "3,4,5,10,14,16,40,46,100,145,149,251,340,373,406,424,439,466,539,556,571,575,617,619,628,629,655,676,689,724,760,779,794,899,901,941,970,989,1019,1055,1070,1076,1183,1213,1226,1231,1258,1270,1285,1331,1340",
+    "name": "Numbers n with property that the concatenation of their anti-divisors is a prime.",
+    "comment": [
+        "Similar to A120712 which uses the proper divisors of n."
+    ],
+    "link": [
+        "Klaus Brockhaus <a href=\"/A191647/b191647.txt\">Table of n, a(n) for n = 1..1000</a> (first 250 terms from Paolo P. Lava)"
+    ],
+    "example": [
+        "The anti-divisors of 40 are 3, 9, 16, 27, and 391627 is prime, hence 40 is in the sequence."
+    ],
+    "maple": [
+        "P:=proc(i) local a,b,c,d,k,n,s,v; v:=array(1..200000);",
+        "for n from 3 by 1 to i do k:=2; b:=0;",
+        "while k<n do if (k mod 2)=0  then",
+        "     if (n mod k)>0 and (2*n mod k)=0 then b:=b+1; v[b]:=k; fi;",
+        "     else",
+        "     if (n mod k)>0 and (((2*n-1) mod k)=0 or ((2*n+1) mod k)=0) then",
+        "b:=b+1; v[b]:=k; fi; fi; k:=k+1; od; a:=v[1];",
+        "for s from 2 to b do a:=a*10^floor(1+evalf(log10(v[s])))+v[s]; od;",
+        "if isprime(a) then print(n); fi;",
+        "od; end: P(10^6);"
+    ],
+    "mathematica": [
+        "antiDivisors[n_Integer] := Cases[Range[2, n - 1], _?(Abs[Mod[n, #] - #/2] < 1 &)]; a191647[n_Integer] := Select[Range[n],",
+        "PrimeQ[FromDigits[Flatten[IntegerDigits /@ antiDivisors[#]]]] &]; a191647[1350] (* _Michael De Vlieger_, Aug 09 2014, \"antiDivisors\" after _Harvey P. Dale_ at A066272 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "[n for n in xrange(3,10**4) if isprime(int(''.join([str(d) for d in xrange(2,n) if n%d and 2*n%d in [d-1,0,1]])))] # _Chai Wah Wu_, Aug 08 2014"
+    ],
+    "xref": [
+        "Cf. A037279, A066272, A106708, A120712, A120716, A191648."
+    ],
+    "keyword": "nonn,base,changed",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jun 10 2011",
+    "ext": [
+        "a(618) corrected in b-file by _Paolo P. Lava_, Feb 28 2018"
+    ],
+    "references": 3,
+    "revision": 31,
+    "time": "2018-02-28T12:03:25-05:00",
+    "created": "2011-06-17T18:35:11-04:00"
+}

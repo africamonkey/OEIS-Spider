@@ -1,0 +1,51 @@
+{
+    "number": 257860,
+    "data": "1,89,132,264,518,739,2407,6579,8200,8201,8202,8203,8204,8205,8206,8207,8208,8209,32780,32781,32782,32783,32784,32785,32786,32787,32788,32789,59060,59061,59062,59063,59064,59065,59066,59067,59068,59069,78145,524300,524301,524302,524303,524304,524305,524306,524307,524308,524309,531459,823567,2097178",
+    "name": "Numbers n such that a digit of n to the power k plus the sum of the other digits of n equals n, where k is a positive integer.",
+    "comment": [
+        "There are numbers that come in groups of 10, like 8200, 32780 and 524300. But there are also a few stand-alone numbers. Like 531459 (=5+3+1+4+5+9^6).",
+        "It is easy to generate large terms in the sequence, for example, 9^104+409 and 9^1047+4561 are the smallest terms with 100 and 1000 digits, respectively. - _Giovanni Resta_, May 12 2015"
+    ],
+    "example": [
+        "89 is in the sequence because 89 = 8+9^2.",
+        "2407 is in the sequence because 2407 = 2+4+0+7^4.",
+        "8202 is in the sequence because 8202 = 8+ 2^13 +0+2, also 8202 = 8+2+0+2^13."
+    ],
+    "program": [
+        "(Python)",
+        "def sod(n):",
+        "....kk = 0",
+        "....while n > 0:",
+        "........kk= kk+(n%10)",
+        "........n =int(n//10)",
+        "....return kk",
+        "for i in range (1,10**7):",
+        "....for j in range(1,len(str(i))+1):",
+        "........k=(i//(10**(j-1)))%10",
+        "........for m in range (2,30):",
+        "............if i==sod(i)+k**m-k:",
+        "................print (i)",
+        "(Haskell)",
+        "import Data.List (nub); import Data.List.Ordered (member)",
+        "a257860 n = a257860_list !! (n-1)",
+        "a257860_list = 1 : filter f [1..] where",
+        "   f x = any (\\d -> member (x - q + d) $ ps d) $ filter (> 1) $ nub ds",
+        "         where q = sum ds; ds = (map (read . return) . show) x",
+        "   ps x = iterate (* x) (x ^ 2)",
+        "-- _Reinhard Zumkeller_, May 12 2015"
+    ],
+    "xref": [
+        "Cf. A061209, A130680, A257766, A257768, A257784,",
+        "Cf. A007953."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Pieter Post_, May 11 2015",
+    "ext": [
+        "One more term and some missing data added by _Reinhard Zumkeller_, May 12 2015"
+    ],
+    "references": 1,
+    "revision": 17,
+    "time": "2015-05-12T20:10:07-04:00",
+    "created": "2015-05-12T08:31:26-04:00"
+}

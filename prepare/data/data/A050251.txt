@@ -1,0 +1,61 @@
+{
+    "number": 50251,
+    "data": "4,5,20,20,113,113,781,781,5953,5953,47995,47995,401696,401696,3438339,3438339,30483565,30483565,269577430,269577430,2427668363,2427668363,22170468927,22170468927",
+    "name": "Number of palindromic primes less than 10^n.",
+    "comment": [
+        "Every palindrome with an even number of digits is divisible by 11 and therefore is composite (not prime). Hence there is only one palindromic prime with an even number of digits, 11. - _Martin Renner_, Apr 15 2006"
+    ],
+    "link": [
+        "P. De Geest, <a href=\"http://www.worldofnumbers.com/palprim1.htm\">World!Of Palindromic Primes, Page 1</a>",
+        "Shyam Sunder Gupta, <a href=\"http://listserv.nodak.edu/cgi-bin/wa.exe?A1=ind0602&amp;L=nmbrthry\">Palindromic Primes up to 10^19</a>.",
+        "Shyam Sunder Gupta, <a href=\"https://listserv.nodak.edu/cgi-bin/wa.exe?A2=ind1310&amp;L=NMBRTHRY&amp;F=&amp;S=&amp;P=241\">Palindromic Primes up to 10^23</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PalindromicPrime.html\">Palindromic Prime.</a>",
+        "<a href=\"/index/Pri#primepop\">Index entries for sequences related to numbers of primes in various ranges</a>"
+    ],
+    "formula": [
+        "a(n) ~ A070199(n)/log(10^n) = 1/log(10^n)*Sum {k=1..n} 9*10^floor[(k-1)/2]. - _Robert G. Wilson v_, May 31 2009"
+    ],
+    "program": [
+        "(Python)",
+        "from __future__ import division",
+        "from sympy import isprime",
+        "def paloddgen(l,b=10): # generator of odd-length palindromes in base b of length <= 2*l",
+        "....if l > 0:",
+        "........yield 0",
+        "........for x in range(1,l+1):",
+        "............n = b**(x-1)",
+        "............n2 = n*b",
+        "............for y in range(n,n2):",
+        "................k, m = y//b, 0",
+        "................while k >= b:",
+        "....................k, r = divmod(k,b)",
+        "....................m = b*m + r",
+        "................yield y*n + b*m + k",
+        "def A050251(n):",
+        "....if n == 0:",
+        "........return 4",
+        "....else:",
+        "........c = 1",
+        "........for i in paloddgen(n//2+1):",
+        "............if isprime(i):",
+        "................c += 1",
+        "........return c # _Chai Wah Wu_, Jan 05 2015"
+    ],
+    "xref": [
+        "Partial sums of A016115.",
+        "Cf. A002113 (palindromes), A002385 (palindromic primes)."
+    ],
+    "keyword": "nonn,hard,nice,base,more",
+    "offset": "0,1",
+    "author": "_Eric W. Weisstein_",
+    "ext": [
+        "More terms from _Patrick De Geest_, Aug 01 1999",
+        "2 more terms from _Shyam Sunder Gupta_, Feb 12 2006",
+        "2 more terms from _Shyam Sunder Gupta_, Mar 13 2009",
+        "a(22)-a(23) from _Shyam Sunder Gupta_, Oct 05 2013"
+    ],
+    "references": 4,
+    "revision": 43,
+    "time": "2015-10-17T22:51:39-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

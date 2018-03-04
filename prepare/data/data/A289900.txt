@@ -1,0 +1,47 @@
+{
+    "number": 289900,
+    "data": "1,1,3,9,135,2025,212625,22325625,21097715625,19937341265625,207248662456171875,2154349846231906640625,291128066470548703880859375,39341591262497599098939931640625,79746389028864195813528714933837890625",
+    "name": "Number of maximal matchings in the n-triangular honeycomb rook graph.",
+    "comment": [
+        "Also the number of maximum matchings for n > 1.",
+        "The n-triangular honeycomb rook graph is the disjoint union of the complete graphs K_k for k in {1..n}. In terms of a triangular chessboard it is the graph for a chesspiece that is constrained to move on a single axis. - _Andrew Howroyd_, Jul 17 2017"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A289900/b289900.txt\">Table of n, a(n) for n = 1..50</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Matching.html\">Matching</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/MaximalIndependentEdgeSet.html\">Maximal Independent Edge Set</a>"
+    ],
+    "formula": [
+        "a(n) = Product_{k=1..n} A001147(ceiling(k/2)). - _Andrew Howroyd_, Jul 17 2017"
+    ],
+    "mathematica": [
+        "MapAt[# - 1 &, #, 1] &@ FoldList[Times, Array[(2 Ceiling[#/2] - 1)!! &, 15]] (* _Michael De Vlieger_, Jul 18 2017 *)",
+        "FoldList[Times, Table[(k - Mod[k - 1, 2])!!, {k, 15}]] (* _Eric W. Weisstein_, Jul 19 2017 *)",
+        "Table[Product[(k - Mod[k - 1, 2])!!, {k, n}], {n, 15}] (* _Eric W. Weisstein_, Jul 19 2017 *)",
+        "Table[2^(n (n + 2)/4 - 1/12)  E^(-1/4) Pi^(-(n + 1)/2) Glaisher^3 If[Mod[n, 2] == 0, BarnesG[(3 + n)/2]^2, 2^(1/4) BarnesG[n/2 + 1] BarnesG[n/2 + 2]], {n, 15}] (* _Eric W. Weisstein_, Jul 19 2017 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "a(n)=prod(k=1,n, k!/((k\\2)!*2^(k\\2))); \\\\ _Andrew Howroyd_, Jul 17 2017",
+        "(Python)",
+        "from sympy import factorial2, ceiling",
+        "from operator import mul",
+        "def a001147(n): return factorial2(2*n - 1)",
+        "def a(n): return reduce(mul, [a001147(ceiling(k/2)) for k in xrange(1, n + 1)])",
+        "print map(a, xrange(1, 31)) # _Indranil Ghosh_, Jul 18 2017, after PARI code"
+    ],
+    "xref": [
+        "Cf. A289897."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Eric W. Weisstein_, Jul 14 2017",
+    "ext": [
+        "Terms a(11) and beyond from _Andrew Howroyd_, Jul 17 2017",
+        "a(1) changed to 1 by _N. J. A. Sloane_, Jul 18 2017"
+    ],
+    "references": 2,
+    "revision": 33,
+    "time": "2017-07-21T07:54:00-04:00",
+    "created": "2017-07-15T11:03:22-04:00"
+}

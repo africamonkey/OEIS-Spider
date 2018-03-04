@@ -1,0 +1,65 @@
+{
+    "number": 2704,
+    "id": "M2146 N0855",
+    "data": "2,26,938,42800,2130458,111557594,6041272682,335089258634,18922687509962,1083572842675610,62744027461625648,3666433604712457466,215879610645469496234,12792865816027823374874,762278349313657804740842,45638342462133835019322554",
+    "name": "Sets with a congruence property.",
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Rosa, Alexander; Znam, Stefan, <a href=\"/A002703/a002703.pdf\">A combinatorial problem in the theory of congruences (Russian with English summary)</a>, Mat.-Fys. Casopis Sloven. Akad. Vied 15 1965 49-59. [Annotated scanned copy.]",
+        "Rosa, Alexander; Znam, Stefan, <a href=\"/A002703/a002703_1.pdf\">A remark on a combinatorial problem (Russian with English summary)</a>, Mat.-Fyz. Casopis Sloven. Akad. Vied 15 1965 313-316. [Annotated scanned copy] See Table 3."
+    ],
+    "formula": [
+        "See Maple code!"
+    ],
+    "maple": [
+        "p := proc(r,s,k)",
+        "    option remember;",
+        "    if r = 0 then",
+        "        1;",
+        "    elif r < 0 then",
+        "        0;",
+        "    elif s < 0 then",
+        "        0;",
+        "    elif igcd(s,2*k+1) > 1 then",
+        "        procname(r,s-1,k) ;",
+        "    else",
+        "        procname(r,s-1,k)+procname(r-s,s-1,k) ;",
+        "    end if;",
+        "end proc:",
+        "Q := proc(n,k)",
+        "    local q,knrat,alpha,m ;",
+        "    q := 0 ;",
+        "    knrat := (2*k*n^2+n^2+k^2)/4/k ;",
+        "    if type(knrat,'integer') then",
+        "        for alpha from 0 to knrat do",
+        "            m := 2*n+n/k ;",
+        "            if modp(2*alpha,m) = modp(knrat,m) then",
+        "                q := q+p(alpha,n+(n-k)/2/k,k) ;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "    q ;",
+        "end proc:",
+        "A002704 := proc(n)",
+        "    nloc := 3+6*n ;",
+        "    Q(nloc,3) ;",
+        "end proc:",
+        "seq(A002704(n),n=0..15) ; # _R. J. Mathar_, Oct 21 2015"
+    ],
+    "xref": [
+        "Cf. A002703, A002705, A262570, A262583, A262584."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _R. J. Mathar_, Oct 21 2015"
+    ],
+    "references": 6,
+    "revision": 33,
+    "time": "2015-10-22T04:32:13-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

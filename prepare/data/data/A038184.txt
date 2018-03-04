@@ -1,0 +1,43 @@
+{
+    "number": 38184,
+    "data": "1,7,21,107,273,1911,5189,28123,65793,460551,1381653,7039851,17829905,124809335,340873541,1840690907,4295032833,30065229831,90195689493,459568513131,1172543963409,8207807743863,22286925370437",
+    "name": "State of one-dimensional cellular automaton 'sigma' (Rule 150): 000,001,010,011,100,101,110,111 -> 0,1,1,0,1,0,0,1 at generation n, converted to a decimal number.",
+    "comment": [
+        "Generation n (starting from the generation 0: 1) interpreted as a binary number, but written in base 10.",
+        "Rows of the mod 2 trinomial triangle (A027907), interpreted as binary numbers: 1, 111, 10101, 1101011, ... (A118110) - _Jacob A. Siehler_, Aug 25 2006",
+        "See A071053 for number of ON cells. - _N. J. A. Sloane_, Jul 28 2014"
+    ],
+    "reference": [
+        "Alan J. Macfarlane, On generating functions of some sequences of integers defined in the evolution of the cellular automaton Rule 150, Preprint 2016; http://www.damtp.cam.ac.uk/user/ajm/Papers2016/CellularAutomatonRule150.ps"
+    ],
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A038184/b038184.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Rule150.html\">Rule 150</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>"
+    ],
+    "maple": [
+        "bit_n := (x,n) -> `mod`(floor(x/(2^n)),2);",
+        "sigmagen := proc(n) option remember: if (0 = n) then (1)",
+        "else sum('((bit_n(sigmagen(n-1),i)+bit_n(sigmagen(n-1),i-1)+bit_n(sigmagen(n-1),i-2)) mod 2)*(2^i)', 'i'=0..(2*n)) fi: end:"
+    ],
+    "mathematica": [
+        "f[n_] := Sum[2^k*Coefficient[ #, x, k], {k, 0, 2n}] & @ Expand[(1 + x + x^2)^n, Modulus -> 2] (* _Jacob A. Siehler_, Aug 25 2006 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "a(n) = subst(lift(Pol(Mod([1,1,1],2),'x)^n),'x,2);",
+        "vector(23,n,a(n-1))  \\\\ _Gheorghe Coserea_, Jun 12 2016"
+    ],
+    "xref": [
+        "Cf. A006977, A006978, A038183, A038185 (other cellular automata).",
+        "Cf. A048710, A048720, A027907, A001317, A071053.",
+        "This sequence, A071036 and A118110 are equivalent descriptions of the Rule 150 automaton."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Antti Karttunen_, Feb 15 1999",
+    "references": 12,
+    "revision": 37,
+    "time": "2017-03-16T21:39:23-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,28 @@
+{
+    "number": 89896,
+    "data": "6,30,177,1246,9629,78627,664918,5762209,50849234,455055614,4118066400,37607950280,346065645810,3204942065691,29844571475287,279238344248556,2623557165610821,24739954309690415,234057667376222382",
+    "name": "Logarithmic integral approximation to number of primes less than 10^x.",
+    "comment": [
+        "In computing Li(x) we can limit the iterations to 2*log(x) + m where m is suitably large to allow convergence to the precision desired. If we let m = floor(log(log(x))) we get a better approximation of Pi(x) than the full Li(x) expansion. With this m we get Li(x) < Pi(x) often but still closer in absolute value to Pi(x). Note the use of the gamma function to quickly compute factorials in the precision range i.e. gamma(x+1) = x!.",
+        "See A057754 for the round() variant. [From _R. J. Mathar_, Oct 09 2010]"
+    ],
+    "link": [
+        "Xavier Gourdon, <a href=\"http://numbers.computation.free.fr/Constants/constants.html\">Collection of approximations for pi</a>"
+    ],
+    "formula": [
+        "The logarithmic Integral can be computed by Li(x) = log(log(x)) + log(x) + log(x)^2/2/2! + log(x)^3/3/3! + ... + 1 - log(3/2) - sum(k=1, prec, (zeta(2k+1)-1)/(2k+1)/4^k). This last expression is a fast converging series taken from the link for the Euler-Mascheroni constant 0.57721.. where prec is the precision level you are using. PARI has an Euler() function built in so that was used in this calculation."
+    ],
+    "mathematica": [
+        "Table[Floor[LogIntegral[10^n]], {n, 19}] (* _Arkadiusz Wesolowski_, Dec 23 2011 *)"
+    ],
+    "program": [
+        "(PARI) pw2pix(n,m) = { for(x=1,n, y=10^x; print1(floor(Li(y,m))\",\") ) } Li(n,m) = { y2 = log(n); y = 1; z=1; s=log(y2)+ Euler(); for(x=1,floor(2*log(n)+m),y=y2^x/x/gamma(x+1); s+=y; ); return(s) }"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Jan 10 2004",
+    "references": 1,
+    "revision": 19,
+    "time": "2014-08-03T14:27:52-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

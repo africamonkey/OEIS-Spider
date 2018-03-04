@@ -1,0 +1,48 @@
+{
+    "number": 264805,
+    "data": "80625,890625,724297265625,9774697265625,6447206984619140625,56747553669171295166015625,492518329910900929355621337890625,4198069146906637888238489627838134765625,34930039085994014667329000271856784820556640625,280959098499075220855234768279851414263248443603515625",
+    "name": "Numbers n not divisible by 100 such that both concat(1,n) and concat(6,n) are squares.",
+    "comment": [
+        "All terms == 75 mod 90. It appears that all terms == 8625 mod 9000.",
+        "All members of the sequence are obtained as follows.",
+        "Let f(t) = 25 t - 7/2 + 1/(16 t), and 0 < t_1 < t_2 < t_3 < t_4 where f(t_1) = f(t_4) = 1 and f(t_2) = f(t_3) = 1/10.",
+        "If -log(t_2)/log(25) -1 <= frac(d*log(10)/log(25)) < -log(t_1)/log(25) - 1, then",
+        "f(t)*10^d is in the sequence, where a = floor(d*log(10)/log(25)) - 1 and t = 25^a/10^d.",
+        "If -log(t_4)/log(25) < frac(d*log(10)/log(25)) <= -log(t_3)/log(25), then",
+        "   f(t)*10^d is in the sequence, where a = floor(d*log(10)/log(25)) and t = 25^a/10^d.",
+        "By the equidistribution theorem and irrationality of log(10)/log(25), there are infinitely many terms of each type."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A264805/b264805.txt\">Table of n, a(n) for n = 1..177</a>"
+    ],
+    "example": [
+        "For n=1, 180625 = 425^2 and 680625 = 825^2 are squares, so 80625 is in the sequence."
+    ],
+    "maple": [
+        "f:= t -> 25*t - 7/2 + 1/(16*t):",
+        "t1,t2,t3,t4:= 9/100-(1/50)*14^(1/2), 9/125-(1/500)*671^(1/2), 9/125+(1/500)*671^(1/2), 9/100+(1/50)*14^(1/2):",
+        "v1,v2,v3,v4:= -log(t1)/log(25)-1, -log(t2)/log(25)-1, -log(t3)/log(25), -log(t4)/log(25):",
+        "A:= NULL:",
+        "for d from 1 to 100 do",
+        "  v:= frac(d*log(10)/log(25));",
+        "  if is(v >= v2 and v < v1) then",
+        "    a:= d*log(10)/log(25) - v - 1;",
+        "    A:= A,10^d*f(25^a/10^d);",
+        "  elif is(v > v4 and v <= v3) then",
+        "    a:= d*log(10)/log(25) - v;",
+        "    A:= A,10^d*f(25^a/10^d);",
+        "  fi",
+        "od:",
+        "A;"
+    ],
+    "program": [
+        "(PARI) is_A264805(n)=issquare(10^#digits(n)+n)&&issquare(6*10^#digits(n)+n) \\\\ _M. F. Hasler_, Nov 25 2015"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Nov 25 2015",
+    "references": 1,
+    "revision": 17,
+    "time": "2015-11-25T20:52:00-05:00",
+    "created": "2015-11-25T20:52:00-05:00"
+}

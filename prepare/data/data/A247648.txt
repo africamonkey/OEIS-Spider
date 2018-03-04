@@ -1,0 +1,47 @@
+{
+    "number": 247648,
+    "data": "1,3,5,7,11,13,15,21,23,27,29,31,43,45,47,53,55,59,61,63,85,87,91,93,95,107,109,111,117,119,123,125,127,171,173,175,181,183,187,189,191,213,215,219,221,223,235,237,239,245,247,251,253",
+    "name": "Numbers whose binary expansion begins and ends with 1 and does not contain two adjacent zeros.",
+    "comment": [
+        "Decimal equivalents of A247647.",
+        "A265716(a(n)) = A265705(2*a(n),a(n)) = 2*a(n). - _Reinhard Zumkeller_, Dec 15 2015",
+        "The viabin numbers of the integer partitions having distinct parts (for the definition of viabin number see comment in A290253). For example, 109 is in the sequence because it is the viabin number of the integer partition [5,4,2]; 121 is not in the sequence because it is the viabin number of the integer partition [5,4,4]. - _Emeric Deutsch_, Aug 29 2017"
+    ],
+    "link": [
+        "Chai Wah Wu and Reinhard Zumkeller, <a href=\"/A247648/b247648.txt\">Table of n, a(n) for n = 1..121392</a>, all terms < 2^24; first 1000 terms from Chai Wah Wu",
+        "N. J. A. Sloane, <a href=\"http://arxiv.org/abs/1503.01168\">On the Number of ON Cells in Cellular Automata</a>, arXiv:1503.01168 [math.CO], 2015."
+    ],
+    "example": [
+        "109 is in the sequence because its binary expansion is 1101101."
+    ],
+    "maple": [
+        "vitopart := proc (n) local L, i, j, N, p, t: N := 2*n: L := ListTools:-Reverse(convert(N, base, 2)): j := 0: for i to nops(L) do if L[i] = 0 then j := j+1: p[j] := numboccur(L[1 .. i], 1) end if end do: sort([seq(p[t], t = 1 .. j)], `>=`) end proc: a := proc (n) if n = 1 then 1 elif `mod`(n, 2) = 0 then a((1/2)*n) elif `mod`(n, 2) = 1 and `mod`((1/2)*n-1/2, 2) = 0 then a((1/2)*n-1/2)+1 else a((1/2)*n-1/2) end if end proc: A := {}: for n to 254 do if a(n) = nops(vitopart(n)) then A := `union`(A, {n}) else end if end do: A; # program is based on my comment; the command vitopart(n) yields the integer partition having viabin number n. # _Emeric Deutsch_, Aug 29 2017"
+    ],
+    "mathematica": [
+        "Select[Range@ 256, And[First@ # == Last@ # == 1, NoneTrue[Map[Length, Select[Split[#], First@ # == 0 &]], # > 1 &]] &@ IntegerDigits[#, 2] &] (* _Michael De Vlieger_, Aug 29 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "A247648_list = [n for n in range(1,10**5) if n % 2 and not '00' in bin(n)]",
+        "# _Chai Wah Wu_, Sep 25 2014",
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert)",
+        "a247648 n = a247648_list !! (n-1)",
+        "a247648_list = f $ singleton 1 where",
+        "   f s = x : f (insert (4 * x + 1) $ insert (2 * x + 1) s')",
+        "         where (x, s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Sep 25 2014"
+    ],
+    "xref": [
+        "Cf. A247647, A247649, A253085.",
+        "Cf. A247875 (complement).",
+        "Cf. A265716, A265705."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Sep 25 2014",
+    "references": 11,
+    "revision": 34,
+    "time": "2018-01-15T23:37:33-05:00",
+    "created": "2014-09-25T11:01:06-04:00"
+}

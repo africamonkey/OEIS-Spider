@@ -1,0 +1,30 @@
+{
+    "number": 121352,
+    "data": "1,1,2,4,7,10,24,37,63,112,200,318,607,1058,1814,3247,6004,10316,19048,35478,63496,117023,223822,408121,766661,1484363,2775201,5270079,10357605,19714259,37970066,75439670,146103241,284719527,571706625",
+    "name": "Number of different, not necessarily connected, unlabeled trivalent diagrams of size n.",
+    "comment": [
+        "Equivalently, the number of isomorphism class of PSL_2(ZZ) actions on finite sets of size n.",
+        "Also the number of (r,s) pair of permutations up to simultaneous conjugation, in S_n for which r is involutive i.e. r^2 = id and s is of weak order three i.e. s^3 = id."
+    ],
+    "link": [
+        "S. A. Vidal, <a href=\"https://arxiv.org/abs/1103.4936\">Sur la Classification et le D\u00e9nombrement des Sous-groupes du Groupe Modulaire et de leurs Classes de Conjugaison</a> (in French), arXiv:1103.4936 [math.CO], 2006."
+    ],
+    "maple": [
+        "mu := k -> `if`( k mod 2 = 0, 2/k, 1/k ) : nu := k -> `if`( k mod 3 = 0, 3/k, 1/k ) : u := (k,n) -> add(mu(k)^(n-2*k2)/(n-2*k2)!/k2!/(2*k)^k2,k2=0..floor(n/ 2)) : v := (k,n) -> add(nu(k)^(n-3*k3)/(n-3*k3)!/k3!/(3*k)^k3,k3=0..floor(n/ 3)) : N := 100 : ZF := 1 : for k from N to 1 by -1 do ZF := rem(ZF * add(n!*k^n*u(k,n)*v(k,n)*t^(k*n), n = 0..floor(N/ k)),t^(N+1),t) ; end do : sort(ZF,t, ascending);"
+    ],
+    "mathematica": [
+        "max = 34; mu[k_] := If[Mod[k, 2] == 0, 2/k, 1/k]; nu[k_] := If[Mod[k, 3] == 0, 3/k, 1/k]; u[k_, n_] := Sum[ mu[k]^(n - 2*k2) / (((n - 2*k2)!*k2!)*(2*k)^k2), {k2, 0, Floor[n/2]}]; v[k_, n_] := Sum[ nu[k]^(n - 3*k3) / (((n - 3*k3)!*k3!)*(3*k)^k3), {k3, 0, Floor[n/3]}]; ZF = 1; For[k = max, k >= 1, k--, ZF = PolynomialMod[ ZF*Sum[ n!*k^n*u[k, n]*v[k, n]*t^(k*n), {n, 0, Floor[max/k]}], t^(max + 1)]]; CoefficientList[ZF, t](* _Jean-Fran\u00e7ois Alcover_, Dec 05 2012, translated from Samuel Vidal's Maple program *)"
+    ],
+    "xref": [
+        "Unconnected version of A121350.",
+        "Unlabeled version of A121357.",
+        "Cf. also A005133, A121355, A121356."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "Samuel Alexandre Vidal (samuel.vidal(AT)free.fr), Jul 23 2006",
+    "references": 8,
+    "revision": 16,
+    "time": "2017-03-09T05:25:55-05:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

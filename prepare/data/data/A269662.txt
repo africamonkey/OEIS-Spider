@@ -1,0 +1,34 @@
+{
+    "number": 269662,
+    "data": "9,25,85,121,145,205,217,301,361,481,565,697,841,865,1141,1285,1717,1765,2041,2101,2305,2461,2581,2605,2641,2965,2977,3241,3337,3397,3865,3901,3997,4285,4537,4681,4765,5317,5377,5461,5941,6001,6241,6505,6937,7081,7117",
+    "name": "Semiprimes which are the sum of a twin prime pair plus one.",
+    "comment": [
+        "All the terms, except a(1), are congruent to 1 (mod 3)."
+    ],
+    "link": [
+        "K. D. Bajpai, <a href=\"/A269662/b269662.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(2) = 25 = 5 * 5 that is semiprime. Also, 25 = 11 + 13 + 1 where {11, 13} is a twin prime pair.",
+        "a(3) = 85 = 5 * 17 that is semiprime. Also, 55 = 41 + 43 + 1 where {41, 43} is a twin prime pair."
+    ],
+    "mathematica": [
+        "A269662 = {}; Do[a = Prime[n]; b = a + 2; c = a + b + 1; If[PrimeQ[b] && PrimeOmega[c] == 2, AppendTo[A269662, c]], {n, 1000}]; A269662",
+        "Select[Range[1, 7200, 2], And[PrimeOmega@ # == 2, And[PrimeQ@ #, NextPrime[#] - 2] == # &[(# - 1)/2 - 1]] &] (* _Michael De Vlieger_, Apr 01 2016 *)",
+        "Select[1+Total[#]&/@Select[Partition[Prime[Range[500]],2,1],#[[2]]-#[[1]] == 2&],PrimeOmega[#]==2&] (* _Harvey P. Dale_, Apr 10 2016 *)"
+    ],
+    "program": [
+        "(PARI) for(n = 1, 1000, p=prime(n); q=p+2; s=p+q+1; if(isprime(q) && bigomega(s)==2, print1(s,\", \")));",
+        "(MAGMA) IsP2:=func< n | &+[k[2]: k in Factorization(n)] eq 2 >; [ s: n in [1..1000] | IsPrime(n) and IsPrime(n+2) and IsP2(s) where s is (n + n+2 + 1)];"
+    ],
+    "xref": [
+        "Cf. A001097, A001358, A001359, A006512, A054735, A118071."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_K. D. Bajpai_, Mar 02 2016",
+    "references": 1,
+    "revision": 13,
+    "time": "2016-04-10T09:25:22-04:00",
+    "created": "2016-04-05T00:21:48-04:00"
+}

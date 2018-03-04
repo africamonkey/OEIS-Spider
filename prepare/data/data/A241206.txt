@@ -1,0 +1,70 @@
+{
+    "number": 241206,
+    "data": "7,97,997,9949,99991,999979,9999991,99999989,999999929,9999999929,99999999599,999999999989,9999999999799,99999999999959,999999999999989,9999999999999199,99999999999999997,999999999999999989,9999999999999999919,99999999999999999989",
+    "name": "Greatest n-digit prime having at least n-1 identical digits.",
+    "comment": [
+        "Not the same as A069661 (Smallest n-digit prime with maximum digit sum). For example, A069661(10) = 9899989999 with only n-2 = 8 identical digits.",
+        "Conjecture: each term consists of at least n-1 digits 9 and no digit 0. - _Chai Wah Wu_, Dec 10 2015"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A241206/b241206.txt\">Table of n, a(n) for n = 2..1000</a>"
+    ],
+    "maple": [
+        "with(numtheory):lst:={}:nn:=30:kk:=0:T:=array(1..nn):U:=array(1..20):",
+        "   for n from 2 to nn do:",
+        "     for i from 1 to n do:",
+        "     T[i]:=9:",
+        "     od:",
+        "     ii:=0:",
+        "        for j from 1 to n while(ii=0)do:",
+        "        for k from 9 by -1 to 0 while(ii=0)do:",
+        "        T[n-j+1]:=k:s:=sum('T[i]*10^(n-i)', 'i'=1..n):",
+        "         if type(s,prime)=true and length(s)=n",
+        "         then",
+        "         ii:=1: kk:=kk+1:U[kk]:=s:",
+        "         else",
+        "         T[n-j+1]:=9:",
+        "         fi:",
+        "       od:",
+        "     od:",
+        "    od :",
+        "     print(U) :"
+    ],
+    "mathematica": [
+        "Table[SelectFirst[Reverse@ Prime@ Range[PrimePi[10^(n - 1)] + 1, PrimePi[10^n - 1]], Max@ DigitCount@ # >= (n - 1) &], {n, 2, 8}]",
+        "(* WARNING: the following assumes the conjecture is true WARNING *)",
+        "Table[SelectFirst[Select[Reverse@ Union@ Map[FromDigits, Join @@ Map[Permutations[Append[Table[9, {n - 1}], #]] &, Range[0, 9]]], PrimeQ@ # && IntegerLength@ # == n &], Max@ DigitCount@ # >= (n - 1) &], {n, 2, 20}] (* _Michael De Vlieger_, Dec 10 2015, Version 10 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from __future__ import division",
+        "from sympy import isprime",
+        "def A241206(n):",
+        "    for i in range(9,0,-1):",
+        "        x = i*(10**n-1)//9",
+        "        for j in range(n-1,-1,-1):",
+        "            for k in range(9-i,-1,-1):",
+        "                y = x + k*(10**j)",
+        "                if isprime(y):",
+        "                    return y",
+        "        for j in range(n):",
+        "            for k in range(1,i+1):",
+        "                if j < n-1 or k < i:",
+        "                    y = x-k*(10**j)",
+        "                    if isprime(y):",
+        "                        return y # _Chai Wah Wu_, Dec 29 2015"
+    ],
+    "xref": [
+        "Cf. A069661, A241100."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Apr 17 2014",
+    "ext": [
+        "a(1) added - _N. J. A. Sloane_, Dec 29 2015"
+    ],
+    "references": 7,
+    "revision": 21,
+    "time": "2015-12-29T19:52:44-05:00",
+    "created": "2014-04-17T04:44:23-04:00"
+}

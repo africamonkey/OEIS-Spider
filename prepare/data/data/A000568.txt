@@ -1,0 +1,74 @@
+{
+    "number": 568,
+    "id": "M1262 N0484",
+    "data": "1,1,1,2,4,12,56,456,6880,191536,9733056,903753248,154108311168,48542114686912,28401423719122304,31021002160355166848,63530415842308265100288,244912778438520759443245824,1783398846284777975419600287232,24605641171260376770598003978281472",
+    "name": "Number of outcomes of unlabeled n-team round-robin tournaments.",
+    "comment": [
+        "Harary and Palmer give incorrect values for a(24) and a(25); the correct values are a(24) = 195692027657521876084316842660833482785173437775365039898624 and a(25) = 131326696677895002131450257709457767457170027052967027982788816896. - _Vladeta Jovovic_, Apr 08 2001"
+    ],
+    "reference": [
+        "R. L. Davis, Structure of dominance relations, Bull. Math. Biophys., 16 (1954), 131-140.",
+        "J. L. Gross and J. Yellen, eds., Handbook of Graph Theory, CRC Press, 2004; p. 157 and 523.",
+        "F. Harary and E. M. Palmer, Graphical Enumeration, Academic Press, NY, 1973, pp. 126 and 245.",
+        "J. W. Moon, Topics on Tournaments. Holt, NY, 1968, p. 87.",
+        "K. B. Reid and L. W. Beineke \"Tournaments\", pp. 169-204 in L. W. Beineke and R. J. Wilson, editors, Selected Topics in Graph Theory, Academic Press, NY, 1978.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Keith Briggs, <a href=\"/A000568/b000568.txt\">Table of n, a(n) for n = 0..76</a>",
+        "P. J. Cameron, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/groups.html\">Sequences realized by oligomorphic permutation groups</a>, J. Integ. Seqs. Vol. 3 (2000), #00.1.5.",
+        "Cropper, Sebrina Ruth, <a href=\"http://digitalcommons.usu.edu/gradreports/91\">Ranking Score Vectors of Tournaments</a> (2011). All Graduate Reports and Creative Projects. Paper 91. Utah State University, School of Graduate Studies.",
+        "R. L. Davis, <a href=\"/A000568/a000568_4.pdf\">Structure of dominance relations</a>, Bull. Math. Biophys., 16 (1954), 131-140. [Annotated scanned copy]",
+        "D. S. Dummit, E. P. Dummit, H. Kisilevsky, <a href=\"http://arxiv.org/abs/1512.06480\">Characterizations of quadratic, cubic, and quartic residue matrices</a>, arXiv preprint arXiv:1512.06480 [math.NT], 2015.",
+        "Brendan McKay, <a href=\"http://users.cecs.anu.edu.au/~bdm/data/digraphs.html\">Combinatorial Data</a>.",
+        "John W. Moon, <a href=\"http://www.gutenberg.org/ebooks/42833\">Topics on tournaments</a>, Holt, Rinehard and Winston (1968), see page 115.",
+        "J. W. Moon and M. Goldberg, <a href=\"http://projecteuclid.org/euclid.dmj/1077378978\">On the composition of two tournaments</a>, Duke Mathematical Journal, vol.37, no.2 (1970), pp.323-332. (subscription required)",
+        "J. W. Moon and M. Goldberg, <a href=\"/A000568/a000568_2.pdf\">On the composition of two tournaments</a>, Duke Mathematical Journal 37.2 (1970): 323-332. [Annotated scans of pages 331 and 332 only]",
+        "Vladim\u00edr M\u00fcller, Jaroslav Ne\u0161et\u0159il, Jan Pelant, <a href=\"/A003505/a003505.pdf\">Either tournaments or algebras?</a>, Discrete Math. 11 (1975), 37-66. [Annotated copy] See table 1 on page 65.",
+        "N. J. A. Sloane, <a href=\"/A000568/a000568.pdf\">Annotated scan of John Moon's tables of tournaments on up to 6 nodes</a>",
+        "N. J. A. Sloane, <a href=\"/A000568/a000568_1.pdf\">Illustration of first 5 terms</a>",
+        "N. J. A. Sloane, <a href=\"/A000568/a000568.txt\">A second Maple program for A000568</a>",
+        "Peter Steinbach, <a href=\"/A000664/a000664_11.pdf\">Field Guide to Simple Graphs, Volume 4</a>, Part 11 (For Volumes 1, 2, 3, 4 of this book see A000088, A008406, A000055, A000664, respectively.)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Tournament.html\">Tournament</a>",
+        "<a href=\"/index/To#tournament\">Index entries for sequences related to tournaments</a>"
+    ],
+    "formula": [
+        "Davis's formula: a(n) = Sum_{j} (1/(Product (k^(j_k) (j_k)!))) * 2^{t_j},",
+        "where j runs through all partitions of n into odd parts, say with j_1 parts of size 1, j_3 parts of size 3, etc.,",
+        "and t_j = (1/2)*[ Sum_{r=1..n, s=1..n} j_r j_s gcd(r,s) - Sum_{r} j_r ]."
+    ],
+    "maple": [
+        "with(combinat):with(numtheory): for n from 1 to 30 do p:=partition(n): s:=0:for k from 1 to nops(p) do ex:=1:for i from 1 to nops(p[k]) do if p[k][i] mod 2=0 then ex:=0:break:fi:od:",
+        "if ex=1 then q:=convert(p[k],multiset): for i from 1 to n do a(i):=0:od:for i from 1 to nops(q) do a(q[i][1]):=q[i][2]:od:",
+        "c:=1:ord:=1:for i from 1 to n do c:=c*a(i)!*i^a(i): if a(i)<>0 then ord:=lcm(ord,i):fi:od: g:=0:for d from 1 to ord do if ord mod d=0 then g1:=0:for del from 1 to n do if d mod del=0 then g1:=g1+del*a(del):fi:od:g:=g+phi(ord/d)*g1*(g1-1):fi:od: s:=s+2^(g/ord/2)/c:fi:",
+        "od: print(n,s); od: # _Vladeta Jovovic_"
+    ],
+    "mathematica": [
+        "permcount[v_] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_] := Sum[Sum[GCD[v[[i]], v[[j]]], {j, 1, i-1}], {i, 2, Length[v]}] + Sum[Quotient[v[[i]], 2], {i, 1, Length[v]}];",
+        "oddp[v_] := (For[i = 1, i <= Length[v], i++, If[BitAnd[v[[i]], 1] == 0, Return[0]]]; 1);",
+        "a[n_] := a[n] = (s = 0; Do[If[oddp[p] == 1, s += permcount[p]*2^edges[p]], {p, IntegerPartitions[n]}]; s/n!);",
+        "Table[Print[\"a(\", n, \") = \", a[n]]; a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Nov 13 2017, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1,s=0,k=0,t); for(i=1,#v,t=v[i]; k=if(i>1&&t==v[i-1],k+1,1); m*=t*k;s+=t); s!/m}",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, gcd(v[i],v[j]))) + sum(i=1, #v, v[i]\\2)}",
+        "oddp(v) = {for(i=1, #v, if(bitand(v[i],1)==0, return(0)));1}",
+        "a(n) = {my(s=0); forpart(p=n, if(oddp(p), s+=permcount(p)*2^edges(p))); s/n!} \\\\ _Andrew Howroyd_, Oct 22 2017"
+    ],
+    "xref": [
+        "Cf. A006125 for the labeled analog, A051337."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_"
+    ],
+    "references": 20,
+    "revision": 79,
+    "time": "2017-11-13T02:36:59-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

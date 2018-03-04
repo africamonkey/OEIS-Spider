@@ -1,0 +1,51 @@
+{
+    "number": 262145,
+    "data": "1,2,10,108,2214,75708,3895236,280356120,26824493574,3287849716332,501916845156012,93337607623037544,20766799390944491100,5446109742113077482456,1662395457873577922274888",
+    "name": "O.g.f.: exp( Sum_{n >= 1} A000182(n+1)*x^n/n ), where A000182 is the sequence of tangent numbers.",
+    "comment": [
+        "It appears that the sequence has integer entries. Calculation suggests the following conjecture: the expansion of exp( Sum_{n >= 1} A000182(n + m)*x^n/n ) has integer coefficients for m = 1, 2, 3, .... This is the case m = 1. Cf. A255881 and A255895.",
+        "First row of square array A262144."
+    ],
+    "link": [
+        "P. Bala, <a href=\"/A100100/a100100.pdf\">Notes on logarithmic differentiation, the binomial transform and series reversion</a>"
+    ],
+    "formula": [
+        "Recurrence: a(n) = 1/n * Sum_{k = 1..n} A000182(k+1)*a(n-k)."
+    ],
+    "maple": [
+        "#A262145",
+        "#define tangent numbers A000182",
+        "A000182 := n -> (1/2) * 2^(2*n) * (2^(2*n) - 1) * abs(bernoulli(2*n))/n:",
+        "a := proc (n) option remember;",
+        "if n = 0 then 1 else",
+        "  add(A000182(k+1)*a(n-k), k = 1 .. n)/n",
+        "end if;",
+        "end proc:",
+        "seq(a(n), n = 0 .. 15);"
+    ],
+    "mathematica": [
+        "max = 15; CoefficientList[E^Sum[(-1)^n*2^(2*n+1)*(4^(n+1)-1)*BernoulliB[2*(n+1)]*x^n / (n*(n+1)), {n, 1, max}] + O[x]^max, x] (* _Jean-Fran\u00e7ois Alcover_, Sep 18 2015 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def a_list(n):",
+        "    T = [0]*(n+2); T[1] = 1",
+        "    for k in range(2, n+1): T[k] = (k-1)*T[k-1]",
+        "    for k in range(2, n+1):",
+        "        for j in range(k, n+1): T[j] = (j-k)*T[j-1]+(j-k+2)*T[j]",
+        "    @cached_function",
+        "    def a(n): return sum(T[k+1]*a(n-k) for k in (1..n))//n if n> 0 else 1",
+        "    return [a(k) for k in range(n)]",
+        "a_list(15) # _Peter Luschny_, Sep 18 2015"
+    ],
+    "xref": [
+        "Cf. A000182, A255881, A255895, A262144 (first row)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Peter Bala_, Sep 13 2015",
+    "references": 3,
+    "revision": 12,
+    "time": "2015-09-27T17:47:47-04:00",
+    "created": "2015-09-27T17:47:47-04:00"
+}

@@ -1,0 +1,73 @@
+{
+    "number": 4215,
+    "id": "M4349",
+    "data": "7,15,23,28,31,39,47,55,60,63,71,79,87,92,95,103,111,112,119,124,127,135,143,151,156,159,167,175,183,188,191,199,207,215,220,223,231,239,240,247,252,255,263,271,279,284,287,295,303,311,316,319,327,335,343",
+    "name": "Numbers that are the sum of 4 but no fewer nonzero squares.",
+    "comment": [
+        "Lagrange's theorem tells us that each positive integer can be written as a sum of four squares.",
+        "If n is in the sequence and k is an odd positive integer then n^k is in the sequence because n^k is of the form 4^i(8j+7). - _Farideh Firoozbakht_, Nov 23 2006",
+        "Numbers whose cubes do not have a partition as a sum of 3 squares. a(n)^3 = A134738(n). - _Artur Jasinski_, Nov 07 2007",
+        "A002828(a(n)) = 4; A025427(a(n)) > 0. - _Reinhard Zumkeller_, Feb 26 2015",
+        "There are infinitely many adjacent pairs (for example, 128n + 111 and 128n + 112 for any n), but never a triple of consecutive integers. - _Ivan Neretin_, Aug 17 2017"
+    ],
+    "reference": [
+        "L. E. Dickson, History of the Theory of Numbers. Carnegie Institute Public. 256, Washington, DC, Vol. 1, 1919; Vol. 2, 1920; Vol. 3, 1923, see vol. 2, p. 261.",
+        "E. Poznanski, 1901. Pierwiastki pierwotne liczb pierwszych. Warszawa, pp. 1-63.",
+        "W. Sierpi\u0144ski, 1925. Teorja Liczb. pp. 1-410 (p. 125).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "David Wells, The Penguin Dictionary of Curious and Interesting Numbers, entry 4181."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A004215/b004215.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "David S. Bettes, <a href=\"/A004214/a004214.pdf\">Letter to N. J. A. Sloane, Nov 05 1976</a>",
+        "R. T. Bumby, <a href=\"http://www.math.rutgers.edu/~bumby/squares1.pdf\">Sums Of Four Squares</a>",
+        "L. J. Mordell, <a href=\"http://dx.doi.org/10.1093/qmath/os-1.1.276\">A new Waring's problem with squares of linear forms</a>, Quart. J. Math., 1 (1930), 276-288 (see p. 283).",
+        "S. Uchiyama, <a href=\"https://www.jstage.jst.go.jp/article/kyotoms1969/13/1/13_1_301/_pdf\">A five-square theorem</a>, Publ. Res. Math. Sci., Vol 13, Number 1 (1977), 301-305.",
+        "Steve Waterman, <a href=\"http://watermanpolyhedron.com/MISSING.html\">Missing numbers formula</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SquareNumber.html\">Square Number</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Lagrange%27s_four-square_theorem\">Lagrange's four-square theorem</a>.",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of squares</a>"
+    ],
+    "formula": [
+        "a(n) = A044075(n)/2. - _Ray Chandler_, Jan 30 2009",
+        "Numbers of the form 4^i(8j+7), i >= 0, j >= 0. [A.-M. Legendre & C. F. Gauss]",
+        "Products of the form A000302(i)*A004771(j), i, j >= 0. - _R. J. Mathar_, Nov 29 2006",
+        "a(n) = 6n + O(log n). - _Charles R Greathouse IV_, Dec 19 2013"
+    ],
+    "example": [
+        "15 is in the sequence because it is the sum of four squares, namely, 3^2 + 2^2 + 1^2 + 1^2, and it can't be expressed as the sum of fewer squares.",
+        "16 is not in the sequence, because, although it can be expressed as 2^2 + 2^2 + 2^2 + 2^2, it can also be expressed as 4^2."
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "{seq(seq(4^i * (8*j + 7), j = 0 .. floor((N/4^i - 7)/8)), i = 0 .. floor(log[4](N)))}; # _Robert Israel_, Sep 02 2014"
+    ],
+    "mathematica": [
+        "Sort[Flatten[Table[4^i(8j + 7), {i, 0, 2}, {j, 0, 42}]]] (* _Alonso del Arte_, Jul 05 2005 *)",
+        "b = Table[x^3, {x, 1, 300}]; a = {}; Do[Do[Do[AppendTo[a, (x^2 + y^2 + z^2)^3], {x, 0, 30}], {y, 0, 30}], {z, 0, 30}]; Union[a]; k = Complement[b, a]; k^(1/3) (* _Artur Jasinski_, Nov 07 2007 *)",
+        "Select[Range[120], Mod[ #/4^IntegerExponent[ #, 4], 8] == 7 &] (* _Ant King_, Oct 14 2010 *)"
+    ],
+    "program": [
+        "(PARI) isA004215(n)={ local(fouri,j) ; fouri=1 ; while( n >=7*fouri, if( n % fouri ==0, j= n/fouri -7 ; if( j % 8 ==0, return(1) ) ; ) ; fouri *= 4 ; ) ; return(0) ; } { for(n=1,400, if(isA004215(n), print1(n,\",\") ; ) ; ) ; } \\\\ _R. J. Mathar_, Nov 22 2006",
+        "(PARI) isA004215(n)= n\\4^valuation(n,4)%8==7 \\\\ _M. F. Hasler_, Mar 18 2011",
+        "(Haskell)",
+        "a004215 n = a004215_list !! (n-1)",
+        "a004215_list = filter ((== 4) . a002828) [1..]",
+        "-- _Reinhard Zumkeller_, Feb 26 2015"
+    ],
+    "xref": [
+        "Cf. Complement A000378, A002828, A055039, A072401, A125084, A134738, A134739, A055045, A055046, A234000.",
+        "Cf. A000118 (ways to write n as sum of 4 squares), A025427."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_ and _J. H. Conway_",
+    "ext": [
+        "More terms from Arlin Anderson (starship1(AT)gmail.com)",
+        "Additional comments from _Jud McCranie_, Mar 19 2000"
+    ],
+    "references": 73,
+    "revision": 91,
+    "time": "2017-08-24T13:40:52-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

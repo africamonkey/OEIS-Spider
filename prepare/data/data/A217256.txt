@@ -1,0 +1,34 @@
+{
+    "number": 217256,
+    "data": "116,186,245,255,275,285,316,356,366,429,604,654,801,861,1066,1076,1086,1106,1146,1166,1246,1266,1396,1406,1426,1436,1446,1506,1516,1526,1556,1586,1606,1626,1636,1676,1686,1756,1786,1796,1826,1846,1866,1886,1916,1946",
+    "name": "Triprimes that become squares when their central digit (or central pair of digits) is deleted.",
+    "comment": [
+        "In theory, every square number potentially could have 110 triprime representatives through the insertion of 0-9, and 00-99. It appears 25, which is represented by 48 entries in the sequence, holds the record (confirmed for squares < 594441).",
+        "1600 is the first valid square number (with an even number of digits) not represented in the sequence.",
+        "104976 is the first valid square number not divisible by 100 with no representatives."
+    ],
+    "link": [
+        "Christian N. K. Anderson, <a href=\"/A217256/b217256.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1)=116 and a(15)=1066 are both triprimes (2*2*29 and 2*13*41 respectively) and become the square number 16 upon deletion."
+    ],
+    "program": [
+        "(R)library(gmp);",
+        "removecentraldigit<-function(x) { s=as.character(x); n=nchar(s);",
+        "    as.bigz(paste(substr(s,1,ifelse(n%%2==0,n/2-1,(n-1)/2)), substr(s,ifelse(n%%2==0,n/2+2,(n+3)/2),n),sep=\"\"))};",
+        "istriprime=function(x) ifelse(as.bigz(x)<8,F,length(factorize(x))==3);",
+        "issquare<-function(x) ifelse(x<2,T,all(table(as.numeric(factorize(x)))%%2==0))",
+        "which(sapply(101:1500,function(x) istriprime(x) & issquare(removecentraldigit(x))))+100"
+    ],
+    "xref": [
+        "Cf. A014612, A225082, A080603, A000290."
+    ],
+    "keyword": "nonn,base,less",
+    "offset": "1,1",
+    "author": "_Kevin L. Schwartz_ and _Christian N. K. Anderson_, May 03 2013",
+    "references": 1,
+    "revision": 14,
+    "time": "2013-05-06T11:23:16-04:00",
+    "created": "2013-05-06T11:23:16-04:00"
+}

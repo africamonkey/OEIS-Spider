@@ -1,0 +1,58 @@
+{
+    "number": 226227,
+    "data": "1,3,4,7,8,9,12,15,17,19,24,25,28,31,32,35,36,39,49,51,56,57,60,63,65,68,71,72,73,76,79,96,99,100,103,113,115,120,121,124,127,128,131,136,137,140,143,145,147,152,153,156,159,193,196,199,200,201,204,207,224,227",
+    "name": "Numbers m such that all lengths of runs of 0's in the binary representation of m are prime numbers.",
+    "comment": [
+        "Numbers with no 0's in base 2 (that is, 2^k - 1) are included."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A226227/b226227.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "Select[Range@227, And @@ PrimeQ[(Length /@ Split@ IntegerDigits[#, 2])[[2 ;; ;; 2]]] &] (* _Giovanni Resta_, Jun 01 2013 *)"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#include <stdlib.h>",
+        "typedef unsigned long long U64;",
+        "U64 runs[] = {0,2,3,5,7,11,13,17,19,23,29,31,37,41,43}, *wr;",
+        "#define MemUSAGE 1ULL<<33",
+        "#define TOP (1ULL<<9)  // <<40 ok if MemUSAGE = 1ULL<<33",
+        "int compare64(const void *p1, const void *p2) {",
+        "  if (*(U64*)p1 == *(U64*)p2) return 0;",
+        "  return (*(U64*)p1 < *(U64*)p2) ? -1 : 1;",
+        "}",
+        "void rec(U64 bits) {",
+        "  for (U64 i = 0, b; (b = bits << runs[i]) < TOP; ++i)",
+        "    *wr++ = b, rec(b*2+1);",
+        "}",
+        "int main() {",
+        "  U64 *wr0 = (wr = (U64*)malloc(MemUSAGE));",
+        "  rec(1);",
+        "  //printf(\"%llu\\n\", wr-wr0);",
+        "  qsort(wr0, wr-wr0, 8, compare64);",
+        "  while (wr0<wr)  printf(\"%llu, \", *wr0++);",
+        "  return 0;",
+        "}",
+        "(Haskell)",
+        "import Data.List (group, genericLength)",
+        "a226227 n = a226227_list !! (n-1)",
+        "a226227_list = filter (all (== 1) .",
+        "               map (a010051 . genericLength) .",
+        "                   other . tail . reverse . group . a030308_row) [1..]",
+        "   where other [] = []; other [x] = [x]; other (x:_:xs) = x : other xs",
+        "-- _Reinhard Zumkeller_, Jun 05 2013"
+    ],
+    "xref": [
+        "Cf. A033015, A226228, A226229.",
+        "Cf. A005811, A030308, A010051."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, May 31 2013",
+    "references": 4,
+    "revision": 11,
+    "time": "2013-06-05T15:11:27-04:00",
+    "created": "2013-06-04T18:10:34-04:00"
+}

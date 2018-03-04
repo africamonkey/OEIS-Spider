@@ -1,0 +1,63 @@
+{
+    "number": 51022,
+    "data": "0,1,2,3,4,5,6,7,8,9,100,101,102,103,104,105,106,107,108,109,200,201,202,203,204,205,206,207,208,209,300,301,302,303,304,305,306,307,308,309,400,401,402,403,404,405,406,407,408,409,500,501,502,503,504,505",
+    "name": "Interpolate 0's between each pair of digits of n.",
+    "comment": [
+        "These numbers have the same decimal and negadecimal representations.",
+        "Or fixed points of decimal negadecimal conversion. - _Gerald Hillier_, Apr 23 2015"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A051022/b051022.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Negadecimal.html\">Negadecimal</a>"
+    ],
+    "formula": [
+        "Sums a_i*100^e_i with 0 <= a_i < 10.",
+        "A051022(n) = if n <= 10 then n else A051022([n / 10]) * 100 + n mod 10. - _Reinhard Zumkeller_, Apr 20 2011"
+    ],
+    "example": [
+        "a(23) = 203.",
+        "a(99) = 909.",
+        "a(100) = 10000.",
+        "a(101) = 10001.",
+        "a(111) = 10101."
+    ],
+    "maple": [
+        "M:= 3: # to get a(0) to a(10^M-1)",
+        "A:= 0:",
+        "for d from 1 to M do",
+        "  A:= seq(seq(a*100+b,b=0..9),a=A);",
+        "od:",
+        "A; # _Robert Israel_, Apr 23 2015"
+    ],
+    "mathematica": [
+        "Table[FromDigits[Riffle[IntegerDigits[n],0]],{n,0,60}] (* _Harvey P. Dale_, Nov 17 2013 *)",
+        "ToNegaBases[i_Integer, b_Integer] := FromDigits[ Rest[ Reverse[ Mod[ NestWhileList[(#1 - Mod[ #1, b])/-b &, i, #1 != 0 &], b]]]];",
+        "k = 0; lst = {}; While[k < 1001, If[k == ToNegaBases[k, 10], AppendTo[ lst, k]]; k++]; lst (* _Robert G. Wilson v_, Jun 11 2014 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a051022 n = if n < 10 then n else a051022 n' * 100 + r",
+        "            where (n', r) = divMod n 10",
+        "-- _Reinhard Zumkeller_, Apr 20 2011",
+        "(HP 49G calculator)",
+        "\u00ab \"\" + SREV 0 9",
+        "  FOR i i \"\" + DUP 0 + SREPL DROP",
+        "  NEXT SREV OBJ->\u008d",
+        "\u00bb. _Gerald Hillier_, Apr 23 2015"
+    ],
+    "xref": [
+        "Cf. A039723, A063010, A092908, A092909."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "0,3",
+    "author": "_Eric W. Weisstein_, Dec 11 1999",
+    "ext": [
+        "More terms and more precise definition from Jorge Coveiro (jorgecoveiro(AT)yahoo.com), Apr 15 2004 and _David Wasserman_, Feb 26 2008",
+        "Edited by _N. J. A. Sloane_, Sep 14 2008 at the suggestion of _R. J. Mathar_",
+        "Offset fixed by _Reinhard Zumkeller_, Apr 20 2012"
+    ],
+    "references": 6,
+    "revision": 45,
+    "time": "2015-04-23T23:17:00-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

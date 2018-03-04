@@ -1,0 +1,32 @@
+{
+    "number": 227993,
+    "data": "4,16,27,54,64,256,729,1024,1296,1536,3125,4096,6250,9375,12500,16384,19683,30720,39366,65536,262144,472392,531441,823543,1048576,1179648,1647086,2125764,3294172,4194304,6291456,6770688,9765625,11595672,14348907,16777216",
+    "name": "Let d(1) < d(2) < ... < d(q) denote the divisors of n. Sequence lists numbers n > 1 such that d(1)/d(2) + d(2)/d(3) + ... + d(q-1)/d(q) is an integer.",
+    "comment": [
+        "The sequence is infinite because the powers of 4 (A000302) are in the sequence: the divisors of 2^(2m) are {1, 2, 4, 8, ..., 2^(2m)} and Sum_{i=1..q-1} d(i)/d(i+1) = 1/2 + 2/4 + 4/8 + ... + 2^(2m-1)/2^(2m) = 1/2 + 1/2 + ... + 1/2 = 2m.",
+        "The powers of 27 (A009971) are also in the sequence.",
+        "In the general case, the numbers of the form p^(p*m) where p is prime are in the sequence."
+    ],
+    "example": [
+        "54 is in the sequence because the divisors of 54 are {1, 2, 3, 6, 9, 18, 27, 54} and 1/2 + 2/3 + 3/6 + 6/9 + 9/18 + 18/27 + 27/54 = 4 is integer."
+    ],
+    "maple": [
+        "with(numtheory):for n from 1 to 2000000 do: x:=divisors(n):n1:=nops(x): s:=sum('x[i]/x[i+1]', 'i'=1..n1-1): if s=floor(s)then printf(`%d, `, n):else fi:od:"
+    ],
+    "mathematica": [
+        "fQ[n_] := Module[{d = Divisors[n]}, IntegerQ[Total[Most[d]/Rest[d]]]]; t = {}; n = 1; While[Length[t] < 40, n++; If[fQ[n], AppendTo[t, n]]]; t (* _T. D. Noe_, Aug 06 2013 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(t,s);fordiv(n,d,s+=t/d;t=d);denominator(s)==1 && n>1 \\\\ _Charles R Greathouse IV_, Aug 06 2013"
+    ],
+    "xref": [
+        "Cf. A000302, A009971."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Aug 06 2013",
+    "references": 3,
+    "revision": 26,
+    "time": "2017-09-15T19:36:40-04:00",
+    "created": "2013-08-06T14:54:09-04:00"
+}

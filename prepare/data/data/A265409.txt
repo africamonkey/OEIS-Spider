@@ -1,0 +1,46 @@
+{
+    "number": 265409,
+    "data": "0,0,0,0,0,0,0,1,1,1,2,2,2,3,4,4,4,5,6,6,6,7,8,9,9,9,10,11,12,12,12,13,14,15,16,16,16,17,18,19,20,20,20,21,22,23,24,25,25,25,26,27,28,29,30,30,30,31,32,33,34,35,36,36,36,37,38,39,40,41,42,42,42,43,44,45,46,47,48,49,49,49,50",
+    "name": "a(n) = index to the nearest inner neighbor in Ulam-style square-spirals using zero-based indexing.",
+    "comment": [
+        "Each n occurs A265411(n+1) times.",
+        "Useful when defining recurrences like A078510 and A265408."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A265409/b265409.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "If n <= 7, a(n) = 0 for n >= 8: if either A240025(n) or A240025(n-1) is not zero [when n or n-1 is in A002620], then a(n) = a(n-1), otherwise, a(n) = 1 + a(n-1).",
+        "If n <= 7, a(n) = 0, for n >= 8, a(n) = a(n-1) + (1-A240025(n))*(1-A240025(n-1)). [The same formula in a more compact form.]",
+        "a(n) = A265410(n+1) - 1.",
+        "Other identities. For all n >= 0:",
+        "a(n) = n - A265359(n)."
+    ],
+    "example": [
+        "We arrange natural numbers as a counterclockwise spiral into the square grid in the following manner (here A stands for 10, B for 11). The first square corresponds with n (where the initial term 0 is at the center), and the second square with the value of a(n). This sequence doesn't specify a(0), thus it is shown as an asterisk (*):",
+        "                    44322",
+        "            432B    40002B",
+        "            501A    50*01A",
+        "            6789    600119",
+        "                    667899",
+        "-",
+        "For each n > 0, we look for the nearest horizontally or vertically adjacent neighbor of n towards the center that is not n-1, which will then be value of a(n) [e.g., it is 0 for 3, 5 and 7, while it is 1 for 8, 9 and A (10) and 2 for B (11)] unless n is in the corner (one of the terms of A002620), in which case the value is the nearest diagonally adjacent neighbor towards the center, e.g. 0 for 2, 4 and 6, while it is 1 for 9).",
+        "See also the illustration at A078510."
+    ],
+    "program": [
+        "(Scheme, with memoization macro definec)",
+        "(definec (A265409 n) (cond ((<= n 7) 0) ((or (= 1 (A240025 n)) (= 1 (A240025 (- n 1)))) (A265409 (- n 1))) (else (+ 1 (A265409 (- n 1))))))"
+    ],
+    "xref": [
+        "One less than A265410(n+1).",
+        "Cf. A002620, A240025, A265359.",
+        "Cf. also A033951, A063826, A078510, A265408."
+    ],
+    "keyword": "nonn",
+    "offset": "1,11",
+    "author": "_Antti Karttunen_, Dec 13 2015",
+    "references": 6,
+    "revision": 12,
+    "time": "2015-12-18T11:25:48-05:00",
+    "created": "2015-12-18T11:25:48-05:00"
+}

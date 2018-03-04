@@ -1,0 +1,39 @@
+{
+    "number": 265792,
+    "data": "7,17,23,37,167,563,727,1123,1321,1847,2803,4517",
+    "name": "Numerators of upper primes-only best approximates (POBAs) to sqrt(8); see Comments.",
+    "comment": [
+        "Suppose that x > 0. A fraction p/q of primes is an upper primes-only best approximate, and we write \"p/q is in U(x)\", if p'/q < x < p/q < u/v for all primes u and v such that v < q, where p' is greatest prime < p in case p >= 3.",
+        "Let q(1) = 2 and let p(1) be the least prime >= x. The sequence U(x) follows inductively: for n >= 1, let q(n) is the least prime q such that x < p/q < p(n)/q(n) for some prime p. Let q(n+1) = q and let p(n+1) be the least prime p such that x < p/q < p(n)/q(n).",
+        "For a guide to POBAs, lower POBAs, and upper POBAs, see A265759."
+    ],
+    "example": [
+        "The upper POBAs to sqrt(8) start with 7/2, 17/5, 23/7, 37/13, 167/59, 563/199, 727/257, 1123/397. For example, if p and q are primes and q > 13, and p/q > sqrt(8), then 37/13 is closer to sqrt(8) than p/q is."
+    ],
+    "mathematica": [
+        "x = Sqrt[8]; z = 1000; p[k_] := p[k] = Prime[k];",
+        "t = Table[Max[Table[NextPrime[x*p[k], -1]/p[k], {k, 1, n}]], {n, 1, z}];",
+        "d = DeleteDuplicates[t]; tL = Select[d, # > 0 &] (* lower POBA *)",
+        "t = Table[Min[Table[NextPrime[x*p[k]]/p[k], {k, 1, n}]], {n, 1, z}];",
+        "d = DeleteDuplicates[t]; tU = Select[d, # > 0 &] (* upper POBA *)",
+        "v = Sort[Union[tL, tU], Abs[#1 - x] > Abs[#2 - x] &];",
+        "b = Denominator[v]; s = Select[Range[Length[b]], b[[#]] == Min[Drop[b, # - 1]] &];",
+        "y = Table[v[[s[[n]]]], {n, 1, Length[s]}] (* POBA, A265794/A265795 *)",
+        "Numerator[tL]   (* A265790 *)",
+        "Denominator[tL] (* A265791 *)",
+        "Numerator[tU]   (* A265792 *)",
+        "Denominator[tU] (* A265793 *)",
+        "Numerator[y]    (* A265794 *)",
+        "Denominator[y]  (* A265795 *)"
+    ],
+    "xref": [
+        "Cf. A000040, A265759, A265790, A265791, A265793, A265794, A265795."
+    ],
+    "keyword": "nonn,frac,more",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Dec 29 2015",
+    "references": 7,
+    "revision": 6,
+    "time": "2016-01-02T04:34:40-05:00",
+    "created": "2016-01-02T04:34:40-05:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 292194,
+    "data": "1,1,5,36,610,13225,1173652,92137513,27960729094,14612913824364,11885159817456154,23676862215173960082,144210774157588042096815,778807208565930895328294712,15863318347221014170216633451982,908978343753718115412387406378667615",
+    "name": "Sum of n-th powers of products of terms in all partitions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A292194/b292194.txt\">Table of n, a(n) for n = 0..79</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n] Product_{k=1..n} 1/(1 - k^n*x^k).",
+        "From _Vaclav Kotesovec_, Sep 15 2017: (Start)",
+        "a(n) ~ 3^(n^2/3)               if mod(n,3)=0",
+        "a(n) ~ 3^(n*(n-4)/3)*2^(2*n+1) if mod(n,3)=1",
+        "a(n) ~ 3^(n*(n-2)/3)*2^n       if mod(n,3)=2",
+        "(End)"
+    ],
+    "example": [
+        "5 = 4 + 1 = 3 + 2 = 3 + 1 + 1 = 2 + 2 + 1 = 2 + 1 + 1 + 1 = 1 + 1 + 1 + 1 + 1.",
+        "So a(5) = 5^5 + (4*1)^5 + (3*2)^5 + (3*1*1)^5 + (2*2*1)^5 + (2*1*1*1)^5 + (1*1*1*1*1)^5 = 13225."
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0 or i=1, 1,",
+        "      `if`(i>n, 0, i^k*b(n-i, i, k))+b(n, i-1, k))",
+        "    end:",
+        "a:= n-> b(n$3):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Sep 11 2017"
+    ],
+    "mathematica": [
+        "nmax = 20; Table[SeriesCoefficient[Product[1/(1 - k^n*x^k), {k, 1, n}], {x, 0, n}], {n, 0, nmax}] (* _Vaclav Kotesovec_, Sep 15 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoeff(1/prod(k=1, n, 1-k^n*x^k+x*O(x^n)), n)}"
+    ],
+    "xref": [
+        "Main diagonal of A292193.",
+        "Cf. A292190."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Seiichi Manyama_, Sep 11 2017",
+    "references": 4,
+    "revision": 22,
+    "time": "2017-09-15T07:37:36-04:00",
+    "created": "2017-09-11T14:00:54-04:00"
+}

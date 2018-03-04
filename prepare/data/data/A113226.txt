@@ -1,0 +1,57 @@
+{
+    "number": 113226,
+    "data": "1,2,6,23,107,585,3669,25932,203768,1761109,16595757,169287873,1857903529,21823488238,273130320026,3627845694283,50962676849199,754814462534449,11754778469338581,191998054346198680",
+    "name": "Number of permutations avoiding the pattern 12-34.",
+    "comment": [
+        "a(n) is the number of permutations on [n] that avoid the mixed consecutive/scattered pattern 12-34 (also number that avoid 43-21)."
+    ],
+    "link": [
+        "A. M. Baxter, <a href=\"https://pdfs.semanticscholar.org/2c5d/79e361d3aecb25c380402144177ad7cd9dc8.pdfindex.html\">Algorithms for Permutation Statistics</a>, Ph. D. Dissertation, Rutgers University, May 2011.",
+        "Andrew M. Baxter and Lara K. Pudwell, <a href=\"http://arxiv.org/abs/1108.2642\">Enumeration schemes for dashed patterns</a>, arXiv preprint arXiv:1108.2642 [math.CO], 2011.",
+        "Sergi Elizalde, <a href=\"https://arxiv.org/abs/math/0505254\">Asymptotic enumeration of permutations avoiding generalized patterns</a>, arXiv:math/0505254 [math.CO], 2005.",
+        "Sergi Elizalde, <a href=\"https://doi.org/10.1016/j.aam.2005.05.006\">Asymptotic enumeration of permutations avoiding generalized patterns</a>, Adv. in Appl. Math. 36 (2006), no. 2, 138-155.",
+        "Steven Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/csolve/av.pdf\">Pattern-Avoiding Permutations</a> [Broken link?]",
+        "Steven Finch, <a href=\"/A240885/a240885.pdf\">Pattern-Avoiding Permutations</a> [Cached copy, with permission]"
+    ],
+    "formula": [
+        "In the recurrence coded in Mathematica below, w[n] = # (12-34)-avoiding permutations on [n]; v[n, a] is the number that start with a descent and have first entry a; u[n, a, k, b] is the number that start with an ascent and that have (i) first entry a, (ii) other than a, all ascent initiators <k, (iii) second entry b. The summation index c denotes the next ascent initiator after a. The indices j1, j2, i, j all count entries lying strictly between a and c in position and with value in the intervals: j1 in [k, b), j2 in (c, k), i in (b, n], j in (c, b)."
+    ],
+    "example": [
+        "523146 contains 2346 as a 12-34 pattern because the 23 and 46 are",
+        "adjacent in the permutation and the reduced form of 2346 is 1234."
+    ],
+    "mathematica": [
+        "Clear[u, v, w]; w[0] = w[1] = 1; w[n_] /; n >= 2 := w[n] = u[n] + v[n];",
+        "v[n_] /; n >= 2 := v[n] = Sum[v[n, a], {a, 2, n}]; v[1, 1] = 1;",
+        "v[n_, a_] /; 2 <= a <= n :=",
+        "v[n, a] = Sum[u[n - 1, b], {b, a - 1}] + Sum[v[n - 1, b], {b, 2, a - 1}];",
+        "u[1] = 1; u[n_] /; n >= 2 := u[n] = Sum[u[n, a], {a, n - 1}]; u[1, 1] = 1;",
+        "u[n_, a_] /; a == n := 0; u[n_, a_] /; 1 <= a < n := u[n, a, n];",
+        "u[1, 1, k_] := 1; u[2, 1, k_] := 1; u[n_, a_, k_] /; a >= n := 0;",
+        "u[n_, a_, k_] /; 1 <= a < n && n >= 3 :=",
+        "u[n, a, k] = Sum[u[n, a, k, b], {b, a + 1, n}];",
+        "u[n_, a_, k_, b_] /; 1 <= a < b <= n && k >= b + 2 := u[n, a, b + 1, b];",
+        "u[n_, a_, k_, b_] /; 1 <= a < n && b == n && k == n + 1 := u[n, a, n, n];",
+        "u[n_, a_, k_, b_] /; 1 == a < b == n && k == 2 := 1;",
+        "u[n_, a_, k_, b_] /; 1 <= a < b <= n && k <= b :=",
+        "u[n, a, k, b] =",
+        "  Sum[Binomial[b - k - If[k <= a, 1, 0], j1] Binomial[",
+        "     k - 1 - If[a < k, 1, 0] - c, j2]*",
+        "    u[n - 2 - j1 - j2, c, k - If[a < k, 1, 0] - j2], {c,",
+        "    k - 1 - If[a < k, 1, 0]}, {j1, 0, b - k - If[k <= a, 1, 0]}, {j2, 0,",
+        "    k - 1 - If[a < k, 1, 0] - c}];",
+        "u[n_, a_, k_, b_] /; 1 <= a < b < n && k == b + 1 && {a, b} == {1, 2} := 1;",
+        "u[n_, a_, k_, b_] /; 1 <= a < b < n && k == b + 1 && {a, b} != {1, 2} :=",
+        "u[n, a, k, b] =",
+        "  Sum[Binomial[n - b, i] Binomial[b - 2 - c, j] u[n - 2 - i - j, c,",
+        "     b - 1 - j], {c, b - 2}, {i, 0, n - b}, {j, 0, b - 2 - c}]; Table[",
+        "w[n], {n, 0, 15}]"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_David Callan_, Oct 19 2005",
+    "references": 1,
+    "revision": 30,
+    "time": "2017-07-29T06:20:34-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

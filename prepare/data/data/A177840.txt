@@ -1,0 +1,57 @@
+{
+    "number": 177840,
+    "data": "1,21,653,37577,3434169,457819549,83900098309,20238575173137,6217167231292913,2369809434953636261,1097587512530348834301,607119566298408076479961,395312612701784187384578473,299298318246814086742418737197,260721599469397754183307347278709",
+    "name": "Consider the n pairs (1,2), ..., (2n-1,2n); a(n) is the number of permutations of [ 2n ] with no two fixed points for any pair.",
+    "comment": [
+        "Inverse binomial transform of (2n)!. - _Peter Luschny_, May 31 2014"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A177840/b177840.txt\">Table of n, a(n) for n = 1..100</a>",
+        "P. Weisenhorn, <a href=\"/A177840/a177840.txt\">First 10 rows of permutation numbers A(n,s) with s=0..n, formatted as a simple linear sequence n, a(n)</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=0..n} C(n,j) * 2^j * f(2*n-j), where f(n) is the number of permutations of [n] with no fixed-points (A000166).",
+        "a(n) = A(n,0), with A(n,s) = number of permutations of [2n] with exactly s pairs with 2 fixed points:",
+        "A(n,s) = n!/s! * Sum_{j=0..n-s} 1/(j!*(n-s-j)!) * 2^j * f(2*(n-s)-j).",
+        "A(n,n) = 1, A(n,n-1) = n, A(n,n-2) = 21*n!/(2*(n-2)!).",
+        "Sum_{s=0..n} A(n,s) = (2*n)!.",
+        "a(n) = Sum_{j=0..n} C(n,j)*(2*n-2*j)!*(-1)^j. - _Tani Akinari_, Feb 01 2015",
+        "A(n,s) = Sum_{j=s..n} C(n,j)*C(j,s)*(2*n-2*j)!*(-1)^(j-s). - _Tani Akinari_, Feb 01 2015",
+        "From _Peter Bala_, Mar 07 2015: (Start)",
+        "a(n) = int_{x = 0..inf} (x^2 - 1)^n*exp(-x) dx.",
+        "For n >= 1, int_{x = 0..1} (x^2 - 1)^n*exp(x) dx = A007060(n)*e - a(n). Hence a(n)/A007060(n) -> e as n-> infinity.",
+        "O.g.f. with a(0) := 1: sum {k >= 0} (2*k)!*x^k/(1 + x)^(k + 1) = 1 + x + 21*x^2 + 653*x^3 + ....",
+        "a(n) = 2*n*(2*n - 1)*a(n-1) + 4*n*(n - 1)*a(n-2) + (-1)^n, with initial conditions a(0) = 1, a(1) = 1.",
+        "Homogeneous recurrence: a(n) = (4*n^2 - 2*n - 1)*a(n-1) + 2*(n - 1)*(4*n - 3)*a(n-2) + 4*(n - 1)*(n - 2)*a(n-3), with initial conditions a(0) = 1, a(1) = 1 and a(2) = 21. Cf. A064570. (End)",
+        "a(n) ~ sqrt(Pi) * 2^(2*n+1) * n^(2*n + 1/2) / exp(2*n). - _Vaclav Kotesovec_, Mar 10 2015",
+        "a(n) = (2*n)!*hypergeom([],[1/2-n],1/4)+(-1)^n*(1-hypergeom([1],[1/2,n+1],1/4)). - _Peter Luschny_, Mar 15 2015"
+    ],
+    "example": [
+        "a(2) = 21, because there are 4! = 24 permutations of [ 4 ], only 3 of them have pairs with 2 fixed points: [1,2,3,4], [1,2,4,3], [2,1,3,4].",
+        "a(3) = A(3,0) = 653, A(3,1) = 63, A(3,2) = 3, A(3,4) = 1, sum = 720 = 6!."
+    ],
+    "maple": [
+        "f:= proc(n) option remember;",
+        "      `if`(n<2, 1-n, (n-1) *(f(n-1)+f(n-2)))",
+        "    end:",
+        "a:= n-> add(binomial(n,j) *2^j *f(2*n-j), j=0..n):",
+        "seq(a(n), n=1..20);  # _Alois P. Heinz_, Sep 06 2011"
+    ],
+    "mathematica": [
+        "f[n_] := f[n] = If[n<2, 1-n, (n-1)*(f[n-1]+f[n-2])]; a[n_] := Sum[Binomial[ n, j]*2^j*f[2*n-j], {j, 0, n}]; Table[a[n], {n, 1, 20}] (* _Jean-Fran\u00e7ois Alcover_, Feb 25 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000166, A064570, A007060, A053983, A053984."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Paul Weisenhorn_, May 14 2010",
+    "ext": [
+        "b-file changed to a-file by _N. J. A. Sloane_, Oct 05 2010",
+        "Edited by _Alois P. Heinz_, Sep 06 2011"
+    ],
+    "references": 2,
+    "revision": 45,
+    "time": "2017-02-25T12:25:04-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

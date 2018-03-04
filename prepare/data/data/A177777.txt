@@ -1,0 +1,37 @@
+{
+    "number": 177777,
+    "data": "1,2,12,152,3640,160224,13063792,2012388736,596666619648,344964885948160,392058233038486784,880255154481199466496,3916538634445633156373504,34603083354426212294072477696",
+    "name": "E.g.f. satisfies: L(x) = x*Sum_{n>=0} (1/n!)*Product_{k=0..n-1} L(2^k*x).",
+    "comment": [
+        "An analog of the LambertW function.",
+        "A053549 without the leading term. - _R. J. Mathar_, May 24 2010"
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A177777/b177777.txt\">Table of n, a(n) for n = 1..70</a>"
+    ],
+    "formula": [
+        "a(n) = n*A001187(n), where A001187(n) is the number of connected labeled graphs with n nodes.",
+        "Let B(x) = Sum_{n>=0} 2^(n(n-1)/2)*x^n/n! then",
+        ". L(x) = x*d/dx log(B(x)) = x*B'(x)/B(x) and",
+        ". 1/B(x) = Sum_{n>=0} (-1)^n/n!*Product_{k=0..n-1} L(2^k*x)."
+    ],
+    "example": [
+        "E.g.f.: L(x) = x + 2*x^2/2! + 12*x^3/3! + 152*x^4/4! + 3640*x^5/5! +...",
+        "which is invariant under the series:",
+        "L(x)/x = 1 + L(x) + L(x)L(2x)/2! + L(x)L(2x)L(4x)/3! + L(x)L(2x)L(4x)L(8x)/4! +...",
+        "Let B(x) = 1 + x + 2*x^2/2! + 8*x^3/3! + 64*x^4/4! + 1024*x^5/5! +...",
+        "so that log(B(x)) = x + x^2/2! + 4*x^3/3! + 38*x^4/4! + 728*x^5/5! +...+ A001187(n)*x^n/n! +...",
+        "then L(x) = x*d/dx log(B(x)) which also satisfies:",
+        "1/B(x) = 1 - L(x) + L(x)L(2x)/2! - L(x)L(2x)L(4x)/3! + L(x)L(2x)L(4x)L(8x)/4! -+..."
+    ],
+    "program": [
+        "(PARI) {a(n,r=1)=local(A=x+x^2);for(i=1,n,A=x*sum(m=0,n,r^m/m!*prod(k=0,m-1,subst(A,x,2^k*x+x*O(x^n)))));n!*polcoeff(A,n)}"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, May 19 2010",
+    "references": 4,
+    "revision": 8,
+    "time": "2017-03-17T16:45:45-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

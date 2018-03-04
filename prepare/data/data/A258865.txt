@@ -1,0 +1,67 @@
+{
+    "number": 258865,
+    "data": "24,43,62,81,141,160,179,258,277,359,375,378,397,476,495,593,694,713,811,1029,1347,1366,1385,1464,1483,1581,1682,1701,1799,2017,2213,2232,2251,2330,2349,2447,2548,2567,2665,2670,2689,2787,2883,3005,3536,3555",
+    "name": "Numbers that are a sum of the cubes of three primes.",
+    "comment": [
+        "The subsequence of cubes in the sequence starts 505^3, 535^3, 709^3, 865^3, 1033^3, 1037^3, 1067^3, 1133^3, 1513^3, ...  See A258262."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A258865/b258865.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = A030078(i)+A030078(j)+A030078(k) for some triple (i,j,k)."
+    ],
+    "example": [
+        "2^3+2^3+2^3=24. 2^3+2^3+3^3=43. 2^3+3^3+3^3=62. 3^3+3^3+3^3=81."
+    ],
+    "maple": [
+        "A258865 := proc(lim)",
+        "    local a,p,q,r ;",
+        "    a := {} ;",
+        "    p := 2 ;",
+        "    while p^3 < lim do",
+        "        q := p ;",
+        "        while p^3 +q^3< lim do",
+        "            r := q ;",
+        "            while p^3+q^3+r^3 <= lim do",
+        "                a := a union {p^3+q^3+r^3} ;",
+        "                r := nextprime(r) ;",
+        "            end do:",
+        "            q := nextprime(q) ;",
+        "        end do:",
+        "        p := nextprime(p) ;",
+        "    end do ;",
+        "    a ;",
+        "end proc:",
+        "A258865(30000) ;"
+    ],
+    "mathematica": [
+        "lim = 15; Take[Sort@ DeleteDuplicates[Total /@ (Tuples[Prime@ Range@ lim, 3]^3)], 3 lim] (* _Michael De Vlieger_, Jun 12 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, fromList)",
+        "import qualified Data.Set as Set (union)",
+        "import qualified Data.List.Ordered as List (union)",
+        "a258865 n = a258865_list !! (n-1)",
+        "a258865_list = tail $ f (singleton 1) 1 [] [] a030078_list where",
+        "   f s z vs qcs pcs'@(pc:pcs)",
+        "     | m < z = m : f s' z vs qcs pcs'",
+        "     | otherwise = f (Set.union s $ fromList $ map (+ pc) ws)",
+        "                     pc ws (pc:qcs) pcs",
+        "     where ws = List.union vs $ map (+ pc) (pc : qcs)",
+        "           (m, s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Jun 13 2015"
+    ],
+    "xref": [
+        "Cf. A138854, A114923.",
+        "Cf. A030078, A258262 (subsequence)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. J. Mathar_, Jun 12 2015",
+    "references": 2,
+    "revision": 13,
+    "time": "2015-06-13T05:22:03-04:00",
+    "created": "2015-06-12T23:27:16-04:00"
+}

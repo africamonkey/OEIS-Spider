@@ -1,0 +1,36 @@
+{
+    "number": 265007,
+    "data": "1,1,3,7,18,40,97,216,499,1112,2502,5503,12197,26582,58088,125619,271713,583228,1251115,2668651,5685053,12059993,25544291,53926003,113666195,238946232,501546514,1050430420,2196869731,4586021745,9560876381,19900839742,41373446190",
+    "name": "Total sum of number of lambda-parking functions, where lambda ranges over all partitions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A265007/b265007.txt\">Table of n, a(n) for n = 0..50</a>",
+        "R. Stanley, <a href=\"http://math.mit.edu/~rstan/transparencies/parking.pdf\">Parking Functions</a>, 2011"
+    ],
+    "example": [
+        "The number of lambda-parking functions induced by the partitions of 4:",
+        "1 by [1,1,1,1]: [1,1,1,1],",
+        "4 by [1,1,2]: [1,1,1], [1,1,2], [1,2,1], [2,1,1],",
+        "4 by [2,2]: [1,1], [1,2], [2,1], [2,2],",
+        "5 by [1,3]: [1,1], [1,2], [2,1], [1,3], [3,1],",
+        "4 by [4]: [1], [2], [3], [4].",
+        "a(4) = 1 + 4 + 4 + 5 + 4 = 18."
+    ],
+    "maple": [
+        "p:= l-> (n-> n!*LinearAlgebra[Determinant](Matrix(n, (i, j)",
+        "         -> (t->`if`(t<0, 0, l[i]^t/t!))(j-i+1))))(nops(l)):",
+        "g:= (n, i, l)-> `if`(n=0 or i=1, p([1$n, l[]]), g(n, i-1, l)",
+        "               +`if`(i>n, 0, g(n-i, i, [i, l[]]))):",
+        "a:= n-> g(n$2, []):",
+        "seq(a(n), n=0..20);"
+    ],
+    "xref": [
+        "Cf. A000041, A255047, A265016."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Nov 29 2015",
+    "references": 3,
+    "revision": 14,
+    "time": "2015-12-04T16:23:33-05:00",
+    "created": "2015-12-02T13:15:15-05:00"
+}

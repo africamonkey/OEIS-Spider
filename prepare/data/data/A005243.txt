@@ -1,0 +1,51 @@
+{
+    "number": 5243,
+    "id": "M0623",
+    "data": "1,2,3,5,6,8,10,11,14,16,17,18,19,21,22,24,25,29,30,32,33,34,35,37,40,41,43,45,46,47,49,51,54,57,58,59,60,62,65,67,68,69,70,71,72,73,75,76,77,78,80,81,82,84,86,87,88,90,91,92,93,94,95,96,97,99,100",
+    "name": "A self-generating sequence: start with 1 and 2, take all sums of any number of successive previous elements and adjoin them to the sequence. Repeat!",
+    "comment": [
+        "Most of the natural numbers are members. Conjecture: there are infinitely many nonmembers. Is there an estimate for a(k)/k ?",
+        "A118164(n) = number of representations of a(n) as sum of consecutive earlier terms. - _Reinhard Zumkeller_, Apr 13 2006"
+    ],
+    "reference": [
+        "R. K. Guy, Unsolved Problems in Number Theory, E31.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005243/b005243.txt\">Table of n, a(n) for n=1..1000</a>",
+        "D. R. Hofstadter, <a href=\"/A006336/a006336_1.pdf\">Eta-Lore</a> [Cached copy, with permission]",
+        "D. R. Hofstadter, <a href=\"/A006336/a006336_2.pdf\">Pi-Mu Sequences</a> [Cached copy, with permission]",
+        "D. R. Hofstadter and N. J. A. Sloane, <a href=\"/A006336/a006336.pdf\">Correspondence, 1977 and 1991</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HofstadterSequences.html\">Hofstadter Sequences.</a>"
+    ],
+    "example": [
+        "After 1,2,3,5,6 you can adjoin 8 = 3+5, 10 = 2+3+5, etc.",
+        "12 is not a term since it is not the sum of any set of consecutive previous terms."
+    ],
+    "mathematica": [
+        "nmax = 200; For[ s = {1, 2}; n = 3, n <= nmax, n++, ls = Length[s]; tt = Total /@ Flatten[Table[s[[i ;; j]], {i, 1, ls-1}, {j, i+1, ls}], 1]; If[MemberQ[tt, n], AppendTo[s, n]]]; A005243 = s (* _Jean-Fran\u00e7ois Alcover_, Oct 21 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, fromList, union, IntSet)",
+        "a005243 n = a005243_list !! (n-1)",
+        "a005243_list = 1 : h [1] (singleton 2) where",
+        "   h xs s = m : h (m:xs) (union s' $ fromList $ map (+ m) $ scanl1 (+) xs)",
+        "     where (m, s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Dec 17 2015, Jun 22 06 2011"
+    ],
+    "xref": [
+        "Complement of A048973.",
+        "Cf. A118065, A118166."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "D. R. Hofstadter, Jul 15 1977",
+    "ext": [
+        "More terms from _Jud McCranie_"
+    ],
+    "references": 9,
+    "revision": 41,
+    "time": "2016-10-22T03:16:58-04:00",
+    "created": "1991-05-20T03:00:00-04:00"
+}

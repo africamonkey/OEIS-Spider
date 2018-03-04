@@ -1,0 +1,47 @@
+{
+    "number": 1648,
+    "id": "M2648 N1055",
+    "data": "1,3,7,15,26,51,99,191,367,708,1365,2631,5071,9775,18842,36319,70007,134943,260111,501380,966441,1862875,3590807,6921503,13341626,25716811,49570747,95550687,184179871,355018116,684319421,1319068095,2542585503,4900991135",
+    "name": "Tetranacci numbers A073817 without the leading term 4.",
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A001648/b001648.txt\">Table of n, a(n) for n = 1..3501</a> (terms 1..200 from T. D. Noe)",
+        "Daniel C. Fielder, <a href=\"http://www.fq.math.ca/Scanned/6-3/fielder.pdf\">Special integer sequences controlled by three parameters</a>, Fibonacci Quarterly 6, 1968, 64-70.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "S. Saito, T. Tanaka, N. Wakabayashi, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL14/Saito/saito22.html\">Combinatorial Remarks on the Cyclic Sum Formula for Multiple Zeta Values </a>, J. Int. Seq. 14 (2011) # 11.2.4, Table 3.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Lucasn-StepNumber.html\">Lucas n-Step Number</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,1,1)."
+    ],
+    "formula": [
+        "G.f.: x*(1+2*x+3*x^2+4*x^3)/(1-x-x^2-x^3-x^4).",
+        "a(n) = trace of M^n, where M = the 4 X 4 matrix [ 0 1 0 0 / 0 0 1 0 / 0 0 0 1 / 1 1 1 1]. E.g., the trace (sum of diagonal terms) of M^12 = a(12) = 2631 = (108 + 316 + 717 + 1490). - _Gary W. Adamson_, Feb 22 2004",
+        "a(n) = n*Sum_{k=ceiling(n/5)..n} Sum_{i=0..(n-k)/4} (-1)^i*binomial(k,k-i)*binomial(n-i*4-1,k-1))/k), n>0. - _Vladimir Kruchinin_, Jan 20 2012"
+    ],
+    "maple": [
+        "A001648:=-(1+2*z+3*z**2+4*z**3)/(-1+z+z**2+z**3+z**4); # conjectured by _Simon Plouffe_ in his 1992 dissertation"
+    ],
+    "mathematica": [
+        "Rest@ CoefficientList[ Series[(4 - 3 x - 2 x^2 - x^3)/(1 - x - x^2 - x^3 - x^4), {x, 0, 40}], x] (* Or *)",
+        "a[0] = 4; a[1] = 1; a[2] = 3; a[3] = 7; a[4] = 15; a[n_] := 2*a[n - 1] - a[n - 5]; Array[a, 33] (* _Robert G. Wilson v_ *)",
+        "LinearRecurrence[{1, 1, 1, 1}, {1, 3, 7, 15}, 60] (* _Vladimir Joseph Stephan Orlovsky_, Feb 08 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,polcoeff(x*(1+2*x+3*x^2+4*x^3)/(1-x-x^2-x^3-x^4)+x*O(x^n),n))",
+        "(Maxima) a(n):=n*sum(sum((-1)^i*binomial(k,k-i)*binomial(n-i*4-1,k-1),i,0,((n-k)/4))/k,k,ceiling(n/5),n); /* _Vladimir Kruchinin_, Jan 20 2012 */",
+        "(MAGMA) I:=[1,3,7,15]; [n le 4 select I[n] else Self(n-1) + Self(n-2) + Self(n-3) + Self(n-4): n in [1..30]]; // _G. C. Greubel_, Dec 18 2017"
+    ],
+    "xref": [
+        "Cf. A000288, A073817."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 14,
+    "revision": 55,
+    "time": "2017-12-19T18:32:21-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

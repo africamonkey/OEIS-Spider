@@ -1,0 +1,55 @@
+{
+    "number": 8846,
+    "data": "5,13,17,25,29,37,41,53,61,65,73,85,89,97,101,109,113,125,137,145,149,157,169,173,181,185,193,197,205,221,229,233,241,257,265,269,277,281,289,293,305,313,317,325,337,349,353,365,373,377,389,397,401,409,421,425,433",
+    "name": "Hypotenuses of primitive Pythagorean triangles.",
+    "comment": [
+        "n for which there is no solution to 4/n = 2/x + 1/y for integers y > x > 0. Related to A073101. - _T. D. Noe_, Sep 30 2002",
+        "Discovered by Frenicle (on Pythagorean triangles) : Methode pour trouver .., page 14 on 44. First text of Divers ouvrages .. Par Messieurs de l'Academie Royale des Sciences,in-folio,6+518+1pp,Paris,1693. Also A020882 with only one of doubled terms (first:65). - _Paul Curtz_, Sep 03 2008",
+        "All divisors of terms are of the form 4*k+1 (products of members of A002144). - _Zak Seidov_, Apr 13 2011",
+        "A024362(a(n)) > 0. - _Reinhard Zumkeller_, Dec 02 2012",
+        "Closed under multiplication. Primitive elements are in A002144. - _Jean-Christophe Herv\u00e9_, Nov 10 2013",
+        "Not only the square of these numbers is equal to the sum of two nonzero squares, but the numbers themselves also are; this sequence is then a subsequence of A004431. - _Jean-Christophe Herv\u00e9_, Nov 10 2013",
+        "All primitive Pythagorean triangles with sides {a, b, c} where a = a(n) are hypotenuses, \"b\" is the even leg, and \"c\" is the odd leg, have the property that Sqrt(a+b) = t, which is an odd integer, and t is a divisible into c.  This property derives from the fact that all primitive Pythagorean triangles can be from generated from two integers, j<i, as {j^2-i^2,2ij,j^2+i^2}. Also note: t = c only when the longer leg equals to a(n)-1. - _Richard R. Forberg_, May 11 2016"
+    ],
+    "reference": [
+        "A. H. Beiler, Recreations in the Theory of Numbers, Dover, NY, 1964, pp. 10, 107."
+    ],
+    "link": [
+        "Zak Seidov, <a href=\"/A008846/b008846.txt\">Table of n, a(n) for n = 1..87881</a> (with a(n) up to 10^6).",
+        "Ron Knott, <a href=\"http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Pythag/pythag.html\">Pythagorean Triples and Online Calculators</a>"
+    ],
+    "formula": [
+        "x^2+y^2 where x is even, y is odd and gcd(x, y)=1. Essentially the same as A004613."
+    ],
+    "maple": [
+        "for x from 1 by 2 to 50 do for y from 2 by 2 to 50 do if gcd(x,y) = 1 then print(x^2+y^2); fi; od; od; [ then sort ]."
+    ],
+    "mathematica": [
+        "Union[ Map[ Plus@@(#1^2)&, Select[ Flatten[ Array[ {2*#1, 2*#2-1}&, {10, 10} ], 1 ], GCD@@#1 == 1& ] ] ] (* _Olivier G\u00e9rard_, Aug 15 1997 *)",
+        "lst = {}; Do[ If[ GCD[m, n] == 1, a = 2 m*n; b = m^2 - n^2; c = m^2 + n^2; AppendTo[lst, c]], {m, 100}, {n, If[ OddQ@m, 2, 1], m - 1, 2}]; Take[ Union@ lst, 57] (* _Robert G. Wilson v_, May 02 2009 *)",
+        "Union[Sqrt[#[[1]]^2+#[[2]]^2]&/@Union[Sort/@({Times@@#,(Last[#]^2-First[#]^2)/2}&/@ (Select[Subsets[Range[1,33,2],{2}],GCD@@#==1&]))]] (* _Harvey P. Dale_, Aug 26 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a008846 n = a008846_list !! (n-1)",
+        "a008846_list = filter f [1..] where",
+        "   f n = all ((== 1) . (`mod` 4)) $ filter ((== 0) . (n `mod`)) [1..n]",
+        "-- _Reinhard Zumkeller_, Apr 27 2011",
+        "(PARI) is(n)=Set(factor(n)[,1]%4)==[1] \\\\ _Charles R Greathouse IV_, Nov 06 2015"
+    ],
+    "xref": [
+        "Subsequence of A004431 and of A000404; primitive elements: A002144.",
+        "Cf. A020882, A073101.",
+        "Cf. A137409 (complement), union of A024409 and A120960."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Ralph Peterson (RALPHP(AT)LIBRARY.nrl.navy.mil)",
+    "ext": [
+        "More terms from _T. D. Noe_, Sep 30 2002"
+    ],
+    "references": 40,
+    "revision": 59,
+    "time": "2017-02-07T06:26:01-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

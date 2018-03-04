@@ -1,0 +1,56 @@
+{
+    "number": 246042,
+    "data": "15774,67880,101340,482434,91710898,268436480,877362668,4832460192",
+    "name": "Numbers n such that there is both a square and a triangular number strictly between n^3 and n^3+n.",
+    "comment": [
+        "Is the sequence infinite?",
+        "a(9) > 10^10. - _Hiroaki Yamanouchi_, Sep 03 2014",
+        "a(9) > 10^12. - _Jon E. Schoenfield_, Dec 23 2014",
+        "Under certain assumptions, a heuristic argument can be made that the sequence is infinite. Given a value of n, let I_n be the interval consisting of the n-1 integers lying strictly between n^3 and n^3+n. The density of squares in the vicinity of a large number C is 1/(2*sqrt(C)), so if we assume that we may treat the event that I_n includes a square as a random event, its probability of occurrence should be about P_S = (n-1)/(2*sqrt(n^3)), which approaches 1/(2*sqrt(n)) for large n. Similarly, the density of triangular numbers in the vicinity of a large number C is 1/sqrt(2*C), so if we assume that we may treat the event that I_n includes a triangular number as a random event, its probability of occurrence should be about P_T = (n-1)/sqrt(2*n^3), which approaches 1/sqrt(2*n) for large n. If we further assume that these two events can be modeled as occurring independently of each other, then the probability that I_n will include both a square and a triangular number approaches P = P_S * P_T = sqrt(1/8)/n. Since sum_{n=1..inf} sqrt(1/8)/n diverges, the sequence should have an infinite number of terms. (The expected number of D-digit terms would approach log(10)/sqrt(8) = 0.814... as D increases; as it turns out, the average number of D-digit terms for D in the interval [1,10] is 8/10 = 0.8.) - _Jon E. Schoenfield_, Oct 09 2014",
+        "For a simple algorithm that uses only integer arithmetic, see the Magma program link. - _Jon E. Schoenfield_, Oct 09 2014"
+    ],
+    "link": [
+        "Jon E. Schoenfield, <a href=\"/A246042/a246042.txt\">Magma program</a>"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#include <stdlib.h>",
+        "typedef unsigned long long U64;",
+        "U64 isqrt(U64 a) {",
+        "    U64 sr = 1ULL<<31;",
+        "    while (a<sr*sr) sr>>=1;",
+        "    U64 b = sr>>1;",
+        "    while (b) {",
+        "        U64 s = sr + b;",
+        "        if (a>=s*s)  sr = s;",
+        "        b>>=1;",
+        "    }",
+        "    return sr;",
+        "}",
+        "int main()",
+        "{",
+        "    U64 tn, t, n, cu;",
+        "    for (t = n = 0; n < 2642246; ++n) {",
+        "        for (cu = n*n*n; tn <= cu; ++t)",
+        "            tn += t;",
+        "        if (tn < cu+n && isqrt(cu) != isqrt(cu+n-1))",
+        "            printf(\"%llu, \", n);",
+        "    }",
+        "}",
+        "(PARI) isok(n) = {st = 0; ss = 0; for (i=n^3+1, n^3+n-1, if (issquare(i), ss++); if (ispolygonal(i, 3), st++)); (st == 1) && (ss == 1);} \\\\ _Michel Marcus_, Aug 24 2014"
+    ],
+    "xref": [
+        "Cf. A000217, A000290, A002378."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, Aug 23 2014",
+    "ext": [
+        "a(5)-a(8) from _Hiroaki Yamanouchi_, Sep 03 2014"
+    ],
+    "references": 1,
+    "revision": 31,
+    "time": "2014-12-24T03:29:20-05:00",
+    "created": "2014-08-23T11:04:36-04:00"
+}

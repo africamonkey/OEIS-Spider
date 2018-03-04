@@ -1,0 +1,43 @@
+{
+    "number": 140049,
+    "data": "1,1,5,55,1005,26601,941863,42372177,2336926665,153927536545,11869936146891,1055015092106889,106731589524249517,12163935655214359329,1548324822731892094191,218516875165035215308801",
+    "name": "E.g.f. A(x) satisfies: A( x*exp(-x*A(x)) ) = exp(x*A(x)).",
+    "formula": [
+        "a(n) = A140054(n+1)/(n+1).",
+        "E.g.f.: A(x) = exp(G(x)) where G(x) = e.g.f. of A140055.",
+        "E.g.f. satisfies: A(x) = exp( x*A(x) * A(x*A(x)) ).",
+        "Contribution from _Paul D. Hanna_, Jul 09 2009: (Start)",
+        "E.g.f. satisfies: A(x) = exp(x*A(x)*A(x*A(x))).",
+        "...",
+        "Let A(x)^m = Sum_{n>=0} a(n,m)*x^n/n! with a(0,m)=1, then",
+        "a(n,m) = Sum_{k=0..n} C(n,k) * m*(n+m)^(k-1) * a(n-k,k).",
+        "...",
+        "Let log(A(x)) = x*A(x*A(x)) = Sum_{n>=1} L(n)*x^n/n!, then",
+        "L(n) = Sum_{k=1..n} C(n,k) * n^(k-1) * a(n-k,k).",
+        "(End)"
+    ],
+    "example": [
+        "A(x) = 1 + x + 5*x^2/2! + 55*x^3/3! + 1005*x^4/4! + 26601*x^5/5! +...",
+        "Log(A(x)) = G(x) = e.g.f. of A140055:",
+        "Log(A(x)) = x + 4*x^2/2! + 42*x^3/3! + 764*x^4/4! + 20400*x^5/5! +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x);for(i=0,n,A=serreverse(x*exp(-A+x*O(x^n))));n!*polcoeff(A,n+1)}",
+        "(PARI) {a(n)=local(A=x);for(i=0,n,A=x*exp(subst(A,x,A+x*O(x^n))));n!*polcoeff(A,n+1)}",
+        "Contribution from _Paul D. Hanna_, Jul 09 2009: (Start)",
+        "(PARI) {a(n,m=1)=if(n==0,1,if(m==0,0^n,sum(k=0,n,binomial(n,k)*m*(n+m)^(k-1)*a(n-k,k))))}",
+        "(PARI) /* Log(A(x)) = x*A(x*A(x)) = Sum_{n>=1} L(n)*x^n/n! where: */",
+        "{L(n)=if(n<1,0,sum(k=1,n,binomial(n,k)*n^(k-1)*a(n-k,k)))} (End)"
+    ],
+    "xref": [
+        "Cf. A140054, A140055.",
+        "Cf. A162659. [From _Paul D. Hanna_, Jul 09 2009]"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, May 06 2008",
+    "references": 1,
+    "revision": 3,
+    "time": "2012-03-30T18:37:10-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

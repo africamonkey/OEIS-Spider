@@ -1,0 +1,48 @@
+{
+    "number": 112929,
+    "data": "1,2,3,5,7,8,11,12,15,17,19,23,26,28,30,32,36,37,41,44,45,49,51,55,60,61,63,66,67,70,77,80,83,85,91,92,95,99,102,104,108,109,116,117,120,121,129,138,140,141,144,148,149,153,157,161,165,166,169,171,173,179,187",
+    "name": "Number of squarefree integers less than the n-th prime.",
+    "comment": [
+        "a(n) = order of n-th term of A112925 among squarefree integers.",
+        "a(n) = A175046(A000040(n)). - _Reinhard Zumkeller_, Apr 05 2010"
+    ],
+    "link": [
+        "Diana Mecum and Charles R Greathouse IV, <a href=\"/A112929/b112929.txt\">Table of n, a(n) for n = 1..10000</a> (first 200 terms from Mecum)"
+    ],
+    "formula": [
+        "A005117(a(n)) = A112925(n). - _R. J. Mathar_, Apr 19 2008",
+        "a(n) ~ 6/Pi^2 * n log n. - _Charles R Greathouse IV_, Apr 26 2012"
+    ],
+    "example": [
+        "a(5)=7 because the 5th prime is 11 and the squarefree numbers not exceeding 11 are: 2,3,5,6,7,10,11.",
+        "The 5th term of A112925 is 10 and 10 is the 7th squarefree integer (with 1 counted as the first squarefree integer). So a(5) = 7."
+    ],
+    "maple": [
+        "with(numtheory): a:=proc(n) local p,B,j: p:=ithprime(n): B:={}: for j from 2 to p do if abs(mobius(j))>0 then B:=B union {j} else B:=B fi od: nops(B) end: seq(a(m),m=1..75);"
+    ],
+    "mathematica": [
+        "f[n_] := Prime[n] - Sum[ If[ MoebiusMu[k]]==0, 1, 0], {k, Prime[n]}] - 1; Table[ f[n], {n, 63}] (* _Robert G. Wilson v_, Oct 15 2005 *)"
+    ],
+    "program": [
+        "(PARI) a(n)={",
+        "my(lim=prime(n)-1,b=sqrtint(lim\\2));",
+        "sum(k=1,b,moebius(k)*(lim\\k^2))+",
+        "sum(k=b+1,sqrt(lim),moebius(k))",
+        "}; \\\\ _Charles R Greathouse IV_, Apr 26 2012",
+        "(PARI) a(n,p=prime(n))=p--; my(s,b=sqrtint(p\\2)); forsquarefree(k=1, b, s += p\\k[1]^2*moebius(k)); forsquarefree(k=b+1, sqrtint(p), s += moebius(k)); s \\\\ _Charles R Greathouse IV_, Jan 08 2018"
+    ],
+    "xref": [
+        "Cf. A112925, A112926, A061400, A112928, A112930."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Oct 06 2005 and _Emeric Deutsch_, Oct 14 2005",
+    "ext": [
+        "More terms from _Diana L. Mecum_, May 29 2007",
+        "Edited by _N. J. A. Sloane_, Apr 26 2008 at the suggestion of _R. J. Mathar_"
+    ],
+    "references": 7,
+    "revision": 26,
+    "time": "2018-01-08T01:57:19-05:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

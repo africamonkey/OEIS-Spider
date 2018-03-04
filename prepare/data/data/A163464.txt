@@ -1,0 +1,37 @@
+{
+    "number": 163464,
+    "data": "0,0,0,1,1,1,2,2,3,4,4,5,5,6,6,8,9,9,10,11,11,12,12,13,14,16,16,17,17,18,20,20,21,21,24,24,25,26,26,27,28,28,30,30,32,32,34,35,36,36,37,38,38,40,41,42,43,43,44,45,45,46,49,50,50,51,53,54,57,57,58,59,60,61,62",
+    "name": "Cumulative sum of a repeated shift-and-add operation on the base-7 representation of prime(n).",
+    "comment": [
+        "Starting from the base-7 representation of prime(n) = d_m*7^m + ... + d_3*7^3 + d_2*7^2 + d_1*7 + d_0, the least-significant digit is recursively removed (a shift-right operation in base 7), and the intermediate numbers are all added up:",
+        "a(n) =   (d_m*7^(m-1) + ... + d_3*7^2 + d_2*7 + d_1)",
+        "       + (d_m*7^(m-2) + ... + d_4*7^2 + d_3*7 + d_2)",
+        "       + (d_m*7^(m-3) +      ...      + d_4*7 + d_3)",
+        "       +                     ...              + d_m",
+        "     = Sum_{j=1..m} d_j*(7^j - 1)/6."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A163464/b163464.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "maple": [
+        "shiftadd := proc(n,b) dgs := convert(n,base,b) ; add( op(i,dgs)*(b^(i-1)-1),i=2..nops(dgs))/(b-1) ; end:",
+        "A163464 := proc(n) shiftadd(ithprime(n),7) ; end:",
+        "seq(A163464(n),n=1..40) ; # _R. J. Mathar_, Aug 02 2009"
+    ],
+    "mathematica": [
+        "lst={}; Do[p=Prime[n]; s=0; While[p>1,p=IntegerPart[p/7];s+=p;]; AppendTo[lst, s],{n,6!}]; lst"
+    ],
+    "xref": [
+        "Cf. A080085, A080086, A080087."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,7",
+    "author": "_Vladimir Joseph Stephan Orlovsky_, Jul 28 2009",
+    "ext": [
+        "Definition rewritten by _R. J. Mathar_, Aug 02 2009"
+    ],
+    "references": 1,
+    "revision": 10,
+    "time": "2017-07-26T09:33:15-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 121805,
+    "data": "1,12,35,94,135,186,248,331,344,387,461,475,530,535,590,595,651,667,744,791,809,908,997,1068,1149,1240,1241,1252,1273,1304,1345,1396,1457,1528,1609,1700,1701,1712,1733,1764,1805,1856,1917,1988,2070",
+    "name": "The \"commas\" sequence: a(1) = 1; for n > 1, let x be the least significant digit of a(n-1); then a(n) = a(n-1) + x*10 + y where y is the most significant digit of a(n) and is the smallest such y, if such a y exists. If no such y exists, stop.",
+    "comment": [
+        "The sequence contains exactly 2137453 terms, with a(2137453)=99999945. The next term does not exist. - _W. Edwin Clark_, Dec 11 2006",
+        "It is remarkable that the sequence persists for so long. - _N. J. A. Sloane_, Dec 15 2006"
+    ],
+    "reference": [
+        "E. Angelini, \"Jeux de suites\", in Dossier Pour La Science, pp. 32-35, Volume 59 (Jeux math'), April/June 2008, Paris."
+    ],
+    "link": [
+        "Zak Seidov, <a href=\"/A121805/b121805.txt\">Table of n, a(n) for n = 1..1001</a>",
+        "Eric Angelini, <a href=\"http://www.cetteadressecomportecinquantesignes.com/Commas.htm\">(No title)</a>",
+        "E. Angelini, <a href=\"/A121805/a121805.pdf\">The Commas Sequence</a> [Cached, with permission]",
+        "Simon Demers, <a href=\"https://sites.google.com/site/simdem/home/b121805.zip\">Table of n, a(n) for n = 1..2137453</a> (full sequence)"
+    ],
+    "example": [
+        "E.g., a(6) = 186 and a(7) = 248 = 186 + 62",
+        "Sequence..: 1, 12, 35, 94, 135, 186, 248, 331, 344, 387, 461, 475, 530, 535, ...",
+        "Differences: 11, 23, 59, 41 , 51 , 62 , 83 , 13 , 43 , 74 , 14 , 55 , 05 , 55..."
+    ],
+    "maple": [
+        "digits:=n->ListTools:-Reverse(convert(n,base,10)):",
+        "nextK:=proc(K) local i,L; for i from 0 to 9 do L:=K+digits(K)[ -1]*10+i; if i = digits(L)[1] then return L; fi; od; FAIL; end:",
+        "a:=proc(n) option remember: if n = 1 then return 1; fi; return nextK(a(n-1)); end: # _W. Edwin Clark_"
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := a[n] = For[x=Mod[a[n-1], 10]; y=0, y <= 9, y++, an = a[n-1] + 10*x + y; If[y == IntegerDigits[an][[1]], Return[an]]]; Array[a, 45] (* _Jean-Fran\u00e7ois Alcover_, Nov 25 2014 *)"
+    ],
+    "program": [
+        "(PARI) a=1; for(n=1,1000, print1(a\", \"); a+=a%10*10; for(k=1, 9, digits(a+k)[1]==k&&(a+=k)&&next(2)); error(\"blocked at a(\"n\")=\",a-a%10*10)) \\\\ _M. F. Hasler_, Jul 21 2015",
+        "(R) A121805 <- data.frame(n=seq(from=1,to=2137453),a=integer(2137453)); A121805$a[1]=1; for (i in seq(from=2,to=2137453)){LSD=A121805$a[i-1] %% 10; k = 1; while (k != as.integer(substring(A121805$a[i-1]+LSD*10+k,1,1))){k = k+1; if(k>9) break} A121805$a[i]=A121805$a[i-1]+LSD*10+k} # _Simon Demers_, Oct 19 2017"
+    ],
+    "xref": [
+        "Cf. A139284, A260261."
+    ],
+    "keyword": "nonn,base,fini,nice",
+    "offset": "1,2",
+    "author": "_Eric Angelini_, Dec 11 2006",
+    "ext": [
+        "More terms from _Zak Seidov_, Dec 11 2006"
+    ],
+    "references": 5,
+    "revision": 32,
+    "time": "2017-10-20T03:05:59-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

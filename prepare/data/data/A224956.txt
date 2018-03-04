@@ -1,0 +1,68 @@
+{
+    "number": 224956,
+    "data": "1,1,2,3,5,6,9,11,16,19,26,31,42,50,65,78,100,119,149,178,222,263,322,382,465,549,660,778,932,1093,1299,1520,1798,2096,2464,2868,3357,3892,4536,5247,6096,7028,8133,9357,10795,12388,14244,16309,18706,21367,24440,27857,31788,36157",
+    "name": "Number of partitions of n where the difference between consecutive parts is at most 2.",
+    "comment": [
+        "Also (by taking the conjugate), a(n) is the number of partitions of n such that all parts, with the possible exception of the largest are repeated at most twice. - _Geoffrey Critzer_, Sep 30 2013"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A224956/b224956.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "O.g.f.: 1 + sum(k>=1, x^k/(1-x^k) * prod(i=1..k-1, 1+x^i+x^(2*i) ) ). - _Geoffrey Critzer_, Sep 30 2013",
+        "a(n) = Sum_{k=0..2} A238353(n,k). - _Alois P. Heinz_, Mar 09 2014"
+    ],
+    "example": [
+        "The a(7)=11 such partitions of 7 are",
+        "01:  [ 1 1 1 1 1 1 1 ]",
+        "02:  [ 2 1 1 1 1 1 ]",
+        "03:  [ 2 2 1 1 1 ]",
+        "04:  [ 2 2 2 1 ]",
+        "05:  [ 3 1 1 1 1 ]",
+        "06:  [ 3 2 1 1 ]",
+        "07:  [ 3 2 2 ]",
+        "08:  [ 3 3 1 ]",
+        "09:  [ 4 2 1 ]",
+        "10:  [ 4 3 ]",
+        "11:  [ 7 ]",
+        "The a(7)=11 partitions with no part (excepting the largest) repeated more than twice are the conjugates of the above respectively:",
+        "01:  [7]",
+        "02:  [6 1]",
+        "03:  [5 2]",
+        "04:  [4 3]",
+        "05:  [5 1 1]",
+        "06:  [4 2 1]",
+        "07:  [3 3 1]",
+        "08:  [3 2 2]",
+        "09:  [3 2 1 1]",
+        "10:  [2 2 2 1]",
+        "11:  [1 1 1 1 1 1 1]"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(b(n-i*j, i-1, `if`(j>0, 0, 1)), j=t..n/i)))",
+        "    end:",
+        "a:= n-> add(b(n, k, 1), k=0..n):",
+        "seq(a(n), n=0..70);  #  _Alois P. Heinz_, May 01 2013"
+    ],
+    "mathematica": [
+        "nn=53;CoefficientList[Series[1+Sum[x^k/(1-x^k)Product[1+x^i+x^(2i),{i,1,k-1}],{k,1,nn}],{x,0,nn}],x] (* _Geoffrey Critzer_, Sep 30 2013 *)",
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0, 1, If[i<1, 0, Sum[b[n-i*j, i-1, If[j>0, 0, 1]], {j, t, n/i}]]]; a[n_] := Sum[b[n, k, 1], {k, 0, n}]; Table[a[n], {n, 0, 70}] (* _Jean-Fran\u00e7ois Alcover_, Jun 19 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=66;  q = 'q + O('q^N);",
+        "Vec ( 1 + sum(k=1, N, q^k/(1-q^k) * prod(i=1,k-1, 1+q^i+q^(2*i) ) ) )",
+        "\\\\ _Joerg Arndt_, Mar 08 2014"
+    ],
+    "xref": [
+        "Sequences \"number of partitions with max diff d\": A000005 (d=0, for n>=1), A034296 (d=1), A224956 (d=2), A238863 (d=3), A238864 (d=4), A238865 (d=5), A238866 (d=6), A238867 (d=7), A238868 (d=8), A238869 (d=9), A000041 (d --> infinity)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Joerg Arndt_, Apr 21 2013",
+    "references": 10,
+    "revision": 35,
+    "time": "2018-01-09T00:46:47-05:00",
+    "created": "2013-04-21T11:42:32-04:00"
+}

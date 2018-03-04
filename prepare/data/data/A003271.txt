@@ -1,0 +1,44 @@
+{
+    "number": 3271,
+    "id": "M0531",
+    "data": "1,2,3,4,5,9,16,17,41,83,113,137,257,773,977,1657,2048,2313,4001,5725,7129,11117,17279,19897,22409,39283,43657,55457,120677,308941,314521,465089,564353,797931,1110841,1310443,1924159,2535041,3637637,6001937,8319617,9453569,10969369",
+    "name": "Smallest number that requires n iterations of the unitary totient function (A047994) to reach 1.",
+    "comment": [
+        "A049865(a(n)) = n and A049865(m) <> n for m < a(n). [_Reinhard Zumkeller_, Aug 17 2011]"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Donovan Johnson, <a href=\"/A003271/b003271.txt\">Table of n, a(n) for n = 0..66</a> (terms < 10^10)",
+        "R. K. Guy, <a href=\"/A003271/a003271.pdf\">Letter to N. J. A. Sloane, Apr 1975</a>",
+        "M. Lal, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1974-0335419-3\">Iterates of the unitary totient function</a>, Math. Comp., 28 (1974), 301-302."
+    ],
+    "mathematica": [
+        "uphi[n_ /; n <= 1] = 1; uphi[n_] := uphi[n] = (f = FactorInteger[n]; Times @@ (f[[All, 1]]^f[[All, 2]] - 1));",
+        "b[n_] := (k = 0; FixedPoint[(k++; uphi[#])&, n]; k - 1);",
+        "a[0] = 1; a[n_] := a[n] = For[an = a[n-1], True, an++, If[b[an] == n, Return[an]]];",
+        "Table[Print[\"a(\", n, \") = \", a[n]]; a[n], {n, 0, 42}] (* _Jean-Fran\u00e7ois Alcover_, Oct 05 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (elemIndex)",
+        "import Data.Maybe (fromJust)",
+        "a003271 n = a003271_list !! n",
+        "a003271_list = map ((+ 1) . fromJust . (`elemIndex` a049865_list)) [0..]",
+        "-- _Reinhard Zumkeller_, Aug 17 2011"
+    ],
+    "xref": [
+        "Cf. A047994, A049865, A225172, A225173."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _David W. Wilson_"
+    ],
+    "references": 12,
+    "revision": 37,
+    "time": "2017-10-05T17:21:48-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

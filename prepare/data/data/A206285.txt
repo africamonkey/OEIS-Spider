@@ -1,0 +1,35 @@
+{
+    "number": 206285,
+    "data": "1,2,4,5,7,8,11,13,14,15,16,17,19,21,23,25,26,29,31,32,33,34,35,37,38,39,41,43,45,47,49,51,53,55,57,58,59,61,62,63,64,65,67,69,71,73,74,75,77,78,79,82,83,84,85,86,87,89,90,91,93,94,95,97,99,101,103",
+    "name": "Numbers that match polynomials not irreducible over the nonnegative integers.",
+    "comment": [
+        "Complement of A206284."
+    ],
+    "example": [
+        "(See the example at A206284.)"
+    ],
+    "mathematica": [
+        "b[n_] := Table[x^k, {k, 0, n}];",
+        "f[n_] := f[n] = FactorInteger[n]; z = 400;",
+        "t[n_, m_, k_] := If[PrimeQ[f[n][[m, 1]]] && f[n][[m, 1]]",
+        "== Prime[k], f[n][[m, 2]], 0];",
+        "u = Table[Apply[Plus,",
+        "    Table[Table[t[n, m, k], {k, 1, PrimePi[n]}], {m, 1,",
+        "      Length[f[n]]}]], {n, 1, z}];",
+        "p[n_, x_] := u[[n]].b[-1 + Length[u[[n]]]]",
+        "Table[p[n, x], {n, 1, z/4}]",
+        "v = {}; Do[n++; If[IrreduciblePolynomialQ[p[n, x]],",
+        "AppendTo[v, n]], {n, z/2}]; v  (* A206284 *)",
+        "Complement[Range[200], v]      (* A206285 *)"
+    ],
+    "xref": [
+        "Cf. A206285, A206331."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Feb 05 2012",
+    "references": 3,
+    "revision": 8,
+    "time": "2012-03-30T18:58:12-04:00",
+    "created": "2012-02-06T11:11:27-05:00"
+}

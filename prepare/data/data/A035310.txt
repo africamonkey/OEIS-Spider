@@ -1,0 +1,64 @@
+{
+    "number": 35310,
+    "data": "1,4,12,47,170,750,3255,16010,81199,448156,2579626,15913058,102488024,698976419,4976098729",
+    "name": "Let f(n) = number of ways to factor n = A001055(n); a(n) = sum of f(k) over all terms k in A025487 that have n factors.",
+    "comment": [
+        "Ways of partitioning an n-multiset with multiplicities some partition of n."
+    ],
+    "example": [
+        "a(3) = 12 because there are 3 terms in A025487 with 3 factors, namely 8, 12, 30; and f(8)=3, f(12)=4, f(30)=5 and 3+4+5 = 12."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "g:= proc(n, k) option remember;",
+        "      `if`(n>k, 0, 1) +`if`(isprime(n), 0,",
+        "      add(`if`(d>k, 0, g(n/d, d)), d=divisors(n) minus {1, n}))",
+        "    end:",
+        "b:= proc(n, i, l)",
+        "      `if`(n=0, g(mul(ithprime(t)^l[t], t=1..nops(l))$2),",
+        "      `if`(i<1, 0, add(b(n-i*j, i-1, [l[], i$j]), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2, []):",
+        "seq(a(n), n=1..10);  # _Alois P. Heinz_, May 26 2013"
+    ],
+    "mathematica": [
+        "g[n_, k_] := g[n, k] = If[n > k, 0, 1] + If[PrimeQ[n], 0, Sum[If[d > k, 0, g[n/d, d]], {d, Divisors[n] ~Complement~ {1, n}}]]; b[n_, i_, l_] := If[n == 0, g[p = Product[Prime[t]^l[[t]], {t, 1, Length[l]}], p], If[i < 1, 0, Sum[b[n - i*j, i-1, Join[l, Array[i&, j]]], {j, 0, n/i}]]]; a[n_] := b[n, n, {}]; Table[Print[an = a[n]]; an, {n, 1, 13}] (* _Jean-Fran\u00e7ois Alcover_, Dec 12 2013, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.core.cache import cacheit",
+        "from sympy import divisors, isprime, prime",
+        "from operator import mul",
+        "@cacheit",
+        "def g(n, k): return (0 if n>k else 1) + (0 if isprime(n) else sum([0 if d>k else g(n/d, d) for d in divisors(n)[1:-1]]))",
+        "@cacheit",
+        "def b(n, i, l):",
+        "    if n==0:",
+        "        p=reduce(mul, [prime(t + 1)**l[t] for t in xrange(len(l))])",
+        "        return g(p, p)",
+        "    else: return 0 if i<1 else sum([b(n - i*j, i - 1, l + [i]*j) for j in xrange(n/i + 1)])",
+        "def a(n): return b(n, n, [])",
+        "for n in xrange(1, 11): print a(n) # _Indranil Ghosh_, Aug 19 2017, after Maple code"
+    ],
+    "xref": [
+        "Cf. A025487, A000041, A000110, A035098, A080688.",
+        "Sequence A035341 counts the ordered cases. Tables A093936 and A095705 distribute the values; e.g. 81199 = 30 + 536 + 3036 + 6181 + 10726 + 11913 + 14548 + 13082 + 21147.",
+        "Cf. A035341, A093936, A095705."
+    ],
+    "keyword": "nonn,more,nice",
+    "offset": "1,2",
+    "author": "_Alford Arnold_",
+    "ext": [
+        "More terms from _Erich Friedman_.",
+        "81199 from _Alford Arnold_, Mar 04 2008",
+        "a(10) from _Alford Arnold_, Mar 31 2008",
+        "a(10) corrected by _Alford Arnold_, Aug 07 2008",
+        "a(11)-a(13) from _Alois P. Heinz_, May 26 2013",
+        "a(14) from _Alois P. Heinz_, Sep 27 2014",
+        "a(15) from _Alois P. Heinz_, Jan 10 2015"
+    ],
+    "references": 9,
+    "revision": 30,
+    "time": "2017-08-19T12:09:27-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

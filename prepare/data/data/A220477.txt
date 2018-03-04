@@ -1,0 +1,58 @@
+{
+    "number": 220477,
+    "data": "0,0,2,5,14,23,46,71,115,174,263,371,542,756,1044,1432,1947,2605,3478,4588,6020,7863,10182,13114,16820,21480,27254,34489,43423,54491,68103,84864,105318,130408,160828,197923,242774,297141,362531,441456,536062,649695",
+    "name": "Total number of parts in all partitions of n with at least one distinct part.",
+    "comment": [
+        "Also total number of parts in all partitions of n minus the sum of divisors of n. Also sum of largest parts of all partitions of n minus the sum of divisors of n."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A220477/b220477.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A006128(n) - A000203(n).",
+        "G.f.:  Q(0)/(1-x), where Q(k)= 1 - prod(n=1..k+1, (1-x^n))/( 1 - (x^(k+1)) - x*(1- (x^(k+1)))^2*(k+2)/( x*(1- (x^(k+1)))*(k+2) - (k+1)*(1 - (x^(k+2)))*prod(n=1..k+1, (1-x^n) )/Q(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, May 16 2013"
+    ],
+    "example": [
+        "For n = 6",
+        "-----------------------------------------------------",
+        "Partitions of 6            Value",
+        "-----------------------------------------------------",
+        "6 .......................... 0  (all parts are equal)",
+        "5 + 1 ...................... 2",
+        "4 + 2 ...................... 2",
+        "4 + 1 + 1 .................. 3",
+        "3 + 3 ...................... 0  (all parts are equal)",
+        "3 + 2 + 1 .................. 3",
+        "3 + 1 + 1 + 1 .............. 4",
+        "2 + 2 + 2 .................. 0  (all parts are equal)",
+        "2 + 2 + 1 + 1 .............. 4",
+        "2 + 1 + 1 + 1 + 1 .......... 5",
+        "1 + 1 + 1 + 1 + 1 + 1 ...... 0  (all parts are equal)",
+        "-----------------------------------------------------",
+        "The sum of the values is    23",
+        "On the other hand the total number of parts of the partitions of 6 is A006128(6) = 35 and the sum of divisor of 6 is 1 + 2 + 3 + 6 = sigma(6) = A000203(6) = 12 equals the total number of parts of the partitions of 6 into equal parts. So a(6) = 35 - 12 = 23."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; local f, g;",
+        "      if n=0 or i=1 then [1, n]",
+        "    else f, g:= b(n, i-1), `if`(i>n, [0$2], b(n-i, i));",
+        "         [f[1]+g[1], f[2]+g[2] +g[1]]",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n, n)[2] -numtheory[sigma](n):",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Jan 17 2013"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[DivisorSigma[0, k]*PartitionsP[n-k], {k, 1, n}] - DivisorSigma[1, n]; Table[a[n], {n, 1, 50}] (* _Jean-Fran\u00e7ois Alcover_, Oct 22 2015 *)"
+    ],
+    "xref": [
+        "Cf. A000005, A000203, A000041, A006128, A066186, A182629, A182977, A182978."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Omar E. Pol_, Jan 16 2013",
+    "references": 5,
+    "revision": 23,
+    "time": "2015-10-22T08:35:26-04:00",
+    "created": "2013-01-18T00:24:05-05:00"
+}

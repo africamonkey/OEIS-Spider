@@ -1,0 +1,49 @@
+{
+    "number": 61715,
+    "data": "4,6,12,18,30,34,42,56,60,72,86,92,94,102,108,138,142,144,150,160,180,184,186,192,198,202,204,214,216,218,220,228,236,240,248,266,270,282,300,302,304,312,320,322,328,340,348,392,394,412,414,416,420,424,432",
+    "name": "Numbers which are sandwiched between two numbers having the same ordered canonical form.",
+    "comment": [
+        "The average of twin primes is a member. Is there ever a prime in the sequence?"
+    ],
+    "example": [
+        "34 is sandwiched between 33 and 35 which are of the form p*q where p and q are primes."
+    ],
+    "maple": [
+        "isA061715 := proc(n)",
+        "    local nm1,np1 ;",
+        "    nm1 := ifactors(n-1)[2] ;",
+        "    np1 := ifactors(n+1)[2] ;",
+        "    if nops(nm1) = nops(np1) then",
+        "        for i from 1 to nops(nm1) do",
+        "            if op(2,op(i,nm1)) <>  op(2,op(i,np1)) then",
+        "                return false;",
+        "            end if;",
+        "        end do:",
+        "        true ;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 to 300 do",
+        "    if isA061715(n)  then",
+        "        printf(\"%d,\",n);",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 18 2017"
+    ],
+    "mathematica": [
+        "f[n_] := Flatten[Table[{ # [[2]]}] & /@ FactorInteger[n]]; Drop[ Select[ Range[415], Sort[f[ # - 1]] == Sort[f[ # + 1]] & ], 1]"
+    ],
+    "xref": [
+        "Cf. A074497, A074498."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Aug 21 2002",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, Aug 22 2002"
+    ],
+    "references": 3,
+    "revision": 5,
+    "time": "2017-01-18T08:47:38-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

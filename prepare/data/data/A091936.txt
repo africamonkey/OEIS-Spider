@@ -1,0 +1,26 @@
+{
+    "number": 91936,
+    "data": "2,5,11,17,37,67,131,257,521,1033,2053,4099,8209,16417,32771,65537,133121,262147,524353,1048609,2097169,4194433,8388617,16777729,33554467,67239937,134250497,268435459,536903681,1073741827,2147483713",
+    "name": "Smallest prime between 2^n and 2^(n+1), having a minimal number of 1's in binary representation.",
+    "comment": [
+        "A091935(n) = A000120(a(n)).",
+        "So far only a(25) and a(32) possess 4 1's in their binary representation."
+    ],
+    "mathematica": [
+        "NextPrim[ n_] := Block[ {k = n + 1}, While[ !PrimeQ[ k], k++ ]; k]; p = 2; Do[ c = Infinity; While[ p < 2^n, b = Count[ IntegerDigits[ p, 2], 1]; If[ c > b, c = b; q = p]; p = NextPrim[ p]; If[ c < 4, p = NextPrim[ 2^n]; Continue[ ]]]; Print[ q], {n, 2, 32}] (* _Robert G. Wilson v_, Feb 18 2004 *)",
+        "b[ n_ ] := Min[ Select[ FromDigits[ #, 2 ] & /@ (Join[ {1}, #, {1} ] & /@ Permutations[ Join[ {1}, Table[ 0, {n - 2} ] ] ]), PrimeQ[ # ] & ] ]; c[ n_ ] := Min[ Select[ FromDigits[ #, 2 ] & /@ (Join[ {1}, #, {1} ] & /@ Permutations[ Join[ {1, 1}, Table[ 0, {n - 3} ] ] ]), PrimeQ[ # ] & ] ]; f[ n_ ] := If[ PrimeQ[ 2^n + 1 ], 2^n + 1, If[ PrimeQ[ b[ n ] ], b[ n ], c[ n ] ] ]; Table[ f[ n ], {n, 2, 32} ] (* _Robert G. Wilson v_ *)"
+    ],
+    "xref": [
+        "Cf. A091938, A019434."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Feb 14 2004",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Feb 18 2004"
+    ],
+    "references": 4,
+    "revision": 12,
+    "time": "2015-03-15T21:03:14-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

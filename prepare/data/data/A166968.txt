@@ -1,0 +1,48 @@
+{
+    "number": 166968,
+    "data": "2,8,9,24,25,32,33,48,115,116,117,118,118,140,140,141,200,212,212,213,294,294,318,318,319,319,320,320,320,524,525,525,526,526,526,527,527,528,528,1328,1329,1330,1331,1331,1332,1333,1333,1334,1334,1335,1335",
+    "name": "Minimum k such that for all m >= k there is a prime p with m < p < m * (n+1)/n.",
+    "comment": [
+        "The first term was proved by Chebyshev in 1850: for all m > 1, there is a prime number between m and 2m. It is known by Bertrand's Postulate after Joseph Bertrand, who first conjectured it in 1845, and also by Chebyshev's Theorem.",
+        "The result a(5)=25 was proved by Jitsuro Nagura in 1952.",
+        "The result a(16597)=2010760 was proved by Pierre Dusart in 1998."
+    ],
+    "link": [
+        "Eric M. Schmidt, <a href=\"/A166968/b166968.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Pierre Dusart, <a href=\"http://www.unilim.fr/laco/theses/1998/T1998_01.html\">Autour de la fonction qui compte le nombre de nombres premiers</a> (French), 1998.",
+        "Jitsuro Nagura, <a href=\"https://doi.org/10.3792/pja/1195570997\">On the interval containing at least one prime number</a>, Proc. Japan Acad. 28: 177-181, 1952.",
+        "Sondow, Jonathan and Weisstein, Eric W., Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/BertrandsPostulate.html\">Bertrand's Postulate</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Bertrand&#39;s_postulate\">Bertrand's postulate</a>"
+    ],
+    "example": [
+        "For n=4, there are no primes between 23 and 23*5/4=28.75. But, for all m >= 24, there is a prime p such that m < p < 5m/4, so a(4) = 24."
+    ],
+    "program": [
+        "(PARI) /* This function searches until it finds 10 primes between x and x*(n+1)/n */",
+        "pi_excl(y) = if(y==floor(y),primepi(y)-isprime(y),primepi(y)) /* all primes < y, primepi(y) is all primes <= y */",
+        "pbetween(x,y) = pi_excl(y) - primepi(x)",
+        "A166968(n) = {local(pr,x,r);pr=0;x=1;r=0;while(pr<10,pr=pbetween(x,x*(n+1)/n);if(pr==0,r=x+1);x=x+1);r}",
+        "(Sage)",
+        "def a_list() :",
+        "....(known_n, known_k) = (16597, 2010760)",
+        "....L = [0] * known_n",
+        "....L[known_n-1] = known_k",
+        "....for n in xrange(known_n-1,0,-1) :",
+        "........L[n-1] = 1 + next(k for k in xrange(L[n]-1,0,-1) if next_prime(k) >= k*(n+1)/n)",
+        "....return L",
+        "....end # _Eric M. Schmidt_, Oct 21 2017"
+    ],
+    "xref": [
+        "Cf. A060715, A104272."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michael B. Porter_, Oct 25 2009",
+    "ext": [
+        "Edited by _Eric M. Schmidt_, Oct 21 2017"
+    ],
+    "references": 2,
+    "revision": 9,
+    "time": "2017-10-21T21:08:03-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

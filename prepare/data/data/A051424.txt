@@ -1,0 +1,60 @@
+{
+    "number": 51424,
+    "data": "1,1,2,3,4,6,7,10,12,15,18,23,27,33,38,43,51,60,70,81,92,102,116,134,153,171,191,211,236,266,301,335,367,399,442,485,542,598,649,704,771,849,936,1023,1103,1185,1282,1407,1535,1662,1790,1917,2063,2245,2436",
+    "name": "Number of partitions of n into pairwise relatively prime parts.",
+    "reference": [
+        "E. Schmutz, Partitions whose parts are pairwise relatively prime, Discrete Math. 81 (1990), 87-89."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A051424/b051424.txt\">Table of n, a(n) for n = 0..400</a>",
+        "Temba Shonhiwa, <a href=\"http://www.fq.math.ca/Papers1/44-4/quarttemba04_2006.pdf\">Compositions with pairwise relatively prime summands within a restricted setting</a>, Fibonacci Quart. 44 (2006), no. 4, 316-323."
+    ],
+    "formula": [
+        "log a(n) ~ (2 Pi/sqrt(6)) sqrt(n/log n). - _Eric M. Schmidt_, Jul 04 2013",
+        "Apparently no formula or recurrence is known. - _N. J. A. Sloane_, Mar 05 2017"
+    ],
+    "example": [
+        "a(4) = 4 since all partitions of 4 consist of relatively prime numbers except 2+2."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n, i, s) option remember; local f;",
+        "      if n=0 or i=1 then 1",
+        "    elif i<2 then 0",
+        "    else f:= factorset(i);",
+        "         b(n, i-1, select(x->is(x<i), s))+`if`(i<=n and f intersect s={},",
+        "         b(n-i, i-1, select(x->is(x<i), s union f)), 0)",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n, n, {}):",
+        "seq(a(n), n=0..80);  # _Alois P. Heinz_, Mar 14 2012"
+    ],
+    "mathematica": [
+        "b[n_, i_, s_] := b[n, i, s] = Module[{f}, If[n == 0 || i == 1, 1, If[i < 2, 0, f = FactorInteger[i][[All, 1]]; b[n, i-1, Select[s, # < i &]] + If[i <= n && f ~Intersection~ s == {}, b[n-i, i-1, Select[s ~Union~ f, # < i &]], 0]]]]; a[n_] := b[n, n, {}]; Table[a[n], {n, 0, 54}] (* _Jean-Fran\u00e7ois Alcover_, Oct 03 2013, translated from Maple, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a051424 = length . filter f . partitions where",
+        "   f [] = True",
+        "   f (p:ps) = (all (== 1) $ map (gcd p) ps) && f ps",
+        "   partitions n = ps 1 n where",
+        "     ps x 0 = [[]]",
+        "     ps x y = [t:ts | t <- [x..y], ts <- ps t (y - t)]",
+        "-- _Reinhard Zumkeller_, Dec 16 2013"
+    ],
+    "xref": [
+        "Number of partitions of n into relatively prime parts = A000837.",
+        "Cf. A007359, A007360.",
+        "Row sums of A282749."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Hugo van der Sanden_",
+    "ext": [
+        "More precise definition from _Vladeta Jovovic_, Dec 11 2004"
+    ],
+    "references": 10,
+    "revision": 31,
+    "time": "2017-10-07T01:15:50-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

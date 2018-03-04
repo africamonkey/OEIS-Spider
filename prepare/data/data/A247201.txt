@@ -1,0 +1,35 @@
+{
+    "number": 247201,
+    "data": "1,10,41,73,100,793,1000,7993,9100,9320,10000,73000,79993,100000,340000,735221,799993,1000000,3070000,7999993,9382711,9910000,10000000,73000000,79000000,79999993,100000000,361300000,799999993,1000000000,1281010000",
+    "name": "Numbers n whose reversal divides n+1.",
+    "comment": [
+        "Similar to A160946.",
+        "Sequence is infinite because any number of the form 10^k, for k integer, belongs to the sequence. In fact Rev(10^k)=1 and (10^k + 1) / 1 = 10^k + 1. Also concat(7,9\u20269,3) = 73, 793, 7993, 79993, etc. is part of the sequence: Rev(concat(7,9\u20269,3)) = concat(3,9\u20269,7) and concat(7,9\u20269,4) / concat(3,9\u20269,7) = 2."
+    ],
+    "example": [
+        "Rev(1) = 1 and 2 / 1 = 2.",
+        "Rev(10) = 1 and 11 /1 = 11.",
+        "Rev(41) = 14 and 42 / 14 = 3.",
+        "Rev(73) = 37 and 74 / 37 = 2. Etc."
+    ],
+    "maple": [
+        "with(numtheory): T:=proc(w) local x, y, z; x:=0; y:=w;",
+        "for z from 1 to ilog10(w)+1 do x:=10*x+(y mod 10); y:=trunc(y/10); od; x; end;",
+        "P:=proc(q) local n; for n from 1 to q do if type((n+1)/T(n),integer)",
+        "then print(n); fi; od; end: P(10^9);"
+    ],
+    "program": [
+        "(PARI) rev(n)=s=\"\";for(i=1,#(d=digits(n)),s=concat(d[i],s));eval(s)",
+        "for(n=1,10^5,if(!((n+1)%rev(n)),print1(n,\", \"))) \\\\ _Derek Orr_, Nov 26 2014"
+    ],
+    "xref": [
+        "Cf. A160946."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Nov 25 2014",
+    "references": 2,
+    "revision": 13,
+    "time": "2014-11-26T22:40:02-05:00",
+    "created": "2014-11-26T22:40:02-05:00"
+}

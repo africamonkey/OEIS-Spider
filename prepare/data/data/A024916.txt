@@ -1,0 +1,64 @@
+{
+    "number": 24916,
+    "data": "1,4,8,15,21,33,41,56,69,87,99,127,141,165,189,220,238,277,297,339,371,407,431,491,522,564,604,660,690,762,794,857,905,959,1007,1098,1136,1196,1252,1342,1384,1480,1524,1608,1686,1758,1806,1930,1987,2080,2152",
+    "name": "a(n) = Sum_{k=1..n} k*floor(n/k); also Sum_{k=1..n} sigma(k) where sigma(n) = sum of divisors of n (A000203).",
+    "comment": [
+        "Row sums of triangle A130541. E.g., a(5) = 15 = (10 + 3 + 1 + 1), sum of row 4 terms of triangle A130541. - _Gary W. Adamson_, Jun 03 2007",
+        "Row sums of triangle A134867. - _Gary W. Adamson_, Nov 14 2007",
+        "a(10^4) = 82256014, a(10^5) = 8224740835, a(10^6) = 822468118437, a(10^7) = 82246711794796; see A072692. - _M. F. Hasler_, Nov 22 2007",
+        "Equals row sums of triangle A158905. - _Gary W. Adamson_, Mar 29 2009",
+        "n is prime if and only if a(n) - a(n-1) - 1 =  n. - _Omar E. Pol_, Dec 31 2012",
+        "Also the alternating row sums of A236104. - _Omar E. Pol_, Jul 21 2014",
+        "a(n) is also the total number of parts in all partitions of the positive integers <= n into equal parts. - _Omar E. Pol_, Apr 30 2017",
+        "a(n) is also the total area of the terraces of the step pyramid with n levels described in A245092. - _Omar E. Pol_, Nov 04 2017"
+    ],
+    "reference": [
+        "Hardy and Wright, \"An introduction to the theory of numbers\", Oxford University Press, fifth edition, p. 266."
+    ],
+    "link": [
+        "Daniel Mondot, <a href=\"/A024916/b024916.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from T. D. Noe)",
+        "P. L. Patodia (pannalal(AT)usa.net), <a href=\"/A072692/a072692.txt\">PARI program for A072692 and A024916</a>",
+        "Peter Polm, <a href=\"http://bigintegers.blogspot.com/2014/07/sum-of-all-divisors-of-all-positive.html\">C# program for A024916</a>",
+        "A. Walfisz, <a href=\"http://dx.doi.org/10.1002/zamm.19640441217\">Weylsche Exponentialsummen in der neueren Zahlentheorie</a>, ZAMM - Journal of Applied Mathematics and Mechanics / Zeitschrift f\u00fcr Angewandte Mathematik und Mechanik, Volume 44, Issue 12, page 607, 1964."
+    ],
+    "formula": [
+        "a(n) = n^2 - A004125(n); asymptotically a(n) = n^2*Pi^2/12 + O(n*Log(n)). - _Benoit Cloitre_, Apr 28 2002",
+        "G.f.: (1/(1-x))*Sum_{k>=1} x^k/(1-x^k)^2. - _Benoit Cloitre_, Apr 23 2003",
+        "a(n) = Sum_{m=1..n} (n - (n mod m)). - _Roger L. Bagula_ and _Gary W. Adamson_, Oct 06 2006",
+        "a(n) = n^2*Pi^2/12 + O(n*log(n)^(2/3)) [Walfisz]. - _Charles R Greathouse IV_, Jun 19 2012",
+        "a(n) = A000217(n) + A153485(n). - _Omar E. Pol_, Jan 28 2014",
+        "a(n) = A000292(n) - A076664(n), n > 0. - _Omar E. Pol_, Feb 11 2014",
+        "a(n) = A078471(n) + A271342(n). - _Omar E. Pol_, Apr 08 2016"
+    ],
+    "maple": [
+        "A024916 := proc(n)",
+        "    add(numtheory[sigma](k),k=0..n) ;",
+        "end proc: # _Zerinvary Lajos_, Jan 11 2009"
+    ],
+    "mathematica": [
+        "Table[Plus @@ Flatten[Divisors[Range[n]]], {n, 50}] (* _Alonso del Arte_, Mar 06 2006 *)",
+        "Table[Sum[n - Mod[n, m], {m, n}], {n, 50}] (* _Roger L. Bagula_ and _Gary W. Adamson_, Oct 06 2006 *)",
+        "a[n_] := Sum[DivisorSigma[1, k], {k, n}]; Table[a[n], {n, 51}] (* _Jean-Fran\u00e7ois Alcover_, Dec 16 2011 *)",
+        "Accumulate[DivisorSigma[1,Range[60]]] (* _Harvey P. Dale_, Mar 13 2014 *)"
+    ],
+    "program": [
+        "(PARI) A024916(n)=sum(k=1,n,n\\k*k) \\\\ _M. F. Hasler_, Nov 22 2007",
+        "(PARI) A024916(z) = { my(s,u,d,n,a,p); s = z*z; u = sqrtint(z); p = 2; for(d=1, u, n = z\\d - z\\(d+1); if(n<=1, p=d; break(), a = z%d; s -= (2*a+(n-1)*d)*n/2); ); u = z\\p; for(d=2, u, s -= z%d); return(s); } \\\\ See the link for a nicely formatted version. - P. L. Patodia (pannalal(AT)usa.net), Jan 11 2008",
+        "(PARI) A024916(n)={my(s=0,d=1,q=n);while(d<q,s+=q*(q+1+2*d)\\2;d++;q=n\\d;);return(s-d*(d-1)\\2*d+q*(q+1)\\2);} \\\\ _Peter Polm_, Aug 18 2014",
+        "(PARI) A024916(n)={ my(s=n^2, r=sqrtint(n), nd=n, D); for(d=1, r, (1>=D=nd-nd=n\\(d+1)) && (r=d-1) && break; s -= n%d*D+(D-1)*D\\2*d); s - sum(d=2, n\\(r+1), n%d)} \\\\ Slightly optimized version of Patodia's code. - _M. F. Hasler_, Apr 18 2015",
+        "(C#) See Polm link.",
+        "(Haskell)",
+        "a024916 n = sum $ map (\\k -> k * div n k) [1..n]",
+        "-- _Reinhard Zumkeller_, Apr 20 2015"
+    ],
+    "xref": [
+        "Cf. A056550, A104471(2*n-1, n), A123229, A130541, A000217, A134867, A072692, A158905."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_",
+    "references": 105,
+    "revision": 128,
+    "time": "2017-11-07T10:24:57-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

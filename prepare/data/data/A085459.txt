@@ -1,0 +1,36 @@
+{
+    "number": 85459,
+    "data": "3,9,10,20,27,40,50,80,81,100,160,200,243,250,320,400,500,640,729,800,1000,1250,1280,1600,2000,2187,2500,2560,3200,4000,5000,5120,6250,6400,6561,8000,10000,10240,12500,12800,16000,19683,20000,20480,25000,25600",
+    "name": "Numbers k such that k-th cyclotomic polynomial has exactly 3 positive coefficients.",
+    "comment": [
+        "Sequence appears to consist of 3^i, i > 0; and 2^i*5^j, i, j > 0. Are there any other terms? - _David Wasserman_, Feb 01 2005",
+        "It appears they are the solutions of the equation x = phi(x)/2 + phi(2*x). - _Paolo P. Lava_, Oct 26 2017"
+    ],
+    "example": [
+        "9 is a member because the 9th cyclotomic polynomial is P(x) = x^6+x^3+1."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(n) local x;",
+        "if nops(select(x->x>0,[coeffs(cyclotomic(n,x))]))=3 then n; fi;",
+        "end: seq(P(j),j=1..25600); # _Paolo P. Lava_, Oct 26 2017"
+    ],
+    "mathematica": [
+        "Select[Range@ 5000, Count[CoefficientList[Cyclotomic[#, x], x], _?(# > 0 &)] == 3 &] (* _Michael De Vlieger_, Oct 26 2017 *)"
+    ],
+    "program": [
+        "(PARI) n = 0; while (1, n++; p = polcyclo(n, x); d = poldegree(p); c = 0; i = 0; while (c < 4 && i <= d, if (polcoeff(p, i) > 0, c++); i++); if (c == 3, print(n))); \\\\ _David Wasserman_, Feb 01 2005"
+    ],
+    "xref": [
+        "Cf. A065119, A086765."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "Yuval Dekel (dekelyuval(AT)hotmail.com), Aug 14 2003",
+    "ext": [
+        "More terms from _David Wasserman_, Feb 01 2005"
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2017-10-27T02:25:01-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

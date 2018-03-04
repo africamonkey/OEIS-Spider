@@ -1,0 +1,36 @@
+{
+    "number": 1103,
+    "data": "1,2,3,4,5,6,7,8,9,11,15,24,36,115,175,212,624,735,816,1115,1184,1197,1416,2144,3171,3276,3915,6624,7119,8832,9612,11133,11212,11331,12128,12216,12768,13131,21184,21728,24912,31113,31488,32172,32616,35175",
+    "name": "Numbers n such that (n / product of digits of n) is 1 or a prime.",
+    "link": [
+        "Klaus Brockhaus, <a href=\"/A001103/b001103.txt\">Table of n, a(n) for n = 1..448</a> (terms < 10^8)"
+    ],
+    "maple": [
+        "P:=proc(n) local a; a:=convert(convert(n,base,10),`*`);",
+        "if a>0 then a:=n/a;if frac(a)=0 then if isprime(a) then n;",
+        "fi; fi; fi; end: seq(P(i),i=1..10^5); # _Paolo P. Lava_, Feb 05 2018"
+    ],
+    "mathematica": [
+        "okQ[n_] := Block[{p = Times @@ IntegerDigits[n]}, n == p || PrimeQ[n/p]]; Select[ Range[36000], okQ]"
+    ],
+    "program": [
+        "(MAGMA) IsA001103:=func< n | p ne 0 and n mod p eq 0 and (q eq 1 or IsPrime(q)) where q is (p eq 0 select 0 else n div p) where p is &*Intseq(n) >; [ n: n in [1..40000] | IsA001103(n) ]; // _Klaus Brockhaus_, Jan 24 2011",
+        "(Haskell)",
+        "a001103 n = a001103_list !! (n-1)",
+        "a001103_list = filter f a052382_list where",
+        "   f x = m == 0 && (x' == 1 || a010051 x' == 1) where",
+        "       (x',m) = divMod x $ a007954 x",
+        "-- _Reinhard Zumkeller_, Nov 02 2011"
+    ],
+    "xref": [
+        "Cf. A007954, A066577.",
+        "Cf. A052382, A010051, A007602, A188642."
+    ],
+    "keyword": "nonn,base,easy,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Bill Moran (moran1(AT)llnl.gov)",
+    "references": 2,
+    "revision": 28,
+    "time": "2018-02-05T09:37:05-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

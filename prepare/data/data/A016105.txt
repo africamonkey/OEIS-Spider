@@ -1,0 +1,55 @@
+{
+    "number": 16105,
+    "data": "21,33,57,69,77,93,129,133,141,161,177,201,209,213,217,237,249,253,301,309,321,329,341,381,393,413,417,437,453,469,473,489,497,501,517,537,553,573,581,589,597,633,649,669,681,713,717,721,737,749,753,781,789",
+    "name": "Blum integers: numbers of the form p * q where p and q are distinct primes congruent to 3 (mod 4).",
+    "comment": [
+        "Subsequence of A084109. - _Ralf Stephan_ and _David W. Wilson_, Apr 17 2005",
+        "Subsequence of A046388. - _Altug Alkan_, Dec 10 2015"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A016105/b016105.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Joe Hurd, <a href=\"http://www.gilith.com/research/talks/cambridge1997.pdf\">Blum Integers</a>, Talk at the Trinity College, Jan 20 1997.",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Blum_integer\">Blum integer</a>"
+    ],
+    "formula": [
+        "a(n) = A195758(n) * A195759(n). - _Reinhard Zumkeller_, Sep 23 2011"
+    ],
+    "maple": [
+        "N:= 10000: # to get all terms <= N",
+        "Primes:= select(isprime, [seq(i,i=3..N/3,4)]):",
+        "S:=select(`<=`,{seq(seq(Primes[i]*Primes[j],i=1..j-1),j=2..nops(Primes))},N):",
+        "sort(convert(S,list)); # _Robert Israel_, Dec 11 2015"
+    ],
+    "mathematica": [
+        "With[{upto = 820}, Select[Union[Times@@@Subsets[ Select[Prime[Range[ PrimePi[ NextPrime[upto/3]]]], Mod[#, 4] == 3 &], {2}]], # <= upto &]] (* _Harvey P. Dale_, Aug 19 2011 *)",
+        "Select[4Range[5, 197] + 1, PrimeNu[#] == 2 && MoebiusMu[#] == 1 && Mod[FactorInteger[#][[1, 1]], 4] != 1 &] (* _Alonso del Arte_, Nov 18 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, fromList, deleteFindMin, union)",
+        "a016105 n = a016105_list !! (n-1)",
+        "a016105_list = f [3,7] (drop 2 a002145_list) 21 (singleton 21) where",
+        "   f qs (p:p':ps) t s",
+        "     | m < t     = m : f qs (p:p':ps) t s'",
+        "     | otherwise = m : f (p:qs) (p':ps) t' (s' `union` (fromList pqs))",
+        "     where (m,s') = deleteFindMin s",
+        "           t' = head $ dropWhile (> 3*p') pqs",
+        "           pqs = map (p *) qs",
+        "-- _Reinhard Zumkeller_, Sep 23 2011",
+        "(Perl) use ntheory \":all\"; forcomposites { say if ($_ % 4) == 1 && is_square_free($_) && scalar(factor($_)) == 2 && !scalar(grep { ($_ % 4) != 3 } factor($_)); } 10000; # _Dana Jacobsen_, Dec 10 2015",
+        "(PARI) list(lim)=my(P=List(),v=List(),t,p); forprime(p=2,lim\\3, if(p%4==3, listput(P,p))); for(i=2,#P, p=P[i]; for(j=1,i-1, t=p*P[j]; if(t>lim, break); listput(v,t))); Set(v) \\\\ _Charles R Greathouse IV_, Jul 01 2016"
+    ],
+    "xref": [
+        "Cf. A002145, A006881, A046388."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_",
+    "ext": [
+        "More terms from _Erich Friedman_"
+    ],
+    "references": 8,
+    "revision": 43,
+    "time": "2017-02-27T09:53:02-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

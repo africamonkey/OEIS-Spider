@@ -1,0 +1,48 @@
+{
+    "number": 258901,
+    "data": "1,24,32256,285272064,8967114326016,735868743566229504,130778914961055994085376,44390350317502907443360825344,26290393222157669992962395876622336,25377887922329300948014930852183837507584,37855568618678541873143615775486954119570128896",
+    "name": "E.g.f. satisfies: A(x) = Integral 1 + A(x)^4 dx.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A258901/b258901.txt\">Table of n, a(n) for n = 0..112</a>",
+        "Guo-Niu Han, Jing-Yi Liu, <a href=\"https://arxiv.org/abs/1707.08882\">Divisibility properties of the tangent numbers and its generalizations</a>, arXiv:1707.08882 [math.CO], 2017. See Table for k = 4 p. 8."
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A(x) = Series_Reversion( Integral 1/(1+x^4) dx ).",
+        "(2) A(x) = sqrt( tan( 2 * Integral A(x) dx ) ).",
+        "Let C(x) = S'(x) such that S(x) = Series_Reversion( Integral 1/(1-x^4)^(1/4) dx ) is the e.g.f. of A258900, then e.g.f. A(x) of this sequence satisfies:",
+        "(3) A(x) = S(x)/C(x),",
+        "(4) A(x) = Integral 1/C(x)^4 dx,",
+        "(5) A(x)^2 = S(x)^2/C(x)^2 = tan( 2 * Integral S(x)/C(x) dx ).",
+        "a(n) ~ 2^(6*n + 14/3) * (4*n)! * n^(1/3) / (3^(1/3) * Gamma(1/3) * Pi^(4*n + 4/3)). - _Vaclav Kotesovec_, Jun 18 2015"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 24*x^5/5! + 32256*x^9/9! + 285272064*x^13/13! + 8967114326016*x^17/17! + 735868743566229504*x^21/21! +...",
+        "where Series_Reversion(A(x)) = x - x^5/5 + x^9/9 - x^13/13 + x^17/17 +...",
+        "Also, A(x) = S(x)/C(x) where",
+        "S(x) = x - 6*x^5/5! - 1764*x^9/9! - 7700616*x^13/13! - 147910405104*x^17/17! - 8310698364852576*x^21/21! +...+ A258900(n)*x^(4*n+1)/(4*n+1)! +...",
+        "C(x) = 1 - 6*x^4/4! - 1764*x^8/8! - 7700616*x^12/12! - 147910405104*x^16/16! - 8310698364852576*x^20/20! +...+ A258900(n)*x^(4*n)/(4*n)! +...",
+        "such that C(x)^4 + S(x)^4 = 1."
+    ],
+    "mathematica": [
+        "nmax=20; Table[CoefficientList[InverseSeries[Series[Integrate[1/(1+x^4),x],{x,0,4*nmax+1}],x],x][[4*n-2]] * (4*n-3)!, {n,1,nmax+1}] (* _Vaclav Kotesovec_, Jun 18 2015 *)"
+    ],
+    "program": [
+        "(PARI) /* E.g.f. Series_Reversion( Integral 1/(1+x^4) dx ): */",
+        "{a(n) = local(A=x); A = serreverse( intformal( 1/(1 + x^4 + O(x^(4*n+2))) ) ); (4*n+1)!*polcoeff(A,4*n+1)}",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(PARI) /* E.g.f. A(x) = Integral 1 + A(x)^4 dx.: */",
+        "{a(n) = local(A=x); for(i=1,n+1, A = intformal( 1 + A^4 + O(x^(4*n+2)) )); (4*n+1)!*polcoeff(A,4*n+1)}",
+        "for(n=0,20,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A000182, A000831, A258900, A258880, A258925, A258927, A259112, A259113, A258970."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jun 14 2015",
+    "references": 10,
+    "revision": 29,
+    "time": "2017-07-28T13:43:53-04:00",
+    "created": "2015-06-14T16:04:39-04:00"
+}

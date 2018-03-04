@@ -1,0 +1,72 @@
+{
+    "number": 9003,
+    "data": "5,10,13,15,17,20,25,26,29,30,34,35,37,39,40,41,45,50,51,52,53,55,58,60,61,65,68,70,73,74,75,78,80,82,85,87,89,90,91,95,97,100,101,102,104,105,106,109,110,111,113,115,116,117,119,120,122,123,125,130,135,136,137,140",
+    "name": "Hypotenuse numbers (squares are sums of 2 nonzero squares).",
+    "comment": [
+        "Multiples of Pythagorean primes A002144 or of primitive Pythagorean triangles' hypotenuses A008846. - _Lekraj Beedassy_, Nov 12 2003",
+        "It appears that this is exactly the sequence of positive integers with at least one prime divisor of the form 4k + 1. (This has been verified for all terms less than or equal to 500.) Compare A072592. - _John W. Layman_, Mar 12 2008",
+        "The conjecture by Layman is correct. It is well known that the hypotenuses of primitive Pythagorean triples are precisely those numbers with all prime divisors of the form 4k + 1. - _Franklin T. Adams-Watters_, Apr 26 2009",
+        "Circumradius R of the triangles such that the area, the sides and R are integers. - _Michel Lagneau_, Mar 03 2012",
+        "The 2 squares summing to a(n)^2 cannot be equal because sqrt(2) is not rational. - _Jean-Christophe Herv\u00e9_, Nov 10 2013",
+        "Closed under multiplication. The primitive elements are those with exactly one prime divisor of the form 4k + 1 with multiplicity one, which are also those for which there exists a unique integer triangle = A084645. - _Jean-Christophe Herv\u00e9_, Nov 11 2013",
+        "a(n) are numbers whose square is the mean of two distinct nonzero squares. This creates 1-to-1 mapping between a Pythagorean triple and a \"Mean\" triple. If the Pythagorean triple is written, abnormally, as {j, k, h} where j^2 +(j+k)^2 = h^2, and h = a(n), then the corresponding \"Mean\" triple with the same h is {k, 2j, h} where (k^2 + (k+2j)^2)/2 = h^2. For example for h = 5, the Pythagorean triple is {3, 1, 5} and the Mean triple is {1, 6, 5}. - _Richard R. Forberg_, Mar 01 2015",
+        "Integral side lengths of rhombuses with integral diagonals p and q (therefore also with integral areas A because A = pq/2 is some multiple of 24). No such rhombuses are squares. - _Rick L. Shepherd_, Apr 09 2017"
+    ],
+    "reference": [
+        "S. R. Finch, Mathematical Constants, Cambridge, 2003, pp. 98-104."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A009003/b009003.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "R. Chapman, <a href=\"http://empslocal.ex.ac.uk/people/staff/rjchapma/courses/nt13/sumsquares.pdf\">Pythagorean triples and sums of squares</a>",
+        "S. R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/constant/lr/lr.html\">Landau-Ramanujan Constant</a>",
+        "Ron Knott, <a href=\"http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Pythag/pythag.html\">Pythagorean Triples and Online Calculators</a>",
+        "J. Pahikkala, <a href=\"http://dx.doi.org/10.4171/EM/141\">On contraharmonic mean and Pythagorean triples</a>, Elemente der Mathematik, 65:2 (2010), 62-67.",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of squares</a>"
+    ],
+    "formula": [
+        "A005089(a(n)) > 0. - _Reinhard Zumkeller_, Jan 07 2013"
+    ],
+    "maple": [
+        "isA009003 := proc(n)",
+        "    local p;",
+        "    for p in numtheory[factorset](n) do",
+        "        if modp(p,4) = 1 then",
+        "            return true;",
+        "        end if;",
+        "    end do:",
+        "    false;",
+        "end proc:",
+        "for n from 1 to 200 do",
+        "    if isA009003(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Nov 17 2014"
+    ],
+    "mathematica": [
+        "f[n_] := Module[{k = 1}, While[(n - k^2)^(1/2) != IntegerPart[(n - k^2)^(1/2)], k++; If[2 * k^2 >= n, k = 0; Break[]]]; k]; A009003 = {}; Do[If[f[n^2] > 0, AppendTo[A009003, n]], {n, 3, 100}]; A009003 (* _Vladimir Joseph Stephan Orlovsky_, Jun 15 2009 *)",
+        "Select[Range[200], Length[PowersRepresentations[#^2, 2, 2]] > 1 &] (* _Alonso del Arte_, Feb 11 2014 *)"
+    ],
+    "program": [
+        "(PARI) is_A009003(n)=setsearch(Set(factor(n)[,1]%4),1)  \\\\ _M. F. Hasler_, May 27 2012",
+        "(Haskell)",
+        "import Data.List (findIndices)",
+        "a009003 n = a009003_list !! (n-1)",
+        "a009003_list = map (+ 1) $ findIndices (> 0) a005089_list",
+        "-- _Reinhard Zumkeller_, Jan 07 2013"
+    ],
+    "xref": [
+        "Cf. A009000, A024507, A004431, A072592, A004613, A187811.",
+        "Complement of A004144. Primes in this sequence give A002144. Same as A146984 (integer contraharmonic means) as sets - see Pahikkala 2010, Theorem 5.",
+        "Cf. A083025, A084645 (primitive elements), A084646, A084647, A084648, A084649, A006339."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "Definition edited by _Jean-Christophe Herv\u00e9_, Nov 10 2013"
+    ],
+    "references": 52,
+    "revision": 89,
+    "time": "2017-04-10T12:40:58-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

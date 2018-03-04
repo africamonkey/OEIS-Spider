@@ -1,0 +1,58 @@
+{
+    "number": 270123,
+    "data": "19,43,47,59,67,71,79,83,103,107,131,139,151,163,167,179,191,199,211,223,227,239,251,263,271,283,311,331,347,359,367,379,383,419,431,439,443,463,467,479,487,491,499",
+    "name": "Primes p such that p is equivalent to 3 modulo 4, p is neither 11 nor 23, and p is not a generalized repunit prime (i.e., p cannot be written as (q^t-1)/(q-1) for any prime-power q).",
+    "comment": [
+        "The numbers in this sequence are called zeta-primes, and they exactly identify when (for n > 4) the set of maximal subgroups of even order fail to cover Alt(n). This is proved in the reference below."
+    ],
+    "link": [
+        "B. J. Benesh, D. C. Ernst, and N. Sieben <a href=\"http://arxiv.org/abs/1508.03419\">Impartial avoidance and achievement games for generating symmetric and alternating groups</a>, arXiv:1508.03419 [math.CO], 2015.",
+        "H. Dubner, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1993-1185243-9\">Generalized repunit primes</a>, Math. Comp., 61 (1993), 927-930."
+    ],
+    "program": [
+        "(GAP)",
+        "# Primes is a list of the 168 primes below 1000.",
+        "primeList:=[];",
+        "primeList:=ShallowCopy(Primes);",
+        "# Remove {3} and {11,23}, which are in the 2nd, 5th, and 9th positions, respectively.",
+        "Remove(primeList,9);",
+        "Remove(primeList,5);",
+        "Remove(primeList,2);",
+        "# Remove anything that is not 3 mod 4.",
+        "primeList:=Filtered(primeList,p->p mod 4 = 3);",
+        "# This generates all repunits so that we may remove them from the list of primes.",
+        "repunitList:=[];",
+        "for q in [2..1000] do",
+        "if IsPrimePowerInt(q) then",
+        "n:=1;",
+        "x:=(q^n-1)/(q-1);",
+        "while  x < 1000 do",
+        "Add(repunitList,x);",
+        "n:=n+1;",
+        "x:=(q^n-1)/(q-1);",
+        "od;",
+        "fi;",
+        "od;",
+        "# Remove repunits from filtered prime list to produce list of zeta-primes",
+        "getZeta:=function()",
+        "local zlist,p;",
+        "zlist:=[];",
+        "for p in primeList do",
+        "if not p in repunitList then",
+        "Add(zlist,p);",
+        "fi;",
+        "od;",
+        "return zlist;",
+        "end;"
+    ],
+    "xref": [
+        "Subsequence of A002145, A028491 gives examples of generalized repunit primes."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bret Benesh_, Mar 11 2016",
+    "references": 0,
+    "revision": 20,
+    "time": "2017-07-16T14:39:55-04:00",
+    "created": "2016-03-15T05:13:05-04:00"
+}

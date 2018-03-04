@@ -1,0 +1,48 @@
+{
+    "number": 154951,
+    "data": "0,1,1,2,3,4,4,5,6,6,7,8,9,9,10,10,11,12,13,13,14,15,15,16,16,17,18,19,19,20,21,22,22,23,24,24,25,25,26,27,28,28,29,29,30,31,32,32,33,34,35,35,36,37,37,38,38,39,40,41,41,42,43,43,44,44,45,46,47,47",
+    "name": "Found by taking the tree defined by the Hofstadter H-sequence (A005374), mirroring it left to right and relabeling the nodes so they increase left to right. a(n) is the parent node of node n in the tree so constructed.",
+    "reference": [
+        "D. R. Hofstadter, Goedel, Escher, Bach: an Eternal Golden Braid, Basic Books, 1999, p. 137."
+    ],
+    "link": [
+        "David Fifield <a href=\"/A154951/b154951.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "program": [
+        "(Python) # Emulate a breadth-first traversal of the \"flip\"",
+        "# of the tree defined by the Hofstadter H-sequence.",
+        ".def hflip_iter():",
+        "....yield 0",
+        "....yield 1",
+        "....# Start on the first node of a left branch, parent node is 1.",
+        "....queue = [(1, 1)]",
+        "....n = 2",
+        "....while True:",
+        "........parent, state = queue.pop(0)",
+        "........yield parent",
+        "........if state == 0:",
+        "............# Root node. Add the two children.",
+        "............queue.append((n, 1))",
+        "............queue.append((n, 0))",
+        "........elif state == 1:",
+        "............# First node on left branch. Add the second node.",
+        "............queue.append((n, 2))",
+        "........elif state == 2:",
+        "............# Second node on left branch. Add a new root.",
+        "............queue.append((n, 0))",
+        "........n += 1",
+        ".i = hflip_iter()",
+        ".for n in range(0, 10001):",
+        "....print \"%d %d\" % (n, i.next())"
+    ],
+    "xref": [
+        "Cf. A005374, A123070."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "David Fifield (david(AT)bamsoftware.com), Jan 17 2009",
+    "references": 1,
+    "revision": 4,
+    "time": "2016-08-28T18:18:36-04:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

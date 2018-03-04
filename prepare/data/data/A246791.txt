@@ -1,0 +1,35 @@
+{
+    "number": 246791,
+    "data": "1,4,15,136,2128,15453,479403,1184231,10975072,27112368,175600366,2304656281,14896902677,59331462112",
+    "name": "Smallest number m such that for 0 <= k < n, np(m+k) = np(m)+k, where np(t) is number of primes p with prime(t) < p < prime(t)^(1 + 1/t).",
+    "comment": [
+        "np(m) = A182134(m).",
+        "According to the definition, numbers np(a(n)), np(a(n)+1), ..., np(a(n)+n-2), np(a(n)+n-1) are n consecutive numbers in ascending order.",
+        "a(15) > 10^12. - _Robert Price_, Nov 19 2014",
+        "See A247116 for the corresponding values of np."
+    ],
+    "example": [
+        "a(8) = 1184231 since np(1184231) = 17, np(1184231+1) = 18, ..., np(1184231+6) = 23, np(1184231+7) = 24 are 8 consecutive numbers and 1184231 is the smallest number with this property."
+    ],
+    "mathematica": [
+        "np[n_] := np[n] = Length[Select[Range[Prime[n]+1, Prime[n]^(1 + 1/n)], PrimeQ]]; a[1]=1; a[n_] := a[n] = (For[m = a[n-1], c = Table[np[m+k], {k,0,n-1}]; c != Range[Min[c], Max[c]], m++]; m); Do[Print[a[n]],{n, 8}]"
+    ],
+    "program": [
+        "(PARI) np(t) = primepi(prime(t)^(1 + 1/t)) - t;",
+        "ok(m, n) = {for (k=0, n-1, if (np(m+k) != np(m)+k, return(0));); return (1);}",
+        "a(n) = {m = 1; while (! ok(m, n), m++); m;} \\\\ _Michel Marcus_, Nov 25 2014"
+    ],
+    "xref": [
+        "Cf. A000040, A182134, A246792, A247116."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Farideh Firoozbakht_, Oct 16 2014",
+    "ext": [
+        "a(9)-a(14) from _Robert Price_, Nov 19 2014"
+    ],
+    "references": 2,
+    "revision": 23,
+    "time": "2014-11-25T10:03:38-05:00",
+    "created": "2014-10-17T23:45:51-04:00"
+}

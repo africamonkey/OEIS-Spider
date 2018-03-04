@@ -1,0 +1,50 @@
+{
+    "number": 29804,
+    "data": "0,1,2,3,4,5,6,7,9,121,292,333,373,414,585,3663,8778,13131,13331,26462,26662,30103,30303,207702,628826,660066,1496941,1935391,1970791,4198914,55366355,130535031,532898235,719848917,799535997,1820330281",
+    "name": "Numbers that are palindromic in bases 8 and 10.",
+    "comment": [
+        "Intersection of A002113 and A029803. - _Michel Marcus_, Nov 20 2014"
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A029804/b029804.txt\">Table of n, a(n) for n = 1..75</a>",
+        "P. De Geest, <a href=\"http://www.worldofnumbers.com/nobase10.htm\">Palindromic numbers beyond base 10</a>",
+        "Rick Regan, <a href=\"http://www.exploringbinary.com/finding-numbers-that-are-palindromic-in-multiple-bases/\">Code to generate this sequence</a>"
+    ],
+    "mathematica": [
+        "b1=8; b2=10; lst={}; Do[d1=IntegerDigits[n, b1];d2=IntegerDigits[n,b2]; If[d1==Reverse[d1]&&d2==Reverse[d2], AppendTo[lst, n]], {n, 0, 100000}]; lst (* _Vincenzo Librandi_, Nov 13 2014 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = (n==0) || ((d10=digits(n, 10)) && (d10==Vecrev(d10)) && (d8=digits(n, 8)) && (d8==Vecrev(d8))); \\\\ _Michel Marcus_, Nov 13 2014",
+        "(PARI) ispal(n,r) = my(d=digits(n,r)); d==Vecrev(d);",
+        "for(n=0,10^7,if(ispal(n,10)&&ispal(n,8),print1(n,\", \"))); \\\\ _Joerg Arndt_, Nov 22 2014",
+        "(MAGMA) [n: n in [0..10000000] | Intseq(n, 10) eq Reverse(Intseq(n, 10))and Intseq(n, 8) eq Reverse(Intseq(n, 8))]; // _Vincenzo Librandi_, Nov 23 2014",
+        "(Python)",
+        "def palQ8(n): # check if n is a palindrome in base 8",
+        "....s = oct(n)[2:]",
+        "....return s == s[::-1]",
+        "def palQgen10(l): # unordered generator of palindromes of length <= 2*l",
+        "....if l > 0:",
+        "........yield 0",
+        "........for x in range(1,10**l):",
+        "............s = str(x)",
+        "............yield int(s+s[-2::-1])",
+        "............yield int(s+s[::-1])",
+        "A029804_list = sorted([n for n in palQgen10(6) if palQ8(n)])",
+        "# _Chai Wah Wu_, Nov 25 2014"
+    ],
+    "xref": [
+        "Cf. A007632, A007633, A029961, A029962, A029963, A029964, A029965, A029966, A029967, A029968, A029969, A029970, A029731, A097855, A099165."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Patrick De Geest_",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Sep 30 2004",
+        "Incorrect Mathematica program deleted by _N. J. A. Sloane_, Sep 01 2009",
+        "Terms 33 through 36 corrected by Rick Regan (exploringbinary(AT)gmail.com), Sep 01 2009"
+    ],
+    "references": 37,
+    "revision": 32,
+    "time": "2014-11-26T23:06:32-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

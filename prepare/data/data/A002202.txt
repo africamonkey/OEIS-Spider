@@ -1,0 +1,54 @@
+{
+    "number": 2202,
+    "id": "M0987 N0371",
+    "data": "1,2,4,6,8,10,12,16,18,20,22,24,28,30,32,36,40,42,44,46,48,52,54,56,58,60,64,66,70,72,78,80,82,84,88,92,96,100,102,104,106,108,110,112,116,120,126,128,130,132,136,138,140,144,148,150,156,160,162,164,166,168,172,176",
+    "name": "Values taken by totient function phi(m) (A000010).",
+    "comment": [
+        "These are the numbers n such that for some m the multiplicative group mod m has order n.",
+        "Maier & Pomerance show that there are about x * exp(c (log log log x)^2)/log x members of this sequence up to x, with c = 0.81781465... (A234614); see the paper for details on making this precise. - _Charles R Greathouse IV_, Dec 28 2013",
+        "A264739(a(n)) = 1; a(n) occurs A058277(n) times in A007614. - _Reinhard Zumkeller_, Nov 26 2015"
+    ],
+    "reference": [
+        "J. W. L. Glaisher, Number-Divisor Tables. British Assoc. Math. Tables, Vol. 8, Camb. Univ. Press, 1940, p. 64.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A002202/b002202.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "K. Ford, <a href=\"http://www.ams.org/era/1998-04-05/S1079-6762-98-00043-2/home.html\">The distribution of totients</a>, Electron. Res. Announc. Amer. Math. Soc. 4 (1998), 27-34.",
+        "Helmut Maier and Carl Pomerance, <a href=\"http://matwbn.icm.edu.pl/ksiazki/aa/aa49/aa4934.pdf\">On the number of distinct values of Euler's phi-function</a>, Acta Arithmetica 49:3 (1988), pp. 263-275.",
+        "S. Sivasankaranarayana Pillai, <a href=\"http://dx.doi.org/10.1090/S0002-9904-1929-04799-2\">On some functions connected with phi(n)</a>, Bull. Amer. Math. Soc. 35 (1929), 832-836.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TotientValenceFunction.html\">Totient Valence Function</a>"
+    ],
+    "maple": [
+        "with(numtheory); t1 := [seq(nops(invphi(n)), n=1..300)]; t2 := []: for n from 1 to 300 do if t1[n] <> 0 then t2 := [op(t2), n]; fi; od: t2;"
+    ],
+    "mathematica": [
+        "phiQ[m_] := Select[Range[m+1, 2m*Product[(1-1/(k*Log[k]))^(-1), {k, 2, DivisorSigma[0, m]}]], EulerPhi[#] == m &, 1 ] != {}; Select[Range[176], phiQ] (* _Jean-Fran\u00e7ois Alcover_, May 23 2011, after Maxim Rytin *)"
+    ],
+    "program": [
+        "(PARI) lst(lim)=my(P=1,q,v);forprime(p=2,default(primelimit), if(eulerphi(P*=p)>=lim,q=p;break));v=vecsort(vector(P/q*lim\\eulerphi(P/q),k,eulerphi(k)),,8);select(n->n<=lim,v) \\\\ _Charles R Greathouse IV_, Apr 16 2012",
+        "(PARI) select(istotient,vector(100,i,i)) \\\\ _Charles R Greathouse IV_, Dec 28 2012",
+        "(Haskell)",
+        "import Data.List.Ordered (insertSet)",
+        "a002202 n = a002202_list !! (n-1)",
+        "a002202_list = f [1..] (tail a002110_list) [] where",
+        "   f (x:xs) ps'@(p:ps) us",
+        "     | x < p = f xs ps' $ insertSet (a000010' x) us",
+        "     | otherwise = vs ++ f xs ps ws",
+        "     where (vs, ws) = span (<= a000010' x) us",
+        "-- _Reinhard Zumkeller_, Nov 22 2015"
+    ],
+    "xref": [
+        "Cf. A000010, A002180, A032446, A058277.",
+        "Cf. A002110, A007614, A007617 (complement).",
+        "Cf. A083533 (first differences), A264739."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 86,
+    "revision": 46,
+    "time": "2016-04-22T23:52:58-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

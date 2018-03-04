@@ -1,0 +1,55 @@
+{
+    "number": 58863,
+    "data": "1,1,4,23,181,1812,22037,315569,5201602,97009833,2019669961,46432870222,1168383075471,31939474693297,942565598033196,29866348653695203,1011335905644178273,36446897413531401020,1392821757824071815641,56259101478392975833333",
+    "name": "Number of connected labeled chordal graphs on n nodes with no induced path P_4; also the number of labeled trees with each vertex replaced by a clique.",
+    "comment": [
+        "A subclass of chordal-comparability graphs."
+    ],
+    "link": [
+        "Jon E. Schoenfield, <a href=\"/A058863/b058863.txt\">Table of n, a(n) for n = 1..100</a>",
+        "R. Castelo and N. C. Wormald, <a href=\"http://www.math.uwaterloo.ca/~nwormald/papers/chordal.pdf\">Enumeration of P4-free chordal graphs</a>",
+        "R. Castelo and N. C. Wormald, <a href=\"http://dx.doi.org/10.1007/s00373-002-0513-9\">Enumeration of P4-Free chordal graphs</a>, Graphs and Combinatorics, 19:467-474, 2003.",
+        "M. C. Golumbic, <a href=\"http://dx.doi.org/10.1016/0012-365X(78)90178-4\">Trivially perfect graphs</a>, Discr. Math. 24(1) (1978), 105-107.",
+        "Venkatesan Guruswami, <a href=\"http://dx.doi.org/10.1016/S0012-365X(99)00022-9\">Enumerative aspects of certain subclasses of perfect graphs</a>, Discrete Math. 205 (1999), 97-117.",
+        "T. H. Ma and J. P. Spinrad, <a href=\"http://dx.doi.org/10.1007/BF00385814\">Cycle-free partial orders and chordal comparability graphs</a>, Order, 1991, 8:49-61.",
+        "E. S. Wolk, <a href=\"http://dx.doi.org/10.1090/S0002-9939-1965-0172274-5\">A note on the comparability graph of a tree</a>, Proc. Am. Math. Soc., 1965, 16:17-20."
+    ],
+    "formula": [
+        "A058863 and A058864 satisfy:",
+        "  1) c(n) = 1 + Sum_{k=1..n-2} binomial(n, k)*(t(n-k) - c(n-k))",
+        "  2) t(n) = c(n) + Sum_{k=1..n-1} k*c(k)*binomial(n, k)*t(n-k))/n",
+        "  where c(n) (A058863) is the number of connected graphs of this type and t(n) (A058864) is the total number of such graphs.",
+        "a(n) is asymptotic to sqrt(r*(e-1))/n*(n/(e*r))^n where r = 1 - log(e-1).",
+        "E.g.f.: -LambertW(exp(-x)-1). - _Vladeta Jovovic_, Nov 22 2002",
+        "a(n) = Sum_{k=0..n} Stirling2(n, k)*A060356(k). Also a(n) = Sum_{k=1..n} (-1)^(n-k)*Stirling2(n, k)*k^(k-1). - _Vladeta Jovovic_, Sep 17 2003"
+    ],
+    "maple": [
+        "S:= series(-LambertW(exp(-x)-1), x, 101):",
+        "seq(coeff(S,x,j)*j!, j=1..100); # _Robert Israel_, Nov 30 2015"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[(-1)^(n-k)*StirlingS2[n, k]*k^(k-1), {k, 1, n}];",
+        "Array[a, 20] (* _Jean-Fran\u00e7ois Alcover_, Dec 17 2017, after _Vladeta Jovovic_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "geta(n, va, vA) = {local(k); if (n==1, return(1)); if (n==2, return(1)); return(1 + sum(k=1, n-2, binomial(n,k)*(vA[n-k] - va[n-k])));}",
+        "getA(n, va, vA) = {local(k); if (n==1, return(1)); if (n==2, return(2)); return ((va[n] + sum(k=1, n-1, k*va[k]*binomial(n,k)*vA[n-k])/n));}",
+        "both(n) = {va = vector(n); vA = vector(n); for (i=1, n, va[i] = geta(i, va, vA); vA[i] = getA(i, va, vA);); print(\"va_A058863=\", va); print(\"vA_A058864=\", vA);}",
+        "\\\\ _Michel Marcus_, Apr 03 2013"
+    ],
+    "xref": [
+        "Cf. A007134, A058864, A058865.",
+        "Cf. A048802."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "Robert Castelo (rcastelo(AT)imim.es), Jan 06 2001",
+    "ext": [
+        "Formulae edited and completed by _Michel Marcus_, Apr 07 2013"
+    ],
+    "references": 5,
+    "revision": 38,
+    "time": "2017-12-17T08:05:59-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

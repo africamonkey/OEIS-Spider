@@ -1,0 +1,46 @@
+{
+    "number": 87155,
+    "data": "5,7,13,17,23,29,31,37,41,43,59,61,67,71,73,83,89,97,101,107,109,113,127,131,151,157,173,181,191,193,197,199,211,227,229,233,239,241,251,257,271,277,281,307,313,331,337,349,353,373,379,383,397,401,409,419",
+    "name": "Primes having nontrivial palindromic representation in some (at least one) base.",
+    "comment": [
+        "Number of terms < 10^n: 2, 18, 129, 1010, 8392, ..., . - _Robert G. Wilson v_, Jun 19 2014",
+        "Every whole number has single-digit representation in all large bases and all greater than 2 have representation 11 in the base one less than itself. Other palindromic representations are the nontrivial ones. - _James G. Merickel_, Jul 25 2015",
+        "Primes not in A016038. - _Robert Israel_, Jul 27 2015"
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A087155/b087155.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "17 is in the list because 17_2 = 10001 and 17_4 = 101, two nontrivial palindromic representations. 19 is not in the list because 19 is not a multidigit palindrome in any base other than base 18."
+    ],
+    "maple": [
+        "filter:= proc(n) local b,L;",
+        "if not isprime(n) then return false fi;",
+        "for b from 2 to floor(sqrt(n)) do",
+        "  L:= convert(n,base,b);",
+        "  if L = ListTools:-Reverse(L) then return true fi;",
+        "od:",
+        "false",
+        "end proc:",
+        "select(filter, [2*i+1 $ i=1..1000]); # _Robert Israel_, Jul 27 2015"
+    ],
+    "mathematica": [
+        "palindromicBases[n_] := Module[{p}, Table[p = IntegerDigits[n, b]; If[p == Reverse[p], {b, p}, Sequence @@ {}], {b, 2, n - 2}]]; Select[ Prime@ Range@ 300, palindromicBases[#] !=\uf0b9{}&] (* _Robert G. Wilson v_, May 06 2014 *)"
+    ],
+    "program": [
+        "(PARI) q=1; forprime(m=3,500,count=0; for(b=2,m-1, w=b+1; k=0; i=m; while(i>0,k=k*w+i%b; i=floor(i/b)); l=0; j=k; while(j>0,l=l*w+j%w; j=floor(j/w)); if(l==k,count=count+1; if(count>1,print1(m,\", \"); q=b; m=nextprime(m+1); q=1; b=1,q=b),)))"
+    ],
+    "xref": [
+        "Cf. A016038."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Randy L. Ekl_, Oct 18 2003",
+    "ext": [
+        "Title, comments and example changed to agree with convention on single-digit numbers and incorporate 'nontrivial' concept by _James G. Merickel_, Jul 25 2015"
+    ],
+    "references": 3,
+    "revision": 39,
+    "time": "2016-12-10T18:57:29-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

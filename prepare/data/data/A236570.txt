@@ -1,0 +1,42 @@
+{
+    "number": 236570,
+    "data": "1,3,9,25,68,185,504,1379,3788,10480,29094,81193,227379,639099,1801394,5091388,14422301,40939337,116420959,331622137,946020596,2702412657,7729367873,22132856218,63444473053,182046034559,522841943138,1502920139133",
+    "name": "Number of n-node simple unicyclic graphs.",
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/UnicyclicGraph.html\">Unicyclic Graph</a>"
+    ],
+    "formula": [
+        "G.f.: A(x)*B(x) where A(x) is the o.g.f. for A001429 and B(x) is the o.g.f. for A005195. _Geoffrey Critzer_, Nov 16 2014"
+    ],
+    "mathematica": [
+        "Needs[\"Combinatorica`\"];nn = 20; t[x_] := Sum[a[n] x^n, {n, 1, nn}]; a[0] = 0;",
+        "b = Drop[Flatten[",
+        "   sol = SolveAlways[",
+        "     0 == Series[",
+        "       t[x] - x Product[1/(1 - x^i)^ a[i], {i, 1, nn}], {x, 0, nn}],",
+        "     x]; Table[a[n], {n, 0, nn}] /. sol], 1];",
+        "r[x_] := Sum[b[[n]] x^n, {n, 1, nn}]; c =",
+        "Drop[Table[",
+        "    CoefficientList[",
+        "     Series[CycleIndex[DihedralGroup[n], s] /.",
+        "       Table[s[i] -> r[x^i], {i, 1, n}], {x, 0, nn}], x], {n, 3,",
+        "     nn}] // Total, 1];",
+        "d[x_] := Sum[c[[n]] x^n, {n, 1, nn}]; f =",
+        "Drop[CoefficientList[Series[r[x] - (r[x]^2 - r[x^2])/2, {x, 0, nn}],",
+        "   x], 1]; Drop[CoefficientList[",
+        "Series[d[x] Product[1/(1 - x^i)^f[[i]], {i, 1, nn}], {x, 0, nn}], x],3] (* _Geoffrey Critzer_, Nov 16 2014 *)"
+    ],
+    "xref": [
+        "Cf. A001429 (number of connected n-node unicyclic graphs)."
+    ],
+    "keyword": "nonn",
+    "offset": "3,2",
+    "author": "_Eric W. Weisstein_, Jan 29 2014",
+    "ext": [
+        "a(11)- a(30) from _Geoffrey Critzer_, Nov 16 2014"
+    ],
+    "references": 2,
+    "revision": 18,
+    "time": "2017-09-05T04:11:35-04:00",
+    "created": "2014-01-29T14:18:35-05:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 72921,
+    "data": "1,2,5,13,25,44,71,106,148,203,263,334,415,506,608,724,853,998,1169,1357,1561,1778,2018,2269,2539,2828,3137,3460,3796,4157,4535,4930,5341,5765,6212,6670,7147,7643,8159,8698,9268,9863,10484,11122",
+    "name": "a(1)=1; a(n) = a(n-1) + [sum of all decimal digits present so far in the sequence].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A072921/b072921.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(1)=1, a(2)=2; a(n+1)=2a(n)-a(n-1)+sod(a(n)) (sod = \"sum of digits\"). - _Farideh Firoozbakht_, Oct 01 2009",
+        "Asymptotically it seems a(n)~c*n^2*log(n) for c~1.99... - _Benoit Cloitre_, Oct 07 2009"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; local m;",
+        "      m:= a(n);",
+        "      `if`(n=1, 0, b(n-1));",
+        "       while m>0 do %+ irem(m, 10, 'm') od; %",
+        "    end:",
+        "a:= proc(n) option remember;",
+        "      `if`(n=1, 1, a(n-1) +b(n-1))",
+        "    end:",
+        "seq(a(n), n=1..50); # _Alois P. Heinz_, Jun 01 2010"
+    ],
+    "mathematica": [
+        "a[1]=1;a[2]=2;a[n_]:=a[n]=2*a[n-1]-a[n-2]+Apply[Plus,IntegerDigits[a[n-1]]];Table[a[n],{n,100}] (* _Farideh Firoozbakht_, Oct 01 2009 *)",
+        "a[1] = 1; a[n_] := a[n] = a[n - 1] + Plus @@ Flatten[ Map[ IntegerDigits, Array[a, n - 1]]]; Array[a, 100] (* _Robert G. Wilson v_, Oct 01 2009 *)"
+    ],
+    "xref": [
+        "Cf. A152231-A152234."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Oct 07 2009, based on a posting to the Sequence Fans Mailing List by _Eric Angelini_, Oct 01 2009",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Oct 01 2009"
+    ],
+    "references": 5,
+    "revision": 15,
+    "time": "2014-11-14T12:01:26-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

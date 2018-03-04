@@ -1,0 +1,39 @@
+{
+    "number": 142984,
+    "data": "1,4,22,136,984,8016,73392,742464,8254080,99838080,1307301120,18407831040,277570298880,4460506444800,76131788544000,1375048700928000,26208041287680000,525597067634688000,11065538390925312000",
+    "name": "a(1) = 1, a(2) = 4, a(n+2) = 4*a(n+1) + (n+1)*(n+2)*a(n).",
+    "comment": [
+        "This is the case m = 2 of the general recurrence a(1) = 1, a(2) = 2*m, a(n+2) = 2*m*a(n+1) + (n+1)*(n+2)*a(n), which arises when accelerating the convergence of a certain series for the constant log(2). See A142983 for remarks on the general case."
+    ],
+    "reference": [
+        "Bruce C. Berndt, Ramanujan's Notebooks Part II, Springer-Verlag."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A142984/b142984.txt\">Table of n, a(n) for n = 1..250</a>"
+    ],
+    "formula": [
+        "a(n) = n!*p(n+1)*sum {k = 1..n} (-1)^(k+1)/(p(k)*p(k+1)), where p(n) = n^2. Recurrence: a(1) = 1, a(2) = 4, a(n+2) = 4*a(n+1)+(n+1)*(n+2)*a(n). The sequence b(n):= n!*p(n+1) satisfies the same recurrence with b(1) = 4, b(2) = 18. Hence we obtain the finite continued fraction expansion a(n)/b(n) = 1/(4 +1*2/(4 +2*3/(4+3*4/(4+...+(n-1)*n/4)))), for n >=2. The behavior of a(n) for large n is given by lim n -> infinity a(n)/b(n) = sum {k = 1..inf} (-1)^(k+1)/(k^2*(k+1)^2) = 1/(4 +1*2/(4 +2*3/(4 +3*4/(4 +...+n*(n+1)/(4 +...))))) = 3 - 4*log(2), where the final equality follows by a result of Ramanujan (see [Berndt, Chapter 12, Entry 32(i)])."
+    ],
+    "maple": [
+        "a := n -> n!*(n+1)^2*sum ((-1)^(k+1)/(k^2*(k+1)^2), k = 1..n): seq(a(n), n = 1..20);"
+    ],
+    "program": [
+        "(Haskell)",
+        "a142984 n = a142984_list !! (n-1)",
+        "a142984_list = 1 : 4 : zipWith (+)",
+        "                       (map (* 4) $ tail a142984_list)",
+        "                       (zipWith (*) (drop 2 a002378_list) a142984_list)",
+        "-- _Reinhard Zumkeller_, Jul 17 2015"
+    ],
+    "xref": [
+        "Cf. A142983, A142985, A142986, A142987.",
+        "Cf. A002378."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Peter Bala_, Jul 17 2008",
+    "references": 5,
+    "revision": 8,
+    "time": "2015-07-17T07:03:27-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

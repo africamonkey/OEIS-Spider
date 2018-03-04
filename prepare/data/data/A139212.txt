@@ -1,0 +1,38 @@
+{
+    "number": 139212,
+    "data": "0,2,4,7,8,10,11,13,16,19,22,25,27,29,32,36,39,43,49,55,60,64,71,78,85,90,95,102,105,107,109,112,116,120,122,126,129,133,138,143,150,155,161,168,175,183,190,196,204,210,214,221,227,232,239,246,254,264,274,285,293,303,308,313,319,325,330,335,341,350,357,365,373,383",
+    "name": "Number of vowels in the preceding terms spelled out in French.",
+    "comment": [
+        "Form a sequence of French words as follows: look to the left, towards the beginning of the sequence and write down the number of vowels you see; repeat; then replace the words by the corresponding numbers.",
+        "The sequence of words is: zero, deux, quatre, sept, huit, dix, onze, treize, seize, ...",
+        "Hyphens, accents and spaces are not counted."
+    ],
+    "reference": [
+        "E. Angelini, \"Jeux de suites\", in Dossier Pour La Science, pp. 32-35, Volume 59 (Jeux math'), April/June 2008, Paris."
+    ],
+    "example": [
+        "The second word is \"deux\" (and so a(2)=2 for the 'e' and the 'u'), because at the end of the first word (\"z\u00e9ro\") we can see two vowels ('e' and 'o') to the left."
+    ],
+    "program": [
+        "(PARI) a(n)={ n>1 || return;#select(Vec(French(n=a(n-1))),x->setsearch(Vec(\"aeiou\"),x))+n }  /* see A167507 for French() */",
+        "/* Version with memoization for better performance when n >> 100: */",
+        "A139212(n)={ type(a139212)!=\"t_VEC\" && a139212=[];",
+        "n > #a139212 && a139212=concat( a139212,vector(n-#a139212));",
+        "(a139212[n] || n==1) && return(a139212[n]);",
+        "a139212[n]=/*up to here only memoization, could be omitted*/",
+        "#select(Vec(French(A139212(n-1))), x->setsearch(Vec(\"aeiou\"),x))) + A139212(n-1) } \\\\ _M. F. Hasler_, Sep 29 2011"
+    ],
+    "xref": [
+        "For an English version see A139282."
+    ],
+    "keyword": "nonn,word,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_ (based on Angelini's article), Jun 08 2008",
+    "ext": [
+        "Fixed offset (according to example) and typo in example. M. F. Hasler, Sep 29 2011"
+    ],
+    "references": 6,
+    "revision": 11,
+    "time": "2017-06-14T01:04:09-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

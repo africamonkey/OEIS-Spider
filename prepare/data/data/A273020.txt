@@ -1,0 +1,44 @@
+{
+    "number": 273020,
+    "data": "1,1,3,5,19,39,141,321,1107,2675,8953,22483,73789,190345,616227,1621413,5196627,13882947,44152809,119385663,377379369,1030434069,3241135527,8921880135,27948336381,77459553549,241813226151,674100041501,2098240353907,5878674505303,18252025766941",
+    "name": "a(n) = Sum_{k=0..n} C(n,k)*((-1)^n*(C(k,n-k)-C(k,n-k-1))+C(n-k,k+1)).",
+    "link": [
+        " A. Bostan and M. Kauers, <a href=\"http://arxiv.org/abs/0811.2899\">Automatic Classification of Restricted Lattice Walks</a>, arXiv:0811.2899 (2008)."
+    ],
+    "formula": [
+        "a(n) = JacobiP(n, 1, -n-3/2, -7)/(n+1) + GegenbauerC(n-1, -n, -1/2), with a(0) = 1.",
+        "a(n) = hypergeom([-n,1/2], [2], 4) + n*hypergeom([-n/2+1,-n/2+1/2], [2], 4).",
+        "a(n) = (-1)^n*A005043(n) + A005717(n).",
+        "a(2*n) = A082758(n).",
+        "a(2*n+1) = A273019(n)."
+    ],
+    "maple": [
+        "seq(simplify(hypergeom([-n,1/2],[2],4) + n*hypergeom([-n/2+1,-n/2+1/2],[2],4)), n=0..30);"
+    ],
+    "mathematica": [
+        "Table[ JacobiP[n, 1, -n-3/2, -7]/(n+1) + GegenbauerC[n-1,-n,-1/2], {n,0,30} ]"
+    ],
+    "program": [
+        "(Sage)",
+        "def A():",
+        "    a, b, c, d, n = 0, 1, 1, -1, 1",
+        "    yield 1",
+        "    while True:",
+        "        yield d + b*(1-(-1)^n)",
+        "        n += 1",
+        "        a, b = b, (3*(n-1)*n*a+(2*n-1)*n*b)//((n+1)*(n-1))",
+        "        c, d = d, (3*(n-1)*c-(2*n-1)*d)//n",
+        "A273020 = A()",
+        "print([A273020.next() for _ in range(31)])"
+    ],
+    "xref": [
+        "Cf. A005043, A005717, A082758, A273019."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, May 13 2016",
+    "references": 2,
+    "revision": 16,
+    "time": "2016-05-16T09:26:34-04:00",
+    "created": "2016-05-16T06:36:02-04:00"
+}

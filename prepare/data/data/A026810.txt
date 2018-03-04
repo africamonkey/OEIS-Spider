@@ -1,0 +1,61 @@
+{
+    "number": 26810,
+    "data": "0,0,0,0,1,1,2,3,5,6,9,11,15,18,23,27,34,39,47,54,64,72,84,94,108,120,136,150,169,185,206,225,249,270,297,321,351,378,411,441,478,511,551,588,632,672,720,764,816,864,920,972,1033,1089,1154,1215,1285,1350",
+    "name": "Number of partitions of n in which the greatest part is 4.",
+    "comment": [
+        "Also number of partitions of n into exactly 4 parts."
+    ],
+    "reference": [
+        "G. H. Hardy and E. M. Wright, An Introduction to the Theory of Numbers. 3rd ed., Oxford Univ. Press, 1954, p. 275.",
+        "D. E. Knuth, The Art of Computer Programming, vol. 4,fascicle 3, Generating All Combinations and Partitions, Section 7.2.1.4., p. 56, exercise 31."
+    ],
+    "link": [
+        "Washington Bomfim, <a href=\"/A026810/b026810.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "<a href=\"/index/Rec#order_10\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,0,0,-2,0,0,1,1,-1)."
+    ],
+    "formula": [
+        "G.f.: x^4/((1-x)*(1-x^2)*(1-x^3)*(1-x^4)).",
+        "a(n+4) = A001400(n). - _Michael Somos_, Apr 07 2012",
+        "a(n) = round(n^3+3n^2-9n[n odd])/144, where [...] denotes the Iverson bracket [true] = 1 and [false] = 0. - _Washington Bomfim_, Jul 03 2012",
+        "a(n) = (n+1)*(2*n^2+4*n-13+9*(-1)^n)/288 -A049347(n)/9 +A056594(n)/8. - _R. J. Mathar_, Jul 03 2012",
+        "From _Gregory L. Simay_, Oct 13 2015: (Start)",
+        "a(n) = (n^3 + 3*n^2 - 9*n)/144 + a(m) - (m^3 + 3*m^2 - 9*m)/144 if n = 12k + m and m is odd. For example, a(23) = a(12*1 + 11) = (23^3 + 3*23^2 - 9*23)/144 + a(11) - (11^3 + 3*11^2 - 9*11)/144 = 94.",
+        "a(n) = (n^3 + 3*n^2)/144 + a(m) - (m^3 + 3*m^2)/144 if n = 12k + m and m is even. For example, a(22) = a(12*1 + 10) = (22^3 + 3*22^2)/144 + a(10) - (10^3 + 3*10^2)/144 = 84. (End)"
+    ],
+    "maple": [
+        "A049347 := proc(n)",
+        "        op(1+(n mod 3),[1,-1,0]) ;",
+        "end proc:",
+        "A056594 := proc(n)",
+        "        op(1+(n mod 4),[1,0,-1,0]) ;",
+        "end proc:",
+        "A026810 := proc(n)",
+        "        1/288*(n+1)*(2*n^2+4*n-13+9*(-1)^n) ;",
+        "        %-A049347(n)/9 ;",
+        "        %+A056594(n)/8 ;",
+        "end proc: # _R. J. Mathar_, Jul 03 2012"
+    ],
+    "mathematica": [
+        "Table[Count[IntegerPartitions[n], {4, ___}], {n, 0, 60}]",
+        "LinearRecurrence[{1, 1, 0, 0, -2, 0, 0, 1, 1, -1}, {0, 0, 0, 0, 1, 1, 2, 3, 5, 6}, 80] (* _Vincenzo Librandi_, Oct 14 2015 *)",
+        "Table[Length[IntegerPartitions[n, {4}]], {n, 0, 60}] (* _Eric Rowland_, Mar 02 2017 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "for(n=0, 10000, print(n, \" \", round((n^3 + 3*n^2 -9*n*(n % 2))/144)));",
+        "\\\\ _Washington Bomfim_, Jul 03 2012",
+        "(MAGMA) [Round((n^3+3*n^2-9*n*(n mod 2))/144): n in [0..80]]; // _Vincenzo Librandi_, Oct 14 2015",
+        "(PARI) x='x+O('x^100); concat([0, 0, 0, 0], Vec(x^4/((1-x)*(1-x^2)*(1-x^3)*(1-x^4)))) \\\\ _Altug Alkan_, Oct 14 2015",
+        "(PARI) vector(100, n, n--; (n+1)*(2*n^2+4*n-13+9*(-1)^n)/288 + real(I^n)/8 - ((n+2)%3-1)/9) \\\\ _Altug Alkan_, Oct 26 2015"
+    ],
+    "xref": [
+        "Cf. A001400, A026811, A026812, A026813, A026814, A026815, A026816, A069905 (3 positive parts)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,7",
+    "author": "_Clark Kimberling_",
+    "references": 15,
+    "revision": 65,
+    "time": "2017-08-10T07:03:08-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

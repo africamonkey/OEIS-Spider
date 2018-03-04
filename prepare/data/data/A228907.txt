@@ -1,0 +1,39 @@
+{
+    "number": 228907,
+    "data": "1,2,6,24,114,598,3336,19402,116302,713368,4455650,28240942,181180912,1174280146,7677229718,50570040088,335289825874,2235856077798,14985808827416,100900119437082,682145490613118,4628755102582328,31514118237222850,215214456560655070",
+    "name": "G.f. satisfies: A(x) = Sum_{n>=0} x^n * (1 - A(x)^(2*n))/(1 - A(x)).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A228907/b228907.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = 1 + x*A(x)*(2 - A(x) + A(x)^2) + x^2*A(x)^2*(1 - A(x)).",
+        "G.f.: (1/x)*Series_Reversion( x*(1+x+x^2 + sqrt(1-2*x-5*x^2-2*x^3+x^4)) / (2*(1+x)^2) ).",
+        "Recurrence: n*(2*n+1)*(7*n^2 - 35*n + 34)*a(n) = (126*n^4 - 742*n^3 + 1193*n^2 - 601*n + 78)*a(n-1) - (182*n^4 - 1253*n^3 + 2788*n^2 - 2293*n + 450)*a(n-2) + (56*n^4 - 434*n^3 + 1189*n^2 - 1273*n + 318)*a(n-3) + (n-4)*(2*n-5)*(7*n^2 - 21*n + 6)*a(n-4). - _Vaclav Kotesovec_, Sep 09 2013",
+        "a(n) ~ c*d^n/n^(3/2), where d = 8/3+14/3*cos(arctan(3*sqrt(3)/13)/3) = 7.29589694323977237... is the root of the equation 1 + 5*d - 8*d^2 + d^3 = 0 and c = 0.33910585091755684322274547... - _Vaclav Kotesovec_, Sep 09 2013"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 6*x^2 + 24*x^3 + 114*x^4 + 598*x^5 + 3336*x^6 +...",
+        "where g.f. A = A(x) satisfies the equivalent expressions:",
+        "A = 1 + x*(1-A^2)/(1-A) + x^2*(1-A^4)/(1-A) + x^3*(1-A^6)/(1-A) +...",
+        "A = 1 + x*(1 + A) + x^2*(1 + A + A^2 + A^3) + x^3*(1 + A + A^2 + A^3 + A^4 + A^5) +..."
+    ],
+    "mathematica": [
+        "nmax=20;aa=ConstantArray[0,nmax];aa[[1]]=2;Do[AGF=1+Sum[aa[[n]]*x^n,{n,1,j-1}]+koef*x^j;sol=Solve[Coefficient[1+x*AGF*(2-AGF+AGF^2)+x^2*AGF^2*(1-AGF)-AGF,x,j]==0,koef][[1]];aa[[j]]=koef/.sol[[1]],{j,2,nmax}];Flatten[{1,aa}] (* _Vaclav Kotesovec_, Sep 09 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=sum(m=0, n, x^m*sum(k=0, 2*m-1, A^k)+x*O(x^n))); polcoeff(A, n)}",
+        "for(n=0,25,print1(a(n),\", \"))",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1+x*A*(2-A+A^2)+x^2*A^2*(1-A)+x*O(x^n)); polcoeff(A, n)}",
+        "for(n=0,25,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A199548."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Sep 08 2013",
+    "references": 1,
+    "revision": 10,
+    "time": "2013-09-10T06:23:56-04:00",
+    "created": "2013-09-08T17:10:08-04:00"
+}

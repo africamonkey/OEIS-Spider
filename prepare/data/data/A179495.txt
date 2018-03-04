@@ -1,0 +1,65 @@
+{
+    "number": 179495,
+    "data": "0,1,2,12,84,820,9540,132888,2129232,38760048,788500800,17740459440,437238410400,11716457100192,339129808346784,10544636706428160,350515939418507520,12404398847785793280,465618362609300313600",
+    "name": "E.g.f. satisfies: A'(x) = [A(x)^2 + A(x)^3]/(x^2 + x^3).",
+    "comment": [
+        "A179495(n) = n * A179496(n-1). - _Vaclav Kotesovec_, Dec 25 2013"
+    ],
+    "reference": [
+        "Roland Bacher, Counting Packings of Generic Subsets in Finite Groups, Electr. J. Combinatorics, 19 (2012), #P7. - From _N. J. A. Sloane_, Feb 06 2013"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A179495/b179495.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "E.g.f. satisfies: d/dx A_n(x) = [A_n(x)^2 + A_n(x)^3]/(x^2 + x^3) where A_n(x) denotes the n-th iteration of e.g.f. A(x).",
+        "...",
+        "Define a triangular matrix where the e.g.f. of column k equals (A(x)/x)^k, then the matrix log is the matrix L with L(n+1,n)=L(n+2,n)=n+1 and zeros elsewhere.",
+        "a(n) ~ sqrt(1+r) * n^n * r^(n-1) / exp(n), where r = -1-LambertW(-1, -exp(-2)) = 2.146193220620582585237... is the root of the equation log(1+r)=r-1. - _Vaclav Kotesovec_, Jan 04 2014"
+    ],
+    "example": [
+        "E.g.f. A(x) = x + 2*x^2/2! + 12*x^3/3! + 84*x^4/4! + 820*x^5/5! +...",
+        "Related expansions:",
+        "A(x)^2 + A(x)^3 = 2*x^2/2! + 18*x^3/3! + 192*x^4/4! + 2400*x^5/5! +...",
+        "A'(x) = 1 + 2*x + 12*x^2/2! + 84*x^3/3! + 820*x^4/4! + 9540*x^5/5! +...",
+        "A(x)/x = 1 + x + 4*x^2/2! + 21*x^3/3! + 164*x^4/4! + 1590*x^5/5! +...",
+        "...",
+        "Define a triangular matrix where the e.g.f. of column k equals A(x)^k:",
+        "1;",
+        "1, 1;",
+        "4/2!, 2, 1;",
+        "21/3!, 10/2!, 3, 1;",
+        "164/4!, 66/3!, 18/2!, 4, 1;",
+        "1590/5!, 592/4!, 141/3!, 28/2!, 5, 1;",
+        "18984/6!, 6500/5!, 1428/4!, 252/3!, 40/2!, 6, 1;",
+        "266154/7!, 85548/6!, 17430/5!, 2840/4!, 405/3!, 54/2!, 7, 1;",
+        "...",
+        "then the matrix log of the above matrix equals:",
+        "0;",
+        "1, 0;",
+        "1, 2, 0;",
+        "0, 2, 3, 0;",
+        "0, 0, 3, 4, 0;",
+        "0, 0, 0, 4, 5, 0;",
+        "0, 0, 0, 0, 5, 6, 0; ..."
+    ],
+    "mathematica": [
+        "nmax = 20; aa = ConstantArray[0, nmax]; aa[[1]] = 1; aa[[2]] = 2; Do[AGF = Sum[aa[[n]]*x^n/n!, {n, 1, j - 1}] + koef*x^j/j!; sol = Solve[Coefficient[D[AGF, x]*(x^2 + x^3) - (AGF^2 + AGF^3), x, j + 1] == 0, koef][[1]]; aa[[j]] = koef /. sol[[1]], {j, 3, nmax}]; Flatten[{0, aa}] (* _Vaclav Kotesovec_, Dec 25 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x+x^2+O(x^(n+1)),D=1);n!*polcoeff(1+sum(m=1, n+1, (D=A*deriv(x*D+O(x^(n+1))))/m!),n-1)}"
+    ],
+    "xref": [
+        "Cf. A179496."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jul 25 2010",
+    "ext": [
+        "Minor edits _Vaclav Kotesovec_, Mar 31 2014"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2014-03-31T07:20:13-04:00",
+    "created": "2010-07-31T03:00:00-04:00"
+}

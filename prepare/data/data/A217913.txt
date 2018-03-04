@@ -1,0 +1,43 @@
+{
+    "number": 217913,
+    "data": "1,1,31,3025,611501,210766920,110687251039,82310957214948,82318282158320505,106563273280541795575,173373343599189364594756,346289681454731077633095526,833091176987705031151553054843,2376102520162485084539597049185710",
+    "name": "O.g.f.: Sum_{n>=0} (n^3)^n * exp(-n^3*x) * x^n / n!.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A217913/b217913.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "a(n) = Stirling2(3*n, n).",
+        "a(n) = [x^(3*n)] (3*n)! * (exp(x) - 1)^n / n!.",
+        "a(n) = [x^(2*n)] 1 / Product_{k=1..n} (1-k*x).",
+        "a(n) = 1/n! * [x^n] Sum_{k>=0} (k^3)^k*x^k / (1 + k^3*x)^(k+1).",
+        "a(n) ~ 9^n*exp(n*(c+1))*n^(2*n)/((c+3)^(2*n)*sqrt(2*Pi*(c+1)*n)), where c = -0.1785606278779211... = LambertW(-3/exp(3)) = A226750. - _Vaclav Kotesovec_, Feb 28 2013"
+    ],
+    "example": [
+        "O.g.f.: A(x) = 1 + x + 31*x^2 + 3025*x^3 + 611501*x^4 + ... + Stirling2(3*n, n)*x^n + ...",
+        "where",
+        "A(x) = 1 + 1^3*x*exp(-1^3*x) + 2^6*exp(-2^3*x)*x^2/2! + 3^9*exp(-3^3*x)*x^3/3! + 4^12*exp(-4^3*x)*x^4/4! + 5^15*exp(-5^3*x)*x^5/5! + ...",
+        "simplifies to a power series in x with integer coefficients."
+    ],
+    "mathematica": [
+        "Table[StirlingS2[3*n,n],{n,0,20}] (* _Vaclav Kotesovec_, Feb 28 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(k=0,n,(k^3)^k*exp(-k^3*x +x*O(x^n))*x^k/k!),n)}",
+        "(PARI) {a(n)=1/n!*polcoeff(sum(k=0, n, (k^3)^k*x^k/(1+k^3*x +x*O(x^n))^(k+1)), n)}",
+        "(PARI) {a(n)=polcoeff(1/prod(k=1, n, 1-k*x +x*O(x^(2*n))), 2*n)}",
+        "(PARI) {Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)}",
+        "{a(n) = Stirling2(3*n, n)}",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(Maxima) makelist(stirling2(3*n, n), n, 0, 13); \\* _Martin Ettl_, Oct 15 2012 *\\"
+    ],
+    "xref": [
+        "Cf. A219228, A007820, A217914, A217915, A217900, A008277."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Oct 14 2012",
+    "references": 21,
+    "revision": 41,
+    "time": "2018-02-28T21:35:41-05:00",
+    "created": "2012-10-14T21:57:54-04:00"
+}

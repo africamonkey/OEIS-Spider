@@ -1,0 +1,59 @@
+{
+    "number": 81085,
+    "data": "1,4,20,112,676,4304,28496,194240,1353508,9593104,68906320,500281280,3664176400,27033720640,200683238720,1497639994112,11227634469668,84509490017680,638344820152784,4836914483890112,36753795855173776",
+    "name": "Expansion of 1 / AGM(1, 1 - 8*x) in powers of x.",
+    "comment": [
+        "AGM(x, y) is the arithmetic-geometric mean of Gauss and Legendre.",
+        "This is the Taylor expansion of a special point on a curve described by Beauville. - _Matthijs Coster_, Apr 28 2004",
+        "This is the exponential (also known as binomial) convolution of sequence A000984 (central binomial) with itself. See the V. Jovovic e.g.f. and a(n) formulas given below. - _Wolfdieter Lang_, Jan 13 2012",
+        "This is one of the Apery-like sequences - see Cross-references. - _Hugo Pfoertner_, Aug 06 2017"
+    ],
+    "reference": [
+        "Matthijs Coster, Over 6 families van krommen [On 6 families of curves], Master's Thesis (unpublished), Aug 26 1983."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A081085/b081085.txt\">Table of n, a(n) for n = 0..1110</a> (terms 0..200 from Vincenzo Librandi)",
+        "B Adamczewski, JP Bell, E Delaygue, <a href=\"http://arxiv.org/abs/1603.04187\">Algebraic independence of G-functions and congruences \"a la Lucas\"</a>, arXiv preprint arXiv:1603.04187, 2016",
+        "Arnaud Beauville, <a href=\"http://gallica.bnf.fr/ark:/12148/bpt6k5543443c/f31.item\">Les familles stables de courbes sur P_1 admettant quatre fibres singuli\u00e8res</a>, Comptes Rendus, Acad\u00e9mie Sciences Paris, no. 294, May 24 1982, page 657.",
+        "E. Delaygue, <a href=\"http://arxiv.org/abs/1310.4131\">Arithmetic properties of Apery-like numbers</a>, arXiv preprint arXiv:1310.4131 [math.NT], 2013-2015.",
+        "Xiao-Juan Ji, Zhi-Hong Sun, <a href=\"http://arxiv.org/abs/1505.00668\">Congruences for Catalan-Larcombe-French numbers</a>, arXiv:1505.00668 [math.NT], 2015.",
+        "Amita Malik and Armin Straub, <a href=\"https://doi.org/10.1007/s40993-016-0036-8\">Divisibility properties of sporadic Ap\u00e9ry-like numbers</a>, Research in Number Theory, 2016, 2:5"
+    ],
+    "formula": [
+        "(n+1)^2 * a(n+1) = (12*n^2+12*n+4) * a(n) - 32*n^2*a(n-1). - _Matthijs Coster_, Apr 28 2004",
+        "G.f.: 1 / AGM( 1, 1 - 8*x).",
+        "E.g.f.: exp(4*x)*BesselI(0, 2*x)^2. - _Vladeta Jovovic_, Aug 20 2003",
+        "a(n) = Sum_{k=0..n} binomial(n, k)*binomial(2*n-2*k, n-k)*binomial(2*k, k) = binomial(2*n, n)*hypergeom([ -n, -n, 1/2], [1, -n+1/2], -1). - _Vladeta Jovovic_, Sep 16 2003",
+        "E.g.f.: [Sum_{n>=0} binomial(2n,n)*x^n/n! ]^2. - _Paul D. Hanna_, Sep 04 2009",
+        "G.f.: Gaussian Hypergeometric function 2F1(1/2, 1/2; 1; 16*x-64*x^2)  - _Mark van Hoeij_, Oct 24 2011",
+        "a(n) = 2^(-n) * A053175(n).",
+        "a(n) ~ 2^(3*n+1)/(Pi*n). - _Vaclav Kotesovec_, Oct 13 2012",
+        "0 = x*(x+4)*(x+8)*y'' + (3*x^2 + 24*x + 32)*y' + (x+4)*y, where y(x) = A(x/-32). - _Gheorghe Coserea_, Aug 26 2016",
+        "a(n) = Sum_{k=0..[n/2]} 4^(n - 2*k)*binomial(n, 2*k)*binomial(2*k, k)^2. - _Seiichi Manyama_, Apr 02 2017"
+    ],
+    "example": [
+        "A(x) = 1 + 4*x + 20*x^2 + 112*x^3 + 676*x^4 + 4304*x^5 + 28496*x^6 + ... is the g.f."
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[n,k]*Binomial[2*n-2*k,n-k]*Binomial[2*k,k],{k,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Oct 13 2012 *)",
+        "a[ n_] := SeriesCoefficient[ Hypergeometric2F1[ 1/2, 1/2, 1, 16 x (1 - 4 x)], {x, 0, n}]; (* _Michael Somos_, Oct 25 2014 *)",
+        "a[ n_] := If[ n < 0, 0, SeriesCoefficient[ 1 / NestWhile[ {(#[[1]] + #[[2]])/2, Sqrt[#[[1]] #[[2]]]} &, {1, Series[ 1 - 8 x, {x, 0, n}]}, #[[1]] =!= #[[2]] &] // First, {x, 0, n}]]; (* _Michael Somos_, Oct 27 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( 1 / agm( 1, 1 - 8 * x + x * O(x^n)), n))};",
+        "(PARI) {a(n) = if( n<0,0, 4^n * sum( k=0, n\\2, binomial( n, 2*k) * binomial( 2*k, k)^2 / 16^k))};",
+        "(PARI) {a(n)=n!*polcoeff(sum(k=0,n,(2*k)!*x^k/(k!)^3 +x*O(x^n))^2,n)} /* _Paul D. Hanna_, Sep 04 2009 */"
+    ],
+    "xref": [
+        "Cf. A053175, A089603, A091401.",
+        "The Ap\u00e9ry-like numbers [or Ap\u00e9ry-like sequences, Apery-like numbers, Apery-like sequences] include A000172, A000984, A002893, A002895, A005258, A005259, A005260, A006077, A036917, A063007, A081085, A093388, A125143 (apart from signs), A143003, A143007, A143413, A143414, A143415, A143583, A183204, A214262, A219692,A226535, A227216, A227454, A229111 (apart from signs), A260667, A260832, A262177, A264541, A264542, A279619, A290575, A290576. (The term \"Apery-like\" is not well-defined.)",
+        "For primes that do not divide the terms of the sequences A000172, A005258, A002893, A081085, A006077, A093388, A125143, A229111, A002895, A290575, A290576, A005259 see A260793, A291275-A291284 and A133370 respectively."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Michael Somos_, Mar 04 2003",
+    "references": 53,
+    "revision": 78,
+    "time": "2017-08-22T12:09:41-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

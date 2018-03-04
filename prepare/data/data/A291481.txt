@@ -1,0 +1,63 @@
+{
+    "number": 291481,
+    "data": "2,4,7,13,37,73,145,289,865,1729,3457,10369,20737,41473,82945,248833,497665,995329,1990657,3981313,11943937,23887873,47775745,143327233,286654465,573308929,1146617857,3439853569,6879707137,20639121409,41278242817,82556485633",
+    "name": "Number of terms of A293630 at stage n.",
+    "comment": [
+        "limsup a(n+1)/a(n)=3, liminf a(n+1)/a(n)=2 (n-->infty). It seems that a(n)^(1/n)-->C (n-->infty) with C>2.",
+        "Lim_{n->infinity} a(n)^(1/n) = 2.236151... (see A297890). - _Jon E. Schoenfield_, Dec 23 2017",
+        "The previous limit is also equal to 2^(2 - d) * 3^(d - 1), where d = 1.275261... (see A296564). - _Iain Fox_, Dec 24 2017"
+    ],
+    "link": [
+        "Iain Fox, <a href=\"/A291481/b291481.txt\">Table of n, a(n) for n = 0..2860</a>"
+    ],
+    "formula": [
+        "From _Iain Fox_, Jan 21 2018: (Start)",
+        "a(n) = (1 + A293630(a(n-1)))*a(n-1) - A293630(a(n-1)).",
+        "a(n) ~ c^n, where c = 2.236151... (see comments or A297890).",
+        "(End)"
+    ],
+    "example": [
+        "A293630 at stage n:",
+        "  n = 0: [1, 2];                                      2 terms",
+        "  n = 1: [1, 2, 1, 1];                                4 terms",
+        "  n = 2: [1, 2, 1, 1, 1, 2, 1];                       7 terms",
+        "  n = 3: [1, 2, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 2];    13 terms",
+        "  n = 4: [1, 2, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, ...];  37 terms",
+        "   ..."
+    ],
+    "mathematica": [
+        "Length /@ NestList[Join[#, Join @@ ConstantArray[Most[#], Last[#]]] &, {1, 2}, 24] (* _Michael De Vlieger_, Jan 21 2018 *)"
+    ],
+    "program": [
+        "(PARI) v=[1,2];for(n=1,17,l=length(v);w=vector(l-1,i,v[i]);v=concat(v,if(v[l]-1,concat(w,w),w));print1(length(v),\",\"));",
+        "(PARI) lista(nn) = {",
+        "my(S = [1, 2], n = 2, L, nPrev, E);",
+        "print1(\"2, \");",
+        "for(j = 1, nn, L = S[#S]; n = n*(1+L)-L; nPrev = #S; for(r = 1, L, for(i = 1, nPrev-1, S = concat(S, S[i]))); print1(n, \", \"));",
+        "E = S;",
+        "for(j = nn + 1, nn + #E, L = E[#E+1-(j-nn)]; n = n*(1+L)-L; print1(n, \", \"))",
+        "} \\\\ _Iain Fox_, Jan 21 2018",
+        "(Python)",
+        "a, z = [1, 2], [2]",
+        "while z[-1]<1000:",
+        "    a += a[:-1]*a[-1]",
+        "    z.append(len(a))",
+        "for i in range(100):",
+        "    z.append((z[-1]-1)*(a.pop()+1)+1)",
+        "print(z)",
+        "# _Andrey Zabolotskiy_, Oct 15 2017"
+    ],
+    "xref": [
+        "Cf. A293630, A296564, A297890."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Benoit Cloitre_, Oct 15 2017",
+    "ext": [
+        "More terms from _Andrey Zabolotskiy_, Oct 15 2017"
+    ],
+    "references": 5,
+    "revision": 39,
+    "time": "2018-01-22T03:02:03-05:00",
+    "created": "2017-10-15T20:29:29-04:00"
+}

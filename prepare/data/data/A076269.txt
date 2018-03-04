@@ -1,0 +1,35 @@
+{
+    "number": 76269,
+    "data": "1,1,1,1,1,1,2,2,2,3,4,4,5,6,7,9,10,11,14,17,20,24",
+    "name": "Size of largest antichain in partition lattice Par(n).",
+    "comment": [
+        "Par(n) is the set of partitions of n under \"dominance order\": partition P is <= partition Q iff the sum of the largest k parts of P is <= the corresponding sum for Q for all k."
+    ],
+    "link": [
+        "T. Brylawski, <a href=\"http://dx.doi.org/10.1016/0012-365X(73)90094-0\">The lattice of integer partitions</a>, Discrete Math. 6 (1973), 201-219.",
+        "Edward Early, <a href=\"http://myweb.stedwards.edu/edwarde/partitions.pdf\">Chain Lengths in the Dominance Lattice</a>, June 8, 2013;",
+        "C. Greene and D. J. Kleitman, <a href=\"http://dx.doi.org/10.1016/S0195-6698(86)80013-0\">Longest Chains in the Lattice of Integer Partitions ordered by Majorization</a>, Europ. J. Combinatorics 7 (1986), 1-10."
+    ],
+    "formula": [
+        "Order of growth is between n^(-5/2)e^(Pi*sqrt(2n/3)) and n^(-1)e^(Pi*sqrt(2n/3))."
+    ],
+    "example": [
+        "a(10)=4; one antichain consists of 5+1+1+1+1+1, 4+3+1+1+1, 4+2+2+2 and 3+3+3+1."
+    ],
+    "mathematica": [
+        "leq[p_, q_] := If[Length[p]<Length[q], False, Module[{i, ds}, For[i=1; ds=0, i<Length[q], i++, If[(ds+=q[[i]]-p[[i]])<0, Return[False]]]; True]]; maxac[l_] := If[Length[l]<=1, Length[l], maxac[l]=Max[maxac[Drop[l, 1]], 1+maxac[Select[l, !leq[ #, l[[1]]]&&!leq[l[[1]], # ]&]]]]; a[n_] := a[n]=maxac[IntegerPartitions[n]]"
+    ],
+    "xref": [
+        "Cf. A006463, A077765, A076779."
+    ],
+    "keyword": "hard,more,nonn",
+    "offset": "0,7",
+    "author": "_Edward Early_, Nov 05 2002",
+    "ext": [
+        "Edited by _Dean Hickerson_, Nov 09 2002"
+    ],
+    "references": 3,
+    "revision": 18,
+    "time": "2014-06-24T01:08:32-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

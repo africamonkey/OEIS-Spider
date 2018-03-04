@@ -1,0 +1,65 @@
+{
+    "number": 247013,
+    "data": "4,9,14,94,194,371,1887,1994,11282,25656,61081,66691,112082,394407,582225,4284191,5681778,9317913,9361072,9493615,19120874,75519134,92688481",
+    "name": "Consider the prime factors, with multiplicity, in ascending order, of a composite number not ending in 0. Take their sum and repeat the process deleting the minimum number and adding the previous sum. The sequence lists the numbers that after some iterations reach a sum equal to the reverse of themselves.",
+    "comment": [
+        "Similar to A212875 but reading the sum backwards.",
+        "If numbers ending in 0 are allowed, 1200 has factors 2,2,2,2,3,5,5 which add up to 21. - _Chai Wah Wu_, Sep 12 2014"
+    ],
+    "example": [
+        "Prime factors of 1994 are 2 and 997;",
+        "2 + 997 = 999;",
+        "997 + 999 = 1996;",
+        "999 + 1996 = 2995;",
+        "1996 + 2995 = 4991 that is the reverse of 1994.",
+        "Prime factors of 25656 are 2^3, 3 and 1069;",
+        "2 + 2 + 2 + 3 + 1069 = 1078;",
+        "2 + 2 + 3 + 1069 + 1078 = 2154;",
+        "2 + 3 + 1069 + 1078 + 2154 = 4306;",
+        "3 + 1069 + 1078 + 2154 + 4306 = 8610;",
+        "1069 + 1078 + 2154 + 4306 + 8610 = 17217;",
+        "1078 + 2154 + 4306 + 8610 + 17217 = 33365;",
+        "2154 + 4306 + 8610 + 17217 + 33365 = 65652 that is the reverse of 25656."
+    ],
+    "maple": [
+        "with(numtheory): R:=proc(w) local x,y; x:=w; y:=0;",
+        "while x>0 do y:=10*y+(x mod 10); x:=trunc(x/10); od: y; end:",
+        "P:=proc(q,h) local a,b,c,d,j,k,n,t,v; v:=array(1..h);",
+        "for n from 2 to q do if not isprime(n) then a:=ifactors(n)[2];",
+        "b:=nops(a); c:=ilog10(n)+1; t:=0; d:=[];",
+        "for k from 1 to b do for j from 1 to a[k,2] do d:=[op(d),a[k,1]]; od;",
+        "od; d:=sort(d); for k from 1 to nops(d) do v[k]:=d[k]; od; a:=nops(d);",
+        "t:=a; t:=t+1; v[t]:=add(v[k],k=1..t-1); if R(v[t])=n then print(n);",
+        "else while ilog10(v[t])+1<=c do t:=t+1; v[t]:=add(v[k],k=t-a..t-1);",
+        "if R(v[t])=n then print(n); break; fi; od; fi; fi; od; end:",
+        "P(10^6, 1000);"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import chain",
+        "from sympy import isprime, factorint",
+        "A247013_list = []",
+        "for n in range(2,10**8):",
+        "....m = int(str(n)[::-1])",
+        "....if n % 10 and not isprime(n):",
+        "........x = sorted(chain.from_iterable([p]*e for p,e in factorint(n).items()))",
+        "........y = sum(x)",
+        "........while y < m:",
+        "............x, y = x[1:]+[y], 2*y-x[0]",
+        "........if y == m:",
+        "............A247013_list.append(n) # _Chai Wah Wu_, Sep 12 2014"
+    ],
+    "xref": [
+        "Cf A097090, A212875, A247012."
+    ],
+    "keyword": "nonn,more,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Sep 09 2014",
+    "ext": [
+        "More terms and definition edited by _Chai Wah Wu_, Sep 12 2014"
+    ],
+    "references": 3,
+    "revision": 16,
+    "time": "2014-09-13T15:33:22-04:00",
+    "created": "2014-09-11T18:20:48-04:00"
+}

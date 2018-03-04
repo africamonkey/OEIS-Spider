@@ -1,0 +1,45 @@
+{
+    "number": 244069,
+    "data": "11,21,53,75,83,95,211,506,523,708,908,932,955,1008,5086,6535,7272,7557,9126,20534,31165,51301,52695,71665,73713,85173,90902,93026,93565,210021,313370,330173,406945,423775,521427,633190,728687,850123,926281",
+    "name": "Consider a number of k digits n = d_(k)*10^(k-1) + d_(k-1)*10^(k-2) + \u2026 + d_(2)*10 + d_(1). Sequence lists the numbers n such that Sum_{i=1..k-1}{phi(Sum_{j=1..i}{d_(j)*10^(j-1)})}} = Sum_{i=1..k-1}{sigma(Sum_{j=1..i}{d_(k-j+1)*10^(i-j)})} (see example below).",
+    "comment": [
+        "No single-digit terms are permitted. - _Harvey P. Dale_, Mar 08 2015"
+    ],
+    "example": [
+        "If n = 423775, starting from the least significant digit, let us cut the number into the set {5, 75, 775, 3775, 23775}. We have:",
+        "sigma(5) = 6;",
+        "sigma(75) = 124;",
+        "sigma(775) = 992;",
+        "sigma(3775) = 4712;",
+        "sigma(23775) = 39432.",
+        "Then, starting from the most significant digit, let us cut the number into the set {4, 42, 423, 4237, 42377}. We have:",
+        "phi(4) = 2;",
+        "phi(42) = 12;",
+        "phi(423) = 276;",
+        "phi(4237) = 3996;",
+        "phi(42377) = 40980.",
+        "Finally, 6 + 124 + 992 + 4712 + 39432 = 2 + 12 + 276 + 3996 + 40980 = 45266."
+    ],
+    "maple": [
+        "with(numtheory); P:=proc(q) local a, b, k, n; for n from 10 to q do",
+        "a:=0; k:=1; while trunc(n/10^k)>0 do a:=a+phi(trunc(n/10^k)); k:=k+1; od;",
+        "b:=0; k:=1; while (n mod 10^k)<n do b:=b+sigma(n mod 10^k); k:=k+1; od;",
+        "if a=b then print(n); fi; od; end: P(10^9);"
+    ],
+    "mathematica": [
+        "dsepQ[n_]:=Module[{idn=IntegerDigits[n],len},len=Length[idn]-1; Total[ DivisorSigma[1,#]&/@(FromDigits/@Table[Take[idn,-k],{k,If[Last[idn] == 0,2,1],len}])]==Total[EulerPhi/@(FromDigits/@Table[Take[idn,i],{i, len}])]]; Select[Range[10,10^6],dsepQ] (* _Harvey P. Dale_, Mar 08 2015 *)"
+    ],
+    "xref": [
+        "Cf. A000010, A000203, A240894-A240903, A241207, A241502, A241503, A244068."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jun 19 2014",
+    "ext": [
+        "Corrected (a(18) added) by _Harvey P. Dale_, Mar 08 2015"
+    ],
+    "references": 3,
+    "revision": 16,
+    "time": "2015-03-08T10:49:41-04:00",
+    "created": "2014-06-24T05:48:28-04:00"
+}

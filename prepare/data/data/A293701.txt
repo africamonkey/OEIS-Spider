@@ -1,0 +1,56 @@
+{
+    "number": 293701,
+    "data": "1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,47,49",
+    "name": "a(n) is the length of the longest palindromic subsequence in the first n terms of A293700.",
+    "comment": [
+        "If a(n + 1) > a(n) for some n, then A293700(n + 1) is in the longest palindrome. So to find a(n + 1) it suffices to check if A293700 is in the palindrome, which must be at least of length a(n). - _David A. Corneth_, Nov 25 2017",
+        "At points where a(n) = n, the whole sequence is a palindrome. For example at n=9105, the length of the longest palindrome a(9105) is 9105 (see A294923)."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A293701/b293701.txt\">Table of n, a(n) for n = 1..10000</a> (computed with the given Scheme-program from the b-file of A293700 provided by Robert Israel)",
+        "V.J. Pohjola, <a href=\"https://palindromesdotblog.files.wordpress.com/2017/12/lenpalsp-1-100.pdf\">Line plot of n, a(n) for n=1...100</a>",
+        "V.J. Pohjola, <a href=\"https://palindromesdotblog.files.wordpress.com/2017/12/lenpalsp-1-1400.pdf\">Line plot of n, a(n)  for n=1...1400</a>",
+        "V.J. Pohjola, <a href=\"https://palindromesdotblog.files.wordpress.com/2017/12/lenpalsp-1-10000.pdf\">Line plot of n, a(n)  for n=1...10000</a>"
+    ],
+    "example": [
+        "For n = 1, Roots = 1, 4; First differences = 3; Longest palindrome = 3; a(n) = 1.",
+        "For n = 2, Roots = 1, 4, 23; First differences = 3, 19; Longest palindrome = 3; a(n) = 1.",
+        "For n = 3, Roots = 1, 4, 23, 26; First differences = 3, 19, 3; Longest palindrome = 3, 19, 3; a(n) = 3.",
+        "For n = 33, Roots = 1, 4, 23, 26, 45, 48, 67, 70, 89, 92, 111, 114, 133, 136, 155, 158, 177, 180, 183, 199, 202, 205, 221, 224, 227, 243, 246, 249, 265, 268, 271, 290, 293, 312; First differences = 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3, 3, 16, 3, 3, 16, 3, 3, 16, 3, 3, 16, 3, 3, 19, 3, 19; Longest palindrome = 19, 3, 19, 3, 3, 16, 3, 3, 16, 3, 3, 16, 3, 3, 16, 3, 3, 19, 3, 19; a(n) = 20."
+    ],
+    "mathematica": [
+        "rootsp = Flatten[Position[Table[Floor[Tan[i]], {i, 1, 10^4}], 1]];",
+        "lrootsp = Length[rootsp];",
+        "difp = Differences[rootsp];",
+        "ldp = Length[difp];",
+        "nmax = 200; palsp = {}; lenpalsp = {0};",
+        "Do[diffip = difp[[1 ;; n]]; lendiffip = Length[diffip];",
+        "  pmax = n - Last[lenpalsp];",
+        "  t = Table[difp[[p ;; n]], {p, 1, pmax}];",
+        "  sp = Flatten[Select[t, # == Reverse[#] &]];",
+        "  If[sp == {},",
+        "   AppendTo[palsp, Last[palsp]] && AppendTo[lenpalsp, Last[lenpalsp]],",
+        "   AppendTo[palsp, sp] && AppendTo[lenpalsp, Length[Flatten[sp]]]], {n, 1, nmax}];",
+        "Drop[lenpalsp,1](*a(n)=Drop[lenpalsp,1][[n]]*)"
+    ],
+    "program": [
+        "(PARI) firstsols(n) = {my(res = vector(n), i = 0, pi = [Pi, Pi], sols = [atan(1), atan(2)]); while(1, for(j = ceil(sols[1]), floor(sols[2]), i++; if(i>n, return(res)); res[i] = j); sols+=[Pi(), Pi()])} \\\\ A293698",
+        "diff(v) = vector(#v-1,i,v[i+1]-v[i]);",
+        "first(n) = {my(res = vector(n), m = 0, check = diff(firstsols(n+1))); for(i=1, n, for(j = 1, i - m, if(ispalindrome(check, j, i), m = i - j + 1; next(1))); res[i] = m); res}",
+        "ispalindrome(v, {llim = 1}, {ulim = #v}) = {for(i=0, (ulim - llim) \\ 2, if(v[llim + i]!=v[ulim - i], return(0))); 1} \\\\ _David A. Corneth_, Nov 25 2017",
+        "(Scheme)",
+        ";; This uses memoization-macro definec and assumes also that A293700 is available:",
+        "(definec (A293701 n) (if (= 1 n) n (let outloop ((k n)) (cond ((<= k (A293701 (- n 1))) (A293701 (- n 1))) (else (let inloop ((i n)) (let ((low-ind (+ 1 (- n k) (- n i)))) (cond ((< i low-ind) (max k (A293701 (- n 1)))) ((not (= (A293700 i) (A293700 low-ind))) (outloop (- k 1))) (else (inloop (- i 1)))))))))))",
+        ";; _Antti Karttunen_, Nov 25 2017"
+    ],
+    "xref": [
+        "Cf. A293698, A293699, A293700, A293702, A293703, A293704, A293705, A293706, A293751."
+    ],
+    "keyword": "nonn,easy,changed",
+    "offset": "1,3",
+    "author": "_V.J. Pohjola_, Oct 16 2017",
+    "references": 11,
+    "revision": 49,
+    "time": "2018-02-24T03:06:34-05:00",
+    "created": "2017-11-06T11:46:23-05:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 236559,
+    "data": "0,1,2,5,10,20,37,66,113,190,310,497,782,1212,1851,2793,4163,6142,8972,12989,18646,26561,37556,52743,73593,102064,140736,193011,263333,357521,483129,649960,870677,1161604,1543687,2043780,2696156,3544485,4644241,6065739",
+    "name": "Number of partitions of 2n of type EO (see Comments).",
+    "comment": [
+        "The partitions of n are partitioned into four types:",
+        "EO, even # of odd parts and odd  # of even parts, A236559;",
+        "OE, odd  # of odd parts and even # of even parts, A160786;",
+        "EE, even # of odd parts and even # of even parts, A236913;",
+        "OO, odd  # of odd parts and odd  # of even parts, A236914.",
+        "A236559 and A160786 are the bisections of A027193;",
+        "A236913 and A236914 are the bisections of A027187."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A236559/b236559.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "The partitions of 4 of type EO are [4] and [2,1,1], so that a(2) = 2.",
+        "type/k . 1 .. 2 .. 3 .. 4 .. 5 .. 6 .. 7 .. 8 ... 9 ... 10 .. 11",
+        "EO ..... 0 .. 1 .. 0 .. 2 .. 0 .. 5 .. 0 .. 10 .. 0 ... 20 .. 0",
+        "OE ..... 1 .. 0 .. 2 .. 0 .. 4 .. 0 .. 8 .. 0 ... 16 .. 0 ... 29",
+        "EE ..... 0 .. 1 .. 0 .. 3 .. 0 .. 6 .. 0 .. 12 .. 0 ... 22 .. 0",
+        "OO ..... 0 .. 0 .. 1 .. 0 .. 3 .. 0 .. 7 .. 0 ... 14 .. 0 ... 27"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, [1, 0$3],",
+        "      `if`(i<1, [0$4], b(n, i-1)+`if`(i>n, [0$4], (p->",
+        "      `if`(irem(i, 2)=0, [p[3], p[4], p[1], p[2]],",
+        "          [p[2], p[1], p[4], p[3]]))(b(n-i, i)))))",
+        "    end:",
+        "a:= n-> b(2*n$2)[3]:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Feb 16 2014"
+    ],
+    "mathematica": [
+        "z = 25; m1 = Map[Length[Select[Map[{Count[#, True], Count[#, False]} &,  OddQ[IntegerPartitions[2 #]]], EvenQ[(*Odd*)First[#]] && OddQ[(*Even*)Last[#]] &]] &, Range[z]]; m2 = Map[Length[Select[Map[{Count[#, True], Count[#, False]} &,       OddQ[IntegerPartitions[2 # - 1]]], OddQ[(*Odd*)First[#]] && EvenQ[(*Even*)Last[#]] &]] &, Range[z]]; m3 = Map[Length[Select[Map[{Count[#, True], Count[#, False]} &,",
+        "OddQ[IntegerPartitions[2 #]]], EvenQ[(*Odd*)First[#]] && EvenQ[(*Even*)Last[#]] &]] &, Range[z]] ; m4 = Map[Length[Select[Map[{Count[#, True], Count[#, False]} &,",
+        "OddQ[IntegerPartitions[2 # - 1]]], OddQ[(*Odd*)First[#]] && OddQ[(*Even*)Last[#]] &]] &, Range[z]];",
+        "m1 (* A236559, type EO*)",
+        "m2 (* A160786, type OE*)",
+        "m3 (* A236913, type EE*)",
+        "m4 (* A236914, type OO*)",
+        "(* _Peter J. C. Moses_, Feb 03 2014 *)",
+        "b[n_, i_] := b[n, i] = If[n==0, {1, 0, 0, 0}, If[i<1, {0, 0, 0, 0}, b[n, i - 1] + If[i>n, {0, 0, 0, 0}, Function[p, If[Mod[i, 2]==0, p[[{3, 4, 1, 2}]], p[[{2, 1, 4, 3}]]]][b[n-i, i]]]]]; a[n_] := b[2*n, 2*n][[3]]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Oct 27 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A160786, A236913, A236914, A000041, A027187, A027193."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Feb 01 2014",
+    "ext": [
+        "More terms from and definition corrected by _Alois P. Heinz_, Feb 16 2014"
+    ],
+    "references": 4,
+    "revision": 24,
+    "time": "2015-10-27T03:26:14-04:00",
+    "created": "2014-02-05T15:21:59-05:00"
+}

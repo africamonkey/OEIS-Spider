@@ -1,0 +1,37 @@
+{
+    "number": 185324,
+    "data": "0,1,2,7,34,215,1682,15727,171274,2130275,29799722,463123747,7916886514,147635940335,2982555226562,64888568231767,1512552803481754,37608099684426395,993530210286226202,27791008680163167787,820556749933610580994,25502885614554196884455",
+    "name": "E.g.f. log(1/(2-tan(x)-sec(x)).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A185324/b185324.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} (k-1)! * A147315(n,k).",
+        "a(n) ~ (n-1)! / (arctan(3/4))^n. - _Vaclav Kotesovec_, Aug 22 2014"
+    ],
+    "maple": [
+        "T:= proc(n,k) option remember;",
+        "      if k=n then 1",
+        "    elif k<0 or k>n then 0",
+        "    else T(n-1, k-1) +k*T(n-1,k) +k*(k+1)/2 *T(n-1, k+1)",
+        "      fi",
+        "    end:",
+        "a:= n-> add((k-1)! * T(n,k), k=1..n):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Feb 17 2011"
+    ],
+    "mathematica": [
+        "T[n_, k_] := T[n, k] = If[k==n, 1, If[k<0 || k>n, 0, T[n-1, k-1] + k*T[n-1, k] +  k*(k+1)/2*T[n-1, k+1]]]; a[n_] := Sum[(k-1)!*T[n, k], {k, 1, n}]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Apr 03 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Maxima) a[0]:0$a[1]:1$",
+        "a[n]:=sum((-1)^floor(p/2)*(mod(p+1,2)-(-1)^p*4^floor(p/2))*binomial(n-1,p)*a[n-p],p,1,n-1)-mod(n-1,2)*(%i)^n;",
+        "makelist(a[n],n,0,100); /* _Tani Akinari_, Oct 30 2017 */"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Vladimir Kruchinin_, Feb 17 2011",
+    "references": 1,
+    "revision": 28,
+    "time": "2017-10-30T23:00:53-04:00",
+    "created": "2011-01-25T22:47:42-05:00"
+}

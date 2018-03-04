@@ -1,0 +1,43 @@
+{
+    "number": 234849,
+    "data": "1,15,19,24,29,41,368,833,1582,12996,30527,105072,412282,571364,615279,641180,1213387,1635523,2603393,3505632,4289930,14230877,19306296,22032773,79279388,94146647,147017418,149333691,455566242,535859188,1429801665",
+    "name": "Positions of records in iterated MD5 applied to empty string",
+    "comment": [
+        "The MD5 message digest algorithm converts a string into a 128-bit number represented as a 32-digit lowercase hexadecimal string. Consider iterating this function starting with the empty string, MD5(\"\") = d41d8cd98f00b204e9800998ecf8427e, MD5^{(2)}(\"\") = MD5(\"d41d8cd98f00b204e9800998ecf8427e\") = 74be16979710d4c4e7c6647856088456.",
+        "The sequence gives the iteration numbers where a record value is achieved.",
+        "Because each iteration produces a 128-bit number, the sequence must be finite, although it is unknown what the maximum value attained by the above iteration is."
+    ],
+    "link": [
+        "Sean A. Irvine, <a href=\"/A234849/b234849.txt\">Table of n, a(n) for n = 1..35</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/MD5\">MD5</a>"
+    ],
+    "example": [
+        "a(2)=15 because MD5^{(15)}(\"\")=d4f6f4e928303d5361d83531beb5260f is larger than MD^{(n)}(\"\") for all n<15.",
+        "a(28)=149333691 because MD5^{(149333691)}(\"\")=fffffff5fedfdd0975cc5bbd15245b22 is larger than all preceding values."
+    ],
+    "program": [
+        "#!/bin/bash",
+        "function md5() {",
+        "    echo -n \"$1\" | md5sum - | gawk '{print $1}'",
+        "}",
+        "it=0",
+        "while :; do",
+        "    it=$[$it+1]",
+        "    prev=$(md5 \"$prev\")",
+        "    if [ \"$prev\" == \"$best\" ]; then",
+        "        echo \"Cycle detected\"",
+        "        exit",
+        "    elif [ \"$prev\" \\> \"$best\" ]; then",
+        "        best=$prev",
+        "        echo $it $prev",
+        "    fi",
+        "done"
+    ],
+    "keyword": "nonn,fini,nice",
+    "offset": "1,2",
+    "author": "_Sean A. Irvine_, Dec 31 2013",
+    "references": 1,
+    "revision": 9,
+    "time": "2014-01-20T10:24:19-05:00",
+    "created": "2014-01-20T10:24:19-05:00"
+}

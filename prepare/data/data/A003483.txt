@@ -1,0 +1,72 @@
+{
+    "number": 3483,
+    "id": "M2931",
+    "data": "1,1,1,3,12,60,270,1890,14280,128520,1096200,12058200,139043520,1807565760,22642139520,339632092800,5237183952000,89032127184000,1475427973219200,28033131491164800,543494606861606400,11413386744093734400,235075995738558374400,5406747901986842611200,126214560713084056012800",
+    "name": "Number of square permutations of n elements.",
+    "comment": [
+        "Number of permutations p in S_n such that there exists q in S_n with q^2=p.",
+        "\"A permutation P has a square root if and only if the numbers of cycles of P that have each even length are even numbers.\" [Theorem 4.8.1. on p.147 from the Wilf reference]. - _Joerg Arndt_, Sep 08 2014"
+    ],
+    "reference": [
+        "Edward A. Bender, Asymptotic methods in enumeration, SIAM Review 16 (1974), no. 4, 485-515.",
+        "J. Blum, Enumeration of the square permutations in S_n, J. Combin. Theory, A 17 (1974), 156-161.",
+        "N. Pouyanne, On the number of permutations admitting an m-th root, Electron. J. Combin., 9 (2002), #R3.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "R. P. Stanley, Enumerative Combinatorics, Cambridge, Vol. 2, 1999; see Problem 5.11.",
+        "H. S. Wilf, Generatingfunctionology, 3rd ed., A K Peters Ltd., Wellesley, MA, 2006, p. 157."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A003483/b003483.txt\">Table of n, a(n) for n = 0..250</a> (first 101 terms from N. J. A. Sloane)",
+        "Joseph Blum, <a href=\"/A003483/a003483.pdf\">Letters to N. J. A. Sloane, 1974</a>",
+        "Steven R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/csolve/erradd.pdf\">Errata and Addenda to Mathematical Constants</a>, p. 36.",
+        "P. Flajolet et al., <a href=\"http://arXiv.org/abs/math.CO/0606370\">A hybrid of Darboux's method and singularity analysis in combinatorial asymptotics</a>, arXiv:math.CO/0606370, p. 18, Proposition 2.",
+        "M. R. Pournaki, <a href=\"http://ajc.maths.uq.edu.au/pdf/45/ajc_v45_p037.pdf\">On the number of even permutations with roots</a>, The Australasian Journal of Combinatorics, Volume 45, 2009, pp. 37-42.",
+        "Bob Smith and N. J. A. Sloane, <a href=\"/A003483/a003483_1.pdf\">Correspondence, 1979</a>",
+        "H. S. Wilf, <a href=\"http://www.math.upenn.edu/~wilf/DownldGF.html\">Generatingfunctionology</a>, 2nd edn., Academic Press, NY, 1994, p. 148, Eq. 4.8.1."
+    ],
+    "formula": [
+        "E.g.f.: sqrt((1+x)/(1-x)) * prod(k>=1, cosh( x^(2*k)/(2*k) ) ). [Blum, corrected].",
+        "a(2n+1) = (2n+1)*a(2n).",
+        "Asymptotics: a(n) ~ n! * sqrt(2/(n*Pi)) * e^G, where e^G = prod_{k>=1} cosh(1/(2k)) ~ 1.22177951519253683396485298445636121278881... (see A246945). - corrected by _Vaclav Kotesovec_, Sep 13 2014",
+        "G = Sum_{j>=1} (-1)^(j+1) * Zeta(2*j)^2 * (1-1/2^(2*j)) / (j * Pi^(2*j)). - _Vaclav Kotesovec_, Sep 20 2014"
+    ],
+    "example": [
+        "a(3)=3: permutations with square roots are identity and two 3-cycles."
+    ],
+    "maple": [
+        "with(combinat):",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(`if`(irem(i, 2)=0 and irem(j, 2)=1, 0, (i-1)!^j*",
+        "      multinomial(n, n-i*j, i$j)/j!*b(n-i*j, i-1)), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Sep 08 2014"
+    ],
+    "mathematica": [
+        "max = 20; f[x_] := Sqrt[(1 + x)/(1 - x)]*  Product[ Cosh[x^(2*k)/(2*k)], {k, 1, max}]; se = Series[ f[x], {x, 0, max}]; CoefficientList[ se, x]*Range[0, max]! (* _Jean-Fran\u00e7ois Alcover_, Oct 05 2011, after g.f. *)",
+        "multinomial[n_, k_List] := n!/Times @@ (k!); b[n_, i_] := b[n, i] = If[n == 0, 1, If[i<1, 0, Sum[If[Mod[i, 2] == 0 && Mod[j, 2] == 1, 0, (i-1)!^j* multinomial[n, Join[{n-i*j}, Array[i&, j]]]/j!*b[n-i*j, i-1]], {j, 0, n/i}]]]; a[n_] := b[n, n]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Mar 23 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=66; x='x+O('x^66);",
+        "Vec(serlaplace( sqrt((1+x)/(1-x))*prod(k=1,N, cosh(x^(2*k)/(2*k)))))",
+        "\\\\ _Joerg Arndt_, Sep 08 2014"
+    ],
+    "xref": [
+        "Cf. A103619 (cube root), A103620 (fourth root), A215716 (fifth root), A215717 (sixth root), A215718 (seventh root).",
+        "Column k=2 of A247005.",
+        "Cf. A246945, A247621."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Mar 28 2001",
+        "Additional comments from _Michael Somos_, Jun 27, 2002",
+        "Minor edits by _Vaclav Kotesovec_, Sep 16 2014 and Sep 21 2014"
+    ],
+    "references": 19,
+    "revision": 69,
+    "time": "2017-06-21T00:33:09-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

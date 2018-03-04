@@ -1,0 +1,42 @@
+{
+    "number": 193021,
+    "data": "1,1,2,4,9,19,42,93,205,453,1003,2221,4918,10892,24126,53442,118384,262248,580946,1286953,2850965,6315712,13991153,30994539,68662111,152107038,336962513,746472721,1653660451,3663352982,8115423952,17978094917",
+    "name": "G.f.: A(x) = 1/(1 - x*(1+x)/(1 - x^2*(1+x)/(1 - x^3*(1+x)/(1 - x^4*(1+x)/(1 - ...))))), a continued fraction.",
+    "formula": [
+        "G.f.: A(x) = P(x)/Q(x) where",
+        "_ P(x) = Sum_{n>=0} x^(n*(n+1)) * (-1-x)^n / Product(k=1..n} (1-x^k),",
+        "_ Q(x) = Sum_{n>=0} x^(n^2) * (-1-x)^n / Product(k=1..n} (1-x^k),",
+        "due to Ramanujan's continued fraction identity.",
+        "a(n) ~ c * d^n, where d = 2.2152996327586394990264647692065917932114805328469811... and c = 0.35183326334197478337804661003215013650248042019243949... - _Vaclav Kotesovec_, Aug 25 2017"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 4*x^3 + 9*x^4 + 19*x^5 + 42*x^6 +...",
+        "which satisfies A(x) = P(x)/Q(x) where",
+        "P(x) = 1 - x^2*(1+x)/(1-x) + x^6*(1+x)^2/((1-x)*(1-x^2)) - x^12*(1+x)^3/((1-x)*(1-x^2)*(1-x^3)) + x^20*(1+x)^4/((1-x)*(1-x^2)*(1-x^3)*(1-x^4)) +...",
+        "Q(x) = 1 - x*(1+x)/(1-x) + x^4*(1+x)^2/((1-x)*(1-x^2)) - x^9*(1+x)^3/((1-x)*(1-x^2)*(1-x^3)) + x^16*(1+x)^4/((1-x)*(1-x^2)*(1-x^3)*(1-x^4)) +...",
+        "Explicitly, the above series begin:",
+        "P(x) = 1 - x^2 - 2*x^3 - 2*x^4 - 2*x^5 - x^6 + x^7 + 3*x^8 + 5*x^9 + 7*x^10 + 9*x^11 + 10*x^12 + 9*x^13 + 7*x^14 + 4*x^15 - x^16 - 7*x^17 - 14*x^18 +...",
+        "Q(x) = 1 - x - 2*x^2 - 2*x^3 - x^4 + x^5 + 3*x^6 + 5*x^7 + 7*x^8 + 8*x^9 + 7*x^10 + 5*x^11 + 2*x^12 - 3*x^13 - 9*x^14 - 16*x^15 - 24*x^16 - 30*x^17 +..."
+    ],
+    "mathematica": [
+        "nmax = 50; CoefficientList[Series[1/Fold[(1 - #2/#1) &, 1, Reverse[x^Range[nmax + 1]*(1+x)]], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Aug 25 2017 *)"
+    ],
+    "program": [
+        "(PARI) /* As a continued fraction: */",
+        "{a(n)=local(A=1+x, CF); CF=1+x; for(k=0, n, CF=1/(1-x^(n-k+1)*(1+x)*CF+x*O(x^n))); A=CF; polcoeff(A, n)}",
+        "(PARI) /* By Ramanujan's continued fraction identity: */",
+        "{a(n)=local(A=1+x, P, Q); for(i=1, n,",
+        "P=sum(m=0, sqrtint(n), x^(m*(m+1))/prod(k=1, m, 1-x^k)*(-1-x+x*O(x^n))^m);",
+        "Q=sum(m=0, sqrtint(n), x^(m^2)/prod(k=1, m, 1-x^k)*(-1-x+x*O(x^n))^m); A=P/Q); polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A005169, A192728."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jul 14 2011",
+    "references": 0,
+    "revision": 9,
+    "time": "2017-08-25T04:30:06-04:00",
+    "created": "2011-07-15T03:40:20-04:00"
+}

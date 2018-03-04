@@ -1,0 +1,58 @@
+{
+    "number": 27826,
+    "data": "1,1,2,4,9,21,50,120,290,706,1732,4280,10644,26612,66824,168384,425481,1077529,2733746,6945812,17669149,44994345,114682042,292544200,746831570,1907983346,4877966628,12479883736,31951158024,81858610968,209865391600,538408691456",
+    "name": "Inverse binomial transform of a_0 = 1, a_1, a_2, etc. is a_0, 0, a_1, 0, a_2, 0, etc.",
+    "comment": [
+        "The self-convolution equals A051163. - _Paul D. Hanna_, Nov 23 2004",
+        "Equals row sums of triangle A152193. - _Gary W. Adamson_, Nov 28 2008"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A027826/b027826.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies A(x^2) = A(x/(1+x))/(1+x) and A(x) = A(x^2/(1-x)^2)/(1-x).",
+        "The recursive formula A[n+1] = A[n](x^2/(1-x)^2)/(1-x), A[0]=1, yields exactly 2^n terms after n iterations: A(x) - A[n](x) = x^(2^n) + (2^n+1)*x^(2^n+1) + O(x^(2^n+2)). For example, A[4] = (1-x)^3*(1-2*x-x^2)/((1-2*x)(1-4*x+4*x^2-2*x^4)) = A(x) - x^16 - 17*x^17 + O(x^18). - _M. F. Hasler_, Aug 19 2015"
+    ],
+    "example": [
+        "Array of successive differences (col. 1 is the inverse binomial transform):",
+        "1, 1,  2,  4,  9, 21, 50, ...",
+        "0, 1,  2,  5, 12, 29, 70, ...",
+        "1, 1,  3,  7, 17, 41, ...",
+        "0, 2,  4, 10, 24, 59, ...",
+        "2, 2,  6, 14, 35, 87, ...",
+        "0, 4,  8, 21, 52, ...",
+        "4, 4, 13, 31, 79, ...",
+        "0, 9, 18, 48, ...",
+        "9, 9, 30, ...",
+        "..."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; add(`if`(k=0, 1,",
+        "      `if`(k::odd, 0, a(k/2)))*binomial(n, k), k=0..n)",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jul 08 2015"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = Sum[If[k == 0, 1, If[OddQ[k], 0, a[k/2]]]*Binomial[n, k], {k, 0, n}]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Jan 20 2017, translated from Maple *)"
+    ],
+    "program": [
+        "(PARI) a(n)=local(A,m); if(n<0,0,m=1; A=1+O(x); while(m<=n,m*=2; A=subst(A,x,(x/(1-x))^2)/(1-x)); polcoeff(A,n))",
+        "(PARI) a=List();for(n=1,100,listput(a,sum(i=1,n\\2,a[i]*binomial(n,2*i),1))) \\\\ _M. F. Hasler_, Aug 19 2015"
+    ],
+    "xref": [
+        "Cf. A051163.",
+        "Cf. A152193. - _Gary W. Adamson_, Nov 28 2008"
+    ],
+    "keyword": "nonn,eigen",
+    "offset": "0,3",
+    "author": "_Allan C. Wechsler_",
+    "ext": [
+        "Incorrect g.f. and formulas removed by _R. J. Mathar_, Oct 02 2012",
+        "Incorrect g.f.s removed by _Peter Bala_, Jul 07 2015"
+    ],
+    "references": 7,
+    "revision": 41,
+    "time": "2017-01-20T13:49:56-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

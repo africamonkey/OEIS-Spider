@@ -1,0 +1,40 @@
+{
+    "number": 213427,
+    "data": "1,1,2,6,18,74,314,1614,8650,52794,337410,2373822,17327770,136539154,1115206818,9671306438,86529147794,816066328602,7904640819682,80089651530566,832008919174434,8983256694817802,99219778649809162,1134999470682805134,13241030890523397154",
+    "name": "Number of ways of refining the partition n^1 to get 1^n.",
+    "comment": [
+        "Consider the ranked poset L(n) of partitions defined in A002846. Add additional edges from each partition to any other partition that is a refinement of it. In L(5), for example, we add edges from 5^1 to 31^2, 2^21, 21^3 and 1^5, from 41 to 21^3 and 1^5, and so on.",
+        "Then a(n) is the total number of paths in the augmented poset of any length from n^1 to 1^n."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A213427/b213427.txt\">Table of n, a(n) for n = 1..40</a>",
+        "Olivier G\u00e9rard, <a href=\"/A002846/a002846.png\">The ranked posets L(2),...,L(8)</a>"
+    ],
+    "maple": [
+        "b:= proc(l) option remember; local i, j, n, t; n:=nops(l);",
+        "      `if`(n<2, {[0]}, `if`(l[-1]=0, b(subsop(n=NULL, l)), {l,",
+        "      seq(`if`(l[i]=0, {}[], {seq(b([seq(l[t]-`if`(t=1, l[t],",
+        "      `if`(t=i, 1, `if`(t=j and t=i-j, -2, `if`(t=j or t=i-j,",
+        "      -1, 0)))), t=1..n)])[], j=1..i/2)}[]), i=2..n)}))",
+        "    end:",
+        "p:= proc(l) option remember;",
+        "      `if`(nops(l)=1, 1, add(p(x), x=b(l) minus {l}))",
+        "    end:",
+        "a:= n-> p([0$(n-1), 1]):",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Jun 12 2012"
+    ],
+    "xref": [
+        "Cf. A002846, A213242, A213385."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, Jun 11 2012",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jun 11 2012",
+        "Edited by _Alois P. Heinz_ at the suggestion of _Gus Wiseman_, May 02 2016"
+    ],
+    "references": 6,
+    "revision": 23,
+    "time": "2016-05-02T12:28:41-04:00",
+    "created": "2012-06-11T12:51:33-04:00"
+}

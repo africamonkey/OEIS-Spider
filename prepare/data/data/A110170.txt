@@ -1,0 +1,49 @@
+{
+    "number": 110170,
+    "data": "1,2,10,50,258,1362,7306,39650,217090,1196834,6634890,36949266,206549250,1158337650,6513914634,36718533570,207412854786,1173779487810,6653482333450,37770112857074,214694383882498,1221832400430482,6961037946938250,39697830840765090,226596964146630658",
+    "name": "First differences of the central Delannoy numbers (A001850).",
+    "comment": [
+        "Number of Delannoy paths of length n that do not start with a (1, 1) step (a Delannoy path of length n is a path from (0, 0) to (n, n), consisting of steps E = (1, 0), N = (0, 1) and D = (1, 1)). Example: a(1) = 2 because we have NE and EN. Column 0 of A110169 (also nonzero entries in each column of A110169).",
+        "For n > 0: a(n) = A128966(2*n,n). - _Reinhard Zumkeller_, Jul 20 2013"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A110170/b110170.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Robert A. Sulanke, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL6/Sulanke/delannoy.html\">Objects Counted by the Central Delannoy Numbers</a>, Journal of Integer Sequences, Volume 6, 2003, Article 03.1.5."
+    ],
+    "formula": [
+        "G.f.: (1-z)/sqrt(1-6*z+z^2).",
+        "a(n) = P_n(3) - P_{n-1}(3) (n >= 1), where P_j is j-th Legendre polynomial.",
+        "From _Paul Barry_, Oct 18 2009: (Start)",
+        "G.f.: (1-x)/(1-x-2x/(1-x-x/(1-x-x/(1-x-x/(1-... (continued fraction);",
+        "G.f.: 1/(1-2x/((1-x)^2-x/(1-x/((1-x)^2-x/(1-x/((1-x)^2-x/(1-... (continued fraction);",
+        "a(n) = sum{k = 0..n, (0^(n + k) + C(n + k - 1, 2k - 1)) * C(2k, k)} = 0^n + sum{k = 0..n, C(n + k - 1, 2k - 1) * C(2k, k)}. (End)",
+        "Recurrence: n*(2*n-3)*a(n) = 2*(6*n^2-12*n+5)*a(n-1) - (n-2)*(2*n-1)*a(n-2). - _Vaclav Kotesovec_, Oct 18 2012",
+        "a(n) ~ 2^(-1/4)*(3+2*sqrt(2))^n/sqrt(Pi*n). - _Vaclav Kotesovec_, Oct 18 2012",
+        "a(n) = A277919(2n,n). - _John P. McSorley_, Nov 23 2016",
+        "a(n) = 2*hypergeom([1 - n, -n], [1], 2) for n>0. - _Peter Luschny_, May 22 2017"
+    ],
+    "maple": [
+        "with(orthopoly): a:=proc(n) if n=0 then 1 else P(n,3)-P(n-1,3) fi end: seq(a(n),n=0..25);",
+        "a := n -> `if`(n=0, 1, 2*hypergeom([1 - n, -n], [1], 2)):",
+        "seq(simplify(a(n)), n=0..24); # _Peter Luschny_, May 22 2017"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1 - x)/Sqrt[1 - 6 * x + x^2], {x, 0, 20}], x] (* _Vaclav Kotesovec_, Oct 18 2012 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^66); Vec((1-x)/sqrt(1-6*x+x^2)) \\\\ _Joerg Arndt_, May 16 2013",
+        "(Haskell)",
+        "a110170 0 = 1",
+        "a110170 n = a128966 (2 * n) n  -- _Reinhard Zumkeller_, Jul 20 2013"
+    ],
+    "xref": [
+        "Cf. A001850, A110169."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Emeric Deutsch_, Jul 14 2005",
+    "references": 5,
+    "revision": 38,
+    "time": "2017-05-22T10:17:00-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

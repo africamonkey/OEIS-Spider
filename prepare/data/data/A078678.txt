@@ -1,0 +1,46 @@
+{
+    "number": 78678,
+    "data": "1,2,4,8,18,42,100,242,592,1460,3624,9042,22656,56970,143688,363348,920886,2338566,5949148,15157874,38674978,98803052,252701484,646990518,1658066668,4252908542,10917422860,28046438252,72099983802,185469011130",
+    "name": "Number of binary strings with n 1's and n 0's avoiding zigzags, that is avoiding the substrings 101 and 010.",
+    "comment": [
+        "Also number of Grand Dyck paths of length 2*n with no zigzags, that is, with no factors UDU or DUD. [_Emanuele Munarini_, Jul 07 2011]"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A078678/b078678.txt\">Table of n, a(n) for n = 0..220</a>",
+        "E. Munarini and N. Z. Salvi, <a href=\"http://www.mat.univie.ac.at/~slc/wpapers/s49zagaglia.html\">Binary strings without zigzags</a>, S\u00e9minaire Lotharingien de Combinatoire, B49h (2004), 15 pp.",
+        "R. Pemantle and M. C. Wilson, <a href=\"https://arxiv.org/abs/math/0512548\">Twenty Combinatorial Examples of Asymptotics Derived from Multivariate Generating Functions</a>, arXiv:math/0512548 [math.CO], 2007."
+    ],
+    "formula": [
+        "G.f.: sqrt( ( 1 + x + x^2 ) / ( 1 - 3*x + x^2 ) ).",
+        "a(n) = sum( binomial( n - k + 2*floor(k/3), floor(k/3) )^2, k=0..n+floor(n/2)).",
+        "a(n) = sum( binomial(n-k,k)^2*( 2*n^2 - 6*n*k + 6*k^2 )/(n-k)^2 ), k=0..floor(n/2) ).",
+        "Recurrence: 0 = (n+6)*a(n+6) - (n+7)*a(n+5) - 2*(n+5)*a(n+4) - 5*(n+3)*a(n+3) - 2*(n+1)*a(n+2) - (n-1)*a(n+1) + n*a(n).",
+        "a(n) ~ 2 * ((3+sqrt(5))/2)^n / (5^(1/4)*sqrt(Pi*n)). - _Vaclav Kotesovec_, Mar 21 2014",
+        "a(n) = [x^n y^n](1+x*y+x^2*y^2)/(1-x-y+x*y-x^2*y^2). - _Gheorghe Coserea_, Jul 18 2016"
+    ],
+    "example": [
+        "For n = 2 : 0011, 0110, 1001, 1100.",
+        "For n = 3 : 000111, 011001, 100011, 110001, 001110, 011100, 100110, 111000."
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[Series[Sqrt[(1 + x + x^2)/(1 - 3 x + x^2)], {x, 0, n}], n], {n, 0, 40}]"
+    ],
+    "program": [
+        "(Maxima) a(n):=coeff(taylor((1+x+x^2)/sqrt(1-2*x-x^2-2*x^3+x^4),x,0,n),x,n);",
+        "makelist(a(n),n,0,12); [Emanuele Munarini, Jul 07 2011]",
+        "(PARI) x='x+O('x^99); Vec(((1+x+x^2)/(1-3*x+x^2))^(1/2)) \\\\ _Altug Alkan_, Jul 18 2016"
+    ],
+    "xref": [
+        "Cf. A078679.",
+        "Cf. A003440.",
+        "Main diagonal of array A099172.",
+        "Related to diagonal of rational functions: A268545-A268555."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Emanuele Munarini_, Dec 17 2002",
+    "references": 6,
+    "revision": 24,
+    "time": "2016-12-11T03:56:32-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

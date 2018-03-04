@@ -1,0 +1,62 @@
+{
+    "number": 10785,
+    "data": "0,1,2,3,4,5,6,7,8,9,11,22,33,44,55,66,77,88,99,111,222,333,444,555,666,777,888,999,1111,2222,3333,4444,5555,6666,7777,8888,9999,11111,22222,33333,44444,55555,66666,77777,88888,99999,111111,222222,333333,444444,555555,666666",
+    "name": "Repdigit numbers, or numbers with repeated digits.",
+    "comment": [
+        "A037904(a(n)) = 0. - _Reinhard Zumkeller_, Dec 14 2007",
+        "Complement of A139819. - _David Wasserman_, May 21 2008",
+        "Subsequence of A134336 and of A178403; A178401(a(n))>0. - _Reinhard Zumkeller_, May 27 2010",
+        "For n > 0: A193459(a(n)) = A000005(a(n)), subsequence of A193460;",
+        "for n > 10: a(n) mod 10 = floor(a(n)/10) mod 10, A010879(n)=A010879(A059995(n)). - _Reinhard Zumkeller_, Jul 26 2011",
+        "A202022(a(n)) = 1. - _Reinhard Zumkeller_, Dec 09 2011",
+        "A151949(a(n)) = 0; A180410(a(n)) = A227362(a(n)). - _Reinhard Zumkeller_, Jul 09 2013",
+        "A047842(a(n)) = A244112(a(n)). - _Reinhard Zumkeller_, Nov 11 2014"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A010785/b010785.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Bart Goddard, Jeremy Rouse, <a href=\"http://arxiv.org/abs/1607.06681\">Sum of two repdigits a square</a>, arXiv:1607.06681 [math.NT], 2016. Mentions this sequence.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Repdigit.html\">Repdigit</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Repdigit\">Repdigit</a>",
+        "<a href=\"/index/Rec#order_18\">Index entries for linear recurrences with constant coefficients</a>, signature (0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, -10)."
+    ],
+    "formula": [
+        "a(0)=0, a(1)=1, a(2)=2, a(3)=3, a(4)=4, a(5)=5, a(6)=6, a(7)=7, a(8)=8, a(9)=9, a(10)=11, a(11)=22, a(12)=33, a(13)=44, a(14)=55, a(15)=66, a(16)=77, a(17)=88, a(n)=11*a(n-9)-10*a(n-18). - _Harvey P. Dale_, Dec 28 2011",
+        "a(n) = (n-9*floor((n-1)/9))*(10^floor((n+8)/9)-1)/9. - _Jos\u00e9 de Jes\u00fas Camacho Medina_, Nov 06 2014",
+        "G.f.: x*(9*x^8+8*x^7+7*x^6+6*x^5+5*x^4+4*x^3+3*x^2+2*x+1)/((x^9-1)*(10*x^9-1)). - _Robert Israel_, Nov 09 2014"
+    ],
+    "maple": [
+        "A010785 := proc(n)",
+        "    (n-9*floor(((n-1)/9)))*((10^(floor(((n+8)/9)))-1)/9) ;",
+        "end proc:",
+        "seq(A010785(n), n = 0 .. 100); # _Robert Israel_, Nov 09 2014"
+    ],
+    "mathematica": [
+        "fQ[n_]:=Module[{id=IntegerDigits[n]}, Length[Union[id]]==1]; Select[Range[0,10000], fQ] (* _Vladimir Joseph Stephan Orlovsky_, Dec 29 2010 *)",
+        "Union[FromDigits/@Flatten[Table[PadRight[{},i,n],{n,0,9},{i,6}],1]] (* or *) LinearRecurrence[{0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,-10},{0,1,2,3,4,5,6,7,8,9,11,22,33,44,55,66,77,88},40] (* _Harvey P. Dale_, Dec 28 2011 *)",
+        "Union@ Flatten@ Table[k (10^n - 1)/9, {k, 0, 9}, {n, 6}] (* _Robert G. Wilson v_, Oct 09 2014 *)",
+        "Table[(n - 9 Floor[(n - 1)/9]) (10^Floor[(n + 8)/9] - 1)/9, {n, 0, 50}]",
+        "(* _Jos\u00e9 de Jes\u00fas Camacho Medina_, Nov 06 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=10^((n+8)\\9)\\9*((n-1)%9+1) \\\\ _Charles R Greathouse IV_, Jun 15 2011",
+        "(PARI) nxt(n,t=n%10)=if(t<9,n*(t+1),n*10+9))\\t \\\\ Yields the term a(k+1) following a given term a(k)=n. _M. F. Hasler_, Jun 24 2016",
+        "(PARI) is(n)={1==#Set(digits(n))}",
+        "inv(n) = 9*#Str(n) + n%10 - 9 \\\\ _David A. Corneth_, Jun 24 2016",
+        "(Haskell)",
+        "a010785 n = a010785_list !! n",
+        "a010785_list = 0 : r [1..9] where",
+        "   r (x:xs) = x : r (xs ++ [10*x + x `mod` 10])",
+        "-- _Reinhard Zumkeller_, Jul 26 2011",
+        "(MAGMA) [(n-9*Floor((n-1)/9))*(10^Floor((n+8)/9)-1)/9: n in [0..50]]; // _Vincenzo Librandi_, Nov 10 2014"
+    ],
+    "xref": [
+        "Cf. A047842, A244112."
+    ],
+    "keyword": "nonn,base,easy,nice",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "references": 92,
+    "revision": 66,
+    "time": "2017-01-17T04:46:10-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

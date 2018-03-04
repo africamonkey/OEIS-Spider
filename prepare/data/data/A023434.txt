@@ -1,0 +1,57 @@
+{
+    "number": 23434,
+    "data": "0,1,1,2,3,4,6,8,11,15,20,27,36,48,64,85,113,150,199,264,350,464,615,815,1080,1431,1896,2512,3328,4409,5841,7738,10251,13580,17990,23832,31571,41823,55404,73395,97228,128800,170624,226029,299425,396654,525455",
+    "name": "Dying rabbits: a(n) = a(n-1) + a(n-2) - a(n-4).",
+    "comment": [
+        "lim n->inf a(n)/a(n-1) = positive root of 1+x-x^3 (smallest Pisot-Vijayaraghavan number, A060006). - _Gerald McGarvey_, Sep 19 2004",
+        "a(n) = number of distinct even run-types taken over nonempty subsets of [n+1]. The run-type of a set of positive integers is the sequence of lengths when the set is decomposed into maximal runs of consecutive integers and it is even if all its entries are even. For example, the set {2,3,5,6,9,10,11} has run-type (2,2,3) and a(6)=6 counts (2),(4),(6),(2,2),(2,4),(4,2). - _David Callan_, Jul 14 2006",
+        "Partial sums of the sequence obtained by deleting the first 2 terms of A000931. Example: 0+1+0+1+1 = 3 = a(4). - _David Callan_, Jul 14 2006",
+        "One less than the sequence obtained by deleting the first 7 terms of A000931. - _Ira M. Gessel_, May 02 2007",
+        "This sequence counts ordered partitions of (n-1) into parts less than or equal to 3, in which the order of 1's are unimportant. Alternately, the order of 2's and 3's are important (see example). - _David Neil McGrath_, Apr 26 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A023434/b023434.txt\">Table of n, a(n) for n = 0..7360</a>",
+        "O. Bouillot, <a href=\"http://www.math.u-psud.fr/~bouillot/OB_The_Algebra_of_Multitangent_Functions.pdf\">The Algebra of Multitangent Functions</a>, 2013.",
+        "J. H. E. Cohn, <a href=\"http://www.fq.math.ca/Scanned/2-2/cohn1.pdf\">Letter to the editor</a>, Fib. Quart. 2 (1964), 108.",
+        "V. E. Hoggatt, Jr. and D. A. Lind, <a href=\"http://www.fq.math.ca/Scanned/7-5/hoggatt.pdf\">The dying rabbit problem</a>, Fib. Quart. 7 (1969), 482-487.",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=1070\">Encyclopedia of Combinatorial Structures 1070</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,0,-1)."
+    ],
+    "formula": [
+        "a(n) = A000931(n+7)-1.",
+        "a(0)=0, a(1)=1, a(2)=1 then for n>2 a(n)=ceiling(r*a(n-1)) where r is the positive root of x^3-x-1=0. - _Benoit Cloitre_, Jun 19 2004",
+        "G.f.: x/((1-x)(1-x^2-x^3)). - _Jon Perry_, Jul 04 2004",
+        "For n>2 a(n) = floor(sqrt(a(n-3)*a(n-2) + a(n-2)*a(n-1) + a(n-1)*a(n-3))) + 1. - _Gerald McGarvey_, Sep 19 2004",
+        "a(n) = Sum_{1<=k<=(n+2)/3} binomial[Floor[(n+2-k)/2],k]. This formula counts even run-types by length. - _David Callan_, Jul 14 2006",
+        "a(n) = a(n-2) + a(n-3) + 1. - M. Dols (markdols(AT)yahoo.com), Feb 01 2010",
+        "a(n) + a(n+1) = A054405(n). Partial sums is A054405. - _Michael Somos_, Dec 01 2013",
+        "a(-3-n) = -A077905(n) for all n in Z. - _Michael Somos_, Sep 25 2014"
+    ],
+    "example": [
+        "G.f. = x + x^2 + 2*x^3 + 3*x^4 + 4*x^5 + 6*x^6 + 8*x^7 + 11*x^8 + ...",
+        "a(7)=8, with (n-1)=6. The partially ordered partitions of 6 are (33),(321,312,132=one),(231,213,123=one),(3111,1311,1131,1113=one),(222),(2211,1122,1221,2112,1212,2121=one),(21111,12111,11211,11121,11112=one),(111111). - _David Neil McGrath_, Apr 26 2015"
+    ],
+    "maple": [
+        "f:= gfun:-rectoproc({a(n)=a(n-1)+a(n-2)-a(n-4),seq(a(i)=[0,1,1,2][i+1],i=0..3)},a(n),remember):",
+        "seq(f(i),i=0..100); # _Robert Israel_, May 04 2015"
+    ],
+    "mathematica": [
+        "a=b=c=0;d=1;lst={c,d};Do[e=c+d-a;AppendTo[lst,e];a=b;b=c;c=d;d=e,{n,5!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Nov 30 2009 *)",
+        "a[ n_] := If[ n < 0, SeriesCoefficient[ -x^3 / (1 - x^2 - x^3 + x^4), {x, 0, -n}], SeriesCoefficient[ x / (1 - x - x^2 + x^4), {x, 0, n}]]; (* _Michael Somos_, Nov 29 2013 *)",
+        "LinearRecurrence[{1, 1, 0, -1}, {0, 1, 1, 2}, 50] (* _Vincenzo Librandi_, Apr 27 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoeff( if( n<0, -x^3 / (1 - x^2 - x^3 + x^4), x / (1 - x - x^2 + x^4)) + x * O(x^abs(n)), abs(n))}; /* _Michael Somos_, Nov 29 2013 */",
+        "(MAGMA) [0,1] cat [ n le 4 select (n) else Self(n-1)+Self(n-2)-Self(n-4): n in [1..45] ]; // _Vincenzo Librandi_, Apr 27 2015"
+    ],
+    "xref": [
+        "Cf. A000931, A054405, A060006, A077905."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "references": 11,
+    "revision": 76,
+    "time": "2017-04-18T07:03:16-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

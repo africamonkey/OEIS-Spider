@@ -1,0 +1,35 @@
+{
+    "number": 56938,
+    "data": "49,77,711,3379,31109,132393,344131,1731653,71143523,11115771019,31135742029,717261644891,11193431873899,116134799345907,3204751189066719,31068250396355573,62161149980213343,336906794442245927,734615161567701999,31318836286194043641",
+    "name": "Concatenate all the prime divisors in previous term (with repetition), starting at 49.",
+    "comment": [
+        "This is the search for the home prime for 49.",
+        "This sequence has now been followed for 117 steps without a prime being reached (after which of course it would simply repeat)."
+    ],
+    "link": [
+        "Patrick De Geest, <a href=\"/A056938/b056938.txt\">Table of n, a(n) for n = 1..119</a>",
+        "P. De Geest, <a href=\"http://www.worldofnumbers.com/topic1.htm\">Home Primes</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HomePrime.html\">Home Prime</a>"
+    ],
+    "mathematica": [
+        "g[n_] := (x = n; d = {}; While[FactorInteger[x] != {}, f = FactorInteger[x, FactorComplete -> True][[1, 1]]; x = x/f; AppendTo[d, IntegerDigits[f]]]; FromDigits[Flatten[d]]); NestList[g, 49, 25]",
+        "(* Second program: *)",
+        "NestList[FromDigits@ Flatten@ Map[IntegerDigits, FactorInteger[#] /. {p_, e_} /; p >= 1 :> If[p == 1, 1, ConstantArray[p, e]]] &, 49, 16] (* _Michael De Vlieger_, Apr 27 2017 *)"
+    ],
+    "program": [
+        "(PARI) a=vector(35); a[1]=49; for(k=2,length(a), f=factor(a[k-1]); for(i=1,matsize(f)[1], l=10^ceil(log(f[i,1])/log(10)); for(j=1,f[i,2], a[k]=a[k]*l+f[i,1]))) \\\\ _M. F. Hasler_, Mar 09 2007"
+    ],
+    "xref": [
+        "Cf. A006919, A037273, A037274, A037271, A238579."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Sep 05 2000",
+    "ext": [
+        "b-file updated by _Max Alekseyev_, Nov 28 2017"
+    ],
+    "references": 8,
+    "revision": 28,
+    "time": "2017-11-28T13:53:42-05:00",
+    "created": "2000-07-22T03:00:00-04:00"
+}

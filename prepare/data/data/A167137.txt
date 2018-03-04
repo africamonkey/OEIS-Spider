@@ -1,0 +1,37 @@
+{
+    "number": 167137,
+    "data": "1,1,5,31,257,2551,30065,407191,6214577,105530071,1972879025,40213910551,886979957297,21044674731991,534313527291185,14448883517785111,414475305054698417,12568507978358276311,401658204472560090545,13490011548122407566871,474964861088609044357937,17491333169997896126211031",
+    "name": "E.g.f.: P(exp(x)-1) where P(x) is the g.f. of the partition numbers (A000041).",
+    "comment": [
+        "CONJECTURE: Sum_{n>=0} a(n)^m * log(1+x)^n/n! is an integer series in x for all integer m>0; see A167138 and A167139 for examples."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} A000041(k)*Stirling2(n,k)*k! where A000041 is the partition numbers.",
+        "E.g.f.: exp( Sum_{n>=1} sigma(n)*[exp(x)-1]^n/n ).",
+        "Sum_{n>=0} a(n) * log(1+x)^n/n! = g.f. of the partition numbers (A000041).",
+        "Sum_{n>=0} a(n)^2*log(1+x)^n/n! = g.f. of A167138.",
+        "From _Peter Bala_, Sep 18 2013: (Start)",
+        "Sum {n >= 0} (-1)^n*a(n)*(log(1 - x))^n/n! = 1 + x + 3*x^2 + 8*x^3 + 21*x^4 + ... is the o.g.f. of A218482.",
+        "a(n) is always odd. Congruences for n >= 1: a(2*n) = 2 (mod 3); a(4*n) = 2 (mod 5); a(6*n) = 0 (mod 7); a(10*n) = 7 (mod 11); a(12*n) = 5 (mod 13); a(16*n) = 0 (mod 17). (End)"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 5*x^2/2! + 31*x^3/3! + 257*x^4/4! +...",
+        "A(log(1+x)) = P(x) = 1 + x + 2*x^2 + 3*x^3 + 5*x^4 + 7*x^5 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0,1,n!*polcoeff(exp(sum(m=1,n,sigma(m)*(exp(x+x*O(x^n))-1)^m/m) ),n))}",
+        "(PARI) {Stirling2(n, k)=if(k<0|k>n, 0, sum(i=0, k, (-1)^i*binomial(k, i)/k!*(k-i)^n))}",
+        "{a(n)=sum(k=0,n,numbpart(k)*Stirling2(n, k)*k!)}",
+        "(PARI) x='x+O('x^66); Vec( serlaplace( 1/eta(exp(x)-1) ) ) \\\\ _Joerg Arndt_, Sep 18 2013"
+    ],
+    "xref": [
+        "Cf. A167138, A000041, A019538 (Stirling2). A218482."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Nov 03 2009",
+    "references": 1,
+    "revision": 8,
+    "time": "2013-09-18T06:53:07-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

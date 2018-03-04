@@ -1,0 +1,50 @@
+{
+    "number": 242109,
+    "data": "2,2917,13457,15377,15877,21317,78401,147457,190097,215297,217157,287297,401957,414737,577601,1299601,1308737,1313317,1378277,1547537,1623077,1664101,1731857,1742401,1822501,1887877,1976837,2044901,2390117,2421137,2446097,2483777",
+    "name": "First of two consecutive (primes of the form n^2+1) with no semiprime of the same form between them.",
+    "example": [
+        "2 is in the sequence because there is no semiprime between the two primes 1^2 + 1 = 2 and 2^2 + 1 = 5 of the form k^2 + 1.",
+        "2917 is in the sequence because there is no semiprime between the two primes 54^2 + 1 = 2917 and 56^2 + 1 = 3127 : 55^2 + 1 = 3026 = 2*17*89 is not a semiprime."
+    ],
+    "maple": [
+        "with(numtheory):nn:=2000: lst:={}:",
+        "for n from 1 to nn do:",
+        "  if type(n^2+1,prime)=true",
+        "    then",
+        "    lst:=lst union {n}:",
+        "    else",
+        "  fi:",
+        "od:",
+        "n1:=nops(lst):",
+        "  for m from 1 to n1-1 do:",
+        "    i1:=lst[m]:i2:=lst[m+1]:ii:=0:",
+        "     for k from i1+1 to i2-1 do:",
+        "       x:=k^2+1:y:=factorset(x):",
+        "         if bigomega(x)=2 and nops(y)=2",
+        "         then",
+        "         ii:=ii+1:",
+        "         else",
+        "       fi:",
+        "    od:",
+        "    if ii=0",
+        "    then",
+        "    printf(`%d, `,i1^2+1):",
+        "    else",
+        "    fi:",
+        "od:"
+    ],
+    "program": [
+        "(PARI)",
+        "for(n=1,10^4,if(isprime(n^2+1),k=1;while(!isprime((n+k)^2+1),k++);c=0;for(i=1,k-1,d=factor((n+i)^2+1);s=sum(j=1,#d[,1],d[j,2]);if(s==2,c++;break));if(c==0,print1(n^2+1,\", \")))) \\\\ _Derek Orr_, Aug 15 2014"
+    ],
+    "xref": [
+        "Cf. A002496, A005574."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Aug 15 2014",
+    "references": 0,
+    "revision": 10,
+    "time": "2014-08-21T22:49:15-04:00",
+    "created": "2014-08-21T22:49:15-04:00"
+}

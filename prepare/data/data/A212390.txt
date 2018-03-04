@@ -1,0 +1,43 @@
+{
+    "number": 212390,
+    "data": "1,1,1,1,1,1,1,1,1,1,1,2,13,79,365,1366,4369,12377,31825,75583,167961,352718,705466,1352585,2501205,4495351,7956391,14221936,26802361,56058016,133316626,350785307,967683665,2677259721,7246005881,18977267621,47931495649",
+    "name": "Number of Dyck n-paths all of whose ascents have lengths equal to 1 (mod 10).",
+    "comment": [
+        "Lengths of descents are unrestricted."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A212390/b212390.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Vaclav Kotesovec, <a href=\"http://oeis.org/A212382/a212382.pdf\">Asymptotic of subsequences of A212382</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = 1+x*A(x)/(1-(x*A(x))^10).",
+        "a(n) ~ s^2 / (n^(3/2) * r^(n-1/2) * sqrt(2*Pi*p*(s-1)*(1+s/(1+p*(s-1))))), where p = 10 and r = 0.421937635689419083..., s = 1.885352542104400040... are roots of the system of equations r = p*(s-1)^2 / (s*(1-p+p*s)), (r*s)^p = (s-1-r*s)/(s-1). - _Vaclav Kotesovec_, Jul 16 2014"
+    ],
+    "example": [
+        "a(0) = 1: the empty path.",
+        "a(1) = 1: UD.",
+        "a(11) = 2: UDUDUDUDUDUDUDUDUDUDUD, UUUUUUUUUUUDDDDDDDDDDD.",
+        "a(12) = 13: UDUDUDUDUDUDUDUDUDUDUDUD, UDUUUUUUUUUUUDDDDDDDDDDD, UUUUUUUUUUUDDDDDDDDDDDUD, UUUUUUUUUUUDDDDDDDDDDUDD, UUUUUUUUUUUDDDDDDDDDUDDD, UUUUUUUUUUUDDDDDDDDUDDDD, UUUUUUUUUUUDDDDDDDUDDDDD, UUUUUUUUUUUDDDDDDUDDDDDD, UUUUUUUUUUUDDDDDUDDDDDDD, UUUUUUUUUUUDDDDUDDDDDDDD, UUUUUUUUUUUDDDUDDDDDDDDD, UUUUUUUUUUUDDUDDDDDDDDDD, UUUUUUUUUUUDUDDDDDDDDDDD."
+    ],
+    "maple": [
+        "b:= proc(x, y, u) option remember;",
+        "      `if`(x<0 or y<x, 0, `if`(x=0 and y=0, 1, b(x, y-1, true)+",
+        "      `if`(u, add(b(x-(10*t+1), y, false), t=0..(x-1)/10), 0)))",
+        "    end:",
+        "a:= n-> b(n$2, true):",
+        "seq(a(n), n=0..40);",
+        "# second Maple program:",
+        "a:= n-> coeff(series(RootOf(A=1+x*A/(1-(x*A)^10), A), x, n+1), x, n):",
+        "seq(a(n), n=0..40);"
+    ],
+    "xref": [
+        "Column k=10 of A212382."
+    ],
+    "keyword": "nonn",
+    "offset": "0,12",
+    "author": "_Alois P. Heinz_, May 12 2012",
+    "references": 2,
+    "revision": 17,
+    "time": "2016-03-06T22:18:22-05:00",
+    "created": "2012-05-13T17:07:56-04:00"
+}

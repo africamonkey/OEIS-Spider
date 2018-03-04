@@ -1,0 +1,33 @@
+{
+    "number": 281915,
+    "data": "1,7,19,20,22,25,28,36,77,107,110,175,789,1528,1932,3778,5200,7043,8077,38855,41234,44884,49468,204386,9423515",
+    "name": "4th power analog of Keith numbers.",
+    "comment": [
+        "Like Keith numbers but starting from n^4 digits to reach n.",
+        "Consider the digits of n^4. Take their sum and repeat the process deleting the first addend and adding the previous sum. The sequence lists the numbers that after some number of iterations reach a sum equal to n."
+    ],
+    "example": [
+        "175^4 = 937890625:",
+        "9 + 3 + 7 + 8 + 9 + 0 + 6 + 2 + 5 = 49;",
+        "3 + 7 + 8 + 9 + 0 + 6 + 2 + 5 + 49 = 89;",
+        "7 + 8 + 9 + 0 + 6 + 2 + 5 + 49 + 89 = 175."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q, h,w) local a, b, k, t, v; global n; v:=array(1..h);",
+        "for n from 1 to q do b:=n^w; a:=[];",
+        "for k from 1 to ilog10(b)+1 do a:=[(b mod 10), op(a)]; b:=trunc(b/10); od;",
+        "for k from 1 to nops(a) do v[k]:=a[k]; od; b:=ilog10(n^w)+1;",
+        "t:=nops(a)+1; v[t]:=add(v[k], k=1..b); while v[t]<n do t:=t+1; v[t]:=add(v[k], k=t-b..t-1);",
+        "od; if v[t]=n then print(n); fi; od; end: P(10^6,10000,4);"
+    ],
+    "xref": [
+        "Cf. A007629, A246544, A263534, A274769, A274770, A281916 - A281921."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Feb 02 2017",
+    "references": 5,
+    "revision": 12,
+    "time": "2017-07-26T23:30:19-04:00",
+    "created": "2017-02-04T14:28:07-05:00"
+}

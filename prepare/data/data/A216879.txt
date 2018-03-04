@@ -1,0 +1,53 @@
+{
+    "number": 216879,
+    "data": "1,2,6,24,110,540,2772,14704,79974,443594,2499640,14269320,82346004,479604748,2815557264,16643093712,98974828886,591742372068,3554708076858,21444913596408,129870710693976,789237890852160,4811481299622276,29417496447990096,180337119342194820",
+    "name": "G.f. satisfies: A(x) = sqrt( theta_3(x*A(x)) / theta_4(x*A(x)) ).",
+    "comment": [
+        "Here theta_3(x) = 1 + 2*Sum_{n>=1} x^(n^2) and theta_4(x) = 1 + 2*Sum_{n>=1} (-x)^(n^2) are Jacobi theta functions.",
+        "The radius of convergence r of g.f. A(x) is given by",
+        "r = 0.15335406881552899483841215094726329935743212998703... with",
+        "A(r) = 2.14877235788136654366723937779352044712735012012453...",
+        "such that G(y) = y*G'(y) = A(r) at y = r*A(r) = 0.3295229840394455820300...",
+        "where G(x) = sqrt(theta_3(x)/theta_4(x))."
+    ],
+    "formula": [
+        "G.f. satisfies the identities:",
+        "(1) A(x) = 1 / A(-x*A(x)^2).",
+        "(2) A(x) = eta(-x*A(x))^2 * eta(x^4*A(x)^4) / eta(x^2*A(x)^2)^3.",
+        "(3) A(x) = exp( 2*Sum_{n>=1} sigma(2*n-1) * (x*A(x))^(2*n-1) / (2*n-1) ).",
+        "(4) A(x) = 1 / Product_{n>=1} (1 + (x*A(x))^(2*n)) * (1 - (x*A(x))^(2*n-1))^2.",
+        "(5) A(x) = Product_{n>=1} (1 + (x*A(x))^(2*n-1)) * (1 + (x*A(x))^n).",
+        "(6) A(x) = Product_{n>=1} (1 + (x*A(x))^(2*n-1)) / (1 - (x*A(x))^(2*n-1)).",
+        "(7) A(x) = Product_{n>=1} (1 - (x*A(x))^(4*n-2)) / ((1 - (x*A(x))^(4*n-1))*(1 - (x*A(x))^(4*n-3)))^2.",
+        "(8) A(x) = 1/(1 - 2*q/(1+q - q^2*(1-q^2)/(1+q^3 - q^3*(1-q^4)/(1+q^5 - q^4*(1-q^6)/(1+q^7 - ...))))), a continued fraction, where q = x*A(x).",
+        "(9) A(x) = (1/x)*Series_Reversion( x*sqrt(theta_4(x)/theta_3(x)) ).",
+        "(10) A(x/G(x)) = G(x) where G(x) = sqrt(theta_3(x)/theta_4(x)) is the g.f. of A080054.",
+        "Special value: A(exp(-Pi)/2^(1/8)) = 2^(1/8).",
+        "a(n) = [x^n] ( theta_3(x) / theta_4(x) )^((n+1)/2) / (n+1)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 6*x^2 + 24*x^3 + 110*x^4 + 540*x^5 + 2772*x^6 +...",
+        "such that, by definition, the g.f. satisfies:",
+        "A(x) = sqrt( (1 + 2*Sum_{n>=1} (x*A(x))^(n^2) ) / (1 + 2*Sum_{n>=1} (-x*A(x))^(n^2) ) )."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=sqrt((1+2*sum(m=1,sqrtint(n)+1,(x*A)^(m^2)))/(1+2*sum(m=1,sqrtint(n)+1,(-x*A)^(m^2)))));polcoeff(A,n)}",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=eta(-x*A)^2*eta(x^4*A^4)/eta(x^2*A^2)^3);polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=exp(2*sum(n=1,n,sigma(2*n-1)*(x*A)^(2*n-1)/(2*n-1))));polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=1/prod(m=1,n,(1+(x*A)^(2*m))*(1-(x*A)^(2*m-1))^2));polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=prod(m=1,n,(1+(x*A)^(2*m-1))*(1+(x*A)^m)));polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=prod(m=1,n,(1+(x*A)^(2*m-1))/(1-(x*A)^(2*m-1))));polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n));for(i=1,n,A=prod(m=1,n,(1-(x*A)^(4*m-2))/((1-(x*A)^(4*m-1))*(1-(x*A)^(4*m-3)))^2));polcoeff(A,n)}"
+    ],
+    "xref": [
+        "Cf. A080054."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Sep 18 2012",
+    "references": 0,
+    "revision": 17,
+    "time": "2012-09-20T00:18:37-04:00",
+    "created": "2012-09-19T21:31:19-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 77420,
+    "data": "1,33,1121,38081,1293633,43945441,1492851361,50713000833,1722749176961,58522759015841,1988051057361633,67535213191279681,2294209197446147521,77935577499977736033,2647515425801796877601",
+    "name": "Bisection of Chebyshev sequence T(n,3) (odd part) with Diophantine property.",
+    "comment": [
+        "(3*a(n))^2 - 2*(2*b(n))^2 = 1 with companion sequence b(n)= A046176(n+1), n>=0 (special solutions of Pell equation)."
+    ],
+    "reference": [
+        "S Vidhyalakshmi, V Krithika, K Agalya, On The Negative Pell Equation, International Journal of Emerging Technologies in Engineering Research (IJETER), Volume 4, Issue 2, February (2016) www.ijeter.everscience.org,"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A077420/b077420.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "<a href=\"/index/Ch#Cheby\">Index entries for sequences related to Chebyshev polynomials.</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (34,-1)."
+    ],
+    "formula": [
+        "a(n) = 34*a(n-1) - a(n-2), a(-1)=1, a(0)=1.",
+        "a(n) = T(2*n+1, 3)/3 = S(n, 34) - S(n-1, 34), with S(n, x) := U(n, x/2), resp. T(n, x), Chebyshev's polynomials of the second, resp. first, kind. See A049310 and A053120. S(-1, x)=0, S(n, 34)= A029547(n), T(n, 3)=A001541(n).",
+        "G.f.: (1-x)/(1-34*x+x^2).",
+        "a(n) = sqrt(8*A046176(n+1)^2 + 1)/3.",
+        "a(n) = (k^n)+(k^(-n))-a(n-1) = A003499(2n)-a(n-1)), where k = (sqrt(2)+1)^4 = 17+12*sqrt(2) and a(0)=1. - _Charles L. Hohn_, Apr 05 2011",
+        "a(n) = a(-n-1) = A029547(n)-A029547(n-1) = ((1+sqrt(2))^(4n+2)+(1-sqrt(2))^(4n+2))/6. - _Bruno Berselli_, Nov 22 2011"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{34,-1},{1,33},20] (* _Vincenzo Librandi_, Nov 22 2011 *)",
+        "a[c_, n_] := Module[{},",
+        "   p := Length[ContinuedFraction[ Sqrt[ c]][[2]]];",
+        "   d := Denominator[Convergents[Sqrt[c], n p]];",
+        "   t := Table[d[[1 + i]], {i, 0, Length[d] - 1, p}];",
+        "   Return[t];",
+        "] (* Complement of A041027 *)",
+        "a[18, 20] (* _Gerry Martens_, Jun 07 2015 *)"
+    ],
+    "program": [
+        "(MAGMA) I:=[1,33]; [n le 2 select I[n] else 34*Self(n-1)-Self(n-2): n in [1..20]]; // Vincenzo Librandi, Nov 22 2011",
+        "(PARI) Vec((1-x)/(1-34*x+x^2)+O(x^99)) \\\\ _Charles R Greathouse IV_, Nov 22 2011",
+        "(Maxima) makelist(expand(((1+sqrt(2))^(4*n+2)+(1-sqrt(2))^(4*n+2))/6),n,0,14);  /* _Bruno Berselli, Nov 22 2011 */"
+    ],
+    "xref": [
+        "Cf. A056771 (even part).",
+        "Row 34 of array A094954.",
+        "Row 3 of array A188646.",
+        "Cf. similar sequences listed in A238379."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Wolfdieter Lang_, Nov 29 2002",
+    "references": 11,
+    "revision": 40,
+    "time": "2017-01-16T19:03:38-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

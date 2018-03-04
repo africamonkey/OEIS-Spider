@@ -1,0 +1,46 @@
+{
+    "number": 161132,
+    "data": "1,1,1,4,14,78,426,3216,24024,229080,2170680,25022880,287250480,3884393520,52370755920,812752093440,12585067447680,220448163358080,3854801333416320,75225258805132800,1465957162768492800,31537353006189676800,677696237345719468800",
+    "name": "Number of permutations of {1,2,...,n} that have no even fixed points.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A161132/b161132.txt\">Table of n, a(n) for n = 0..450</a>"
+    ],
+    "formula": [
+        "a(n) = Sum[d(n-j)*binom(ceil(n/2), j), j=0..ceil(n/2)], where d(i) = A000166(i) are the derangement numbers.",
+        "a(n) = Sum[(-1)^(j)*binomial(floor(n/2),j)*(n-j)!, j=0..floor(n/2)].",
+        "a(n) = A267383(n,ceiling(n/2)). - _Alois P. Heinz_, Jan 13 2016",
+        "a(n) ~ exp(-1/2) * n!. - _Vaclav Kotesovec_, Feb 18 2017"
+    ],
+    "example": [
+        "a(3)=4 because we have 132, 312, 213, and 231."
+    ],
+    "maple": [
+        "d[0] := 1: for n to 25 do d[n] := n*d[n-1]+(-1)^n end do: a := proc (n) options operator, arrow: add(d[n-j]*binomial(ceil((1/2)*n), j), j = 0 .. ceil((1/2)*n)) end proc: seq(a(n), n = 0 .. 22);",
+        "a := proc (n) options operator, arrow: add((-1)^j*binomial(floor((1/2)*n), j)*factorial(n-j), j = 0 .. floor((1/2)*n)) end proc; seq(a(n), n = 0 .. 22); # _Emeric Deutsch_, Jul 18 2009"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[Subfactorial[n-j]*Binomial[Ceiling[n/2], j], {j, 0, Ceiling[ n/2]}]; Table[a[n], {n, 0, 22}] (* _Jean-Fran\u00e7ois Alcover_, Feb 19 2017 *)"
+    ],
+    "program": [
+        "(PARI)for (n=0, 30, print1(sum(j=0, floor(n/2), (-1)^j*binomial(floor(n/2),j)*(n - j)!),\", \")) \\\\ _Indranil Ghosh_, Mar 08 2017",
+        "(Python)",
+        "import math",
+        "f=math.factorial",
+        "def C(n, r): return f(n)/ f(r)/ f(n - r)",
+        "def A161132(n):",
+        "....s=0",
+        "....for j in range(0, (n/2)+1):",
+        "........s+=(-1)**j*C(n/2, j)*f(n - j)",
+        "....return s # _Indranil Ghosh_, Mar 08 2017"
+    ],
+    "xref": [
+        "Cf. A000166, A161131, A267383."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Emeric Deutsch_, Jul 18 2009",
+    "references": 6,
+    "revision": 19,
+    "time": "2017-03-08T10:24:42-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

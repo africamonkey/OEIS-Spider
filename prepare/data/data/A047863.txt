@@ -1,0 +1,66 @@
+{
+    "number": 47863,
+    "data": "1,2,6,26,162,1442,18306,330626,8488962,309465602,16011372546,1174870185986,122233833963522,18023122242478082,3765668654914699266,1114515608405262434306,467221312005126294077442,277362415313453291571118082",
+    "name": "Number of labeled graphs with 2-colored nodes where black nodes are only connected to white nodes and vice versa.",
+    "comment": [
+        "Row sums of A111636. - _Peter Bala_, Sep 30 2012",
+        "Column 2 of Table 2 in Read. - _Peter Bala_, Apr 11 2013",
+        "It appears that 5 does not divide a(n), that a(n) is even for n>0, that 3 divides a(2n) for n>0, that 7 divides a(6n+5), and that 13 divides a(12n+3). - _Ralf Stephan_, May 18 2013"
+    ],
+    "reference": [
+        "H. S. Wilf, Generatingfunctionology, Academic Press, NY, 1990, p. 79, Eq. 3.11.2."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A047863/b047863.txt\">Table of n, a(n) for n = 0..50</a>",
+        "P. J. Cameron, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/groups.html\">Sequences realized by oligomorphic permutation groups</a>, J. Integ. Seqs. Vol. 3 (2000), #00.1.5.",
+        "S. R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/\">Bipartite, k-colorable and k-colored graphs</a>",
+        "A. Gainer-Dewar and I. M. Gessel, <a href=\"http://arxiv.org/abs/1304.0139\">Enumeration of bipartite graphs and bipartite blocks</a>, arXiv:1304.0139 [math.CO], 2013.",
+        "D. A. Klarner, <a href=\"/A000798/a000798_11.pdf\">The number of graded partially ordered sets</a>, J. Combin. Theory, 6 (1969), 12-19. [Annotated scanned copy]",
+        "Y. Puri and T. Ward, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL4/WARD/short.html\">Arithmetic and growth of periodic orbits</a>, J. Integer Seqs., Vol. 4 (2001), #01.2.1.",
+        "R. C. Read, <a href=\"http://cms.math.ca/10.4153/CJM-1960-035-0\">The number of k-colored graphs on labelled nodes</a>, Canad. J. Math., 12 (1960), 410-414.",
+        "R. P. Stanley, <a href=\"http://www-math.mit.edu/~rstan/pubs/pubfiles/18.pdf\">Acyclic orientation of graphs</a> Discrete Math. 5 (1973), 171-178. North Holland Publishing Company.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/k-ColorableGraph.html\">k-Colorable Graph</a>",
+        "H. S. Wilf, <a href=\"http://www.math.upenn.edu/~wilf/DownldGF.html\">Generatingfunctionology</a>, 2nd edn., Academic Press, NY, 1994, p. 88, Eq. 3.11.2."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} binomial(n, k)*2^(k*(n-k)).",
+        "a(n) = 4 * A000683(n) + 2. - _Vladeta Jovovic_, Feb 02 2000",
+        "E.g.f.: Sum_{n>=0} exp(2^n*x)*x^n/n!. - _Paul D. Hanna_, Nov 27 2007",
+        "O.g.f.: Sum_{n>=0} x^n/(1 - 2^n*x)^(n+1). - _Paul D. Hanna_, Mar 08 2008",
+        "From _Peter Bala_, Apr 11 2013: (Start)",
+        "Let E(x) = Sum_{n >= 0} x^n/(n!*2^C(n,2)) = 1 + x + x^2/(2!*2) + x^3/(3!*2^3) + .... Then a generating function is E(x)^2 = 1 + 2*x + 6*x^2/(2!*2) + 26*x^3/(3!*2^3) + .... In general, E(x)^k, k = 1, 2, ..., is a generating function for labeled k-colored graphs (see Stanley). For other examples see A191371 (k = 3) and A223887 (k = 4).",
+        "If A(x) = 1 + 2*x + 6*x^2/2! + 26*x^3/3! + ... denotes the e.g.f. for this sequence then sqrt(A(x)) = 1 + x + 2*x^2/2! + 7*x^3/3! + ... is the e.g.f. for A047864, which counts labeled 2-colorable graphs. (End)",
+        "a(n) ~ c * 2^(n^2/4+n+1/2)/sqrt(Pi*n), where c = Sum_{k = -infinity..infinity} 2^(-k^2) = EllipticTheta[3, 0, 1/2] = 2.128936827211877... if n is even and c = Sum_{k = -infinity..infinity} 2^(-(k+1/2)^2) = EllipticTheta[2, 0, 1/2] = 2.12893125051302... if n is odd. - _Vaclav Kotesovec_, Jun 24 2013"
+    ],
+    "example": [
+        "For n=2, {1,2 black, not connected}, {1,2 white, not connected}, {1 black, 2 white, not connected}, {1 black, 2 white, connected}, {1 white, 2 black, not connected}, {1 white, 2 black, connected}.",
+        "G.f. = 1 + 2*x + 6*x^2 + 26*x^3 + 162*x^4 + 1442*x^5 + 18306*x^6 + ..."
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[n,k]2^(k(n-k)),{k,0,n}],{n,0,20}] (* _Harvey P. Dale_, May 09 2012 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(sum(k=0,n,exp(2^k*x +x*O(x^n))*x^k/k!),n)} \\\\ _Paul D. Hanna_, Nov 27 2007",
+        "(PARI) {a(n)=polcoeff(sum(k=0, n, x^k/(1-2^k*x +x*O(x^n))^(k+1)), n)} \\\\ _Paul D. Hanna_, Mar 08 2008",
+        "(PARI) N=66; x='x+O('x^N); egf = sum(n=0, N, exp(2^n*x)*x^n/n!);",
+        "Vec(serlaplace(egf))  \\\\ _Joerg Arndt_, May 04 2013",
+        "(Python)",
+        "from sympy import binomial",
+        "def a(n): return sum([binomial(n, k)*2**(k*(n - k)) for k in xrange(n + 1)]) # _Indranil Ghosh_, Jun 03 2017"
+    ],
+    "xref": [
+        "Cf. A001831, A002031, A052332.",
+        "Cf. A135079 (variant).",
+        "Cf. A111636. A033995, A047864, A191371, A223887."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Better description from _Christian G. Bower_, Dec 15 1999"
+    ],
+    "references": 33,
+    "revision": 62,
+    "time": "2017-06-28T02:10:01-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

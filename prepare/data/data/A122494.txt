@@ -1,0 +1,33 @@
+{
+    "number": 122494,
+    "data": "4,8,16,27,32,64,81,128,243,256,512,729,1024,2048,2187,3125,4096,6561,8192,15625,16384,19683,32768,46656,59049,65536,78125,131072,177147,262144,279936,390625,524288,531441,823543,1048576,1594323,1679616",
+    "name": "Set of numbers of the form a^b with 2<=a<=b (rare powers?), sorted.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A122494/b122494.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "279936 is there because it is 6^7."
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert)",
+        "a122494 n = a122494_list !! (n-1)",
+        "a122494_list = f (singleton (4, 2)) 27 [3..] where",
+        "   f s uu us@(u:us'@(u':_))",
+        "     | vv > uu = uu : f (insert (uu * u, u) s) (u' ^ u') us'",
+        "     | vv < uu = vv : f (insert (vv * v, v) s') uu us",
+        "     | otherwise = vv : f (insert (vv * v, v) s') (u' ^ u') us'",
+        "     where ((vv, v), s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, May 01 2015"
+    ],
+    "xref": [
+        "Subsequences: A000312, A257278."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Paul Stoeber (pstoeber(AT)uni-potsdam.de), Sep 16 2006",
+    "references": 3,
+    "revision": 4,
+    "time": "2015-05-01T09:43:01-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

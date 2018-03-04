@@ -1,0 +1,32 @@
+{
+    "number": 63980,
+    "data": "23,29,59,61,67,71,79,83,109,137,139,149,193,227,233,239,251,257,269,271,277,293,307,311,317,359,379,383,389,397,401,419,431,449,461,463,467,479,499,503,521,557,563,569,571,577,593,599,601,607",
+    "name": "Pillai primes: p such that there exists an integer m such that m!+1 is 0 mod p and p is not 1 mod m.",
+    "comment": [
+        "Hardy & Subbarao prove that this sequence is infinite. An upper bound can be extracted from their proof: a(n) < e^e^...^e^O(n log n) with e appearing n times. This tetrational bound could be improved with results on the disjointness of the factorizations of numbers of the form k! + 1. - _Charles R Greathouse IV_, Sep 15 2015"
+    ],
+    "link": [
+        "T. D. Noe and Charles R Greathouse IV, <a href=\"/A063980/b063980.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from T. D. Noe)",
+        "G. E. Hardy and M. V. Subbarao, <a href=\"http://www.math.ualberta.ca/~subbarao/documents/2002_Pillai.pdf\">A modified problem of Pillai and some related questions</a>, Amer. Math. Monthly 109:6 (2002), pp. 554-559."
+    ],
+    "mathematica": [
+        "ok[p_] := (r = False; Do[If[Mod[m! + 1, p] == 0 && Mod[p, m] != 1, r = True; Break[]], {m, 2, p}]; r); Select[Prime /@ Range[111], ok] (* _Jean-Fran\u00e7ois Alcover_, Apr 22 2011 *)",
+        "nn=1000; fact=1+Rest[FoldList[Times,1,Range[nn]]]; t={}; Do[p=Prime[i]; m=2; While[m<p && !(Mod[p,m]!=1 && Mod[fact[[m]],p]==0), m++]; If[m<p, AppendTo[t,p]], {i,2,PrimePi[nn]}]; t (* _T. D. Noe_, Apr 22 2011 *)"
+    ],
+    "program": [
+        "(PARI) is(p)=my(t=Mod(5040,p)); for(m=8, p-2, t*=m; if(t==-1 && p%m!=1, return(isprime(p)))); 0 \\\\ _Charles R Greathouse IV_, Feb 10 2013"
+    ],
+    "xref": [
+        "Smallest m is given in A063828, largest in A211411."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_R. K. Guy_, Sep 08 2001",
+    "ext": [
+        "More terms from _David W. Wilson_, Sep 08 2001"
+    ],
+    "references": 6,
+    "revision": 40,
+    "time": "2015-09-16T03:44:55-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

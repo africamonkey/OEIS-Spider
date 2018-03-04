@@ -1,0 +1,47 @@
+{
+    "number": 258116,
+    "data": "1,2,5,10,11,17,22,23,31,34,41,46,47,55,59,62,67,73,82,83,85,94,97,103,109,110,115,118,127,134,137,146,149,155,157,166,167,170,179,187,191,194,197,205,206,211,218,227,230,233,235,241,253,254,257,269,274,277,283,295,298,307,310,313,314,331,334,335,341,347",
+    "name": "The Heinz numbers in increasing order of the partitions into distinct odd parts.",
+    "comment": [
+        "We define the Heinz number of a partition p = [p_1, p_2, ..., p_r] as Product(p_j-th prime, j=1...r) (concept used by Alois P. Heinz in A215366 as an \"encoding\" of a partition). For example, the Heinz number of the partition [1, 1, 2, 4, 10] is 2*2*3*7*29 = 2436.",
+        "In the Maple program the subprogram B yields the partition with Heinz number n.",
+        "More terms are obtained if one replaces the 350 in the Maple program by a larger number."
+    ],
+    "reference": [
+        "G. E. Andrews, The Theory of Partitions, Addison-Wesley, Reading, Mass. 1976.",
+        "G. E. Andrews, K. Eriksson, Integer Partitions, Cambridge Univ. Press, 2004, Cambridge."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A258116/b258116.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "170 is in the sequence because it is the Heinz number of the partition [1,3,7]; indeed, (1st prime)*(3rd prime)*(7th prime) = 2*5*17 = 170."
+    ],
+    "maple": [
+        "with(numtheory): B := proc (n) local pf: pf := op(2, ifactors(n)): [seq(seq(pi(op(1, op(i, pf))), j = 1 .. op(2, op(i, pf))), i = 1 .. nops(pf))] end proc: DO := {}: for q to 350 do if `and`(nops(B(q)) = nops(convert(B(q), set)), map(type, convert(B(q), set), odd) = {true}) then DO := `union`(DO, {q}) else  end if end do: DO;",
+        "# second Maple program:",
+        "a:= proc(n) option remember; local k;",
+        "      for k from 1+`if`(n=1, 0, a(n-1)) do",
+        "        if not false in map(i-> i[2]=1 and numtheory",
+        "        [pi](i[1])::odd, ifactors(k)[2]) then break fi",
+        "      od; k",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, May 10 2016"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = Module[{k}, For[k = 1 + If[n == 1, 0, a[n-1]], True, k++, If[AllTrue[FactorInteger[k], #[[2]] == 1 && OddQ[PrimePi[#[[1]]]]&], Break[]]]; k]; Join[{1}, Array[a, 100]] (* _Jean-Fran\u00e7ois Alcover_, Dec 10 2016 after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A215366, A258117."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Emeric Deutsch_, May 20 2015",
+    "ext": [
+        "a(1)=1 inserted by _Alois P. Heinz_, May 10 2016"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2016-12-10T06:24:08-05:00",
+    "created": "2015-05-24T13:09:51-04:00"
+}

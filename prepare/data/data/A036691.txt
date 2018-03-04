@@ -1,0 +1,50 @@
+{
+    "number": 36691,
+    "data": "1,4,24,192,1728,17280,207360,2903040,43545600,696729600,12541132800,250822656000,5267275776000,115880067072000,2781121609728000,69528040243200000,1807729046323200000,48808684250726400000,1366643159020339200000",
+    "name": "Compositorial numbers: product of first n composite numbers.",
+    "comment": [
+        "a(A196415(n)) = A141092(n) * A053767(A196415(n)). - _Reinhard Zumkeller_, Oct 03 2011",
+        "For n>11, A000142(n) < a(n) < A002110(n). - _Chayim Lowen_, Aug 18 2015"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A036691/b036691.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "From _Chayim Lowen_, Jul 23 - Aug 05 2015: (Start)",
+        "a(n) = A049614(A002808(n)) = A000142(A002808(n))/A034386(A002808(n)).",
+        "a(n) = Product_{k=1..A002808(n)-n-1} prime(k)^(A085604(A002808(n),k)-1).",
+        "Sum_{k >= 1} 1/a(k) = 1.2975167655550616507663335821769... is to this sequence as e is to the factorials. (End)"
+    ],
+    "example": [
+        "a(3) = c(1)*c(2)*c(3) = 4*6*8 = 192."
+    ],
+    "maple": [
+        "A036691 := proc(n)",
+        "        mul(A002808(i),i=1..n) ;",
+        "end proc: # _R. J. Mathar_, Oct 03 2011"
+    ],
+    "mathematica": [
+        "Composite[n_] := FixedPoint[n + PrimePi[ # ] + 1 &, n + PrimePi[n] + 1]; Table[ Product[ Composite[i], {i, 1, n}], {n, 0, 18}] (* _Robert G. Wilson v_, Sep 13 2003 *)",
+        "nn=50;cnos=Complement[Range[nn],Prime[Range[PrimePi[nn]]]];Rest[FoldList[ Times,1,cnos]] (* _Harvey P. Dale_, May 19 2011 *)",
+        "A036691 = Union[Table[n!/(Times@@Prime[Range[PrimePi[n]]]), {n, 29}]] (* _Alonso del Arte_, Sep 21 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a036691_list = scanl1 (*) a002808_list -- _Reinhard Zumkeller_, Oct 03 2011",
+        "(PARI) a(n)=my(c,p);c=4;p=1;while(n>0,if(!isprime(c),p=p*c;n=n-1);c=c+1);p \\\\ _Ralf Stephan_, Dec 21 2013"
+    ],
+    "xref": [
+        "Cf. primorial numbers A002110. Distinct members of A049614. See also A049650, A060880.",
+        "Cf. A092435 (subsequence: A092435(n) = a(prime(n)-n-1)). - _Chayim Lowen_, Jul 23 2015"
+    ],
+    "keyword": "nice,nonn,easy",
+    "offset": "0,2",
+    "author": "_Felice Russo_",
+    "ext": [
+        "Corrected and extended by Niklas Eriksen (f95-ner(AT)nada.kth.se) and _N. J. A. Sloane_"
+    ],
+    "references": 26,
+    "revision": 76,
+    "time": "2015-08-19T16:59:09-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

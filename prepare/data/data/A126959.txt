@@ -1,0 +1,42 @@
+{
+    "number": 126959,
+    "data": "1,3,12,58,352,2376,19296,168912,1670976,18000000,219916800,2781561600,39605760000,584889984000,9253091635200,154909552896000,2834240274432000,52918877491200000,1074184895250432000",
+    "name": "a(k) = k! * lim_{n->oo} card({ i*j; i=1..k, j=1..n })/n.",
+    "comment": [
+        "a(k) = k! card { i*j, i<=k, j<=k# } / k# where k# = lcm(1,2,3...,k) a(k)/(k+1)! <= 1/2 for all k."
+    ],
+    "reference": [
+        "A. A. Buchstab, \"Asymptotic estimates of a general number-theoretic function\", Mat. Sbornik 44 (1937), 1239-1246."
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A126959/b126959.txt\">Table of n, a(n) for n = 1..36</a>",
+        "N. G. de Bruijn, <a href=\"http://www.dwc.knaw.nl/DL/publications/PU00018826.pdf\">On the number of uncancelled elements in the sieve of Eratosthenes</a>, Proc. Neder. Akad. Wetensch, 1950.",
+        "<a href=\"http://www.mersenneforum.org/showthread.php?p=101523\">\"Counting Integers and their Multiplicities\" on mersenneforum.org</a>"
+    ],
+    "example": [
+        "a(2)=3/2 since #{ i*j, i=1..2, j=1..2 } / 2 = #{ 1,2, 2,4 } / 2 = #{1,2,4} / 2.",
+        "a(3)=2 since #{ i*j, i=1..3, j=1..6 } / 6 = #{ 1,2,3,4,5,6, 2,4,6,8,10,12, 3,6,9,12,15,18 } / 6 = #{ 1,2,3,4,5,6,8,9,10,12,15,18 } / 6."
+    ],
+    "maple": [
+        "p:=proc(n) option remember;local s,t,i,j: s:=1; t:={}:",
+        "for i from n-1 by -1 to 1+n/(min@op@eval@numtheory[factorset])(n) do",
+        "t := t union { ilcm(n,i)/n };",
+        "t := select( x-> numtheory[divisors](x) intersect t = { x }, t ):",
+        "for j in combinat[powerset](t) do s := s+(-1)^nops(j)/ilcm(op(j)) od:",
+        "od; s/n end:",
+        "A126959 := k -> k!*add( p(n), n=1..k);"
+    ],
+    "program": [
+        "(PARI) p(n)={ local( cnt=lcm(vector(n-1,j,j)), L=vector(cnt,j,n*j), s=cnt ); forstep( i=n-1, n/factor(n)[1,1]+1, -1, forstep( j=lcm(n,i)/n, #L, lcm(n,i)/n, if( L[j] && (L[j] % i == 0), L[j]=0; cnt--)); s+=cnt ); s/#L/n } a=vector(16); a[1]=1; for( k=2, #a, a[k]=k*a[k-1]+k!*p(k));"
+    ],
+    "xref": [
+        "Cf. A101459, A027424."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_M. F. Hasler_, Mar 19 2007, Mar 22 2007",
+    "references": 2,
+    "revision": 31,
+    "time": "2015-01-06T03:56:53-05:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

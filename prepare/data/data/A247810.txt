@@ -1,0 +1,36 @@
+{
+    "number": 247810,
+    "data": "0,1,2,3,4,5,6,7,8,9,10,13,15,16,17,18,20,21,23,25,26,27,28,29,30,40,41,42,43,45,46,47,48,49,50,53,56,57,60,63,67,70,73,80,83,85,86,87,90,91,93,95,96,97,98,130,150,153,156,157,160,163,167,170,173",
+    "name": "Numbers in decimal representation with distinct digits, such that in Polish their digits are in alphabetic order.",
+    "comment": [
+        "List of decimal digits, alphabetically sorted by their names in Polish:",
+        "4 _ cztery, 2 _ dwa/dwie, 9 _ dziewi\u0119\u0107, 1 _ jeden/jedna/jedno, 8 _ osiem, 5 _ pi\u0119\u0107, 6 _ sze\u015b\u0107, 7 _ siedem, 3 _ trzy, 0 _ zero;",
+        "finite sequence with last and largest term a(1023) = 4291856730."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A247810/b247810.txt\">Table of n, a(n) for n = 1..1023</a>"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.IntSet (fromList, deleteFindMin, union)",
+        "import qualified Data.IntSet as Set (null)",
+        "a247810 n = a247810_list !! (n-1)",
+        "a247810_list = 0 : f (fromList [1..9]) where",
+        "   f s | Set.null s = []",
+        "       | otherwise  = x : f (s' `union`",
+        "         fromList (map (+ 10 * x) $ tail $ dropWhile (/= mod x 10) digs))",
+        "       where (x, s') = deleteFindMin s",
+        "   digs = [4, 2, 9, 1, 8, 5, 6, 7, 3, 0]"
+    ],
+    "xref": [
+        "Intersection of A010784 and A247760.",
+        "Cf. A247800 (Czech), A247801 (Danish), A247802 (Dutch), A053433 (English), A247803 (Finnish), A247804 (French), A247805 (German), A247806 (Hungarian), A247807 (Italian), A247808 (Latin), A247809 (Norwegian), A247807 (Portuguese), A247811 (Russian), A247812 (Slovak), A247813 (Spanish), A247809 (Swedish), A247814 (Turkish)."
+    ],
+    "keyword": "nonn,base,word,fini,full",
+    "offset": "1,3",
+    "author": "_Reinhard Zumkeller_, Oct 05 2014",
+    "references": 17,
+    "revision": 4,
+    "time": "2014-10-05T19:16:23-04:00",
+    "created": "2014-10-05T19:16:23-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 222603,
+    "data": "1,2,4,6,8,12,18,20,24,30,32,36,42,54,56,60,66,78,80,84,90,104,120,162,176,192,210,224,234,260,270,272,276,294,320,330,342,378,380,384,390,392,396,414,416,420,450,462,464,468,476,486,510,512,522,546,594,620,630,702,704,714,726,728,744,750,798,800,810,812,816,920,924,930,966,968,972,980,990,992,1014,1040,1050,1088,1122,1232,1242,1254,1280,1290,1302,1316,1332,1350,1352,1380,1386,1458,1518,1520",
+    "name": "a(1)=1; for n>0, a(n+1) is the least practical number q>a(n) such that 2(a(n)+1)-q is practical.",
+    "comment": [
+        "By a result of Melfi, each positive even number can be written as the sum of two practical numbers.",
+        "For a practical number p, define h(p) as the least practical number q>p such that 2(p+1)-q is practical. Construct a simple (undirected) graph H as follows: The vertex set of H is the set of all practical numbers, and for two vertices p and q>p there is an edge connecting p and q if and only if h(p)=q. Clearly H contains no cycle.",
+        "Conjecture: The graph H constructed above is connected and hence it is a tree."
+    ],
+    "reference": [
+        "G. Melfi, On two conjectures about practical numbers, J. Number Theory 56(1996), 205-210."
+    ],
+    "link": [
+        "Zhi-Wei Sun, <a href=\"/A222603/b222603.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(4)=6 since 2(a(3)+1)=10=6+4 with 4 and 6 both practical, and 6>a(3)=4."
+    ],
+    "mathematica": [
+        "f[n_]:=f[n]=FactorInteger[n]",
+        "Pow[n_,i_]:=Pow[n,i]=Part[Part[f[n],i],1]^(Part[Part[f[n],i],2])",
+        "Con[n_]:=Con[n]=Sum[If[Part[Part[f[n],s+1],1]<=DivisorSigma[1,Product[Pow[n,i],{i,1,s}]]+1,0,1],{s,1,Length[f[n]]-1}]",
+        "pr[n_]:=pr[n]=n>0&&(n<3||Mod[n,2]+Con[n]==0)",
+        "k=1",
+        "n=1",
+        "Do[If[m==1,Print[n,\" \",1]];If[m==k,n=n+1;Do[If[pr[2j]==True&&pr[2m+2-2j]==True,k=2j;Print[n,\" \",2j];Goto[aa]],{j,Ceiling[(m+1)/2],m}]];",
+        "Label[aa];Continue,{m,1,1000}]"
+    ],
+    "xref": [
+        "Cf. A005153, A222532, A163846, A163847, A222566."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Zhi-Wei Sun_, Feb 26 2013",
+    "references": 2,
+    "revision": 13,
+    "time": "2013-02-27T15:06:43-05:00",
+    "created": "2013-02-26T02:37:09-05:00"
+}

@@ -1,0 +1,25 @@
+{
+    "number": 205727,
+    "data": "0,0,1,2,4,6,8,11,14,19,23,28,33,37,46,51,56,66,73,80,88,96,108,118,126,134,148,159,172,183,197,207,220,234,249,263,280,297,309,323,338,356,376,393,412,427,449,465,482,505,527,544,561,582,606,634,658",
+    "name": "Number of odd semiprimes <= n^2.",
+    "comment": [
+        "The Goldbach conjecture being true would imply that for every integer j, there exists at least one integer k such that (j^2)-(k^2) is an odd semiprime; i.e., for 2j=p+q, j=(p+q)/2 and k=(p-q)/2 results in (j^2)-(k^2)=pq. [Note that in many cases, 2j can be expressed as the sum of more than one set of two primes.] See A205728 for related series where p must be distinct from q."
+    ],
+    "mathematica": [
+        "SemiPrimeQ[n_Integer] := If[Abs[n] < 2, False, (2 == Plus @@ Transpose[FactorInteger[Abs[n]]][[2]])];nn = 100;  t = Select[Range[1, nn^2, 2], SemiPrimeQ]; Table[Length[Select[t, # <= n^2 &]], {n, nn}] (* _T. D. Noe_, Jan 30 2012 *)",
+        "With[{osp=Table[{n,PrimeOmega[n]},{n,1,10001,2}]},Table[ Count[ Select[ osp,#[[1]]<=k^2&],_?(#[[2]]==2&)],{k,60}]] (* _Harvey P. Dale_, Dec 29 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n^2, (k%2) && (bigomega(k) == 2)); \\\\ _Michel Marcus_, Feb 24 2018"
+    ],
+    "xref": [
+        "Cf. A046315, A205726, A205728."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "1,4",
+    "author": "_Keith Backman_, Jan 30 2012",
+    "references": 2,
+    "revision": 26,
+    "time": "2018-02-24T11:57:02-05:00",
+    "created": "2012-01-30T15:15:51-05:00"
+}

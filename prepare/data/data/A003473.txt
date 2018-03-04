@@ -1,0 +1,65 @@
+{
+    "number": 3473,
+    "id": "M0875",
+    "data": "1,2,3,8,15,24,49,128,189,480,1023,1536,4095,6272,10125,32768,65025,96768,262143,491520,583443,2095104,4190209,6291456,15728625,33546240,49545027,102760448,268435455,331776000,887503681,2147483648,3211797501,8522956800,12325233375,25367150592,68719476735,137438429184,206007472125",
+    "name": "Generalized Euler phi function (for p=2).",
+    "comment": [
+        "a(n) is the number of n X n circulant invertible matrices over GF(2) . - Yuval Dekel (dekelyuval(AT)hotmail.com), Aug 20 2003"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A003473/b003473.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "J. T. B. Beard Jr. and K. I. West, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1974-0364196-5\">Factorization tables for x^n-1 over GF(q)</a>, Math. Comp., 28 (1974), 1167-1168.",
+        "Swee Hong Chan, Henk D. L. Hollmann, Dmitrii V. Pasechnik, <a href=\"http://arxiv.org/abs/1405.0113\">Sandpile groups of generalized de Bruijn and Kautz graphs and circulant matrices over finite fields</a>, arXiv:1405.0113 [math.CO], (1-May-2014)"
+    ],
+    "formula": [
+        "a(n) = n * A027362(n). - _Vladeta Jovovic_, Sep 09 2003"
+    ],
+    "mathematica": [
+        "p = 2; numNormalp[n_] := Module[{r, i, pp}, pp = 1; Do[r = MultiplicativeOrder[p, d]; i = EulerPhi[d]/r; pp *= (1 - 1/p^r)^i, {d, Divisors[n]}]; Return[pp]]; numNormal[n_] := Module[{t, q, pp }, t = 1;  q = n; While[0 == Mod[q, p], q /= p; t += 1]; pp = numNormalp[q]; pp *= p^n/n; Return[pp]]; a[n_] := n*numNormal[n]; Array[a, 40] (* _Jean-Fran\u00e7ois Alcover_, Dec 10 2015, after _Joerg Arndt_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "p=2; /* global */",
+        "num_normal_p(n)=",
+        "{",
+        "    my( r, i, pp );",
+        "    pp = 1;",
+        "    fordiv (n, d,",
+        "        r = znorder(Mod(p,d));",
+        "        i = eulerphi(d)/r;",
+        "        pp *= (1 - 1/p^r)^i;",
+        "    );",
+        "    return( pp );",
+        "}",
+        "num_normal(n)=",
+        "{",
+        "    my( t, q, pp );",
+        "    t = 1;  q = n;",
+        "    while ( 0==(q%p), q/=p; t+=1; );",
+        "    /* here: n==q*p^t */",
+        "    pp = num_normal_p(q);",
+        "    pp *= p^n/n;",
+        "    return( pp );",
+        "}",
+        "a(n)=n * num_normal(n);",
+        "v=vector(66,n,a(n))  /* _Joerg Arndt_, Jul 03 2011 */"
+    ],
+    "xref": [
+        "Cf. A003474 (p=3), A192037 (p=5).",
+        "Cf. also A086479, A027362."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Sep 09 2003",
+        "Terms >331776000 from _Joerg Arndt_, Jul 03 2011"
+    ],
+    "references": 8,
+    "revision": 40,
+    "time": "2017-03-16T20:59:33-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

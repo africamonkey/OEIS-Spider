@@ -1,0 +1,54 @@
+{
+    "number": 64618,
+    "data": "1,1,5,49,821,21121,775205,38516689,2490976661,203419086241,20474978755205,2490729330118129,360263844701062901,61114158974786823361,12017074366801186956005,2711409826920884006692369,695820350706240448128979541,201526362605605903609254528481",
+    "name": "Stirling transform of (n!)^2.",
+    "comment": [
+        "From _Thomas Wieder_, Oct 21 2004: (Start)",
+        "\"Also the number of hierarchies with labeled elements and labeled levels where the levels are permuted. Let l_x denote level x, e.g. l_2 is level 2. Let 1 denote an element and 2 a second element and so on. Then l_1:123 means elements 1,2 and 3 are on level 1.",
+        "\"Let | indicate separation between levels. Then l_1:1|l_2:346|l_3:5 denotes a hierarchy of n=6 unlabeled elements with element 1 on level 1, elements 3,4 and 6 on level 2 and element 5 on level 3.",
+        "\"E.g. for n=3 one has a(3) = 49 possible hierarchies:",
+        "\"l_1:123,",
+        "\"l_1:12|l_2:3, l_1:13|l_2:2, l_1:23|l_2:1,",
+        "\"l_2:12|l_1:3, l_2:13|l_1:2, l_2:23|l_1:1,",
+        "\"l_1:1|l_2:23, l_1:2|l_2:13, l_1:3|l_2:12,",
+        "\"l_2:1|l_1:23, l_2:2|l_1:13, l_2:3|l_1:12,",
+        "\"l_1:1|l_2:2|l_3:3 and further five permutations of the elements with levels fixed,",
+        "\"l_3:1|l_1:2|l_2:3 and further five permutations of the elements with levels fixed,. etc., up to",
+        "\"l_3:1|l_2:2|l_1:3 and further five permutations of the elements with levels fixed. this gives 1 + 6 +6 + 6*6 = 49 = a(3) possible hierarchies.",
+        "\"See A001339 for the number of hierarchies with unlabeled elements and labeled levels.\"",
+        "(End)",
+        "Conjecture: for fixed k = 1,2,..., the sequence a(n) (mod k) is eventually periodic with the exact period dividing phi(k), where phi(k) is the Euler totient function A000010. For example, modulo 10 the sequence becomes (1, 1, 5, 9, 1, 1, 5, 9, ...), with an apparent period 1, 1, 5, 9 of length 4 = phi(10) beginning at a(0). - _Peter Bala_, Jan 15 2018"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A064618/b064618.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "a(n) = sum(stirling2(n, k)*((k!)^2), k=0..n).",
+        "E.g.f: hypergeom([1, 1], [], exp(x)-1). - _Vladeta Jovovic_, Sep 14 2003",
+        "O.g.f.: Sum_{n>=0} n!^2 * Product_{k=1..n} x/(1 - k*x). - _Paul D. Hanna_, Nov 25 2012",
+        "a(n) ~ exp(1/2) * (n!)^2. - _Vaclav Kotesovec_, May 10 2014"
+    ],
+    "maple": [
+        "a:= n-> add(Stirling2(n, k)*(k!^2), k=0..n):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Apr 21 2012"
+    ],
+    "mathematica": [
+        "Table[Sum[(k!)^2*StirlingS2[n, k], {k, 0, n}], {n, 0, 20}] (* _Vaclav Kotesovec_, May 10 2014 *)"
+    ],
+    "program": [
+        "(PARI) /* By Vladeta Jovovic's formula: */",
+        "{a(n) = my(X=x+x*O(x^n)); n!*polcoeff( sum(m=0,n, m!*(exp(X)-1)^m), n)} /* _Paul D. Hanna_, Feb 15 2012 */"
+    ],
+    "xref": [
+        "Cf. A001044.",
+        "Cf. A001339.",
+        "Cf. A242282, A242283, A019774."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Karol A. Penson_, Sep 26 2001",
+    "references": 4,
+    "revision": 35,
+    "time": "2018-01-15T11:46:03-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

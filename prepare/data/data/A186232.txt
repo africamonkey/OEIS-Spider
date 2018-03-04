@@ -1,0 +1,33 @@
+{
+    "number": 186232,
+    "data": "1,1,2,3,7,18,58,221,1055,6485,50536,478836,5440177,76190368,1363369202,31071197441,868697997215,29108097152159,1188937117381254,61492149340335133,4073478163425582443,335184988593624746984,33170032360612393972748",
+    "name": "Row sums of A185249.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A186232/b186232.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "ctln:= proc(n) option remember; binomial(2*n, n)/(n+1) end:",
+        "T := proc(n,k)",
+        "       if n=k then 1",
+        "     elif irem(n+k,2)=1 then 0",
+        "     else Determinant(Matrix((n-k)/2, (i, j)-> ctln(i+j-1+k)))",
+        "       fi",
+        "     end:",
+        "a:= n-> add(T(n,k), k=0..n):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Feb 15 2011"
+    ],
+    "mathematica": [
+        "t[n_, n_] = 1; t[n_, k_] /; Mod[n+k, 2] == 1 = 0; t[n_, k_] :=  Array[CatalanNumber[#1 + #2 - 1 + k]&, {(n-k)/2, (n-k)/2}] // Det; a[n_] := Sum[t[n, k], {k, 0, n}]; Table[a[n], {n, 0, 22} ]  (* _Jean-Fran\u00e7ois Alcover_, Mar 19 2014, after _Alois P. Heinz_ *)"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Feb 15 2011",
+    "ext": [
+        "Corrected and extended by _Alois P. Heinz_, Feb 15 2011"
+    ],
+    "references": 2,
+    "revision": 19,
+    "time": "2014-11-14T09:54:06-05:00",
+    "created": "2011-02-15T18:20:40-05:00"
+}

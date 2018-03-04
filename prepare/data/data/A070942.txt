@@ -1,0 +1,52 @@
+{
+    "number": 70942,
+    "data": "1,2,3,4,7,8,9,10,17,18,19,22,23,24,43,55,56,57,73,99,136,137,142,143,202,217,218,233,234,264,281,282,287,288,289,302,303,304,387,409,414,415,491,509,520,521,528,529,532,533,553,554,555,588,652,653,654,665",
+    "name": "Values of n such that the first n terms of A055265 constitute a permutation of {1,2,3,...,n}.",
+    "link": [
+        "Zak Seidov and Robert Israel, <a href=\"/A070942/b070942.txt\">Table of n, a(n) for n = 1..1500</a> (first 286 terms from Zak Seidov)"
+    ],
+    "maple": [
+        "S:= {1}: L:= {}:",
+        "a[1]:= 1: b[1]:= 1:",
+        "count:= 1:",
+        "for n from 2 to 10000 do",
+        "  for k in L do",
+        "    if isprime(k+b[n-1]) then",
+        "      b[n]:= k;",
+        "      S:= S union {k};",
+        "      L:= L minus {k};",
+        "      if L = {} then",
+        "        count:= count+1;",
+        "        a[count]:= n;",
+        "      fi;",
+        "      break;",
+        "    fi",
+        "  od:",
+        "  if not assigned(b[n]) then",
+        "    for k from max(S) + 1 do",
+        "      if isprime(k+b[n-1]) then",
+        "        b[n]:= k;",
+        "        if k = max(S) + 1 and L = {} then",
+        "           count:= count+1;",
+        "           a[count]:= n;",
+        "        fi;",
+        "        S:= S union {k};",
+        "        L:= {$1..k} minus S;",
+        "        break",
+        "      fi",
+        "    od",
+        "  fi;",
+        "od:",
+        "seq(a[i], i=1..count); # _Robert Israel_, Sep 10 2014"
+    ],
+    "xref": [
+        "Cf. A055265."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_John W. Layman_, Apr 15 2003",
+    "references": 3,
+    "revision": 18,
+    "time": "2014-09-13T14:27:58-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

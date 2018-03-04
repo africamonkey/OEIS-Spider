@@ -1,0 +1,49 @@
+{
+    "number": 229043,
+    "data": "1,1,1,5,12,35,122,390,1320,4631,16185,57707,208348,756840,2775012,10246206,38043339,142045387,532888840,2007554241,7592537590,28814794105,109702322730,418868083725,1603584623355,6154156653687,23671591739306,91242219125712,352378515196920,1363360128627380",
+    "name": "Series reversion of (sqrt(1+4*x) - 1)/2 - x^3.",
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x)^3 = Sum_{n>=1} d^(n-1)/dx^(n-1) x^(3*n)*(1+x)^(3*n)/n! ).",
+        "(2) A(x)^3 = A(x)*C(-A(x)) - x^3, where C(x) = 1 + x*C(x)^2 is the g.f. of A000108.",
+        "(3) A(x) = G(x)*(1 + G(x)) where G(x) = x + A(x)^3.",
+        "a(n) ~ r^(1/2-n) / (2 * sqrt(3*Pi*s*(1+9*s^5)) * n^(3/2)), where s = 0.44683030245197... is the root of the equation 9*s^4*(1+4*s) = 1 and r = -1/2 + 1/(6*s^2) - s^3 = 0.24555068038... - _Vaclav Kotesovec_, Jan 22 2014"
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^2 + x^3 + 5*x^4 + 12*x^5 + 35*x^6 + 122*x^7 + 390*x^8 +...",
+        "where the series reversion of g.f. A(x) begins:",
+        "(sqrt(1+4*x) - 1)/2 - x^3 = x - x^2 + x^3 - 5*x^4 + 14*x^5 - 42*x^6 + 132*x^7 - 429*x^8 +...+ (-1)^(n-1)*A000108(n-1)*x^n +...",
+        "The cube of the g.f. equals the series:",
+        "A(x)^3 = x^3*(1+x)^3 + d/dx x^6*(1+x)^6/2! + d^2/dx^2 x^9*(1+x)^9/3! + d^3/dx^3 x^12*(1+x)^12/4! + d^4/dx^4 x^15*(1+x)^15/5! +...",
+        "A(x)^3 = x^3 + 3*x^4 + 6*x^5 + 22*x^6 + 72*x^7 + 225*x^8 + 790*x^9 + 2739*x^10 +...",
+        "RELATED EXPANSIONS.",
+        "G.f. A(x) = G(x)*(1 + G(x)) = (G(x) - x)^(1/3) where G(x) begins:",
+        "G(x) = x + x^3 + 3*x^4 + 6*x^5 + 22*x^6 + 72*x^7 + 225*x^8 + 790*x^9 +..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[(Sqrt[1+4*x]-1)/2-x^3, {x, 0, 20}], x],x]] (* _Vaclav Kotesovec_, Jan 22 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff( serreverse( (sqrt(1+4*x +x*O(x^n)) - 1)/2 - x^3 ), n)}",
+        "for(n=1, 30, print1(a(n), \", \"))",
+        "(PARI) /* G.f. A(x) = sqrt(G(x) - x) where G(x) = x + G(x)^3*(1 + G(x))^3 */",
+        "{a(n)=local(G=serreverse(x-x^3*(1+x)^3+x^3*O(x^n)));polcoeff((G-x)^(1/3),n)}",
+        "for(n=1, 30, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D} \\\\ n-th derivative",
+        "{a(n)=local(A3=x); A3=sum(m=1, n, Dx(m-1, x^(3*m)*(1+x+x*O(x^n))^(3*m)/m!)); polcoeff(A3^(1/3), n)}",
+        "for(n=1, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A229042."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Paul D. Hanna_, Nov 02 2013",
+    "ext": [
+        "Offset corrected by _Vaclav Kotesovec_, Jan 22 2014"
+    ],
+    "references": 1,
+    "revision": 13,
+    "time": "2014-01-22T11:39:18-05:00",
+    "created": "2013-11-02T13:19:35-04:00"
+}

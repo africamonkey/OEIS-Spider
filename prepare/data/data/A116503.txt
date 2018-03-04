@@ -1,0 +1,40 @@
+{
+    "number": 116503,
+    "data": "1,2,3,8,13,26,39,64,98,148,216,322,455,648,904,1258,1711,2336,3128,4198,5548,7330,9569,12496,16146,20836,26674,34098,43273,54846,69072,86848,108627,135612,168527,209066,258271,318482,391321,479946,586709",
+    "name": "Sum of the areas of the Durfee squares of all partitions of n.",
+    "comment": [
+        "a(n) = sum(k^2*A115994(n,k), k=1..floor(sqrt(n)))."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A116503/b116503.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "G.f.: sum(k^2*z^(k^2)/product((1-z^j)^2, j=1..k), k=1..infinity)."
+    ],
+    "example": [
+        "a(4) = 8 because the partitions of 4, namely [4], [3,1], [2,2], [2,1,1] and [1,1,1,1], have Durfee squares of sizes 1,1,2,1 and 1, respectively and 1^2+1^2+2^2+1^2+1^2=8."
+    ],
+    "maple": [
+        "g:=sum(k^2*z^(k^2)/product((1-z^j)^2,j=1..k),k=1..10): gser:=series(g,z=0,52): seq(coeff(gser,z^n),n=1..45);",
+        "# second Maple program:",
+        "b:= proc(n, i) option remember;",
+        "      `if`(n=0, 1, `if`(i<1, 0, b(n, i-1)+`if`(i>n, 0, b(n-i, i))))",
+        "    end:",
+        "a:= n-> add(k^2*add(b(m, k)*b(n-k^2-m, k),",
+        "            m=0..n-k^2), k=1..floor(sqrt(n))):",
+        "seq(a(n), n=1..40);  # _Alois P. Heinz_, Apr 09 2012"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, If[i<1, 0, b[n, i-1] + If[i>n, 0, b[n-i, i]]]]; a[n_] := Sum [k^2*Sum[b[m, k]*b[n - k^2 - m, k], {m, 0, n - k^2}], {k, 1, Sqrt[n]}]; Table[a[n], {n, 1, 50}] (* _Jean-Fran\u00e7ois Alcover_, Jan 24 2014, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A115994, A115995."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Emeric Deutsch_, _Vladeta Jovovic_, Feb 18 2006",
+    "references": 3,
+    "revision": 16,
+    "time": "2016-01-30T13:44:35-05:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

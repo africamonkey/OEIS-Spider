@@ -1,0 +1,38 @@
+{
+    "number": 270802,
+    "data": "631,673,953,1163,1709,2003,2143,2731,2857,3109,3389,3739,4271,4999,5237,5279,5531,5867,6553,6679,6959,7001,7309,7351,7393,8191,8681,9157,9829,10627,10739,11117,11243,11299,11411,11467,13007,13259,15121,15233,15583,16073,18439,18803,20063,20147",
+    "name": "Primes p of the form 14*k+1 for which there is a solution to x^7 == 2 mod p.",
+    "link": [
+        "Leonard Eugene Dickson, <a href=\"http://dx.doi.org/10.1090/S0002-9947-1935-1501791-3\">Cyclotomy and trinomial congruences</a>, Transactions of the American Mathematical Society, 37.3 (1935): 363-380. See page 373."
+    ],
+    "maple": [
+        "ans:=[];",
+        "M:=10000;",
+        "e:=7; r:=2;",
+        "for k from 2 to M do p:=ithprime(k);",
+        "if p mod 14 = 1 then",
+        "   for x from 2 to p-1 do",
+        "      if x^e mod p = r then ans:=[op(ans),p]; break; fi;",
+        "                       od:",
+        "fi;",
+        "od:",
+        "ans;"
+    ],
+    "mathematica": [
+        "Select[Select[14 Range[10^3] + 1, PrimeQ], Function[p, AnyTrue[Range[2, 10^4], Mod[#^7, p] == 2 &]]] (* _Michael De Vlieger_, Apr 02 2016, Version 10 *)"
+    ],
+    "program": [
+        "(MAGMA) [p: p in PrimesUpTo(50000) | IsOne(p mod 14) and exists{x: x in ResidueClassRing(p) | x^7 eq 2}]; // _Bruno Berselli_, Apr 02 2016",
+        "(PARI) forprime(p=2,10^5,if(p%14!=1,next);if(Mod(2,p)^((p-1)/7)==1,print1(p,\", \"))); \\\\ _Joerg Arndt_, Apr 03 2016"
+    ],
+    "xref": [
+        "Cf. A042966."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Apr 01 2016",
+    "references": 0,
+    "revision": 33,
+    "time": "2016-04-04T12:33:36-04:00",
+    "created": "2016-04-01T14:35:36-04:00"
+}

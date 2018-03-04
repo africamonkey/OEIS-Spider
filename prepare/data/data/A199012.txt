@@ -1,0 +1,28 @@
+{
+    "number": 199012,
+    "data": "0,3,48,1308,96080,23114160,18522702240,50214057399744,469006445678383872,15356719437883766115840,1788760016178073736115859200,750205198434476437912637004278784,1144188684031608529784893493874665232384",
+    "name": "The total number of edges in all unlabeled directed graphs (no self loops allowed) on n nodes.",
+    "formula": [
+        "a(n) = A000273(n) * n(n-1)/2.",
+        "a(n) = Sum_{k=1..n*(n-1)} k*A052283(n,k). - _Andrew Howroyd_, Nov 05 2017"
+    ],
+    "mathematica": [
+        "Table[D[GraphPolynomial[n,x,Directed],x]/.x->1, {n,1,15}]"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1,s=0,k=0,t); for(i=1,#v,t=v[i]; k=if(i>1&&t==v[i-1],k+1,1); m*=t*k;s+=t); s!/m}",
+        "edges(v,t) = {prod(i=2, #v, prod(j=1, i-1, my(g=gcd(v[i],v[j])); t(v[i]*v[j]/g)^(2*g))) * prod(i=1, #v, t(v[i])^(v[i]-1))}",
+        "a(n) = {my(s=0); forpart(p=n, s+=permcount(p)*subst(deriv(edges(p,i->1+x^i)),x,1)); s/n!} \\\\ _Andrew Howroyd_, Nov 05 2017"
+    ],
+    "xref": [
+        "Cf. A000273, A052283, A086314."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Geoffrey Critzer_, Nov 01 2011",
+    "references": 0,
+    "revision": 10,
+    "time": "2017-11-05T18:52:39-05:00",
+    "created": "2011-11-01T21:53:13-04:00"
+}

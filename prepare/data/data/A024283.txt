@@ -1,0 +1,55 @@
+{
+    "number": 24283,
+    "id": "N1950",
+    "data": "0,1,8,136,3968,176896,11184128,951878656,104932671488,14544442556416,2475749026562048,507711943253426176,123460740095103991808,35125800801971979943936,11559592093904798920736768,4356981378562584648085405696",
+    "name": "E.g.f. 1/2 * tan(x)^2 (even powers only).",
+    "comment": [
+        "Number of cyclically reverse alternating permutations of length 2n+1, cf. A024255. - _Vladeta Jovovic_, May 20 2007",
+        "Related to A102573: letting T(q,r) be the coefficient of n^r in the polynomial 2^(q-n)/n times sum(k=0..n binomial(n, k)*k^q), then A024283(x) = sum(k=0..(2*x-1) T(2*x,k)*(-1)^(k+x)*2^k). See Mathematica code below. [_John M. Campbell_, Sep 15 2013]"
+    ],
+    "reference": [
+        "L. Comtet, Advanced Combinatorics, Reidel, 1974, p. 259, T(n,2).",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A024283/b024283.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "G.f.: (1/2)*(tan(z))^2 = (z^2/(1-z^2)/2)*( 1 +2*z^2/( (z^2-1)*(G(0)-2*z^2)), G(k) = (k+2)*(2*k+3)-2*z^2+2*z^2*(k+2)*(2*k+3)/G(k+1); (continued fraction). - _Sergei N. Gladkovskii_, Dec 15 2011",
+        "O.g.f.: Sum_{n>=1} x^n * Product_{k=1..n} (2*k-1)^2 / (1 + (2*k-1)^2*x). - _Paul D. Hanna_, Feb 01 2013",
+        "G.f.: x/(Q(0)-x), where Q(k) = 1 + 2*x*(2*k+1)^2 - x*(2*k+3)^2*(1+x*(2*k+1)^2)/Q(k+1); (continued fraction). - _Sergei N. Gladkovskii_, Nov 27 2013",
+        "a(n) ~ (2*n)! * n * 2^(2*n+3) / Pi^(2*n+2). - _Vaclav Kotesovec_, Aug 22 2014"
+    ],
+    "example": [
+        "(tan x)^2 = x^2 + 2/3*x^4 + 17/45*x^6 + 62/315*x^8 + ...",
+        "G.f. = x + 8*x^2 + 136*x^3 + 3968*x^4 + 176896*x^5 + 11184128*x^6 + ..."
+    ],
+    "maple": [
+        "A024283 := n -> `if`(n=0,0,(-1)^(n-1)*2^(2*n+1)*polylog(-2*n-1,-1)); # _Peter Luschny_, Jun 28 2012"
+    ],
+    "mathematica": [
+        "f[n_] := -(-1)^n 2^(2 n + 1) PolyLog[-1 - 2 n, -1]; f[0] = 0; Array[f, 15, 0] (* _Robert G. Wilson v_, Jun 28 2012 *)",
+        "poly[q_] := 2^(q-n)/n*FunctionExpand[Sum[Binomial[n, k]*k^q, {k, 0, n}]]; T[q_, r_] := First[Take[CoefficientList[poly[q], n], {r+1, r+1}]]; Print[Table[Sum[T[2*x, k]*(-1)^(k+ x)*(2^k), {k, 0, 2*x-1}], {x, 1, 10}]]; (* _John M. Campbell_, Sep 15 2013 *)",
+        "a[ n_] := If[ n < 1, 0, -2 (-4)^n PolyLog[ -1 - 2 n, -1]] (* _Michael Somos_, Jan 21 2014 *)",
+        "a[ n_] := If[ n < 1, 0, With[ {k = 2 n + 1}, k! SeriesCoefficient[ Tan[x] / 2, {x, 0, k}]]] (* _Michael Somos_, Jan 21 2014 *)",
+        "a[ n_] := If[ n < 0, 0, With[ {k = 2 n}, k! SeriesCoefficient[ Tan[x]^2 / 2, {x, 0, k}]]] (* _Michael Somos_, Jan 21 2014 *)",
+        "a[0] = 0; a[n_] := (4^(n+1)-1)*Gamma[2*(n+1)]*Zeta[2*(n+1)]/Pi^(2*(n+1)); Table[a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Feb 05 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff( sum(m=1, n, x^m*prod(k=1, m, (2*k-1)^2/(1+(2*k-1)^2*x +x*O(x^n))) ), n)} \\\\ _Paul D. Hanna_, Feb 01 2013"
+    ],
+    "xref": [
+        "Cf. A009764, A024255.",
+        "Cf. A009764, A000182, A102573. A diagonal of A059419."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_. This sequence was in the 1973 \"Handbook\", but was then omitted from the database. Resubmitted by _R. H. Hardin_. Entry revised by _N. J. A. Sloane_, Jun 12 2012",
+    "ext": [
+        "Extended and signs tested Mar 15 1997."
+    ],
+    "references": 7,
+    "revision": 48,
+    "time": "2016-02-05T04:50:37-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

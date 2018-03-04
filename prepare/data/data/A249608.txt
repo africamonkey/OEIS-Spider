@@ -1,0 +1,44 @@
+{
+    "number": 249608,
+    "data": "1,1,7,19,115,451,2521,11677,63379,318115,1716517,8981017,48623389,260410333,1418640055,7707719299,42263782099,231857347603,1278917211061,7065478018585,39174182961865,217591443710905,1211736702238795,6759723716824855,37785032547293245,211540175726995501",
+    "name": "E.g.f.: exp(x) * BesselI(0, 2*x) * BesselI(0, 2*sqrt(2)*x).",
+    "formula": [
+        "a(n) = Sum_{k=0..n} (-1)^k * C(n,k) * C(2*k,k) * (Sum_{j=0..n-k} C(n-k,j)^2 * 2^j).",
+        "a(n) = Sum_{k=0..n} (-1)^k * C(n,k) * C(2*k,k) * A001850(n-k), where A001850 is the central Delannoy numbers.",
+        "Recurrence: (n-2)*n^2*a(n) = (4*n^3 - 12*n^2 + 10*n - 3)*a(n-1) + (n-1)*(18*n^2 - 54*n + 35)*a(n-2) - 44*(n-2)^2*(n-1)*a(n-3) + 7*(n-3)*(n-2)*(n-1)*a(n-4). - _Vaclav Kotesovec_, Nov 09 2014",
+        "a(n) ~ (3+2*sqrt(2))^(n+1) / (2^(9/4) * Pi * n). - _Vaclav Kotesovec_, Nov 09 2014"
+    ],
+    "example": [
+        " E.g.f.: E(x) = 1 + x + 7*x^2/2! + 19*x^3/3! + 115*x^4/4! + 451*x^5/5! + ...",
+        "such that E(x) = exp(x)*F(x)*G(x) where",
+        "F(x) = 1 + 2*x^2/2! + 6*x^4/4! + 20*x^6/6! + 70*x^8/8! + 252*x^10/10! + ...",
+        "G(x) = 1 + 4*x^2/2! + 24*x^4/4! + 160*x^6/6! + 1120*x^8/8! + 8064*x^10/10! + ...",
+        "O.g.f.: A(x) = 1 + x + 7*x^2 + 19*x^3 + 115*x^4 + 451*x^5 + 2521*x^6 + ...",
+        "where",
+        "x/Series_Reversion(x*A(x)) = 1 + x + 6*x^2 + 6*x^4 - 36*x^6 - 138*x^8 + 1044*x^10 + 2364*x^12 - 25416*x^14 - 89946*x^16 + 921348*x^18 + 2457972*x^20 + ...",
+        "(x/Series_Reversion(x*A(x)) - x)^2 = 1 + 12*x^2 + 48*x^4 - 672*x^8 + 16896*x^12 - 512640*x^16 + 17160192*x^20 - 610750464*x^24 + 22672244736*x^28 + ..."
+    ],
+    "mathematica": [
+        "Table[Sum[(-1)^k * Binomial[n,k] * Binomial[2*k,k] * Sum[Binomial[n-k,j]^2 * 2^j,{j,0,n-k}],{k,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Nov 09 2014 *)",
+        "CoefficientList[Series[E^x * BesselI[0, 2*x] * BesselI[0, 2*Sqrt[2]*x], {x, 0, 20}], x] * Range[0, 20]! (* _Vaclav Kotesovec_, Nov 09 2014 *)"
+    ],
+    "program": [
+        "(PARI) /* Using product of Bessel functions: */",
+        "{a(n)=local(A=1,B1=sum(m=0,n,x^(2*m)/m!^2)+x*O(x^n),B2=sum(m=0,n,2^m*x^(2*m)/m!^2)+x*O(x^n));",
+        "n!*polcoeff(exp(x +x*O(x^n))*B1*B2,n)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) /* Using binomial sum: */",
+        "{a(n)=sum(k=0,n,(-1)^k*binomial(n,k)*binomial(2*k,k)*sum(j=0,n-k,binomial(n-k,j)^2*2^j))}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A001850."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Nov 09 2014",
+    "references": 0,
+    "revision": 27,
+    "time": "2014-11-11T03:38:36-05:00",
+    "created": "2014-11-09T00:43:06-05:00"
+}

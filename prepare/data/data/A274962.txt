@@ -1,0 +1,59 @@
+{
+    "number": 274962,
+    "data": "2,2401,19356878641,46904541018721,119601542190001,360371335935601,16472757578830081,26835157974988801,59879777952495601,147669280778756881,170589096345900241,219660193449998401,1103765757989399761,1515946818108402241,2044393722679974961,2608728003079029841,2805689752523610241,3071293995460971361,4537323492222149281,9583348094642219041,9982134924573725761",
+    "name": "Numbers n such that sigma(n) and sigma(n) + 2 are both primes.",
+    "comment": [
+        "Intersection of A249763 and A023194.",
+        "The next term, if it exists, must be greater than 5*10^12.",
+        "Each term > 2 is a square.",
+        "From _Chai Wah Wu_, Jul 13 2016: (Start)",
+        "Every term > 2 is of the form p^(2m) with p prime and m > 1. Proof: from the discussion in A023194, a term is of the form p^(2m). An odd term cannot be of the form n = p^2. If p = 6k+1, then sigma(n) = 36k^2 + 18k + 3 is composite. If p = 6k-1, then sigma(n) + 2 = 36k^2 - 6k + 3 is composite. Finally, 4 is not a term.",
+        "This could be the reason this sequence is so much sparser than A274963.",
+        "(End)",
+        "Terms cannot be of the form 2^(2m) since sigma(2^(2m)) + 2 = 2^(2m+1) + 1 is divisible by 3. - _Altug Alkan_, Jul 14 2016",
+        "Terms cannot be of the form 3^(2m) since sigma(3^(3m)) + 2 = 3(3^(2m) + 1)/2 is divisible by 3, i.e., all terms are of the form (6*k+1)^(2m) or (6*k-1)^(2m) - _Chai Wah Wu_, Aug 06 2016",
+        "Terms cannot be of the form p^6 since if p = 6*k+1, then sigma((6*k+1)^6) + 2 = 9*(5184*k^6 + 6048*k^5 + 3024*k^4 + 840*k^3 + 140*k^2 + 14*k + 1) and if p = 6*k-1 then sigma((6*k-1)^6) + 2 = 3*(15552*k^6 - 12960*k^5 + 4752*k^4 - 936*k^3 + 108*k^2 - 6*k + 1). Also note that terms cannot be of the form p^8 since if p = 6*k-1 then sigma((6*k-1)^8) = (1 - 6*k + 36*k^2)*(1 - 18*k + 432*k^2 - 4104*k^3 + 19440*k^4 - 46656*k^5 + 46656*k^6) and if p = 6*k+1 then sigma((6*k+1)^8) = 9*(186624*k^8 + 279936*k^7 + 186624*k^6 + 72576*k^5 + 18144*k^4 + 3024*k^3 + 336*k^2 + 24*k + 1). The least term that is of the form p^10 is 2089^10. So this partially explains why numbers of the form p^4 appear in this sequence most of the time in limited range. - _Altug Alkan_, Jul 15 2016",
+        "From _Chai Wah Wu_, Jul 20 2016: (Start)",
+        "If p^m > 2 is a term, then m == 4 mod 6 and p == 1 mod 6. Proof: Let q(k) be sigma(p^m) expressed as a polynomial in k. If p = 6k-1, then q(k) = 1 + (6k-1) + (6k-1)^2 + ... + (6k-1)^m.",
+        "The constant term of q(k) is 1-1+1-1+...-1+1 = 1 whereas the other coefficients are multiples of 6, i.e., q(k) = 1 + 6k*(...), thus sigma(p^m) + 2 is a multiple of 3.",
+        "Suppose p = 6k+1, then q(k) = 1 + (6k+1) + (6k+1)^2 + ... + (6k+1)^m. The constant term is m+1 and the other coefficients are multiples of 6, i.e., q(k) = (m+1) + 6k*(...).",
+        "This means that if m = 6r+2, then sigma(p^m) is a multiple of 3 and if m = 6r, then sigma(p^m) + 2 is a multiple of 3. End of Proof.",
+        "The following table lists the minimal k for r <= 4.",
+        "r   | smallest k such that (6k+1)^(6r+4) is a term (A275237)",
+        "------------------------------------------------------------",
+        "0   |      1",
+        "1   |    348",
+        "2   |    436",
+        "3   |   6018",
+        "4   |   5880",
+        "For every prime p = 6k+1, does there exist r >= 0 such that(6k+1)^(6r+4) is a term?",
+        "(End)",
+        "_Altug Alkan_ found that sigma((6k+1)^34) (i.e., the r = 5 case) is always composite (see comment in A275237). - _Chai Wah Wu_, Jul 21 2016"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A274962/b274962.txt\">Table of n, a(n) for n = 1..10337</a>"
+    ],
+    "example": [
+        "2401 is in the sequence because sigma(2401) = 2801 and sigma(2401) + 2 = 2803 are both primes."
+    ],
+    "program": [
+        "(MAGMA) [n: n in[1..10^7] | IsPrime(SumOfDivisors(n)) and IsPrime(SumOfDivisors(n)+2)]",
+        "(Python)",
+        "from sympy import isprime, divisor_sigma",
+        "A274962_list = [2]+[n for n, s in ((d**2, divisor_sigma(d**2)) for d in range(1,10**3)) if isprime(s) and isprime(s+2)] # _Chai Wah Wu_, Jul 13 2016",
+        "(PARI) isok(n) = isprime(s=sigma(n)) && isprime(s+2); \\\\ _Michel Marcus_, Jul 14 2016"
+    ],
+    "xref": [
+        "Cf. A000203, A023194, A249763, A274963, A275237."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jaroslav Krizek_, Jul 12 2016",
+    "ext": [
+        "a(4)-a(21) from _Chai Wah Wu_, Jul 13 2016"
+    ],
+    "references": 3,
+    "revision": 62,
+    "time": "2017-11-12T02:51:55-05:00",
+    "created": "2016-07-12T22:41:50-04:00"
+}

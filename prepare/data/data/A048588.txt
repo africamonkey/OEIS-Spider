@@ -1,0 +1,49 @@
+{
+    "number": 48588,
+    "data": "7,8,10,13,17,23,32,45,64,92,133,193,281,410,599,876,1282,1877,2749,4027,5900,8645,12668,18564,27205,39869,58429,85630,125495,183920,269546,395037,578953,848495,1243528,1822477,2670968,3914492,5736965,8407929,12322417",
+    "name": "Pisot sequence L(7,8).",
+    "link": [
+        "Colin Barker, <a href=\"/A048588/b048588.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Ph#Pisot\">Index entries for Pisot sequences</a>"
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1) - a(n-2) + a(n-3) - a(n-4) (holds at least up to n = 72000 but is not known to hold in general)."
+    ],
+    "maple": [
+        "L := proc(a0,a1,n)",
+        "    option remember;",
+        "    if n = 0 then",
+        "        a0 ;",
+        "    elif n = 1 then",
+        "        a1;",
+        "    else",
+        "        ceil( procname(a0,a1,n-1)^2/procname(a0,a1,n-2)) ;",
+        "    end if;",
+        "end proc:",
+        "A048588 := proc(n)",
+        "    L(7,8,n) ;",
+        "end proc: # _R. J. Mathar_, Feb 12 2016"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[0] == 7, a[1] == 8, a[n] == Ceiling[a[n - 1]^2/a[n - 2]]}, a, {n, 0, 50}] (* _Bruno Berselli_, Feb 05 2016 *)"
+    ],
+    "program": [
+        "(MAGMA) Lxy:=[7,8]; [n le 2 select Lxy[n] else Ceiling(Self(n-1)^2/Self(n-2)): n in [1..50]]; // _Bruno Berselli_, Feb 05 2016",
+        "(PARI) pisotL(nmax, a1, a2) = {",
+        "  a=vector(nmax); a[1]=a1; a[2]=a2;",
+        "  for(n=3, nmax, a[n] = ceil(a[n-1]^2/a[n-2]));",
+        "  a",
+        "}",
+        "pisotL(50, 7, 8) \\\\ _Colin Barker_, Aug 07 2016"
+    ],
+    "xref": [
+        "See A008776 for definitions of Pisot sequences."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_David W. Wilson_",
+    "references": 2,
+    "revision": 15,
+    "time": "2016-08-07T18:05:37-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

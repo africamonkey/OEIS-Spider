@@ -1,0 +1,34 @@
+{
+    "number": 143740,
+    "data": "1,1,2,7,34,216,1696,15898,173468,2161036,30282076,471599316,8082816160,151218316120,3066890630168,67031194526416,1570793031033616,39290173530686544,1044871388684004304,29440090627527552976",
+    "name": "E.g.f.: A(x) = exp(x + x^2*A(x)/2).",
+    "formula": [
+        "E.g.f.: A(x) = -2*LambertW( -x^2*exp(x)/2 )/x^2.",
+        "E.g.f.: A(x) = Sum_{n>=0} (n+1)^(n-1)*(x^2/2)^n*exp((n+1)*x)/n!.",
+        "a(n) ~ sqrt(1+LambertW(1/sqrt(2*exp(1)))) * n^(n-1) /(2^(n+1/2) * exp(n) * (LambertW(1/sqrt(2*exp(1))))^(n+2)). - _Vaclav Kotesovec_, Jul 09 2013",
+        "Recurrence: a(0)=1, a(1)=1, for n > 1, a(n) = a(n-1) + Sum_{k=0..n-2} (n-1)*(n-k)*binomial(n-2,k)*a(k)*a(n-2-k)/2. - _Tani Akinari_, Nov 01 2017"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 2*x^2/2! + 7*x^3/3! + 34*x^4/4! + 216*x^5/5! + ..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[-2*LambertW[-x^2*E^x/2]/x^2, {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Jul 09 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x*O(x^n));for(i=0,n,A=exp(x+x^2*A/2));(n+0)!*polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=sum(m=0,n,(m+1)^(m-1)*(x^2/2)^m*exp((m+1)*x+x*O(x^n))/m!)); n!*polcoeff(A,n)}",
+        "(PARI) {a(n)=local(Ex=exp(x+x*O(x^n)),W=Ex);for(k=0,n,W=exp(x*W)); n!*polcoeff(subst(W,x,x^2*Ex/2)*Ex,n)}",
+        "(Maxima) a[n]:=(if n<2 then 1 else a[n-1]+sum((n-1)*(n-k)*binomial(n-2,k)*a[k]*a[n-2-k],k,0,n-2)/2);",
+        "makelist(a[n],n,0,100); /* _Tani Akinari_, Nov 01 2017 */"
+    ],
+    "xref": [
+        "Cf. A125500."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Aug 30 2008",
+    "references": 0,
+    "revision": 19,
+    "time": "2017-11-02T03:57:30-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

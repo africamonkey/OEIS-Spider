@@ -1,0 +1,42 @@
+{
+    "number": 288748,
+    "data": "1,1,17,71,368,1697,7769,34751,153313,668088,2882104,12329145,52358300,220901081,926638057,3867432363,16068748557,66495876593,274178902925,1126793986670,4616878543095,18864740697016,76885237242318,312611605360287,1268261191750753",
+    "name": "Number of Dyck paths of semilength n such that the maximal number of peaks per level equals seven.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A288748/b288748.txt\">Table of n, a(n) for n = 7..1000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "maple": [
+        "b:= proc(n, k, j) option remember; `if`(j=n, 1, add(",
+        "      b(n-j, k, i)*add(binomial(i, m)*binomial(j-1, i-1-m),",
+        "       m=max(0, i-j)..min(k, i-1)), i=1..min(j+k, n-j)))",
+        "    end:",
+        "g:= proc(n, k) option remember; add(b(n, k, j), j=1..k) end:",
+        "a:= n-> g(n, 7)-g(n, 6):",
+        "seq(a(n), n=7..35);"
+    ],
+    "mathematica": [
+        "b[n_, k_, j_]:=b[n, k, j]=If[j==n, 1, Sum[b[n - j,k, i] Sum[Binomial[i, m] Binomial[j - 1, i - 1 - m], {m, Max[0, i - j], Min[k, i - 1]}], {i, Min[j + k, n - j]}]]; g[n_, k_]:=Sum[b[n, k, j], {j, k}]; Table[g[n, 7] - g[n, 6], {n, 7, 35}] (* _Indranil Ghosh_, Aug 08 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.core.cache import cacheit",
+        "from sympy import binomial",
+        "@cacheit",
+        "def b(n, k, j): return 1 if j==n else sum([b(n - j, k, i)*sum([binomial(i, m)*binomial(j - 1, i - 1 - m) for m in xrange(max(0, i - j), min(k, i - 1) + 1)]) for i in xrange(1, min(j + k, n - j) + 1)])",
+        "def g(n, k): return sum([b(n, k, j) for j in xrange(1, k + 1)])",
+        "def a(n): return g(n, 7) - g(n, 6)",
+        "print map(a, xrange(7, 36)) # _Indranil Ghosh_, Aug 08 2017"
+    ],
+    "xref": [
+        "Column k=7 of A287822.",
+        "Cf. A000108."
+    ],
+    "keyword": "nonn",
+    "offset": "7,3",
+    "author": "_Alois P. Heinz_, Jun 14 2017",
+    "references": 2,
+    "revision": 7,
+    "time": "2017-08-08T19:04:58-04:00",
+    "created": "2017-06-14T17:14:12-04:00"
+}

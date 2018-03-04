@@ -1,0 +1,43 @@
+{
+    "number": 247295,
+    "data": "1,1,2,4,7,14,30,64,141,316,713,1626,3740,8659,20176,47274,111302,263201,624860,1488736,3558412,8530533,20505468,49413242,119347708,288873639,700582008,1702190653,4142880297,10099352082,24656876772,60283224645,147581756005",
+    "name": "Number of weighted lattice paths B(n) having no uhd and no uHd strings.",
+    "comment": [
+        "B(n) is the set of lattice paths of weight n that start in (0,0), end on the horizontal axis and never go below this axis, whose steps are of the following four kinds: h = (1,0) of weight 1, H = (1,0) of weight 2, u = (1,1) of weight 2, and d = (1,-1) of weight 1. The weight of a path is the sum of the weights of its steps.",
+        "a(n) = A247294(n,0)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A247295/b247295.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "M. Bona and A. Knopfmacher, <a href=\"http://dx.doi.org/10.1007/s00026-010-0060-7\">On the probability that certain compositions have the same number of parts</a>, Ann. Comb., 14 (2010), 291-306."
+    ],
+    "formula": [
+        "G.f. G = G(z) satisfies G = 1 + z*G + z^2*G + z^3*G*(G - z- z^2 )."
+    ],
+    "example": [
+        "a(6)=30 because among the 37 (=A004148(7)) members of B(6) only uhdhh, huhdh, hhuhd, Huhd, uhdH, uHdh, and huHd contain uhd or uHd (or both)."
+    ],
+    "maple": [
+        "eq := G = 1+z*G+z^2*G+z^3*(G-z-z^2)*G: G := RootOf(eq, G): Gser := series(G, z = 0, 37): seq(coeff(Gser, z, n), n = 0 .. 35);",
+        "# second Maple program:",
+        "b:= proc(n, y, t) option remember; `if`(y<0 or y>n or t=3, 0,",
+        "      `if`(n=0, 1, b(n-1, y-1, `if`(t=2, 3, 0))+b(n-1, y,",
+        "      `if`(t=1, 2, 0))+`if`(n>1, b(n-2, y, `if`(t=1, 2, 0))+",
+        "       b(n-2, y+1, 1), 0)))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Sep 16 2014"
+    ],
+    "mathematica": [
+        "b[n_, y_, t_] := b[n, y, t] = If[y<0 || y>n || t == 3, 0, If[n == 0, 1, b[n-1, y-1, If[t == 2, 3, 0]] + b[n-1, y, If[t == 1, 2, 0]] + If[n>1, b[n-2, y, If[t == 1, 2, 0]] + b[n-2, y+1, 1], 0]]]; a[n_] := b[n, 0, 0]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, May 27 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A004148, A247291, A247293, A247294."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Emeric Deutsch_, Sep 16 2014",
+    "references": 4,
+    "revision": 11,
+    "time": "2015-05-27T08:41:03-04:00",
+    "created": "2014-09-16T20:09:57-04:00"
+}

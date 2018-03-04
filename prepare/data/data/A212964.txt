@@ -1,0 +1,49 @@
+{
+    "number": 212964,
+    "data": "0,0,0,2,6,14,26,44,68,100,140,190,250,322,406,504,616,744,888,1050,1230,1430,1650,1892,2156,2444,2756,3094,3458,3850,4270,4720,5200,5712,6256,6834,7446,8094,8778,9500,10260,11060,11900,12782,13706",
+    "name": "Number of (w,x,y) with all terms in {0,...,n} and |w-x| < |x-y| < |y-w|.",
+    "comment": [
+        "For a guide to related sequences, see A212959.",
+        "Magic numbers of nucleons in a biaxially deformed nucleus at oscillator ratio 1:2 (oblate ellipsoid) under the simple harmonic oscillator model. - _Jess Tauber_, May 14 2013",
+        "a(n) is the number of Sidon subsets of {1,..,n+1} of size 3. - _Carl Najafi_, Apr 27 2014"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A212964/b212964.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Ikuko Hamamoto, <a href=\"http://ribf.riken.jp/~seminar/Lecture/hamamoto/hamamoto100622/riken-lec-june10-pdf.pdf\">One-particle motion in nuclear many-body problem</a>, Division of Mathematical Physics, LTH, University of Lund, Sweden.",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-2,-2,3,-1)."
+    ],
+    "formula": [
+        "a(n) = 3*a(n-1)-2*a(n-2)-2*a(n-3)+3*a(n-4)-a(n-5).",
+        "G.f.: f(x)/g(x), where f(x)=2*x^3 and g(x)=(1+x)(1-x)^4.",
+        "a(n+3) = 2*A002623(n).",
+        "a(n) = sum(k=0..n, floor((k-1)^2/2))). - _Enrique P\u00e9rez Herrero_, Dec 28 2013",
+        "a(n) = sum_{i=1..n} floor(i^2/2) - 2*floor(i/2). - _Wesley Ivan Hurt_, Jul 23 2014",
+        "a(n) = (2*n-1)*(2*n^2-2*n-3)/24 - (-1)^n/8. - _Robert Israel_, Jul 23 2014"
+    ],
+    "maple": [
+        "A212964:=n->add(floor(i^2/2) - 2*floor(i/2), i=1..n): seq(A212964(n), n=0..50); # _Wesley Ivan Hurt_, Jul 23 2014"
+    ],
+    "mathematica": [
+        "t = Compile[{{n, _Integer}}, Module[{s = 0},",
+        "(Do[If[Abs[w - x] < Abs[x - y] < Abs[y - w], s = s + 1],",
+        "{w, 0, n}, {x, 0, n}, {y, 0, n}]; s)]];",
+        "m = Map[t[#] &, Range[0, 45]]   (* A212964 *)",
+        "m/2 (* essentially A002623 *)",
+        "CoefficientList[Series[2 x^3/((1 + x) (1 - x)^4), {x, 0, 50}], x] (* _Vincenzo Librandi_, Jul 25 2014 *)"
+    ],
+    "program": [
+        "(MAGMA) [(2*n-1)*(2*n^2-2*n-3)/24 - (-1)^n/8: n in [0..50]]; // _Vincenzo Librandi_, Jul 25 2014",
+        "(PARI) a(n) = (2*n-1)*(2*n^2-2*n-3)/24 - (-1)^n/8;",
+        "vector (100, n, a(n-1)) \\\\ _Altug Alkan_, Sep 30 2015"
+    ],
+    "xref": [
+        "Cf. A212959."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Clark Kimberling_, Jun 02 2012",
+    "references": 5,
+    "revision": 48,
+    "time": "2015-10-02T03:48:24-04:00",
+    "created": "2012-06-13T15:59:37-04:00"
+}

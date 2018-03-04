@@ -1,0 +1,52 @@
+{
+    "number": 74141,
+    "data": "1,2,7,18,50,118,301,684,1621,3620,8193,17846,39359,84198,181313,383208,811546,1695062,3546634,7341288,15207022,31261006,64255264,131317012,268336125,545858260,1110092387,2250057282,4558875555",
+    "name": "Sum of products of parts increased by 1 in all partitions of n.",
+    "comment": [
+        "Replace each term in A036035 by the number of its divisors; sequence gives sum of terms in n-th group.",
+        "This is the sum of the number of submultisets of the multisets with n elements; a part of a partition is a frequency of such an element. - _George Beck_, Nov 01 2011"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A074141/b074141.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: 1/Product_{m>0} (1-(m+1)*x^m). Recurrence: a(n) = 1/n*Sum_{k=1..n} b(k)*a(n-k), where b(k) = Sum_{d divides k} d*(d+1)^(k/d).",
+        "a(n) = S(n,1), where S(n,m) = sum(k=m..n/2, (k+1)*S(n-k,k))+(n+1), S(n,n)=n+1, S(0,m)=1, S(n,m)=0 for n<m. - _Vladimir Kruchinin_, Sep 07 2014",
+        "a(n) ~ c * 2^n, where c = 18.56314656361011472747535423226928404842588594722907068201... = A256155. - _Vaclav Kotesovec_, Sep 11 2014"
+    ],
+    "example": [
+        "The partitions of 4 are 4, 3+1, 2+2, 2+1+1, 1+1+1+1, the corresponding products when parts are increased by 1 are 5,8,9,12,16 and their sum is a(4) = 50."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      b(n, i-1) +`if`(i>n, 0, (1+i)*b(n-i, i))))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..50); # _Alois P. Heinz_, Sep 07 2014"
+    ],
+    "mathematica": [
+        "Table[Plus @@ Times @@@ (IntegerPartitions[n] + 1), {n, 0, 28}] (* _T. D. Noe_, Nov 01 2011 *)",
+        "b[n_, i_] := b[n, i] = If[n==0, 1, If[i<1, 0, b[n, i-1] + If[i>n, 0, (1+i) * b[n-i, i]]]]; a[n_] := b[n, n]; Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Oct 08 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "S(n,m):=if n=0 then 1 else if n<m then 0 else if n=m then n+1 else sum((k+1)*S(n-k,k),k,m,n/2)+(n+1);",
+        "makelist(S(n,1),n,0,17); /* _Vladimir Kruchinin_, Sep 07 2014 */"
+    ],
+    "xref": [
+        "Cf. A006906, A036035, A074139, A074140, A256155.",
+        "Row sums of A079308.",
+        "Column k=2 of A261718."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Amarnath Murthy_, Aug 28 2002",
+    "ext": [
+        "More terms from _Alford Arnold_, Sep 17 2002",
+        "More terms, better description and formulas from _Vladeta Jovovic_, _Vladimir Baltic_, Nov 28 2002"
+    ],
+    "references": 14,
+    "revision": 33,
+    "time": "2015-10-08T12:54:08-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

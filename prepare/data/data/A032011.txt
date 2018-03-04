@@ -1,0 +1,48 @@
+{
+    "number": 32011,
+    "data": "1,1,1,7,9,31,403,757,2873,12607,333051,761377,3699435,16383121,108710085,4855474267,13594184793,76375572751,388660153867,2504206435681,20148774553859,1556349601444477,5050276538344665,33326552998257031,186169293932977115,1305062351972825281,9600936552132048553,106019265737746665727,12708226588208611056333,47376365554715905155127",
+    "name": "Partition n labeled elements into sets of different sizes and order the sets.",
+    "comment": [
+        "From _Alois P. Heinz_, Sep 02 2015: (Start)",
+        "Also the number of matrices with n rows of nonnegative integer entries and without zero rows or columns such that the sum of all entries is equal to n and the column sums are distinct.  Equivalently, the number of compositions of n into distinct parts where each part i is marked with a word of length i over an n-ary alphabet whose letters appear in alphabetical order and all n letters occur exactly once.",
+        "a(3) = 7:",
+        "[1]   [1 0]  [0 1]  [1 0]  [0 1]  [0 1]  [1 0]",
+        "[1]   [1 0]  [0 1]  [0 1]  [1 0]  [1 0]  [0 1]",
+        "[1]   [0 1]  [1 0]  [1 0]  [0 1]  [1 0]  [0 1].",
+        "3abc, 2ab1c, 1c2ab, 2ac1b, 1b2ac, 2bc1a, 1a2bc.  (End)"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A032011/b032011.txt\">Table of n, a(n) for n = 0..670</a>",
+        "C. G. Bower, <a href=\"/transforms2.html\">Transforms (2)</a>"
+    ],
+    "formula": [
+        "\"AGJ\" (ordered, elements, labeled) transform of 1, 1, 1, 1, ...",
+        "a(n) = Sum_{k>=0} k! * A131632(n,k). - _Alois P. Heinz_, Sep 09 2015"
+    ],
+    "maple": [
+        "b:= proc(n, i, p) option remember;",
+        "      `if`(i*(i+1)/2<n, 0, `if`(n=0, p!, b(n, i-1, p)+",
+        "      `if`(i>n, 0, b(n-i, i-1, p+1)*binomial(n,i))))",
+        "    end:",
+        "a:= n-> b(n$2, 0):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Sep 02 2015"
+    ],
+    "mathematica": [
+        "f[list_]:=Apply[Multinomial,list]*Length[list]!; Table[Total[Map[f, Select[IntegerPartitions[n], Sort[#] == Union[#] &]]], {n, 1, 30}]",
+        "b[n_, i_, p_] := b[n, i, p] = If[i*(i+1)/2<n, 0, If[n==0, p!, b[n, i-1, p] + If[i>n, 0, b[n-i, i-1, p+1]*Binomial[n, i]]]]; a[n_] := b[n, n, 0]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Nov 16 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000670, A007837, A032020, A114902, A120774, A131632.",
+        "Main diagonal of A261836 and A261959."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Christian G. Bower_, Apr 01 1998",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Sep 02 2015"
+    ],
+    "references": 10,
+    "revision": 41,
+    "time": "2017-04-27T09:44:14-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

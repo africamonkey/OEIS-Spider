@@ -1,0 +1,40 @@
+{
+    "number": 278289,
+    "data": "1,1,16,101376,1190156828672,68978321274090930831360,40824193474825703180733027309531955200,440873872874088459550341319780612789503586208384381091840,140992383930585613207663170866505518985873138480180692888967131590224605582721024",
+    "name": "Number of standard Young tableaux of skew shape (2n-1,2n-2,...,2,1)/(n-1,n-2,..,2,1).",
+    "reference": [
+        "R. P. Stanley, Enumerative Combinatorics, Cambridge, Vol. 2, 1999; see Corollary 7.16.3."
+    ],
+    "link": [
+        "Alejandro H. Morales, <a href=\"/A278289/b278289.txt\">Table of n, a(n) for n = 0..22</a>",
+        "A. H. Morales, I. Pak and G. Panova, <a href=\"https://arxiv.org/abs/1610.07561\">Asymptotics of the number of standard Young tableaux of skew shape</a>, arXiv:1610.07561 [math.CO], 2016.",
+        "H. Naruse, <a href=\"http://www.emis.de/journals/SLC/wpapers/s73vortrag/naruse.pdf\">Schubert calculus and hook formula</a>, talk slides at 73rd S\u00e9m. Lothar. Combin., Strobl, Austria, 2014.",
+        "Jay Pantone, <a href=\"http://jaypantone.com/oeis/A278289-439-terms.txt\">File with list of n, a(n) for n = 0..438</a> (warning: file size is 100MB)"
+    ],
+    "formula": [
+        "a(n) = ((3*n^2-n)/2)!*det(1/(lambda[i]-mu[j]-i+j)!), where lambda = (2*n-1,2*n-2,...,1) and mu = (n-1,n-2,...,1,0...,0).",
+        "n*log(n)/2 + c1*n + o(n)  <= log(a(n)) <= n*log(n)/2 + c2*n + o(n) where c1 = -0.3237, and c2 = -0.0621 (proved in arxiv:1610.07561).",
+        "c1 = -0.18425 and c2 = -0.18422 (conjectured by Jay Pantone)."
+    ],
+    "example": [
+        "For n = 3 there are a(2) = 16 standard tableaux of shape (3,2,1)/(1)."
+    ],
+    "maple": [
+        "a:=proc(k) local lam,mu;",
+        "lam:=[seq(2*k-i,i=1..2*k-1)];",
+        "mu:=[seq(k-i,i=1..k-1),seq(0,i=1..k)];",
+        "factorial(binomial(2*k,2)-binomial(k,2))*LinearAlgebra:-Determinant(Matrix(2*k-1, 2*k-1,(i,j)->`if`(lam[i]-mu[j]-i+j<0,0,1/factorial(lam[i]-mu[j]-i+j))));",
+        "end proc:",
+        "seq(a(n),n=0..5);"
+    ],
+    "xref": [
+        "Cf. A005118; for even n the number of terms in Naruse's formula is given by A181119."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alejandro H. Morales_, Nov 16 2016",
+    "references": 1,
+    "revision": 43,
+    "time": "2017-12-06T09:42:56-05:00",
+    "created": "2016-11-18T02:32:24-05:00"
+}

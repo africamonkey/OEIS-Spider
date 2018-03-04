@@ -1,0 +1,36 @@
+{
+    "number": 90367,
+    "data": "1,1,5,34,276,2509,24739,259815,2873376,33207790,398897289,4960652325,63676368387,841741913795,11438028248093,159536511439266,2281321298635427,33411684617642665,500761214428795093,7674842860939188928,120209960716130232745",
+    "name": "Shifts 1 place left under the INVERT transform of the BINOMIAL transform of the self-convolution cube of this sequence.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A090367/b090367.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "G.f.: A(x) = 1/(1 - A(x/(1-x))^3*x/(1-x) )."
+    ],
+    "maple": [
+        "bintr:= proc(p) local b; b:= proc(n) option remember;",
+        "           add(p(k) *binomial(n,k), k=0..n) end",
+        "        end:",
+        "invtr:= proc(p) local b; b:= proc(n) option remember;",
+        "           `if`(n<1, 1, add(b(n-i) *p(i-1), i=1..n+1)) end",
+        "        end:",
+        "s:= proc(n) option remember; add(a(i)*a(n-i), i=0..n) end:",
+        "b:= invtr(bintr(n-> add(s(i)*a(n-i), i=0..n))):",
+        "a:= n-> `if`(n<0, 0, b(n-1)):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jun 28 2012"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A); if(n<0,0,A=1+x+x*O(x^n); for(k=1,n,B=subst(A^3,x,x/(1-x))/(1-x)+x*O(x^n); A=1+x*A*B);polcoeff(A,n,x))}"
+    ],
+    "xref": [
+        "Cf. A090365, A090366."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Nov 26 2003",
+    "references": 3,
+    "revision": 9,
+    "time": "2015-03-24T19:48:17-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

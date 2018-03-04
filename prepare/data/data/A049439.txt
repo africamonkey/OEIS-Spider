@@ -1,0 +1,46 @@
+{
+    "number": 49439,
+    "data": "1,2,4,8,9,16,18,32,36,64,72,128,144,225,256,288,441,450,512,576,625,882,900,1024,1089,1152,1250,1521,1764,1800,2025,2048,2178,2304,2500,2601,3042,3249,3528,3600,4050,4096,4356,4608,4761,5000,5202,5625,6084",
+    "name": "Numbers n such that the number of odd divisors of n is an odd divisor of n.",
+    "comment": [
+        "Invented by the HR concept formation program.",
+        "a(n) = A000079(k)*A016754(m) for appropriate k, m. - _Reinhard Zumkeller_, Jun 05 2008",
+        "Sequence consists of all numbers of the form A000079(k)*A036896(m). - _Matthew Vandermast_, Nov 14 2010"
+    ],
+    "link": [
+        "R. Zumkeller, <a href=\"/A049439/b049439.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "S. Colton, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/colton/joisol.html\">Refactorable Numbers - A Machine Invention</a>, J. Integer Sequences, Vol. 2, 1999, #2.",
+        "S. Colton, <a href=\"http://web.archive.org/web/20070831060523/http://www.dai.ed.ac.uk/homes/simonco/research/hr/\">HR - Automatic Theory Formation in Pure Mathematics</a>"
+    ],
+    "example": [
+        "There are 3 odd divisors of 18, namely 1,3 and 9 and 3 itself is an odd divisor of 18."
+    ],
+    "mathematica": [
+        "ok[n_] := (d = Length @ Select[Divisors[n], OddQ] ;",
+        "  IntegerQ[n/d] && OddQ[d]); Select[Range[6100], ok]",
+        "(* _Jean-Fran\u00e7ois Alcover_, Apr 22 2011 *)",
+        "odQ[n_]:=Module[{ods=Select[Divisors[n],OddQ]},MemberQ[ods,Length[ ods]]]; Select[Range[7000],odQ] (* _Harvey P. Dale_, Dec 18 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a049439 n = a049439_list !! (n-1)",
+        "a049439_list = filter (\\x -> ((length $ oddDivs x) `elem` oddDivs x)) [1..]",
+        "   where oddDivs n = [d | d <- [1,3..n], mod n d == 0]",
+        "-- _Reinhard Zumkeller_, Aug 17 2011",
+        "(PARI) is(n)=my(d=numdiv(n>>valuation(n,2))); d%2 && n%d==0 \\\\ _Charles R Greathouse IV_, Feb 07 2017"
+    ],
+    "xref": [
+        "Contains A000079 and A036896.  Cf. A033950.",
+        "Subsequence of A028982. Includes A120349, A120358, A120359, A120361, A181795. See also A181794."
+    ],
+    "keyword": "nice,nonn",
+    "offset": "1,2",
+    "author": "Simon Colton (simonco(AT)cs.york.ac.uk)",
+    "ext": [
+        "Example corrected by _Harvey P. Dale_, Jul 14 2011"
+    ],
+    "references": 12,
+    "revision": 37,
+    "time": "2017-02-07T17:42:05-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

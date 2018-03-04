@@ -1,0 +1,37 @@
+{
+    "number": 277717,
+    "data": "3,5,7,13,19,23,29,37,43,47,61,67,71,73,79,89,97,103,109,113,151,179,181,193,211,223,233,241,277,281,283,293,307,313,331,337,347,349,359,373,379,383,397,401,409,419,421,443,449,463,467,479,487,523,557",
+    "name": "Primes that only occur once in A094877.",
+    "comment": [
+        "Primes n that are not k + A003132(k) for any nonprime k < n."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A277717/b277717.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "N:= 1000: # to get the first N terms",
+        "res:= NULL: count := 0:",
+        "for n from 1 while count < N do",
+        "  if isprime(n) then",
+        "    if R[n] <> false then count:= count+1; res:= res, n fi",
+        "  else",
+        "    v:= n + add(t^2, t=convert(n,base,10));",
+        "    if isprime(v) then R[v]:= false fi;",
+        "  fi",
+        "od:",
+        "res;"
+    ],
+    "mathematica": [
+        "With[{nn = 1200}, TakeWhile[#, # <= nn/2 &] &@ First@ Transpose@ TakeWhile[#, Last@ # == 1 &] &@ SortBy[#, Last] &@ Tally@ Array[NestWhile[# + Total[IntegerDigits[#]^2] &, #, ! PrimeQ@ # &] &, nn]] (* _Michael De Vlieger_, Oct 27 2016, after _Harvey P. Dale_ at A094877 *)"
+    ],
+    "xref": [
+        "Cf. A003132, A094830, A094877."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Oct 27 2016",
+    "references": 1,
+    "revision": 10,
+    "time": "2016-11-08T20:47:20-05:00",
+    "created": "2016-10-28T03:50:52-04:00"
+}

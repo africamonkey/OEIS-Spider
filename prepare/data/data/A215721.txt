@@ -1,0 +1,50 @@
+{
+    "number": 215721,
+    "data": "0,1,5,9,15,21,25,29,35,39,43,55,59,63,73,77,89,93,97,107,111,123,127,131,141,145,157,161,165,175,179,191,195,199,209,213,225,229,233",
+    "name": "The values of N for which the 1 X N domino-covering game is a second player win.",
+    "comment": [
+        "In a domino-covering game, the players take turns placing dominoes (1 X 2 rectangles) on the board (here a 1 X N rectangle), such that the position of the dominoes is integer, and no two dominoes overlap. The loser is the first player unable to move.",
+        "The optimal strategies for this game can be determined by computing the nim-value nv(N) of each board 1 X N:",
+        "nv(0) = 0",
+        "nv(1) = 0",
+        "nv(N+2) = least nonnegative integer not in {nimsum(nv(k),nv(N-k)) : k <= N}",
+        "(where nimsum(a,b) is the bitwise xor of a and b).",
+        "The second player wins a game iff its nim-value is 0."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A215721/b215721.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Pratik Alladi, Neel Bhalla, Tanya Khovanova, Nathan Sheffield, Eddie Song, William Sun, Andrew The, Alan Wang, Naor Wiesel, Kevin Zhang Kevin Zhao, <a href=\"https://arxiv.org/abs/1707.07201\">PRIMES STEP Plays Games</a>, arXiv:1707.07201 [math.CO], 2017, Section 8.",
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,0,0,1,-1)."
+    ],
+    "formula": [
+        "For n > 14, a(n) = a(n-5) + 34. - _Rainer Rosenthal_ and _Charles R Greathouse IV_, Sep 20 2012",
+        "G.f.: x^2*(6*x^13 - 2*x^12 + 8*x^10 - 2*x^9 - 2*x^8 + 2*x^7 + 3*x^5 + 6*x^4 + 6*x^3 + 4*x^2 + 4*x + 1) / ((x - 1)^2*(x^4 + x^3 + x^2 + x + 1)). - _Colin Barker_, Jan 26 2013"
+    ],
+    "example": [
+        "N=1: the first player is unable to move (second player win).",
+        "N=2,3: any move by the first player renders the second player unable to move (first player win).",
+        "N=4: the first player can win by covering the two central squares (first player win).",
+        "N=5: any move by the first player has a final counter-move by the second (second player win)."
+    ],
+    "program": [
+        "(Python)",
+        "import numpy as np",
+        "N = np.array([0,0])",
+        "U = np.arange(1000)",
+        "for i in U:",
+        "..N = np.append(N, np.setdiff1d(U,np.bitwise_xor(N[:-1],N[-2::-1])).min())",
+        "print list(*np.where(N==0))",
+        "(PARI) a(n)=if(n<10,[0,1,5,9,15,21,25,29,35][n],n\\5*34-[29,25,13,9,5][n%5+1]) \\\\ _Charles R Greathouse IV_, Aug 24 2012",
+        "(PARI) list(lim)=my(v=vector(lim\\1+1),u);for(n=0,#v-3,u=vecsort(vector(n\\2+1,k,bitxor(v[k],v[n-k+2])),,8);for(i=0,#u-1,if(u[i+1]!=i,v[n+3]=i;next(2));v[n+3]=#u));for(i=0,#v-1,v[i+1]=if(v[i+1],1,i)); vecsort(v,,8) \\\\ _Charles R Greathouse IV_, Aug 24 2012"
+    ],
+    "xref": [
+        "The nim-values are A002187(n-1)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Yuval Gabay_, Aug 22 2012",
+    "references": 1,
+    "revision": 40,
+    "time": "2017-12-09T19:24:49-05:00",
+    "created": "2012-08-24T08:46:31-04:00"
+}

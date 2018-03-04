@@ -1,0 +1,43 @@
+{
+    "number": 274935,
+    "data": "1,1,2,2,4,6,12,22,46,93,205,451,1039,2422,5803,14075,34757,86761,219235,558984,1438033,3726535,9723913,25525112,67375200,178723358,476264352,1274448596,3423494617,9229075121,24961969420,67721961268,184255962564,502658875034,1374713691841,3768527610094,10353602341313",
+    "name": "Number of n-node unlabeled forests with two connected components.",
+    "comment": [
+        "One of the components may be empty (the null graph): a(n) = A000055(n) + A274937(n). - _R. J. Mathar_, Aug 15 2017"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A274935/b274935.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: [A(x)^2 + A(x^2)]/2 where A(x) is the o.g.f. for A000055."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; `if`(n<2, n, (add(add(d*",
+        "      b(d), d=divisors(j))*b(n-j), j=1..n-1))/(n-1))",
+        "    end:",
+        "g:= proc(n) option remember; `if`(n=0, 1, b(n)-add(b(j)*",
+        "      b(n-j), j=0..n/2)+`if`(n::odd, 0, (t->t*(t+1)/2)(b(n/2))))",
+        "    end:",
+        "a:= proc(n) option remember; add(g(j)*g(n-j), j=0..n/2)-",
+        "      `if`(n::odd, 0, (t-> t*(t-1)/2)(g(n/2)))",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jul 20 2016"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n<2, n, Sum[DivisorSum[j, #*b[#]&]*b[n-j], {j, 1, n-1}]/ (n-1)];",
+        "g[n_] := g[n] = If[n==0, 1, b[n]-Sum[b[j]*b[n-j], {j, 0, n/2}]+If[OddQ[n], 0, Function[t, t*(t+1)/2][b[n/2]]]];",
+        "a[n_] := a[n] = Sum[g[j]*g[n-j], {j, 0, n/2}]-If[OddQ[n], 0, Function[t, t*(t-1)/2][g[n/2]]];",
+        "Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Mar 15 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000055, A274936, A274937, A274938. [A274935, A274936, A274937, A274938] are analogs for forests of [A275165, A275166, A216785, A274934] for graphs."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Jul 19 2016",
+    "references": 4,
+    "revision": 20,
+    "time": "2017-08-15T13:53:31-04:00",
+    "created": "2016-07-19T10:25:14-04:00"
+}

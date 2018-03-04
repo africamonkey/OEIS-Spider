@@ -1,0 +1,44 @@
+{
+    "number": 73777,
+    "data": "1,2,5,10,22,42,85,162,314,588,1113,2066,3847,7080,13036,23824,43504,79048,143441,259376,468313,843352,1516515,2721470,4877165,8726118,15593224,27826634,49602226,88316198,157089101,279137436,495566701,879034448,1557979289",
+    "name": "a(n) = sum(-A068341(k+1)*a(n-k), k=1..n), a(0)=1.",
+    "comment": [
+        "Recurrence relation involves the convolution of the Moebius function (A068341).",
+        "Radius of convergence of A(x) is r=0.5802946238073267...",
+        "Related limits are limit_{n->inf} a(n) r^n/n = 0.406...(?) and limit_{n->inf} a(n+1)/a(n) = 1.723262561763844...",
+        "This sequence is the self-convolution of A073776."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A073777/b073777.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: A(x)= x/sum(mu(n)*x^n, n=1..inf)^2, A(0)=1, where mu(n)=Moebius function; a(n) = sum(-A068341(k+1)*a(n-k), k=1..n), a(0)=1."
+    ],
+    "example": [
+        "a(4) = -A068341(2)a(3) -A068341(3)a(2) -A068341(4)a(1) -A068341(5)a(0) = 2*10 +1*5 -2*2 +1*1 = 22. A068341 begins {1,-2,-1,2,-1,4,-2,0,3,...}."
+    ],
+    "mathematica": [
+        "A068341[n_] := A068341[n] = Sum[MoebiusMu[k]*MoebiusMu[n + 1 - k], {k, 1, n}]; a[0] = 1; a[n_] := a[n] = Sum[-A068341[k + 1]*a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 33}] (* _Jean-Fran\u00e7ois Alcover_, Oct 10 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a073777 n = a073777_list !! (n-1)",
+        "a073777_list = 1 : f [1] where",
+        "   f xs = y : f (y : xs) where y = sum $ zipWith (*) xs ms'",
+        "   ms' = map negate $ tail a068341_list",
+        "-- _Reinhard Zumkeller_, Nov 03 2015"
+    ],
+    "xref": [
+        "Cf. A073776, A068341, A070965, A008683."
+    ],
+    "keyword": "easy,nice,nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Aug 10 2002",
+    "ext": [
+        "Corrected by _Jean-Fran\u00e7ois Alcover_, Oct 10 2011"
+    ],
+    "references": 2,
+    "revision": 18,
+    "time": "2015-11-13T22:57:04-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

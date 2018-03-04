@@ -1,0 +1,63 @@
+{
+    "number": 5409,
+    "id": "M3418",
+    "data": "1,1,4,11,28,69,168,407,984,2377,5740,13859,33460,80781,195024,470831,1136688,2744209,6625108,15994427,38613964,93222357,225058680,543339719,1311738120,3166815961,7645370044,18457556051,44560482148,107578520349,259717522848",
+    "name": "Number of polynomials of height n: a(n) = 2a(n-1) + a(n-2) + 2.",
+    "comment": [
+        "Starting with n=1, the sum of the antidiagonals of the array in a comment from Cloitre regarding A002002. - _Gerald McGarvey_, Aug 12 2004",
+        "Cumulative sum of A001333. - _Sture Sj\u00f6stedt_, Nov 15 2011",
+        "a(n) = number of self-avoiding walks on a 3 rows x n columns grid of squares, starting top-left, ending bottom-left, using moves of R(ight), L(eft), U(p), D(own). E.g., for 3x1 there is just the path (D,D), and a(1) = 1. For 3x2, there are 4 paths (D,D) (D,R,D,L) (R,D,D,L) and (R,D,L,D) and a(2) = 4. - _Toby Gottfried_, Mar 04 2013",
+        "Define a triangle to have T(n,1) = n*(n-1)+1 and T(n,n) = n; the other terms T(r,c) = T(r-1,c) + T(r-1,c-1) + T(r-2,c-1).  The sum of the terms in row(n+1) minus those in row(n) = a(n+2). - _J. M. Bergot_, Apr 30 2013"
+    ],
+    "reference": [
+        "R. Courant and H. Robbins, What is Mathematics?, Oxford Univ. Press, 1941, p. 103.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005409/b005409.txt\">Table of n, a(n) for n = 1..300</a>",
+        "M. Bicknell, <a href=\"http://www.fq.math.ca/Scanned/13-4/bicknell.pdf\">A Primer on the Pell Sequence and related sequences</a>, Fibonacci Quarterly, Vol. 13, No. 4, 1975, pp. 345-349.",
+        "S. M. Diano, <a href=\"/A005409/a005409.pdf\">Letter to N. J. A. Sloane</a>",
+        "A. F. Horadam, <a href=\"http://www.fq.math.ca/Scanned/5-5/horadam.pdf\">Special properties of the sequence W_n(a,b; p,q)</a>, Fib. Quart., 5.5 (1967), 424-434.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Gy. Tasi and F. Mizukami, <a href=\"http://dx.doi.org/10.1023/A:1019163812482\">Quantum algebraic-combinatoric study of the conformational properties of n-alkanes</a>, J. Math. Chemistry, 25, 1999, 55-64 (see p. 63)."
+    ],
+    "formula": [
+        "a(n) = ((1+sqrt(2))^n - (1-sqrt(2))^n)/(2*sqrt(2))-1 for n>1, a(1)=1.",
+        "G.f.: x*(1-2*x+2*x^2+x^3)/(1-3*x+x^2+x^3). - _Paul D. Hanna_, Feb 22 2005",
+        "a(n) = 3*a(n-1)-a(n-2)-a(n-3). - _Toby Gottfried_, Mar 08 2013",
+        "a(n+3)_1 = A048745(n+1)_0 - A048739(n)_0 Note: FAMP returns A048739 with an initial term of 0. Indeed, if A048739(-1) were 0, then a(n+2)_1 = A048745(n)_0 - A048739(n-1)_0. - _Creighton Dement_, Feb 22 2005",
+        "(1, 4, 11, 28,...) = (1, 2, 2, 2,...) * the Pell sequence starting (1, 2, 5, 12, 29,...); such that, for example: a(5) = (2, 2, 2, 1) dot (1, 2, 5, 12) = (2 + 4 + 10 + 12) = 48. - _Gary W. Adamson_ May 21 2013"
+    ],
+    "maple": [
+        "A005409:=(1-2*z+2*z**2+z**3)/(z-1)/(z**2+2*z-1); # Conjectured by _Simon Plouffe_ in his 1992 dissertation."
+    ],
+    "mathematica": [
+        "Join[{1}, RecurrenceTable[{a[1]==1, a[2]==4, a[n]==2a[n-1]+a[n-2]+2}, a[n], {n,30}]] (* _Harvey P. Dale_, Jul 27 2011 *)",
+        "Join[{1},CoefficientList[Series[(x+1)/((x-1)*(x^2+2*x-1)),{x,0,40}],x]] (* _Vladimir Joseph Stephan Orlovsky_, Jan 21 2012 *)"
+    ],
+    "program": [
+        "Floretion Algebra Multiplication Program, FAMP Code: 2jesforseq[ - .5'j + 'k - .5j' + .5k' - .5'ii' - .5'ij' - 'ik' - .5'ji' - .5'ki' + .5'kj']; ForType: 1A, LoopType: jes (first iteration)",
+        "(PARI) a(n)=polcoeff(1+x*(1+x)/(1-3*x+x^2+x^3)+x*O(x^n),n) \\\\ _Paul D. Hanna_",
+        "(Haskell)",
+        "a005409 n = a005409_list !! (n-1)",
+        "a005409_list = 1 : scanl1 (+) (tail a001333_list)",
+        "-- _Reinhard Zumkeller_, Jul 08 2012"
+    ],
+    "xref": [
+        "Equals A000129 - 1.",
+        "Cf. A001333, A048654, A048655, A048745.",
+        "Cf. A214931 (walks on grids with 4 rows), A006189 (grids with 3 columns).",
+        "Cf. A216211 (grids with 4 columns)."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, S. M. Diano",
+    "ext": [
+        "Additional comments from _Barry E. Williams_"
+    ],
+    "references": 20,
+    "revision": 86,
+    "time": "2017-06-30T20:21:54-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

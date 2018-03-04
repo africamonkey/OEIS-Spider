@@ -1,0 +1,56 @@
+{
+    "number": 245674,
+    "data": "2,79,107,173,257,359,383,523,593,971,1493,1811,1867,2273,2357,3187,4111,4723,6389,7607,8101,8699,9473,11027,12157,12227,15017,16301,16987,18797,19801,19913,20071,20323,21313,22003,22307,23203,24229,24733,24859,24943",
+    "name": "Prime numbers P such that 8*P^2-1 and 8*(8*P^2-1)^2-1 are also prime numbers.",
+    "comment": [
+        "Subsequence of A245639.",
+        "For P < 150000000 in this sequence, 8*(8*(8*P^2)^2-1)^2-1)^2-1 is composite."
+    ],
+    "link": [
+        "Pierre CAMI, <a href=\"/A245674/b245674.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "2 is prime, 8*2^2-1=31 is prime, 8*31^2-1=7687 is prime, so 2 is in the sequence."
+    ],
+    "mathematica": [
+        "f[n_]:=8 n^2 - 1; Select[Prime[Range[3000]], PrimeQ[f[#]]&&PrimeQ[f[f[#]]]&] (* _Vincenzo Librandi_, Sep 08 2014 *)"
+    ],
+    "program": [
+        "(PFGW & SCRIPT)",
+        "SCRIPT",
+        "DIM i",
+        "DIM j,0",
+        "DIM n,0",
+        "DIMS t",
+        "OPENFILEOUT myf,a(n).txt",
+        "LABEL loop1",
+        "SET j,j+1",
+        "SETS t,%d\\ ;p(j)",
+        "SET i,8*p(j)^2-1",
+        "PRP i,t",
+        "IF ISPRP THEN GOTO a",
+        "GOTO loop1",
+        "LABEL a",
+        "SET i,8*i^2-1",
+        "PRP i,t",
+        "IF ISPRP THEN GOTO b",
+        "GOTO loop1",
+        "LABEL b",
+        "WRITE myf,t",
+        "GOTO loop1",
+        "(PARI)",
+        "f(x) = 8*x^2-1;",
+        "forprime(p=1,10^8,if(ispseudoprime(f(p)) && ispseudoprime(f(f(p))), print1(p,\", \"))) \\\\ _Derek Orr_, Jul 29 2014",
+        "(MAGMA) [p: p in PrimesUpTo(25000)| IsPrime(8*p^2-1)and IsPrime(512*p^4-128*p^2+7)]; // _Vincenzo Librandi_, Sep 08 2014"
+    ],
+    "xref": [
+        "Cf. A245639."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Pierre CAMI_, Jul 29 2014",
+    "references": 1,
+    "revision": 20,
+    "time": "2016-04-25T11:50:03-04:00",
+    "created": "2014-08-21T22:05:00-04:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 241004,
+    "data": "90,137,162,581,714,773,3735,4557,71028",
+    "name": "Numbers n such that anti-phi(sigma*(n)) = n, where anti-phi is A066452 and sigma* is the sum of anti-divisors of n (A066417).",
+    "comment": [
+        "Like A001229 but using anti-phi(n) (A066452) and sigma*(n) (A066417)."
+    ],
+    "example": [
+        "90 is in the sequence: Anti-divisors of 90 are 4, 12, 20, 36, 60 and their sum is 132. Anti-phi of 132 is 90."
+    ],
+    "maple": [
+        "isA241004 := proc(n)",
+        "    simplify( n = A066452(A066417(n))) ;",
+        "end proc:",
+        "for n from 1 do",
+        "    if isA241004(n) then",
+        "        printf(\"%d\\n\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Aug 07 2014"
+    ],
+    "program": [
+        "(PARI) sad(n) = my(k); if(n>1, k=valuation(n, 2); sigma(2*n+1)+sigma(2*n-1)+sigma(n/2^k)*2^(k+1)-6*n-2, 0);",
+        "antidiv(n) = {my(v = []); for (k=2, n-1, if (abs((n % k) - k/2) < 1, v = concat(v, k));); v;}",
+        "antiphi(n) = {my(vad = antidiv(n)); my(nbad = 0); for (j=1, n-1, isad = 1; for (k=1, #vad, if ((j % vad[k]) == 0, isad = 0; break); ); nbad += isad;); nbad;}",
+        "isok(n) = n == antiphi(sad(n)); \\\\ _Michel Marcus_, Feb 25 2016"
+    ],
+    "xref": [
+        "Cf. A001229, A066417, A066452."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Aug 07 2014",
+    "ext": [
+        "a(9) from _Michel Marcus_, Feb 25 2016"
+    ],
+    "references": 0,
+    "revision": 13,
+    "time": "2016-03-01T02:27:38-05:00",
+    "created": "2014-08-07T17:12:03-04:00"
+}

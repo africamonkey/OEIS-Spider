@@ -1,0 +1,34 @@
+{
+    "number": 156326,
+    "data": "1,1,5,58,1181,36696,1601497,92969920,6908883417,638746871680,71860612355981,9664570175364864,1531263494465900725,282321785979644121088,59935663751282958139425",
+    "name": "E.g.f.: A(x) = exp( Sum_{n>=1} n^2 * a(n-1)*x^n/n! ) = Sum_{n>=0} a(n)*x^n/n! with a(0)=1.",
+    "formula": [
+        "a(n) = Sum_{k=1..n} k^2 * C(n-1,k-1)*a(k-1)*a(n-k) for n>0, with a(0)=1.",
+        "E.g.f.: A(x) = (1/x)*Series_Reversion(x/G(x)) where A(x/G(x)) = G(x) is the e.g.f. of A182962, which satisfies:",
+        ". G(x) = exp( x/(1 - x*G'(x)/G(x)) );",
+        ". a(n) = [x^n/n!] G(x)^(n+1)/(n+1) for n>=0.",
+        "a(n) = A161968(n+1)/(n+1), where L(x) = x*exp(x*d/dx L(x)) is the e.g.f. of A161968. - _Paul D. Hanna_, Feb 21 2014",
+        "a(n) ~ c * n * (n!)^2, where c =  A238223 * exp(1) = 0.592451670452494179138706062417512405957... - _Vaclav Kotesovec_, Feb 27 2014"
+    ],
+    "example": [
+        "E.g.f: A(x) = 1 + x + 5*x^2/2! + 58*x^3/3! + 1181*x^4/4! + 36696*x^5/5! +...",
+        "log(A(x)) = x + 2^2*x^2/2! + 3^2*5*x^3/3! + 4^2*58*x^4/4! + 5^2*1181*x^5/5! +..."
+    ],
+    "mathematica": [
+        "nmax = 20; b = ConstantArray[0, nmax+1]; b[[1]] = 1; Do[b[[n+1]] = Sum[k^2 * Binomial[n-1,k-1]*b[[k]]*b[[n-k+1]], {k, 1, n}], {n, 1, nmax}]; b (* _Vaclav Kotesovec_, Feb 27 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0,1,n!*polcoeff(exp(sum(k=1,n,k^2*a(k-1)*x^k/k!)+x*O(x^n)),n))}",
+        "(PARI) {a(n)=if(n==0,1,sum(k=1,n,k^2*binomial(n-1,k-1)*a(k-1)*a(n-k)))}"
+    ],
+    "xref": [
+        "Cf. A156325, A156327, A182962, A161968."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Feb 08 2009",
+    "references": 5,
+    "revision": 11,
+    "time": "2014-02-27T10:41:17-05:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

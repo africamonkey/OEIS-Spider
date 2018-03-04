@@ -1,0 +1,50 @@
+{
+    "number": 243664,
+    "data": "1,1,21,1849,426405,203374081,173959321557,242527666641289,514557294036701349,1577689559404884503761,6714435826042791310638741,38401291553086405072860452569,287412720357301174793668207559205,2753382861926383584939774967275568801",
+    "name": "Number of 3-packed words of degree n.",
+    "comment": [
+        "See Novelli-Thibon (2014) for precise definition."
+    ],
+    "link": [
+        "Peter Luschny, <a href=\"/A243664/b243664.txt\">Table of n, a(n) for n = 0..30</a>",
+        "J.-C. Novelli, J.-Y. Thibon, <a href=\"http://arxiv.org/abs/1403.5962\">Hopf Algebras of m-permutations,(m+1)-ary trees, and m-parking functions</a>, arXiv preprint arXiv:1403.5962, 2014. See Fig. 16."
+    ],
+    "formula": [
+        "a(n) = (3*n)! * [t^n] 1/(2-g(t^(1/3))) with g(t) = (exp(t)+2*exp(-t/2)*cos(sqrt(3)*t/2))/3. - _Peter Luschny_, Jul 07 2015"
+    ],
+    "maple": [
+        "g := t -> (exp(t)+2*exp(-t/2)*cos(sqrt(3)*t/2))/3: series(1/(2-g(t^(1/3))),t,14): seq(((3*n)!*coeff(%,t,n)),n=0..13); # _Peter Luschny_, Jul 07 2015"
+    ],
+    "program": [
+        "(Sage)",
+        "def CEN(m, len):",
+        "    f, e, r, u = [1], [1], [1], 1",
+        "    for i in (1..len-1):",
+        "        f.append(rising_factorial(u, m))",
+        "        for k in range(i-1, -1, -1):",
+        "            e[k] = (e[k]*f[i])//f[i-k]",
+        "        s = sum(e); e.append(s); r.append(s)",
+        "        u += m",
+        "    return r",
+        "A243664 = lambda len: CEN(3,len)",
+        "A243664(14) # _Peter Luschny_, Jul 06 2015",
+        "(Sage) # Alternative",
+        "def PackedWords3(n):",
+        "    shapes = [map(lambda x: x*3, p) for p in Partitions(n).list()]",
+        "    return sum([factorial(len(s))*SetPartitions(sum(s), s).cardinality() for s in shapes])",
+        "[PackedWords3(n) for n in (0..13)] # _Peter Luschny_, Aug 02 2015"
+    ],
+    "xref": [
+        "Cf. A011782, A000670, A094088, A243664, A243665, A243666 for k-packed words of degree n for 0<=k<=5."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Jun 14 2014",
+    "ext": [
+        "a(0)=1 prepended, more terms from _Peter Luschny_, Jul 06 2015"
+    ],
+    "references": 6,
+    "revision": 28,
+    "time": "2016-07-19T12:30:27-04:00",
+    "created": "2014-06-14T07:05:10-04:00"
+}

@@ -1,0 +1,60 @@
+{
+    "number": 14612,
+    "data": "8,12,18,20,27,28,30,42,44,45,50,52,63,66,68,70,75,76,78,92,98,99,102,105,110,114,116,117,124,125,130,138,147,148,153,154,164,165,170,171,172,174,175,182,186,188,190,195,207,212,222,230,231,236,238,242,244",
+    "name": "Numbers that are the product of exactly three (not necessarily distinct) primes.",
+    "comment": [
+        "Sometimes called \"triprimes\" or \"3-almost primes\".",
+        "See also A001358 for product of two primes (sometimes called semiprimes).",
+        "If you graph a(n)/n for n up to 10000 (and probably quite a bit higher), it appears to be converging to something near 3.9. In fact the limit is infinite. - _Franklin T. Adams-Watters_, Sep 20 2006",
+        "Meng proved that for any sufficiently large odd integer n, the equation n = a + b + c has solutions where each of a, b, c is 3-almost prime (A014612). The number of such solutions, where lg x = log_2(x), is (1/2)((((lg n)/log n))^2)/(2 log n))^(1/3))(sigma(n))(n^2)(1+O(1/lg n)) where sigma(n) is a convergent series given by Meng which is > (1/2). - _Jonathan Vos Post_, Sep 16 2005",
+        "Also, a(n) are the numbers such that exactly half of their divisors are composite. For the numbers in which exactly half of the divisors are prime, see A167171. - _Ivan Neretin_, Jan 12 2016"
+    ],
+    "reference": [
+        "E. Landau, Handbuch der Lehre von der Verteilung der Primzahlen, Vol. 1, Teubner, Leipzig; third edition : Chelsea, New York (1974). See p. 211."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A014612/b014612.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "E. Landau, Handbuch der Lehre von der Verteilung der Primzahlen, <a href=\"http://name.umdl.umich.edu/ABV2766.0001.001\">vol. 1</a> and <a href=\"http://name.umdl.umich.edu/ABV2766.0002.001\">vol. 2</a>, Leipzig, Berlin, B. G. Teubner, 1909. See Vol. 1, p. 211.",
+        "Xianmeng Meng, <a href=\"http://dx.doi.org/10.1016/j.jnt.2005.04.013\">On sums of three integers with a fixed number of prime factors</a>, Journal of Number Theory, Vol. 114 (2005), pp. 37-65.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/AlmostPrime.html\">Almost Prime</a>"
+    ],
+    "formula": [
+        "Product p_i^e_i with Sum e_i = 3.",
+        "a(n) ~ 2n log n / (log log n)^2 as n -> infinity [Landau, p. 211].",
+        "Tau(a(n)) = 2 * (omega(a(n)) + 1) = 2*A083399(a(n)), where tau=A000005 and omega=A001221. - _Wesley Ivan Hurt_, Jun 28 2013"
+    ],
+    "maple": [
+        "with(numtheory); A014612:=n->`if`(bigomega(n)=3, n, NULL); seq(A014612(n), n=1..250) # _Wesley Ivan Hurt_, Feb 05 2014"
+    ],
+    "mathematica": [
+        "fQ[n_] := Plus @@ Last /@ FactorInteger@n == 3; Select[ Range@244, fQ[ # ] &] (* _Robert G. Wilson v_, Jan 04 2006 *)",
+        "NextkAlmostPrime[n_, k_: 2, m_: 1] := Block[{c = 0, sgn = Sign[m]}, kap = n + sgn; While[c < Abs[m], While[ PrimeOmega[kap] != k, If[sgn < 0, kap--, kap++]]; If[ sgn < 0, kap--, kap++]; c++]; kap + If[sgn < 0, 1, -1]]; NestList[NextkAlmostPrime[#, 3] &, 2^3, 56] (* _Robert G. Wilson v_, Jan 27 2013 *)",
+        "Select[Range[244], PrimeOmega[#] == 3 &] (* _Jayanta Basu_, Jul 01 2013 *)"
+    ],
+    "program": [
+        "(PARI) isA014612(n)=bigomega(n)==3 \\\\ _Charles R Greathouse IV_, May 07, 2011",
+        "(PARI) list(lim)=my(v=List(),t);forprime(p=2,lim\\4, forprime(q=2,min(lim\\(2*p),p), t=p*q; forprime(r=2,min(lim\\t,q),listput(v,t*r)))); vecsort(Vec(v)) \\\\ _Charles R Greathouse IV_, Jan 04 2013",
+        "(Haskell)",
+        "a014612 n = a014612_list !! (n-1)",
+        "a014612_list = filter ((== 3) . a001222) [1..]",
+        "-- _Reinhard Zumkeller_, Apr 02 2012"
+    ],
+    "xref": [
+        "Cf. A000040, A001358 (biprimes), A014613 (quadruprimes), A033942, A086062, A098238, A123072, A123073, A101605 (characteristic function).",
+        "Cf. A109251 (number of 3-almost primes <= 10^n).",
+        "Subsequence of A145784. - _Reinhard Zumkeller_, Oct 19 2008",
+        "Cf. A007304 (subsequence). - _Alonso del Arte_, Aug 09 2011]",
+        "Sequences listing r-almost primes, that is, the n such that A001222(n) = r: A000040 (r = 1), A001358 (r = 2), this sequence (r = 3), A014613 (r = 4), A014614 (r = 5), A046306 (r = 6), A046308 (r = 7), A046310 (r = 8), A046312 (r = 9), A046314 (r = 10), A069272 (r = 11), A069273 (r = 12), A069274 (r = 13), A069275 (r = 14), A069276 (r = 15), A069277 (r = 16), A069278 (r = 17), A069279 (r = 18), A069280 (r = 19), A069281 (r = 20). - _Jason Kimberley_, Oct 02 2011",
+        "Cf. A046316 (subsequence), A253721 (final digits)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Eric W. Weisstein_",
+    "ext": [
+        "More terms from _Patrick De Geest_, Jun 15 1998"
+    ],
+    "references": 219,
+    "revision": 113,
+    "time": "2016-06-12T12:54:38-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

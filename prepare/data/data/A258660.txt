@@ -1,0 +1,50 @@
+{
+    "number": 258660,
+    "data": "1,4,9,1521,3600,7396,8100,103041,120409,160801,11471769,11655396,12802084,15210000,22724289,36000000,42889401,42928704,45481536,45968400,46009089,54567769,61811044,62236321,70006689,73925604,73960000,76965529,79174404,81000000,85008400,97693456,97713225,100000000",
+    "name": "Numbers n such that the number of digits d in n is not prime and for each factor f of d the sum of the d/f digit groupings of size f is a square.",
+    "comment": [
+        "If a(n) has m = p^k digits, then a(n)*10^((p-1)*m) is also a member of the sequence.  For instance, 1521*10^(2^k-4) is in the sequence for all integers k >=2. # _Chai Wah Wu_, Jun 08 2015"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A258660/b258660.txt\">Table of n, a(n) for n = 1..3730</a>"
+    ],
+    "formula": [
+        "a(n) = A153745(n)^2."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "from gmpy2 import is_prime, isqrt, isqrt_rem, is_square",
+        "A258660_list = []",
+        "for l in range(1,17):",
+        "....if not is_prime(l):",
+        "........fs = divisors(l)",
+        "........a, b = isqrt_rem(10**(l-1))",
+        "........if b > 0:",
+        "............a += 1",
+        "........for n in range(a,isqrt(10**l-1)+1):",
+        "............n2 = n**2",
+        "............ns = str(n2)",
+        "............for g in fs:",
+        "................y = 0",
+        "................for h in range(0,l,g):",
+        "....................y += int(ns[h:h+g])",
+        "................if not is_square(y):",
+        "....................break",
+        "............else:",
+        "................A258660_list.append(n2) # _Chai Wah Wu_, Jun 08 2015"
+    ],
+    "xref": [
+        "Cf. A153745."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Doug Bell_, Jun 06 2015",
+    "ext": [
+        "Corrected a(13)-a(14) by _Chai Wah Wu_, Jun 08 2015"
+    ],
+    "references": 2,
+    "revision": 12,
+    "time": "2015-06-09T21:07:58-04:00",
+    "created": "2015-06-07T07:07:13-04:00"
+}

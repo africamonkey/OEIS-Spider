@@ -1,0 +1,36 @@
+{
+    "number": 268701,
+    "data": "1,1,1,5,7,27,195,421,1619,8675,105757,274029,1402193,6625987,55349787,975068069,3137395939,17960895375,101880880461,696011551909,7596647200175,197122787505191,723879298052695,4905597865756059,29537689035766501,227793692735075911",
+    "name": "Total number of sequences with c_j copies of j and longest increasing subsequence of length k summed over all compositions [c_1, c_2, ..., c_k] of n into distinct parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A268701/b268701.txt\">Table of n, a(n) for n = 0..90</a>",
+        "J. D. Horton and A. Kurn, Counting sequences with complete increasing subsequences, Congressus Numerantium, 33 (1981), 75-80. <a href=\"http://www.ams.org/mathscinet-getitem?mr=681905\">MR 681905</a>"
+    ],
+    "example": [
+        "The compositions of 4 into distinct parts are [3,1], [1,3], [4] giving the a(4) = 7 sequences: 1112, 1121, 1211, 1222, 2122, 2212, 1111."
+    ],
+    "maple": [
+        "c:= l-> f(l)*nops(l)!/(v-> mul(coeff(v, x, j)!,",
+        "        j=0..degree(v)))(add(x^i, i=l)):",
+        "g:= proc(l) option remember; (n-> f(l[1..nops(l)-1])*",
+        "      binomial(n-1, l[-1]-1)+ add(f(sort(subsop(j=l[j]",
+        "      -1, l))), j=1..nops(l)-1))(add(i, i=l))",
+        "    end:",
+        "f:= l-> (n-> `if`(n<2 or l[-1]=1, 1, `if`(l[1]=0, 0, `if`(",
+        "         n=2, binomial(l[1]+l[2], l[1])-1, g(l)))))(nops(l)):",
+        "h:= (n, i, l)-> `if`(n>i*(i+1)/2, 0, `if`(n=0, c(l), h(n, i-1, l)",
+        "               +`if`(i>n, 0, h(n-i, i-1, [i, l[]])))):",
+        "a:= n-> h(n$2, []):",
+        "seq(a(n), n=0..30);"
+    ],
+    "xref": [
+        "Cf. A047909, A268698, A268699, A268700."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Feb 11 2016",
+    "references": 4,
+    "revision": 6,
+    "time": "2016-02-11T19:17:41-05:00",
+    "created": "2016-02-11T19:17:41-05:00"
+}

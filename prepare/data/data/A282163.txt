@@ -1,0 +1,33 @@
+{
+    "number": 282163,
+    "data": "1,154836,985320,1108536,1113959,1492260,1576696,1632708,1649238,1684540,1805570,1988008,2508792,2548810,2550408,2659260,2698740,2746590,2995122,3074552,3286710,3330795,3538458,3574200,3730155,4039932,4160240,4318548,4374370,4426695,4523985",
+    "name": "Numbers k such that the central binomial coefficient C(2*k,k) is divisible by k^3.",
+    "comment": [
+        "Equivalently, numbers k such that the k-th Catalan or Segner number C(2*k,k)/(k+1) is divisible by k^3. - _Lucian Craciun_, Feb 09 2017"
+    ],
+    "link": [
+        "Lucian Craciun, <a href=\"/A282163/b282163.txt\">Table of n, a(n) for n = 1..15615</a>",
+        "Wikipedia Mathematics Reference Desk, <a href=\"http://en.wikipedia.org/wiki/Wikipedia:Reference_desk/Archives/Mathematics/2017_February_9#n4_divides_Central_binomial_coefficient\">n^4 Divides Central Binomial Coefficient</a>"
+    ],
+    "example": [
+        "The central binomial coefficient C(2*154836,154836) is divisible by 154836^3."
+    ],
+    "maple": [
+        "A282163 := proc (n, m) local a, cbc, k; a := {}; cbc := binomial(2*n, n); for k from n+1 to m do cbc := cbc*(4-2/k); if type(cbc/k^3, integer) then a := `union`(a, {k}) end if end do; a end proc; A282163(0, 10^6)"
+    ],
+    "mathematica": [
+        "Select[Table[n, {n, 10^6}], IntegerQ[Binomial[2#, #]/#^3] &] (* for small n *)",
+        "n := 0; m := 10^6; A282163 := {}; cbc := Binomial[2n, n]; For[k := n+1, k <= m, k++, {cbc *= 4-2/k, If[IntegerQ[cbc/k^3], A282163 = Append[A282163, k]]}] (* for large m *)",
+        "A282163:={}; k:=3; For[n:=1, n<=10^6, n++, {f=FactorInteger[n], For[j:=1, j<=Length[f], j++, {b=True, If[Sum[Floor[2n/f[[j, 1]]^i]-2 Floor[n/f[[j, 1]]^i], {i, 1, Length[IntegerDigits[2n, f[[j, 1]]]]}]<f[[j, 2]]k, {b=False, Break[]}]}], If[b, A282163=Append[A282163, n]]}] (* Legendre's formula for drastic time reduction, _Lucian Craciun_, Feb 28 2017; optimized by _Lucian Craciun_, Mar 02 2017 *)"
+    ],
+    "xref": [
+        "Cf. A000108, A000984, A014847, A121943, A282346, A283073, A283074, A282672."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Lucian Craciun_, Feb 07 2017",
+    "references": 7,
+    "revision": 39,
+    "time": "2017-03-16T09:43:59-04:00",
+    "created": "2017-02-08T02:40:19-05:00"
+}

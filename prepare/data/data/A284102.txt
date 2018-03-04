@@ -1,0 +1,37 @@
+{
+    "number": 284102,
+    "data": "6504,12946,12990,19052,19764,21490,31638,35604,41300,42364,45212,52528,58104,60034,63400,66662,67858,69880,74090,74824,78542,88844,96256,96346,97818,104584,106970,111122,113120,117540,125384",
+    "name": "Numbers that are the sum of 10 consecutive primes and also the sum of 10 consecutive semiprimes.",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A284102/b284102.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1)=6504 because 6504 is the sum of 10 consecutive primes A000040(114..114+9)={619,631,641,643,647,653,659,661,673,677} and also",
+        "6504 is the sum of 10 consecutive semiprimes A001358(192..192+9)={629,633,634,635,649,655,662,667,669,671}.",
+        "Note that a(1) = 6504 = A283873(10)."
+    ],
+    "maple": [
+        "N:= 10^6:",
+        "P:= select(isprime, [$1..N]):",
+        "S:= select(t -> numtheory:-bigomega(t)=2, [$1..N]):",
+        "P10:= {seq(add(P[i],i=m..m+9),m=1..nops(P)-9)}:",
+        "S10:= {seq(add(S[i],i=m..m+9),m=1..nops(S)-9)}:",
+        "sort(convert(P10 intersect S10,list)); # _Robert Israel_, Mar 20 2017"
+    ],
+    "mathematica": [
+        "With[{nn = 12600}, Intersection[Total /@ Partition[Prime@ Range@ PrimePi@ nn, 10, 1], Total /@ Partition[Select[Range@ nn, PrimeOmega@ # == 2 &], 10, 1]]] (* _Michael De Vlieger_, Mar 20 2017 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=if(lim<6504,return([])); my(v=List(),u=v,P=primes(9),x=(lim+10*log(lim))\\1,t); forprime(p=2,x\\2, forprime(q=2,min(x\\p,p), listput(u,p*q))); u=Set(u); while(u[#u]+1+(t=sum(i=0,8,u[#u-i]))<=lim, for(n=x+1,lim-t, if(issemi(n), u=concat(u,n); next(2))); break); for(i=1,#u-9, u[i]+=sum(j=1,9,u[i+j])); t=vecsum(P); forprime(p=P[#P]+1,, t+=p; if(t>lim, break); if(setsearch(u,t), listput(v,t)); t-=P[1]; P=concat(P[2..9], p)); Vec(v) \\\\ _Charles R Greathouse IV_, Mar 20 2017"
+    ],
+    "xref": [
+        "Cf. A000040, A001358, A127337, A283873."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, Mar 20 2017",
+    "references": 1,
+    "revision": 16,
+    "time": "2017-03-21T13:38:20-04:00",
+    "created": "2017-03-21T13:38:20-04:00"
+}

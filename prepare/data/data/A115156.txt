@@ -1,0 +1,34 @@
+{
+    "number": 115156,
+    "data": "2,6,28,54,405,486,2808,4860,21870,40824,192456,524160,708588,4059072,14348907,58576608,123731712,462944160,1837080000,3874204890,11809800000,48183984000,65086642152,339033848832,1360965131136,2928898896840,6595446404736",
+    "name": "Smallest number having exactly n ones in binary representation and also exactly n prime factors (counted with multiplicity).",
+    "comment": [
+        "A001222(a(n)) = A000120(a(n)) = n; subsequence of A071814.",
+        "a(n) is roughly 3^n and so far 4 <= a(n)/3^(n-2) <= 15. - _Robert G. Wilson v_",
+        "Does a(n) exist for every n?  It exists for large enough n due to a result of Drmota, Mauduit, & Rivat, see A061712. _T. D. Noe_'s conjecture there implies that a(n) < 4*4^n. - _Charles R Greathouse IV_, Jul 30 2011"
+    ],
+    "example": [
+        "a(5) = 3*3*3*3*5 = 405_10 = 110010101_2.",
+        "a(10) = 2*2*2*3*3*3*3*3*3*7 = 40824_10 = 1001111101111000_2.",
+        "a(18) = 2*2*2*2*2*3*3*3*3*3*3*3*3*3*3*5*7*7 = 462944160_10 = 11011100101111111011110100000_2. - _Robert G. Wilson v_"
+    ],
+    "mathematica": [
+        "Lk[n_] := Block[{k = 2^n - 1}, While[n != Plus @@ IntegerDigits[k, 2] || n != Plus @@ (Transpose[FactorInteger@k][[2]]), k++ ]; k]; L = {}; Do[v = Lk[n]; Print[{n, v}]; AppendTo[L, v], {n, 2, 16}]; L (Resta)",
+        "t = Table[0, {20}]; f[n_] := Block[{b = Count[ IntegerDigits[n, 2], 1], e = Plus @@ Last /@ FactorInteger@n}, If[b == e, b, 0]]; Do[ a = f@n; If[a > 0 && t[[a]] == 0, t[[a]] = n; Print[{a, n}]], {n, 550000000}]; t (* _Robert G. Wilson v_ *)",
+        "f[n_] := Min[ Select[ FromDigits[ #, 2] & /@ Permutations[ Join[ Table[0, {Max[6, 2n/3]}], Table[1, {n}]]], Plus @@ Last /@ FactorInteger@# == n &]]; Array[f, 18] (* _Robert G. Wilson v_ *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Jan 14 2006",
+    "ext": [
+        "a(14)-a(17) from _Giovanni Resta_, Jan 18 2006",
+        "a(14)-a(18) from _Robert G. Wilson v_, Jan 18 2006",
+        "a(19) from _Robert G. Wilson v_, Jan 22 2006",
+        "a(20)-a(24) from _Donovan Johnson_, Apr 07 2008",
+        "a(25)-a(27) from _Donovan Johnson_, Jul 30 2011"
+    ],
+    "references": 2,
+    "revision": 19,
+    "time": "2015-03-21T04:48:11-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

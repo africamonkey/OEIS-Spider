@@ -1,0 +1,40 @@
+{
+    "number": 138109,
+    "data": "6,15,21,35,55,65,77,85,91,95,115,119,133,143,161,187,203,209,217,221,247,253,259,287,299,301,319,323,329,341,377,391,403,407,437,451,473,481,493,517,527,533,551,559,583,589,611,629,649,667,671,689,697,703",
+    "name": "Positive integers n whose smallest prime factor is greater than the cube root of n and strictly less than the square root of n.",
+    "comment": [
+        "This sequence was suggested by _Moshe Shmuel Newman_.",
+        "A020639(n)^2 < a(n) < A020639(n)^3. - _Reinhard Zumkeller_, Dec 17 2014",
+        "In other words, a(n) = pq with primes p, q satisfying p < q < p^2. - _Charles R Greathouse IV_, Apr 03 2017"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A138109/b138109.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1)=6 because the smallest prime factor of 6 is 2 and 1.817...<2<2.449..."
+    ],
+    "mathematica": [
+        "s = {}; Do[f = FactorInteger[i]; test = f[[1]][[1]]; If [test < N[i^(1/2)] && test > N[i^(1/3)], s = Union[s, {i}]], {i, 2, 2000}]; Print[s]",
+        "Select[Range[1000],Surd[#,3]<FactorInteger[#][[1,1]]<Sqrt[#]&] (* _Harvey P. Dale_, May 10 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a138109 n = a138109_list !! (n-1)",
+        "a138109_list = filter f [1..] where",
+        "   f x = p ^ 2 < x && x < p ^ 3 where p = a020639 x",
+        "-- _Reinhard Zumkeller_, Dec 17 2014",
+        "(PARI) is(n)=my(f=factor(n)); f[,2]==[1,1]~ && f[1,1]^3 > n \\\\ _Charles R Greathouse IV_, Mar 28 2017",
+        "(PARI) list(lim)=if(lim<6, return([])); my(v=List([6])); forprime(p=3,sqrtint(1+lim\\=1)-1, forprime(q=p+2, min(p^2-2,lim\\p), listput(v,p*q))); Set(v) \\\\ _Charles R Greathouse IV_, Mar 28 2017"
+    ],
+    "xref": [
+        "Subsequence of A251728 and of A006881.",
+        "Cf. A020639."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David S. Newman_, May 04 2008",
+    "references": 2,
+    "revision": 17,
+    "time": "2017-04-06T11:15:50-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

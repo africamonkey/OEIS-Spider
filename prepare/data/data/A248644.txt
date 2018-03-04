@@ -1,0 +1,44 @@
+{
+    "number": 248644,
+    "data": "0,3,5,6,9,30,33,36,39,53,60,63,65,66,90,95,96,99,105,120,172,175,177,178,180,209,240,243,277,300,303,306,330,340,343,360,363,366,390,396,399,430,480,483,485,486,533,534,543,571,600,603,605,606,630,633,636,658,660,663",
+    "name": "Evil numbers (A001969) remaining evil if any digit is deleted (zeros allowed).",
+    "comment": [
+        "Dual variant of A248642.",
+        "Although for numbers >9 we never put 0 instead of the removed digit, we include single-digit numbers 0,3,5,6,9 since, e.g., 3=03, etc."
+    ],
+    "example": [
+        "172 is in the sequence since 172,72,12,17 are evil."
+    ],
+    "program": [
+        "(Sage)",
+        "def is_evil(n):",
+        "....if n==0:",
+        "........return true",
+        "....else:",
+        "........return sum(Integer(n).digits(base=2))%2==0",
+        "def remain_evil(n):",
+        "....if not(is_evil(n)):",
+        "........return false",
+        "....else:",
+        "........L=Integer(n).digits(base=10)",
+        "........M=[]",
+        "........for i in [0..len(L)-1]:",
+        "............G=L[0:i]+L[i+1:]",
+        "............M.append(is_evil(sum(G[i]*10^i for i in [0..len(G)-1])))",
+        "........return sum(M)==len(M)",
+        "[x for x in [0..500] if remain_evil(x)] # _Tom Edgar_, Oct 10 2014"
+    ],
+    "xref": [
+        "Cf. A001969, A248478, A248642, A248659."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Vladimir Shevelev_, Oct 10 2014",
+    "ext": [
+        "More terms from _Peter J. C. Moses_, Oct 10 2014"
+    ],
+    "references": 3,
+    "revision": 18,
+    "time": "2014-10-25T22:52:48-04:00",
+    "created": "2014-10-25T22:52:48-04:00"
+}

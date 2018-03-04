@@ -1,0 +1,31 @@
+{
+    "number": 281921,
+    "data": "1,82,85,94,97,106,117,459,1197,24615,24657,26184,87664,117099,538168,1049708,1229174,2210323,4587773,11019224",
+    "name": "10th power analog of Keith numbers.",
+    "comment": [
+        "Like Keith numbers but starting from n^10 digits to reach n.",
+        "Consider the digits of n^10. Take their sum and repeat the process deleting the first addend and adding the previous sum. The sequence lists the numbers that after some number of iterations reach a sum equal to n."
+    ],
+    "example": [
+        "106^10 = 179084769654285362176:",
+        "1 + 7 + 9 + 0 + 8 + 4 + 7 + 6 + 9 + 6 + 5 + 4 + 2 + 8 + 5 + 3 + 6 + 2 + 1 + 7 + 6 = 106."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q, h,w) local a, b, k, t, v; global n; v:=array(1..h);",
+        "for n from 1 to q do b:=n^w; a:=[];",
+        "for k from 1 to ilog10(b)+1 do a:=[(b mod 10), op(a)]; b:=trunc(b/10); od;",
+        "for k from 1 to nops(a) do v[k]:=a[k]; od; b:=ilog10(n^w)+1;",
+        "t:=nops(a)+1; v[t]:=add(v[k], k=1..b); while v[t]<n do t:=t+1; v[t]:=add(v[k], k=t-b..t-1);",
+        "od; if v[t]=n then print(n); fi; od; end: P(10^6,10000,4);"
+    ],
+    "xref": [
+        "Cf. A007629, A246544, A263534, A274769, A274770, A281915 - A281920."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Feb 02 2017",
+    "references": 5,
+    "revision": 14,
+    "time": "2017-07-26T23:16:45-04:00",
+    "created": "2017-02-05T13:25:56-05:00"
+}

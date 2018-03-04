@@ -1,0 +1,46 @@
+{
+    "number": 242966,
+    "data": "4,8,16,64,1024,4096,65536,262144,4194304,1073741824,1152921504606846976,1267650600228229401496703205376,85070591730234615865843651857942052864,93536104789177786765035829293842113257979682750464",
+    "name": "Composite numbers whose anti-divisors are all primes.",
+    "comment": [
+        "It appears they are all powers of 2.",
+        "Subset of A242965.",
+        "a(n) must be 2^k. - _Hiroaki Yamanouchi_, Mar 17 2015",
+        "The exponents are 2, 3, 4, 6, 10, 12, 16, 18, 22, 30, 60, 100, 126, 166, 198, ... - _Michel Marcus_, Mar 18 2015"
+    ],
+    "link": [
+        "Hiroaki Yamanouchi, <a href=\"/A242966/b242966.txt\">Table of n, a(n) for n = 1..15</a>"
+    ],
+    "example": [
+        "The anti-divisors of 1024 are all primes: 3, 23, 89, 683.",
+        "The same for 65536: 3, 43691."
+    ],
+    "maple": [
+        "P := proc(q) local k,ok,n; for n from 3 to q do if not isprime(n)",
+        "then ok:=1; for k from 2 to n-1 do if abs((n mod k)-k/2)<1",
+        "then if not isprime(k) then ok:=0; break; fi; fi; od;",
+        "if ok=1 then print(n); fi; fi; od; end: P(10^100);"
+    ],
+    "mathematica": [
+        "antiDivisors[n_] := Cases[Range[2, n - 1], _?(Abs[Mod[n, #] - #/2] < 1 &)]; Select[2^Range[2, 20], AllTrue[antiDivisors@ #, PrimeQ] &] (* _Michael De Vlieger_, Mar 18 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, divisors",
+        "A242966 = [n for n in range(3,10**5) if not isprime(n) and list(filter(lambda x: not isprime(x), [2*d for d in divisors(n) if n > 2*d and n % (2*d)] + [d for d in divisors(2*n-1) if n > d >=2 and n % d] + [d for d in divisors(2*n+1) if n > d >=2 and n % d])) == []]",
+        "# _Chai Wah Wu_, Aug 13 2014"
+    ],
+    "xref": [
+        "Cf. A066272, A242965."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, May 28 2014",
+    "ext": [
+        "a(11)-a(14) from _Hiroaki Yamanouchi_, Mar 17 2015"
+    ],
+    "references": 3,
+    "revision": 26,
+    "time": "2015-03-31T03:59:00-04:00",
+    "created": "2014-05-29T12:10:15-04:00"
+}

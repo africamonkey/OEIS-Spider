@@ -1,0 +1,42 @@
+{
+    "number": 160399,
+    "data": "1,4,11,27,62,137,296,630,1326,2768,5744,11867,24429,50135,102627,209641,427518,870579,1770536,3596614,7298397,14796658,29974913,60681233,122767148,248232863,501648844,1013257334,2045684971",
+    "name": "a(n) = Sum_{k=1..n} binomial(n,k) * d(k), where d(k) = the number of positive divisors of k.",
+    "comment": [
+        "Binomial transform of the sequence d(n) (A000005). - _Emeric Deutsch_, May 15 2009",
+        "Apparently the partial sums of A101509. - _R. J. Mathar_, May 17 2009"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A160399/b160399.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Eric M. Schmidt, <a href=\"https://dx.doi.org/10.1216/RMJ-2017-47-8-2777\">The probability that the number of points on a complete intersection is squarefree</a>, Rocky Mountain J. Math, Volume 47, Number 8 (2017), 2777-2796."
+    ],
+    "formula": [
+        "G.f.: (Sum_{k>=1} (x/(1-x))^k/(1-x^k/(1-x)^k))/(1-x). - _Emeric Deutsch_, May 15 2009",
+        "E.g.f.: exp(x)*Sum_{k>=1} d(k)*x^k/k!. - _Ilya Gutkovskiy_, Nov 26 2017",
+        "a(n) = 2^n*(log(n) + 2*gamma - log(2)) + O(2^n*n^(-1/4)). [Put alpha_n = beta_n = 1/2 in Thm. 4.2 of Schmidt.] - _Eric M. Schmidt_, Feb 03 2018"
+    ],
+    "maple": [
+        "with(numtheory): seq(sum(binomial(n, k)*tau(k), k = 1 .. n), n = 1 .. 30); # _Emeric Deutsch_, May 15 2009",
+        "A160399 := proc(n) local k; add(binomial(n,k)*numtheory[tau](k),k=1..n) ; end: seq(A160399(n),n=1..40) ; # _R. J. Mathar_, May 17 2009"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[Binomial[n, k]*DivisorSigma[0, k], {k, 1, n}]; Table[a[n], {n, 1, 40}] (* _Jean-Fran\u00e7ois Alcover_, Feb 25 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n, binomial(n, k)*numdiv(k)); \\\\ _Michel Marcus_, Feb 25 2017",
+        "(GAP) List([1..10^3], n -> Sum([1..n], k -> Binomial(n,k) * Number(DivisorsInt(k)))); # _Muniru A Asiru_, Feb 04 2018"
+    ],
+    "xref": [
+        "Cf. A000005. - _Emeric Deutsch_, May 15 2009"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, May 12 2009",
+    "ext": [
+        "More terms from _Emeric Deutsch_ and _R. J. Mathar_, May 15 2009"
+    ],
+    "references": 3,
+    "revision": 31,
+    "time": "2018-02-05T03:00:28-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

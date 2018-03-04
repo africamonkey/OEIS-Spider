@@ -1,0 +1,62 @@
+{
+    "number": 56866,
+    "data": "60,120,168,180,240,300,336,360,420,480,504,540,600,660,672,720,780,840,900,960,1008,1020,1080,1092,1140,1176,1200,1260,1320,1344,1380,1440,1500,1512,1560,1620,1680,1740,1800,1848,1860,1920,1980,2016,2040",
+    "name": "Orders of non-solvable groups, i.e., numbers that are not solvable numbers.",
+    "comment": [
+        "A number is solvable if every group of that order is solvable.",
+        "This comment is about the 4 sequences A001034, A060793, A056866, A056868: The Feit Thompson theorem says that a finite group with odd order is solvable, hence all numbers in this sequence are even. - Ahmed Fares (ahmedfares(AT)my-deja.com), May 08 2001",
+        "Insoluble group orders can be derived from A001034 (simple non-cyclic orders): n is an insoluble order iff n is a multiple of a simple non-cyclic order. - _Des MacHale_.",
+        "All terms are divisible by 4 and either 3 or 5. - _Charles R Greathouse IV_, Sep 11 2012",
+        "Subsequence of A056868 and hence of A060652. - _Charles R Greathouse IV_, Apr 16 2015, updated Sep 11 2015",
+        "The primitive elements are A257146. Since the sum of the reciprocals of the terms of that sequence converges, this sequence has a natural density and so a(n) ~ kn for some k (see, e.g., Erd\u0151s 1948). - _Charles R Greathouse IV_, Apr 17 2015"
+    ],
+    "link": [
+        "T. D. Noe and Charles R Greathouse IV, <a href=\"/A056866/b056866.txt\">Table of n, a(n) for n = 1..10000</a> (first 2240 terms from Noe)",
+        "R. Brauer, <a href=\"http://www.pnas.org/cgi/reprint/47/12/1891.pdf\">Investigation on groups of even order, I</a>",
+        "R. Brauer, <a href=\"http://www.pnas.org/cgi/reprint/55/2/254.pdf\">Investigation on groups of even order, II</a>",
+        "P. Erd\u0151s, <a href=\"http://www.renyi.hu/~p_erdos/1948-06.pdf\">On the density of some sequences of integers</a>, Bull. Amer. Math. Soc. 54 (1948), pp. 685-692. See p. 685.",
+        "W. Feit and J. G. Thompson, <a href=\"http://www.pnas.org/content/48/6/968\">A solvability criterion for finite groups and consequences</a>, Proc. N. A. S. 48 (6) (1962) 968",
+        "J. Pakianathan and K. Shankar, <a href=\"http://www.math.ou.edu/%7Eshankar/papers/nil2.pdf\">Nilpotent numbers</a>, Amer. Math. Monthly, 107, August-September 2000, 631-634.",
+        "<a href=\"/index/Gre#groups\">Index entries for sequences related to groups</a>"
+    ],
+    "formula": [
+        "A positive integer n is a non-solvable number if and only if it is a multiple of any of the following numbers: a) 2^p(2^2p-1), p any prime. b) 3^p(3^2p-1)/2, p odd prime. c) p(p^2-1)/2, p prime greater than 3 such that p^2+1 = 0 (mod 5). d) 2^4*3^3*13. e) 2^2p(2^2p+1)(2^p-1), p odd prime."
+    ],
+    "mathematica": [
+        "ma[n_] := For[k = 1, True, k++, p = Prime[k]; m = 2^p*(2^(2*p) - 1); If[m > n, Return[False], If[Mod[n, m] == 0, Return[True]]]]; mb[n_] := For[k = 2, True, k++, p = Prime[k]; m = 3^p*((3^(2*p) - 1)/2); If[m > n, Return[False], If[Mod[n, m] == 0, Return[True]]]]; mc[n_] := For[k = 3, True, k++, p = Prime[k]; m = p*((p^2 - 1)/2); If[Mod[p^2 + 1, 5] == 0, If[m > n, Return[False], If[Mod[n, m] == 0, Return[True]]]]]; md[n_] := Mod[n, 2^4*3^3*13] == 0; me[n_] := For[k = 2, True, k++, p = Prime[k]; m = 2^(2*p)*(2^(2*p) + 1)*(2^p - 1); If[m > n, Return[False], If[Mod[n, m] == 0, Return[True]]]]; notSolvableQ[n_] := OddQ[n] || ma[n] || mb[n] || mc[n] || md[n] || me[n]; Select[ Range[3000], notSolvableQ] (* _Jean-Fran\u00e7ois Alcover_, Jun 14 2012, from formula *)"
+    ],
+    "program": [
+        "(PARI) is(n)={",
+        "    if(n%5616==0,return(1));",
+        "    forprime(p=2,valuation(n,2),",
+        "        if(n%(4^p-1)==0, return(1))",
+        "    );",
+        "    forprime(p=3,valuation(n,3),",
+        "        if(n%(9^p\\2)==0, return(1))",
+        "    );",
+        "    forprime(p=3,valuation(n,2)\\2,",
+        "        if(n%((4^p+1)*(2^p-1))==0, return(1))",
+        "    );",
+        "    my(f=factor(n)[,1]);",
+        "    for(i=1,#f,",
+        "        if(f[i]>3 && f[i]%5>1 && f[i]%5<4 && n%(f[i]^2\\2)==0, return(1))",
+        "    );",
+        "    0",
+        "}; \\\\ _Charles R Greathouse IV_, Sep 11 2012"
+    ],
+    "xref": [
+        "Subsequence of A000977 and A056868.",
+        "Cf. A003277, A051532, A056867, A001034, A060652."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Sep 02 2000",
+    "ext": [
+        "More terms from _Des MacHale_, Feb 19 2001",
+        "Further terms from Francisco Salinas (franciscodesalinas(AT)hotmail.com), Dec 25 2001"
+    ],
+    "references": 17,
+    "revision": 45,
+    "time": "2016-01-03T15:01:24-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

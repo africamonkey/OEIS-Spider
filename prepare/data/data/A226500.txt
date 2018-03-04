@@ -1,0 +1,48 @@
+{
+    "number": 226500,
+    "data": "0,3,300,29403,2881200,282328203,27665282700,2710915376403,265642041604800,26030209161894003,2550694855824007500,249942065661590841003,24491771739980078410800,2399943688452386093417403,235169989696593857076494700,23044259046577745607403063203",
+    "name": "Triangular numbers representable as 3 * x^2.",
+    "link": [
+        "Colin Barker, <a href=\"/A226500/b226500.txt\">Table of n, a(n) for n = 1..503</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (99,-99,1)."
+    ],
+    "formula": [
+        "a(n) = 99*a(n-1) - 99*a(n-2) + a(n-3), for n > 3. a(n) = floor((49 + 20*sqrt(6))^(n-1)/32). - _Giovanni Resta_, Jun 09 2013",
+        "G.f.: 3*x^2*(1+x)/((1-x)*(1-98*x+x^2)); a(n)=3*A108741(n-1). - _Joerg Arndt_, Jun 10 2013",
+        "a(n) = (49+20*sqrt(6))^(-n)*(49+20*sqrt(6)-2*(49+20*sqrt(6))^n+(49-20*sqrt(6))*(49+20*sqrt(6))^(2*n))/32. - _Colin Barker_, Mar 03 2016"
+    ],
+    "mathematica": [
+        "a[1]=0; a[2]=3; a[3]=300; a[n_] := a[n] = 99*(a[n-1] - a[n-2]) + a[n-3]; Array[a, 10] (* _Giovanni Resta_, Jun 09 2013 *)",
+        "Rest@ CoefficientList[Series[3 x^2 (1 + x)/((1 - x) (1 - 98 x + x^2)), {x, 0, 16}], x] (* or *)",
+        "3 LinearRecurrence[{99, -99, 1}, {0, 1, 100}, 16] (* _Michael De Vlieger_, Mar 03 2016, latter after _Vincenzo Librandi_ at A108741 *)"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#include <math.h>",
+        "typedef unsigned long long U64;",
+        "U64 isTriangular(U64 a) {   // input must be < 1ULL<<63",
+        "    U64 r = sqrt(a*2);",
+        "    return (r*(r+1) == a*2);",
+        "}",
+        "int main() {",
+        "  for (U64 j, i = 0; (j=i*i*3) < (1ULL<<63); i++)",
+        "      if (isTriangular(j)) printf(\"%llu, \", j);",
+        "  return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A029549 (triangular numbers representable as x^2 + x).",
+        "Cf. A000217, A001219, A165892, A069017."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, Jun 09 2013",
+    "ext": [
+        "a(12)-a(15) from _Giovanni Resta_, Jun 09 2013"
+    ],
+    "references": 1,
+    "revision": 24,
+    "time": "2016-03-03T22:52:13-05:00",
+    "created": "2013-06-12T13:58:25-04:00"
+}

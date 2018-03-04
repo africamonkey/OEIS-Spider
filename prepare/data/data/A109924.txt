@@ -1,0 +1,37 @@
+{
+    "number": 109924,
+    "data": "1,252,8118,28382,536797635,6180330816,85770307758,2889123219882,535841353148535,135444949494445310,1522312136776312132251",
+    "name": "Least palindromic multiple of concatenation 123...n.",
+    "comment": [
+        "When n is a multiple of 10, any multiple of 123...n has trailing zeros, therefore it cannot be palindromic. The terms listed as a(10k) are therefore the least palindromic multiples with \"invisible leading zeros allowed\", or equivalently, trailing zeros ignored.",
+        "Subsequence of A020485."
+    ],
+    "link": [
+        "P. De Geest, <a href=\"http://www.worldofnumbers.com/em36.htm\">Smallest multipliers to make a number palindromic</a>."
+    ],
+    "example": [
+        "123*j is not palindromic for j < 66 and 123*66 = 8118, hence a(3) = 8118."
+    ],
+    "mathematica": [
+        "f[n_] := Block[{k = 1, p = FromDigits[ Flatten[ IntegerDigits /@ Range[n]]]}, While[ If[ Mod[p, 10] == 0, p/=10]; While[k*p != FromDigits[ Reverse[ IntegerDigits[k*p]]], k++ ]]; k*p]; Table[ f[n], {n, 11}] (* _Robert G. Wilson v_ *)"
+    ],
+    "program": [
+        "(PARI) {s=\"\";for(n=1,10,s=concat(s,n);k=eval(s);if(n%10==0,m=0, j=1;while((m=k*j)!=intreverse(m),j++));print1(m,\",\"))} (for intreverse see A067723)",
+        "(PARI) A109924(n)={ n=eval(concat(vector(n,i,Str(i))));forstep(i=n/10^valuation(n,10),9e99,n/10^valuation(n,10), (m=Vec(Str(i)))==vecextract(m,\"-1..1\")&return(i*10^valuation(n,10)))} \\\\ - M. F. Hasler, Jun 19 2011"
+    ],
+    "xref": [
+        "Cf. A020485, A050782, A061816, A109929."
+    ],
+    "keyword": "base,more,nonn",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, Jul 16 2005",
+    "ext": [
+        "Edited and extended (a(5) to a(10)) by _Klaus Brockhaus_, Jul 19 2005",
+        "a(10) - a(11) from _Robert G. Wilson v_, Jul 19 2005",
+        "Definition of a(10k) clarified by _M. F. Hasler_, Jun 19 2011."
+    ],
+    "references": 2,
+    "revision": 15,
+    "time": "2015-04-04T10:01:56-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 71162,
+    "data": "0,2,10,12,42,44,52,56,170,172,180,184,212,216,232,240,682,684,692,696,724,728,744,752,852,856,872,880,936,944,976,992,2730,2732,2740,2744,2772,2776,2792,2800,2900,2904,2920,2928,2984,2992,3024,3040,3412,3416",
+    "name": "Simple rewriting of binary expansion of n resulting A014486-codes for rooted binary trees with height equal to number of internal vertices. (Binary trees where at each internal vertex at least the other child is leaf).",
+    "comment": [
+        "Essentially rewrites in binary expansion of n each 0 -> 01, 1X -> 1(rewrite X)0, where X is the maximal suffix after the 1-bit, which will be rewritten recursively (see the given Scheme-function). Because of this, the terms of the binary length 2n are counted by 2's powers, A000079.",
+        "In rooted plane (general) tree context, these are those totally balanced binary sequences (terms of A014486) where non-leaf subtrees can occur only as the rightmost branch (at any level of a general tree), but nowhere else. (Cf. A209642).",
+        "Also, these are exactly those rooted plane trees whose \u0141ukasiewicz words happen to be valid asynchronous siteswap juggling patterns. (This was the original, albeit quite frivolous definition of this sequence for almost ten years 2002-2012. Cf. A071160.)"
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A071162/b071162.txt\">Table of n, a(n) for n = 0..65535</a>",
+        "OEIS Wiki, <a href=\"/wiki/\u0141ukasiewicz_words\">\u0141ukasiewicz words</a>",
+        "<a href=\"/index/Lu#Lukasiewicz\">Index entries for sequences related to \u0141ukasiewicz</a>"
+    ],
+    "program": [
+        "(Scheme): (define (A071162 n) (let loop ((n n) (s 0) (i 1)) (cond ((zero? n) s) ((even? n) (loop (/ n 2) (+ s i) (* i 4))) (else (loop (/ (- n 1) 2) (* 2 (+ s i)) (* i 4))))))",
+        "(Python)",
+        "def a036044(n): return int(''.join('1' if i == '0' else '0' for i in bin(n)[2:][::-1]), 2)",
+        "def a209642(n):",
+        "    s=0",
+        "    i=1",
+        "    while n!=0:",
+        "        if n%2==0:",
+        "            n/=2",
+        "            s=4*s + 1",
+        "        else:",
+        "            n=(n - 1)/2",
+        "            s=(s + i)*2",
+        "        i*=4",
+        "    return s",
+        "def a(n): return 0 if n==0 else a036044(a209642(n))",
+        "print [a(n) for n in xrange(101)] # _Indranil Ghosh_, May 25 2017"
+    ],
+    "xref": [
+        "a(n) = A014486(A071163(n)) = A036044(A209642(n)) = A056539(A209642(n)).",
+        "A209859 provides an \"inverse\" function, i.e. A209859(a(n)) = n for all n.",
+        "Cf. A209636, A209637, A209862."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,2",
+    "author": "_Antti Karttunen_, May 14 2002",
+    "references": 7,
+    "revision": 27,
+    "time": "2017-05-26T05:17:05-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

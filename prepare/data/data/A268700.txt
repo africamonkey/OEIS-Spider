@@ -1,0 +1,37 @@
+{
+    "number": 268700,
+    "data": "1,1,1,3,4,14,46,111,330,1614,7348,21340,98145,379405,2633085,14871033,57284558,278927415,1609313975,8289565670,74945364815,522977754235,2403799401259,14180489136597,83964652635668,623008803758260,3918144764978718,46950727351392315",
+    "name": "Total number of sequences with p_j copies of j and longest increasing subsequence of length k summed over all partitions [p_1, p_2, ..., p_k] of n into distinct parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A268700/b268700.txt\">Table of n, a(n) for n = 0..90</a>",
+        "J. D. Horton and A. Kurn, Counting sequences with complete increasing subsequences, Congressus Numerantium, 33 (1981), 75-80. <a href=\"http://www.ams.org/mathscinet-getitem?mr=681905\">MR 681905</a>"
+    ],
+    "example": [
+        "The partitions of 4 into distinct parts are [3,1], [4] giving the a(4) = 4 sequences: 1112, 1121, 1211, 1111."
+    ],
+    "maple": [
+        "g:= proc(l) option remember; (n-> f(l[1..nops(l)-1])*",
+        "      binomial(n-1, l[-1]-1)+ add(f(sort(subsop(j=l[j]",
+        "      -1, l))), j=1..nops(l)-1))(add(i, i=l))",
+        "    end:",
+        "f:= l-> (n-> `if`(n<2 or l[-1]=1, 1, `if`(l[1]=0, 0, `if`(",
+        "         n=2, binomial(l[1]+l[2], l[1])-1, g(l)))))(nops(l)):",
+        "h:= (n, i, l)-> `if`(n>i*(i+1)/2, 0, `if`(n=0, f(l), h(n, i-1, l)",
+        "               +`if`(i>n, 0, h(n-i, i-1, [i, l[]])))):",
+        "a:= n-> h(n$2, []):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "g[l_] := g[l] = Function[n, f[Most[l]]*Binomial[n-1, l[[-1]]-1] + Sum[f[ Sort[ReplacePart[l, j -> l[[j]]-1]]], {j, 1, Length[l]-1}]][Total[l]]; f[l_] := Function[n, If[n<2 || l[[-1]]==1, 1, If[l[[1]]==0, 0, If[n==2, Binomial[l[[1]]+l[[2]], l[[1]]]-1, g[l]]]]][Length[l]]; h[n_, i_, l_] := If[n>i*(i+1)/2, 0, If[n==0, f[l], h[n, i-1, l] + If[i>n, 0, h[n-i, i-1, Join[{i}, l]]]]]; a[n_] := h[n, n, {}]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Feb 11 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A047909, A268698, A268699, A268701."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Feb 11 2016",
+    "references": 4,
+    "revision": 10,
+    "time": "2017-02-11T09:51:39-05:00",
+    "created": "2016-02-11T19:16:16-05:00"
+}

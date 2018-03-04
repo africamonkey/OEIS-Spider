@@ -1,0 +1,48 @@
+{
+    "number": 257108,
+    "data": "2,3,7,47,241,2887,57119,217069,37923937,211014919,221167421,221167421",
+    "name": "Smallest prime p such that none of p + 1, p + 2,... p + n are squarefree.",
+    "comment": [
+        "a(10) = 221167421.",
+        "From _Robert Israel_, Apr 23 2015 (Start):",
+        "a(n) >= A020754(n), with equality when A020754(n) is prime.  This occurs for n = 2,3,4,5,8 and 11.",
+        "Each a(n) exists: given distinct primes q_j, j=1..n, such that q_j does not divide j, by Dirichlet's theorem there is some prime in the arithmetic progression",
+        "{x: x == -j (mod q_j^2) for j=1..n}.",
+        "(End)"
+    ],
+    "formula": [
+        "a(n) << A002110(n)^10 by the CRT and Xylouris' improvement to Linnik's theorem. - _Charles R Greathouse IV_, Apr 29 2015"
+    ],
+    "example": [
+        "47 is a(3) because none of 2^2*12 = 48, 7^2 = 49, 2*5^2 = 50 is squarefree."
+    ],
+    "maple": [
+        "p:= 2:",
+        "A[0]:= 2:",
+        "for n from 1 to 8 do",
+        "  while ormap(numtheory:-issqrfree, [seq(p+i,i=1..n)]) do p:= nextprime(p) od:",
+        "  A[n]:= p;",
+        "od:",
+        "seq(A[i],i=1..8); # _Robert Israel_, Apr 23 2015"
+    ],
+    "mathematica": [
+        "lst={2};Do[If[Union[SquareFreeQ/@Range[Prime[n]+1,Prime[n]+Length[lst]]]=={False},AppendTo[lst,Prime[n]]],{n,10^5}];lst (* _Ivan N. Ianakiev_, May 02 2015 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=forprime(p=2, , for(k=1, n, if(issquarefree(p+k), next(2))); return(p)) \\\\ _Charles R Greathouse IV_, Apr 29 2015"
+    ],
+    "xref": [
+        "Cf. A020754."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,1",
+    "author": "_Juri-Stepan Gerasimov_, Apr 23 2015",
+    "ext": [
+        "a(8) from _Robert Israel_, Apr 23 2015",
+        "a(9)-a(11) from _Charles R Greathouse IV_, Apr 29 2015"
+    ],
+    "references": 3,
+    "revision": 29,
+    "time": "2015-05-02T15:55:37-04:00",
+    "created": "2015-04-23T19:15:09-04:00"
+}

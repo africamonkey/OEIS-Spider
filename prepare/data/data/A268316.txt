@@ -1,0 +1,68 @@
+{
+    "number": 268316,
+    "data": "1,1,7,57,484,4199,36938,328185,2937932,26457508,239414383,2175127695,19827974412,181266501290,1661241473220,15257624681145,140400178555644,1294141164447692,11946771748196428,110435320379615620,1022108852175416720,9470416604629933935",
+    "name": "a(n) is the number of Dyck paths of length 4n and height n.",
+    "comment": [
+        "Equivalently, a(n) is the number of rooted plane trees with 2n+1 nodes and height n."
+    ],
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A268316/b268316.txt\">Table of n, a(n) for n = 0..1000</a>.",
+        "Gheorghe Coserea, <a href=\"/A268316/a268316_2.txt\">Solutions for n=3</a>.",
+        "Gheorghe Coserea, <a href=\"/A268316/a268316_3.txt\">Solutions for n=4</a>.",
+        "Gheorghe Coserea, <a href=\"/A268316/a268316.mzn.txt\">MiniZinc model for generating solutions</a>."
+    ],
+    "formula": [
+        "a(n) = T(2n,n), where T(n,k) is defined by A080936.",
+        "a(n) = binomial(4*n,n) * 2*(2*n+3)*(2*n^2+1)/((3*n+1)*(3*n+2)*(3*n+3)).",
+        "a(n) ~ K * A268315^n / sqrt(n), where K = 8/27 * sqrt(2/(3*Pi)) = 0.13649151584...",
+        "G.f.: -((3F2(-3/4, -1/2, -1/4; 1/3, 2/3; 256*x/27)-1)/(4*x)) + 4/5*x*3F2(5/4, 3/2, 7/4; 7/3, 8/3; 256*x/27) + 8/3*x^2*3F2(9/4, 5/2, 11/4; 10/3, 11/3; 256*x/27). - _Benedict W. J. Irwin_, Aug 09 2016",
+        "Recurrence: 3*(n+1)*(2*n + 1)*(3*n + 1)*(3*n + 2)*(2*n^2 - 4*n + 3)*a(n) = 8*(2*n - 1)*(2*n + 3)*(4*n - 3)*(4*n - 1)*(2*n^2 + 1)*a(n-1). - _Vaclav Kotesovec_, Aug 10 2016"
+    ],
+    "example": [
+        "For n = 2 the a(2) = 7 solutions are",
+        "              /\\/\\/\\       |",
+        "LLRLRLRR     /      \\     /|\\",
+        "................................",
+        "                /\\        /|\\",
+        "LRLLRRLR     /\\/  \\/\\      |",
+        "................................",
+        "              /\\  /\\       /\\",
+        "LLRRLLRR     /  \\/  \\     /  \\",
+        "................................",
+        "              /\\           /|\\",
+        "LLRRLRLR     /  \\/\\/\\     /",
+        "................................",
+        "                  /\\      /|\\",
+        "LRLRLLRR     /\\/\\/  \\        \\",
+        "................................",
+        "              /\\/\\         /\\",
+        "LLRLRRLR     /    \\/\\     /\\",
+        "................................",
+        "                /\\/\\       /\\",
+        "LRLLRLRR     /\\/    \\       /\\"
+    ],
+    "mathematica": [
+        "Table[Binomial[4 n, n] 2 (2 n + 3) (2 n^2 + 1) / ((3 n + 1) (3 n + 2) (3 n + 3)), {n, 1, 25}] (* _Vincenzo Librandi_, Feb 04 2016 *)",
+        "Drop[CoefficientList[Series[-((-1 + HypergeometricPFQ[{-3/4, -1/2, -1/4}, {1/3, 2/3}, 256 x/27])/(4x)) + 4/5 x HypergeometricPFQ[{5/4, 3/2, 7/4}, {7/3, 8/3}, 256 x/27] + 8/3 x^2 HypergeometricPFQ[{9/4, 5/2, 11/4}, {10/3, 11/3}, 256x/27], {x, 0, 20}], x], 1] (* _Benedict W. J. Irwin_, Aug 09 2016 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "a(n) = binomial(4*n,n) * 2*(2*n+3)*(2*n^2+1)/((3*n+1)*(3*n+2)*(3*n+3));",
+        "vector(21, i, a(i))",
+        "(MAGMA) [Binomial(4*n, n)*2*(2*n+3)*(2*n^2+1)/((3*n+1)*(3*n+2)*(3*n+3)): n in [1..30]]; // _Vincenzo Librandi_, Feb 04 2016"
+    ],
+    "xref": [
+        "Cf. A080936, A268315.",
+        "Column k=2 of A289481."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Gheorghe Coserea_, Feb 01 2016",
+    "ext": [
+        "Added a(0)=1, adjusted b-file - _N. J. A. Sloane_, Dec 22 2016"
+    ],
+    "references": 4,
+    "revision": 43,
+    "time": "2017-07-06T18:35:41-04:00",
+    "created": "2016-02-23T13:50:56-05:00"
+}

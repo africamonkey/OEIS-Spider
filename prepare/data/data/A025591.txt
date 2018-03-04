@@ -1,0 +1,44 @@
+{
+    "number": 25591,
+    "data": "1,1,1,2,2,3,5,8,14,23,40,70,124,221,397,722,1314,2410,4441,8220,15272,28460,53222,99820,187692,353743,668273,1265204,2399784,4559828,8679280,16547220,31592878,60400688,115633260,221653776,425363952,817175698",
+    "name": "Maximal coefficient of Product_{k<=n} (x^k+1). Number of solutions to +- 1 +- 2 +- 3 +- ... +- n = 0 or 1.",
+    "comment": [
+        "If k is allowed to approach infinity, this gives the partition numbers A000009.",
+        "a(n) is the maximal number of subsets of {1,2,...,n} that share the same sum."
+    ],
+    "link": [
+        "T. D. Noe, Alois P. Heinz and Ray Chandler, <a href=\"/A025591/b025591.txt\">Table of n, a(n) for n = 0..3339</a> (terms < 10^1000, first 201 terms from T. D. Noe, next 200 terms from Alois P. Heinz)",
+        "Dorin Andrica and Ioan Tomescu, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL5/Tomescu/tomescu4.html\">On an Integer Sequence Related to a Product of Trigonometric Functions, and Its Combinatorial Relevance </a>, Journal of Integer Sequences, Vol. 5 (2002), Article 02.2.4",
+        "Steven R. Finch, <a href=\"/A000980/a000980.pdf\">Signum equations and extremal coefficients</a>, February 7, 2009. [Cached copy, with permission of the author]",
+        "E. Friedman and M. Keith, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/KEITH/carpet.html\">Magic Carpets</a>, J. Int Sequences, 3 (2000), Article 00.2.5.",
+        "Marco Mondelli, SH Hassani, R Urbanke, <a href=\"http://arxiv.org/abs/1612.05295\">Construction of Polar Codes with Sublinear Complexity</a>, arXiv preprint arXiv:1612.05295, 2016. See Sect. I.",
+        "Robert A. Proctor, <a href=\"http://www.jstor.org/stable/2975833\">Solution of two difficult combinatorial problems with linear algebra</a>, American Mathematical Monthly 89, 721-734.",
+        "B. D. Sullivan, <a href=\"http://cs.uwaterloo.ca/journals/JIS/VOL16/Sullivan/sullivan8.html\">On a conjecture of Adrica and Tomescu</a>, J. Int. Sequences 16 (2013), Article 13.3.1"
+    ],
+    "formula": [
+        "a(n) = A063865(n) + A063866(n)."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n>i*(i+1)/2, 0,",
+        "      `if`(i=0, 1, b(n+i, i-1)+b(abs(n-i), i-1)))",
+        "    end:",
+        "a:=n-> b(0, n)+b(1, n):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Mar 10 2014"
+    ],
+    "mathematica": [
+        "f[n_, s_] := f[n, s]=Which[n==0, If[s==0, 1, 0], Abs[s]>(n*(n+1))/2, 0, True, f[n-1, s-n]+f[n-1, s+n]]; Table[Which[Mod[n, 4]==0||Mod[n, 4]==3, f[n, 0], Mod[n, 4]==1||Mod[n, 4]==2, f[n, 1]], {n, 0, 40}]"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,polcoeff(prod(k=1,n,1+x^k),n*(n+1)\\4))"
+    ],
+    "xref": [
+        "Cf. A039828, A063865, A069918, A063866, A063867, A083309, A083527, A086376."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,4",
+    "author": "_David W. Wilson_",
+    "references": 21,
+    "revision": 43,
+    "time": "2018-01-20T10:58:13-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 286799,
+    "data": "1,1,6,49,542,7278,113824,2017881,39842934,865391422,20486717908,524816312106,14463876594476,426759508580416,13423937511765492,448515527244396873,15865571912065180326,592432249691301719190,23290086526099237126180,961614574423928988516286,41607005553456012247259844",
+    "name": "Row sums of A286798.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A286799/b286799.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Luca G. Molinari, Nicola Manini, <a href=\"https://arxiv.org/abs/cond-mat/0512342\">Enumeration of many-body skeleton diagrams</a>, arXiv:cond-mat/0512342 [cond-mat.str-el], 2006."
+    ],
+    "mathematica": [
+        "max = 22; y0[x_, t_] = 1; y1[x_, t_] = 0; For[n = 1, n <= max, n++, y1[x_, t_] = 1 + x y0[x, t]^2 + 3 t x^3 y0[x, t]^2 D[y0[x, t], x] + x^2 (2 y0[x, t] D[y0[x, t], x] + t (2 y0[x, t]^3 - D[y0[x, t], x] + y0[x, t] D[y0[x, t], x])) + O[x]^n // Normal // Simplify; y0[x_, t_] = y1[x, t]];",
+        "P[n_, t_] := Coefficient[y0[x, t] , x, n];",
+        "a[n_] := CoefficientList[P[n, t], t] // Total;",
+        "Table[a[n], {n, 0, max-1}] (* _Jean-Fran\u00e7ois Alcover_, May 24 2017, adapted from PARI *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A286795_ser(N, t='t) = {",
+        "  my(x='x+O('x^N), y0=1, y1=0, n=1);",
+        "  while(n++,",
+        "    y1 = (1 + x*(1 + 2*t + x*t^2)*y0^2 + t*(1-t)*x^2*y0^3 + 2*x^2*y0*y0');",
+        "    y1 = y1 / (1+2*x*t); if (y1 == y0, break()); y0 = y1;); y0;",
+        "};",
+        "A286798_ser(N,t='t) = {",
+        "  my(v = A286795_ser(N,t)); subst(v, 'x, serreverse(x/(1-x*t*v)));",
+        "};",
+        "Vec(A286798_ser(21,1))"
+    ],
+    "xref": [
+        "Cf. A286798."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gheorghe Coserea_, May 21 2017",
+    "references": 4,
+    "revision": 10,
+    "time": "2017-05-26T22:18:32-04:00",
+    "created": "2017-05-26T22:18:32-04:00"
+}

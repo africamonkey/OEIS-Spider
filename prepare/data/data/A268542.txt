@@ -1,0 +1,56 @@
+{
+    "number": 268542,
+    "data": "1,4,42,520,7090,102144,1525776,23380368,365130810,5786380600,92774019052,1501646797248,24498046138384,402329384914240,6645072333486720,110293868867458080,1838511122725436250,30762545845461663240",
+    "name": "The diagonal of the rational function 1/(1 - x - y - x y - x z - y z).",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A268542/b268542.txt\">Table of n, a(n) for n = 0..310</a>",
+        "A. Bostan, S. Boukraa, J.-M. Maillard, J.-A. Weil, <a href=\"http://arxiv.org/abs/1507.03227\">Diagonals of rational functions and selected differential Galois groups</a>, arXiv preprint arXiv:1507.03227 [math-ph], 2015.",
+        "Jacques-Arthur Weil, <a href=\"http://www.unilim.fr/pages_perso/jacques-arthur.weil/diagonals/\">Supplementary Material for the Paper \"Diagonals of rational functions and selected differential Galois groups\"</a>"
+    ],
+    "formula": [
+        "Conjecture: 2*n^2*(21*n-37)*a(n) -32*(7*n-3)*(3*n^2-7*n+3)*a(n-1) +(-1281*n^3+4819*n^2-5610*n+1920)*a(n-2) -3*(3*n-5)*(21*n-16)*(3*n-7)*a(n-3) = 0. - _R. J. Mathar_, Mar 11 2016",
+        "G.f.: hypergeom([1/12, 5/12], [1], 1728*x^4*(x+1)^2*(27*x^2+34*x-2)/(-1+16*x+8*x^2)^3)/(1-16*x-8*x^2)^(1/4). - _Gheorghe Coserea_, Jul 06 2016",
+        "0 = x*(x+4)*(x+1)*(27*x^2+34*x-2)*y'' + (81*x^4+554*x^3+764*x^2+256*x-8)*y' + (24*x^3+184*x^2+192*x+32)*y, where y is g.f. - _Gheorghe Coserea_, Jul 06 2016",
+        "a(n) ~ sqrt(5/12 + 4/(3*sqrt(7))) * ((17+7*sqrt(7))/2)^n / (Pi*n). - _Vaclav Kotesovec_, Jul 07 2016"
+    ],
+    "maple": [
+        "A268542 := proc(n)",
+        "    1/(1-x-y-x*y-x*z-y*z) ;",
+        "    coeftayl(%,x=0,n) ;",
+        "    coeftayl(%,y=0,n) ;",
+        "    coeftayl(%,z=0,n) ;",
+        "end proc:",
+        "seq(A268542(n),n=0..40) ; # _R. J. Mathar_, Mar 11 2016"
+    ],
+    "mathematica": [
+        "gf = Hypergeometric2F1[1/12, 5/12, 1, 1728*x^4*(x + 1)^2*(27*x^2 + 34*x - 2)/(-1 + 16*x + 8*x^2)^3]/(1 - 16*x - 8*x^2)^(1/4);",
+        "CoefficientList[gf + O[x]^18, x] (* _Jean-Fran\u00e7ois Alcover_, Dec 02 2017, after _Gheorghe Coserea_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "my(x='x, y='y, z='z);",
+        "R = 1/(1 - x - y - x*y - x*z - y*z);",
+        "diag(n, expr, var) = {",
+        "  my(a = vector(n));",
+        "  for (i = 1, #var, expr = taylor(expr, var[#var - i + 1], n));",
+        "  for (k = 1, n, a[k] = expr;",
+        "       for (i = 1, #var, a[k] = polcoeff(a[k], k-1)));",
+        "  return(a);",
+        "};",
+        "diag(10, R, [x, y, z])",
+        "(PARI) \\\\ system(\"wget http://www.jjj.de/pari/hypergeom.gpi\");",
+        "read(\"hypergeom.gpi\");",
+        "N = 20; x = 'x + O('x^N);",
+        "Vec(hypergeom([1/12, 5/12], [1], 1728*x^4*(x+1)^2*(27*x^2+34*x-2)/(-1+16*x+8*x^2)^3, N)/(1-16*x-8*x^2)^(1/4))  \\\\ _Gheorghe Coserea_, Jul 06 2016"
+    ],
+    "xref": [
+        "Cf. A268545-A268555."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Feb 29 2016",
+    "references": 1,
+    "revision": 26,
+    "time": "2017-12-03T02:09:40-05:00",
+    "created": "2016-02-29T08:37:38-05:00"
+}

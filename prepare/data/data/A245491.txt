@@ -1,0 +1,43 @@
+{
+    "number": 245491,
+    "data": "9,87,1068,16022,284704,5834024,135430302,3511116537,100559404366,3152738985032,107400330425888,3950024143546665,155996847068247395,6584073072068125453,295764262988176583800,14088968131538370019982,709394716006812244474473",
+    "name": "The least x > 0 such that x < the number of zero digits in the base-n expansions of the numbers 1 through x.",
+    "comment": [
+        "If the function zeros(n,b) returns the number of zeros in the numbers 1 through n in base b, then:",
+        "zeros(2,2) = zeros_in(10) = 1.",
+        "zeros(4,2) = zeros_in(10,100) = 3.",
+        "zeros(5,2) = zeros_in(10,100,101) = 4.",
+        "zeros(6,2) = zeros_in(10,100,101,110) = 5.",
+        "zeros(8,2) = zeros_in(10,100,101,110,1000) = 8.",
+        "zeros(9,2) = zeros_in(10,100,101,110,1000,1001) = 10.",
+        "Therefore 9 < zeros(9,2) and 9 is the first entry in the list."
+    ],
+    "link": [
+        "Anthony Sand, <a href=\"/A245491/b245491.txt\">Table of n, a(n) for n = 2..100</a>"
+    ],
+    "example": [
+        "9 < zero(9,base=2) = 10.",
+        "87 < zero(87,3) = 88.",
+        "1068 < zero(1068,4) = 1069.",
+        "100559404366 < zero(100559404366,10) = 100559404367."
+    ],
+    "mathematica": [
+        "a245491[n_Integer] := Module[{x = 0, z = 0},",
+        "While[x >= z, x++; z += Count[IntegerDigits[x, n], 0]]; x]; Map[a245491, Range[2, 12]] (* _Michael De Vlieger_, Aug 06 2014 *)"
+    ],
+    "program": [
+        "(PARI) /* formula for calculating n such that zero(n) > n, zero(n-1) <= (n-1) */",
+        "{estimate(x,b) = m1=b; est=x\\b; nn=est; while(nn>0, d=nn%b; m2 = nn\\b; if(d==0, est+=(x%m1)+1; if(m2>0, m2--)); est+=m1*m2; m1*=b; nn=nn\\b); return(est)}",
+        "{bmin=2; bmx=20; for(bs=bmin,bmx, ni=bs^bs; n=bs+1; ez1=0; ez2=0; until(ez1>n && ez2<=n-1, ez = estimate(n,bs); if(n>=ez, n+=ni, n-=ni; if(ni>1, ni=ni\\bs)); ez1 = estimate(n,bs); ez2 = estimate(n-1,bs)); print1(n,\", \")) } \\\\ _Anthony Sand_, Aug 11 2014"
+    ],
+    "xref": [
+        "Cf. A164935."
+    ],
+    "keyword": "nonn,base",
+    "offset": "2,1",
+    "author": "_Anthony Sand_, Jul 24 2014",
+    "references": 1,
+    "revision": 35,
+    "time": "2015-06-13T09:31:10-04:00",
+    "created": "2014-08-21T22:54:15-04:00"
+}

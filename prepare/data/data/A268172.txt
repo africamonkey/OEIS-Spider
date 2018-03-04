@@ -1,0 +1,87 @@
+{
+    "number": 268172,
+    "data": "0,1,1,2,4,9,23,58,156,426,1194,3393,9802,28601,84347,250732,750908,2262817,6857386,20882889,63877262,196162762,604567254,1869318719,5797113028,18026873112,56197262814,175594836698,549839459963,1725126992844,5422602630117,17074281639963,53848886560675,170085320026578",
+    "name": "Binary-ternary Wedderburn-Etherington numbers.",
+    "comment": [
+        "This is the number of non-planar binary-ternary rooted trees (every node has out-degree 0 or 2 or 3) with n leaf nodes, indexed by the number of leaf nodes (NOT the total number of nodes).",
+        "It can also be interpreted as the number of bracketings (valid placements of operation symbols) in a monomial of degree n in a nonassociative algebra with an (anti-)commutative binary operation and a completely (skew-)symmetric ternary operation."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A268172/b268172.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Murray R. Bremner, <a href=\"/A268172/a268172.txt\">Maple code for binary-ternary Wedderburn-Etherington numbers</a>",
+        "Murray R. Bremner, <a href=\"/A268172/a268172.pdf\">Recursion formula for binary-ternary Wedderburn-Etherington numbers</a>"
+    ],
+    "formula": [
+        "See Maple code, and the recursion formula under Links."
+    ],
+    "example": [
+        "Here are the 1, 1, 2, 4, 9, 23 bracketings for degrees 1 to 6 (using the monomial interpretation), where the binary and ternary operations are written [-,-] and [-,-,-] respectively, and the hyphen is a placeholder for the argument symbols:",
+        "Degree 1: -.",
+        "Degree 2: [-,-].",
+        "Degree 3: [[-,-],-], [-,-,-].",
+        "Degree 4: [[[-,-],-],-], [[-,-],[-,-]], [[-,-,-],-], [[-,-],-,-].",
+        "Degree 5:",
+        "   [[[[-,-],-],-],-],",
+        "   [[[-,-,-],-],-],",
+        "   [[[-,-],[-,-]],-],",
+        "   [[[-,-],-,-],-],",
+        "   [[[-,-],-],[-,-]],",
+        "   [[-,-,-],[-,-]],",
+        "   [[[-,-],-],-,-],",
+        "   [[-,-,-],-,-],",
+        "   [[-,-],[-,-],-].",
+        "Degree 6:",
+        "   [[[[[-,-],-],-],-],-],",
+        "   [[[[-,-,-],-],-],-],",
+        "   [[[[-,-],[-,-]],-],-],",
+        "   [[[[-,-],-,-],-],-],",
+        "   [[[[-,-],-],[-,-]],-],",
+        "   [[[-,-,-],[-,-]],-],",
+        "   [[[[-,-],-],-,-],-],",
+        "   [[[-,-,-],-,-],-],",
+        "   [[[-,-], [-,-],-],-],",
+        "   [[[[-,-],-],-],[-,-]],",
+        "   [[[-,-,-],-],[-,-]],",
+        "   [[[-,-], [-,-]],[-,-]],",
+        "   [[[-,-],-,-],[-,-]],",
+        "   [[[-,-],-],[[-,-],-]],",
+        "   [[[-,-],-],[-,-,-]],",
+        "   [[-,-,-],[-,-,-]],",
+        "   [[[[-,-],-],-],-,-],",
+        "   [[[-,-,-],-],-,-],",
+        "   [[[-,-],[-,-]],-,-],",
+        "   [[[-,-],-,-],-,-],",
+        "   [[[-,-],-],[-,-],-],",
+        "   [[-,-,-],[-,-],-],",
+        "   [[-,-],[-,-],[-,-]]."
+    ],
+    "maple": [
+        "# for first Maple program see Links",
+        "# second Maple program:",
+        "b:= proc(n, i, v) option remember; `if`(n=0,",
+        "      `if`(v=0, 1, 0), `if`(i<1 or v<1 or n<v, 0,",
+        "      `if`(v=n, 1, add(binomial(a(i)+j-1, j)*",
+        "       b(n-i*j, i-1, v-j), j=0..min(n/i, v)))))",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n<2, n,",
+        "      add(b(n, n+1-j, j), j=2..3))",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jan 28 2016"
+    ],
+    "mathematica": [
+        "b[n_, i_, v_] := b[n, i, v] = If[n==0, If[v==0, 1, 0], If[i<1 || v<1 || n<v, 0, If[v==n, 1, Sum[Binomial[a[i]+j-1, j]*b[n-i*j, i-1, v-j], {j, 0, Min[n/i, v]}]]]]; a[n_] := a[n] = If[n<2, n, Sum[b[n, n+1-j, j], {j, 2, 3}]]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Feb 25 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A001190 (Binary Wedderburn-Etherington numbers).",
+        "Cf. A000598 (Ternary Wedderburn-Etherington numbers: number of non-planar ternary rooted trees with n nodes): note that this sequence is indexed by the total number of nodes, NOT the number of leaves.",
+        "Cf. A000669, A268163.",
+        "Column k=3 of A292085."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,4",
+    "author": "_Murray R. Bremner_, Jan 27 2016",
+    "references": 4,
+    "revision": 35,
+    "time": "2017-09-11T16:38:51-04:00",
+    "created": "2016-01-27T22:07:35-05:00"
+}

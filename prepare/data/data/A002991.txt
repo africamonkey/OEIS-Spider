@@ -1,0 +1,47 @@
+{
+    "number": 2991,
+    "id": "M0725",
+    "data": "1,1,1,1,2,3,5,10,21,43,97,215,503,1187,2876,7033,17510,43961,111664,285809,737632,1915993,5008652,13163785,34774873,92282214,245930746,657931603,1766481135,4758553683,12858286083,34844908142,94681272368",
+    "name": "Number of n-node trees with a forbidden limb of length 5.",
+    "comment": [
+        "A tree with a forbidden limb of length k is a tree where the path from any leaf inward hits a branching node or another leaf within k steps. - _Christian G. Bower_, Dec 15 1999"
+    ],
+    "reference": [
+        "A. J. Schwenk, Almost all trees are cospectral, pp. 275-307 of F. Harary, editor, New Directions in the Theory of Graphs. Academic Press, NY, 1973.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A002991/b002991.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "A. J. Schwenk, <a href=\"/A002988/a002988.pdf\">Letter to N. J. A. Sloane, Aug 1972</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "G.f.: 1+B(x)+(B(x^2)-B(x)^2)/2 where B(x) is g.f. of A052328. - _Christian G. Bower_, Dec 15 1999",
+        "a(n) ~ c * d^n / n^(5/2), where d = 2.9447916575019743775137795109303..., c = 0.521642401804532770865780146005... . - _Vaclav Kotesovec_, Aug 25 2014"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "g:= proc(n) g(n):= `if`(n=0, 1, add(add(d*(g(d-1)-",
+        "      `if`(d=5, 1, 0)), d=divisors(j))*g(n-j), j=1..n)/n)",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, g(n-1)+(`if`(irem(n, 2, 'r')=0,",
+        "         g(r-1), 0)-add(g(i-1)*g(n-i-1), i=1..n-1))/2):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jul 06 2014"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = If[n == 0, 1, Sum[Sum[d*(g[d-1]-If[d == 5, 1, 0]), {d, Divisors[j] }]*g[n-j], {j, 1, n}]/n]; a[n_] := If[n == 0, 1, g[n-1] + (If[Mod[n, 2 ] == 0, g[Quotient[n, 2]-1], 0] - Sum[g[i-1]*g[n-i-1], {i, 1, n-1}])/2]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Feb 26 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A002955, A002988-A002992, A052318-A052329."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Christian G. Bower_, Dec 15 1999"
+    ],
+    "references": 2,
+    "revision": 34,
+    "time": "2017-09-09T03:33:31-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

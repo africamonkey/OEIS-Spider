@@ -1,0 +1,51 @@
+{
+    "number": 287609,
+    "data": "31,71,311,551,1151,14831,45791,455471,2035271,6345239,7241615,8290031,8329991,9086231,9324351,10449575,11497199,15454151,16515815,18337271,20650811,22946591,27609311,33220079,40487471,44106191,45015791,49021199,53315519,54536519",
+    "name": "Intersection of A034961 and A127345.",
+    "comment": [
+        "Surprisingly many terms are prime numbers: 31,71,311,1151,14831,455471.",
+        "Positions of a(n) in A127345: {1,2,4,5,7,19,30,76,142}.",
+        "Positions of a(n) in A034961: {4,8,26,41,75,660,1780,14009,54929}.",
+        "Positions of primes in a(n): {1,2,3,5,6,8,21,22,25,32,37,39,40,45,49,50, 59,62,66,69,...}. - _Michael De Vlieger_, May 28 2017"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A287609/b287609.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "31 is in the sequence because it is both the total of three consecutive primes (7 + 11 + 13) and it is (2*3 + 2*5 + 3*5) = (6 + 10 + 15). - _Michael De Vlieger_, May 28 2017"
+    ],
+    "mathematica": [
+        "Intersection[Map[Total, #], Map[#1 #2 + #1 #3 + #2 #3 & @@ # &, #]] &@ Partition[Prime@ Range[10^6], 3, 1] (* _Michael De Vlieger_, May 28 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from __future__ import division",
+        "from sympy import isprime, prevprime, nextprime",
+        "A287609_list, p, q, r = [], 2, 3, 5",
+        "while r < 10**6:",
+        "    n = p*(q+r) + q*r",
+        "    m = n//3",
+        "    pm, nm = prevprime(m), nextprime(m)",
+        "    k = n - pm - nm",
+        "    if isprime(m):",
+        "        if m == k:",
+        "            A287609_list.append(n)",
+        "    else:",
+        "        if nextprime(nm) == k or prevprime(pm) == k:",
+        "            A287609_list.append(n)",
+        "    p, q, r = q, r, nextprime(r) # _Chai Wah Wu_, May 31 2017"
+    ],
+    "xref": [
+        "Cf. A034961, A127345."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, May 27 2017",
+    "ext": [
+        "More terms from _Michael De Vlieger_, May 28 2017"
+    ],
+    "references": 1,
+    "revision": 13,
+    "time": "2017-05-31T09:33:20-04:00",
+    "created": "2017-05-28T09:43:09-04:00"
+}

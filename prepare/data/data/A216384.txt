@@ -1,0 +1,54 @@
+{
+    "number": 216384,
+    "data": "6,38,42,62,146,1145,4214,15590,47058,121935,464834,4049465,4759314,7756755,15838490,18284105,127137997,132734042,141393578",
+    "name": "Numbers that can be expressed as the sum of their first k consecutive arithmetic derivatives for some k > 1.",
+    "comment": [
+        "If k = 1 is allowed, then numbers of the form p^p also occur, where p is prime. These are the terms of A051674. - _T. D. Noe_, Dec 27 2012"
+    ],
+    "example": [
+        "6\u2019=5; 5\u2019=1; 6=5+1  (k=2);",
+        "38\u2019=21; 21\u2019=10; 10\u2019=7; 38=21+10+7 (k=3);",
+        "42\u2019=41; 41\u2019=1; 42=41+1 (k=2);",
+        "62\u2019=33; 33\u2019=14; 14\u2019=9; 9'=6; 62=33+14+9+6 (k=4);",
+        "146\u2019=75; 75\u2019=55; 55\u2019=16; 146=75+55+16 (k=3);",
+        "1145\u2019=234; 234\u2019=291; 291\u2019=100; 100'=140; 140'=188; 188'=192; 1145=234+291+100+140+188+192 (k=6)."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A216384:= proc(i)",
+        "local a,b,n,p,pfs;",
+        "for n from 1 to i do",
+        "pfs:=ifactors(n)[2]; a:=n*add(op(2,p)/op(1,p),p=pfs);",
+        "if a<n then b:=a;",
+        "   while b<n do",
+        "     pfs:=ifactors(a)[2]; a:=a*add(op(2,p)/op(1,p),p=pfs);",
+        "     if a=0 then break; else b:=b+a; fi;",
+        "   od;",
+        "   if b=n then print(n); fi; fi; od;",
+        "end:",
+        "A216384 (10000000);"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "A216384 = []",
+        "for n in range(1,10**5):",
+        "....ndsum = nd = sum([int(n*e/p) for p,e in factorint(n).items()])",
+        "....while ndsum <= n and nd > 1:",
+        "........nd = sum([int(nd*e/p) for p,e in factorint(nd).items()])",
+        "........ndsum += nd",
+        "........if ndsum == n:",
+        "............A216384.append(n)",
+        "# _Chai Wah Wu_, Aug 21 2014"
+    ],
+    "xref": [
+        "Cf. A003415."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Sep 06 2012",
+    "references": 3,
+    "revision": 15,
+    "time": "2014-08-25T03:49:03-04:00",
+    "created": "2012-09-11T10:59:36-04:00"
+}

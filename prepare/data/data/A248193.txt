@@ -1,0 +1,77 @@
+{
+    "number": 248193,
+    "data": "1,1,1,1,1,1,2,5,10,17,26,37,51,74,118,201,347,586,955,1509,2351,3682,5871,9545,15700,25851,42292,68606,110635,178190,287852,467313,761957,1245011,2033856,3317230,5401332,8787539,14301168,23301005,38016585,62090615,101457357,165778774",
+    "name": "G.f.: Sum_{n>=0} x^n * Sum_{k=0..n} C(n,k)^2 * x^(5*k).",
+    "comment": [
+        " Limit a(n)/a(n+1) = t^2 = 0.6054234235718265... where t is the positive real root of 1 - x - x^6 = 0."
+    ],
+    "formula": [
+        "G.f.: Sum_{n>=0} (2*n)!/(n!)^2 * x^(6*n) / (1 - x + x^6)^(2*n+1). - _Paul D. Hanna_, Oct 15 2014",
+        "G.f.: Sum_{n>=0} x^n * [Sum_{k>=0} C(n+k,k)^2 * x^(5*k)] * (1-x^5)^(2*n+1).",
+        "G.f.: Sum_{n>=0} x^(6*n) * [Sum_{k>=0} C(n+k,k)^2 * x^k].",
+        "G.f.: Sum_{n>=0} x^(6*n) * [Sum_{k=0..n} C(n,k)^2 * x^k] /(1-x)^(2n+1).",
+        "G.f.: exp( Sum_{n>=1} (x^n/n) * Sum_{k=0..n} C(2*n,2*k) * x^(5*k) ).",
+        "G.f.: 1 / sqrt((1 - x + 2*x^3 + x^6)*(1 - x - 2*x^3 + x^6)).",
+        "G.f.: 1 / sqrt((1 - x + x^6)^2 - 4*x^6).",
+        "G.f.: 1 / sqrt((1 - x - x^6)^2 - 4*x^7).",
+        "a(n) = Sum_{k=0..[n/5]} C(n-5*k, k)^2."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + x^2 + x^3 + x^4 + x^5 + 2*x^6 + 5*x^7 + 10*x^8 +...",
+        "where, by definition,",
+        "A(x) = 1 + x*(1 + x^5) + x^2*(1 + 2^2*x^5 + x^10)",
+        "+ x^3*(1 + 3^2*x^5 + 3^2*x^10 + x^15)",
+        "+ x^4*(1 + 4^2*x^5 + 6^2*x^10 + 4^2*x^15 + x^20)",
+        "+ x^5*(1 + 5^2*x^5 + 10^2*x^10 + 10^2*x^15 + 5^2*x^20 + x^25) +...",
+        "which is also given by the series identity:",
+        "A(x) = 1/(1-x+x^6) + 2*x^6/(1-x+x^6)^3 + 6*x^12/(1-x+x^6)^5 + 20*x^18/(1-x+x^6)^7 + 70*x^24/(1-x+x^6)^9 + 252*x^30/(1-x+x^6)^11 + 924*x^36/(1-x+x^6)^13 +...",
+        "The logarithm of the g.f. begins:",
+        "log(A(x)) = x*(1 + x^5) + x^2*(1 + 6*x^5 + x^10)/2",
+        "+ x^3*(1 + 15*x^5 + 15*x^10 + x^15)/3",
+        "+ x^4*(1 + 28*x^5 + 70*x^10 + 28*x^15 + x^20)/4",
+        "+ x^5*(1 + 45*x^5 + 210*x^10 + 210*x^15 + 45*x^20 + x^25)/5 +...",
+        "more explicitly,",
+        "log(A(x)) = x + x^2/2 + x^3/3 + x^4/4 + x^5/5 + 7*x^6/6 + 22*x^7/7 + 41*x^8/8 + 64*x^9/9 + 91*x^10/10 + 122*x^11/11 + 163*x^12/12 +...",
+        "where the logarithmic derivative equals",
+        "A'(x)/A(x) = (1 - x + 6*x^5 + 7*x^6 - 6*x^11) / ((1 - x + 2*x^3 + x^6)*(1 - x - 2*x^3 + x^6))."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1 / Sqrt[(1-x+x^6)^2 - 4*x^6], {x, 0, 20}], x] (* _Vaclav Kotesovec_, Oct 03 2014 *)"
+    ],
+    "program": [
+        "(PARI) /* By definition: */",
+        "{a(n)=local(A=1); A=sum(m=0, n, x^m*sum(k=0, m, binomial(m, k)^2*x^(5*k)) +x*O(x^n)); polcoeff(A, n)}",
+        "for(n=0, 50, print1(a(n), \", \"))",
+        "(PARI) /* From closed formula: */",
+        "{a(n)=local(A=1); A= 1/sqrt((1 - x + x^6)^2 - 4*x^6 +x*O(x^n)); polcoeff(A, n)}",
+        "for(n=0, 50, print1(a(n), \", \"))",
+        "(PARI) /* From a series identity: */",
+        "{a(n)=local(A=1+x); A=sum(m=0, n, (2*m)!/(m!)^2 * x^(6*m) / (1 - x + x^6 +x*O(x^n))^(2*m+1)); polcoeff(A, n)}",
+        "for(n=0, 40, print1(a(n), \", \"))",
+        "(PARI) /* From a binomial series identity: */",
+        "{a(n)=local(A=1+x); A=sum(m=0, n, x^m*(1-x^5)^(2*m+1)*sum(k=0, n, binomial(m+k, k)^2*x^(5*k)) +x*O(x^n)); polcoeff(A, n)}",
+        "for(n=0, 50, print1(a(n), \", \"))",
+        "(PARI) /* From a binomial series identity: */",
+        "{a(n)=local(A=1+x); A=sum(m=0, n\\6, x^(6*m)*sum(k=0, n-5*m, binomial(m+k, k)^2*x^k) +x*O(x^n)); polcoeff(A, n)}",
+        "for(n=0, 50, print1(a(n), \", \"))",
+        "(PARI) /* From a binomial series identity: */",
+        "{a(n)=local(A=1+x); A=sum(m=0, n\\6, x^(6*m) * sum(k=0, m, binomial(m, k)^2*x^k) / (1-x +x*O(x^n))^(2*m+1) ); polcoeff(A, n)}",
+        "for(n=0, 40, print1(a(n), \", \"))",
+        "(PARI) /* From exponential formula: */",
+        "{a(n)=local(A=1); A=exp(sum(m=1, n, sum(k=0, m, binomial(2*m, 2*k)*x^(5*k)) * x^m/m) +x*O(x^n)); polcoeff(A, n)}",
+        "for(n=0, 50, print1(a(n), \", \"))",
+        "(PARI) /* From formula for a(n): */",
+        "{a(n)=sum(k=0, n\\5, binomial(n-5*k, k)^2)}",
+        "for(n=0, 50, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A181665, A246840, A246883, A246884."
+    ],
+    "keyword": "nonn",
+    "offset": "0,7",
+    "author": "_Paul D. Hanna_, Oct 03 2014",
+    "references": 2,
+    "revision": 16,
+    "time": "2014-10-16T00:05:13-04:00",
+    "created": "2014-10-03T11:56:04-04:00"
+}

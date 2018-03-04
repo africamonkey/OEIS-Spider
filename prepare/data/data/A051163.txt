@@ -1,0 +1,44 @@
+{
+    "number": 51163,
+    "data": "1,2,5,12,30,76,194,496,1269,3250,8337,21428,55184,142376,367916,952000,2466014,6393372,16586678,43054344,111801908,290412296,754543052,1960808160,5096293794,13247503540,34440553562,89549255592,232868582328,605646682144",
+    "name": "Sequence is defined by property that (a0,a1,a2,a3,...) = binomial transform of (a0,a0,a1,a1,a2,a2,a3,a3,...).",
+    "comment": [
+        "Equals the self-convolution of A027826. Also equals antidiagonal sums of symmetric square array A100936. - _Paul D. Hanna_, Nov 22 2004",
+        "Equals eigensequence of triangle A152198. - _Gary W. Adamson_, Nov 28 2008"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A051163/b051163.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "a(n) = 1 + Sum_{k=1..n} Sum_{j=0..n-k} C(k, j)*C(n-k, j)*a(j). - _Paul D. Hanna_, Nov 22 2004",
+        "G.f. A(x) satisfies: A(x) = A(x^2/(1-x)^2)/(1-x)^2 and A(x^2) = A(x/(1+x))/(1+x)^2. - _Paul D. Hanna_, Nov 22 2004"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; add(`if`(k<2, 1,",
+        "      a(iquo(k, 2)))*binomial(n, k), k=0..n)",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jul 08 2015"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = 1 + Sum[Binomial[k, j]*Binomial[n-k, j]*a[j], {k, 1, n}, {j, 0, n-k}]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Nov 11 2015 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=1+sum(k=1,n,sum(j=0,n-k,binomial(k,j)*binomial(n-k,j)*a(j)))",
+        "(PARI) a(n)=local(A,m); if(n<0,0,m=1; A=1+O(x); while(m<=n,m*=2; A=subst(A,x,(x/(1-x))^2)/(1-x)); polcoeff(A^2,n))",
+        "for(n=0,40,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Nov 22 2004"
+    ],
+    "xref": [
+        "Cf. A051164, A051165, A051166, A027826, A100936, A100937, A152198."
+    ],
+    "keyword": "easy,nonn,eigen",
+    "offset": "0,2",
+    "author": "_Jonas Wallgren_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Jul 26 2002"
+    ],
+    "references": 8,
+    "revision": 32,
+    "time": "2016-07-19T10:27:41-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

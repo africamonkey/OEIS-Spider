@@ -1,0 +1,42 @@
+{
+    "number": 267460,
+    "data": "0,2,4,6,6,8,8,10,10,12,12,14,14,16,16,18,18,20,20,22,22,24,24,26,26,28,28,30,30,32,32,34,34,36,36,38,38,40,40,42,42,44,44,46,46,48,48,50,50,52,52,54,54,56,56,58,58,60,60,62,62,64,64,66,66,68",
+    "name": "Number of OFF (white) cells in the n-th iteration of the \"Rule 133\" elementary cellular automaton starting with a single ON (black) cell.",
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 55."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A267460/b267460.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "S. Wolfram, <a href=\"http://wolframscience.com/\">A New Kind of Science</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,-1)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Jan 16 2016: (Start)",
+        "a(n) = (2*n-(-1)^n+5)/2 for n>1.",
+        "a(n) = a(n-1)+a(n-2)-a(n-3) for n>4.",
+        "G.f.: 2*x*(1+x-x^3) / ((1-x)^2*(1+x)).",
+        "(End)"
+    ],
+    "mathematica": [
+        "rule=133; rows=20; ca=CellularAutomaton[rule,{{1},0},rows-1,{All,All}]; (* Start with single black cell *) catri=Table[Take[ca[[k]],{rows-k+1,rows+k-1}],{k,1,rows}]; (* Truncated list of each row *) nbc=Table[Total[catri[[k]]],{k,1,rows}]; (* Number of Black cells in stage n *) Table[Length[catri[[k]]]-nbc[[k]],{k,1,rows}] (* Number of White cells in stage n *)",
+        "Join[{0, 2}, LinearRecurrence[{1, 1, -1}, {4, 6, 6}, 70]] (* _Vincenzo Librandi_, Jan 16 2016 *)"
+    ],
+    "program": [
+        "(PARI) concat(0, Vec(2*x*(1+x-x^3)/((1-x)^2*(1+x)) + O(x^100))) \\\\ _Colin Barker_, Jan 16 2016",
+        "(MAGMA) [0,2] cat [(2*n-(-1)^n+5)/2: n in [2..70]]; // _Vincenzo Librandi_, Jan 16 2016"
+    ],
+    "xref": [
+        "Cf. A267423.",
+        "Cf. A052928 and A265283."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Robert Price_, Jan 15 2016",
+    "references": 1,
+    "revision": 15,
+    "time": "2016-01-16T10:29:54-05:00",
+    "created": "2016-01-15T23:08:52-05:00"
+}

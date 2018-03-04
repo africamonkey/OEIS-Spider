@@ -1,0 +1,56 @@
+{
+    "number": 97871,
+    "data": "1,6,2683,223041730,6009583845720101,81562450515482338061230306,801231178966121521807378920617005246471,7747118609267949193978742640152633949388622796278760450,96260050927125657231057045653340232713369826309730222706933915414681058441",
+    "name": "Number of Bernstein squares of order n: n X n squares filled with the numbers 1...n such that in row or column k, for all k = 1...n, the number k appears at least once.",
+    "comment": [
+        "This problem arose because I misunderstood a question that _Mira Bernstein_ asked me!"
+    ],
+    "formula": [
+        "Formula from _Brendan McKay_, Sep 08 2004:",
+        "\"Define A(i) = (n-1)^i*n^(n-i) - (n-2)^i*(n-1)^(n-i) (i=0..n), B(i) = (n-1)^i*n^(n-i) - (n-2)^(i-1)*(n-1)^(n-i+1) (i=1..n).",
+        "\"Then a(n) = (n^n - (n-1)^n)^n + sum( binomial(n, i)*(-1)^i*A(i)^(n-i)*B(i)^i, i=1..n )",
+        "\"Interpretation: A(i) is the number of ways of choosing row j, say R, such that it has at least one j and i specified positions R[k[1]], ..., R[k[i]] that do not include position R[j] do not have R[k[m]]=k[m] for any m.",
+        "\"B(i) is the number of ways of choosing row j, say R, such that it has at least one j and i specified positions R[k[1]], ..., R[k[i]] that DO include position R[j] do not have R[k[m]]=k[m] for any m.",
+        "\"Now A(i)^(n-i) * B(i)^i is the number of ways of choosing all the rows such that row j has at least one j for each j and such that a specified set of i columns each do not have an entry equal to the column number.",
+        "\"The given formula for a(n) is just inclusion-exclusion over the erroneous columns, always working with matrices having valid rows.\""
+    ],
+    "example": [
+        "a(2) = 6:",
+        "11 11 12 12 12 21",
+        "12 22 12 21 22 12",
+        "Naming the squares AB/CD, ... these are:",
+        "A =1,D =2: 4 (2B 2C, i.e., 2 options for B times 2 options for C)",
+        "A =1,D!=2: 1 (1B 1C)",
+        "A!=1,D =2: 1 (1B 1C)",
+        "A!=1,D!=2: 0, for a total of 6.",
+        "For n = 3 and names ABC/DEF/GHI, we get",
+        "A =1,E =2,I =3: 729 (3B 3C 3D 3F 3G 3H)",
+        "A =1,E =2,I!=3: 450 (3B 3D 2I 5(CF) 5(GH))",
+        "A =1,E!=2,I =3: 450",
+        "A!=1,E =2,I =3: 450",
+        "A =1,E!=2,I!=3: 196 (2E 2I 7(CDF) 7(BGH))",
+        "A!=1,E =2,I!=3: 196",
+        "A!=1,E!=2,I =3: 196",
+        "A!=1,E!=2,I!=3: 16 (2A 2E 2I 2(BCDFGH)), for a total of 2683. - _Hugo van der Sanden_"
+    ],
+    "mathematica": [
+        "a[n_] := (n^n - (n-1)^n)^n + Sum[ (-1)^i*((n-1)^i*n^(n-i) - (n-2)^i*(n-1)^(n-i))^(n-i)*((n-1)^i*n^(n-i) - (n-2)^(i-1)*(n-1)^(n-i+1))^i * Binomial[n, i], {i, 1, n}]; a[1] = 1; a[2] = 6; Table[ a[n], {n, 1, 9}] (* _Jean-Fran\u00e7ois Alcover_, Dec 20 2011, from formula *)"
+    ],
+    "xref": [
+        "Cf. A097993."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Sep 03 2004",
+    "ext": [
+        "a(3) from _Hugo van der Sanden_, Sep 03 2004",
+        "a(4) from _Hugo Pfoertner_, Sep 06 2004",
+        "a(4) confirmed by _Hugo van der Sanden_, Sep 07 2004",
+        "a(5) and a(6) from Guenter Stertenbrink (Sterten(AT)aol.com), using a method suggested by _Brendan McKay_, Sep 07 2004",
+        "Formula and further terms from _Brendan McKay_, Sep 08 2004"
+    ],
+    "references": 1,
+    "revision": 22,
+    "time": "2016-12-17T03:54:10-05:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

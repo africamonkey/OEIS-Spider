@@ -1,0 +1,39 @@
+{
+    "number": 256656,
+    "data": "1,2,3,5,8,9,13,14,15,17,21,22,23,24,27,28,30,34,35,36,37,39,43,44,45,48,49,51,55,56,57,58,60,63,64,69,70,71,73,77,78,79,82,83,85,89,90,91,92,94,97,98,102,103,104,106,111,112,113,115,118,119,124",
+    "name": "Numbers for which the minimal alternating Fibonacci representation has positive trace.",
+    "comment": [
+        "See A256655 for definitions.  This sequence and A256657 partition the positive integers."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A256656/b256656.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "Let R(k) be the minimal alternating Fibonacci representation of k.  The trace of R(k) is the last term.",
+        "R(1) = 1, trace = 1",
+        "R(2) = 2, trace = 2",
+        "R(3) = 3, trace = 3",
+        "R(4) = 5 - 1, trace = -1",
+        "R(5) = 5, trace = 5",
+        "R(6) = 6 - 2, trace =  -2"
+    ],
+    "mathematica": [
+        "b[n_] = Fibonacci[n]; bb = Table[b[n], {n, 1, 70}];",
+        "h[0] = {1}; h[n_] := Join[h[n - 1], Table[b[n + 2], {k, 1, b[n]}]];",
+        "g = h[18];  r[0] = {0};",
+        "r[n_] := If[MemberQ[bb, n], {n}, Join[{g[[n]]}, -r[g[[n]] - n]]]",
+        "t = Table[Last[r[n]], {n, 0, 1000}];  (* A256656 *)",
+        "Select[Range[200], Last[r[#]] > 0 &]  (* A256656 *)",
+        "Select[Range[200], Last[r[#]] < 0 &]  (* A256657 *)"
+    ],
+    "xref": [
+        "Cf. A000045, A256655, A256657."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Apr 08 2015",
+    "references": 6,
+    "revision": 4,
+    "time": "2015-04-09T07:58:27-04:00",
+    "created": "2015-04-09T07:58:27-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 100634,
+    "data": "0,2,6,6,22,22,86,86,86,86,1110,1110,5206,5206,5206,5206,70742,70742,332886,332886,332886,332886,4527190,4527190,4527190,4527190,4527190,4527190,272962646,272962646,1346704470,1346704470,1346704470",
+    "name": "a(n) = decimal equivalent of binary number whose k-th least significant bit is 1 iff k is a prime number and k <= n.",
+    "comment": [
+        "1 is not considered prime. If 1 were to be considered prime, each term would be incremented by 1."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A100634/b100634.txt\">Table of n, a(n) for n = 1..300</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/LeastSignificantBit.html\">\"Least Significant Bit.\"</a>"
+    ],
+    "example": [
+        "a(5)=22 because the k-th least significant bits 1,2,3,4,5 are prime for 2,3,5 and not prime for 1,4. So k=1->0, k=2->1, k=3->1, k=4->0 and k=5->1 gives the bit sequence 10110, which is 2 + 4 + 16 = 22 in its decimal expansion."
+    ],
+    "mathematica": [
+        "Table[FromDigits[Reverse[Table[If[PrimeQ[k] == True, 1, 0], {k, 1, N}]], 2], {N, 1, 40}]"
+    ],
+    "program": [
+        "(PARI) Sum(an)={ L=#binary(an)-1; k=2; s=0; pow2=2;",
+        "forstep(j=L, 2, -1,",
+        "if(isprime(k), s+=pow2);",
+        "k++; pow2*=2);",
+        "return(s) };",
+        "  n=1; an=0;",
+        "while(an<=1346704470,",
+        "  an+=Sum(an); print1(an,\", \"); n++;",
+        "  while(!isprime(n), print1(an,\", \"); n++);",
+        "  an=2^(n-1)",
+        ") \\\\ _Washington Bomfim_, Jan 17 2011"
+    ],
+    "xref": [
+        "Cf. A000040, A080355, A080339, A072762."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "Joseph Biberstine (jrbibers(AT)indiana.edu), Dec 02 2004",
+    "references": 2,
+    "revision": 15,
+    "time": "2015-03-04T20:31:05-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

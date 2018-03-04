@@ -1,0 +1,57 @@
+{
+    "number": 122046,
+    "data": "0,0,0,1,3,6,10,16,24,34,46,61,79,100,124,152,184,220,260,305,355,410,470,536,608,686,770,861,959,1064,1176,1296,1424,1560,1704,1857,2019,2190,2370,2560,2760,2970,3190,3421,3663,3916,4180,4456,4744,5044,5356,5681,6019,6370",
+    "name": "Partial sums of floor(n^2/8).",
+    "comment": [
+        "Partial sums of A001972.",
+        "Degree of the polynomial P(n+1,x), defined by P(n,x) = [x^(n-1)*P(n-1,x)*P(n-4,x)+P(n-2,x)*P(n-3,x)]/P(n-5,x) with P(1,x)=P(0,x)=P(-1,x)=P(-2,x)=P(-3,x)=1.",
+        "Define the sequence b(n) = 1, 4, 10, 20, 36, 60,... for n>=0 with g.f. 1/((1+x)*(1+x^2)*(1-x)^5). Then a(n+3) = b(n)-b(n-1) and b(n)+b(n+1)+b(n+2)+b(n+3) = A052762(n+7)/24. - _J. M. Bergot_, Aug 21 2013"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A122046/b122046.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "A. N. W. Hone, <a href=\"/A122046/a122046.txt\">Comments on A122046</a>",
+        "A. N. W. Hone, <a href=\"http://arXiv.org/abs/0807.2538\">Algebraic curves, integer sequences and a discrete Painleve transcendent</a>, Proceedings of SIDE 6, Helsinki, Finland, 2004. [Set a(n)=d(n+3) on p. 8]",
+        "Brian OSullivan and Thomas Busch, <a href=\"http://arxiv.org/abs/0810.0231\">Spontaneous emission in ultra-cold spin-polarised anisotropic Fermi seas</a>, arXiv 0810.0231v1 [quant-ph], 2008. [Eq 10a, lambda=4]",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-3,1,1,-3,3,-1)."
+    ],
+    "formula": [
+        "a(n) = sum(k=0..n,floor(k^2/8)).",
+        "a(n) = round((2*n^3+3*n^2-8*n)/48) = round((4*n^3+6*n^2-16*n-9)/96) = floor((2*n^3+3*n^2-8*n+3)/48) = ceil((2*n^3+3*n^2-8*n-12)/48). - _Mircea Merca_",
+        "a(n) = a(n-8) + (n-4)^2 + n , n>8. - _Mircea Merca_",
+        "a(n+1) = cos((2n+1)Pi/4)/(4*sqrt(2)) + (2n+3)(2n^2+6n-5)/96 + (-1)^n/32. - A. N. W. Hone (A.N.W.Hone(AT)kent.ac.uk), Jul 15 2008",
+        "a(n+1) = A057077(n+1)/8+A090294(n-1)/32+(-1)^n/32. - A. N. W. Hone (A.N.W.Hone(AT)kent.ac.uk), Jul 15 2008",
+        "a(n)= 3a(n-1) -3a(n-2) +a(n-3) +a(n-4) -3a(n-5) +3a(n-6) -a(n-7). - A. N. W. Hone (A.N.W.Hone(AT)kent.ac.uk), Jul 15 2008",
+        "O.g.f.: x^3 / ( (1+x)*(x^2+1)*(x-1)^4 ). - _R. J. Mathar_, Jul 15 2008",
+        "From _Johannes W. Meijer_, May 20 2011: (Start)",
+        "a(n+3) = A144678(n)+A144678(n-1)+A144678(n-2)+A144678(n-3)",
+        "a(n+3) = sum(min(6-k+1,k+1)* A190718(n+k-6),k=0..6) (End)",
+        "a(n) = (4*n^3+6*n^2-16*n-9-3*(-1)^n+12*(-1)^((2*n-1+(-1)^n)/4))/96. - _Luce ETIENNE_, Mar 21 2014"
+    ],
+    "example": [
+        "a(6) = 10 = 0 + 0 + 0 + 1 + 2 + 3 + 4."
+    ],
+    "maple": [
+        "A122046 := proc(n) round((2*n^3+3*n^2-8*n)/48) ; end proc: # _Mircea Merca_"
+    ],
+    "mathematica": [
+        "p[n_] := p[n] = Cancel[Simplify[ (x^(n - 1)p[n - 1]p[n - 4] + p[n - 2]*p[n - 3])/p[n - 5]]]; p[ -5] = 1;p[ -4] = 1;p[ -3] = 1;p[ -2] = 1;p[ -1] = 1; Table[Exponent[p[n], x], {n, 0, 20}]"
+    ],
+    "program": [
+        "(MAGMA) [Round((2*n^3+3*n^2-8*n)/48): n in [0..60]]; // _Vincenzo Librandi_, Jun 25 2011",
+        "(PARI) a(n)=(2*n^3+3*n^2-8*n+3)\\48 \\\\ _Charles R Greathouse IV_, Oct 07 2015"
+    ],
+    "xref": [
+        "Cf. A014125, A122047."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,5",
+    "author": "_Roger L. Bagula_, Sep 13 2006",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Sep 17 2006, Jul 11 2008, Jul 12 2008",
+        "More formulas and better name from _Mircea Merca_, Nov 19 2010"
+    ],
+    "references": 5,
+    "revision": 51,
+    "time": "2016-06-16T23:27:31-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

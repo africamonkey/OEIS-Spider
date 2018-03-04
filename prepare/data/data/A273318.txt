@@ -1,0 +1,46 @@
+{
+    "number": 273318,
+    "data": "58472,79208,104616,150048,160848,205648,224648,234448,252808,259648,259920,294048,297448,387648,421648,433448,462976,488448,506248,563048,621448,683648,770976,790848,799648,837448,1008648,1040848,1084904,1186632,1195648,1205648,1212064",
+    "name": "Numbers n such that n+k-1 is the sum of two nonzero squares in exactly k ways for all k = 1, 2, 3.",
+    "comment": [
+        "Numbers n such that n+k-1 is the sum of two nonzero squares in exactly 4-k ways for all k = 1, 2, 3 are 22984, 65600, 80800, 85544, ..."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A273318/b273318.txt\">Table of n, a(n) for n = 1..1095</a>"
+    ],
+    "example": [
+        "58472 is a term because;",
+        "58472 = 86^2 + 226^2.",
+        "58473 = 48^2 + 237^2 = 147^2 + 192^2.",
+        "58474 = 57^2 + 235^2 = 125^2 + 207^2 = 143^2 + 195^2."
+    ],
+    "maple": [
+        "N:= 10^6: # get all terms <= N-2",
+        "R:= Vector(N):",
+        "for x from 1 to floor(sqrt(N)) do",
+        "  for y from 1 to min(x,floor(sqrt(N-x^2))) do",
+        "    R[x^2+y^2]:= R[x^2+y^2]+1",
+        "od od:",
+        "count:= 0:",
+        "for n from 1 to N-2 do",
+        "  if [R[n],R[n+1],R[n+2]] = [1,2,3] then",
+        "  count:= count+1; A[count]:= n;",
+        "fi",
+        "od:",
+        "seq(A[i],i=1..count); # _Robert Israel_, May 19 2016"
+    ],
+    "program": [
+        "(PARI) is(n,k) = {nb = 0; lim = sqrtint(n); for (x=1, lim, if ((n-x^2 >= x^2) && issquare(n-x^2), nb++); ); nb == k; }",
+        "isok(n) = is(n,1) && is(n+1,2) && is(n+2,3);"
+    ],
+    "xref": [
+        "Cf. A000404, A025284, A025285, A025286."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Altug Alkan_, May 19 2016",
+    "references": 3,
+    "revision": 18,
+    "time": "2016-05-20T03:53:30-04:00",
+    "created": "2016-05-20T03:53:30-04:00"
+}

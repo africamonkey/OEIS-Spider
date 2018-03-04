@@ -1,0 +1,59 @@
+{
+    "number": 249837,
+    "data": "9,9261,92615351886784,9261535188678457128255779014690172977343833,926153518867845712825577901469017297734383369607525414854584903918819898290730346512973206455943454340951813592133138664220381927",
+    "name": "a(n+1) is the next smallest nontrivial cube beginning with a(n), initial term is 9.",
+    "comment": [
+        "a(7) has 1163 digits. - _Robert Israel_, Dec 04 2014"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A249837/b249837.txt\">Table of n, a(n) for n = 1..6</a>"
+    ],
+    "maple": [
+        "nextterm:= proc(x) local d,s,t;",
+        "   for d from 1 do",
+        "     s:= traperror(ceil((x*10^d+1)^(1/3)));",
+        "     while not type(s,integer) do",
+        "        Digits:= Digits *2;",
+        "        s:= traperror(ceil((x*10^d+1)^(1/3)));",
+        "     od:",
+        "     t:= traperror(floor(((x+1)*10^d-1)^(1/3)));",
+        "     while not type(t,integer) do",
+        "        Digits:= Digits *2;",
+        "        t:= traperror(floor(((x+1)*10^d-1)^(1/3)));",
+        "     od:",
+        "     if s <= t then return s^3 fi;",
+        "   od:",
+        "end proc:",
+        "a[1]:= 9;",
+        "for n from 2 to 6 do a[n]:= nextterm(a[n-1]) od; # _Robert Israel_, Dec 04 2014"
+    ],
+    "program": [
+        "(Python)",
+        "def f(x):",
+        "..n = x",
+        "..s = 1",
+        "..while s < 10**7:",
+        "....if s % 10:",
+        "......S = str(s**3)",
+        "......if S.startswith(str(n)):",
+        "........print(s**3, end=', ')",
+        "........n = s**3",
+        "....s += 1",
+        "f(9)",
+        "(PARI) a(n)=k=n; s=1; while(s<10^7, if(s%10, if(s^3\\(10^(#Str(s^3)-#Str(k)))==k, print1(s^3, \", \"); k=s^3)); s++)",
+        "a(9)"
+    ],
+    "xref": [
+        "Cf. A249799, A048559, A048561."
+    ],
+    "keyword": "nonn,more,base",
+    "offset": "1,1",
+    "author": "_Derek Orr_, Dec 03 2014",
+    "ext": [
+        "a(4) and a(5) from _Robert Israel_, Dec 04 2014"
+    ],
+    "references": 1,
+    "revision": 24,
+    "time": "2015-01-15T10:31:44-05:00",
+    "created": "2015-01-15T10:31:44-05:00"
+}

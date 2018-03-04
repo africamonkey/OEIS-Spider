@@ -1,0 +1,42 @@
+{
+    "number": 146088,
+    "data": "0,105263157894736842,157894736842105263,210526315789473684,263157894736842105,315789473684210526,368421052631578947,421052631578947368,473684210526315789,105263157894736842105263157894736842,157894736842105263157894736842105263",
+    "name": "Numbers n with the property that shifting the rightmost digit of n to the left end doubles the number.",
+    "comment": [
+        "The sequence is infinite, since repeating 105263157894736842 any number of times (e.g. 105263157894736842105263157894736842) gives another number with the same property.",
+        "A number N = 10n+m is in the sequence iff 2N = m*10^d+n, where d is the number of digits of n = [N/10]. This is equivalent to 19n = m(10^d-2), i.e. 10^d=2 (mod 19) and n = m(10^d-2)/19, m=2..9 (to ensure that n has d digits). Thus for each d = 18j-1, j=1,2,3... we have exactly 8 solutions which are the j-fold repetition of one among {a(1),...,a(8)}. - _M. F. Hasler_, May 04 2009",
+        "Normally lists have offset 1, but there are good reasons to make an exception in this case. - _N. J. A. Sloane_, Dec 24 2012"
+    ],
+    "link": [
+        "G. P. Michon, <a href=\"http://www.numericana.com/answer/p-adic.htm#a146088\">Deriving A146088 from linear decadic equations</a>."
+    ],
+    "formula": [
+        "a(n) = ((10^d-2)/19*10+1)m, where m=(n-1)%8+2 is the trailing digit and d=(n+7)\\8*18-1 is the number of other digits. - _M. F. Hasler_, May 04 2009",
+        "a(8k+i) = A217592(9k+i+1)/2 for i=1..8 with any k."
+    ],
+    "example": [
+        "The sequence starts with a(0)=0 because rotating a lone 0 does double 0. That initial trivial term was not given an index of 1 when it was added, so that the index of other terms of A146088 would not change and invalidate delicate prior cross-references within OEIS (e.g., A217592) or outside of it.",
+        "a(4) = 263157894736842105 because 2*a(4) = 526315789473684210."
+    ],
+    "mathematica": [
+        "a[n_] := (m = Mod[n - 1, 8] + 2; d = Floor[(n + 7)/8]*18 - 1; ((10/19)*(10^d - 2) + 1)*m); Table[a[n], {n, 0, 10}] (* _Jean-Fran\u00e7ois Alcover_, Jan 16 2013, after _M. F. Hasler_ *)"
+    ],
+    "program": [
+        "(PARI) A146088(n) = ((10^((n+7)\\8*18-1)-2)/19*10+1)*((n-1)%8+2)",
+        "/* or a more experimental approach: */ for(d=1,99, Mod(10,19)^k-2 & next; for(m=2,9, print1(\",\",m*(10^k-2)/19,m))) \\\\\\\\ _M. F. Hasler_, May 04 2009"
+    ],
+    "xref": [
+        "Cf. A092697, A146561, A146569, A146754, A217592."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, based on correspondence from William A. Hoffman III (whoff(AT)robill.com), Apr 10 2009",
+    "ext": [
+        "More terms from _M. F. Hasler_, May 04 2009",
+        "a(0)=0 added by G. P. Michon, Oct 29 2012"
+    ],
+    "references": 9,
+    "revision": 29,
+    "time": "2013-06-23T11:20:58-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

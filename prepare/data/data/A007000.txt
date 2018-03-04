@@ -1,0 +1,52 @@
+{
+    "number": 7000,
+    "id": "M1045",
+    "data": "1,2,4,7,11,17,25,35,49,66,88,115,148,189,238,297,368,451,550,665,799,956,1136,1344,1583,1855,2167,2520,2920,3373,3882,4455,5097,5814,6617,7509,8502,9604,10823,12173,13662,15302,17110,19093,21271,23657,26266",
+    "name": "Number of partitions of n into Fibonacci parts (with 2 types of 1).",
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A007000/b007000.txt\">Table of n, a(n) for n = 0..10000</a>, first 1000 terms from T . D. Noe",
+        "James Propp and N. J. A. Sloane, <a href=\"/A006997/a006997.pdf\">Email, March 1994</a>"
+    ],
+    "formula": [
+        "a(n) = 1/n*Sum_{k=1..n} (A005092(k)+1)*a(n-k), n > 1, a(0)=1. - _Vladeta Jovovic_, Aug 22 2002",
+        "G.f.: 1/product_{j>=1} (1-x^fibonacci(j)). - _Emeric Deutsch_, Mar 05 2006",
+        "G.f.: Sum_{i>=0} x^Fibonacci(i) / Product_{j=1..i} (1 - x^Fibonacci(j)). - _Ilya Gutkovskiy_, May 07 2017"
+    ],
+    "example": [
+        "a(2)=4 because we have [2],[1',1'],[1',1],[1,1] (the two types of 1 are denoted 1 and 1')."
+    ],
+    "maple": [
+        "with(combinat): gf := 1/product((1-q^fibonacci(k)), k=1..20): s := series(gf, q, 200): for i from 0 to 199 do printf(`%d,`,coeff(s, q, i)) od: # _James A. Sellers_, Feb 08 2002"
+    ],
+    "mathematica": [
+        "CoefficientList[ Series[ 1/Product[1 - x^Fibonacci[i], {i, 1, 15}], {x, 0, 50}], x]"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.MemoCombinators (memo2, integral)",
+        "a007000 n = a007000_list !! n",
+        "a007000_list = map (p' 1) [0..] where",
+        "   p' = memo2 integral integral p",
+        "   p _ 0 = 1",
+        "   p k m | m < fib   = 0",
+        "         | otherwise = p' k (m - fib) + p' (k + 1) m where fib = a000045 k",
+        "-- _Reinhard Zumkeller_, Dec 09 2015"
+    ],
+    "xref": [
+        "Cf. A003107.",
+        "Cf. A000045."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, _Mira Bernstein_",
+    "ext": [
+        "More terms from _James A. Sellers_, Feb 08 2002"
+    ],
+    "references": 6,
+    "revision": 37,
+    "time": "2017-11-18T15:53:23-05:00",
+    "created": "1994-05-09T03:00:00-04:00"
+}

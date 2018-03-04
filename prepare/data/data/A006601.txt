@@ -1,0 +1,52 @@
+{
+    "number": 6601,
+    "id": "M5420",
+    "data": "242,3655,4503,5943,6853,7256,8392,9367,10983,11605,11606,12565,12855,12856,12872,13255,13782,13783,14312,16133,17095,18469,19045,19142,19143,19940,20165,20965,21368,21494,21495,21512,22855,23989,26885",
+    "name": "Numbers n such that n, n+1, n+2 and n+3 have the same number of divisors.",
+    "reference": [
+        "M. Abramowitz and I. A. Stegun, eds., Handbook of Mathematical Functions, National Bureau of Standards Applied Math. Series 55, 1964 (and various reprintings), p. 840.",
+        "J.-M. De Koninck, Ces nombres qui nous fascinent, Entry 242, p. 67, Ellipses, Paris 2008.",
+        "R. K. Guy, Unsolved Problems in Number Theory, B18.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A006601/b006601.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "M. Abramowitz and I. A. Stegun, eds., <a href=\"http://apps.nrbook.com/abramowitz_and_stegun/index.html\">Handbook of Mathematical Functions</a>, National Bureau of Standards, Applied Math. Series 55, Tenth Printing, 1972 [alternative scanned copy].",
+        "Victor Meally, <a href=\"/A006556/a006556.pdf\">Letter to N. J. A. Sloane</a>, no date."
+    ],
+    "maple": [
+        "with(numtheory);  A006601:=proc(q) local n;",
+        "for n from 1 to q do",
+        "  if tau(n)=tau(n+1) and tau(n+1)=tau(n+2) and tau(n+2)=tau(n+3) then print(n); fi;",
+        "od; end: A006601(10^4); # _Paolo P. Lava_, May 03 2013"
+    ],
+    "mathematica": [
+        "f[n_]:=Length[Divisors[n]]; lst={};Do[If[f[n]==f[n+1]==f[n+2]==f[n+3],AppendTo[lst,n]],{n,8!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Dec 14 2009 *)",
+        "dsQ[n_]:=Length[Union[DivisorSigma[0,Range[n,n+3]]]]==1; Select[Range[ 30000],dsQ] (* _Harvey P. Dale_, Nov 23 2011 *)",
+        "Flatten[Position[Partition[DivisorSigma[0,Range[27000]],4,1],_?(Union[ Differences[ #]]=={0}&),{1},Heads->False]] (* Faster, because the number of divisors for each number is only calculated once *) (* _Harvey P. Dale_, Nov 06 2013 *)",
+        "SequencePosition[DivisorSigma[0,Range[27000]],{x_,x_,x_,x_}][[All,1]] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Jul 03 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (elemIndices)",
+        "a006601 n = a006601_list !! (n-1)",
+        "a006601_list = map (+ 1) $ elemIndices 0 $",
+        "   zipWith3 (((+) .) . (+)) ds (tail ds) (drop 2 ds) where",
+        "   ds = map abs $ zipWith (-) (tail a000005_list) a000005_list",
+        "-- _Reinhard Zumkeller_, Jan 18 2014",
+        "(PARI) is(n)=my(t=numdiv(n)); numdiv(n+1)==t && numdiv(n+2)==t && numdiv(n+3)==t \\\\ _Charles R Greathouse IV_, Jun 25 2017"
+    ],
+    "xref": [
+        "Cf. A000005, A005237, A005238."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Olivier G\u00e9rard_"
+    ],
+    "references": 13,
+    "revision": 37,
+    "time": "2017-08-12T09:55:11-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

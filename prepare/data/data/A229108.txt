@@ -1,0 +1,31 @@
+{
+    "number": 229108,
+    "data": "15,35,63,143,323,575,675,783,899,1763,2303,3599,5183,6399,6723,10403,11663,15875,19043,22499,27221,28223,32399,36863,39203,50621,51983,53357,57599,58563,72899,77837,79523,95477,97343,119021,121103,123197,129599",
+    "name": "Increasing a(n)is the smallest number of the form p^a*q^b, where a,b are positive integers and p < q are odd primes such that max( p^a, q^b)/min( p^a, q^b) <= 1 + 2/prime(n).",
+    "link": [
+        "Peter J. C. Moses, <a href=\"/A229108/b229108.txt\">Table of n, a(n) for n = 2..1001</a>"
+    ],
+    "formula": [
+        "If [prime(n), prime(n+1)] is a twin pair, then a(n) <= prime(n)*prime(n+1)."
+    ],
+    "example": [
+        "15 is the least number of considered form, and 5/3 = 1 + 2/prime(2). So a(2)=15; in case of n=23, not only 28223 but also 29237 satisfies required inequality and we choose the smallest from them."
+    ],
+    "mathematica": [
+        "tmp={1}; Do[test=1+2/Prime[n]; AppendTo[tmp, NestWhile[#+2&, Last[tmp]+2, !((Max[#]/Min[#]&[Map[#[[1]]^#[[2]]&, FactorInteger[#]]] <= test) && (Length[FactorInteger[#]]==2))&]], {n,2,30}]; Rest[tmp]"
+    ],
+    "program": [
+        "(PARI) factorPP(n)=my(f=factor(n)); vecsort(vector(#f~,i,f[i,1]^f[i,2]))",
+        "list(n)=my(v=primes(n),t=1,f);for(i=1,n,while(1, f=factorPP(t += 2); if(#f==2 && f[2]/f[1] <= 1+2/v[i], v[i]=t; break))); v \\\\ _Charles R Greathouse IV_, Sep 13 2013"
+    ],
+    "xref": [
+        "Cf. A037074."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Vladimir Shevelev_ and _Peter J. C. Moses_, Sep 13 2013",
+    "references": 1,
+    "revision": 29,
+    "time": "2013-09-22T15:31:36-04:00",
+    "created": "2013-09-22T15:31:36-04:00"
+}

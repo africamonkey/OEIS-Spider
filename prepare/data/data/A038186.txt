@@ -1,0 +1,41 @@
+{
+    "number": 38186,
+    "data": "1,2,3,4,5,6,7,8,9,12,24,36,111,112,132,135,144,216,224,312,315,432,612,624,735,1116,1212,1296,1332,1344,1416,2112,2232,2916,3132,3168,3276,3312,4112,4224,6624,6912,8112,9612,11112,11115,11133,11172,11232",
+    "name": "Numbers divisible by the sum and product of their digits.",
+    "comment": [
+        "The property \"numbers divisible by the sum and product of their digits\" leads to the Diophantine equation t*x1*x2*...*xr=s*(x1+x2+...+xr), where t and s are divisors of n; xi is from [1...9]. This corresponds to some arithmetic problems in geometry, see Sandor, 2002. - _Ctibor O. Zizka_, Mar 04 2008",
+        "A188641(a(n)) * A188642(a(n)) = 1: intersection of A005349 and A007602. [_Reinhard Zumkeller_, Apr 07 2011]"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A038186/b038186.txt\">Table of n, a(n) for n=1..1000</a>",
+        "J. Sandor, <a href=\"http://www.gallup.unm.edu/~smarandache/JozsefSandor2.pdf\">Geometric Theorems, Diophantine Equations and Arithmetic Functions</a>. American Research Press, Rehoboth 2002."
+    ],
+    "maple": [
+        "P:=proc(n) local i,k,w,x; for i from 1 by 1 to n do w:=0; k:=i; while k>0 do w:=w+k-(trunc(k/10)*10); k:=trunc(k/10); od; x:=1; k:=i; while k>0 do x:=x*(k-(trunc(k/10)*10)); k:=trunc(k/10); od; if x>0 then if i/x=trunc(i/x) and i/w=trunc(i/w) then print(i); fi; fi; od; end: P(1000); # _Paolo P. Lava_, Feb 12 2008"
+    ],
+    "mathematica": [
+        "dspQ[n_]:=Module[{idn=IntegerDigits[n],t},t=Times@@idn;t!=0 && Divisible[n,Total[idn]] && Divisible[n,t]]; Select[Range[11500],dspQ] (* _Harvey P. Dale_, Jul 11 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (elemIndices)",
+        "a038186 n = a038186_list !! (n-1)",
+        "a038186_list = map succ $ elemIndices 1",
+        "               $ zipWith (*) (map a188641 [1..]) (map a188642 [1..])",
+        "-- _Reinhard Zumkeller_, Apr 07 2011",
+        "(PARI) for(n=1,10^4,d=digits(n);s=sumdigits(n);p=prod(i=1,#d,d[i]);if(p&&!(n%s+n%p),print1(n,\", \"))) \\\\ _Derek Orr_, Apr 29 2015"
+    ],
+    "xref": [
+        "Cf. A005349, A007602."
+    ],
+    "keyword": "nonn,base,nice,look",
+    "offset": "1,2",
+    "author": "_Felice Russo_",
+    "ext": [
+        "More terms from _Patrick De Geest_, Jun 15 1999"
+    ],
+    "references": 12,
+    "revision": 33,
+    "time": "2017-01-02T11:06:36-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 90675,
+    "data": "24,1152,414720,39813120,1337720832,4815794995200,115579079884800,22191183337881600,263631258054033408000,88580102706155225088000,27636992044320430227456000,39797268543821419527536640000",
+    "name": "Denominators of rational coefficients in a series expansion of z! = Gamma(z+1), convergent for Re(z) >= 0, given as equation (21) in the referenced paper by Lanczos.",
+    "comment": [
+        "It would be nice to have a way to generate the sequence which is simpler than that used in the program provided.",
+        "It seems that for n>0 A090675(n) = A144618(n) with the exception 5*A090675(5) = A144618(5). - _Peter Luschny_, Mar 01 2011"
+    ],
+    "reference": [
+        "C. Lanczos, A precision approximation of the gamma function, J. SIAM Numer. Anal., Ser. B, 1 (1964), 86-96"
+    ],
+    "link": [
+        "W. Wang, <a href=\"http://dx.doi.org/10.1016/j.jnt.2015.12.016\">Unified approaches to the approximations of the gamma function</a>, J. Number Theory (2016)."
+    ],
+    "maple": [
+        "Lanczos := proc(n)",
+        "exp(1+LambertW((x^2-1)/exp(1)));",
+        "coeftayl(taylor(%,x=0,2*n+2),x=0,2*n+1);",
+        "simplify(-%*(2*n+1)*pochhammer(1/2,n)/sqrt(2),exp) end:",
+        "A090674 := n -> numer(Lanczos(n));",
+        "A090675 := n -> denom(Lanczos(n)); # _Peter Luschny_, Mar 01 2011"
+    ],
+    "mathematica": [
+        "(* Gamma[z+1] == Sqrt[2*Pi]*((z + 1/2)/E)^(z + 1/2)*(1 - Sum[a[[n]]/Pochhammer[z + 1, n], {n, 1, Infinity}] *) n = 30 (* which must be even *); e[0] = 1; e[1] = Sqrt[2]; f[x_] := SeriesData[x, 0, Table[e[i], {i, 0, n}], 0, n + 1, 1]; d = First[Table[e[i], {i, 0, n - 1}] /. Solve[CoefficientList[Normal[(1/2)*D[f[x]^2, x] - (1 - x^2)*D[f[x], x] - 2*x*f[x]], x] == 0, Table[e[i], {i, 2, n}]]]; c = Table[Sqrt[2]*(i - 1)*d[[i]]*Sin[theta]^(i - 2), {i, 2, n, 2}]; b = Table[Integrate[Cos[theta]^(2*x)*c[[i]], {theta, -(Pi/2), Pi/2}, Assumptions -> x > -(1/2)], {i, 1, n/2}]; a = Table[ -((b[[i]]*Gamma[i + x])/(2*Sqrt[Pi]*Gamma[1/2 + x])), {i, 2, n/2}]; Denominator[a]",
+        "nmax = 10; f[x_] := Exp[1 + ProductLog[(x^2 - 1)/E]]; se = Series[f[x], {x, 0, 2 nmax + 2}] /. Arg[x] -> 0; Lanczos[n_] := ( coe = SeriesCoefficient[ se, {x, 0, 2 n + 1}]; Simplify[ -coe*(2*n + 1)*Pochhammer[1/2, n]/Sqrt[2]]); a[n_] := a[n] = Denominator[ Lanczos[n] ]; A090675 = Table[ Print[a[n]]; a[n], {n, 1, nmax}] (* _Jean-Fran\u00e7ois Alcover_, Dec 07 2011, after _Peter Luschny_ *)"
+    ],
+    "xref": [
+        "Numerators are in A090674."
+    ],
+    "keyword": "frac,nonn",
+    "offset": "1,1",
+    "author": "David W. Cantrell (DWCantrell(AT)sigmaxi.net), Dec 18 2003",
+    "references": 3,
+    "revision": 15,
+    "time": "2016-09-23T13:07:18-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

@@ -1,0 +1,28 @@
+{
+    "number": 209627,
+    "data": "1,2,12,124,1820,34476,796600,21647088,674894736,23727325600,929120132336,40145865303072,1899037891380448,97624128373666272,5416162739385169920,322369745413410839296,20496143199154076929280",
+    "name": "E.g.f. satisfies A(A(x)*exp(-2*A(x)))=x",
+    "formula": [
+        "a(n)=n!*T(n,1), T(n,m)=-1/2*(sum(k=m+1..n-1, T(k,m)*sum(i=k..n, T(n,i)*(k^(i-k)*(-2)^(i-k))/(i-k)!))+sum(i=m+1..n, T(n,i)*(m^(i-m)*(-2)^(i-m))/(i-m)!)), T(n,n)=1."
+    ],
+    "example": [
+        "E.g.f: A(x) = x + 2*x^2/2! + 12*x^3/3! + 124*x^4/4! + 1820*x^5/5! +...",
+        "where",
+        "A(A(x)) = x + 4*x^2/2! + 36*x^3/3! + 512*x^4/4! + 10000*x^5/5! +...+ (2*n)^(n-1)*x^n/n! +..."
+    ],
+    "program": [
+        "(Maxima)",
+        "T(n,m):=if n=m then 1 else -1/2*(sum(T(k,m)*sum(T(n,i)*(k^(i-k)*(-2)^(i-k))/(i-k)!,i,k,n),k,m+1,n-1)+sum(T(n,i)*(m^(i-m)*(-2)^(i-m))/(i-m)!,i,m+1,n));",
+        "makelist(n!*T(n,1),n,1,7);",
+        "(PARI) {a(n)=local(W=sum(m=1,n,(2*m)^(m-1)*x^m/m!)+x*O(x^n),A=x);",
+        "for(i=1,n,A=(A+subst(W,x,serreverse(A+x*O(x^n))))/2);n!*polcoeff(A,n)}",
+        "for(n=1,20,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, May 28 2013"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vladimir Kruchinin_, Mar 11 2012",
+    "references": 0,
+    "revision": 12,
+    "time": "2016-07-19T11:33:29-04:00",
+    "created": "2012-03-12T11:59:41-04:00"
+}

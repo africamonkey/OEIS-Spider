@@ -1,0 +1,56 @@
+{
+    "number": 213975,
+    "data": "1,2,11,12,21,112,121,211,212,1121,1211,1212,2112,2121,11211,11212,12112,12121,21121,21211,112112,112121,121121,121211,211211,211212,212112,1121121,1121211,1211211,1211212,1212112,2112112,2112121,2121121,11211212,11212112",
+    "name": "List of subwords of A003842 arranged in lexicographic order.",
+    "comment": [
+        "The Fibonacci word A003842 is a Sturmian word, which means that there are exactly n+1 different factors (or subwords) of length n for all n.",
+        "For another version of this sequence see the Noe link at A003849 (and included below)."
+    ],
+    "reference": [
+        "Chuan, Wai-Fong; Ho, Hui-Ling. Locating factors of the infinite Fibonacci word. Theoret. Comput. Sci. 349 (2005), no. 3, 429--442. MR2183167 (2007c:68115)",
+        "Currie, James D. and Saari, Kalle, Least Periods of Factors of Infinite Words, RAIRO - Theoretical Informatics and Applications, January 2009, 43, pp. 165-178",
+        "Mignosi, F.; Restivo, A.; Sciortino, M. Words and forbidden factors. WORDS (Rouen, 1999). Theoret. Comput. Sci. 273 (2002), no. 1-2, 99--117. MR1872445 (2002m:68096)",
+        "Kalle Saari, Periods of factors of the Fibonacci word, Department of Mathematics and Turku Centre for Computer Science, University of Turku, 2001 4 Turku, Finland, citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.113.992",
+        "K. Saari, Periods of factors of the Fibonacci word, in Proceedings of the Sixth International Conference on Words (WORDS\u201907). Institut de Math\u00e9matiques de Luminy (2007) 273-279.",
+        "Wen, Z.-X.; Wen, Z.-Y. Some properties of the singular words of the Fibonacci word, European J. Combin. 15 (1994), 587-598."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A213975/b213975.txt\">Table of n, a(n) for n = 1..10010</a>",
+        "M. Lothaire, <a href=\"http://www-igm.univ-mlv.fr/~berstel/Lothaire/\">Algebraic Combinatorics on Words</a>, Cambridge, 2002; see Chap. 2.",
+        "T. D. Noe, <a href=\"/A003849/a003849.txt\">The first 1652 subwords of A003849, including leading zeros.</a>"
+    ],
+    "formula": [
+        "The list S(n), say, of words of length n in this sequence can be constructed recursively as follows.",
+        "There are two words of length 1, namely S(1)={1,2}.",
+        "The n+2 words in S(n+1) are obtained from the n+1 words in S(n) thus:",
+        "if u in S(n) is the reverse of a prefix of the Fibonacci word A003482 then both u0 and u1 are in S(n+1), otherwise u in S(n) has a unique extension ux in S(n+1), where x is determined by the requirement that no right factor of ux is one of the forbidden words listed in A214216.",
+        "For example, A214216 contains both 22 and 111. So if u ends with 2 then (since 22 is forbidden), x=1 and u1 is in S(n+1), while if u ends with 11 then (since 111 is forbidden) x=2 and u2 is in S(n+1).",
+        "On the other hand, consider for example u=21121 in S(5), which is the reverse of the first 5 digits of A003482. Now both u1 and u2 are in S(6)."
+    ],
+    "example": [
+        "A003842 begins 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 2, ... and we can see factors 1, 2, 11, 12, 21, but not 22."
+    ],
+    "maple": [
+        "S:= proc(n) option remember;",
+        "      `if`(n<2, [2-n], [S(n-1)[], S(n-2)[]])",
+        "    end:",
+        "T:= proc(n) local k, l, m, s;",
+        "      for k while nops(S(k))<n do od;",
+        "      do l:= S(k); m:= nops(l);",
+        "         s:= {seq(parse(cat(l[i..i+n-1][])), i=1..m-n+1)};",
+        "         if nops(s) = n+1 then break else k:= k+1 fi",
+        "      od; sort([s[]])[]",
+        "    end:",
+        "seq(T(n), n=1..10);  # _Alois P. Heinz_, Jul 04 2012"
+    ],
+    "xref": [
+        "Cf. A003842, A214207, A214208, A214209, A214216, A214217."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jul 03 2012, Jul 10 2012",
+    "references": 9,
+    "revision": 47,
+    "time": "2015-08-22T19:41:54-04:00",
+    "created": "2012-07-03T09:47:59-04:00"
+}

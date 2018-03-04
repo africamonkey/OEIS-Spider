@@ -1,0 +1,48 @@
+{
+    "number": 249647,
+    "data": "1,3,9,11,33,99,111,333,999,1111,3333,9999,11111,33333,99999,111111,142857,333333,999999,1111111,3333333,9999999,11111111,33333333,99999999,111111111",
+    "name": "Numbers n that divide the concatenation of n+1 and n-1.",
+    "comment": [
+        "A069871 is a subset of this sequence.",
+        "All the numbers of the form (10^k - 1)/9, (10^k - 1)/3 and (10^k-1) are members.",
+        "Any concatenation of 142857 with itself is part of the sequence, too.",
+        "All integers of the form (10^d-1)/k where 1 <= k <= 9. - _Robert Israel_, Jan 06 2016",
+        "It appears that equivalent definitions are: (A) Numbers which divide the repunit of the same length, n | R(length(n)). (B) Numbers equal to one or more concatenations of one among {1, 3, 9, 142857}. Is there a proof for this? - _M. F. Hasler_, Jun 10 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A249647/b249647.txt\">Table of n, a(n) for n = 1..3163</a>"
+    ],
+    "formula": [
+        "a(n) = 1000001*a(n-19) + 1000000*a(n-38). - _Robert Israel_, Jan 06 2016"
+    ],
+    "example": [
+        "3 belongs to this sequence as 3 divides 42, 11 belongs to this sequence as 11 divides 1210.",
+        "9 belongs to this sequence as 9 divides the concatenation of 10 and 8, i.e., 108."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local n;",
+        "for n from 1 to q do if type(((n+1)*10^(ilog10(n-1)+1)+n-1)/n,integer) then print(n);",
+        "fi; od; end: P(10^15);",
+        "# alternative:",
+        "seq(op(select(type, [seq((10^d-1)/k, k=[9,7,3,1])],integer)),d=1..20); # _Robert Israel_, Jan 06 2016"
+    ],
+    "mathematica": [
+        "Select[Range[2, 10^7], Divisible[FromDigits[IntegerDigits[# + 1]~Join~IntegerDigits[# - 1]], #] &] (* _Michael De Vlieger_, Jan 06 2016 *)"
+    ],
+    "program": [
+        "(PARI) for(n=1,10^8, s=concat(Str(n+1),Str(n-1));if(!(eval(s)%n),print1(n,\", \"))) \\\\ _Derek Orr_, Nov 03 2014"
+    ],
+    "xref": [
+        "Cf. A069871."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Nov 03 2014",
+    "ext": [
+        "a(23)-a(25) from _Derek Orr_, Nov 03 2014"
+    ],
+    "references": 2,
+    "revision": 31,
+    "time": "2016-06-11T01:02:29-04:00",
+    "created": "2014-11-04T23:22:28-05:00"
+}

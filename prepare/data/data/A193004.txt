@@ -1,0 +1,39 @@
+{
+    "number": 193004,
+    "data": "1,1,9,29,75,165,331,623,1123,1963,3357,5651,9405,15525,25477,41633,67831,110281,179031,290339,470511,762111,1234009,1997639,3233305,5232745,8468001,13702853,22173123,35878413,58054147,93935351,151992475",
+    "name": "Constant term of the reduction by x^2->x+1 of the polynomial p(n,x) defined at Comments.",
+    "comment": [
+        "The titular polynomials are defined recursively:  p(n,x)=x*p(n-1,x)+n^3, with p(0,x)=1.  For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232 and A192744."
+    ],
+    "link": [
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-5,1,2,-1)."
+    ],
+    "formula": [
+        "a(n) = 4*a(n-1)-5*a(n-2)+a(n-3)+2*a(n-4)-a(n-5).",
+        "G.f.: (x^4-3*x^3+10*x^2-3*x+1) / ((x-1)^3*(x^2+x-1)). - _Colin Barker_, May 12 2014"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 40;",
+        "p[0, x] := 1;",
+        "p[n_, x_] := x*p[n - 1, x] + n^3;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 + PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}] (* A193004 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}] (* A193005 *)"
+    ],
+    "program": [
+        "(PARI) Vec((x^4-3*x^3+10*x^2-3*x+1)/((x-1)^3*(x^2+x-1)) + O(x^100)) \\\\ _Colin Barker_, May 12 2014"
+    ],
+    "xref": [
+        "Cf. A192232, A192744, A192951, A193005."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 14 2011",
+    "references": 2,
+    "revision": 12,
+    "time": "2015-06-13T00:53:55-04:00",
+    "created": "2011-07-14T19:46:57-04:00"
+}

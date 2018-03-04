@@ -1,0 +1,39 @@
+{
+    "number": 217047,
+    "data": "11,23,47,83,131,173,179,233,353,389,521,569,641,683,839,887,911,971,983,1229,1289,1913,2087,2663,2837,2879,3329,3671,3677,3803,3821,4259,4409,4817,4871,4889,5237,5477,5693,6449,6581,6863,7283,7487,7583,7823,7853",
+    "name": "Primes that remain prime when a single \"8\" digit is inserted between any two adjacent digits.",
+    "link": [
+        "Paolo P. Lava, <a href=\"/A217047/b217047.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "325421 is prime and also 3254281, 3254821, 3258421, 3285421 and 3825421."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A217044:=proc(q,x)",
+        "local a,b,c,i,n,ok;",
+        "for n from 5 to q do",
+        "a:=ithprime(n); b:=0;",
+        "while a>0 do b:=b+1; a:=trunc(a/10); od; a:=ithprime(n); ok:=1;",
+        "  for i from 1 to b-1 do",
+        "    c:=a+9*10^i*trunc(a/10^i)+10^i*x;",
+        "    if not isprime(c) then ok:=0; break; fi; od;",
+        "  if ok=1 then print(ithprime(n)); fi;",
+        "od; end:",
+        "A217044(100000,8)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(v=concat([\"\"],digits(n)));for(i=2,#v-1,v[1]=Str(v[1], v[i]); v[i]=8;if(i>2,v[i-1]=\"\");if(!isprime(eval(concat(v))), return(0)));isprime(n) \\\\ _Charles R Greathouse IV_, Sep 25 2012",
+        "(MAGMA) [p: p in PrimesInInterval(11,8000) | forall{m: t in [1..#Intseq(p)-1] | IsPrime(m) where m is (Floor(p/10^t)*10+8)*10^t+p mod 10^t}]; // _Bruno Berselli_, Sep 26 2012"
+    ],
+    "xref": [
+        "Cf. A050674, A050711-A050719, A069246, A159236, A215417, A215419-A215421, A217044-A217046."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Sep 25 2012",
+    "references": 8,
+    "revision": 16,
+    "time": "2012-09-26T04:34:06-04:00",
+    "created": "2012-09-26T04:34:06-04:00"
+}

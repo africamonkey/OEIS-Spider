@@ -1,0 +1,61 @@
+{
+    "number": 273286,
+    "data": "92,130,132,136,154,270,286,384,398,456,546,608,630,636,702,934,944,2730,4394,4470,4556,5544,12084,14320,17572,22632,27808,27930,31150,31284,32534,36346,41004,41544,42274,56916,58552,61680,66654,74826,86200",
+    "name": "Positive integers n such that n=p+q for some primes p,q with pi(p)*pi(q) = sigma(n).",
+    "comment": [
+        "Equivalently, integers n such that sigma(n) = i*j for some i,j with prime(i)+prime(j) = n. Each term is necessarily even, otherwise if n is odd n=2+q < sigma(2+q) = pi(2)*pi(q) = pi(q) < q which is absurd. Also p and q cannot be equal, otherwise sigma(2*p) = 3*(p+1) = pi(p)^2 with no solution.",
+        "Conjecture: the sequence is infinite and each term has only one decomposition into a sum of suitable primes p,q.",
+        "Using Rosser's theorem we can show that the primes p,q >= 19 and each of them can only occur for a finite number of terms n. - _Robert Israel_, Jun 30 2016"
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RossersTheorem.html\">Rosser's Theorem</a>"
+    ],
+    "formula": [
+        "Integers n such that sigma(n) = pi(q) * pi(n-q) for some prime q."
+    ],
+    "example": [
+        "92 = 19 + 73 with pi(19) * pi(73) = 8 * 21 = 168 = sigma(92)."
+    ],
+    "maple": [
+        "N:= 10^6: # to use primes up to N",
+        "Primes:= select(isprime, [2,seq(i,i=3..N,2)]):",
+        "filter:= proc(n) local s,i,j;",
+        "  s:= numtheory:-sigma(n);",
+        "  for i in select(`>=`,numtheory:-divisors(s), ceil(sqrt(s))) minus {s} do",
+        "     if i > nops(Primes) then return FAIL",
+        "     elif Primes[i] + Primes[s/i] = n then return true fi",
+        "  od:",
+        "  false",
+        "end proc:",
+        "A:= NULL:",
+        "for n from 2 by 2 do",
+        "  v:= filter(n);",
+        "  if v = FAIL then break",
+        "  elif v then A:= A, n",
+        "  fi",
+        "od:",
+        "A; # _Robert Israel_, Jun 30 2016"
+    ],
+    "mathematica": [
+        "Select[Range[10^3], Function[n, Length@ Select[Transpose@ {#, n - #} &@ Range[Floor[n/2]], And[Times @@ Boole@ PrimeQ@ {First@ #, Last@ #} == 1, DivisorSigma[1, First@ # + Last@ #] == PrimePi[First@ #] PrimePi[Last@ #]] &] > 0]] (* _Michael De Vlieger_, Jun 30 2016 *)"
+    ],
+    "program": [
+        "(Sage) def sol(n): return [j for j in divisors(sigma(n)) if j^2<= sigma(n) and is_prime(n-nth_prime(j)) and j * prime_pi(n-nth_prime(j))==sigma(n)]",
+        "v=[n for n in range(2,100000,2) if len(sol(n))>0]; print 'list_n =',v",
+        "w=[sigma(n) for n in v]; print 'list_sigma(n) =',w",
+        "list_pi(p)=flatten([sol(n) for n in range(2,100000,2) if len(sol(n))>0]); print 'list_pi(p) =',list_pi(p)",
+        "list_pi(q)=[w[n]/list_pi[n] for n in range(len(v))]; print 'list_pi(q) =',list_pi(q) #.",
+        "(PARI) is(n) = if(n%2==1, return(0), my(x=n-1, y=1); while(x > y, if(ispseudoprime(x) && ispseudoprime(y) && sigma(x+y)==primepi(x)*primepi(y), return(1)); x--; y++); return(0)) \\\\ _Felix Fr\u00f6hlich_, Jun 28 2016",
+        "(PARI) is(n) = my( d=divisors(sigma(n))); for(i=1,ceil(#d/2), if(prime(d[i]) + prime(d[#d + 1-i]) == n, return(1))); return(0) \\\\ _David A. Corneth_, Jun 30 2016"
+    ],
+    "xref": [
+        "Cf. A000203, A000720, A272860, A272862."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Giuseppe Coppoletta_, Jun 20 2016",
+    "references": 2,
+    "revision": 69,
+    "time": "2016-08-11T05:46:23-04:00",
+    "created": "2016-08-11T05:46:23-04:00"
+}

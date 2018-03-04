@@ -1,0 +1,25 @@
+{
+    "number": 102321,
+    "data": "1,1,4,33,436,8122,197920,6007205,219413116,9402081718,463548752912,25893783163498,1618536618626888,112053082721454708,8518619080226661504,705977323976245345133,63382036275445226941548",
+    "name": "Column 0 of triangular matrix A102320, which satisfies T(n,k) = [T^2](n-1,k) when n>k>=0, with T(n,n) = (2*n+1).",
+    "formula": [
+        "G.f.: 1 = Sum_{n>=0} a(n)*x^n*prod_{k=0, n} (1-(2k+1)*x) for n>0 with a(0)=1."
+    ],
+    "example": [
+        "G.f.: 1 = (1-x) + 1*x*(1-x)(1-3x) + 4*x^2*(1-x)(1-3x)(1-5x) + ... + a(n)*x^n*(1-x)(1-3x)(1-5x)*..*(1-(2n+1)*x) + ..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=Mat(1),B); for(m=2,n+1,B=matrix(m,m);for(i=1,m, for(j=1,i, if(j==i,B[i,j]=2*j-1,if(j==1,B[i,j]=(A^2)[i-1,1], B[i,j]=(A^2)[i-1,j]));));A=B);return(A[n+1,1])}",
+        "(PARI) {a(n)=if(n==0,1,polcoeff(1-sum(k=0,n-1,a(k)*x^k*prod(j=0,k,1-(2*j+1)*x+x*O(x^n))),n))}"
+    ],
+    "xref": [
+        "Cf. A102087, A102323."
+    ],
+    "keyword": "nonn,tabl",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jan 05 2005",
+    "references": 2,
+    "revision": 5,
+    "time": "2012-03-30T18:36:44-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

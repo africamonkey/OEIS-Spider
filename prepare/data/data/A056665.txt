@@ -1,0 +1,98 @@
+{
+    "number": 56665,
+    "data": "1,3,11,70,629,7826,117655,2097684,43046889,1000010044,25937424611,743008623292,23298085122493,793714780783770,29192926025492783,1152921504875290696,48661191875666868497,2185911559749720272442,104127350297911241532859",
+    "name": "Number of equivalence classes of n-valued Post functions of 1 variable under action of complementing group C(1,n).",
+    "comment": [
+        "Diagonal of arrays defined in A054630 and A054631.",
+        "Given n colors, a(n) = number of necklaces with n beads and 1 up to n colors effectively assigned to them (super_labeled: which also generates n different monochrome necklaces). - _Wouter Meeussen_, Aug 09 2002",
+        "Number of endofunctions on a set with n objects up to cyclic permutation (rotation). E.g. For n = 3, the 11 endofunctions are 1,1,1; 1,1,2; 1,1,3; 1,2,1; 1,2,3; 1,3,1; 1,3,2; 2,1,1; 2,1,2; 2,3,1; and 3,1,2. - _Franklin T. Adams-Watters_, Jan 17 2007",
+        "Also number of pre-necklaces in Sigma(n,n) (see Ruskey and others). - _Peter Luschny_, Aug 12 2012",
+        "From _Olivier G\u00e9rard_, Aug 01 2016: (Start)",
+        "Decomposition of the endofunctions by class size.",
+        ".",
+        "n   1   2   3   4   5   6     7",
+        "-------------------------------------",
+        "1   1",
+        "2   2   1",
+        "3   3   0   8",
+        "4   4   6   0   60",
+        "5   5   0   0   0   624",
+        "6   6   15  70  0   0   7735",
+        "7   7   0   0   0   0   0     117648",
+        ".",
+        "The right diagonal gives the number of Lyndon Words or aperiodic necklaces, A075147. By multiplying each column by the corresponding size and summing, one gets A000312.",
+        "(end)"
+    ],
+    "reference": [
+        "D. E. Knuth. Generating All Tuples and Permutations. The Art of Computer Programming, Vol. 4, Fascicle 2, 7.2.1.1. Addison-Wesley, 2005."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A056665/b056665.txt\">Table of n, a(n) for n = 1..200</a>",
+        "M. A. Harrison and R. G. High, <a href=\"http://dx.doi.org/10.1016/S0021-9800(68)80008-0\">On the cycle index of a product of permutation groups</a>, J. Combin. Theory, 4 (1968), 277-299.",
+        "F. Ruskey, C. Savage, and T. M. Y. Wang, <a href=\"http://dx.doi.org/10.1016/0196-6774(92)90047-G\">Generating necklaces</a>, Journal of Algorithms, 13(3), 414 - 430, 1992.",
+        "<a href=\"/index/Gre#groups\">Index entries for sequences related to groups</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{d|n} phi(d)*n^(n/d)/n.",
+        "a(n) ~ n^(n-1). - _Vaclav Kotesovec_, Sep 11 2014",
+        "a(n) = (1/n) * Sum_{k=1..n} n^gcd(k,n). - _Joerg Arndt_, Mar 19 2017"
+    ],
+    "example": [
+        "The 11 necklaces for n=3 are (grouped by partition of 3): (RRR,GGG,BBB),(RRG,RGG, RRB,RBB, GGB,GBB), (RGB,RBG)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "a:= n-> add(phi(d)*n^(n/d), d=divisors(n))/n:",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Jun 18 2013"
+    ],
+    "mathematica": [
+        "Table[Fold[ #1+EulerPhi[ #2] n^(n/#2)&, 0, Divisors[n]]/n, {n, 7}]"
+    ],
+    "program": [
+        "(Sage)",
+        "# This algorithm counts all n-ary n-tuples (a_1,..,a_n) such that the string a_1...a_n is preprime. It is algorithm F in Knuth 7.2.1.1.",
+        "def A056665_list(n):",
+        "    C = []",
+        "    for m in (1..n):",
+        "        a = [0]*(n+1); a[0]=-1;",
+        "        j = 1; count = 0",
+        "        while(true):",
+        "            if m%j == 0 : count += 1;",
+        "            j = n",
+        "            while a[j] >= m-1 : j -= 1",
+        "            if j == 0 : break",
+        "            a[j] += 1",
+        "            for k in (j+1..n): a[k] = a[k-j]",
+        "        C.append(count)",
+        "    return C",
+        "def A056665(n) : return sum([euler_phi(d)*n^(n/d)/n for d in divisors(n)])",
+        "[A056665(n) for n in (1..18)] # _Peter Luschny_, Aug 12 2012",
+        "(PARI) a(n) = sum(k=1,n,n^gcd(k,n)) / n; \\\\ _Joerg Arndt_, Mar 19 2017"
+    ],
+    "xref": [
+        "Cf. A001323, A001324, A001372, A000312.",
+        "Diagonal of arrays defined in A054630, A054631 and A075195.",
+        "Cf. A075147 Aperiodic necklaces, a subset of this sequence.",
+        "Cf. A000169 Classes under translation mod n",
+        "Cf. A168658 Classes under complement to n+1",
+        "Cf. A130293 Classes under translation and rotation",
+        "Cf. A081721 Classes under rotation and reversal",
+        "Cf. A275549 Classes under reversal",
+        "Cf. A275550 Classes under reversal and complement",
+        "Cf. A275551 Classes under translation and reversal",
+        "Cf. A275552 Classes under translation and complement",
+        "Cf. A275553 Classes under translation, complement and reversal",
+        "Cf. A275554 Classes under translation, rotation and complement",
+        "Cf. A275555 Classes under translation, rotation and reversal",
+        "Cf. A275556 Classes under translation, rotation, complement and reversal",
+        "Cf. A275557 Classes under rotation and complement",
+        "Cf. A275558 Classes under rotation, complement and reversal"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Vladeta Jovovic_, Aug 09 2000",
+    "references": 21,
+    "revision": 29,
+    "time": "2017-03-19T06:30:13-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

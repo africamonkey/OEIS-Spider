@@ -1,0 +1,55 @@
+{
+    "number": 144115,
+    "data": "1,3,6,11,19,32,49,77,114,169,241,345,480,667,910,1237,1656,2213,2918,3840,5003,6497,8368,10751,13711,17441,22052,27806,34879,43645,54355,67535,83571,103171,126907,155766,190554,232629,283158,343969,416716,503900,607807",
+    "name": "Total number of Fibonacci parts in all partitions of n.",
+    "comment": [
+        "a(n) is also the sum of the differences between the sum of f-th largest and the sum of (f+1)-st largest elements in all partitions of n for all Fibonacci parts f. - _Omar E. Pol_, Oct 27 2012"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A144115/b144115.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{i>=2} x^Fibonacci(i)/(1 - x^Fibonacci(i)) / Product_{j>=1} (1 - x^j). - _Ilya Gutkovskiy_, Jan 24 2017"
+    ],
+    "example": [
+        "From _Omar E. Pol_, Nov 20 2011 (Start):",
+        "For n = 6 we have:",
+        "--------------------------------------",
+        ".                        Number of",
+        "Partitions            Fibonacci parts",
+        "--------------------------------------",
+        "6 .......................... 0",
+        "3 + 3 ...................... 2",
+        "4 + 2 ...................... 1",
+        "2 + 2 + 2 .................. 3",
+        "5 + 1 ...................... 2",
+        "3 + 2 + 1 .................. 3",
+        "4 + 1 + 1 .................. 2",
+        "2 + 2 + 1 + 1 .............. 4",
+        "3 + 1 + 1 + 1 .............. 4",
+        "2 + 1 + 1 + 1 + 1 .......... 5",
+        "1 + 1 + 1 + 1 + 1 + 1 ...... 6",
+        "------------------------------------",
+        "Total ..................... 32",
+        "So a(6) = 32. (End)"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; false end: l:= [0,1]: for k to 100 do b(l[1]):= true; l:= [l[2], l[1]+l[2]] od: aa:= proc(n,i) option remember; local g, h; if n=0 then [1,0] elif i=0 or n<0 then [0, 0] else g:= aa(n, i-1); h:= aa(n-i, i); [g[1]+h[1], g[2]+h[2] +`if`(b(i), h[1], 0)] fi end: a:= n-> aa(n, n)[2]: seq(a(n), n=1..60);  # _Alois P. Heinz_, Jun 24 2009"
+    ],
+    "mathematica": [
+        "Clear[b]; b[_] = False; l = {0, 1}; For[k=1, k <= 100, k++, b[l[[1]]] = True; l = {l[[2]], l[[1]] + l[[2]]}]; aa[n_, i_] := aa[n, i] = Module[{g, h}, If[n==0, {1, 0}, If[i==0 || n<0, {0, 0}, g = aa[n, i-1]; h = aa[n-i, i]; {g[[1]] + h[[1]], g[[2]] + h[[2]] + If[b[i], h[[1]], 0]}]]]; a[n_] := aa[n, n][[2]]; Table[a[n], {n, 1, 60}] (* _Jean-Fran\u00e7ois Alcover_, Jul 30 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000045, A006128, A037032, A144116, A144117, A144118."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Omar E. Pol_, Sep 11 2008",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jun 24 2009"
+    ],
+    "references": 6,
+    "revision": 25,
+    "time": "2017-01-24T20:28:48-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

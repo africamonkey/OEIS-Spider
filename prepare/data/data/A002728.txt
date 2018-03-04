@@ -1,0 +1,46 @@
+{
+    "number": 2728,
+    "id": "M3593 N1457",
+    "data": "1,4,22,190,3250,136758,17256831,7216495370,10271202313659,49856692830176512,826297617412284162618,46948445432190686211183650,9200267975562856184153936960940,6261904454889790650636380541051266410,14910331834338546882501064075429145637985605",
+    "name": "Number of n X (n+2) binary matrices.",
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A002728/b002728.txt\">Table of n, a(n) for n = 0..23</a>",
+        "A. Kerber, <a href=\"/A002727/a002727.pdf\">Experimentelle Mathematik</a>, S\u00e9minaire Lotharingien de Combinatoire. Institut de Recherche Math. Avanc\u00e9e, Universit\u00e9 Louis Pasteur, Strasbourg, Actes 19 (1988), 77-83. [Annotated scanned copy]",
+        "B. Misek, <a href=\"http://dml.cz/dmlcz/108444\">On the number of classes of strongly equivalent incidence matrices</a>, (Czech with English summary) Casopis Pest. Mat. 89 1964 211-218."
+    ],
+    "formula": [
+        "a(n) = sum {1*s_1+2*s_2+...=n, 1*t_1+2*t_2+...=n+2} (fix A[s_1, s_2, ...;t_1, t_2, ...]/(1^s_1*s_1!*2^s_2*s_2!*...*1^t_1*t_1!*2^t_2*t_2!*...)) where fix A[...] = 2^sum {i, j>=1} (gcd(i, j)*s_i*t_j). - _Sean A. Irvine_, Jul 31 2014"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, {0}, `if`(i<1, {},",
+        "      {seq(map(p-> p+j*x^i, b(n-i*j, i-1) )[], j=0..n/i)}))",
+        "    end:",
+        "a:= n-> add(add(2^add(add(igcd(i, j)* coeff(s, x, i)*",
+        "      coeff(t, x, j), j=1..degree(t)), i=1..degree(s))/",
+        "      mul(i^coeff(s, x, i)*coeff(s, x, i)!, i=1..degree(s))/",
+        "      mul(i^coeff(t, x, i)*coeff(t, x, i)!, i=1..degree(t)),",
+        "      t=b(n+2$2)), s=b(n$2)):",
+        "seq(a(n), n=0..12);  # _Alois P. Heinz_, Aug 01 2014"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n == 0, {0}, If[i<1, {}, Table[Function[{p}, p + j*x^i]@ b[n-i*j, i-1] , {j, 0, n/i}]]] // Flatten; a[n_] := Sum[Sum[2^Sum[Sum[GCD[i, j]*Coefficient[s, x, i]*Coefficient[t, x, j], {j, 1, Exponent[t, x]}], {i, 1, Exponent[s, x]}]/Product[i^Coefficient[s, x, i]*Coefficient[s, x, i]!, {i, 1, Exponent[s, x]}]/Product[i^Coefficient[t, x, i]*Coefficient[t, x, i]!, {i, 1, Exponent[t, x]}], {t, b[n+2, n+2]}], {s, b[n, n]}]; Table[a[n], {n, 0, 12}] (* _Jean-Fran\u00e7ois Alcover_, Nov 28 2014, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A002623, A002727, A006148, A002724, A002725.",
+        "A diagonal of the array A(m,n) described in A028657. - _N. J. A. Sloane_, Sep 01 2013"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Feb 04 2000"
+    ],
+    "references": 4,
+    "revision": 31,
+    "time": "2015-10-21T22:25:36-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

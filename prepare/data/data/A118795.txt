@@ -1,0 +1,34 @@
+{
+    "number": 118795,
+    "data": "0,1,4,29,329,5172,104335,2571473,74894818,2516911731,95862252417,4080739041238,192000366357981,9894168501171229,554208686184384028,33527021385789228265,2178482569432714859789,151314182463701892157460,11188187745418763137485747",
+    "name": "E.g.f.: -1 + exp(( 1 - sqrt(5 - 4*exp(x)) )/2).",
+    "comment": [
+        "Also equals the unsigned row sums of triangle A118793 (offset without leading zero)."
+    ],
+    "formula": [
+        "a(n) = (n-1)!*Sum_{k=0..n-1} abs( [x^k] (x/log(1-x-x^2))^n/(n-1-k)! ) for n>0.",
+        "a(n) = sum(k=1..n, (sum(i=0..n-k, ((i+k-1)!*C(k+2*i-1,i+k-1) *stirling2(n, i+k))))/(k-1)!). - Vladimir Kruchinin, Nov 22 2011",
+        "a(n) ~ sqrt(5) * n^(n-1) / (2^(3/2) * exp(n-1/2) * (log(5/4))^(n-1/2)). - _Vaclav Kotesovec_, Jul 14 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 4/2*x^2 + 29/6*x^3 + 329/24*x^4 + 5172/120*x^5 +..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[-1 + E^((1-Sqrt[5-4*E^x])/2), {x, 0, 20}], x] * Range[0, 20]! (* _Vaclav Kotesovec_, Jul 14 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=local(x=X+X^2*O(X^n));n!*polcoeff(-1+exp((1-sqrt(5-4*exp(x)))/2),n,X)",
+        "(PARI) /* As the unsigned row sums of A118793: */ a(n)=local(x=X+X^2*O(X^n));if(n<1,0, (n-1)!*sum(k=0,n-1,abs(polcoeff(((x/log(1-x-x^2)))^n/(n-1-k)!,k,X))))",
+        "(Maxima) a(n):=sum((sum(((i+k-1)!*binomial(k+2*i-1,i+k-1)*stirling2(n,i+k)), i,0,n-k))/(k-1)!,k,1,n); [From Vladimir Kruchinin, Nov 22 2011]"
+    ],
+    "xref": [
+        "Cf. A118793, A118794."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 30 2006",
+    "references": 2,
+    "revision": 13,
+    "time": "2015-06-13T17:40:26-04:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

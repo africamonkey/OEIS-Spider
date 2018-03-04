@@ -1,0 +1,32 @@
+{
+    "number": 277200,
+    "data": "2,6,18,30,90,210,270,450,630,2310,6750,6930,9450,15750,20250,22050,30030,47250,90090,330750,510510,727650,1212750,1531530,1653750,2668050,3543750,4961250,8489250,9699690,18191250,24806250,25467750,29099070,40020750,53156250,57881250,104053950,173423250,173643750",
+    "name": "Even terms in A260442 (in A260443).",
+    "comment": [
+        "All odd terms larger > 1 in A260442 can be obtained from these terms by shifting their prime factorization some number of steps towards larger primes with A003961."
+    ],
+    "program": [
+        "(PARI)",
+        "allocatemem(2^30);",
+        "A061395(n) =  if(1==n, 0, primepi(vecmax(factor(n)[, 1]))); \\\\ After _M. F. Hasler_'s code for A006530.",
+        "A048675(n) = my(f = factor(n)); sum(k=1, #f~, f[k, 2]*2^primepi(f[k, 1]))/2; \\\\ _Michel Marcus_, Oct 10 2016",
+        "A003961(n) = my(f = factor(n)); for (i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); \\\\ From _Michel Marcus_",
+        "A260443(n) = if(n<2, n+1, if(n%2, A260443(n\\2)*A260443(n\\2+1), A003961(A260443(n\\2))));",
+        "isA277200(n) = (!(n%2) && (omega(n) == A061395(n)) && (A260443(A048675(n)) == n));",
+        "i=1; n=0; while(i < 100, n++; if(isA277200(n), write(\"b277200.txt\", i, \" \", n); i++));"
+    ],
+    "xref": [
+        "Cf. A003961, A260442, A260443.",
+        "Sequence A277324 sorted into ascending order.",
+        "Subsequence of A055932.",
+        "Cf. A002110, A277317 (subsequences, apart from their initial terms).",
+        "Also all terms of A277318 apart from initial 3 are included in this sequence."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Oct 14 2016",
+    "references": 5,
+    "revision": 18,
+    "time": "2016-10-26T15:12:11-04:00",
+    "created": "2016-10-26T15:12:11-04:00"
+}

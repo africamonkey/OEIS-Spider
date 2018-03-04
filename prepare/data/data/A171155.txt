@@ -1,0 +1,60 @@
+{
+    "number": 171155,
+    "data": "1,1,3,9,27,83,259,817,2599,8323,26797,86659,281287,915907,2990383,9786369,32092959,105435607,346950321,1143342603,3772698725,12463525229,41218894577,136451431723,452116980643,1499282161375,4975631425581,16524213199923,54913514061867",
+    "name": "For two strings of length n, this is the number of pairwise alignments that do not have an insertion adjacent to a deletion.",
+    "comment": [
+        "This is the number of walks from (0,0) to (n,n) where unit horizontal (+1,0), vertical (0,+1), and diagonal (+1,+1) steps are permitted but a horizontal step cannot be followed by a vertical step, nor vice versa.",
+        "a(n) is also the number of walks from (0,0) to (n,n) with steps that increment one or two coordinates and having the property that no two consecutive steps are orthogonal. - _Lee A. Newberg_, Dec 04 2009",
+        "a(n) is also the number of standard sequence alignments of two strings of length n, counting only those alignments with the property that, for every pair of consecutive alignment columns, there is at least one sequence that contributes a non-gap to both columns. That is, a(n) counts only those standard alignments with a column order that can be unambiguously reconstructed from the knowledge of all pairings, where a pairing is, e.g., that some i-th position of the first string is in the same column as some j-th position of the second string. - _Lee A. Newberg_, Dec 11 2009",
+        "First differences of A108626: a(n) = A108626(n) - A108626(n-1) for n>=1. - _Thomas Baruchel_, Nov 08 2014",
+        "The number of walls of height one in all bargraphs of semiperimeter n>=2. A wall is a maximal sequence of adjacent up steps. - _Arnold Knopfmacher_, Nov 04 2016",
+        "Main diagonal of Table 2 in Covington. - _Peter Bala_, Jan 27 2018"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A171155/b171155.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "A. Blecher, C. Brennan and A. Knopfmacher, <a href=\"https://web.math.rochester.edu/misc/ojac/vol12/134.pdf\">Walls in bargraphs</a>, preprint.",
+        "M. A. Covington, <a href=\"https://doi.org/10.1080/0929617042000314921\">The Number of Distinct Alignments of Two Strings</a>, Journal of Quantitative Linguistics, Vol.11 (2004), Issue3, pp. 173-182"
+    ],
+    "formula": [
+        "a(n) = ((4*n-3)*a(n-1)-(2*n-5)*a(n-2)+a(n-3)-(n-3)*a(n-4))/n. - _Alois P. Heinz_, Jan 22 2013",
+        "G.f.: sqrt((1-x)/(1-3*x-x^2-x^3)). - _Mark van Hoeij_, May 10 2013",
+        "G.f.: Sum_{n>=0} (2*n)!/n!^2 * x^(2*n) / (1-2*x)^(3*n+1). - _Paul D. Hanna_, Sep 21 2013",
+        "G.f.: Sum_{n>=0} x^n/(1-x)^n * Sum_{k=0..n} C(n,k)^2 * x^k. - _Paul D. Hanna_, Nov 08 2014"
+    ],
+    "example": [
+        "For n = 3, the 9 alignments are:",
+        "ABC A-BC ABC- -ABC -ABC --ABC ABC- AB-C ABC--",
+        "DEF DEF- D-EF DEF- DE-F DEF-- -DEF -DEF --DEF"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<4, [1, 1, 3, 9][n+1],",
+        "      ((4*n-3)*a(n-1) -(2*n-5)*a(n-2) +a(n-3) -(n-3)*a(n-4))/n)",
+        "    end:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Jan 22 2013"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Sqrt[(1 - x) / (1 - 3 x - x^2 - x^3)], {x, 0, 40}], x] (* _Vincenzo Librandi_, Nov 09 2014 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^66); Vec(sqrt((1-x)/(1-3*x-x^2-x^3))) \\\\ _Joerg Arndt_, May 11 2013",
+        "(PARI) {a(n)=polcoeff(sum(m=0, n, (2*m)!/m!^2 * x^(2*m) / (1-x+x*O(x^n))^(3*m+1)), n)} \\\\ _Paul D. Hanna_, Sep 21 2013",
+        "(PARI) {a(n)=polcoeff( sum(m=0,n, x^m * sum(k=0,m, binomial(m,k)^2 * x^k) / (1-x +x*O(x^n))^m) ,n)}",
+        "for(n=0,30,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Nov 08 2014",
+        "(PARI) a(n)=sum(k=0, n, sum(i=0, k, binomial(n-k, i)^2*binomial(n-i, k-i)))-sum(k=0, n-1, sum(i=0, k, binomial(n-k-1, i)^2*binomial(n-i-1, k-i))) \\\\ _Thomas Baruchel_, Nov 09 2014"
+    ],
+    "xref": [
+        "See A171158 for the number of such walks in three dimensions. - _Lee A. Newberg_, Dec 04 2009",
+        "See A171563 for the number of such walks in four dimensions. - _Lee A. Newberg_, Dec 11 2009",
+        "Cf. A108626."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Lee A. Newberg_, Dec 04 2009",
+    "ext": [
+        "Extended beyond a(19) by _Alois P. Heinz_, Jan 22 2013"
+    ],
+    "references": 6,
+    "revision": 46,
+    "time": "2018-01-29T12:11:02-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

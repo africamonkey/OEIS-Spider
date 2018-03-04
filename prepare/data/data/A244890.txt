@@ -1,0 +1,42 @@
+{
+    "number": 244890,
+    "data": "0,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100,101,102,103,104,105,106,107,108,109,110,120,130,140,150,160,170,180,190,200,201,300,301,400,401,500,501,600,601,700,701,800,801,900,901,1000,1001,1002,1003,1004,1005,1006,1007,1008,1009",
+    "name": "\"Stringed numbers\": see Comments for definition.",
+    "comment": [
+        "Supoose n is the k-digit number d_1 d_2 ... d_k. Form a graph with k nodes labeled 1, 2, ..., k. Join node i to node j by a directed edge whenever |j-i| = 1 + d_i. Then n is a stringed number iff the graph has a Hamiltonian path.",
+        "Single-digit numbers are trivially stringed."
+    ],
+    "reference": [
+        "Eric Angelini, Posting to Sequence Fans Mailing List, Jul 10 2014; with additional comments from Robert Israel."
+    ],
+    "link": [
+        "Lars Blomberg, <a href=\"/A244890/b244890.txt\">Table of n, a(n) for n = 1..10001</a>"
+    ],
+    "example": [
+        "If n = 2014 the graph has nodes 1,2,3,4 with edges 1->4 (since 4-1=d_1+1=3), 2->1 (since 2-1=d_2+1=1), 2->3 (since 3-2=d_2+1=1), 3->1 (since 3-1=d_3+1=2) , and there is a Hamiltonian path 2->3->1->4, so 2014 is stringed."
+    ],
+    "maple": [
+        "Maple program from _Robert Israel_, Jul 10 2014:",
+        "Stringed:= proc(n)",
+        "uses GraphTheory;",
+        "local L,G,E,d;",
+        "L:= convert(n,base,10);",
+        "d:= nops(L);",
+        "E:= select(e -> e[2] <= d and e[2] >= 1,   {seq(seq([i,i+s*(1+L[i])],s=[1,-1]),i=1..d)})",
+        "  union {seq([0,i],i=1..d)} union {seq([i,0],i=1..d)};;",
+        "G:= Digraph([$0..d],E);",
+        "IsHamiltonian(G);",
+        "end proc;",
+        "select(Stringed, {$0..2020});"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, Jul 13 2014",
+    "ext": [
+        "Corrected and extended by _Robert Israel_, Jul 10 2014"
+    ],
+    "references": 1,
+    "revision": 14,
+    "time": "2014-07-15T20:50:43-04:00",
+    "created": "2014-07-13T13:54:52-04:00"
+}

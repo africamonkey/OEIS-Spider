@@ -1,0 +1,38 @@
+{
+    "number": 199219,
+    "data": "23,41,47,61,67,71,73,97,101,107,127,131,137,139,149,163,167,179,181,197,199,223,229,239,241,251,257,263,271,283,293,313,317,331,353,373,383,397,433,439,443,449,463,467,479,503,509",
+    "name": "Primes p, in the successive intervals (2^i +1 .. 2^(i+1) -1) such that  p XOR 2^i -2 is composite for i=1,2,3...",
+    "comment": [
+        "The successive intervals (2^i +1 .. 2^(i+1) -1) are also (A000051(i)..A000225(i)). The value 2^i -2 XORed with the primes p in each interval is A000918(i). for i=1,2,3...",
+        "This is set of primes not in either A199217 or A199218.",
+        "The program provided produces output with primes in the successive intervals delimited by ****. For each interval, primes in the left half of interval are read from the top down, the right half of the interval primes from the bottom up."
+    ],
+    "program": [
+        "(MAGMA)",
+        "XOR := func<a, b | Seqint([ (adigs[i] + bdigs[i]) mod 2 : i in [1..n]], 2)",
+        "                       where adigs := Intseq(a, 2, n)",
+        "                       where bdigs := Intseq(b, 2, n)",
+        "                       where n := 1 + Ilog2(Max([a, b, 1]))>;",
+        "for i in [2 .. 12] do",
+        "     xornum:=2^(i)-2;",
+        "     for j := 2^(i) +1 to 3*2^(i-1) by 2 do",
+        "           xorcouple:=XOR(j,xornum);",
+        "        if (IsPrime(j) and not(IsPrime(xorcouple))) then j;",
+        "           end if;",
+        "        if (not(IsPrime(j)) and IsPrime(xorcouple)) then \"  \",xorcouple;",
+        "           end if;",
+        "     end for;",
+        "     \"****\";",
+        "end for;"
+    ],
+    "xref": [
+        "Cf. A000051, A000225, A000918, A199217, A199218"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Brad Clardy_, Nov 04 2011",
+    "references": 0,
+    "revision": 10,
+    "time": "2012-03-31T10:25:29-04:00",
+    "created": "2011-11-05T15:04:15-04:00"
+}

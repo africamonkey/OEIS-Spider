@@ -1,0 +1,44 @@
+{
+    "number": 268337,
+    "data": "0,1,30,31,756,3250,3276,3280,81255,81256,81280,81900,81901,82000,59078250,59078251,59078280,59078281,31789468750,31789468776,31789469505,31789469506,31789471900,31789471905,31789471906,31789472005,946095722031,946095800025,946095800026,946095800031,946095800130",
+    "name": "Numbers which have only digits 0 and 1 in bases 3 and 5.",
+    "comment": [
+        "The number 82000 is famous for having only digits 0 and 1 in all bases <= 5, no other such number > 1 is known. See also A146025 and A258981.",
+        "If explicit formulas for (convenient) infinite subsequences of this one can be found, this could open new ways to progress on this problem.",
+        "The terms come in groups having roughly the first half (or at least third) of digits in common, see the link \"Terms in base 10, 5 and 3\"."
+    ],
+    "link": [
+        "Ray Chandler, <a href=\"/A268337/b268337.txt\">Table of n, a(n) for n = 1..10000</a> (first 84 terms from M. F. Hasler, next 31 terms from Charles R Greathouse IV)",
+        "M. F. Hasler, <a href=\"/A268337/a268337.pdf\">Terms in base 10, 5 and 3.</a>"
+    ],
+    "formula": [
+        "a(n) >> n^k with k = log 5/log 2 = 2.321928.... - _Charles R Greathouse IV_, Feb 02 2016"
+    ],
+    "maple": [
+        "d:= 20: # to get all terms < 5^d",
+        "res:= NULL:",
+        "T:= combinat:-cartprod([[$0..1]$d]):",
+        "while not T[finished] do",
+        "  r:= T[nextvalue]();",
+        "  v:= add(r[i]*5^(d-i),i=1..d);",
+        "  if max(convert(v,base,3)) <= 1 then",
+        "    res:= res,v",
+        "  fi",
+        "od:",
+        "res; # _Robert Israel_, Feb 01 2016"
+    ],
+    "program": [
+        "(PARI) print1(0);for(n=1,1e10,vecmax(digits(t=subst(Pol(binary(n)),'x,5),3))<2&&print1(\",\"t))",
+        "(PARI) list(lim)=my(v=List([0]),d=digits(lim\\1,5),t); for(i=1,#d, if(d[i]>1, for(j=i,#d, d[j]=1); break)); for(n=1,fromdigits(d,5), t=fromdigits(binary(n),5); if(vecmax(digits(t,3))<2, listput(v,t))); Vec(v) \\\\ _Charles R Greathouse IV_, Feb 02 2016"
+    ],
+    "xref": [
+        "Cf. A005836, A033042."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_M. F. Hasler_, Feb 01 2016",
+    "references": 1,
+    "revision": 25,
+    "time": "2017-11-21T15:18:37-05:00",
+    "created": "2016-02-02T14:46:39-05:00"
+}

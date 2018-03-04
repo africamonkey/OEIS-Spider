@@ -1,0 +1,47 @@
+{
+    "number": 232472,
+    "data": "2,10,62,466,4142,42610,498542,6541426,95160302,1520385010,26468935022,498766780786,10114484622062,219641848007410,5085371491003502,125055112347154546,3255163896227709422,89416052656071565810,2584886208925055791982,78447137202259689678706,2493719594804686310662382",
+    "name": "2-Fubini numbers.",
+    "link": [
+        "Andrei Z. Broder, <a href=\"http://dx.doi.org/10.1016/0012-365X(84)90161-4\">The r-Stirling numbers</a>, Discrete Math. 49, 241-259 (1984).",
+        "I. Mezo, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL17/Mezo/mezo19.html\">Periodicity of the last digits of some combinatorial sequences</a>, J. Integer Seq. 17, Article 14.1.1 (2014)."
+    ],
+    "formula": [
+        "Let A(x) be the g.f. A232472, B(x) the g.f. A000670, then A(x) = (1-x)*B(x) - 1. - _Sergei N. Gladkovskii_, Nov 29 2013",
+        "a(n) = Sum_{k>=2} T_k*k^(n-2)/2^k where T_k is the (k-1)-st triangular number (i.e., T_k = k*(k-1)/2). - _Derek Orr_, Jan 01 2016",
+        "a(n) = 2*A069321(n+1). - _Vincenzo Librandi_, Jan 03 2016"
+    ],
+    "example": [
+        "G.f.: 2*x^2 + 10*x^3 + 62*x^4 + 466*x^5 + 4142*x^6 + 42610*x^7 + 498542*x^8 + ..."
+    ],
+    "maple": [
+        "# r-Stirling numbers of second kind (e.g., A008277, A143494, A143495):",
+        "T := (n,k,r) -> (1/(k-r)!)*add ((-1)^(k+i+r)*binomial(k-r,i)*(i+r)^(n-r),i = 0..k-r):",
+        "# r-Bell numbers (e.g. A000110, A005493, A005494):",
+        "B := (n,r) -> add(T(n,k,r),k=r..n);",
+        "SB := r -> [seq(B(n,r),n=r..30)];",
+        "SB(2);",
+        "# r-Fubini numbers (e.g., A000670, A232472, A232473, A232474):",
+        "F := (n,r) -> add((k)!*T(n,k,r),k=r..n);",
+        "SF := r -> [seq(F(n,r),n=r..30)];",
+        "SF(2);"
+    ],
+    "mathematica": [
+        "Rest[max=20; t=Sum[n^(n - 1) x^n / n!, {n, 1, max}]; 2 Range[0, max]!CoefficientList[Series[D[1 / (1 - y (Exp[x] - 1)), y] /.y->1, {x, 0, max}], x]] (* _Vincenzo Librandi_ Jan 03 2016 *)",
+        "Fubini[n_, r_] := Sum[k!*Sum[(-1)^(i+k+r)*(i+r)^(n-r)/(i!*(k-i-r)!), {i, 0, k-r}], {k, r, n}]; Table[Fubini[n, 2], {n, 2, 22}] (* _Jean-Fran\u00e7ois Alcover_, Mar 30 2016 *)"
+    ],
+    "program": [
+        "(MAGMA) r:=2; r_Fubini:=func<n,r | &+[Factorial(k)*&+[(-1)^(k+h+r)*(h+r)^(n-r)/(Factorial(h)*Factorial(k-h-r)): h in [0..k-r]]: k in [r..n]]>;",
+        "[r_Fubini(n, r): n in [r..22]]; // _Bruno Berselli_, Mar 30 2016"
+    ],
+    "xref": [
+        "Cf. A000110, A000670, A005493, A005494, A008277, A143494, A143495, A232472, A232473, A232474."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_N. J. A. Sloane_, Nov 27 2013",
+    "references": 7,
+    "revision": 46,
+    "time": "2016-03-30T11:26:56-04:00",
+    "created": "2013-11-27T19:26:20-05:00"
+}

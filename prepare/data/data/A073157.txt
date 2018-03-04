@@ -1,0 +1,36 @@
+{
+    "number": 73157,
+    "data": "1,2,5,18,70,293,1283,5808,26960,127628,613814,2990681,14730713,73229291,366936231,1851352820,9397497758,47957377934,245903408244,1266266092112,6545667052320,33954266444498,176689391245146",
+    "name": "Leftmost column of triangle A073154.",
+    "comment": [
+        "Number of Schroeder n-paths containing no FFs. A Schroeder n-path (A006318) consists of steps U=(1,1),F=(2,0),D=(1,-1) starting at (0,0), ending at (2n,0), and never going below the x-axis. Example: a(2)=5 counts UFD, UUDD, UDF, FUD, UDUD. - _David Callan_, Aug 23 2011"
+    ],
+    "formula": [
+        "A073155(n+1) = Sum_{k=0..n} a(k)*a(n-k), that is, convolution yields sequence A073155 minus the 0th term.",
+        "G.f.: A(x) = (1 - sqrt(1 - 4*x*(1+x)^2))/(2*x*(1+x)) satisfies A(x) = (1+x)*(1 + x*A(x)^2);",
+        "G.f.: A(x) = (1+x)*C(x*(1+x)^2) where C(x) is the Catalan g.f. of A000108. - _Paul D. Hanna_, Mar 03 2008",
+        "a(n) = Sum_{j=0..n}((Sum_{k=0..j}((binomial(2*k+2,j-k)*C(k))))*(-1)^(n-j)), where C(k) = A000108(k). - _Vladimir Kruchinin_, Mar 13 2016"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 5*x^2 + 18*x^3 + 70*x^4 + 293*x^5 + 1283*x^6 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1); for(i=0,n-1,A=(1+x)*(1+x*(A+x*O(x^n))^2));polcoeff(A,n)} /* _Paul D. Hanna_, Mar 03 2008 */",
+        "(Maxima)",
+        "a(n):=sum((sum((binomial(2*k+2,j-k)*binomial(2*k,k)/(k+1)),k,0,j))*(-1)^(n-j),j,0,n); /* _Vladimir Kruchinin_, Mar 13 2016 */"
+    ],
+    "xref": [
+        "Cf. A073154, A073155, A073156, A073153.",
+        "Cf. A000108."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jul 29 2002",
+    "ext": [
+        "More terms from _Paul D. Hanna_, Mar 03 2008"
+    ],
+    "references": 9,
+    "revision": 25,
+    "time": "2016-03-13T11:34:04-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

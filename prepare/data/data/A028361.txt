@@ -1,0 +1,54 @@
+{
+    "number": 28361,
+    "data": "1,2,6,30,270,4590,151470,9845550,1270075950,326409519150,167448083323950,171634285407048750,351678650799042888750,1440827432323678715208750,11804699153027899713705288750,193419995622362136809061156168750",
+    "name": "Number of totally isotropic spaces of index n in orthogonal geometry of dimension 2n.",
+    "comment": [
+        "These numbers appear in first column of A155103. - _Mats Granvik_, Jan 20 2009",
+        "Equals row sums of unsigned triangle A158474. - _Gary W. Adamson_, Mar 20 2009",
+        "a(n) = (n+2) terms in the sequence (1, 1, 2, 4, 8, 16,...) dot (n+2) terms in the sequence (1, 1, 2, 6, 30, 270,...). Example: a(4) = 4590 = (1, 2, 4, 8, 16) dot (1, 1, 2, 6, 30, 270) = (1 + 1 + 4 + 24 + 240 + 4320). - _Gary W. Adamson_, Aug 02 2010",
+        "a(n) is the right-hand side of the mass formula used to classify Type II Self Dual Binary Linear Codes of length 2(n+1). a(n) is the number of distinct Type II Self Dual Binary Linear codes of length 2(n+1) when 2(n+1) = 0 MOD 8.  It is important to note that Type II codes are only possible when the length is a multiple of 8. In short, this sequence only applies to Type II codes when 2(n+1) = 0 MOD 8, else the right hand side of the mass formula is zero. - _Nathan J. Russell_, Mar 04 2016"
+    ],
+    "reference": [
+        "W. Cary Huffman and Vera Pless, Fundamentals of Error Correcting Codes, Cambridge University Press, 2003, Page 366. - _Nathan J. Russell_, Mar 04 2016"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A028361/b028361.txt\">Table of n, a(n) for n=0..50</a>",
+        "C. Bachoc and P. Gaborit, <a href=\"http://www.numdam.org/item?id=JTNB_2000__12_2_255_0\">On extremal additive F_4 codes of length 10 to 18</a>, J. Th\u00e9orie Nombres Bordeaux, 12 (2000), 255-271."
+    ],
+    "formula": [
+        "a(n) = Product( 2^i+1, i=0..n-1) (n>0).",
+        "Asymptotic to C*2^(n*(n-1)/2) where C = A081845 = 4.76846205806274344829979857... = prod(k>=0, 1+1/2^k). - _Benoit Cloitre_, Apr 09 2003",
+        "It appears that a(n) = 2^((1/2)*(n - 1)*n) * prod(1 + 1/(2^k), k >= 0) / prod(1 + 1/(2^(n + k)), k >= 0). - Peter Moxey (pmoxey(AT)live.com), Mar 21 2010",
+        "G.f.: Sum_{n>=0} 2^(n*(n-1)/2) * x^n / Product_{k=0..n} (1 - 2^k*x). - _Paul D. Hanna_, May 02 2012",
+        "a(n) = (a(n-2)^3 + a(n-1) * a(n-3) * (a(n-1) - 2 * a(n-2))) * a(n-1) / (a(n-2)^2 * (a(n-2) - a(n-3))) if n>2. - _Michael Somos_, Aug 21 2012",
+        "0 = a(n)*(+a(n+1) + a(n+2)) + a(n+1)*(-2*a(n+1)) for all n>=0. - _Michael Somos_, Oct 10 2014",
+        "Sum_{k=0..n} 2^k/a(k) = 3-2/a(n) and Sum_{k=0..n} 4^k/a(k) = 9-(4*(1+2^n))/a(n) for n >= 0. - _Werner Schulte_, Dec 25 2016"
+    ],
+    "mathematica": [
+        "Table[QPochhammer[-1, 2, n], {n, 0, 15}] (* _Arkadiusz Wesolowski_, Oct 29 2012 *)",
+        "Table[Product[2^i + 1, {i, 0, n/2 - 2}], {n, 2, 32, 2}] - _Nathan J. Russell_, Mar 04 2016",
+        "Table[Product[2^i + 1, {i, 0, n - 1}], {n, 0, 15}] - _Nathan J. Russell_, Mar 04 2016",
+        "FoldList[Times,1,2^Range[0,20]+1] (* _Harvey P. Dale_, Apr 11 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = prod(k=0, n-1, 2^k + 1)};",
+        "(PARI) {a(n)=polcoeff(sum(m=0,n,2^(m*(m-1)/2)*x^m/prod(k=0,m,1-2^k*x+x*O(x^n))),n)} /* _Paul D. Hanna_, May 02 2012 */",
+        "(PYTHON)",
+        "for n in range(2,50,2):",
+        "  product = 1",
+        "  for i in range(0,n/2-2 + 1):",
+        "    product *= (2**i+1)",
+        "  print product",
+        "# _Nathan J. Russell_, Mar 01 2016"
+    ],
+    "xref": [
+        "Cf. A028362, A155103, A158474."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 15,
+    "revision": 67,
+    "time": "2016-12-25T21:26:16-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

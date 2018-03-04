@@ -1,0 +1,49 @@
+{
+    "number": 193427,
+    "data": "1,8,52,272,1266,5344,20992,77584,272727,917936,2975492,9328736,28391410,84122688,243265848,688008048,1906476351,5184024112,13851270944,36409640400,94255399886,240529147072,605574003464,1505340071744",
+    "name": "G.f.: Product_{k>=1} 1/(1-x^k)^(8*k).",
+    "comment": [
+        "Previous name was: Number of plane partitions of n into parts of 8 kinds.",
+        "In general, if g.f. = Product_{k>=1} 1/(1-x^k)^(m*k) and m > 0, then a(n) ~ 2^(m/36 - 1/3) * exp(m/12 + 3 * 2^(-2/3) * m^(1/3) * Zeta(3)^(1/3) * n^(2/3)) * (m*Zeta(3))^(m/36 + 1/6) / (A^m * sqrt(3*Pi) * n^(m/36 + 2/3)), where A = A074962 = 1.2824271291... is the Glaisher-Kinkelin constant. - _Vaclav Kotesovec_, Mar 01 2015"
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A193427/b193427.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Vaclav Kotesovec, <a href=\"http://arxiv.org/abs/1509.08708\">A method of finding the asymptotics of q-series based on the convolution of generating functions</a>, arXiv:1509.08708 [math.CO], Sep 30 2015, p. 19."
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} (1-x^k)^(-8*k).",
+        "a(n) ~ 2^(19/18) * Zeta(3)^(7/18) * exp(2/3 + 3 * 2^(1/3) * Zeta(3)^(1/3) * n^(2/3)) / (A^8 * sqrt(3*Pi) * n^(8/9)), where A = A074962 = 1.2824271291... is the Glaisher-Kinkelin constant and Zeta(3) = A002117 = 1.202056903... . - _Vaclav Kotesovec_, Feb 28 2015"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, 8*add(",
+        "      a(n-j)*numtheory[sigma][2](j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Mar 11 2015"
+    ],
+    "mathematica": [
+        "ANS = Block[{kmax = 50},",
+        "  Coefficient[",
+        "   Series[Product[1/(1 - x^k)^(8 k), {k, 1, kmax}], {x, 0, kmax}], x,",
+        "   Range[0, kmax]]]",
+        "(* Second program: *)",
+        "a[n_] := a[n] = If[n==0, 1, 8*Sum[a[n-j]*DivisorSigma[2, j], {j, 1, n}]/n]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Feb 07 2017, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) Vec(prod(k=1,100\\2,(1-x^k)^(-8*k),1+O(x^101))) \\\\ _Charles R Greathouse IV_, Aug 09 2011"
+    ],
+    "xref": [
+        "Cf. A000219 (m=1), A161870 (m=2), A255610 (m=3), A255611 (m=4), A255612 (m=5), A255613 (m=6), A255614 (m=7).",
+        "Cf. A023007, A023003, A000712.",
+        "Column k=8 of A255961."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Martin Y. Veillette_, Jul 28 2011",
+    "ext": [
+        "New name from _Vaclav Kotesovec_, Mar 12 2015"
+    ],
+    "references": 9,
+    "revision": 34,
+    "time": "2018-01-08T01:36:25-05:00",
+    "created": "2011-08-10T12:55:34-04:00"
+}

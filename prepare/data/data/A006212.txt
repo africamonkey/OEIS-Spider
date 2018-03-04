@@ -1,0 +1,50 @@
+{
+    "number": 6212,
+    "id": "M3485",
+    "data": "0,1,4,14,56,256,1324,7664,49136,345856,2652244,22014464,196658216,1881389056,19192151164,207961585664,2385488163296,28879019769856,367966308562084,4922409168011264,68978503204900376,1010472388453728256,15445185289163949004",
+    "name": "Number of down-up permutations of n+3 starting with n+1.",
+    "comment": [
+        "Entringer numbers."
+    ],
+    "reference": [
+        "B. Bauslaugh and F. Ruskey, Generating alternating permutations lexicographically, Nordisk Tidskr. Informationsbehandling (BIT) 30 16-26 1990.",
+        "R. C. Entringer, A combinatorial interpretation of the Euler and Bernoulli numbers, Nieuw Archief voor Wiskunde, 14 (1966), 241-246.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A006212/b006212.txt\">Table of n, a(n) for n = 0..483</a>",
+        "J. Millar, N. J. A. Sloane and N. E. Young, A new operation on sequences: the Boustrophedon on transform, J. Combin. Theory, 17A 44-54 1996 (<a href=\"http://neilsloane.com/doc/bous.txt\">Abstract</a>, <a href=\"http://neilsloane.com/doc/bous.pdf\">pdf</a>, <a href=\"http://neilsloane.com/doc/bous.ps\">ps</a>).",
+        "C. Poupard, <a href=\"http://dx.doi.org/10.1016/0012-365X(82)90293-X\">De nouvelles significations \u00e9numeratives des nombres d'Entringer</a>, Discrete Math., 38 (1982), 265-271."
+    ],
+    "formula": [
+        "a(n) = sum((-1)^i*binomial(n, 2i+1)*E[n+1-2i], i=0..1+floor((n+1)/2)), where E[j]=A000111(j)=j!*[x^j]((sec(x)+tan(x)) are the up/down or Euler numbers. a(n)=T(n+2, n), where T is the triangle in A008282. - _Emeric Deutsch_, May 15 2004",
+        "a(n) = E[n+2] - E[n] where E[n] = A000111(n). - _Gerald McGarvey_, Oct 09 2006",
+        "E.g.f.: (sec(x)+tan(x))^2/cos(x) - (sec(x)+tan(x)). - _Sergei N. Gladkovskii_, Jun 29 2015"
+    ],
+    "example": [
+        "a(2)=4 because we have 31425, 31524, 32415 and 32514."
+    ],
+    "maple": [
+        "f:=sec(x)+tan(x): fser:=series(f,x=0,30): E[0]:=1: for n from 1 to 25 do E[n]:=n!*coeff(fser,x^n) od: a:=n->sum((-1)^i*binomial(n,2*i+1)*E[n+1-2*i],i=0..1+floor((n+1)/2)): seq(a(n),n=0..18);",
+        "# Alternatively after _Alois P. Heinz_ in A000111:",
+        "b := proc(u, o) option remember;",
+        "`if`(u + o = 0, 1, add(b(o - 1 + j, u - j), j = 1..u)) end:",
+        "a := n -> b(n, 2): seq(a(n), n = 0..21); # _Peter Luschny_, Oct 27 2017"
+    ],
+    "mathematica": [
+        "t[n_, 0] := If[n == 0, 1, 0]; t[n_ , k_ ] := t[n, k] = t[n, k - 1] + t[n - 1, n - k]; a[n_] := t[n + 2, n]; Array[a, 30, 0] (* _Jean-Fran\u00e7ois Alcover_, Feb 12 2016 *)"
+    ],
+    "xref": [
+        "Cf. A000111, A008282."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Emeric Deutsch_, May 24 2004"
+    ],
+    "references": 2,
+    "revision": 28,
+    "time": "2017-10-27T10:13:24-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

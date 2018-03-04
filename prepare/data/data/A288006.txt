@@ -1,0 +1,38 @@
+{
+    "number": 288006,
+    "data": "1,1,1,2,2,4,6,10,15,27,43,75,124,216,364,634,1081,1879,3229,5609,9680,16809,29077,50482,87452,151811,263201,456871,792468,1375530,2386580,4142425,7188332,12476743,21652780,37582311,65225643,113210394,196487131,341036576",
+    "name": "Number of distinct fountains of n coins.",
+    "comment": [
+        "We regard fountains as equivalent if one can be transformed into another by symmetries."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A288006/b288006.txt\">Table of n, a(n) for n = 0..4179</a>"
+    ],
+    "formula": [
+        "a(n) = (A005169(n) + A288005(n)) / 2."
+    ],
+    "maple": [
+        "g:= proc(n, i) option remember; `if`(n=0, 1,",
+        "      add(g(n-j, j), j=1..min(i+1, n)))",
+        "    end:",
+        "b:= proc(n, i, p) option remember; `if`(n<0, 0, `if`(n=0,",
+        "      `if`(p<0 and i=1, 1, 0), `if`(n=i or n=i+p, 1, 0)+",
+        "      `if`(i<1 and p=1, 0, b(n-2*i, i, -p))+b(n-2*(i+p), i+p, -p)))",
+        "    end:",
+        "a:= n-> (g(n, 0)+`if`(n=0, 1, b(n, 0, 1)))/2:",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Sep 02 2017"
+    ],
+    "xref": [
+        "Cf. A005169, A288005."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Seiichi Manyama_, Sep 01 2017",
+    "ext": [
+        "a(33)-a(39) from _Alois P. Heinz_, Sep 02 2017"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2017-09-03T15:04:45-04:00",
+    "created": "2017-09-01T22:47:11-04:00"
+}

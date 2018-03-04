@@ -1,0 +1,72 @@
+{
+    "number": 266987,
+    "data": "2,5,13,17,19,29,37,41,53,61,73,89,97,101,109,113,137,149,157,173,181,193,197,229,233,241,257,269,277,281,293,307,313,317,337,349,353,373,389,397,401,409,421,433,449",
+    "name": "Primes p for which the average of the primitive roots equals p/2.",
+    "comment": [
+        "From _Robert Israel_, Feb 01 2016: (Start)",
+        "Union of A002144 and A267010.",
+        "Contains A002144 because for each of these primes, x is a primitive root iff p-x is a primitive root. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A266987/b266987.txt\">Table of n, a(n) for n = 1..8213</a>"
+    ],
+    "formula": [
+        "a(n) = prime(A266986(n))."
+    ],
+    "example": [
+        "a(13) = 13 since the primitive roots of 13 are 2, 6, 7, and 11 and the average of these primitive roots is (2+6+7+11)/phi(12) = 26/4 = 13/2."
+    ],
+    "maple": [
+        "proots := proc(n)",
+        "    local r,eulphi,m;",
+        "    if n = 1 then",
+        "        return {0} ;",
+        "    end if;",
+        "    eulphi := numtheory[phi](n) ;",
+        "    r := {} ;",
+        "    for m from 0 to n-1 do",
+        "        if numtheory[order](m,n) = eulphi then",
+        "            r := r union {m} ;",
+        "        end if;",
+        "    end do:",
+        "    return r;",
+        "end proc:",
+        "isA266987 := proc(n)",
+        "    local r;",
+        "    if isprime(n) then",
+        "        r := convert(proots(n),list) ;",
+        "        2*add(pr, pr=r)  = n*nops(r) ;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 to 500 do",
+        "    if isA266987(n) then",
+        "        printf(\"%d,\",n);",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 12 2016",
+        "Filter:= proc(p) local x, s,js;",
+        "  if p mod 4 = 1 then return true fi;",
+        "  x:= numtheory:-primroot(p);",
+        "  js:= select(t -> igcd(t,p-1)=1, [$1..p-2]);",
+        "  s:= add(x&^ j mod p, j=js);",
+        "  evalb(s = p/2 * nops(js))",
+        "end proc:",
+        "select(Filter, [seq(ithprime(i),i=1..1000)]); # _Robert Israel_, Feb 01 2016"
+    ],
+    "mathematica": [
+        "A = Table[Total[Flatten[Position[Table[MultiplicativeOrder[i, Prime[k]], {i, Prime[k] - 1}],Prime[k] - 1]]]/(EulerPhi[Prime[k] - 1] Prime[k]/2), {k, 1, 100}]; Prime[Flatten[Position[A, _?(# == 1 &)]]]",
+        "(* second program (version >= 10): *)",
+        "Select[Prime[Range[100]], Mean[PrimitiveRootList[#]] == #/2&] (* _Jean-Fran\u00e7ois Alcover_, Jan 12 2016 *)"
+    ],
+    "xref": [
+        "Cf. A002144, A008330, A060749, A088144, A266986, A267010."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Dimitri Papadopoulos_, Jan 08 2016",
+    "references": 4,
+    "revision": 49,
+    "time": "2016-02-02T03:34:24-05:00",
+    "created": "2016-01-09T17:12:20-05:00"
+}

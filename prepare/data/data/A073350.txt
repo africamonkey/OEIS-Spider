@@ -1,0 +1,52 @@
+{
+    "number": 73350,
+    "data": "2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,61,67,79,83,97,101,107,113,163,181,197,199,223,229,233,277,313,317,331,433,439,457,569,859",
+    "name": "Primes not at the center of a 3 X 3 magic square of primes.",
+    "comment": [
+        "The \"magic sum\" is always thrice the central entry.",
+        "There are no other terms < 5000.",
+        "There are no other terms < 100000. - _Robert Israel_, Feb 16 2016"
+    ],
+    "link": [
+        "<a href=\"/index/Mag#magic\">Index entries for sequences related to magic squares</a>"
+    ],
+    "maple": [
+        "N:= 10000: # to get all terms <= N",
+        "P:= select(isprime,{seq(p,p=3..2*N,2)}):",
+        "count:= 1:",
+        "A[count]:= 2:",
+        "for ic from 1 while P[ic] <= N do",
+        "   c:= P[ic];",
+        "   V:= map(`-`,P[ic+1..-1],c) intersect map(t -> c-t, P[1..ic-1]);",
+        "   nv:= nops(V);",
+        "   VV:= {seq(seq(V[j]-V[i],j=i+1..nv),i=1..nv-1)} intersect V;",
+        "   nvv:= nops(VV);",
+        "   found:= false;",
+        "   for ia from 1 to nvv while not found do",
+        "     a:= VV[ia];",
+        "     for ib from ia+1 to nvv while VV[ib] < c - a do",
+        "       b:= VV[ib];",
+        "       if b <> 2*a and {c-a-b,c-a+b,c-b+a,c+a+b} subset P then",
+        "          found:= true;",
+        "          break",
+        "       fi",
+        "     od",
+        "   od:",
+        "   if not found then",
+        "     count:= count+1;",
+        "     A[count]:= c;",
+        "   fi",
+        "od:",
+        "seq(A[i],i=1..count); # _Robert Israel_, Feb 16 2016"
+    ],
+    "xref": [
+        "Cf. A073473. A magic square with 59 at center is given in A024351."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David W. Wilson_, Aug 25 2002",
+    "references": 4,
+    "revision": 16,
+    "time": "2016-02-16T17:39:40-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

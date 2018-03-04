@@ -1,0 +1,47 @@
+{
+    "number": 52419,
+    "data": "0,1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,18,19,20,21,22,23,24,25,26,28,29,30,31,32,33,34,35,36,38,39,40,41,42,43,44,45,46,48,49,50,51,52,53,54,55,56,58,59,60,61,62,63,64,65,66,68,69,80,81,82,83,84,85,86,88,89",
+    "name": "Numbers without 7 as a digit.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A052419/b052419.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Ar#10-automatic\">Index entries for 10-automatic sequences</a>."
+    ],
+    "formula": [
+        "a(n) = replace digits d > 6 by d + 1 in base-9 representation of n - 1. - _Reinhard Zumkeller_, Oct 07 2014"
+    ],
+    "maple": [
+        "a:= proc(n) local l, m; l, m:= 0, n-1;",
+        "      while m>0 do l:= (d->",
+        "        `if`(d<7, d, d+1))(irem(m, 9, 'm')), l",
+        "      od; parse(cat(l))/10",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Aug 01 2016"
+    ],
+    "mathematica": [
+        "Select[Range[100],DigitCount[#,10,7]==0&] (* _Harvey P. Dale_, Aug 23 2011 *)"
+    ],
+    "program": [
+        "(MAGMA) [ n: n in [0..89] | not 7 in Intseq(n) ]; // _Bruno Berselli_, May 28 2011",
+        "(sh) seq 0 1000 | grep -v 7; # _Joerg Arndt_, May 29 2011",
+        "(Haskell)",
+        "a052419 = f . subtract 1 where",
+        "f 0 = 0",
+        "f v = 10 * f w + if r > 6 then r + 1 else r where (w, r) = divMod v 9",
+        "-- _Reinhard Zumkeller_, Oct 07 2014",
+        "(PARI) lista(nn)=for (n=0, nn, if (!vecsearch(vecsort(digits(n),,8), 7), print1(n, \", \"));); \\\\ _Michel Marcus_, Feb 22 2015"
+    ],
+    "xref": [
+        "Cf. A004182, A004726.",
+        "Cf. A052382 (without 0), A052383 (without 1), A052404 (without 2), A052405 (without 3), A052406 (without 4), A052413 (without 5), A052414 (without 6), A052421 (without 8), A007095 (without 9)."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,3",
+    "author": "_Henry Bottomley_, Mar 13 2000",
+    "ext": [
+        "Offset changed by _Reinhard Zumkeller_, Oct 07 2014"
+    ],
+    "references": 11,
+    "revision": 21,
+    "time": "2017-02-12T20:00:17-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

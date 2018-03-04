@@ -1,0 +1,42 @@
+{
+    "number": 38772,
+    "data": "23,27,29,34,37,38,43,46,47,49,53,54,56,57,58,59,67,68,69,73,74,76,78,79,83,86,87,89,94,97,98,203,207,209,223,227,229,233,239,247,249,253,257,259,263,267,269,277,283,289,293,299,307,308,323,329,334,337,338",
+    "name": "Numbers not divisible by any of their digits.",
+    "comment": [
+        "A038769(a(n)) = 0; complement of A038770.",
+        "This is a regular language when written in decimal, though the minimal regular expression is probably thousands of characters long. - _Charles R Greathouse IV_, Aug 19 2011",
+        "Exponential density 0.954... = A104139. Asymptotically 8/35 * n^0.954... + O(n^0.903...) members up to n. - _Charles R Greathouse IV_, Jul 22 2012"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A038772/b038772.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "34 is divisible by neither 3 nor 4.",
+        "35 is excluded because 5 is a divisor of 35, but 37 is included because neither 3 nor 7 is a divisor of 37"
+    ],
+    "mathematica": [
+        "nddQ[n_]:=Module[{idn=DeleteCases[IntegerDigits[n],0]},And@@Table[ !Divisible[n, idn[[i]]],{i,Length[idn]}]]; Select[Range[350],nddQ] (* _Harvey P. Dale_, Nov 01 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Char (digitToInt)",
+        "a038772 n = a038772_list !! (n-1)",
+        "a038772_list = filter p [1..] where",
+        "   p n = all (> 0) $ map ((mod n) . digitToInt) $ filter (> '0') $ show n",
+        "-- _Reinhard Zumkeller_, Jun 19 2011",
+        "(PARI) is(n)=my(v=vecsort(eval(Vec(Str(n))), , 8)); for(i=if(v[1], 1, 2), #v, if(n%v[i]==0, return(0))); 1 \\\\ _Charles R Greathouse IV_, Jul 22 2011"
+    ],
+    "xref": [
+        "Cf. A034709, A034837, A038769, A038770."
+    ],
+    "keyword": "base,easy,nonn,nice",
+    "offset": "1,1",
+    "author": "_Henry Bottomley_, May 04 2000",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Nov 17 2008 at the suggestion of R. J. Mathar"
+    ],
+    "references": 24,
+    "revision": 27,
+    "time": "2013-11-21T12:46:44-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

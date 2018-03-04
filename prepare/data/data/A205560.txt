@@ -1,0 +1,46 @@
+{
+    "number": 205560,
+    "data": "3,5,5,6,7,7,7,8,8,9,9,9,9,10,10,10,10,10,11,11,11,12,12,12,12,13,13,13,13,13,13,14,14,14,14,14,15,15,15,15,15,15,15,16,16,16,16,16,16,16,16,17,17,17,17,17,17,17,17,17,18,18,18,18,18,18,19,19,19,19",
+    "name": "Numbers k for which 3 divides prime(k)-prime(j) for some j<k; each k occurs once for each such j.",
+    "comment": [
+        "For a guide to related sequences, see A205558."
+    ],
+    "example": [
+        "The first six terms match these differences:",
+        "p(3)-p(1)=5-2=3=3*1",
+        "p(5)-p(1)=11-2=9=3*3",
+        "p(5)-p(3)=11-5=6=3*2",
+        "p(6)-p(4)=13-7=6=3*2",
+        "p(7)-p(1)=17-2=15=3*5",
+        "p(7)-p(3)=17-5=12=3*4"
+    ],
+    "mathematica": [
+        "s[n_] := s[n] = Prime[n]; z1 = 200; z2 = 80;",
+        "f[n_] := f[n] = Floor[(-1 + Sqrt[8 n - 7])/2];",
+        "Table[s[n], {n, 1, 30}]      (* A000040 *)",
+        "u[m_] := u[m] = Flatten[Table[s[k] - s[j], {k, 2, z1}, {j, 1, k - 1}]][[m]]",
+        "Table[u[m], {m, 1, z1}]      (* A204890 *)",
+        "v[n_, h_] := v[n, h] = If[IntegerQ[u[h]/n], h, 0]",
+        "w[n_] := w[n] = Table[v[n, h], {h, 1, z1}]",
+        "d[n_] := d[n] = Delete[w[n], Position[w[n], 0]]",
+        "c = 3; t = d[c]              (* A205559 *)",
+        "k[n_] := k[n] = Floor[(3 + Sqrt[8 t[[n]] - 1])/2]",
+        "j[n_] := j[n] = t[[n]] - f[t][[n]] (f[t[[n]]] + 1)/2",
+        "Table[k[n], {n, 1, z2}]        (* A205560 *)",
+        "Table[j[n], {n, 1, z2}]        (* A205547 *)",
+        "Table[s[k[n]], {n, 1, z2}]     (* A205673 *)",
+        "Table[s[j[n]], {n, 1, z2}]     (* A205674 *)",
+        "Table[s[k[n]] - s[j[n]], {n, 1, z2}]     (* A205557 *)",
+        "Table[(s[k[n]] - s[j[n]])/c, {n, 1, z2}] (* A205675 *)"
+    ],
+    "xref": [
+        "Cf. A204892, A205547, A204890, A205675."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jan 30 2012",
+    "references": 8,
+    "revision": 10,
+    "time": "2012-03-30T18:58:11-04:00",
+    "created": "2012-01-30T21:07:22-05:00"
+}

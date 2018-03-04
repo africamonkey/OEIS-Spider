@@ -1,0 +1,27 @@
+{
+    "number": 68776,
+    "data": "1,3,6,36,2016,1493856,579616128,11013286048128,1004811205553955491328,1897191992473259952000123882626029056,5012064437680248664058937311304485563631765718940918773832320000",
+    "name": "a(0) = 1; for n > 0, a(n) is the smallest triangular number which is a (proper) multiple of a(n-1).",
+    "example": [
+        "a(2) = 6, since 6 = 2*a(1) and 6 is a triangular number."
+    ],
+    "mathematica": [
+        "pm1[{k_}] := {1, k-1}; pm1[lst_] := Module[{a, m, v}, a=lst[[1]]; m=Times@@Rest[lst]; v=pm1[Rest[lst]]; Union[ChineseRemainder[{1, #}, {a, m}]&/@v, ChineseRemainder[{-1, #}, {a, m}]&/@v]]; nexttri[1]=3; nexttri[n_] := Module[{s}, s=(pm1[Power@@#&/@FactorInteger[4n]]^2-1)/8; For[i=1, True, i++, If[s[[i]]>n, Return[s[[i]]]]]]; a[0]=1; a[n_] := a[n]=nexttri[a[n-1]]; (* First do <<NumberTheory`NumberTheoryFunctions`. If lst is a list of relatively prime integers >= 3, pm1[lst] is the list of numbers less than their product and == 1 or -1 (mod every element of lst). nexttri[n] is the smallest triangular number >n and divisible by n. *)"
+    ],
+    "program": [
+        "(PARI) {a068776(m)=local(k,q,n); k=1; q=k*(k+1)/2; while(q<m,n=q; print1(n,\",\"); k++; q=q+k; while(q<m&&q%n>0,k++; q=q+k))}"
+    ],
+    "xref": [
+        "Cf. A000217, A068142."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Klaus Brockhaus_, Mar 01 2002",
+    "ext": [
+        "Edited by _Dean Hickerson_, Mar 09 2002"
+    ],
+    "references": 4,
+    "revision": 7,
+    "time": "2014-06-24T01:08:23-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 270596,
+    "data": "131,191,239,251,311,419,431,491,599,647,659,683,743,827,911,971,1031,1091,1103,1151,1163,1223,1259,1451,1499,1511,1559,1571,1583,1607,1667,1787,1811,1847,1871,1931,2003,2087,2111,2243,2267,2339,2351,2399,2411,2423,2531,2591,2663,2687,2699,2711,2843,2927,2939,3011",
+    "name": "Primes p congruent to 11 mod 12 (A068231), such that there exists a nonzero element c of GF(p), such that the element c, c-1 and -1 generate a proper subgroup of the multiplicative group.",
+    "comment": [
+        "P. Cameron shows that \"primes congruent to 1 (mod 3) and greater than 7\" (see A002476) and \"primes congruent to 1 (mod 4) and greater than 5\" (see A002144) also have this property."
+    ],
+    "link": [
+        "Joerg Arndt, <a href=\"/A270596/b270596.txt\">Table of n, a(n) for n = 1..1983</a>",
+        "Peter Cameron's Blog, <a href=\"https://cameroncounts.wordpress.com/2012/04/06/permutation-groups-and-regular-semigroups-2/\">Permutation groups and regular semigroups, 2</a>, Posted 22/08/2015.",
+        "Michel Marcus, <a href=\"/A270596/a270596.g.txt\">GAP program with issues</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "{ forprime(p=11, 10^6,",
+        "    if ( p%12 != 11, next() );",
+        "    for (c=2, p-2,",
+        "        my( v = vector(p-1) );",
+        "        my( g0 = Mod(c, p),  rc0 = znorder(g0) );",
+        "        if ( rc0 == p - 1,  next() );",
+        "        if ( znorder( -g0 ) == p - 1,  next() );",
+        "        my( g1 = Mod(c-1, p),  rc1 = znorder(g1) );",
+        "        if ( rc1 == p - 1,  next() );",
+        "        if ( znorder( -g1 ) == p - 1,  next() );",
+        "        if ( znorder( g0*g1 ) == p - 1,  next() );",
+        "        if ( znorder( -g0*g1 ) == p - 1,  next() );",
+        "        for (x0 = 0, rc0,",
+        "            my ( p0 = g0^x0,  z = p0 );",
+        "            for (x1 = 0, rc1,",
+        "                v[lift(z)] = 1;",
+        "                v[p - lift(z)] = 1;",
+        "                z * = g1;",
+        "            );",
+        "        );",
+        "        my( s = sum(k=1,#v,v[k]) );",
+        "        if ( s < p - 1,  print1(p,\", \"); break() );",
+        "    );",
+        "); } \\\\ _Joerg Arndt_, Mar 20 2016"
+    ],
+    "xref": [
+        "Cf. A002476, A002144, A068231."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Mar 20 2016",
+    "ext": [
+        "Terms > 500 by _Joerg Arndt_, Mar 20 2016"
+    ],
+    "references": 1,
+    "revision": 17,
+    "time": "2016-11-15T12:15:16-05:00",
+    "created": "2016-03-20T13:39:58-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 55887,
+    "data": "1,1,3,8,22,59,160,431,1164,3140,8474,22864,61697,166476,449210,1212113,3270684,8825376,23813776,64257396,173387612,467856828,1262431711,3406456212,9191739970,24802339472,66924874539,180585336876,487278670744,1314838220172",
+    "name": "Number of ordered partitions of partitions.",
+    "comment": [
+        "Jordan matrices are upper bidiagonal matrices such that (A) the diagonal entries are in sorted order, (B) there are only 1's and 0's on the superdiagonal, (C) for each superdiagonal 1, the two diagonal entries to the left and below it must be equal. Let J(N) be the number of N X N Jordan matrices where the diagonal values are, wlog, taken to be a prefix of some fixed strictly increasing sequence x_1, x_2, x_3, ... If Jordan blocks sorted by eigenvalue with ties broken by block size during the sorting, then J(1, 2, 3, ...) is this sequence. - _Warren D. Smith_, Jan 28 2002",
+        "Number of compositions of n into parts k>=1 where there are A000041(k) sorts of part k. - _Joerg Arndt_, Sep 30 2012",
+        "Also number of chains of multisets that partition a normal multiset of weight n, where a multiset is normal if it spans an initial interval of positive integers. - _Gus Wiseman_, Oct 28 2015"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A055887/b055887.txt\">Table of n, a(n) for n = 0..2320</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "N. J. A. Sloane and Thomas Wieder, <a href=\"http://arXiv.org/abs/math.CO/0307064\">The Number of Hierarchical Orderings</a>, Order 21 (2004), 83-89, DOI:10.1007/s11083-004-9460-9.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/q-PochhammerSymbol.html\">q-Pochhammer Symbol</a>."
+    ],
+    "formula": [
+        "Invert transform of partitions numbers A000041.",
+        "Let p(k) be the number of integer partitions of k. Furthermore, set a(0)=1. Then a(n) = Sum_{k=1..n} p(k)*a(n-k). - _Thomas Wieder_, Nov 26 2007",
+        "G.f.: 1/( 1 - sum(k>=1, p(k)*x^k ) ) where p(k) = A000041(k) is the number of integer partitions of k. - _Joerg Arndt_, Sep 30 2012",
+        "a(n) ~ c * d^n, where d = 2.698329106474211231263998666188376330713465125913986356769... (see A246828) and c = 0.414113793172792357745578049739573823627306487211379286647... - _Vaclav Kotesovec_, Mar 29 2014",
+        "G.f.: 1/(2 - 1/(x)_inf), where (x)_inf is the q-Pochhammer symbol. - _Vladimir Reshetnikov_, Sep 22 2016"
+    ],
+    "example": [
+        "The a(4) = 22 chains of multisets, where notation x-y means \"y is a submultiset of x\", are: (o-o-o-o) (oo-o-o) (oo-oo) (ooo-o) (oooo) (oe-o-o) (ooe-o) (oooe) (oe-oe) (ooe-e) (oee-o) (ooee) (oei-o) (ooei) (oe-e-e) (oee-e) (oeee) (oei-e) (oeei) (oei-i) (oeii) (oeis)."
+    ],
+    "maple": [
+        "with(combstruct); SeqSetSetU := [T, {T=Sequence(S), S=Set(U,card >= 1), U=Set(Z,card >=1)},unlabeled];",
+        "P := (x) -> product( 1/(1-x^k), k=1..20 ) - 1; F := (x) -> series( 1/(1-P(x)) - 1, x, 21 ); # F(x) is g.f. for this sequence # _Warren D. Smith_, Jan 28 2002",
+        "A055887rec:= proc(n::integer) local k; option remember; with(combinat): if n = 0 then 1 else add(numbpart(k) *procname(n - k), k=1..n); end if; end proc: seq (A055887rec(n), n=0..10); # _Thomas Wieder_, Nov 26 2007"
+    ],
+    "mathematica": [
+        "a = 1/Product[(1 - x^k), {k, 1, \\[Infinity]}] - 1; CoefficientList[Series[1/(1 - a), {x, 0, 20}], x] (* _Geoffrey Critzer_, Dec 23 2010 *)",
+        "(1/(2 - 1/QPochhammer[x]) + O[x]^30)[[3]] (* _Vladimir Reshetnikov_, Sep 22 2016 *)"
+    ],
+    "program": [
+        "(PARI) Vec(1/(2-1/eta(x+O(x^66)))) \\\\ _Joerg Arndt_, Sep 30 2012"
+    ],
+    "xref": [
+        "Cf. A055888, A083355, A095975, A246828.",
+        "Row sums of A060642."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Christian G. Bower_, Jun 09 2000",
+    "references": 12,
+    "revision": 53,
+    "time": "2017-10-03T15:30:19-04:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

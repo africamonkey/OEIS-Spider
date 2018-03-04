@@ -1,0 +1,56 @@
+{
+    "number": 191743,
+    "data": "1,2,4,6,8,12,16,18,20,24,30,32,36,40,42,48,54,60,64,72,80,84,88,90,96,100,108,120,126,128,140,144,150,156,160,162,168,176,180,192,198,200,210,216,220,240,252,256,264,270,272,280,288,294,300,312,315,320,324,330",
+    "name": "Smallest numbers with a given factorization pattern in their sequence of divisors.",
+    "comment": [
+        "To get the factorization pattern of the divisors of n, take the list of divisors of n, and factor each one, using p,q,r,... to represent the prime divisors of n in order. E.g., when factoring 14 as a divisor of 84, the prime divisors of 84 are p=2, q=3, r=7, so 14 => p*r."
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A191743/b191743.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The factors of any prime p are 1,p, so this is the factorization pattern for all primes. The first prime, 2, is thus in the sequence, and no other primes are. Semiprimes have either the pattern 1,p,p^2 or 1,p,q,p*q, so the semiprimes in this sequence are the first instances of each of these, respectively 4 and 6.",
+        "For numbers which are the product of the square of a prime and a different prime (A054753), there are three possible patterns: 1,p,q,p^2,p*q,p^2*q, 1,p,q,p*q,q^2,p*q^2, and 1,p,p^2,q,p*q,p*q^2; the exemplars in the sequence are 12, 18, and 20 respectively."
+    ],
+    "mathematica": [
+        "f[n_] := If[n==1, 1, Block[{p = First /@ FactorInteger@n, z}, z = Table[p[[i]] -> x[i], {i, Length@p}]; Times @@ (((#[[1]] /. z)^#[[2]]) & /@ FactorInteger[#]) & /@ Divisors[n]]]; A = <||>; L={}; Do[k = f[n]; If[! KeyExistsQ[A, k], AppendTo[L, n]; A[k] = 1], {n, 330}]; L (* _Giovanni Resta_, Jul 20 2017 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "vecfnd(v, x)={ for(k=1, #v, if(v[k]==x, return(k))); return(0); }",
+        "vecfndn(v, x, n)={ for(k=1, n, if(v[k]==x, return(k))); return(0); }",
+        "factfmt(k, ps)=",
+        "{",
+        "    local(r, fm); r=\"\"; fm=factor(k);",
+        "    for(i=1, matsize(fm)[1],",
+        "        if(i>1, r=Str(r\"*\"));",
+        "        r=Str(r, vecfnd(ps, fm[i, 1]));",
+        "        if(fm[i, 2]>1, r=Str(r\"^\"fm[i, 2]))",
+        "   );",
+        "   return(r);",
+        "} /* end factfmt() */",
+        "factpatt(n)=",
+        "{",
+        "    local(ps, ds, r); r=\"\"; ps=factor(n)[, 1]~; ds=divisors(n);",
+        "    for(k=1, #ds, if(k>1, r=Str(r\", \")); r=concat(r, factfmt(ds[k], ps)));",
+        "    return(r);",
+        "} /* end factpatt() */",
+        "al(n)=",
+        "{",
+        "    local(k, r, st, m, pt); k=1; r=vector(n); st=vector(n);",
+        "    while(m<n, pt=factpatt(k); if(!vecfndn(st, pt, m), m++; r[m]=k; st[m]=pt); k++);",
+        "    return(r);",
+        "} /* end al() */",
+        "al(66) /* show first 66 terms */"
+    ],
+    "xref": [
+        "A025487 and A055932 are subsequences."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Franklin T. Adams-Watters_, Jun 13 2011",
+    "references": 2,
+    "revision": 11,
+    "time": "2017-07-20T02:24:04-04:00",
+    "created": "2011-06-24T04:35:06-04:00"
+}

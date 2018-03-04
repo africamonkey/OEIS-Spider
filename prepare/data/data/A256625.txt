@@ -1,0 +1,47 @@
+{
+    "number": 256625,
+    "data": "1,3,21,189,2457,36855,773955,19348875,599815125,19793899125,732374267625,31492093507875,1543112581885875,78698741676179625,4958020725599316375,332187388615154197125,22920929814445639601625,1673227876454531690918625,125492090734089876818896875,9913875167993100268692853125",
+    "name": "Product of the first n lucky numbers.",
+    "comment": [
+        "For all n A057616(n)=a(m) for some m, that is, A256625 is a superset of A057616."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A256625/b256625.txt\">Table of n, a(n) for n = 1..315</a>"
+    ],
+    "formula": [
+        "a(n+1) = a(n)*A000959(n+1).",
+        "a(n) > A002110(n) > A000142(n) for all n>1 (conjectured).",
+        "A000312(n) = o(a(n)) where o(a(n)) is \"little o\" notation (conjectured).",
+        "Sum_{k >=1} 1/a(n) = 1.386678865477327..., the sum converges because the inequality a(n) > A000142(n) holds for large enough n."
+    ],
+    "example": [
+        "For n=4, a(4) = A000959(1)*A000959(2)*A000959(3)*A000959(4) = 1*3*7*9 = 189."
+    ],
+    "maple": [
+        "N:= 100:  # to use all lucky numbers <= N",
+        "L:= [seq(2*i+1, i=0..N)]:",
+        "for n from 2 while n < nops(L) do",
+        "  r:= L[n];",
+        "  L:= subsop(seq(r*i=NULL, i=1..nops(L)/r), L);",
+        "od:",
+        "seq(convert(L[1..n],`*`),n=1..nops(L)) ;  # _Robert Israel_, Jul 14 2015"
+    ],
+    "mathematica": [
+        "luckies = 2*Range@ 200 - 1; f[n_] := Block[{k = luckies[[n]]}, luckies = Delete[luckies, Table[{k}, {k, k, Length@ luckies, k}]]]; Do[f@ n, {n, 2, 30}]; Table[Times @@ Take[luckies, n], {n, 20}] (* _Michael De Vlieger_, Jul 12 2015, based on code from _Robert G. Wilson v_ at A000959 *)"
+    ],
+    "xref": [
+        "Cf. A000959 (lucky numbers).",
+        "Cf. A000142 (factorial), A002110 (product of the first n primes).",
+        "Cf. A057616 (subset)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Chayim Lowen_, Jul 11 2015",
+    "ext": [
+        "a(12)-a(20) from _Michael De Vlieger_, Jul 12 2015"
+    ],
+    "references": 2,
+    "revision": 30,
+    "time": "2015-07-17T02:03:21-04:00",
+    "created": "2015-07-17T02:03:21-04:00"
+}

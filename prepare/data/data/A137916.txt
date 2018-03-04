@@ -1,0 +1,38 @@
+{
+    "number": 137916,
+    "data": "0,0,1,15,222,3670,68820,1456875,34506640,906073524,26154657270,823808845585,28129686128940,1035350305641990,40871383866109888,1722832666898627865,77242791668604946560,3670690919234354407000,184312149879830557190940,9751080154504005703189791",
+    "name": "Number of labeled graphs on [n] with unicyclic components.",
+    "comment": [
+        "The first values are row sums of A106239."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A137916/b137916.txt\">Table of n, a(n) for n = 1..150</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Pseudoforest\">Pseudo forest</a>"
+    ],
+    "formula": [
+        "a(n) = Sum N/D over the partitions of n: 1p_1+2p_2+ ... +np_n, with parts >=3, where N = n!*Product_{1 <= i <= n}= A057500(i)^p_i and D = Product_{1 <= i <= n}(p_i!(i!)^p_i).",
+        "a(n) = A144228(n,n). - _Alois P. Heinz_, Sep 15 2008",
+        "E.g.f.: exp(B(T(x))) where B(x)= (log(1/(1-x))-x-x^2/2)/2 and T(x) is the e.g.f. for A000169 (labeled rooted trees). - Geoffrey Critzer, Jan 24 2012",
+        "a(n) ~ 2^(-1/4)*exp(-3/4)*GAMMA(3/4)*n^(n-1/4)/sqrt(Pi) * (1-7*Pi/(12*GAMMA(3/4)^2*sqrt(n))). - _Vaclav Kotesovec_, Aug 16 2013"
+    ],
+    "example": [
+        "a(6) = 3670 because there are 3660 distinct labeled unicycles with 6 vertices and only 10 ways to label two triangles."
+    ],
+    "maple": [
+        "cy:= proc(n) option remember; local t; binomial(n-1, 2) *add ((n-3)! /(n-2-t)! *n^(n-2-t), t=1..n-2) end: T:= proc(n,k) option remember; local j; if k=0 then 1 elif k<0 or n<k then 0 else add (binomial (n-1, j) *((j+1)^(j-1) *T(n-j-1, k-j) +cy(j+1) *T(n-j-1, k-j-1)), j=0..k) fi end: a:= n-> T(n,n): seq (a(n), n=1..20); # _Alois P. Heinz_, Sep 15 2008"
+    ],
+    "mathematica": [
+        "nn = 20; t = Sum[n^(n - 1) x^n/n!, {n, 1, nn}]; Drop[Range[0, nn]! CoefficientList[Series[Exp[Log[1/(1 - t)]/2 - t/2 - t^2/4], {x, 0, nn}], x], 1] (* _Geoffrey Critzer_, Jan 24 2012 *)"
+    ],
+    "xref": [
+        "Cf. A057500, A106239.",
+        "Diagonal of A144228. - _Alois P. Heinz_, Sep 15 2008"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,4",
+    "author": "_Washington Bomfim_, Feb 22 2008",
+    "references": 6,
+    "revision": 24,
+    "time": "2015-12-24T02:41:57-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

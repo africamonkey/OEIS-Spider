@@ -1,0 +1,57 @@
+{
+    "number": 294110,
+    "data": "24,160,896,1215,9720,15309,22528,106496,122472,546875,1948617,2228224,9961472,15588936,17500000,20726199,132890625,165809592,192937984,537109375,1063125000,2195382771,15569256448,15869140625,17187500000,17563062168,21750594173,22082967873,66571993088,130517578125",
+    "name": "Numbers with prime factorization of the form p_1^p_2*p_2^p_3*...p_(n-1)^p_n*p_n where p_(n-1) < p(n) and n > 1.",
+    "comment": [
+        "All members of this sequence, by definition, only have primes and 1 as exponents of prime factors."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A294110/b294110.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "24 is part of the sequence because its prime factorization is 2^3*3.",
+        "122472 is part of the sequence because its prime factorization is 2^3*3^7*7",
+        "10756480 is not part of the sequence because it prime factorization is 2^7*7^5*5. This does not follow the rule where each base in the chain must be greater than the previous (7<5 is not true)."
+    ],
+    "program": [
+        "(Python 3)",
+        "def prime_factors(n):",
+        "    factors = {}",
+        "    i = 2",
+        "    while n != 1:",
+        "        while n % i == 0:",
+        "            n /= i",
+        "            if i in factors:",
+        "                factors[i] += 1",
+        "            else:",
+        "                factors[i] = 1",
+        "        i += 1",
+        "    return factors",
+        "def a(n):",
+        "    i = 1",
+        "    c = 0",
+        "    while c < n:",
+        "        i += 1",
+        "        p = prime_factors(i)",
+        "        if len(p) > 1 and list(p.keys())[1:]+[1] == list(p.values()):",
+        "            c +=1",
+        "    return i",
+        "(PARI) is(n)=my(f=factor(n)); if(#f~<2, return(0)); for(i=2,#f~, if(f[i,1]!=f[i-1,2], return(0))); f[#f~,2]==1 \\\\ _Charles R Greathouse IV_, Oct 22 2017",
+        "(PARI) get(q,N)=my(v,pq); if(N>>q == 0, return(if(N<1,[],[1]))); v=List([1]); forprime(p=2,min(sqrtnint(N,q),q-1), pq=p^q; u=pq*get(p,N\\pq); for(i=1,#u, listput(v,u[i])); u=0); Set(v)",
+        "list(lim)=my(v=List(),u,t); lim\\=1; forprime(q=3,lambertw(log(2)*lim)\\log(2), forprime(p=2,min(sqrtnint(lim,q),q-1), t=p^q*q; u=t*get(p,lim\\t); for(i=1,#u, listput(v,u[i])); u=0)); Set(v) \\\\ _Charles R Greathouse IV_, Oct 22 2017"
+    ],
+    "xref": [
+        "Subsequence of A046099."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Matthew McCaskill_, Oct 22 2017",
+    "ext": [
+        "a(10)-a(30) from _Charles R Greathouse IV_, Oct 22 2017",
+        "Definition corrected by _Jens Kruse Andersen_, Oct 28 2017"
+    ],
+    "references": 1,
+    "revision": 12,
+    "time": "2017-11-07T03:27:30-05:00",
+    "created": "2017-10-22T23:07:17-04:00"
+}

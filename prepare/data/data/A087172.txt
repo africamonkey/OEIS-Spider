@@ -1,0 +1,48 @@
+{
+    "number": 87172,
+    "data": "1,2,3,3,5,5,5,8,8,8,8,8,13,13,13,13,13,13,13,13,21,21,21,21,21,21,21,21,21,21,21,21,21,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55",
+    "name": "Greatest Fibonacci number that does not exceed n.",
+    "comment": [
+        "Also the largest term in Zeckendorf representation of n; starting at Fibonacci positions the sequence is repeated again and again in A107017: A107017(A000045(n)+k)=a(k) with 0<k < A000045(n-1). - _Reinhard Zumkeller_, May 09 2005",
+        "a(n) = A035516(n,0) = A035517(n,A007895(n)-1). - _Reinhard Zumkeller_, Mar 10 2013"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A087172/b087172.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/FibonacciNumber.html\">Fibonacci Number</a>"
+    ],
+    "formula": [
+        "a(n) = Fib(A130233(n)) = Fib(A130234(n+1)-1). - _Hieronymus Fischer_, May 28 2007",
+        "a(n) = n - A066628(n). - _Michel Marcus_, Feb 02 2016"
+    ],
+    "maple": [
+        "with(combinat):",
+        "A087172 := proc (n) local j: for j while fibonacci(j) <= n do fibonacci(j) end do: fibonacci(j-1) end proc:",
+        "seq(A087172(n), n = 1 .. 40); # _Emeric Deutsch_, Nov 11 2014",
+        "# Alternative",
+        "N:= 100: # to get a(n) for n from 1 to N",
+        "Fibs:= [seq(combinat:-fibonacci(i), i = 1 .. ceil(log[(1 + sqrt(5))/2](sqrt(5)*N)))]:",
+        "A:= Vector(N):",
+        "for i from 1 to nops(Fibs)-1 do",
+        "  A[Fibs[i] .. min(N,Fibs[i+1]-1)]:= Fibs[i]",
+        "od:",
+        "convert(A,list); # _Robert Israel_, Nov 11 2014"
+    ],
+    "mathematica": [
+        "With[{rf=Reverse[Fibonacci[Range[10]]]},Flatten[Table[ Select[ rf,n>=#&, 1],{n,80}]]] (* _Harvey P. Dale_, Dec 08 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=my(k=log(n)\\log((1+sqrt(5))/2)); while(fibonacci(k)<=n, k++); fibonacci(k--) \\\\ _Charles R Greathouse IV_, Jul 24 2012",
+        "(Haskell)",
+        "a087172 = head . a035516_row -- _Reinhard Zumkeller_, Mar 10 2013"
+    ],
+    "xref": [
+        "Cf. A066628, A130233, A130234. Partial sums: A130473."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Sam Alexander_, Oct 19 2003",
+    "references": 6,
+    "revision": 35,
+    "time": "2016-05-19T15:58:35-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

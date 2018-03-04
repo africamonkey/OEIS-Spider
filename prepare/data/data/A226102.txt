@@ -1,0 +1,50 @@
+{
+    "number": 226102,
+    "data": "1,4,16,121,529,4096,139129,160554241,812293020529,379188080252621270252095321",
+    "name": "Prime powers (A025475) representable as triangular(k)+1.",
+    "comment": [
+        "Indices of triangular numbers are in A226103.",
+        "53072032161200090602953513048447623^2 is also a term. - _Giovanni Resta_, May 26 2013"
+    ],
+    "formula": [
+        "a(n) = A000217(A226103(n)) + 1."
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#include <stdlib.h>",
+        "#include <math.h>",
+        "#define TOP (1ULL<<32)  // Memory usage: 0.5 Gb",
+        "int main() {",
+        "  unsigned long long i, j, p, t, r;",
+        "  unsigned char *c = (unsigned char *)malloc(TOP/8);",
+        "  memset(c, 0, TOP/8);",
+        "  for (printf(\"1, \"), i=1; i < TOP; i+=2)",
+        "    if ((c[i>>4] & (1<<((i>>1)&7))) == 0) {",
+        "      for (p = i + (i==1), j = p*p; ; j*=p) {",
+        "        t = j - 1;",
+        "        r = sqrt(t*2);",
+        "        if (r*(r+1)==t*2)  printf(\"%llu, \", j);",
+        "        double k = ((double)j) * ((double)p);",
+        "        if (k >= ((double)(1ULL<<62)*4.0)) break;",
+        "      }",
+        "      if (i>1) for (j=i*i>>1; j<TOP; j+=i)  c[j>>3] |= 1 << (j&7);",
+        "    }",
+        "  // SORT the output",
+        "  return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A025475, A000217, A226103."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, May 26 2013",
+    "ext": [
+        "a(10) from _Giovanni Resta_, May 26 2013"
+    ],
+    "references": 1,
+    "revision": 14,
+    "time": "2013-05-29T12:14:54-04:00",
+    "created": "2013-05-29T12:14:54-04:00"
+}

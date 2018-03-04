@@ -1,0 +1,49 @@
+{
+    "number": 99252,
+    "data": "0,1,6,36,232,1585,11298,83097,625992,4805595,37458330,295673994,2358641376,18985057351,154000562758,1257643249140,10331450919456,85317692667643,707854577312178,5897493615536452,49320944483427000,413887836110423787,3484084625456932134,29412628894558563849",
+    "name": "Bisection of A005043.",
+    "reference": [
+        "G. F. Smith, Title?, Tensor, Vol. 19 (1968), p. 79."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A099252/b099252.txt\">Table of n, a(n) for n = 0..200</a>",
+        "D. L. Andrews, <a href=\"/A005043/a005043.pdf\">Letter to N. J. A. Sloane</a>, Apr 10 1978."
+    ],
+    "formula": [
+        "Recurrence: (n+1)*(2*n+1)*a(n) = n*(26*n-7)*a(n-1) - 3*(26*n^2 - 61*n + 39)*a(n-2) + 27*(n-2)*(2*n-3)*a(n-3). - _Vaclav Kotesovec_, Oct 17 2012",
+        "a(n) ~ 3^(2*n+5/2)/(16*sqrt(2*Pi)*n^(3/2)). - _Vaclav Kotesovec_, Oct 17 2012"
+    ],
+    "maple": [
+        "G:=(1+x-sqrt(1-2*x-3*x^2))/(2*x*(1+x)): Gser:=series(G,x=0,60): seq(coeff(Gser,x^(2*n-1)),n=1..25); # _Emeric Deutsch_"
+    ],
+    "mathematica": [
+        "Take[CoefficientList[Series[(1+x-Sqrt[1-2*x-3*x^2])/(2*x*(1+x)), {x, 0, 60}], x], {2, -1, 2}] (* _Vaclav Kotesovec_, Oct 17 2012 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^66); v=Vec((1+x-sqrt(1-2*x-3*x^2))/(2*x*(1+x))); vector(#v\\2,n,v[2*n]) \\\\ _Joerg Arndt_, May 12 2013",
+        "(Sage)",
+        "def A():",
+        "    a, b, c, d, n = 0, 1, 1, -1, 1",
+        "    yield 0",
+        "    while True:",
+        "        n += 1",
+        "        a, b = b, (3*(n-1)*n*a+(2*n-1)*n*b)//((n+1)*(n-1))",
+        "        c, d = d, (3*(n-1)*c-(2*n-1)*d)//n",
+        "        if n%2: yield -(d + b)*(1-(-1)^n)//2",
+        "A099252  = A()",
+        "print([A099252 .next() for _ in range(24)]) # _Peter Luschny_, May 16 2016"
+    ],
+    "xref": [
+        "Cf. A005043, A099251."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Nov 16 2004",
+    "ext": [
+        "More terms from _Emeric Deutsch_, Nov 18 2004"
+    ],
+    "references": 3,
+    "revision": 21,
+    "time": "2017-06-19T18:22:05-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

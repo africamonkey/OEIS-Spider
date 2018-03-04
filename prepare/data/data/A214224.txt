@@ -1,0 +1,40 @@
+{
+    "number": 214224,
+    "data": "1,2,12,128,1920,37056,874496,24395776,785387520,28658483200,1168842842112,52692107132928,2601710674640896,139635670319366144,8094064830515773440,503939620849307353088,33539757103898142179328,2376284247629812872511488,178564437032337539449487360",
+    "name": "E.g.f. satisfies: A(x) = x/(1 - tan(A(x))).",
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A(x - x*tan(x)) = x.",
+        "(2) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) x^n*tan(x)^n/n!.",
+        "(3) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(n-1)*tan(x)^n/n! ).",
+        "a(n) = n*A201594(n-1).",
+        "a(n) = (n-1)! * [x^n] x/(1 - tan(x))^n."
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 12*x^3/3! + 128*x^4/4! + 1920*x^5/5! +...",
+        "Related expansions:",
+        "A(x) = x + x*tan(x) + d/dx x^2*tan(x)^2/2! + d^2/dx^2 x^3*tan(x)^3/3! + d^3/dx^3 x^4*tan(x)^4/4! +...",
+        "log(A(x)/x) = tan(x) + d/dx x*tan(x)^2/2! + d^2/dx^2 x^2*tan(x)^3/3! + d^3/dx^3 x^3*tan(x)^4/4! +...",
+        "A(x)/x = 1 + x + 4*x^2/2! + 32*x^3/3! + 384*x^4/4! + 6176*x^5/5! + 124928*x^6/6! +...+ A201594(n)*x^n/n! +...",
+        "tan(A(x)) = x + 2*x^2/2! + 14*x^3/3! + 152*x^4/4! + 2296*x^5/5! + 44496*x^6/6! + 1052848*x^7/7! + 29425024*x^8/8! +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=(n-1)!*polcoeff(x/(1 - tan(x+x*O(x^n)))^n,n)}",
+        "for(n=1, 25, print1(a(n), \", \"))",
+        "(PARI) {a(n)=n!*polcoeff(serreverse(x-x*tan(x+x*O(x^n))), n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, x^m*tan(x+x*O(x^n))^m/m!)); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, x^(m-1)*tan(x+x*O(x^n))^m/m!)+x*O(x^n))); n!*polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A201594, A214222, A214223, A214225."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jul 07 2012",
+    "references": 4,
+    "revision": 5,
+    "time": "2012-07-08T00:08:38-04:00",
+    "created": "2012-07-07T18:56:05-04:00"
+}

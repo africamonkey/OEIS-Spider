@@ -1,0 +1,48 @@
+{
+    "number": 22518,
+    "data": "7,71,1171,117112,21127112,211271211221,112212211171211221,1122122111711322112212,21112212223112711322112212,21112212223112712112312311221321",
+    "name": "Describe previous term from the right (method B - initial term is 7).",
+    "comment": [
+        "Method B = 'digit'-indication followed by 'frequency'."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A022518/b022518.txt\">Table of n, a(n) for n = 0..21</a>"
+    ],
+    "example": [
+        "The term after 1171 is obtained by saying \"1 once, 7 once, 1 twice\", which gives 117112."
+    ],
+    "mathematica": [
+        "split[n_]:=Split[Reverse[IntegerDigits[n]]];",
+        "list1[n_]:=List/@Length/@split[n];riffle1[n_]:=Riffle[split[n],list1[n]];",
+        "tab[n_]:=Table[i,{i,1,2*Length[list1[n]],2}];",
+        "list2[n_]:=Append[riffle1[n][[#]],riffle1[n][[#+1]]]&/@tab[n];",
+        "flat[n_]:=Flatten/@list2[n];riffle2[n_]:=Riffle[First/@flat[n],Last/@flat[n]];",
+        "a[1]=7;a[n_]:=FromDigits[riffle2[a[n-1]]];Array[a,10] (* or *)",
+        "a[1]=7;a[n_]:=FromDigits[Flatten[Replace[Replace[Replace[Split[Reverse[IntegerDigits[",
+        "a[n-1]]]],{x_,y_}-> {x,Length[{x,y}]},{1}],{x_,y_,z_}-> {x,Length[{x,y,z}]},{1}],{x_}-> {x,Length[{x}]},{1}]]];Array[a,10] (* _Ivan N. Ianakiev_, Oct 07 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (group, transpose)",
+        "a022518 n = a022518_list !! n",
+        "a022518_list = 7 : f [7] :: [Integer] where",
+        "   f xs = (read $ concatMap show ys) : f ys where",
+        "          ys = concat $ transpose [map head zss, map length zss]",
+        "          zss = reverse $ group xs",
+        "-- _Reinhard Zumkeller_, Jan 26 2014"
+    ],
+    "xref": [
+        "Cf. A022481, A022488, A022514, A022515, A022516, A022517, A022519, A022520."
+    ],
+    "keyword": "nonn,base,easy,nice",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Erich Friedman_",
+        "Corrected from 8th term by _Patrick De Geest_, Jun 15 1999"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2016-10-14T08:12:15-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

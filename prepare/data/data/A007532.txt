@@ -1,0 +1,63 @@
+{
+    "number": 7532,
+    "id": "M0487",
+    "data": "1,2,3,4,5,6,7,8,9,24,43,63,89,132,135,153,175,209,224,226,262,264,267,283,332,333,334,357,370,371,372,373,374,375,376,377,378,379,407,445,463,518,598,629,739,794,849,935,994,1034",
+    "name": "Powerful numbers (2): a sum of positive powers of its digits.",
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "David W. Wilson, <a href=\"/A007532/b007532.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Giovanni Resta, <a href=\"http://www.numbersaplenty.com/set/d-powerful_number/\">d-Powerful numbers</a> the 30067 terms and sums up to 10^6.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PowerfulNumber.html\">Powerful Number.</a>",
+        "<a href=\"/index/Pow#powerful\">Index entries for sequences related to powerful numbers</a>"
+    ],
+    "formula": [
+        "If n = d_1 d_2 ... d_k in decimal then there are integers m_1 m_2 ... m_k > 0 such that n = d_1^m_1 + ... + d_k^m_k."
+    ],
+    "example": [
+        "43 = 4^2 + 3^3 is OK; 254 = 2^7 + 5^3 + 4^0 is not OK since one of the powers is 0."
+    ],
+    "maple": [
+        "N:= 10000; # to get all entries <= N",
+        "Sums:= proc(L,N)",
+        "  option remember;",
+        "  local x1,L1;",
+        "  x1:= L[1];",
+        "  if x1 = 1 then L1:= {1}",
+        "  else L1:= {seq(x1^j,j=1..floor(log[x1](N)))};",
+        "  fi;",
+        "  if nops(L) = 1 then L1",
+        "  else select(`<=`,{seq(seq(a+b,a=L1),b=Sums(L[2..-1],N))},N)",
+        "  fi",
+        "end proc;",
+        "filter:= proc(x,N)",
+        "   local L;",
+        "   L:= sort(subs(0=NULL,convert(x,base,10))) ;",
+        "   member(x, Sums(L,N));",
+        "end proc;",
+        "A007532:= select(filter,[$1..N],N); # _Robert Israel_, Apr 13 2014"
+    ],
+    "program": [
+        "(Haskell)",
+        "a007532 n = a007532_list !! (n-1)",
+        "a007532_list = filter f [1..] where",
+        "   f x = g x 0 where",
+        "     g 0 v = v == x",
+        "     g u v = if d <= 1 then g u' (v + d) else v <= x && h d",
+        "             where h p = p <= x && (g u' (v + p) || h (p * d))",
+        "                   (u', d) = divMod u 10",
+        "-- _Reinhard Zumkeller_, Jun 02 2013"
+    ],
+    "xref": [
+        "Cf. A001694, A005934, A005188, A003321, A014576, A023052, A046074.",
+        "Different from A061862."
+    ],
+    "keyword": "base,nonn,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, _Robert G. Wilson v_",
+    "references": 16,
+    "revision": 28,
+    "time": "2014-04-14T02:37:55-04:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

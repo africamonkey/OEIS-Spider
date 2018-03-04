@@ -1,0 +1,42 @@
+{
+    "number": 252944,
+    "data": "23377,31417,49981,74665,220729,435671,679729,769757,852481,915981,1016801,1023121,1128121,1397419,2008597,2987167,3073357,4014361",
+    "name": "Fermat pseudoprimes that are not Carmichael numbers and have only composite XOR couples as defined in A182108.",
+    "comment": [
+        "There are 433 Fermat pseudoprimes that aren't Carmichael numbers below 2^22, but only 18 have this property. Carmichael numbers that have this property are in A182116."
+    ],
+    "program": [
+        "(MAGMA)",
+        "function IsClardynum(X, i)",
+        "  if i eq 1 then",
+        "    return true;",
+        "  else",
+        "    xornum:=2^i - 2;",
+        "    xorcouple:=BitwiseXor(X, xornum);",
+        "    if (IsPrime(xorcouple)) then",
+        "       return false;",
+        "    else",
+        "       return IsClardynum(X, i-1);",
+        "    end if;",
+        "  end if;",
+        "end function;",
+        "for n:= 3 to 1052503 by 2 do",
+        "  if (IsOne(2^(n-1) mod n)",
+        "      and not IsPrime(n)",
+        "      and not n mod CarmichaelLambda(n) eq 1",
+        "      and IsClardynum(n,Ilog2(n)))",
+        "      then n;",
+        "  end if;",
+        "end for;"
+    ],
+    "xref": [
+        "Cf. A153508, A001567, A252943, A182108, A182116."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Brad Clardy_, Dec 25 2014",
+    "references": 0,
+    "revision": 10,
+    "time": "2014-12-29T19:03:27-05:00",
+    "created": "2014-12-29T19:03:27-05:00"
+}

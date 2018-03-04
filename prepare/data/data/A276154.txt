@@ -1,0 +1,54 @@
+{
+    "number": 276154,
+    "data": "0,2,6,8,12,14,30,32,36,38,42,44,60,62,66,68,72,74,90,92,96,98,102,104,120,122,126,128,132,134,210,212,216,218,222,224,240,242,246,248,252,254,270,272,276,278,282,284,300,302,306,308,312,314,330,332,336,338,342,344,420,422,426,428,432,434,450,452,456,458,462,464,480,482,486,488",
+    "name": "a(n) = Shift primorial base representation (A049345) of n left by one digit (append one zero to the right, then convert back to decimal).",
+    "link": [
+        "Antti Karttunen, <a href=\"/A276154/b276154.txt\">Table of n, a(n) for n = 0..30029</a>",
+        "<a href=\"/index/Pri#primorialbase\">Index entries for sequences related to primorial base</a>"
+    ],
+    "formula": [
+        "a(0) = 0; for n >= 1, a(n) = A276152(n) + a(A276151(n))."
+    ],
+    "example": [
+        "   n   A049345  with one zero           converted back",
+        "                appended to the right   to decimal = a(n)",
+        "---------------------------------------------------------",
+        "   0       0            00                     0",
+        "   1       1            10                     2",
+        "   2      10           100                     6",
+        "   3      11           110                     8",
+        "   4      20           200                    12",
+        "   5      21           210                    14",
+        "   6     100          1000                    30",
+        "   7     101          1010                    32",
+        "   8     110          1100                    36",
+        "   9     111          1110                    38",
+        "  10     120          1200                    42",
+        "  11     121          1210                    44",
+        "  12     200          2000                    60",
+        "  13     201          2010                    62",
+        "  14     210          2100                    66",
+        "  15     211          2110                    68",
+        "  16     220          2200                    72"
+    ],
+    "mathematica": [
+        "nn = 75; b = MixedRadix[Reverse@ Prime@ NestWhileList[# + 1 &, 1, Times @@ Prime@ Range[#] <= nn &]]; Table[FromDigits[#, b] &@ Append[IntegerDigits[n, b], 0], {n, 0, nn}] (* Version 10.2, or *)",
+        "f[n_] := Block[{a = {{0, n}}}, Do[AppendTo[a, {First@ #, Last@ #} &@ QuotientRemainder[a[[-1, -1]], Times @@ Prime@ Range[# - i]]], {i, 0, #}] &@ NestWhile[# + 1 &, 0, Times @@ Prime@ Range[# + 1] <= n &]; Rest[a][[All, 1]]]; Table[Total[Times @@@ Transpose@ {Map[Times @@ # &, Prime@ Range@ Range[0, Length@ # - 1]], Reverse@ #}] &@ Append[f@ n, 0], {n, 0, 75}] (* _Michael De Vlieger_, Aug 26 2016 *)"
+    ],
+    "program": [
+        "(Scheme) (definec (A276154 n) (if (zero? n) n (+ (A276152 n) (A276154 (A276151 n)))))"
+    ],
+    "xref": [
+        "Complement: A276155.",
+        "Cf. A002110, A049345, A276151, A276152.",
+        "Cf. also A276156.",
+        "Analogous to A153880."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,2",
+    "author": "_Antti Karttunen_, Aug 24 2016",
+    "references": 7,
+    "revision": 18,
+    "time": "2016-08-31T20:54:12-04:00",
+    "created": "2016-08-25T20:59:04-04:00"
+}

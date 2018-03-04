@@ -1,0 +1,43 @@
+{
+    "number": 126704,
+    "data": "4889,50753,51481,66377,262937,308801,797681,840241,1000793,1046657,1772291,2303003,2986777,3032641,3107729,3365777,4757609,4804201,5135609,7530329,7534361,8061041,8065073,10516249,12394721,14638753",
+    "name": "Prime numbers that are the sum of three distinct positive sixth powers.",
+    "link": [
+        "Robert Israel, <a href=\"/A126704/b126704.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "4889 = 2^6 + 3^6 + 4^6 = 64 + 729 + 4096.",
+        "66377 = 4^6 + 5^6 + 6^6 = 4096 + 15625 + 46656."
+    ],
+    "maple": [
+        "N:= 10^10; # to find all terms <= N",
+        "A := {}:",
+        "for a from 1 to iroot(N,6) do",
+        "  for b from 1 to a-1 while a^6 + b^6 < N do",
+        "    for c from (a+b) mod 2 + 1 to b-1 by 2 do",
+        "      r:= a^6 + b^6 + c^6;",
+        "      if r > N then break fi;",
+        "      if isprime(r) then A:= A union {r} fi;",
+        "od od od:",
+        "sort(convert(A,list)); # _Robert Israel_, Dec 15 2015"
+    ],
+    "mathematica": [
+        "Union[Select[Total/@Subsets[Range[20]^6,{3}],PrimeQ]] (* _Harvey P. Dale_, Apr 20 2013 *)"
+    ],
+    "program": [
+        "(PARI) {m=16; p=m^6; w=[]; for(i=1,m-2,for(j=i+1, m-1, for(k=j+1, m, if((n=i^6+j^6+k^6)<p&&isprime(n), w=concat(w,n))))); w=vecsort(w); for(h=1, #w, print1(w[h], \",\"))} /* _Klaus Brockhaus_, Feb 16 2007 */"
+    ],
+    "xref": [
+        "Cf. A125516, A126657, A126658."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Tomas Xordan_, Feb 11 2007",
+    "ext": [
+        "Edited, corrected and extended by _Klaus Brockhaus_, Feb 16 2007"
+    ],
+    "references": 1,
+    "revision": 10,
+    "time": "2015-12-15T17:06:59-05:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 270834,
+    "data": "3,7,9,11,19,23,31,43,47,67,71,83,107,127,131,139,151,163,167,191,211,263,271,283,307,311,331,347,359,367,383,431,439,463,467,479,491,499,503,523,547,563,571,587,619,631,647,659,691,719,727,739,743,787,811,823,839,859,863,883,887",
+    "name": "Numbers n such that A256832(n)/A000129(n-1) is not divisible by n.",
+    "comment": [
+        "The computation of integers n such that A256832(n) is not divisible by n, leads to A213891. This sequence contains A213891 as a subsequence.",
+        "It appears that 9 is the only composite number in this sequence.",
+        "No composites below 10^7. - _Charles R Greathouse IV_, Apr 20 2016",
+        "No composites below 2*10^7. - _Charles R Greathouse IV_, May 06 2016"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A270834/b270834.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "7 is a term because 1*2*5*12*29*169 = 588120 is not divisible by 7."
+    ],
+    "mathematica": [
+        "With[{s = Sqrt@ 2}, Select[Range[2, 90], ! Divisible[Product[Expand[((1 + s)^k - (1 - s)^k)/2 s], {k, #}]/Simplify[((1 + s)^(# - 1) - (1 - s)^(# -",
+        "1))/(2 s)], #] &]] (* _Michael De Vlieger_, Mar 24 2016, after _Vaclav Kotesovec_ at A256832 and _Michael Somos_ at A000129 *)"
+    ],
+    "program": [
+        "(PARI) a000129(n) = ([2, 1; 1, 0]^n)[2, 1];",
+        "t(n) = Mod((prod(k=1, n, a000129(k)) / a000129(n-1)), n);",
+        "for(n=2, 1e3, if(lift(t(n)) != 0, print1(n, \", \")));",
+        "(PARI) is(n)=my(a,b=Mod(1,n),t=b); for(k=2,n-2,[a,b]=[b,a+2*b]; t*=b; if(t==0, return(0))); t*(2*a+5*b) && n>2 \\\\ _Charles R Greathouse IV_, Mar 24 2016"
+    ],
+    "xref": [
+        "Cf. A000129, A213891, A256832, A270617."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Altug Alkan_, Mar 23 2016",
+    "references": 2,
+    "revision": 26,
+    "time": "2016-05-06T00:18:19-04:00",
+    "created": "2016-03-26T11:50:54-04:00"
+}

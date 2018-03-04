@@ -1,0 +1,60 @@
+{
+    "number": 282409,
+    "data": "3,9,10,12,13,22,23,40,42,73,88,90,92,93,114,115,118,119,144,148,149,152,154,162,163,164,165,166,192,208,212,213,226,227,251,295,318,319,350,351,576,592,596,597,608,616,618,625,640,642,643,648,650,652,653",
+    "name": "Numbers n for which the number of odd members and the number of even members in the Collatz (3x+1) trajectory are both prime.",
+    "comment": [
+        "Or numbers m such that A078719(m) and A006666(m) are both prime.",
+        "The distinct pairs of primes in the order of appearance are: (3, 5), (7, 13), (2, 5), (3, 7), (5, 11), (2, 7), (43, 73), (5, 13), (11, 23), (7, 17), (41, 71), (3, 11), (23, 43), (19, 37),..."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A282409/b282409.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/3#3x1\">Index entries for sequences related to 3x+1 (or Collatz) problem</a>"
+    ],
+    "example": [
+        "13 is in the sequence because its Collatz trajectory is 13 -> 40 -> 20 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1 which contains 3 odd members and 7 even members."
+    ],
+    "maple": [
+        "nn:=10^6:",
+        "for n from 1 to 500 do:",
+        "  m:=n:i1:=1:i2:=0:",
+        "   for i from 1 to nn while(m<>1) do:",
+        "    if irem(m,2)=0",
+        "     then",
+        "     m:=m/2:i2:=i2+1:",
+        "     else",
+        "     m:=3*m+1:i1:=i1+1:",
+        "    fi:",
+        "   od:",
+        "     if isprime(i1) and isprime(i2)",
+        "     then",
+        "     printf(`%d, `,n):",
+        "     else",
+        "    fi:od:"
+    ],
+    "program": [
+        "(PARI) is(n)=my(e,o=1); while(n>1, n=if(n%2, o++; 3*n+1, e++; n/2)); isprime(e) && isprime(o) \\\\ _Charles R Greathouse IV_, Feb 14 2017",
+        "(Python)",
+        "from sympy import isprime",
+        "def a(n):",
+        "    l=[n, ]",
+        "    while True:",
+        "        if n%2==0: n/=2",
+        "        else: n = 3*n + 1",
+        "        l+=[n, ]",
+        "        if n<2: break",
+        "    o=list(filter(lambda i: i%2==1, l))",
+        "    e=list(filter(lambda i: i%2==0, l))",
+        "    return [o, e]",
+        "print [n for n in xrange(2, 1001) if isprime(len(a(n)[0])) and isprime(len(a(n)[1]))] # _Indranil Ghosh_, Apr 14 2017"
+    ],
+    "xref": [
+        "Cf. A078719, A006666, A006667."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Feb 14 2017",
+    "references": 1,
+    "revision": 12,
+    "time": "2017-04-15T09:20:35-04:00",
+    "created": "2017-02-14T22:28:46-05:00"
+}

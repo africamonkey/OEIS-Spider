@@ -1,0 +1,28 @@
+{
+    "number": 291441,
+    "data": "1,4,8,16,32,49,64,128,256,343,361,512,1024,2048,2401,2809,4096,6859,8192,12031,16384,16807,17161,32768,51529,65536,96721,117649,130321,131072,148877",
+    "name": "Matula-Goebel numbers of orderless same-trees with all leaves equal to 1.",
+    "comment": [
+        "See A289078 for the definition of orderless same-tree."
+    ],
+    "example": [
+        "a(20)=12031 corresponds to the following same-tree: {{1,1,1,1},{{1,1},{1,1}}}."
+    ],
+    "mathematica": [
+        "nn=200000;",
+        "primeMS[n_]:=If[n===1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "leafcount[n_]:=If[n===1,1,With[{m=primeMS[n]},If[Length[m]===1,leafcount[First[m]],Total[leafcount/@m]]]];",
+        "sameQ[n_]:=Or[n===1,With[{m=primeMS[n]},And[Length[m]>1,SameQ@@leafcount/@m,And@@sameQ/@m]]];",
+        "Select[Range[nn],sameQ]"
+    ],
+    "xref": [
+        "Cf. A007097, A109129, A214577, A280994, A289078, A289079, A291442, A291443."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Aug 23 2017",
+    "references": 6,
+    "revision": 9,
+    "time": "2017-09-01T05:02:14-04:00",
+    "created": "2017-09-01T05:02:14-04:00"
+}

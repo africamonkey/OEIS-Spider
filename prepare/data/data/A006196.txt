@@ -1,0 +1,51 @@
+{
+    "number": 6196,
+    "id": "M1143",
+    "data": "0,1,1,1,2,4,8,17,38,87,203,482,1160,2822,6929,17149,42736,107144,270060,683940,1739511,4441255,11378814,29245927,75386341,194838673,504802508,1310843123,3411070837,8893590439,23230151744,60780377599,159281030250",
+    "name": "Number of leftist trees with n leaves.",
+    "reference": [
+        "S. R. Finch, Mathematical Constants, Cambridge, 2003, p. 310.",
+        "D. E. Knuth, Vol. 3, Sect. 5.2.3 for definition.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vincenzo Librandi and Vaclav Kotesovec, <a href=\"/A006196/b006196.txt\">Table of n, a(n) for n = 0..1000</a> (first 200 terms from Vincenzo Librandi)",
+        "Steven R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/csolve/erradd.pdf\">Errata and Addenda to Mathematical Constants</a>, p. 39.",
+        "R. Kemp, <a href=\"http://dx.doi.org/10.1016/0020-0190(87)90165-7\">A note on the number of leftist trees</a>, Info. Proc. Lett., 25 (1987), 227-232.",
+        "R. Kemp, <a href=\"/A006196/a006196_1.pdf\">A note on the number of leftist trees</a>, Info. Proc. Lett., 25 (1987), 227-232. (Annotated scanned copy)",
+        "R. Kemp, <a href=\"/A006196/a006196.pdf\">Further results on leftist trees</a>, Random Graphs (1987), 103-130. (Annotated scanned copy)",
+        "P. Nogueira, <a href=\"http://dx.doi.org/10.1016/S0166-218X(00)00250-X\">On the combinatorics of leftist trees</a>, Discrete Appl. Math., 109 (2001) 253-278. MR1818241 (2002f:05090)",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Leftist_tree\">Leftist tree</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "G.f. satisfies A(x) = x+A(x*A(x)). - P. Nogueira, Oct 24 2003",
+        "Series reversion of g.f. A(x) is -A(-x). - _Michael Somos_, Jul 13 2003",
+        "a(n)=T(n,1),a(0)=0, T(n,m)=sum(j=0..m-1, binomial(m,j)* sum(k=0..floor((n+j)/2)-m, T(n-k-m,k+m-j)*T(k+m-j,m-j))), n>m, T(n,n)=1. - _Vladimir Kruchinin_, May 04 2012",
+        "a(n) ~ c * d^n / n^(3/2), where c = A247449 = 0.2503634293925235068... and d = A247448 = 2.7494879027499877498588... - _Vaclav Kotesovec_, Mar 10 2014"
+    ],
+    "maple": [
+        "A := x; for w from 2 to 42 do t1 := series( x+subs(x=x*A,A),x, w+2); t := coeff( t1, x,w); A := series(A+t*x^w, x, w+2); od: A;"
+    ],
+    "mathematica": [
+        "t[n_, n_] = 1; t[n_, m_] := t[n, m] = Sum[ Binomial[m, j] * Sum[ t[n-k-m, k+m-j] * t[k+m-j, m-j], {k, 0, (n+j)/2 - m}], {j, 0, m-1}]; a[n_] := t[n, 1]; Table[a[n], {n, 0, 32}] (* _Jean-Fran\u00e7ois Alcover_, Sep 05 2012, after _Vladimir Kruchinin_'s formula *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A); if(n<1, 0, A=O(x); for(i=1, n, A=x+subst(A, x, x*A)); polcoeff(A, n))}",
+        "(PARI) {a(n)=local(A, m); if(n<1, 0, A=x+O(x^2); m=1; while(m<n, m*=2; A=sqrt(subst(A, x, -4*x^2)^2/4+subst(A, x, 4*x^2)/4)+subst(A, x, -4*x^2)/2); polcoeff(-subst(A, x, -serreverse(A)), n)/4^(n-1))} /* _Michael Somos_, Sep 20 2006 */",
+        "(Maxima) T(n,m):=if n=m then 1 else sum(binomial(m,j)*sum(T(n-k-m,k+m-j)*T(k+m-j,m-j),k,0,floor((n+j)/2)-m),j,0,m-1); makelist(T(n,1),n,1,15); \\\\ _Vladimir Kruchinin_, May 04 2012"
+    ],
+    "xref": [
+        "Cf. A247448, A247449."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Corrected by _N. J. A. Sloane_, Oct 25 2003"
+    ],
+    "references": 6,
+    "revision": 56,
+    "time": "2017-11-05T11:49:47-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

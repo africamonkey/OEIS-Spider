@@ -1,0 +1,58 @@
+{
+    "number": 197818,
+    "data": "1,3,5,15,17,51,93,255,257,771,1453,3855,4593,13299,23901,65535,65537,196611,371373,983055,1175281,3394803,6103645,16711935,16908033,50593539,95245741,252706575,301011441,871576563,1566432605,4294967295",
+    "name": "Walsh matrix antidiagonals converted to decimal.",
+    "comment": [
+        "Infinite Walsh matrix with the negative ones replaced by zeros (negated binary Walsh matrix), the antidiagonals read as binary numbers.",
+        "This sequence is similar to A001317 (Sierpinski triangle rows converted to decimal). a(n) = A001317(n) iff n=0 or n is an element of A099627."
+    ],
+    "link": [
+        "Tilman Piesk, <a href=\"/A197818/b197818.txt\">Table of n, a(n) for n = 0..1023</a>",
+        "Tilman Piesk, <a href=\"http://commons.wikimedia.org/wiki/File:Binary_Walsh_matrix_256_neg.svg\">Negated binary Walsh matrix of size 256</a>",
+        "Tilman Piesk, <a href=\"http://commons.wikimedia.org/wiki/File:Binary_Walsh_matrix_256_neg;_diags_to_cols.svg\">The antidiagonals shown in a triangular matrix</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Walsh_matrix\">Walsh matrix</a>"
+    ],
+    "example": [
+        "Top left corner of the negated binary Walsh matrix:",
+        "1 1 1 1 1 1 1 1",
+        "1 0 1 0 1 0 1 0",
+        "1 1 0 0 1 1 0 0",
+        "1 0 0 1 1 0 0 1",
+        "1 1 1 1 0 0 0 0",
+        "1 0 1 0 0 1 0 1",
+        "1 1 0 0 0 0 1 1",
+        "1 0 0 1 0 1 1 0",
+        "The antidiagonals in binary and decimal are:",
+        "         1 =   1",
+        "        11 =   3",
+        "       101 =   5",
+        "      1111 =  15",
+        "     10001 =  17",
+        "    110011 =  51",
+        "   1011101 =  93",
+        "  11111111 = 255"
+    ],
+    "program": [
+        "(PARI)",
+        "N=2^5;  /* a power of 2 */",
+        "parity(x)= {",
+        "    my(s=1);",
+        "    while ( (x>>s),  x=bitxor(x, x>>s); s+=s; );",
+        "    return( bitand(x,1) );",
+        "}",
+        "W = matrix(N,N, i,j, if(parity(bitand(i-1,j-1)),0,1); );",
+        "a(n) = sum(k=0,n, 2^k * W[n-k+1,k+1] );",
+        "vector(N,n,a(n-1))",
+        "/* _Joerg Arndt_, Mar 27 2013 */"
+    ],
+    "xref": [
+        "Cf. A001317, A099627."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,2",
+    "author": "_Tilman Piesk_, Oct 18 2011",
+    "references": 2,
+    "revision": 38,
+    "time": "2014-03-29T02:42:26-04:00",
+    "created": "2011-10-24T18:28:25-04:00"
+}

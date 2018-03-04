@@ -1,0 +1,43 @@
+{
+    "number": 240542,
+    "data": "1,2,2,3,3,5,5,6,7,7,7,9,9,9,11,12,12,13,13,15,15,15,15,17,18,18,18,20,20,22,22,23,23,23,25,26,26,26,26,28,28,30,30,30,32,32,32,34,35,36,36,36,36,38,38,40,40,40,40,42,42,42,44,45,45,47,47,47,47,49,49,52,52",
+    "name": "Numbers a(n) that are the coordinates of the midpoints of the (rotated) Dyck paths from (0, n) to (n, 0) defined by A237593. Also the alternating row sums of A235791.",
+    "comment": [
+        "The sequence is closely related to the alternating harmonic series.",
+        "Its asymptotic behavior is lim_{k -> infinity} a(k)/k = log 2. The relative error is abs(a(k) - k*log2)/(k*log2) <= 2/sqrt(k).",
+        "Conjecture 1: the sequence of first positions of the alternating runs of odd and even numbers in a(k) equals A028982. Example: the positions in (1),(2),2,(3),3,5,5,(6),(7),7,7,9,9,9,11,(12),12,(13),13,15,... are 1,2,4,8,9,16,18,... Checked with a Mathematica function through a(1000000).",
+        "See A235791, A237591 and A237593 for additional formulas and properties.",
+        "2) The sequence of differences a(n) - a(n-1), for n>=1, appears to be equal to A067742(n), the sequence of middle divisors of n; as an empty sum, a(0) = 0, (which was conjectured by _Michel Marcus_ in the entry A237593). Checked with the two respective Mathematica functions up to n=100000. - _Hartmut F. W. Hoft_, Jul 17 2014",
+        "The number of occurrences of n is A259179(n). - _Omar E. Pol_, Dec 11 2016",
+        "Conjecture 3: a(n) is also the difference between the total number of partitions of all positive integers <= n into an odd number of consecutive parts, and the total number of partitions of all positive integers <= n into an even number of consecutive parts. - _Omar E. Pol_, Apr 28 2017",
+        "Conjecture 4: a(n) is also the total number of central subparts of all symmetric representations of sigma of all positive integers <= n. - _Omar E. Pol_, Apr 29 2017"
+    ],
+    "formula": [
+        "a(n) = Sum_{k = 1..A003056(n)} (-1)^(k+1) A235791(n,k).",
+        "a(n) = A285901(n) - A285902(n), assuming the conjecture 3. - _Omar E. Pol_, Feb 15 2018"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[(-1)^(k + 1) Ceiling[(n + 1)/k - (k + 1)/2], {k, 1, Floor[-1/2 + 1/2 Sqrt[8 n + 1]]}]; Table[a[n], {n, 40}]"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, floor(-1/2 + 1/2*sqrt(8*n + 1)), (-1)^(k + 1)*ceil((n + 1)/k - (k + 1)/2)); \\\\ _Indranil Ghosh_, Apr 21 2017",
+        "(Python)",
+        "from sympy import sqrt",
+        "import math",
+        "def a(n): return sum([(-1)**(k + 1) * int(math.ceil((n + 1)/k - (k + 1)/2)) for k in xrange(1, int(math.floor(-1/2 + 1/2*sqrt(8*n + 1))) + 1)])",
+        "print [a(n) for n in xrange(1, 101)] # _Indranil Ghosh_, Apr 21 2017"
+    ],
+    "xref": [
+        "Cf. A028982, A067742, A196020, A236104, A235791, A237270, A237271, A237591, A237593, A071562, A259179, A279387."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "1,2",
+    "author": "_Hartmut F. W. Hoft_, Apr 07 2014",
+    "ext": [
+        "More terms from _Omar E. Pol_, Apr 16 2014"
+    ],
+    "references": 26,
+    "revision": 75,
+    "time": "2018-02-24T09:30:47-05:00",
+    "created": "2014-04-16T13:12:20-04:00"
+}

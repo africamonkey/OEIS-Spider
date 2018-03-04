@@ -1,0 +1,41 @@
+{
+    "number": 196304,
+    "data": "1,1,5,64,1587,65421,4071178,357962760,42379107165,6512954469625,1262574678261816,301690485704179584,87187147717429037215,29994563760476311689525,12119686846920536310216000,5685713204308826743851247936,3066004482905684870319668989977",
+    "name": "G.f.: x = Sum_{n>=1} a(n)*x^n/(1 + n*(n+1)/2*x)^n.",
+    "comment": [
+        "Compare g.f. to: x = Sum_{n>=1} n^(n-2)*x^n/(1 + n*x)^n, which generates coefficients in the series reversion of x*exp(-x)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A196304/b196304.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "formula": [
+        "E.g.f.: x = Sum_{n>=1} a(n)*x^n/(n-1)! * exp(-n*(n+1)/2*x).",
+        "a(n) = A195737(n)/n for n>=1.",
+        "a(n) = Sum_{k=1..n-1} (-1)^(k-1)*binomial(n-1,k)*binomial(n+1-k,2)^k*a(n-k) for n>=2. - _Jonathan Noel_, May 05 2017"
+    ],
+    "example": [
+        "x = x/(1+x) + 1*x^2/(1+3*x)^2 + 5*x^3/(1+6*x)^3 + 64*x^4/(1+10*x)^4 + 1587*x^5/(1+15*x)^5 +...+ a(n)*x^n/(1+n*(n+1)/2*x)^n +...",
+        "The coefficients a(n) also satisfy:",
+        "x = x*exp(-x) + 1*x^2/1!*exp(-3*x) + 5*x^3/2!*exp(-6*x) + 64*x^4/3!*exp(-10*x) + 1587*x^5/4!*exp(-15*x) +...+ a(n)*x^n/(n-1)!*exp(-n*(n+1)/2*x) +..."
+    ],
+    "maple": [
+        "p:= l-> (n-> n!*LinearAlgebra[Determinant](Matrix(n, (i, j)",
+        "         -> (t->`if`(t<0, 0, l[i]^t/t!))(j-i+1))))(nops(l)):",
+        "a:= n-> p([i*(i+1)/2$i=1..n-1]):",
+        "seq(a(n), n=1..20);  # _Alois P. Heinz_, Dec 03 2015"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n<1, 0, polcoeff(x-sum(m=1, n-1, a(m)*x^m/(1+m*(m+1)/2*x+x*O(x^n))^m), n))}",
+        "(PARI) {a(n)=if(n<1, 0, (n-1)!*polcoeff(x-sum(m=1, n-1, a(m)*x^m/(m-1)!*exp(-m*(m+1)/2*x+x*O(x^n))), n))}"
+    ],
+    "xref": [
+        "Cf. A195737, A082157."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Sep 30 2011",
+    "references": 2,
+    "revision": 22,
+    "time": "2017-05-05T04:52:24-04:00",
+    "created": "2011-09-30T19:23:54-04:00"
+}

@@ -1,0 +1,29 @@
+{
+    "number": 214019,
+    "data": "1,2,3,4,5,6,7,8,9,11,22,33,44,55,66,77,88,99,111,222,333,370,407,444,481,518,555,592,629,666,777,888,999,1111,1818,2222,3333,4444,5555,6666,7777,8888,9999,11111,22222,33333,44444,55555,66666,77777,88888,99999",
+    "name": "a(n) is the smallest positive number such that n divides the sum of all numbers formed by cyclically permuting digits of a(n).",
+    "comment": [
+        "Many terms in this sequence are the same as A160818(n) but not all."
+    ],
+    "example": [
+        "For example with 481: 481 + 814 + 148 = 1443 and 481 divides 1443."
+    ],
+    "maple": [
+        "P:=proc(q) local a,b,c,k,n; for n from 1 to q do a:=n; b:=a; c:=ilog10(a);",
+        "for k from 1 to c do a:=(a mod 10)*10^c+trunc(a/10); b:=b+a; od;",
+        "if type(b/n,integer) then print(n); fi; od; end: P(10^9); # _Paolo P. Lava_, Sep 16 2014"
+    ],
+    "mathematica": [
+        "lst = {}; cycDigitPerms[n_Integer, b_: 10] := Module[{list = {n}, digits = IntegerDigits[n, b], len, counter, holder, next}, len = Length[digits]; counter = 1; While[counter < len, holder = digits[[-1]]; digits = Drop[digits, -1]; digits = Insert[digits, holder, 1]; list = Append[list, FromDigits[digits, b]]; counter++]; Return[list]]; Do[If[Divisible[Total@cycDigitPerms[n], n], AppendTo[lst, n]], {n, 10^5}]; lst (* Most of the code is from _Alonso del Arte_ *)"
+    ],
+    "xref": [
+        "Cf. A160818."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Arkadiusz Wesolowski_, Jul 01 2012",
+    "references": 0,
+    "revision": 17,
+    "time": "2014-09-17T20:47:30-04:00",
+    "created": "2012-07-04T03:02:06-04:00"
+}

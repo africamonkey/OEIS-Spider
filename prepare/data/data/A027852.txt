@@ -1,0 +1,65 @@
+{
+    "number": 27852,
+    "data": "0,1,1,3,6,16,37,96,239,622,1607,4235,11185,29862,80070,216176,586218,1597578,4370721,12003882,33077327,91433267,253454781,704429853,1962537755,5479855546,15332668869,42983656210,120716987723,339596063606,956840683968",
+    "name": "Number of connected functions on n points with a loop of length 2.",
+    "comment": [
+        "Also rooted trees on n+1 nodes where root has degree 2.",
+        "Also trees on n nodes in which one pair of adjacent nodes is labeled in a special way. - _Washington Bomfim_, Jul 06 2012",
+        "Guy (1988) calls these tadpole graphs. - _N. J. A. Sloane_, Nov 04 2014"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A027852/b027852.txt\">Table of n, a(n) for n = 1..2136</a>",
+        "Washington Bomfim, <a href=\"/A027852/a027852.gif\">Illustration of initial terms</a>",
+        "R. K. Guy, <a href=\"/A000081/a000081.pdf\">Letter to N. J. A. Sloane, 1988-04-12</a> (annotated scanned copy) Includes illustrations for n <= 6.",
+        "R. J. Mathar, <a href=\"http://arxiv.org/abs/1603.00077\">Topologically distinct sets of non-intersecting circles in the plane</a>, arXiv:1603.00077 [math.CO] (2016), Eq. (75).",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "G.f.: A(x) = (B(x)^2 + B(x^2))/2 where B(x) is g.f. of A000081.",
+        "a(n) = Sum_(p=1..L-1) {f(p) * f(n-p)} + f(L) * f(n-L) * (n mod 2) + (f(L)+1)*f(L)/2*(1-n mod 2), where L = floor(n/2), and f = A000081. - _Washington Bomfim_, Jul 06 2012",
+        "a(n) ~ c * d^n / n^(3/2), where d = A051491 = 2.9557652856519949747148..., c = A187770 = 0.43992401257102530404090339... . - _Vaclav Kotesovec_, Sep 12 2014"
+    ],
+    "maple": [
+        "with(numtheory): b:= proc(n) option remember; local d, j; `if`(n<=1, n, (add(add(d*b(d), d=divisors(j)) *b(n-j), j=1..n-1))/ (n-1)) end: a:= n-> (add(b(i) *b(n-i), i=0..n) +`if`(irem(n, 2)=0, b(n/2), 0))/2: seq(a(n), n=1..50);  # _Alois P. Heinz_, Aug 22 2008, revised Oct 07 2011",
+        "# second, re-usable version",
+        "A027852 := proc(N::integer)",
+        "    local dh, Nprime;",
+        "    dh := 0 ;",
+        "    for Nprime from 0 to N do",
+        "        dh := dh+A000081(Nprime)*A000081(N-Nprime) ;",
+        "    end do:",
+        "    if type(N,'even') then",
+        "        dh := dh+A000081(N/2) ;",
+        "    end if;",
+        "    dh/2 ;",
+        "end proc: # _R. J. Mathar_, Mar 06 2017"
+    ],
+    "mathematica": [
+        "Needs[\"Combinatorica`\"];nn = 30; s[n_, k_] := s[n, k] = a[n + 1 - k] + If[n < 2 k, 0, s[n - k, k]]; a[1] = 1; a[n_] := a[n] = Sum[a[i] s[n - 1, i] i, {i, 1, n - 1}]/(n - 1); rt = Table[a[i], {i, 1, nn}]; Take[CoefficientList[CycleIndex[DihedralGroup[2], s] /. Table[s[j] -> Table[Sum[rt[[i]] x^(k*i), {i, 1, nn}], {k, 1, nn}][[j]], {j, 1, nn}], x], {2, nn}]  (* _Geoffrey Critzer_, Oct 12 2012, after code given by _Robert A. Russell_ in A000081 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "max_n = 650; f=vector(max_n);           \\\\ f[n] = A000081[n], n=1..max_n",
+        "sum2(k) = {local(s); s=0; fordiv(k,d, s += d*f[d]); return(s)};",
+        "Init_f()={f[1]=1;",
+        "for(n =1, max_n -2, s=0; for(k=1,n,s+=sum2(k)*f[n-k+1]);f[n+1]=s/n)};",
+        "a(n) = {s=0; if(n==1,return(s)); L = floor(n/2);",
+        "for(p=1,L-1, s += f[p]*f[n-p]);",
+        "s += f[L]*f[n-L]*(n%2) + (f[L]+1)*f[L]/2*(1-n%2); return(s)}",
+        "Init_f(); for(n=1, max_n, print(n, \" \", a(n))) \\\\ b-file format",
+        "\\\\ _Washington Bomfim_, Jul 06 2012"
+    ],
+    "xref": [
+        "Cf. A000081, A000226, A001372, A002861, A051491."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Christian G. Bower_, Dec 14 1997",
+    "ext": [
+        "Edited by _Christian G. Bower_, Feb 12 2002"
+    ],
+    "references": 10,
+    "revision": 49,
+    "time": "2017-10-02T02:14:32-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 271661,
+    "data": "1,1,2,3,5,7,9,13,18,24,32,42,55,71,91,116,147,185,231,288,357,440,540,661,807,980,1186,1432,1724,2069,2476,2956,3521,4183,4958,5865,6923,8155,9587,11251,13180,15411,17990,20967,24399,28348,32886,38098,44075",
+    "name": "Expansion of phi(-x^6) / f(-x) in powers of x where phi(), f() are Ramanujan theta functions.",
+    "comment": [
+        "Ramanujan theta functions: f(q) (see A121373), phi(q) (A000122), psi(q) (A010054), chi(q) (A000700)."
+    ],
+    "reference": [
+        "D. M. Bressoud, Analytic and combinatorial generalizations of the Rogers-Ramanujan identities, Mem. Amer. Math. Soc. 24 (1980), no. 227, 54 pp.",
+        "Srinivasa Ramanujan, The Lost Notebook and Other Unpublished Papers, Narosa Publishing House, New Delhi, 1988. See page 6 equation 2."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A271661/b271661.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Andrew Sills, <a href=\"https://works.bepress.com/andrew_sills/40/\">Rademacher-Type Formulas for Restricted Partition and Overpartition Functions</a>, Ramanujan Journal, 23 (1-3): 253-264, 2010.",
+        "M. Somos, <a href=\"http://somos.crg4.com/multiq.html\">Introduction to Ramanujan theta functions</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RamanujanThetaFunctions.html\">Ramanujan Theta Functions</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Bailey_pair\">Bailey pair</a>"
+    ],
+    "formula": [
+        "Expansion of f(x^2, x^4) / psi(-x) in powers of x where psi(), f(, ) are Ramanujan theta functions.",
+        "Expansion of q^(1/24) * eta(q^6)^2 / (eta(q) * eta(q^12)) in powers of q.",
+        "Euler transform of period 12 sequence [ 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 0, ...].",
+        "G.f.: Sum_{k>=0} x^(k^2) (-x, x^2)_k / (x)_{2*k}.",
+        "a(n) ~ Pi * BesselI(1, Pi*sqrt(24*n-1)/(4*sqrt(3))) / sqrt(24*n-1) ~ exp(sqrt(n/2)*Pi) / (2^(7/4)*sqrt(3)*n^(3/4)) * (1 - (3/(4*Pi) + Pi/48)/sqrt(2*n) + (5/128 - 15/(64*Pi^2) + Pi^2/9216)/n). - _Vaclav Kotesovec_, Apr 18 2016, extended Jan 10 2017"
+    ],
+    "example": [
+        "G.f. = 1 + x + 2*x^2 + 3*x^3 + 5*x^4 + 7*x^5 + 9*x^6 + 13*x^7 + 18*x^8 + ...",
+        "G.f. = q^-1 + q^23 + 2*q^47 + 3*q^71 + 5*q^95 + 7*q^119 + 9*q^143 + 13*q^167 + .."
+    ],
+    "mathematica": [
+        "a[ n_] := SeriesCoefficient[ EllipticTheta[ 4, 0, x^6] / QPochhammer[ x], {x, 0, n}];",
+        "a[ n_] := If[ n < 0, 0, SeriesCoefficient[ Sum[ x^k^2 QPochhammer[ -x, x^2, k] / QPochhammer[ x, x, 2 k] // FunctionExpand, {k, 0, Sqrt@n}], {x, 0, n}]];",
+        "nmax = 50; CoefficientList[Series[Product[(1-x^(6*k)) / ((1-x^k) * (1+x^(6*k))), {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Apr 18 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A); if( n<0, 0, A = x * O(x^n); polcoeff( eta(x^6 + A)^2 / (eta(x + A) * eta(x^12 + A)), n))};"
+    ],
+    "xref": [
+        "Cf. A000700, A070047, A108961, A108962, A280937, A280938."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Michael Somos_, Apr 11 2016",
+    "references": 6,
+    "revision": 18,
+    "time": "2017-01-11T08:08:39-05:00",
+    "created": "2016-04-11T21:24:09-04:00"
+}

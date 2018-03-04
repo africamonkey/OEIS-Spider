@@ -1,0 +1,57 @@
+{
+    "number": 1711,
+    "id": "M4429 N1873",
+    "data": "1,7,47,342,2754,24552,241128,2592720,30334320,383970240,5231113920,76349105280,1188825724800,19675048780800,344937224217600,6386713749964800,124548748102195200,2551797512248320000,54804198761303040000,1231237843834521600000",
+    "name": "Generalized Stirling numbers.",
+    "comment": [
+        "The asymptotic expansion of the higher order exponential integral E(x,m=2,n=3) ~ exp(-x)/x^2*(1 - 7/x + 47/x^2 - 342/x^3 + 2754/x^4 - 24552/x^5 + 241128/x^6 - ... ) leads to the sequence given above. See A163931 and A028421 for more information. - _Johannes W. Meijer_, Oct 20 2009",
+        "For n > 4, a(n) mod n = 0 for n composite, = n-3 for n prime. - _Gary Detlefs_, Jul 18 2011"
+    ],
+    "reference": [
+        "Mitrinovic, D. S.; Mitrinovic, R. S.; Tableaux d'une classe de nombres relies aux nombres de Stirling. Univ. Beograd. Publ. Elektrotehn. Fak. Ser. Mat. Fiz. No. 77 1962, 77 pp.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A001711/b001711.txt\">Table of n, a(n) for n = 0..440</a>[Terms 0 to 100 computed by T. D. Noe; terms 101 to 440 computed by G. C. Greubel, Jan 15 2017]",
+        "Robert E. Moritz, <a href=\"/A001701/a001701.pdf\">On the sum of products of n consecutive integers</a>, Univ. Washington Publications in Math., 1 (No. 3, 1926), 44-49 [Annotated scanned copy]",
+        "J. Riordan, <a href=\"/A000254/a000254.pdf\">Letter of 04/11/74</a>"
+    ],
+    "formula": [
+        "E.g.f.: -log(1 - x)/(1 - x)^3 if offset 1. With offset 0: (d/dx)(-log(1 - x)/(1 - x)^3) = (1 - 3*log(1 - x))/(1 - x)^4.",
+        "a(n) = Sum_{k=0..n} ((-1)^(n+k)*(k+1)*3^k*Stirling1(n+1, k+1)). - Borislav Crstici (bcrstici(AT)etv.utt.ro), Jan 26 2004",
+        "a(n) = n!*Sum_{k=0..n-1} ((-1)^k*binomial(-3,k)/(n-k)). - _Milan Janjic_, Dec 14 2008",
+        "a(n) = ( A000254(n+3) - 3*A001710(n+3) )/2. - _Gary Detlefs_, May 24 2010",
+        "a(n) = ((n+3)!/4) * (2*h(n+3) - 3), where h(n) = Sum_{k=1..n} (1/k) is the n-th harmonic number. - _Gary Detlefs_, Aug 15 2010",
+        "a(n) = n!*[2]h(n), where [k]h(n) denotes the k-th successive summation of the harmonic numbers from 0 to n. With offset 1. - _Gary Detlefs_, Jan 04 2011",
+        "a(n) = (n+3)! * Sum_{k=1..n+1} (1/(2*k+4)). - _Gary Detlefs_, Sep 14 2011",
+        "a(n) = (n+1)! * Sum_{k=0..n} (binomial(k+2,2)/(n+1-k)). - _Gary Detlefs_, Dec 01 2011",
+        "a(n) = A001705(n+2) - A182541(n+4). - _Anton Zakharov_, Jul 02 2016",
+        "a(n) ~ n^(n+7/2) * exp(-n) * sqrt(Pi/2) * log(n) * (1 + (gamma - 3/2)/log(n)), where gamma is the Euler-Mascheroni constant A001620. - _Vaclav Kotesovec_, Jul 12 2016"
+    ],
+    "maple": [
+        "a := n-> add(1/2*((n+3)!/(k+3)), k=0..n): seq(a(n), n=0..19); # _Zerinvary Lajos_, Jan 22 2008",
+        "a := n -> (n+1)!*hs2(n+1): hs2 := n-> add(hs(k), k=0..n): hs := n-> add(h(k), k=0..n): h := n-> add(1/k, k=1..n): seq(a(n), n=0..19); # _Gary Detlefs_, Jan 01 2011"
+    ],
+    "mathematica": [
+        "f[k_] := k + 2; t[n_] := Table[f[k], {k, 1, n}]; a[n_] := SymmetricPolynomial[n - 1, t[n]]; Table[a[n], {n, 1, 16}]; (* _Clark Kimberling_, Dec 29 2011 *)",
+        "Table[(n + 3)!*Sum[1/(2*k + 4), {k, 1, n + 1}], {n,0,100}] (* _G. C. Greubel_, Jan 15 2017 *)"
+    ],
+    "program": [
+        "(PARI) for(n=0, 19, print1((n+1)! * sum(k=0, n, binomial(k + 2, 2) / (n + 1 - k)),\", \")) \\\\ _Indranil Ghosh_, Mar 13 2017"
+    ],
+    "xref": [
+        "Related to n!*the k-th successive summation of the harmonic numbers: k=0..A000254, k=1..A001705, k=2..A001711, k=3..A001716, k=4..A001721, k=5..A051524, k=6..A051545, k=7..A051560, k=8..A051562, k=9..A051564."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from Borislav Crstici (bcrstici(AT)etv.utt.ro), Jan 26 2004",
+        "Maple programs corrected and edited by _Johannes W. Meijer_, Nov 28 2012"
+    ],
+    "references": 23,
+    "revision": 89,
+    "time": "2018-01-10T18:05:29-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

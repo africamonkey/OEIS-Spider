@@ -1,0 +1,39 @@
+{
+    "number": 215989,
+    "data": "1,1,3,6,13,26,56,115,247,533,1174,2633,6031,14055,33343,80386,196569,487017,1220491,3090331,7896160,20341323,52783053,137867631,362237861,956881142,2540051927,6772828374,18133435767,48734282113,131434508449,355627568994",
+    "name": "Number of simple unlabeled graphs on n nodes with exactly 9 connected components that are trees or cycles.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A215989/b215989.txt\">Table of n, a(n) for n = 9..650</a>"
+    ],
+    "example": [
+        "a(11) = 3: .o-o o o o o.  .o-o o o o o.  .o o o o o o.",
+        "           .|/         .  .|          .  .| |        .",
+        "           .o o o o o  .  .o o o o o  .  .o o o o o  ."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; local d, j; `if`(n<=1, n,",
+        "      (add(add(d*b(d), d=divisors(j)) *b(n-j), j=1..n-1))/(n-1))",
+        "    end:",
+        "g:= proc(n) option remember; local k; `if`(n>2, 1, 0)+ b(n)-",
+        "      (add(b(k)*b(n-k), k=0..n) -`if`(irem(n, 2)=0, b(n/2), 0))/2",
+        "    end:",
+        "p:= proc(n, i, t) option remember; `if`(n<t, 0, `if`(n=t, 1,",
+        "      `if`(min(i, t)<1, 0, add(binomial(g(i)+j-1, j)*",
+        "       p(n-i*j, i-1, t-j), j=0..min(n/i,t)))))",
+        "    end:",
+        "a:= n-> p(n, n, 9):",
+        "seq(a(n), n=9..50);"
+    ],
+    "xref": [
+        "Column k=9 of A215977.",
+        "The labeled version is A215859."
+    ],
+    "keyword": "nonn",
+    "offset": "9,3",
+    "author": "_Alois P. Heinz_, Aug 29 2012",
+    "references": 3,
+    "revision": 7,
+    "time": "2014-12-04T07:00:09-05:00",
+    "created": "2012-08-29T22:21:47-04:00"
+}

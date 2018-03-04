@@ -1,0 +1,55 @@
+{
+    "number": 36820,
+    "data": "1,1,1,1,2,3,4,4,5,7,10,12,14,16,21,27,33,37,44,54,68,80,92,106,129,155,182,207,240,283,337,389,444,508,594,692,797,902,1030,1187,1373,1564,1770,2004,2295,2624,2978,3349,3783,4293,4880,5501,6174,6932,7830,8834",
+    "name": "Number of partitions satisfying (cn(2,5) = cn(3,5) = 0).",
+    "comment": [
+        "For a given partition cn(i,n) means the number of its parts equal to i modulo n.",
+        "Short: (2=3 := 0).",
+        "It appears that this sequence is related to the generalized heptagonal numbers A085787 in the same way as the partition numbers A000041 are related to the generalized pentagonal numbers A001318. (See the table in comments section of A195825.) Conjecture: Column 1 of triangle A195837. Also 1 together with the row sums of triangle A195837. Also column 3 of the square array A195825. - _Omar E. Pol_, Oct 08 2011",
+        "Note that this sequence contains two plateaus: [1, 1, 1, 1] and [4, 4]. For more information see A195825 and A210843. - _Omar E. Pol_, Jun 23 2012"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A036820/b036820.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "Euler transform of period 5 sequence [1, 0, 0, 1, 1, ...]. - _Michael Somos_, Feb 09 2012",
+        "Expansion of 1 / f(-x, -x^4) in powers of x where f(, ) is Ramanujan's general theta function. - _Michael Somos_, Sep 08 2012",
+        "Convolution inverse of A113429. - _Michael Somos_, Feb 09 2012",
+        "G.f.: 1 / (Product_{k>0} (1 - x^(5*k)) * (1 - x^(5*k - 1)) * (1 - x^(5*k - 4))). - _Michael Somos_, Sep 08 2012",
+        "G.f.: 1 / (Sum_{k in Z} (-1)^k * x^(k * (5*k + 3) / 2)). - _Michael Somos_, Sep 08 2012",
+        "a(n) ~ sqrt(1+sqrt(5)) * exp(sqrt(2*n/5)*Pi) / (2^(5/2)*5^(1/4)*n). - _Vaclav Kotesovec_, Oct 06 2015",
+        "a(n) = (1/n)*Sum_{k=1..n} A284361(k)*a(n-k), a(0) = 1. - _Seiichi Manyama_, Mar 25 2017"
+    ],
+    "example": [
+        "G.f. = 1 + x + x^2 + x^3 + 2*x^4 + 3*x^5 + 4*x^6 + 4*x^7 + 5*x^8 + 7*x^9 + 10*x^10 + ...",
+        "G.f. = q^-9 + q^31 + q^71 + q^111 + 2*q^151 + 3*q^191 + 4*q^231 + 4*q^271 + 5*q^311 + ... - _Michael Somos_, Sep 08 2012"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(add(d*[1, 1, 0, 0, 1]",
+        "      [1+irem(d, 5)], d=divisors(j))*a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Apr 04 2014"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n == 0, 1, Sum[ Sum[ d*{1, 1, 0, 0, 1}[[1 + Mod[d, 5]]], {d, Divisors[j]}] * a[n-j], {j, 1, n}]/n]; Table[a[n], {n, 0, 60}] (* _Jean-Fran\u00e7ois Alcover_, Apr 15 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( 1 / prod( k=1, (n+4)\\5, (1 - x^(5*k - 4)) * (1 - x^(5*k - 1)) * (1 - x^(5*k)), 1 + x * O(x^n)), n))}; /* _Michael Somos_, Feb 09 2012 */",
+        "(GWbasic)' A program with two A-numbers:",
+        "10 Dim A085787(100), A057077(100), a(100): a(0)=1",
+        "20 For n = 1 to 56: For j = 1 to n",
+        "30 If A085787(j) <= n then a(n) = a(n) + A057077(j-1)*a(n - A085787(j))",
+        "40 Next j: Print a(n-1);: Next n ' _Omar E. Pol_, Jun 10 2012"
+    ],
+    "xref": [
+        "Cf. A113429."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 17,
+    "revision": 64,
+    "time": "2017-04-01T21:09:23-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

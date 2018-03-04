@@ -1,0 +1,32 @@
+{
+    "number": 204218,
+    "data": "1,1,2,7,22,74,271,1012,3858,15046,59579,238825,967873,3958517,16316594,67716000,282719162,1186633647,5004102122,21192022233,90089538788,384305738731,1644544501988,7057705570877,30368821119351,130993073168419,566297366630412,2453269044761359",
+    "name": "G.f. satisfies: A(x) = 1 + Sum_{n>=1} n * (x*A(x))^(n*(n+1)/2) / (1 - x^n*A(x)^n).",
+    "formula": [
+        "G.f. satisfies: A(x) = 1 + 1/Theta4(x*A(x))^2 * Sum_{n>=1} (-1)^(n-1) * n * (x*A(x))^(n*(n+1)/2) * (1 - x^n*A(x)^n)/(1 + x^n*A(x)^n)^2 where Theta4(x) = 1 + 2*Sum_{n>=1} (-x)^(n^2), due to an identity of Ramanujan.",
+        "G.f. satisfies: A(x) = 1 + Sum_{n>=1} A204217(n)*x^n*A(x)^n."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 7*x^3 + 22*x^4 + 74*x^5 + 271*x^6 + 1012*x^7 +...",
+        "where A(x) = 1 + x*A(x)/(1 - x*A(x)) + 2*x^3*A(x)^3/(1 - x^2*A(x)^2) + 3*x^6*A(x)^6/(1 - x^3*A(x)^3) + 4*x^10*A(x)^10/(1 - x^4*A(x)^4) +...",
+        "Also, by a Ramanujan identity:",
+        "(A(x) - 1)*Theta4(x*A(x))^2 = x*A(x)*(1 - x*A(x))/(1 + x*A(x))^2 - 2*x^3*A(x)^3*(1 - x^2*A(x)^2)/(1 + x^2*A(x)^2)^2 + 3*x^6*A(x)^6*(1 - x^3*A(x)^3)/(1 + x^3*A(x)^3)^2 - 4*x^10*A(x)^10*(1 - x^4*A(x)^4)/(1 + x^4*A(x)^4)^2 +..."
+    ],
+    "mathematica": [
+        "a[n_] := (For[A = 1+x; i = 1, i <= n, i++, A = 1+Sum[m*(x*A)^(m*(m+1)/2)/(1 - (x*A + x*O[x]^n)^m), {m, 1, n}]]; Coefficient[A, x, n]); Table[an = a[n]; Print[an]; an, {n, 0, 27}] (* _Jean-Fran\u00e7ois Alcover_, Jun 04 2017, translated from PARI *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,A=1+sum(m=1,n,m*(x*A)^(m*(m+1)/2)/(1-(x*A +x*O(x^n))^m)));polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+x,Theta4=1+2*sum(m=1,sqrtint(n+1),(-x)^(m^2))); for(i=1,n,A=1+1/subst(Theta4^2,x,x*A+x*O(x^n))*sum(m=1,sqrtint(2*n+1),(-1)^(m-1)*m*(x*A)^(m*(m+1)/2)*(1-(x*A)^m)/(1+(x*A)^m+x*O(x^n))^2));polcoeff(A,n)}"
+    ],
+    "xref": [
+        "Cf. A204217."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jan 12 2012",
+    "references": 1,
+    "revision": 9,
+    "time": "2017-06-04T12:06:06-04:00",
+    "created": "2012-01-12T20:28:25-05:00"
+}

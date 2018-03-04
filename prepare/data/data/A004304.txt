@@ -1,0 +1,41 @@
+{
+    "number": 4304,
+    "id": "M0364",
+    "data": "1,2,2,6,28,160,1036,7294,54548,426960,3463304,28910816,247104976,2154192248,19097610480,171769942086,1564484503044,14407366963440,133978878618904,1256799271555872,11881860129979440",
+    "name": "Number of nonseparable planar tree-rooted maps with n edges.",
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. R. S. Walsh, A. B. Lehman, <a href=\"http://dx.doi.org/10.1016/0095-8956(75)90050-7\">Counting rooted maps by genus. III: Nonseparable maps</a>, J. Combinatorial Theory Ser. B 18 (1975), 222-259. See Table IVc."
+    ],
+    "formula": [
+        "From _Paul D. Hanna_, Nov 26 2009: (Start)",
+        "G.f.: A(x) = [x/Series_Reversion(x*F(x)^2)]^(1/2) where F(x) = g.f. of A005568, where A005568(n) is the product of two successive Catalan numbers C(n)*C(n+1).",
+        "G.f.: A(x) = F(x/A(x)^2) where A(x*F(x)^2) = F(x) where F(x) = g.f. of A005568.",
+        "G.f.: A(x) = G(x/A(x)) where A(x*G(x)) = G(x) where F(x) = g.f. of A168450.",
+        "G.f.: A(x) = x/Series_Reversion(x*G(x)) where G(x) = g.f. of A168450.",
+        "Self-convolution yields A168451.",
+        "(End)"
+    ],
+    "maple": [
+        "A004304 := proc(n) local N,x,ode ; Order := n+1 ; ode := x^2*diff(N(x),x,x)*(N(x)^3-16*x*N(x)) ; ode := ode + (x*diff(N(x),x))^3*(16-6*N(x)) ; ode := ode + (x*diff(N(x),x))^2*(12*N(x)^2-16*x-24*N(x)) ; ode := ode + x*diff(N(x),x)*(-8*N(x)^3+24*x*N(x)+12*N(x)^2) ; ode := ode + 2*N(x)^2*(N(x)^2-N(x)-6*x) ; dsolve({ode=0,N(0)=1,D(N)(0)=2},N(x),type=series) ; convert(%,polynom) ; rhs(%) ; RETURN( coeftayl(%,x=0,n)) ; end; for n from 0 to 20 do printf(\"%d,\",A004304(n)) ; od ; # _R. J. Mathar_, Aug 18 2006"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(C_2=vector(n+1,m,(binomial(2*m-2,m-1)/m)*(binomial(2*m,m)/(m+1))));polcoeff((x/serreverse(x*Ser(C_2)^2))^(1/2),n)} \\\\ _Paul D. Hanna_, Nov 26 2009"
+    ],
+    "xref": [
+        "Cf. A000264.",
+        "Cf. A005568, A168450, A168451, A168452. - _Paul D. Hanna_, Nov 26 2009"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _R. J. Mathar_, Aug 18 2006"
+    ],
+    "references": 6,
+    "revision": 19,
+    "time": "2017-08-18T18:12:25-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 80155,
+    "data": "2,3,11,31,47,229,251,577,857,859,911,1123,1223,1297,1571,2161,2417,2551,2879,3319,5273,6121,6947,7603,8273,12721,12953,13291,15683,16453,17207,18133,20399,23743,23909,25849,28277,28879,35291,35461,36107,43573",
+    "name": "a(1)=2; a(n) for n>1 is the smallest prime number > a(n-1) such that the concatenation of all previous terms is also prime.",
+    "comment": [
+        "See A073640 for the sequence involving concatenation of 2 successive terms, A080153 for 3 successive terms. Primeness is established using Maple's isprime() function, so later terms should be regarded as \"probable\"."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A080155/b080155.txt\">Table of n, a(n) for n = 1..201</a>"
+    ],
+    "formula": [
+        "For any n>1, a(n) is prime and a(n) > a(n-1). a(n) is the smallest prime for which a(1)//a(2)//...//a(n) is prime. // denotes concatenation."
+    ],
+    "example": [
+        "E.g. a(5)=47 since this is the smallest prime>a(4) which, when concatenated with the concatenation of a(1) to a(4) (=231131), also yields a prime, in this case 23113147."
+    ],
+    "maple": [
+        "with(numtheory): pout := [2]: nout := [1]: for n from 2 to 5000 do: p := ithprime(n): d := parse(cat(seq(pout[i],i=1..nops(pout)),p)): if (isprime(d)) then pout := [op(pout),p]: nout := [op(nout),n]: fi: od: pout;"
+    ],
+    "mathematica": [
+        "f[s_List] := Block[{p=NextPrime@s[[-1]], pp=FromDigits@Flatten[IntegerDigits/@s]}, While[!PrimeQ[pp*10^Floor[Log[10,p]+1]+p], p=NextPrime@p]; Append[s,p]]; Nest[f,{2},40]"
+    ],
+    "xref": [
+        "Cf. A073640, A080152, A080153, A080154, A080156.",
+        "Cf. A033679, A069603, A074338."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "Mark Hudson (mrmarkhudson(AT)hotmail.com), Jan 31 2003",
+    "references": 3,
+    "revision": 13,
+    "time": "2014-04-12T02:24:19-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

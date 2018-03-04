@@ -1,0 +1,56 @@
+{
+    "number": 92287,
+    "data": "1,1,2,6,96,480,414720,2903040,5945425920,4334215495680,277389791723520000,3051287708958720000,437332621360674939863040000,5685324077688774218219520000,15974941971638268369709427589120000,982608696336737613503095822614528000000000",
+    "name": "a(n) = Product_{j=1..n} Product_{k=1..n} GCD(j,k).",
+    "comment": [
+        "Conjecture: Let p be a prime and let ordp(n,p) denote the exponent of the highest power of p that divides n. For example, ordp(48,2)=4, since 48=3*(2^4). Then we conjecture that the prime factorization of a(n) is given by the formula: ordp(a(n),p) = (floor(n/p))^2 + (floor(n/p^2))^2 + (floor(n/p^3))^2 + .... Compare this to the de Polignac-Legendre formula for the prime factorization of n!: ordp(n!,p) = floor(n/p) + floor(n/p^2) + floor(n/p^3) + .... This suggests that a(n) can be considered as generalization of n!. See A129453 for the analog for a(n) of Pascal's triangle. See A129454 for the sequence defined as a triple product of GCD(i,j,k). - _Peter Bala_, Apr 16 2007",
+        "The conjecture is correct. - _Charles R Greathouse IV_, Apr 02 2013",
+        "a(n)/a(n-1) = n, n >= 1, if and only if n is noncomposite, otherwise a(n)/a(n-1) = n * f^2, f > 1. - _Daniel Forgues_, Apr 07 2013"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A092287/b092287.txt\">Table of n, a(n) for n = 0..67</a>",
+        "OEIS Wiki, <a href=\"/Factorial#Generalization_of_the_factorial\">Generalization of the factorial</a>."
+    ],
+    "formula": [
+        "Also a(n) = prod(k=1..n, prod(j=1..n, LCM(1, 2, 3, ..., floor(min(n/k, n/j) )).",
+        "From _Daniel Forgues_, Apr 08 2013: (Start)",
+        "Recurrence: a(0) := 1; for n > 0: a(n) := n * prod(j=1..n-1, GCD(n,j) )^2 * a(n-1) = n * A051190(n)^2 * a(n-1).",
+        "Formula for n >= 0: a(n) = n! * prod(j=1..n, prod(k=1..j-1, GCD(j,k) ) )^2. (End)",
+        "a(n) = n! * A224479(n)^2, (the last formula above).",
+        "a(n) = n$ * A224497(n)^4, n$ the swinging factorial A056040(n). - _Peter Luschny_, Apr 10 2013"
+    ],
+    "maple": [
+        "f := n->mul(mul(igcd(j,k),k=1..n),j=1..n);"
+    ],
+    "mathematica": [
+        "a[0] = 1; a[n_] := a[n] = n*Product[GCD[k, n], {k, 1, n-1}]^2*a[n-1]; Table[a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Apr 16 2013, after _Daniel Forgues_ *)"
+    ],
+    "program": [
+        "(PARI) h(n,p)=if(n<p,0,n\\=p;h(n,p)+n^2)",
+        "a(n)=prod(i=1,primepi(n),my(p=prime(i));p^h(n,p)) \\\\ _Charles R Greathouse IV_, Apr 02 2013",
+        "(Sage)",
+        "def A092287(n):",
+        "    R = 1",
+        "    for p in primes(n+1) :",
+        "        s = 0; r = n",
+        "        while r > 0 :",
+        "            r = r//p",
+        "            s += r*r",
+        "        R *= p^s",
+        "    return R",
+        "[A092287(i) for i in (0..15)]  # _Peter Luschny_, Apr 10 2013"
+    ],
+    "xref": [
+        "Cf. A018806, A090494, A129365, A129439, A129453, A129454, A129455, A051190, A224479, A224497."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, based on a suggestion from _Leroy Quet_, Feb 03 2004",
+    "ext": [
+        "Recurrence formula corrected by _Daniel Forgues_, Apr 07 2013"
+    ],
+    "references": 11,
+    "revision": 46,
+    "time": "2015-07-11T00:56:46-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

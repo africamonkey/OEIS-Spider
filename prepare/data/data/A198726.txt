@@ -1,0 +1,36 @@
+{
+    "number": 198726,
+    "data": "1,1,1,2,3,3,4,6,7,9,11,13,17,21,24,29,37,42,49,60,70,82,96,111,129,152,173,199,234,266,302,349,399,451,515,585,661,752,847,954,1081,1215,1359,1531,1719,1917,2147,2400,2675,2985,3322,3690,4110,4563,5048,5603",
+    "name": "Number of partitions of n into positive Loeschian numbers (cf. A003136).",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A198726/b198726.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "a(10) = #{9+1, 7+3, 7+1+1+1, 4+4+1+1, 4+3+3, 4+3+1+1+1, 4+6x1, 3+3+3+1, 3+3+1+1+1+1, 3+7x1, 10x1} = 11;",
+        "a(11) = #{9+1+1, 7+4, 7+3+1, 7+1+1+1+1, 4+4+3, 4+4+1+1+1, 4+3+3+1, 4+3+4x1, 4+7x1, 3+3+3+1+1, 3+3+5x1, 3+8x1, 11x1} = 13;",
+        "a(12) = #{12, 9+3, 9+1+1+1, 7+4+1, 7+3+1+1, 7+5x1, 4+4+4, 4+4+3+1, 4+4+4x1, 4+3+3+1+1, 4+3+5x1, 4+8x1, 3+3+3+3, 3+3+3+1+1+1, 3+3+6x1, 3+9x1, 12x1} = 17."
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.MemoCombinators (memo2, list, integral)",
+        "a198726 n = a198726_list !! n",
+        "a198726_list = f 0 [] $ tail a003136_list where",
+        "   f u vs ws'@(w:ws) | u < w = (p' vs u) : f (u + 1) vs ws'",
+        "                     | otherwise = f u (vs ++ [w]) ws",
+        "   p' = memo2 (list integral) integral p",
+        "   p _  0 = 1",
+        "   p [] _ = 0",
+        "   p ks'@(k:ks) m = if m < k then 0 else p' ks' (m - k) + p' ks m",
+        "-- _Reinhard Zumkeller_, Nov 16 2015, Oct 30 2011"
+    ],
+    "xref": [
+        "Cf. A003136, A198727."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Reinhard Zumkeller_, Oct 30 2011",
+    "references": 3,
+    "revision": 13,
+    "time": "2015-11-16T23:27:16-05:00",
+    "created": "2011-10-30T14:15:36-04:00"
+}

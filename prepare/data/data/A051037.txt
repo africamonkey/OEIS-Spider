@@ -1,0 +1,83 @@
+{
+    "number": 51037,
+    "data": "1,2,3,4,5,6,8,9,10,12,15,16,18,20,24,25,27,30,32,36,40,45,48,50,54,60,64,72,75,80,81,90,96,100,108,120,125,128,135,144,150,160,162,180,192,200,216,225,240,243,250,256,270,288,300,320,324,360,375,384,400,405",
+    "name": "5-smooth numbers, i.e., numbers whose prime divisors are all <= 5.",
+    "comment": [
+        "Sometimes called the Hamming sequence, since Hamming asked for an efficient algorithm to generate the list, in ascending order, of all numbers of the form 2^i 3^j 5^k for i,j,k >= 0. The problem was popularized by Edsger Dijkstra.",
+        "Successive numbers k such that 8 k = EulerPhi[30 k]. - _Artur Jasinski_, Nov 05 2008",
+        "Where record values greater than 1 occur in A165704: A165705(n)=A165704(a(n)). - _Reinhard Zumkeller_, Sep 26 2009",
+        "A051916 is a subsequence. - _Reinhard Zumkeller_, Mar 20 2010",
+        "a(n) = A143207(n) / 30. - _Reinhard Zumkeller_, Sep 13 2011",
+        "A204455(15*a(n)) = 15, and only for these numbers. - _Wolfdieter Lang_, Feb 04 2012",
+        "A006530(a(n)) <= 5. - _Reinhard Zumkeller_, May 16 2015"
+    ],
+    "link": [
+        "T. D. Noe and Reinhard Zumkeller, <a href=\"/A051037/b051037.txt\">Table of n, a(n) for n = 1..10000</a>, first 1000 terms from T. D. Noe",
+        "Benoit Cloitre, <a href=\"/A051037/a051037.png\">Plot of abs(f(n)-s(n)) vs its mean values (blue) and vs loglog(n) (red)</a>",
+        "M. J. Dominus, <a href=\"http://perl.plover.com/Stream/stream.html\">Infinite Lists in Perl</a>",
+        "Rosetta Code, <a href=\"http://rosettacode.org/wiki/Hamming_numbers\">A collection of computer codes to compute 5-smooth numbers</a>",
+        "Raphael Schumacher, <a href=\"http://arxiv.org/abs/1608.06928\">The Formula for the Distribution of the 3-Smooth Numbers, 5-Smooth, 7-Smooth and all other Smooth Numbers</a>, arXiv:1608.06928 [math.NT], 2016.",
+        "Sci.math, <a href=\"http://groups.google.com/groups?dq=&amp;hl=en&amp;lr=&amp;ie=UTF-8&amp;th=55ea20a088f414b2\">Ugly numbers</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SmoothNumber.html\">Smooth Number</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Regular_number\">Regular number</a>"
+    ],
+    "formula": [
+        "Let s(n) = Card(k | a(k)<n) and f(n) = log(n*sqrt(30))^3/(6*log(2)*log(3)*log(5)). Then s(n) = f(n) + O(log(n)). Conjecture: s(n)=f(n) + O(log log n). For example, s(10000000)=768 is well approximated by f(10000000)=769, 3... (see graphic given as link). - _Benoit Cloitre_, Dec 30 2001",
+        "The characteristic function of this sequence is given by:",
+        "  Sum_{n>=1} x^a(n) = Sum_{n>=1}-m\u00f6bius(30*n)*x^n/(1-x^n). - _Paul D. Hanna_, Sep 18 2011"
+    ],
+    "maple": [
+        "A051037 := proc(n)",
+        "    option remember;",
+        "    local a;",
+        "    if n = 1 then",
+        "        1;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            numtheory[factorset](a) minus {2, 3,5 } ;",
+        "            if % = {} then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "seq(A051037(n),n=1..100) ; # _R. J. Mathar_, Nov 05 2017"
+    ],
+    "mathematica": [
+        "aa = {}; Do[If[8 n - EulerPhi[30 n] == 0, AppendTo[aa, n]], {n, 1, 405}]; aa (* _Artur Jasinski_, Nov 05 2008 *)",
+        "mx = 405; Sort@ Flatten@ Table[ 2^a*3^b*5^c, {a, 0, Log[2, mx]}, {b, 0, Log[3, mx/2^a]}, {c, 0, Log[5, mx/(2^a*3^b)]}] (* Or *)",
+        "Select[ Range@ 405, Last@ Map[First, FactorInteger@ #] < 7 &] (* _Robert G. Wilson v_ *)"
+    ],
+    "program": [
+        "(PARI) test(n)= {m=n; forprime(p=2,5, while(m%p==0,m=m/p)); return(m==1)} for(n=1,500,if(test(n),print1(n\",\")))",
+        "(PARI) a(n)=local(m); if(n<1,0,n=a(n-1); until(if(m=n, forprime(p=2,5, while(m%p==0,m/=p)); m==1),n++); n)",
+        "(PARI) list(lim)=my(v=List(),s,t); for(i=0,logint(lim\\=1,5), t=5^i; for(j=0,logint(lim\\t,3), s=t*3^j; while(s<=lim, listput(v,s); s<<=1))); Set(v) \\\\ _Charles R Greathouse IV_, Sep 21 2011; updated Sep 19 2016",
+        "(PARI) smooth(P:vec,lim)={ my(v=List([1]),nxt=vector(#P,i,1),indx,t);",
+        "while(1, t=vecmin(vector(#P,i,v[nxt[i]]*P[i]),&indx);",
+        "if(t>lim,break); if(t>v[#v],listput(v,t)); nxt[indx]++);",
+        "Vec(v)",
+        "};",
+        "smooth([2,3,5], 1e4) \\\\ _Charles R Greathouse IV_, Dec 03 2013",
+        "(MAGMA) [n: n in [1..500] | PrimeDivisors(n) subset [2,3,5]]; // _Bruno Berselli_, Sep 24 2012",
+        "(PARI) is_A051037(n)=n<7||vecmax(factor(n,5)[, 1])<7 \\\\ _M. F. Hasler_, Jan 16 2015",
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert)",
+        "a051037 n = a051037_list !! (n-1)",
+        "a051037_list = f $ singleton 1 where",
+        "   f s = y : f (insert (5 * y) $ insert (3 * y) $ insert (2 * y) s')",
+        "               where (y, s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, May 16 2015"
+    ],
+    "xref": [
+        "For p-smooth numbers with other values of p, see A003586, A002473, A051038, A080197, A080681, A080682, A080683.",
+        "Cf. A112757, A112758, A112759, A112763, A112764, A003593, A006530.",
+        "Subsequences: A003595, A003592, A257997."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Eric W. Weisstein_",
+    "references": 66,
+    "revision": 84,
+    "time": "2017-11-05T14:26:35-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

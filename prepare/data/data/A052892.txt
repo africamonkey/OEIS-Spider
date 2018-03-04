@@ -1,0 +1,40 @@
+{
+    "number": 52892,
+    "data": "0,1,3,22,269,4606,101407,2728818,86783769,3184595686,132443395091,6156200036746,316272966462565,17795937622944846,1088410048965734055,71893314170319604066,5100574859506418167601,386824334429004242804086,31229208329663841200670619",
+    "name": "E.g.f. is series reversion of log(1+x)*(1-x).",
+    "comment": [
+        "A simple grammar.",
+        "Sum(k=1..n, a(k)*sum(j=k..n, (C(k,n-j)*(-1)^(n-j)*stirling1(j,k))/j!)) = delta(n,1) for n>0. - _Vladimir Kruchinin_, Feb 08 2012"
+    ],
+    "link": [
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=868\">Encyclopedia of Combinatorial Structures 868</a>",
+        "Vladimir Kruchinin, <a href=\"http://arxiv.org/abs/1211.3244\">The method for obtaining expressions for coefficients of reverse generating functions</a>, arXiv:1211.3244"
+    ],
+    "formula": [
+        "E.g.f.: exp(RootOf(-2*_Z+_Z*exp(x*_Z)+1)*x)-1.",
+        "G.f.: x*Sum_{k>0} 1/(2-k*x)^k. - _Vladeta Jovovic_, Sep 23 2006",
+        "a(n) = ((-1)^(n-1)*(n-1)!*sum(k=0..n-1, (sum(j=0..k, j!*(sum(i=j..n+j-1, (stirling1(i,j)*(-1)^(i)*C(j,n+j-i-1))/i!))*C(k,j))) *C(n+k-1,n-1))), n>0. - _Vladimir Kruchinin_, Feb 08 2012",
+        "a(n) = sum(i=0..n-1, binomial(n-1,i)*sum(k=0..i, stirling2(i,k)*k!* binomial(n+k-1,k))). - _Vladimir Kruchinin_, Jan 22 2014",
+        "a(n) ~ n^(n-1) * (c/2)^(n-1) / (sqrt(c+1) * exp(n) * (c-1)^(2*n-1)), where c = LambertW(2*exp(1)) = 1.3748225281836... - _Vaclav Kotesovec_, Jan 22 2014"
+    ],
+    "maple": [
+        "spec := [S,{C=Prod(Z,B),S=Set(C,1 <= card),B=Sequence(S)},labeled]: seq(combstruct[count](spec,size=n), n=0..20);"
+    ],
+    "mathematica": [
+        "a[n_] := ((-1)^(n-1)*(n-1)!*Sum[ (Sum[ j!*(Sum[ (StirlingS1[i, j]*(-1)^(i)*Binomial[j, n+j-i-1])/i!, {i, j, n+j-1}])*Binomial[k, j], {j, 0, k}])*Binomial[n+k-1, n-1], {k, 0, n-1}]); a[0] = 0; Table[a[n], {n, 0, 18}] (* _Jean-Fran\u00e7ois Alcover_, Feb 26 2013, after _Vladimir Kruchinin_ *)",
+        "CoefficientList[InverseSeries[Series[Log[1+x]*(1-x), {x, 0, 20}], x],x] * Range[0, 20]! (* _Vaclav Kotesovec_, Jan 22 2014 *)"
+    ],
+    "program": [
+        "(Maxima) a(n):=((-1)^(n-1)*(n-1)!*sum((sum(j!*(sum((stirling1(i,j)*(-1)^(i)*binomial(j,n+j-i-1))/i!,i,j,n+j-1))*binomial(k,j), j,0,k)) *binomial(n+k-1,n-1),k,0,n-1)); [From _Vladimir Kruchinin_, Feb 06 2012]"
+    ],
+    "xref": [
+        "Row sums of A198204. - _Peter Bala_, Aug 01 2012"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "references": 1,
+    "revision": 39,
+    "time": "2017-04-18T07:04:13-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

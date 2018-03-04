@@ -1,0 +1,55 @@
+{
+    "number": 212384,
+    "data": "1,1,1,1,1,2,7,22,57,128,268,573,1343,3434,9038,23374,58649,144400,355992,892336,2280020,5892301,15253305,39347067,101177783,260255812,671941182,1743500452,4542147622,11858732144,30983904244,80982376879,211831943129,554905957520",
+    "name": "Number of Dyck n-paths all of whose ascents have lengths equal to 1 (mod 4).",
+    "comment": [
+        "Lengths of descents are unrestricted.",
+        "The radius of convergence of g.f. A(x) is r = 4*(1-2*s+s^2)/(s*(4*s-3)) = 0.36467312501521477251..., where s = A(r) is described below. - _Vaclav Kotesovec_, Mar 21 2014"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A212384/b212384.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Vaclav Kotesovec, <a href=\"/A212384/a212384.txt\">Recurrence (of order 8)</a>",
+        "Vaclav Kotesovec, <a href=\"http://oeis.org/A212382/a212382.pdf\">Asymptotic of subsequences of A212382</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = 1+x*A(x)/(1-(x*A(x))^4).",
+        "a(n) ~ (s*(4*s-3))^(n+3/2) / (sqrt(Pi) * sqrt(5*s-3) * n^(3/2) * 2^(2*n+9/2) * (s-1)^(2*n+7/2)), where s = 1.880470225526517115847397... is the root of the equation 283 - 2156*s + 7312*s^2 - 14400*s^3 + 17920*s^4 - 14336*s^5 + 7168*s^6 - 2048*s^7 + 256*s^8 = 0. - _Vaclav Kotesovec_, Mar 21 2014",
+        "a(n) = Sum_{k=0..n} (binomial(3*k-2*n-1,n-k)*binomial(n+1,4*k-3*n))/(n+1). - _Vladimir Kruchinin_, Mar 05 2016"
+    ],
+    "example": [
+        "a(0) = 1: the empty path.",
+        "a(1) = 1: UD.",
+        "a(5) = 2: UDUDUDUDUD, UUUUUDDDDD.",
+        "a(6) = 7: UDUDUDUDUDUD, UDUUUUUDDDDD, UUUUUDDDDDUD, UUUUUDDDDUDD, UUUUUDDDUDDD, UUUUUDDUDDDD, UUUUUDUDDDDD."
+    ],
+    "maple": [
+        "b:= proc(x, y, u) option remember;",
+        "      `if`(x<0 or  y<x, 0, `if`(x=0 and y=0, 1, b(x, y-1, true)+",
+        "      `if`(u, add (b(x-(4*t+1), y, false), t=0..(x-1)/4), 0)))",
+        "    end:",
+        "a:= n-> b(n$2, true):",
+        "seq(a(n), n=0..40);",
+        "# second Maple program:",
+        "a:= n-> coeff(series(RootOf(A=1+x*A/(1-(x*A)^4), A), x, n+1), x, n):",
+        "seq(a(n), n=0..40);"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[Binomial[3k-2n-1, n-k]*Binomial[n+1, 4k-3n], {k, 0, n}]/(n+1);",
+        "Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Apr 03 2017, after _Vladimir Kruchinin_ *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum(binomial(3*k-2*n-1,n-k)*binomial(n+1,4*k-3*n),k,0,n)/(n+1); /* _Vladimir Kruchinin_, Mar 05 2016 */",
+        "(PARI) a(n) = sum(k=0, n, binomial(3*k-2*n-1,n-k)*binomial(n+1,4*k-3*n))/(n+1); \\\\ _Michel Marcus_, Mar 05 2016"
+    ],
+    "xref": [
+        "Column k=4 of A212382."
+    ],
+    "keyword": "nonn",
+    "offset": "0,6",
+    "author": "_Alois P. Heinz_, May 12 2012",
+    "references": 2,
+    "revision": 28,
+    "time": "2017-04-15T00:43:10-04:00",
+    "created": "2012-05-13T17:06:51-04:00"
+}

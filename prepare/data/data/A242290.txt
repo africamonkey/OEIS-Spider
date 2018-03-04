@@ -1,0 +1,36 @@
+{
+    "number": 242290,
+    "data": "5,6,8,9,10,11,14,15,19,20,21,23,24,25,27,29,30,33,34,35,38,40,41,43,44,45,47,48,49,50,51,54,55,56,59,61,63,64,65,67,68,69,70,71,74,75,76,78,79,81,83,85,90,93,98,99,104,105,106,107,108,109,110,114",
+    "name": "Positive integers k for which the k-th tetrahedral number is greedy-summable.",
+    "comment": [
+        "Greedy summability is defined at A242288."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A242290/b242290.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "Let s(n) = n(n+1)(n+2)/6 = A000292(n).  Then",
+        "a(1) = 5; s(5) = 35 = 20 + 10 + 4 + 1;",
+        "a(2) = 6; s(6) = 56 = 35 + 20 + 1;",
+        "a(3) = 8; s(8) = 120 = 84 + 35 + 1;",
+        "a(4) = 9; s(9) = 165 = 120 + 35 + 10."
+    ],
+    "mathematica": [
+        "z = 200;  s = Table[n (n + 1)(n + 2)/6, {n, 1, z}]; t = Table[{s[[n]], #, Total[#] == s[[n]]} &[DeleteCases[-Differences[FoldList[If[#1 - #2 >= 0, #1 - #2, #1] &, s[[n]], Reverse[Select[s, # < s[[n]] &]]]], 0]], {n, z}]",
+        "r[n_] := s[[n]] - Total[t[[n]][[2]]];",
+        "tr = Table[r[n], {n, 2, z}]  (* A242288 *)",
+        "c = Table[Length[t[[n]][[2]]], {n, 2, z}] (* A242289 *)",
+        "f = 1 + Flatten[Position[tr, 0]]  (* A242290 *)",
+        "f (f + 1)(f + 2)/6  (* A242291 *) (* _Peter J. C. Moses_, May 06 2014 *)"
+    ],
+    "xref": [
+        "Cf. A242288, A242289, A242291, A241833, A242284, A000292."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, May 10 2014",
+    "references": 4,
+    "revision": 4,
+    "time": "2014-05-15T10:16:41-04:00",
+    "created": "2014-05-15T10:16:41-04:00"
+}

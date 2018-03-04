@@ -1,0 +1,47 @@
+{
+    "number": 187040,
+    "data": "7,11,13,14,17,19,22,23,26,28,29,34,35,38,44,46,47,49,52,55,56,58,59,61,65,68,70,73,76,77,85,88,89,91,92,94,95,97,98,101,103,104,109,110,112,113,115,116,118,121,122,127,130,131,133,136,137,139,140,143,145,146,149,152,154,157,161,167,169,170,175,176,178,179,181,182,184,188,190,193,194,196,197",
+    "name": "Numbers for which Midy's theorem holds.",
+    "comment": [
+        "Martin gives generalizations of Midy's theorem that characterize the numbers in this sequence. See theorem 8. - _T. D. Noe_, Mar 02 2011",
+        "Garc\u00eda-Pulgar\u00edn Gilberto and Giraldo Hern\u00e1n give the characterization of the numbers that satisfy Midy's property."
+    ],
+    "link": [
+        "Gilberto Garc\u00eda-Pulgar\u00edn and Hern\u00e1n Giraldo, <a href=\"http://www.emis.de/journals/INTEGERS/papers/j18/j18.Abstract.html\">Characterizations of Midy's property,</a> Integers 9 (2009), A18, 191--197. MR2506150 (2010f:11013).",
+        "Joseph Lewittes, <a href=\"http://arxiv.org/abs/math/0605182\">Midy's theorem for periodic decimals</a>, arXiv:math/0605182 [math.NT], 2006.",
+        "Harold W. Martin, <a href=\"http://www.emis.de/journals/INTEGERS/papers/h3/h3.Abstract.html\">Generalizations of midy\u2019s theorem on repeating decimals</a>, INTEGERS 7 (2007), #A03.",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Midy%27s_theorem\">Midy's theorem</a>"
+    ],
+    "maple": [
+        "fct1 := proc(an) local i,st:  st := 0:",
+        "for i from 1 to nops(an)/2 do",
+        "   st := op(i,an)*10^(nops(an)/2-i) + st",
+        "od: RETURN(st):  end:",
+        "fct2 := proc(an) local i,st:  st := 0:",
+        "for i from nops(an)/2+1 to nops(an) do",
+        "   st := op(i,an)*10^(nops(an)/2-i+nops(an)/2) + st",
+        "od:  RETURN(st):  end:",
+        "A187040 := proc(n) local st:",
+        "st := op(4,numtheory[pdexpand](1/n));",
+        "if (modp(nops(st),2) = 0) then",
+        "   if (10^(nops(st)/2)-1 - (fct1(st)+fct2(st)) = 0) then",
+        "      RETURN(n)",
+        "fi: fi: end:  seq(A187040(n), n=2..200);"
+    ],
+    "mathematica": [
+        "okQ[n_] := Module[{ps = First /@ FactorInteger[n], d, len}, If[n < 2 || Complement[ps, {2, 5}] == {}, False, d = RealDigits[1/n, 10][[1, -1]]; len = Length[d]; EvenQ[len] && Union[Total[Partition[d, len/2]]] == {9}]]; Select[Range[200], okQ] (* _T. D. Noe_, Mar 02 2011 *)"
+    ],
+    "xref": [
+        "Cf. A028416, A187041."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jani Melik_, Mar 02 2011",
+    "ext": [
+        "Corrected by _T. D. Noe_, Mar 02 2011"
+    ],
+    "references": 3,
+    "revision": 32,
+    "time": "2015-06-05T06:58:31-04:00",
+    "created": "2011-03-02T09:08:09-05:00"
+}

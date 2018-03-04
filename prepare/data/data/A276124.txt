@@ -1,0 +1,41 @@
+{
+    "number": 276124,
+    "data": "1,1,1,1,4,22,589,399253,41144206447,77387327118194895379,10169897514576967837097322386922878932,259050897146323086186965020577200627526185475088368701480903471601830",
+    "name": "a(0) = a(1) = a(2) = a(3) = 1; for n > 3, a(n) = (a(n-1)^2+a(n-2)^2+a(n-3)^2+a(n-1)*a(n-2)*a(n-3))/a(n-4).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A276124/b276124.txt\">Table of n, a(n) for n = 0..15</a>"
+    ],
+    "formula": [
+        "a(n) = 8*a(n-1)*a(n-2)*a(n-3)-a(n-1)*a(n-2)-a(n-1)*a(n-3)-a(n-2)*a(n-3)-a(n-4)."
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[n] == (a[n - 1]^2 + a[n - 2]^2 + a[n - 3]^2 + a[n - 1] a[n - 2] a[n - 3])/a[n - 4], a[0] == a[1] == a[2] == a[3] == 1}, a, {n, 0, 11}] (* _Michael De Vlieger_, Aug 21 2016 *)"
+    ],
+    "program": [
+        "(Ruby)",
+        "def A(m, n)",
+        "  a = Array.new(m, 1)",
+        "  ary = [1]",
+        "  while ary.size < n + 1",
+        "    i = a[1..-1].inject(0){|s, i| s += i * i} + a[1..-1].inject(:*)",
+        "    break if i % a[0] > 0",
+        "    a = *a[1..-1], i / a[0]",
+        "    ary << a[0]",
+        "  end",
+        "  ary",
+        "end",
+        "def A276124(n)",
+        "  A(4, n)",
+        "end # _Seiichi Manyama_, Aug 21 2016"
+    ],
+    "xref": [
+        "Cf. A165903, A072878."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Bruno Langlois_, Aug 21 2016",
+    "references": 2,
+    "revision": 18,
+    "time": "2016-08-25T18:10:46-04:00",
+    "created": "2016-08-21T11:09:19-04:00"
+}

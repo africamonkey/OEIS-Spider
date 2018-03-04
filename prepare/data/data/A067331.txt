@@ -1,0 +1,63 @@
+{
+    "number": 67331,
+    "data": "2,5,12,25,50,96,180,331,600,1075,1908,3360,5878,10225,17700,30509,52390,89664,153000,260375,442032,748775,1265832,2136000,3598250,6052061,10164540,17048641,28559450,47786400,79870428,133359715,222457608,370747675,617363100",
+    "name": "Convolution of Fibonacci F(n+1), n>=0, with F(n+3), n>=0.",
+    "comment": [
+        "Third diagonal of A067330. Third column of A067418.",
+        "From _Emeric Deutsch_, Jun 15 2010: (Start)",
+        "a(n) is the external path length of the Fibonacci tree of order n+3. A Fibonacci tree of order n (n>=2) is a complete binary tree whose left subtree is the Fibonacci tree of order n-1 and whose right subtree is the Fibonacci tree of order n-2; each of the Fibonacci trees of order 0 and 1 is defined as a single node. The external path length of a tree is the sum of the levels of its external nodes (i.e., leaves).",
+        "a(n) = Sum(k*A178524(n+2,k), k>=0).",
+        "(End)",
+        "a(n) equals the penultimate immanant of the (n+3) X (n+3) tridiagonal matrix with ones along the main diagonal, the superdiagonal, and the subdiagonal. - _John M. Campbell_, Jan 01 2016",
+        "a(n) is the sum of the eccentricities of the vertices of the Fibonacci cube G(n+1). Example: a(1)=5; indeed, the Fibonacci cube G(2) is the path graph P(3), the vertices of which have eccentricities 2, 1, 2. - _Emeric Deutsch_, May 28 2017"
+    ],
+    "reference": [
+        "D. E. Knuth, The Art of Computer Programming, Vol. 3, 2nd edition, Addison-Wesley, Reading, MA, 1998, p. 417."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A067331/b067331.txt\">Table of n, a(n) for n = 0..4720</a>",
+        "J. Bodeen, S. Butler, T. Kim, X. Sun, S. Wang, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v21i1p7\">Tiling a strip with triangles</a>, El. J. Combinat. 21 (1) (2014) P1.7.",
+        "John M. Campbell, <a href=\"/A067331/a067331.pdf\">On the external path length of a Fibonacci tree</a>",
+        "Y. Horibe, <a href=\"http://www.fq.math.ca/Scanned/20-2/horibe.pdf\">An entropy view of Fibonacci trees</a>, Fibonacci Quarterly, 20, No. 2, 1982, 168-178. [_Emeric Deutsch_, Jun 15 2010]",
+        "S. Klavzar, M. Mollard, <a href=\"https://hal.archives-ouvertes.fr/hal-00836788\">Asymptotic properties of Fibonacci cubes and Lucas cubes</a>, HAL Id: hal-00836788, 2013.",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (2, 1, -2, -1)."
+    ],
+    "formula": [
+        "a(n) = A067330(n+2, n) = A067418(n+2, 2) = sum(F(k+1)*F(n+3-k), k=0..n), n>=0.",
+        "a(n) = ((7*n+10)*F(n+1)+4*(n+1)*F(n))/5, with F(n) = A000045(n) (Fibonacci).",
+        "G.f.: (2+x)/(1-x-x^2)^2.",
+        "a(n) = sum(binom(n+3-i,i)*(n+2-2*i), i=0..[(n+3)/2]). - _John M. Campbell_, Jan 04 2016"
+    ],
+    "example": [
+        "From _John M. Campbell_, Jan 03 2016: (Start)",
+        "Letting n=2, the external path length of the Fibonacci tree T(5) of order n+3 illustrated below is 12 = a(n) = F(1)*F(5)+F(2)*F(4)+F(3)*F(3).",
+        "     .",
+        "    / \\",
+        "   /\\ /\\",
+        "  /\\",
+        "(End)"
+    ],
+    "maple": [
+        "f:= gfun:-rectoproc({a(n) = 2*a(n-1)+a(n-2) - 2*a(n-3)-a(n-4),a(0)=2,a(1)=5,a(2)=12,a(3)=25},a(n),remember):",
+        "map(f, [$0..50]); # _Robert Israel_, Jan 06 2016"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{2, 1, -2, -1}, {2, 5, 12, 25}, 70] (* _Vincenzo Librandi_, Jan 02 2016 *)",
+        "Table[SeriesCoefficient[(2 + x)/(1 - x - x^2)^2, {x, 0, n}], {n, 0, 34}] (* _Michael De Vlieger_, Jan 02 2016 *)",
+        "Print[Table[Sum[Binomial[n + 3 - i, i]*(n + 2 - 2*i), {i, 0, Floor[(n + 3)/2]}], {n, 0, 100}]] (* _John M. Campbell_, Jan 04 2016 *)"
+    ],
+    "program": [
+        "(MAGMA) [((7*n+10)*Fibonacci(n+1)+4*(n+1)*Fibonacci(n))/5: n in [0..40]]; // _Vincenzo Librandi_, Jan 02 2016",
+        "(PARI) Vec((2+x)/(1-x-x^2)^2 + O(x^100)) \\\\ _Altug Alkan_, Jan 04 2016"
+    ],
+    "xref": [
+        "Cf. A004070, A178523, A178524. - _Emeric Deutsch_, Jun 15 2010"
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,1",
+    "author": "_Wolfdieter Lang_, Feb 15 2002",
+    "references": 16,
+    "revision": 59,
+    "time": "2017-05-29T07:31:22-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

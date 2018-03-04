@@ -1,0 +1,57 @@
+{
+    "number": 214372,
+    "data": "1,1,4,16,74,364,1876,9993,54582,304040,1720576,9864114,57169168,334404892,1971641096,11705119157,69911438676,419798442416,2532791105844,15346498242460,93344296450020,569741502841020,3488539758461880,21422341792366320",
+    "name": "G.f. satisfies: A(x) = x + A(x)^2*(1 + A(x))^2.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A214372/b214372.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x) = Series_Reversion( x - x^2*(1+x)^2 ).",
+        "(2) A(x) = x + Series_Reversion( (sqrt(1+4*x) - 1)/2 - x^2 )^2. - _Paul D. Hanna_, Oct 24 2013",
+        "(3) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) x^(2*n)*(1+x)^(2*n)/n!.",
+        "(4) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(2*n-1)*(1+x)^(2*n)/n! ).",
+        "Recurrence: 31*(n-2)*(n-1)*n*(104*n - 293)*a(n) = 8*(n-2)*(n-1)*(1768*n^2 - 7633*n + 7425)*a(n-1) + 20*(n-2)*(2080*n^3 - 14180*n^2 + 31612*n - 22995)*a(n-2) + 8*(2*n-5)*(4*n-13)*(4*n-11)*(104*n - 189)*a(n-3). - _Vaclav Kotesovec_, Sep 17 2013",
+        "a(n) ~ 1/312*sqrt(78)*sqrt((26533 + 50583*sqrt(78))^(2/3) - 5837 + 13*(26533 + 50583*sqrt(78))^(1/3))/((26533 + 50583*sqrt(78))^(1/6)) * (4/93*((209773 + 4836*sqrt(78))^(2/3) + 3481 + 34*(209773 + 4836* sqrt(78))^(1/3))/(209773 + 4836*sqrt(78))^(1/3))^n / (n^(3/2)*sqrt(Pi)). - _Vaclav Kotesovec_, Sep 17 2013"
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^2 + 4*x^3 + 16*x^4 + 74*x^5 + 364*x^6 + 1876*x^7 +...",
+        "Related expansions:",
+        "A(x) = x + x^2*(1+x)^2 + d/dx x^4*(1+x)^4/2! + d^2/dx^2 x^6*(1+x)^6/3! + d^3/dx^3 x^8*(1+x)^8/4! +...",
+        "log(A(x)/x) = x*(1+x)^2 + d/dx x^3*(1+x)^4/2! + d^2/dx^2 x^5*(1+x)^6/3! + d^3/dx^3 x^7*(1+x)^8/4! +...",
+        "A(x)^2 = x^2 + 2*x^3 + 9*x^4 + 40*x^5 + 196*x^6 + 1004*x^7 + 5328*x^8 +...",
+        "(1+A(x))^2 = 1 + 2*x + 3*x^2 + 10*x^3 + 41*x^4 + 188*x^5 + 924*x^6 + 4756*x^7 + 25314*x^8 +...",
+        "Series reversion shows a relation to the Catalan numbers (A000108):",
+        "Series_Reversion( sqrt(A(x) - x) ) =  (sqrt(1+4*x) - 1)/2 - x^2, which begins",
+        "x - 2*x^2 + 2*x^3 - 5*x^4 + 14*x^5 - 42*x^6 + 132*x^7 - 429*x^8 +...",
+        "where",
+        "sqrt(A(x) - x) = x + 2*x^2 + 6*x^3 + 25*x^4 + 114*x^5 + 560*x^6 + 2880*x^7 +...+ A229042(n)*x^n +..."
+    ],
+    "maple": [
+        "a:= n-> coeff(series(RootOf(A=x+A^2*(1+A)^2, A), x, n+1), x, n):",
+        "seq(a(n), n=1..30);  # _Alois P. Heinz_, Feb 13 2017"
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[x - x^2*(1+x)^2,{x,0,20}],x],x]] (* _Vaclav Kotesovec_, Sep 17 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(serreverse(x-x^2*(1+x)^2+x*O(x^n)), n)}",
+        "for(n=1, 30, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, x^(2*m)*(1+x+x*O(x^n))^(2*m)/m!)); polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, x^(2*m-1)*(1+x+x*O(x^n))^(2*m)/m!))); polcoeff(A, n)}",
+        "(PARI) {a(n)=polcoeff(x + serreverse( (sqrt(1+4*x +x*O(x^n)) - 1)/2 - x^2 )^2,n)}",
+        "for(n=1, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A229042."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Jul 14 2012",
+    "references": 3,
+    "revision": 14,
+    "time": "2017-02-13T14:27:11-05:00",
+    "created": "2012-07-14T13:17:49-04:00"
+}

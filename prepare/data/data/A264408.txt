@@ -1,0 +1,42 @@
+{
+    "number": 264408,
+    "data": "1,1,8,123,2880,91380,3670422,178637046,10220188584,672297233904,49998246211440,4148400045354048,379922492043352728,38069325641907527760,4143052833221549219112,486645149764644576491160,61364015736691449905270208,8267876533375590035644494336,1185420892076469924434688605760",
+    "name": "E.g.f. satisfies: A(x) = 1/(1-x)^(A(x)^3).",
+    "formula": [
+        "E.g.f. also satisfies:",
+        "(1) A(x) = ( LambertW(3*log(1-x)) / (3*log(1-x)) )^(1/3).",
+        "(2) A(x) = Sum_{n>=0} (3*n+1)^(n-1) * (-log(1-x))^n / n!.",
+        "(3) A(x) = Sum_{n>=0} x^n/n! * Product_{k=0..n-1} (A(x)^3 + k).",
+        "(4) A(x) = Sum_{n>=0} x^n/n! * Sum_{k=0..n} |Stirling1(n, k)| * A(x)^(3*k).",
+        "a(n) = Sum_{k=0..n} |Stirling1(n, k)| * (3*k+1)^(k-1).",
+        "a(n) ~ n^(n-1) / (sqrt(3) * exp(n - n*exp(-1)/3 - 5/6) * (exp(exp(-1)/3) - 1)^(n-1/2)). - _Vaclav Kotesovec_, Nov 18 2015"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 8*x^2/2! + 123*x^3/3! + 2880*x^4/4! + 91380*x^5/5! + 3670422*x^6/6! + 178637046*x^7/7! + 10220188584*x^8/8! +...",
+        "where A(x) = 1/(1-x)^(A(x)^3).",
+        "From a LambertW identity,",
+        "A(x) = 1 - log(1-x) + 7*log(1-x)^2/2! - 10^2*log(1-x)^3/3! + 13^3*log(1-x)^4/4! - 16^4*log(1-x)^5/5! + 19^5*log(1-x)^6/6! +...",
+        "Also,",
+        "A(x) = 1 + x*A(x)^3 + x^2*A(x)^3*(A(x)^3+1)/2! + x^3*A(x)^3*(A(x)^3+1)*(A(x)^3+2)/3! + x^4*A(x)^3*(A(x)^3+1)*(A(x)^3+2)*(A(x)^3+3)/4! +..."
+    ],
+    "mathematica": [
+        "Table[Sum[Abs[StirlingS1[n, k]] * (3*k+1)^(k-1), {k,0,n}], {n,0,20}] (* _Vaclav Kotesovec_, Nov 18 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=1+x); for(i=1, n, A = sum(m=0, n, x^m/m! * prod(k=0, m-1, A^3 + k) +x*O(x^n)) ); n!*polcoeff(A, n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {Stirling1(n, k)=n!*polcoeff(binomial(x, n), k)}",
+        "{a(n) = sum(k=0, n, abs(Stirling1(n, k))*(3*k+1)^(k-1))}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A052813, A264407."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Nov 18 2015",
+    "references": 1,
+    "revision": 10,
+    "time": "2015-11-18T14:19:20-05:00",
+    "created": "2015-11-18T13:10:18-05:00"
+}

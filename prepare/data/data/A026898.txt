@@ -1,0 +1,89 @@
+{
+    "number": 26898,
+    "data": "1,2,4,9,23,66,210,733,2781,11378,49864,232769,1151915,6018786,33087206,190780213,1150653921,7241710930,47454745804,323154696185,2282779990495,16700904488706,126356632390298,987303454928973,7957133905608837,66071772829247410",
+    "name": "a(n) = Sum_{k=0..n} (n-k+1)^k.",
+    "comment": [
+        "Row sums of A004248, A009998, A009999.",
+        "First differences are in A047970.",
+        "First differences of A103439.",
+        "Antidiagonal sums of array A003992.",
+        "a(n-1), for n>=1, is the number of length-n restricted growth strings (RGS) [s(0),s(1),...,s(n-1)] where s(0)=0 and s(k)<=1+max(prefix) for k>=1, that are simultaneously projections as maps f: [n] -> [n] where f(x)<=x and f(f(x))=f(x); see example and the two comments (Arndt, Apr 30 2011 Jan 04 2013) in A000110. - _Joerg Arndt_, Mar 07 2015",
+        "Number of finite sequences s of length n+1 whose discriminator sequence is s itself. Here the discriminator sequence of s is the one where the n-th term (n>=1) is the least positive integer k such that the first n terms are pairwise incongruent, modulo k. - _Jeffrey Shallit_, May 17 2016"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A026898/b026898.txt\">Table of n, a(n) for n = 0..500</a>",
+        "Sajed Haque, Corollary 29, <a href=\"https://uwspace.uwaterloo.ca/bitstream/handle/10012/12234/Haque_Sajed.pdf\">Discriminators of Integer Sequences</a>, 2017, See p. 33."
+    ],
+    "formula": [
+        "a(n) = A003101(n)+1.",
+        "G.f.: Sum_{n>=0} x^n/(1 - (n+1)*x). - _Paul D. Hanna_, Sep 13 2011",
+        "G.f.: G(0) where G(k) =  1 + x*(2*k*x-1)/((2*k*x+x-1) - x*(2*k*x+x-1)^2/(x*(2*k*x+x-1) + (2*k*x+2*x-1)/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Jan 26 2013",
+        "E.g.f.: Sum_{n>=0} Integral^n exp((n+1)*x) dx^n, where Integral^n F(x) dx^n is the n-th integration of F(x) with no constant of integration. - _Paul D. Hanna_, Dec 28 2013",
+        "O.g.f.: Sum_{n>=0} n! * x^n/(1-x)^(n+1) / Product_{k=1..n} (1 + k*x). - _Paul D. Hanna_, Jul 20 2014",
+        "a(n) = A101494(n+1,0). - _Vladimir Kruchinin_, Apr 01 2015."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 4*x^2 + 9*x^3 + 23*x^4 + 66*x^5 + 210*x^6 + ...",
+        "where we have the identity:",
+        "A(x) = 1/(1-x) + x/(1-2*x) + x^2/(1-3*x) + x^3/(1-4*x) + x^4/(1-5*x) + ...",
+        "is equal to",
+        "A(x) = 1/(1-x) + x/((1-x)^2*(1+x)) + 2!*x^2/((1-x)^3*(1+x)*(1+2*x)) + 3!*x^3/((1-x)^4*(1+x)*(1+2*x)*(1+3*x)) + 4!*x^4/((1-x)^5*(1+x)*(1+2*x)*(1+3*x)*(1+4*x)) + ...",
+        "From _Joerg Arndt_, Mar 07 2015: (Start)",
+        "The a(5-1) = 23 RGS described in the comment are (dots denote zeros):",
+        "01:  [ . . . . . ]",
+        "02:  [ . 1 . . . ]",
+        "03:  [ . 1 . . 1 ]",
+        "04:  [ . 1 . 1 . ]",
+        "05:  [ . 1 . 1 1 ]",
+        "06:  [ . 1 1 . . ]",
+        "07:  [ . 1 1 . 1 ]",
+        "08:  [ . 1 1 1 . ]",
+        "09:  [ . 1 1 1 1 ]",
+        "10:  [ . 1 2 . . ]",
+        "11:  [ . 1 2 . 1 ]",
+        "12:  [ . 1 2 . 2 ]",
+        "13:  [ . 1 2 1 . ]",
+        "14:  [ . 1 2 1 1 ]",
+        "15:  [ . 1 2 1 2 ]",
+        "16:  [ . 1 2 2 . ]",
+        "17:  [ . 1 2 2 1 ]",
+        "18:  [ . 1 2 2 2 ]",
+        "19:  [ . 1 2 3 . ]",
+        "20:  [ . 1 2 3 1 ]",
+        "21:  [ . 1 2 3 2 ]",
+        "22:  [ . 1 2 3 3 ]",
+        "23:  [ . 1 2 3 4 ]",
+        "(End)"
+    ],
+    "maple": [
+        "a:= n-> add((n+1-j)^j, j=0..n): seq(a(n), n=0..23); # _Zerinvary Lajos_, Apr 18 2009"
+    ],
+    "mathematica": [
+        "Table[Sum[(n - k + 1)^k, {k, 0, n}], {n, 0, 25}] (* _Michael De Vlieger_, Apr 01 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(m=0,n,x^m/(1-(m+1)*x+x*O(x^n))),n)} /*_Paul D. Hanna_, Sep 13 2011 */",
+        "(PARI) {INTEGRATE(n,F)=local(G=F);for(i=1,n,G=intformal(G));G}",
+        "{a(n)=local(A=1+x);A=sum(k=0,n,INTEGRATE(k,exp((k+1)*x+x*O(x^n))));n!*polcoeff(A,n)} \\\\ _Paul D. Hanna_, Dec 28 2013",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) /* From o.g.f. (_Paul D. Hanna_, Jul 20 2014) */",
+        "{a(n)=polcoeff( sum(m=0, n, m!*x^m/(1-x +x*O(x^n))^(m+1)/prod(k=1, m, 1+k*x +x*O(x^n))), n)}",
+        "for(n=0, 25, print1(a(n), \", \"))",
+        "(Haskell)",
+        "a026898 n = sum $ zipWith (^) [n + 1, n .. 1] [0 ..]",
+        "-- _Reinhard Zumkeller_, Sep 14 2014"
+    ],
+    "xref": [
+        "Cf. A003101, A038125, A062810, A287216."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "a(23)-a(25) from _Paul D. Hanna_, Dec 28 2013"
+    ],
+    "references": 16,
+    "revision": 85,
+    "time": "2018-02-17T12:25:04-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

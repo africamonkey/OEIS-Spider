@@ -1,0 +1,39 @@
+{
+    "number": 163210,
+    "data": "1,1,1,3,23,71,757,2559,30671,1383331,5003791,245273927,3362110459,12517624987,175179377183,9356953451851,509614686432899,1938763632210843,107752663194272623",
+    "name": "Swinging Wilson quotients ((p-1)$ +(-1)^floor((p+2)/2))/p, p prime. Here '$' denotes the swinging factorial function (A056040).",
+    "reference": [
+        "Peter Luschny, \"Divide, swing and conquer the factorial and the lcm{1,2,...,n}\", preprint, April 2008."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A163210/b163210.txt\">Table of n, a(n) for n = 1..470</a>",
+        "M. E. Bassett, S. Majid, <a href=\"http://arxiv.org/abs/1603.00426\">Finite noncommutative geometries related to F_p[x]</a>, arXiv:1603.00426 [math.QA], 2016.",
+        "Peter Luschny, <a href=\"http://www.luschny.de/math/primes/SwingingPrimes.html\"> Swinging Primes.</a>"
+    ],
+    "example": [
+        "The 5th prime is 11, (11-1)$ = 252, the remainder term is (-1)^floor((11+2)/2)=1. So the quotient (252+1)/11 = 23 is the 5th member of the sequence."
+    ],
+    "maple": [
+        "swing := proc(n) option remember; if n = 0 then 1 elif irem(n, 2) = 1 then swing(n-1)*n else 4*swing(n-1)/n fi end:",
+        "WQ := proc(f,r,n) map(p->(f(p-1)+r(p))/p,select(isprime,[$1..n])) end:",
+        "A163210 := n -> WQ(swing,p->(-1)^iquo(p+2,2),n);"
+    ],
+    "mathematica": [
+        "sf[n_] := n!/Quotient[n, 2]!^2; a[n_] := (p = Prime[n]; (sf[p - 1] + (-1)^Floor[(p + 2)/2])/p); Table[a[n], {n, 1, 19}] (* _Jean-Fran\u00e7ois Alcover_, Jun 28 2013 *)",
+        "a[p_] := (Binomial[p-1, (p-1)/2] - (-1)^((p-1)/2)) / p",
+        "Join[{1, 1}, a[Prime[Range[3,20]]]] (* _Peter Luschny_, May 13 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n, p=prime(n)) = ((p-1)!/((p-1)\\2)!^2 - (-1)^(p\\2))/p \\\\ _David A. Corneth_, May 13 2017"
+    ],
+    "xref": [
+        "Cf. A163213, A002068, A163212, A163209, A007619, A007540."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Peter Luschny_, Jul 24 2009",
+    "references": 7,
+    "revision": 23,
+    "time": "2017-05-13T10:46:33-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

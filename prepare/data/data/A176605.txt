@@ -1,0 +1,34 @@
+{
+    "number": 176605,
+    "data": "1,1,3,8,23,72,239,825,2929,10624,39193,146587,554535,2118042,8156595,31635298,123462515,484483902,1910465543,7566438417,30084771297,120044573286,480550302501,1929362833770,7767140703837,31346346634338",
+    "name": "Sequence defined by the recurrence formula a(n+1)=sum(a(p)*a(n-p)+k,p=0..n)+l for n>=1, with here a(0)=1, a(1)=1, k=0 and l=1.",
+    "formula": [
+        "G.f f: f(z)=(1-sqrt(1-4*z*(a(0)-z*a(0)^2+z*a(1)+(k+l)*z^2/(1-z)+k*z^2/(1-z)^2)))/(2*z) (k=0, l=1).",
+        "Conjecture: (n+1)*a(n) +2*(-3*n+1)*a(n-1) +(9*n-13)*a(n-2) +8*(-n+3)*a(n-3) +4*(n-4)*a(n-4)=0. - _R. J. Mathar_, Feb 29 2016",
+        "a(n) = Sum_{k=0..n}((C(k)*Sum_{j=0..(n-k)/2}(binomial(k+1,j)*binomial(n-k-j-1,n-k-2*j)))), where C(n) is Catalan numbers (A100108). - _Vladimir Kruchinin_, Apr 15 2016"
+    ],
+    "example": [
+        "a(2)=(1*1+0)+(1*1+0)+1=3. a(3)=1*3+1^1+3*1+1=8. a(4)=2*1*8+2*1*3+1=23."
+    ],
+    "maple": [
+        "l:=1: : k := 0 : m:=1:d(0):=1:d(1):=m: for n from 1 to 28 do d(n+1):=sum(d(p)*d(n-p)+k,p=0..n)+l:od :",
+        "taylor((1-sqrt(1-4*z*(d(0)-z*d(0)^2+z*m+(k+l)*z^2/(1-z)+k*z^2/(1-z)^2)))/(2*z),z=0,31);seq(d(n),n=0..29);"
+    ],
+    "mathematica": [
+        "Table[Sum[(Binomial[2 k, k] Sum[Binomial[k + 1, j] Binomial[n - k - j - 1, n - k - 2 j], {j, 0, (n - k)/2}])/(k + 1), {k, 0, n}], {n, 0, 25}] (* _Michael De Vlieger_, Apr 15 2016 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum((binomial(2*k,k)*sum(binomial(k+1,j)*binomial(n-k-j-1,n-k-2*j),j,0,(n-k)/2))/(k+1),k,0,n); /* _Vladimir Kruchinin_, Apr 15 2016  */"
+    ],
+    "xref": [
+        "Cf. A176604."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Richard Choulet_, Apr 21 2010",
+    "references": 3,
+    "revision": 10,
+    "time": "2016-04-15T13:46:42-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 349,
+    "id": "M3932 N1617",
+    "data": "0,0,0,1,5,24,128,835,6423,56410,554306,6016077,71426225,920484892,12793635300,190730117959,3035659077083,51371100102990,920989078354838,17437084517068465,347647092476801301,7280060180210901232,159755491837445900120,3665942433747225901707",
+    "name": "One-half the number of permutations of length n with exactly 2 rising or falling successions.",
+    "comment": [
+        "(1/2) times number of permutations of 12...n such that exactly 2 of the following occur: 12, 23, ..., (n-1)n, 21, 32, ..., n(n-1)."
+    ],
+    "reference": [
+        "F. N. David, M. G. Kendall and D. E. Barton, Symmetric Function and Allied Tables, Cambridge, 1966, p. 263.",
+        "J. Riordan, A recurrence for permutations without rising or falling successions. Ann. Math. Statist. 36 (1965), 708-710.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A000349/b000349.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "Coefficient of t^2 in S[n](t) defined in A002464, divided by 2.",
+        "Recurrence: (n-3)*(n-2)*(n-4)^3*a(n) = (n-3)*(n^4-9*n^3+23*n^2-4*n-29)*(n-4)*a(n-1) - (n-1)*(n^4-12*n^3+57*n^2-125*n+104)*(n-4)*a(n-2) - (n-2)*(n-1)*(n^4-15*n^3+83*n^2-198*n+169)*a(n-3) + (n-3)^3*(n-2)^2*(n-1)*a(n-4). - _Vaclav Kotesovec_, Aug 10 2013",
+        "a(n) ~ sqrt(2*Pi)*n^(n+1/2)/exp(n+2). - _Vaclav Kotesovec_, Aug 10 2013"
+    ],
+    "maple": [
+        "S:= proc(n) option remember; `if`(n<4, [1, 1, 2*t, 4*t+2*t^2]",
+        "       [n+1], expand((n+1-t)*S(n-1) -(1-t)*(n-2+3*t)*S(n-2)",
+        "       -(1-t)^2*(n-5+t)*S(n-3) +(1-t)^3*(n-3)*S(n-4)))",
+        "    end:",
+        "a:= n-> ceil(coeff(S(n), t, 2)/2):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jan 11 2013"
+    ],
+    "mathematica": [
+        "S[n_] := S[n] = If[n<4, {1, 1, 2*t, 4*t+2*t^2}[[n+1]], Expand[(n+1-t)*S[n-1]-(1-t)*(n-2+3*t)*S[n-2]-(1-t)^2*(n-5+t)*S[n-3]+(1-t)^3*(n-3)*S[n-4]]]; a[n_] := Ceiling[Coefficient[S[n], t, 2]/2]; Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Mar 11 2014, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A002464, A000130, A086852. Equals A086853/2. A diagonal of A010028."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_.",
+    "references": 9,
+    "revision": 21,
+    "time": "2015-09-29T15:30:27-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

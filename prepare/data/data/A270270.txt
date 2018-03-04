@@ -1,0 +1,69 @@
+{
+    "number": 270270,
+    "data": "4,6,17,45,131,381,1123,3334,9973,29991,90601,274746,835844,2549874,7797469,23894630,73358721,225589420,694745922,2142444490,6614766985,20445300258,63256499281,195890524486,607136782567,1883199766658,5845450449249,18156369461770,56429925440218",
+    "name": "The number of n-digit numbers in A270048.",
+    "comment": [
+        "Conjecture: lim_{n -> infinity} a(n)/a(n-1) = sqrt(10).",
+        "(Similar to A265108, where we count the n-digit numbers of A264847, pluritriangular numbers.)",
+        "It is not possible to count some hundred-digit numbers without a \"climbing algorithm\" (see also Program and Links)."
+    ],
+    "link": [
+        "Francesco Di Matteo, <a href=\"/A270270/b270270.txt\">Table of n, a(n) for n = 1..300</a>",
+        "Francesco Di Matteo, <a href=\"/A270270/a270270.pdf\">Calculating the A270270 terms</a>"
+    ],
+    "example": [
+        "a(1) = 4 because in A270048 there are 4 numbers with 1 digit (0, 1, 3, 6).",
+        "a(2) = 6 because in A270048 there are 8 numbers with 2 digits (10, 20, 32, 46, 62, 80)."
+    ],
+    "program": [
+        "(Python)",
+        "# init values",
+        "seq = [4]   # the output list",
+        "somme = [4] # the n-value list after the adding of the last seq term",
+        "last = [10] # last a(n) term, or the first k-digit number (10 with k=2)",
+        "# CLIMBING loop, put a bigger value if you want",
+        "for n in range (1,30):",
+        "  k = (len(somme)+1)     # the digits number",
+        "  limit = 10**k          # the newest value to achieve",
+        "  base = (somme[-1]+1)*k # this is the (n+1)*k value",
+        "  hypo = seq[-1]*3       # to obtain rapidly the limite value",
+        "  rid = 10**(len(str(hypo))-1) # the reduction factor",
+        "  # Adjustment LOOP #",
+        "  s, p, m = 0, 0, 0",
+        "  while s < 1:",
+        "    diff_1 = (base + (base + (k*(hypo-1))))*float(hypo)/2",
+        "    tot = last[-1] + diff_1",
+        "    if tot < limit:",
+        "      p = 1",
+        "      if m == 1 and rid > 1:",
+        "        m = 0; rid = rid/10",
+        "      hypo = hypo + rid",
+        "    else:",
+        "      diff_2 = (base + (base + (k*(hypo-2))))*float(hypo-1)/2",
+        "      tot = last[-1] + diff_2",
+        "      if tot > limit:",
+        "        m = 1",
+        "        if p == 1 and rid > 1:",
+        "          p = 0; rid = rid/10",
+        "        hypo = hypo - rid",
+        "      else:",
+        "        s = 1    # escape value",
+        "  # lists updating",
+        "  seq.append(hypo)",
+        "  somme.append(somme[-1]+ hypo)",
+        "  last.append(last[-1]+ diff_1)",
+        "# if you want to prove the conjecture values, uncomment next line",
+        "#print seq[-1], float(seq[-1])/seq[-2]",
+        "print seq"
+    ],
+    "xref": [
+        "Cf. A264847, A265108, A270048."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Francesco Di Matteo_, Mar 14 2016",
+    "references": 2,
+    "revision": 21,
+    "time": "2017-03-18T21:59:24-04:00",
+    "created": "2016-04-09T16:29:17-04:00"
+}

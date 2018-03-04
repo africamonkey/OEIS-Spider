@@ -1,0 +1,45 @@
+{
+    "number": 217539,
+    "data": "0,0,0,1,4,17,66,252,946,3523,13054,48248,178146,657813,2430962,8995521,33342588,123822171,460772982,1718304786,6421729878,24051429321,90272123682,339522804129,1279556832780,4831639423695,18278491474726,69272752632502,262981858878706",
+    "name": "Number of Dyck paths of semilength n which satisfy the condition: number of returns + number of hills < number of peaks.",
+    "comment": [
+        "David Scambler observed that [1, 0, A113682(n-2)] for n>=2 count the Dyck paths of semilength n which satisfy the condition \"number of peaks = number of returns + number of hills\" and [1, A189912(n-1)] for n>=1 count the paths which satisfy the condition \"number of peaks <= number of returns + number of hills\"."
+    ],
+    "formula": [
+        "a(n) = Sum(k < 0, A217540(n, k)).",
+        "a(n) = A000108(n) - A189912(n-1) for n > 0.",
+        "a(n) = C(n)-(n-1)*M(n-2)-M(n-1) for n > 0; C(n) Catalan, M(n) Motzkin numbers.",
+        "Conjecture: 2*(n+1)*(n-3)*a(n) +(-15*n^2+53*n-12)*a(n-1) +(28*n^2-157*n+165)*a(n-2) + 3*(3*n^2+2*n-26)*a(n-3) -18*(2*n-7)*(n-4)*a(n-4)=0. - _R. J. Mathar_, Nov 11 2012"
+    ],
+    "example": [
+        "a(4) = 4 count the Dyck words",
+        "[11010100] (()()()) [11011000] (()(()))",
+        "[11100100] ((())()) [11101000] ((()())) ."
+    ],
+    "maple": [
+        "A217539 := proc(n) local k; if n = 0 then 0 else (2*n)!/(n!^2*(n+1)) - add((n-1)!/(((n-1-k)!*iquo(k,2)!^2)*(iquo(k,2)+1)), k=0..n-1) fi end: seq(A217539(i), i=0..28);"
+    ],
+    "mathematica": [
+        "MotzkinNumber[n_] := Sum[ Binomial[n+1, k]*Binomial[n+1-k, k-1], {k, 0, Ceiling[(n+1)/2]}]/(n+1); a[0] = a[1] = 0; a[n_] := CatalanNumber[n] - (n-1)*MotzkinNumber[n-2] - MotzkinNumber[n-1]; Table[a[n], {n, 0, 28}] (* _Jean-Fran\u00e7ois Alcover_, Jun 27 2013, from 3rd formula *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A217539(n):",
+        "    @CachedFunction",
+        "    def M(n): return (3*(n-1)*M(n-2)+(2*n+1)*M(n-1))/(n+2) if n>1 else 1",
+        "    @CachedFunction",
+        "    def catalan(n): return ((4*n-2)*catalan(n-1))/(n+1) if n>0 else 1",
+        "    return catalan(n) - (n-1)*M(n-2) - M(n-1) if n<>0 else 0",
+        "[A217539(i) for i in (0..28)]"
+    ],
+    "xref": [
+        "Cf. A217540."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Peter Luschny_, Oct 22 2012",
+    "references": 4,
+    "revision": 17,
+    "time": "2013-06-27T12:45:38-04:00",
+    "created": "2012-10-28T16:12:49-04:00"
+}

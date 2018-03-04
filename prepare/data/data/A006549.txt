@@ -1,0 +1,67 @@
+{
+    "number": 6549,
+    "id": "M0582",
+    "data": "1,2,3,4,7,8,16,31,127,256,8191,65536,131071,524287,2147483647,2305843009213693951,618970019642690137449562111,162259276829213363391578010288127,170141183460469231731687303715884105727",
+    "name": "Numbers n such that n and n+1 are prime powers.",
+    "comment": [
+        "Numbers n such that n + (0, 1) is a prime power pair.",
+        "Consecutive prime powers.",
+        "n + (0, 2m), m >= 1, being an admissible pattern for prime pairs, since (0, 2m) = (0, 0) (mod 2), has high density.",
+        "n + (0, 2m-1), m >= 1, being a non-admissible pattern for prime pairs, since (0, 2m-1) = (0, 1) (mod 2), has low density [the only possible pairs are (2^a - 2m-1, 2^a) or (2^a, 2^a + 2m-1), a >= 0].",
+        "Numbers n such that n and n+1 are primes would give only 2, for the prime pair (2, 3).",
+        "This sequence corresponds to the least member of each one of the following prime power pairs, ordered by increasing value of least member: (1, 2), (2^3, 3^2), (Fermat primes - 1, Fermat primes), (Mersenne primes, Mersenne primes + 1).",
+        "It is not known whether this sequence is infinite, but is conjectured to be since:",
+        "(*) 2^3, 3^2 are the only consecutive prime powers with exponents >= 2",
+        "(as a consequence of Mihailescu's theorem -- Mihailescu proved Catalan's conjecture in 2002);",
+        "(*) Only the first 5 Fermat numbers f_0 to f_4 are known to be prime",
+        "(it is conjectured that there might be no others, f_5 to f_32 are all composite);",
+        "(*) It has been conjectured that there exist an infinite number of Mersenne primes.",
+        "Numbers n such that A003418(n) appears only once in the sequence A003418. This may suggest that n is also characterized by the pairs formed by a 2 whose direct neighbor is a prime number in the sequence A014963. - _Eric Desbiaux_, Feb 11 2015"
+    ],
+    "reference": [
+        "R. K. Guy, Unsolved Problems in Number Theory, D9.",
+        "P. Ribenboim, 13 Lect. on Fermat's Last Theorem, p. 236.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "David W. Wilson and Eric Rains (rains(AT)caltech.edu) found a simple proof that in this case of Catalan's conjecture either n or n+1 must be a power of 2 and the other number must be a prime, except for n=8. Using this the sequence is easy to extend."
+    ],
+    "link": [
+        "Daniel Forgues, <a href=\"/A006549/b006549.txt\">Table of n, a(n) for n = 1..25</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CatalansConjecture.html\">Catalan's Conjecture</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/MersennePrime.html\">Mersenne Prime</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/FermatPrime.html\">Fermat Prime</a>"
+    ],
+    "mathematica": [
+        "Do[ a = Length[ FactorInteger[ 2^n - 1 ] ]; b = Length[ FactorInteger[ 2^n ] ]; c = Length[ FactorInteger[ 2^n + 1 ] ]; If[ a == b, Print[ 2^n - 1 ] ]; If[ b == c, Print[ 2^n ] ], {n, 0, 127} ]"
+    ],
+    "program": [
+        "(Haskell)",
+        "a006549 n = a006549_list !! (n-1)",
+        "a006549_list = [1,2,3,4,7,8] ++ f (drop 4 a000040_list) where",
+        "   f (p:ps) | a010055 (p - 1) == 1 = (p - 1) : f ps",
+        "            | a010055 (p + 1) == 1 = p : f ps",
+        "            | otherwise            = f ps",
+        "-- _Reinhard Zumkeller_, Jan 03 2013",
+        "(PARI) is(n)=if(n<5,return(n>0)); isprimepower(n) && isprimepower(n+1) \\\\ _Charles R Greathouse IV_, Apr 24 2015"
+    ],
+    "xref": [
+        "Cf. A000961, A000040, A010055.",
+        "Cf. A019434 Fermat primes: primes of form 2^(2^n) + 1, n >= 0.",
+        "Cf. A000668 Mersenne primes (of form 2^p - 1 where p is a prime).",
+        "Cf. A120431 Numbers n such that n and n+2 are prime powers.",
+        "Cf. A164571 Numbers n such that n and n+3 are prime powers.",
+        "Cf. A164572 Numbers n such that n and n+4 are prime powers.",
+        "Cf. A164573 Numbers n such that n and n+5 are prime powers.",
+        "Cf. A164574 Numbers n such that n and n+6 are prime powers."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _David W. Wilson_",
+        "Additional comments from _Daniel Forgues_, Aug 17 2009"
+    ],
+    "references": 19,
+    "revision": 40,
+    "time": "2015-04-24T12:27:03-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

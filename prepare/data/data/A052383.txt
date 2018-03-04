@@ -1,0 +1,71 @@
+{
+    "number": 52383,
+    "data": "0,2,3,4,5,6,7,8,9,20,22,23,24,25,26,27,28,29,30,32,33,34,35,36,37,38,39,40,42,43,44,45,46,47,48,49,50,52,53,54,55,56,57,58,59,60,62,63,64,65,66,67,68,69,70,72,73,74,75,76,77,78,79,80,82,83,84,85,86,87,88,89",
+    "name": "Numbers without 1 as a digit.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A052383/b052383.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Ar#10-automatic\">Index entries for 10-automatic sequences</a>."
+    ],
+    "formula": [
+        "a(1) = 1, a(n+1) = f(a(n)+1,a(n)+1) where f(x,y) = if x<10 and x<>1 then y else if x mod 10 = 1 then f(y+1,y+1) else f(floor(x/10),y). - _Reinhard Zumkeller_, Mar 02 2008",
+        "a(n) = replace all nonzero digits d by d+1 in base-9 representation of n-1. - _Reinhard Zumkeller_, Oct 07 2014"
+    ],
+    "maple": [
+        "M:= 3: # to get all terms with up to M digits",
+        "B:= {$2..9}: A:= B union {0}:",
+        "for m from 1 to M do",
+        "B:= map(b -> seq(10*b+j,j={0,$2..9}), B);",
+        "A:= A union B;",
+        "od:",
+        "sort(convert(A,list)); # _Robert Israel_, Jan 11 2016",
+        "# second program:",
+        "A052383 := proc(n)",
+        "      option remember;",
+        "      if n = 1 then",
+        "        0;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if nops(convert(convert(a,base,10),set) intersect {1}) = 0 then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Jul 31 2016",
+        "# third Maple program:",
+        "a:= proc(n) local l, m; l, m:= 0, n-1;",
+        "      while m>0 do l:= (d->",
+        "        `if`(d=0, 0, d+1))(irem(m, 9, 'm')), l",
+        "      od; parse(cat(l))/10",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Aug 01 2016"
+    ],
+    "mathematica": [
+        "ban1Q[n_]:=FreeQ[IntegerDigits[n],1]==True; Select[Range[0,89],ban1Q[#] &] (* _Jayanta Basu_, May 17 2013 *)"
+    ],
+    "program": [
+        "(MAGMA) [ n: n in [0..89] | not 1 in Intseq(n) ];  // _Bruno Berselli_, May 28 2011",
+        "(sh) seq 0 1000 | grep -v 1; # _Joerg Arndt_, May 29 2011",
+        "(PARI) a(n)=my(v=digits(n,9));for(i=1,#v,if(v[i],v[i]++));subst(Pol(v),'x,10) \\\\ _Charles R Greathouse IV_, Oct 04 2012",
+        "(Haskell)",
+        "a052383 = f . subtract 1 where",
+        "   f 0 = 0",
+        "   f v = 10 * f w + if r > 0 then r + 1 else 0  where (w, r) = divMod v 9",
+        "-- _Reinhard Zumkeller_, Oct 07 2014"
+    ],
+    "xref": [
+        "Cf. A004176, A004720.",
+        "Cf. A052382 (without 0), A052404 (without 2), A052405 (without 3), A052406 (without 4), A052413 (without 5), A052414 (without 6), A052419 (without 7), A052421 (without 8), A007095 (without 9).",
+        "Cf. A248518, A248519.",
+        "Cf. A011531 (complement)."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,2",
+    "author": "_Henry Bottomley_, Mar 13 2000",
+    "ext": [
+        "Offset changed by _Reinhard Zumkeller_, Oct 07 2014"
+    ],
+    "references": 24,
+    "revision": 45,
+    "time": "2017-02-12T19:04:13-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

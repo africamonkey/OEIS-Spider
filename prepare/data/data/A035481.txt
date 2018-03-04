@@ -1,0 +1,24 @@
+{
+    "number": 35481,
+    "data": "1,1,1,1,4,6,456,6240,10936320,1225566720",
+    "name": "Number of n X n symmetric matrices whose first row is 1..n and whose rows and columns are all permutations of 1..n.",
+    "comment": [
+        "The odd subsequence is presumably A000438, which gives more terms. The even subsequence is A035483."
+    ],
+    "example": [
+        "a(3) = 1 because after 123 in the first row and column, 213 is not allowed for the second row, so it must be 231 and thus the third row is 312."
+    ],
+    "mathematica": [
+        "(* This script is not suitable for n > 6 *) matrices[n_ /; n > 1] := Module[{a, t, vars}, t = Table[Which[i==1, j, j==1, i, j>i, a[i, j], True, a[j, i]], {i, n}, {j, n}]; vars = Select[Flatten[t], !IntegerQ[#]& ] // Union; t /. {Reduce[And @@ (1 <= # <= n & /@ vars) && And @@ Unequal @@@ t, vars, Integers] // ToRules}]; a[0] = a[1] = 1; a[n_] := Length[ matrices[n]]; Table[an = a[n]; Print[\"a(\", n, \") = \", an]; an, {n, 0, 6}] (* _Jean-Fran\u00e7ois Alcover_, Jan 04 2016 *)"
+    ],
+    "xref": [
+        "Cf. A000438, A035482, A000315, A002860, A003090, A040082."
+    ],
+    "keyword": "more,nonn,nice",
+    "offset": "0,5",
+    "author": "_Joshua Zucker_ and Joe Keane",
+    "references": 6,
+    "revision": 13,
+    "time": "2016-01-04T04:49:50-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

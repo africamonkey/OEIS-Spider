@@ -1,0 +1,83 @@
+{
+    "number": 54639,
+    "data": "1,2,3,5,6,9,11,14,18,23,26,29,30,33,35,39,41,50,51,53,65,69,74,81,83,86,89,90,95,98,99,105,113,119,131,134,135,146,155,158,173,174,179,183,186,189,191,194,209,210,221,230,231,233,239",
+    "name": "Queneau numbers: numbers n such that the Queneau-Daniel permutation {1, 2, 3, ..., n} -> {n, 1, n-1, 2, n-2, 3, ...} is of order n.",
+    "comment": [
+        "The troubadour Arnaut Daniel composed sestinas based on the permutation 123456 -> 615243, which cycles after 6 iterations.",
+        "Roubaud quotes the number 141, but the corresponding Queneau-Daniel permutation is only of order 47 = 141/3.",
+        "This appears to coincide with the numbers n such that a type-2 optimal normal basis exists for GF(2^n) over GF(2). But are these two sequences really the same? - _Joerg Arndt_, Feb 11 2008",
+        "The answer is Yes - see Theorem 2 of the Dumas reference. [Jean-Guillaume Dumas (Jean-Guillaume.Dumas(AT)imag.fr), Mar 20 2008]",
+        "From _Peter R. J. Asveld_, Aug 17 2009: (Start)",
+        "a(n) is the n-th T-prime (Twist prime). For N>=2, the family of twist permutations is defined by",
+        "p(m,N) = +2m (mod 2N+1) if 1 <= m <k = ceiling((N+1)/2),",
+        "p(m,N) = -2m (mod 2N+1) if k <= m < N.",
+        "N is T-prime if p(m,N) consists of a single cycle of length N.",
+        "The twist permutation is the inverse of the Queneau-Daniel permutation.",
+        "N is T-prime iff p=2N+1 is a prime number and exactly one of the following three conditions holds;",
+        "(1) N=1 (mod 4) and +2 generates Z_p^* (the multiplicative group of Z_p) but -2 does not,",
+        "(2) N=2 (mod 4) and both +2 and -2 generate Z_p^*,",
+        "(3) N=3 (mod 4) and -2 generate Z_p^* bur +2 does not. (End)",
+        "The sequence name says the permutation is of order n, but P. R. J. Asveld's comment says it's an n-cycle. Is there a proof that those conditions are equivalent for the Queneau-Daniel permutation? (They are not equivalent for any arbitrary permutation; e.g., (123)(45)(6) has order 6 but isn't a 6-cycle.) More generally, I have found that for all n <= 9450, (order of Queneau-Daniel permutation) = (length of orbit of 1) = A003558(n). Does this hold for all n? - _David Wasserman_, Aug 30 2011"
+    ],
+    "reference": [
+        "Jacques Roubaud, Biblioth\u00e8que Oulipienne No 65 (1992) and 66 (1993)."
+    ],
+    "link": [
+        "P. R. J. Asveld, <a href=\"/A054639/b054639.txt\">Table of n, a(n) for n = 1..10085</a>",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>, section 42.9 \"Gaussian normal bases\", pp. 914-920",
+        "P. R. J. Asveld, <a href=\"http://dx.doi.org/10.1016/j.dam.2011.07.019\">Permuting operations on strings and their relation to prime numbers</a>, Discrete Applied Mathematics 159 (2011) 1915-1932.",
+        "P. R. J. Asveld, <a href=\"http://eprints.eemcs.utwente.nl/20685/\">Permuting operations on strings and the distribution of their prime numbers</a>, TR-CTIT-11-24, Dept. of CS, Twente University of Technology, Enschede, The Netherlands.",
+        "P. R. J. Asveld, <a href=\"http://eprints.eemcs.utwente.nl/15678/\">Some families of permutations and their primes </a> (2009), TR-CTIT-09-27, Dept. of CS, Twente University of Technology, Enschede, The Netherlands.",
+        "P. R. J. Asveld, <a href=\"http://eprints.eemcs.utwente.nl/23422/\">Queneau Numbers--Recent Results and a Bibliography</a>, University of Twente, 2013.",
+        "P. R. J. Asveld, <a href=\"http://purl.utwente.nl/publications/67513\">Permuting Operations on Strings-Their Permutations and Their Primes</a>, Twente University of Technology, 2014.",
+        "M. Bringer, <a href=\"http://www.numdam.org/item?id=MSH_1969__27__13_0\">Sur un probl\u00e8me de R. Queneau</a>, Math. Sci. Humaines No. 25 (1969) 13-20.",
+        "Jean-Guillaume Dumas, <a href=\"http://hal.archives-ouvertes.fr/hal-00188240\">Caract\u00e9risation des Quenines et leur repr\u00e9sentation spirale</a>, Math\u00e9matiques et Sciences Humaines, Centre de Math\u00e9matique Sociale et de statistique, EPHE, 2008, 184 (4), pp. 9-23, hal-00188240.",
+        "G. Esposito-Farese, <a href=\"http://www.cpt.univ-mrs.fr/~gef/oulipo7.html#150300\">C program</a>"
+    ],
+    "formula": [
+        "a(n) = (A216371(n)-1)/2. - _L. Edson Jeffery_, Dec 18 2012"
+    ],
+    "example": [
+        "For N=6 and N=7 we obtain the permutations (1 2 4 5 3 6) and (1 2 4 7)(3 6)(5): 6 is T-prime, but 7 is not. - _Peter R. J. Asveld_, Aug 17 2009"
+    ],
+    "maple": [
+        "QD:= proc(n) local i;",
+        "  if n::even then map(op,[seq([n-i,i+1],i=0..n/2-1)])",
+        "  else map(op, [seq([n-i,i+1],i=0..(n-1)/2-1),[(n+1)/2]])",
+        "  fi",
+        "end proc:",
+        "select(n -> GroupTheory:-PermOrder(Perm(QD(n)))=n, [$1..1000]); # _Robert Israel_, May 01 2016"
+    ],
+    "mathematica": [
+        "a[p_] := Sum[Cos[2^n Pi/((2 p + 1) )], {n, 1, p}];",
+        "Select[Range[500],Reduce[a[#] == -1/2, Rationals] &] (* _Gerry Martens_, May 01 2016 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "is(n)=",
+        "{",
+        "    if (n==1, return(1));",
+        "    my( m=n%4 );",
+        "    if ( m==4, return(0) );",
+        "    my(p=2*n+1, r=znorder(Mod(2,p)));",
+        "    if ( !isprime(p), return(0) );",
+        "    if ( m==3 && r==n, return(1) );",
+        "    if ( r==2*n, return(1) ); \\\\ r == 1 or 2",
+        "    return(0);",
+        "}",
+        "for(n=1,10^3, if(is(n),print1(n,\", \")) );",
+        "\\\\ _Joerg Arndt_, May 02 2016"
+    ],
+    "xref": [
+        "Not to be confused with Queneau's \"s-additive sequences\", cf. A003044.",
+        "Considered as sets A054639 is the union of A163782 (Josephus_2-primes) and A163781 (dual Josephus_2-primes); it also equals the union of A163777 (Archimedes_0-primes) and A163778 (Archimedes_1-primes). If b(n) and c(n) denote A071642 (shuffle primes) and A163776 (dual shuffle primes) respectively, then A054639 is the union of b(n)/2 and c(n)/2. - _Peter R. J. Asveld_, Aug 17 2009",
+        "Cf. A216371, A003558 (for which a(n) == n)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Gilles Esposito-Farese (gef(AT)cpt.univ-mrs.fr), May 17 2000",
+    "references": 15,
+    "revision": 77,
+    "time": "2016-11-27T06:58:41-05:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

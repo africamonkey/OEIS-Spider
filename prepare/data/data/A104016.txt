@@ -1,0 +1,30 @@
+{
+    "number": 104016,
+    "data": "561,1105,1729,2465,2821,6601,8911,10585,11305,15841,29341,39865,41041,46657,52633,62745,63973,75361,96985,101101,115921,126217,162401,172081,188461,252601,278545,294409,314821,334153,340561,399001,401401,410041",
+    "name": "Devaraj numbers: squarefree r-prime-factor (r>1) integers N=p1*...*pr such that phi(N)=(p1-1)*...*(pr-1) divides gcd(p1-1,...,pr-1)^2*(N-1)^(r-2).",
+    "comment": [
+        "_A.K. Devaraj_ conjectured that these numbers are exactly Carmichael numbers. It was proved (see Alekseyev link) that every Carmichael number is indeed a Devaraj number, but the converse is not true. Devaraj numbers that are not Carmichael are given by A104017.",
+        "These numbers can't be even, since phi(N) is always even (N>2) but p1=2 implies that gcd{pi-1}=1 and N-1 is odd. - _M. F. Hasler_, Apr 03 2009"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A104016/b104016.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Max Alekseyev, <a href=\"http://www.mersenneforum.org/showpost.php?p=55271\">Pomerance's proof</a>, June 2005."
+    ],
+    "program": [
+        "(PARI) Devaraj() = for(n=2,10^8, f=factorint(n); if(vecmax(f[,2])>1,next); f=f[,1]; r=length(f); if(r==1,next); d=f[1]-1; p=f[1]-1; for(i=2,r,d=gcd(d,f[i]-1); p*=f[i]-1); if( ((n-1)^(r-2)*d^2)%p==0, print1(\" \",n)) )",
+        "(PARI) isA104016(n)= local(f=factor(n)); vecmax(f[,2])==1 && #(f*=[1,-1]~)>1 && gcd(f)^2*(n-1)^(#f-2)%prod(i=1,#f,f[i])==0",
+        "/* To print the list: */ forstep( n=3, 10^6, 2, vecmax((f=factor(n))[,2])>1 && next; #(f*=[1,-1]~)>1 || next; gcd(f)^2*(n-1)^(#f-2)%prod(i=1,#f,f[i]) || print1(n\",\"))",
+        "/* The following version could be efficient for large omega(n) */",
+        "isA104016(n) = issquarefree(n) && !isprime(n) && Mod(n-1,prod(i=1,#n=factor(n)*[1,-1]~,n[i]))^(#n-2)*gcd(n)^2==0 \\\\ _M. F. Hasler_, Apr 03 2009"
+    ],
+    "xref": [
+        "Cf. A104017, A002997."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Max Alekseyev_, Feb 25 2005",
+    "references": 5,
+    "revision": 25,
+    "time": "2017-06-13T00:55:49-04:00",
+    "created": "2005-04-09T03:00:00-04:00"
+}

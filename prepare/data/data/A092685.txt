@@ -1,0 +1,23 @@
+{
+    "number": 92685,
+    "data": "1,2,5,11,25,55,120,258,551,1169,2469,5193,10885,22746,47404,98553,204443,423259,874680,1804556,3717348,7647075,15711194,32242013,66096274,135366764,276988466,566312984,1156974619,2362043602",
+    "name": "Row sums of triangle A092683, in which the convolution of each row with {1,1} produces a triangle that, when flattened, equals the flattened form of A092683.",
+    "formula": [
+        "G.f.: A(x,y) = H(x)*(1-x)/(1-2*x), where H(x) satisfies: H(x) = H(x^2/(1-x))/(1-x) and H(x) is the g.f. of A092684. - _Paul D. Hanna_, Jul 17 2006"
+    ],
+    "program": [
+        "(PARI) {T(n,k)=if(n<0 || k>n,0, if(n==0 && k==0,1, if(n==1 && k<=1,1, if(k==n,T(n,0), T(n-1,k)+T(n-1,k+1)))))}",
+        "a(n)=sum(k=0,n,T(n,k))",
+        "(PARI) {a(n)=local(A,F=1+x,d=1,G=x,H=1+x,S=ceil(log(n+1)/log(d+1))); for(i=0,n,G=x*subst(F,x,G+x*O(x^n)));for(i=0,S,H=subst(H,x,x*G^d+x*O(x^n))*G/x); A=(x*H-y*subst(H,x,x*y^d +x*O(x^n)))/(x*subst(F,x,y)-y); sum(k=0,2*n,polcoeff(polcoeff(A,n,x),k,y))} \\\\ _Paul D. Hanna_, Jul 17 2006"
+    ],
+    "xref": [
+        "Cf. A092683, A092684, A092686, A092689, A120897, A120902."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 04 2004",
+    "references": 2,
+    "revision": 7,
+    "time": "2017-06-13T21:55:59-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

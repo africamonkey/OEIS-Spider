@@ -1,0 +1,50 @@
+{
+    "number": 249517,
+    "data": "0,1,2,3,4,5,6,7,8,9,11111111111",
+    "name": "Numbers n for which the digital sum A007953(n) and the digital product A007954(n) both contain the same distinct digits as the number n.",
+    "comment": [
+        "a(12) = (10^106-1)/9 + 122222222. - _Max Alekseyev_, Nov 15 2014",
+        "Intersection of A249515 and A249516. Subsequence of A249334.",
+        "Other entries include (10^111-1)/9, (10^113-1)/9 + 177, (10^115-1)/9 + 122222222, (10^117-1)/9 + 11117, (10^125-1)/9 + 2224, (10^126-1)/9 + 333335, (10^135-1)/9 + 4666, (10^143-1)/9 + 446, (10^143-1)/9 + 2224, (10^144-1)/9 + 33335. All other entries with 150 or less digits are formed by permutations of the decimal digits of these entries (including a(12)). (10^((10^n-1)/9)-1)/9 are entries of the sequences for n > 1. - _Chai Wah Wu_, Nov 15 2014"
+    ],
+    "example": [
+        "11111111111 is a member since A007953(11111111111) = 11 and A007954(11111111111) = 1."
+    ],
+    "program": [
+        "(MAGMA) [n: n in [0..10^7] | Set(Intseq(n)) eq Set(Intseq(&*Intseq(n))) and Set(Intseq(n)) eq Set(Intseq(&+Intseq(n)))]",
+        "(PARI) is(n)=if(n<=9,return(1)); my(d=digits(n),s=Set(d)); s==Set(digits(sum(i=1,#d,d[i]))) && s==Set(digits(prod(i=1,#d,d[i]))) \\\\ _Charles R Greathouse IV_, Nov 13 2014",
+        "(Python)",
+        "from itertools import product",
+        "from operator import mul",
+        "from functools import reduce",
+        "A249517_list = [0]",
+        "for g in range(1,15):",
+        "....xp, ylist = [], []",
+        "....for i in range(9*g,-1,-1):",
+        "........x = set(str(i))",
+        "........if not (('0' in x) or (x in xp)):",
+        "............xv = [int(d) for d in x]",
+        "............imin = int(''.join(sorted(str(i))))",
+        "............if max(xv)*(g-len(x)) >= imin-sum(xv) and i-sum(xv) >=  min(xv)*(g-len(x)):",
+        "................xp.append(x)",
+        "................for y in product(x,repeat=g):",
+        "....................if set(y) == x:",
+        "........................yd = [int(d) for d in y]",
+        "........................if set(str(sum(yd))) == x == set(str(reduce(mul, yd, 1))):",
+        "............................ylist.append(int(''.join(y)))",
+        "....A249517_list.extend(sorted(ylist)) # _Chai Wah Wu_, Nov 15 2014"
+    ],
+    "xref": [
+        "Cf. A007954, A249334, A249515, A249516."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Jaroslav Krizek_, Oct 31 2014",
+    "ext": [
+        "a(11) = 11111111111 confirmed by _Sean A. Irvine_, Nov 13 2014, by direct search."
+    ],
+    "references": 2,
+    "revision": 38,
+    "time": "2014-11-16T14:21:28-05:00",
+    "created": "2014-11-13T11:26:50-05:00"
+}

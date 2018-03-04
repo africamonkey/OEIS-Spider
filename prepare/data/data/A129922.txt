@@ -1,0 +1,50 @@
+{
+    "number": 129922,
+    "data": "1,1,3,4,12,22,51,101,225,465,1008,2111,4528,9560,20402,43222,92018,195256,415243,881758,1874288,3981318,8460906,17975132,38196045,81152769,172436680,366376845,778476016,1654054258,3514494256,7467412436,15866507485,33712418692,71630875356,152198161794",
+    "name": "Number of 3-Carlitz compositions of n (or, more generally p-Carlitz compositions, p > 1), i.e., words b_1^{i_1}b_2^{i_2}...b_k^{i_k} such that the b_j's and i_j's are positive integers for which Sum_{j=1..k} i_j * b_j = n and, for all j, i_j < p and if b_j = b_(j+1) then i_j + i_(j+1) is not equal to p.",
+    "comment": [
+        "For p=2, the sequence enumerates Carlitz compositions, A003242."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A129922/b129922.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Sylvie Corteel, Pawe\u0142 Hitczenko, <a href=\"http://www.emis.ams.org/journals/JIS/VOL10/Hitczenko/hitczenko4.html\">Generalizations of Carlitz Compositions</a>, Journal of Integer Sequences, Vol. 10 (2007), Article 07.8.8."
+    ],
+    "formula": [
+        "G.f.: 1/(1 - Sum_{k>0} (z^k/(1-z^k) - 3*z^(k*3)/(1-z^(k*3)))).",
+        "For general p the generating function is 1/(1 - Sum_{k>0}(z^k/(1-z^k) - p*z^(k*p)/(1-z^(k*p))))."
+    ],
+    "example": [
+        "a(3)=4 because, for p=3, we can write:",
+        "  3^{1},",
+        "  1^{1} 2^{1},",
+        "  2^{1} 1^{1},",
+        "  1^{1} 1^{1} 1^{1}."
+    ],
+    "maple": [
+        "b:= proc(n, i, j) option remember;",
+        "     `if`(n=0, 1, add(add(`if`(k=i and m+j=3, 0,",
+        "      b(n-k*m, k, m)), m=1..min(2, n/k)), k=1..n))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jul 22 2017"
+    ],
+    "program": [
+        "(PARI) N = 66;  x = 'x + O('x^N);  p=3;",
+        "gf = 1/(1-sum(k=1,N, x^k/(1-x^k)-p*x^(k*p)/(1-x^(k*p))));",
+        "Vec(gf)  /* _Joerg Arndt_, Apr 28 2013 */"
+    ],
+    "xref": [
+        "Cf. A129921.",
+        "Cf. A003242."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "Pawel Hitczenko (phitczenko(AT)math.drexel.edu), Jun 05 2007",
+    "ext": [
+        "Added more terms, _Joerg Arndt_, Apr 28 2013"
+    ],
+    "references": 2,
+    "revision": 12,
+    "time": "2017-07-22T22:25:06-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

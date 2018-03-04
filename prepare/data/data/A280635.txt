@@ -1,0 +1,53 @@
+{
+    "number": 280635,
+    "data": "111,122,133,144,155,166,177,188,199,212,224,236,248,313,326,339,414,428,515,616,717,818,919,2510,2612,2714,2816,2918,3412,3515,3618,3721,3824,3927,4312,4416,4520,4624,4728,4832,4936,5210,5315,5420,5525,5630,5735",
+    "name": "Numbers whose digit string can be partitioned into three nonempty parts such that the product of the first two parts equals the third part.",
+    "comment": [
+        "Could be called \"area numbers\" since if the first set of digits is the length, and the second set of digits is the width, then the last set of digits is the area, with length * width = area."
+    ],
+    "example": [
+        "236 is in the sequence since 2*3=6. 3515 is in the sequence since 3*5=15. Leading zeros are not allowed, thus 2036 (2*03=6) is not included."
+    ],
+    "maple": [
+        "read(\"transforms\") : # implements digcatL",
+        "isA280635 := proc(n)",
+        "    local dgs,spl1,spl2,dgs1,dgs2,dgs3;",
+        "    dgs := convert(n,base,10) ;",
+        "    if nops(dgs) >= 3 then",
+        "        for spl1 from 1 to nops(dgs)-2 do",
+        "        for spl2 from spl1+1 to nops(dgs)-1 do",
+        "            if op(-1,dgs) <> 0 and op(spl1,dgs) <> 0 and op(spl2,dgs) <> 0 then",
+        "                dgs1 := ListTools[Reverse]([op(spl2+1..nops(dgs),dgs)]) ;",
+        "                dgs2 := ListTools[Reverse]([op(spl1+1..spl2,dgs)]) ;",
+        "                dgs3 := ListTools[Reverse]([op(1..spl1,dgs)]) ;",
+        "                if digcatL(dgs1)*digcatL(dgs2) = digcatL(dgs3) then",
+        "                    return true;",
+        "                end if",
+        "            end if;",
+        "        end do:",
+        "        end do:",
+        "        false ;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 100 do",
+        "    if isA280635(n) then",
+        "        printf(\"%d,\\n\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 10 2017"
+    ],
+    "mathematica": [
+        "With[{nn = 1}, Union@ Flatten@ Table[FromDigits@ Flatten@ Map[IntegerDigits, {n, k, n k}], {n, 10^nn - 1}, {k, 10^nn - 1}]] (* _Michael De Vlieger_, Jan 07 2017 *)"
+    ],
+    "xref": [
+        "Cf. A088294, A280636."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Randy L. Ekl_, Jan 06 2017",
+    "references": 4,
+    "revision": 28,
+    "time": "2017-01-10T07:18:18-05:00",
+    "created": "2017-01-10T07:18:18-05:00"
+}

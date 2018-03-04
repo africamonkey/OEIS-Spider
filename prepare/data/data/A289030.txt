@@ -1,0 +1,48 @@
+{
+    "number": 289030,
+    "data": "1,10,471,27076,1713955,114751470,7969151855,567878871304,41247976697019,3040572724077010,226777538499783271,17076122335343354700,1296037531424347164115,99025149551454886937590,7609414766853344476768095,587623058661705739915402256",
+    "name": "Number of Dyck paths having exactly n peaks in each of the levels 1,2,3 and no other peaks.",
+    "comment": [
+        "The semilengths of Dyck paths counted by a(n) are elements of the integer interval [3*n+2, 6*n] for n>0."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A289030/b289030.txt\">Table of n, a(n) for n = 0..523</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "example": [
+        ". a(1) = 10:",
+        ".",
+        ".        /\\        /\\          /\\        /\\",
+        ".     /\\/  \\      /  \\/\\    /\\/  \\      /  \\/\\",
+        ".  /\\/      \\  /\\/      \\  /      \\/\\  /      \\/\\",
+        ".",
+        ".                /\\        /\\                /\\",
+        ".           /\\  /  \\      /  \\  /\\    /\\    /  \\",
+        ".        /\\/  \\/    \\  /\\/    \\/  \\  /  \\/\\/    \\",
+        ".",
+        ".              /\\        /\\            /\\",
+        ".         /\\  /  \\      /  \\    /\\    /  \\  /\\",
+        ".        /  \\/    \\/\\  /    \\/\\/  \\  /    \\/  \\/\\  ."
+    ],
+    "maple": [
+        "b:= proc(n, k, j, v) option remember; `if`(n=j, `if`(v=1, 1, 0),",
+        "      `if`(v<2, 0, add(b(n-j, k, i, v-1)*(binomial(i, k)*",
+        "       binomial(j-1, i-1-k)), i=1..min(j+k, n-j))))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, add(b(w, n$2, 3), w=3*n+2..6*n)):",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "b[n_, k_, j_, v_]:=b[n, k, j, v]=If[n==j, If[v==1, 1, 0], If[v<2, 0, Sum[b[n - j, k, i, v - 1] Binomial[i, k] Binomial[j - 1, i - 1 - k], {i, Min[j + k, n - j]}]]]; a[n_]:=If[n==0, 1, Sum[b[w, n, n, 3], {w, 3n + 2, 6n}]]; Table[a[n], {n, 0, 15}] (* _Indranil Ghosh_, Jul 06 2017, after maple code *)"
+    ],
+    "xref": [
+        "Row n=3 of A288972."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Jun 22 2017",
+    "references": 2,
+    "revision": 16,
+    "time": "2017-07-07T06:03:33-04:00",
+    "created": "2017-06-22T10:36:23-04:00"
+}

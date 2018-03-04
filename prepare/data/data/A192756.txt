@@ -1,0 +1,34 @@
+{
+    "number": 192756,
+    "data": "0,1,6,17,38,75,138,243,416,699,1160,1909,3124,5093,8282,13445,21802,35327,57214,92631,149940,242671,392716,635497,1028328,1663945,2692398,4356473,7049006,11405619,18454770,29860539,48315464,78176163",
+    "name": "Coefficient of x in the reduction by x^2->x+1 of the polynomial p(n,x) defined below in Comments.",
+    "comment": [
+        "The titular polynomial is defined recursively by p(n,x)=x*(n-1,x)+5n for n>0, where p(0,x)=1.  For discussions of polynomial reduction, see A192232 and A192744."
+    ],
+    "formula": [
+        "Conjecture: G.f.: -x*(1+3*x+x^2) / ( (x^2+x-1)*(x-1)^2 ). a(n) = A001924(n)+3*A001924(n-1)+A001924(n-2). Partial sums of A166863. - _R. J. Mathar_, May 04 2014"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 40;",
+        "p[0, n_] := 1; p[n_, x_] := x*p[n - 1, x] + 5 n;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "(* A166863 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "(* A192756 *)"
+    ],
+    "xref": [
+        "Cf. A192744, A192232."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 09 2011",
+    "references": 2,
+    "revision": 8,
+    "time": "2014-05-04T17:26:56-04:00",
+    "created": "2011-07-10T00:56:51-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 206622,
+    "data": "1,2,10,36,118,376,1148,3376,9654,26894,73192,195188,510948,1315048,3332720,8326448,20529526,49998884,120379574,286726340,676057144,1578880480,3654180236,8385122192,19085029540,43103203626,96630606968,215105226728,475608824400",
+    "name": "G.f.: Product_{n>0} ( (1+x^n)/(1-x^n) )^(n^2).",
+    "comment": [
+        "Compare g.f. to: Product_{n>0} (1+x^n)/(1-x^n) = exp( Sum_{n>=1} (sigma(2*n) - sigma(n))*x^n/n ) which equals 1/theta_4(x) = 1/(1 + 2*Sum_{n>=1} (-x)^(n^2)).",
+        "Convolution of A023871 and A027998. - _Vaclav Kotesovec_, Aug 19 2015",
+        "In general, if g.f. = Product_{k>=1} ((1 + x^k)/(1 - x^k))^(c2*k^2 + c1*k + c0) and c2>0, then a(n) ~ exp(Pi * 2^(5/4) * c2^(1/4) * n^(3/4) / 3 + 7*c1 * Zeta(3) * sqrt(n) / (Pi^2 * sqrt(2*c2)) + (c0*Pi / (2^(5/4) * c2^(1/4)) - 49*c1^2 * Zeta(3)^2 / (2^(5/4) * c2^(5/4) * Pi^5)) * n^(1/4) + 22411 * c1^3 * Zeta(3)^3 / (196 * c2^2 * Pi^8) - 7*c0*c1 * Zeta(3) / (4*c2 * Pi^2) - c2 * Zeta(3) / (4*Pi^2) + c1/12) * Pi^(c1/12) * c2^(1/8 + c0/8 + c1/48) / (A^c1 * 2^(15/8 + 11*c0/8 + 7*c1/48) * n^(5/8 + c0/8 + c1/48)), where A is the Glaisher-Kinkelin constant A074962. - _Vaclav Kotesovec_, Nov 08 2017"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A206622/b206622.txt\">Table of n, a(n) for n = 0..9042</a> (terms 0..1000 from Vaclav Kotesovec)",
+        "Vaclav Kotesovec, <a href=\"http://arxiv.org/abs/1509.08708\">A method of finding the asymptotics of q-series based on the convolution of generating functions</a>, arXiv:1509.08708 [math.CO], Sep 30 2015, p. 23."
+    ],
+    "formula": [
+        "G.f.: exp( Sum_{n>=1} (sigma_3(2*n) - sigma_3(n))/4 * x^n/n ), where sigma_3(n) is the sum of cubes of divisors of n (A001158).",
+        "The inverse Euler transform has g.f.: x*(2 + 7*x + 12*x^2 + 7*x^3 + 2*x^4)/(1-x^2)^3.",
+        "a(n) ~ exp(2^(5/4)*Pi*n^(3/4)/3 - Zeta(3)/(4*Pi^2)) / (2^(15/8) * n^(5/8)), where Zeta(3) = A002117. - _Vaclav Kotesovec_, Aug 19 2015",
+        "a(0) = 1, a(n) = (2/n)*Sum_{k=1..n} A007331(k)*a(n-k) for n > 0. - _Seiichi Manyama_, Apr 30 2017"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 10*x^2 + 36*x^3 + 118*x^4 + 376*x^5 + 1148*x^6 +...",
+        "where A(x) = (1+x)/(1-x) * (1+x^2)^4/(1-x^2)^4 * (1+x^3)^9/(1-x^3)^9 *...",
+        "Also, A(x) = Euler transform of [2,7,18,28,50,63,98,112,162,175,...]:",
+        "A(x) = 1/((1-x)^2*(1-x^2)^7*(1-x^3)^18*(1-x^4)^28*(1-x^5)^50*(1-x^6)^63*...)."
+    ],
+    "mathematica": [
+        "nmax = 40; CoefficientList[Series[Product[((1+x^k)/(1-x^k))^(k^2), {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Aug 19 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(prod(m=1,n+1,((1+x^m)/(1-x^m+x*O(x^n)))^(m^2)),n)}",
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1, n, (sigma(2*m, 3)-sigma(m, 3))/4*x^m/m)+x*O(x^n)), n)}",
+        "(PARI) {a(n)=local(InvEulerGF=x*(2+7*x+12*x^2+7*x^3+2*x^4)/(1-x^2+x*O(x^n))^3);polcoeff(1/prod(k=1,n,(1-x^k+x*O(x^n))^polcoeff(InvEulerGF,k)),n)}",
+        "for(n=0,35,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A156616, A206623, A206624, A001158 (sigma_3)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Feb 10 2012",
+    "references": 9,
+    "revision": 38,
+    "time": "2017-11-08T09:13:38-05:00",
+    "created": "2012-02-11T10:47:44-05:00"
+}

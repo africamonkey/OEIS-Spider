@@ -1,0 +1,68 @@
+{
+    "number": 1274,
+    "id": "M2999 N1215",
+    "data": "1,3,15,104,164,194,255,495,584,975,2204,2625,2834,3255,3705,5186,5187,10604,11715,13365,18315,22935,25545,32864,38804,39524,46215,48704,49215,49335,56864,57584,57645,64004,65535,73124,105524,107864,123824,131144,164175,184635",
+    "name": "Numbers n such that phi(n) = phi(n+1).",
+    "comment": [
+        "Unlike totients, cototient(x + 1) = cototient(x) never holds (except 2 - phi(2) = 3 - phi(3) = 1) because cototient(x) is congruent to x modulo 2. - _Labos Elemer_, Aug 08 2001",
+        "Lal-Gillard and Firoozbakht ask whether there is another pair of consecutive integers in this sequence, apart from a(16) + 1 = a(17) = 5187, see link. - _M. F. Hasler_, Jan 05 2011",
+        "There are 5236 terms less than 10^12. - _Jud McCranie_, Feb 13 2012",
+        "Up to 10^13 there are 10755 terms, and no further consecutive pairs like (5186, 5187). - _Giovanni Resta_, Feb 27 2014",
+        "A051179(k) for k from 0 to 5 are in the sequence.  No other members of A051179 are in the sequence, because phi(2^(2^k)-1) = product(j=1..k-1) phi(2^(2^j)+1) and phi(2^(2^5)+1) < 2^(2^5) so if k > 5, phi(2^(2^k)-1) < product(j=1..k-1, 2^(2^j)) = 2^(2^k-1) = phi(2^(2^k)). - _Robert Israel_, Mar 31 2015"
+    ],
+    "reference": [
+        "J.-M. De Koninck, Ces nombres qui nous fascinent, Entry 15, pp 5, Ellipses, Paris 2008.",
+        "R. K. Guy, Unsolved Problems Number Theory, Sect. B36.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe and Jud McCranie, <a href=\"/A001274/b001274.txt\">Table of n, a(n) for n = 1..5236</a> (first 2567 terms from T. D. Noe)",
+        "R. Baillie, <a href=\"http://dx.doi.org/10.1090/S0025-5718-76-99669-1\">Table of phi(n) = phi(n+1)</a>, Math. Comp., 30 (1976), 189-190.",
+        "Farideh Firoozbakht, <a href=\"http://www.primepuzzles.net/puzzles/puzz_466.htm\">Puzzle 466. phi(n-1)=phi(n)=phi(n+1)</a>, in C. Rivera's Primepuzzles.",
+        "Dov Jarden, <a href=\"/A001602/a001602.pdf\">Recurring Sequences</a>, Riveon Lematematika, Jerusalem, 1966. [Annotated scanned copy] See p. 66.",
+        "V. L. Klee, Jr., <a href=\"http://www.jstor.org/stable/2305207\">Some remarks on Euler's totient function</a>, Amer. Math. Monthly, 54 (1947), 332.",
+        "M. Lal and P. Gillard, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1972-0319391-6\">On the equation phi(n) = phi(n+k)</a>, Math. Comp., 26 (1972), 579-583.",
+        "K. Miller, Solutions of phi(n) = phi(n+1) for 1 <= n <= 500000. Unpublished, 1972. [ Cf. <a href=\"http://www.jstor.org/stable/2005646\">(Untitled)</a>, Math. Comp., Vol. 27, p. 447, 1973 ].",
+        "Leo Moser, <a href=\"http://www.jstor.org/stable/2305815\">Some equations involving Euler's totient function</a>, Amer. Math. Monthly, 56 (1949), 22-23.",
+        "J. Shallit, <a href=\"/A001274/a001274.pdf\">Letter to N. J. A. Sloane, Jul 17 1975</a>"
+    ],
+    "formula": [
+        "Conjecture: a(n) ~ C*n^3*log(n), where C = 9/pi^2 = 0.91189... - _Thomas Ordowski_, Oct 21 2014"
+    ],
+    "example": [
+        "phi(3) = phi(4) = 2, so 3 is in the sequence.",
+        "phi(15) = phi(16) = 8, so 15 is in the sequence."
+    ],
+    "maple": [
+        "select(n -> numtheory:-phi(n) = numtheory:-phi(n+1), [$1..10^5]); # _Robert Israel_, Mar 31 2015"
+    ],
+    "mathematica": [
+        "Reap[For[n = 1; k = 2; f1 = 1, k <= 10^9, k++, f2 = EulerPhi[k]; If[f1 == f2, Print[\"a(\", n, \") = \", k - 1]; Sow[k - 1]; n++]; f1 = f2]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Mar 29 2011, revised Dec 26 2013 *)",
+        "Flatten[Position[Partition[EulerPhi[Range[200000]],2,1],{x_,x_}]] (* _Harvey P. Dale_, Dec 27 2015 *)",
+        "Select[Range[1000], EulerPhi[#] == EulerPhi[# + 1] &] (* _Alonso del Arte_, Oct 03 2014 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (elemIndices)",
+        "a001274 n = a001274_list !! (n-1)",
+        "a001274_list = map (+ 1) $ elemIndices 0 $",
+        "                           zipWith (-) (tail a000010_list) a000010_list",
+        "-- _Reinhard Zumkeller_, May 20 2014, Mar 31 2011",
+        "(PARI) is(n)=eulerphi(n)==eulerphi(n+1) \\\\ _Charles R Greathouse IV_, Feb 27 2014",
+        "(MAGMA) [n: n in [1..3*10^5] | EulerPhi(n) eq EulerPhi(n+1)]; // _Vincenzo Librandi_, Apr 14 2015"
+    ],
+    "xref": [
+        "Cf. A000010, A001494, A051953, A003276, A003275, A007015, A179186, A179187, A179188, A179189, A179202, A217139."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _David W. Wilson_"
+    ],
+    "references": 38,
+    "revision": 100,
+    "time": "2016-12-10T20:18:51-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

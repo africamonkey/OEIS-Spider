@@ -1,0 +1,46 @@
+{
+    "number": 90081,
+    "data": "1,8,16,27,32,36,48,54,64,72,81,96,108,125,128,135,144,150,160,162,180,192,200,216,225,240,243,250,256,270,288,300,320,324,343,350,360,375,378,384,392,400,405,420,432,441,448,450,480,486,490,500,504,512,525",
+    "name": "Cube root-smooth numbers: numbers n such that largest prime factor of n does not exceed cube root of n.",
+    "comment": [
+        "What is the asymptotic growth of this sequence?",
+        "Answer: a(n) ~ kn, where k = 1/A175475. That is, about 4.8% of numbers are in this sequence. - _Charles R Greathouse IV_, Jul 14 2014"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A090081/b090081.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "Solutions to A006530(n) <= n^(1/3)."
+    ],
+    "example": [
+        "378 = 2 * 3^3 * 7 is a member of the sequence since 7 < 7.23... = 378^(1/3)."
+    ],
+    "maple": [
+        "filter:= n ->",
+        "evalb(max(seq(f[1],f=ifactors(n)[2]))^3 <= n):",
+        "select(filter, [$1..1000]); # _Robert Israel_, Jul 14 2014"
+    ],
+    "mathematica": [
+        "ffi[x_] := Flatten[FactorInteger[x]]; ba[x_] := Table[Part[ffi[x], 2*w-1], {w, 1, lf[x]}]; lf[x_] := Length[FactorInteger[x]]; ma[x_] := Max[ba[x]]; Do[If[ !Greater[ma[n], gy=n^(1/3)//N]&&!PrimeQ[n], Print[n(*, {gy, ma[n]}}*)]], {n, 1, 1000}]",
+        "Select[Range[1000], (FactorInteger[#][[-1,1]])^3 <= # &] (* _T. D. Noe_, Sep 14 2011 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(f=factor(n)[,1]);f[#f]^3<=n \\\\ _Charles R Greathouse IV_, Sep 14 2011",
+        "(Python)",
+        "from sympy import primefactors",
+        "def ok(n):",
+        "    if n==1 or max(primefactors(n))**3<=n: return 1",
+        "    else: return 0",
+        "print [n for n in xrange(1, 1001) if ok(n)] # _Indranil Ghosh_, Apr 23 2017"
+    ],
+    "xref": [
+        "Cf. A063763, A001248, A048098, A036966, A054744, A059172, A068936, A076405, A076467."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_Labos Elemer_, Nov 21 2003",
+    "references": 2,
+    "revision": 28,
+    "time": "2017-04-24T00:51:34-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

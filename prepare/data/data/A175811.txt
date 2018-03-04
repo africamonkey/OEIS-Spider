@@ -1,0 +1,33 @@
+{
+    "number": 175811,
+    "data": "1,7,11,13,17,18,19,23,24,25,29,30,31,32,33,37,38,39,40,41,42,43,47,48,49,50,51,52,53,57,58,59,60,61,62,63,67,68,69,70,71,72,73,74,75,79,81,82,83,84,85,86,87,88,89,93,94,95,96,97,98,99,100,101,103,106,107,108,109,110,111,112,113,114,115,116,117",
+    "name": "A007318-deficient numbers.",
+    "comment": [
+        "Definition see in comment to A175522. The same criticism on index-selection as in A175807 applies. All primes more than 5 are in the sequence"
+    ],
+    "formula": [
+        "{n: sum_{d|n, d<n} A007318(d) < A007318(n)}."
+    ],
+    "maple": [
+        "A007318 := proc(n) option remember; local t, r; t := 0 ; for r from 0 do if t+r+1 > n then return binomial(r, n-t) ; end if; t := t+r+1 ; end do: end proc:",
+        "isA175811 := proc(n) m := 0 ; for d in numtheory[divisors](n) minus {n} do m := m+A007318(d) ; end do; m < A007318(n) ; end proc:",
+        "for n from 1 to 120 do if isA175811(n) then printf(\"%d,\", n); end if; end do: # _R. J. Mathar_, Dec 06 2010"
+    ],
+    "program": [
+        "(PARI) b(n) = {my(m = 1); while (m*(m+1)/2 < n, m++); if (! ispolygonal(n, 3), m--); binomial(m, n - m*(m+1)/2);}",
+        "isok(n) = sumdiv(n, d, (d<n)* b(d)) < b(n); \\\\ _Michel Marcus_, Feb 07 2016"
+    ],
+    "xref": [
+        "Cf. A007318, A175522, A175807 (perfect version), A005100, A005101"
+    ],
+    "keyword": "nonn,less",
+    "offset": "1,2",
+    "author": "_Vladimir Shevelev_, Dec 05 2010",
+    "ext": [
+        "Terms >25 from _R. J. Mathar_, Dec 06 2010"
+    ],
+    "references": 5,
+    "revision": 12,
+    "time": "2016-02-07T15:11:43-05:00",
+    "created": "2010-11-12T14:24:41-05:00"
+}

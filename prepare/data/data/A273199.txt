@@ -1,0 +1,44 @@
+{
+    "number": 273199,
+    "data": "51,55,57,69,87,93,111,119,123,129,141,159,177,183,201,207,213,219,237,249,253,267,275,291,303,309,319,321,327,333,339,369,377,381,393,403,411,417,447,453,471,489,501,519,537,543,573,579,591,597",
+    "name": "Integers which have a positive but not monotone difference table of their divisors.",
+    "comment": [
+        "For an integer n>0 and not the unity we define DTD(n) to be the difference table of the divisors of n. We say that DTD(n) is positive if all entries in the table are positive and we call DTD(n) monotone if all rows and all columns of the table are nondecreasing (reading from left to right and from top to bottom)."
+    ],
+    "example": [
+        "159 is in this sequence because the DTD of 159 has only positive entries but not all columns are nondecreasing:",
+        "[  1   3   53 159]",
+        "[  2  50  106]",
+        "[ 48  56]",
+        "[  8]"
+    ],
+    "program": [
+        "(Sage)",
+        "def is_A273199(n):",
+        "    D = divisors(n)",
+        "    T = matrix(ZZ, len(D))",
+        "    for (m, d) in enumerate(D):",
+        "        T[0, m] = d",
+        "        for k in range(m-1, -1, -1) :",
+        "            T[m-k, k] = T[m-k-1, k+1] - T[m-k-1, k]",
+        "            if T[m-k, k] <= 0: return false",
+        "    non_decreasing = lambda L: all(x<=y for x, y in zip(L, L[1:]))",
+        "    b = true",
+        "    for k in range(0,len(D)-1):",
+        "        b &= non_decreasing(T.row(k)[:len(D)-k])",
+        "        b &= non_decreasing(T.column(k)[:len(D)-k])",
+        "        if not b: return true",
+        "    return false",
+        "print filter(is_A273199, range(1,600))"
+    ],
+    "xref": [
+        "Cf. A000040, A246655, A273102, A273130, A273200, A273201."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, May 17 2016",
+    "references": 2,
+    "revision": 11,
+    "time": "2016-05-18T23:35:17-04:00",
+    "created": "2016-05-18T23:35:17-04:00"
+}

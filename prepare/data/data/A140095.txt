@@ -1,0 +1,58 @@
+{
+    "number": 140095,
+    "data": "1,1,5,41,437,5513,78477,1225865,20644021,370334137,7017055933,139562915193,2899946191077,62722686552841,1408033260333581,32729098457253417,786224322656857941,19486950945070339801,497649167866430159197,13078602790892074110937",
+    "name": "G.f. satisfies: A(x) = x/(1 - A(A(A(A(x))))).",
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x) = Series_Reversion(x - x*A(A(A(x)))).",
+        "(2) A(x) = x + Sum_{n=1} d^(n-1)/dx^(n-1) x^n * A(A(A(x)))^n / n!.",
+        "(3) A(x) = x*exp( Sum_{n=1} d^(n-1)/dx^(n-1) x^n * A(A(A(x)))^n/x / n! ).",
+        "Define A_{n} such that A_{n+1}(x) = A( A_{n}(x) ) with A_0(x) = x,",
+        "then A_{n}(x) = A_{n-1}/[1 - A_{n+3}(x)] ;",
+        "thus A_{n}(x) = 1 - A_{n-4}(x) / A_{n-3}(x).",
+        "G.f.: A(x)/x is the unique solution to variable A in the infinite system of simultaneous equations starting with:",
+        "A = 1 + x*A*D;",
+        "B = A + x*B*E;",
+        "C = B + x*C*F;",
+        "D = C + x*D*G;",
+        "E = D + x*E*H; ..."
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^2 + 5*x^3 + 41*x^4 + 437*x^5 + 5513*x^6 + 78477*x^7 +...",
+        "Iterations A_{n+1}(x) = A( A_{n}(x) ) are related as follows.",
+        "A_2(x) = 1 - Series_Reversion(A_2(x)) / Series_Reversion(A(x));",
+        "A_3(x) = 1 - Series_Reversion(A(x)) / x;",
+        "A_4(x) = 1 - x / A(x);",
+        "A_5(x) = 1 - A(x) / A_2(x);",
+        "A_6(x) = 1 - A_2(x) / A_3(x);",
+        "A_7(x) = 1 - A_3(x) / A_4(x);",
+        "A_8(x) = 1 - A_4(x) / A_5(x); ...",
+        "where the iterations of A(x) begin:",
+        "A_2(x) = x + 2*x^2 + 12*x^3 + 108*x^4 + 1220*x^5 + 16028*x^6 +...",
+        "A_3(x) = x + 3*x^2 + 21*x^3 + 207*x^4 + 2489*x^5 + 34259*x^6 +...",
+        "A_4(x) = x + 4*x^2 + 32*x^3 + 344*x^4 + 4408*x^5 + 63776*x^6 +...",
+        "A_5(x) = x + 5*x^2 + 45*x^3 + 525*x^4 + 7165*x^5 + 109125*x^6 +...",
+        "A_6(x) = x + 6*x^2 + 60*x^3 + 756*x^4 + 10972*x^5 + 175948*x^6 +...",
+        "A_7(x) = x + 7*x^2 + 77*x^3 + 1043*x^4 + 16065*x^5 + 271103*x^6 +...",
+        "A_8(x) = x + 8*x^2 + 96*x^3 + 1392*x^4 + 22704*x^5 + 402784*x^6 +...",
+        "...",
+        "Iterations are also related by continued fractions:",
+        "A(x) = x/(1 - A_3(x)/(1 - A_6(x)/(1 - A_9(x)/(1 -...)))) ;",
+        "A_2(x) = A(x)/(1 - A_4(x)/(1 - A_7(x)/(1 - A_10(x)/(1 -...)))) ;",
+        "A_3(x) = A_2(x)/(1 - A_5(x)/(1 - A_8(x)/(1 - A_11(x)/(1 -...)))) ;",
+        "A_4(x) = A_3(x)/(1 - A_6(x)/(1 - A_9(x)/(1 - A_12(x)/(1 -...)))) ; ..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A); if(n<1, 0, n++; A=x+O(x^2); for(i=2, n,B=subst(A, x, A); A=x/(1-subst(B, x, B))); polcoeff(A, n))}"
+    ],
+    "xref": [
+        "Cf. A140094, A088714, A088717, A091713, A120971, A139702."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, May 08 2008, May 20 2008",
+    "references": 3,
+    "revision": 10,
+    "time": "2013-01-31T09:11:45-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

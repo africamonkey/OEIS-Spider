@@ -1,0 +1,37 @@
+{
+    "number": 56569,
+    "data": "1,2,3,6,14,42,158,756,4594,35532,349428,4370436,69532964,1407280392,36228710348,1186337370456,49415178236344,2618246576596392,176462813970065208,15128228719573952976,1649746715671916095304",
+    "name": "Row sums of Fibonomial triangle A010048.",
+    "link": [
+        "S. Falcon, <a href=\"http://saspublisher.com/wp-content/uploads/2014/06/SJET24C669-675.pdf\">On The Generating Functions of the Powers of the K-Fibonacci Numbers</a>, Scholars Journal of Engineering and Technology (SJET), 2014; 2 (4C):669-675."
+    ],
+    "formula": [
+        "a(n)= sum(A010048(n, m), m=0..n); A010048(n, m)=: fibonomial(n, m).",
+        "From _Vaclav Kotesovec_, Apr 30 2015: (Start)",
+        "a(n) ~ c * ((1+sqrt(5))/2)^(n^2/4), where",
+        "c = EllipticTheta[3,0,1/GoldenRatio] / QPochhammer[-1/GoldenRatio^2] = 2.082828701647012450835512317685120373906427048806222527375... if n is even,",
+        "c = EllipticTheta[2,0,1/GoldenRatio] / QPochhammer[-1/GoldenRatio^2] = 2.082828691334156222136965926255238646603356514964103252122... if n is odd.",
+        "Or c = Sum_{j} ((1+sqrt(5))/2)^(-(j+(1-(-1)^n)/4)^2) / A062073, where A062073 = 1.2267420107203532444176302... is the Fibonacci factorial constant.",
+        "(End)"
+    ],
+    "mathematica": [
+        "Table[Sum[Product[Fibonacci[j],{j,1,n}] / Product[Fibonacci[j],{j,1,k}] / Product[Fibonacci[j],{j,1,n-k}],{k,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Apr 30 2015 *)",
+        "(* Or, since version 10 *) Table[Sum[Fibonorial[n]/Fibonorial[k]/Fibonorial[n-k],{k,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Apr 30 2015 *)",
+        "Round@Table[Sum[GoldenRatio^(k(n-k)) QBinomial[n, k, -1/GoldenRatio^2], {k, 0, n}], {n, 0, 20}] (* Round is equivalent to FullSimplify here, but is much faster - _Vladimir Reshetnikov_, Sep 25 2016 *)"
+    ],
+    "program": [
+        "(Maxima) ffib(n):=prod(fib(k),k,1,n);",
+        "fibonomial(n,k):=ffib(n)/(ffib(k)*ffib(n-k));",
+        "makelist(sum(fibonomial(n,k),k,0,n),n,0,30); \\\\ _Emanuele Munarini_, Apr 02 2012"
+    ],
+    "xref": [
+        "Cf. A010048, A062073, A181926."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Wolfdieter Lang_, Jul 10 2000",
+    "references": 7,
+    "revision": 24,
+    "time": "2016-09-26T08:08:37-04:00",
+    "created": "2000-07-22T03:00:00-04:00"
+}

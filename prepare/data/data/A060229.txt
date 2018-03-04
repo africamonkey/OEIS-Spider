@@ -1,0 +1,63 @@
+{
+    "number": 60229,
+    "data": "29,59,149,179,239,269,419,569,599,659,809,1019,1049,1229,1289,1319,1619,1949,2129,2309,2339,2549,2729,2789,2969,2999,3119,3299,3329,3359,3389,3539,3929,4019,4049,4229,4259,4649,4799,5009,5099,5279,5519,5639",
+    "name": "Smaller member of a twin prime pair whose mean is a multiple of A002110(3)=30.",
+    "comment": [
+        "Equivalently, smaller of twin prime pair with primes in different decades.",
+        "Primes p such that p and p+2 are prime factors of Fibonacci(p-1) and Fibonacci(p+1) respectively. - _Michel Lagneau_, Jul 13 2016",
+        "The union of this sequence and A282326 gives A132243. - _Martin Renner_, Feb 11 2017",
+        "The union of {3,5}, A282321, A282323 and this sequence gives A001359. - _Martin Renner_, Feb 11 2017",
+        "The union of {3,5,7}, A282321, A282322, A282323, A282324, this sequence and A282326 gives A001097. - _Martin Renner_, Feb 11 2017",
+        "Number of terms less than 10^k, k=2,3,4,...: 2, 11, 72, 407, 2697, 19507, 146516, ... - _Muniru A Asiru_, Jan 29 2018"
+    ],
+    "link": [
+        "Muniru A Asiru, <a href=\"/A060229/b060229.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "For the pair {149,151} (149 + 151)/2 = 5*30."
+    ],
+    "maple": [
+        "isA060229 := proc(n)",
+        "    if modp(n+1,30) =0 and isprime(n) and isprime(n+2) then",
+        "        true;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "A060229 := proc(n)",
+        "    option remember;",
+        "    if n =1 then",
+        "        29;",
+        "    else",
+        "        for a from procname(n-1)+2 by 2 do",
+        "            if isA060229(a) then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "seq(A060229(n),n=1..80) ; # _R. J. Mathar_, Feb 19 2017"
+    ],
+    "mathematica": [
+        "Select[Prime@ Range[10^3], PrimeQ[# + 2] && Mod[# + 1, 30] == 0 &] (* _Michael De Vlieger_, Jul 14 2016 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = isprime(n) && isprime(n+2) && !((n+1) % 30); \\\\ _Michel Marcus_, Dec 11 2013",
+        "(MAGMA) [p: p in PrimesUpTo(7000) | IsPrime(p+2) and p mod 30 eq 29 ]; // _Vincenzo Librandi_, Feb 13 2017",
+        "(GAP) Filtered(List([0..200], k -> 30*k-1), n -> IsPrime(n) and IsPrime(n+2));  # _Muniru A Asiru_, Feb 02 2018"
+    ],
+    "xref": [
+        "Cf. A001359, A002110, A060230, A060231, A158277, A158861.",
+        "Subset of A001097, A001359, A132236, A132243 and A132247."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Labos Elemer_, Mar 21 2001",
+    "ext": [
+        "Minor edits by _Ray Chandler_, Apr 02 2009"
+    ],
+    "references": 17,
+    "revision": 35,
+    "time": "2018-02-09T15:54:58-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

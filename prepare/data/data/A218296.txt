@@ -1,0 +1,40 @@
+{
+    "number": 218296,
+    "data": "1,1,4,30,352,5560,109056,2540720,68401152,2087897472,71236526080,2686375597312,110951893303296,4980913763830784,241491517062512640,12575483733378816000,700015678015053758464,41480146826887546372096,2606901492484549499682816",
+    "name": "E.g.f.: Sum_{n>=0} n^n * cosh(n*x) * x^n/n!.",
+    "comment": [
+        "Compare the e.g.f. to the identity: Sum_{n>=0} n^n * exp(-n*x) * x^n/n! = 1/(1-x)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A218296/b218296.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1 + (1/2)*x/(1-x) - (1/2)*LambertW(-x*exp(x))/(1 + LambertW(-x*exp(x))).",
+        "a(n) ~ n^n/(2*sqrt(1+LambertW(exp(-1)))*exp(n)*LambertW(exp(-1))^n). - _Vaclav Kotesovec_, Jul 08 2013"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 4*x^2/2! + 30*x^3/3! + 352*x^4/4! + 5560*x^5/5! +...",
+        "where",
+        "A(x) = 1 + 1^1*x*cosh(1*x) + 2^2*cosh(2*x)*x^2/2! + 3^3*cosh(3*x)*x^3/3! + 4^4*cosh(4*x)*x^4/4! + 5^5*cosh(5*x)*x^5/5! +..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1 + 1/2*x/(1-x) - 1/2*LambertW[-x*E^x]/(1 + LambertW[-x*E^x]), {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Jul 08 2013 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=n!*polcoeff(sum(k=0, n, k^k*cosh(k*x +x*O(x^n))*x^k/k!), n)",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) LambertW(x,N)=sum(n=1,N,(-n)^(n-1)*x^n/n!)",
+        "{a(n)=local(X=x+x*O(x^n));n!*polcoeff(1 + (1/2)*x/(1-X) - (1/2)*LambertW(-x*exp(X),n)/(1 + LambertW(-x*exp(X),n)),n)}",
+        "for(n=0, 30, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Jul 08 2013"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Oct 27 2012",
+    "ext": [
+        "E.g.f. in Formula section corrected by _Paul D. Hanna_, Jul 08 2013, error noted by _Vaclav Kotesovec_."
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2016-07-19T11:36:16-04:00",
+    "created": "2012-10-27T01:03:20-04:00"
+}

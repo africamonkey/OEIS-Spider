@@ -1,0 +1,80 @@
+{
+    "number": 5823,
+    "id": "M1567",
+    "data": "0,2,6,8,18,20,24,26,54,56,60,62,72,74,78,80,162,164,168,170,180,182,186,188,216,218,222,224,234,236,240,242,486,488,492,494,504,506,510,512,540,542,546,548,558,560,564,566,648,650,654,656,666,668,672,674",
+    "name": "Numbers whose ternary expansion contains no 1's.",
+    "comment": [
+        "The set of real numbers between 0 and 1 that contain no 1's in their ternary expansion is the well-known Cantor set with Hausdorff dimension log 2 / log 3.",
+        "Complement of A081606. - _Reinhard Zumkeller_, Mar 23 2003",
+        "Numbers n such that the n-th Apery number equals 1 (mod 3) (cf. A005258) - _Benoit Cloitre_, Nov 30 2003",
+        "Numbers n such that the n-th central Delannoy number equals 1 (mod 3) (cf. A001850) - _Benoit Cloitre_, Nov 30 2003",
+        "Numbers n such that there exists a permutation p_1, ..., p_n of 1, ..., n such that i + p_i is a power of 3 for every i - _Ray Chandler_, Aug 03 2004",
+        "Subsequence of A125292; A125291(a(n)) = 1 for n>0. - _Reinhard Zumkeller_, Nov 26 2006",
+        "A062756(a(n)) = 0. - _Reinhard Zumkeller_, Mar 02 2008",
+        "The first 2^n terms of the sequence could be obtained using the Cantor process for the segment [0,3^n-1]. E.g. for n=2 we have [0,{1},2,{3,4,5},6,{7},8]. The numbers outside of braces are the first 4 terms of the sequence. Therefore the terms of the sequence could be called \"Cantor's numbers\". - _Vladimir Shevelev_, Jun 13 2008",
+        "Mahler proved that positive a(n) is never a square. - _Michel Marcus_, Nov 12 2012"
+    ],
+    "reference": [
+        "K. J. Falconer, The Geometry of Fractal Sets, Cambridge, 1985; p. 14.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005823/b005823.txt\">Table of n, a(n) for n = 1..1024</a>",
+        "J.-P. Allouche and J. Shallit, <a href=\"http://www.cs.uwaterloo.ca/~shallit/Papers/as0.ps\">The ring of k-regular sequences</a>, Theoretical Computer Sci., 98 (1992), 163-197.",
+        "J.-P. Allouche and J. Shallit, <a href=\"http://dx.doi.org/10.1016/0304-3975(92)90001-V\">The ring of k-regular sequences</a>, Theoretical Computer Sci., 98 (1992), 163-197.",
+        "Sajed Haque, Chapter 3.4 of <a href=\"https://uwspace.uwaterloo.ca/bitstream/handle/10012/12234/Haque_Sajed.pdf\">Discriminators of Integer Sequences</a>, 2017, See p. 45.",
+        "Sajed Haque, Jeffrey Shallit, <a href=\"http://arxiv.org/abs/1605.00092\">Discriminators and k-Regular Sequences</a>, arXiv:1605.00092 [cs.DM], 2016.",
+        "C. Kimberling, <a href=\"http://dx.doi.org/10.1016/S0012-365X(03)00085-2\">Affinely recursive sets and orderings of languages</a>, Discrete Math., 274 (2004), 147-160.",
+        "K. Mahler, <a href=\"http://matwbn.icm.edu.pl/ksiazki/aa/aa53/aa5316.pdf\">The representation of squares to the base 3</a>, Acta Arith. Vol. 53, Issue 1 (1989), 99-106.",
+        "M. Mendes France and A. J. van der Poorten, <a href=\"http://dx.doi.org/10.1016/0304-3975(89)90045-5\">From geometry to Euler identities</a>, Theoret. Comput. Sci., 65 (1989), 213-220.",
+        "<a href=\"/index/Ar#3-automatic\">Index entries for 3-automatic sequences</a>."
+    ],
+    "formula": [
+        "a(2n) = 3*a(n)+2, a(2n+1) = 3*a(n+1), a(1) = 0.",
+        "a(n) = Sum_{k = 1..n} 1 + 3^A007814(k). - _Philippe Del\u00e9ham_, Jul 09 2005",
+        "If the offset were changed to zero, then: a(0)=0, a(n+1)=f(a(n)+1,f(a(n)+1) where f(x,y) = if x<3 and x<>1 then y else if x mod 3 = 1 then f(y+1,y+1) else f(floor(x/3),y). - _Reinhard Zumkeller_, Mar 02 2008",
+        "G.f. g(x) satisfies g(x) = 3*g(x^2)*(1+1/x) + 2*x^2/(1-x^2). - _Robert Israel_, Jan 04 2015"
+    ],
+    "maple": [
+        "a:= proc(n) option remember;",
+        "      `if`(n=1, 0, `if`(irem (n, 2, 'q')=0, 3*a(q)+2, 3*a(q+1)))",
+        "    end:",
+        "seq(a(n), n=1..100); # _Alois P. Heinz_, Apr 19 2012"
+    ],
+    "mathematica": [
+        "Select[ Range[ 0, 729 ], (Count[ IntegerDigits[ #, 3 ], 1 ]==0)& ]",
+        "Select[Range[0,700],DigitCount[#,3,1]==0&] (* _Harvey P. Dale_, Mar 12 2016 *)"
+    ],
+    "program": [
+        "(PARI) { plnt=1;",
+        "mxind=57 ; mxind++ ;",
+        "for(testn=0,10^6,",
+        "lgt=1;",
+        "for(i=1,1000,if(3^i > testn,lgt=i;break()));",
+        "atst=testn;pasr=1;",
+        "for(j=1,lgt,lasd=atst%3;",
+        "if(lasd==1,pasr=0;break(),atst=(atst-lasd)/3));",
+        "if(pasr==1,",
+        "print1(testn, \", \"); plnt++) ; if(mxind ==  plnt, break() ))} \\\\\\ _Douglas Latimer_, Apr 17 2012",
+        "(PARI) is(n)=while(n,if(n%3==1,return(0),n\\=3));1 \\\\ _Charles R Greathouse IV_, Apr 20 2012",
+        "(PARI) a(n)=n=binary(n-1);sum(i=1,#n,2*n[i]*3^(#n-i)) \\\\ _Charles R Greathouse IV_, Apr 20 2012",
+        "(PARI) a(n)=2*fromdigits(binary(n-1),3) \\\\ _Charles R Greathouse IV_, Aug 24 2016",
+        "(Python)",
+        "def A005823(n):",
+        "....return 2*int(format(n-1,'b'),3) # _Chai Wah Wu_, Jan 04 2015"
+    ],
+    "xref": [
+        "Twice A005836. Cf. A032924, A014263, A007089, A062756, A061392, A001196, A097252-A097262."
+    ],
+    "keyword": "nonn,easy,nice,base",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, _Jeffrey Shallit_",
+    "ext": [
+        "More terms from _Sascha Kurz_, Mar 24 2002",
+        "Offset corrected by _N. J. A. Sloane_, Mar 02 2008. This may require some of the formulas to be adjusted."
+    ],
+    "references": 43,
+    "revision": 83,
+    "time": "2018-02-17T12:24:11-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

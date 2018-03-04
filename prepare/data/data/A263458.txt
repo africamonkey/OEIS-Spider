@@ -1,0 +1,41 @@
+{
+    "number": 263458,
+    "data": "4,6,12,22,28,30,36,46,52,60,70,78,100,102,108,126,148,150,156,166,172,180,190,196,198,222,228,238,262,268,270,276,292,310,316,348,358,366,372,382,388,396,420,430,438,460,462,478,486,502,508,540,556,598",
+    "name": "Deal a pack of n cards into two piles and gather them up, n/2 times. All n such that this reverses the order of the deck.",
+    "comment": [
+        "This seems to be A003628(n)-1; that is, each element of this sequence is one less than a prime congruent to 5 or 7 modulo 8."
+    ],
+    "example": [
+        "Take a deck of 52 playing cards. Deal it into two piles, then pick up the first pile and put it on top of the other. Do this 26 times. The order of the deck is reversed, so 52 belongs to this sequence."
+    ],
+    "program": [
+        "(Sage)",
+        "from itertools import cycle",
+        ".",
+        "def into_piles(r,deck):",
+        "...packs = [[] for i in range(r)]",
+        "...for card,pack in zip(range(1,deck+1),cycle(range(r))):",
+        "......packs[pack].insert(0,card)",
+        "...out = sum(packs,[])",
+        "...return Permutation(out)",
+        ".",
+        "def pow(p,n):",
+        "...s = p",
+        "...for i in range(n-1):",
+        "......s = s*p",
+        "...return s",
+        ".",
+        "def has_reversing_property(deck):",
+        "...p = pow(into_piles(2,deck),deck/2)",
+        "...return p==into_piles(1,deck)",
+        ".",
+        "[i for i in range(2,400) if has_reversing_property(i)]"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Christian Perfect_, Oct 19 2015",
+    "references": 0,
+    "revision": 12,
+    "time": "2015-10-23T06:27:38-04:00",
+    "created": "2015-10-23T06:27:38-04:00"
+}

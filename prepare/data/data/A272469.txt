@@ -1,0 +1,49 @@
+{
+    "number": 272469,
+    "data": "0,6,50,322,1874,10558,58716,325758,1808778,10068548,56213606,314785072,1767660604,9951449844,56151698716,317484868212",
+    "name": "Numbers of n-step paths of a king moving on an n X n chessboard, starting to at a corner and not visiting any cell twice.",
+    "example": [
+        "On an n X n chessboard, a king in a corner is allowed to have n moves. For n=2, let's name the cells A1,A2,B1,B2 with the king at A1. Two moves, without repeating cells, can be done in the following 6 different ways: {A1-A2-B1, A1-A2-B2, A1-B1-A2, A1-B1-B2, A1-B2-A2, A1-B2-B1}. So a(2)=6."
+    ],
+    "maple": [
+        "pathCount := proc (N)",
+        "local g1, g2, nStep, gg, nCells, nPrev, i1, i2, j1, j2, i, j, nNext;",
+        "    nCells := N^2; g1 := [[1]];",
+        "    if N = 1 then return nops(g1) fi; #forced value for N=0",
+        "    for nStep to N do",
+        "        g2 := [];",
+        "        for gg in g1 do",
+        "            nPrev := gg[-1];",
+        "            i1 := `if`(floor((nPrev-1)/N) = 0, 0, -N);",
+        "            i2 := `if`(floor((nPrev-1)/N) = N-1, 0, N);",
+        "            j1 := `if`(`mod`(nPrev-1, N) = 0, 0, -1);",
+        "            j2 := `if`(`mod`(nPrev-1, N) = N-1, 0, 1);",
+        "            for i from i1 by N to i2 do",
+        "                for j from j1 to j2 do",
+        "                    if i = 0 and j = 0 then next fi;",
+        "                    nNext := nPrev+i+j;",
+        "                    if nNext < 0 or nCells < nNext or (nNext in gg) then next fi;",
+        "                    g2 := [op(g2), [op(gg), nNext]]",
+        "                end do",
+        "            end do",
+        "        end do;",
+        "        g1 := g2",
+        "    end do;",
+        "    return nops(g1);",
+        "end proc:",
+        "[seq(pathCount(n), n = 1 .. 6)];"
+    ],
+    "xref": [
+        "Cf. A272445."
+    ],
+    "keyword": "nonn,walk,more",
+    "offset": "1,2",
+    "author": "_C\u00e9sar Eliud Lozada_, Apr 30 2016",
+    "ext": [
+        "a(9)-a(16) from _Alois P. Heinz_, May 01 2016"
+    ],
+    "references": 1,
+    "revision": 23,
+    "time": "2016-05-02T14:18:56-04:00",
+    "created": "2016-05-01T17:21:47-04:00"
+}

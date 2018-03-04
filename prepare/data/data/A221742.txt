@@ -1,0 +1,35 @@
+{
+    "number": 221742,
+    "data": "172081,1773289,4463641,295643089,798770161,1976295241,122160500281,374464040689,444722065201,676328168881,1009514855521,2382986541601,3022286597929,9031805532361,33648448111489,155773422536761,206932492972801,366715617643441,708083570971801",
+    "name": "Carmichael numbers of the form (6*k+1)*(12*k+1)*(18*k+1) which are the product of four prime numbers.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A221742/b221742.txt\">Table of n, a(n) for n = 1..87</a>",
+        "Umberto Cerruti, <a href=\"/A221742/a221742.pdf\">Pseudoprimi di Fermat e numeri di Carmichael</a> (in Italian), 2013. The sequence is on page 11.",
+        "<a href=\"https://oeis.org/wiki/Index_to_OEIS:_Section_Ca#Carmichael\">Index entries for sequences related to Carmichael numbers</a>."
+    ],
+    "maple": [
+        "with(numtheory);P:=proc(q)local a,b,k,ok,n;",
+        "for n from 0 to q do a:=(6*n+1)*(12*n+1)*(18*n+1); b:=ifactors(a)[2];",
+        "if issqrfree(a) and nops(b)=4 then ok:=1;",
+        "for k from 1 to 4 do if not type((a-1)/(b[k][1]-1),integer) then ok:=0;",
+        "break; fi; od; if ok=1 then print(a); fi;",
+        "fi; od; end: P(10^6); # _Paolo P. Lava_, Oct 11 2013"
+    ],
+    "mathematica": [
+        "g[n_] := (6*n+1)*(12*n+1)*(18*n+1); testQ[n_] := Block[{p,e}, {p, e} = Transpose@ FactorInteger@ n; e == {1,1,1,1} && Max[Mod[n-1, p-1]] == 0]; Select[g /@ Range[10^4], testQ] (* _Giovanni Resta_, May 21 2013 *)"
+    ],
+    "program": [
+        "(MAGMA) [c: n in [1..10^4] | #PrimeDivisors(c) eq 4 and IsOne(c mod CarmichaelLambda(c)) where c is (6*n+1)*(12*n+1)*(18*n+1)];"
+    ],
+    "xref": [
+        "Cf. A002997, A033502, A221743 (associated k).",
+        "Subsequence of A182087."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bruno Berselli_, Jan 23 2013, based on the Cerruti paper.",
+    "references": 2,
+    "revision": 26,
+    "time": "2016-12-01T04:38:58-05:00",
+    "created": "2013-01-23T11:08:56-05:00"
+}

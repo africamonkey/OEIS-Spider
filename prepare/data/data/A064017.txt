@@ -1,0 +1,55 @@
+{
+    "number": 64017,
+    "data": "1,3,12,45,162,567,1944,6561,21870,72171,236196,767637,2480058,7971615,25509168,81310473,258280326,817887699,2582803260,8135830269,25569752274,80196041223,251048476872,784526490225,2447722649502",
+    "name": "Number of ternary trees (A001764) with n nodes and maximal diameter.",
+    "comment": [
+        "A problem important for polymer science because it counts the trees having unbranched branches; they are called \"combs\".",
+        "Equals (1, 3, 9, 27, 81, ...) convolved with (1, 0, 3, 9, 27, 81, ...). Example: a(5) = 162 = (81, 27, 9, 3, 1) dot (1, 0, 3, 9, 27) = 81 + 3*27. - _Gary W. Adamson_, Jul 31 2010"
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A064017/b064017.txt\">Table of n, a(n) for n = 1..200</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (6,-9)."
+    ],
+    "formula": [
+        "a(n) = 3*a(n-1) + 3^(n-2); closed formula: (n+1)*3^(n-2).",
+        "a(n) = (n+2)3^(n-1) + 0^n/3 (offset 0); a(n) = A025192(n) + A027471(n). - _Paul Barry_, Sep 05 2003",
+        "A006234(n+4) - a(n+2) = 3^n. - _Creighton Dement_, Mar 01 2005",
+        "a(n+1) = Sum_{k=0..n} A196389(n,k)*3^k. - _Philippe Del\u00e9ham_, Oct 31 2011",
+        "G.f.: (1 - 3*x + 3*x^2)*x/(1 - 3*x)^2. - _Philippe Del\u00e9ham_, Oct 31 2011",
+        "a(1)=1, a(2)=3, a(3)=12, a(n) = 6*a(n-1) - 9*a(n-2). - _Harvey P. Dale_, Feb 07 2012"
+    ],
+    "example": [
+        "a(5)=162 because we can write (5+1)*3^(5-2) = 6*3^3 = 6*27."
+    ],
+    "maple": [
+        "a:=n->ceil(sum(3^(n-2),j=0..n)): seq(a(n), n=1..26); # _Zerinvary Lajos_, Jun 05 2008"
+    ],
+    "mathematica": [
+        "Join[{1},Table[(n+1)3^(n-2),{n,2,30}]] (* or *) Join[{1}, LinearRecurrence[ {6,-9},{3,12},30]] (* _Harvey P. Dale_, Feb 07 2012 *)"
+    ],
+    "program": [
+        "Floretion Algebra Multiplication Program, FAMP Code: lesforseq[ - 'i + 'j - 'kk' - 'ki' - 'kj' ], vesforseq(n) = 3^n, tesforseq = A006234",
+        "(PARI) { for (n=1, 200, if (n>1, a=(n + 1)*p; p*=3, a=p=1); write(\"b064017.txt\", n, \" \", a) ) } \\\\ _Harry J. Smith_, Sep 06 2009]",
+        "(Sage)",
+        "@CachedFunction",
+        "def BB(n, k, x):  # modified cardinal B-splines",
+        "    if n == 1: return 0 if (x < 0) or (x >= k) else 1",
+        "    return x*BB(n-1, k, x) + (n*k-x)*BB(n-1, k, x-k)",
+        "def EulerianPolynomial(n, k, x):",
+        "    if n == 0: return 1",
+        "    return add(BB(n+1, k, k*m+1)*x^m for m in (0..n))",
+        "def A064017(n) : return 3^(n-1)*EulerianPolynomial(1,n-1,1/3) if n <> 1 else 1",
+        "[A064017(n) for n in (1..25)]  # _Peter Luschny_, May 04 2013",
+        "(PARI) a(n)=if(n==1, 1, (n+1)*3^(n-2)); \\\\ _Joerg Arndt_, May 06 2013"
+    ],
+    "xref": [
+        "Cf. A001764, A006234, A014915, A027261, A079272."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "Danail Bonchev (bonchevd(AT)aol.com), Sep 07 2001",
+    "references": 8,
+    "revision": 43,
+    "time": "2017-09-09T23:22:38-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

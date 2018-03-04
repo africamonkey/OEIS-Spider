@@ -1,0 +1,38 @@
+{
+    "number": 272818,
+    "data": "1,4,27,72,96,108,486,800,1280,3125,6272,10976,12500,14336,21600,30375,36000,48600,51840,54675,69120,84375,121500,134456,169344,174960,192000,225000,240000,247808,337500,340736,395136,435456,451584,703125,750141,781250,787320,823543,857304,885735",
+    "name": "Numbers such that (sum + product) of all their prime factors equals (sum + product) of all exponents in their prime factorization.",
+    "comment": [
+        "For p prime, p^p satisfy the condition, hence A051674 (and also A048102) is a subsequence. Moreover, if p and q are primes and i and j are positive integers, if p^i * q^j verify the condition, then the same is true for p^j * q^i. So A122406 is also a subsequence. More generally, if a number is a term, then any permutation of the exponents in its prime factorization (i.e. any permutation of its prime signature) gives also a term. In addition, any number having no more than two distinct prime factors (apart their multiplicity) is a term iff it belongs also to A272858."
+    ],
+    "link": [
+        "Giuseppe Coppoletta and Giovanni Resta, <a href=\"/A272818/b272818.txt\">Table of n, a(n) for n = 1..1413</a> (terms < 10^19, first 100 terms from G. Coppoletta)"
+    ],
+    "example": [
+        "885735 = 3^11 * 5 is included because (3+5) + 3*5 = (11+1) + 11*1.",
+        "2^10 * 3^6 * 19^2 is included because (2+3+19)+ 2*3*19 = (10+6+2)+ 10*6*2."
+    ],
+    "mathematica": [
+        "Select[Range[10^6], Total@ First@ # + Times @@ First@ # == Total@ Last@ # + Times @@ Last@ # &@ Transpose@ FactorInteger@ # &] (* _Michael De Vlieger_, May 08 2016 *)"
+    ],
+    "program": [
+        "(Sage) def d(n):",
+        "    v=factor(n)[:]; L=len(v)",
+        "    d1=sum(v[j][0] for j in range(L))+prod(v[j][0] for j in range(L))",
+        "    d2=sum(v[j][1] for j in range(L))+prod(v[j][1] for j in range(L))",
+        "    return d1-d2",
+        "[k for k in (1..1000000) if d(k)==0]",
+        "(PARI) spp(v) = vecsum(v) + prod(k=1, #v, v[k]);",
+        "isok(n) = my(f = factor(n)); spp(f[,1]) == spp(f[,2]); \\\\ _Michel Marcus_, May 08 2016"
+    ],
+    "xref": [
+        "Cf. A048102, A054411, A054412, A071174, A122406, A272858, A272859."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Giuseppe Coppoletta_, May 08 2016",
+    "references": 3,
+    "revision": 40,
+    "time": "2016-05-17T09:18:35-04:00",
+    "created": "2016-05-17T09:14:38-04:00"
+}

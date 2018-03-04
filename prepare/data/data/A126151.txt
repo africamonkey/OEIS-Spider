@@ -1,0 +1,51 @@
+{
+    "number": 126151,
+    "data": "1,1,6,96,2976,151416,11449296,1204566336,168233625216,30110372009856,6719377991060736,1829013279998846976,596449130341224185856,229556544889929225117696,102956750031135241952280576",
+    "name": "E.g.f.: ( (1 + cos(sqrt(6)*x))/2 )^(-1/3), showing coefficients of only the even powers of x.",
+    "comment": [
+        "Previous name was: Column 0 and row sums of symmetric triangle A126150."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A126151/b126151.txt\">Table of n, a(n) for n = 0..232</a>",
+        "E. Norton, <a href=\"http://arxiv.org/abs/1302.5411\">Symplectic Reflection Algebras in Positive Characteristic as Ore Extensions</a>, arXiv preprint arXiv:1302.5411 [math.RA], 2013."
+    ],
+    "formula": [
+        "a(n)=Sum_{k, 0<=k<=n}A087736(n,k)*2^(n-k). - _Philippe Del\u00e9ham_, Jul 17 2007",
+        "G.f.: 1/(1-x/(1-5*x/(1-12*x/(1-22*x/(1-35*x/(1-51*x/(1-70*x/(1-...- (n*(3*n-1)/2)*x/(1-...))))))))), a continued fraction involving pentagonal numbers A000326. - _Paul D. Hanna_, Feb 15 2012",
+        "E.g.f. satisfies: A(x) = exp( Integral Integral A(x)^3 dx dx ), where A(x) = Sum_{n>=0} a(n)*x^(2*n)/(2*n)! and the constant of integration is zero. - _Paul D. Hanna_, May 29 2015",
+        "E.g.f. satisfies: A(x) = exp( Integral A(x)^(3/2) * Integral 1/A(x)^(3/2) dx dx ),  where A(x) = Sum_{n>=0} a(n)*x^(2*n)/(2*n)! and the constant of integration is zero. - _Paul D. Hanna_, Jun 02 2015",
+        "a(n) ~ Gamma(1/3) * 2^(3*n+4/3) * 3^(n+1/2) * n^(2*n+1/6) / (exp(2*n) * Pi^(2*n+7/6)). - _Vaclav Kotesovec_, May 30 2015"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x^2/2! + 6*x^4/4! + 96*x^6/6! + 2976*x^8/8! + 151416*x^10/10! +...",
+        "where the logarithm begins:",
+        "log(A(x)) = x^2/2! + 3*x^4/4! + 36*x^6/6! + 918*x^8/8! + 40176*x^10/10! + 2686608*x^12/12! +...",
+        "compare the logarithm to",
+        "A(x)^3 = 1 + 3*x^2/! + 36*x^4/4! + 918*x^6/6! + 40176*x^8/8! + 2686608*x^10/10! +...",
+        "where A(x)^3 = 2/(1 + cos(sqrt(6)*x))."
+    ],
+    "program": [
+        "(PARI) /* Continued Fraction involving pentagonal numbers A000326: */",
+        "{a(n)=local(CF=1+x*O(x),m,P); for(k=1, n,m=n-k+1;P=m*(3*m-1)/2; CF=1/(1-P*x*CF)); polcoeff(CF, n, x)}",
+        "for(n=0,20,print1(a(n),\",\"))",
+        "(PARI) /* E.g.f. A(x) = exp( Integral^2 A(x)^3 dx^2 ): */",
+        "{a(n)=local(A=1+x*O(x)); for(i=1, n, A=exp(intformal(intformal(A^3 + x*O(x^(2*n))))) ); (2*n)!*polcoeff(A, 2*n, x)}",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(PARI) /* E.g.f. A(x) = exp( Integral A(x)^(3/2) * Integral 1/A(x)^(3/2) dx dx ) */",
+        "{a(n) = local(A=1+x); for(i=1,n, A = exp( intformal( A^(3/2) * intformal( 1/A^(3/2) + x*O(x^n)) ) ) ); n!*polcoeff(A,n)}",
+        "for(n=0,20,print1(a(2*n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A126150; diagonals: A126152, A126153."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 19 2006",
+    "ext": [
+        "New name from _Paul D. Hanna_, May 30 2015"
+    ],
+    "references": 5,
+    "revision": 32,
+    "time": "2018-01-08T01:53:00-05:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

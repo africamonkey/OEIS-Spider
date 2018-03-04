@@ -1,0 +1,74 @@
+{
+    "number": 245659,
+    "data": "281683,496789,823421,1352753,1719217,6174109,8643149,9761051,9843529,16191167,19132121,19745797,23490473,28457797,31820429,32860271,36552277,37068569,43506569,44776981,46808903,55035047,55957807,67194403,75099137,83092897,86580421,89135089",
+    "name": "Prime numbers P such that Q=2*P^2-1, R=2*Q^2-1, S=2*R^2-1 and T=2*S^2-1 are all prime numbers.",
+    "comment": [
+        "Subsequence of A106483.",
+        "For P = 496789, 83092897, 467014643, U=2*T^2-1 is also prime. [Corrected by _Jens Kruse Andersen_, Aug 21 2014]"
+    ],
+    "link": [
+        "Pierre CAMI, <a href=\"/A245659/b245659.txt\">Table of n, a(n) for n = 1..140</a>"
+    ],
+    "example": [
+        "281683 is prime P.",
+        "Q=2*P^2-1 = 158690624977 is prime Q.",
+        "R=2*Q^2-1 = 50365428911181712501057 is prime R.",
+        "S=2*R^2-1 = 5073352858814597404058971422301788780452234497 is prime S.",
+        "T=2*S^2-1 = 51477818460084496601334991724899650493354568309112026195311592373475872924903206720553686017 is prime T.",
+        "U=2*T^2-1 is composite."
+    ],
+    "mathematica": [
+        "f[n_]:=2n^2-1;Select[Prime[Range[5170000]],PrimeQ[f[#]]&&PrimeQ[f[f[#]]]&&PrimeQ[f[f[f[#]]]]&&PrimeQ[f[f[f[f[#]]]]]&] _Farideh Firoozbakht_, Aug 11 2014"
+    ],
+    "program": [
+        "(PFGW & SCRIPT)",
+        "SCRIPT",
+        "DIM i",
+        "DIM j",
+        "DIM k",
+        "DIM n,0",
+        "DIMS t",
+        "OPENFILEOUT myf,a(n).txt",
+        "LABEL loop1",
+        "SET n,n+1",
+        "SETS t,%d,%d\\,;n;p(n)",
+        "PRP 2*p(n)^2-1,t",
+        "IF ISPRP THEN GOTO a",
+        "GOTO loop1",
+        "LABEL a",
+        "SET i,2*p(n)^2-1",
+        "PRP 2*i^2-1,t",
+        "IF ISPRP THEN GOTO b",
+        "GOTO loop1",
+        "LABEL b",
+        "SET j,2*i^2-1",
+        "PRP 2*j^2-1,t",
+        "IF ISPRP THEN GOTO c",
+        "GOTO loop1",
+        "LABEL c",
+        "WRITE myf,t",
+        "SET k,2*j^2-1",
+        "PRP 2*k^2-1",
+        "IF ISPRP THEN GOTO d",
+        "GOTO loop1",
+        "LABEL d",
+        "WRITE myf,t",
+        "GOTO loop1",
+        "(PARI)",
+        "f(x)=return(2*x^2-1)",
+        "forprime(p=1,10^8,if(ispseudoprime(f(p)) && ispseudoprime(f(f(p))) && ispseudoprime(f(f(f(p)))) && ispseudoprime(f(f(f(f(p))))), print1(p,\", \"))) \\\\ _Derek Orr_, Jul 28 2014"
+    ],
+    "xref": [
+        "Cf. A106483."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Pierre CAMI_, Jul 28 2014",
+    "ext": [
+        "More terms from _Derek Orr_, Jul 28 2014"
+    ],
+    "references": 1,
+    "revision": 34,
+    "time": "2016-04-25T11:50:03-04:00",
+    "created": "2014-08-20T20:43:14-04:00"
+}

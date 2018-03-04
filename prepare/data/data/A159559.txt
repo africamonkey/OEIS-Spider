@@ -1,0 +1,43 @@
+{
+    "number": 159559,
+    "data": "3,5,6,7,8,11,12,14,15,17,18,19,20,21,22,23,24,29,30,32,33,37,38,39,40,42,44,47,48,53,54,55,56,57,58,59,60,62,63,67,68,71,72,74,75,79,80,81,82,84,85,89,90,91,92,93,94,97,98,101,102,104,105,106,108,109,110,111",
+    "name": "Lexicographically first strictly increasing sequence starting a(2) = 3 with the property that a(n) is prime if and only if n is prime.",
+    "comment": [
+        "a(n) is prime iff n is prime."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A159559/b159559.txt\">Table of n, a(n) for n = 2..10000</a>",
+        "V. Shevelev, <a href=\"http://arXiv.org/abs/0904.2101\">Several results on sequences which are similar to the positive integers</a>, arXiv:0904.2101 [math.NT], 2009."
+    ],
+    "formula": [
+        "a(n+1) = min{m>a(n), m is prime}, if n+1 is prime; otherwise, a(n+1) = min{m>a(n), m is composite}."
+    ],
+    "example": [
+        "For n = 6, since n is composite, a(n) is the smallest composite number greater than a(6-1) = a(5) = 7, so a(6) = 8. For n = 11, since n is prime, a(n) is the smallest prime number greater than a(11-1) = a(10) = 15, so a(12) = 17. - _Michael B. Porter_, Sep 04 2016"
+    ],
+    "maple": [
+        "A159559 := proc(n) option remember; if n = 2 then 3; else for a from procname(n-1)+1 do if isprime(n) and isprime(a) then RETURN(a) ; elif not isprime(n) and not isprime(a) then RETURN(a) ; fi; od: fi; end: seq(A159559(n),n=2..100) ; # _R. J. Mathar_, Jul 28 2009"
+    ],
+    "mathematica": [
+        "a[2]:=3;",
+        "a[n_]:=a[n]=If[PrimeQ[n],NextPrime[a[n-1]],NestWhile[#+1&,a[n-1]+1,PrimeQ[#]&]];",
+        "Map[a,Range[2,100]](* _Peter J. C. Moses_, Sep 19 2013 *)"
+    ],
+    "program": [
+        "(PARI) nextcomposite(n)=if(n<4, return(4)); n=ceil(n); if(isprime(n),n+1,n)",
+        "first(n)=my(v=vector(n)); v[2]=3; for(k=3,n, v[k]=if(isprime(k),nextprime(v[k-1]+1), nextcomposite(v[k-1]+1))); v[2..n] \\\\ _Charles R Greathouse IV_, Sep 21 2016"
+    ],
+    "xref": [
+        "Cf. A159698, A229019, A229132."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Vladimir Shevelev_, Apr 15 2009, May 04 2009",
+    "ext": [
+        "More terms from _R. J. Mathar_, Jul 28 2009"
+    ],
+    "references": 23,
+    "revision": 25,
+    "time": "2016-09-21T11:02:38-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

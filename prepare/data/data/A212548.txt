@@ -1,0 +1,38 @@
+{
+    "number": 212548,
+    "data": "0,0,1,1,3,4,8,11,19,26,41,56,82,110,156,205,281,366,488,627,821,1041,1340,1684,2135,2657,3331,4108,5095,6238,7663,9315,11354,13709,16588,19915,23936,28580,34154,40573,48225,57031,67452,79428,93530,109695,128639",
+    "name": "Number of partitions of n containing at least one part m-8 if m is the largest part.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A212548/b212548.txt\">Table of n, a(n) for n = 8..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{i>0} x^(2*i+8) / Product_{j=1..8+i} (1-x^j)."
+    ],
+    "example": [
+        "a(10) = 1: [9,1].",
+        "a(11) = 1: [9,1,1].",
+        "a(12) = 3: [9,1,1,1], [9,2,1], [10,2].",
+        "a(13) = 4: [9,1,1,1,1], [9,2,1,1], [9,3,1], [10,2,1].",
+        "a(14) = 8: [9,1,1,1,1,1], [9,2,1,1,1], [9,2,2,1], [9,3,1,1], [9,4,1], [10,2,1,1], [10,2,2], [11,3]."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember;",
+        "      `if`(n=0 or i=1, 1, b(n, i-1)+`if`(i>n, 0, b(n-i, i)))",
+        "    end:",
+        "a:= n-> add(b(n-2*m-8, min(n-2*m-8, m+8)), m=1..(n-8)/2):",
+        "seq(a(n), n=8..60);"
+    ],
+    "mathematica": [
+        "Table[Count[IntegerPartitions[n],_?(MemberQ[#,Max[#]-8]&)],{n,8,55}] (* _Harvey P. Dale_, May 05 2016 *)"
+    ],
+    "xref": [
+        "Column k=8 of A212551."
+    ],
+    "keyword": "nonn",
+    "offset": "8,5",
+    "author": "_Alois P. Heinz_, May 20 2012",
+    "references": 2,
+    "revision": 10,
+    "time": "2016-05-05T09:17:04-04:00",
+    "created": "2012-05-22T02:41:04-04:00"
+}

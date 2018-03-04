@@ -1,0 +1,52 @@
+{
+    "number": 224923,
+    "data": "0,2,12,24,68,114,168,224,408,594,788,984,1212,1442,1680,1920,2672,3426,4188,4952,5748,6546,7352,8160,9096,10034,10980,11928,12908,13890,14880,15872,18912,21954,25004,28056,31140,34226,37320,40416,43640,46866,50100,53336,56604",
+    "name": "Sum_{i=0..n} Sum_{j=0..n} (i XOR j), where XOR is the binary logical exclusive-or operator.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A224923/b224923.txt\">Table of n, a(n) for n = 0..1023</a>"
+    ],
+    "program": [
+        "(Python)",
+        "for n in range(99):",
+        "....s = 0",
+        "....for i in range(n+1):",
+        "........for j in range(n+1):",
+        "............s += i ^ j",
+        "....print s, # _Alex Ratushnyak_, Apr 19 2013",
+        "(Python)",
+        "# O(log(n)) version, whereas program above is O(n^2)",
+        "def countPots2Until(n):",
+        "....nbPots = {1:n>>1}",
+        "....lftMask = ~3",
+        "....rgtMask = 1",
+        "....digit = 2",
+        "....while True:",
+        "........lft = (n & lftMask) >> 1",
+        "........rgt = n & rgtMask",
+        "........nbDigs = lft",
+        "........if n & digit:",
+        "............nbDigs |= rgt",
+        "........if nbDigs == 0:",
+        "............return nbPots",
+        "........nbPots[digit] = nbDigs",
+        "........rgtMask |= digit",
+        "........digit <<= 1",
+        "........lftMask = lftMask ^ digit",
+        "def sumXorSquare(n):",
+        "....\"\"\"Returns sum(i^j for i, j <= n)\"\"\"",
+        "....n += 1",
+        "....nbPots = countPots2Until(n)",
+        "....return 2 * sum(pot * freq * (n - freq) for pot, freq in nbPots.items())",
+        "print([sumXorSquare(n) for n in range(100)])  # _Miguel Garcia Diaz_, Nov 19 2014"
+    ],
+    "xref": [
+        "Cf. A004125, A222423, A224915, A224924."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,2",
+    "author": "_Alex Ratushnyak_, Apr 19 2013",
+    "references": 4,
+    "revision": 17,
+    "time": "2015-05-30T18:59:34-04:00",
+    "created": "2013-04-27T13:49:07-04:00"
+}

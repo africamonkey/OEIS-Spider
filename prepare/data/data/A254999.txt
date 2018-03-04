@@ -1,0 +1,46 @@
+{
+    "number": 254999,
+    "data": "2,18,234,650,1890,8190,14850,61110,64890,92070,157950,162162,206910,258390,365310,383130,558558,702702,711450,743850,822510,916110,1140750,1561950,1862190,2357550,4977126,5782590",
+    "name": "Numbers n of the form 4*k+2 such that (sigma(n) mod n) divides n, where sigma is given by A000203.",
+    "comment": [
+        "Data provided by _Charles R Greathouse IV_."
+    ],
+    "link": [
+        "Chai Wah Wu and Charles R Greathouse IV, <a href=\"/A254999/b254999.txt\">Table of n, a(n) for n = 1..150</a> (first 68 terms from Chai Wah Wu)"
+    ],
+    "example": [
+        "234 = 4*58 + 2, sigma(234) = A000203(234) = 546, 546 mod 234 = 78, and 78 divides 546, so 234 is in the list."
+    ],
+    "maple": [
+        "for n from 2 by 4 do",
+        "    m := numtheory[sigma](n) mod n ;",
+        "    if m <> 0 and modp(n,m) = 0 then",
+        "        print(n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Feb 13 2015"
+    ],
+    "program": [
+        "(Sage)",
+        "[4*k+2 for k in [0..600000] if sigma(4*k+2)%(4*k+2)!=0 and (4*k+2)%(sigma(4*k+2)%(4*k+2))==0] # _Tom Edgar_, Feb 12 2015",
+        "(Python)",
+        "from sympy import factorint",
+        "def sigma_mod(n, m): # computes sigma(n) mod m",
+        "....y = 1",
+        "....for p, e in factorint(n).items():",
+        "........y  = (y*(p**(e + 1) - 1)//(p - 1)) % m",
+        "....return y",
+        "A254999_list = [n for n,m in ((4*k+2, sigma_mod(4*k+2,4*k+2)) for k in range(10**6)) if m and not n % m]",
+        "# _Chai Wah Wu_, Mar 01 2015",
+        "(PARI) select(n->my(s=sigma(n)%n); s && n%s==0, vector(1000,n,4*n-2)) \\\\ _Charles R Greathouse IV_, Mar 17 2015"
+    ],
+    "xref": [
+        "Cf. A054024, A016825."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_, Feb 11 2015",
+    "references": 1,
+    "revision": 32,
+    "time": "2015-03-24T10:24:32-04:00",
+    "created": "2015-02-25T15:38:25-05:00"
+}

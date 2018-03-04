@@ -1,0 +1,59 @@
+{
+    "number": 200321,
+    "data": "17,43,59,103,139,151,157,173,193,281,457,461,463,499,607,1409,1451,2143,2657,4229,16063,19583,19699,62143,124981,166303,172663,240257,244301,276041,289853,305411,327319,376639,417941,505663,518761,524119,600703,1056287",
+    "name": "Irregular triangle T(n,k) where row n contains the maximal nodes in the graph of XOR connected primes of interval [2^n+1,2^(n+1)-1], n>=4.",
+    "comment": [
+        "Nodes with degree > 2 that have the greatest number of vertices in prime XOR connected graphs are defined as maximal nodes. The graph is constructed in the manner outlined in A200143."
+    ],
+    "example": [
+        "The XOR connected graph for the interval [33,63], n=5, is",
+        "   37 41 43 47 53 59 61",
+        "37  0  0  1  0  0  1  0",
+        "41  0  0  1  1  0  0  0             37",
+        "43  1  1  0  0  1  0  0            /  \\",
+        "47  0  1  0  0  0  0  0 or 47~41~43   59~61",
+        "53  0  0  1  0  0  1  0            \\  /",
+        "59  1  0  0  0  1  0  1             53",
+        "61  0  0  0  0  0  1  0",
+        "The maximum number of vertices connected to any prime is 3, therefore 43 and 59 are members of row n=5.",
+        "Triangle begins:",
+        "17;",
+        "43,   59;",
+        "103;",
+        "139,  151,  157,  173,  193;",
+        "281,  457,  461,  463,  499;",
+        "607;",
+        "1409, 1451;"
+    ],
+    "maple": [
+        "q:= (l, p, r)-> `if`(r-l=2, 0, `if`(isprime(l+r-p), 1, 0)+",
+        "                `if`((l+r)/2>p, q(l, p, (l+r)/2), q((l+r)/2, p, r))):",
+        "T:= proc(n) local r, l, u, p, m, d;",
+        "      r:= NULL;",
+        "      l:= 2^n; u:= 2*l;",
+        "      p:= nextprime(l);",
+        "      m:= -1;",
+        "      while p<=u do",
+        "        d:= q(l, p, u);",
+        "        if d=m then r:= r,p",
+        "      elif d>m then m:= d; r:= p fi;",
+        "        p:= nextprime(p)",
+        "      od;",
+        "      `if`(m>=3, r, NULL)",
+        "    end:",
+        "seq(T(n), n=4..18);  # _Alois P. Heinz_, Nov 16 2011"
+    ],
+    "xref": [
+        "Cf. A200143."
+    ],
+    "keyword": "nonn,tabf",
+    "offset": "4,1",
+    "author": "_Brad Clardy_, Nov 15 2011",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Nov 16 2011"
+    ],
+    "references": 1,
+    "revision": 15,
+    "time": "2014-11-14T10:42:19-05:00",
+    "created": "2011-11-16T13:53:23-05:00"
+}

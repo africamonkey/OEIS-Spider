@@ -1,0 +1,41 @@
+{
+    "number": 261838,
+    "data": "1,1,2,20,48,264,4296,14528,89472,593248,19115360,75604544,599169408,4141674240,40147321344,2159264715776,10240251475456,92926573965184,746025520714112,7285397378650112,82900557619046912,7796186873306241024,41825012467664893440",
+    "name": "Number of compositions of n into distinct parts where each part i is marked with a word of length i over a k-ary alphabet (k=1,2,3,...) whose letters appear in alphabetical order and all k letters occur at least once in the composition.",
+    "comment": [
+        "Also number of matrices with nonnegative integer entries and without zero rows or columns such that sum of all entries is equal to n and the column sums are distinct.",
+        "a(2) = 2:",
+        "[1]   [2]",
+        "[1]"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A261838/b261838.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "example": [
+        "a(0) = 1: the empty composition.",
+        "a(1) = 1: 1a.",
+        "a(2) = 2: 2aa (for k=1), 2ab (for k=2)."
+    ],
+    "maple": [
+        "b:= proc(n, i, p, k) option remember;",
+        "      `if`(i*(i+1)/2<n, 0, `if`(n=0, p!, b(n, i-1, p, k)+",
+        "      `if`(i>n, 0, b(n-i, i-1, p+1, k)*binomial(i+k-1, k-1))))",
+        "    end:",
+        "a:= n-> add(add(b(n$2, 0, k-i)*(-1)^i*binomial(k, i), i=0..k), k=0..n):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[n_, i_, p_, k_] := b[n, i, p, k] = If[i*(i+1)/2 < n, 0, If[n == 0, p!, b[n, i-1, p, k] + If[i>n, 0, b[n-i, i-1, p+1, k]*Binomial[i+k-1, k-1]]]]; a[n_] := Sum[b[n, n, 0, k-i]*(-1)^i*Binomial[k, i], {k, 0, n}, {i, 0, k}]; Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Feb 25 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Row sums of A261836.",
+        "Cf. A120733."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 02 2015",
+    "references": 3,
+    "revision": 14,
+    "time": "2017-02-25T03:00:22-05:00",
+    "created": "2015-09-03T00:28:52-04:00"
+}

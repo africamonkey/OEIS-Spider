@@ -1,0 +1,75 @@
+{
+    "number": 32308,
+    "data": "1,3,3,12,12,21,48,57,84,120,228,264,399,516,732,1119,1416,1884,2532,3324,4296,6168,7545,9984,12684,16500,20577,26688,34572,43032,54264,68232,84972,106176,131664,162507,205680,249888,308856,377796,465195,564024,691788,835572,1017768,1241040",
+    "name": "Expansion of Product_{k>=1} (1 + 3*x^k).",
+    "comment": [
+        "\"EFK\" (unordered, size, unlabeled) transform of 3,3,3,3,...",
+        "Number of partitions into distinct parts of 3 sorts, see example. [_Joerg Arndt_, May 22 2013]"
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A032308/b032308.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "C. G. Bower, <a href=\"/transforms2.html\">Transforms (2)</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} (1 + 3*x^k).",
+        "a(n) = (1/4) * [x^n] QPochammer(-3, x). - _Vladimir Reshetnikov_, Nov 20 2015",
+        "a(n) ~ c^(1/4) * exp(2*sqrt(c*n)) / (4*sqrt(Pi)*n^(3/4)), where c = Pi^2/6 + log(3)^2/2 + polylog(2, -1/3) = 1.93937542076670895307727171917789144122... . - _Vaclav Kotesovec_, Jan 04 2016"
+    ],
+    "example": [
+        "From _Joerg Arndt_, May 22 2013: (Start)",
+        "There are a(5) = 21 partitions of 5 into distinct parts of 3 sorts (format P:S for part:sort):",
+        "01:  [ 1:0  4:0  ]",
+        "02:  [ 1:0  4:1  ]",
+        "03:  [ 1:0  4:2  ]",
+        "04:  [ 1:1  4:0  ]",
+        "05:  [ 1:1  4:1  ]",
+        "06:  [ 1:1  4:2  ]",
+        "07:  [ 1:2  4:0  ]",
+        "08:  [ 1:2  4:1  ]",
+        "09:  [ 1:2  4:2  ]",
+        "10:  [ 2:0  3:0  ]",
+        "11:  [ 2:0  3:1  ]",
+        "12:  [ 2:0  3:2  ]",
+        "13:  [ 2:1  3:0  ]",
+        "14:  [ 2:1  3:1  ]",
+        "15:  [ 2:1  3:2  ]",
+        "16:  [ 2:2  3:0  ]",
+        "17:  [ 2:2  3:1  ]",
+        "18:  [ 2:2  3:2  ]",
+        "19:  [ 5:0  ]",
+        "20:  [ 5:1  ]",
+        "21:  [ 5:2  ]",
+        "(End)"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(i*(i+1)/2<n, 0,",
+        "      `if`(n=0, 1, b(n, i-1)+`if`(i>n, 0, 3*b(n-i, i-1))))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Aug 24 2015",
+        "# Alternatively:",
+        "simplify(expand(QDifferenceEquations:-QPochhammer(-3,x,99),x)/4):",
+        "seq(coeff(%,x,n), n=0..45); # _Peter Luschny_, Nov 17 2016"
+    ],
+    "mathematica": [
+        "nmax = 40; CoefficientList[Series[Product[1 + 3*x^k, {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Aug 24 2015 *)",
+        "nmax = 40; CoefficientList[Series[Exp[Sum[(-1)^(k+1)*3^k/k*x^k/(1-x^k), {k, 1, nmax}]], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Aug 25 2015 *)",
+        "(QPochhammer[-3, x]/4 + O[x]^58)[[3]] (* _Vladimir Reshetnikov_, Nov 20 2015 *)"
+    ],
+    "program": [
+        "(PARI) N=66; x='x+O('x^N); Vec(prod(n=1,N, 1+3*x^n)) \\\\ _Joerg Arndt_, May 22 2013"
+    ],
+    "xref": [
+        "Cf. A000009, A032302, A261568, A261569."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Christian G. Bower_",
+    "ext": [
+        "a(0) prepended and more terms added by _Joerg Arndt_, May 22 2013"
+    ],
+    "references": 13,
+    "revision": 33,
+    "time": "2016-11-17T09:40:56-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

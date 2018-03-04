@@ -1,0 +1,58 @@
+{
+    "number": 266505,
+    "data": "-1,1,3,5,5,11,13,27,31,65,75,157,181,379,437,915,1055,2209,2547,5333,6149,12875,14845,31083,35839,75041,86523,181165,208885,437371,504293,1055907,1217471,2549185,2939235,6154277,7095941,14857739,17131117,35869755,41358175,86597249,99847467",
+    "name": "a(n) = 2*a(n - 2) + a(n - 4) with a(0) = -1, a(1) = 1, a(2) = 3, a(3) = 5.",
+    "comment": [
+        "a(n)/A266504(n) converges to sqrt(2).",
+        "Alternatively, bisection of A266506.",
+        "Alternatively, A135532(n) and A048655(n) interlaced.",
+        "Alternatively, A255236(n-1), A054490(n), A038762(n) and A101386(n) interlaced.",
+        "Also see comments in A222786 regarding a curious relationship between this sequence, A266504, A266506 and laminated lattice kissing numbers with an average number of spheres/dimension equal to either a pronic number or twice a square.",
+        "Let b(n) = (a(n) - (a(n) mod 2))/2, that is b(n) = {-1, 0, 1, 2, 2, 5, 6, 13, 15, 32, 37, 78, 90, ...}. Then:",
+        "A006451(n) = {b(4n+0) U b(4n+1)} gives n in N such that triangular(n) + 1 is square;",
+        "A216134(n) = {b(4n+2) U b(4n+3)} gives n in N such that triangular(n) follows form n^2 + n + 1 (twice a triangular number + 1)."
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (0,2,0,1)."
+    ],
+    "formula": [
+        "G.f.: (-1 + 3*x)*(1 + x)^2/(1 - 2 x^2 - x^4).",
+        "a(n) = (-(1+sqrt(2))^floor(n/2)*(-1)^n - sqrt(8)*(1-sqrt(2))^floor(n/2) - (1-sqrt(2))^floor(n/2)*(-1)^n + sqrt(8)*(1+sqrt(2))^floor(n/2))/2.",
+        "a(n) = 3*(((1+sqrt(2))^floor(n/2)-(1-sqrt(2))^floor(n/2))/sqrt(8)) - (-1)^n*(((1+sqrt(2))^(floor(n/2)-(-1)^n)-(1-sqrt(2))^(floor(n/2)-(-1)^n))/sqrt(8)).",
+        "a(n) = (3*A000129(floor(n/2)) - A000129(n-(-1)^n)), where A000129 gives the Pell numbers.",
+        "a(n) = sqrt(2*A266504(n))^2 - 7(-1)^A266504(n))*sgn(2*n -1), where A266504 gives all x in N such that 2*x^2 - 7(-1)^x = y^2. This sequence gives associated y values.",
+        "a(2n) = (-(1 + sqrt(2))^n - sqrt(8)*(1 - sqrt(2))^n - (1 - sqrt(2))^n + sqrt(8)*(1 + sqrt(2))^n)/2 = a(2n) = A135532(n).",
+        "a(2n) = 3*(((1+sqrt(2))^n-(1-sqrt(2))^n)/sqrt(8)) - (((1+sqrt(2))^(n-1)-(1-sqrt(2))^(n-1))/sqrt(8)) = A135532(n).",
+        "a(2n+1) = (+(1 + sqrt(2))^n - sqrt(8)*(1 - sqrt(2))^n + (1 - sqrt(2))^n + sqrt(8)*(1 + sqrt(2))^n)/2 = a(2n + 1) = A048655(n).",
+        "a(2n+1) = 3*(((1+sqrt(2))^n-(1-sqrt(2))^n)/sqrt(8)) + (((1+sqrt(2))^(n+1)-(1-sqrt(2))^(n+1))/sqrt(8)) = A048655(n).",
+        "a(4n + 0) = 6*a(4n - 4) - a(4n - 8) = A255236(n-1).",
+        "a(4n + 1) = 6*a(4n - 3) - a(4n - 7) = A054490(n).",
+        "a(4n + 2) = 6*a(4n - 2) - a(4n - 6) = A038762(n).",
+        "a(4n + 3) = 6*a(4n - 1) - a(4n - 5) = A101386(n).",
+        "(sqrt(2*(a(2n + 1) )^2 + 14*(-1)^floor(n/2)))/2 = A266504(n).",
+        "(a(2n + 1) + a(2n))/8 = A000129(n), where A000129 gives the Pell numbers.",
+        "a(2n + 1) - a(2n) = A002203(n), where A002203 gives the companion Pell numbers.",
+        "(a(2n + 2) + a(2n + 1))/2 = A000129(n+2).",
+        "(a(2n + 2) - a(2n + 1))/2 = A000129(n-1)."
+    ],
+    "maple": [
+        "a:=proc(n) option remember; if n=0 then -1 elif n=1 then 1 elif n=2 then 3 elif n=3 then 5 else 2*a(n-2)+a(n-4); fi; end:  seq(a(n), n=0..50); # _Wesley Ivan Hurt_, Jan 01 2016"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{0, 2, 0, 1}, {-1, 1, 3, 5}, 70] (* _Vincenzo Librandi_, Dec 31 2015 *)",
+        "Table[SeriesCoefficient[(-1 + 3 x) (1 + x)^2/(1 - 2 x^2 - x^4), {x, 0, n}], {n, 0, 42}] (* _Michael De Vlieger_, Dec 31 2015 *)"
+    ],
+    "program": [
+        "(MAGMA) I:=[-1,1,3,5]; [n le 4 select I[n] else 2*Self(n-2)+Self(n-4): n in [1..70]]; // _Vincenzo Librandi_, Dec 31 2015"
+    ],
+    "xref": [
+        "Cf. A000129, A001333, A002203, A002965, A006451, A006452, A002965, A038761, A038762, A048654, A048655, A054490, A078343, A098586, A098790, A100525, A101386, A135532, A216134, A216162, A253811, A255236, A266504, A266505, A266507."
+    ],
+    "keyword": "sign,easy",
+    "offset": "0,3",
+    "author": "_Raphie Frank_, Dec 30 2015",
+    "references": 3,
+    "revision": 33,
+    "time": "2016-01-02T04:22:32-05:00",
+    "created": "2016-01-02T04:22:32-05:00"
+}

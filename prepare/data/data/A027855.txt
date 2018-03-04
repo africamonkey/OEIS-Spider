@@ -1,0 +1,36 @@
+{
+    "number": 27855,
+    "data": "2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,31,32,33,34,35,37,38,39,41,42,43,44,46,47,49,50,51,52,53,54,55,57,58,59,61,62,64,65,66,67,68,69,71,73,74,75,76,77,78,79,81,82,83,85,86,87",
+    "name": "Antimutinous numbers: n>1 such that n/p^k < p, where p is the largest prime dividing n and p^k is the highest power of p dividing n.",
+    "link": [
+        "Ivan Neretin, <a href=\"/A027855/b027855.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "A006530 := proc(n) local ifs ; if n = 1 then 1; else ifs := ifactors(n)[2] ; max(seq( op(1,k),k=ifs)) ; fi ; end: isA027855 := proc(n) local p,k,pk; if n <= 1 then false; else p := A006530(n) ; pk := p ; while n mod ( pk*p) = 0 do pk := pk*p ; od: if n< p*pk then true ; else false ; fi ; fi ; end: for n from 2 to 120 do if isA027855(n) then printf(\"%d, \",n) ; fi ; od: # _R. J. Mathar_, Dec 02 2007"
+    ],
+    "mathematica": [
+        "Select[Range@100, #1^(#2 + 1) & @@ FactorInteger[#][[-1]] > # &] (* _Ivan Neretin_, Jul 09 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint, primefactors",
+        "def a053585(n):",
+        "    if n==1: return 1",
+        "    p = primefactors(n)[-1]",
+        "    return p**factorint(n)[p]",
+        "print [n for n in xrange(2, 301) if n/a053585(n)<primefactors(n)[-1]] # _Indranil Ghosh_, Jul 13 2017"
+    ],
+    "xref": [
+        "Cf. A027854."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Leroy Quet_",
+    "ext": [
+        "More terms from _R. J. Mathar_, Dec 02 2007"
+    ],
+    "references": 4,
+    "revision": 18,
+    "time": "2017-07-13T21:51:33-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

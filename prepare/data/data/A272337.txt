@@ -1,0 +1,33 @@
+{
+    "number": 272337,
+    "data": "3,4,52,164,275,332,388,556,668,724,892,1004,1172,1228,1396,1676,1732,1844,2012,2348,2404,2572,2908,3076,3188,3244,3356,3412,3524,3748,4084,4196,4252,4364,4868,4924,5036,5204,5596,5708,5932,6044,6212,6268,6436,6548",
+    "name": "Numbers such that antisigma(n) mod sigma(n) = d(n), where antisigma(n) is the sum of the numbers less than n that do not divide n, sigma(n) is the sum of the divisors of n and d(n) is the number of divisors of n.",
+    "formula": [
+        "Solutions of the equation  A024816(n) mod A000203(n) = A000005(n)."
+    ],
+    "example": [
+        "52*53/2 mod sigma(52) = 1378 mod 98 = 6 = d(52)."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local n;",
+        "for n from 1 to q do if (n*(n+1)/2) mod sigma(n)=tau(n) then print(n); fi;",
+        "od; end: P(10^6);"
+    ],
+    "mathematica": [
+        "Select[Range@ 6600, Function[n, Mod[Total@ First@ #, Total@ Last@ #] == Length@ Last@ # &@ {Complement[Range@ n, #], #} &@ Divisors@ n]] (* faster, or *)",
+        "Select[Range@ 6600, Mod[Total[Select[Range[# - 1], Function[m, ! Divisible[#, m]]]], DivisorSigma[1, #]] == DivisorSigma[0, #] &] (* _Michael De Vlieger_, Apr 27 2016 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = n*(n+1)/2 % sigma(n) == numdiv(n); \\\\ _Michel Marcus_, Apr 29 2016"
+    ],
+    "xref": [
+        "Cf. A000005, A000203, A024816, A232324, A272338."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Apr 26 2016",
+    "references": 1,
+    "revision": 11,
+    "time": "2016-04-29T17:32:37-04:00",
+    "created": "2016-04-29T17:32:37-04:00"
+}

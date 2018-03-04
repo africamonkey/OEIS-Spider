@@ -1,0 +1,41 @@
+{
+    "number": 227910,
+    "data": "1,2,4,8,13,24,40,71,119,216,372,678,1215,2240,4102,7674,14299,27000,50952,96896,184397,352684,675174,1296843,2493711,4806062,9272764,17920843,34669585,67159032,130216106,252745349,490984469,954637538,1857545280,3617214660,7048675939,13744694906",
+    "name": "The number of necklaces with n beads of white and red colors, including at least three white ones.",
+    "comment": [
+        "a(n) is the number of classes (not necessarily convex) n-gons. Two n-gons are assigned to the same class, if (under suitable start and direction) their vertex at the same time belong or do not belong to the convex hull of the corresponding polygon.",
+        "a(n) is also the number of classes (not necessarily convex) n-gons at the other classification. Two n-gons belong to one class, if (under suitable start and direction) their angles simultaneously have a measure either less or greater than 180 degrees.",
+        "Note that the equation quantities of classes of these classifications does not mean equality classes themselves.",
+        "a(n) is also the number of non-isomorphic n-vertex undirected graphs in the form of a simple cycle with any number of degree-1 vertices attached to each cycle vertex. To transform a necklace into a graph of this type, create a cycle vertex for each white bead and a pendant vertex for each red bead, with the pendant vertex for a red bead attached to the cycle vertex for the clockwise next white bead. - _David Eppstein_, Oct 25 2015"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A227910/b227910.txt\">Table of n, a(n) for n = 3..200</a>",
+        "Peter Kagey, <a href=\"/A227910/a227910.pdf\">Examples of classes of n-gons for a(4), a(5), and a(6)</a>",
+        "Vladimir Letsko, <a href=\"http://dxdy.ru/topic16349-135.html\">Mathematical Marathon, Problem 150</a> (in Russian)"
+    ],
+    "formula": [
+        "a(n) = (Sum_{m=3..n} (1/n*sum_{d|gcd(m,n)} phi(d)*binomial(n/d,m/d)) + binomial(floor(m/2)+floor((n-m)/2), floor(m/2)))/2."
+    ],
+    "example": [
+        "a(4)=2 because there are exactly 2 necklaces with 4 beads of white and red colors, including at least three white ones:",
+        "1) all beads are white;",
+        "2) one bead is red."
+    ],
+    "maple": [
+        "g:=(n,m)->add(phi(d)*binomial(n/d,m/d),d in divisors(igcd(n,m)))/2/n+1/2*binomial(floor(m/2)+floor((n-m)/2),floor(m/2));",
+        "for n from 3 do s:=0:for m from 3 to n dos:=s+g(n,m) od: print(n,s) od:"
+    ],
+    "program": [
+        "(PARI) a(n) = (sum(m=3, n, (1/n*sumdiv(gcd(m,n), d, eulerphi(d)*binomial(n/d,m/d))) + binomial(m\\2+(n-m)\\2, m\\2) ))/2; \\\\ _Andrew Howroyd_, Oct 11 2017"
+    ],
+    "xref": [
+        "Cf. A000029, A262232."
+    ],
+    "keyword": "nonn",
+    "offset": "3,2",
+    "author": "_Vladimir Letsko_, Oct 13 2013",
+    "references": 3,
+    "revision": 42,
+    "time": "2018-01-26T14:02:45-05:00",
+    "created": "2013-10-16T13:06:47-04:00"
+}

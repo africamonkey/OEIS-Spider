@@ -1,0 +1,52 @@
+{
+    "number": 291049,
+    "data": "2,3,5,17,137,257,65537,157217,295937,557057,1336337,96550277,1212153857,2281701377,5473632257,395469930497,1401249857537,2637646790657,4964982194177,28572702478337,1271035441709057,38280596832649217,1872540629620228097,6634884445436379137",
+    "name": "Primes of the form 2^r * 17^s + 1.",
+    "comment": [
+        "Primes of the forms a^r * b^s + 1 where (a, b) = (2,1), (2,3), (2,5), (2,7), (2,11) and (2,13) are A092506, A005109, A077497, A077498, A077499 and A173236.",
+        "Fermat prime exponents r are 0, 1, 2, 4, 8, 16.",
+        "For n > 2, all terms are congruent to 5 (mod 6).",
+        "Also, these are prime numbers p for which (p*34^p)/(p-1) is an integer."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A291049/b291049.txt\">Table of n, a(n) for n = 1..625</a>"
+    ],
+    "example": [
+        "With n = 1, a(1) = 2^0 * 17^0 + 1 = 2.",
+        "With n = 5, a(5) = 2^3 * 17^1 + 1 = 137.",
+        "list of (r,s): (0,0), (1,0), (2,0), (4,0), (3,1), (8,0), (16,0), (5,3), (10,2), (15,1), (4,4), (2,6)."
+    ],
+    "maple": [
+        "N:= 10^20: # to get all terms <= N+1",
+        "S:= NULL:",
+        "for r from 0 to ilog2(N) do",
+        "  for s from 0 to floor(log[17](N/2^r)) do",
+        "    p:= 2^r*17^s +1;",
+        "    if isprime(p) then",
+        "     S:= S, p",
+        "    fi",
+        "od od:",
+        "sort([S]); # _Robert Israel_, Sep 26 2017"
+    ],
+    "mathematica": [
+        "With[{nn = 10^19, q = 17}, Select[Sort@ Flatten@ Table[2^i*q^j + 1, {i, 0, Log[2, nn]}, {j, 0, Log[q, nn/2^i]}], PrimeQ]] (* _Michael De Vlieger_, Sep 18 2017, after _Robert G. Wilson v_ at A005109 *)"
+    ],
+    "program": [
+        "(GAP)",
+        "K:=26*10^7+1;; # to get all terms <= K.",
+        "A:=Filtered(Filtered([1,3..K],i-> i mod 6=5),IsPrime);;    I:=[17];;",
+        "B:=List(A,i->Elements(Factors(i-1)));;",
+        "C:=List([0..Length(I)],j->List(Combinations(I,j),i->Concatenation([2],i)));;",
+        "A291049:=Concatenation([2,3],List(Set(Flat(List([1..Length(C)],i->List([1..Length(C[i])],j->Positions(B,C[i][j]))))),i->A[i]));"
+    ],
+    "xref": [
+        "Cf. Sequences of primes of form 2^n * q^u + 1: A092506 (q=1), A005109 (q=3), A077497 (q=5), A077498 (q=7), A077499 (q=11), A173236 (q=13)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Muniru A Asiru_, Sep 15 2017",
+    "references": 1,
+    "revision": 27,
+    "time": "2017-09-26T02:33:09-04:00",
+    "created": "2017-09-25T15:23:34-04:00"
+}

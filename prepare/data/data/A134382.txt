@@ -1,0 +1,39 @@
+{
+    "number": 134382,
+    "data": "20,140,464,660,1276,1365,2204,2508,2805,2907,5590,5698,5742,6006,7395,8680,14645,15052,18875,19170,19740,23871,34579,34804,35164,35244,35934,38121,106805,114953,261536,503082",
+    "name": "a(n) is the smallest number k larger than a(n-1) such that n*d(k)*sopf(k)=sigma(k), where d is the number of divisors (A000005) and sopf the sum of prime factors without repetition (A008472).",
+    "comment": [
+        "Sequence suggested by Puzzle 419 in Carlos Rivera's The Prime Puzzles & Problems Connection.",
+        "Subsequence of A070222. - _R. J. Mathar_, Feb 05 2010"
+    ],
+    "link": [
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/puzzles/puzz_419.htm\">Puzzle 419. Four SOPF questions</a>, Prime Puzzles."
+    ],
+    "formula": [
+        "a(n) > a(n-1): n*A000005(a(n))*A008472(a(n)) = A000203(a(n)). - _R. J. Mathar_, Nov 16 2007, Jun 24 2009"
+    ],
+    "maple": [
+        "A008472 := proc(n) local divs,i ; if n = 1 then 0; else divs := ifactors(n)[2] ; add( op(1,i),i=divs) ; fi ; end: A134382 := proc(n) option remember ; local k,kmin ; if n = 1 then kmin := 1 ; else kmin := procname(n-1)+1 ; fi ; for k from kmin do if numtheory[sigma](k) = n* numtheory[tau](k)*A008472(k) then RETURN(k) ; fi ; od: end: for n from 1 to 30 do print( A134382(n)) ; od: # _R. J. Mathar_, Nov 16 2007, Jun 24 2009"
+    ],
+    "mathematica": [
+        "sopf[1] = 0; sopf[n_] := Total[FactorInteger[n][[All, 1]]]; a[n_] := a[n] = For[k = If[n == 1, 1, a[n-1] + 1], True, k++, If[DivisorSigma[1, k] == n*DivisorSigma[0, k]*sopf[k], Return[k]]]; Table[Print[a[n]]; a[n], {n, 1, 32}] (* _Jean-Fran\u00e7ois Alcover_, Sep 12 2013 *)"
+    ],
+    "program": [
+        "lista(nn) = {lasta = 2; for (n=1, nn, k = lasta; while ((f = factor(k)) && (n*numdiv(k)*sum(j=1,#f~,f[j,1]) != sigma(k)), k++); print1(k, \", \"); lasta = k;);} \\\\ _Michel Marcus_, Feb 25 2016"
+    ],
+    "xref": [
+        "Cf. A134383, A134384, A134385, A134386."
+    ],
+    "keyword": "more,nonn",
+    "offset": "1,1",
+    "author": "_Enoch Haga_, Oct 23 2007",
+    "ext": [
+        "Edited by _R. J. Mathar_, Nov 16 2007",
+        "A-number in formula and Maple program corrected by _R. J. Mathar_, Jun 24 2009",
+        "a(32) from _R. J. Mathar_, Feb 05 2010"
+    ],
+    "references": 5,
+    "revision": 20,
+    "time": "2016-02-26T09:24:29-05:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

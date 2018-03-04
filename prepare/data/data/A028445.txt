@@ -1,0 +1,56 @@
+{
+    "number": 28445,
+    "data": "1,2,4,6,10,16,24,36,56,80,118,174,254,378,554,802,1168,1716,2502,3650,5324,7754,11320,16502,24054,35058,51144,74540,108664,158372,230800,336480,490458,714856,1041910,1518840,2213868",
+    "name": "Number of cubefree words of length n on two letters.",
+    "comment": [
+        "It appears that the number of maximal cubefree words A282133(n) ~ a(n-11). - _M. F. Hasler_, May 05 2017"
+    ],
+    "reference": [
+        "S. R. Finch, Mathematical Constants, Cambridge, 2003, see page 368 for cubefree words."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A028445/b028445.txt\">Table of n, a(n) for n = 0..47</a> [copied from Edlin paper]",
+        "Anne E. Edlin, <a href=\"http://www.math.temple.edu/~anne/cubefree.html\">Cubefree words</a> [Broken link]",
+        "Anne E. Edlin, <a href=\"/A028445/a028445.pdf\">Cubefree words</a> [Cached copy, pdf version, with permission]",
+        "Anne E. Edlin, <a href=\"/A028445/a028445_1.pdf\">The number of binary cubefree words of length up to 47 and their numerical analysis</a> [Cached copy, with permission]",
+        "Anne E. Edlin, <a href=\"/A028445/a028445.txt\">Maple package \"Cubefree\"</a> [Cached copy, with permission]",
+        "Anne E. Edlin, <a href=\"/A028445/a028445_1.txt\">Maple package \"GJseries\"</a> [Cached copy, with permission]",
+        "Mari Huova, <a href=\"http://www.doria.fi/handle/10024/95677\">Combinatorics on Words. New Aspects on Avoidability, Defect Effect, Equations and Palindromes</a>, Turku Centre for Computer Science, TUCS Dissertations No 172, April 2014.",
+        "K. Jarhumaki and J. Shallit, <a href=\"http://arXiv.org/abs/math.CO/0304095\">Polynomial vs Exponential Growth in Repetition-Free Binary Words</a>, arXiv:math/0304095 [math.CO], 2003.",
+        "R. Kolpakov, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL10/Kolpakov/kolpakov42.html\">Efficient Lower Bounds on the Number of Repetition-free Words</a>, J. Integer Sequences, Vol. 10 (2007), Article 07.3.2.",
+        "A. M. Shur, <a href=\"http://dx.doi.org/10.1016/j.cosrev.2012.09.001\">Growth properties of power-free languages</a>, Computer Science Review, Vol. 6 (2012), 187-208.",
+        "A. M. Shur, <a href=\"http://arxiv.org/abs/1009.4415\">Numerical values of the growth rates of power-free languages</a>, arXiv:1009.4415 [cs.FL], 2010.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CubefreeWord.html\">Cubefree Word.</a>"
+    ],
+    "formula": [
+        "Let L = lim a(n)^(1/n); then L exists since a(n) is submultiplicative, and 1.4575732 < L < 1.4575772869240 (Shur 2010). Empirical: L=1.4575772869237..., i.e. the upper bound is very precise. - _Arseny Shur_, Apr 27 2015"
+    ],
+    "maple": [
+        "isCubeFree:=proc(v) local n,L;",
+        "for n from 3 to nops(v) do for L to n/3 do",
+        "if v[n-L*2+1 .. n] = v[n-L*3+1 .. n-L] then RETURN(false) fi od od; true end;",
+        "A028445:=proc(n) local s,m;",
+        "if n=0 then 1 else add( `if`(isCubeFree(convert(m,base,2)),2,0), m = 2^(n-1)..2^n-1) fi end;",
+        "[seq(A028445(n),n=0..10)];  # _M. F. Hasler_, May 04 2017"
+    ],
+    "mathematica": [
+        "Length/@NestList[DeleteCases[Flatten[Outer[Append, #, {0, 1}, 1], 1], {___, x__, x__, x__, ___}] &, {{}}, 20] (* _Vladimir Reshetnikov_, May 16 2016 *)"
+    ],
+    "program": [
+        "(PARI) (isCubeFree(v)=!for(n=3,#v,for(L=1,n\\3,v[n-L*2+1..n]==v[n-L*3+1..n-L]&&return))); A028445(n)=sum(m=1<<(n-1)+1<<(n-4),1<<n-1<<(n-3)-1,isCubeFree(binary(m)))<<!!n \\\\ Becomes slow beyond n=20. - _M. F. Hasler_, May 04 2017"
+    ],
+    "xref": [
+        "Cf. A007777, A082379, A082380, A286262.",
+        "A282133 gives the maximally cubefree words."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "Anne Edlin (anne(AT)euclid.math.temple.edu)",
+    "ext": [
+        "a(29)-a(36) from _Lars Blomberg_, Aug 22 2013"
+    ],
+    "references": 17,
+    "revision": 70,
+    "time": "2017-05-05T10:58:13-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

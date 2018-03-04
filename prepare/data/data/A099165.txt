@@ -1,0 +1,37 @@
+{
+    "number": 99165,
+    "data": "0,1,2,3,4,5,6,7,8,9,11,22,33,66,99,363,858,1441,2882,5445,6886,9449,15951,19891,21012,29692,32223,54945,369963,477774,564465,585585,609906,672276,717717,780087,804408,912219,1251521,2639362,3825283",
+    "name": "Palindromic in bases 10 and 32.",
+    "link": [
+        "Ray Chandler and Robert G. Wilson v, <a href=\"/A099165/b099165.txt\">Table of n, a(n) for n = 1..115</a>, terms a(88)-a(111) from Ray Chandler."
+    ],
+    "mathematica": [
+        "NextPalindrome[n_] := Block[{l = Floor[ Log[10, n] + 1], idn = IntegerDigits[n]}, If[ Union[idn] == {9}, Return[n + 2], If[l < 2, Return[n + 1], If[ FromDigits[ Reverse[ Take[idn, Ceiling[l/2]] ]] FromDigits[ Take[idn, -Ceiling[l/2]]], FromDigits[ Join[ Take[idn, Ceiling[l/2]], Reverse[ Take[idn, Floor[l/2]] ]]], idfhn = FromDigits[ Take[idn, Ceiling[l/2]]] + 1; idp = FromDigits[ Join[ IntegerDigits[idfhn], Drop[ Reverse[ IntegerDigits[idfhn]], Mod[l, 2]] ]]] ]]]; palQ[n_Integer, base_Integer] := Block[{idn = IntegerDigits[n, base]}, idn == Reverse[idn]]; l = {0}; a = 0; Do[a = NextPalindrome[a]; If[ palQ[a, 32], AppendTo[l, a]], {n, 10000}]; l"
+    ],
+    "program": [
+        "(Python)",
+        "from gmpy2 import digits",
+        "def palQ(n,b): # check if n is a palindrome in base b",
+        "....s = digits(n,b)",
+        "....return s == s[::-1]",
+        "def palQgen10(l): # unordered generator of palindromes of length <= 2*l",
+        "....if l > 0:",
+        "........yield 0",
+        "........for x in range(1,10**l):",
+        "............s = str(x)",
+        "............yield int(s+s[-2::-1])",
+        "............yield int(s+s[::-1])",
+        "A099165_list = sorted([n for n in palQgen10(6) if palQ(n,32)])",
+        "# _Chai Wah Wu_, Nov 25 2014"
+    ],
+    "xref": [
+        "Cf. A007632, A007633, A029961, A029962, A029963, A029964, A029804, A029965, A029966, A029967, A029968, A029969, A029970, A029731, A097855."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,3",
+    "author": "_Robert G. Wilson v_, Sep 30 2004",
+    "references": 35,
+    "revision": 23,
+    "time": "2014-11-25T12:51:47-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

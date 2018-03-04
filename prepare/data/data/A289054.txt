@@ -1,0 +1,40 @@
+{
+    "number": 289054,
+    "data": "1,1,9,471,82899,36913581,34878248649,62045165964951,190543753640526939,945931782247964900901,7209377339218632463758129,80920117567254715984058542191,1292645840976784584918218615760819,28557854803885245556927129118200208781",
+    "name": "Number of Dyck paths having exactly two peaks in each of the levels 1,...,n and no other peaks.",
+    "comment": [
+        "The semilengths of Dyck paths counted by a(n) are elements of the integer interval [3*n-1, n*(n+1)] for n>0."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A289054/b289054.txt\">Table of n, a(n) for n = 0..60</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "example": [
+        ". a(2) = 9:           /\\/\\        /\\/\\        /\\/\\             /\\  /\\",
+        ".                /\\/\\/    \\    /\\/    \\/\\    /    \\/\\/\\   /\\/\\/  \\/  \\",
+        ".",
+        ".    /\\    /\\      /\\  /\\      /\\      /\\    /\\    /\\      /\\  /\\",
+        ". /\\/  \\/\\/  \\  /\\/  \\/  \\/\\  /  \\/\\/\\/  \\  /  \\/\\/  \\/\\  /  \\/  \\/\\/\\ ."
+    ],
+    "maple": [
+        "b:= proc(n, j, v) option remember; `if`(n=j, `if`(v=1, 1, 0),",
+        "      `if`(v<2, 0, add(b(n-j, i, v-1)*(binomial(i, 2)*",
+        "       binomial(j-1, i-3)), i=1..min(j+2, n-j))))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, add(b(w, 2, n), w=3*n-1..n*(n+1))):",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "b[n_, j_, v_]:=b[n, j, v]=If[n==j, If[v==1, 1, 0], If[v<2, 0, Sum[b[n - j, i, v - 1] Binomial[i, 2] Binomial[j - 1, i - 3], {i, Min[j + 2, n - j]}]]]; a[n_]:=If[n==0, 1, Sum[b[w, 2, n], {w, 3*n - 1, n(n + 1)}]]; Table[a[n], {n, 0, 15}] (* _Indranil Ghosh_, Jul 06 2017, after Maple code *)"
+    ],
+    "xref": [
+        "Column k=2 of A288972."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jun 23 2017",
+    "references": 2,
+    "revision": 10,
+    "time": "2017-07-06T09:27:24-04:00",
+    "created": "2017-06-23T05:16:38-04:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 254686,
+    "data": "1,1,5,19,74,248,814,2457,7168,19928,53688,139820,354987,878434,2128102,5052010,11781881,27019758,61035671,135928105,298784144,648726349,1392474574,2956730910,6214668074,12937060340,26686392239,54572423946,110680119454,222710856175,444776676764",
+    "name": "Number of ways to put n red and n blue balls into n indistinguishable boxes.",
+    "comment": [
+        "See a comment on A254811 about multiset partitions and the Knuth reference. - _Wolfdieter Lang_, Mar 26 2015"
+    ],
+    "link": [
+        "Brian Chen, <a href=\"/A254686/b254686.txt\">Table of n, a(n) for n = 0..64</a>"
+    ],
+    "example": [
+        "For n = 2 the a(2) = 5 ways to put 2 red balls and 2 blue balls into 2 indistinguishable boxes are (RRBB)(), (RRB)(B), (RBB)(R), (RR)(BB), (RB)(RB)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n, k, i) option remember;",
+        "      `if`(n>k, 0, 1) +`if`(isprime(n) or i<2, 0, add(",
+        "      `if`(d>k, 0, b(n/d, d, i-1)), d=divisors(n) minus {1, n}))",
+        "    end:",
+        "a:= n-> b(6^n$2,n):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Mar 26 2015"
+    ],
+    "mathematica": [
+        "b[n_, k_, i_] := b[n, k, i] = If[n > k, 0, 1] + If[PrimeQ[n] || i < 2, 0, Sum[If[d > k, 0, b[n/d, d, i - 1]], {d, Divisors[n] [[2 ;; -2]]}]]; a[n_] := b[6^n, 6^n, n]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Jan 08 2016, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A002774, A060150, A254811.",
+        "Column k=2 of A256384.",
+        "Main diagonal of A277239."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Brian Chen_, Feb 08 2015",
+    "references": 4,
+    "revision": 26,
+    "time": "2016-10-06T18:23:44-04:00",
+    "created": "2015-02-22T11:31:25-05:00"
+}

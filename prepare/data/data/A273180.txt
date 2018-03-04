@@ -1,0 +1,44 @@
+{
+    "number": 273180,
+    "data": "1,2,6,19,38,102,307,614,1638,4915,9830,26214,78643,157286,419430,1258291,2516582,6710886,20132659,40265318,107374182,322122547,644245094,1717986918,5153960755,10307921510,27487790694,82463372083,164926744166,439804651110",
+    "name": "Numbers n such that ror(n) + rol(n) is a power of 2, where ror(n)=A038572(n) is n rotated one binary place to the right, rol(n)=A006257(n) is n rotated one binary place to the left.",
+    "link": [
+        "Colin Barker, <a href=\"/A273180/b273180.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (0,0,17,0,0,-16)."
+    ],
+    "formula": [
+        "From _Colin Barker_, May 19 2016: (Start)",
+        "a(n) = 17*a(n-3) - 16*a(n-6) for n>6.",
+        "G.f.: x*(1+2*x+6*x^2+2*x^3+4*x^4) / ((1-x)*(1+x+x^2)*(1-16*x^3)).",
+        "(End)"
+    ],
+    "mathematica": [
+        "Select[Range[10^6], IntegerQ@ Log2[FromDigits[RotateRight@ #, 2] + FromDigits[RotateLeft@ #, 2]] &@ IntegerDigits[#, 2] &] (* or *)",
+        "Rest@ CoefficientList[Series[x (1 + 2 x + 6 x^2 + 2 x^3 + 4 x^4)/((1 - x) (1 + x + x^2) (1 - 16 x^3)), {x, 0, 30}], x] (* _Michael De Vlieger_, May 19 2016 *)"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "int main(int argc, char** argv)",
+        "{",
+        "  unsigned long long x, n, BL=0;",
+        "  for (n=1; n>0; ++n) {",
+        "    if ((n & (n-1))==0)  ++BL;",
+        "    x = (n>>1) + ((n&1) << (BL-1));   // A038572(n)",
+        "    x+= (n*2) - (1ull<<BL) + 1;   // A006257(n)  for n>0",
+        "    if ((x & (x-1))==0)  printf(\"%lld, \", n);",
+        "  }",
+        "}",
+        "(PARI) Vec(x*(1+2*x+6*x^2+2*x^3+4*x^4)/((1-x)*(1+x+x^2)*(1-16*x^3)) + O(x^50)) \\\\ _Colin Barker_, May 19 2016"
+    ],
+    "xref": [
+        "Cf. A006257, A038572, A088161, A088163, A112627, A273105, A273106."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, May 17 2016",
+    "references": 1,
+    "revision": 24,
+    "time": "2016-05-22T07:16:39-04:00",
+    "created": "2016-05-21T22:41:07-04:00"
+}

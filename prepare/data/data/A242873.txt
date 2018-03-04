@@ -1,0 +1,37 @@
+{
+    "number": 242873,
+    "data": "3896,6583,23428,25447,27355,27991,36276,37219,37540,39819,41063",
+    "name": "Absolute discriminants of complex quadratic fields with 3-class group of type (3,3), 3-principalization type (4443), IPAD [(3,3,3)^3, (3,9)], and Hilbert 3-class field tower of unknown length at least 3.",
+    "comment": [
+        "For all these discriminants, the metabelianization of the 3-tower group is the unbalanced group SmallGroup(729,45), whence it is completely open whether the tower must terminate at a finite stage or not. Consequently, these discriminants are among the foremost challenges of future research.",
+        "These fields are characterized either by their 3-principalization type (transfer kernel type, TKT) (4443), H.4, or equivalently by their transfer target type (TTT) [(3,3,3)^3, (3,9)] (called IPAD by Boston, Bush, Hajir). The latter is used in the MAGMA PROG. The TKT (4443) is not a permutation, contains a transposition, and has no fixed point. - _Daniel Constantin Mayer_, Sep 22 2014"
+    ],
+    "reference": [
+        "D. C. Mayer, The distribution of second p-class groups on coclass graphs, J. Th\u00e9or. Nombres Bordeaux 25 (2) (2013), 401-456."
+    ],
+    "link": [
+        "L. Bartholdi and M. R. Bush, <a href=\"http://dx.doi.org/10.1016/j.jnt.2006.08.008\">Maximal unramified 3-extensions of imaginary quadratic fields and SL_2Z_3</a>, J. Number Theory 124 (2007), 159-166.",
+        "N. Boston, M. R. Bush, F. Hajir, <a href=\"http://arxiv.org/abs/1111.4679\">Heuristics for p-class towers of imaginary quadratic fields</a>, arXiv:1111.4679 [math.NT], 2011.",
+        "D. C. Mayer, <a href=\"http://arxiv.org/abs/1403.3833\">The distribution of second p-class groups on coclass graphs</a>, arXiv:1403.3833 [math.NT], 2014."
+    ],
+    "example": [
+        "Already the smallest term 3896 resists all attempts to determine the length of its Hilbert 3-class field tower."
+    ],
+    "program": [
+        "(MAGMA)",
+        "for d := 2 to 10^5 do a := false; if (3 eq d mod 4) and IsSquarefree(d) then a := true; end if; if (0 eq d mod 4) then r := d div 4; if IsSquarefree(r) and ((2 eq r mod 4) or (1 eq r mod 4)) then a := true; end if; end if; if (true eq a) then K := QuadraticField(-d); C,mC := ClassGroup(K); if ([3, 3] eq pPrimaryInvariants(C, 3)) then E := AbelianExtension(mC); sS := Subgroups(C: Quot := [3]); sA := [AbelianExtension(Inverse(mQ)*mC) where Q, mQ := quo<C|x`subgroup>: x in sS]; sN := [NumberField(x): x in sA]; sF := [AbsoluteField(x): x in sN]; sM := [MaximalOrder(x): x in sF]; sM := [OptimizedRepresentation(x): x in sF]; sA := [NumberField(DefiningPolynomial(x)): x in sM]; sO := [Simplify(LLL(MaximalOrder(x))): x in sA]; delete sA, sN, sF, sM; g := true; e := 0; for j in [1..#sO] do CO := ClassGroup(sO[j]); if (3 eq Valuation(#CO, 3)) then if ([3, 3, 3] eq pPrimaryInvariants(CO, 3)) then e := e+1; end if; else g := false; end if; end for; if (true eq g) and (3 eq e) then d, \", \"; end if; end if; end if; end for;"
+    ],
+    "xref": [
+        "Cf. A242862, A242863 (supersequences), and A242864, A242878 (disjoint sequences)."
+    ],
+    "keyword": "hard,nonn",
+    "offset": "1,1",
+    "author": "_Daniel Constantin Mayer_, May 24 2014",
+    "ext": [
+        "Definition completed by _Daniel Constantin Mayer_, Sep 22 2014"
+    ],
+    "references": 8,
+    "revision": 17,
+    "time": "2015-01-27T14:43:01-05:00",
+    "created": "2014-05-29T00:07:37-04:00"
+}

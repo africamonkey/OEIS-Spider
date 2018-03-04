@@ -1,0 +1,38 @@
+{
+    "number": 290630,
+    "data": "3,5,8,15,18,25,28,31,40,47,50,57,60,69,76,79,82,91,100,107,110,119,122,125,128,135,136,137,138,145,154,155,156,157,158,165,168,175,178,181,190,191,192,193,194,197,200,209,218,219,220,221,222,223,224,227,230,239,242,243,244,245,246,247,248,249,250,251,252",
+    "name": "a(n+1) = a(n) + (final digit of greatest prime < a(n)); a(1)=3.",
+    "comment": [
+        "Let a(n) be composite, and gp(n) be the greatest prime less than a(n), with final digit d(n). Then sp(n), the smallest prime greater than a(n) is in the sequence if and only if d(n) divides (sp(n) - a(n)), in which case (sp(n) - a(n))/d(n) is the integer m, and a(n + m) = sp(n).",
+        "If a(n) is prime, with final digit d'(n) then sp(n) (the next prime after a(n)) is in the sequence if and only if sp(n) = a(n)+ d(n) + r * d'(n) for some r >= 1, in which case",
+        "a(n + r + 1) = sp(n).",
+        "Primes appearing in the sequence are 3, 5, 31, 47, 79, 107, 137, 157, 181, 191, 193, 197, ... If a prime occurs at a(n), a(n+2) = a(n+1) + d(n) only if there is no prime between a(n) and a(n+1).",
+        "Primes in the sequence whose final digit is not contributed to a subsequent term include 3, 5, 31, 107, 197, ...",
+        "Primes not appearing in the sequence but which contribute a final digit include 2, 7, 13, 17, 23, 29, 37, ..."
+    ],
+    "formula": [
+        "a(n+1) = a(n) + d(n) where d(n) = A007652(gp(n)); gp(n) = greatest prime < a(n)."
+    ],
+    "example": [
+        "a(2) = a(1) + gp(1) = 3 + 2 = 5.",
+        "a(59) = 242 (composite), gp(59) = 241, and d(59) = 1. sp(59) = 251 is in the sequence because (sp(59) - a(59))/d(59) = (251 - 242)/1 = 9 (= m). Therefore a(59 + 9) = a(68) = 251.",
+        "a(40) = 181 (prime), d'(40) = 1, gp(40) = 179, d(40) = 9. Then sp(40) = 191 is in the sequence because with r = 1,",
+        "a(40) + d(40) + r*d'(40) = 181 + 9 + 1*1 = 191 = a(40+1+1) = a(42)."
+    ],
+    "mathematica": [
+        "NestList[# + Mod[NextPrime[#, -1], 10] &, 3, 68] (* _Michael De Vlieger_, Aug 19 2017 *)"
+    ],
+    "program": [
+        "(PARI) lista(nn) = {print1(a = 3, \", \"); for (n=2, nn, a = a + precprime(a-1) % 10; print1(a, \", \"););} \\\\ _Michel Marcus_, Aug 19 2017"
+    ],
+    "xref": [
+        "Cf. A000040, A007652."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_David James Sycamore_, Aug 07 2017",
+    "references": 0,
+    "revision": 27,
+    "time": "2017-08-21T22:40:19-04:00",
+    "created": "2017-08-21T22:40:19-04:00"
+}

@@ -1,0 +1,67 @@
+{
+    "number": 14575,
+    "data": "1260,1395,1435,1530,1827,2187,6880,102510,104260,105210,105264,105750,108135,110758,115672,116725,117067,118440,120600,123354,124483,125248,125433,125460,125500,126027,126846,129640",
+    "name": "Vampire numbers (definition 2): numbers n with an even number of digits which have a factorization n = i*j where i and j have the same number of digits and the multiset of the digits of n coincides with the multiset of the digits of i and j.",
+    "comment": [
+        "The numbers i and j may not both have trailing zeros. Numbers may have more than one such factorization. However, each n is listed only once. [Comment modified by _Rick L. Shepherd_, Nov 02 2009]"
+    ],
+    "reference": [
+        "C. A. Pickover, \"Vampire Numbers.\" Ch. 30 in Keys to Infinity. New York: Wiley, pp. 227-231, 1995."
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A014575/b014575.txt\">Table of n, a(n) for n = 1..10000</a> (terms a(1)-a(87) by R. J. Mathar and a(88)-a(1006) by Manfred Scheucher)",
+        "Ely Golden, <a href=\"/A014575/a014575_5.sagews.txt\">General program for generating vampire number sequences</a>",
+        "Manfred Scheucher, <a href=\"/A014575/a014575.sage.txt\">Sage Script</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/VampireNumber.html\">Vampire Number.</a>"
+    ],
+    "example": [
+        "1260 = 21*60, 1395 = 15*93, 1435 = 35*41, 1530 = 30*51, etc."
+    ],
+    "maple": [
+        "n := 1 :",
+        "for dgs from 4 to 10 by 2 do",
+        "    for a from 10^(dgs-1) to 10^dgs-1 do",
+        "        amset := sort(convert(a,base,10)) ;",
+        "        isv := false ;",
+        "        for d in numtheory[divisors](a) do",
+        "            m := a/d ;",
+        "            if ( m >= d ) then",
+        "                dset := convert(d,base,10) ;",
+        "                mset := convert(m,base,10) ;",
+        "                fset := sort([op(dset),op(mset)]) ;",
+        "                if fset = amset and nops(dset) = nops(mset) then",
+        "                    if (m mod 10 <> 0 ) or (d mod 10 <> 0 ) then",
+        "                    printf(\"%d %d\\n\",n,a) ;",
+        "                    isv := true ;",
+        "                    n := n+1 ;",
+        "                    end if;",
+        "                end if;",
+        "            end if;",
+        "            if isv then",
+        "                break;",
+        "            end if;",
+        "        end do:",
+        "    end do:",
+        "end do: # _R. J. Mathar_, Jan 10 2013"
+    ],
+    "mathematica": [
+        "fQ[n_] := If[OddQ@ IntegerLength@ n, False, MemberQ[Map[Sort@ Flatten@ IntegerDigits@ # &, Select[Map[{#, n/#} &, TakeWhile[Divisors@ n, # <= Sqrt@ n &]], SameQ @@ Map[IntegerLength, #] &]], Sort@ IntegerDigits@ n]]; Select[Range[10^6], fQ] (* _Michael De Vlieger_, Jan 27 2017 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(v=digits(n));if(#v%2,return(0));fordiv(n,d,if(#Str(d)==#v/2 && #Str(n/d)==#v/2 && vecsort(v)==vecsort(digits(eval(Str(d,n/d)))) && (d%10 || (n/d)%10), return(1)));0 \\\\ _Charles R Greathouse IV_, Apr 19 2013"
+    ],
+    "xref": [
+        "The following sequences are all closely related: A020342, A014575, A080718, A280928, A048936, A144563.",
+        "Cf. A048933, A048934, A048935, A048936, A048937, A048938, A048939."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Eric W. Weisstein_",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Jan 03 2009"
+    ],
+    "references": 18,
+    "revision": 66,
+    "time": "2017-07-21T08:22:18-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

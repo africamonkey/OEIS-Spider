@@ -1,0 +1,53 @@
+{
+    "number": 276156,
+    "data": "0,1,2,3,6,7,8,9,30,31,32,33,36,37,38,39,210,211,212,213,216,217,218,219,240,241,242,243,246,247,248,249,2310,2311,2312,2313,2316,2317,2318,2319,2340,2341,2342,2343,2346,2347,2348,2349,2520,2521,2522,2523,2526,2527,2528,2529,2550,2551,2552,2553,2556,2557,2558,2559,30030,30031",
+    "name": "Numbers obtained by reinterpreting base-2 representation of n in primorial base: a(0) = 0, a(2n) = A276154(a(n)), a(2n+1) = 1 + A276154(a(n)).",
+    "comment": [
+        "Numbers that are sums of distinct primorial numbers, A002110.",
+        "Numbers with no digits larger than one in primorial base, A049345."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A276156/b276156.txt\">Table of n, a(n) for n = 0..8191</a>",
+        "<a href=\"/index/Pri#primorialbase\">Index entries for sequences related to primorial base</a>"
+    ],
+    "formula": [
+        "a(0) = 0, a(2n) = A276154(a(n)), a(2n+1) = 1+A276154(a(n)).",
+        "Other identities. For all n >= 0:",
+        "a(n) = A276085(A019565(n)).",
+        "A049345(a(n)) = A007088(n).",
+        "A257993(a(n)) = A001511(n).",
+        "A276084(a(n)) = A007814(n)."
+    ],
+    "mathematica": [
+        "nn = 65; b = MixedRadix[Reverse@ Prime@ Range[IntegerLength[nn, 2] - 1]]; Table[FromDigits[IntegerDigits[n, 2], b], {n, 0, 65}] (* Version 10.2, or *)",
+        "Table[Total[Times @@@ Transpose@ {Map[Times @@ # &, Prime@ Range@ Range[0, Length@ # - 1]], Reverse@ #}] &@ IntegerDigits[n, 2], {n, 0, 65}] (* _Michael De Vlieger_, Aug 26 2016 *)"
+    ],
+    "program": [
+        "(Scheme, two versions)",
+        ";; Almost standalone, requiring only A000040:",
+        "(define (A276156 n) (let loop ((n n) (s 0) (pr 1) (i 1)) (cond ((zero? n) s) ((even? n) (loop (/ n 2) s (* (A000040 i) pr) (+ 1 i))) (else (loop (/ (- n 1) 2) (+ s pr) (* (A000040 i) pr) (+ 1 i))))))",
+        ";; One using memoization-macro, implementing the given recurrence:",
+        "(definec (A276156 n) (cond ((zero? n) n) ((even? n) (A276154 (A276156 (/ n 2)))) (else (+ 1 (A276154 (A276156 (/ (- n 1) 2)))))))",
+        "(Python)",
+        "from sympy import prime, primorial, primepi, factorint",
+        "from operator import mul",
+        "def a002110(n): return 1 if n<1 else primorial(n)",
+        "def a276085(n):",
+        "    f=factorint(n)",
+        "    return sum([f[i]*a002110(primepi(i) - 1) for i in f])",
+        "def a019565(n): return reduce(mul, (prime(i+1) for i, v in enumerate(bin(n)[:1:-1]) if v == '1')) # after _Chai Wah Wu_",
+        "def a(n): return 0 if n==0 else a276085(a019565(n))",
+        "print [a(n) for n in xrange(101)] # _Indranil Ghosh_, Jun 23 2017"
+    ],
+    "xref": [
+        "Cf. A000040, A001511, A002110, A007088, A007814, A019565, A049345, A257993, A276084, A276085, A276154.",
+        "Cf. also A059590."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Antti Karttunen_, Aug 24 2016",
+    "references": 5,
+    "revision": 21,
+    "time": "2017-06-24T00:56:45-04:00",
+    "created": "2016-08-25T20:59:18-04:00"
+}

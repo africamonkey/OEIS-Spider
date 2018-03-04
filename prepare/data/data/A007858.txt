@@ -1,0 +1,44 @@
+{
+    "number": 7858,
+    "data": "1,2,4,13,44,164,636,2559,10556,44440,190112,824135,3612244,15981632,71277736,320121747,1446537564,6571858168,30000766128,137544893940,633051803120,2923867281660,13547594977500,62955434735505,293336372858724,1370149533359784,6414423856436816",
+    "name": "G.f. is 1 - 1/f(x), where f(x) = 1+x+3*x^2+9*x^3+32*x^4+... is 1/x times g.f. for A063020.",
+    "comment": [
+        "Number of maximal independent sets in rooted plane trees on n nodes."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A007858/b007858.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "M. Klazar, <a href=\"http://dx.doi.org/10.1006/eujc.1995.0095\">Twelve countings with rooted plane trees</a>, European Journal of Combinatorics 18 (1997), 195-210; Addendum, 18 (1997), 739-740.",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "a(n+1) = Sum_{k = 1..n} ( binomial(n+k,k)/(n+k)*Sum_{j = 0..k} ( binomial(j,n-k-j+1)*binomial(k,j)*(-1)^(n+k-j+1) ) ) + C(n), where C(n) is a Catalan number. - _Vladimir Kruchinin_, Nov 13 2014",
+        "Recurrence: 16*(n-1)*n*(2*n-3)*(17*n^2 - 81*n + 96)*a(n) = (n-1)*(1819*n^4 - 14124*n^3 + 40377*n^2 - 50320*n + 23040)*a(n-1) + 8*(2*n-5)*(4*n-11)*(4*n-9)*(17*n^2 - 47*n + 32)*a(n-2). - _Vaclav Kotesovec_, Nov 14 2014",
+        "Asymptotics (Klazar, 1997): a(n) ~ sqrt(5731-4635/sqrt(17)) * ((107+51*sqrt(17))/64)^n / (256 * sqrt(Pi) * n^(3/2)). - _Vaclav Kotesovec_, Nov 14 2014"
+    ],
+    "maple": [
+        "series(1-x/RootOf(_Z-_Z^2-_Z^3+_Z^4-x), x=0,20); # _Mark van Hoeij_, May 28 2013"
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[1-x/InverseSeries[Series[x-x^2-x^3+x^4, {x, 0, 20}], x],x]] (* _Vaclav Kotesovec_, Nov 14 2014 *)",
+        "Table[Sum[Binomial[n + k, k]/(n + k)*Sum[(Binomial[j, n - k - j + 1]*",
+        "Binomial[k, j]*(-1)^(n + k - j + 1)), {j, 0, k}], {k, 1, n}] + CatalanNumber[n], {n, 0, 50}] (* _G. C. Greubel_, Feb 15 2017 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^66); Vec(1-x/serreverse(x-x^2-x^3+x^4)) \\\\ _Joerg Arndt_, May 28 2013",
+        "(Maxima)",
+        "a(n):=sum(binomial(n+k,k)/(n+k)*sum(binomial(j,n-k-j+1)*binomial(k,j)*(-1)^(n+k-j+1),j,0,k),k,1,n)+1/(n+1)*binomial(2*n,n); // _Vladimir Kruchinin_, Nov 13 2014"
+    ],
+    "xref": [
+        "Cf. A000108."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Martin Klazar (klazar(AT)kam.mff.cuni.cz), Mar 15 1996",
+    "ext": [
+        "Alternative description from _Olivier G\u00e9rard_, Jul 05 2001"
+    ],
+    "references": 2,
+    "revision": 35,
+    "time": "2017-02-16T02:31:25-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

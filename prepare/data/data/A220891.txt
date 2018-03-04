@@ -1,0 +1,45 @@
+{
+    "number": 220891,
+    "data": "2,3,4,5,29,41,55,71,791,1079,30239,246960,636481,1360800,2162161,39412801,107881201,3625549201,170918748000,2355997644001,237662810985599,4614209634434399,7522575180120001,362645725505263201,10684484093105222399,442709913651892286399,5205240636387758366399",
+    "name": "Where record values occur in A187824.",
+    "comment": [
+        "Since A187824 is unbounded, this sequence is infinite."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A220891/b220891.txt\">Table of n, a(n) for n = 1..30</a>"
+    ],
+    "maple": [
+        "(Contribution from _Robert Israel_, Dec 31 2012) (Start)",
+        "N:= 20: # number of record values wanted",
+        "R[1]:= 2: R[2]:= 3: r:= 3: count:= 2:",
+        "S[3]:= {$0..5}: M[3]:= 6:",
+        "# M[m] is the lcm of 1..m",
+        "# S[m] is the set of residues mod M[m] for numbers n with A187824(n)>=m",
+        "# R[i] is the i'th record value",
+        "for m from 4 while count < N do",
+        "  M[m]:= ilcm(M[m-1],m); p:= M[m]/M[m-1];",
+        "  if p = 1 then T:= S[m-1]",
+        "  else T:= {seq(seq(a+b*M[m-1],a=S[m-1]),b=0..p-1)}",
+        "  end if;",
+        "  S[m]:= select(t -> member(mods(t,m),{1,0,-1}),T);",
+        "  r:= min(S[m] minus {0,1});",
+        "  if r > R[count] then",
+        "    count:= count+1; R[count]:= r",
+        "  end if;",
+        "end do:",
+        "[seq(R[j],j=1..count)]; # (End)"
+    ],
+    "program": [
+        "(PARI) {m=0;for(n=1,9e9,m<A187824(n) || next; print1(n\",\"); m=A187824(n))} \\\\ For illustrative purpose (values < 10^8) only. - _M. F. Hasler_, Dec 31 2012"
+    ],
+    "xref": [
+        "Cf. A187824, A220890, A056697."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Dec 30 2012",
+    "references": 4,
+    "revision": 26,
+    "time": "2012-12-31T09:07:01-05:00",
+    "created": "2012-12-30T13:26:22-05:00"
+}

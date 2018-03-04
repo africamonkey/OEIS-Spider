@@ -1,0 +1,42 @@
+{
+    "number": 143207,
+    "data": "30,60,90,120,150,180,240,270,300,360,450,480,540,600,720,750,810,900,960,1080,1200,1350,1440,1500,1620,1800,1920,2160,2250,2400,2430,2700,2880,3000,3240,3600,3750,3840,4050,4320,4500,4800,4860",
+    "name": "Numbers with distinct prime factors 2, 3, and 5.",
+    "comment": [
+        "A001221(a(n)) = 3; A020639(a(n)) = 2; A006530(a(n)) = 5; A143201(a(n)) = 6.",
+        "Subsequence of A143204 and of A051037.",
+        "Successive k such that EulerPhi[x]/x=4/15. - _Artur Jasinski_, Nov 07 2008",
+        "Numbers of the form 2^i * 3^j * 5^k with i, j, k > 0; a(n) = 30*A051037(n); A007947(a(n)) = A010869(n). - _Reinhard Zumkeller_, Sep 13 2011"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A143207/b143207.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "mathematica": [
+        "a = {}; Do[If[EulerPhi[x]/x == 4/15, AppendTo[a, x]], {x, 1, 11664}]; a (* _Artur Jasinski_, Nov 07 2008 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert)",
+        "a143207 n = a143207_list !! (n-1)",
+        "a143207_list = f (singleton (2*3*5)) where",
+        "   f s = m : f (insert (2*m) $ insert (3*m) $ insert (5*m) s') where",
+        "     (m,s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Sep 13 2011",
+        "(PARI) is(n)=if(n%30, return(0)); my(g=30); while(g>1, n/=30; g=gcd(n,30)); n==1 \\\\ _Charles R Greathouse IV_, Sep 14 2015",
+        "(PARI) list(lim)=my(v=List(),s,t); for(i=1,logint(lim\\6,5), t=5^i; for(j=1,logint(lim\\t\\2,3), s=t*3^j; while((s<<=1)<=lim, listput(v,s)))); Set(v) \\\\ _Charles R Greathouse IV_, Sep 14 2015",
+        "(MAGMA) [n: n in [1..5000] | PrimeDivisors(n) eq [2,3,5]]; // _Bruno Berselli_, Sep 14 2015"
+    ],
+    "xref": [
+        "Cf. A069819."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Aug 12 2008",
+    "ext": [
+        "New name from _Charles R Greathouse IV_, Sep 14 2015"
+    ],
+    "references": 19,
+    "revision": 20,
+    "time": "2015-09-19T11:14:37-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

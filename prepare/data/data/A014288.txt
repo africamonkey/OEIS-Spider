@@ -1,0 +1,44 @@
+{
+    "number": 14288,
+    "data": "0,1,2,5,17,77,437,2957,23117,204557,2018957,21977357,261478157,3374988557,46964134157,700801318157,11162196262157,189005910310157,3390192763174157,64212742967590157,1280663747055910157,26826134832910630157,588826498721714470157",
+    "name": "a(n) = floor(Sum_{k=0..n} k!/2), or floor( A003422(n+1)/2 ).",
+    "comment": [
+        "The first term a(0) would be a fraction if the floor( ... ) function were omitted; for n >= 2, all terms from A003422 are even. - _M. F. Hasler_, Dec 16 2007"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A014288/b014288.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(0)=0, a(1)=1, a(2)=2, a(n) = (n+1)*a(n-1) - n*a(n-2). - _Benoit Cloitre_, Sep 07 2002",
+        "a(0) = 0, a(n) = (1/2)*floor(1 + 1*floor(1 + 2*floor(1 + ... + (n-1)*floor(1+n*floor(1))). - Joseph E. Cooper III (easonrevant(AT)gmail.com), Aug 19 2008",
+        "G.f.: G(0)/(1-x)/2 -1/2, where G(k)= 1 + (2*k + 1)*x/( 1 - 2*x*(k+1)/(2*x*(k+1) + 1/G(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, May 24 2013",
+        "G.f.: A(x) = (Sum_{n>=0} x^n*n!)/(2-2*x) - 1/2 = G(0)/(4*(1-x)) - 1/2, where G(k) = 1 + 1/(1 - x/(x + 1/(k+1)/G(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, Jun 02 2013",
+        "a(n) ~ n!/2. - _Vaclav Kotesovec_, Aug 10 2013",
+        "E.g.f.: -1/2 + (exp(x)/2)*Sum_{k>=0} (k! - k*Gamma(k,x)). - _Robert Israel_, Jun 01 2015"
+    ],
+    "maple": [
+        "a:= proc(n) a(n):= `if`(n<3, n, (n+1)*a(n-1)-n*a(n-2)) end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Feb 01 2013"
+    ],
+    "mathematica": [
+        "f[x_] := {Floor[1 + (n - x[[2]])*x[[1]]], x[[2]] + 1};",
+        "a[0] = 0; a[n_] := Nest[f, {1, 0}, n][[1]]/2 (* Joseph E. Cooper III (easonrevant(AT)gmail.com), Aug 19 2008 *) (* updated by _Jean-Fran\u00e7ois Alcover_, Jun 01 2015 *)",
+        "a[n_]:=-(1/2) Subfactorial[-1]-1/2(-1)^n Gamma[2+n] Subfactorial[-2-n]; Table[a[n] //FullSimplify,{n,0,25}] (* _Gerry Martens_, May 29 2015 *)"
+    ],
+    "program": [
+        "(PARI) A014288(n)=sum(k=0,n,k!)>>1 \\\\ _M. F. Hasler_, Dec 16 2007"
+    ],
+    "xref": [
+        "Cf. A003422, A067078, A007489."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Edited by _M. F. Hasler_, Dec 16 2007"
+    ],
+    "references": 9,
+    "revision": 41,
+    "time": "2017-11-14T19:58:52-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

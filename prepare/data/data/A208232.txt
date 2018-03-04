@@ -1,0 +1,61 @@
+{
+    "number": 208232,
+    "data": "1,1,1,4,20,120,168,1344,1512,1920,7920,95040,95040",
+    "name": "Maximum order of a subgroup of the symmetric group of degree n that contains no 2-cycle and no 3-cycle.",
+    "link": [
+        "MathOverflow, <a href=\"http://mathoverflow.net/questions/118494\">Largest permutation group without 2-cycles or 3-cycles</a>"
+    ],
+    "example": [
+        "a(4) = 4 since the subgroups of S_4 up to conjugation as computed by GAP are:",
+        "H(1) =  { ()}",
+        "H(2) =  { (), (1,3)(2,4)}",
+        "H(3) =  { (), (3,4)}",
+        "H(4) =  { (), (2,3,4), (2,4,3)}",
+        "H(5) =  { (), (1,2)(3,4), (1,3)(2,4), (1,4)(2,3)}",
+        "H(6) =  { (), (3,4), (1,2), (1,2)(3,4)}",
+        "H(7) =  { (), (1,2)(3,4), (1,3,2,4), (1,4,2,3)}",
+        "H(8) =  { (), (3,4),(2,3), (2,3,4), (2,4,3), (2,4)}",
+        "H(9) =  { (), (3,4), (1,2), (1,2)(3,4), (1,3)(2,4), (1,3,2,4), (1,4,2,3), (1,4)(2,3)}",
+        "H(10) = { (), (2,3,4), (2,4,3), (1,2)(3,4), (1,2,3), (1,2,4), (1,3,2), (1,3,4), (1,3)(2,4), (1,4,2), (1,4,3), (1,4)(2,3)}",
+        "H(11) = { (), (3,4), (2,3), (2,3,4), (2,4,3), (2,4), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4), (1,2,4,3), (1,2,4), (1,3,2), (1,3,4,2), (1,3), (1,3,4), (1,3)(2,4), (1,3,2,4), (1,4,3,2), (1,4,2), (1,4,3), (1,4), (1,4,2,3), (1,4)(2,3)}",
+        "Only H(1), H(2), H(5) and H(7) contain neither 2-cycle nor 3-cycle and the largest of these groups has order 4.",
+        "I use here the GAP convention of writing cycles with commas."
+    ],
+    "program": [
+        "(GAP)",
+        "Has23:=function(G,n)",
+        "local x,p;",
+        "for p in Elements(G) do",
+        "  x:=Product(CycleLengths(p,[1..n]));",
+        "  if x = 2 or x = 3 then return true; fi;",
+        "od;",
+        "return false;",
+        "end;;",
+        "a:=function(n)",
+        "local MM,h,nn;",
+        "MM:=0;;",
+        "for H in ConjugacyClassesSubgroups(SymmetricGroup(n)) do",
+        "  h:=Representative(H);",
+        "  if Size(h)<=MM then continue; fi;",
+        "  if Has23(h,n) = false then",
+        "    nn:=Size(h);",
+        "    if nn > MM then MM:=nn; Mg:=h; fi;",
+        "  fi;",
+        "od;;",
+        "return MM;",
+        "end;;"
+    ],
+    "xref": [
+        "Cf. A208235."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,4",
+    "author": "_W. Edwin Clark_, Jan 10 2013",
+    "ext": [
+        "a(10)-a(13) from _Stephen A. Silver_, Feb 14 2013"
+    ],
+    "references": 1,
+    "revision": 27,
+    "time": "2013-02-15T08:49:46-05:00",
+    "created": "2013-01-14T12:16:59-05:00"
+}

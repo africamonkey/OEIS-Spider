@@ -1,0 +1,33 @@
+{
+    "number": 137428,
+    "data": "20,28,40,42,44,52,56,60,66,68,76,78,80,84,88,92,99,100,102,104,110,112,114,116,117,120,124,126,130,132,136,138,140,148,152,153,156,160,164,168,170,171,172,174,176,180,184,186,188,190,196,198,200,204,207,208",
+    "name": "Positive integers n which have a composite divisor smaller than their largest prime factor.",
+    "comment": [
+        "The primitive elements of this sequence are those of the form s*p, where s is a semiprime and p a prime larger than s, cf. A252478. Any multiple of these primitive terms is also in the sequence. - _M. F. Hasler_, Jan 02 2015"
+    ],
+    "example": [
+        "The positive divisors of 60 are 1,2,3,4,5,6,10,12,15,20,30,60. The divisor 4, a composite, is less than the prime divisor 5. So 60 is in this sequence."
+    ],
+    "maple": [
+        "isA137428 := proc(n) local dvs,p,i ; dvs := sort(convert(numtheory[divisors](n) minus{1},list)) ; for i from 1 to nops(dvs) do if isprime(op(-i,dvs)) then p := op(-i,dvs) ; break ; fi ; od: for i from 1 to nops(dvs) do if op(i,dvs) < p and not isprime(op(i,dvs)) then RETURN(true) ; fi ; od: RETURN(false) ; end: for n from 1 to 400 do if isA137428(n) then printf(\"%d,\",n) ; fi ; od: # _R. J. Mathar_, Apr 21 2008"
+    ],
+    "mathematica": [
+        "a = {}; For[n = 2, n < 300, n++, If[FactorInteger[n][[ -1, 1]] > Min[Select[ Divisors[n], ! PrimeQ[ # ]&& # > 1 &]], AppendTo[a, n]]]; a (* _Stefan Steinerberger_, Apr 21 2008 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=#(n=factor(n)~)>1&&n[1,#n]>=n[1,1]*if(n[2,1]>1,n[1,1],n[1,2]) \\\\ _M. F. Hasler_, Jan 02 2015"
+    ],
+    "xref": [
+        "Cf. A006530, A088739."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Leroy Quet_, Apr 17 2008",
+    "ext": [
+        "More terms from _R. J. Mathar_ and _Stefan Steinerberger_, Apr 21 2008"
+    ],
+    "references": 2,
+    "revision": 13,
+    "time": "2015-01-02T10:18:33-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

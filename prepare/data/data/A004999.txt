@@ -1,0 +1,37 @@
+{
+    "number": 4999,
+    "data": "0,1,2,8,9,16,27,28,35,54,64,65,72,91,125,126,128,133,152,189,216,217,224,243,250,280,341,343,344,351,370,407,432,468,512,513,520,539,559,576,637,686,728,729,730,737,756,793,854,855,945,1000,1001",
+    "name": "Sums of two nonnegative cubes.",
+    "link": [
+        "T. D. Noe, <a href=\"/A004999/b004999.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Kevin A. Broughan, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL6/Broughan/broughan25.html\">Characterizing the sum of two cubes</a>, J. Integer Seqs., Vol. 6, 2003.",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of cubes</a>"
+    ],
+    "mathematica": [
+        "Union[(#[[1]]^3+#[[2]]^3)&/@Tuples[Range[0,20],{2}]] (* _Harvey P. Dale_, Dec 04 2010 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(k1=ceil((n-1/2)^(1/3)), k2=floor((4*n+1/2)^(1/3)), L); fordiv(n,d,if(d>=k1 && d<=k2 && denominator(L=(d^2-n/d)/3)==1 && issquare(d^2-4*L), return(1))); 0",
+        "list(lim)=my(v=List());for(x=0,(lim+.5)^(1/3),for(y=0,min(x,(lim-x^3)^(1/3)),listput(v,x^3+y^3))); vecsort(Vec(v),,8) \\\\ _Charles R Greathouse IV_, Jun 12 2012",
+        "(PARI) is(n)=my(L=sqrtnint(n-1,3)+1,U=sqrtnint(4*n,3));fordiv(n,m,if(L<=m&m<=U,my(ell=(m^2-n/m)/3);if(denominator(ell)==1&&issquare(m^2-4*ell),return(1))));0 \\\\ _Charles R Greathouse IV_, Apr 16 2013",
+        "(PARI) T=thueinit('z^3+1);",
+        "is(n)=n==0 || #select(v->min(v[1],v[2])>=0, thue(T,n))>0 \\\\ _Charles R Greathouse IV_, Nov 29 2014",
+        "(Haskell)",
+        "a004999 n = a004999_list !! (n-1)",
+        "a004999_list = filter c2 [1..] where",
+        "   c2 x = any (== 1) $ map (a010057 . fromInteger) $",
+        "                       takeWhile (>= 0) $ map (x -) $ tail a000578_list",
+        "-- _Reinhard Zumkeller_, Dec 20 2013"
+    ],
+    "xref": [
+        "Cf. A003325 (subsequence), subsequence of A045980.",
+        "Cf. A000578, A004825, A010057, A003325 (subsequence), subsequence of A045980."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, _Steven Finch_",
+    "references": 15,
+    "revision": 30,
+    "time": "2016-09-16T14:30:56-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

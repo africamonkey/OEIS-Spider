@@ -1,0 +1,43 @@
+{
+    "number": 265279,
+    "data": "1,5,30,196,1348,9603,70210,523732,3969948,30490434",
+    "name": "Number of pairs of binary trees with n leaves which have only a single common parse word under the grammar G = {0 -> 12, 0 -> 21, 1 -> 02, 1 -> 20, 2 -> 01, 2 -> 10}.",
+    "comment": [
+        "We say that a word w in {0,1,2}^* is a parse word of a binary tree T if T is the derivation tree of w under the given grammar G.",
+        "Parse words are counted only up to permutation of the three letters.",
+        "The statement that all pairs of binary trees have at least one common parse word under G is equivalent to the four-color theorem."
+    ],
+    "link": [
+        "B. Cooper and E. Rowland and D. Zeilberger, <a href=\"http://arxiv.org/abs/1006.1324\">Toward a language theoretic proof of the four color theorem</a>, arXiv:1006.1324 [math.CO], 2011-2012.",
+        "B. Cooper and E. Rowland and D. Zeilberger, <a href=\"http://dx.doi.org/10.1016/j.aam.2011.11.002\">Toward a language theoretic proof of the four color theorem</a>, Advances in Applied Mathematics 48 (2012), 414-431.",
+        "E. Rowland, <a href=\"http://people.hofstra.edu/Eric_Rowland/packages/ParseWords.m\"> Mathematica program ParseWords.m</a>.",
+        "D. Zeilberger, <a href=\"http://www.math.rutgers.edu/~zeilberg/tokhniot/LOU\">Maple program LOU.txt</a>."
+    ],
+    "example": [
+        "There are exactly two binary trees with n = 3 leaves, the first one parses the words 101 and 110, the second one parses the words 011 and 101 (and all words obtained by permuting the letters 0, 1, 2). Thus this single pair of trees has precisely one common parse word."
+    ],
+    "maple": [
+        "read `LOU.txt`;  # see link above",
+        "seq(nops(MinLou(n)[2]), n=3..7);"
+    ],
+    "mathematica": [
+        "BinaryTrees[1] = {{}};",
+        "BinaryTrees[n_Integer /; n > 1] := BinaryTrees[n] =",
+        "  Join @@ Table[Tuples[{BinaryTrees[i], BinaryTrees[n - i]}], {i, n - 1}];",
+        "ParseWords[{}, root_] := {{root}};",
+        "ParseWords[tree_List, root_: 0] := ParseWords[tree, root] =",
+        "  With[{col = DeleteCases[{0, 1, 2}, root]}, Join[",
+        "    Flatten /@ Tuples[{ParseWords[tree[[1]], col[[1]]], ParseWords[tree[[2]], col[[2]]]}],",
+        "    Flatten /@ Tuples[{ParseWords[tree[[1]], col[[2]]], ParseWords[tree[[2]], col[[1]]]}]",
+        "  ]];",
+        "MinTreePairs[n_Integer /; n > 0] :=",
+        "  Count[Length[Intersection[ParseWords[#1], ParseWords[#2]]]& @@@ Subsets[BinaryTrees[n], {2}], 2];"
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "3,2",
+    "author": "_Christoph Koutschan_, Apr 06 2016",
+    "references": 0,
+    "revision": 17,
+    "time": "2016-09-01T02:12:38-04:00",
+    "created": "2016-04-08T12:12:05-04:00"
+}

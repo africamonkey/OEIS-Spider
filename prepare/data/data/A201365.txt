@@ -1,0 +1,38 @@
+{
+    "number": 201365,
+    "data": "1,5,45,605,10845,243005,6534045,204972605,7348546845,296387331005,13282361478045,654762261324605,35211177242722845,2051349014835939005,128701394409842982045,8651475271312083756605,620334325261670875138845,47259638324026516284867005",
+    "name": "E.g.f.: exp(x) / (5 - 4*exp(x)).",
+    "formula": [
+        "O.g.f.: A(x) = Sum_{n>=0} n! * 5^n*x^n / Product_{k=0..n} (1+k*x).",
+        "O.g.f.: A(x) = 1/(1 - 5*x/(1-4*x/(1 - 10*x/(1-8*x/(1 - 15*x/(1-12*x/(1 - 20*x/(1-16*x/(1 - 25*x/(1-20*x/(1 - ...)))))))))), a continued fraction.",
+        "a(n) = Sum_{k=0..n} (-1)^(n-k) * 5^k * Stirling2(n,k) * k!.",
+        "a(n) = Sum_{k, 0<=k<=n} A123125(n,k)*5^k*4^(n-k). - _Philippe Del\u00e9ham_, Nov 30 2011",
+        "a(n) ~ n! / (4*(log(5/4))^(n+1)) . - _Vaclav Kotesovec_, Jun 13 2013",
+        "a(n) = log(5/4) * int {x = 0..inf} (ceiling(x))^n * (5/4)^(-x) dx. - _Peter Bala_, Feb 14 2015"
+    ],
+    "example": [
+        "E.g.f.: E(x) = 1 + 5*x + 45*x^2/2! + 605*x^3/3! + 10845*x^4/4! + 243005*x^5/5! +...",
+        "O.g.f.: A(x) = 1 + 5*x + 45*x^2 + 605*x^3 + 10845*x^4 + 243005*x^5 +...",
+        "where A(x) = 1 + 5*x/(1+x) + 2!*5^2*x^2/((1+x)*(1+2*x)) + 3!*5^3*x^3/((1+x)*(1+2*x)*(1+3*x)) + 4!*5^4*x^4/((1+x)*(1+2*x)*(1+3*x)*(1+4*x)) +..."
+    ],
+    "mathematica": [
+        "Table[Sum[(-1)^(n-k)*5^k*StirlingS2[n,k]*k!,{k,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Jun 13 2013 *)",
+        "With[{nn=20},CoefficientList[Series[Exp[x]/(5-4Exp[x]),{x,0,nn}],x] Range[ 0,nn]!] (* _Harvey P. Dale_, Jul 09 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(exp(x+x*O(x^n))/(5 - 4*exp(x+x*O(x^n))), n)}",
+        "(PARI) {a(n)=polcoeff(sum(m=0, n, 5^m*m!*x^m/prod(k=1, m, 1+k*x+x*O(x^n))), n)}",
+        "(PARI) {Stirling2(n, k)=if(k<0|k>n, 0, sum(i=0, k, (-1)^i*binomial(k, i)/k!*(k-i)^n))}",
+        "{a(n)=sum(k=0, n, (-1)^(n-k)*5^k*Stirling2(n, k)*k!)}"
+    ],
+    "xref": [
+        "Cf. A201366, A201367, A201368, A050353."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 30 2011",
+    "references": 4,
+    "revision": 25,
+    "time": "2015-07-09T16:18:25-04:00",
+    "created": "2011-11-30T13:26:34-05:00"
+}

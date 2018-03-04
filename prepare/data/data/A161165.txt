@@ -1,0 +1,38 @@
+{
+    "number": 161165,
+    "data": "5,28,44,58,66,84,98,112,120,138,156,186,192,228,236,268,276,318,332,370,390,406,414,456,474,498,510,528,536,580,588,606,614,648,654,670,680,712,722,786,792,868,878,898,912,948,954,1020,1026,1078,1112,1146,1158,1180",
+    "name": "The n-th twin prime plus the n-th isolated prime.",
+    "formula": [
+        "a(n)=A001097(n)+A007510(n)."
+    ],
+    "example": [
+        "a(1)=3+2=5. a(2)=5+23=28. a(3)=7+37=44."
+    ],
+    "maple": [
+        "isA001097 := proc(n) isprime(n) and (isprime(n+2) or isprime(n-2)) ; end proc:",
+        "A001097 := proc(n) if n = 1 then 3; else for p from procname(n-1)+2 by 2 do if isA001097(p) then return p end if; end do: end if; end proc:",
+        "isA007510 := proc(n) isprime(n) and not isprime(n+2) and not isprime(n-2) ; end proc:",
+        "A007510 := proc(n) if n = 1 then 2; else for p from procname(n-1)+1 do if isA007510(p) then return p end if; end do: end if; end proc:",
+        "A161165 := proc(n) A001097(n) + A007510(n) ; end proc:",
+        "seq(A161165(n),n=1..100) ; # R. J. Mathar, Mar 18 2010",
+        "Contribution from _R. J. Mathar_, Mar 29 2010: (Start)",
+        "isA001097 := proc(n) if isprime(n) then isprime(n+2) or isprime(n-2) ; else false; end if; end proc:",
+        "isA007510 := proc(n) if isprime(n) then not isprime(n+2) and not isprime(n-2) ; else false; end if; end proc:",
+        "A001097 := proc(n) option remember; if n = 1 then 3; else for a from procname(n-1)+1 do if isA001097(a) then return a; end if; end do: end if; end proc:",
+        "A007510 := proc(n) option remember; if n = 1 then 2; else for a from procname(n-1)+1 do if isA007510(a) then return a; end if; end do: end if; end proc:",
+        "A161165 := proc(n) A001097(n)+A007510(n) ; end proc: seq(A161165(n),n=1..90) ; (End)"
+    ],
+    "xref": [
+        "Cf. A001097, A007510."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Jun 04 2009",
+    "ext": [
+        "Entries checked by _R. J. Mathar_, Mar 18 2010"
+    ],
+    "references": 7,
+    "revision": 3,
+    "time": "2012-03-30T18:52:33-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

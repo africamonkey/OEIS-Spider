@@ -1,0 +1,45 @@
+{
+    "number": 90630,
+    "data": "1,1,1,1,8,8,144,144,576,5184,518400,518400,2073600,2073600,101606400,914457600,14631321600,14631321600,526727577600,526727577600,52672757760000,221225582592000,6373403688960000,6373403688960000,917770131210240000,22944253280256000000,3877578804363264000000",
+    "name": "Greatest divisor d of n! such that d=m^k with k>1.",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A090630/b090630.txt\">Table of n, a(n) for n = 0..500</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PerfectPower.html\">Perfect Powers</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Factorial.html\">Factorial</a>",
+        "<a href=\"/index/Fa#factorial\">Index entries for sequences related to factorial numbers</a>"
+    ],
+    "formula": [
+        "a(n)= n!/A251753(n). - _Robert G. Wilson v_, Dec 08 2014"
+    ],
+    "maple": [
+        "f:= proc(n)",
+        "  local F,  k, d,r,s;",
+        "  F:= ifactors(n!)[2];",
+        "  r:= 1;",
+        "  for k from 2 to F[1][2] do",
+        "    r:= max(r, mul(f[1]^(k*floor(f[2]/k)),f=F))",
+        "  od:",
+        "r",
+        "end proc:",
+        "1,1,seq(f(n), n=2..100); # _Robert Israel_, Dec 08 2014"
+    ],
+    "mathematica": [
+        "IsPower[n_] := If[n==1, True, GCD@@(Transpose[FactorInteger[n]][[2]])>1]; Table[Select[Divisors[n! ], IsPower][[ -1]], {n, 0, 25}]"
+    ],
+    "program": [
+        "(PARI) a(n)=my(f=factor(n!),m=1); for(i=2,if(#f~,f[1,2]), m=max(factorback(concat(Mat(f[,1]), f[,2]\\i*i)),m)); m \\\\ _Charles R Greathouse IV_, Dec 09 2014"
+    ],
+    "xref": [
+        "Cf. A011776, A060818, A060828."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Reinhard Zumkeller_, Dec 13 2003",
+    "ext": [
+        "More terms from _T. D. Noe_, Oct 04 2004"
+    ],
+    "references": 3,
+    "revision": 21,
+    "time": "2014-12-09T00:40:12-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 244821,
+    "data": "1,1,7,82,2377,125956,13786849,2767780450,1068587690545,755247058160104,990216775791709921,2368086973433913986398,10296184143094869761471305,81305381330548263178299374860,1153396004725120797831718629888193,29585981132637810261211357828811890786",
+    "name": "E.g.f.: Sum_{n>=0} exp(n*3^n*x) * x^n/n!.",
+    "link": [
+        "Robert Israel, <a href=\"/A244821/b244821.txt\">Table of n, a(n) for n = 0..86</a>",
+        "Vaclav Kotesovec, <a href=\"http://oeis.org/A244820/a244820.pdf\">Asymptotic of sequences A244820, A244821 and A244822</a>"
+    ],
+    "formula": [
+        "O.g.f.: Sum_{n>=0} x^n/(1 - n*3^n*x)^(n+1).",
+        "a(n) = Sum_{k=0..n} C(n,k) * k^(n-k) * 3^(k*(n-k))."
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 7*x^2/2! + 82*x^3/3! + 2377*x^4/4! + 125956*x^5/5! +...",
+        "where",
+        "A(x) = 1 + exp(3*x)*x + exp(3^2*x)^2*x^2/2! + exp(3^3*x)^3*x^3/3! + exp(3^4*x)^4*x^4/4! + exp(3^5*x)^5*x^5/5! + exp(3^6*x)^6*x^6/6! +..."
+    ],
+    "maple": [
+        "N:= 31:",
+        "S:= series(add(exp(n*3^n*x)*x^n/n!, n=0..N), x, N):",
+        "seq(coeff(S,x,j)*j!, j=0..N-1); # _Robert Israel_, Jul 04 2017"
+    ],
+    "mathematica": [
+        "Flatten[{1, Table[Sum[Binomial[n, k]*k^(n-k)*3^(k*(n-k)), {k, 0, n}], {n, 1, 20}]}] (* _Vaclav Kotesovec_, Jul 11 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=0, n, binomial(n, k) * k^(n-k) * 3^(k*(n-k)) )",
+        "for(n=0, 25, print1(a(n), \", \"))",
+        "(PARI) a(n)=n!*polcoeff(sum(k=0, n, exp(k*3^k*x +x*O(x^n))*x^k/k!), n)",
+        "for(n=0, 25, print1(a(n), \", \"))",
+        "(PARI) a(n)=polcoeff(sum(k=0, n, x^k/(1-k*3^k*x +x*O(x^n))^(k+1)), n)",
+        "for(n=0, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A244820, A244822, A245076."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jul 06 2014",
+    "references": 4,
+    "revision": 13,
+    "time": "2017-07-04T21:36:12-04:00",
+    "created": "2014-07-06T13:45:49-04:00"
+}

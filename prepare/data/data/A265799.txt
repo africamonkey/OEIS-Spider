@@ -1,0 +1,39 @@
+{
+    "number": 265799,
+    "data": "2,3,19,29,97,563,631,919,2647,3181,5333,6841",
+    "name": "Denominators of upper primes-only best approximates (POBAs) to the golden ratio, tau (A001622); see Comments.",
+    "comment": [
+        "Suppose that x > 0. A fraction p/q of primes is an upper primes-only best approximate, and we write \"p/q is in U(x)\", if p'/q < x < p/q < u/v for all primes u and v such that v < q, where p' is greatest prime < p in case p >= 3.",
+        "Let q(1) = 2 and let p(1) be the least prime >= x. The sequence U(x) follows inductively: for n >= 1, let q(n) is the least prime q such that x < p/q < p(n)/q(n) for some prime p. Let q(n+1) = q and let p(n+1) be the least prime p such that x < p/q < p(n)/q(n).",
+        "For a guide to POBAs, lower POBAs, and upper POBAs, see A265759."
+    ],
+    "example": [
+        "The upper POBAs to tau start with 5/2, 5/3, 31/19, 47/29, 157/97, 911/563, 1021/631. For example, if p and q are primes and q > 97, and p/q > tau, then 157/97 is closer to tau than p/q is."
+    ],
+    "mathematica": [
+        "x = GoldenRatio; z = 1000; p[k_] := p[k] = Prime[k];",
+        "t = Table[Max[Table[NextPrime[x*p[k], -1]/p[k], {k, 1, n}]], {n, 1, z}];",
+        "d = DeleteDuplicates[t]; tL = Select[d, # > 0 &] (* lower POBA *)",
+        "t = Table[Min[Table[NextPrime[x*p[k]]/p[k], {k, 1, n}]], {n, 1, z}];",
+        "d = DeleteDuplicates[t]; tU = Select[d, # > 0 &] (* upper POBA *)",
+        "v = Sort[Union[tL, tU], Abs[#1 - x] > Abs[#2 - x] &];",
+        "b = Denominator[v]; s = Select[Range[Length[b]], b[[#]] == Min[Drop[b, # - 1]] &];",
+        "y = Table[v[[s[[n]]]], {n, 1, Length[s]}] (* POBA, A265800/A265801 *)",
+        "Numerator[tL]   (* A265796 *)",
+        "Denominator[tL] (* A265797 *)",
+        "Numerator[tU]   (* A265798 *)",
+        "Denominator[tU] (* A265799 *)",
+        "Numerator[y]    (* A265800 *)",
+        "Denominator[y]  (* A265801 *)"
+    ],
+    "xref": [
+        "Cf. A000040, A001622, A265759, A265796, A265797, A265798, A265800, A265801."
+    ],
+    "keyword": "nonn,frac,more",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Dec 29 2015",
+    "references": 9,
+    "revision": 8,
+    "time": "2016-01-02T04:35:39-05:00",
+    "created": "2016-01-02T04:35:39-05:00"
+}

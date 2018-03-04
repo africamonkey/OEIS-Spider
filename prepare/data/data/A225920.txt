@@ -1,0 +1,33 @@
+{
+    "number": 225920,
+    "data": "1,13,48,150,447,1312,3831,11167,32531,94748,275938,803605,2340292,6815476,19848236,57802615,168334451,2315818099",
+    "name": "a(n) = least k such that f(a(n-1)+1) + ... + f(k) > f(a(n-2)+1) + ... + f(a(n)-1) for n > 1, where f(n) = 1/(n+5) and a(1) = 1.",
+    "comment": [
+        "Conjecture:  a(n) is linearly recurrent.  See A225918 for details."
+    ],
+    "example": [
+        "a(1) = 1 by decree; a(2) = 13 because",
+        "1/6 + ... + 1/12 < 1 < 1/6 + ... + 1/13, so that a(3) = 48 because",
+        "1/14 + ... + 1/47 < 1/6 + ... + 1/13 < 1/14 + ... + 1/48.",
+        "Successive values of a(n) yield a chain:",
+        "1 < 1/6 + ... + 1/13 < 1/14 + ... + 1/48 < 1/49 + ... + 1/150 < ...",
+        "Abbreviating this chain as b(1) = 1 < b(2) < b(3) < b(4) < ... < R = 2.912229..., it appears that lim b(n) = log(R) = 1.068918..."
+    ],
+    "mathematica": [
+        "nn = 11; f[n_] := 1/(n + 5); a[1] = 1; g[n_] := g[n] = Sum[f[k], {k, 1, n}]; s = 0; a[2] = NestWhile[# + 1 &, 2, ! (s += f[#]) >= a[1] &]; s = 0; a[3] = NestWhile[# + 1 &, a[2] + 1, ! (s += f[#]) >= g[a[2]] - f[1] &]; Do[s = 0; a[z] = NestWhile[# + 1 &, a[z - 1] + 1, ! (s += f[#]) >= g[a[z - 1]] - g[a[z - 2]] &], {z, 4, nn}]; m = Map[a, Range[nn]]"
+    ],
+    "xref": [
+        "Cf. A225918."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, May 21 2013",
+    "ext": [
+        "a(12)-a(16) from _Robert G. Wilson v_, May 22 2013",
+        "a(17) and a(18) from _Robert G. Wilson v_, Jun 13 2013"
+    ],
+    "references": 1,
+    "revision": 13,
+    "time": "2013-06-14T13:24:28-04:00",
+    "created": "2013-05-23T14:15:04-04:00"
+}

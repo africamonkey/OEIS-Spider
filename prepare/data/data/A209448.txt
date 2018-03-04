@@ -1,0 +1,38 @@
+{
+    "number": 209448,
+    "data": "1,24,432,4440,21024,87696,559440,1395264,5728320,23852760,64719648,183528288,898460640,1765134672,6002425728,21820957200,52895150208,134056553904,598084104240,1090757945760,3530801969856,11795485116480,26821191064896,65724336729792",
+    "name": "a(n) = Pell(n)*A008655(n) for n>=1, with a(0)=1, where A008655 lists the coefficients in (theta_3(x)*theta_3(3*x)+theta_2(x)*theta_2(3*x))^4.",
+    "comment": [
+        "Compare g.f. to the Lambert series of A008655:",
+        "1 + Sum_{n>=1} 24*n^3*x^n/(1-x^n) + 8*(3*n)^3*x^(3*n)/(1-x^(3*n))."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A209448/b209448.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: 1 + Sum_{n>=1} 24*Pell(n)*n^3*x^n/(1 - A002203(n)*x^n + (-1)^n*x^(2*n)) + 8*Pell(3*n)*(3*n)^3*x^(3*n)/(1 - A002203(3*n)*x^(3*n) + (-1)^n*x^(6*n)), where A002203(n) = Pell(n-1) + Pell(n+1)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 24*x + 432*x^2 + 4440*x^3 + 21024*x^4 + 87696*x^5 +...",
+        "where A(x) = 1 + 1*24*x + 2*216*x^2 + 5*888*x^3 + 12*1752*x^4 + 29*3024*x^5 +...+ Pell(n)*A008655(n)*x^n +..."
+    ],
+    "mathematica": [
+        "A008655[n_]:= SeriesCoefficient[((EllipticTheta[3, 0, q]^3 + EllipticTheta[3, Pi/3, q]^3 + EllipticTheta[3, 2 Pi/3, q]^3)^4/(3* EllipticTheta[3, 0, q^3])^4), {q, 0, n}]; b:= Table[A008655[n], {n, 0, 102}][[1 ;; ;; 2]]; Join[{1}, Table[Fibonacci[n, 2]*b[[n + 1]], {n, 1, 50}]] (* _G. C. Greubel_, Jan 26 2018 *)"
+    ],
+    "program": [
+        "(PARI) {Pell(n)=polcoeff(x/(1-2*x-x^2+x*O(x^n)),n)}",
+        "{A002203(n)=Pell(n-1)+Pell(n+1)}",
+        "{a(n)=polcoeff(1 + sum(m=1,n, 24*Pell(m)*m^3*x^m/(1-A002203(m)*x^m+(-1)^m*x^(2*m) +x*O(x^n)) + 8*Pell(3*m)*(3*m)^3*x^(3*m)/(1-A002203(3*m)*x^(3*m)+(-1)^m*x^(6*m) +x*O(x^n))  ),n)}",
+        "for(n=0,40,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A008655, A205968, A209447, A209449, A204270, A000129 (Pell), A002203."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 10 2012",
+    "references": 4,
+    "revision": 10,
+    "time": "2018-01-27T02:29:38-05:00",
+    "created": "2012-03-10T11:18:42-05:00"
+}

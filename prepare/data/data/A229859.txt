@@ -1,0 +1,55 @@
+{
+    "number": 229859,
+    "data": "5,8,10,15,16,20,24,25,30,32,33,35,39,40,45,48,50,51,55,56,57,60,63,64,65,66,70,72,75,77,78,80,85,88,90,91,95,96,99,100,102,104,105,110,112,114,115,117,120,125,126,128,130,132,135,136,140,143,144,145",
+    "name": "Consider all 120-degree triangles with sides A < B < C. The sequence gives the values of B.",
+    "comment": [
+        "A229858 gives the values of A, and A050931 gives the values of C."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Integer_triangle\">Integer triangle</a>"
+    ],
+    "example": [
+        "20 appears in the sequence because there exists a 120-degree triangle with sides 12, 20 and 28."
+    ],
+    "program": [
+        "(PARI)",
+        "\\\\ Gives values of B not exceeding bmax.",
+        "\\\\ e.g. t120b(40) gives [5, 8, 10, 15, 16, 20, 24, 25, 30, 32, 33, 35, 39, 40]",
+        "t120b(bmax) = {",
+        "  v=pt120b(bmax);",
+        "  s=[];",
+        "  for(i=1, #v,",
+        "    for(m=1, bmax\\v[i],",
+        "      if(v[i]*m<=bmax, s=concat(s, v[i]*m))",
+        "    )",
+        "  );",
+        "  vecsort(s,,8)",
+        "}",
+        "\\\\ Gives values of B not exceeding bmax in primitive triangles.",
+        "\\\\ e.g. pt120b(40) gives [5, 8, 16, 24, 33, 35, 39]",
+        "pt120b(bmax) = {",
+        "  s=[];",
+        "  for(m=1, (bmax-1)\\2,",
+        "    for(n=1, m-1,",
+        "      if((m-n)%3!=0 && gcd(m, n)==1,",
+        "        a=m*m-n*n;",
+        "        b=n*(2*m+n);",
+        "        if(a>b, b=a);",
+        "        if(b<=bmax, s=concat(s, b))",
+        "      )",
+        "    )",
+        "  );",
+        "  vecsort(s,,8)",
+        "}"
+    ],
+    "xref": [
+        "Cf. A050931, A229849, A229858."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Colin Barker_, Oct 06 2013",
+    "references": 3,
+    "revision": 7,
+    "time": "2013-10-06T15:29:20-04:00",
+    "created": "2013-10-06T15:29:20-04:00"
+}

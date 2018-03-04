@@ -1,0 +1,73 @@
+{
+    "number": 245800,
+    "data": "1,1,2,3,5,9,14,24,39,64,106,175,288,475,783,1291,2129,3510,5787,9541,15730,25935,42759,70498,116232,191634,315951,520915,858844,1415994,2334579,3849070,6346044,10462858,17250336,28440996,46891275,77310643,127463701,210152115,346482262",
+    "name": "a(n) is the least number k such that Sum_{j=S(n)+1..S(n)+k} 1/j >= 1/2, where S(n) = Sum_{i=1..n-1} a(i) and S(1) = 0.",
+    "comment": [
+        "The limiting ratio of consecutive terms is sqrt(e) ~ 1.648721270700128.",
+        "Conjecture 1: If the summation threshold (which, for this sequence, is defined as 1/2) is set to any positive number R, then the limiting ratio of consecutive terms in the resulting sequence is e^R.",
+        "Conjecture 2: If the summation threshold is set to log(phi) = 0.4812118250..., then the Fibonacci sequence is generated.",
+        "Partition the harmonic series into the smallest-sized groups that sum to 1/2 or greater. You get 1, 1/2, 1/3 + 1/4, 1/5 + 1/6 + 1/7, 1/8 + 1/9 + 1/10 + 1/11 + 1/12, 1/13 + 1/14 + ... + 1/21, 1/22 + ... ; a(n) gives the number of terms in the n-th group. - _Derek Orr_, Nov 08 2014",
+        "A partition sums to exactly 1/2 for only n=2. - _Jon Perry_, Nov 09 2014"
+    ],
+    "example": [
+        "Start with 1/1; 1/1 >= 1/2, so a(1) = 1.",
+        "1/1 has been used, so start a new sum with 1/2; 1/2 >= 1/2, so a(2) = 1.",
+        "1/1 and 1/2 have been used, so start a new sum with 1/3; 1/3 + 1/4 >= 1/2, so a(3) = 2.",
+        "1/1 through 1/4 have been used, so start a new sum with 1/5; 1/5 + 1/6 + 1/7 >= 1/2, so a(4) = 3, etc."
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "total = 0",
+        "prev = 1",
+        "count = 0",
+        "for n in range(1, 10**7):",
+        "....total = total + 1/n",
+        "....count = count + 1",
+        "....if (total >= 0.5):",
+        "........print(count,end=', ')",
+        "........prev = count",
+        "........total = 0",
+        "........count = 0",
+        ".",
+        "print(\"\\ndone\")",
+        "print(math.sqrt(math.e))",
+        "# _Rob van den Tillaart_, Aug 22 2014 [Corrected by _Derek Orr_, Oct 16 2014]",
+        "(Python)",
+        "def a(n):",
+        "..if n == 1:",
+        "....return 1",
+        "..tot,c,k = 0,0,0",
+        "..for x in range(1,10**7):",
+        "....tot += 1/x",
+        "....if tot >= 0.5:",
+        "......k += 1",
+        "......tot = 0",
+        "....if k == n-1:",
+        "......c += 1",
+        "....if k == n:",
+        "......return c",
+        "n = 1",
+        "while n < 100:",
+        "..print(a(n),end=', ')",
+        "..n += 1",
+        "# _Derek Orr_, Oct 16 2014",
+        "(PARI) lista(nn) = {n = 1; while (n < nn, k = 1; while (sum(x=n, n+k-1, 1/x) < 1/2, k++); print1(k, \", \"); n = n+k;);} \\\\ _Michel Marcus_, Sep 14 2014",
+        "(PARI) a(n)=if(n==1,return(1));p=sum(i=1,n-1,a(i));k=1;while(sum(x=p+1,p+k,1/x)<1/2,k++);k",
+        "n=1;while(n<100,print1(a(n),\", \");n++) \\\\ _Derek Orr_, Oct 16 2014"
+    ],
+    "xref": [
+        "Cf. A226161.",
+        "Cf. A019774, A002390."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Rob van den Tillaart_, Aug 22 2014",
+    "ext": [
+        "Edited by _Derek Orr_, Nov 08 2014"
+    ],
+    "references": 0,
+    "revision": 59,
+    "time": "2014-11-24T14:35:30-05:00",
+    "created": "2014-11-24T14:35:30-05:00"
+}

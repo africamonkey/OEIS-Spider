@@ -1,0 +1,76 @@
+{
+    "number": 246955,
+    "data": "3,5,7,10,11,13,14,17,19,22,23,26,29,31,34,37,38,41,43,44,46,47,52,53,58,59,61,62,67,68,71,73,74,76,79,82,83,86,89,92,94,97,101,103,106,107,109,113,116,118,122,124,127,131,134,136,137,139,142,146,148,149,151,152,157,158,163,164,166,167,172,173,178,179,181,184,188,191,193,194,197,199",
+    "name": "Numbers n for which the symmetric representation of sigma(n) has two parts, each of width one.",
+    "comment": [
+        "The sequence is the intersection of A239929 (sigma(n) has two parts) and of A241008 (sigma(n) has an even number of parts of width one).",
+        "The numbers in the sequence are precisely those defined by the formula for the triangle, see the link. The symmetric representation of sigma(n) has two parts, each part having width one, precisely when n = 2^(k - 1) * p where 2^k <= row(n) < p, p is prime and row(n) = floor((sqrt(8*n + 1) - 1)/2). Therefore, the sequence can be written naturally as a triangle as shown in the Example section.",
+        "The symmetric representation of sigma(n) = 2*n - 2 consists of two regions of width 1 that meet on the diagonal precisely when n = 2^(2^m - 1)(2^(2^m) + 1) where  2^(2^m) + 1 is a Fermat prime (see A019434).  This subsequence of numbers n is: 3, 10, 136, 32896, 2147516416,...[?]... (A191363).",
+        "The k-th column of the triangle starts in the row whose initial entry is the first prime larger than 2^(k+1) (that sequence of primes is A014210, except for 2)."
+    ],
+    "link": [
+        "Hartmut F. W. Hoft, <a href=\"/A246955/a246955.pdf\">image for sigma(n) values</a>",
+        "Hartmut F. W. Hoft, <a href=\"/A246955/a246955_1.pdf\">equivalence proof of sequence and triangle</a>"
+    ],
+    "formula": [
+        "Formula for the triangle of numbers associated with the sequence:",
+        "P(n, k) = 2^k * p(n)  where n >= 2, 0 <= k <= floor(log2(p(n)) - 1), p(n) is the n-th prime and log2( ) is the logarithm to base 2."
+    ],
+    "example": [
+        "We show portions of the first eight columns, 0 <= k <= 7, of the triangle.",
+        "0    1    2     3     4     5     6     7",
+        "3",
+        "5    10",
+        "7    14",
+        "11   22   44",
+        "13   26   52",
+        "17   34   68    136",
+        "19   38   76    152",
+        "23   46   92    184",
+        "29   58   116   232",
+        "31   62   124   248",
+        "37   74   148   296   592",
+        "41   82   164   328   656",
+        "43   86   172   344   688",
+        "47   94   188   376   752",
+        "53   106  212   424   848",
+        "59   118  236   472   944",
+        "61   122  244   488   976",
+        "67   134  268   536   1072  2144",
+        "71   142  284   568   1136  2272",
+        ".    .    .     .     .     .",
+        ".    .    .     .     .     .",
+        "127  254  508   1016  2032  4064",
+        "131  262  524   1048  2096  4192  8384",
+        "137  274  548   1096  2192  4384  8768",
+        ".    .    .     .     .     .     .",
+        ".    .    .     .     .     .     .",
+        "251  502  1004  2008  4016  8032  16064",
+        "257  514  1028  2056  4112  8224  16448  32896",
+        "263  526  1052  2104  4208  8416  16832  33664",
+        "Since 2^(2^4) + 1 = 65537 is the 6543-rd prime, column k = 15 starts with 2^15*(2^(2^16) + 1) = 2147516416 in row 6542 with 65537 in column k = 0.",
+        "For an image of the symmetric representations of sigma(m) for all values m <= 137 in the triangle see the link.",
+        "The first column is the sequence of odd primes, see A065091.",
+        "The second column is the sequence of twice the primes starting with 10, see A001747.",
+        "The third column is the sequence of four times the primes starting with 44, see A001749.",
+        "For related references also see A033676 (largest divisor of n less than or equal to sqrt(n))."
+    ],
+    "mathematica": [
+        "(* functions path[] and a237270[ ] are defined in A237270 *)",
+        "atmostOneDiagonalsQ[n_]:=SubsetQ[{0, 1}, Union[Flatten[Drop[Drop[path[n], 1], - 1] - path[n - 1], 1]]]",
+        "(* data *)",
+        "Select[Range[200], Length[a237270[#]]==2 && atmostOneDiagonalsQ[#]&]",
+        "(* function for computing triangle in the Example section through row 55 *)",
+        "TableForm[Table[2^k Prime[n], {n, 2, 56}, {k, 0, Floor[Log[2, Prime[n]] - 1]}], TableDepth->2]"
+    ],
+    "xref": [
+        "Cf. A000203, A237270, A237271, A237593, A241008, A241010, A247687, A250068, A250070, A250071."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Hartmut F. W. Hoft_, Sep 08 2014",
+    "references": 14,
+    "revision": 18,
+    "time": "2014-11-21T16:14:42-05:00",
+    "created": "2014-09-09T20:50:28-04:00"
+}

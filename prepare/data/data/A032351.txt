@@ -1,0 +1,67 @@
+{
+    "number": 32351,
+    "data": "1,1,2,6,22,88,366,1552,6652,28696,124310,540040,2350820,10248248,44725516,195354368,853829272,3733693872,16333556838,71476391800,312865382004,1369760107576,5998008630244,26268304208032,115055864102504,503997820344464,2207927106851580,9673223726469136,42382192892577128,185702341264971696",
+    "name": "Number of permutations of length n which avoid the patterns 2143, 1324 (smooth permutations); or avoid the patterns 1342, 2431; etc.",
+    "reference": [
+        "H. Abe and S. Billey, Consequences of the Lakshmibai-Sandhya theorem: the ubiquity of permutation patterns in Schubert calculus and related geometry, 2014; http://www.math.washington.edu/~billey/papers/abe.billey.pdf",
+        "S. Kitaev, Patterns in Permutations and Words, Springer-Verlag, 2011. see p. 399 Table A.7",
+        "Kremer, Darla and Shiu, Wai Chee; Finite transition matrices for permutations avoiding pairs of length four patterns. Discrete Math. 268 (2003), 171-183. MR1983276 (2004b:05006). See Table 1.",
+        "R. P. Stanley, Enumerative Combinatorics, Cambridge, Vol. 2, 1999; see Problem 6.47.",
+        "A. Woo and A. Yong, \"When is a Schubert variety Gorenstein?\", preprint 2004."
+    ],
+    "link": [
+        "C. Bean, M. Tannock and H. Ulfarsson, <a href=\"http://arxiv.org/abs/1512.08155\">Pattern avoiding permutations and independent sets in graphs</a>, arXiv:1512.08155 [math.CO], 2015. See Eq. (2).",
+        "Miklos Bona, The permutation classes equinumerous to the smooth class, <a href=\"http://www.combinatorics.org/\">Electron. J. Combin.</a>, 5 (1998), no. 1, Research Paper 31, 12 pp.",
+        "M. Bousquet-M\u00e9lou and S. Butler, <a href=\"http://arXiv.org/abs/math.CO/0603617\">Forest-like permutations</a>.",
+        "E. Rowland, R. Yassawi, <a href=\"http://arxiv.org/abs/1310.8635\">Automatic congruences for diagonals of rational functions</a>, arXiv preprint arXiv:1310.8635, 2013",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Enumerations_of_specific_permutation_classes#Classes_avoiding_two_patterns_of_length_4\">Permutation classes avoiding two patterns of length 4</a>.",
+        "A. Woo and A. Yong, <a href=\"http://www.math.berkeley.edu/~ayong/Goren.ps\">When is a Schubert variety Gorenstein?</a>."
+    ],
+    "formula": [
+        "G.f.: (1-5*x+3*x^2+x^2*sqrt(1-4*x))/(1-6*x+8*x^2-4*x^3).",
+        "G.f.: 1 / (1 - x / (1 - x / (1 - 2*x / (1 - x / (1 - x / (1 - x / (1 - x / ...))))))). - _Michael Somos_, Apr 18 2012",
+        "a(n) = upper left term in n-th power of the following infinite square production matrix:",
+        "  1, 1, 0, 0, 0, 0, ...",
+        "  1, 2, 1, 0, 0, 0, ...",
+        "  1, 3, 1, 1, 0, 0, ...",
+        "  1, 4, 1, 1, 1, 0, ...",
+        "  1, 5, 1, 1, 1, 1, ...",
+        "  ...",
+        "- Gary W. Adamson, Jul 11 2011",
+        "HANKEL transform is A011782. HANKEL transform of a(n+1) is A011782(n+1). INVERT transform of A026671 with 1 prepended. - _Michael Somos_, Apr 18 2012",
+        "Recurrence: (n-2)*a(n) = 2*(5*n-13)*a(n-1) - 4*(8*n-25)*a(n-2) + 12*(3*n-10)*a(n-3) - 8*(2*n-7)*a(n-4). - _Vaclav Kotesovec_, Aug 24 2014",
+        "a(n) ~ 1/11 * (1 - 5*r + 3*r^2 + r^2*sqrt(1-4*r)) *(25 - 44*r + 24*r^2) / r^n, where r = 1/6*(4 - 2/(-17 + 3*sqrt(33))^(1/3) + (-17 + 3*sqrt(33))^(1/3)) = 0.228155493653961819214572... is the root of the equation -1 + 6*r - 8*r^2 + 4*r^3 = 0. - _Vaclav Kotesovec_, Aug 24 2014",
+        "a(n) = (Sum_{m=0..n-2} (m+3)*(Sum_{k=0..m/2} Sum_{j=0..m-2*k-1} 2^j * binomial(j+k, k) * binomial(m-j, 2*k+1)) * binomial(2*n-m-2,n) + binomial(2*n,n))/(n+1). - _Vladimir Kruchinin_, Sep 19 2014"
+    ],
+    "example": [
+        "1 + x + 2*x^2 + 6*x^3 + 22*x^4 + 88*x^5 + 366*x^6 + 1552*x^7 + ..."
+    ],
+    "maple": [
+        "t1:=(1-5*x+3*x^2+x^2*sqrt(1-4*x))/(1-6*x+8*x^2-4*x^3);",
+        "series(t1,x,40);",
+        "seriestolist(%); # _N. J. A. Sloane_, Nov 09 2016"
+    ],
+    "mathematica": [
+        "Table[(Sum[(m+3)*(Sum[Sum[2^j*Binomial[j+k, k]*Binomial[m-j, 2*k+1], {j, 0, m-2*k-1}], {k, 0, m/2}]) * Binomial[2*n-m-2, n], {m, 0, n-2}] + Binomial[2*n, n])/(n+1),{n,0,20}] (* _Vaclav Kotesovec_, Sep 19 2014, after _Vladimir Kruchinin_ *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^44) /* that many terms */",
+        "gf=(1-5*x+3*x^2+x^2*sqrt(1-4*x))/(1-6*x+8*x^2-4*x^3);",
+        "Vec(gf) /* show terms */ /* _Joerg Arndt_, Apr 20 2011 */",
+        "(Maxima)",
+        "a(n):=(sum((m+3)*(sum(sum(2^(j)*binomial(j+k,k)*binomial(m-j,2*k+1),j,0,m-2*k-1),k,0,m/2))*binomial(2*n-m-2,n),m,0,n-2)+binomial(2*n,n))/(n+1); /* _Vladimir Kruchinin_, Sep 19 2014 */"
+    ],
+    "xref": [
+        "Cf. A053617."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,3",
+    "author": "Miklos Bona (bona(AT)math.ufl.edu)",
+    "ext": [
+        "More terms from _Erich Friedman_"
+    ],
+    "references": 3,
+    "revision": 51,
+    "time": "2017-10-08T17:39:31-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

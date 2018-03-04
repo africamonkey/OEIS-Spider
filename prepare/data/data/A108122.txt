@@ -1,0 +1,54 @@
+{
+    "number": 108122,
+    "data": "1,1,1,4,7,16,34,73,157,337,724,1555,3340,7174,15409,33097,71089,152692,327967,704440,1513066,3249913,6980485,14993377,32204260,69171499,148573396,319120654,685438945,1472253649,3162252193,6792198436,14588956471,31335605536",
+    "name": "G.f.: (1-2*x^2)/(1-x-2*x^2-x^3).",
+    "comment": [
+        "The sequence counts row lengths of an array in which rows are obtained by the substitution 1->2, 2->3, 3->1,2,2,3 from previous rows:",
+        "1;",
+        "2;",
+        "3;",
+        "1,2,2,3;",
+        "2,3,3,1,2,2,3;",
+        "3,1,2,2,3,1,2,2,3,2,3,3,1,2,2,3;"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A108122/b108122.txt\">Table of n, a(n) for n = 0..303</a>",
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,1)."
+    ],
+    "formula": [
+        "a(n) = a(n-1) + 2*a(n-2) + a(n-3), starting 1,1,1.",
+        "a(n) = A002478(n) - 2*A002478(n-2), n>1.",
+        "a(n) = sum(m=0..n/2, sum(i=0..m, 2^i*binomial(n-2*m+1,m-i)*binomial(n-2*m+i,n-2*m))). - _Vladimir Kruchinin_, Dec 17 2011"
+    ],
+    "maple": [
+        "a[0],a[1],a[2]:= 1,1,1:",
+        "for n from 3 to 100 do",
+        "  a[n]:= a[n-1]+2*a[n-2]+a[n-3]",
+        "od:",
+        "seq(a[i],i=0..100); # _Robert Israel_, Jun 15 2014"
+    ],
+    "mathematica": [
+        "s[1] = {2}; s[2] = {3}; s[3] = {1, 2, 2, 3}; t[a_] := Flatten[s /@ a]; p[0] = {1}; p[1] = t[p[0]]; p[n_] := t[p[n - 1]] a0 = Table[Length[p[i]], {i, 0, 20}]",
+        "f[n_] := Sum[ 2^i*Binomial[n - 2 m, m - i]*Binomial[n - 2 m + i - 1, n - 2 m - 1], {m, 0, (n - 1)/2}, {i, 0, m}]; f[0] = 1; Array[f, 33, 0] (* or *)",
+        "CoefficientList[ Series[(1 - 2 x^2)/(1 - x - 2 x^2 - x^3), {x, 0, 33}], x] (* or *)",
+        "LinearRecurrence[ {1, 2, 1}, {1, 1, 1}, 34] (* or *)",
+        "Length /@ NestList[ Flatten[ # /. {1 -> 2, 2 -> 3, 3 -> {1, 2, 2, 3}}] &, {1}, 24] (* _Robert G. Wilson v_, Jun 13 2014 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum(sum(2^i*binomial(n-2*m+1,m-i)*binomial(n-2*m+i,n-2*m),i,0,m),m,0,(n)/2); /* _Vladimir Kruchinin_, Dec 17 2011 */"
+    ],
+    "xref": [
+        "Cf. A078007, A101399."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Roger L. Bagula_, Jun 04 2005",
+    "ext": [
+        "More terms from _Wesley Ivan Hurt_, Jun 14 2014"
+    ],
+    "references": 1,
+    "revision": 36,
+    "time": "2015-06-13T00:51:50-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

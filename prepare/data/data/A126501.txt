@@ -1,0 +1,37 @@
+{
+    "number": 126501,
+    "data": "1,6,34,194,1106,6306,35954,204994,1168786,6663906,37994674,216628994,1235123666,7042134306,40151166194,228924368194,1305226505746,7441830001506,42430056030514,241917600158594,1379308224915026",
+    "name": "Number of n-tuples of numbers [0..5] (leading zeros allowed) in which adjacent digits differ by 4 or less.",
+    "comment": [
+        "For n>=1, a(n) equals the numbers of words of length n-1 on alphabet {0,1,...,5} containing no subwords 00 and 11. - _Milan Janjic_, Jan 31 2015",
+        "See PARI script for proof of g.f. - _Andrew Howroyd_, Apr 15 2017"
+    ],
+    "formula": [
+        "[Empirical] a(base,n) = a(base-1,n)+9^(n-1) for base>=4n-3; a(base,n) = a(base-1,n)+9^(n-1)-2 when base=4n-4.",
+        "From _Philippe Del\u00e9ham_, Mar 24 2012: (Start)",
+        "G.f.: (1+x)/(1-5*x-4*x^2).",
+        "a(n) = 5*a(n-1) + 4*a(n-2), a(0) = 1, a(1) = 6.",
+        "a(n) = Sum_{k, 0<=k<=n} A054458(n,k)*3^k. (End)",
+        "Conjecture: a(n) = (2^(-1-n)*((5-sqrt(41))^n*(-7+sqrt(41)) + (5+sqrt(41))^n*(7+sqrt(41)))) / sqrt(41). - _Colin Barker_, Jan 20 2017"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{5, 4}, {1, 6}, 21] (* _Jean-Fran\u00e7ois Alcover_, Oct 07 2017 *)"
+    ],
+    "program": [
+        "(S/R) stvar $[N]:(0..M-1) init $[]:=0 asgn $[]->{*} kill +[i in 0..N-2](($[i]`-$[i+1]`>4)+($[i+1]`-$[i]`>4))",
+        "(PARI) \\\\ Proof of generating function",
+        "TransferGf(m,u,t,v,z)=vector(m,i,u(i))*matsolve(matid(m)-z*matrix(m,m,i,j,t(i,j)),vectorv(m,i,v(i)));",
+        "RowGf(d,m,z)=1+z*TransferGf(m, i->1, (i,j)->abs(i-j)<=d, j->1, z);",
+        "print(RowGf(4,6,x)); \\\\ _Andrew Howroyd_, Apr 15 2017"
+    ],
+    "xref": [
+        "Cf. Base 6 differing by three or less A126474, two or less A126393, one or less A126360."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_R. H. Hardin_, Dec 28 2006",
+    "references": 15,
+    "revision": 43,
+    "time": "2017-10-07T09:02:34-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

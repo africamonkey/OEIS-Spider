@@ -1,0 +1,47 @@
+{
+    "number": 174973,
+    "data": "1,2,4,6,8,12,16,18,20,24,28,30,32,36,40,42,48,54,56,60,64,66,72,80,84,88,90,96,100,104,108,112,120,126,128,132,140,144,150,156,160,162,168,176,180,192,196,198,200,204,208,210,216,220,224,228,234,240,252,256",
+    "name": "Numbers whose divisors increase by a factor of 2 or less.",
+    "comment": [
+        "That is, if the divisors of a number are listed in increasing order, the ratio of adjacent divisors is at most 2. The only odd number in this sequence is 1. Every term appears to be a practical number (A005153). The first practical number not here is 78.",
+        "Let p1^e1*p2^e2...pr^er be the prime factorization of a number, with primes p1 < p2 <...< pr and ek > 0. Then the number is in this sequence if and only if pk <= 2*Product_{j < k} p_j^e_j. This condition is similar to, but more restrictive than, the condition for practical numbers.",
+        "The polymath8 project led by Terry Tao refers to these numbers as \"2-densely divisible\". In general they say that n is y-densely divisible if its divisors increase by a factor of y or less, or equivalently, if for every R with 1 <= R <= n, there is a divisor in the interval [R/y,R]. They use this as a weakening of the condition that n be y-smooth. - _David S. Metzler_, Jul 02 2013",
+        "Also, numbers n with the property that the symmetric representation of sigma(n) has only one part. See A238443."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A174973/b174973.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "T. Tao, <a href=\"http://terrytao.wordpress.com/2013/06/18/a-truncated-elementary-selberg-sieve-of-pintz/\">A Truncated Elementary Selberg Sieve of Pintz</a> (blog entry defining y-densely divisible)",
+        "T. Tao et al., <a href=\"http://michaelnielsen.org/polymath1/index.php?title=Bounded_gaps_between_primes\">Polymath8 home page</a>"
+    ],
+    "formula": [
+        "a(n) = A047836(n) / 2. - _Reinhard Zumkeller_, Sep 28 2011"
+    ],
+    "example": [
+        "The divisors of 12 are 1, 2, 3, 4, 6, 12. The ratios of adjacent divisors is 2, 3/2, 4/3, 3/2, and 2, which are all <=2. Hence 12 is in this sequence."
+    ],
+    "mathematica": [
+        "OK[n_] := Module[{d=Divisors[n]}, And@@(#<=2& /@ (Rest[d]/Most[d]))]; Select[Range[1000], OK]"
+    ],
+    "program": [
+        "(Haskell)",
+        "a174973 n = a174973_list !! (n-1)",
+        "a174973_list = filter f [1..] where",
+        "   f n = all (<= 0) $ zipWith (-) (tail divs) (map (* 2) divs)",
+        "         where divs = a027750_row' n",
+        "-- _Reinhard Zumkeller_, Jun 25 2015, Sep 28 2011                           (PARI) is(n)=my(d=divisors(n));for(i=2,#d,if(d[i]>2*d[i-1],return(0)));1 \\\\ _Charles R Greathouse IV_, Jul 06 2013"
+    ],
+    "xref": [
+        "Subsequence of A196149. Same as A238443.",
+        "Cf. A027750."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_T. D. Noe_, Apr 02 2010",
+    "ext": [
+        "Alternate nomenclature and links added by _David S. Metzler_, Jul 02 2013"
+    ],
+    "references": 15,
+    "revision": 27,
+    "time": "2015-07-11T11:07:40-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

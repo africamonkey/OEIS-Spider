@@ -1,0 +1,66 @@
+{
+    "number": 82232,
+    "data": "1,2,3,4,5,6,7,8,9,111,171,222,252,333,414,444,555,666,777,828,888,999,2112,2772,2992,4224,4554,4774,6336,6556,8118,8338,8448,10101,10701,10901,11511,12321,13131,15751,18981,19791,20202,20502,20702,21012,21112",
+    "name": "Palindromes divisible by their digit sum.",
+    "reference": [
+        "P. J. Costello, More Palindromic Niven Numbers, Journal of Recreational Mathematics, vol. 33:1 pp. 18-21 2004-5 Baywood Amityville NY.",
+        "W. McDaniel, Palindromic Niven Numbers, Journal of Recreational Mathematics, vol. 24 pp. 164-6 1992 Baywood Amityville NY."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A082232/b082232.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "dmax:= 6; # to get all terms with at most dmax digits",
+        "f1:= proc(n)",
+        "  local L, Ln, i,r,s,p;",
+        "  L:= convert(n, base, 10);",
+        "  Ln:= nops(L);",
+        "r:= add(L[i]*10^(Ln-i), i=1..Ln);",
+        "s:= convert(L,`+`);",
+        "p:= 10^Ln*n+r;",
+        "if p mod (2*s) = 0 then p else NULL fi;",
+        "end proc:",
+        "f2:= proc(n,d)",
+        "local L, Ln, i,r,s,p;",
+        "L:= convert(n, base, 10);",
+        "Ln:= nops(L);",
+        "r:= add(L[i]*10^(Ln-i), i=1..Ln);",
+        "s:= convert(L,`+`);",
+        "p:= 10^(1+Ln)*n+10^Ln*d+r;",
+        "if p mod(2*s+d) = 0 then p else NULL fi;",
+        "end proc:",
+        "A:= {$1..9}:",
+        "for d from 2 to dmax do",
+        "  if d::even then",
+        "    A:= A union {seq(f1(x),x=10^(d/2-1) .. 10^(d/2)-1)}",
+        "  else",
+        "    A:= A union {seq(seq(f2(x,y),x=10^((d-1)/2-1) .. 10^((d-1)/2)-1),y=0..9)}",
+        "  fi",
+        "od:",
+        "A; # _Robert Israel_, Aug 22 2014"
+    ],
+    "mathematica": [
+        "d[n_] := IntegerDigits[n]; Select[Range[20800], Reverse[x = d[#]] == x && Divisible[#, Plus @@ d[#]] &] (* _Jayanta Basu_, Jul 13 2013 *)"
+    ],
+    "program": [
+        "(Python)",
+        "A082232 = sorted([int(str(x)+str(x)[::-1]) for x in range(1,10**5) if not",
+        "....int(str(x)+str(x)[::-1]) % sum((int(d) for d in str(x)+str(x)[::-1]))]",
+        "....+ [int(str(x)+str(x)[-2::-1]) for x in range(1,10**5) if not",
+        "....int(str(x)+str(x)[-2::-1]) % sum((int(d) for d in str(x)+str(x)[-2::-1]))]) # _Chai Wah Wu_, Aug 22 2014",
+        "(PARI)",
+        "rev(n)=r=\"\";d=digits(n);for(i=1,#d,r=concat(Str(d[i]),r));eval(r)",
+        "for(n=1,10^5,if(rev(n)==n,if(n%sumdigits(n)==0,print1(n,\", \")))) \\\\ _Derek Orr_, Aug 25 2014"
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, Apr 09 2003",
+    "ext": [
+        "Corrected and extended by _Giovanni Resta_, Feb 08 2006",
+        "More terms from _Chai Wah Wu_, Aug 22 2014"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2014-08-26T03:58:01-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

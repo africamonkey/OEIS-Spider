@@ -1,0 +1,35 @@
+{
+    "number": 196150,
+    "data": "1,1,4,18,92,505,2922,17541,108270,682823,4380942,28504466,187636994,1247375147,8362420498,56471709841,383790966537,2622982116829,18016055333571,124296340608870,860986586024343,5985590694574930,41749023026002831",
+    "name": "G.f. satisfies A(x) = 1/Product_{n>=1} (1 - x^n*A(x)^2).",
+    "formula": [
+        "G.f. satisfies:",
+        "(1) A(x) = 1 + Sum_{n>=1} x^n*A(x)^(2*n) / Product_{k=1..n} (1-x^k) due to an identity of Euler.",
+        "(2) A(x) = 1 + Sum_{n>=1} x^(n^2)*A(x)^(2*n)/[Product_{k=1..n} (1-x^k)*(1-x^k*A(x)^2)] due to Cauchy's identity.",
+        "(3) A(x) = 1 + Sum_{n>=1} x^n*A(x)^2 / Product_{k=1..n} (1 - x^k*A(x)^2)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 4*x^2 + 18*x^3 + 92*x^4 + 505*x^5 + 2922*x^6 +...",
+        "where",
+        "(0) A(x) = 1/((1-x*A(x)^2) * (1-x^2*A(x)^2) * (1-x^3*A(x)^2) *...).",
+        "(1) A(x) = 1 + x*A(x)^2/(1-x) + x^2*A(x)^4/((1-x)*(1-x^2)) + x^3*A(x)^6/((1-x)*(1-x^2)*(1-x^3)) +...",
+        "(2) A(x) = 1 + x*A(x)^2/[(1-x)*(1-x*A(x)^2)] + x^4*A(x)^4/[(1-x)*(1-x^2)*(1-x*A(x)^2)*(1-x^2*A(x)^2)] + x^9*A(x)^6/[(1-x)*(1-x^2)*(1-x^3)*(1-x*A(x)^2)*(1-x^2*A(x)^2)*(1-x^3*A(x)^2)] +...",
+        "(3) A(x) = 1 + x*A(x)^2/(1-x*A(x)^2) + x^2*A(x)^2/((1-x*A(x)^2)*(1-x^2*A(x)^2)) + x^3*A(x)^2/((1-x*A(x)^2)*(1-x^2*A(x)^2)*(1-x^3*A(x)^2)) +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1/prod(k=1, n, (1-x^k*A^2+x*O(x^n)))); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1+sum(m=1, n, x^m*A^(2*m)/prod(k=1, m, (1-x^k+x*O(x^n))))); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1+sum(m=1, sqrtint(n+1), x^(m^2)*A^(2*m)/prod(k=1, m, (1-x^k)*(1-x^k*A^2+x*O(x^n))))); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1+sum(m=1, n, x^m*A^2/prod(k=1, m, (1-x^k*A^2+x*O(x^n))))); polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A196151, A145268, A145267, A206639, A206637."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Sep 28 2011",
+    "references": 5,
+    "revision": 11,
+    "time": "2012-03-30T18:37:29-04:00",
+    "created": "2011-09-28T13:31:12-04:00"
+}

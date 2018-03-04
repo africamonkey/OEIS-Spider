@@ -1,0 +1,48 @@
+{
+    "number": 159685,
+    "data": "1,2,3,3,6,6,10,15,15,30,30,42,42,70,105,105,210,210,210,210,330,330,462,462,770,1155,1155,2310,2310,2730,2730,2730,2730,4290,4290,6006,6006,10010,15015,15015,30030,30030,30030,30030,39270,39270,46410,46410",
+    "name": "Maximal product of distinct primes whose sum is <= n.",
+    "comment": [
+        "Equivalently, largest value of the LCM of the partitions of n into primes.",
+        "Equivalently, maximal number of times a permutation of length n, with prime cycle lengths, can operate on itself before returning to the initial permutation.",
+        "If the requirement that primes are distinct is dropped, this becomes A000792. - _Charles R Greathouse IV_, Jul 10 2012"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A159685/b159685.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "M. Del\u00e9glise and J.-L. Nicolas, <a href=\"http://arxiv.org/abs/1207.0603\">Maximal product of primes whose sum is bounded</a>, arXiv 1207.0603 [math.NT] (2012).",
+        "Marc Del\u00e9glise and Jean-Louis Nicolas, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Deleglise/deleglise3.html\">On the Largest Product of Primes with Bounded Sum</a>, Journal of Integer Sequences, Vol. 18 (2015), Article 15.2.8."
+    ],
+    "formula": [
+        "a(n) <= A002809(n) and A008475(a(n)) <= n (see (1.2) and (1.4) in Del\u00e9glise-Nicolas 2012). - _Jonathan Sondow_, Jul 04 2012."
+    ],
+    "example": [
+        "A permutation of length 10 can have prime cycle lengths of 2+3+5; so when repeatedly applied to itself, can produce at most 2*3*5 different permutations.",
+        "The products of distinct primes whose sum is <= 10 are 1 (the empty product), 2, 3, 5, 7, 2*3=6, 2*5=10, 2*7=14, 3*5=15, 3*7=21, and 2*3*5=30. The maximum is 30, so a(10) = 30. - _Jonathan Sondow_, Jul 06 2012"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n,i) option remember; local p; p:= ithprime(max(i,1));",
+        "      `if`(n=0, 1, `if`(i<1, 0,",
+        "       max(b(n, i-1), `if`(p>n, 0, b(n-p, i-1)*p))))",
+        "    end:",
+        "a:= proc(n) option remember;",
+        "     `if`(n=0, 1, max(b(n, pi(n)), a(n-1)))",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Jun 04 2012"
+    ],
+    "mathematica": [
+        "temp=Series[Times @@ (1/(1-q[ # ] x^#)& /@ Prepend[Prime /@ Range[24],1]),{x,0,Prime[24]}]; Table[Max[List @@ Expand[Coefficient[temp,x^n]]/. q[a_]^_ ->q[a] /.q->Identity],{n,64}]",
+        "(* Second program: *)",
+        "b[n_, i_] := b[n, i] = Module[{p = Prime[Max[i, 1]]}, If[n == 0, 1, If[i < 1, 0, Max[b[n, i-1], If[p > n, 0, b[n-p, i-1]*p]]]]]; a[n_] := a[n] = If[n == 0, 1, Max[b[n, PrimePi[n]], a[n-1]]]; Table[a[n], {n, 1, 100}] (* _Jean-Fran\u00e7ois Alcover_, Nov 05 2013, translated from _Alois P. Heinz_'s Maple program *)"
+    ],
+    "xref": [
+        "Cf. A077011, A000793, A034891."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Wouter Meeussen_, Apr 19 2009, May 02 2009",
+    "references": 2,
+    "revision": 39,
+    "time": "2017-12-26T13:08:02-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

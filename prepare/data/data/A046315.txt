@@ -1,0 +1,47 @@
+{
+    "number": 46315,
+    "data": "9,15,21,25,33,35,39,49,51,55,57,65,69,77,85,87,91,93,95,111,115,119,121,123,129,133,141,143,145,155,159,161,169,177,183,185,187,201,203,205,209,213,215,217,219,221,235,237,247,249,253,259,265,267,287,289",
+    "name": "Odd semiprimes: odd numbers divisible by exactly 2 primes (counted with multiplicity).",
+    "comment": [
+        "The number of odd semiprimes < 10^n: 1, 19, 204, 1956, 18245, 168497, 1555811, 14426124, 134432669, ...; see A085770. - _Robert G. Wilson v_, Aug 25 2011",
+        "In general, the prime factors, p, of a(n) are given by: p = sqrt(a(n) + (k/2)^2) +- (k/2) where k is the positive difference of the prime factors.  Equivalently, p = (1/2)( sqrt(4a(n) + k^2) +- k ). - _Wesley Ivan Hurt_, Jun 28 2013"
+    ],
+    "link": [
+        "Zak Seidov and K. D. Bajpai, <a href=\"/A046315/b046315.txt\">Table of n, a(n) for n = 1..10000</a> (first 1956 terms from Zak Seidov)"
+    ],
+    "example": [
+        "15 is in the sequence because it is odd number and also 15 = 3 * 5, which is semiprime. - _K. D. Bajpai_, Jul 05 2014",
+        "39 is in the sequence because it is odd number and also 39 = 3 * 13, which is semiprime. - _K. D. Bajpai_, Jul 05 2014"
+    ],
+    "maple": [
+        "A046315 := proc(n) option remember; local r;",
+        "if n = 0 then RETURN(0) fi;",
+        "for r from A046315(n - 1) + 1 do",
+        "   if r mod 2 = 1 and numtheory[bigomega](r) = 2",
+        "   then RETURN(r) fi",
+        "od end:",
+        "seq(A046315(n),n=1..56); # _Peter Luschny_, Feb 15 2011"
+    ],
+    "mathematica": [
+        "Reap[Do[If[Total[FactorInteger[n]][[2]] == 2, Sow[n]], {n, 1, 400, 2}]][[2,1]] (* _Zak Seidov_ *)",
+        "fQ[n_] := Plus @@ Last /@ FactorInteger@ n == 2; Select[2 Range@ 150 - 1, fQ] (* _Robert G. Wilson v_, Feb 15 2011 *)",
+        "Select[Range[5,301,2],PrimeOmega[#]==2&] (* _Harvey P. Dale_, May 22 2015 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(u=primes(primepi(lim\\3)),v=List(),t); for(i=2,#u, for(j=i,#u, t=u[i]*u[j];if(t>lim,break); listput(v,t))); vecsort(Vec(v)) \\\\ _Charles R Greathouse IV_, Jul 19 2011",
+        "(Haskell)",
+        "a046315 n = a046315_list !! (n-1)",
+        "a046315_list = filter odd a001358_list  -- _Reinhard Zumkeller_, Jan 02 2014"
+    ],
+    "xref": [
+        "Odd members of A001358.",
+        "A046388 is a subsequence."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Jun 15 1998",
+    "references": 60,
+    "revision": 52,
+    "time": "2017-09-28T02:42:24-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

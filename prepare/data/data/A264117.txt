@@ -1,0 +1,64 @@
+{
+    "number": 264117,
+    "data": "23,55,87,94,119,178,271,312,335,403,501,551,598,717,861,861,903,1022,1119,1248,1463,1535,1688,2031,2067,2416,2535,2976,3064,3164,3407,3552,3552,4023,4143,4416,4633,4663,5424,5424,5688,6000,6455",
+    "name": "Largest integer which cannot be partitioned using only parts from the set {perfect powers excluding the n smallest}.",
+    "comment": [
+        "It appears, but has not been proved, that for n>28, a(n) < a(n-1) + A001597(n)."
+    ],
+    "link": [
+        "Martin Y. Champel, <a href=\"/A264117/a264117_4.txt\">Table of n, a(n) for n = 1..281</a>"
+    ],
+    "example": [
+        "a(1) = 23 as 23 cannot be obtained by any combination of {4, 8, 9, 16} but the 4 following integers can:",
+        "24 (6*4) a combination of {4, 8, 9, 16},",
+        "25 (1*25) a combination of {4, 8, 9, 16, 25},",
+        "26 (1*8+2*9) a combination of {4, 8, 9, 16, 25},",
+        "27 (1*27) a combination of {4, 8, 9, 16, 25, 27} so all following integers can.",
+        "a(2) = 55 as 55 cannot be obtained by any combination of {8, 9, 16, 25, 27, 32, 36, 49} but the 8 following integers can.",
+        "a(3) = 87 as 87 cannot be obtained by any combination of {9, 16, 25, 27, 32, 36, 49, 64, 81} but the 9 following integers can."
+    ],
+    "program": [
+        "(Python 2.7)",
+        "from copy import *",
+        "from math import *",
+        "sol ={}",
+        "def a(n):",
+        "....global sol",
+        "....if n in sol:  return sol[n]",
+        "....k = n**2 + 100",
+        "....yt = sorted(list(set([b**a for a in range(2, 1+int(log(k)/log(2))) for b in range(1, 1+int(k**(1./a)))])))[n:]",
+        "....p0 = yt[0]",
+        "....if n-1 in sol and n > 28:  p1 = sol[n-1] + 2 * p0",
+        "....else: p1 = 7 * p0 + 400",
+        "....yt = sorted(list(set([b**a for a in range(2, 1+int(log(p1)/log(2))) for b in range(1, 1+int(p1**(1./a)))])))[n:]",
+        "....st = []",
+        "....while st != yt:",
+        "........st = deepcopy(yt)",
+        "........yt = sorted(list(set(yt + [i+j for i in yt for j in yt if i>=j if i+j < p1])))",
+        "....d = 0",
+        "....f = yt[0] + 1",
+        "....t = f",
+        "....for i in range(1,len(yt)):",
+        "........if yt[i] == f:",
+        "............d += 1",
+        "............f += 1",
+        "............if d == yt[0] + 1:",
+        "................yt = yt[:yt.index(t+1)]",
+        "................sol[n] = yt.pop() + 1",
+        "................return sol[n]",
+        "........else:",
+        "............t = f",
+        "............f = yt[i]+1",
+        "............d = 0"
+    ],
+    "xref": [
+        "Cf. A001597."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Martin Y. Champel_, Nov 03 2015",
+    "references": 1,
+    "revision": 44,
+    "time": "2015-11-25T02:58:09-05:00",
+    "created": "2015-11-25T02:58:09-05:00"
+}

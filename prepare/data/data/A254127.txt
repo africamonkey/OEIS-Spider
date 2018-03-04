@@ -1,0 +1,56 @@
+{
+    "number": 254127,
+    "data": "1,1,7,257,50128,50796983,264719566561,7063448084710944,963204439792722969647,670733745303300958404439297,2384351527902618144856749327661056,43263422878945294225852497665519673400479,4006622856873663241294794301627790673728956619649",
+    "name": "The number of tilings of an n X n rectangle using integer length rectangles with at least one side of length 1, i.e., tiles are of size (1 X i) or (i X 1) with 1<=i<=n.",
+    "comment": [
+        "Let R(n) be the set of squares that have vertices at integer coordinates and lie in the region of the plane |x|+|y|<=n+1, and let two squares be independent if they do not share a common edge.  Then a(n) is the number of ways to pick a set of independent cell(s) in R(n).  (Note R(n) is also known as the Aztec diamond.)"
+    ],
+    "link": [
+        "Steve Butler, <a href=\"/A254127/b254127.txt\">Table of n, a(n) for n = 0..15</a>",
+        "Z. Zhang, <a href=\"http://match.pmf.kg.ac.rs/electronic_versions/Match56/n3/match56n3_625-636.pdf\">Merrifield-Simmons index of generalized Aztec diamond and related graphs</a>, MATCH Commun. Math. Comput. Chem. 56 (2006) 625-636."
+    ],
+    "example": [
+        "a(2)=7 for the following 7 tilings:",
+        "   _ _   _ _   _ _   _ _   _ _   _ _   _ _",
+        "  |_|_| |_ _| |_|_| | |_| |_| | |_ _| | | |",
+        "  |_|_| |_|_| |_ _| |_|_| |_|_| |_ _| |_|_|"
+    ],
+    "program": [
+        "# SAGE",
+        "def matrix_entry(L1,L2,n):",
+        "....tally=0",
+        "....for i in range(n-1):",
+        "........if (not i in L1) and (not i in L2) and (not i+1 in L1) and (not i+1 in L2):",
+        "............tally+=1",
+        "....return 2^tally",
+        "def a(n):",
+        "....index_set={}",
+        "....counter=0",
+        "....for C in Combinations(n):",
+        "........index_set[counter]=C",
+        "........counter+=1",
+        "....current_v=[0]*counter",
+        "....current_v[0]=1",
+        "....for t in range(n):",
+        "........new_v=[0]*counter",
+        "........for i in range(counter):",
+        "............for j in range(counter):",
+        "................new_v[i]+=current_v[j]*matrix_entry(index_set[i],index_set[j],n)",
+        "........current_v=new_v",
+        "....return current_v[0]"
+    ],
+    "xref": [
+        "Cf. A052961, A254124, A254125, A254126.",
+        "Main diagonal of A254414."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Steve Butler_, Jan 25 2015",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Jan 30 2015"
+    ],
+    "references": 5,
+    "revision": 24,
+    "time": "2015-01-30T11:11:47-05:00",
+    "created": "2015-01-25T21:20:42-05:00"
+}

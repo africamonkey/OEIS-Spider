@@ -1,0 +1,41 @@
+{
+    "number": 233313,
+    "data": "1,4,45,717,9787,148414,2282036,34688229,530613082,8119995275,124183342755,1899899589557,29066650643742,444678773140018,6803102237763707,104079849391557116,1592303310404361651,24360457647669398381,372687643806340329749,5701702230014416236396",
+    "name": "Number of tilings of a 2 X 3 X n box using bricks of shape 3 X 1 X 1 and 2 X 1 X 1.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A233313/b233313.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "example": [
+        "a(1) = A219866(3,2) = A129682(3) = A219866(2,3) = A219867(2) = 4:",
+        "._____.  ._____.  ._____.  ._____.",
+        "|_____|  | | | |  |___| |  | |___|",
+        "|_____|  |_|_|_|  |___|_|  |_|___|."
+    ],
+    "maple": [
+        "s:= subsop:",
+        "b:= proc(n, l) option remember; local k, t; t:= min(l[]);",
+        "      if n=0 then 1 elif t>0 then b(n-t, map(h->h-t, l))",
+        "    else for k while l[k]>0 do od; add(`if`(n>=j,",
+        "         b(n, s(k=j, l)), 0), j=2..3)+ `if`(k<=4 and l[k+2]=0,",
+        "         b(n, s(k=1, k+2=1, l))+ `if`(k<=2 and l[k+4]=0,",
+        "         b(n, s(k=1, k+2=1, k+4=1, l)), 0), 0)+ `if`(",
+        "         irem(k, 2)>0 and l[k+1]=0, b(n, s(k=1, k+1=1, l)), 0)",
+        "      fi",
+        "    end:",
+        "a:=n-> b(n, [0$6]):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[n_, l_] := b[n, l] = Module[{k, t}, t = Min[l]; If [n == 0, 1, If[t > 0, b[n-t, l-t], k = 1; While[l[[k]] > 0 , k++]; Sum[If[n >= j, b[n, ReplacePart[l, k -> j]], 0], {j, 2, 3}] + If[k <= 4 && l[[k+2]] == 0, b[n, ReplacePart[l, {k -> 1, k+2 -> 1}]] + If[k <= 2 && l[[k+4]] == 0, b[n, ReplacePart[l, {k -> 1, k+2 -> 1, k+4 -> 1}]], 0], 0] + If[Mod[k, 2] > 0 && l[[k+1]] == 0, b[n, ReplacePart[l, {k -> 1, k+1 -> 1}]], 0] ] ] ]; a[n_] := b[n, Array[0&, 6]]; Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Dec 16 2013, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A000931, A129682, A219866, A219867, A233505, A233506, A233507, A233509."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Dec 07 2013",
+    "references": 5,
+    "revision": 16,
+    "time": "2013-12-16T09:46:36-05:00",
+    "created": "2013-12-11T16:31:41-05:00"
+}

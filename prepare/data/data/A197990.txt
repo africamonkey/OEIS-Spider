@@ -1,0 +1,32 @@
+{
+    "number": 197990,
+    "data": "1,4,27,664,19375,712536,31474709,1623421808,95752130751,6356272757680,468976366239799,38071162011854412,3372179632719015287,323631920261745650114,33452466695808298399785,3705187274710433648959456,437779689881887196512539391",
+    "name": "Number of binary arrangements of total n 1's, without adjacent 1's on n X n torus connected n-s",
+    "link": [
+        "V. Kotesovec, <a href=\"https://oeis.org/wiki/User:Vaclav_Kotesovec\">Non-attacking chess pieces</a>, 6ed, 2013, p. 408."
+    ],
+    "formula": [
+        "Explicit formula (V. Kotesovec, Oct 14 2011): a(n) = n*binomial(n^2-n-1,n-1)+n*(-1)^n, n>1"
+    ],
+    "mathematica": [
+        "permopak[part_,k_]:=(hist=ConstantArray[0,k];",
+        "Do[hist[[part[[t]]]]++,{t,1,Length[part]}];",
+        "(Length[part])!/Product[(hist[[t]])!,{t,1,k}]);",
+        "waz1t[k_,n_]:=(If[n-k+1<k,0,Binomial[n-k+1,k]-Binomial[n-k-1,k-2]]);",
+        "semiwazt[k_,n_]:=(psum=0;",
+        "Do[p=IntegerPartitions[k,{size}];",
+        "psum=psum+Sum[permopak[p[[i]],k]*Binomial[n,Length[p[[i]]]]*Product[waz1t[p[[i,j]],n], {j,1,Length[p[[i]]]}], {i,1,Length[p]}], {size,1,n}]; psum);",
+        "Table[semiwazt[n,n],{n,1,25}]",
+        "Join[{1},Table[n Binomial[n^2-n-1,n-1]+n (-1)^n,{n,2,20}]] (* _Harvey P. Dale_, Nov 24 2016 *)"
+    ],
+    "xref": [
+        "Cf. A067961, A197989"
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_Vaclav Kotesovec_, Oct 20 2011",
+    "references": 1,
+    "revision": 12,
+    "time": "2016-11-24T08:27:41-05:00",
+    "created": "2011-10-20T11:33:23-04:00"
+}

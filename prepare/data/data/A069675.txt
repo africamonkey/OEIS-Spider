@@ -1,0 +1,56 @@
+{
+    "number": 69675,
+    "data": "2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,307,401,409,503,509,601,607,701,709,809,907,1009,2003,3001,4001,4003,4007,5003,5009,6007,7001,8009,9001,9007,10007,10009",
+    "name": "Primes with either no internal digits or all internal digits are 0.",
+    "comment": [
+        "Despite their initial density, these primes are rare. The value of a(310) = 9*10^2914 + 7. Beginning with a(54), this is a subset of A164968. Indeed, these could be called the \"naughtiest\" primes. - _Harlan J. Brothers_, Aug 17 2015",
+        "There are expected to be infinitely many terms, but growing very rapidly, something like a(n) ~ exp(exp(const * n)). - _Robert Israel_, Aug 17 2015"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A069675/b069675.txt\">Table of n, a(n) for n = 1..263</a>",
+        "Robert Israel, <a href=\"/A069675/a069675.png\">Plot of log(log(a(n))) for 1 <= n <= 293</a>"
+    ],
+    "formula": [
+        "a(n) >> 10^(n/24). - _Charles R Greathouse IV_, Sep 14 2015"
+    ],
+    "example": [
+        "4001 is in the sequence because it is prime and all the internal digits (the digits between 4 and 1) are zero. - _Michael B. Porter_, Aug 11 2016"
+    ],
+    "maple": [
+        "A := {}:",
+        "for n to 1000 do",
+        "  p := ithprime(n):",
+        "  d := convert(p, base, 10):",
+        "  s := 0:",
+        "  for m from 2 to nops(d)-1 do",
+        "    s := s+d[m]:",
+        "  end do",
+        "  if s = 0 then",
+        "    A := `union`(A, {p})",
+        "  end if:",
+        "end do:",
+        "A := A",
+        "# _C\u00e9sar Eliud Lozada_, Sep 04 2012",
+        "select(isprime, [$1..9, seq(seq(seq(10^d*a+b, b=1..9),a=1..9), d=1..10)]); # _Robert Israel_, Aug 18 2015"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[1, 100000]], IntegerLength[#] < 3 || Union@Rest@Most@IntegerDigits[#, 10] == {0} &] (* _Harlan J. Brothers_, Aug 17 2015 *)",
+        "Select[Join[Range[1, 99], Flatten[Table[a*10^d + b, {d, 2, 50}, {a, 1, 9}, {b, 1, 9}]]], PrimeQ[#] &] (* _Seth A. Troisi_, Aug 03 2016 *)"
+    ],
+    "program": [
+        "(PARI) go(n)=my(v=List(primes(4)),t); for(d=1,n-1, for(i=1,9, forstep(j=1,9,[2,4,2], if(isprime(t=10^d*i+j), listput(v,t))))); Vec(v) \\\\ _Charles R Greathouse IV_, Sep 14 2015"
+    ],
+    "xref": [
+        "Cf. A069676-A069684, A164968."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Apr 06 2002",
+    "ext": [
+        "Offset corrected and name changed by _Arkadiusz Wesolowski_, Sep 07 2011"
+    ],
+    "references": 21,
+    "revision": 59,
+    "time": "2016-10-02T04:59:16-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

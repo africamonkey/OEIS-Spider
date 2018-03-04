@@ -1,0 +1,40 @@
+{
+    "number": 128607,
+    "data": "1,81,343,400,32400,1705636,3648100,138156516,295496100,1055340196,1476326929,1857437604,2263475776,2323432804,2592846400,2661528100,7036525456,10994571025,17604513124,39415749156,61436066769,85482555876,90526367376,97577515876,98551417041",
+    "name": "Perfect (or pure) powers pp such that sigma(pp) is also a perfect (pure) power.",
+    "comment": [
+        "Denote by egcd(n) the gcd of all the powers in the prime factorization of n. In our context, a square has egcd=2, a cube has egcd=3 and so on. The only elements n in the sequence for which egcd(n)>2 are 81 and 343. Are there any others? Conjecture I: egcd(A128607(n))=2 for all n>2. Let A128608(n)=sigma(A128607(n)). Note that A128607(11)=1857437604=(2^2)*(3^2)*(11^2)*(653^2) has A128608(11)=5168743489=(7^3)*(13^3)*(19^3). Any other cubes or higher egcd's in A128608? Conjecture II: egcd(A128608(n))=2 for all n ne 11."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A128607/b128607.txt\">Table of n, a(n) for n = 1..58</a>"
+    ],
+    "maple": [
+        "N:= 10^13: # to get all terms <= N",
+        "pows:= {1, seq(seq(n^k, n = 2 .. floor(N^(1/k))), k = 2 .. floor(log[2](N)))}:",
+        "filter:= proc(n) local s, F;",
+        "   s:= numtheory:-sigma(n);",
+        "   F:= map(t -> t[2], ifactors(s)[2]);",
+        "   igcd(op(F)) >= 2",
+        "end proc:",
+        "filter(1):= true:",
+        "sort(convert(select(filter, pows),list)); # _Robert Israel_, Feb 14 2016"
+    ],
+    "program": [
+        "(PARI) isok(n) = (n==1) || (ispower(n) && ispower(sigma(n))); \\\\ _Michel Marcus_, Feb 14 2016",
+        "(MAGMA) [1] cat [n : n in [2..4*10^6] | IsPower(n) and IsPower(SumOfDivisors(n))]; // _Vincenzo Librandi_, Feb 15 2016"
+    ],
+    "xref": [
+        "Cf. A000203, A001597, A128608."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Walter Kehowski_, Mar 20 2007",
+    "ext": [
+        "Missing terms: 1, 10994571025, 17604513124, 39415749156  added by _Zak Seidov_, Feb 14 2016",
+        "Missing terms  61436066769, 90526367376, 97577515876, 98551417041 added by _Robert Israel_, Feb 14 2016"
+    ],
+    "references": 4,
+    "revision": 19,
+    "time": "2016-02-27T09:52:21-05:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

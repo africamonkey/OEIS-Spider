@@ -1,0 +1,37 @@
+{
+    "number": 285406,
+    "data": "0,5,15,28,46,68,94,123,158,195,236,283,333,387,445,506,574,643,716,794,875,961,1054,1146,1244,1346,1451,1562,1676,1794,1916,2041,2174,2307,2444,2586,2731,2881,3034,3193,3356,3520,3690,3864,4041,4227,4413,4601,4796,4993",
+    "name": "Log base 2 of denominator of Sum_{k=0..n^2-1}((-1)^k*sqrt(Pi)/(Gamma(1/2-k)*Gamma(1+k)))/n).",
+    "comment": [
+        "Needed for studying of Wallis-kind products of central binomials."
+    ],
+    "formula": [
+        "a(n) = A000523(A285389(n)).",
+        "a(n) = A056220(n) - A285717(n) = (2*(n^2)) - A007814(n) - A000120(n^2) - 1. - _Antti Karttunen_, Apr 28 2017, based on _Vladimir Shevelev_'s Jul 20 2009 formula in A000984"
+    ],
+    "mathematica": [
+        "Log[2,Table[Denominator[Sum[Binomial[2k,k]/4^k,{k,0,n^2-1}]/n], {n,1,50}]]",
+        "Log[2,Denominator[Table[2^(1-2 n^2) n Binomial[2 n^2,n^2],{n,1,50}]]] (* _Ralf Steiner_, Apr 22 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = logint(denominator((2^(1 - 2*(n^2)))*n*binomial(2*(n^2), n^2)), 2); \\\\ _Indranil Ghosh_, Apr 27 2017",
+        "(PARI) val(n, p) = my(r=0); while(n, r+=n\\=p);r",
+        "a(n) = 2*n^2-1 - valuation(n, 2) - val(2*n^2, 2) + 2*val(n^2, 2) \\\\ _David A. Corneth_, Apr 28 2017",
+        "(Python)",
+        "from fractions import Fraction",
+        "from sympy import binomial",
+        "import math",
+        "def a(n): return int(round(math.log(Fraction(str(2**(1 - 2*n**2)*n*binomial(2*n**2, n**2))).denominator, 2), 0)) # _Indranil Ghosh_, Apr 27 2017",
+        "(Scheme) (define (A285406 n) (- (* 2 n n) (A007814 n) (A000120 (* n n)) 1)) ;; _Antti Karttunen_, Apr 28 2017"
+    ],
+    "xref": [
+        "Cf. A000120, A000523, A000984, A007814, A011371, A056220, A201555, A285389, A281264, A285717."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ralf Steiner_, Apr 18 2017",
+    "references": 5,
+    "revision": 37,
+    "time": "2017-04-28T07:29:32-04:00",
+    "created": "2017-04-18T15:33:46-04:00"
+}

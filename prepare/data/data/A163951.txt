@@ -1,0 +1,45 @@
+{
+    "number": 163951,
+    "data": "0,0,1,9,93,1155,17025,292383,5752131,127790505,3167896005,86756071545,2602658092419,84917405260779,2994675198208785,113538315994418175,4606094297461892895,199122610252964803857,9139190793845641425261,443881600924216704982425",
+    "name": "The number of functions in a finite set for which the sequence of composition powers ends in a length 2 cycle.",
+    "comment": [
+        "The number of functions in a finite set {1,..,n} for which the sequence of composition powers ends in a fixed point gave terms of the sequence A000272(n-1)=(n+1)^(n-1).",
+        "This is to be seen as a conjecture, and the sequence ending with a length 2 cycle does not seem to have such an easy expression."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A163951/b163951.txt\">Table of n, a(n) for n = 0..387</a>"
+    ],
+    "formula": [
+        "a(n) ~ (2*exp(3/2)-exp(1)) * n^(n-1). - _Vaclav Kotesovec_, Aug 20 2014"
+    ],
+    "example": [
+        "Any transposition (or disjoint combination) is one element to be counted.",
+        "When n=2, there is only one, and a(2)=1. When n=3, there are only 3 transpositions, but there are other 6 elements, for instance",
+        "f:{1,2,3}->{2,1,1} gives fof:{1,2,3}->{1,2,2} and fofof=f (cycle 2),",
+        "(the others are similar), thus giving a(3)=9."
+    ],
+    "maple": [
+        "with(combinat):",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add((i-1)!^j*multinomial(n, n-i*j, i$j)/j!*",
+        "      b(n-i*j, i-1), j=0..n/i)))",
+        "    end:",
+        "A:= (n, k)-> add(binomial(n-1, j-1)*n^(n-j)*b(j, min(j, k)), j=0..n):",
+        "a:= n-> A(n, 2) -A(n, 1):",
+        "seq(a(n), n=2..25);  # _Alois P. Heinz_, Aug 19 2014"
+    ],
+    "xref": [
+        "Cf. A163947, A163952, A163859.",
+        "Column k=2 of A222029 and of A241981."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Carlos Alves_, Aug 06 2009",
+    "ext": [
+        "a(0), a(8)-a(19) added and A246212 merged into this sequence by _Alois P. Heinz_, Aug 14 2017"
+    ],
+    "references": 5,
+    "revision": 18,
+    "time": "2017-08-16T16:51:30-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

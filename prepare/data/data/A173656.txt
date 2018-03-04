@@ -1,0 +1,38 @@
+{
+    "number": 173656,
+    "data": "521,190699",
+    "name": "Primes p such that p^2 divides P(p), where P = Perrin sequence A001608.",
+    "comment": [
+        "It is not known if this sequence is infinite.",
+        "The squares are in A013998.",
+        "No more terms < 10^9."
+    ],
+    "link": [
+        "G. L. Honaker, Jr. and Chris Caldwell, <a href=\"http://primes.utm.edu/curios/cpage/16432.html\">Prime Curios! 521</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Perrin_pseudoprime\">Perrin number</a>"
+    ],
+    "example": [
+        "521 is in the sequence since its square 271441 is the factor of A001608(521)."
+    ],
+    "mathematica": [
+        "lst = {}; a = 3; b = 0; c = 2; Do[P = b + a; If[PrimeQ[n] && Divisible[P, n^2], AppendTo[lst, n]]; a = b; b = c; c = P, {n, 3, 2*10^5}]; lst",
+        "lst = {}; PowerMod2[mat_, n_, m_] := Mod[Fold[Mod[If[#2 == 1, #1.#1.mat, #1.#1], m] &, mat, Rest@IntegerDigits[n, 2]], m]; LinearRecurrence2[coeffs_, init_, n_, m_] := Mod[First@PowerMod2[Append[RotateRight /@ Most@IdentityMatrix@Length[coeffs], coeffs], n, m].init, m] /; n >= Length[coeffs]; Do[n = Power[p, 2]; If[PrimeQ[p] && LinearRecurrence2[{1, 1, 0}, {3, 0, 2}, n, n] == 0, AppendTo[lst, p]], {p, 1, 2*10^5, 2}]; lst"
+    ],
+    "program": [
+        "(PARI)",
+        "/* Assuming b13998 containing second column of b013998.txt */",
+        "A013998 = readvec(b13998);",
+        "for (k=1,#A013998,if (issquare(A013998[k])==1,print(k,\" \",A013998[k])));",
+        "/* _Hugo Pfoertner_, Sep 01 2017 */"
+    ],
+    "xref": [
+        "Cf. A001608, A013998."
+    ],
+    "keyword": "bref,hard,more,nonn",
+    "offset": "1,1",
+    "author": "_Arkadiusz Wesolowski_, Aug 15 2012",
+    "references": 2,
+    "revision": 38,
+    "time": "2017-09-01T05:03:55-04:00",
+    "created": "2012-08-18T22:52:46-04:00"
+}

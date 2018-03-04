@@ -1,0 +1,54 @@
+{
+    "number": 224626,
+    "data": "27361,65731,167623,424093,1559449,2389693,3880633,4683661,5755921,5780881,6124411,6840643,7802959,7822879,7917769,8876719,9488683,9640321,9966139,10392073,10865083,10988743,12363991,12457681,12756253,13471561,14437561,14508709,14550331,14839711,15366223,16574143",
+    "name": "Primes p such that q=2*p^3-1, r=2*p*q^2-1, and s=2*p*r^2-1 are all prime.",
+    "comment": [
+        "A prime p here is prime p(n) when A224611(n) = 1.",
+        "A subsequence of A224614. - _M. F. Hasler_, Apr 22 2013"
+    ],
+    "link": [
+        "Pierre CAMI, <a href=\"/A224626/b224626.txt\">Table of n, a(n) for n = 1..747</a>"
+    ],
+    "mathematica": [
+        "Reap[ For[p = 2, p < 2*10^7, p = NextPrime[p], If[PrimeQ[q = 2*p^3 - 1] && PrimeQ[r = 2*p*q^2 - 1] && PrimeQ[2*p*r^2 - 1], Print[p]; Sow[p]] ]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Apr 22 2013 *)",
+        "apQ[n_]:=Module[{q=2n^3-1,r},r=2n q^2-1;And@@PrimeQ[{q,r,2n r^2-1}]]; Select[ Prime[Range[1100000]],apQ] (* _Harvey P. Dale_, Nov 24 2013 *)"
+    ],
+    "program": [
+        "(PFGW SCRIPT)",
+        "SCRIPT",
+        "DIM n, 1",
+        "DIM q",
+        "DIMS t",
+        "OPENFILEOUT myf, a(n).txt",
+        "LABEL a",
+        "SET n, n+1",
+        "SETS t, %d\\,; p(n)",
+        "SET q, 2*p(n)^3-1",
+        "PRP q, t",
+        "IF ISPRP THEN GOTO b",
+        "GOTO a",
+        "LABEL b",
+        "SET q, 2*p(n)*q^2-1",
+        "PRP q, t",
+        "IF ISPRP THEN GOTO c",
+        "GOTO a",
+        "LABEL c",
+        "SET q, 2*p(n)*q^2-1",
+        "PRP q, t",
+        "IF ISPRP THEN GOTO d",
+        "GOTO a",
+        "LABEL d",
+        "WRITE myf,t",
+        "GOTO a"
+    ],
+    "xref": [
+        "Cf. A224611, A224613, A224614."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Pierre CAMI_, Apr 12 2013",
+    "references": 3,
+    "revision": 29,
+    "time": "2013-11-27T08:13:32-05:00",
+    "created": "2013-04-22T11:59:38-04:00"
+}

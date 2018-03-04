@@ -1,0 +1,61 @@
+{
+    "number": 8545,
+    "data": "1,3,21,231,3465,65835,1514205,40883535,1267389585,44358635475,1729986783525,74389431691575,3496303289504025,178311467764705275,9807130727058790125,578620712896468617375,36453104912477522894625,2442358029135994033939875",
+    "name": "Quadruple factorial numbers: product_{k=0..n-1} (4*k+3).",
+    "comment": [
+        "a(n-1), n>=1, enumerates increasing plane (aka ordered) trees with n vertices (one of them a root labeled 1) with one version of a vertex with out-degree r=0 (a leaf or a root) and each vertex with out-degree r>=1 comes in binom(r+2,2) types (like a binom(r+2,2)-ary vertex). See the increasing tree comments under A001498. For example, a(1)=3 from the three trees with n=2 vertices (a root (out-degree r=1, label 1) and a leaf (r=0), label 2). There are three such trees because of the three types of out-degree r=1 vertices. - W. Lang, Oct 05 2007; corrected by _Karen Yeats_, Jun 17 2013",
+        "a(n) is the product of the positive integers less than or equal to 4n that have modulo 4 = 3. - _Peter Luschny_, Jun 23 2011"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A008545/b008545.txt\">Table of n, a(n) for n=0..100</a>",
+        "W. Lang, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/LANG/lang.html\">On generalizations of Stirling number triangles</a>, J. Integer Seqs., Vol. 3 (2000), #00.2.4."
+    ],
+    "formula": [
+        "a(n) = 3*A034176(n) = (4*n-1)(!^4), n >= 1, a(0) := 1.",
+        "E.g.f. (1-4*x)^(-3/4).",
+        "a(n) ~ 2^(1/2)*Pi^(1/2)*Gamma(3/4)^-1*n^(1/4)*2^(2*n)*e^-n*n^n*{1 - 1/96*n^-1 + ...}. - Joe Keane (jgk(AT)jgk.org), Nov 23 2001",
+        "G.f.: 1/(1-3x/(1-4x/(1-7x/(1-8x/(1-11x/(1-12x/(1-15x/(1-16x/(1-19x/(1-20x/(1-23x/(1-24x/(1-... (continued fraction). - _Paul Barry_, Dec 03 2009",
+        "a(n) = (-1)^n*sum_{k=0..n} 4^k*s(n+1,n+1-k), where s(n,k) are the Stirling numbers of the first kind, A048994. - _Mircea Merca_, May 03 2012",
+        "a(n) +(-4*n+1)*a(n-1)=0. - _R. J. Mathar_, Dec 04 2012",
+        "G.f.: 1/x - G(0)/(2*x), where G(k)= 1 + 1/(1 - x*(4*k-1)/(x*(4*k-1) + 1/G(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, Jun 04 2013",
+        "a(-n) = (-1)^n / A007696(n). - _Michael Somos_, Jan 17 2014",
+        "G.f.: 1 / (1 - b(1)*x / (1 - b(2)*x / ...)) where b = A014601. - _Michael Somos_, Jan 17 2014",
+        "a(n) = 4^n * GAMMA(n+3/4) / GAMMA(3/4). - _Vaclav Kotesovec_, Jan 28 2015",
+        "a(n) = A225471(n, 0), n >= 0. a(n) = sigma[4,3]^{(n)}_n, with the elementary symmetric function sigma[4,3]^{n}_n of degree n of the n numbers 3, 7, 11, ..., (3 + 4*(n-1)), and sigma[4,3]^{n}_0 := 1. See the formula given in the name. - _Wolfdieter Lang_, May 29 2017"
+    ],
+    "example": [
+        "G.f. = 1 + 3*x + 21*x^2 + 231*x^3 + 3465*x^4 + 65835*x^5 + 1514205*x^6 + ...",
+        "a(3) = sigma[4,3]^{3}_3 = 3*7*11 = 231. See the name. - _Wolfdieter Lang_, May 29 2017"
+    ],
+    "maple": [
+        "f := n->product( (4*k-1),k=0..n);",
+        "A008545 := n -> mul(k, k = select(k-> k mod 4 = 3, [$1 .. 4*n])): seq(A008545(n), n=0..15); # _Peter Luschny_, Jun 23 2011"
+    ],
+    "mathematica": [
+        "s=1; lst={s};Do[s+=n*s;AppendTo[lst, s], {n, 2, 5!, 4}]; lst (* _Vladimir Joseph Stephan Orlovsky_, Nov 08 2008 *)",
+        "FoldList[Times,1,4*Range[0,20]+3] (* _Harvey P. Dale_, Jan 19 2013 *)",
+        "a[ n_] := Pochhammer[ 3/4, n] 4^n; (* _Michael Somos_, Jan 17 2014 *)",
+        "a[ n_] := If[n < 0, 1 / Product[ -k, {k, 1, -4 n - 3, 4}], Product[ k, {k, 3, 4 n - 1, 4}]]; (* _Michael Somos_, Jan 17 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=prod(k=0,n-1,4*k+3) \\\\ _Charles R Greathouse IV_, Jun 23 2011",
+        "(Haskell)",
+        "a008545 n = a008545_list !! n",
+        "a008545_list = scanl (*) 1 a004767_list",
+        "-- _Reinhard Zumkeller_, Oct 25 2013",
+        "(PARI) {a(n) = if( n<0, 1 / prod(k=1, -n, 3 - 4*k), prod(k=1, n, 4*k - 1))}; /* _Michael Somos_, Jan 17 2014 */"
+    ],
+    "xref": [
+        "Cf. A004982, A001813, A047053, A051142, A254286.",
+        "a(n)= A000369(n+1, 1) (first column of triangle).",
+        "Partial products of A004767.",
+        "Cf. A007696, A014601, A225471 (first column)."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,2",
+    "author": "Joe Keane (jgk(AT)jgk.org)",
+    "references": 38,
+    "revision": 65,
+    "time": "2017-05-29T17:48:57-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

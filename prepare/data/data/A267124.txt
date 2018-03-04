@@ -1,0 +1,28 @@
+{
+    "number": 267124,
+    "data": "1,2,6,20,28,30,42,66,78,88,104,140,204,210,220,228,260,272,276,304,306,308,330,340,342,348,364,368,380,390,414,460,462,464,476,496,510,522,532,546,558,570,580,620,644,666,690,714,740,744,798,812,820,858,860,868,870,888,930,966,984",
+    "name": "Primitive practical numbers: practical numbers that are squarefree or practical numbers that when divided by any of its prime factors whose factorization exponent is greater than 1 is no longer practical.",
+    "comment": [
+        "If n is a practical number and d is any of its divisors then n*d must be practical. Consequently the sequence of all practical numbers must contain members that are either squarefree (A265501) or when divided by any of its prime factors whose factorization exponent is greater than 1 is no longer practical. Such practical numbers are said to be primitive. The set of all practical numbers can be generated from the set of primitive practical numbers by multiplying these primitives by any of their divisors."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Complete_sequence\">Complete sequence</a>, <a href=\"http://en.wikipedia.org/wiki/Practical_number\">Practical number</a>, and <a href=\"http://en.wikipedia.org/wiki/Squarefree_integer\">Squarefree integer</a>"
+    ],
+    "example": [
+        "a(4)=20=2^2*5. It is a practical number because it has 6 divisors 1, 2, 4, 5, 10, 20 that form a complete sequence. If it is divided by 2 the resultant has 4 divisors 1, 2, 5, 10 that is not a complete sequence.",
+        "a(7)=42=2*3*7. It is squarefree and is practical because it has 8 divisors  1, 2, 3, 6, 7, 14, 21, 42 that form a complete sequence."
+    ],
+    "mathematica": [
+        "PracticalQ[n_] := Module[{f, p, e, prod=1, ok=True}, If[n<1||(n>1&&OddQ[n]), False, If[n==1, True, f=FactorInteger[n]; {p, e}=Transpose[f]; Do[If[p[[i]]>1+DivisorSigma[1, prod], ok=False; Break[]]; prod=prod*p[[i]]^e[[i]], {i, Length[p]}]; ok]]]; lst=Select[Range[1, 1000], PracticalQ]; lst1=lst; maxfac=PrimePi[Last[Union[Flatten[FactorInteger[lst], 1]]][[1]]]; Do[lst1=Select[lst1, Mod[#, Prime[p]^2]!=0||!PracticalQ[#/Prime[p]] &], {p, 1, maxfac}]; lst1"
+    ],
+    "xref": [
+        "Cf. A005117, A005153, A265501."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Frank M Jackson_, Jan 10 2016",
+    "references": 0,
+    "revision": 8,
+    "time": "2016-02-20T21:44:35-05:00",
+    "created": "2016-02-20T21:44:35-05:00"
+}

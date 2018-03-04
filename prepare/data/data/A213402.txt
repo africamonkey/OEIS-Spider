@@ -1,0 +1,39 @@
+{
+    "number": 213402,
+    "data": "1,1,18,8121,75143314,12641135924840,36876057665515782388,1819829483946334379705083199,1496946629440335290077827171482478552,20328210229221517747154723779733726877327901902,4527425732825492268524878479039840102127714838348518156649",
+    "name": "Expansion of exp( Sum_{n>=1} binomial(2*n^2-1, n^2) * x^n/n ).",
+    "comment": [
+        "Self-convolution square-root of A201556.",
+        "Compare to the g.f. C(x) = 1 + x*C(x)^2 of the Catalan numbers (A000108): C(x) = exp( Sum_{n>=1} binomial(2*n-1,n) * x^n/n )."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A213402/b213402.txt\">Table of n, a(n) for n = 0..40</a>"
+    ],
+    "formula": [
+        "a(n) = (1/n) * Sum_{k=1..n} C(2*k^2,k^2)/2 * a(n-k) for n>0 with a(0)=1.",
+        "a(n) ~ 2^(2*n^2-1) / (sqrt(Pi)*n^2). - _Vaclav Kotesovec_, Mar 06 2014"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 18*x^2 + 8121*x^3 + 75143314*x^4 + 12641135924840*x^5 +...",
+        "where",
+        "log(A(x)) = x + 35*x^2/2 + 24310*x^3/3 + 300540195*x^4/4 +...+ C(2*n^2-1,n^2)*x^n/n +..."
+    ],
+    "mathematica": [
+        "nmax = 10; b = ConstantArray[0, nmax+1]; b[[1]] = 1; Do[b[[n+1]] = 1/n*Sum[Binomial[2*k^2, k^2]/2*b[[n-k+1]], {k, 1, n}], {n, 1, nmax}]; b  (* _Vaclav Kotesovec_, Mar 06 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1, n, binomial(2*m^2, m^2)/2*x^m/m)+x*O(x^n)), n)}",
+        "(PARI) {a(n)=if(n==0, 1, (1/n)*sum(k=1, n, binomial(2*k^2, k^2)/2*a(n-k)))}",
+        "for(n=0,21,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A201556, A200002."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jun 10 2012",
+    "references": 2,
+    "revision": 19,
+    "time": "2017-03-31T03:53:14-04:00",
+    "created": "2012-06-10T18:52:32-04:00"
+}

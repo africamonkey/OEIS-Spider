@@ -1,0 +1,33 @@
+{
+    "number": 22512,
+    "data": "8,18,1811,211811,21182112,122112182112,122112181112212211,2122112231181112212211,21221122311821132221221112,12312211321321121821132221221112",
+    "name": "Describe previous term from the right (method A - initial term is 8).",
+    "comment": [
+        "Method A = 'frequency' followed by 'digit'-indication."
+    ],
+    "example": [
+        "E.g., the term after 1811 is obtained by saying \"two 1's, one 8, one 1\", which gives 211811."
+    ],
+    "mathematica": [
+        "split[n_]:=Split[Reverse[IntegerDigits[n]]];",
+        "list1[n_]:=List/@Length/@split[n];riffle1[n_]:=Riffle[split[n],list1[n]];",
+        "tab[n_]:=Table[i,{i,1,2*Length[list1[n]],2}];",
+        "list2[n_]:=Append[riffle1[n][[#]],riffle1[n][[#+1]]]&/@tab[n];",
+        "flat[n_]:=Flatten/@list2[n];riffle2[n_]:=Riffle[Last/@flat[n],First/@flat[n]];",
+        "a[1]=8; a[n_]:=FromDigits[riffle2[a[n-1]]]; Array[a,10] (* or *)",
+        "IntegerReverse[NestList[FromDigits[Flatten[Replace[Replace[Replace[Split[Reverse[IntegerDigits[#]]],{x_,y_}->{x,Length[{x,y}]},{1}],{x_,y_,z_}->{x,Length[{x,y,z}]},{1}],{x_}->{x,Length[{x}]},{1}]]]&,8,9]] (* _Ivan N. Ianakiev_, Nov 10 2016 *)"
+    ],
+    "xref": [
+        "Cf. A022506, A006711, A022482, A022507-A022513."
+    ],
+    "keyword": "nonn,base,easy,nice",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Erich Friedman_"
+    ],
+    "references": 1,
+    "revision": 12,
+    "time": "2016-11-27T22:01:56-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

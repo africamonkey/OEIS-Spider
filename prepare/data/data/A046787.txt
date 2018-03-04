@@ -1,0 +1,34 @@
+{
+    "number": 46787,
+    "data": "0,0,1,5,17,46,113,254,546,1122,2242,4354,8286,15441,28303,51025,90699,159003,275355,471216,797761,1336686,2218393,3648177,5948503,9620406,15439833,24597942,38916192,61159549,95508014,148241050,228753319,351022425,535760584",
+    "name": "Number of partitions of 5n with equal nonzero number of parts congruent to each of 1, 2, 3 and 4 modulo 5.",
+    "comment": [
+        "Number of partitions of m with equal numbers of parts congruent to each of 1, 2, 3 and 4 (mod 5) is 0 unless m == 0 mod 5."
+    ],
+    "link": [
+        "<a href=\"/wiki/Partitions_of_5n\">Index and properties of sequences related to partitions of 5n</a>"
+    ],
+    "formula": [
+        "a(n) = A046776(n) + A202086(n) + A202088(n) - A000041(n) = A202192(n) - A000041(n). - _Max Alekseyev_"
+    ],
+    "maple": [
+        "mkl:= proc(i,l) local ll, mn, x; ll:= `if`(irem(i, 5)=0, l, applyop(x->x+1, irem(i,5), l)); mn:= min(l[])-1; `if`(mn<=0, ll, map(x->x-mn, ll)) end:",
+        "g:= proc(n,i,t) local m, mx; if n<0 then 0 elif n=0 then `if`(t[1]>0 and t[1]=t[2] and t[2]=t[3] and t[3]=t[4], 1, 0) elif i=0 then 0 elif i<5 then mx:= max(t[]); m:= n-10*mx +t[1] +t[2]*2 +t[3]*3 +t[4]*4; `if`(m>=0 and irem(m, 10)=0, 1, 0) else g(n,i,t):= g(n, i-1, t) + g(n-i, i, mkl(i, t)) fi end:",
+        "a:= n-> g(5*n, 5*n, [0,0,0,0]):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Jul 04 2009"
+    ],
+    "xref": [
+        "Cf. A046776, A202192"
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "a(17)-a(32) from _Alois P. Heinz_, Jul 04 2009",
+        "a(33)-a(34) from _Alois P. Heinz_, Aug 13 2013"
+    ],
+    "references": 2,
+    "revision": 19,
+    "time": "2015-01-09T20:08:36-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

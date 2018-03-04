@@ -1,0 +1,44 @@
+{
+    "number": 72352,
+    "data": "8,89,987,6765,75025,832040,9227465,63245986,701408733,7778742049,86267571272,956722026041,6557470319842,72723460248141,806515533049393,8944394323791464,99194853094755497,679891637638612258,7540113804746346429,83621143489848422977",
+    "name": "Largest n-digit Fibonacci numbers.",
+    "link": [
+        "Robert Israel, <a href=\"/A072352/b072352.txt\">Table of n, a(n) for n = 1..990</a>"
+    ],
+    "formula": [
+        "a(n) = A000045(A072353(n)). - _Robert Israel_, Mar 10 2016"
+    ],
+    "example": [
+        "a(3)=987, as 987 is largest 3-digit Fibonacci number."
+    ],
+    "maple": [
+        "fib:= combinat:-fibonacci:",
+        "g:= proc(x) local n;",
+        "  n:= floor(ln((2*x+1)*sqrt(5)/2)/ln((1+sqrt(5))/2));",
+        "  if fib(n) > x then while fib(n) > x do n:= n-1 od",
+        "  elif fib(n+1) <= x then while fib(n+1) <= x do n:= n+1 od",
+        "  fi;",
+        "  fib(n)",
+        "end:",
+        "seq(g(10^n),n=1..50); # _Robert Israel_, Mar 10 2016",
+        "# second Maple program:",
+        "F:= proc(n) option remember; local f;",
+        "      f:= `if`(n=1, [1$2], F(n-1));",
+        "      do f:= [f[2], f[1]+f[2]];",
+        "         if length(f[1])<length(f[2]) then break fi",
+        "      od; f",
+        "    end:",
+        "a:= n-> F(n)[1]:",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Mar 10 2016"
+    ],
+    "xref": [
+        "Cf. A000045, A072351, A072353."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Shyam Sunder Gupta_, Jul 17 2002",
+    "references": 3,
+    "revision": 9,
+    "time": "2016-03-10T21:02:11-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

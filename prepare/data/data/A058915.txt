@@ -1,0 +1,24 @@
+{
+    "number": 58915,
+    "data": "2,7,34,181,1266,14106,293756,12362198,1032671168,166176421788,50672459139597,29105501987344357,31455795559882541775,64032588337815572241795,246000022800939308314311897",
+    "name": "Number of graphs with 3 distinct components.",
+    "reference": [
+        "F. Harary and E. M. Palmer, Graphical Enumeration, Academic Press, NY, 1973, page 48, (2.6.3)."
+    ],
+    "formula": [
+        "G.f.: 1/6*(f(x)^3 - 3*f(x)*f(x^2) + 2*f(x^3)), where f(x) = g(x) - 1 and g(x) is g.f. for connected graphs. Cf. A001349."
+    ],
+    "mathematica": [
+        "Needs[\"Combinatorica`\"];max=25;A000088=Table[NumberOfGraphs[n],{n,0,max}];f[x_]=1-Product[1/(1-x^k)^a[k],{k,1,max}];a[0]=a[1]=a[2]=1;coes=CoefficientList[Series[f[x],{x,0,max}],x];sol=First[Solve[Thread[Rest[coes+A000088]== 0]]];cg=Table[a[n],{n,1,max}]/.sol;Take[CoefficientList[CycleIndex[AlternatingGroup[3],s]-CycleIndex[SymmetricGroup[3],s]/.Table[s[j]->Table[Sum[cg[[i]] x^(k*i),{i,1,max}],{k,1,max}][[j]],{j,1,3}],x],{7,max}] (* _Geoffrey Critzer_, Oct 15 2012; after code by _Jean-Fran\u00e7ois Alcover_ in A001349 *)"
+    ],
+    "xref": [
+        "Cf. A001349. Column 3 of A217955."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "6,1",
+    "author": "_Vladeta Jovovic_, Jan 11 2001",
+    "references": 2,
+    "revision": 25,
+    "time": "2017-10-07T01:00:32-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

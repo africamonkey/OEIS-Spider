@@ -1,0 +1,45 @@
+{
+    "number": 277212,
+    "data": "1,5,20,65,190,505,1260,2970,6700,14535,30520,62235,123720,240340,457380,854190,1568230,2834120,5048140,8871450,15396690,26410860,44811440,75254240,125162100,206275505,337032360,546183425,878270360,1401857550,2221862260",
+    "name": "Expansion of Product_{n>=1} (1 - x^(5*n))/(1 - x^n)^5 in powers of x.",
+    "comment": [
+        "In general, for fixed m > 1, if g.f. = Product_{k>=1} (1 - x^(m*k))/(1 - x^k)^m, then a(n, m) ~ exp(Pi*sqrt(2*n*(m-1/m)/3)) * (m^2 - 1)^(m/4) / (2^(3*m/4 + 1/2) * 3^(m/4) * m^(m/4 + 1/2) * n^(m/4 + 1/2)). - _Vaclav Kotesovec_, Nov 10 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A277212/b277212.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/q-PochhammerSymbol.html\">q-Pochhammer Symbol</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{n>=1} (1 - x^(5*n))/(1 - x^n)^5.",
+        "a(n) ~ exp(4*Pi*sqrt(n/5)) / (sqrt(2) * 5^(7/4) * n^(7/4)). - _Vaclav Kotesovec_, Nov 10 2016",
+        "G.f.: (x^5; x^5)_inf/((x; x)_inf)^5, where (a; q)_inf is the q-Pochhammer symbol. - _Vladimir Reshetnikov_, Nov 20 2016",
+        "a(0) = 1, a(n) = (5/n)*Sum_{k=1..n} A285896(k)*a(n-k) for n > 0. - _Seiichi Manyama_, Apr 29 2017"
+    ],
+    "example": [
+        "G.f.: 1 + 5*x + 20*x^2 + 65*x^3 + 190*x^4 + 505*x^5 + 1260*x^6 + ..."
+    ],
+    "maple": [
+        "N:= 100: # to get a(0)..a(N)",
+        "S:= series(mul((1-x^(5*n))/(1-x^n)^5,n=1..N),x,N+1):",
+        "seq(coeff(S,x,n),n=0..N); # _Robert Israel_, Nov 09 2016"
+    ],
+    "mathematica": [
+        "nmax = 50; CoefficientList[Series[Product[(1 - x^(5*k))/(1 - x^k)^5, {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Nov 10 2016 *)",
+        "(QPochhammer[x^5, x^5]/QPochhammer[x, x]^5 + O[x]^40)[[3]] (* _Vladimir Reshetnikov_, Nov 20 2016 *)"
+    ],
+    "program": [
+        "(PARI) first(n)=my(x='x); Vec(prod(k=1, n, (1-x^(5*k))/(1-x^k)^5, 1+O(x^(n+1)))) \\\\ _Charles R Greathouse IV_, Nov 07 2016",
+        "(PARI) x='x+O('x^66); Vec(eta(x^5)/eta(x)^5) \\\\ _Joerg Arndt_, Nov 27 2016"
+    ],
+    "xref": [
+        "Cf. Expansion of Product_{n>=1} (1 - x^(k*n))/(1 - x^n)^k in powers of x: A015128 (k=2), A273845 (k=3), A274327 (k=4), this sequence (k=5), A160539 (k=7).",
+        "Cf. A109064."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Seiichi Manyama_, Nov 07 2016",
+    "references": 11,
+    "revision": 42,
+    "time": "2017-04-30T04:43:27-04:00",
+    "created": "2016-11-07T10:29:24-05:00"
+}

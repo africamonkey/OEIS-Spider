@@ -1,0 +1,46 @@
+{
+    "number": 255936,
+    "data": "0,0,1,95,23360,17853159,47300505935,455725535985152,16477833186525760257,2285218507961233452756479,1234874616385516438189472371200,2628743329824106687023439956782224783,22201933512060923158839975337648286975677119",
+    "name": "Number of n X n binary matrices having a contiguous 2 by 2 submatrix whose every element is 1.",
+    "comment": [
+        "This sequence is of interest in the theory of 'Reliability in Engineering', where a 2-dimensional m by n array of elements might be considered to have failed if and only if it includes a contiguous r by s rectangle of failed elements. This is an extension of the 1-dimensional problem exemplified by a sequence of pumping stations along a pipeline. In the case where each element fails with probability 1/2, independently of the other elements, computing the probability that the system fails becomes a combinatorial problem."
+    ],
+    "link": [
+        "S. R. Cowell, <a href=\"http://dx.doi.org/10.1155/2015/140909\">A formula for the reliability of a d-dimensional consecutive-k-out-of-n:F system</a>, International Journal of Combinatorics, Vol. 2015, Article ID 140909, 5 pages",
+        "<a href=\"/index/Mat#binmat\">Index entries for sequences related to binary matrices</a>"
+    ],
+    "formula": [
+        "a(n) = A002416(n) - A139810(n). - _Alois P. Heinz_, Mar 11 2015",
+        "a(n) = -2^(n^2) Sum_{J a nonempty subset of E} (-1)^|J| Prod_{J' a nonempty subset of J} exp[(-1)^|J'| log(2) max(0, 2-(max_{e in J'} e_1 - min_{e in J'} e_1)) max(0, 2-(max_{e in J'} e_2 - min_{e in J'} e_2))], for n >= 2, where E={1,..,n-1} x {1,..,n-1}. (special case of Corollary 2 in the Cowell reference) - _Simon Cowell_, Sep 07 2015"
+    ],
+    "mathematica": [
+        "failurenumber[m_, n_, r_, s_] :=",
+        "Module[{numberofnodes, numberofcases, cases, badsubmatrix,",
+        "   failurecases, i, j},",
+        "  numberofnodes = m n;",
+        "  numberofcases = 2^numberofnodes;",
+        "  cases = Tuples[{0, 1}, {m, n}];",
+        "  badsubmatrix = Table[1, {r}, {s}];",
+        "  failurecases =",
+        "   Parallelize[",
+        "    Select[cases,",
+        "     Apply[Or,",
+        "       Flatten[Table[#[[i ;; i + r - 1, j ;; j + s - 1]] ==",
+        "          badsubmatrix, {i, 1, m - r + 1}, {j, 1, n - s + 1}]]] &]];",
+        "  Length[failurecases] ]",
+        "failurenumberslist = Map[failurenumber[#1, #1, 2, 2] &, Range[2, 5]]"
+    ],
+    "xref": [
+        "Cf. A002416, A139810."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Simon Cowell_, Mar 11 2015",
+    "ext": [
+        "a(6)-a(12) from _Alois P. Heinz_, Mar 11 2015"
+    ],
+    "references": 0,
+    "revision": 34,
+    "time": "2015-10-23T03:48:49-04:00",
+    "created": "2015-03-12T17:40:35-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 91472,
+    "data": "2,12,320,43892",
+    "name": "Number of n X n matrices with entries {0,1} that are diagonalizable over the complex numbers.",
+    "comment": [
+        "A matrix M is diagonalizable over a field F if there is an invertible matrix S with entries from F such that S^(-1) M S is diagonal.",
+        "An n X n matrix M is diagonalizable if and only if it has n linearly independent eigenvectors."
+    ],
+    "reference": [
+        "R. A. Horn and C. R. Johnson, Matrix Analysis, Cambridge, 1988, Section 1.3."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/DiagonalizableMatrix.html\">Diagonalizable Matrix</a>",
+        "<a href=\"/index/Mat#binmat\">Index entries for sequences related to binary matrices</a>"
+    ],
+    "example": [
+        "a(2) = 12: all except 00/10, 01/00, 11/01, 10/11."
+    ],
+    "mathematica": [
+        "Needs[\"Utilities`FilterOptions`\"] Options[DiagonalizableQ]={ Field->Complexes, ZeroTest->(RootReduce[ # ]===0&) };",
+        "Matrices[n_, l_List:{0, 1}] := Partition[ #, n]&/@Flatten[Outer[List, Sequence@@Table[l, {n^2}]], n^2-1]",
+        "DiagonalizableQ[m_List?MatrixQ, opts___] := Module[ { field=Field/.{opts}/.Options[DiagonalizableQ], eigenopts=FilterOptions[Eigenvectors, opts] }, Switch[field, Complexes, ComplexDiagonalizableQ[m, eigenopts], Reals, RealDiagonalizableQ[m, eigenopts] ] ]",
+        "Table[Count[Matrices[n], _?DiagonalizableQ], {n, 4}]"
+    ],
+    "xref": [
+        "Cf. A091470, A091471."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Eric W. Weisstein_, Jan 12 2004",
+    "references": 2,
+    "revision": 10,
+    "time": "2015-08-13T21:39:46-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

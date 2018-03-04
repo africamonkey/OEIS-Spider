@@ -1,0 +1,36 @@
+{
+    "number": 159915,
+    "data": "0,0,0,1,2,2,3,6,8,8,10,15,18,18,21,28,32,32,36,45,50,50,55,66,72,72,78,91,98,98,105,120,128,128,136,153,162,162,171,190,200,200,210,231,242,242,253,276,288,288,300,325,338,338,351,378,392,392,406,435,450,450",
+    "name": "a(n)=floor((n+1)/4)*floor(n/2)",
+    "comment": [
+        "Half the number of (n-2)-element subsets of {1,...,n} with odd sum of the elements.",
+        "This is half the antepenultimate column of A159916, cf. formula.",
+        "The number of subsets of {1,...,n} with n-2 elements, adding up to an odd integer, is always even (cf. examples), so we divide it by 2.",
+        "We prefer to include a(0)=a(1)=a(2)=0, even if it might seem more natural to start only at n=2 or n=3.",
+        "From the rational g.f. it can be seen that the sequence is a linear recurrence with constant coefficients (3,-5,7,-7,5,-3,1) of order 7."
+    ],
+    "formula": [
+        "G.f.: x^3(1-x+x^2)/(1-3x+5x^2-7x^3+7x^4-5x^5+3x^6-x^7)",
+        "a(n)=3a(n-1)-5a(n-2)+7a(n-3)-7a(n-4)+5a(n-5)-3a(n-6)+a(n-7) for n>7",
+        "For n>2, a(n) = A159916(n(n-1)/2+n-2)/2 = T[n,n-2]/2 as defined there.",
+        "a(n)=[(n+1)/4][n/2] ; a(2n+1)=A093005(n) ; a(2n)=A093353(n-1)=[n/2]*n. - M. F. Hasler, May 03 2009"
+    ],
+    "example": [
+        "a(0)=a(1)=0 since there are no subsets with -2 or -1 elements.",
+        "a(2)=0 since the sum of the elements of a 0-element subset is zero.",
+        "a(3)=1 since for n=3 we have two singleton subsets of {1,2,3}, {1} and {3}, with odd sum of elements.",
+        "a(4)=2 since for n=4 we have four 2-element subsets of {1,2,3,4} with odd sum: {1,2}, {2,3}, {1,4}, {3,4}."
+    ],
+    "program": [
+        "(PARI) A159915(n)=polcoeff((1-x+x^2)/(1-3*x+5*x^2-7*x^3+7*x^4-5*x^5+3*x^6-x^7)+O(x^(n-2)),n-3)",
+        "a(n,t=[0,0,0,1,2,2,3],c=[1,-3,5,-7,7,-5,3]~)=while(n-->5,t=concat(vecextract(t,\"^1\"),t*c));t[n+2] /* NB: a(n+1,[0,0,0,0,1,2,2]) gives the same result as a(n) */",
+        "(PARI) A159915(n)=(n+1)\\4*(n\\2) \\\\\\\\ M. F. Hasler, May 03 2009"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,5",
+    "author": "_M. F. Hasler_, May 01 2009, May 03 2009",
+    "references": 1,
+    "revision": 3,
+    "time": "2012-07-14T11:32:25-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

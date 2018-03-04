@@ -1,0 +1,62 @@
+{
+    "number": 152132,
+    "data": "2,8,24,54,104,174,270,396,558,756,996,1282,1620,2010,2458,2968,3546,4192,4912,5710,6592,7558,8614,9764,11014,12364,13820,15386,17068,18866,20786,22832,25010,27320,29768,32358,35096,37982,41022,44220,47582",
+    "name": "Maximal length of rook tour on an n X n+1 board.",
+    "reference": [
+        "M. Gardner, Knotted Doughnuts and Other Mathematical Entertainments. Freeman, NY, 1986, p. 76."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A152132/b152132.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-3,1,1,-3,3,-1)."
+    ],
+    "formula": [
+        "G.f.: -2*x*(-1-x-2*x^3-2*x^4-3*x^2+x^5)/(1+x)/(x^2+1)/(x-1)^4.",
+        "a(n)= 3*a(n-1) -3*a(n-2) +a(n-3) +a(n-4) -3*a(n-5) +3*a(n-6) -a(n-7).",
+        "a(n) = 2*n^3/3+n^2-7*n/6+3/4-(-1)^n/4-A087960(n)/2."
+    ],
+    "maple": [
+        "# Figure 43 of the Gardner book:",
+        "C := proc(n,m)",
+        "if type(m,even) and type(n,even) then",
+        "2 ;",
+        "elif type(m,odd) and type(n,odd) then",
+        "1 ;",
+        "elif type(m,even) and type(n,odd) and type(floor(n/2),even) then",
+        "3/2 ;",
+        "elif type(m,even) and type(n,odd) and type(floor(n/2),odd) then",
+        "1/2 ;",
+        "elif type(m,odd) and type(n,even) and type(floor(n/2),even) then",
+        "0 ;",
+        "elif type(m,odd) and type(n,even) and type(floor(n/2),odd) then",
+        "1 ;",
+        "fi;",
+        "end:",
+        "# formula for n X m boards, from the Gardner book:",
+        "T := proc(n,m)",
+        "n*(3*m^2+n^2-10)/6+C(n,m) ;",
+        "end:",
+        "for n from 1 to 24 do",
+        "m := n+3 ; # third diagonal here, for example",
+        "printf(\"%d,\",T(n,m)) ;",
+        "od:"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[-2 * (-1 - x - 2*x^3 - 2*x^4 - 3*x^2 + x^5)/(1 + x)/(x^2 + 1)/(x - 1)^4, {x, 0, 40}], x] (* _Vincenzo Librandi_, Dec 14 2012 *)"
+    ],
+    "program": [
+        "(MAGMA) I:=[2, 8, 24, 54, 104, 174, 270]; [n le 7 select I[n] else 3*Self(n-1) - 3*Self(n-2) + Self(n-3) + Self(n-4) - 3*Self(n-5) + 3*Self(n-6)- Self(n-7): n in [1..50]]; // _Vincenzo Librandi_, Dec 14 2012"
+    ],
+    "xref": [
+        "Cf. A006071, A152133-A152135."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "R. J. Mathar, Mar 22 2009",
+    "ext": [
+        "More terms from _R. J. Mathar_, Sep 22 2009"
+    ],
+    "references": 9,
+    "revision": 14,
+    "time": "2015-06-13T00:52:44-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

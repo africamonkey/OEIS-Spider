@@ -1,0 +1,52 @@
+{
+    "number": 203154,
+    "data": "1,5,21,102,480,2688,14880,96480,622080,4613760,34110720,285586560,2386298880,22289541120,207921530880,2145056256000,22108972032000,249782787072000,2820035699712000,34637103857664000,425205351825408000",
+    "name": "(n-1)-st elementary symmetric function of {2, 3, 3, 4, 4, 5, 5,...,Floor[(n+4)/2]}.",
+    "link": [
+        "Robert Israel, <a href=\"/A203154/b203154.txt\">Table of n, a(n) for n = 1..502</a>"
+    ],
+    "example": [
+        "Let esf abbreviate \"elementary symmetric function\". Then",
+        "0th esf of {2}:  1",
+        "1st esf of {2,3}:  2+3=5;",
+        "2nd esf of {2,3,3} is 2*3+2*3+3*3=21."
+    ],
+    "maple": [
+        "SymmPolyn := proc(L::list,n::integer)",
+        "    local c,a,sel;",
+        "    a :=0 ;",
+        "    sel := combinat[choose](nops(L),n) ;",
+        "    for c in sel do",
+        "        a := a+mul(L[e],e=c) ;",
+        "    end do:",
+        "    a;",
+        "end proc:",
+        "A203154 := proc(n)",
+        "    [seq(floor((k+4)/2),k=1..n)] ;",
+        "    SymmPolyn(%,n-1);",
+        "end proc:  # _R. J. Mathar_, Sep 23 2016",
+        "# second Maple program:",
+        "f:=  proc(n) local L,x;",
+        "  if n::odd then L:= `*`(x+2,seq((x+i)$2, i=3..2+n/2))",
+        "  else L:= `*`(seq((x+i)*(x+i+1),i=2..1+n/2))",
+        "  fi;",
+        "  coeff(L,x,1);",
+        "end proc:",
+        "map(f, [$1..50]); # _Robert Israel_, Nov 27 2017"
+    ],
+    "mathematica": [
+        "f[k_] := Floor[(k + 4)/2]; t[n_] := Table[f[k], {k, 1, n}]",
+        "a[n_] := SymmetricPolynomial[n - 1, t[n]]",
+        "Table[a[n], {n, 1, 22}] (* A203154 *)"
+    ],
+    "xref": [
+        "Cf. A203152, A203153, A203155."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Dec 29 2011",
+    "references": 3,
+    "revision": 18,
+    "time": "2017-11-27T16:50:04-05:00",
+    "created": "2012-01-02T19:47:35-05:00"
+}

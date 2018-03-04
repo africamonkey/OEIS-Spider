@@ -1,0 +1,47 @@
+{
+    "number": 240902,
+    "data": "39,147,413,1268,1550,3964,9987,137097,238268,285993,2139783,4866838,74523325,131135109",
+    "name": "Consider a number of k digits n = d_(k)*10^(k-1) + d_(k-1)*10^(k-2) + \u2026 + d_(2)*10 + d_(1). Sequence lists the numbers n such that sigma(n)-n = Sum_{i=1..k-1}{sigma(Sum_{j=1..i}{d_(j)*10^(j-1)})}} + Sum_{i=1..k-1}{sigma(Sum_{j=1..i}{d_(k-j+1)*10^(i-j)})} (see example below)",
+    "comment": [
+        "a(15) > 10^10. - _Giovanni Resta_, May 23 2016"
+    ],
+    "example": [
+        "If n = 238268, starting from the least significant digit, let us cut the number into the set 8, 68, 268, 8268, 38268. We have:",
+        "sigma(8) = 15;",
+        "sigma(68) = 126;",
+        "sigma(268) = 476;",
+        "sigma(8268) = 21168;",
+        "sigma(38268) = 96824.",
+        "Then, starting from the most significant digit, let us cut the number into the set 2, 23, 238, 2382, 23826. We have:",
+        "sigma(2) = 3;",
+        "sigma(23) = 24;",
+        "sigma(238) = 432;",
+        "sigma(2382) = 4776;",
+        "sigma(23826) = 54864.",
+        "Finally, 15 + 126 + 476 + 21168 + 96824 + 3 + 24 + 432 + 4776 + 54864 = 178708 = sigma(238268) - 238268."
+    ],
+    "maple": [
+        "with(numtheory); P:=proc(q) local a,b,k,n;",
+        "for n from 2 to q do a:=0; k:=1; while trunc(n/10^k)>0 do",
+        "a:=a+sigma(trunc(n/10^k)); k:=k+1; od; b:=0; k:=1;",
+        "while (n mod 10^k)<n do b:=b+sigma(n mod 10^k); k:=k+1; od;",
+        "if sigma(n)-n=a+b then print(n); fi; od; end: P(10^9);"
+    ],
+    "program": [
+        "(PARI) isok(n) = {sa = 0; k = 1; while (x=n\\10^k, sa += sigma(x); k++;); sb = 0; k = 1; while ((x=n % 10^k) < n, if (x, sb += sigma(x)); k++;); sigma(n)-n == sa+sb;} \\\\ _Michel Marcus_, Jun 19 2015"
+    ],
+    "xref": [
+        "Cf. A000203, A240894-A240901."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Apr 16 2014",
+    "ext": [
+        "a(11)-a(12) from _Michel Marcus_, Jun 19 2015",
+        "a(13)-a(14) from _Giovanni Resta_, May 23 2016"
+    ],
+    "references": 9,
+    "revision": 17,
+    "time": "2016-05-24T16:13:27-04:00",
+    "created": "2014-04-16T05:37:17-04:00"
+}

@@ -1,0 +1,66 @@
+{
+    "number": 24629,
+    "data": "0,1,2,20,21,22,210,211,212,2100,2101,2102,2120,2121,2122,21010,21011,21012,21200,21201,21202,21220,21221,21222,210110,210111,210112,212000,212001,212002,212020,212021,212022,212210,212211,212212,2101100,2101101",
+    "name": "n written in fractional base 3/2.",
+    "comment": [
+        "A246435(n) = (number of digits in a(n)) = A055642(a(n)). - _Reinhard Zumkeller_, Sep 05 2014",
+        "The number of positive even n such that a(n) has k+1 digits is A005428(k). - _Glen Whitney_, Jul 09 2017"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A024629/b024629.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "J. S. Tanton, <a href=\"http://www.themathcircle.org/researchproblems.php\">A collection of research problems</a>"
+    ],
+    "formula": [
+        "To represent a number in base b, if a digit exceeds b, subtract b and carry 1. In fractional base a/b, subtract a and carry b."
+    ],
+    "example": [
+        "Representations of the first few numbers are:",
+        "0 = 0",
+        "1 = 1",
+        "2 = 2",
+        "3 = 2 0",
+        "4 = 2 1",
+        "5 = 2 2",
+        "6 = 2 1 0",
+        "7 = 2 1 1",
+        "8 = 2 1 2",
+        "9 = 2 1 0 0",
+        "10 = 2 1 0 1"
+    ],
+    "mathematica": [
+        "a[ n_] := If[ n < 1, 0, a[ Quotient[n, 3] 2] 10 + Mod[ n, 3]]; (* _Michael Somos_, Jun 18 2014 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def base32Expansion(n):",
+        "    L=[n]",
+        "    i=1",
+        "    while L[i-1]>2:",
+        "        x=L[i-1]",
+        "        L[i-1]=x.mod(3)",
+        "        L.append(2*floor(x/3))",
+        "        i+=1",
+        "    L.reverse()",
+        "    T=Integer(join([str(x) for x in L],''))",
+        "    return T",
+        "[base32Expansion(y) for y in [0..50]] # - _Tom Edgar_, _Hailey R. Olafson_, and _James Van Alstine_, Jun 17 2014",
+        "(PARI) {a(n) = if( n<1, 0, a(n\\3 * 2) * 10 + n%3)}; /* _Michael Somos_, Jun 18 2014 */",
+        "(Haskell)",
+        "a024629 0 = 0",
+        "a024629 n = 10 * a024629 (2 * n') + t where (n', t) = divMod n 3",
+        "-- _Reinhard Zumkeller_, Sep 05 2014"
+    ],
+    "xref": [
+        "Cf. A081848, A246435 (string lengths), A244040 (digit sums)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "Tanton link corrected by _Charles R Greathouse IV_, Oct 20 2008"
+    ],
+    "references": 10,
+    "revision": 30,
+    "time": "2017-07-24T12:00:26-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

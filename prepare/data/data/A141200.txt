@@ -1,0 +1,70 @@
+{
+    "number": 141200,
+    "data": "1,1,2,6,20,72,272,1065,4282,17576,73344,310226,1327036,5730948,24952776,109417672,482779032,2141832444,9548501992,42753897498,192184437012,866963862560,3923596330784,17809292215406,81055344516420",
+    "name": "G.f. satisfies: A(x) = x + A(A(x)^2).",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A141200/b141200.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x - A(x^2)) = x.",
+        "(2) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) A(x^2)^n / n!.",
+        "(3) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) A(x^2)^n/x / n! ).",
+        "(4) A(x) = x + G(x) + G(G(x)) + G(G(G(x))) + G(G(G(G(x)))) +... where G(x) = A(x)^2 = g.f. of A141201.",
+        "Contribution from _Paul D. Hanna_, Jun 18 2010: (Start)",
+        "Derivative of g.f. A(x) satisfies A'(x) = 1/(1 - 2*A(x)*A'(A(x)^2)).",
+        "Radius of convergence, r, and related values:",
+        ". r = 0.206450159053688924498041214308637032933597292895284203439137...",
+        ". A(r) = 0.350063281326319514237505104302392755865233862157808469329...",
+        "where r = A(r) - A(A(r)^2);",
+        ". A(A(r)^2) = 0.1436131222726305897394638899937557229316365692625242...",
+        ". A'(A(r)^2) = 1.428313184135166508863259733728425402891099463888244...",
+        "where A'(A(r)^2) = 1/(2*A(r)).",
+        "G.f. of A178852 is V(x) = x/(x - A(x^2)) where:",
+        "V'(A(r)) = 1/r,",
+        "V(A(x)) = A(x)/x and A(x/V(x)) = x.",
+        "(End)",
+        "Let B(x) = Sum_{n>=1} a(n)*x^(2*n), then B(x) = x^2 + B(B(x)). [From _Paul D. Hanna_, Jul 15 2011]",
+        "a(n) ~ c / (r^n * n^(3/2)), where c = 0.073344948246606003114646... . - _Vaclav Kotesovec_, Dec 02 2014"
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^2 + 2*x^3 + 6*x^4 + 20*x^5 + 72*x^6 + 272*x^7 +...",
+        "The g.f. satisfies the series:",
+        "A(x) = x + A(x^2) + d/dx A(x^2)^2/2! + d^2/dx^2 A(x^2)^3/3! + d^3/dx^3 A(x^2)^4/4! +...",
+        "as well as the logarithmic series:",
+        "log(A(x)/x) = A(x^2)/x + [d/dx A(x^2)^3/x]/2! + [d^2/dx^2 A(x^2)^3/x]/3! + [d^3/dx^3 A(x^2)^4/x]/4! +...",
+        "Related expansions.",
+        "A(x)^2 = x^2 + 2*x^3 + 5*x^4 + 16*x^5 + 56*x^6 + 208*x^7 + 804*x^8 +...",
+        "The series reversion of A(x) equals x - A(x^2), therefore",
+        "A(x - x^2 - x^4 - 2*x^6 - 6*x^8 - 20*x^10 - 72*x^12 -...) = x.",
+        "Let G(x) = A(x)^2 then",
+        "G(G(x)) = x^4 + 4*x^5 + 16*x^6 + 64*x^7 + 260*x^8 + 1072*x^9 +...",
+        "G(G(G(x))) = x^8 + 8*x^9 + 48*x^10 + 256*x^11 + 1290*x^12 +...",
+        "where A(x) = x + G(x) + G(G(x)) + G(G(G(x))) + ..."
+    ],
+    "mathematica": [
+        "terms = 25; A[_] = 0; Do[A[x_] = x + A[A[x]^2] + O[x]^(terms+1) // Normal, terms+1]; CoefficientList[A[x], x] // Rest (* _Jean-Fran\u00e7ois Alcover_, Jan 09 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x+x^2);for(i=0,n,A=serreverse(x-subst(A,x,x^2+x^2*O(x^n)))) ;polcoeff(A,n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); for(i=1, n, A=x+sum(m=1, n, Dx(m-1, subst(A,x,x^2+x*O(x^n))^m)/m!)+x*O(x^n)); polcoeff(A, n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); for(i=1, n, A=x*exp(sum(m=1, n, Dx(m-1, subst(A,x,x^2+x*O(x^n))^m/x)/m!)+x*O(x^n))); polcoeff(A, n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(Maxima) Co(n, k, F):=if k=1 then F(n) else sum(F(i+1)*Co(n-i-1, k-1, F), i, 0, n-k); a(n):=if n=1 then 1 else sum(if 2*k>n then 0 else Co(n, 2*k, a)*a(k), k, 1, n); makelist(a(n), n, 1, 10); [_Vladimir Kruchinin_, Aug 02 2011]",
+        "(Maxima) T(n,m):=if n=m then 1 else kron_delta(n,m)+sum(binomial(m,j)*sum(if 2*k<=n-j then T(n-j,2*k)*T(k,m-j) else 0,k,m-j,n-j),j,0,m-1); makelist(T(n,1),n,1,12); [_Vladimir Kruchinin_, May 02 2012]"
+    ],
+    "xref": [
+        "Cf. A141201.",
+        "Cf. A178852. [From _Paul D. Hanna_, Jun 18 2010]"
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Jun 12 2008, Jun 13 2008",
+    "references": 13,
+    "revision": 32,
+    "time": "2018-02-02T14:00:12-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

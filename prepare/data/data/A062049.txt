@@ -1,0 +1,58 @@
+{
+    "number": 62049,
+    "data": "2,2,3,3,4,5,6,7,8,9,10,11,13,14,15,16,17,19,20,21,23,24,25,27,28,29,31,32,34,35,36,38,39,41,43,44,46,47,49,50,52,53,55,57,58,60,61,63,65,66,68,70,71,73,75,76,78,80,82,83,85,87,88,90,92,94,95,97,99,101,103",
+    "name": "Integer part of geometric mean of first n primes.",
+    "comment": [
+        "For large n, the ratio prime(n)/a(n) tends to e (very slowly). This was conjectured by Anton Vrba in 2010 (see Rivera, 2010) and proved by Sandor and Verroken (2011). Tighter bounds and asymptotics for a(n) are proved in the note \"On the geometric mean of the first n primes\" (2016) (see links). Better formulas prime(n)/a(n) ~ exp(1 + several terms A233824(k) / log^k(prime(n))) exist for larger n; see examples in the formula section. - _Alexei Kourbatov_, Feb 27 2016."
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A062049/b062049.txt\">Table of n, a(n) for n=1..1000</a>",
+        "Christian Axler, <a href=\"https://arxiv.org/abs/1609.07934\">On the arithmetic and geometric means of the prime numbers</a>, arXiv:1609.07934 [math.NT], 2016.",
+        "A. Kourbatov, <a href=\"http://arxiv.org/abs/1603.00855\">On the geometric mean of the first n primes</a>, arXiv:1603.00855 [math.NT], 2016.",
+        "C. Rivera, ed. <a href=\"http://www.primepuzzles.net/conjectures/conj_067.htm\">Conjecture 67. Primes and e</a>, 2010.",
+        "J. Sandor and A. Verroken, <a href=\"http://nntdm.net/papers/nntdm-17/NNTDM-17-2-01-03.pdf\">On a limit involving the product of prime numbers</a>, Notes Number Theory Discrete Math. 17 (2011), No. 2, 1-3."
+    ],
+    "formula": [
+        "From _Alexei Kourbatov_, Feb 22 2016: (Start)",
+        "a(n) ~ prime(n)/exp(1 + 1/log(prime(n)) + O(1/log^2(prime(n)))).",
+        "a(n) ~ prime(n)/e (this approximation is poor).",
+        "a(n) ~ prime(n)/exp(1 + 1/log(prime(n))).",
+        "a(n) ~ prime(n)/exp(1 + 1/log(prime(n)) + 3/log^2(prime(n))).",
+        "a(n) ~ prime(n)/exp(1 + 1/log(prime(n)) + 3/log^2(prime(n)) + 13/log^3(prime(n))).",
+        "a(n) < (1/2)*prime(n) for n>3.",
+        "(End)",
+        "a(n) = floor(A002110(n)^(1/n)). - _Michel Marcus_, Feb 22 2016"
+    ],
+    "example": [
+        "a(5) = floor( (2*3*5*7*11)^(1/5) ) = 4."
+    ],
+    "maple": [
+        "P:= 1:",
+        "A[0]:= 1:",
+        "for n from 1 to 100 do",
+        "  P:= ithprime(n)*P;",
+        "  for k from A[n-1] while (k+1)^n <= P do od:",
+        "  A[n]:= k;",
+        "od:",
+        "seq(A[i],i=1..100); # _Robert Israel_, Feb 22 2016"
+    ],
+    "mathematica": [
+        "With[{pl=Prime[Range[80]]},Table[IntegerPart[GeometricMean[Take[pl,n]]],{n,80}]] (* _Harvey P. Dale_, Mar 31 2012 *)"
+    ],
+    "program": [
+        "(PARI) { default(realprecision, 100); p=1; for (n=1, 1000, p*=prime(n); write(\"b062049.txt\", n, \" \", p^(1/n)\\1) ) } \\\\ _Harry J. Smith_, Jul 30 2009"
+    ],
+    "xref": [
+        "Cf. A002110, A060620, A233824."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Jun 06 2001",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org) and _Matthew Conroy_, Jun 11 2001"
+    ],
+    "references": 2,
+    "revision": 45,
+    "time": "2017-07-19T03:08:39-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

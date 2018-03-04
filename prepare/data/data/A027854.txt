@@ -1,0 +1,45 @@
+{
+    "number": 27854,
+    "data": "12,24,30,36,40,45,48,56,60,63,70,72,80,84,90,96,105,108,112,120,126,132,135,140,144,150,154,160,165,168,175,176,180,182,189,192,195,198,200,208,210,216,220,224,225,231,234,240,252,260,264,270,273,275,280",
+    "name": "Mutinous numbers: n>1 such that n/p^k > p, where p is the largest prime dividing n and p^k is the highest power of p dividing n.",
+    "comment": [
+        "Numbers n > 1 such that n/A053585(n) > A006530(n). - _Michael De Vlieger_, Jul 13 2017",
+        "If p = A006530(a(n)) then p * a(n) is in the sequence. E.g. As 12 is in the sequence with Gpf(12) = A006530(12) = 3, 12*3^k is in the sequence for k > 0. Conjecture: if m is in the sequence then so is A003961(m). - _David A. Corneth_, Jul 13 2017"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A027854/b027854.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "From _Michael De Vlieger_, Jul 13 2017: (Start)",
+        "12 is a term since 12/A053585(12) = 12/3 = 4, A006530(12) = 3, and 4 > 3.",
+        "30 is a term since 30/A053585(30) = 30/5 = 6, A006530(30) = 5, and 6 > 5.",
+        "(End)"
+    ],
+    "mathematica": [
+        "Select[Range@ 280, Function[n, (n/Apply[Power, Last@ #]) > #[[-1, 1]] &@ FactorInteger[n]]] (* _Michael De Vlieger_, Jul 13 2017 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {my(f = factor(n)); my(maxf = #f~); my(p = f[maxf, 1]); my(pk = f[maxf, 2]); (n/p^pk) > p;} \\\\ _Michel Marcus_, Jan 16 2014",
+        "(Python)",
+        "from sympy import factorint, primefactors",
+        "def a053585(n):",
+        "    if n==1: return 1",
+        "    p = primefactors(n)[-1]",
+        "    return p**factorint(n)[p]",
+        "print [n for n in xrange(2, 301) if n/a053585(n)>primefactors(n)[-1]] # _Indranil Ghosh_, Jul 13 2017"
+    ],
+    "xref": [
+        "Cf. A006530, A027855, A053585."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Leroy Quet_.",
+    "ext": [
+        "Extended by _Ray Chandler_, Nov 17 2008",
+        "Offset changed to 1 by _Michel Marcus_, Jan 16 2014"
+    ],
+    "references": 7,
+    "revision": 29,
+    "time": "2017-07-13T21:50:53-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

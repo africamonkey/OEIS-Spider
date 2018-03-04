@@ -1,0 +1,42 @@
+{
+    "number": 192962,
+    "data": "1,2,7,15,30,55,97,166,279,463,762,1247,2033,3306,5367,8703,14102,22839,36977,59854,96871,156767,253682,410495,664225,1074770,1739047,2813871,4552974,7366903,11919937,19286902,31206903,50493871,81700842",
+    "name": "Constant term of the reduction by x^2->x+1 of the polynomial p(n,x) defined at Comments.",
+    "comment": [
+        "The titular polynomials are defined recursively:  p(n,x)=x*p(n-1,x)+n+n^2, with p(0,x)=1.  For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232 and A192744."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A192962/b192962.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-2,-1,1)."
+    ],
+    "formula": [
+        "a(n) = 3*a(n-1) - 2*a(n-2) - a(n-3) + a(n-4).",
+        "G.f.: x*(-1+x-3*x^2+x^3) / ( (x^2+x-1)*(x-1)^2 ). - _R. J. Mathar_, May 09 2014",
+        "a(n) -2*a(n-1) + a(n-2) = A022120(n-4). - _R. J. Mathar_, May 09 2014"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 40;",
+        "p[0, x] := 1;",
+        "p[n_, x_] := x*p[n - 1, x] + n^2 + n;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "  (* A192962 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "  (* A192963 *)",
+        "CoefficientList[Series[(-1 + x - 3 x^2 + x^3)/((x^2 + x - 1) (x - 1)^2), {x, 0, 40}], x] (* _Vincenzo Librandi_, May 09 2014 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192744, A192951, A192963."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Jul 13 2011",
+    "references": 3,
+    "revision": 17,
+    "time": "2015-06-13T00:53:55-04:00",
+    "created": "2011-07-13T20:18:13-04:00"
+}

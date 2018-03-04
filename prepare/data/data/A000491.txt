@@ -1,0 +1,50 @@
+{
+    "number": 491,
+    "id": "M4365 N1830",
+    "data": "7,19,47,97,189,339,589,975,1576,2472,3804,5727,8498,12400,17874,25433,35818,49908,68939,94378,128234,172917,231630,308240,407804,536412,701910,913773,1184022,1527165,1961432,2508762,3196473,4057403,5132066",
+    "name": "Number of bipartite partitions of n white objects and 5 black ones.",
+    "comment": [
+        "Number of ways to factor p^n*q^5 where p and q are distinct primes.",
+        "a(n) = if n <= 5 then A054225(5,n) else A054225(n,5). [_Reinhard Zumkeller_, Nov 30 2011]"
+    ],
+    "reference": [
+        "M. S. Cheema and H. Gupta, Tables of Partitions of Gaussian Integers. National Institute of Sciences of India, Mathematical Tables, Vol. 1, New Delhi, 1956, p. 1.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A000491/b000491.txt\">Table of n, a(n) for n = 0..500</a>",
+        "F. C. Auluck, <a href=\"http://dx.doi.org/10.1017/S0305004100028061\">On partitions of bipartite numbers</a>, Proc. Cambridge Philos. Soc. 49, (1953). 72-83.",
+        "F. C. Auluck, <a href=\"/A002774/a002774.pdf\">On partitions of bipartite numbers, annotated scan of a few pages.</a>",
+        "M. S. Cheema and H. Gupta, <a href=\"/A002755/a002755.pdf\">Tables of Partitions of Gaussian Integers. National Institute of Sciences of India, Mathematical Tables, Vol. 1, New Delhi, 1956</a> (Annotated scanned pages from, plus a review)"
+    ],
+    "formula": [
+        "a(n) ~ 3*n^(3/2) * exp(Pi*sqrt(2*n/3)) / (20*sqrt(2)*Pi^5). - _Vaclav Kotesovec_, Feb 01 2016"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n, k) option remember; `if`(n>k, 0, 1) +`if`(isprime(n), 0,",
+        "      add(`if`(d>k, 0, b(n/d, d)), d=divisors(n) minus {1, n}))",
+        "    end:",
+        "a:= n-> b(243*2^n$2):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jun 27 2013"
+    ],
+    "mathematica": [
+        "b[n_, k_] := b[n, k] = If[n>k, 0, 1] + If[PrimeQ[n], 0, Sum[If[d>k, 0, b[n/d, d]], {d, DeleteCases[Divisors[n], 1|n]}]]; a[n_] := b[3^5*2^n, 3^5*2^n]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Mar 13 2014, after _Alois P. Heinz_ *)",
+        "nmax = 50; CoefficientList[Series[(7 + 5*x + 2*x^2 - 2*x^3 - 7*x^4 - 9*x^5 - 6*x^6 + x^7 + 4*x^8 + 6*x^9 + 3*x^10 + x^11 - 3*x^12 - 2*x^13 + x^14)/((1-x)*(1-x^2)*(1-x^3)*(1-x^4)*(1-x^5)) * Product[1/(1 - x^k), {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Feb 01 2016 *)"
+    ],
+    "xref": [
+        "Column 5 of A054225.",
+        "Cf. A005380."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "Edited by _Christian G. Bower_, Jan 08 2004"
+    ],
+    "references": 5,
+    "revision": 43,
+    "time": "2016-02-01T06:05:24-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 194530,
+    "data": "0,1,3,9,32,132,623,3314,19628,128126,914005,7074517,59050739,528741491,5055414317,51406084221,553946196892,6305737560455,75610546284387,952559077043183,12579235034203780,173759983171005721,2505751777457313815,37657189917162605826",
+    "name": "Number of unlabeled rigid interval posets with n non-maximal and 2 maximal elements.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A194530/b194530.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Soheir Mohamed Khamis, <a href=\"http://dx.doi.org/10.1007/s11083-011-9213-5\">Exact Counting of Unlabeled Rigid Interval Posets Regarding or Disregarding Height</a>, Order (journal) (2011)."
+    ],
+    "formula": [
+        "a(n) = [ y^n z^2 ] W(y,z); W(y,z) = z + z*(W(y,y+z+yz) - W(y,z))."
+    ],
+    "maple": [
+        "w:= proc(t) option remember;",
+        "      `if`(t=0, 1, expand(convert(series(series(z +z*(subs(",
+        "           z=z+y+y*z, w(t-1)) -w(t-1)), z, t+1), y, t+1), polynom)))",
+        "    end:",
+        "a:= n-> coeff(coeff(w(2+n), z, 2), y, n):",
+        "seq(a(n), n=0..50);"
+    ],
+    "mathematica": [
+        "w[t_] := w[t] = If[t == 0, 1, Expand[Normal[Series[Series[z+z*((w[t-1] /. z -> z+y+y*z)-w[t-1]), {z, 0, t+1}], {y, 0, t+1}]]]]; a[n_] := a[n] = Coefficient[Coefficient[w[2+n], z, 2], y, n]; Table[Print[\"a(\", n, \") = \", a[n]]; a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Mar 05 2014, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "2nd column of A193344.",
+        "Column k=2 of A218757."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 28 2011",
+    "references": 3,
+    "revision": 19,
+    "time": "2017-08-15T13:05:06-04:00",
+    "created": "2011-08-28T03:18:05-04:00"
+}

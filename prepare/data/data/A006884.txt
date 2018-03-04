@@ -1,0 +1,54 @@
+{
+    "number": 6884,
+    "id": "M0843",
+    "data": "1,2,3,7,15,27,255,447,639,703,1819,4255,4591,9663,20895,26623,31911,60975,77671,113383,138367,159487,270271,665215,704511,1042431,1212415,1441407,1875711,1988859,2643183,2684647,3041127,3873535,4637979,5656191",
+    "name": "In the `3x+1' problem, these values for the starting value set new records for highest point of trajectory before reaching 1.",
+    "comment": [
+        "Both the 3x+1 steps and the halving steps are counted.",
+        "Where records occur in A025586: A006885(n) = A025586(a(n)) and A025586(m) < A006885(n) for m < a(n). - _Reinhard Zumkeller_, May 11 2013"
+    ],
+    "reference": [
+        "R. B. Banks, Slicing Pizzas, Racing Turtles and Further Adventures in Applied Mathematics, Princeton Univ. Press, 1999. See p. 96.",
+        "B. Hayes, Computer Recreations: On the ups and downs of hailstone numbers, Scientific American, 250 (No. 1, 1984), pp. 10-16.",
+        "D. R. Hofstadter, Goedel, Escher, Bach: an Eternal Golden Braid, Random House, 1980, p. 400.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe and N. J. A. Sloane, <a href=\"/A006884/b006884.txt\">Table of n, a(n) for n = 1..89</a> (from Eric Roosendaal's data, supplemented by further values from the web page of Tom\u00e1s Oliveira e Silva)",
+        "G. T. Leavens and M. Vermeulen, <a href=\"http://dx.doi.org/10.1016/0898-1221(92)90034-F\">3x+1 search problems</a>, Computers and Mathematics with Applications, 24 (1992), 79-99.",
+        "G. T. Leavens and M. Vermeulen, <a href=\"/A006877/a006877_1.pdf\">3x+1 search programs</a>, Computers and Mathematics with Applications, 24 (1992), 79-99. (Annotated scanned copy)",
+        "J. C. Lagarias, <a href=\"http://www.cecm.sfu.ca/organics/papers/lagarias/paper/html/paper.html\">The 3x+1 problem and its generalizations</a>, Amer. Math. Monthly, 92 (1985), 3-23.",
+        "Tom\u00e1s Oliveira e Silva, <a href=\"http://sweet.ua.pt/tos/3x_plus_1.html\">Tables</a> (gives many more terms)",
+        "Eric Roosendaal, <a href=\"http://www.ericr.nl/wondrous/pathrecs.html\">3x+1 Path Records</a>",
+        "R. G. Wilson, V, <a href=\"/A006877/a006877.pdf\">Letter to N. J. A. Sloane with attachments, Jan. 1989</a>",
+        "R. G. Wilson, V, <a href=\"/A006884/a006884.pdf\">Tables of A6877, A6884, A6885, Jan. 1989</a>",
+        "<a href=\"/index/3#3x1\">Index entries for sequences related to 3x+1 (or Collatz) problem</a>",
+        "<a href=\"/index/Go#GEB\">Index entries for sequences from \"Goedel, Escher, Bach\"</a>"
+    ],
+    "mathematica": [
+        "mcoll[n_]:=Max@@NestWhileList[If[EvenQ[#],#/2,3#+1]&,n,#>1&]; t={1,max=2}; Do[If[(y=mcoll[n])>max,max=y; AppendTo[t,n]],{n,3,705000,4}]; t (* _Jayanta Basu_, May 28 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a006884 n = a006884_list !! (n-1)",
+        "a006884_list = f 1 0 a025586_list where",
+        "   f i r (x:xs) = if x > r then i : f (i + 1) x xs else f (i + 1) r xs",
+        "-- _Reinhard Zumkeller_, May 11 2013",
+        "(PARI) A025586(n)=my(r=n); while(n>2, if(n%2, n=3*n+1; if(n>r, r=n)); n>>=1); r",
+        "r=0; for(n=1,1e6, t=A025586(n); if(t>r, r=t; print1(n\", \"))) \\\\ _Charles R Greathouse IV_, May 25 2016"
+    ],
+    "xref": [
+        "A060409 gives associated \"dropping times\", A060410 the maximal values and A060411 the steps at which the maxima occur.",
+        "Cf. A006885, A006877, A006878, A033492, A060412-A060415, A132348."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, _Robert Munafo_",
+    "ext": [
+        "b-file extended by _N. J. A. Sloane_, Nov 27 2007"
+    ],
+    "references": 27,
+    "revision": 42,
+    "time": "2017-11-08T16:59:21-05:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

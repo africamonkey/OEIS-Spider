@@ -1,0 +1,39 @@
+{
+    "number": 147780,
+    "data": "1,4,54,8422,464862602,7134230598346156958,13246386641663595526163132113862494582602,643152870463337226096381089442329605982736165294243832777767297119502149008481206286",
+    "name": "Number of nodes at n-th level in tree in which top node is 1; each node k has children labeled 1, 2, ..., (k+1)^2 at next level.",
+    "comment": [
+        "See the reference in A058311 for a better way to compute this!"
+    ],
+    "maple": [
+        "M:=3;",
+        "L[0]:=[1]; a[0]:=1;",
+        "for n from 1 to M do",
+        "L[n]:=[];",
+        "t1:=L[n-1];",
+        "tc:=nops(t1);",
+        "for i from 1 to tc do",
+        "t2:=t1[i];",
+        "for j from 1 to (t2+1)^2 do",
+        "L[n]:=[op(L[n]),j]; od:",
+        "a[n]:=nops(L[n]);",
+        "#lprint(n,L[n],a[n]);",
+        "od:",
+        "od:",
+        "[seq(a[n],n=0..M)];",
+        "p := proc(n,k) option remember; local j ; if n = 1 then (k+1)^2; else sum( procname(n-1,j),j=1..(k+1)^2) ; fi; expand(%) ; end: A147780 := proc(n) if n = 0 then 1 ; else subs(k=1, p(n,k)) ; fi; end: for n from 0 do printf(\"%d,\\n\", A147780(n)) ; od: # _R. J. Mathar_, May 04 2009"
+    ],
+    "xref": [
+        "A variant of A058311. Cf. A147794."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, May 03 2009",
+    "ext": [
+        "4 more terms from _R. J. Mathar_, May 04 2009"
+    ],
+    "references": 3,
+    "revision": 5,
+    "time": "2017-08-06T20:17:33-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

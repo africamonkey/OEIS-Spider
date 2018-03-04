@@ -1,0 +1,52 @@
+{
+    "number": 212387,
+    "data": "1,1,1,1,1,1,1,1,2,10,46,166,496,1288,3004,6437,12895,24583,45799,87211,180235,420547,1087220,2941931,7927664,20705636,51886966,124660576,288445186,648173927,1431655546,3156274456,7062245781,16256654077,38704049941,94853117381",
+    "name": "Number of Dyck n-paths all of whose ascents have lengths equal to 1 (mod 7).",
+    "comment": [
+        "Lengths of descents are unrestricted."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A212387/b212387.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Vaclav Kotesovec, <a href=\"http://oeis.org/A212382/a212382.pdf\">Asymptotic of subsequences of A212382</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = 1+x*A(x)/(1-(x*A(x))^7).",
+        "a(n) ~ s^2 / (n^(3/2) * r^(n-1/2) * sqrt(2*Pi*p*(s-1)*(1+s/(1+p*(s-1))))), where p = 7 and r = 0.4020785148135889828..., s = 1.877947072112206660... are roots of the system of equations r = p*(s-1)^2 / (s*(1-p+p*s)), (r*s)^p = (s-1-r*s)/(s-1). - _Vaclav Kotesovec_, Jul 16 2014",
+        "a(n) = Sum_{k=0..n} (binomial(6*k-5*n-1,n-k)*binomial(n+1,7*k-6*n))/(n+1). - _Vladimir Kruchinin_, Mar 05 2016"
+    ],
+    "example": [
+        "a(0) = 1: the empty path.",
+        "a(1) = 1: UD.",
+        "a(8) = 2: UDUDUDUDUDUDUDUD, UUUUUUUUDDDDDDDD.",
+        "a(9) = 10: UDUDUDUDUDUDUDUDUD, UDUUUUUUUUDDDDDDDD, UUUUUUUUDDDDDDDDUD, UUUUUUUUDDDDDDDUDD, UUUUUUUUDDDDDDUDDD, UUUUUUUUDDDDDUDDDD, UUUUUUUUDDDDUDDDDD, UUUUUUUUDDDUDDDDDD, UUUUUUUUDDUDDDDDDD, UUUUUUUUDUDDDDDDDD."
+    ],
+    "maple": [
+        "b:= proc(x, y, u) option remember;",
+        "      `if`(x<0 or  y<x, 0, `if`(x=0 and y=0, 1, b(x, y-1, true)+",
+        "      `if`(u, add (b(x-(7*t+1), y, false), t=0..(x-1)/7), 0)))",
+        "    end:",
+        "a:= n-> b(n$2, true):",
+        "seq(a(n), n=0..40);",
+        "# second Maple program",
+        "a:= n-> coeff(series(RootOf(A=1+x*A/(1-(x*A)^7), A), x, n+1), x, n):",
+        "seq(a(n), n=0..40);"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[Binomial[6k-5n-1, n-k]*Binomial[n+1, 7k-6n], {k, 0, n}]/(n+1);",
+        "Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Apr 03 2017, after _Vladimir Kruchinin_ *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum(binomial(6*k-5*n-1, n-k)*binomial(n+1, 7*k-6*n), k, 0, n)/(n+1); /* _Vladimir Kruchinin_, Mar 05 2016 */"
+    ],
+    "xref": [
+        "Column k=7 of A212382."
+    ],
+    "keyword": "nonn",
+    "offset": "0,9",
+    "author": "_Alois P. Heinz_, May 12 2012",
+    "references": 2,
+    "revision": 26,
+    "time": "2017-04-15T00:49:49-04:00",
+    "created": "2012-05-13T17:07:25-04:00"
+}

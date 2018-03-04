@@ -1,0 +1,58 @@
+{
+    "number": 6933,
+    "id": "M1030",
+    "data": "2,4,6,30,32,34,36,40,42,44,46,50,52,54,56,60,62,64,66,2000,2002,2004,2006,2030,2032,2034,2036,2040,2042,2044,2046,2050,2052,2054,2056,2060,2062,2064,2066,4000,4002,4004,4006,4030,4032,4034,4036,4040,4042,4044,4046,4050,4052,4054,4056,4060,4062,4064,4066,6000",
+    "name": "`Eban' numbers (the letter `e' is banned!).",
+    "comment": [
+        "Invented by _N. J. A. Sloane_ circa 1990.",
+        "Theorem (_N. J. A. Sloane_): In English every odd number contains an `e'.",
+        "The first number that would appear in the British Eban list but not the American list is 2*10^21. - _Douglas Boffey_, Jun 21 2012",
+        "A085513(a(n)) = 0. - _Reinhard Zumkeller_, Jan 23 2015"
+    ],
+    "reference": [
+        "J. C. Hernandez et al., \"Characterization of Eban numbers\", pp. 197-200, Journal of Recreational Mathematics, 31 (3) 2002-2003.",
+        "Georges Perec, La disparition, Editions Gallimard, Paris, 1969; English translation: A Void, Harvill, 1994. (A novel that does does not use the letter \"e\".)",
+        "Georges Perec, Les Revenentes [a novel in which the only vowel that appears is `e']. - From _Simon Plouffe_, Mar 12 2010",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A006933/b006933.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Roel and Bas van Dijk, <a href=\"http://hackage.haskell.org/package/numerals\">Numerals package</a>, Hackage (Haskell packages)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/EbanNumber.html\">Eban Number</a>",
+        "<a href=\"/index/Lc#letters\">Index entries for sequences related to number of letters in n</a>"
+    ],
+    "example": [
+        "2052 is in the sequence because written out in English words, \"two thousand fifty-two,\" it does not contain a single instance of the letter E.",
+        "2053 (two thousand fifty-three) is not in the sequence because written out it contains two instances of E."
+    ],
+    "program": [
+        "(MAGMA) [ n : n in [1..100] | forall{ i : i in [1..#seq] | seq[i] in eban[(i-1)mod 3+1]} where seq is Intseq(n) ] where eban is [[0,2,4,6],[0,3,4,5,6],[0]]; // Sergei Haller (sergei(AT)sergei-haller.de), Dec 21 2006",
+        "(Haskell)",
+        "import Data.Maybe (fromJust)",
+        "import Data.Text (Text); import qualified Data.Text as T (unpack)",
+        "import Text.Numeral.Grammar.Reified (defaultInflection)",
+        "import qualified Text.Numeral.Language.EN as EN  -- see link",
+        "a006933 n = a006933_list !! (n-1)",
+        "a006933_list = filter (T.all (/= 'e') . numeral) [0..] where",
+        "   numeral :: Integer -> Text",
+        "   numeral = fromJust . EN.gb_cardinal defaultInflection",
+        "-- _Reinhard Zumkeller_, Jan 23 2015",
+        "(Python)",
+        "from num2words import num2words",
+        "print [n for n in xrange(6001) if num2words(n).count('e')==0] # _Indranil Ghosh_, Jul 05 2017"
+    ],
+    "xref": [
+        "Cf. A082504.",
+        "Cf. A085513, A008520 (complement), A089589 (ban i), A008521 (ban o), A008523 (ban t), A089590 (ban u), A014254 (a French version), A287876 (a Hebrew version)."
+    ],
+    "keyword": "word,nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _WG Zeist_, Aug 28 2012"
+    ],
+    "references": 15,
+    "revision": 48,
+    "time": "2017-07-05T16:18:11-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 229330,
+    "data": "0,1,258,6821,72872,470319,2229624,8464487,27530298,78974938,206418978,497450302,1126668140,2410089243,4930872330,9670306930,18336637198,33650085029,60146112858,104730757818,178524931538,297898015114,488407670832,786658901771",
+    "name": "Total sum of 8th powers of parts in all partitions of n.",
+    "comment": [
+        "The bivariate g.f. for the partition statistic \"sum of 8th powers of the parts\" is G(t,x) = 1/Product_{k>=1}(1 - t^{k^8}*x^k). The g.f. g at the Formula section has been obtained by evaluating dG/dt at t=1. - _Emeric Deutsch_, Dec 06 2015"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A229330/b229330.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Guo-Niu Han, <a href=\"https://arxiv.org/abs/0804.1849\">An explicit expansion formula for the powers of the Euler Product in terms of partition hook lengths</a>, arXiv:0804.1849 [math.CO], 2008."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} A066633(n,k) * k^8.",
+        "G.f.: g(x) = (Sum_{k>=1} k^8*x^k/(1-x^k))/Product_{q>=1}(1-x^q). - _Emeric Deutsch_, Dec 06 2015"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, [1, 0],",
+        "      `if`(i<1, [0, 0], `if`(i>n, b(n, i-1),",
+        "      ((g, h)-> g+h+[0, h[1]*i^8])(b(n, i-1), b(n-i, i)))))",
+        "    end:",
+        "a:= n-> b(n, n)[2]:",
+        "seq(a(n), n=0..40);",
+        "# second Maple program:",
+        "g := (sum(k^8*x^k/(1-x^k), k = 1..100))/(product(1-x^k, k = 1..100)): gser := series(g, x = 0, 45): seq(coeff(gser, x, m), m = 1 .. 40); # _Emeric Deutsch_, Dec 06 2015"
+    ],
+    "mathematica": [
+        "(* T = A066633 *) T[n_, n_] = 1; T[n_, k_] /; k < n := T[n, k] = T[n - k, k] + PartitionsP[n - k]; T[_, _] = 0; a[n_] := Sum[T[n, k]*k^8, {k, 1, n}]; Array[a, 40, 0] (* _Jean-Fran\u00e7ois Alcover_, Dec 15 2016 *)"
+    ],
+    "xref": [
+        "Column k=8 of A213191."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 20 2013",
+    "references": 2,
+    "revision": 19,
+    "time": "2017-07-19T19:23:36-04:00",
+    "created": "2013-09-20T07:36:19-04:00"
+}

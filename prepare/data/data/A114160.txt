@@ -1,0 +1,67 @@
+{
+    "number": 114160,
+    "data": "1,2,7,38,281,2634,29919,399342,6125265,106156530,2051433495,43734832470,1019650457385,25807495577850,704708234182575,20649996837971550,646340185330747425,21521124899877175650,759572031366463998375,28325808256035867711750,1112907316518036732317625",
+    "name": "E.g.f. is A(x) = (1-log(B(x)))/B(x), where B(x) = sqrt(1-2*x).",
+    "comment": [
+        "From _John M. Campbell_, May 20 2011: (Start)",
+        "a(n) is the determinant of the n X n matrix of the form:",
+        "|2 1 1 1  ...   1  |",
+        "|1 4 1 1  ...   1  |",
+        "|1 1 6 1  ...   1  |",
+        "|1 1 1 8  ...   1  |",
+        "|...    ...     1  |",
+        "|1 1 1 1  2n-2  1  |",
+        "|1 1 1 1   1    2n |",
+        "See examples. (End)"
+    ],
+    "reference": [
+        "C. Dement, Floretion Integer Sequences (work in progress)"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A114160/b114160.txt\">Table of n, a(n) for n = 0..400</a>"
+    ],
+    "formula": [
+        "a(n) = A001147(n) + A004041(n-1) = 2^n*GAMMA(n+1/2)/Pi^(1/2)*(1/2*Psi(n+1/2)+1/2*gamma+log(2)+1. - _Vladeta Jovovic_"
+    ],
+    "example": [
+        "From _John M. Campbell_, May 20 2011: (Start)",
+        "Det[{",
+        "{2,1,1,1,1,1},",
+        "{1,4,1,1,1,1},",
+        "{1,1,6,1,1,1},",
+        "{1,1,1,8,1,1},",
+        "{1,1,1,1,10,1},",
+        "{1,1,1,1,1,12}}] = 29919 = a(6), and",
+        "Det[{",
+        "{2,1,1,1,1,1,1},",
+        "{1,4,1,1,1,1,1},",
+        "{1,1,6,1,1,1,1},",
+        "{1,1,1,8,1,1,1},",
+        "{1,1,1,1,10,1,1},",
+        "{1,1,1,1,1,12,1},",
+        "{1,1,1,1,1,1,14}}] = 399342 = a(7).",
+        "(End)"
+    ],
+    "mathematica": [
+        "Range[0, 18]! CoefficientList[ Series[(1 - Log[Sqrt[1 - 2x]])/Sqrt[(1 - 2x)], {x, 0, 18}], x] (* or *)",
+        "f[n_] := FullSimplify[ 2^(n-1)*Gamma[n + 1/2]/Sqrt[Pi]*(PolyGamma[n + 1/2] + EulerGamma + Log[4] + 2)]; Table[f[n], {n, 0, 18}] (* _Robert G. Wilson v_ *)",
+        "twox[x_, y_] := If[x == y, 2*x, 1]; a[n_] := Det[Array[twox[#1, #2] &, {n, n}]]; Join[{1}, Table[a[n], {n, 1, 10}]] (* _John M. Campbell_, May 20 2011 *)"
+    ],
+    "program": [
+        "(PARI) x='x + O('x^50); Vec(serlaplace((1 - log(sqrt(1 - 2*x)))/sqrt(1 - 2*x))) \\\\ _G. C. Greubel_, Feb 08 2017"
+    ],
+    "xref": [
+        "Cf. A114161."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Creighton Dement_, Nov 14 2005",
+    "ext": [
+        "E.g.f. given by _Vladeta Jovovic_",
+        "More terms from _Robert G. Wilson v_, Nov 15 2005"
+    ],
+    "references": 3,
+    "revision": 23,
+    "time": "2017-02-10T01:11:12-05:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

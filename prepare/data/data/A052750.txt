@@ -1,0 +1,65 @@
+{
+    "number": 52750,
+    "data": "1,1,5,49,729,14641,371293,11390625,410338673,16983563041,794280046581,41426511213649,2384185791015625,150094635296999121,10260628712958602189,756943935220796320321,59938945498865420543457",
+    "name": "a(n) = (2*n+1)^(n-1). E.g.f.: exp(-1/2*W(-2*x)), where W is Lambert's W function.",
+    "comment": [
+        "a(n+1) is the number of labeled incomplete ternary trees on n vertices in which each left child has a larger label than its parent. - _Brian Drake_, Jul 28 2008",
+        "Put a(0) = 1. For n>0, let x(n,k) = 2*cos((2*k-1)*Pi/(2*n+1)), k=1..n. Define the recurrences S(n;0,x(n,k)) = 1, S(n;1,x(n,k)) = x(n,k), S(n;r,x(n,k)) = x(n,k)*S(n;r-1,x(n,k)) - S(n;r-2,x(n,k)), r>1 an integer, k=1..n. CONJECTURE: For n>0, a(n) = Product_{k=1..n} (Sum_{m=0..n-1} S(n;2*m,x(n,k))^2). - _L. Edson Jeffery_, Sep 11 2013",
+        "Comment from _Wolfdieter Lang_, Dec 16 2013 (Start):",
+        "Discriminants of the first difference of Chebyshev S-polynomials.",
+        "The coefficient table for the first difference polynomials P(n, x) = S(n, x) - S(n-1, x), n>=0, S(-1, x) = 0, with the Chebyshev S polynomials (see A049310), is given in A130777.",
+        "For the discriminant of a polynomial in terms of the square of a determinant of a Vandermonde matrix build from the zeros of the polynomial see, e.g., A127670.",
+        "For the proof that D(n) := discriminant(P(n,x)) = (2*n+1)^(n-1), n >= 1, use the formula given e.g., in the Rivlin reference, p. 218, Theorem 5.13, eq. (5.3), namely D(n) = (-1)^(n*(n-1)/2)*product(P'(n, x(n,j)),j=1..n), with the zeros x(n,j) = -2*cos(2*Pi*j/(2*n+1)) of P(n, x) (see A130777). P'(n, x(n,j)) = (2*n+1)*P(n-1, x(n,j))/(2*sin(Pi*j/(2*n+1))*2*cos(Pi*j/(2*n+1)))^2. P(n-1, x(n,j)) = (-1)^(n+j)*2*cos(Pi*j/(2*n+1)). product(2*sin(Pi*j/(2*n+1))^, j=1..n) = 2*n+1 (see the Oct 10 2013 formula in A005408. product(2*cos(Pi*j/(2*n+1)),j=1..n) = 1, because S(2*n, 0) = (-1)^n.",
+        "(End)"
+    ],
+    "reference": [
+        "Theodore J. Rivlin, Chebyshev polynomials: from approximation theory to algebra and number theory, 2. ed., Wiley, New York, 1990."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A052750/b052750.txt\">Table of n, a(n) for n = 0..350</a>",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=706\">Encyclopedia of Combinatorial Structures 706</a>",
+        "J.-C. Novelli, J.-Y. Thibon, <a href=\"http://arxiv.org/abs/1403.5962\">Hopf Algebras of m-permutations,(m+1)-ary trees, and m-parking functions</a>, arXiv preprint arXiv:1403.5962 [math.CO], 2014.",
+        "<a href=\"/index/Ch#Cheby\">Index entries for sequences related to Chebyshev polynomials.</a>"
+    ],
+    "formula": [
+        "E.g.f. satisfies: A(x) = sqrt(1 + 2*Sum_{n>=1} x^(2*n-1)/(2*n-1)! * A(x)^(4*n-1)). - _Paul D. Hanna_, Sep 07 2012",
+        "E.g.f. satisfies: A(x) = 1/A(-x*A(x)^4). - _Paul D. Hanna_, Sep 07 2012",
+        "a(n) = discriminant of P(n,x) = S(n,x) - S(n-1,x), n >= 1., with the Chebyshev S polynomials from A049310. For the proof see the comment above. a(n) is also the discriminant of S(n,x) + S(n-1,x) = (-1)^n*(S(n,-x) - S(n-1,-x)). - _Wolfdieter Lang_, Dec 16 2013",
+        "From _Peter Bala_, Dec 19 2013: (Start)",
+        "The e.g.f. A(x) = 1 + x + 5*x^2/2! + 49*x^3/3! + 729*x^4/4! + ... satisfies:",
+        "1) A(x*exp(-2*x)) = exp(x) = 1/A(-x*exp(2*x));",
+        "2) A^2(x) = 1/x*series reversion(x*exp(-2*x));",
+        "3) A(x^2) = 1/x*series reversion(x*exp(-x^2));",
+        "4) A(x) = exp(x*A(x)^2). (End)",
+        "E.g.f.: sqrt(-LambertW(-2*x)/(2*x)). - _Vaclav Kotesovec_, Dec 07 2014",
+        "Related to A001705 by Sum_{n >= 1} a(n)*x^n/n! = series reversion( 1/(1 + x)^2*log(1 + x) ) = series reversion(x - 5*x^2/2! + 26*x^3/3! - 154*x^4/4! + ...). Cf. A000272, A052752, A052774, A052782. - _Peter Bala_, Jun 15 2016"
+    ],
+    "example": [
+        "Discriminant: n=4: P(4, x) = 1 + 2*x - 3*x^2 - x^3 + x^4 with the zeros x[1] = -2*cos((2/9)*Pi), x[2] = -2*cos((4/9)*Pi), x[3] = 1, x[4] = 2*cos((1/9)*Pi). D(4) = (Det(Vandermonde(4,[x[1],x[2],x[3],x[4]]))^2 = 729 = a(4). - _Wolfdieter Lang_, Dec 16 2013"
+    ],
+    "maple": [
+        "spec := [S,{B=Prod(Z,S,S),S=Set(B)},labeled]: seq(combstruct[count](spec,size=n), n=0..20);",
+        "with(finance):seq(mul(cashflows([n,n,1],0), k=2..n), n=0..20); # _Zerinvary Lajos_, Dec 22 2008"
+    ],
+    "mathematica": [
+        "max = 16; (Series[Exp[-1/2*ProductLog[-2*x]], {x, 0, max}] // CoefficientList[#, x] & ) * Range[0, max]! (* _Jean-Fran\u00e7ois Alcover_, Jun 20 2013 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=(2*n+1)^(n-1) \\\\ _Charles R Greathouse IV_, Nov 20 2011",
+        "(PARI) {a(n)=local(A=1+x);for(i=1,21,A=sqrt(1+2*sum(n=1,21,x^(2*n-1)/(2*n-1)!*A^(4*n-1))+x*O(x^n)));n!*polcoeff(A,n)} \\\\ _Paul D. Hanna_, Sep 07 2012",
+        "(MAGMA) [(2*n+1)^(n-1) : n in [0..20]]; // _Wesley Ivan Hurt_, Jan 20 2017"
+    ],
+    "xref": [
+        "Cf. A127670, A130777. A000169, A052752, A052774, A052782, A000272."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "ext": [
+        "Better description from _Vladeta Jovovic_, Sep 02 2003"
+    ],
+    "references": 11,
+    "revision": 55,
+    "time": "2017-04-18T07:04:04-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

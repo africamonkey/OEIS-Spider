@@ -1,0 +1,60 @@
+{
+    "number": 253412,
+    "data": "1,2,2,4,4,7,9,13,18,25,36,49,70,97,137,191,268,376,526,738,1033,1449,2029,2844,3985,5584,7825,10964,15365,21529,30169,42274,59238,83008,116316,162991,228393,320041,448462,628417,880580,1233929,1729066,2422885,3395113,4757463",
+    "name": "Number of n-bit legal binary words with maximal set of 1s.",
+    "comment": [
+        "An n-bit binary word is legal if every 1 has an adjacent 0.",
+        "The set of 1s is maximal if changing any 0 to a 1 makes the word illegal. For example, a maximal word cannot contain 000, 0100, or 0010, and cannot start or end with 00. - _Andrew Woods_, Jan 02 2015",
+        "In other words, the number of minimal dominating sets in the n-path graph P_n. - _Eric W. Weisstein_, Jul 24 2017"
+    ],
+    "link": [
+        "Andrew Woods, <a href=\"/A253412/b253412.txt\">Table of n, a(n) for n = 1..100</a>",
+        "M. L. Gargano, A. Weisenseel, J. Malerba and M. Lewinter, <a href=\"http://www.csis.pace.edu/~ctappert/srd2005/b3.pdf\">Discrete Renyi parking constants</a>, 36th Southeastern Conf. on Combinatorics, Graph Theory, and Computing, Boca Raton, 2005, Congr. Numer. 176 (2005) 43-48.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/MinimalDominatingSet.html\">Minimal Dominating Set</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PathGraph.html\">Path Graph</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (0,1,1,1,0,-1)."
+    ],
+    "formula": [
+        "a(n) = a(n-2) + a(n-3) + a(n-4) - a(n-6), for n >= 6, with a(1) = 1, a(2) = a(3) = 2, a(4) = a(5) = 4, a(6) = 7. - _Andrew Woods_, Jan 02 2015",
+        "G.f.: x*(1 + 2*x + x^2 + x^3 - x^4 - x^5) / (1 - x^2 - x^3 - x^4 + x^6). - _Paul D. Hanna_, Jan 02 2015"
+    ],
+    "example": [
+        "The only legal words with maximal set of 1s are",
+        "0 if n = 1; 01 & 10 if n = 2; 010 & 101 if n = 3;",
+        "0110, 1001, 0101 & 1010 if n = 4;",
+        "01010, 01101, 10101 & 10110 if n = 5; and",
+        "010101, 010110, 011001, 011010, 100110, 101010 & 101101 if n = 6."
+    ],
+    "mathematica": [
+        "LinearRecurrence[{0, 1, 1, 1, 0, -1}, {1, 2, 2, 4, 4, 7}, 50] (* _Harvey P. Dale_, May 08 2017 *)",
+        "CoefficientList[Series[(1 + 2 x + x^2 + x^3 - x^4 - x^5)/(1 - x^2 - x^3 - x^4 + x^6), {x, 0, 20}], x] (* _Eric W. Weisstein_, Jul 24 2017 *)",
+        "Table[RootSum[1 - #^2 - #^3 - #^4 + #^6 &, 9 #^n - 18 #^(n + 2) + 23 #^(n + 3) - 3 #^(n + 4) + 32 #^(n + 5) &]/229, {n, 20}] (* _Eric W. Weisstein_, Aug 04 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def A253412(n):",
+        "....c, fs = 0, '0'+str(n)+'b'",
+        "....for i in range(2**n):",
+        "........s = '01'+format(i,fs)+'10'",
+        "........for j in range(n):",
+        "............if s[j:j+4] == '0100' or s[j+1:j+5] == '0010' or s[j+1:j+4] == '000' or s[j+1:j+4] == '111':",
+        "................break",
+        "........else:",
+        "............c += 1",
+        "....return c # _Chai Wah Wu_, Jan 02 2015"
+    ],
+    "xref": [
+        "Asymmetric analog of A000931 (no consecutive 1s but maximal).",
+        "Linear analog of A253413."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Steven Finch_, Dec 31 2014",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Woods_, Jan 02 2015"
+    ],
+    "references": 4,
+    "revision": 49,
+    "time": "2017-08-04T20:09:42-04:00",
+    "created": "2015-01-01T18:47:22-05:00"
+}

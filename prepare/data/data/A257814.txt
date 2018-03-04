@@ -1,0 +1,43 @@
+{
+    "number": 257814,
+    "data": "2,3,4,5,6,7,8,9,50,298,130004,484950,3242940,4264064,5560625,36550290,47746195,111971979,129833998,9865843497,46793077740,767609367921,4432743262896,42744572298532,77186414790914,99320211963544,99335229415136,456385296642870",
+    "name": "Numbers n such that k times the sum of the digits (d) to the power k equal n, so n=k*sum(d^k), for some positive integer k, where k is smaller than sum(d^k).",
+    "comment": [
+        "The first nine terms are trivial, but then the terms become scarce.  The exponent k must be less than the \"sum of the digits\" raised to the k-th power, otherwise there will be infinitely many terms containing 1's and 0's, like 11000= 5500*(1^5500+1^5500+0^5500+0^5500+0^5500). It appears this sequence is finite, because there is a resemblance with the Armstrong numbers (A005188)."
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A257814/b257814.txt\">Table of n, a(n) for n = 1..53</a> (terms < 10^30)"
+    ],
+    "example": [
+        "50 = 2*(5^2+0^2);",
+        "484950 = 5*(4^5+8^5+4^5+9^5+5^5+0^5)."
+    ],
+    "program": [
+        "(Python)",
+        "def mod(n,a):",
+        "....kk = 0",
+        "....while n > 0:",
+        "........kk= kk+(n%10)**a",
+        "........n =int(n//10)",
+        "....return kk",
+        "for a in range (1, 10):",
+        "....for c in range (1, 10**7):",
+        "........if c==a*mod(c,a) and a<mod(c,a):",
+        "............print (a,c, mod(c,a))",
+        "(PARI) sdk(d, k) = sum(j=1, #d, d[j]^k);",
+        "isok(n) = {d = digits(n); k = 1; while ((val=k*sdk(d,k)) != n, k++; if (val > n, return (0))); k < sdk(d,k);} \\\\ _Michel Marcus_, May 30 2015"
+    ],
+    "xref": [
+        "Cf. A005188, A023052, A257768."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Pieter Post_, May 10 2015",
+    "ext": [
+        "a(16)-a(28) from _Giovanni Resta_, May 10 2015"
+    ],
+    "references": 2,
+    "revision": 22,
+    "time": "2015-05-30T16:31:38-04:00",
+    "created": "2015-05-30T16:31:38-04:00"
+}

@@ -1,0 +1,61 @@
+{
+    "number": 242511,
+    "data": "1,1,2,6,28,100,330,1050,3024,8736,23220,62700,158004,406692,986986,2452450,5788640,14002560,32357052,76640148,174174520,405623400,909582212,2089064516,4633556448,10519464000,23120533800,51977741400,113365499940,252725219460,547593359850,1211884139250,2610998927040,5741708459520,12309472580460,26917328938500,57457069777800,125016198060600,265832233972140,575824335603660,1220234181784800",
+    "name": "a(n) = number of knight's move paths of minimal length n steps, from origin (0,0) at center of an infinite open chessboard to square (0,0) for n=0; square (2,-1) for n=1; and square (2n-3, (n+1)mod 2) for n>=2.",
+    "comment": [
+        "The squares concerned constitute an infinite, locally fully concertinaed knight's path from the origin, which hugs the axis y=0 and is minimal to each square."
+    ],
+    "reference": [
+        "Fred Lunnon, Knights in Daze, to appear."
+    ],
+    "link": [
+        "Fred Lunnon, <a href=\"/A242591/a242591.a.txt\">Revised tables & functions for knight's path distance and count (MAGMA code)</a>"
+    ],
+    "formula": [
+        "For n>=2, a(n) = binomial(n,foor(n/2)-1)/6 *",
+        "      ( (n^2-2*n+6)*(n^2+8)/(n+4) if n even, (n-1)*(n^2-2*n+15) if n odd ).",
+        "G.f.: (-10 + 10*x + 127*x^2 - 111*x^3 - 576*x^4 + 410*x^5 + 1072*x^6 - 528*x^7 - 624*x^8 + 144*x^9 + q*(10 + 10*x - 7*x^2 - 3*x^3 + x^4 + x^5))/(q*x^4), where q = sqrt((1 - 2*x)^7*(1 + 2*x)^5). - _Benedict W. J. Irwin_, Oct 20 2016"
+    ],
+    "example": [
+        "For n=0 there is a(0)=1 path from (0,0) to (0,0) with 0 step.",
+        "For n=1 there is a(1)=1 path from (0,0) to (2,-1) with 1 step.",
+        "For n=2 there are a(2)=2 paths from (0,0) to (1,1) with 2 steps:",
+        "  (0,0) -> (2,-1) -> (1,1) and (0,0) -> (-1,2) -> (1,1).",
+        "For n=3 there are a(3)=6 paths from (0,0) to (3,0) with 3 steps:",
+        "  (0,0)(2,-1)(1,1)(3,0); (0,0)(2,1)(1,-1)(3,0); (0,0)(2,-1)(4,-2)(3,0);",
+        "  (0,0)(2,1)(4,2)(3,0); (0,0)(-1,-2)(1,-1)(3,0); (0,0)(-1,2)(1,1)(3,0)."
+    ],
+    "maple": [
+        "A242511 := proc(n)",
+        "    local a;",
+        "    if n <=1 then",
+        "        return 1;",
+        "    end if ;",
+        "    a := binomial(n,floor(n/2)-1)/6 ;",
+        "    if type(n,'even') then",
+        "        a*(n^2-2*n+6)*(8+n^2)/(n+4) ;",
+        "    else",
+        "        a*(n-1)*(n^2-2*n+15) ;",
+        "    end if ;",
+        "end proc: # _R. J. Mathar_, May 17 2014"
+    ],
+    "mathematica": [
+        "q := (1 - 2 x)^(7/2) (1 + 2 x)^(5/2); CoefficientList[Series[(-10 + 10 x + 127 x^2 - 111 x^3 - 576 x^4 + 410 x^5 + 1072 x^6 - 528 x^7 - 624 x^8 + 144 x^9 + q (10 + 10 x - 7 x^2 - 3 x^3 + x^4 + x^5))/(q*x^4), {x, 0, 20}],x] (* _Benedict W. J. Irwin_, Oct 20 2016 *)"
+    ],
+    "program": [
+        "(MAGMA)",
+        "[ Max(1, Binomial(d, d div 2 - 1)/6 * // axis-hugging path",
+        "  ( /*if*/ IsEven(d) select (d^2-2*d+6)*(d^2+8)/(d+4)",
+        "  else (d-1)*(d^2-2*d+15) /*end if*/ )) : d in [0..20] ];"
+    ],
+    "xref": [
+        "Cf. A242512, A242513, A242514, A183043, A242591."
+    ],
+    "keyword": "easy,nonn,walk",
+    "offset": "0,3",
+    "author": "_Fred Lunnon_, May 16 2014 and May 18 2014",
+    "references": 6,
+    "revision": 55,
+    "time": "2016-10-31T10:55:04-04:00",
+    "created": "2014-05-17T02:40:58-04:00"
+}

@@ -1,0 +1,32 @@
+{
+    "number": 247657,
+    "data": "5,23,53,101,359,487,631,1669,5407,6959,7517,8093,9341,10009,15427,17191,21011,26489,30089,32609,42281,45293,51683,56747,60251,73471,77509,79561,90197,101513,137209,142867,169489,182047,191717,194981,198301,201661,211943",
+    "name": "Partial sums of primes, but with a twist.",
+    "comment": [
+        "We start with the primes, 2 3 5 7 11 13 17 19 ..., and form the partial sums (starting with the first two terms), 2+3 = 5, ..., but whenever the partial sum is a prime, we remove it from the list of primes to be added later. Thus, 5 will not be added, and the next term in the partial sums is 2+3+7 = 12, and then 2+3+7+11 = 23, which is again prime, thus not used (later) in the partial sum. The primes that are removed are 5, 23, 53, 101, 359, 487, 631, 1669,... and the partial sums are A247658."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A247657/b247657.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "program": [
+        "(Haskell)",
+        "a247657 n = a247657_list !! (n-1)",
+        "a247657_list = f 0 $ drop 2 a000040_list where",
+        "   f z (p:ps) | a010051' z' == 1 = z' : f z' (delete z' ps)",
+        "              | otherwise        = f z' ps",
+        "              where z' = z + p",
+        "-- _Reinhard Zumkeller_, Oct 01 2014",
+        "(PARI) {omit=[];s=2;forprime(p=3,999,if(vecsearch(omit,p),omit=vecextract(omit,\"^1\");next); isprime(s+=p)||next;print1(s\",\"); omit=concat(omit,s))} \\\\ _M. F. Hasler_, Oct 04 2014"
+    ],
+    "xref": [
+        "Cf. A247658.",
+        "Cf. A000040, A010051, A007504."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Daniel Joyce_, Oct 01 2014",
+    "references": 2,
+    "revision": 18,
+    "time": "2014-10-05T04:00:39-04:00",
+    "created": "2014-10-01T13:22:36-04:00"
+}

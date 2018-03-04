@@ -1,0 +1,25 @@
+{
+    "number": 70083,
+    "data": "3,5,6,7,7,8,9,9,9,10,10,11,11,11,11,12,12,12,13,13,13,13,13,14,14,14,14,15,15,15,15,15,15,15,16,16,16,16,16,17,17,17,17,17,17,17,17,18,18,18,18,18,18,18,19,19,19,19,19,19,19,19,19",
+    "name": "Perimeters of integer triangles, sorted by perimeter, sides lexicographically ordered.",
+    "comment": [
+        "A005044(p) is the number of all integer triangles having perimeter p."
+    ],
+    "link": [
+        "R. Zumkeller, <a href=\"/A070080/a070080.txt\">Integer-sided triangles</a>"
+    ],
+    "formula": [
+        "a(n) = A070080(n) + A070081(n) + A070082(n)."
+    ],
+    "mathematica": [
+        "maxPer = 19; maxSide = Floor[(maxPer-1)/2]; order[{a_, b_, c_}] := (a+b+c)*maxPer^3 + a*maxPer^2 + b*maxPer + c; triangles = Reap[Do[If[ a+b+c <= maxPer && c-b < a < c+b && b-a < c < b+a && c-a < b < c+a, Sow[{a, b, c}]], {a, 1, maxSide}, {b, a, maxSide}, {c, b, maxSide}]][[2, 1]]; Total /@ Sort[triangles, order[#1] < order[#2] &] (* _Jean-Fran\u00e7ois Alcover_, Jun 12 2012 *)",
+        "maxPer = m = 22; sides[per_] := Select[Reverse /@ IntegerPartitions[per, {3}, Range[Ceiling[per/2]]], #[[1]] < per/2 && #[[2]] < per/2 && #[[3]] < per/2&]; triangles = DeleteCases[Table[ sides[per], {per, 3, m}], {}] // Flatten[#, 1]& // SortBy[Total[#] m^3 + #[[1]] m^2 + #[[2]] m + #[[1]]&]; Total /@ triangles (* _Jean-Fran\u00e7ois Alcover_, Jul 09 2017 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, May 05 2002",
+    "references": 17,
+    "revision": 20,
+    "time": "2017-07-09T16:15:14-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

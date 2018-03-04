@@ -1,0 +1,39 @@
+{
+    "number": 5184,
+    "id": "M5220",
+    "data": "31,83,293,347,671,19151,2025797",
+    "name": "Self-contained numbers: odd numbers n whose Collatz sequence contains a higher multiple of n.",
+    "comment": [
+        "The Collatz function is defined as a(n+1) = a(n)/2 if a(n) is even, 3*a(n) + 1 if a(n) is odd.",
+        "No others less than 250000000. - Sam Handler (sam_5_5_5_0(AT)yahoo.com), Aug 07 2006",
+        "There are no more terms < 10^11. - _Donovan Johnson_, Nov 28 2013"
+    ],
+    "reference": [
+        "R. K. Guy, Unsolved Problems in Number Theory, E16.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "example": [
+        "The Collatz sequence of 31 is 31, 94, 47, 142, 71, 214, 107, 322, 161, 484, 242, 121, 364, 182, 91, 274, 137, 412, 206, 103, 310 (see A008884) ... 310 is a multiple of 31, so the number 31 is \"self-contained\"."
+    ],
+    "mathematica": [
+        "isSelfContained[n_] := Module[{d}, d = n; While[d != 1, If[EvenQ[d], d = d/2, d = 3 * d + 1]; If[IntegerQ[d/n], Return[True]]]; Return[False]]; For[n = 1, n <= 250000000, n += 2, If[isSelfContained[n], Print[n]]]; (* Sam Handler (sam_5_5_5_0(AT)yahoo.com), Aug 07 2006 *)",
+        "scnQ[n_] := MemberQ[Divisible[#, n] & / @Rest[NestWhileList[If[EvenQ[#], #/2, 3# + 1] &, n, # > 1 &]], True]; Select[Range[1, 2100001, 2], scnQ] (* _Harvey P. Dale_, Oct 21 2011 *)"
+    ],
+    "program": [
+        "(PARI) m=5; d=2; while(1,n=(3*m+1)\\2; until(n==1,n=if(n%2,3*n+1,n\\2); if(n%m==0,print(m,\" \",n); break)); m+=d; d=6-d)"
+    ],
+    "xref": [
+        "The ratios \"higher multiple of n\" / n are given in A059198."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Robert G. Wilson v_",
+        "Better description from Jack Brennen, Feb 07 2003."
+    ],
+    "references": 3,
+    "revision": 23,
+    "time": "2013-11-29T03:21:17-05:00",
+    "created": "1991-05-16T03:00:00-04:00"
+}

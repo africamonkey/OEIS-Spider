@@ -1,0 +1,34 @@
+{
+    "number": 291965,
+    "data": "64,65,95,98,121,132,136,143,154,160,165,176,184,185,187,190,192,194,195,196,198,202,206,208,217,220,231,238,242,253,260,264,265,268,275,286,291,294,297,298,303,306,309,325,326,330,332,335,340,341,345,352,363,365,374,385,390,392,394,395,396,398,404,406,408,427,435",
+    "name": "Denominators of fractions with anomalous cancellation property, where more than one digit can be cancelled.",
+    "comment": [
+        "Here we refer to anomalous cancellation in a fraction if numerator and denominator have one or more digits in common, and the value of the fraction remains the same if all pairs of common digits are \"cancelled\", i.e., removed. (There are other variants of this definition, e.g., A291094, which differ in particular when there is more than one pair of common digits.)",
+        "For any solution one could add a trailing 0 to numerator and denominator and get another solution, but such solutions are excluded here.",
+        "See A291966 for the numerators. See the variant A291094 for other references.",
+        "The fractions are assumed to be between 0 and 1."
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A291965/a291965_1.txt\">Table of n, N(n), a(n)</a>, for n = 1..146 (all terms a(n) < 1000), where N(n) = A291966(n) are the corresponding numerators.",
+        "B. L. Schwartz, <a href=\"http://doi.org/10.2307/2688504\">Proposal 434</a>, Mathematics Magazine Vol. 34, No. 3 (1961), Problems and Questions, p. 173.",
+        "Eric W. Weisstein, <a href=\"http://mathworld.wolfram.com/AnomalousCancellation.html\">Anomalous Cancellation</a>"
+    ],
+    "example": [
+        "The two-digit examples 16/64, 26/65, 19/95, 49/98 are well known. (The last one is particular in the sense that the (digit-wise) \"simplified\" fraction 4/8 is not in its lowest terms.)",
+        "The earliest three-digit terms correspond to 22/121 = 2/11, 33/132 = 3/12, 34/136 = 4/16, 44/143 = 4/13, 64/160 = 4/10, 55/154, 138/184 = 3/4 (first example of a two-digit simplification), ...",
+        "In constrast to A291093/A291094, the fraction 11/110 is not allowed here because we require that all pairs of common digits must be \"cancelled\", so the two 1's must be deleted, which leads to an invalid expression (with no digits left in the numerator)."
+    ],
+    "program": [
+        "(PARI) {is(n,dn=digits(n),Dn=Set(dn))=local(Cd,sc(x)=select(t->setsearch(Cd,t),x),rd(x)=local(S=0);fromdigits(select(d->!(setsearch(Cd,d)&&!bittest(S,d)&&S+=1<<d),x)));for(d=10,n-1,gcd(d,n)>1 && #(Cd=setintersect(Set(dd=digits(d)),Dn)) && gcd(n,d)%10 ||next; rd(dd) || next; my(n1=rd(dn),d1=rd(dd),nd=digits(n1)); Cd=setintersect(Set(dd=digits(d1)),Set(nd)); if(#Cd, d*rd(nd)==n*rd(dd) && rd(dd), d*n1 == n*d1) && return(d))}"
+    ],
+    "xref": [
+        "Cf. A291966 (numerators), A291093/A291094 (alternate definition), A159975/A159976, A290462/A290463."
+    ],
+    "keyword": "nonn,base,frac",
+    "offset": "1,1",
+    "author": "_M. F. Hasler_, Sep 06 2017",
+    "references": 4,
+    "revision": 13,
+    "time": "2017-09-09T11:24:57-04:00",
+    "created": "2017-09-09T06:10:17-04:00"
+}

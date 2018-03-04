@@ -1,0 +1,49 @@
+{
+    "number": 87659,
+    "data": "1,6,57,701,10147,164317,2888282,54047434,1062530119,21739192762,459685114665,9993072855135,222421656113435,5052215132332492,116808526607319823,2742986603349411311,65306671610636210891,1574090246599071243962,38361262640988126803839",
+    "name": "a(n) = hypergeom([ -n, (n+4)/2, (n+5)/2], [3, 2], -4).",
+    "comment": [
+        "From _Bill Gosper_, Feb 04 2004: (Start)",
+        "A few weeks ago I conjectured that 2 binomial(n,i) (n+2i+3)! / ((i+1)!(i+2)!(n+3)!) is always an integer (summed on i, this gives the current sequence).",
+        "This is the special case C(3,i,n-i) of C(m,k,n) := (n+k)!(n+m)!/(n!(n+m+k)!) * Product_{j=1..k} (j - 1)! (n + j m + m)!/((m + j - 1)! (n + j m)!)",
+        "which I also conjecture integral.",
+        "(End)",
+        "From Alec Mihailovs, Feb 04 2004: (Start)",
+        "These conjectures are true. Consider the partition p(m,k,n)=(n+m,m,...,m) of n+m*(k+1), where m is repeated k times. It is easy to see that C(m,k,n) equals the dimension of the irreducible representation of S_(n+m*(k+1)) corresponding to p(m,k,n) calculated using hook length formula.",
+        "Another formula for C(m,k,n) is ((n+mk+m)!/n!) * Product_{i=0..m-1} i!/((k+i)!(n+k+i+1)!).",
+        "(End)",
+        "Cloitre has characterized the sequence mods 2 and 3. Remarkably, a(9k+6) mod 3 = 2*A014578(k+1), the binary expansion of the \"Thue constant\", 110110111110110111110110110..., wherein the 3n-th bit is the complement of the n-th. - _Bill Gosper_, Mar 19 2004"
+    ],
+    "formula": [
+        "a(n) = Sum _{i=0..n} 2*C(n,i) * (n+2*i+3)! / ( (i+1)! * (i+2)! * (n+3)! )."
+    ],
+    "mathematica": [
+        "a[n_] := HypergeometricPFQ[{-n, (n + 4)/2, (n + 5)/2}, {3, 2}, -4];",
+        "Table[a[n], {n, 0, 18}] (* _Jean-Fran\u00e7ois Alcover_, Feb 19 2018 *)"
+    ],
+    "program": [
+        "(PARI) a(n)= sum(i=0,n,2*binomial(n,i)*(n+2*i+3)!/((i+1)!*(i+2)!*(n+3)!)) \\\\ _Benoit Cloitre_",
+        "(Sage)",
+        "def A087659():",
+        "    x, y, z, n = 1, 6, 57, 2",
+        "    while true:",
+        "        yield x",
+        "        n += 1",
+        "        x, y, z = y, z, ((n-1)*(n-2)*(n-3)*(3*n+2)*x-(n-1)*(9*n^3-3*n^2-4*n-4)*y+(2*(3*n+1))*(n+2)*(15*n^2+5*n-2)*z)/((n+3)*(3*n-1)*(n+2)^2)",
+        "a = A087659()",
+        "[a.next() for i in range(19)]   # _Peter Luschny_, Oct 12 2013"
+    ],
+    "xref": [
+        "Row sums of triangle A087727. Cf. A087660-A087662."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,2",
+    "author": "_Bill Gosper_, Sep 26 2003",
+    "ext": [
+        "More terms from _Benoit Cloitre_, Sep 26 2003"
+    ],
+    "references": 7,
+    "revision": 22,
+    "time": "2018-02-19T08:21:53-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

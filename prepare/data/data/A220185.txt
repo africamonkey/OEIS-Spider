@@ -1,0 +1,74 @@
+{
+    "number": 220185,
+    "data": "0,10,348,11830,401880,13652098,463769460,15754509550,535189555248,18180690368890,617608282987020,20980500931189798,712719423377466120,24211479893902658290,822477596969312915748,27940026817062736477150,949138434183163727307360",
+    "name": "Numbers n such that n^2 + n(n+1) is an oblong number (A002378).",
+    "comment": [
+        "Also numbers n such that the sum of the hexagonal numbers H(n) and H(n+1) is equal to m^2 + (m+1)^2 for some m. - _Colin Barker_, Dec 10 2014",
+        "Also nonnegative integers x in the solutions to 4*x^2-2*y^2+2*x-2*y = 0, the corresponding values of y being A251867. - _Colin Barker_, Dec 10 2014"
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A220185/b220185.txt\">Table of n, a(n) for n = 1..654</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (35,-35,1)."
+    ],
+    "formula": [
+        "For n>1, a(n) = A089928(n*4-5).",
+        "From _Bruno Berselli_, Apr 12 2013: (Start)",
+        "G.f.: 2*x^2*(5-x)/((1-x)*(1-34*x+x^2)).",
+        "a(n) = ((1+sqrt(2))^(4n-3)+(1-sqrt(2))^(4n-3)-2)/8.",
+        "a(n+2) = 10*A029546(n)-2*A029546(n-1). (End)",
+        "a(n) = 35*a(n-1)-35*a(n-2)+a(n-3). - _Colin Barker_, Dec 10 2014",
+        "a(n) = A251867(n) - A001542(n-1)^2. - _Alexander Samokrutov_, Sep 05 2015"
+    ],
+    "example": [
+        "a(3) = A089928(7) = 348."
+    ],
+    "maple": [
+        "f:= gfun:-rectoproc({a(n)=35*(a(n-1)-a(n-2))+a(n-3),a(1)=0,a(2)=10,a(3)=348},a(n),remember):",
+        "map(f, [$1..50]); # _Robert Israel_, Sep 06 2015"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{35, - 35, 1}, {0, 10, 348}, 20] (* _Vincenzo Librandi_, Sep 06 2015 *)"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#include <math.h>",
+        "typedef unsigned long long U64;",
+        "U64 rootPronic(U64 a) {",
+        "    U64 sr = 1L<<31, s, b;",
+        "    if (a < sr*(sr+1)) {",
+        "          sr>>=1;",
+        "          while (a < sr*(sr+1))  sr>>=1;",
+        "    }",
+        "    for (b = sr>>1; b; b>>=1) {",
+        "            s = sr+b;",
+        "            if (a >= s*(s+1))  sr = s;",
+        "    }",
+        "    return sr;",
+        "}",
+        "int main() {",
+        "  U64 a, n, r, t;",
+        "  for (n=0; n < (1L<<31); n++) {",
+        "    a = (n*(n+1)) + n*n;",
+        "    t = rootPronic(a);",
+        "    if (a == t*(t+1))  printf(\"%llu\\n\", n);",
+        "  }",
+        "}",
+        "(PARI) concat(0, Vec(2*x^2*(5-x)/((1-x)*(1-34*x+x^2))+O(x^100))) \\\\ _Colin Barker_, Dec 10 2014",
+        "(MAGMA) [Floor(((1+Sqrt(2))^(4*n-3)+(1-Sqrt(2))^(4*n-3)-2)/8): n in [1..20]]; // _Vincenzo Librandi_, Sep 08 2015"
+    ],
+    "xref": [
+        "Cf. A002378, A014105 (n^2 + n(n+1)), A029546, A084703 (numbers n such that n^2 + n(n+1) is a square).",
+        "Cf. A000290, A000384, A251867."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, Apr 12 2013",
+    "ext": [
+        "More terms from _Bruno Berselli_, Apr 12 2013"
+    ],
+    "references": 5,
+    "revision": 37,
+    "time": "2015-09-06T07:26:00-04:00",
+    "created": "2013-04-13T15:24:08-04:00"
+}

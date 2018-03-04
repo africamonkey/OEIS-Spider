@@ -1,0 +1,47 @@
+{
+    "number": 68311,
+    "data": "0,0,1,5,44,244,2064,15168,181824,1878336,21323520,238187520,3496919040,45938949120,699188474880,11185253452800,220809635020800,3774686585241600,75413794524364800,1439264469668659200,31704771803185152000,690129227948654592000",
+    "name": "Arithmetic derivative of n!.",
+    "reference": [
+        "Giorgio Balzarotti and Paolo P. Lava, La Derivata Arithmetica, Hoepli, Milan, p. 40.",
+        "Ivars Peterson, Deriving the Structure of Numbers, Science News, March 20, 2004.",
+        "Linda Westrick, Investigations of the Number Derivative (pdf)"
+    ],
+    "link": [
+        "T. D. Noe and Alois P. Heinz, <a href=\"/A068311/b068311.txt\">Table of n, a(n) for n = 0..450</a> (first 101 terms from T. D. Noe)"
+    ],
+    "example": [
+        "a(4) = d(4!) = d(3!*4) = d(3!)*4 + 3!*d(4) =",
+        "= d(2!*3)*4 + 3!*d(2*2) = d(2*3)*4 + 6*d(2*2) =",
+        "= (d(2)*3 + 2*d(3))*4 + 6*(d(2)*2 + 2*(d(2)) =",
+        "= (1*3+2*1)*4 + 6*(2*2*1) = 5*4 + 6*4 = 44;",
+        "where d(n) = A003415(n) with d(1)=0, d(prime)=1 and d(m*n)=d(m)*n+m*d(n).",
+        "a(6)=2064 because the arithmetic derivative of 6!=720 is 720(4/2+2/3+1/5)."
+    ],
+    "maple": [
+        "d:= n-> n*add(i[2]/i[1], i=ifactors(n)[2]):",
+        "a:= proc(n) option remember;",
+        "      `if`(n<2, 0, a(n-1)*n+(n-1)!*d(n))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jun 06 2015"
+    ],
+    "mathematica": [
+        "a[0] = 0; a[1] = 0; a[n_] := Module[{f = Transpose[ FactorInteger[n]]}, If[PrimeQ[n], 1, Plus @@ (n*f[[2]]/f[[1]])]]; Table[ a[n! ], {n, 0, 6}] (* _Robert G. Wilson v_, Nov 11 2004 *)"
+    ],
+    "program": [
+        "(MAGMA) Ad:=func<h | h*(&+[Factorisation(h)[i][2]/Factorisation(h)[i][1]: i in [1..#Factorisation(h)]])>; [n le 1 select 0 else Ad(Factorial(n)): n in [0..30]]; // _Bruno Berselli_, Oct 23 2013"
+    ],
+    "xref": [
+        "Equals A003415(A000142(n))."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Reinhard Zumkeller_, Feb 25 2002",
+    "ext": [
+        "a(19)-a(21) from _Bruno Berselli_, Oct 23 2013"
+    ],
+    "references": 8,
+    "revision": 18,
+    "time": "2015-06-06T18:08:16-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

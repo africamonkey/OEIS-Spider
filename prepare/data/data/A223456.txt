@@ -1,0 +1,83 @@
+{
+    "number": 223456,
+    "data": "16,36,48,64,80,81,100,112,120,144,162,168,176,196,208,210,216,225,256,264,270,272,280,304,312,324,330,368,378,384,390,400,405,408,440,441,456,462,464,484,496,510,512,520,546,552,567,570,576,592,594,616,625",
+    "name": "Composite numbers whose number of proper divisors has a prime number of proper divisors.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A223456/b223456.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "{ n: n in A002808 and A032741(A032741(n)) in A000040}.",
+        "(1 - A010051(a(n))) * A010051(a032741(a032741(a(n)))) = 1. - _Reinhard Zumkeller_, Sep 22 2013"
+    ],
+    "example": [
+        "a(1) = 16, which has 4 proper divisors (1, 2, 4, 8). 4 has 2 proper divisors, 2 is prime. 2 steps were needed."
+    ],
+    "maple": [
+        "isA223456 := proc(n)",
+        "        local npd ;",
+        "        if not isprime(n) and n >=4 then",
+        "                npd := A032741(n) ;",
+        "                if isprime( A032741(npd)) then",
+        "                        true;",
+        "                else",
+        "                        false;",
+        "                end if ;",
+        "        else",
+        "                false;",
+        "        end if;",
+        "end proc:",
+        "for n from 16 to 630 do",
+        "        if isA223456(n) then",
+        "                printf(\"%d,\",n) ;",
+        "        end if;",
+        "end do: # _R. J. Mathar_, Sep 18 2013"
+    ],
+    "mathematica": [
+        "Select[Range[1000], PrimeQ[DivisorSigma[0, DivisorSigma[0, #] - 1] - 1] &] (* _Alonso del Arte_, Jul 21 2013 *)"
+    ],
+    "program": [
+        "(C#)",
+        "// data",
+        "uint size = Math.Power(2,30);",
+        "uint[] divisors = new uint[size]",
+        "List<uint> A000040 = new List<uint>();",
+        "List<uint> A063806 = new List<uint>();",
+        "List<uint> A223456 = new List<uint>();",
+        "List<uint> A223457 = new List<uint>();",
+        "// calculate",
+        "for( uint i = 1; i < size; i++ )",
+        "    for( uint j = i * 2; j < size; j += i )",
+        "        divisors[j]++;",
+        "// assign",
+        "for( uint i = 2; i < size; i++ )",
+        "    if( divisors[i] == 1 )",
+        "        // A000040: Numbers with a only one proper divisor.",
+        "        A000040.Add( i );",
+        "    else if( divisors[divisors[i]] == 1 )",
+        "        // A063806: Numbers with a prime number of proper divisors.",
+        "        A063806.Add( i );",
+        "    else if( divisors[divisors[divisors[i]]] == 1 )",
+        "        // Numbers with a nonprime number of proper divisors",
+        "        // which itself has prime number of proper divisors.",
+        "        A223456.Add( i );",
+        "    else if( divisors[divisors[divisors[divisors[i]]]] == 1 )",
+        "        // Numbers with a nonprime number of proper divisors",
+        "        // which itself has a nonprime number of proper divisors",
+        "        // which itself has prime number of proper divisors.",
+        "        A223457.Add( i );",
+        "(Haskell)",
+        "a223456 n = a223456_list !! (n-1)",
+        "a223456_list = filter ((== 1 ) . a010051 . a032741 . a032741) a002808_list",
+        "-- _Reinhard Zumkeller_, Sep 22 2013"
+    ],
+    "xref": [
+        "Cf. A000040, A063806, A032741."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Christopher J. Hanson_, Jul 19 2013",
+    "references": 2,
+    "revision": 34,
+    "time": "2015-07-16T22:28:34-04:00",
+    "created": "2013-09-19T13:49:30-04:00"
+}

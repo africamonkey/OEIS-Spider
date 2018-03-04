@@ -1,0 +1,48 @@
+{
+    "number": 78456,
+    "data": "1,3,14,92,968,12096,199296,3679488,82607616,2349508608,71507128320,2604912721920,105300128563200,4466750187110400,207324589680230400,10866166392736972800,634672612705724006400,38337584554108256256000",
+    "name": "Number of numbers less than p(1)*p(2)*...*p(n) having exactly one prime factor among (p(1),p(2)....,p(n)) where p(n) is the n-th prime.",
+    "comment": [
+        "For n>1 a(n) is the determinant of the (n-1) X (n-1) matrix with elements M[i,j] = Prime[i+1] if i=j and 1 otherwise. (See example lines.) - _Alexander Adamchuk_, Jun 02 2006",
+        "Second column of A096294. - _Eric Desbiaux_, Jun 20 2013"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A078456/b078456.txt\">Table of n, a(n) for n = 1..350</a>"
+    ],
+    "formula": [
+        "a(n) = (prime(n)-1)*a(n-1) + A005867(n). - _Matthew Vandermast_, Jun 06 2004",
+        "a(n) = Det[ DiagonalMatrix[ Table[ Prime[i+1]-1, {i, 1, n-1} ] ] + 1 ] for n>1. - _Alexander Adamchuk_, Jun 02 2006",
+        "a(n) = A120071(n) * A135212(n). - _Alexander Adamchuk_, Nov 23 2007"
+    ],
+    "example": [
+        "a(2)=3 since 2*3=6 and 2,3,4 have 1 prime factor among (2,3)",
+        "3 1 1 1 1 ...",
+        "1 5 1 1 1 ...",
+        "1 1 7 1 1 ...",
+        "1 1 1 11 1 ...",
+        "1 1 1 1 13 ...",
+        "and so a(2) = 3, a(3) = 3*5 - 1*1 = 14, a(4) = 3*5*7 + 1*1*1 + 1*1*1 - 7*1*1 - 5*1*1 - 3*1*1 = 92, etc."
+    ],
+    "mathematica": [
+        "Table[ Det[ DiagonalMatrix[ Table[ Prime[i+1]-1, {i, 1, n-1} ] ] + 1 ], {n, 1, 20} ] (* _Alexander Adamchuk_, Jun 02 2006 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=sum(k=1,prod(i=1,n, prime(i)),if(isprime(gcd(k,prod(i=1,n, prime(i)))),1,0))",
+        "(PARI) a(n) = matdet(matrix(n-1, n-1, j, k, if (j==k, prime(j+1), 1))); \\\\ after Mathematica; _Michel Marcus_, Oct 02 2016"
+    ],
+    "xref": [
+        "Cf. A135212, A120271."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Benoit Cloitre_, Dec 31 2002",
+    "ext": [
+        "a(7) from _Ralf Stephan_, Mar 25 2003",
+        "a(8)-a(12) from _Matthew Vandermast_, Jun 06 2004",
+        "More terms from _Alexander Adamchuk_, Jun 02 2006"
+    ],
+    "references": 5,
+    "revision": 30,
+    "time": "2016-10-03T03:34:19-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

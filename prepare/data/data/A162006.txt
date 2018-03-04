@@ -1,0 +1,25 @@
+{
+    "number": 162006,
+    "data": "1,28,1032,52736,3646208,330545664,38188155904,5488365862912,961530104709120,201865242068910080,50052995352723193856,14476381898608390176768,4831399425299156001882112",
+    "name": "Second left hand column of the EG1 triangle A162005",
+    "formula": [
+        "a(n) = sum((-1)^(m-p-1)*sum(2^(n-q-1)*binomial(n-q-1,m-p-1)*A094665(n-1,q)*A156919(q,p),q=1..n-m+p), p=0..m-1) with m = 2."
+    ],
+    "maple": [
+        "nmax := 14; mmax := nmax: imax := nmax: T1(0, x) := 1: T1(0, x+1) := 1: for i from 1 to imax do T1(i, x) := expand((2*x+1)*(x+1)*T1(i-1, x+1) - 2*x^2*T1(i-1, x)): dx := degree(T1(i, x)): for k from 0 to dx do c(k) := coeff(T1(i, x), x, k) od: T1(i, x+1) := sum(c(j1)*(x+1)^(j1), j1 = 0..dx): od: for i from 0 to imax do for j from 0 to i do A083061(i, j) := coeff(T1(i, x), x, j) od: od: for n from 0 to nmax do for k from 0 to n do A094665(n+1, k+1) := A083061(n, k) od: od: A094665(0, 0) := 1: for n from 1 to nmax do A094665(n, 0) := 0 od: for m from 1 to mmax do A156919(0, m) := 0 end do: for n from 0 to nmax do A156919(n, 0) := 2^n end do: for n from 1 to nmax do for m from 1 to mmax do A156919(n, m) := (2*m+2)*A156919(n-1, m) + (2*n-2*m+1) * A156919(n-1, m-1) end do end do: m:=2; for n from m to nmax do a(n, m) := sum((-1)^(m-p1-1)*sum(2^(n-q-1)*binomial(n-q-1, m-p1-1) * A094665(n-1, q) * A156919(q, p1), q=1..n-m+p1), p1=0..m-1) od: seq(a(n, m), n = m..nmax);",
+        "# Maple program edited by _Johannes W. Meijer_, Sep 25 2012"
+    ],
+    "xref": [
+        "Second left hand column of the EG1 triangle A162005.",
+        "Other left hand columns are A000182 and A162007.",
+        "Related to A094665, A083061 and A156919.",
+        "A000079 and A036289 appear in the Maple program."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "2,2",
+    "author": "_Johannes W. Meijer_, Jun 27 2009",
+    "references": 5,
+    "revision": 5,
+    "time": "2012-09-25T14:48:58-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

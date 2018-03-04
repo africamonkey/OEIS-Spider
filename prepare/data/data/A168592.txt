@@ -1,0 +1,50 @@
+{
+    "number": 168592,
+    "data": "1,3,14,80,509,3459,24579,180389,1356743,10402493,81004516,638886082,5093081983,40971735401,332187974718,2711668091448,22267979870143,183830653156341,1524747465249750,12700172705956876,106187411693668179",
+    "name": "G.f.: exp( Sum_{n>=1} A082758(n)*x^n/n ), where A082758(n) = sum of the squares of the trinomial coefficients in row n of triangle A027907.",
+    "comment": [
+        "Number of lattice paths from (0,0) to (n,n) which do not go above the diagonal x=y using steps (1,k), (k,1) with k >= 0 and two kinds of (1,1). - _Alois P. Heinz_, Oct 07 2015"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A168592/b168592.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: A(x) = (1/x)*Series_Reversion[x*(1-x)^2/((1+x)^2*(1-x+x^2))].",
+        "G.f.: A(x) satisfies A(x^2) = M(x)*M(-x), where M(x) is the g.f. of A001006. - _Alexander Burstein_, Oct 03 2017",
+        "G.f.: A(x) satisfies A(x^2) = (1-x - sqrt(1-2*x-3*x^2))*(1+x - sqrt(1+2*x-3*x^2))/(4*x^4). - _Paul D. Hanna_, Oct 05 2017, concluded from formula of Alexander Burstein."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 3*x + 14*x^2 + 80*x^3 + 509*x^4 + 3459*x^5 +...",
+        "log(A(x)) = 3*x + 19*x^2/2 + 141*x^3/3 + 1107*x^4/4 + 8953*x^5/5 +...+ A082758(n)*x^n/n +..."
+    ],
+    "maple": [
+        "b:= proc(x, y) option remember; `if`(y<0 or y>x, 0, `if`(x=0, 1,",
+        "      add(b(x-i, y-1), i=0..x) +add(b(x-1, y-j), j=0..y)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Oct 07 2015",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n<4, [1, 3, 14, 80][n+1],",
+        "      ((10*(n+1))*(16*n^3-20*n^2-n-1) *a(n-1)",
+        "      +(-944*n^4+2596*n^3-1924*n^2+236*n+30) *a(n-2)",
+        "      +(90*(n-2))*(16*n^3-52*n^2+45*n-6) *a(n-3)",
+        "      -(81*(2*n-5))*(n-2)*(n-3)*(4*n-1) *a(n-4))/",
+        "      ((n+1)*(4*n-5)*(2*n+1)*(n+2)))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Oct 07 2015"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0,1,polcoeff(exp(sum(m=1,n,sum(k=0,2*m, polcoeff((1+x+x^2)^m,k)^2)*x^m/m) +x*O(x^n)),n))}",
+        "(PARI) {a(n)=polcoeff(1/x*serreverse(x*(1-x)^2/((1+x)^2*(1-x+x^2)+x*O(x^n))),n)}"
+    ],
+    "xref": [
+        "Cf. A168590, A168593, A082758, A027907, A168595, A218321, A263316."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 01 2009",
+    "references": 8,
+    "revision": 22,
+    "time": "2017-10-05T00:50:01-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

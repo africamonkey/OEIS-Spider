@@ -1,0 +1,55 @@
+{
+    "number": 53696,
+    "data": "7,13,15,21,31,40,43,57,63,73,85,91,111,121,127,133,156,157,183,211,241,255,259,273,307,341,343,364,381,400,421,463,507,511,553,585,601,651,703,757,781,813,820,871,931,993,1023,1057,1093,1111,1123,1191",
+    "name": "Numbers that can be represented as a string of three or more 1's in a base >= 2.",
+    "comment": [
+        "Numbers of the form (b^n-1)/(b-1) for n > 2 and b > 1. - _T. D. Noe_, Jun 07 2006",
+        "Numbers m that are nontrivial repunits for any base b >= 2. For k = 2 (I use k for the exponent since n is used as the index in a(n)) we get (b^k-1)/(b-1) = (b^2-1)/(b-1) = b+1, so every integer m >= 3 is a 2-digit repunit in base b = m-1. And for n = 1 (the 1-digit degenerate repunit) we get (b-1)/(b-1) = 1 for any base b >= 2. If we considered all k >= 1 we would get the sequence of all positive integers except 2 since it is the smallest uniform base used in positional representation (2 might be seen as the \"repunit\" in a nonpositional base representation such as the Roman numerals where 2 is expressed as II). - _Daniel Forgues_, Mar 01 2009",
+        "These repunits numbers belong to Brazilian numbers (A125134) (see Links: \"Les nombres br\u00e9siliens\" - section IV, p. 32). - _Bernard Schott_, Dec 18 2012",
+        "The Brazilian primes (A085104) belong to this sequence. - _Bernard Schott_, Dec 18 2012"
+    ],
+    "link": [
+        "T. D. Noe and Charles R Greathouse IV, <a href=\"/A053696/b053696.txt\">Table of n, a(n) for n = 1..10000</a> (first 1172 terms from Noe)",
+        "Bernard Schott, <a href=\"/A125134/a125134.pdf\">Les nombres br\u00e9siliens</a>, Quadrature, no. 76, avril-juin 2010, pages 30-38; included here with permission from the editors of Quadrature."
+    ],
+    "formula": [
+        "a(n) ~ n^2 since as n grows the density of repunits of degree 2 among all the repunits tends to 1. - _Daniel Forgues_, Dec 09 2008",
+        "A088323(a(n)) > 1. - _Reinhard Zumkeller_, Jan 22 2014"
+    ],
+    "example": [
+        "a(5) = 31 because 31 can be written as 111 base 5 (or indeed 11111 base 2)."
+    ],
+    "maple": [
+        "N:= 10^4: # to get all terms <= N",
+        "V:= Vector(N):",
+        "for b from 2 while (b^3-1)/(b-1) <= N do",
+        "  inds:= [seq((b^k-1)/(b-1), k=3..ilog[b](N*(b-1)+1))];",
+        "  V[inds]:= 1;",
+        "od:",
+        "select(t -> V[t] = 1, [$1..N]); # _Robert Israel_, Dec 10 2015"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{d = Rest@ Divisors[n - 1]}, Length@ d > 2 && Length@ Select[ IntegerDigits[n, d], Union@# == {1} &] > 1]; Select[ Range@ 1200, fQ]",
+        "lim=1000; Union[Reap[Do[n=3; While[a=(b^n-1)/(b-1); a<=lim, Sow[a]; n++], {b, 2, Floor[Sqrt[lim]]}]][[2, 1]]]",
+        "Take[Union[Flatten[With[{l=Table[PadLeft[{},n,1],{n,3,100}]}, Table[ FromDigits[#,n]&/@l,{n,2,100}]]]],80] (* _Harvey P. Dale_, Oct 06 2011 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List(),e,t);for(b=2,sqrt(lim),e=3;while((t=(b^e-1)/(b-1))<=lim,listput(v,t);e++));vecsort(Vec(v),,8) \\\\ _Charles R Greathouse IV_, Oct 06 2011",
+        "(PARI) list(lim)=my(v=List(),e,t);for(b=2,lim^(1/3),e=4;while((t=(b^e-1)/(b-1))<=lim,listput(v,t);e++));vecsort(concat(Vec(v), vector((sqrtint (lim\\1*4-3)-3)\\2,i,i^2+3*i+3)),,8) \\\\ _Charles R Greathouse IV_, May 30 2013",
+        "(Haskell)",
+        "a053696 n = a053696_list !! (n-1)",
+        "a053696_list = filter ((> 1) . a088323) [2..]",
+        "-- _Reinhard Zumkeller_, Jan 22 2014, Nov 26 2013"
+    ],
+    "xref": [
+        "Cf. A090503 (a subsequence), A119598 (numbers that are repunits in four or more bases), A125134, A085104.",
+        "Cf. A108348."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Henry Bottomley_, Mar 23 2000",
+    "references": 14,
+    "revision": 65,
+    "time": "2015-12-13T07:02:32-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

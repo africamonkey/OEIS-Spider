@@ -1,0 +1,53 @@
+{
+    "number": 46682,
+    "data": "1,1,1,2,3,4,6,8,12,16,22,29,40,52,69,90,118,151,195,248,317,400,505,632,793,985,1224,1512,1867,2291,2811,3431,4186,5084,6168,7456,9005,10836,13026,15613,18692,22316,26613,31659,37619,44601,52815,62416,73680,86809,102162",
+    "name": "Number of cycle types of conjugacy classes of all even permutations of n elements.",
+    "comment": [
+        "Also number of partitions of n with even number of even parts. There is no restriction on the odd parts.",
+        "a(n) = u(n) + v(n), n>=2, of the Osima reference, p. 383.",
+        "Also number of partitions of n with largest part congruent to n modulo 2: a(2*n)=A027187(2*n), a(2*n-1)=A027193(2*n-1); a(n)=A000041(n)-A000701(n). - _Reinhard Zumkeller_, Apr 22 2006",
+        "Equivalently, number of partitions of n with number of parts having the same parity as n. - _Olivier G\u00e9rard_, Apr 04 2012",
+        "Also number of distinct free Young diagrams (Ferrers graphs with n nodes). Free Young diagrams are distinct when none is a rigid transformation (translation, rotation, reflection or glide reflection) of another. - _Jani Melik_, May 08 2016"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A046682/b046682.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "M. Osima, <a href=\"http://dx.doi.org/10.4153/CJM-1952-034-x\">On the irreducible representations of the symmetric group</a>, Canad. J. Math., 4 (1952), 381-384."
+    ],
+    "formula": [
+        "G.f.: sum(n>=0, (-q^2)^(n^2) ) / prod(m>=1, 1-q^m ) = ( 1/prod(m>=1, 1-q^m) + prod(m>=1, 1+q^(2*m-1) ) ) / 2. - _Mamuka Jibladze_, Sep 07 2003",
+        "a(n) = (A000041(n) + A000700(n)) / 2."
+    ],
+    "example": [
+        "1 + x + x^2 + 2*x^3 + 3*x^4 + 4*x^5 + 6*x^6 + 8*x^7 + 12*x^8 + 16*x^9 + ...",
+        "a(3)=2 since cycle types of even permutations of 3 elements is (.)(.)(.), (...).",
+        "a(4)=3 since cycle types of even permutations of 4 elements is (.)(.)(.)(.), (...)(.), (..)(..).",
+        "a(5)=4 (free Young diagrams):",
+        "  XXXXX XXXX. XXX.. XXX..",
+        "  ..... X.... XX... X....",
+        "  ..... ..... ..... X....",
+        "  ..... ..... ..... .....",
+        "  ..... ..... ..... ....."
+    ],
+    "maple": [
+        "seq(add((-1)^(n-k)*combinat:-numbpart(n,k),k=0..n),n=0..48); # _Peter Luschny_, Aug 03 2015"
+    ],
+    "mathematica": [
+        "max = 48; f[q_] := Sum[(-q^2)^n^2, {n, 0, max}]/Product[1-q^n, {n, 1, max}]; CoefficientList[ Series[f[q], {q, 0, max}], q] (* _Jean-Fran\u00e7ois Alcover_, Oct 18 2011, after g.f. *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(q='q);Vec(sum(n=0,sqrt(lim),(-q^2)^(n^2))/prod(n=1,lim,1-q^n)+O(q^(lim\\1+1))) \\\\ _Charles R Greathouse IV_, Oct 18 2011",
+        "(PARI) {a(n) = if( n<0, 0, (numbpart(n) + polcoeff( 1 / prod( k=1, n, 1 + (-x)^k, 1 + x * O(x^n)), n)) / 2)} /* _Michael Somos_, Jul 24 2012 */"
+    ],
+    "xref": [
+        "Cf. A000041, A000700, A000701, A006950, A015128.",
+        "For the number of conjugacy classes of the alternating group A_n, n>=2, see A000702.",
+        "Cf. A118301."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,4",
+    "author": "_Vladeta Jovovic_",
+    "references": 21,
+    "revision": 60,
+    "time": "2016-05-28T07:32:08-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

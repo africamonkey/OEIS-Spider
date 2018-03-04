@@ -1,0 +1,48 @@
+{
+    "number": 267277,
+    "data": "11,13,17,19,31,37,43,47,61,73,79,83,223,227,263,281,283,463,643,683,821,827,881,1117,1231,1259,1291,1321,1361,1367,1433,1471,1543,1567,1583,1597,1619,1637,1657,1699,1723,1741,1753,1777,1933,1951,1973",
+    "name": "Zeroless primes p such that p*(product of digits of p)+(sum of digits of p) is also prime.",
+    "comment": [
+        "Zeroless means that the decimal expansion has no digit \"0\", so no element of A056709 is in the sequence.",
+        "If we define a function \"n*times products of digits plus sum of digits\", f(n) = n*A007954(n) + A007953(n), then iterating the function starting at 217421 generates a chain of at least 4 primes: 217421 -> 24351169 -> 157795575151 -> 1522234189034803183."
+    ],
+    "example": [
+        "19 => 19*1*9+1+9 = 181 (is prime).",
+        "821 => 821*8*2*1+8+2+1 = 13147 (is prime).",
+        "2357 => 2357*2*3*5*7+2+3+5+7 = 494987 (is prime).",
+        "99995999 => 99995999*(9^7)*5+9*7+5 = 2391388816705223 (is prime)."
+    ],
+    "maple": [
+        "isA267277 := proc(n)",
+        "    local pdgs ;",
+        "    if isprime(n) then",
+        "        pdgs := A007954(n) ;",
+        "        if pdgs <> 0 then",
+        "            isprime(n*pdgs+A007953(n)) ;",
+        "        else",
+        "            false;",
+        "        end if;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 to 400 do",
+        "    if isA267277(n) then",
+        "        printf(\"%d,\\n\",n);",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 16 2016"
+    ],
+    "mathematica": [
+        "Select[Prime@ Range@ 480, And[Last@ DigitCount@ # == 0, PrimeQ[Function[k, # Times @@ k + Total@ k]@ IntegerDigits@ #]] &] (* _Michael De Vlieger_, Jan 12 2016 *)"
+    ],
+    "xref": [
+        "Cf. A038618."
+    ],
+    "keyword": "nonn,base,less,easy",
+    "offset": "1,1",
+    "author": "_Emre APARI_, Jan 12 2016",
+    "references": 0,
+    "revision": 17,
+    "time": "2016-01-16T13:07:37-05:00",
+    "created": "2016-01-16T13:07:37-05:00"
+}

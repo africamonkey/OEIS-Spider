@@ -1,0 +1,54 @@
+{
+    "number": 59097,
+    "data": "0,1,2,3,4,6,7,9,10,11,12,21,22,28,29,30,31,36,37,54,55,57,58,110,171,784,786",
+    "name": "Numbers n such that the binomial coefficient C(2n,n) is not divisible by the square of an odd prime.",
+    "comment": [
+        "Probably finite. Erd\u0151s believed there were no more terms.",
+        "The power of p that divides n! is (n-s)/(p-1), where s is the sum of the \"digits\" in the base-p representation of n (see Gouvea). - _N. J. A. Sloane_, Nov 26 2005",
+        "From _David W. Wilson_, Nov 21 2005: (Start)",
+        "\"The exponent e of prime p in n! can be computed as follows (in pseudo-C):",
+        "int e(int p, int n) { int s = 0; while (n > 0) { n /= p; s += n; } return s; }",
+        "The exponent of p in C(2n, n) is then f(p, n) = e(p, 2*n) - 2*e(p, n).",
+        "We can then use the following function to check if n is in the sequence:",
+        "bool isGood(int n) { for (int p = 3; p <= n; p += 2) { if (!isPrime(p)) continue; if (f(p, n) >= 2) return false; } return true; }\"  (End)",
+        "There are no more terms: Granville and Ramar\u00e9 show that if n >= 2082 then C(2n,n) is divisible by the square of a prime >= sqrt(n/5). - _Robert Israel_, Sep 18 2017"
+    ],
+    "reference": [
+        "F. Q. Gouvea, p-Adic Numbers, Springer-Verlag, 1993; see p. 100.",
+        "R. L. Graham, D. E. Knuth and O. Patashnik, Concrete Mathematics, first ed, chap 5, prob 96.",
+        "R. K. Guy, Unsolved problems in Number Theory, section B33."
+    ],
+    "link": [
+        "A. Granville and O. Ramar\u00e9, <a href=\"http://www.dms.umontreal.ca/~andrew/PDF/ramare.pdf\">Explicit bounds on exponential sums and the scarcity of squarefree binomial coefficients</a>, Mathematika 43 (1996), 73-107, <a href=\"http://dx.doi.org/10.1112/S0025579300011608\">[DOI]</a>."
+    ],
+    "example": [
+        "C(12,6)=924, which is not divisible by the square of an odd prime, so 6 is in the sequence."
+    ],
+    "maple": [
+        "filter:= proc(n)",
+        "  andmap(t -> t[1] = 2 or t[2] = 1, ifactors(binomial(2*n,n))[2]) end proc:",
+        "select(filter, [$0..2081]); # _Robert Israel_, Sep 18 2017"
+    ],
+    "mathematica": [
+        "l = {}; Do[m = Binomial[2n, n]; While[EvenQ[m], m = m/2]; If[MoebiusMu[m] != 0, l = {l, n}], {n, 1000}]; Flatten[l] (* _Alonso del Arte_, Nov 11 2005 *)",
+        "(* The following is an implementation of _David W. Wilson_'s algorithm: *)",
+        "expoPF[p_, n_] := Module[{s, x}, x = n; s = 0; While[x > 0, x = Floor[x/p]; s = s + x]; s]",
+        "expoP2nCn[p_, n_] := expoPF[p, 2*n] - 2*expoPF[p, n]",
+        "goodQ[ n_ ] := TrueQ[ Module[ {flag, i}, flag = True; i = 2; While[ flag && Prime[ i ] < n, If[ expoP2nCn[ Prime[ i ], n ] > 1, flag = False ]; i++ ]; flag ] ]",
+        "Select[ Range[ 1000 ], goodQ[ # ] & ] (* _Alonso del Arte_, Nov 11 2005 *)"
+    ],
+    "xref": [
+        "Cf. A000984. Cf. also A081391, n such that C[2n, n] has only one prime divisor of which exponent equals one."
+    ],
+    "keyword": "nonn,fini,full",
+    "offset": "1,3",
+    "author": "_Jud McCranie_, Jan 01 2001",
+    "ext": [
+        "No other terms for n<=157430. - _Naohiro Nomoto_, May 12 2002",
+        "No other terms for n<=2^31 - 1. - _Jack Brennen_, Nov 21 2005"
+    ],
+    "references": 5,
+    "revision": 23,
+    "time": "2017-09-18T05:03:36-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

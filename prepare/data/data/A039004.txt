@@ -1,0 +1,45 @@
+{
+    "number": 39004,
+    "data": "0,3,6,9,12,15,18,24,27,30,33,36,39,45,48,51,54,57,60,63,66,72,75,78,90,96,99,102,105,108,111,114,120,123,126,129,132,135,141,144,147,150,153,156,159,165,177,180,183,189,192,195,198,201,204,207,210,216,219",
+    "name": "Numbers n such that representation in base 4 has same number of 1's and 2's.",
+    "comment": [
+        "Numbers such that sum (-1)^k*b(k) = 0 where b(k)=k-th binary digit of n. - _Benoit Cloitre_, Nov 18 2003",
+        "Conjecture: a(C(2n,n)-1) = 4^n - 1. (A000984 is C(2n,n). - _Gerald McGarvey_, Nov 18 2007",
+        "From _Russell Jay Hendel_, Jun 23 2015: (Start)",
+        "We prove the McGarvey conjecture (A) a(e(n,n)-1) = 4^n-1, with e(n,m) = a034870(n,m) = binomial(2n,m), the even rows of Pascal's triangle. By the comment from Hendel in A034870, we have the function s(n,k) = #{n-digit, base-4 numbers with n-k more 1-digits than 2-digits}. As shown in A034870, (B) #s(n,k)= e(n,k) with # indicating cardinality, that is, e(n,k) = binomial(2n,k) gives the number of n-digit, base-4 numbers with n-k more 1-digits than 2-digits.",
+        "We now show that (B) implies (A). By definition, s(n,n) contains the e(n,n) = binomial(2n,n) numbers with an equal number of 1-digits and 2-digits. The biggest n-digit, base-4 number is 333...3 (n copies of 3). Since 333...33 has zero 1-digits and zero 2-digits it follows that 333...333 is a member of s(n,n) and hence it is the biggest member of s(n,n). But 333...333 (n copies of 3) in base 4 has value 4^n-1. Since A039004 starts with index 0 (that is, 0 is the 0th member of A039004), it immediately follows that 4^n-1 is the (e(n,n)-1)st member of A039004, proving the McGarvey conjecture. (End)"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A039004/b039004.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "Conjecture: there is a constant c around 5 such that a(n) is asymptotic to c*n. - _Benoit Cloitre_, Nov 24 2002",
+        "That conjecture is false. The number of members of the sequence from 0 to 4^d-1 is binomial(2d,d) which by Stirling's formula is asymptotic to 4^d/sqrt(Pi*d). If Cloitre's conjecture were true we would have 4^d-1 asymptotic to c*4^d/sqrt(Pi*d), a contradiction. - _Robert Israel_, Jun 24 2015"
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms up to N, which should be divisible by 4",
+        "B:= Array(0..N-1):",
+        "d:= ceil(log[4](N));",
+        "S:= Array(0..N-1,[seq(op([0,1,-1,0]),i=1..N/4)]):",
+        "for i from 1 to d do",
+        "  B:= B + S;",
+        "  S:= Array(0..N-1,i-> S[floor(i/4)]);",
+        "od:",
+        "select(t -> B[t]=0, [$0..N-1]); # _Robert Israel_, Jun 24 2015"
+    ],
+    "program": [
+        "(PARI) for(n=0,219,if(sum(i=1,length(binary(n)),(-1)^i*component(binary(n),i))==0,print1(n,\",\")))",
+        "See link in A139351 for Fortran program."
+    ],
+    "xref": [
+        "Cf. A139370, A139371, A139372, A139373.",
+        "Cf. A139351, A139352, A139353, A139354, A139355."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 12,
+    "revision": 34,
+    "time": "2017-03-24T00:47:49-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

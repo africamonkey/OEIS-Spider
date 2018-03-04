@@ -1,0 +1,70 @@
+{
+    "number": 208738,
+    "data": "1,2,4,9,20,45,98,211,445,927,1909,3901,7920,16011,32260,64852,130157,260932,522691,1046489,2094438,4190798,8384100,16771453,33547094,67099568,134205996,268420714,536852452,1073718799,2147455019,4294931825,8589890772",
+    "name": "Number of multisets occuring as the peak heights multiset of a Dyck n-path.",
+    "comment": [
+        "We use the definition given by Callan and Deutsch (see reference).  A Dyck n-path is a lattice path of n upsteps U (changing by (1,1)) and n downsteps D (changing by (1,-1)) that starts at the origin and never goes below the x-axis.  A peak is an occurrence of U D and the peak height is the y-coordinate of the vertex between its U and D.",
+        "Also the number of nonempty multisets S of positive integers satisfying max(S) + |S| - 1 <= n  <= sum(S)."
+    ],
+    "reference": [
+        "D. Callan and E. Deutsch, Problems and Solutions: 11624, The Amer. Math. Monthly 119 (2012), no. 2, 161-162"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A208738/b208738.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = 2^n - A000070(n-1).",
+        "a(n) = 2*a(n-1) + A058884(n+1).",
+        "G.f.: 2*x/(1-2*x) - (x/(1-x))*prod(m>=1, 1/(1-x^m))."
+    ],
+    "example": [
+        "For n=2 the possibilities are UDUD, UUDD giving us multisets of {1,1} and {2} respectively.  There are two distinct multisets so a(2) = 2."
+    ],
+    "mathematica": [
+        "Table[2^(n) -  Sum[PartitionsP[k], {k, 0, n - 1}], {n, 1, 40}]"
+    ],
+    "program": [
+        "(Python)",
+        "#Returns all possible peak heights multisets",
+        "def peakheightsmultisets(n):",
+        ".#Making all possible paths",
+        ".allpaths=list()",
+        ".combinst=itertools.combinations(range(2*n),n)",
+        ".for tup in combinst:",
+        "..a=[]",
+        "..for i in range(2*n):",
+        "...if i in tup:",
+        "....a.append(1)",
+        "...else:",
+        "....a.append(-1)",
+        "..allpaths.append(tuple(a))",
+        ".#Now we take Dyck paths and form multisets as we go",
+        ".output=set()",
+        ".for x in allpaths:",
+        "..include=True",
+        "..peaklist=[]",
+        "..total=0",
+        "..for unit in x:",
+        "...if unit==-1 and lastunit==1:",
+        "....peaklist.append(total)",
+        "...total+=unit",
+        "...if total < 0:",
+        "....include=False",
+        "....break",
+        "...lastunit=unit",
+        "..if include:",
+        "...output.add(tuple(sorted(peaklist)))",
+        ".return output",
+        "(Python)",
+        "#Using peakheightsmultisets(n)",
+        "def a(n):",
+        ".return len(peakheightsmultisets(n))"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_David Nacin_, Mar 01 2012",
+    "references": 3,
+    "revision": 15,
+    "time": "2012-03-31T10:26:32-04:00",
+    "created": "2012-03-02T12:12:49-05:00"
+}

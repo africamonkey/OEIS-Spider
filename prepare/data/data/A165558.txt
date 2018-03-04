@@ -1,0 +1,43 @@
+{
+    "number": 165558,
+    "data": "0,16,108,729,12500,84375,3294172,9765625,22235661,2573571875,678223072849,1141246682444,7703415106497,891598970659375,1211500426369012,8177627877990831,234966429149994773,946484708100790625",
+    "name": "Integers that are half of their arithmetic derivatives.",
+    "comment": [
+        "All integers of the form p^p*q^q, with q and p two distinct primes, are in the sequence. [_R. J. Mathar_, Sep 26 2009]",
+        "6*10^8 < a(10) <= 2573571875. a(11) <= 678223072849. [_Donovan Johnson_, Nov 03 2010]",
+        "By a result of Ufnarovski and Ahlander, an integer is in this sequence if and only if it has the form p^(2p) or p^p*q^q, with p and q distinct primes. See comments from A072873. [_Nathaniel Johnston_, Nov 22 2010]"
+    ],
+    "formula": [
+        "{n: A003415(n) = 2*n}."
+    ],
+    "example": [
+        "For k =84375 = 3^3*5^5, so A003415(k)/2 = 84375*(3/3+5/5)/2 = 84375 = k, which adds k=84375 to the sequence."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "P:=proc(n)",
+        "local a,i,p,pfs;",
+        "for i from 1 to n do",
+        "  pfs:=ifactors(i)[2]; a:=i*add(op(2,p)/op(1,p),p=pfs);  if a=2*i then print(i); fi; od;",
+        "end:",
+        "P(100000000);"
+    ],
+    "mathematica": [
+        "d[0] = d[1] = 0; d[n_] := n*Total[f = FactorInteger[n]; f[[All, 2]]/f[[All, 1]] ]; Join[{0}, Reap[Do[p = Prime[n]; ip = p^(2*p); If[ip == d[ip]/2, Sow[ip]]; Do[q = Prime[k]; iq = p^p*q^q; If[iq == d[iq]/2, Sow[iq]], {k, n+1, 6}], {n, 1, 5}]][[2, 1]] // Union][[1 ;; 18]] (* _Jean-Fran\u00e7ois Alcover_, Apr 22 2015, after _Nathaniel Johnston_ *)"
+    ],
+    "xref": [
+        "Cf. A003415, A072873."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_ and _Giorgio Balzarotti_, Sep 22 2009",
+    "ext": [
+        "Entries checked by _R. J. Mathar_, Sep 26 2009",
+        "a(7)-a(9) from _Donovan Johnson_, Nov 03 2010",
+        "a(10)-a(18) and general form from _Nathaniel Johnston_, Nov 22 2010"
+    ],
+    "references": 4,
+    "revision": 28,
+    "time": "2015-08-18T04:55:00-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

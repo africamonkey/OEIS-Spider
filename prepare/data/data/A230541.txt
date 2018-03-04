@@ -1,0 +1,33 @@
+{
+    "number": 230541,
+    "data": "11,20,22,26,33,65,82,117,209,218,376,417,483,508,537,561,675,758,910,1186,1208,1317,1350,1828,2039,2192,2347,2471,2840,2889,4129,4369,4389,4495,4893,5007,6430,7276,7690,8246,8777,9289,10651,11727,11797,12048,12099",
+    "name": "Numbers n such that the digits of sigma(n) are a permutation of those of sigma*(n), where sigma*(n) is the sum of anti-divisors of n (A066417).",
+    "link": [
+        "Paolo P. Lava, <a href=\"/A230541/b230541.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "example": [
+        "Divisors of 376 are 1, 2, 4, 8, 47, 94, 376, 188 and sigma(376) = 720; anti-divisors of 376 are 3, 16, 251 and sigma*(376) = 270.",
+        "Therefore 376 is part of the sequence because the digits of 720 are a permutation of the digits of 270."
+    ],
+    "maple": [
+        "with(numtheory); P:= proc(i) local a,b,c,j,k,n,ok,p;",
+        "for n from 3 to i do b:=[]; c:=[];",
+        "k:=0; j:=n; while j mod 2<>1 do k:=k+1; j:=j/2; od;",
+        "a:=sigma(2*n+1)+sigma(2*n-1)+sigma(n/2^k)*2^(k+1)-6*n-2;",
+        "while a>0 do b:=[op(b),a mod 10]; a:=trunc(a/10); od; a:=sigma(n);",
+        "while a>0 do c:=[op(c),a mod 10]; a:=trunc(a/10); od;",
+        "if nops(b)=nops(c) then b:=sort(b); c:=sort(c); b:=b-c; ok:=1;",
+        "for j from 1 to nops(b) do if b[j]<>0  then ok:=0; break; fi; od;",
+        "if ok=1 then print(n); fi; fi; od; end; P(10^6);"
+    ],
+    "xref": [
+        "Cf. A000203, A066417, A115920."
+    ],
+    "keyword": "nonn,base,less",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Oct 23 2013",
+    "references": 1,
+    "revision": 11,
+    "time": "2013-10-24T12:04:14-04:00",
+    "created": "2013-10-23T21:13:32-04:00"
+}

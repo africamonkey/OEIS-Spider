@@ -1,0 +1,51 @@
+{
+    "number": 161213,
+    "data": "1,131071,64570081,8589869056,190734863281,8463265086751,38771752331201,562945658454016,2779530261754401,24999809265103951,50544702849929377,554648540725313536,720867993281778161,5081852349802846271",
+    "name": "a(n) = Sum_{d|n} Moebius(n/d)*d^(b-1)/phi(n) for b = 18.",
+    "comment": [
+        "a(n) is the number of lattices L in Z^17 such that the quotient group Z^17 / L is C_n. - _\u00c1lvar Ibeas_, Nov 26 2015"
+    ],
+    "reference": [
+        "J. H. Kwak and J. Lee, Enumeration of graph coverings, surface branched coverings and related group theory, in Combinatorial and Computational Mathematics (Pohang, 2000), ed. S. Hong et al., World Scientific, Singapore 2001, pp. 97-161. See p. 134."
+    ],
+    "link": [
+        "Enrique P\u00e9rez Herrero, <a href=\"/A161213/b161213.txt\">Table of n, a(n) for n = 1..5000</a>",
+        "<a href=\"/index/J#nome\">Index to Jordan function ratios J_k/J_1</a>"
+    ],
+    "formula": [
+        "a(n) = J_17(n)/A000010(n), where J_17 is the 17th Jordan Totient Function.",
+        "From _\u00c1lvar Ibeas_, Nov 26 2015: (Start)",
+        "Multiplicative with a(p^e) = p^(16e-16) * (p^17-1) / (p-1).",
+        "For squarefree n, a(n) = A000203(n^16).",
+        "(End)"
+    ],
+    "maple": [
+        "A161213 := proc(n)",
+        "    add(numtheory[mobius](n/d)*d^17,d=numtheory[divisors](n)) ;",
+        "    %/numtheory[phi](n) ;",
+        "end proc:",
+        "for n from 1 to 5000 do",
+        "    printf(\"%d %d\\n\",n,A161213(n)) ;",
+        "end do: # _R. J. Mathar_, Mar 15 2016"
+    ],
+    "mathematica": [
+        "A161213[n_]:=DivisorSum[n,MoebiusMu[n/#]*#^(18-1)/EulerPhi[n]&]; Array[A161213,20]"
+    ],
+    "program": [
+        "(PARI) A161213(n)=sumdiv(n,d,moebius(n/d)*d^17)/eulerphi(n);",
+        "(PARI) vector(100, n, sumdiv(n^16, d, if(ispower(d, 17), moebius(sqrtnint(d, 16))*sigma(n^16/d), 0))) \\\\ _Altug Alkan_, Nov 26 2015"
+    ],
+    "xref": [
+        "Cf. A000010, A000203."
+    ],
+    "keyword": "nonn,mult",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Nov 19 2009",
+    "ext": [
+        "Definition corrected by _Enrique P\u00e9rez Herrero_, Oct 30 2010"
+    ],
+    "references": 5,
+    "revision": 31,
+    "time": "2016-03-16T16:34:20-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

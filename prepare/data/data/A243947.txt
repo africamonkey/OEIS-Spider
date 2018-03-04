@@ -1,0 +1,39 @@
+{
+    "number": 243947,
+    "data": "1,11,155,2365,37555,610897,10098997,168894355,2849270515,48395044705,826479148001,14177519463191,244109912494525,4216385987238575,73024851218517275,1267712063327871245,22052786911315216595,384321597582115655825,6708530714274563938225",
+    "name": "G.f.: sqrt( (1+x - sqrt(1-18*x+x^2)) / (10*x*(1-18*x+x^2)) ).",
+    "comment": [
+        "Multiply the square of each term by 5 to form a bisection of A243945.",
+        "Limit a(n+1)/a(n) = 9 + 4*sqrt(5)."
+    ],
+    "formula": [
+        "a(n)^2 = (1/5) * Sum_{k=0..2*n+1} C(2*k, k)^2 * C(2*n+k+1, 2*n-k+1).",
+        "a(n) ~ (9+4*sqrt(5))^(n+1) / (2*5^(1/4)*sqrt(2*Pi*n) * sqrt(5+2*sqrt(5))). - _Vaclav Kotesovec_, Aug 18 2014"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 11*x + 155*x^2 + 2365*x^3 + 37555*x^4 + 610897*x^5 +...",
+        "where",
+        "A(x)^2 = (1+x - sqrt(1-18*x+x^2)) / (10*x*(1-18*x+x^2))."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Sqrt[((1+x-Sqrt[1-18x+x^2]))/(10x(1-18x+x^2))],{x,0,20}],x] (* _Harvey P. Dale_, Jul 31 2016 *)"
+    ],
+    "program": [
+        "(PARI) /* From definition: */",
+        "{a(n)=polcoeff( sqrt( (1+x - sqrt(1-18*x+x^2 +x^2*O(x^n))) / (10*x*(1-18*x+x^2 +x*O(x^n))) ), n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) /* From a(n) = sqrt( A243945(2*n+1)/5 ): */",
+        "{a(n)=sqrtint( (1/5)*sum(k=0, 2*n+1, binomial(2*k, k)^2*binomial(2*n+k+1, 2*n-k+1)) )}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A243945, A243946, A084769, A245927."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Aug 17 2014",
+    "references": 3,
+    "revision": 7,
+    "time": "2016-07-31T12:15:27-04:00",
+    "created": "2014-08-17T21:51:56-04:00"
+}

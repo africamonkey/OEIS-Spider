@@ -1,0 +1,25 @@
+{
+    "number": 122993,
+    "data": "1,1,2,5,14,43,145,538,2194,9796,47635,250811,1421509,8623112,55693506,381175374,2753122695,20909082797,166448275680,1385010594903,12016912542681,108481226052096,1016937780320981,9882191461530141",
+    "name": "G.f.: A(x) = Product_{n>=0} 1/( 1 - x/(1-x)^n )^( 1/2^(n+1) ).",
+    "link": [
+        "D. Callan, <a href=\"http://arxiv.org/abs/1111.6297\">A permutation pattern that illustrates the strong law of small numbers</a>, arXiv:1111.6297"
+    ],
+    "example": [
+        "A(x) = (1-x)^(-1/2) * (1 - x/(1-x))^(-1/4) * (1 - x/(1-x)^2)^(-1/8) * (1 - x/(1-x)^3)^(-1/16) * ..."
+    ],
+    "program": [
+        "(PARI) {a(n)=round(polcoeff(prod(i=0,6*n+10,1/(1-x/(1-x)^i +x*O(x^n))^(1/2^(i+1))),n))}",
+        "(PARI) {a(n)=local(A); if(n<0, 0, A=1+O(x); for(k=1, n, A=truncate(A)+x*O(x^k); A+=substvec(A, [x, y], [x/(1-x*y+O(x^k)), y*(1-x*y)]) -A^2*(1-x)); subst(polcoeff(A, n), y, 1))} /* _Michael Somos_, Oct 21 2006 */"
+    ],
+    "xref": [
+        "Cf. A122992."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Sep 23 2006",
+    "references": 2,
+    "revision": 16,
+    "time": "2014-05-20T22:39:06-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

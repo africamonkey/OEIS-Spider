@@ -1,0 +1,50 @@
+{
+    "number": 272661,
+    "data": "2,6,32,333,8927",
+    "name": "Number of distinct characteristic polynomials of n X n matrices with elements {0, 1}.",
+    "reference": [
+        "Robert M. Corless, Bohemian Eigenvalues, Talk Presented at Computational Discovery in Mathematics (ACMES 2), University of Western Ontario, May 12 2016. (Talk based on joint work with Steven E. Thornton, Sonia Gupta, Jonathan Brino-Tarasoff, Venkat Balasubramanian.)"
+    ],
+    "link": [
+        "Robert M. Corless, Steven E. Thornton, Sonia Gupta, Jonathan Brino-Tarasoff, Venkat Balasubramanian, <a href=\"https://s3.amazonaws.com/stevenethornton.github/BHIME+Slides.pdf\">Slides from \"Bohemian Eigenvalues\" talk</a>.",
+        "Robert Israel, <a href=\"/A272661/a272661.txt\">Examples for n=5</a>"
+    ],
+    "program": [
+        "(MATLAB)",
+        "function count = A272661(N)",
+        "  C = zeros(0,N);",
+        "  count = 0;",
+        "  V = zeros(1,N);",
+        "  L = -floor(N/2) + [0:N-1];",
+        "  for x = 0:2^(N^2)-1;",
+        "    r = dec2bin(x+2^(N^2))-'0';",
+        "    A = reshape(r(2:end),N,N);",
+        "    rowcounts = sum(A,2);",
+        "    colcounts = sum(A,1);",
+        "    if ~issorted(rowcounts)|| rowcounts(N) < max(colcounts)",
+        "      continue",
+        "    end",
+        "    for i = 1:N",
+        "        V(i) = round(det(A - L(i)*eye(N)));",
+        "    end",
+        "    if ~ismember(V, C, 'rows')",
+        "      count = count+1;",
+        "      C(count,:) = V;",
+        "    end",
+        "  end",
+        "end  % _Robert Israel_, Aug 18 2016"
+    ],
+    "xref": [
+        "Six classes of matrices mentioned in Rob Corless's talk: A272658, A272659, A272660, A272661, A272662, A272663."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, May 15 2016",
+    "ext": [
+        "a(5) from _Robert Israel_, Aug 18 2016"
+    ],
+    "references": 6,
+    "revision": 17,
+    "time": "2017-12-16T18:10:09-05:00",
+    "created": "2016-05-15T16:16:09-04:00"
+}

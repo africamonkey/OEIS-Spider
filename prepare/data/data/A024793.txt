@@ -1,0 +1,46 @@
+{
+    "number": 24793,
+    "data": "0,0,0,0,0,0,0,0,1,1,2,3,5,7,11,15,22,31,43,58,80,106,142,187,246,319,416,533,685,872,1108,1397,1762,2204,2755,3426,4251,5250,6476,7950,9746,11905,14514,17638,21403,25888,31265,37661,45288,54329,65079,77775",
+    "name": "Number of 9's in all partitions of n.",
+    "comment": [
+        "The sums of nine successive terms give A000070. - _Omar E. Pol_, Jul 12 2012",
+        "a(n) is also the difference between the sum of 9th largest and the sum of 10th largest elements in all partitions of n. - _Omar E. Pol_, Oct 25 2012"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A024793/b024793.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A181187(n,9) - A181187(n,10). - _Omar E. Pol_, Oct 25 2012",
+        "From _Peter Bala_, Dec 26 2013: (Start)",
+        "a(n+9) - a(n) = A000041(n).",
+        "a(n) + a(n+3) + a(n+6) = A024787(n).",
+        "O.g.f.: x^9/(1 - x^9) * product {k >= 1} 1/(1 - x^k) = x^9 + x^10 + 2*x^11 + 3*x^12 + ....",
+        "Asymptotic result: log(a(n)) ~ 2*sqrt(Pi^2/6)*sqrt(n) as n -> inf. (End)",
+        "a(n) ~ exp(Pi*sqrt(2*n/3)) / (18*Pi*sqrt(2*n)) * (1 - 109*Pi/(24*sqrt(6*n)) + (109/48 + 7993*Pi^2/6912)/n). - _Vaclav Kotesovec_, Nov 05 2016"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; local g;",
+        "      if n=0 or i=1 then [1, 0]",
+        "    else g:= `if`(i>n, [0$2], b(n-i, i));",
+        "         b(n, i-1) +g +[0, `if`(i=9, g[1], 0)]",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n, n)[2]:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Oct 27 2012"
+    ],
+    "mathematica": [
+        "Table[ Count[ Flatten[ IntegerPartitions[n]], 9], {n, 1, 55} ]",
+        "(* second program: *)",
+        "b[n_, i_] := b[n, i] = Module[{g}, If[n == 0 || i == 1, {1, 0}, g = If[i > n, {0, 0}, b[n - i, i]]; b[n, i - 1] + g + {0, If[i == 9, g[[1]], 0]}]]; a[n_] := b[n, n][[2]]; Table[a[n], {n, 1, 100}] (* _Jean-Fran\u00e7ois Alcover_, Oct 09 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf.  A000041, A066633, A024786, A024787, A024788, A024789, A024790, A024791, A024792, A024794."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,11",
+    "author": "_Clark Kimberling_",
+    "references": 12,
+    "revision": 31,
+    "time": "2016-11-05T10:25:13-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 71879,
+    "data": "1,1,1,2,5,11,24,57,141,349,871,2212,5688,14730,38403,100829,266333,706997,1885165,5047522,13565203,36578497,98934826,268342933,729709432,1989021256,5433518806,14873285506,40790118487,112064912455",
+    "name": "G.f. satisfies: A(x) = 1 + x*A(x) + x^3*A(x)^3.",
+    "comment": [
+        "Number of ordered trees with n edges and having nonleaf nodes of outdegrees 1 or 3. - _Emeric Deutsch_, Nov 03 2002. [Comment corrected by _Christian G. Bower_, Sep 25 2007]",
+        "Sequence is a Motzkin-like sequence. The Motzkin sequence A001006 counts ordered trees with n edges and having nodes of outdegree 0, 1, or 2 [g.f. f(x) defined by f = 1+x*f+(x*f)^2]. - _Emeric Deutsch_, Sep 30 2007",
+        "G.f. (offset 1) is series reversion of x^2/(x+x^2+x^4)."
+    ],
+    "reference": [
+        "P Barry, Riordan arrays, generalized Narayana triangles, and series reversion, Linear Algebra and its Applications, 491 (2016) 343-385."
+    ],
+    "link": [
+        "Olivier Bodini, Matthieu Dien, Antoine Genitrini, Fr\u00e9d\u00e9ric Peschanski, <a href=\"http://dx.doi.org/10.1137%2F1.9781611974775.2\">The Ordered and Colored Products in Analytic Combinatorics: Application to the Quantitative Study of Synchronizations in Concurrent Processes</a>. In 2017 Proceedings of the Fourteenth Workshop on Analytic Algorithmics and Combinatorics (ANALCO)."
+    ],
+    "formula": [
+        "a(n) = sum(C(n+1, 1+2i)*C(n-2i, i), i=0..floor(n/3))/(n+1). - _Emeric Deutsch_, Nov 03 2002",
+        "a(n) = sum{k=0..floor(n/3), C(n,3k)C(3k,k)/(2k+1)}. - _Paul Barry_, Sep 07 2006",
+        "Conjecture: 2*n*(2*n+3)*a(n) +2*(1-6*n^2)*a(n-1) +6*(2*n-1)*(n-1)*a(n-2) -31*(n-1)*(n-2)*a(n-3)=0. - _R. J. Mathar_, Nov 13 2012",
+        "a(n) ~ (2+3*2^(1/3))^(3/2) * (1+3*2^(-2/3))^n/(4*sqrt(6*Pi)*n^(3/2)). - _Vaclav Kotesovec_, Aug 19 2013",
+        "G.f. satisfies: A(x) = Sum_{n>=0} x^n * Sum_{k=0..n} C(n,k) * (x*A(x))^(2*k). - _Paul D. Hanna_, Sep 05 2014"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + x^2 + 2*x^3 + 5*x^4 + 11*x^5 + 24*x^6 + ...",
+        "The first-order differences of the terms form the coefficients of A(x)^3:",
+        "A(x)^3 = 1 + 3*x + 6*x^2 + 13*x^3 + 33*x^4 + 84*x^5 + 208*x^6 + 522*x^7 +..."
+    ],
+    "maple": [
+        "a:= n-> add(binomial(n+1,1+2*i)*binomial(n-2*i,i), i=0..floor(n/3))/(n+1): seq(a(n), n=0..29);"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[Binomial[n+1, 1+2i]*Binomial[n-2i, i], {i, 0, Floor[n/3]}]/(n+1);"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,polcoeff(serreverse(x^2/(x+x^2+x^4+x^2*O(x^n))),n+1))",
+        "(PARI) Vec(serreverse(x/(1+x+x^3)+O(x^66))/x) /* _Joerg Arndt_, Aug 19 2012 */",
+        "(PARI) {a(n)=local(A=1); for(i=1,n,A=sum(m=0, n, x^m*sum(k=0, m, binomial(m, k)*(x*A)^(2*k)) +x*O(x^n))); polcoeff(A, n)}",
+        "for(n=0, 40, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Sep 05 2014"
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Jun 10 2002",
+    "ext": [
+        "Name changed by _Paul D. Hanna_, Nov 15 2012"
+    ],
+    "references": 2,
+    "revision": 34,
+    "time": "2017-10-02T04:00:12-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

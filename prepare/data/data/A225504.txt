@@ -1,0 +1,38 @@
+{
+    "number": 225504,
+    "data": "3,5,7,13,29,73,233,883,4049,22013,140269,1036183,8771489,84270997,910550899,10977409981,146618640533,2155882170713,34701120973507",
+    "name": "a(n) = prime((a(n-1) + a(n-2)) / 2) for n>1, with a(0) = 3, a(1) = 5.",
+    "mathematica": [
+        "nxt[{a_, b_}] := {b, Prime[(a + b)/2]}; Transpose[NestList[nxt,{3,5},17]][[1]] (* The program generates only the first 18 terms of the sequence; the 19th term is too large for Mathematica to generate it *) (* _Harvey P. Dale_, Apr 24 2016 *)"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#define TOP (1ULL<<32)",
+        "typedef unsigned long long U64;",
+        "int main() {",
+        "  U64 i, j, p = 2, prpr = 3, prev = 5;",
+        "  unsigned int *primes = (unsigned int*)malloc(TOP/4);",
+        "  char *c = (char*)malloc(TOP/2);",
+        "  memset(c, 0, TOP/2);",
+        "  for (primes[1] = 2, i = 3; i < TOP; i+=2)",
+        "    if (c[i>>1]==0)",
+        "      for (primes[p++]=i, j=i*i>>1; j<TOP/2; j+=i) c[j]=1;",
+        "  for (printf(\"3, 5, \"); (prev+prpr)/2<p; prpr=prev, prev=i)",
+        "    i = primes[(prev+prpr)/2], printf(\"%llu, \", i);",
+        "}"
+    ],
+    "xref": [
+        "Cf. A000040, A107327."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "0,1",
+    "author": "_Alex Ratushnyak_, May 09 2013",
+    "ext": [
+        "a(15)-a(18) from _Max Alekseyev_, Jan 30 2014"
+    ],
+    "references": 1,
+    "revision": 10,
+    "time": "2016-04-24T15:07:37-04:00",
+    "created": "2013-05-09T18:39:47-04:00"
+}

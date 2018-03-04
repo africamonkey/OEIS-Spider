@@ -1,0 +1,44 @@
+{
+    "number": 232466,
+    "data": "0,0,1,2,4,10,20,44,93,198,414,864,1788,3687,7541,15382,31200,63191,127482,256857,516404,1037104,2080357,4170283,8354078",
+    "name": "Number of dependent sets with largest element n.",
+    "comment": [
+        "Let S be a set of positive integers. If S can be divided into two subsets which have equal sums, then S is said to be a dependent set."
+    ],
+    "reference": [
+        "J. Bourgain, \u039b_p-sets in analysis: results, problems and related aspects. Handbook of the geometry of Banach spaces, Vol. I,195-232, North-Holland, Amsterdam, 2001."
+    ],
+    "example": [
+        "Here are the dependent sets counted by a(6): {1,5,6}, {2,4,6}, {1,2,3,6}, {1,2,5,6}, {1,3,4,6}, {2,3,5,6}, {3,4,5,6}, {1,2,3,4,6}, {1,2,4,5,6}, {2,3,4,5,6}."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(i<1, `if`(n=0, {0}, {}),",
+        "      `if`(i*(i+1)/2<n, {}, b(n, i-1) union map(p-> p+x^i,",
+        "       b(n+i, i-1) union b(abs(n-i), i-1))))",
+        "    end:",
+        "a:= n-> nops(b(n, n-1)):",
+        "seq(a(n), n=1..15);  # _Alois P. Heinz_, Nov 24 2013"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[i<1, If[n == 0, {0}, {}], If[i*(i+1)/2 < n, {}, b[n, i-1] ~Union~ Map[Function[p, p+x^i], b[n+i, i-1] ~Union~ b[Abs[n-i], i-1]]]]; a[n_] := Length[b[n, n-1]]; Table[Print[a[n]]; a[n], {n, 1, 24}] (* _Jean-Fran\u00e7ois Alcover_, Mar 04 2014, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) dep(S,k=0)=if(#S<2,return(if(#S,S[1],0)==k)); my(T=S[1..#S-1]);dep(T,abs(k-S[#S]))||dep(T,k+S[#S])",
+        "a(n)=my(S=[1..n-1]);sum(i=1,2^(n-1)-1,dep(vecextract(S,i),n)) \\\\ _Charles R Greathouse IV_, Nov 25 2013"
+    ],
+    "xref": [
+        "Cf. A161943, A232534.",
+        "Column k=2 of A248112."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,4",
+    "author": "_David S. Newman_, Nov 24 2013",
+    "ext": [
+        "a(9)-a(24) from _Alois P. Heinz_, Nov 24 2013",
+        "a(25) from _Alois P. Heinz_, Sep 30 2014"
+    ],
+    "references": 2,
+    "revision": 40,
+    "time": "2014-10-03T13:47:35-04:00",
+    "created": "2013-11-25T01:48:37-05:00"
+}

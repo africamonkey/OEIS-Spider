@@ -1,0 +1,46 @@
+{
+    "number": 640,
+    "id": "M3466 N1410",
+    "data": "0,1,4,13,42,131,402,1218,3657,10899,32298,95257,279844,819390,2392392,6967956,20250974,58744089,170118980,491913999,1420493862,4096940530,11803172152,33970257473,97678027311,280624328431,805587723862",
+    "name": "Number of paraffins C_n H_{2n-1} XYZ with n carbon atoms.",
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A000640/b000640.txt\">Table of n, a(n) for n = 0..100</a>",
+        "Frederic Chyzak, <a href=\"http://algo.inria.fr/libraries/autocomb/Polya-html/Polya.html\">Enumerating alcohols and other classes of chemical molecules</a>",
+        "G. Polya, <a href=\"http://dx.doi.org/10.1524/zkri.1936.93.1.415\">Algebraische Berechnung der Anzahl der Isomeren einiger organischer Verbindungen</a>, Zeit. f. Kristall., 93 (1936), 415-443.",
+        "G. Polya, <a href=\"/A000598/a000598_3.pdf\">Algebraische Berechnung der Anzahl der Isomeren einiger organischer Verbindungen</a>,  Zeit. f. Kristall., 93 (1936), 415-443. (Annotated scanned copy)"
+    ],
+    "formula": [
+        "G.f.: A(x) = x*A000598(x)/(1-A000642(x))^3."
+    ],
+    "maple": [
+        "# The following Maple commands are taken from the Chyzak web site:",
+        "with(combstruct);",
+        "gramm_Alkyl:=Alkyl=Prod(Carbon,Set(Alkyl,card<=3)),Carbon=Atom:",
+        "specs_Alkyl:=[Alkyl,{gramm_Alkyl},unlabeled]:",
+        "gramm_S1_Alkyl:=S1_Alkyl[X]=Union(Prod(Carbon,S1_Alkyl[X],Set(Alkyl,card<=2)),Prod(Prod(Carbon,X),Set(Alkyl,card<=2))),X=Epsilon:",
+        "specs_S1_Alkyl:=[S1_Alkyl[X],{gramm_S1_Alkyl,gramm_Alkyl},unlabeled]:",
+        "gramm_S2_Alkyl:=S2_Alkyl[X,Y]=Union(Prod(Carbon,S2_Alkyl[X,Y], Set(Alkyl,card<=2)),Prod(Carbon,Union(S1_Alkyl[X],X),Union(S1_Alkyl[Y],Y),Set(Alkyl,card<=1))):",
+        "specs_S2_Alkyl:=[S2_Alkyl[X,Y],{gramm_S2_Alkyl,gramm_S1_Alkyl,op(subs(X=Y,[gramm_S1_Alkyl])),gramm_Alkyl},unlabeled]:",
+        "[seq(count(specs_S2_Alkyl,size=i),i=0..50)];"
+    ],
+    "mathematica": [
+        "terms = 27; (* B,B2 = g.f. for A000598,A000642 resp. *) B[_] = 0; Do[B[x_] = 1 + (1/6)*x*(B[x]^3 + 3*B[x]*B[x^2] + 2*B[x^3]) + O[x]^terms // Normal, terms];",
+        "B2[x_] = (1/2)*x*(B[x^2] + B[x]^2) + O[x]^terms;",
+        "A[x_] = x*B[x]/(1 - B2[x])^3 + O[x]^terms;",
+        "CoefficientList[A[x], x] (* _Jean-Fran\u00e7ois Alcover_, Jan 10 2018 *)"
+    ],
+    "xref": [
+        "Cf. A000598, A000642."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_.",
+    "references": 2,
+    "revision": 25,
+    "time": "2018-02-09T21:44:36-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

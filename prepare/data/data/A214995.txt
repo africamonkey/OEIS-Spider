@@ -1,0 +1,52 @@
+{
+    "number": 214995,
+    "data": "18,322,5779,103699,1860804,33390772,599173093,10751724901,192931875126,3462022027366,62123464617463,1114760341086967,20003562674947944,358949367807976024,6441085057868620489,115580581673827192777,2074009385071020849498",
+    "name": "Power ceiling-floor sequence of (golden ratio)^6.",
+    "comment": [
+        "See A214992 for a discussion of power ceiling-floor sequence and the power ceiling-floor function, p3(x) = limit of a(n,x)/x^n.  The present sequence is a(n,r), where r = (golden ratio)^6, and the limit p3(r) = 17.94722275971790615684809..."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A214995/b214995.txt\">Table of n, a(n) for n = 0..250</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (17,17,-1)."
+    ],
+    "formula": [
+        "a(n) = floor(x*a(n-1)) if n is odd, a(n) = ceiling(x*a(n-1) if n is even, where x=((1+sqrt(5))/2)^6 and a(0) = ceiling(x).",
+        "a(n) = 17*a(n-1) + 17*a(n-2) - a(n-3).",
+        "G.f.: (18 + 16*x - x^2)/(1 - 17*x - 17*x^2 + x^3).",
+        "a(n) = (4*(-1)^n+(718-321*sqrt(5))*(9+4*sqrt(5))^(-n)+(9+4*sqrt(5))^n*(718+321*sqrt(5)))/80. - _Colin Barker_, Mar 04 2016"
+    ],
+    "example": [
+        "a(0) = ceiling(r) = [17.9] = 18 , where r=(1+sqrt(5))^6;",
+        "a(1) = floor(18*r) = 322; a(2) = ceiling(322*r ) = 5779."
+    ],
+    "mathematica": [
+        "x = GoldenRatio^6; z = 30; (* z = # terms in sequences *)",
+        "z1 = 100; (* z1 = # digits in approximations *)",
+        "f[x_] := Floor[x]; c[x_] := Ceiling[x];",
+        "p1[0] = f[x]; p2[0] = f[x]; p3[0] = c[x]; p4[0] = c[x];",
+        "p1[n_] := f[x*p1[n - 1]]",
+        "p2[n_] := If[Mod[n, 2] == 1, c[x*p2[n - 1]], f[x*p2[n - 1]]]",
+        "p3[n_] := If[Mod[n, 2] == 1, f[x*p3[n - 1]], c[x*p3[n - 1]]]",
+        "p4[n_] := c[x*p4[n - 1]]",
+        "Table[p1[n], {n, 0, z}]  (* A007805 *)",
+        "Table[p2[n], {n, 0, z}]  (* A156085 *)",
+        "Table[p3[n], {n, 0, z}]  (* A214995 *)",
+        "Table[p4[n], {n, 0, z}]  (* A049660 *)",
+        "Table[p4[n] - p1[n], {n, 0, z}]  (* A049660 *)",
+        "Table[p3[n] - p2[n], {n, 0, z}]  (* A099279 *)",
+        "LinearRecurrence[{17,17,-1},{18,322,5779},30] (* _Harvey P. Dale_, Feb 25 2013 *)"
+    ],
+    "program": [
+        "(PARI) Vec((18+16*x-x^2)/((1+x)*(1-18*x+x^2)) + O(x^20)) \\\\ _Colin Barker_, Mar 04 2016"
+    ],
+    "xref": [
+        "Cf. A214992, A007805, A156085, A049660."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,1",
+    "author": "_Clark Kimberling_, Nov 09 2012",
+    "references": 2,
+    "revision": 12,
+    "time": "2016-03-04T08:31:08-05:00",
+    "created": "2012-11-13T12:56:47-05:00"
+}

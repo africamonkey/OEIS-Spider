@@ -1,0 +1,55 @@
+{
+    "number": 212919,
+    "data": "1,1,1,1,5,14,29,73,229,671,1840,5415,16983,52547,161420,511039,1655598,5372395,17527912,58076084,194676024,656160449,2227549164,7635624954,26380508479,91696805060,320866223000,1130833326852,4010720214072,14306769257286",
+    "name": "G.f. satisfies: A(x) = x^3 - x + Series_Reversion(x - x*A(x)).",
+    "comment": [
+        "Compare the g.f. to a g.f. G(x) of A088714 (offset 1), which satisfies:",
+        "G(x) = Series_Reversion(x - x*G(x)),",
+        "G(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) x^n*G(x)^n/n!, and",
+        "G(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(n-1)*G(x)^n/n! )."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A212919/b212919.txt\">Table of n, a(n) for n = 3..200</a>"
+    ],
+    "formula": [
+        "G.f. A(x) also satisfies:",
+        "(1) A(x) = x^3 + Sum_{n>=1} d^(n-1)/dx^(n-1) x^n*A(x)^n/n!.",
+        "(2) A(x) = x^3 - x + x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(n-1)*A(x)^n/n! )."
+    ],
+    "example": [
+        "G.f.: A(x) = x^3 + x^4 + x^5 + x^6 + 5*x^7 + 14*x^8 + 29*x^9 + 73*x^10 +...",
+        "The series reversion of x - x*A(x) begins:",
+        "x + x^4 + x^5 + x^6 + 5*x^7 + 14*x^8 + 29*x^9 + 73*x^10 + 229*x^11 +...",
+        "which equals x - x^3 + A(x).",
+        "The g.f. satisfies:",
+        "A(x) = x^3 + x*A(x) + d/dx x^2*A(x)^2/2! + d^2/dx^2 x^3*A(x)^3/3! + d^3/dx^3 x^4*A(x)^4/4! +...",
+        "log(1-x^2 + A(x)/x) = A(x) + d/dx x*A(x)^2/2! + d^2/dx^2 x^2*A(x)^3/3! + d^3/dx^3 x^3*A(x)^4/4! +...",
+        "Related expansions:",
+        "d/dx x^2*A(x)^2/2! = 4*x^7 + 9*x^8 + 15*x^9 + 22*x^10 + 78*x^11 + 260*x^12 +...",
+        "d^2/dx^2 x^3*A(x)^3/3! = 22*x^10 + 78*x^11 + 182*x^12 + 350*x^13 + 1080*x^14 +...",
+        "d^3/dx^3 x^4*A(x)^4/4! = 140*x^13 + 680*x^14 + 2040*x^15 + 4845*x^16 +...",
+        "d^4/dx^4 x^5*A(x)^5/5! = 969*x^16 + 5985*x^17 + 21945*x^18 + 61985*x^19 +...",
+        "...",
+        "d^(n-1)/dx^(n-1) x^n*A(x)^n/n! = A002293(n)*x^(3*n+1) +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x^3); for(i=1, n, A=x^3-x+serreverse(x-x*A +x*O(x^n))); polcoeff(A, n)}",
+        "for(n=3, 40, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(G=F); for(i=1, n, G=deriv(G)); G}",
+        "{a(n)=local(A=x^3); for(i=1, n, A=x^3+sum(m=1, n, Dx(m-1, x^m*A^m/m!)+x*O(x^n))); polcoeff(A, n)}",
+        "for(n=3, 40, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(G=F); for(i=1, n, G=deriv(G)); G}",
+        "{a(n)=local(A=x^3); for(i=1, n, A=x^3-x+x*exp(sum(m=1, n, Dx(m-1, x^(m-1)*A^m/m!)+x*O(x^n)))); polcoeff(A, n)}",
+        "for(n=3, 40, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A088714, A212910."
+    ],
+    "keyword": "nonn",
+    "offset": "3,5",
+    "author": "_Paul D. Hanna_, May 31 2012",
+    "references": 5,
+    "revision": 9,
+    "time": "2017-08-24T09:24:39-04:00",
+    "created": "2012-05-31T03:36:18-04:00"
+}

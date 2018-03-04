@@ -1,0 +1,31 @@
+{
+    "number": 80117,
+    "data": "2,10,52,738,2866,53620,162438,4023888,166243974,921787428,48034443442,935251508324,2558696229078,68055676507664,2655011787909270,210067141980993186,831463106366605026,42882922858578320598",
+    "name": "Binary encoding of quadratic residue set formed for n-th prime, coerced to \"complementarily symmetric binary sequence\" with A080261 if the prime is of the form 4k+1.",
+    "maple": [
+        "with(numtheory,ithprime); A080117 := proc(n) local c,p; p := ithprime(n); c := A055094(p); if(3 = (p mod 4)) then RETURN(c); else RETURN(A080261(c)); fi; end;"
+    ],
+    "mathematica": [
+        "A055094[n_] := With[{rr = Table[Mod[k^2, n], {k, 1, n-1}] // Union}, Boole[ MemberQ[rr, #]] & /@ Range[n-1]] // FromDigits[#, 2]&;",
+        "A080261[n_] := Module[{bb = IntegerDigits[n, 2]}, lg = Length[bb]; Do[ bb[[i]] = 1 - bb[[i]], {i, lg, lg - Floor[lg/2] + 1, -1}]; FromDigits[ bb, 2]];",
+        "a[n_] := Module[{c, p = Prime[n]}, c = A055094[p]; If[Mod[p, 4] == 3, c, A080261[c]]]; Table[a[n], {n, 2, 20}] (* _Jean-Fran\u00e7ois Alcover_, Mar 05 2016, adapted from Maple *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A080117(n) :",
+        "    p = nth_prime(n)",
+        "    c = A055094(p)",
+        "    return c if 3 == p%4 else A080261(c)",
+        "[A080117(n) for n in (2..19)] # _Peter Luschny_, Aug 09 2012"
+    ],
+    "xref": [
+        "a(A080148(n)) = A080146(A080148(n)). Cf. A080118."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Antti Karttunen_ Feb 11 2003",
+    "references": 7,
+    "revision": 9,
+    "time": "2016-03-05T15:55:50-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

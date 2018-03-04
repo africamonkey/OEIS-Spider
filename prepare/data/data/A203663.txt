@@ -1,0 +1,37 @@
+{
+    "number": 203663,
+    "data": "432,972,1944,2000,2700,3456,4500,5292,5400,5488,8748,9000,10584,10800,12348,12500,13068,15552,16000,17496,18000,18252,21168,21296,21600,24300,24500,24696,25000,26136",
+    "name": "Achilles number whose double is also an Achilles number.",
+    "comment": [
+        "Every a(n) is multiple of 4."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A203663/b203663.txt\">Table of n, a(n) for n = 1..4148</a>"
+    ],
+    "example": [
+        "15552 is in the sequence because 15552 = 2^6*3^5 (Achilles number) and 15552*2 = 2^7*3^5 is also an Achilles number."
+    ],
+    "maple": [
+        "filter:= proc(n) local e2,F;",
+        "  e2:= padic:-ordp(n,2);",
+        "  if e2 < 2 then return false fi;",
+        "  F:= map(t -> t[2], ifactors(n/2^e2)[2]);",
+        "  min(F) > 1 and igcd(e2,op(F))=1 and igcd(e2+1,op(F))=1",
+        "end proc:",
+        "select(filter, [seq(i,i=4..10^5,4)]); # _Robert Israel_, Jan 16 2018"
+    ],
+    "program": [
+        "(PARI) achilles(n) = { n>1 & vecmin(factor(n)[, 2])>1 & !ispower(n) } \\\\ _M. F. Hasler_, 2010",
+        "{ for (n=1, 10^6, if (achilles(n)==1 && achilles(2*n)==1, print1(n,\", \"))); } \\\\ _Antonio Rold\u00e1n_, Oct 07 2012"
+    ],
+    "xref": [
+        "Cf. A052486, A143610, A203662."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antonio Rold\u00e1n_, Jan 04 2012",
+    "references": 1,
+    "revision": 19,
+    "time": "2018-01-16T19:02:47-05:00",
+    "created": "2012-01-04T20:54:43-05:00"
+}

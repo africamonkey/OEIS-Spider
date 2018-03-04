@@ -1,0 +1,36 @@
+{
+    "number": 268691,
+    "data": "1,2,2,4,8,12,24,48,96,180,360,720,1440,2820,5640,11280,22560,44760,89520,179040,358080,713760,1427520,2855040,5710080,11403060,22806120,45612240,91224480,182321460,364642920,729285840,1458571680,2916160800,5832321600",
+    "name": "Number of n-digit binary strings such that for all 2 <= k <= n, the string formed by the first k digits of the original string is composed of at least one-quarter 1's and one-quarter 0's.",
+    "link": [
+        "Alois P. Heinz and Charles R Greathouse IV, <a href=\"/A268691/b268691.txt\">Table of n, a(n) for n = 0..3323</a>  (0-1000 from Heinz)"
+    ],
+    "formula": [
+        "For all n > 2 not equivalent to 1 mod 4, a(n) = 2a(n-1)."
+    ],
+    "example": [
+        "For n=2, the strings are 01 and 10. For n=3, they are 010, 011, 100, 101."
+    ],
+    "maple": [
+        "b:= proc(n, i, j) option remember; `if`(n=0, 1, (t->",
+        "      `if`(t>=2 and 4*j<t, 0, b(n-1, sort([j, i+1])[]))+",
+        "      `if`(t>=2 and 4*i<t, 0, b(n-1, sort([i, j+1])[])))(i+j+1))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Feb 11 2016"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<2,return(n+1));my(u,v=vector((3*n+1)\\4),mx,mn);v[1]=2;for(i=3,n,mn=(i+3)\\4;mx=i-mn;u=vector(#v,j,if(j<mn||j>mx,0,if(j>1,v[j-1])+v[j]));v=u);vecsum(v) \\\\ _Charles R Greathouse IV_, Feb 11 2016",
+        "(PARI) first(n)=if(n<2,return(n+1));my(u,v=vector((3*n+1)\\4),w=vector(n+1),mx,mn);w[1]=1;w[2]=w[3]=v[1]=2;for(i=3,n,mn=(i+3)\\4;mx=i-mn;u=vector(#v,j,if(j<mn||j>mx,0,if(j>1,v[j-1])+v[j]));w[i+1]=vecsum(v=u));w \\\\ _Charles R Greathouse IV_, Feb 11 2016"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Josh Speckman_, Feb 11 2016",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Feb 11 2016"
+    ],
+    "references": 1,
+    "revision": 13,
+    "time": "2016-02-11T12:08:04-05:00",
+    "created": "2016-02-11T12:08:04-05:00"
+}

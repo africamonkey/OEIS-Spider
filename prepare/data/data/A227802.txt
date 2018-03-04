@@ -1,0 +1,40 @@
+{
+    "number": 227802,
+    "data": "1,2,3,5,7,8,9,10,15,17,24,26,28,31,33,48,50,63,65,80,82,99,101,124,126,127,129,224,226,242,244,255,257,288,290,342,344,511,513,575,577,624,626,675,677,728,730,783,785,960,962,999,1001,1023,1025,1088,1090",
+    "name": "Positive numbers of the form a^b +- 1 where a is in the sequence and b>1.",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A227802/b227802.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "1 is the seed value of the sequence. 2 is in the sequence because 2 = 1^2 + 1 and 1 is in the sequence. 3 is in the sequence because 3 = 2^2 - 1 and 2 is in the sequence."
+    ],
+    "program": [
+        "(Python)",
+        "def func(i):",
+        ".a=[2]",
+        ".pows={2:2}",
+        ".for rep in range(i):",
+        "..for x in a[:]:",
+        "...if not x**pows[x]-1 in a:",
+        "....a.append(x**pows[x]-1)",
+        "....pows[x**pows[x]-1]=2",
+        "...if not x**pows[x]+1 in a:",
+        "....a.append(x**pows[x]+1)",
+        "....pows[x**pows[x]+1]=2",
+        "...pows[x]+=1",
+        "..a.sort()",
+        ".return a",
+        "(PARI) is(n)=if(n<4,1,my(t);(ispower(n-1,,&t)&&is(t)) || (ispower(n+1,,&t)&&is(t))) \\\\ _Charles R Greathouse IV_, Aug 08 2013",
+        "(PARI) list(lim)=my(v=List([1,2]),i=1);while(i++<=#v, for(e=2,log(lim+2)\\log(v[i]), listput(v,v[i]^e-1);listput(v,v[i]^e+1))); vecsort(Vec(v),,8) \\\\ _Charles R Greathouse IV_, Aug 08 2013"
+    ],
+    "xref": [
+        "Cf. A080262."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alexander E. Koren_, Jul 31 2013",
+    "references": 1,
+    "revision": 13,
+    "time": "2013-08-09T03:39:18-04:00",
+    "created": "2013-08-09T03:39:18-04:00"
+}

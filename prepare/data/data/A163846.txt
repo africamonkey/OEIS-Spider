@@ -1,0 +1,42 @@
+{
+    "number": 163846,
+    "data": "5,7,11,17,23,29,41,53,59,71,83,107,113,137,167,197,227,257,263,269,281,293,317,353,359,401,419,449,467,491,503,557,593,599,641,683,719,761,821,881,941,953,977,983,1013,1049,1151,1193,1223,1229,1277,1361,1433",
+    "name": "Starting from a(1)=5, a(n+1) is the smallest prime > a(n) such that 2*a(n)-a(n+1) is also prime.",
+    "comment": [
+        "This is: select the smallest prime a(n+1) = a(n)+d such that at a(n)-d is another prime at the same distance to but at the opposite side of a(n).",
+        "From _Zhi-Wei Sun_, Feb 25 2013: (Start)",
+        "By induction, a(n)==2 (mod 3) for all n>2.",
+        "For a prime p>3 define g(p) as the least prime q>p such that 2p-q is also prime. Construct a simple (undirected) graph G as follows: The vertex set is the set of all primes greater than 3, and there is an edge connecting the vertices p and q>p if and only if g(p)=q.",
+        "Conjecture: The graph G constructed above consists of exactly two trees: one containing 7 and all odd primes congruent to 2 modulo 3, and another one containing all primes congruent to 1 modulo 3 except 7. (End)"
+    ],
+    "link": [
+        "Zhi-Wei Sun, <a href=\"/A163846/b163846.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Zhi-Wei Sun, <a href=\"http://arxiv.org/abs/1211.1588\">Conjectures involving primes and quadratic forms</a>, arXiv:1211.1588."
+    ],
+    "example": [
+        "The first candidate for a(2) is the prime 5+2=7, which is selected since 5-2=3 is also prime.",
+        "The first candidate for a(3) is the prime 7+4=11, which is selected since 7-4=3 is also prime.",
+        "The first candidate for a(4) is the prime 11+2=13, which is not selected since 11-2=9 is composite.",
+        "The second candidate for a(4) is the prime 11+4=17, which is selected since 11-4=7 is prime."
+    ],
+    "mathematica": [
+        "DeltaPrimePrevNext[n_]:=Module[{d, k1, k2}, k1=n-1; k2=n+1; While[ !PrimeQ[k1] || !PrimeQ[k2], k2++; k1-- ]; d=k2-n]; lst={}; p=5; Do[If[p-DeltaPrimePrevNext[p]>1, AppendTo[lst, p]; p=p+DeltaPrimePrevNext[p]], {n,6!}]; lst",
+        "k=3",
+        "n=1",
+        "Do[If[m==3, Print[n, \" \", 5]]; If[m==k, n=n+1; Do[If[PrimeQ[2Prime[m]-Prime[j]]==True, k=j; Print[n, \" \", Prime[j]]; Goto[aa]], {j, m+1, PrimePi[2Prime[m]]}]]; Label[aa]; Continue, {m, 3, 1000}] (* _Zhi-Wei Sun_, Feb 25 2013 *)",
+        "np[n_]:=Module[{nxt=NextPrime[n]},While[!PrimeQ[2n-nxt],nxt=NextPrime[nxt]]; nxt]; NestList[np, 5, 60] (* _Harvey P. Dale_, Feb 28 2013 *)"
+    ],
+    "xref": [
+        "Cf. A163847, A222532."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladimir Joseph Stephan Orlovsky_, Aug 05 2009",
+    "ext": [
+        "Edited by _R. J. Mathar_, Aug 29 2009"
+    ],
+    "references": 6,
+    "revision": 11,
+    "time": "2013-02-28T10:32:15-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

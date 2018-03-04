@@ -1,0 +1,39 @@
+{
+    "number": 192342,
+    "data": "2,7,100,28051,2357659852,16675673548656023155,834234264904007920903714901139450715276,2087840426219791385723375854976408025594408461778898567573217959566013061037427",
+    "name": "Constant term of the reduction of n-th polynomial at A158983 by x^2->x+2.",
+    "comment": [
+        "For an introduction to reductions of polynomials by substitutions such as x^2->x+2, see A192232."
+    ],
+    "example": [
+        "The first three polynomials at A158983 and their reductions are as follows:",
+        "p0(x)=2+x -> 2+x",
+        "p1(x)=5+4x+x^2 -> 7+5x",
+        "p2(x)=26+40x+26x^2+8x^3+x^4 -> 100+95x.",
+        "From these, we read",
+        "A192342=(2,7,100,...) and A192343=(1,5,95,...)"
+    ],
+    "mathematica": [
+        "q[x_] := x + 2;",
+        "p[0, x_] := x + 2;",
+        "p[n_, x_] := 1 + p[n - 1, x]^2 /; n > 0  (* polynomials defined at A158983 *)",
+        "Table[Expand[p[n, x]], {n, 0, 4}]",
+        "reductionRules = {x^y_?EvenQ -> q[x]^(y/2),",
+        "   x^y_?OddQ -> x q[x]^((y - 1)/2)};",
+        "t = Table[Last[Most[FixedPointList[Expand[#1 /. reductionRules] &, p[n, x]]]], {n, 0,9}]",
+        "Table[Coefficient[Part[t, n], x, 0], {n, 1, 9}]",
+        "  (* A192342 *)",
+        "Table[Coefficient[Part[t, n], x, 1], {n, 1, 9}]",
+        "  (* A192343 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192343."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jun 28 2011",
+    "references": 2,
+    "revision": 4,
+    "time": "2012-03-30T18:57:34-04:00",
+    "created": "2011-06-30T11:43:04-04:00"
+}

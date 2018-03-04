@@ -1,0 +1,43 @@
+{
+    "number": 37408,
+    "data": "0,1,9,10,12,27,28,30,36,37,39,81,82,84,85,90,91,93,94,108,109,111,112,117,118,120,243,244,246,247,252,253,256,270,271,273,274,279,280,282,283,324,325,327,328,333,334,336,337,351,352,354,355,360,361,363",
+    "name": "Numbers n such that the set of base-2 digits of n equals the set of base-3 digits of n.",
+    "comment": [
+        "From _Alonso del Arte_, Sep 10 2017: (Start)",
+        "Neither binary repunits (A000225 without the initial 0) nor ternary repunits (A003462 without the initial 0) can be in this sequence, except for 1.",
+        "The ternary repunits are numbers of the form (3^k - 1)/2. If k is odd, then (3^k - 1)/2 is even and therefore its binary representation ends in 0. If k is even, then (3^k - 1)/2 = 1 mod 4, which means its binary representation ends in 01.",
+        "For much more obvious reasons, numbers with even just one 2 in their ternary representations (A074940) can't be in this sequence. (End)"
+    ],
+    "link": [
+        "John Cerkan, <a href=\"/A037408/b037408.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "9 is 1001 in binary and 100 in ternary. In both representations, the set of digits used is {0, 1}, hence 9 is in the sequence.",
+        "10 is 1010 in binary and 101 in ternary. In both representations, the set of digits used is {0, 1}, hence 10 is in the sequence.",
+        "11 is 1011 in binary and 102 in ternary. Clearly the binary representation can't include the digit 2, hence 11 is not in the sequence."
+    ],
+    "maple": [
+        "filter:= proc(n) local F;",
+        "  F:= convert(convert(n,base,3),set);",
+        "  if has(F,2) then return false fi;",
+        "  evalb(F = convert(convert(n,base,2),set))",
+        "end proc:",
+        "select(filter, [$0..1000]); # _Robert Israel_, Sep 18 2017"
+    ],
+    "mathematica": [
+        "Select[Range[0, 399], Union[IntegerDigits[#, 2]] == Union[IntegerDigits[#, 3]] &] (* _Vincenzo Librandi_ Sep 09 2017 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = vecsort(digits(n, 2),,8) == vecsort(digits(n, 3),,8); \\\\ _Michel Marcus_, Jan 05 2017"
+    ],
+    "keyword": "nonn,base,changed",
+    "offset": "1,3",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Initial 0 added by _Alonso del Arte_, Sep 10 2017"
+    ],
+    "references": 2,
+    "revision": 44,
+    "time": "2018-02-23T15:20:56-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

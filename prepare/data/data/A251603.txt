@@ -1,0 +1,60 @@
+{
+    "number": 251603,
+    "data": "3,4551,46775,82503,106976,1642796,4290771,4492203,4976427,21537831,21549347,21879936,51127259,56786087,60296571,80837771,87761787,94424463,96593696,138644871,168864999,221395539,255881451,297460451,305198247,360306363,562654203",
+    "name": "Numbers n such that n + 2 divides n^n - 2.",
+    "comment": [
+        "Numbers n such that (n^n - 2)/(n + 2) is an integer.",
+        "Since n == -2 (mod n+2), also numbers n such that n + 2 divides (-2)^n - 2. - _Robert Israel_, Jan 04 2015",
+        "Numbers n == 0 (mod 4) such that A066602(n/2+1) = 8, and odd numbers n such that n = 3 or A082493(n+2) = 8. - _Robert Israel_, Apr 08 2015"
+    ],
+    "formula": [
+        "The even terms form A122711, the odd terms are those in A245319 decreased by 2. - _Max Alekseyev_, Sep 22 2016"
+    ],
+    "example": [
+        "3 is in this sequence because 3 + 2 = 5 divides 3^3 - 2 = 25."
+    ],
+    "maple": [
+        "isA251603 := proc(n)",
+        "    if modp(n &^ n-2,n+2) = 0 then",
+        "        true;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "A251603 := proc(n)",
+        "    option remember;",
+        "    local a;",
+        "    if n = 1 then",
+        "        3;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if isA251603(a) then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Jan 09 2015"
+    ],
+    "mathematica": [
+        "Select[Range[10^6], Mod[PowerMod[#, #, # + 2] - 2, # + 2] == 0 &] (* _Michael De Vlieger_, Dec 20 2014, based on _Robert G. Wilson v_ at A252041 *)"
+    ],
+    "program": [
+        "(MAGMA) [n: n in [0..10000] | Denominator((n^n-2)/(n+2)) eq 1];",
+        "(PARI) for(n=1,10^9,if(Mod(n,n+2)^n==+2,print1(n,\", \"))); \\\\ _Joerg Arndt_, Dec 06 2014",
+        "(Python)",
+        "A251603_list = [n for n in range(1,10**6) if pow(n, n, n+2) == 2] # _Chai Wah Wu_, Apr 13 2015"
+    ],
+    "xref": [
+        "Cf. A001477, A004273, A004275, A066602, A082493, A081765, A213382, A252606."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Dec 05 2014",
+    "ext": [
+        "Terms 1642796 and beyond from _Joerg Arndt_, Dec 06 2014"
+    ],
+    "references": 4,
+    "revision": 71,
+    "time": "2016-09-22T02:20:40-04:00",
+    "created": "2015-04-13T08:48:59-04:00"
+}

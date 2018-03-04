@@ -1,0 +1,47 @@
+{
+    "number": 225887,
+    "data": "1,4,18,86,426,2162,11166,58438,309042,1648154,8851206,47813790,259585002,1415431266,7747200558,42545600310,234346445154,1294260644906,7165245015510,39754745775886,221009855334426,1230909476804594,6867024985408638,38369226561522086",
+    "name": "a(n) = A212205(2*n + 1).",
+    "comment": [
+        "From _Peter Bala_, Apr 23 2017: (Start)",
+        "a(n) is also the number of Schr\u00f6der paths of semilength n (paths from (0, 0) to (2*n, 0), using only single steps northeast or southeast (steps (1, 1) or (1, -1)) or double steps east (steps (2, 0)), that never fall below the x-axis) in which the (2,0)-steps that are on the horizontal axis come in 3 colors (see Oste and Van der Jeugt, Section 7).",
+        "Example: a(2) = 18 because from the origin to the point (4,0) we have 3^2 = 9 paths of type HH, 3 paths of type HUD, 3 paths of type UDH as well as the paths UDUD, UUDD, and UHD.",
+        "It follows that the sequence may be calculated as the leading diagonal of the lower triangular array (T(n,k))n,k>=0 defined by the relations: T(n,0) = 1, T(n,k) = T(n,k-1) + T(n-1,k) + T(n-1,k-1) for 1 <= k <= n-1 and T(n,n) = 3*T(n-1,n-1) + T(n,n-1). The array begins: [1], [1, 4], [1, 6, 18], [1, 8, 32, 86], [1, 10, 50, 168, 426].  (End)"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A225887/b225887.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "R. Oste and J. Van der Jeugt, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v22i2p8/pdf\">Motzkin paths, Motzkin polynomials and recurrence relations</a>, Electronic Journal of Combinatorics 22(2) (2015), #P2.8. Section 7"
+    ],
+    "formula": [
+        "G.f.: (-1 + 5*x + sqrt(1 - 6*x + x^2)) / (2 * (x - 6*x^2)) = 2 / (1 - 5*x + sqrt(1 - 6*x + x^2)).",
+        "G.f.: A(x) = 1 / (1 - 5*x + (x - 6*x^2) * A(x)) = 1 + x * A(x) * (5 - A(x) * (1 - 6*x)).",
+        "INVERT transform of A001003(n+1). INVERT transform is A134425.",
+        "HANKEL transform is A006125. HANKEL transform with 1 prepended is A127850(n+1).",
+        "BINOMIAL transform of A151090.",
+        "Conjecture: (n+1)*a(n) +3*(-4*n-1)*a(n-1) +(37*n-20)*a(n-2) +6*(-n+2)*a(n-3)=0. - _R. J. Mathar_, May 23 2014",
+        "a(n) = Sum_{k=0..n}((k+1)*Sum_{j=0..n+1}(binomial(j,n-k-j)*3^(-n+k+2*j)*2^(n-k-j)*binomial(n+1,j)))/(n+1). - _Vladimir Kruchinin_, Mar 13 2016",
+        "a(n) ~ (1+sqrt(2))^(2*n+5) / (2^(3/4)*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Mar 13 2016",
+        "G.f.: 1/(1-3*x -x/(1-x -x/(1-x -x/(1-x - ... )))) (continued fraction) = 1/(1 - 3*x - x*S(x)), where S(x) is the generating function of the large Schr\u00f6der numbers A001003. - _Peter Bala_, Apr 23 2017"
+    ],
+    "example": [
+        "1 + 4*x + 18*x^2 + 86*x^3 + 426*x^4 + 2162*x^5 + 11166*x^6 + 58438*x^7 + ..."
+    ],
+    "mathematica": [
+        "a[ n_] := SeriesCoefficient[ 2 / (1 - 5 x + Sqrt[1 - 6 x + x^2]), {x, 0, n}]"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( 2 / (1 -  5*x + sqrt(1 - 6*x + x^2 + x * O(x^n))), n))}",
+        "(Maxima)",
+        "a(n):=sum((k+1)*sum(binomial(j,n-k-j)*3^(-n+k+2*j)*2^(n-k-j)*binomial(n+1,j),j,0,n+1),k,0,n)/(n+1); /* _Vladimir Kruchinin_, Mar 13 2016 */"
+    ],
+    "xref": [
+        "Cf. A001003, A006125, A127850, A131090, A151090, A212205, A111966."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Michael Somos_, May 19 2013",
+    "references": 1,
+    "revision": 29,
+    "time": "2017-05-31T23:02:06-04:00",
+    "created": "2013-05-21T12:49:07-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 5424,
+    "id": "M0530",
+    "data": "2,3,4,5,8,9,13,16,17,24,25,35,44,63,64,91,97,128,193,221,259,324,353,391,477,702,929,1188,1269,1589,1613,2017,2309,2623,3397,4064,4781,5468,6515,6887,9213,12286,12887,14009,16564,16897,17803,30428,36256",
+    "name": "Smallest number that requires n iterations of the bi-unitary totient function (A116550) to reach 1.",
+    "comment": [
+        "Let p(n) = number of unitary divisors k of n, k<n, that are relatively prime to n. Let p_1(n) = p(n), p_r(n) = p(p_{r-1}(n)). Sequence gives minimal r such that p_r(n)=1."
+    ],
+    "reference": [
+        "M. Lal, H. Wareham and R. Mifflin, Iterates of the bi-unitary totient function, Utilitas Math., 10 (1976), 347-350.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Donovan Johnson, <a href=\"/A005424/b005424.txt\">Table of n, a(n) for n = 1..78</a> (terms < 5*10^6)"
+    ],
+    "maple": [
+        "L := [seq(0,i=0..100)] ;",
+        "for n from 1 do",
+        "    itr := A225320(n) ;",
+        "    if itr < nops(L) then",
+        "        if op(itr,L) = 0 then",
+        "            L := subsop(itr=n,L) ;",
+        "            print(L) ;",
+        "        end if;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, May 02 2013"
+    ],
+    "mathematica": [
+        "A116550[1] = 1; A116550[n_] := With[{pp = Power @@@ FactorInteger[n]}, Count[Range[n], m_ /; Intersection[pp, Power @@@ FactorInteger[m]] == {}]]; A225320[n_] := A225320[n] = If[n == 1, 0, 1+A225320[A116550[n]]]; L = Array[0&, 100]; For[n = 1, n <= 40000, n++, itr = A225320[n]; If[itr < Length[L], If[L[[itr]] == 0, L = ReplacePart[L, itr -> n]; Print[Select[L, Positive] // Last]]]]; Select[L, Positive] (* _Jean-Fran\u00e7ois Alcover_, Jan 13 2014, after _R. J. Mathar_ *)"
+    ],
+    "xref": [
+        "Cf. A116550, A225175, A225176."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "references": 5,
+    "revision": 33,
+    "time": "2016-01-03T16:14:36-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

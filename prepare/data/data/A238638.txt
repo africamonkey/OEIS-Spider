@@ -1,0 +1,47 @@
+{
+    "number": 238638,
+    "data": "1,2,4,14,109,3366,380480,592178710,12245355432908,42590813279958575804,35428820136077436448479258280,643572551892460566707053818908283349242945,1088540944742787295982636155758383327725184898133092177544054",
+    "name": "Position of n-th row of Pascal's triangle in Mathematica-ordered list of partitions of 2^n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A238638/b238638.txt\">Table of n, a(n) for n = 0..14</a>",
+        "Manfred Scheucher, <a href=\"/A238638/a238638_1.c.txt\">C-Code</a>"
+    ],
+    "example": [
+        "The partitions of 4 in Mathematica order are 4, 31, 22, 211, 111.  a(2) = 4 is the position of 211, which as a partition is equivalent to row 2 of Pascal's triangle:  1 2 1 (where the top row is counted as row 0)."
+    ],
+    "maple": [
+        "p:= (n, k)-> binomial(n, iquo(2*n-k+1, 2)):",
+        "g:= (n, k, i)-> `if`(n=0, 1, g(n-p(k, i-1), k, i-1)",
+        "    +add(b(n-j, j), j=p(k, i-1)+1..min(n, p(k, i)))):",
+        "b:= proc(n, i) option remember; `if`(n=0, 1,",
+        "      `if`(i<1, 0, b(n, i-1)+`if`(i>n, 0, b(n-i, i))))",
+        "    end:",
+        "a:= n-> (m-> add(b(m-j, min(j, m-j)), j=p(n$2)+1..m)",
+        "            +g(m-p(n$2), n$2))(2^n):",
+        "seq(a(n), n=0..10);  # _Alois P. Heinz_, Jun 03 2015"
+    ],
+    "mathematica": [
+        "r[n_] := Reverse[Sort[Table[Binomial[n, k], {k, 0, n}]]]; Flatten[Table[Position[IntegerPartitions[2^n], r[n]], {n, 0, 6}]]",
+        "(* second program: *)",
+        "$RecursionLimit = 2000;",
+        "p[n_, k_] := Binomial[n, Quotient[2*n - k + 1, 2]];",
+        "g[n_, k_, i_] := If[n == 0, 1, g[n - p[k, i - 1], k, i - 1] + Sum[b[n - j, j], {j, p[k, i - 1] + 1, Min[n, p[k, i]]}]];",
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, If[i < 1, 0, b[n, i - 1] + If[i > n, 0, b[n - i, i]]]];",
+        "a[n_] := Function[m, Sum[b[m - j, Min[j, m - j]], {j, p[n, n] + 1, m}] + g[m - p[n, n], n, n]][2^n];",
+        "Table[a[n], {n, 0, 10}] (* _Jean-Fran\u00e7ois Alcover_, Aug 30 2016, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A007318, A080577 (Mathematica ordering), A238639, A238640."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, Mar 04 2014",
+    "ext": [
+        "a(7) from _Manfred Scheucher_, May 29 2015",
+        "a(8)-a(12) from _Alois P. Heinz_, Jun 03 2015"
+    ],
+    "references": 3,
+    "revision": 28,
+    "time": "2016-08-30T10:12:48-04:00",
+    "created": "2014-03-08T22:52:39-05:00"
+}

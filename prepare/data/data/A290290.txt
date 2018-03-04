@@ -1,0 +1,36 @@
+{
+    "number": 290290,
+    "data": "3432,5980,12870,12880,13090,14280,14586,20475,28272,28275,31416,31450,34580,35650,39270,45045,45220,72072,76076,96135,97812,106080,106590,120120,121992,125580,132804,139230,173420,181350,185640,191400,195624,202275,203112,215050,216315,222768,232254,240240,266475",
+    "name": "Numbers m having greatest prime power divisor d such that d is smaller than the difference between m and the largest prime smaller than m and d is smaller than the difference between m and twice the largest prime smaller than m/2.",
+    "comment": [
+        "It is conjectured that for all integers m there exist two primes p and r such that all the binomial coefficients (m,k) with 1 <= k <= m-1 are divisible by either p or r. Using Lucas's Theorem we can prove that the conjecture is true for integers m such that the difference between m and the largest prime smaller than m is smaller than the greatest prime power divisor of m. In A290203 we examine the integers that do not satisfy this property. However, when this property is not satisfied, if the difference between m and twice the largest prime smaller than m/2 is smaller than the greatest prime power divisor of m we can prove the conjecture for odd numbers and some cases of even numbers. Note that we take the difference between m and twice the largest prime smaller than m/2 because this is the last digit of the base-p representation of m, where p refers to the largest prime smaller than m/2. Therefore, this list examines the numbers that satisfy neither of the two properties and hence are the difficult cases for the proof of the conjecture."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A290290/b290290.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "E. Kummer, <a href=\"http://gdz.sub.uni-goettingen.de/dms/load/img/?PID=GDZPPN002147432\">\u00dcber die Erg\u00e4nzungss\u00e4tze zu den allgemeinen Reciprocit\u00e4tsgesetzen</a>, Journal f\u00fcr die reine und angewandte Mathematik, 44:93-146, 1852.",
+        "E. Lucas, <a href=\"http://www.jstor.org/stable/2369308\">Th\u00e9orie des fonctions num\u00e9riques simplement p\u00e9riodiques</a>, American Journal of Mathematics, 44:184-196, 1878.",
+        "J. Shareshian and R. Woodroofe, <a href=\"https://arxiv.org/abs/1505.05143\">Divisibility of binomial coefficients and generation of alternating groups</a>, arXiv:1505.05143 [math.CO], 2015-2017.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Kummer%27s_theorem\">Kummer's Theorem</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lucas%27s_theorem\">Lucas' Theorem</a>"
+    ],
+    "example": [
+        "The first number of the sequence is 3432. 3432 = 2^3*3*11*13, so the greatest prime power divisor of 3432 is 13. The largest prime smaller than 3432 is 3413, and the difference between these two numbers is 19. Because 19 is greater than 13 the first property is not satisfied. 3432/2 = 1716, and the closest prime to 1716 is 1709. The difference between m and 2*1709 = 3418 is 14. 14 is also greater than 13, which means that the second property is also not satisfied. Thus 3432 is in the sequence."
+    ],
+    "program": [
+        "(PARI) a034699(n) = my(d = Vecrev(divisors(n))); for (k=1, #d, if (isprimepower(d[k]), return (d[k])););",
+        "isok(n) = my(thed = a034699(n)); (thed < (n - precprime(n-1))) && (thed < (n - 2*precprime((n-1)/2))); \\\\ _Michel Marcus_, Aug 08 2017",
+        "(PARI) is(n)=if(n<9, return(0)); my(f=factor(n),d=f[1,1]^f[1,2],t); for(i=2,#f~, t=f[i,1]^f[i,2]; if(t>d, d=t)); d < n-precprime(n-1) && d < n - 2*precprime((n-1)/2) \\\\ _Charles R Greathouse IV_, Aug 10 2017",
+        "(PARI) allUnitaryDivisorsLessThan(n,sz)=my(t,e); if(t==1, return(sz>1)); forprime(p=2,sz-1, e=valuation(n,p); t=p^e; if(t>1, if(t>=sz, return(0)); n/=t; if(n==1, return(1)))); 0",
+        "is(n)=n>9 && allUnitaryDivisorsLessThan(n, min(n - 2*precprime((n-1)/2), n-precprime(n-1))) \\\\ _Charles R Greathouse IV_, Aug 10 2017"
+    ],
+    "xref": [
+        "Cf. A034699."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_S\u00edlvia Casacuberta Puig_, Jul 26 2017",
+    "references": 1,
+    "revision": 19,
+    "time": "2017-08-11T09:40:48-04:00",
+    "created": "2017-08-11T09:40:48-04:00"
+}

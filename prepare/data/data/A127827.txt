@@ -1,0 +1,43 @@
+{
+    "number": 127827,
+    "data": "13,113,1223,11149,111119,1111339,11111117,111111199,1111111999,11111111113,111111111149,1111111111267,11111111111257,111111111113447,1111111111112227,11111111111122223,111111111111113569,1111111111111113779,11111111111111133677,111111111111111111157,1111111111111111122359,11111111111111111133469",
+    "name": "Smallest n-digit emirp (A006567) with nondecreasing digits.",
+    "link": [
+        "Robert Israel, <a href=\"/A127827/b127827.txt\">Table of n, a(n) for n = 2..255</a>"
+    ],
+    "maple": [
+        "nextl:= proc(L)",
+        "local m,k,r;",
+        "# L a list of digits 1-9, last odd, in nondecreasing order",
+        "if L[-1]<= 7 then return subsop(-1=L[-1]+2, L) fi;",
+        "m:= nops(L); k:= m-1;",
+        "while L[k] =9 do k:= k-1 od:",
+        "r:= [op(L[1..k-1]),(L[k]+1) $ (m+1-k)];",
+        "if r[-1]::even then r:= subsop(-1=r[-1]+1, r) fi;",
+        "r",
+        "end proc:",
+        "f:= proc(n) local L,p,q,i;",
+        "  L:= [1$n];",
+        "  do",
+        "    p:= add(L[i]*10^(i-1),i=1..n);",
+        "    q:= add(L[-i]*10^(i-1),i=1..n);",
+        "    if q <> p and isprime(p) and isprime(q) then return(q) fi;",
+        "    L:= nextl(L);",
+        "  od",
+        "end proc:",
+        "map(f, [$2..30]); # _Robert Israel_, Nov 19 2017"
+    ],
+    "xref": [
+        "Cf. A006567, A031991, A114018, A127747, A127828."
+    ],
+    "keyword": "nonn,base",
+    "offset": "2,1",
+    "author": "_Ray Chandler_, Jan 31 2007",
+    "ext": [
+        "More terms from _Robert Israel_, Nov 19 2017"
+    ],
+    "references": 2,
+    "revision": 8,
+    "time": "2017-11-20T03:25:16-05:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

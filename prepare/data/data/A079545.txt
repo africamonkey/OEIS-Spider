@@ -1,0 +1,56 @@
+{
+    "number": 79545,
+    "data": "2,3,5,11,17,19,37,41,53,59,73,83,101,107,131,137,149,163,179,181,197,227,233,251,257,293,307,347,389,401,443,467,491,521,523,563,577,587,593,613,641,677,739,773,809,811,821,883",
+    "name": "Primes of the form x^2 + y^2 + 1 with x,y >= 0.",
+    "comment": [
+        "Bredihin proves that this sequence is infinite. Motohashi improves the upper and lower bounds. - _Charles R Greathouse IV_, Sep 16 2011",
+        "Sun & Pan prove that there are arbitrarily long arithmetic progressions in this sequence. - _Charles R Greathouse IV_, Mar 03 2018"
+    ],
+    "reference": [
+        "Y. Motohashi, \"On the distribution of prime numbers which are of the form x^2 + y^2 + 1. II\". Acta Mathematica Academiae Scientiarum Hungaricae 22 (1971), pp. 207-210."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A079545/b079545.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "B. M. Bredihin, <a href=\"http://www.mathnet.ru/php/archive.phtml?wshow=paper&amp;jrnid=im&amp;paperid=3124&amp;option_lang=eng\">Binary additive problems of indeterminate type II. Analogue of the problem of Hardy and Littlewood</a> (in Russian). Izvestiya Akademii Nauk SSSR Seriya Matematicheskaya 27 (1963), pp. 577-612.",
+        "Y. Motohashi, <a href=\"http://matwbn.icm.edu.pl/ksiazki/aa/aa16/aa1642.pdf\">On the distribution of prime numbers which are of the form x^2 + y^2 + 1</a>. Acta Arithmetica 16 (1969), pp. 351-364.",
+        "Yu-Chen Sun and Hao Pan, <a href=\"https://arxiv.org/abs/1708.08629\">The Green-Tao theorem for primes of the form x^2 + y^2 + 1</a> (2017)"
+    ],
+    "formula": [
+        "a(n) << n log^2 n, see Theorem 2 in Motohashi. - _Charles R Greathouse IV_, Mar 03 2018"
+    ],
+    "example": [
+        "17 = 0^2 + 4^2 + 1 is prime so in this sequence."
+    ],
+    "program": [
+        "(PARI) list(lim)={",
+        "    my(A,t,v=List([2]));",
+        "    forstep(a=2,sqrt(lim-1),2,",
+        "        A=a^2+1;",
+        "        forstep(b=0,min(a,sqrt(lim-A)),2,",
+        "            if(isprime(t=A+b^2),listput(v,t))",
+        "        )",
+        "    );",
+        "    forstep(a=1,sqrt(lim-2),2,",
+        "        A=a^2+1;",
+        "        forstep(b=1,min(a,sqrt(lim-A)),2,",
+        "            if(isprime(t=A+b^2),listput(v,t))",
+        "        )",
+        "    );",
+        "    vecsort(Vec(v),,8)",
+        "}; \\\\ _Charles R Greathouse IV_, Sep 16 2011",
+        "(PARI) is(n)=for(x=sqrtint(n\\2),sqrtint(n-1), if(issquare(n-x^2-1), return(isprime(n)))); 0 \\\\ _Charles R Greathouse IV_, Jun 12 2015",
+        "(PARI) B=bnfinit('x^2+1);",
+        "is(n)=!!#bnfisintnorm(B,n-1) && isprime(n) \\\\ _Charles R Greathouse IV_, Jun 13 2015"
+    ],
+    "xref": [
+        "Primes in A166687.",
+        "Cf. A079544, A079739, A079740."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Jan 23 2003",
+    "references": 7,
+    "revision": 19,
+    "time": "2018-03-03T17:51:20-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

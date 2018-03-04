@@ -1,0 +1,39 @@
+{
+    "number": 273195,
+    "data": "10,28,50,99,110,130,170,171,190,196,222,230,250,290,310,370,410,430,470,476,530,532,550,590,610,644,650,670,710,730,790,812,830,850,868,890,950,970",
+    "name": "The determinant of the difference table of the divisors vanishes for these numbers.",
+    "comment": [
+        "Prime power-like numbers (A273200) have nonvanishing determinants."
+    ],
+    "example": [
+        "50 is in this sequence because the determinant of DTD(50) = 0.",
+        "[  1  2  5 10 25 50]",
+        "[  1  3  5 15 25  0]",
+        "[  2  2 10 10  0  0]",
+        "[  0  8  0  0  0  0]",
+        "[  8 -8  0  0  0  0]",
+        "[-16  0  0  0  0  0]"
+    ],
+    "program": [
+        "(Sage)",
+        "def is_A273195(n):",
+        "    D = divisors(n)",
+        "    T = matrix(ZZ, len(D))",
+        "    for (m, d) in enumerate(D):",
+        "        T[0, m] = d",
+        "        for k in range(m-1, -1, -1) :",
+        "            T[m-k, k] = T[m-k-1, k+1] - T[m-k-1, k]",
+        "    return T.det() == 0",
+        "print filter(is_A273195, range(1,1000))"
+    ],
+    "xref": [
+        "Cf. A273200."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, May 18 2016",
+    "references": 0,
+    "revision": 12,
+    "time": "2018-01-07T21:36:16-05:00",
+    "created": "2016-05-18T23:34:31-04:00"
+}

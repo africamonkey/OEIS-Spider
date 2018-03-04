@@ -1,0 +1,36 @@
+{
+    "number": 202828,
+    "data": "1,4,36,400,5776,97344,1915456,42406144,1049760000,28558296064,848579961856,27271456395264,943132599095296,34877026635366400,1373536895379849216,57351382681767706624,2530646978003730497536,117614221470591038521344,5742190572014854792806400",
+    "name": "E.g.f.: exp(4*x/(1-2*x)) / sqrt(1-4*x^2).",
+    "formula": [
+        "a(n) = A000898(n)^2, where the e.g.f. of A000898 is exp(2*x + x^2).",
+        "a(n) = ( Sum_{k=0..[n/2]} 2^(n-2*k) * n!/((n-2*k)!*k!) )^2.",
+        "a(n) = ( Sum_{k=0..n} Stirling1(n, k)*2^k*Bell(k) )^2. [From formula by Vladeta Jovovic in A000898].",
+        "a(n) ~ n^n*exp(2*sqrt(2*n)-1-n)*2^(n-1). - _Vaclav Kotesovec_, May 23 2013",
+        "Recurrence: a(n) = 2*(n+1)*a(n-1) + 4*(n-1)*(n+1)*a(n-2) - 8*(n-1)*(n-2)^2*a(n-3). - _Vaclav Kotesovec_, May 23 2013"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + 4*x + 36*x^2/3! + 400*x^3/3! + 5776*x^4/4! + 97344*x^5/5! +...",
+        "where A(x) = 1 + 2^2*x + 6^2*x^2/2! + 20^2*x^3/3! + 76^2*x^4/4! + 312^2*x^5/5! +...+ A000898(n)^2*x^n/n! +..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Exp[4*x/(1-2*x)]/Sqrt[1-4*x^2], {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, May 23 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(exp(4*x/(1-2*x)+x*O(x^n))/sqrt(1-4*x^2+x*O(x^n)),n)}",
+        "(PARI) {a(n)=sum(k=0,n\\2,2^(n-2*k)*n!/((n-2*k)!*k!))^2}",
+        "(PARI) {Stirling1(n, k)=n!*polcoeff(binomial(x, n), k)}",
+        "{Bell(n)=n!*polcoeff(exp(exp(x+x*O(x^n))-1), n)}",
+        "{a(n)=sum(k=0, n, Stirling1(n, k)*Bell(k)*2^k)^2}"
+    ],
+    "xref": [
+        "Cf. A000898, A202827, A202829, A202831, A202833, A202835, A202836."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 25 2011",
+    "references": 8,
+    "revision": 9,
+    "time": "2013-05-23T14:45:40-04:00",
+    "created": "2011-12-26T13:27:52-05:00"
+}

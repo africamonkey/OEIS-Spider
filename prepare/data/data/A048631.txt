@@ -1,0 +1,37 @@
+{
+    "number": 48631,
+    "data": "1,1,2,6,24,120,272,1904,15232,124800,848640,7507200,39738368,433441792,2589116416,30419859456,486717751296,8128101580800,132557598294016,1971862458400768,30421253686034432,512675443057623040",
+    "name": "Xfactorials - like factorials but use carryless GF(2)[ X ] polynomial multiplication.",
+    "comment": [
+        "In formula X stands for the multiplication in a ring of GF(2)[ X ] polynomials."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A048631/b048631.txt\">Table of n, a(n) for n = 0..475</a>",
+        "Vaclav Kotesovec, <a href=\"/A048631/a048631.jpg\">Graph a(n+1)/a(n)</a>"
+    ],
+    "formula": [
+        "a(0) = 1, a(n) = n X a(n-1) (see the Maple function Xfactorial given below)."
+    ],
+    "maple": [
+        "Xfactorial := proc(n); if(0 = n) then RETURN(1); else RETURN(Xmult(n,Xfactorial(n-1))); fi; end;",
+        "Xmult := proc(n,m) option remember; if(0 = n) then RETURN(0); else RETURN(XORnos(((n mod 2)*m),Xmult(floor(n/2),m*2))); fi; end;"
+    ],
+    "mathematica": [
+        "Xmult[nn_, mm_] := Module[{n = nn, m = mm, s = 0}, While[n > 0, If[1 == Mod[n, 2], s = BitXor[s, m]]; n = Floor[n/2]; m = m*2]; s];",
+        "Xfactorial[n_] := Xfactorial[n] = If[0 == n, 1, Xmult[n, Xfactorial[n - 1]] ];",
+        "Table[Xfactorial[n], {n, 0, 21}] (* _Jean-Fran\u00e7ois Alcover_, Mar 04 2016, updated Mar 06 2016 after Maple *)"
+    ],
+    "program": [
+        "(PARI) a(n)=my(s=Mod(1,2)); for(k=1,n, s*=Pol(binary(k))); fromdigits(Vec(lift(s)), 2) \\\\ _Charles R Greathouse IV_, Oct 03 2016"
+    ],
+    "xref": [
+        "Cf. A000142, A048720, A048632, A061922."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Antti Karttunen_, Jul 14 1999",
+    "references": 7,
+    "revision": 19,
+    "time": "2016-10-03T13:19:34-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

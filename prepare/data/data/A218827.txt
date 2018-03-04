@@ -1,0 +1,29 @@
+{
+    "number": 218827,
+    "data": "1,1,3,16,129,1438,20955,384226,8623101,231978454,7359117591,271673905642,11543742745689,559348370431630,30659822500574739,1887796293833267746,129757032076160998677,9900820197631733600518,834421415151529202479023,77318409826165250051727514",
+    "name": "Number of indecomposable (by shuffling) alternating n-anagrams.",
+    "comment": [
+        "Alternating anagrams enumeration is related to A000366 by a(n) = A000366(n+1).",
+        "For n>2, a(n) are alternatively congruent to 3 and -2 modulo 18."
+    ],
+    "link": [
+        "G. Kreweras and J. Barraud, <a href=\"http://dx.doi.org/10.1006/eujc.1997.0161\">Anagrammes altern\u00e9s</a>, European Journal of Combinatorics,Volume 18, Issue 8, November 1997, Pages 887-891.",
+        "G. Kreweras and D. Dumont, <a href=\"http://dx.doi.org/10.1016/S0012-365X(99)00238-1\">Sur les anagrammes altern\u00e9s</a>, Discrete Mathematics, Volume 211, Issues 1-3, 28 January 2000, Pages 103-110."
+    ],
+    "program": [
+        "(PARI) a000366(n)= {return((-1/2)^(n-2)*sum(k=0, n, binomial(n, k)*(1-2^(n+k+1))*bernfrac(n+k+1)));}",
+        "ci(n,k) = {if (matc[n,k] == 0, if (n==k, v = 1, if (k==1, v = c(n), v = sum(i=1, n-k+1, binomial(n-1,i-1)*c(i)*ci(n-i,k-1)););); matc[n,k] = v;); return(matc[n,k]);}",
+        "c(n) = {if (n==1, return(a000366(n+1)), return(a000366(n+1) - sum(i=2, n, ci(n,i))));}",
+        "allc(m) = {matc = matrix(m,m); for (i=1, m, print1(c(i), \", \"););}"
+    ],
+    "xref": [
+        "Cf. A000366, A218826. First column of A239895."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Michel Marcus_, Nov 07 2012",
+    "references": 2,
+    "revision": 9,
+    "time": "2014-04-04T00:45:31-04:00",
+    "created": "2012-11-08T11:16:54-05:00"
+}

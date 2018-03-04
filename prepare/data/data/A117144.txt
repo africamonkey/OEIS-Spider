@@ -1,0 +1,36 @@
+{
+    "number": 117144,
+    "data": "1,1,1,1,2,2,3,3,4,5,6,6,8,9,10,12,15,16,19,21,25,28,32,34,41,46,51,55,64,70,79,86,97,106,119,129,146,159,175,190,214,232,256,277,306,334,367,394,434,472,515,556,607,654,714,770,836,901,978,1048,1140,1226,1322",
+    "name": "Partitions of n in which each part k occurs at least k times.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A117144/b117144.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} (1-x^k+x^(k^2))/(1-x^k)."
+    ],
+    "example": [
+        "a(9)=5 because we have [3,3,3], [2,2,2,2,1], [2,2,2,1,1,1], [2,2,1,1,1,1,1] and [1,1,1,1,1,1,1,1,1]."
+    ],
+    "maple": [
+        "g:=product((1-x^k+x^(k^2))/(1-x^k),k=1..100): gser:=series(g,x=0,70): seq(coeff(gser,x,n),n=0..66);",
+        "# second Maple program:",
+        "b:= proc(n,i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      b(n, i-1) +add(b(n-i*j, i-1), j=i..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..80);  # _Alois P. Heinz_, Dec 28 2016"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n==0, 1, If[i<1, 0, b[n, i-1] + Sum[b[n-i*j, i-1], {j, i, n/i}]]]; a[n_] := b[n, n]; Table[a[n], {n, 0, 80}] (* _Jean-Fran\u00e7ois Alcover_, Feb 03 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A033461, A052335, A115584."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Emeric Deutsch_, Mar 06 2006",
+    "references": 4,
+    "revision": 13,
+    "time": "2017-02-09T20:04:30-05:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

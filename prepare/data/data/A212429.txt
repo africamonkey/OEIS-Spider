@@ -1,0 +1,54 @@
+{
+    "number": 212429,
+    "data": "1,1,2,4,48,96,1152,2304,276480,552960,6635520,13271040,33443020800,66886041600,802632499200,1605264998400,385263599616000,770527199232000,194172854206464000,388345708412928000,512616335105064960000,1025232670210129920000",
+    "name": "a(n) is the LCM of denominators of polynomials of degree n which are integer-valued on primes together with their first divided differences.",
+    "comment": [
+        "a(n) is also the n-th Bhargava's factorial n_P^{{1}} of the set P of primes with respect to the first divided difference."
+    ],
+    "reference": [
+        "M. Bhargava, On P-orderings, Integer-Valued Polynomials, and Ultrametric Analysis, J. Amer. Math. Soc., 22 (2009), 963-993"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A212429/b212429.txt\">Table of n, a(n) for n = 1..170</a>",
+        "J. L. Chabert, <a href=\"http://www.lamfa.u-picardie.fr/chabert/AboutPolynomials.pdf\">About polynomials whose divided differences are integer-valued on prime numbers</a>, ICM 2012 Proceedings, vol. I, pp. 1-7. Complete <a href=\"http://icm.uaeu.ac.ae/pdf/TomeI.pdf\">proceedings</a> (warning: file size is 26MB)."
+    ],
+    "formula": [
+        "a(n) = Prod_{p prime} p^w_p(n-1)  where  w_p(n) = Sum_{k>=0} floor(n / ((p-1)*p^k)) - t_{p,n}  and  p^(t_{p,n}-1) <= n/(p-1) < p^t_{p,n}."
+    ],
+    "example": [
+        "a(5) = 48 because f(x) = (x-1)(x-2)(x-3)(x-5)(x-7)/48 satisfies f(p) and (f(p)-f(q))/(p-q) are integers for all primes p,q."
+    ],
+    "maple": [
+        "a:= proc(n) local i, p, wp, r;",
+        "      r:=1;",
+        "      for i do p:= ithprime(i);",
+        "        wp:= p^(w(p,n-1));",
+        "        if wp=1 then break fi;",
+        "        r:= r*wp",
+        "      od; r",
+        "    end:",
+        "w:= proc(p, n) local d, k, r;",
+        "      r:= 0;",
+        "      for k from 0 do d:= floor(n/((p-1)*p^k));",
+        "        if d=0 then break fi;",
+        "        r:= r+d;",
+        "      od;",
+        "      r -t(n,p)",
+        "    end:",
+        "t:= proc(n, p) local h, q;",
+        "      q:= n/(p-1);",
+        "      for h from 0 while q>= p^h do od; h",
+        "    end:",
+        "seq (a(n), n=1..30);  # _Alois P. Heinz_, Jun 25 2012"
+    ],
+    "xref": [
+        "Cf. A053657."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Jean-Luc Chabert_, Jun 21 2012",
+    "references": 2,
+    "revision": 45,
+    "time": "2012-12-06T16:39:48-05:00",
+    "created": "2012-06-25T18:44:39-04:00"
+}

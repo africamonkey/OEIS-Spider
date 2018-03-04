@@ -1,0 +1,53 @@
+{
+    "number": 219430,
+    "data": "1,2,14,154,2062,31066,504886,8652402,154208270,2832526306,53287424374,1022143389578,19924535352374,393685747760714,7869272950148382,158875743754158098,3235672769357219854,66405081412501161442,1372115409786911859502,28524372351269271839610",
+    "name": "Number of overpartitions of n^2; a(n) = A015128(n^2).",
+    "comment": [
+        "Limit a(n+1)/a(n) = exp(Pi) = 23.14069263...",
+        "a(n) ~ (cosh(Pi*n) - sinh(Pi*n)/(Pi*n)) / (4*n^2), a \"remarkable approximation\" due to \"Ramanujan's false statement\" (see formula 12 in \"Jagged partitions\" link).",
+        "By definition of A015128, an overpartition of n^2 is an ordered sequence of nonincreasing integers that sum to n^2, where the first occurrence of each integer may be overlined (see Hirschhorn and Sellers link)."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A219430/b219430.txt\">Table of n, a(n) for n = 0..730</a> (terms 0..180 from Paul D. Hanna)",
+        "J.-F. Fortin, P. Jacob and P. Mathieu, <a href=\"http://arXiv.org/abs/math.CO/0310079\">Jagged partitions</a>",
+        "M. D. Hirschhorn and J. A. Sellers, <a href=\"http://www.emis.de/journals/INTEGERS/papers/f20/f20.pdf\">AN INFINITE FAMILY OF OVERPARTITION CONGRUENCES MODULO 12</a>"
+    ],
+    "formula": [
+        "a(n) = -2*Sum_{k=1..n} (-1)^k * A015128(n^2-k^2) for n>0 with a(0)=1.",
+        "a(n) = [x^(n^2)] 1 / ( Sum_{m=-inf..inf} (-x)^(m^2) ).",
+        "a(n) = [x^(n^2)] 1 / theta_4(x).",
+        "a(n) = [x^(n^2)] eta(x^2) / eta(x)^2.",
+        "a(n) = [x^(n^2)] Product_{m>=1} (1 + x^m) / (1 - x^m).",
+        "a(n) = [x^(n^2)] Product_{m>=1} (1 - x^(2*m)) * (1 - x^(2*m-1))^2.",
+        "a(n) = [x^(n^2)] exp( Sum_{m>=1} 2*x^(2*m-1)/(1 - x^(2*m-1))/(2*m-1) ).",
+        "a(n) = [x^(n^2)] exp( Sum_{m>=1} (sigma(2*m) - sigma(m)) * x^m/m )."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 14*x^2 + 154*x^3 + 2062*x^4 + 31066*x^5 + 504886*x^6 +...",
+        "It appears that the logarithmic derivative of the g.f. A(x),",
+        "A'(x)/A(x) = 2 + 24*x + 386*x^2 + 6832*x^3 + 128442*x^4 + 2505720*x^5 + 50153770*x^6 + 1022997344*x^7 + 21170657906*x^8 +...+ A219431(n+1)*x^n +...",
+        "is congruent to 2/(1-x^2) mod 4."
+    ],
+    "mathematica": [
+        "Table[Sum[PartitionsP[n^2-k]*PartitionsQ[k], {k, 0, n^2}], {n, 0, 20}] (* _Vaclav Kotesovec_, Nov 28 2015 *)"
+    ],
+    "program": [
+        "(PARI) /* Formula: a(n) = [x^(n^2)] 1 / theta_4(x) */",
+        "{a(n)=polcoeff(1/(1+2*sum(k=1,n,(-x)^(k^2))+x*O(x^(n^2))),n^2)}",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(PARI) /* Formula: a(n) = -2*Sum_{k=1..n} (-1)^k * A015128(n^2-k^2) */",
+        "{A015128(n)=polcoeff(1/(1+2*sum(k=1, sqrtint(n+1), (-x)^(k^2))+x*O(x^(n))), n)}",
+        "{a(n)=if(n==0,1,-2*sum(k=1, n, (-1)^k*A015128(n^2-k^2)))}",
+        "for(n=0, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A219431, A015128, A195584."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 19 2012",
+    "references": 2,
+    "revision": 30,
+    "time": "2017-04-11T06:25:17-04:00",
+    "created": "2012-11-19T22:42:42-05:00"
+}

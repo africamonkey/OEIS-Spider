@@ -1,0 +1,57 @@
+{
+    "number": 48889,
+    "data": "68,116,118,161,166,169,188,608,616,1006,1018,1066,1081,1096,1106,1108,1118,1169,1186,1606,1618,1808,1816,1898,1916,1918,1969,1981,1988,1996,6001,6008,6016,6098,6188,6191,6196,6616,6668,6698,6808,6809,6881,6896",
+    "name": "Composite numbers not ending in zero that yield a prime when turned upside down.",
+    "link": [
+        "Robert Israel and Reinhard Zumkeller, <a href=\"/A048889/b048889.txt\">Table of n, a(n) for n = 1..10000</a> (a(1) to a(1048) from Reinhard Zumkeller)"
+    ],
+    "example": [
+        "68 is not prime, yet when turned upside down gives 89 which is prime."
+    ],
+    "maple": [
+        "N:= 1000: # to get a(1) to a(N)",
+        "count:= 0:",
+        "for q from 1 while count < N do",
+        "  if q mod 5 <> 0 then",
+        "    L:= convert(q,base,5);",
+        "    m:= nops(L);",
+        "    Lx:= subs(2=6,3=8,4=9,L);",
+        "    x:= add(Lx[i]*10^(i-1),i=1..m);",
+        "    if isprime(x) then next fi;",
+        "    Ly:= subs(2=9,3=8,4=6,L);",
+        "    y:= add(Ly[-i]*10^(i-1),i=1..m);",
+        "    if isprime(y) then",
+        "      count:= count+1;",
+        "      A[count]:= x;",
+        "    fi",
+        " fi",
+        "od:",
+        "seq(A[i],i=1..count); # _Robert Israel_, Jul 11 2016"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (intersect)",
+        "import Numeric (readInt)",
+        "import Data.Char (digitToInt)",
+        "a048889 n = a048889_list !! (n-1)",
+        "a048889_list = filter f a002808_list where",
+        "   f n = n `mod` 10 > 0 &&",
+        "         null (\"23547\" `intersect` show n)  &&",
+        "         (a010051 (fst $ head $ readInt 10 (const True) ud $ ns) == 1)",
+        "       where ns = reverse $ show n",
+        "             ud '6' = 9",
+        "             ud '9' = 6",
+        "             ud z = digitToInt z",
+        "-- _Reinhard Zumkeller_, Aug 11 2011"
+    ],
+    "xref": [
+        "Cf. A002808, A010051."
+    ],
+    "keyword": "base,easy,nonn,nice",
+    "offset": "1,1",
+    "author": "_G. L. Honaker, Jr._",
+    "references": 2,
+    "revision": 16,
+    "time": "2016-07-11T19:34:29-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

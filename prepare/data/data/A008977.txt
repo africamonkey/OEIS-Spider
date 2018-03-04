@@ -1,0 +1,61 @@
+{
+    "number": 8977,
+    "data": "1,24,2520,369600,63063000,11732745024,2308743493056,472518347558400,99561092450391000,21452752266265320000,4705360871073570227520,1047071828879079131681280,235809301462142612780721600",
+    "name": "a(n) = (4*n)!/(n!)^4.",
+    "comment": [
+        "Number of paths of length 4*n in an n X n X n X n grid from (0,0,0,0) to (n,n,n,n).",
+        "a(n) occurs in Ramanujan's formula 1/Pi = sqrt(8)/9801 * Sum_{n>=0} (4*n)!/(n!)^4 * (1103 + 26390*n)/396^(4*n) ). - _Susanne Wienand_, Jan 05 2013",
+        "a(n) is the number of ballot results that lead to a 4-way tie when 4*n voters each cast three votes for three out of four candidates vying for 3 slots on a county commission; each of these ballot results give 3*n votes to each of the four candidates. - _Dennis P. Walsh_, May 02 2013",
+        "a(n) is the constant term of (X + Y + Z + 1/(X*Y*Z))^(4*n). - _Mark van Hoeij_, May 07 2013",
+        "In Narumiya and Shiga on page 158 the g.f. is given as a hypergeometric function. - _Michael Somos_, Aug 12 2014",
+        "Diagonal of the rational function R(x,y,z,w) = 1/(1-(w+x+y+z)). - _Gheorghe Coserea_, Jul 15 2016"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A008977/b008977.txt\">Table of n, a(n) for n=0..100</a>",
+        "R. M. Dickau, <a href=\"http://mathforum.org/advanced/robertd/path4d.html\">Paths through a 4-D lattice</a>",
+        "N. Narumiya and H. Shiga, <a href=\"https://www.researchgate.net/publication/268489728_The_mirror_map_for_a_family_of_K3_surfaces_induced_from_the_simplest_3-dimensional_reflexive_polytope\">The mirror map for a family of K3 surfaces induced from the simplest 3-dimensional reflexive polytope</a>, Proceedings on Moonshine and related topics (Montr\u00e9al, QC, 1999), 139-161, CRM Proc. Lecture Notes, 30, Amer. Math. Soc., Providence, RI, 2001.  MR1877764 (2002m:14030)."
+    ],
+    "formula": [
+        "a(n) = A139541(n)*(A001316(n)/A049606(n))^3. - _Reinhard Zumkeller_, Apr 28 2008",
+        "Self-convolution of A178529, where A178529(n) = (4^n/n!^2) * Product_{k=0..n-1} (8*k + 1)*(8*k + 3).",
+        "G.f.: hypergeom([1/8, 3/8], [1], 256*x)^2. - _Mark van Hoeij_, Nov 16 2011",
+        "a(n) ~ 2^(8*n - 1/2) / (Pi*n)^(3/2). - _Vaclav Kotesovec_, Mar 07 2014",
+        "G.f.: hypergeom([1/4, 2/4, 3/4], [1, 1], 256*x). - _Michael Somos_, Aug 12 2014",
+        "From _Peter Bala_, Jul 12 2016: (Start)",
+        "a(n) = binomial(2*n,n)*binomial(3*n,n)*binomial(4*n,n) = ( [x^n](1 + x)^(2*n) ) * ( [x^n](1 + x)^(3*n) ) * ( [x^n](1 + x)^(4*n) ) = [x^n](F(x)^(24*n)), where F(x) = 1 + x + 29*x^2 + 2246*x^3 + 239500*x^4 + 30318701*x^5 + 4271201506*x^6 + ... appears to have integer coefficients. For similar results see A000897, A002894, A002897, A006480, A008978, A008979, A186420 and A188662. (End)",
+        "0 = (x^2-256*x^3)*y''' + (3*x-1152*x^2)*y'' + (1-816*x)*y' - 24*y, where y is the g.f. - _Gheorghe Coserea_, Jul 15 2016",
+        "From _Peter Bala_, Jul 17 2016: (Start)",
+        "a(n) = Sum_{k = 0..3*n} (-1)^(n+k)*binomial(4*n,n + k)* binomial(n + k,k)^4.",
+        "a(n) = Sum_{k = 0..4*n} (-1)^k*binomial(4*n,k)*binomial(n + k,k)^4. (End)",
+        "E.g.f.: 3F3(1/4,1/2,3/4; 1,1,1; 256*x). - _Ilya Gutkovskiy_, Jan 23 2018"
+    ],
+    "example": [
+        "a(13)=52!/(13!)^4=53644737765488792839237440000 is the number of ways of dealing the four hands in Bridge or Whist. - _Henry Bottomley_, Oct 06 2000",
+        "a(1)=24 since, in a 4-voter 3-vote election that ends in a four-way tie for candidates A, B, C, and D, there are 4! ways to arrange the needed vote sets {A,B,C}, {A,B,D}, {A,C,D}, and {B,C,D} among the 4 voters. - _Dennis P. Walsh_, May 02 2013",
+        "G.f. = 1 + 24*x + 2520*x^2 + 369600*x^3 + 63063000*x^4 + 11732745024*x^5 + ..."
+    ],
+    "maple": [
+        "A008977 := n->(4*n)!/(n!)^4;"
+    ],
+    "mathematica": [
+        "Table[(4n)!/(n!)^4,{n,0,16}] (* _Harvey P. Dale_, Oct 24 2011 *)",
+        "a[ n_] := If[ n < 0, 0, (4 n)! / n!^4]; (* _Michael Somos_, Aug 12 2014 *)",
+        "a[ n_] := SeriesCoefficient[ HypergeometricPFQ[ {1/4, 2/4, 3/4}, {1, 1}, 256 x], {x, 0, n}]; (* _Michael Somos_, Aug 12 2014 *)"
+    ],
+    "program": [
+        "(Maxima) A008977(n):=(4*n)!/(n!)^4$ makelist(A008977(n),n,0,20); /* _Martin Ettl_, Nov 15 2012 */",
+        "(MAGMA) [Factorial(4*n)/Factorial(n)^4: n in [0..20]]; // _Vincenzo Librandi_, Aug 13 2014",
+        "(PARI) a(n) = (4*n)!/n!^4; \\\\ _Gheorghe Coserea_, Jul 15 2016"
+    ],
+    "xref": [
+        "Cf. A000984, A006480, A008978, A178529, A000897, A002894, A002897, A006480, A008979, A186420, A188662.",
+        "Related to diagonal of rational functions: A268545-A268555."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 25,
+    "revision": 81,
+    "time": "2018-01-23T15:33:50-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

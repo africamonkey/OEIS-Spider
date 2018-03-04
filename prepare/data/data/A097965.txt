@@ -1,0 +1,31 @@
+{
+    "number": 97965,
+    "data": "1,2,9,16,45,186,343,848,1809,8290,13431,33672,66157,143066,591165,966016,2180913,4281570,8776423,15865400,67586841,101053282,226690047,420479952,845781625,1476079826,2830894353,10479645568,15758982597,33145324410,60465162751",
+    "name": "Number of compositions (ordered partitions) of n into n parts, allowing zeros, with distinct nonzero parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A097965/b097965.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, [1],",
+        "      `if`(n>i*(i+1)/2, [], zip((x, y)->x+y, b(n, i-1),",
+        "      `if`(i>n, [], [0, b(n-i, i-1)[]]), 0)))",
+        "    end:",
+        "a:= proc(n) local l; l:= b(n$2);",
+        "      add(l[i+1]*i!*binomial(n, i), i=1..nops(l)-1)",
+        "    end:",
+        "seq (a(n), n=1..40);  # _Alois P. Heinz_, Nov 20 2012"
+    ],
+    "mathematica": [
+        "zip[f_, x_List, y_List, z_] := With[{m = Max[Length[x], Length[y]]}, Thread[f[PadRight[x, m, z], PadRight[y, m, z]]]]; b[n_, i_] := b[n, i] = If[n == 0, {1}, If[n > i*(i+1)/2, {}, zip[Plus, b[n, i-1], If[i>n, {}, Join[{0}, b[n-i, i-1]]], 0]]]; a[n_] := Module[{l}, l = b[n, n]; Sum[l[[i+1]]*i!*Binomial[n, i], {i, 1, Length[l]-1}]]; Table[a[n], {n, 1, 40}] (* _Jean-Fran\u00e7ois Alcover_, Jan 29 2014, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A088218, A032020."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vladeta Jovovic_, Sep 21 2004",
+    "references": 1,
+    "revision": 14,
+    "time": "2014-01-29T07:04:22-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

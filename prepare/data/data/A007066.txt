@@ -1,0 +1,56 @@
+{
+    "number": 7066,
+    "id": "M3299",
+    "data": "1,4,7,9,12,15,17,20,22,25,28,30,33,36,38,41,43,46,49,51,54,56,59,62,64,67,70,72,75,77,80,83,85,88,91,93,96,98,101,104,106,109,111,114,117,119,122,125,127,130,132,135,138,140,143,145,148,151,153,156,159,161,164,166",
+    "name": "a(n) = 1 + ceiling((n-1)*phi^2), phi = (1+sqrt(5))/2.",
+    "comment": [
+        "First column of dual Wythoff array.",
+        "Positions of 0's in A189479.",
+        "Skala (2016) asks if this sequence also gives the positions of the 0's in A283310. - _N. J. A. Sloane_, Mar 06 2017"
+    ],
+    "reference": [
+        "C. Kimberling, \"Stolarsky interspersions,\" Ars Combinatoria 39 (1995) 129-138.",
+        "D. R. Morrison, \"A Stolarsky array of Wythoff pairs,\" in A Collection of Manuscripts Related to the Fibonacci Sequence. Fibonacci Assoc., Santa Clara, CA, 1980, pp. 134-136.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A007066/b007066.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "C. Kimberling, <a href=\"http://faculty.evansville.edu/ck6/integer/intersp.html\">Interspersions</a>",
+        "Matthew Skala, <a href=\"https://arxiv.org/abs/1604.04072\">Graph Nimors</a>, arXiv preprint arXiv:1604.04072 [math.CO], 2016.",
+        "N. J. A. Sloane, <a href=\"/classic.html#WYTH\">Classic Sequences</a>"
+    ],
+    "formula": [
+        "Floor(1+phi*floor(phi*(n-1)+1)), phi=(1+sqrt(5))/2, n >= 2.",
+        "a(1)=1; for n>1, a(n)=a(n-1)+2 if n is already in the sequence, a(n)=a(n-1)+3 otherwise. - _Benoit Cloitre_, Mar 06 2003"
+    ],
+    "maple": [
+        "Digits := 100: t := (1+sqrt(5))/2; A007066 := proc(n) if n <= 1 then 1 else floor(1+t*floor(t*(n-1)+1)); fi; end;"
+    ],
+    "mathematica": [
+        "t = Nest[Flatten[# /. {0 -> {0, 1}, 1 -> {1, 0, 1}}] &, {0}, 6] (*A189479*)",
+        "Flatten[Position[t, 0]] (*A007066*)",
+        "Flatten[Position[t, 1]] (*A099267*)",
+        "With[{grs=GoldenRatio^2},Table[1+Ceiling[grs(n-1)],{n,70}]] (* _Harvey P. Dale_, Jun 24 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a007066 n = a007066_list !! (n-1)",
+        "a007066_list = 1 : f 2 [1] where",
+        "   f x zs@(z:_) = y : f (x + 1) (y : zs) where",
+        "     y = if x `elem` zs then z + 2 else z + 3",
+        "-- _Reinhard Zumkeller_, Sep 26 2014, Sep 18 2011"
+    ],
+    "xref": [
+        "Cf. A064437. Apart from initial terms, same as A026356. Complement is (essentially) A026355. Equals 1 + A004957, also n + A004956.",
+        "First differences give A076662.",
+        "Complement of A099267. [_Gerald Hillier_, Dec 19 2008]",
+        "Cf. A193214 (primes)."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, _Mira Bernstein_",
+    "references": 17,
+    "revision": 35,
+    "time": "2017-08-28T04:19:47-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

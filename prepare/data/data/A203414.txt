@@ -1,0 +1,53 @@
+{
+    "number": 203414,
+    "data": "1,5,16,61,146,554,1184,4149,9457,29890,63152,222850,434994,1414642,3140576,9575893,19323714,65160959,125877072,408744626,865638272,2563647322,5176349664,17476326546,33019614771,102921708050,220209942688,657218691722,1292253982322",
+    "name": "a(n) = n*Pell(n) * Sum_{d|n} 1/(d*Pell(d)) where Pell(n) = A000129(n).",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A203414/b203414.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "formula": [
+        "Equals the logarithmic derivative of A203413.",
+        "L.g.f.: L(x) = Sum_{n>=1} a(n)*x^n/n satisfies:",
+        "(1) L(x) = Sum_{n>=1} x^n/n * Sum_{k>=0} Pell(n*k+n)/Pell(n) * x^(n*k).",
+        "(2) L(x) = Sum_{n>=1} x^n/n * exp( Sum_{k>=1} A002203(n*k)*x^(n*k)/k ) ).",
+        "(3) L(x) = Sum_{n>=1} x^n/n * 1/(1 - A002203(n)*x^n + (-1)^n*x^(2*n)) ).",
+        "(4) L(x) = Sum_{n>=1} x^n/n * G_n(x^n) where G_n(x^n) = Product_{k=0..n-1} G(u^k*x) where G(x) = 1/(1-2*x-x^2) and u is an n-th root of unity."
+    ],
+    "example": [
+        "L.g.f.: L(x) = x + 5*x^2/2 + 16*x^3/3 + 61*x^4/4 + 146*x^5/5 + 554*x^6/6 +...",
+        "where",
+        "L(x) = x*(1 + 2*x + 5*x^2 + 12*x^3 + 29*x^4 +...+ Pell(n+1)*x^n +...) +",
+        "x^2/2*(1 + 6*x^2 + 35*x^4 + 204*x^6 +...+ Pell(2*n+2)/2*x^(2*n) +...) +",
+        "x^3/3*(1 + 14*x^3 + 197*x^6 + 2772*x^9 +...+ Pell(3*n+3)/5*x^(3*n) +...) +",
+        "x^4/4*(1 + 34*x^4 + 1155*x^8 + 39236*x^12 +...+ Pell(4*n+4)/12*x^(4*n) +...) +",
+        "x^5/5*(1 + 82*x^5 + 6725*x^10 + 551532*x^15 +...+ Pell(5*n+5)/29*x^(5*n) +...) +",
+        "x^6/6*(1 + 198*x^6 + 39203*x^12 + 7761996*x^18 +...+ Pell(6*n+6)/70*x^(6*n) +...) +...",
+        "Equivalently,",
+        "L(x) = x/(1-2*x-x^2) + (x^2/2)/(1-6*x^2+x^4) + (x^3/3)/(1-14*x^3-x^6) + (x^4/4)/(1-34*x^4+x^8) +...+ (x^n/n)/(1 - A002203(n)*x^n + (-1)^n*x^(2*n)) +...",
+        "where A002203 is the companion Pell numbers.",
+        "Exponentiation of the l.g.f. equals the g.f. of A203413:",
+        "exp(L(x)) = 1 + x + 3*x^2 + 8*x^3 + 25*x^4 + 64*x^5 + 200*x^6 + 512*x^7 + 1528*x^8 + 4048*x^9 +...+ A203413(n)*x^n +..."
+    ],
+    "mathematica": [
+        "pell[n_] := pell[n] = ((1+Sqrt[2])^n - (1-Sqrt[2])^n)/(2*Sqrt[2]) // Round; a[n_] := n pell[n] DivisorSum[n, 1/(# pell[#]) &]; Array[a, 30] (* _Jean-Fran\u00e7ois Alcover_, Dec 23 2015 *)"
+    ],
+    "program": [
+        "(PARI) /* Subroutines used in PARI programs below: */",
+        "{Pell(n)=polcoeff(x/(1-2*x-x^2+x*O(x^n)),n)}",
+        "{A002203(n)=Pell(n-1)+Pell(n+1)}",
+        "(PARI) {a(n)=if(n<1, 0, n*Pell(n)*sumdiv(n, d, 1/(d*Pell(d))) )}",
+        "(PARI) {a(n)=n*polcoeff(sum(m=1, n+1, (x^m/m)/(1-A002203(m)*x^m+(-1)^m*x^(2*m)+x*O(x^n))), n)}",
+        "(PARI) {a(n)=local(L=x); L=sum(m=1, n, x^m/m*exp(sum(k=1, floor((n+1)/m), A002203(m*k)*x^(m*k)/k)+x*O(x^n))); n*polcoeff(L, n)}",
+        "(PARI) {a(n)=local(A=1+2*x+x*O(x^n), F=1/(1-2*x-x^2+x*O(x^n))); A=exp(sum(m=1, n+1, x^m/m*round(prod(k=0, m-1, subst(F, x, exp(2*Pi*I*k/m)*x+x*O(x^n)))))); n*polcoeff(log(A), n)}"
+    ],
+    "xref": [
+        "Cf. A203413, A203319, A203321; A000129 (Pell), A002203 (companion Pell)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jan 01 2012",
+    "references": 3,
+    "revision": 12,
+    "time": "2015-12-23T07:55:11-05:00",
+    "created": "2012-01-02T15:12:10-05:00"
+}

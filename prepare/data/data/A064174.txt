@@ -1,0 +1,51 @@
+{
+    "number": 64174,
+    "data": "1,1,2,3,4,6,9,12,17,23,31,42,56,73,96,125,161,207,265,336,426,536,672,840,1046,1296,1603,1975,2425,2970,3628,4417,5367,6503,7861,9482,11412,13702,16423,19642,23447,27938,33231,39453,46767,55342,65386,77135",
+    "name": "Number of partitions of n with nonnegative rank.",
+    "comment": [
+        "The rank of a partition is the largest summand minus the number of summands.",
+        "This sequence (up to proof) equals \"partitions of 2n with even number of parts, ending in 1, with max descent of 1, where the number of odd parts in odd places equals the number of odd parts in even places. (See link and 2nd Mathematica line.) - _Wouter Meeussen_, Mar 29 2013",
+        "Number of partitions p of n such that max(max(p), number of parts of p) is a part of p. - _Clark Kimberling_, Feb 28 2014"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A064174/b064174.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Rekha Biswal <a href=\"http://mathoverflow.net/questions/125709\">bijection between number of partitions of 2n satisfying certain conditions with number of partitions of n</a> (Mathoverflow)"
+    ],
+    "formula": [
+        "a(n) = (A000041(n) + A047993(n))/2.",
+        "a(n) = p(n-1) - p(n-5) + p(n-12) - ... -(-1)^k*p(n-(3*k^2-k)/2) + ..., where p() is A000041(). - _Vladeta Jovovic_, Aug 04 2004",
+        "G.f.: Sum_{n>=1} x^n * Product_{k=1..n} (1 - x^(n+k-1))/(1 - x^k). - _Paul D. Hanna_, Aug 03 2015"
+    ],
+    "example": [
+        "a(20) = p(19) - p(15) + p(8) = 490 - 176 + 22 = 336."
+    ],
+    "maple": [
+        "f:= n -> add((-1)^(k+1)*combinat:-numbpart(n-(3*k^2-k)/2),k=1..floor((1+sqrt(24*n+1))/6)):",
+        "map(f, [$1..100]); # _Robert Israel_, Aug 03 2015"
+    ],
+    "mathematica": [
+        "Table[Count[IntegerPartitions[n], q_ /; First[q] >= Length[q]], {n, 16}]",
+        "(* also *)",
+        "Table[Count[IntegerPartitions[2n],q_/;Last[q]===1 && Max[q-PadRight[Rest[q],Length[q]]]<=1 && Count[First/@Partition[q,2],_?OddQ]==Count[Last/@Partition[q,2],_?OddQ]],{n,16}]",
+        "(* also *)",
+        "Table[Count[IntegerPartitions[n], p_ /; MemberQ[p, Max[Max[p], Length[p]]]], {n, 50}] (* _Clark Kimberling_, Feb 28 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=1); A = sum(m=0,n,x^m*prod(k=1,m,(1-x^(m+k-1))/(1-x^k +x*O(x^n)))); polcoeff(A,n)}",
+        "for(n=1,60,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Aug 03 2015"
+    ],
+    "xref": [
+        "Cf. A063995, A064173.",
+        "Row sums of triangle A105806."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Vladeta Jovovic_, Sep 20 2001",
+    "ext": [
+        "Mathematica programs modified by _Clark Kimberling_, Feb 12 2014"
+    ],
+    "references": 9,
+    "revision": 49,
+    "time": "2015-08-04T03:39:51-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

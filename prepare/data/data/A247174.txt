@@ -1,0 +1,39 @@
+{
+    "number": 247174,
+    "data": "1,3,15,255,65535,2200694,2619705,6372794,40588485,76466985,81591194,118018094,206569605,470542485,525644385,726638834,791937614,971122514,991172805",
+    "name": "Numbers n such that phi(n) = phi(n+1) and simultaneously Product_{d|n} phi(d) = Product_{d|(n+1)} phi(d) where phi(x) = Euler totient function (A000010).",
+    "comment": [
+        "Numbers n such that A000010(n) = A000010(n+1) and simultaneously A029940(n) = A029940(n+1).",
+        "4294967295 is also a term of this sequence.",
+        "Intersection of A001274 and A248795."
+    ],
+    "example": [
+        "15 is in the sequence because phi(15) = phi(16) = 8 and simultaneously Product_{d|15} phi(d) = Product_{d|(15+1)} phi(d) = 64."
+    ],
+    "mathematica": [
+        "a247174[n_Integer] := Module[{a001274, a248795},",
+        "  a001274[m_] := Select[Range[m], EulerPhi[#] == EulerPhi[# + 1] &];",
+        "  a248795[m_] :=",
+        "   Select[Range[m],",
+        "    Product[EulerPhi[i], {i, Divisors[#]}] ==",
+        "      Product[EulerPhi[j], {j, Divisors[# + 1]}] &];",
+        "Intersection[a001274[n], a248795[n]]] (* _Michael De Vlieger_, Dec 01 2014 *)"
+    ],
+    "program": [
+        "(MAGMA) [n: n in [1..100000] |  (&*[EulerPhi(d): d in Divisors(n)]) eq (&*[EulerPhi(d): d in Divisors(n+1)]) and EulerPhi(n) eq EulerPhi(n+1)]",
+        "(MAGMA) [n: n in [A248795(n)] | EulerPhi(n) eq EulerPhi(n+1)]"
+    ],
+    "xref": [
+        "Cf. A000010, A001274, A029940, A248795."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jaroslav Krizek_, Nov 22 2014",
+    "ext": [
+        "a(6)-a(19) using A248795 by _Jaroslav Krizek_, Nov 25 2014"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2014-12-03T23:24:59-05:00",
+    "created": "2014-12-03T23:24:59-05:00"
+}

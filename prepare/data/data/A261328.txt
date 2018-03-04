@@ -1,0 +1,51 @@
+{
+    "number": 261328,
+    "data": "10,640,7290,8954,40960,52728,55566,70434,156250,405000,466560,536250,573056,960089,997920,1176490,2037960,2621440,3374592,3556224,3748745,4379424,4507776,5005000,5314410,6527466,6742450,7778106,8938800,10000000,10214145,12065355",
+    "name": "Larger of pairs (m, n), such that the difference of their squares is a cube and the difference of their cubes is a square.",
+    "comment": [
+        "See A261296 for the smaller of the pairs and for additional comments."
+    ],
+    "reference": [
+        "H. E. Dudeney, 536 Puzzles & Curious Problems, Charles Scribner's Sons, New York, 1967, pp 56, 268, #177"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A261328/b261328.txt\">Table of n, a(n) for n = 1..302</a>",
+        "Gianlino, in reply to Smci, <a href=\"https://answers.yahoo.com/question/index?qid=20110722023859AAsGZxn\">Solution method for \"integers with the difference between their cubes is a square, and v.v.\"</a>, Yahoo! answers, 2011"
+    ],
+    "example": [
+        "(6, 10) is a pair since 10^3 - 6^3 = 784 = 28^2, 10^2 - 6^2 = 64 = 4^3."
+    ],
+    "program": [
+        "(PARI) is(n)=forstep(k=n-1,1,-1,issquare(n^3-k^3)&&ispower(n^2-k^2,3)&&return(k)) \\\\ _M. F. Hasler_, Aug 17 2015",
+        "(Python)",
+        "# generate sequences A261328 and A261296",
+        "from __future__ import division",
+        "from sympy import divisors",
+        "from gmpy2 import is_square",
+        "alist = []",
+        "for i in range(1,10000):",
+        "    c = i**3",
+        "    for d in divisors(c, generator=True):",
+        "        d2 = c//d",
+        "        if d >= d2:",
+        "            m, r = divmod(d+d2,2)",
+        "            if not r:",
+        "                n = m-d2",
+        "                if n > 0 and (m,n) not in alist and is_square(c*m+d2*n**2):",
+        "                    alist.append((m,n))",
+        "A261328_list, A261296_list = zip(*sorted(alist)) # _Chai Wah Wu_, Aug 25 2015"
+    ],
+    "xref": [
+        "Cf. A000290, A000578, A001014, A261296."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Pieter Post_, Aug 15 2015",
+    "ext": [
+        "Added a(6) and more terms added by _Chai Wah Wu_, Aug 17 2015"
+    ],
+    "references": 3,
+    "revision": 23,
+    "time": "2018-01-08T01:58:32-05:00",
+    "created": "2015-08-17T07:45:49-04:00"
+}

@@ -1,0 +1,90 @@
+{
+    "number": 52955,
+    "data": "1,2,3,5,7,11,15,23,31,47,63,95,127,191,255,383,511,767,1023,1535,2047,3071,4095,6143,8191,12287,16383,24575,32767,49151,65535,98303,131071,196607,262143,393215,524287,786431,1048575,1572863,2097151,3145727",
+    "name": "a(2n) = 2*2^n - 1, a(2n+1) = 3*2^n - 1.",
+    "comment": [
+        "a(n) = least k such that A056792(k) = n.",
+        "One quarter of the number of positive integer (n+2) X (n+2) arrays with every 2 X 2 subblock summing to 1. - _R. H. Hardin_, Sep 29 2008",
+        "Number of length n+1 left factors of Dyck paths having no DUU's (here U=(1,1) and D=(1,-1)). Example: a(4)=7 because we have UDUDU, UUDDU, UUDUD, UUUDD, UUUDU, UUUUD, and UUUUU (the paths UDUUD, UDUUU, and UUDUU do not qualify).",
+        "Number of binary palindromes < 2^n (see A006995). - _Hieronymus Fischer_, Feb 03 2012",
+        "Partial sums of A016116 (omitting the initial term). - _Hieronymus Fischer_, Feb 18 2012",
+        "a(n - 1), n > 1, is the number of maximal subsemigroups of the monoid of order-preserving or -reversing partial injective mappings on a set with n elements. - _Wilf A. Wilson_, Jul 21 2017"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A052955/b052955.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "J.-L. Baril, T. Mansour, A. Petrossian, <a href=\"http://jl.baril.u-bourgogne.fr/equival.pdf\">Equivalence classes of permutations modulo excedances</a>, 2014.",
+        "James East, Jitender Kumar, James D. Mitchell, and Wilf A. Wilson <a href=\"https://arxiv.org/abs/1706.04967\">Maximal subsemigroups of finite transformation and partition monoids</a>, arXiv:1706.04967 [math.GR], 2017. [_Wilf A. Wilson_, Jul 21 2017]",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=1026\">Encyclopedia of Combinatorial Structures 1026</a>",
+        "<a href=\"/index/Com#complexity\">Index to sequences related to the complexity of n</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2)."
+    ],
+    "formula": [
+        "a(n) = -1+Sum((1/4)*(3+4*alpha)*alpha^(-1-n), where alpha = RootOf(-1+2*Z^2))",
+        "a(n) = 2^(n/2)(3*sqrt(2)/4+1-(3*sqrt(2)/4-1)(-1)^n)-1. - _Paul Barry_, May 23 2004",
+        "G.f.: (1 + x - x^2)/((1 - x)*(1 - 2*x^2)). a(n) = 2*a(n-2) + 1, n>=2.",
+        "a(n) = 1 + partial sum of A016116(k-1). - _Robert G. Wilson v_, Jun 05 2004",
+        "A132340(a(n)) = A027383(n). - _Reinhard Zumkeller_, Aug 20 2007",
+        "a(n) = A027383(n-1)+1 for n>0. - _Hieronymus Fischer_, Sep 15 2007",
+        "a(n) = A132666(a(n+1)-1). - _Hieronymus Fischer_, Sep 15 2007",
+        "a(n) = A132666(a(n-1))+1 for n>0. - _Hieronymus Fischer_, Sep 15 2007",
+        "A132666(a(n)) = a(n+1)-1. - _Hieronymus Fischer_, Sep 15 2007",
+        "a(n) = A027383(n+1)/2. - _Zerinvary Lajos_, Mar 16 2008",
+        "a(n) = (5-(-1)^n)/2*2^floor(n/2)-1. - _Hieronymus Fischer_, Feb 03 2012",
+        "a(2n+1) = (a(2n) + a(2n+2))/2. Combined with a(n) = 2*a(n-2) + 1, n>=2 and a(0) = 1, this specifies the sequence. - _Richard R. Forberg_, Nov 30 2013",
+        "a(n) = ((5-(-1)^n)/2)*2^((2*n-1+(-1)^n)/4)-1. - _Luce ETIENNE_, Sep 20 2014",
+        "a(0) = 1; a(1) = 2; a(n) = 1 + 2 * a(n-2), n >= 2. - _Daniel Forgues_, Feb 24 2015"
+    ],
+    "maple": [
+        "spec := [S,{S=Prod(Sequence(Prod(Union(Z,Z),Z)),Union(Sequence(Z),Z))},unlabeled ]: seq(combstruct[count ](spec,size=n), n=0..20);",
+        "a[0]:=0:a[1]:=1:for n from 2 to 100 do a[n]:=2*a[n-2]+2 od: seq(a[n]/2, n=2..43); # _Zerinvary Lajos_, Mar 16 2008"
+    ],
+    "mathematica": [
+        "f[n_] := If[EvenQ[n], 2^(n/2 + 1) - 1, 3*2^((n - 1)/2) - 1]; Table[ f[n], {n, 0, 41}] (* _Robert G. Wilson v_, Jun 05 2004 *)",
+        "Clear[a, b, c, m, n]; a[m_] := Table[If[IntegerDigits[n, 2] == Reverse[IntegerDigits[n, 2]], IntegerDigits[n, 2], {0}], {n, 0, 2^m}]; b[m_] := Union[Sort[a[m]]]; c[m_] := Table[FromDigits[b[m][[n]], 2], {n, 1, Length[b[m]]}]; Table[Length[c[m]], {m, 12}] (* _Roger L. Bagula_, Nov 06 2008 *)",
+        "a[0] = 1; a[1] = 2; a[n_] := a[n]= 2 a[n - 2] + 1; Array[a, 42, 0]"
+    ],
+    "program": [
+        "(Perl)# command line argument tells how high to take n",
+        "# Beyond a(38) = 786431 you may need a special code to handle large integers",
+        "# Mark A. Mandel (thnidu aT  g ma(il) doT c0m) 2010-12-29",
+        "  $lim = shift;",
+        "  sub show{};",
+        "$n = $incr = $P = 1;",
+        "show($n, $incr, $P);",
+        "$incr = 1;",
+        "for $n (2..$lim) {",
+        "    $P += $incr;",
+        "    show($n, $P, $incr, $P);",
+        "    $incr *=2 if ($n % 2); # double the increment after an odd n",
+        "}",
+        "sub show {",
+        "    my($n, $P) = @_;",
+        "    printf(\"%4d\\t%16g\\n\", $n, $P);",
+        "}",
+        "(PARI) a(n)=(2+n%2)<<(n\\2)-1 \\\\ _Charles R Greathouse IV_, Jun 19 2011",
+        "(Haskell)",
+        "a052955 n = a052955_list !! n",
+        "a052955_list = 1 : 2 : map ((+ 1) . (* 2)) a052955_list",
+        "-- _Reinhard Zumkeller_, Feb 22 2012"
+    ],
+    "xref": [
+        "Cf. A000225 for even terms, A055010 for odd terms. See also A056792.",
+        "Essentially 1 more than A027383, 2 more than A060482. [Comment corrected by _Klaus Brockhaus_, Aug 09 2009]",
+        "Union of A000225 & A055010.",
+        "For partial sums see A027383.",
+        "Cf. A132666.",
+        "See A016116 for the first differences.",
+        "Cf. A083329."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "ext": [
+        "Formula and more terms from _Henry Bottomley_, May 03 2000",
+        "Additional comments from _Robert G. Wilson v_, Jan 29 2001"
+    ],
+    "references": 32,
+    "revision": 100,
+    "time": "2017-07-22T03:02:51-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

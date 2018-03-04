@@ -1,0 +1,43 @@
+{
+    "number": 218011,
+    "data": "5,7,13,19,31,43,48,55,61,73,74,87,103,106,109,117,139,146,151,159,160,178,181,193,199,202,208,212,225,229,236,241,252,267,268,271,283,285,298,313,349,357,362,386,403,411,421,433,455,463,496,511,519,523,535",
+    "name": "Numbers n for which n\u2019 = x\u2019*y\u2019, where x>0, y>0, n = x + y and n\u2019, x\u2019, y\u2019 are the arithmetic derivatives of n, x, y.",
+    "comment": [
+        "The greatest prime in a twin primes couple is in the sequence. In fact if the twin primes are a and b, with a<b, b can be written as b=a+2. Being a\u2019=b\u2019=2\u2019=1 we have b\u2019=a\u2019*2\u2019 that is 1=1*1."
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A218011/b218011.txt\">Table of n, a(n) for n = 1..250</a>"
+    ],
+    "example": [
+        "n= 612, x=85,  y=527; n\u2019=1056, x\u2019=22, y\u2019=48 and 1056=22*48.",
+        "n= 752, x=361, y=391; n\u2019=1520, x\u2019=38, y\u2019=40 and 1520=38*40.",
+        "n= 779, x=36,  y=743; n\u2019=60,   x\u2019=60, y\u2019=1  and 60=60*1."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A218011:= proc(i)",
+        "local a,b,c,n,p,pfs,q;",
+        "for n from 1 to i do",
+        "for q from 1 to trunc(n/2) do",
+        "  a:=q*add(op(2,p)/op(1,p),p= ifactors(q)[2]);",
+        "  b:=(n-q)*add(op(2,p)/op(1,p),p= ifactors(n-q)[2]);",
+        "  c:=n*add(op(2,p)/op(1,p),p= ifactors(n)[2]);",
+        "  if c=a*b then lprint(n,q,n-q); break; fi;",
+        "od; od;",
+        "end:",
+        "A218011(1000000);"
+    ],
+    "mathematica": [
+        "dn[0] = 0; dn[1] = 0; dn[n_?Negative] := -dn[-n]; dn[n_] := Module[{f = Transpose[FactorInteger[n]]}, If[PrimeQ[n], 1, Plus @@ (n*f[[2]]/f[[1]])]]; f[n_] := Select[Range[n/2], dn[#]*dn[n - #] == dn[n] &]; Select[Range[535], Length[f[#]] > 0 &] (* _T. D. Noe_, Oct 18 2012 *)"
+    ],
+    "xref": [
+        "Cf. A003415, A211223, A211224, A211225, A212662, A212663, A212664."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Oct 18 2012",
+    "references": 1,
+    "revision": 13,
+    "time": "2017-05-14T22:48:55-04:00",
+    "created": "2012-10-18T14:48:50-04:00"
+}

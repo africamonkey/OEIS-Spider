@@ -1,0 +1,98 @@
+{
+    "number": 25487,
+    "data": "1,2,4,6,8,12,16,24,30,32,36,48,60,64,72,96,120,128,144,180,192,210,216,240,256,288,360,384,420,432,480,512,576,720,768,840,864,900,960,1024,1080,1152,1260,1296,1440,1536,1680,1728,1800,1920,2048,2160,2304,2310",
+    "name": "List giving least integer of each prime signature; also products of primorial numbers A002110.",
+    "comment": [
+        "All numbers of the form 2^k1*3^k2*...*p_n^k_n, where k1 >= k2 >= ... >= k_n, sorted.",
+        "A111059 is a subsequence. - _Reinhard Zumkeller_, Jul 05 2010",
+        "The exponents k1, k2, ... can be read off Abramowitz & Stegun p. 831, column labeled \"pi\"."
+    ],
+    "link": [
+        "Will Nicholes and Franklin T. Adams-Watters, <a href=\"/A025487/b025487.txt\">Table of n, a(n) for n = 1..10001</a> (Will Nicholes supplied the first 291 terms.)",
+        "M. Abramowitz and I. A. Stegun, eds., <a href=\"http://apps.nrbook.com/abramowitz_and_stegun/index.html\">Handbook of Mathematical Functions</a>, National Bureau of Standards, Applied Math. Series 55, Tenth Printing, 1972.",
+        "G. H. Hardy and S. Ramanujan, <a href=\"http://www.imsc.res.in/~rao/ramanujan/CamUnivCpapers/Cpaper34/page1.htm\">Asymptotic formulas concerning the distribution of integers of various types</a>, Proc. London Math. Soc, Ser. 2, Vol. 16 (1917), pp. 112-132."
+    ],
+    "formula": [
+        "What can be said about the asymptotic behavior of this sequence? - _Franklin T. Adams-Watters_, Jan 06 2010",
+        "Hardy & Ramanujan prove that there are exp((2 Pi + o(1))/sqrt(3) * sqrt(log x/log log x)) members of this sequence up to x. - _Charles R Greathouse IV_, Dec 05 2012"
+    ],
+    "example": [
+        "The first few terms are 1, 2, 2^2, 2*3, 2^3, 2^2*3, 2^4, 2^3*3, 2*3*5, ..."
+    ],
+    "maple": [
+        "isA025487 := proc(n)",
+        "    local pset,omega ;",
+        "    pset := sort(convert(numtheory[factorset](n),list)) ;",
+        "    omega := nops(pset) ;",
+        "    if op(-1,pset) <> ithprime(omega) then",
+        "        return false;",
+        "    end if;",
+        "    for i from 1 to omega-1 do",
+        "        if padic[ordp](n,ithprime(i)) < padic[ordp](n,ithprime(i+1)) then",
+        "            return false;",
+        "        end if;",
+        "    end do:",
+        "    true ;",
+        "end proc:",
+        "A025487 := proc(n)",
+        "    option remember ;",
+        "    local a;",
+        "    if n = 1 then",
+        "        1 ;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if isA025487(a) then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "seq(A025487(n),n=1..100) ; # _R. J. Mathar_, May 25 2017"
+    ],
+    "mathematica": [
+        "PrimeExponents[n_] := Last /@ FactorInteger[n]; lpe = {}; ln = {1}; Do[pe = Sort@PrimeExponents@n; If[ FreeQ[lpe, pe], AppendTo[lpe, pe]; AppendTo[ln, n]], {n, 2, 2350}]; ln (* _Robert G. Wilson v_, Aug 14 2004 *)"
+    ],
+    "program": [
+        "(PARI) isA025487(n)=my(k=valuation(n,2),t);n>>=k;forprime(p=3,default(primelimit),t=valuation(n,p);if(t>k,return(0),k=t);if(k,n/=p^k,return(n==1))) \\\\ _Charles R Greathouse IV_, Jun 10 2011",
+        "(PARI) factfollow(n)={local(fm, np, n2);",
+        "  fm=factor(n); np=matsize(fm)[1];",
+        "  if(np==0,return([2]));",
+        "  n2=n*nextprime(fm[np,1]+1);",
+        "  if(np==1||fm[np,2]<fm[np-1,2], [n*fm[np,1], n2], [n2])}",
+        "al(n) = {local(r, ms); r=vector(n);",
+        "  ms=[1];",
+        "  for(k=1, n,",
+        "    r[k]=ms[1];",
+        "    ms=vecsort(concat(vector(#ms-1, j, ms[j+1]), factfollow(ms[1]))));",
+        "  r} /* _Franklin T. Adams-Watters_, Dec 01 2011 */",
+        "(Haskell)",
+        "import Data.Set (singleton, fromList, deleteFindMin, union)",
+        "a025487 n = a025487_list !! (n-1)",
+        "a025487_list = 1 : h [b] (singleton b) bs where",
+        "   (_ : b : bs) = a002110_list",
+        "   h cs s xs'@(x:xs)",
+        "     | m <= x    = m : h (m:cs) (s' `union` fromList (map (* m) cs)) xs'",
+        "     | otherwise = x : h (x:cs) (s  `union` fromList (map (* x) (x:cs))) xs",
+        "     where (m, s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Apr 06 2013",
+        "(Sage) def sharp_primorial(n): return sloane.A002110(prime_pi(n))",
+        "def p(n,k): return sharp_primorial(factor(n)[k][0])^factor(n)[k][1];",
+        "N=2310; nmax=2^floor(log(N,2)); sorted([k for k in [prod(p(n,k) for k in range (0,len(factor(n)))) for n in (1..nmax)] if k<=N]) # _Giuseppe Coppoletta_, Jan 26 2015"
+    ],
+    "xref": [
+        "Cf. A001013, A036035, A025488, A051282, A055932, A036041, A061394, A124832.",
+        "Equals range of values taken by A046523.",
+        "Cf. A178799 (first differences), A247451 (squarefree kernel), A146288 (number of divisors)."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,2",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "Offset corrected by _Matthew Vandermast_, Oct 19 2008",
+        "Minor correction by _Charles R Greathouse IV_, Sep 03 2010"
+    ],
+    "references": 273,
+    "revision": 62,
+    "time": "2017-05-25T16:08:30-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

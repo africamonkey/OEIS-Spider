@@ -1,0 +1,48 @@
+{
+    "number": 5191,
+    "id": "M3891",
+    "data": "1,1,5,19,85,381,1751,8135,38165,180325,856945,4091495,19611175,94309099,454805755,2198649549,10651488789,51698642405,251345549849,1223798004815,5966636799745,29125608152345,142330448514875,696235630761115",
+    "name": "Central pentanomial coefficients: largest coefficient of (1 + x + ... + x^4)^n.",
+    "comment": [
+        "Coefficient of x^n in ((1-x^10)/((1-x^5)(1-x^2)(1-x)))^n. - _Michael Somos_, Sep 24 2003",
+        "Note that n divides a(n+1) - a(n). - _T. D. Noe_, Mar 16 2005",
+        "Terms that are not a multiple of 5 have zero density, namely, there are fewer than n^(log(4)/log(5)) such terms among A005191(1..n). In particular, A005191(5k+2) and A005191(5k+4) are multiples of 5 for every k. - _Max Alekseyev_, Apr 25 2005",
+        "Number of n-step 1-D walks ending at the origin with steps of size 0, 1 or 2. - _David Scambler_, Apr 09 2012"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005191/b005191.txt\">Table of n, a(n) for n=0..200</a>",
+        "V. E. Hoggatt, Jr. and M. Bicknell, <a href=\"http://www.fq.math.ca/Scanned/7-4/hoggatt-a.pdf\">Diagonal sums of generalized Pascal triangles</a>, Fib. Quart., 7 (1969), 341-358, 393.",
+        "Lyle E. Muller and Michelle Rudolph-Lilith, <a href=\"http://dx.doi.org/10.1016/j.disc.2015.04.001\">On a link between Dirichlet kernels and central multinomial coefficients</a>, Discrete Mathematics, Volume 338, Issue 9, 6 September 2015, Pages 1567-1572.",
+        "Project Euler, <a href=\"https://projecteuler.net/problem=588\">Quintinomial coefficients, Problem 588</a>",
+        "M. Rudolph-Lilith, L. E. Muller, <a href=\"http://arxiv.org/abs/1403.5942\">On an explicit representation of central (2k+1)-nomial coefficients</a>, arXiv preprint arXiv:1403.5942, 2014"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..floor(2n/5)} binomial(n,k)*binomial(-n, 2n-5k); a(n) = (5^n + Sum_{j=1..2n-1} (sin(5j*Pi/(2n))/sin(j*Pi/(2n)))^n)/(2n) - 2. - _Max Alekseyev_, Mar 04 2005",
+        "Conjecture: 2*n*(2*n-1)*(3*n-4)*a(n) - (3*n-1)*(19*n^2-38*n+18)*a(n-1) - 5*(n-1)*(3*n-4)*(2*n-1)*a(n-2) + 25*(n-1)*(n-2)*(3*n-1)*a(n-3) = 0. [_R. J. Mathar_, Feb 21 2010] Proved using the Almkvist-Zeilberger algorithm in EKHAD. - _Doron Zeilberger_, Apr 02 2013",
+        "G.f.: sqrt((-5*x+2+2*sqrt(5*x^2-6*x+1))/(25*x^3-10*x^2-19*x+4))  - _Mark van Hoeij_, May 06 2013",
+        "a(n) ~ 5^n/(2*sqrt(Pi*n)). - _Vaclav Kotesovec_, Aug 09 2013"
+    ],
+    "mathematica": [
+        "Flatten[{1,Table[Coefficient[Expand[Sum[x^j,{j,0,4}]^n],x^(2*n)],{n,1,20}]}] (* _Vaclav Kotesovec_, Aug 09 2013 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,polcoeff(((1-x^5)/(1-x)+x*O(x^(2*n)))^n,2*n))",
+        "(PARI) a(n)=if(n<0,0,polcoeff(((1-x^10)/((1-x^5)*(1-x^2)*(1-x))+x*O(x^n))^n,n))",
+        "(PARI) a(n) = sum(k=0,(2*n)\\5,binomial(n,k)*binomial(-n,2*n-5*k)) /* _Max Alekseyev_ */",
+        "(PARI) a(n) = round((5^n+sum(j=1,2*n-1,(sin(5*Pi*j/2/n)/sin(Pi*j/2/n))^n))/2/n)-2 /* _Max Alekseyev_ */",
+        "(PARI) a(n) = vecmax(Vec(Pol(vector(5,k,1))^n)); \\\\ _Michel Marcus_, Jan 29 2017"
+    ],
+    "xref": [
+        "Cf. A001405, A002426, A005190, A018901, A025012, A025013, A025014."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "references": 54,
+    "revision": 61,
+    "time": "2017-01-30T12:42:08-05:00",
+    "created": "1991-05-20T03:00:00-04:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 178165,
+    "data": "1,2,8,59,652,9736,186478,4421018,126317785,4260664251,166884941780,7489637988545,380861594219460,21739310882945458,1381634777325000263,97089956842985393297,7497783115765911443879,632884743974716421132084",
+    "name": "Number of unordered collections of distinct nonempty subsets of an n-element set where each element appears in at most 2 subsets.",
+    "comment": [
+        "If each element must appear in exactly 1 subset, then we get the Bell numbers A000110.",
+        "If each element must appear in exactly 2 subsets, then we get A002718."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A178165/b178165.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "Binomial transform of A094574: a(n) = Sum_{k=0..n} C(n,k)*A094574(k)."
+    ],
+    "program": [
+        "(Python)",
+        "def powerSet(k): return [toBinary(n,k) for n in xrange(1,2**k)]",
+        "def courcelle(maxUses, remainingSets, exact=False):",
+        "....if exact and not all(maxUses<=sum(remainingSets)): ans=0",
+        "....elif len(remainingSets)==0: ans=1",
+        "....else:",
+        "........set0=remainingSets[0]",
+        "........if all(set0<=maxUses): ans=courcelle(maxUses-set0,remainingSets[1:],exact=exact)",
+        "........else: ans=0",
+        "........ans+=courcelle(maxUses,remainingSets[1:],exact=exact)",
+        "....return ans",
+        "for i in xrange(10):",
+        "....print i, courcelle(array([2]*i),powerSet(i),exact=False)"
+    ],
+    "xref": [
+        "Cf. A094574, A000110, A002718, A178171, A178173."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Daniel E. Loeb_, Dec 16 2010",
+    "ext": [
+        "Edited and corrected by _Max Alekseyev_, Dec 19 2010"
+    ],
+    "references": 3,
+    "revision": 15,
+    "time": "2016-07-03T00:14:40-04:00",
+    "created": "2010-11-12T14:26:37-05:00"
+}

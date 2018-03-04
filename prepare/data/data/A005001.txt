@@ -1,0 +1,63 @@
+{
+    "number": 5001,
+    "id": "M1194",
+    "data": "0,1,2,4,9,24,76,279,1156,5296,26443,142418,820988,5034585,32679022,223578344,1606536889,12086679036,94951548840,777028354999,6609770560056,58333928795428,533203744952179,5039919483399502,49191925338483848,495150794633289137",
+    "name": "a(0) = 0; for n>0, a(n) = Sum_k={0..n-1} Bell(k), where the Bell numbers Bell(k) are given in A000110.",
+    "comment": [
+        "Counts rhyme schemes.",
+        "Row sums of triangle A137596 starting with offset 1. - _Gary W. Adamson_, Jan 29 2008",
+        "With offset 1 = binomial transform of the Bell numbers, A000110 starting (1, 1, 1, 2, 5, 15, 52, 203,...). - _Gary W. Adamson_, Dec 04 2008",
+        "a(n) is the number of partitions of the set {1,2,...,n} in which n is either a singleton or it is in a block of consecutive integers. Example: a(3)=4 because we have 123, 1-23, 12-3, and 1-2-3. Deleting the blocks containing n=3, we obtain: empty, 1, 12, 1-2, i.e. all the partitions of the sets: empty, {1}, and {1,2}. - _Emeric Deutsch_, May 01 2010"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005001/b005001.txt\">Table of n, a(n) for n=0..100</a>",
+        "J. Riordan, <a href=\"/A005000/a005000.pdf\">Cached copy of paper</a>",
+        "J. Riordan, <a href=\"http://dx.doi.org/10.1111/j.1749-6632.1979.tb32823.x\">A budget of rhyme scheme counts</a>, pp. 455 - 465 of Second International Conference on Combinatorial Mathematics, New York, 1978. Edited by Allan Gewirtz and Louis V. Quintas. Annals New York Academy of Sciences, 319, 1979."
+    ],
+    "formula": [
+        "a(0) = 0; for n >= 0, a(n+1) = 1 + Sum_{j=1..n} (C(n, j)-C(n, j+1))*a(j).",
+        "Sum_{i=1..n} Bell(i) = 1 + C(n, 2) + 2*C(n-3, 1) + 8*C(n-4, 1) + C(n-3, 2) + 22*C(n-5, 1) + 13*C(n-4, 2) + 52*C(n-6, 1) + 74*C(n-5, 2) + 10*C(n-4, 3) + 114*C(n-7, 1) + 314*C(n-6, 2) + 134*C(n-5, 3) + 3*C(n-4, 4) + 240*C(n-8, 1) + 1155*C(n-7, 2) + 1024*C(n-6, 3) + 134*C(n-5, 4) + 494*C(n-9, 1) + ..... . - _Andr\u00e9 F. Labossi\u00e8re_, Feb 11 2005",
+        "a(n) = A000110(n) - A171859(n). [_Emeric Deutsch_, May 01 2010]",
+        "G.f.: x*( 1 + (G(0)+1)*x/(1-x) ) where G(k) = 1 - 2*x*(k+1)/((2*k+1)*(2*x*k+x-1) - x*(2*k+1)*(2*k+3)*(2*x*k+x-1)/(x*(2*k+3) - 2*(k+1)*(2*x*k+2*x-1)/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Dec 20 2012",
+        "G.f.: x*G(0)/(1-x^2) where G(k) = 1 - 2*x*(k+1)/((2*k+1)*(2*x*k-1) - x*(2*k+1)*(2*k+3)*(2*x*k-1)/(x*(2*k+3) - 2*(k+1)*(2*x*k+x-1)/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Dec 22 2012",
+        "G.f.: x*( G(0) - 1 )/(1-x) where G(k) =  1 + (1-x)/(1-x*k)/(1-x/(x+(1-x)/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Jan 21 2013",
+        "G.f.: (G(0)-1)*x/(1-x^2) where G(k) = 1 + 1/(1-k*x)/(1-x/(x+1/G(k+1) );  (continued fraction). - _Sergei N. Gladkovskii_, Feb 06 2013",
+        "G.f.: x/(1-x)/(1-x*Q(0)), where Q(k)= 1 + x/(1 - x + x*(k+1)/(x - 1/Q(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, May 19 2013",
+        "E.g.f. A(x) satisfies: A'(x) = A(x) + exp(exp(x)-1). - _Geoffrey Critzer_, Feb 04 2014",
+        "G.f.: (x/(1 - x)) * Sum_{i>=0} x^i / Product_{j=1..i} (1 - j*x). - _Ilya Gutkovskiy_, Jun 05 2017"
+    ],
+    "maple": [
+        "with(combinat): seq(add(bell(j), j = 0 .. n-1), n = 0 .. 22); # _Emeric Deutsch_, May 01 2010"
+    ],
+    "mathematica": [
+        "nn=20;Range[0,nn]!CoefficientList[Series[Exp[-1](-Exp[Exp[x]]+Exp[1+x]-Exp[x]ExpIntegralEi[1]+Exp[x]ExpIntegralEi[Exp[x]]),{x,0,nn}],x] (* _Geoffrey Critzer_, Feb 04 2014 *)"
+    ],
+    "program": [
+        "(Python)",
+        "# Python 3.2 or higher required.",
+        "from itertools import accumulate",
+        "A005001_list, blist, a, b = [0,1,2], [1], 2, 1",
+        "for _ in range(30):",
+        "....blist = list(accumulate([b]+blist))",
+        "....b = blist[-1]",
+        "....a += b",
+        "....A005001_list.append(a) # _Chai Wah Wu_, Sep 19 2014"
+    ],
+    "xref": [
+        "Partial sums of A000110, partial sums give A029761.",
+        "Equals A024716(n-1) + 1.",
+        "Cf. A102735, A094262, A000110, A008277, A102639, A003422, A000166, A000204, A000045, A000108.",
+        "Cf. A137596.",
+        "Cf. A171859. - _Emeric Deutsch_, May 01 2010"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_.",
+    "references": 18,
+    "revision": 55,
+    "time": "2017-06-05T16:00:17-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

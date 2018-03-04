@@ -1,0 +1,74 @@
+{
+    "number": 212591,
+    "data": "0,1,2,5,8,9,10,21,32,33,34,37,40,41,42,85,128,129,130,133,136,137,138,149,160,161,162,165,168,169,170,341,512,513,514,517,520,521,522,533,544,545,546,549,552,553,554,597,640,641,642,645,648,649,650,661",
+    "name": "a(n) = smallest value of k for which A020986(k) = n.",
+    "comment": [
+        "Brillhart and Morton derive an omega function for the largest values of k. This sequence appears to be given by a similar alpha function."
+    ],
+    "link": [
+        "Michael Day, <a href=\"/A212591/b212591.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "J. Brillhart and P. Morton, <a href=\"http://www.maa.org/programs/maa-awards/writing-awards/a-case-study-in-mathematical-research-the-golay-rudin-shapiro-sequence\">A case study in mathematical research: the Golay-Rudin-Shapiro sequence</a>, Amer. Math. Monthly, 103 (1996) 854-869."
+    ],
+    "formula": [
+        "a(2*n-1) - a(2*n-2) = (2^(2*k+1)+1)/3 and a(2*n) - a(2*n-1) = (2^(2*k+1)+1)/3 with a(0) = a(1) = 0, where n = (2^k)*(2*m-1) for some integers k >= 0 and m > 0."
+    ],
+    "program": [
+        "(PARI)",
+        "alpha(n)={",
+        "if(n<2, return(max(0,n-1)));",
+        "local(nm1=n-1,",
+        "      mi=m=ceil(nm1/2),",
+        "      r=floor(log(m)/log(2)),",
+        "i,fi,alpha=0,a);",
+        "forstep(i=1, 2*r+1, 2,",
+        "    mi/=2;",
+        "    fi=(1+2^i)\\3;",
+        "alpha+=fi*floor(0.5+mi);",
+        "       );",
+        "alpha*=2;",
+        "if(nm1%2,   \\\\ adjust for even n",
+        "   a=factor(2*m)[1,2]-1;",
+        "alpha-= (1+2^(1+2*a))\\3;",
+        "  );",
+        "return(alpha);",
+        "}",
+        "(J)",
+        "NB. J function on a vector",
+        "NB. Beware round-off errors on large arguments",
+        "NB. ok up to ~ 1e8",
+        "alphav =: 3 : 0",
+        "n   =. <: y",
+        "if.+/ ntlo=. n > 0 do.",
+        "n   =. ntlo#n",
+        "m   =. >.-: n",
+        "r   =. <.2^.m",
+        "f   =. <.3%~2+2^2*>:i.>./>:r",
+        "z   =. 0",
+        "mi  =. m",
+        "for_i. i.#f do.",
+        "  z   =. z + (i{f) * <.0.5 + mi =. mi%2",
+        "end.",
+        "nzer=. (+/ @: (0=>./\\)@:|.)\"1 @: #: m",
+        "ntlo #^:_1 z - (2|n) * <.-:nzer{f",
+        "else.",
+        "ntlo",
+        "end.",
+        ")",
+        "NB. eg    alphav 1 3 5 100 2 8 33"
+    ],
+    "xref": [
+        "Cf. A020985, A020991, A020986."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Michael Day_, May 22 2012",
+    "ext": [
+        "Minor edits by _N. J. A. Sloane_, Jun 06 2012",
+        "Formula section modified following _Joerg Arndt_'s comment",
+        "Added comments about round-off in J function"
+    ],
+    "references": 3,
+    "revision": 27,
+    "time": "2015-12-21T13:06:03-05:00",
+    "created": "2012-05-25T20:09:48-04:00"
+}

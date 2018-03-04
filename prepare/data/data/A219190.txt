@@ -1,0 +1,47 @@
+{
+    "number": 219190,
+    "data": "0,4,6,18,22,42,48,76,84,120,130,174,186,238,252,312,328,396,414,490,510,594,616,708,732,832,858,966,994,1110,1140,1264,1296,1428,1462,1602,1638,1786,1824,1980,2020,2184,2226,2398,2442,2622,2668,2856,2904,3100",
+    "name": "Numbers of the form n*(5*n+1), where n = 0,-1,1,-2,2,-3,3,...",
+    "comment": [
+        "Equivalently, numbers m such that 20*m+1 is a square.",
+        "Also, integer values of h*(h+1)/5.",
+        "More generally, for the numbers of the form n*(k*n+1) with n in A001057, we have:",
+        ". generating function (offset 1): x^2*(k-1+2*x+(k-1)*x^2)/((1+x)^2*(1-x)^3);",
+        ". n-th term: b(n) = (2*k*n*(n-1)+(k-2)*(-1)^n*(2*n-1)+k-2)/8;",
+        ". first differences: (n-1)*((-1)^n*(k-2)+k)/2;",
+        ". b(2n+1)-b(2n) = 2*n (independent from k);",
+        ". (4*k)*b(n)+1 = (2*k*n+(k-2)*(-1)^n-k)^2/4."
+    ],
+    "link": [
+        "Bruno Berselli, <a href=\"/A219190/b219190.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2,-1,1)."
+    ],
+    "formula": [
+        "G.f.: 2*x^2*(2 + x + 2*x^2)/((1 + x)^2*(1 - x)^3).",
+        "a(n) = a(-n+1) = (10*n*(n-1) + 3*(-1)^n*(2*n - 1) + 3)/8.",
+        "a(n) = 2*A057569(n) = (1/5)*A008851(n+1)*A047208(n).",
+        "a(1)=0, a(2)=4, a(3)=6, a(4)=18, a(5)=22, a(n)=a(n-1)+2*a(n-2)- 2*a(n-3)- a(n-4)+a (n-5). - _Harvey P. Dale_, Jan 21 2015"
+    ],
+    "mathematica": [
+        "Rest[Flatten[{# (5 # - 1), # (5 # + 1)} & /@ Range[0, 25]]]",
+        "CoefficientList[Series[2 x (2 + x + 2 x^2) / ((1 + x)^2 (1 - x)^3), {x, 0, 50}], x] (* _Vincenzo Librandi_, Aug 18 2013 *)",
+        "LinearRecurrence[{1,2,-2,-1,1},{0,4,6,18,22},50] (* _Harvey P. Dale_, Jan 21 2015 *)"
+    ],
+    "program": [
+        "(MAGMA) k:=5; f:=func<n | n*(k*n+1)>; [0] cat [f(n*m): m in [-1,1], n in [1..25]];",
+        "(MAGMA) I:=[0,4,6,18,22]; [n le 5 select I[n] else Self(n-1)+2*Self(n-2)-2*Self(n-3)-Self(n-4)+Self(n-5): n in [1..50]]; // _Vincenzo Librandi_, Aug 18 2013"
+    ],
+    "xref": [
+        "Subsequence of A011858.",
+        "Cf. A090771: square roots of 20*a(n)+1 (see the first comment).",
+        "Cf. numbers of the form n*(k*n+1) with n in A001057: k=0, A001057; k=1, A110660; k=2, A000217; k=3, A152749; k=4, A074378; k=5, this sequence; k=6, A036498; k=7, A219191; k=8, A154260.",
+        "Cf. similar sequences listed in A219257."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Bruno Berselli_, Nov 14 2012",
+    "references": 5,
+    "revision": 52,
+    "time": "2016-01-07T04:51:43-05:00",
+    "created": "2012-11-15T18:00:30-05:00"
+}

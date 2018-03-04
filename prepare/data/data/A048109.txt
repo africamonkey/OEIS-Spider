@@ -1,0 +1,46 @@
+{
+    "number": 48109,
+    "data": "8,24,27,40,54,56,88,104,120,125,135,136,152,168,184,189,232,248,250,264,270,280,296,297,312,328,343,344,351,375,376,378,408,424,440,456,459,472,488,513,520,536,552,568,584,594,616,621,632,664,680,686,696",
+    "name": "Numbers having equally many squarefree and nonsquarefree divisors; number of unitary divisors of n (A034444) = number of non-unitary divisors of n (A048105).",
+    "comment": [
+        "For these terms the number of divisors should be a special power of two because ud(n)=2^r and nud(n)=ud(n). In particular the exponent of 2 is 1+A001221(n), the number of distinct prime factors + 1. Thus this is a subsequence of A036537 where A000005(A036537(n)) = 2^s; here s=1+A001221(n).",
+        "Let us introduce a function D(n)=sigma_0(n)/(2^(alpha(1)+...+alpha(r)), sigma_0(n) number of divisors of n (A000005), prime factorization of n=p(1)^alpha(1) * ... * p(r)^alpha(r), alpha(1)+...+alpha(r) is sequence (A086436). This function splits the set of positive integers into subsets, according to the value of D(n). Squarefree numbers (A005117) has D(n)=1, other numbers are \"deviated\" from the squarefree ideal and have 0 < D(n) < 1. So for D(n)=1/2 we have A048109, D(n)=3/4 we have A067295. - _Ctibor O. Zizka_, Sep 21 2008",
+        "Integers n such that there are exactly 3 Abelian groups of order n. That is, n such that A000688(n)=3. In other words, in the prime factorization of n there is exactly one prime with exponent of 3 and the others have exponent of 1. - _Geoffrey Critzer_, Jun 09 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A048109/b048109.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "d[ x ] = 2^(r[ x ]+1) or A000005[ x ]=2^(A(001221[ x ])+1)=2*A034444[ x ]."
+    ],
+    "example": [
+        "n = 88 = 2*2*2*11 has 8 divisors, of which 4 are unitary divisors (because of 2 distinct prime factors) and 4 are nonunitary divisors: U={1,88,11,8} and NU = {2,44,4,22}."
+    ],
+    "maple": [
+        "filter:= proc(n) local F;",
+        "  F:= ifactors(n)[2];",
+        "  mul(t[2]+1,t=F) = 2^(1+nops(F))",
+        "end proc;",
+        "select(filter, [$1..1000]); # _Robert Israel_, Jun 09 2015"
+    ],
+    "mathematica": [
+        "Position[Table[FiniteAbelianGroupCount[n], {n, 1, 1000}],3] // Flatten (* _Geoffrey Critzer_, Jun 09 2015 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=select(e->e>1, factor(n)[,2])==[3]~ \\\\ _Charles R Greathouse IV_, Jun 10 2015",
+        "(PARI) isok(n) = sumdiv(n, d, issquarefree(d)) == sumdiv(n, d, !issquarefree(d)); \\\\ _Michel Marcus_, Jun 24 2015"
+    ],
+    "xref": [
+        "Cf. A000005, A001221, A034444, A036537, A048106, A048107."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Labos Elemer_",
+    "ext": [
+        "New name based on comment by _Ivan Neretin_, Jun 19 2015"
+    ],
+    "references": 9,
+    "revision": 30,
+    "time": "2015-07-05T00:48:09-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

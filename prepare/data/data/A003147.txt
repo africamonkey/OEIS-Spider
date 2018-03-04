@@ -1,0 +1,53 @@
+{
+    "number": 3147,
+    "id": "M3811",
+    "data": "5,11,19,31,41,59,61,71,79,109,131,149,179,191,239,241,251,269,271,311,359,379,389,409,419,431,439,449,479,491,499,569,571,599,601,631,641,659,701,719,739,751,821,839,929,971,1019,1039,1051,1091,1129,1171,1181,1201,1259,1301",
+    "name": "Primes with a Fibonacci primitive root.",
+    "comment": [
+        "Primes p with a primitive root g such that g^2=g+1 mod p.",
+        "Not the same as primes with a Fibonacci number as primitive root; cf. A083701. - _Jonathan Sondow_, Feb 17 2013",
+        "For all except the initial term 5, these are numbers such that the Pisano period equals 1 less than the Pisano number, i.e. where A001175(n) = n-1. - _Matthew Goers_, Sep 20 2013",
+        "As shown in the paper by Brison, these are also the primes p such that there is a Fibonacci-type sequence (mod p) that begins with (1,b) and encounters all numbers less than p in the first p-1 iterations (for some b). - _T. D. Noe_, Feb 26 2014"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe and Charles R Greathouse IV, <a href=\"/A003147/b003147.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from Noe)",
+        "Owen J. Brison, <a href=\"http://www.fq.math.ca/Scanned/30-4/brison.pdf\">Complete Fibonacci sequences in finite fields</a>, Fibonacci Quarterly, 30 (1992), pp. 295-304.",
+        "Alexandru Gica, <a href=\"http://www.fq.math.ca/Papers1/46_47-1/Gica_11-08.pdf\">Quadratic Residues in Fibonacci Sequences</a>, Fibonacci Quart. 46/47 (2008/2009), no. 1, 68-72. See Theorem 5.1.",
+        "D. Shanks, <a href=\"http://www.fq.math.ca/Scanned/10-2/shanks-a.pdf\">Fibonacci primitive roots</a>, <a href=\"http://www.fq.math.ca/Scanned/10-2/shanks-b.pdf\">end of article</a>, Fib. Quart., 10 (1972), 163-168, 181.",
+        "<a href=\"/index/Pri#primes_root\">Index entries for primes by primitive root</a>"
+    ],
+    "example": [
+        "3 is a primitive root mod 5, and 3^2 = 3 + 1 mod 5, so 5 is a member. - _Jonathan Sondow_, Feb 17 2013"
+    ],
+    "maple": [
+        "filter:=proc(n) local g,r;",
+        "if not isprime(n) then return false fi;",
+        "r:= [msolve(g^2 -g - 1, n)][1];",
+        "numtheory:-order(rhs(op(r)),n) = n-1",
+        "end proc:",
+        "select(filter, [5,seq(seq(10*i+j,j=[1,9]),i=1..1000)]); # _Robert Israel_, May 22 2015"
+    ],
+    "mathematica": [
+        "okQ[p_] := AnyTrue[PrimitiveRootList[p], Mod[#^2, p] == Mod[#+1, p]&]; Select[Prime[Range[300]], okQ] (* _Jean-Fran\u00e7ois Alcover_, Jan 04 2016 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=if(kronecker(5,n)<1||!isprime(n), return(n==5)); my(s=sqrt(Mod(5,n))); znorder((1+s)/2)==n-1 || znorder((1-s)/2)==n-1 \\\\ _Charles R Greathouse IV_, May 22 2015"
+    ],
+    "xref": [
+        "Subsequence of A038872. Cf. A001175"
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _David W. Wilson_.",
+        "Cross-reference from _Charles R Greathouse IV_, Nov 05 2009"
+    ],
+    "references": 7,
+    "revision": 62,
+    "time": "2016-03-01T17:08:59-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

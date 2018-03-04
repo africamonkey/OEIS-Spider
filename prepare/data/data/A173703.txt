@@ -1,0 +1,56 @@
+{
+    "number": 173703,
+    "data": "561,1105,1729,2465,6601,8481,12801,15841,16705,19345,22321,30889,41041,46657,50881,52633,71905,75361,88561,93961,115921,126673,162401,172081,193249,247105,334153,340561,378561,449065,460801,574561,656601,658801,670033",
+    "name": "Composite numbers n with the property that phi(n) divides (n-1)^2.",
+    "comment": [
+        "All terms are odd because if n is even, (n-1)^2 is odd and phi(n) is even for n > 2. - _Donovan Johnson_, Sep 08 2013"
+    ],
+    "link": [
+        "Joerg Arndt and Donovan Johnson, <a href=\"/A173703/b173703.txt\">Table of n, a(n) for n = 1..2000</a> (first 327 terms from Joerg Arndt)",
+        "Jos\u00e9 Mar\u00eda Grau and Antonio M. Oller-Marc\u00e9n, <a href=\"http://arxiv.org/abs/1012.2337\">On k-Lehmer numbers</a>, Integers, 12(2012), #A37",
+        "Nathan McNew, <a href=\"http://arxiv.org/abs/1210.2001\">Radically weakening the Lehmer and Carmichael conditions</a> (2012)",
+        "Romeo Me\u0161trovi\u0107, <a href=\"http://arxiv.org/abs/1305.1867\">Generalizations of Carmichael numbers I,</a> arXiv:1305.1867v1 [math.NT], May 4, 2013."
+    ],
+    "example": [
+        "a(1) = 561 is in the sequence because 560^2 = phi(561)*980 = 320*980 = 313600."
+    ],
+    "maple": [
+        "isA173703 := proc(n)",
+        "    n <> 1 and not isprime(n) and (modp( (n-1)^2, numtheory[phi](n)) = 0 );",
+        "end proc:",
+        "for n from 1 to 10000 do",
+        "    if isA173703(n) then",
+        "        printf(\"%d,\\n\",n);",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Nov 06 2017"
+    ],
+    "mathematica": [
+        "Union[Table[If[PrimeQ[n] === False && IntegerQ[(n-1)^2/EulerPhi[n]], n], {n, 3, 100000}]]",
+        "Select[Range[700000],CompositeQ[#]&&Divisible[(#-1)^2,EulerPhi[#]]&] (* _Harvey P. Dale_, Nov 29 2014 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=10^9;",
+        "default(primelimit,N);",
+        "ct = 0;",
+        "{ for (n=4, N,",
+        "    if ( ! isprime(n),",
+        "        if ( ( (n-1)^2 % eulerphi(n) ) == 0,",
+        "            ct += 1;",
+        "            print(ct,\" \",n);",
+        "        );",
+        "    );",
+        "); }",
+        "/* _Joerg Arndt_, Jun 23 2012 */"
+    ],
+    "xref": [
+        "Cf. A000010, A207080."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jos\u00e9 Mar\u00eda Grau Ribas_, Nov 25 2010",
+    "references": 6,
+    "revision": 41,
+    "time": "2017-11-06T16:05:38-05:00",
+    "created": "2010-11-12T14:22:58-05:00"
+}

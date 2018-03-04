@@ -1,0 +1,46 @@
+{
+    "number": 253951,
+    "data": "0,1,5,9,20,23,42,52,69,77,113,119,165,177,190,214,279,291,366,379,399,422,517,533,599,625,679,701,829,846,986,1035,1069,1105,1137,1164,1339,1380,1417,1449,1646,1674,1883,1918,1955,2008,2239,2274,2420,2462,2515,2559,2827,2874,2929",
+    "name": "A partial double sum of integers: a(n) = Sum_{x=1..n} Sum_{y=1..n} T(x,y), where T is the matrix product: T = A051731*A127093*Transpose(A054524) and T(n,1)=0 (* stands for matrix multiplication).",
+    "comment": [
+        "a(n) ~ log(A003418(n))*n, based on the comment by _Hans Havermann_ in A048272 referring to an argument by Gareth McCaughan.",
+        "The exact relation is: lim_{n->Infinity} log(A003418(k))*n = Sum_{x=1..n} Sum_{y=1..k} T(x,y), where T is the matrix product: T = A051731*A127093*Transpose(A054524) and T(n,1)=0.",
+        "Compare a(n) to round(log(A003418)*n)= 0, 1, 5, 10, 20, 25, 42, 54, 70, 78,..."
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A253951/b253951.txt\">Table of n, a(n) for n = 1..1002</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{x=1..n} Sum_{y=1..n} T(x,y), where T is the matrix product: T=A051731*A127093*Transpose(A054524) and T(n,1)=0. (* stands for matrix multiplication)"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "N:= 200:",
+        "A051731:= Matrix(N,N,(n,k) -> `if`(n mod k = 0, 1, 0),shape=triangular[lower]):",
+        "A127093:= Matrix(N,N,(n,k) -> `if`(n mod k = 0, k, 0), shape=triangular[lower]):",
+        "A054524T:= Matrix(N,N,(k,n) -> `if`(n mod k = 0, numtheory:-mobius(k),0), shape=triangular[upper]):",
+        "T:= A051731 . A127093 . A054524T:",
+        "a[1]:= 0:",
+        "for n from 2 to N do",
+        "  a[n]:= a[n-1] + add(T[i,n],i=1..n) + add(T[n,j],j=2..n-1)",
+        "od:",
+        "seq(a[n],n=1..N); # _Robert Israel_, Jan 20 2015"
+    ],
+    "mathematica": [
+        "nn = 55;",
+        "Z = Table[ If[ Mod[n, k] == 0, 1, 0], {n, nn}, {k, nn}];",
+        "A = Table[ If[ Mod[n, k] == 0, k, 0], {n, nn}, {k, nn}];",
+        "B = Table[ If[ Mod[n, k] == 0, MoebiusMu[k], 0], {n, nn}, {k, nn}];",
+        "MatrixForm[T = Z.A.Transpose[B]];",
+        "T[[All, 1]] = 0;",
+        "a = Table[ Total[ T[[1 ;; n, 1 ;; n]], 2], {n, nn}]",
+        "(* shows a graph *) Show[ ListLinePlot[a], ListLinePlot[ Accumulate[ MangoldtLambda[ Range[ nn]]]]]"
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Mats Granvik_, Jan 20 2015",
+    "references": 1,
+    "revision": 35,
+    "time": "2015-03-20T21:15:26-04:00",
+    "created": "2015-03-20T21:15:26-04:00"
+}

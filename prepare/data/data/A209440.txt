@@ -1,0 +1,35 @@
+{
+    "number": 209440,
+    "data": "1,1,4,30,340,5235,102756,2464898,70120020,2313120225,86962820000,3674969314090,172615622432040,8928295918586815,504561763088722500,30946605756915149850,2048137516834986743700,145535818715694311408181,11054204297079333714850260",
+    "name": "G.f.: 1 = Sum_{n>=0} a(n)*x^n * (1-x)^((n+1)^2).",
+    "comment": [
+        "Compare to a g.f. of the Catalan numbers: 1 = Sum_{n>=0} A000108(n)*x^n*(1-x)^(n+1)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A209440/b209440.txt\">Table of n, a(n) for n = 0..350</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n-1} (-1)^(n+1-k) * a(k) * binomial((k+1)^2,n-k) for n>=1, with a(0)=1."
+    ],
+    "example": [
+        "G.f.: 1 = 1*(1-x) + 1*x*(1-x)^4 + 4*x^2*(1-x)^9 + 30*x^3*(1-x)^16 + 340*x^4*(1-x)^25 +..."
+    ],
+    "mathematica": [
+        "a[0] := 1; a[n_] := a[n] = Sum[(-1)^(n + 1 - k)*a[k]*Binomial[(k + 1)^2, n - k], {k, 0, n - 1}]; Table[a[n], {n,0,50}] (* _G. C. Greubel_, Jan 02 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0, 1, -polcoeff(sum(m=0, n-1, a(m)*x^m*(1-x+x*O(x^n))^((m+1)^2)), n))}",
+        "(PARI) {a(n)=if(n==0,1,sum(k=0,n-1,(-1)^(n+1-k)*a(k)*binomial((k+1)^2,n-k)))}",
+        "for(n=0,20,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A107878, A180716."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 07 2012",
+    "references": 3,
+    "revision": 10,
+    "time": "2018-01-03T15:54:52-05:00",
+    "created": "2012-04-07T22:06:34-04:00"
+}

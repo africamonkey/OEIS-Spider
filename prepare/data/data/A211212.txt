@@ -1,0 +1,44 @@
+{
+    "number": 211212,
+    "data": "1,1,69,33661,60376809,288294050521,3019098162602349,60921822444067346581,2159058013333667522020689,125339574046311949415000577841,11289082167259099068433198467575829,1510335441937894173173702826484473600301",
+    "name": "4-alternating permutations of length 4n.",
+    "comment": [
+        "a(n) = A181985(4,n)."
+    ],
+    "link": [
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>"
+    ],
+    "maple": [
+        "A211212 := proc(n) local E, dim, i, k; dim := 4*(n-1);",
+        "E := array(0..dim, 0..dim); E[0, 0] := 1;",
+        "for i from 1 to dim do",
+        "   if i mod 4 = 0 then E[i, 0] := 0 ;",
+        "      for k from i-1 by -1 to 0 do E[k, i-k] := E[k+1, i-k-1] + E[k, i-k-1] od;",
+        "   else E[0, i] := 0;",
+        "      for k from 1 by 1 to i do E[k, i-k] := E[k-1, i-k+1] + E[k-1, i-k] od;",
+        "   fi od;",
+        "E[0, dim] end:",
+        "seq(A211212(i), i = 1..12);",
+        "A211212_list := proc(size) local E, S;",
+        "E := 2*exp(x*z)/(cosh(z)+cos(z));",
+        "S := z -> series(E, z, 4*(size+1));",
+        "seq((-1)^n*(4*n)!*subs(x=0, coeff(S(z), z, 4*n)), n=0..size-1) end:",
+        "A211212_list(12); # _Peter Luschny_, Jun 06 2016"
+    ],
+    "program": [
+        "(Sage)",
+        "# Function A(m, n) defined in A181936.",
+        "A211212 = lambda n: A(4,4*n)*(-1)^n",
+        "print [A211212(n) for n in (0..11)] # _Peter Luschny_, Jan 24 2017"
+    ],
+    "xref": [
+        "Cf. A000364, A002115, A181985."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, Apr 04 2012",
+    "references": 6,
+    "revision": 11,
+    "time": "2017-01-24T14:59:22-05:00",
+    "created": "2012-04-07T13:55:12-04:00"
+}

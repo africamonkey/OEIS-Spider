@@ -1,0 +1,41 @@
+{
+    "number": 134157,
+    "data": "1,1,1,2,3,4,6,8,10,14,18,23,30,38,48,61,76,94,117,144,176,216,262,317,384,462,554,664,792,942,1120,1326,1566,1848,2174,2552,2992,3499,4084,4762,5540,6434,7464,8642,9991,11538,13302,15314,17612,20225,23196",
+    "name": "Number of partitions of n into parts that are odd or == +- 4 mod 10.",
+    "comment": [
+        "Generating function arises naturally in Rodney Baxter's solution of the Hard Hexagon Model according to George Andrews.",
+        "Ramanujan theta functions: f(q) (see A121373), phi(q) (A000122), psi(q) (A010054), chi(q) (A000700)."
+    ],
+    "reference": [
+        "G. E. Andrews, q-series, CBMS Regional Conference Series in Mathematics, 66, Amer. Math. Soc. 1986, see p. 7, Equ. (1.4). MR0858826 (88b:11063)"
+    ],
+    "link": [
+        "M. Somos, <a href=\"http://somos.crg4.com/multiq.html\">Introduction to Ramanujan theta functions</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RamanujanThetaFunctions.html\">Ramanujan Theta Functions</a>"
+    ],
+    "formula": [
+        "Expansion of f(-x^2, -x^8) / f(-x, -x^2) in powers of x where f(, ) is Ramanujan's general theta function.",
+        "Euler transform of period 10 sequence [ 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, ...].",
+        "G.f.: ( Sum_{k>=0} x^(2*(k^2+k)) / ((1 - x^2) * (1 - x^4) * ... * (1 - x^(2*k))) ) / Product_{k>0} 1 - x^(2*k-1).",
+        "G.f.: Sum_{k>=0} x^(k*(3*k+3)/2) * (1 + x) * (1 + x^2) * ... * (1 + x^(2*k)) / ( (1 - x) * (1 - x^2) * ... * (1 - x^(2*k+1)) )."
+    ],
+    "example": [
+        "G.f. = 1 + x + x^2 + 2*x^3 + 3*x^4 + 4*x^5 + 6*x^6 + 8*x^7 + 10*x^8 + 14*x^9 + ...",
+        "G.f. = q^49 + q^169 + q^289 + 2*q^409 + 3*q^529 + 4*q^649 + 6*q^769 + 8*q^889 + ..."
+    ],
+    "mathematica": [
+        "a[ n_] := SeriesCoefficient[ QPochhammer[ x^2, x^10] QPochhammer[ x^8, x^10] QPochhammer[ x^10] / QPochhammer[ x], {x, 0, n}]; (* _Michael Somos_, Oct 26 2015 *)",
+        "a[ n_] := SeriesCoefficient[ Product[ (1 - x^k)^-{ 1, 0, 1, 1, 1, 1, 1, 0, 1, 0}[[Mod[k, 10, 1]]], {k, n}], {x, 0, n}]; (* _Michael Somos_, Oct 26 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(t); if( n<0, 0, t = 1 / (1 - x) + x * O(x^n); polcoeff( sum(k=1, (sqrtint(24*n + 1) - 1)\\6, t = t * x^(3*k) / ((1 - x^k) * (1 - x^(2*k + 1))) + x * O(x^n), t), n))};",
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( 1 / prod( k=1, n, 1 - [ 0, 1, 0, 1, 1, 1, 1, 1, 0, 1][k%10 + 1] * x^k, 1 + x * O(x^n)), n))};"
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Michael Somos_, Oct 10 2007",
+    "references": 0,
+    "revision": 4,
+    "time": "2015-10-26T14:45:32-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

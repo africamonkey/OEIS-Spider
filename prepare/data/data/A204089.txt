@@ -1,0 +1,89 @@
+{
+    "number": 204089,
+    "data": "1,1,4,14,48,164,560,1912,6528,22288,76096,259808,887040,3028544,10340096,35303296,120532992,411525376,1405035520,4797091328,16378294272,55918994432,190919389184,651839567872,2225519493120,7598398836736,25942556360704,88573427769344",
+    "name": "The number of 1 by n Haunted Mirror Maze puzzles with a unique solution ending with a mirror, where mirror orientation is fixed.",
+    "comment": [
+        "Apart from a leading 1, the same as A007070. - _R. J. Mathar_, Jan 16 2012",
+        "Since the uniqueness of a solution is unaffected by the orientation of the mirrors in this 1 by n case, we assume mirror orientation is fixed for this sequence.",
+        "Dropping the requirement that the board end with a mirror gives A204090. Allowing for mirror orientation gives A204091. Allowing for orientation and dropping the requirement gives A204092."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A204089/b204089.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "David Millar, <a href=\"http://thegriddle.net/tags/haunted\">Haunted Puzzles</a>, The Griddle",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-2)."
+    ],
+    "formula": [
+        "G.f.: (1-x)*(1-2*x)/(1-4*x+2*x^2).",
+        "a(n) = Sum_{i=0..n-1} a(i) * (2^(n-i)-1), with a(0)=1.",
+        "a(n) = 4*a(n-1) - 2*a(n-2), a(1)=1, a(2)=4.",
+        "G.f.: (x-1)*(2*x-1)/(1 - 4*x + 2*x^2) = 1/(1 + U(0)) where U(k)= 1 - 2^k/(1 - x/(x - 2^k/U(k+1) )); (continued fraction 3rd kind, 3-step). - _Sergei N. Gladkovskii_, Dec 05 2012",
+        "a(n) = ((-(2-sqrt(2))^n+(2+sqrt(2))^n))/(2*sqrt(2)). - _Colin Barker_, Dec 06 2015"
+    ],
+    "example": [
+        "For M(3) we would have the following possibilities:",
+        "('Z', 'Z', '/')",
+        "('Z', 'G', '/')",
+        "('Z', '/', '/')",
+        "('V', 'V', '/')",
+        "('V', 'G', '/')",
+        "('V', '/', '/')",
+        "('G', 'Z', '/')",
+        "('G', 'V', '/')",
+        "('G', 'G', '/')",
+        "('G', '/', '/')",
+        "('/', 'Z', '/')",
+        "('/', 'V', '/')",
+        "('/', 'G', '/')",
+        "('/', '/', '/')"
+    ],
+    "mathematica": [
+        "Join[{1}, LinearRecurrence[{4, -2}, {1, 4}, 25]]"
+    ],
+    "program": [
+        "(Python)",
+        "def a(n, d={0:1,1:4}):",
+        ".if n in d:",
+        "..return d[n]",
+        ".d[n]=4*a(n-1) - 2*a(n-2)",
+        ".return d[n]",
+        "(Python)",
+        "#Produces a(n) through enumeration and also displays boards:",
+        "def Mprint(n):",
+        ".print('The following generate boards with a unique solution')",
+        ".s=0",
+        ".for x in product(['Z', 'V', 'G', '/'], repeat=n):",
+        "..if x[-1]=='/':",
+        "...#Splitting x up into a list pieces",
+        "...y=list(x)",
+        "...z=list()",
+        "...while y:",
+        "....#print(y)",
+        "....if '/' in y:",
+        ".....if y[0] != '/': #Don't need to add blank pieces to z",
+        "......z.append(y[:y.index('/')])",
+        ".....y=y[y.index('/')+1:]",
+        "....else:",
+        ".....z.append(y)",
+        ".....y=[]",
+        "...#For each element in the list checking for Z&V together",
+        "...goodword=True",
+        "...for w in z:",
+        "....if 'Z' in w and 'V' in w:",
+        ".....goodword=False",
+        "...if goodword:",
+        "....s+=1",
+        "....print(x)",
+        ".return s",
+        "(PARI) Vec((1-x)*(1-2*x)/(1-4*x+2*x^2) + O(x^30)) \\\\ _Michel Marcus_, Dec 06 2015"
+    ],
+    "xref": [
+        "Cf. A007070, A204090, A204091, A204092."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_David Nacin_, Jan 10 2012",
+    "references": 7,
+    "revision": 45,
+    "time": "2015-12-07T01:41:41-05:00",
+    "created": "2012-01-11T15:55:00-05:00"
+}

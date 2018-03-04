@@ -1,0 +1,55 @@
+{
+    "number": 200143,
+    "data": "5,7,11,13,23,47,61,83,131,191,211,223,241,317,331,397,467,479,491,503,509,563,577,613,727,743,757,829,887,907,941,947,997,1009,1021,1039,1069,1087,1097,1109,1223,1229,1237,1381,1399,1423,1447,1523,1543,1549",
+    "name": "Nodes of degree 1 in graphs of XOR connected primes in successive intervals [2^i+1,2^(i+1)-1], i>=1.",
+    "comment": [
+        "The number used to produce the XOR couple is 2^i-2, with i sharing the index value of the initial interval and decremented in halved intervals down to 2."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A200143/b200143.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "In the interval [17,31], i=4, the XOR couple number is 2^4-2=14. For half intervals it is 2^3-2 = 6, and the final application would be 2^2-2 = 2. All of the pairings can be represented as:",
+        "|-------XOR 14-------|",
+        "|  |--------------|  |",
+        "|  |  |--------|  |  |",
+        "|  |  |  |--|  |  |  |",
+        "17 19 21 23 25 27 29 31",
+        "|-XOR  6-|  |-XOR  6-|",
+        "|  |--|  |  |  |--|  |",
+        "17 19 21 23 25 27 29 31",
+        "XOR   XOR   XOR   XOR",
+        "|2-|  |2-|  |2-|  |2-|",
+        "17 19 21 23 25 27 29 31",
+        "The prime XOR couples are (17,31), (19,29), (17,23), (17,19), (29,31) which produces the graph:",
+        "  17 19 23 29 31",
+        "17 0  1  1  0  1             19",
+        "19 1  0  0  1  0           /    \\",
+        "23 1  0  0  0  0   or  23~17~31~29",
+        "29 0  1  0  0  1",
+        "31 1  0  0  1  0",
+        "Therefore 23 is the only node of degree 1 in the interval."
+    ],
+    "maple": [
+        "q:= (l, p, r)-> `if`(r-l=2, 0, `if`(isprime(l+r-p), 1, 0)+",
+        "                `if`((l+r)/2>p, q(l, p, (l+r)/2), q((l+r)/2, p, r))):",
+        "a:= proc(n) local p, l;",
+        "      p:= `if`(n=1, 1, a(n-1));",
+        "      do p:= nextprime(p);",
+        "         l:= 2^ilog2(p);",
+        "         if q(l, p, l+l)=1 then break fi",
+        "      od; a(n):=p",
+        "    end:",
+        "seq(a(n), n=1..60);  # _Alois P. Heinz_, Nov 15 2011"
+    ],
+    "xref": [
+        "Cf. A199824."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Brad Clardy_, Nov 14 2011",
+    "references": 2,
+    "revision": 23,
+    "time": "2014-11-14T09:38:07-05:00",
+    "created": "2011-11-16T15:52:09-05:00"
+}

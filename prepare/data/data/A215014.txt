@@ -1,0 +1,52 @@
+{
+    "number": 215014,
+    "data": "0,1,2,3,4,5,6,7,8,9,10,12,21,23,32,34,43,45,54,56,65,67,76,78,87,89,98,102,120,123,132,201,210,213,231,234,243,312,321,324,342,345,354,423,432,435,453,456,465,534,543,546,564,567,576,645,654,657,675,678,687,756,765,768,786,789,798,867",
+    "name": "Numbers where any two consecutive decimal digits differ by 1 after arranging the digits in decreasing order.",
+    "comment": [
+        "a(4091131) = 9876543210 is the last term.",
+        "Numbers n such that A004186(n) is a term of A033075. - _Felix Fr\u00f6hlich_, Dec 26 2017",
+        "Also 0 together with positive integers having k distinct digits and the difference between the largest and the smallest digit equal to k-1. - _David A. Corneth_, Dec 26 2017"
+    ],
+    "link": [
+        "Ely Golden, <a href=\"/A215014/b215014.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "If zero is excluded, the number of terms with k digits, 1 <= k <= 10, is (11-k)*k! - (k-1)!. - _Franklin T. Adams-Watters_, Aug 01 2012"
+    ],
+    "mathematica": [
+        "lst = {}; Do[If[Times @@ Differences@Sort@IntegerDigits[n] == 1, AppendTo[lst, n]], {n, 0, 675}]; lst (* _Arkadiusz Wesolowski_, Aug 01 2012 *)",
+        "Join[Range[0,9],Select[Range[1000],Union[Differences[Sort[ IntegerDigits[ #]]]] == {1}&]] (* _Harvey P. Dale_, Jan 14 2015 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(v=vecsort(eval(Vec(Str(n)))));for(i=2,#v,if(v[i]!=1+v[i-1],return(0)));1",
+        "(PARI) is(n) = if(!n, return(1)); my(d = digits(n), v = vecsort(d,,8)); #d == #v && v[#v] - v[1] == #v - 1",
+        "(Python)",
+        "# _Ely Golden_, Dec 26 2017",
+        "def consecutive(li):",
+        "  for i in range(len(li)-1):",
+        "    if(li[i+1]!=1+li[i]): return False",
+        "  return True",
+        "def sorted_digits(n):",
+        "  lst=[]",
+        "  while(n>0):",
+        "    lst+=[n%10] ; n//=10",
+        "  lst.sort() ; return lst",
+        "j=0",
+        "for i in range(1,10001):",
+        "  while(not consecutive(sorted_digits(j))): j+=1",
+        "  print(str(i)+\" \"+str(j)) ; j+=1"
+    ],
+    "xref": [
+        "Cf. A004186, A033075."
+    ],
+    "keyword": "nonn,base,fini",
+    "offset": "1,3",
+    "author": "_Tanya Khovanova_ and _Charles R Greathouse IV_, Jul 31 2012",
+    "ext": [
+        "Name edited by _Felix Fr\u00f6hlich_, Dec 26 2017"
+    ],
+    "references": 4,
+    "revision": 40,
+    "time": "2017-12-26T17:38:15-05:00",
+    "created": "2012-08-01T15:12:30-04:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 257969,
+    "data": "1,10,100,1000,7972,10000,53941,79720,100000,134242,539410,698614,797200,1000000,1342420,5394100,6986140,7525615,7972000,9000864,10000000,10057054,13424200,15366307,17513566,20602674,23280211,24716905,25274655,25665559,32083981,34326702,34446204,34534816",
+    "name": "Numbers n such that the sum of the digits (sod) of n, n^2, n^3, ..., n^9 come in arithmetical order, sod(n^(k+1))-sod(n^k)=f for k=1 to 8.",
+    "comment": [
+        "All numbers 10^k are members of this sequence.",
+        "Once a number is member of this sequence, every decuple is also a member.",
+        "Number of terms <10^k: 1, 2, 3, 5, 8, 13, 20, 62.."
+    ],
+    "formula": [
+        "sod(n^(k+1))-sod(n^k)=f for k=1 to 8."
+    ],
+    "example": [
+        "7972 is in the sequence, because the difference between the subsequent items is 15.",
+        "sod(7972) = 25",
+        "sod(7972^2) = 40",
+        "sod(7972^3) = 55",
+        "sod(7972^4) = 70",
+        "sod(7972^5) = 85",
+        "sod(7972^6) = 100",
+        "sod(7972^7) = 115",
+        "sod(7972^8) = 130",
+        "sod(7972^9) = 145",
+        "sod(7972^10) = 178, where the increment is no longer 15.",
+        "But there are seven numbers below 10^9 with a longer sequence, 134242, 23280211, 40809168, 46485637, 59716223, 66413917, 97134912 where sod(n^(k+1))-sod(n^k)=f for k=1 to 9.",
+        "sod(134242) = 16",
+        "sod(134242^2) = 40",
+        "sod(134242^3) = 64",
+        "sod(134242^4) = 88",
+        "sod(134242^5) = 112",
+        "sod(134242^6) = 136",
+        "sod(134242^7) = 160",
+        "sod(134242^8) = 184",
+        "sod(134242^9) = 208",
+        "sod(134242^10) = 232",
+        "sod(134242^11) = 283, where the increment is no longer 24."
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{g}, g[x_] := Power[x, #] & /@ Range@ 9; Length@ DeleteDuplicates@ Differences[Total[IntegerDigits@ #] & /@ g@ n] == 1]; Select[Range@ 1000000, fQ] (* _Michael De Vlieger_, Jun 12 2015 *)",
+        "Select[Range[35*10^6],Length[Union[Differences[Total/@IntegerDigits[ #^Range[9]]]]] ==1&] (* _Harvey P. Dale_, Aug 23 2017 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {my(osod = sumdigits(n^2)); my(f = osod - sumdigits(n)); for (k=3, 9, my(nsod = sumdigits(n^k)); if (nsod - osod != f, return (0)); osod = nsod;); return (1);} \\\\ _Michel Marcus_, May 28 2015"
+    ],
+    "xref": [
+        "Cf. A061209, A115518, A257784, A258722."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Pieter Post_, May 15 2015",
+    "ext": [
+        "Corrected and extended by _Harvey P. Dale_, Aug 23 2017"
+    ],
+    "references": 0,
+    "revision": 28,
+    "time": "2017-08-23T17:22:47-04:00",
+    "created": "2015-06-23T07:37:26-04:00"
+}

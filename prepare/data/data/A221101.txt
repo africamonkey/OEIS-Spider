@@ -1,0 +1,30 @@
+{
+    "number": 221101,
+    "data": "1,1,2,12,144,3160,118380,7174188,692356896,104696597808,24680489921280,9010186432576560,5073501307520289600,4385657278007399474496,5797249519065509217375936,11674185903250032386477342880,35692663320428574506107140979200",
+    "name": "E.g.f. satisfies: A(x) = Sum_{n>=0} log(1 + x*A(n*x))^n/n!.",
+    "formula": [
+        " E.g.f. satisfies: A(x) = Sum_{n>=0} x^n * Sum_{k=0..n} Stirling1(n,k) * A(k*x)^n/n!."
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 2*x^2/2! + 12*x^3/3! + 144*x^4/4! + 3160*x^5/5! +...",
+        "where",
+        "A(x) = 1 + log(1 + x*A(x)) + log(1 + x*A(2*x))^2/2! + log(1 + x*A(3*x))^3/3! + log(1 + x*A(4*x))^4/4! +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=sum(m=0, n, log(1+x*subst(A,x,m*x+x*O(x^n)))^m/m!)); n!*polcoeff(A, n)}",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(PARI) {Stirling1(n, k)=n!*polcoeff(binomial(x, n), k)}",
+        "{a(n)=local(A=1+x); for(i=1, n, A=sum(m=0, n, sum(k=0, m, Stirling1(m, k)*subst(A,x,k*x+x*O(x^n))^m)*x^m/m!)); n!*polcoeff(A, n)}",
+        "for(n=0,20,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A189981, A221100."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jan 01 2013",
+    "references": 2,
+    "revision": 6,
+    "time": "2013-01-16T04:49:36-05:00",
+    "created": "2013-01-01T21:26:42-05:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 249329,
+    "data": "1,7,8,55,62,435,497,3440,3937,27208,31145,215199,246344,1702099,1948443,13462620",
+    "name": "First row of spectral array W(log(Pi)).",
+    "comment": [
+        "log(Pi) = 1.144729885849400174143427351353058711647294812915311571513623...",
+        "The sequence is generated from the Beatty sequence (A059561) and from the complement of the Beatty sequence (A059562) for log(Pi)."
+    ],
+    "link": [
+        "A. Fraenkel and C. Kimberling, <a href=\"http://dx.doi.org/10.1016/0012-365X(94)90259-3\">Generalized Wythoff arrays, shuffles and interspersions</a>, Discrete Mathematics 126 (1994) 137-149."
+    ],
+    "program": [
+        "(PARI)",
+        "\\\\ Row i of the generalized Wythoff array W(h),",
+        "\\\\   where h is an irrational number between 1 and 2,",
+        "\\\\   and m is the number of terms in the vectors b and c.",
+        "row(h, i, m) = {",
+        "  if(h<=1 || h>=2, print(\"Invalid value for h\"); return);",
+        "  my(",
+        "    b=vector(m, n, floor(n*h)),       \\\\ Beatty sequence for h",
+        "    c=vector(m, n, floor(n*h/(h-1))), \\\\ Complement of b",
+        "    w=[b[b[i]], c[b[i]]],",
+        "    j=3",
+        "  );",
+        "  while(1,",
+        "    if(j%2==1,",
+        "      if(w[j-1]<=#b, w=concat(w, b[w[j-1]]), return(w))",
+        "    ,",
+        "      if(w[j-2]<=#c, w=concat(w, c[w[j-2]]), return(w))",
+        "    );",
+        "    j++",
+        "  )",
+        "}",
+        "allocatemem(10^9)",
+        "default(realprecision, 100)",
+        "row(log(Pi), 1, 10^7)"
+    ],
+    "xref": [
+        "Cf. A059561, A059562."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Colin Barker_, Dec 03 2014",
+    "references": 0,
+    "revision": 20,
+    "time": "2014-12-14T02:50:24-05:00",
+    "created": "2014-12-14T02:50:24-05:00"
+}

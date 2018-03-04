@@ -1,0 +1,40 @@
+{
+    "number": 266795,
+    "data": "0,1,4,6,11,15,23,27,39,43,59,63,83,87,111,115,143,147,179,183,219,223,263,267,311,315,363,367,419,423,479,483,543,547,611,615,683,687,759,763,839,843,923,927,1011,1015,1103,1107,1199,1203,1299,1303,1403",
+    "name": "Total number of OFF (white) cells after n iterations of the \"Rule 61\" elementary cellular automaton starting with a single ON (black) cell.",
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 55."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A266795/b266795.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "S. Wolfram, <a href=\"http://wolframscience.com/\">A New Kind of Science</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2,-1,1)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Jan 04 2016: (Start)",
+        "a(n) = (2*n*(n+(-1)^n+1)-7*(-1)^n+3)/4 for n>3.",
+        "a(n) = a(n-1)+2*a(n-2)-2*a(n-3)-a(n-4)+a(n-5) for n>8.",
+        "G.f.: x*(1+3*x-x^3+x^4+x^5-2*x^6+x^7) / ((1-x)^3*(1+x)^2).",
+        "(End)"
+    ],
+    "mathematica": [
+        "rule=61; rows=20; ca=CellularAutomaton[rule,{{1},0},rows-1,{All,All}]; (* Start with single black cell *) catri=Table[Take[ca[[k]],{rows-k+1,rows+k-1}],{k,1,rows}]; (* Truncated list of each row *) nbc=Table[Total[catri[[k]]],{k,1,rows}]; (* Number of Black cells in stage n *) nwc=Table[Length[catri[[k]]]-nbc[[k]],{k,1,rows}]; (* Number of White cells in stage n *) Table[Total[Take[nwc,k]],{k,1,rows}] (* Number of White cells through stage n *)"
+    ],
+    "program": [
+        "(PARI) concat(0, Vec(x*(1+3*x-x^3+x^4+x^5-2*x^6+x^7)/((1-x)^3*(1+x)^2) + O(x^100))) \\\\ _Colin Barker_, Jan 04 2016"
+    ],
+    "xref": [
+        "Cf. A266786.",
+        "Partial sums of A266794."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Robert Price_, Jan 03 2016",
+    "references": 2,
+    "revision": 13,
+    "time": "2016-01-08T08:51:02-05:00",
+    "created": "2016-01-03T12:54:54-05:00"
+}

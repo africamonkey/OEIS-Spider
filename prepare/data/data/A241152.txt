@@ -1,0 +1,29 @@
+{
+    "number": 241152,
+    "data": "2,2,3,3,4,6,8,10,13,17,22,32,43,57,77,94,119,144,178,209,274,364,465,597,746,935,1143,1389,1674,2006,2376,2803,3284,3905,4853,6010,7360,8988,10834,13070,15565,18522,21836,25713,30030,35048,40575,46930,53950",
+    "name": "Maximal number of partitions having the same degree in the partition graph G(n) defined at A241150.",
+    "example": [
+        "a(7) counts these 6 partitions:  61, 52, 43, 331, 322, 2221, which all have degree 2 in G(7), as seen by putting k = 7 in the Mathematica program."
+    ],
+    "mathematica": [
+        "z = 25; spawn[part_] := Map[Reverse[Sort[Flatten[ReplacePart[part, {# - 1, 1}, Position[part, #, 1, 1][[1]][[1]]]]]] &, DeleteCases[DeleteDuplicates[part], 1]];",
+        "     unspawn[part_] := If[Length[Cases[part, 1]] > 0, Map[ReplacePart[Most[part], Position[Most[part], #, 1, 1][[1]][[1]] -> # + 1] &, DeleteDuplicates[Most[part]]], {}]; m = Map[Last[Transpose[Tally[Map[#[[2]] &, Tally[Flatten[{Map[unspawn, #], Map[spawn, #]}, 2] &[IntegerPartitions[#]]]]]]] &, 1 + Range[z]];",
+        "     Column[m] (* A241150 as an array *)",
+        "     Flatten[m] (* A241150 as a sequence *)",
+        "     Table[Length[m[[n]]], {n, 1, z}] (* A241151 *)",
+        "     Table[Max[m[[n]]], {n, 1, z}] (* A241152 *)",
+        "     Table[Last[m[[n]]], {n, 1, z}] (* A241153 *)",
+        "     (* Next, show the graph G(k) *)",
+        "     k = 8; graph = Flatten[Table[part = IntegerPartitions[k][[n]]; Map[FromDigits[part] -> FromDigits[#] &, spawn[part]], {n, 1, PartitionsP[k]}]]; Graph[graph, VertexLabels -> \"Name\", ImageSize -> 500, ImagePadding -> 20] (* _Peter J. C. Moses_, Apr 15 2014 *)"
+    ],
+    "xref": [
+        "Cf. A241150, A241151, A241153."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "2,1",
+    "author": "_Clark Kimberling_ and _Peter J. C. Moses_, Apr 17 2014",
+    "references": 4,
+    "revision": 8,
+    "time": "2014-04-22T22:19:09-04:00",
+    "created": "2014-04-22T22:19:09-04:00"
+}

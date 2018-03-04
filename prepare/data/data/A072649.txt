@@ -1,0 +1,67 @@
+{
+    "number": 72649,
+    "data": "1,2,3,3,4,4,4,5,5,5,5,5,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10",
+    "name": "n occurs Fibonacci(n) times (cf. A000045).",
+    "comment": [
+        "Number of digits in Zeckendorf-binary representation of n. E.g., the Zeckendorf representation of 12 is 8+3+1, which in binary notation is 10101, which consists of 5 digits. - _Clark Kimberling_, Jun 05 2004",
+        "First position where value n occurs is A000045(n+1), i.e., a(A000045(n)) = n-1, for n >= 2 and a(A000045(n)-1) = n-2, for n >= 3.",
+        "This is the number of distinct Fibonacci numbers greater than 0 which are less than or equal to n. - _Robert G. Wilson v_, Dec 10 2006",
+        "The smallest nondecreasing sequence a(n) such that a(Fibonacci(n-1)) = n. - _Tanya Khovanova_, Jun 20 2007"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A072649/b072649.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Popular Computing (Calabasas, CA), <a href=\"/A256967/a256967.png\">A Coding Exercise (from a suggestion by R. W. Hamming)</a>, Vol. 5 (No. 54, Sep 1977), p. PC55-18."
+    ],
+    "formula": [
+        "G.f.: (Sum_{n>1} x^Fibonacci(n))/(1-x). - _Michael Somos_, Apr 25, 2003",
+        "a(n) = floor(log_phi((sqrt(5)*n + sqrt(5*n^2+4))/2)) - 1, n >= 1, where phi is the golden ratio. Alternatively, a(n) = floor(arcsinh(sqrt(5)*n/2)/log(phi)) - 1. Also a(n) = A108852(n) - 2. - _Hieronymus Fischer_, May 02 2007",
+        "a(n) = -1 + floor( log_phi( (n+0.2)*sqrt(5) ) ), where log_phi(x) is the logarithm to the base (1+sqrt(5))/2. - _Ralf Stephan_, May 14 2007"
+    ],
+    "example": [
+        "1, 1, then F(2) 2's, then F(3) 3's, then F(4) 4's, ..., then F(k) k's, ..."
+    ],
+    "maple": [
+        "a:= proc(n) local j; for j from ilog[(1+sqrt(5))/2](n)",
+        "       while combinat[fibonacci](j+1)<=n do od; (j-1)",
+        "    end:",
+        "seq(a(n), n=1..120);  # _Alois P. Heinz_, Mar 18 2013"
+    ],
+    "mathematica": [
+        "Table[Table[n, {Fibonacci[n]}], {n, 10}] // Flatten (* _Robert G. Wilson v_, Jan 14 2007 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = -1+floor(log(((n+0.2)*sqrt(5)))/log((1+sqrt(5))/2))",
+        "(PARI) a(n)=local(m); if(n<1,0,m=0; until(fibonacci(m)>n,m++); m-2)",
+        "(Haskell)",
+        "a072649 n = a072649_list !! (n-1)",
+        "a072649_list = f 1 where",
+        "   f n = (replicate (fromInteger $ a000045 n) n) ++ f (n+1)",
+        "-- _Reinhard Zumkeller_, Jul 04 2011",
+        "(Python)",
+        "from sympy import fibonacci",
+        "def a(n):",
+        "    if n<1: return 0",
+        "    m=0",
+        "    while fibonacci(m)<=n: m+=1",
+        "    return m-2",
+        "print [a(n) for n in xrange(1, 101)] # _Indranil Ghosh_, Jun 09 2017",
+        "(MIT Scheme) (define (A072649 n) (let ((b (A072648 n))) (+ -1 b (floor->exact (/ n (A000045 (1+ b))))))) ;; (The implementation below is better)",
+        "(Scheme) (define (A072649 n) (if (<= n 3) n (let loop ((k 5)) (if (> (A000045 k) n) (- k 2) (loop (+ 1 k)))))) ;; (Use this with the memoized implementation of A000045 given under that entry. No floating point arithmetic is involved). - _Antti Karttunen_, Oct 06 2017"
+    ],
+    "xref": [
+        "Cf. A000045, A095791, A095792.",
+        "Used to construct A003714. Cf. also A002024, A072643, A072648, A072650.",
+        "Cf. A131234.",
+        "Partial sums: A256966, A256967."
+    ],
+    "keyword": "nonn,look",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Jun 02 2002",
+    "ext": [
+        "Typo fixed by _Charles R Greathouse IV_, Oct 28 2009"
+    ],
+    "references": 37,
+    "revision": 56,
+    "time": "2017-10-07T07:31:09-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

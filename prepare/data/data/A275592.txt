@@ -1,0 +1,39 @@
+{
+    "number": 275592,
+    "data": "1,1,2,3,5,7,12,16,26,35,56,74,117,154,241,317,492,645,998,1306,2014,2634,4053,5296,8139,10630,16321,21310,32699,42684,65472,85452,131038,171012,262198,342161,524552,684497,1049300,1369216,2098849,2738710,4198011",
+    "name": "Number of compositions of n if only the order of the even numbers matter.",
+    "comment": [
+        "The number of compositions of n = 2k with only even numbers is c(k) = A011782(k). The number of partitions of n with only odd numbers is the strict partition q(n) = A000009(n). Enumerating a(n) is therefore a sum of products of composition numbers and strict partition numbers. (See formulas.)"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A275592/b275592.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(2k+1) = Sum_{j=0..k} c(j)*q(2k+1-2j), where c(j) = A011782(j), the number of compositions of j, and q(j) = A000009(j), the number of strict partitions of j.",
+        "a(2k) = Sum_{j=0..k} c(j)*q(2k - 2j).",
+        "a(n) = 2*a(n-2) + q(n) - q(n-2).",
+        "G.f.: (1 - x^2)/(1 - 2*x^2) * Product_{n>=1} (1 + x^n). - _Peter Bala_, Aug 03 2016"
+    ],
+    "example": [
+        "The compositions enumerated by a(6) = 12 are (6), (5,1)=(1,5), (4,2), (2,4), (3,3), (4,1,1)=(1,4,1)=(1,1,4), (3,2,1)=(1,2,3)=(2,3,1)=(2,1,3)=(3,1,2)=(1,3,2), (2,2,2), (3,1,1,1)=(1,3,1,1)=(1,1,3,1)=(1,1,1,3), (2,2,1,1)=(2,1,2,1)=(2,1,1,2)=(1,2,1,2)=(1,1,2,2)=(1,2,2,1), (2,1,1,1,1)=(1,2,1,1,1)=(1,1,2,1,1,)=(1,1,1,2,1)=(1,1,1,1,2), (1,1,1,1,1,1).",
+        "The compositions enumerated by a(5) = 7 are (5), (4,1)=(1,4), (3,2)=(2,3), (3,1,1)=(1,3,1)=(1,1,3), (2,2,1)=(2,1,2)=(1,2,2), (2,1,1,1)=(1,2,1,1)=(1,1,2,1)=(1,1,1,2), (1,1,1,1,1)."
+    ],
+    "maple": [
+        "b:= proc(n, i, p) option remember; (t-> `if`(n=0, p!,",
+        "      `if`(i<1, 0, add(b(n-i*j, i-1, p+`if`(t, j, 0))/",
+        "      `if`(t, j, 0)!, j=0..n/i))))(i::even)",
+        "    end:",
+        "a:= n-> b(n$2, 0):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Aug 03 2016"
+    ],
+    "xref": [
+        "Cf. A000009, A011782, A275548."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gregory L. Simay_, Aug 02 2016",
+    "references": 2,
+    "revision": 18,
+    "time": "2016-08-03T12:25:26-04:00",
+    "created": "2016-08-03T12:23:38-04:00"
+}

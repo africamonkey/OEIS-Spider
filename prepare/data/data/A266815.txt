@@ -1,0 +1,56 @@
+{
+    "number": 266815,
+    "data": "11,2441,3313,3331,4241,4421,12163,12613,13313,13331,16231,16363,16633,21163,21613,26113,31663,32233,32323,32611,33113,33223,33311,48281,48821,61231,61363,62131,62311,63211,63361,88241,112121,114643,116443,122263,123323,126223",
+    "name": "Primes whose sum of reciprocal of digits is a prime.",
+    "comment": [
+        "Subset of A034708."
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A266815/b266815.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "11: 1/1 + 1/1 = 2;",
+        "2441: 1/2 + 1/4 + 1/4 + 1/1 = 2;",
+        "3313: 1/3 + 1/3 + 1/1 + 1/3 = 2; etc."
+    ],
+    "maple": [
+        "P:=proc(q) local a,k,n,ok;",
+        "for n from 1 to q do if isprime(n) then ok:=1; a:=0; for k from 0 to ilog10(n) do",
+        "if trunc(n/10^k) mod 10>0 then a:=a+1/(trunc(n/10^k) mod 10) else ok:=0; break; fi; od;",
+        "if ok=1 and type(a,integer) then if isprime(a) then print(n) fi; fi; fi; od; end: P(10^9);",
+        "# Alternative:",
+        "N:= 8: # to get all terms of up to N digits",
+        "S1:= proc(t,k,N)",
+        "    option remember;",
+        "    if t = 0 then {[]}",
+        "    elif k = 0 then {}",
+        "    else",
+        "      `union`(seq(map(p -> [op(p),k$m], procname(t - m*2520/k, k-1,N-m)),",
+        "         m = 0 .. min(N, floor(t*k/2520))))",
+        "    fi",
+        "end proc:",
+        "targets:= 2520*select(isprime,[$2..N]):",
+        "Dlists:= select(p -> convert(p,`+`) mod 3 <> 0, `union`(seq(S1(t,9,N),t=targets))):",
+        "g:= proc(L) local i,m;",
+        "   m:= nops(L);",
+        "   op(select(isprime, map(t -> add(t[i]*10^(i-1),i=1..m), combinat:-permute(L))));",
+        "end proc:",
+        "sort(convert(map(g, Dlists),list)); # _Robert Israel_, Feb 12 2016"
+    ],
+    "mathematica": [
+        "Select[Prime@ Range@ 12000, If[MemberQ[#, 0], False, PrimeQ@ Total[1/#]] &@ IntegerDigits@ # &] (* _Michael De Vlieger_, Feb 12 2016 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = if (isprime(n), my(d = digits(n)); vecmin(d) && (denominator(s=sum(k=1, #d, 1/d[k])) == 1) && isprime(s)) \\\\ _Michel Marcus_, Feb 12 2016"
+    ],
+    "xref": [
+        "Cf. A000040, A034708."
+    ],
+    "keyword": "nonn,base,less",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Feb 12 2016",
+    "references": 2,
+    "revision": 13,
+    "time": "2016-02-13T15:51:14-05:00",
+    "created": "2016-02-13T15:51:14-05:00"
+}

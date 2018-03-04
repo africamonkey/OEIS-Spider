@@ -1,0 +1,49 @@
+{
+    "number": 173792,
+    "data": "9,14,19,51,99,243,339,579,723,1059,1640,1683,1923,2739,3363,3699,4419,5619,6963,7443,8979,10083,10659,12483,13779,15843,18819,20403,21219,22899,23763,25539,32259,34323,37539,38643,44403,45603,49299,53139,55779",
+    "name": "Numbers of the form x^2 + y^2 + z^2 = phi(x*y*z) + sigma(x*y*z).",
+    "comment": [
+        "Phi = A000010 is Euler's totient and sigma = A000203 is the sum of divisors.",
+        "Let p prime, then (x,y,z) = (1,p,p),(p,1,p),(p,p,1) are solutions because phi(p^2) + sigma(p^2) = (p-1)p + p(p+1)+1 = 2p^2 + 1."
+    ],
+    "link": [
+        "Donovan Johnson, <a href=\"/A173792/b173792.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "9 is in the sequence because for (x,y,z) = (1,2,2), x^2 + y^2 + z^2 = 9, phi(4)=2, sigma(4)=7, and phi(4) + sigma(4) = 9 ;",
+        "1640 is in the sequence because for (x,y,z) = (6,2,40), x^2 + y^2 + z^2 = 1640, phi(480)=128, sigma(480)=1512, and phi(480) + sigma(480) = 1640."
+    ],
+    "maple": [
+        "isA173792 := proc(n)",
+        "        for x from 1 do",
+        "                if x^2 > n then",
+        "                        return false;",
+        "                end if;",
+        "                for y from x do",
+        "                        if x^2+y^2 > n then",
+        "                                break;",
+        "                        end if;",
+        "                        if issqr(n-x^2-y^2) then",
+        "                                z := sqrt(n-x^2-y^2) ;",
+        "                                p := x*y*z ;",
+        "                                if n = numtheory[sigma](p) + numtheory[phi](p) then",
+        "                                        return true;",
+        "                                end if;",
+        "                        end if;",
+        "                end do:",
+        "        end do:",
+        "end proc:",
+        "for n from 1 do",
+        "        if isA173792(n) then",
+        "                printf(\"%d,\\n\",n) ;",
+        "        end if;",
+        "end do: # _R. J. Mathar_, Jul 08 2012"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Feb 24 2010",
+    "references": 1,
+    "revision": 11,
+    "time": "2012-07-09T12:20:50-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

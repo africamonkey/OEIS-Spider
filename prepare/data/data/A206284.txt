@@ -1,0 +1,70 @@
+{
+    "number": 206284,
+    "data": "3,6,9,10,12,18,20,22,24,27,28,30,36,40,42,44,46,48,50,52,54,56,60,66,68,70,72,76,80,81,88,92,96,98,100,102,104,108,112,114,116,118,120,124,126,130,132,136,140,144,148,150,152,154,160,162,164,168,170",
+    "name": "Numbers that match irreducible polynomials over the nonnegative integers.",
+    "comment": [
+        "After p(1) which encodes 0-polynomial, each n>1 corresponds with a polynomial having nonnegative integer coefficients determined by the prime factorization of n.",
+        "Write n=p(1)^e(1) * p(2)^e(2) * ... * p(k)^e(k).  The matching polynomial is then p(n,x) = e(1) + e(2)x + e(3)x^2 + ... + e(k)x^k.",
+        "Identities:",
+        "  p(m*n,x) = p(m,x) + p(n,x),",
+        "  p(m*n,x) = p(GCD(m,n),x) + p(LCM(m,n),x),",
+        "  p(m+n,x) = p(GCD(m,n),x) + p((m+n)/GCD(m,n),x), so that if A003057 is read as a square matrix, then",
+        "  p(A003057,x) = p(A003989,x) + p(A106448,x).",
+        "Apart from powers of 3, all terms are even. [_Charles R Greathouse IV_, Feb 11 2012]",
+        "Contains 2*p^m  and p*2^m if p is an odd prime and m is in A052485. - _Robert Israel_, Oct 09 2016"
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A206284/b206284.txt\">Table of n, a(n) for n = 1..10566</a>"
+    ],
+    "example": [
+        "Polynomials having nonnegative integer coefficients are matched to the positive integers as follows:",
+        "   n    p[n,x]    irreducible",
+        "  ---------------------------",
+        "   1    0         no",
+        "   2    1         no",
+        "   3    x         yes",
+        "   4    2         no",
+        "   5    x^2       no",
+        "   6    1+x       yes",
+        "   7    x^3       no",
+        "   8    3         no",
+        "   9    2x        yes",
+        "  10    1+x^2     yes"
+    ],
+    "maple": [
+        "P:= n -> add(f[2]*x^(numtheory:-pi(f[1])-1), f =  ifactors(n)[2]):",
+        "select(irreduc @ P, [$1..200]); # _Robert Israel_, Oct 09 2016"
+    ],
+    "mathematica": [
+        "b[n_] := Table[x^k, {k, 0, n}];",
+        "f[n_] := f[n] = FactorInteger[n]; z = 400;",
+        "t[n_, m_, k_] := If[PrimeQ[f[n][[m, 1]]] && f[n][[m, 1]]",
+        "== Prime[k], f[n][[m, 2]], 0];",
+        "u = Table[Apply[Plus,",
+        "    Table[Table[t[n, m, k], {k, 1, PrimePi[n]}], {m, 1,",
+        "      Length[f[n]]}]], {n, 1, z}];",
+        "p[n_, x_] := u[[n]].b[-1 + Length[u[[n]]]]",
+        "Table[p[n, x], {n, 1, z/4}]",
+        "v = {}; Do[n++; If[IrreduciblePolynomialQ[p[n, x]],",
+        "AppendTo[v, n]], {n, z/2}]; v  (* A206284 *)",
+        "Complement[Range[200], v]      (* A206285 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(f=factor(n));polisirreducible(sum(i=1, #f[,1], f[i,2]*'x^primepi(f[i,1]-1))) \\\\ _Charles R Greathouse IV_, Feb 12 2012"
+    ],
+    "xref": [
+        "Cf. A052485, A206285, A206296.",
+        "Positions of ones in A277322.",
+        "Terms of A277318 form a proper subset of this sequence. Cf. also A277316."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Feb 05 2012",
+    "ext": [
+        "Comment section edited and typos corrected by _Antti Karttunen_, Oct 09 2016"
+    ],
+    "references": 23,
+    "revision": 37,
+    "time": "2017-09-09T19:37:10-04:00",
+    "created": "2012-02-06T11:11:13-05:00"
+}

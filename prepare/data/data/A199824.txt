@@ -1,0 +1,71 @@
+{
+    "number": 199824,
+    "data": "67,167,587,719,751,769,1129,1163,1531,1913,2099,2153,2543,2819,3049,3079,3709,3967,4691,4861,4909,5147,5347,5749,5813,5939,6121,6151,6397,6473,6563,6709,6883,6899,6911,7247,7393,7451,7703,7829,7919,8093,8171,8447,8707,8807,8963,9157,9161,9209",
+    "name": "Primes in successive intervals (2^i +1 .. 2^(i+1) -1) i=1,2,3,... such that there are no prime symmetric XOR couples in either the original interval or any recursively halved interval that contains them.",
+    "comment": [
+        "The MAGMA program provided produces output with each interval delimited by the power of 2 that starts it.",
+        "All of these primes are a sparse subset of isolated primes (the only possible exception would be a twin prime that crosses the interval boundary, but none are known to occur).",
+        "In each interval XOR couples are produced by XORing a number in the interval with 2^i -2 where i is the index used in the interval definition. In recursively halved intervals, i is decremented each time down to i=2."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A199824/b199824.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "In the interval (17 .. 31) i=4 the numbers are coupled symmetrically around the middle of the interval by XORing each with 2^i -2 where i=4 or 14.",
+        "|-------XOR 14-------|",
+        "|  |--------------|  |",
+        "|  |  |--------|  |  |",
+        "|  |  |  |--|  |  |  |",
+        "17 19 21 23 25 27 29 31",
+        "(17,31), (19,29) are prime XOR couples but the prime 23 has a composite couple (23,25).",
+        "23 is in the first half of the interval. XORing each number in the first half of the interval with 2^i -2 where i=3 or 6",
+        "|---XOR 6---|",
+        "|   |---|   |",
+        "17  19  21  23",
+        "(17,23) is a prime XOR couple and all primes in the interval have been coupled, therefore there are no primes with only composite couples in the interval (17 .. 31).",
+        "The first such prime occurs in the interval (65 ..127) and is 67"
+    ],
+    "maple": [
+        "q:= (l, p, r)-> r-l=2 or not isprime(l+r-p) and",
+        "                `if`((l+r)/2>p, q(l, p, (l+r)/2), q((l+r)/2, p, r)):",
+        "a:= proc(n) local p, l;",
+        "      p:= `if`(n=1, 3, a(n-1));",
+        "      do p:= nextprime(p);",
+        "         l:= 2^ilog2(p);",
+        "         if q(l, p, l+l) then break fi",
+        "      od; a(n):=p",
+        "    end:",
+        "seq(a(n), n=1..60); # _Alois P. Heinz_, Nov 13 2011"
+    ],
+    "program": [
+        "(MAGMA)",
+        "XOR := func<a, b | Seqint([ (adigs[i] + bdigs[i]) mod 2 : i in [1..n]], 2)",
+        "      where adigs := Intseq(a, 2, n)",
+        "      where bdigs := Intseq(b, 2, n)",
+        "      where n := 1 + Ilog2(Max([a, b, 1]))>;",
+        "for i:= 4 to 16 do",
+        "    \"****\", i;",
+        "    for j:= 2^(i) +1 to 2^(i+1) -1 by 2 do",
+        "        sympair:=0;",
+        "        for k:= 2 to i do",
+        "            xornum:=2^k -2;",
+        "            xorcouple:=XOR(j,xornum);",
+        "            if (IsPrime(j) and IsPrime(xorcouple)) then sympair:=1;",
+        "               end if;",
+        "        end for;",
+        "        if ((sympair eq 0) and IsPrime(j)) then j;",
+        "           end if;",
+        "    end for;",
+        "end for;"
+    ],
+    "xref": [
+        "Cf. A000040."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Brad Clardy_, Nov 11 2011",
+    "references": 3,
+    "revision": 23,
+    "time": "2014-11-14T08:45:18-05:00",
+    "created": "2011-11-13T14:29:15-05:00"
+}

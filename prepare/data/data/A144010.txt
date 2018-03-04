@@ -1,0 +1,46 @@
+{
+    "number": 144010,
+    "data": "1,1,1,4,21,160,1525,17760,243145,3833600,68373225,1361264000,29925477725,719991897600,18817847565725,530921477363200,16082605690148625,520603130117939200,17934634668874889425",
+    "name": "E.g.f. satisfies: A'(x) = 1/(1 - x*A(x)) with A(0)=1.",
+    "comment": [
+        "From _Peter Bala_, Nov 26 2010: (Start)",
+        "Define a polynomial sequence P_n(x) recursively by",
+        "... P_0(x) = 1,",
+        "... P_n(x) = (x-1)*P_(n-1)(x-1) + n*P_(n-1)(x+1) for n >= 1.",
+        "The first few polynomials are",
+        "P_1(x) = x;",
+        "P_2(x) = x^2 + 3;",
+        "P_3(x) = x^3 + 12*x + 8.",
+        "It appears that a(n+1) = P_n(1) (checked as far as a(19)).",
+        "Compare with A173895. (End)"
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A144010/b144010.txt\">Table of n, a(n) for n = 0..400</a>"
+    ],
+    "formula": [
+        "E.g.f. satisfies: A(x) = 1 + Integral 1/(1 - x*A(x)) dx.",
+        "a(n) ~ n^(n-1) * s^n / exp(n), where s = 2.0832144900084392272885741721727173082215... is the root of the equation sqrt(Pi/2)*s*exp(-s^2/2)*(erfi(1/sqrt(2)) - erfi(s/sqrt(2))) = -1. - _Vaclav Kotesovec_, Feb 23 2014",
+        "a(0) = 1, a(1) = 1, a(n) = Sum_{0 < k < n} k * binomial(n-1, k) * a(k) * a(n-k-1). - _Vladimir Reshetnikov_, May 17 2016"
+    ],
+    "mathematica": [
+        "FindRoot[Sqrt[Pi/2]*s*E^(-s^2/2)*(Erfi[1/Sqrt[2]]-Erfi[s/Sqrt[2]]) == -1,{s,1},WorkingPrecision->50] (* program for numerical value of the constant s, _Vaclav Kotesovec_, Feb 23 2014 *)",
+        "a[0] = 1; a[1] = 1; a[n_] := a[n] = Sum[k Binomial[n-1, k] a[k] a[n-k-1], {k, 1, n-1}]; Table[a[n], {n, 0, 20}] (* _Vladimir Reshetnikov_, May 17 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=0, n, A=1+intformal(1/(1-x*A+x*O(x^n)) )); n!*polcoeff(A, n)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) /* from _Peter Bala_'s Formula */",
+        "{a(n)=local(P=1);if(n>=0&n<2,1,for(k=1,n-1,P=(x-1)*subst(P,x,x-1) + k*subst(P,x,x+1)));subst(P,x,1)}",
+        "for(n=0,30,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Jun 15 2013"
+    ],
+    "xref": [
+        "Cf. A144011, A238302."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Sep 10 2008",
+    "references": 4,
+    "revision": 26,
+    "time": "2018-02-09T03:10:18-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

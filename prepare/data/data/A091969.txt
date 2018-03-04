@@ -1,0 +1,27 @@
+{
+    "number": 91969,
+    "data": "1,1,1,4,28,550,28456,4134861,1781622569,2407100396065,10660643722901700,159393017165624876022,8189716815725538561261887",
+    "name": "Related to Gray codes: see Comments lines.",
+    "comment": [
+        "A (cyclic) Gray code is a listing of the binary n-tuples in a cyclic sequence so that adjacent elements differ in exactly one bit position. So we can describe a Gray code just by listing the bit that gets changed at each step. This gives us a sequence of 2^n numbers, each of which lies in {0..n-1}.",
+        "Let c_i be the number of times that the bit in position i is changed. This gives us a sequence (c0,c1,...,c_{n-1}), called the transition count of the code, such that each number is even and the sum is 2^n.",
+        "In addition, if we assume that we reorder everything so that these numbers are nondecreasing (c_0 <= c_1 <= ... <= c_{n-1}) then there is an additional condition c_0 + c_1 + ... + c_{j-1} >= 2^j by noting that all 2^j patterns must occur in the j least-flipped bit positions. Then a(n) is the number of sequences satisfying these conditions.",
+        "For example, for n=4 there are 4 possible sequences: 2 2 4 8, 2 2 6 6, 2 4 4 6 and 4 4 4 4 and indeed there are cyclic Gray codes with each possible transition count sequence, so a(4) = 4.",
+        "Additional comments from _Rob Pratt_: set b_i = c_i / 2. Let a(n,s,p) be the number of solutions to b_0 + b_1 + ... + b_{n-1} = s, 1 <= b_0 <= b_1 <= ... <= b_{n-1} <= p and b_0 + b_1 + ... + b_{j-1} >= 2^j for j = 1 to n.",
+        "Then a(n,s,p) satisfies the following recursion (written in Mathematica syntax). a[1, s_, p_] := a[1, s, p] = If[1 <= s <= p, 1, 0]; a[n_, s_, p_] := a[n, s, p] = If[s < 2^(n - 1), 0, Sum[a[n - 1, s - k, Min[p, k]], {k, 1, Min[p, s]}]]; we want to compute a(n,2^(n-1),2^(n-1))."
+    ],
+    "mathematica": [
+        "a[1, s_, p_] := a[1, s, p] = If[1 <= s <= p, 1, 0]; a[n_, s_, p_] := a[n, s, p] = If[s < 2^(n - 1), 0, Sum[a[n - 1, s - k, Min[p, k]], {k, 1, Min[p, s]}]]; A091969[n_] := a[n, 2^(n-1), 2^(n-1)]"
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Gordon Royle_, Mar 14 2004",
+    "ext": [
+        "More terms from _Don Reble_ and _Rob Pratt_, Mar 14 2004",
+        "a(11)-a(13) from _Hans Havermann_, Mar 15 2004"
+    ],
+    "references": 2,
+    "revision": 11,
+    "time": "2017-10-19T10:38:27-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

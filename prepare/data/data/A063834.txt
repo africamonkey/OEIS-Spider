@@ -1,0 +1,63 @@
+{
+    "number": 63834,
+    "data": "1,1,3,6,15,28,66,122,266,503,1027,1913,3874,7099,13799,25501,48508,88295,165942,299649,554545,997281,1817984,3245430,5875438,10410768,18635587,32885735,58399350,102381103,180634057,314957425,551857780,958031826,1667918758",
+    "name": "Twice partitioned numbers: the number of ways a number can be partitioned into not necessarily different parts and each part is again so partitioned.",
+    "comment": [
+        "These are different from plane partitions.",
+        "For ordered partitions of partitions see A055887 which may be computed from A036036 and A048996. - _Alford Arnold_, May 19 2006",
+        "Twice partitioned numbers correspond to triangles (or compositions) in the multiorder of integer partitions. - _Gus Wiseman_, Oct 28 2015"
+    ],
+    "link": [
+        "T. D. Noe and Alois P. Heinz, <a href=\"/A063834/b063834.txt\">Table of n, a(n) for n = 0..5000</a> (terms n=1..500 from T. D. Noe)",
+        "Vaclav Kotesovec, <a href=\"/A063834/a063834.jpg\">Screenshot - A closed form formula for the constant c</a>",
+        "Gus Wiseman, <a href=\"https://docs.google.com/document/d/1m0s6DGTBkDW9gvMuFmJHvy6oLGRAbQ7okAZcOPZawp0/pub\">Comcategories and Multiorders</a> <a href=\"http://www.nafindix.com/math/academic/ComcategoriesandMultiordersv7.pdf\">(pdf version)</a>",
+        "Gus Wiseman, <a href=\"http://www.nafindix.com/math/academic/catptn02.pdf\">On the Categorical Structure of Weakly Ordered Sequences of Integer Partitions</a>",
+        "Gus Wiseman, <a href=\"/A063834/a063834.txt\">Sequences enumerating triangles of integer partitions</a>"
+    ],
+    "formula": [
+        "G.f.: 1/Product_{k>0} (1-A000041(k)*x^k). n*a(n) = Sum_{k=1..n} b(k)*a(n-k), a(0) = 1, where b(k) = Sum_{d|k} d*A000041(d)^(k/d) = 1, 5, 10, 29, 36, 110, 106, ... . - _Vladeta Jovovic_, Jun 19 2003",
+        "From _Vaclav Kotesovec_, Mar 27 2016: (Start)",
+        "a(n) ~ c * 5^(n/4), where",
+        "c = 96146522937.7161898848278970039269600938032826... if n mod 4 = 0",
+        "c = 96146521894.9433858914667933636782092683849082... if n mod 4 = 1",
+        "c = 96146522937.2138934755566928890704687838407524... if n mod 4 = 2",
+        "c = 96146521894.8218716328341714149619262713426755... if n mod 4 = 3",
+        "(End)"
+    ],
+    "example": [
+        "G.f. = 1 + x + 3*x^2 + 6*x^3 + 15*x^4 + 28*x^5 + 66*x^6 + 122*x^7 + 266*x^8 + ...",
+        "If n=6, a possible first partitioning is (3+3), resulting in the following second partitionings: ((3),(3)), ((3),(2+1)), ((3),(1+1+1)), ((2+1),(3)), ((2+1),(2+1)), ((2+1),(1+1+1)), ((1+1+1),(3)), ((1+1+1),(2+1)), ((1+1+1),(1+1+1))."
+    ],
+    "maple": [
+        "with(combinat):",
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, 1,",
+        "      b(n, i-1)+`if`(i>n, 0, numbpart(i)*b(n-i, i)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Nov 26 2015"
+    ],
+    "mathematica": [
+        "Table[Plus @@ Apply[Times, IntegerPartitions[i] /. i_Integer :> PartitionsP[i], 2], {i, 36}]",
+        "(* second program: *)",
+        "b[n_, i_] := b[n, i] = If[n==0 || i==1, 1, b[n, i-1] + If[i > n, 0, PartitionsP[i]*b[n-i, i]]]; a[n_] := b[n, n]; Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Jan 20 2016, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( 1 / prod(k=1, n, 1 - numbpart(k) * x^k, 1 + x * O(x^n)), n))}; /* _Michael Somos_, Dec 19 2016 */"
+    ],
+    "xref": [
+        "Cf. A063835, A196545.",
+        "Cf. A036036, A048996, A055887.",
+        "Cf. A006906, A270995.",
+        "Cf. A007425, A047966, A047968, A271619, A279375, A279784-A279791."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,3",
+    "author": "_Wouter Meeussen_, Aug 21 2001",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Nov 26 2015"
+    ],
+    "references": 50,
+    "revision": 50,
+    "time": "2016-12-19T22:40:45-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

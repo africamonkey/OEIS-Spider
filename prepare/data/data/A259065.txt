@@ -1,0 +1,44 @@
+{
+    "number": 259065,
+    "data": "1,8,204,8656,514100,39254904,3663341724,404021632928,51413304278916,7414832746025800,1195170934203398636,212923233266007511152,41545466670049713766356,8811212141812890158250776,2018230889016461893216938300,496523506149784085749952075584,130578628540561635331879674437156",
+    "name": "E.g.f.: Series_Reversion( 5*x - 4*x*exp(x) ).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A259065/b259065.txt\">Table of n, a(n) for n = 1..305</a>"
+    ],
+    "formula": [
+        "O.g.f.: x * Sum_{n>=0}  4^n / (5 - n*x)^(n+1).",
+        "E.g.f.: x + Sum_{n>=1} d^(n-1)/dx^(n-1) 4^n * (exp(x)-1)^n * x^n / n!.",
+        "E.g.f.: x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) 4^n * (exp(x)-1)^n * x^(n-1) / n! ).",
+        "a(n) ~ (c/(5*exp(1)))^n * n^(n-1) / (sqrt(c+1) * (c-1)^(2*n-1)), where c = LambertW(5*exp(1)/4). - _Vaclav Kotesovec_, Jun 19 2015"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 8*x^2/2! + 204*x^3/3! + 8656*x^4/4! + 514100*x^5/5! +...",
+        "where A(5*x - 4*x*exp(x)) = x.",
+        "Also we have the related infinite series.",
+        "O.g.f.: F(x) = x + 8*x^2 + 204*x^3 + 8656*x^4 + 514100*x^5 + 39254904*x^6 +...",
+        "where F(x)/x = 1/5 + 4/(5-x)^2 + 4^2/(5-2*x)^3 + 4^3/(5-3*x)^4 + 4^4/(5-4*x)^5 +..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[5*x - 4*x*E^x, {x, 0, 20}], x],x] * Range[0, 20]!] (* _Vaclav Kotesovec_, Jun 19 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = local(A=x); A = serreverse(5*x - 4*x*exp(x +x*O(x^n) )); n!*polcoeff(A,n)}",
+        "for(n=1,20,print1(a(n),\", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A = x+sum(m=1, n, Dx(m-1, 4^m*(exp(x+x*O(x^n))-1)^m * x^m/m!)); n!*polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A = x*exp(sum(m=1, n, Dx(m-1, 4^m*(exp(x+x*O(x^n))-1)^m * x^(m-1)/m!)+x*O(x^n))); n!*polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A053492, A259063, A259064, A259066."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jun 17 2015",
+    "references": 5,
+    "revision": 18,
+    "time": "2017-11-16T02:54:57-05:00",
+    "created": "2015-06-17T22:46:55-04:00"
+}

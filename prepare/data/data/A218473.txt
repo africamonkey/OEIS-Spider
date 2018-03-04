@@ -1,0 +1,36 @@
+{
+    "number": 218473,
+    "data": "1,1,7,61,591,6101,65719,729933,8297247,96044101,1128138567,13411861629,161066465583,1950996039669,23808159962839,292413627476141,3611870017079871,44838216520062117,559127724970143079,7000374603097246173,87964883375131331151",
+    "name": "Number of 3n-length 3-ary words, either empty or beginning with the first letter of the alphabet, that can be built by repeatedly inserting triples of identical letters into the initially empty word.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A218473/b218473.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "a(n) = 1/n * Sum_{j=0..n-1} C(3*n,j)*(n-j)*2^j for n>0, a(0) = 1.",
+        "a(n) ~ 3^(3*n-3/2)/(sqrt(Pi)*2^(n-1)*n^(3/2)). - _Vaclav Kotesovec_, May 22 2013",
+        "G.f. (for n>0): (1/(81*x-3)+2/((3-81*x)*(1-27*x-3*sqrt(3*x*(27*x-2)))^(2/3))). - _Vaclav Kotesovec_, Jul 06 2013"
+    ],
+    "maple": [
+        "a:= n-> `if`(n=0, 1, add(binomial(3*n, j)*(n-j)*2^j, j=0..n-1)/n):",
+        "seq(a(n), n=0..20);",
+        "# second Maple program",
+        "a:= proc(n) a(n):= `if`(n<3, [1, 1, 7][n+1], (-81*(3*n-1)*(3*n-5)*a(n-2)",
+        "       +(81*n^2-81*n+15)*a(n-1))/ ((2*n-1)*n))",
+        "    end:",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "Flatten[{1,Table[1/n*Sum[Binomial[3*n,j]*(n-j)*2^j,{j,0,n-1}],{n,1,20}]}] (* _Vaclav Kotesovec_, May 22 2013 *)",
+        "Flatten[{1,Table[FullSimplify[SeriesCoefficient[(1/(81*x-3)+2/((3-81*x)*(1-27*x-3*Sqrt[3*x*(27*x-2)])^(2/3))),{x,0,n}]],{n,1,10}]}] (* _Vaclav Kotesovec_, Jul 06 2013 *)"
+    ],
+    "xref": [
+        "Column k=3 of A213027."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Oct 29 2012",
+    "references": 2,
+    "revision": 18,
+    "time": "2015-10-23T12:19:27-04:00",
+    "created": "2012-10-30T12:16:46-04:00"
+}

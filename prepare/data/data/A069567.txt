@@ -1,0 +1,69 @@
+{
+    "number": 69567,
+    "data": "1913,18379,19013,25013,34613,35617,35879,36979,37379,37813,40013,40213,40639,45613,48091,49279,51613,55313,56179,56713,58613,63079,63179,64091,65479,66413,74779,75913,76213,76579,76679,85313,88379",
+    "name": "Smaller of two consecutive primes which are anagrams of each other.",
+    "comment": [
+        "Smaller members of Ormiston prime pairs.",
+        "Given the n-th prime, it is occasionally possible to form the (n+1)th prime using the same digits in a different order. Such a pair is called an Ormiston pair.",
+        "Ormiston pairs occur rarely but randomly. It is thought that there are infinitely many but this has not been proved. They always differ by a multiple of 18. Ormiston triples also exist - see A075093.",
+        "\"Anagram\" means that both primes must not only use the same digits but must use each digit the same number of times.  [From _Harvey P. Dale_, Mar 06 2012]",
+        "Dickson's conjecture would imply that the sequence is infinite, e.g. that there are infinitely many k for which 1913+3972900*k and 1931+3972900*k form an Ormiston pair. - _Robert Israel_, Feb 23 2017"
+    ],
+    "reference": [
+        "A. Edwards, Ormiston Pairs, Australian Mathematics Teacher, Vol. 58, No. 2 (2002), pp 12-13."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A069567/b069567.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Jens Kruse Andersen, <a href=\"http://primerecords.dk/ormiston_tuples.htm\">Ormiston Tuples</a>",
+        "A. Edwards, <a href=\"http://www.aamt.edu.au/content/download/742/19588/file/amt-s.pdf\">Ormiston Pairs</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RearrangementPrimePair.html\">Rearrangement Prime Pair</a>"
+    ],
+    "example": [
+        "1913 and 1931 are two successive primes.",
+        "Although 179 and 197 are composed of the same digits, they do not form an Ormiston pair as several other primes intervene (i.e. 181, 191, 193)."
+    ],
+    "maple": [
+        "N:= 10^6: # to get all terms <= N",
+        "R:= NULL: p:= 3: q:= 5:",
+        "while p <= N do",
+        "  p:= q;",
+        "  q:= nextprime(q);",
+        "  if q-p mod 18 = 0 and sort(convert(p,base,10)) = sort(convert(q,base,10)) then",
+        "    R:= R, p",
+        "  fi",
+        "od:",
+        "R; # _Robert Israel_, Feb 23 2017"
+    ],
+    "mathematica": [
+        "Prime[ Select[ Range[10^4], Sort[ IntegerDigits[ Prime[ # ]]] == Sort[ IntegerDigits[ Prime[ # + 1]]] & ]]",
+        "a = {1}; b = {2}; Do[b = Sort[ IntegerDigits[ Prime[n]]]; If[a == b, Print[ Prime[n - 1], \", \", Prime[n]]]; a = b, {n, 1, 10^4}]",
+        "Transpose[Select[Partition[Prime[Range[8600]],2,1],Sort[IntegerDigits[ First[#]]] == Sort[ IntegerDigits[Last[#]]]&]][[1]] (* _Harvey P. Dale_, Mar 06 2012 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=isprime(n)&&vecsort(Vec(Str(n)))==vecsort(Vec(Str(nextprime(n+1)))) \\\\ _Charles R Greathouse IV_, Aug 09 2011",
+        "(PARI) p=2;forprime(q=3,1e5,if((q-p)%18==0&&vecsort(Vec(Str(p)))==vecsort(Vec(Str(q))),print1(p\", \"));p=q) \\\\ _Charles R Greathouse IV_, Aug 09 2011, minor edits by _M. F. Hasler_, Oct 11 2012",
+        "(Haskell)",
+        "import Data.List (sort)",
+        "a069567 n = a069567_list !! (n-1)",
+        "a069567_list = f a000040_list where",
+        "   f (p:ps@(p':_)) = if sort (show p) == sort (show p')",
+        "                     then p : f ps else f ps",
+        "-- _Reinhard Zumkeller_, Apr 03 2015"
+    ],
+    "xref": [
+        "Cf. A072274, A075093, A161160, A066540.",
+        "Cf. A000040, A028906."
+    ],
+    "keyword": "nonn,base,nice",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Mar 24 2002",
+    "ext": [
+        "Comments and references from Andy Edwards (AndynGen(AT)aol.com), Jul 09 2002",
+        "Edited by _Robert G. Wilson v_, Jul 15 2002 and Aug 29 2002",
+        "Minor edits by _Ray Chandler_, Jul 16 2009"
+    ],
+    "references": 22,
+    "revision": 43,
+    "time": "2017-02-23T22:20:32-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

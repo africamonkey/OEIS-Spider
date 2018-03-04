@@ -1,0 +1,53 @@
+{
+    "number": 237600,
+    "data": "2,3,5,7,11,13,37,41,43,47,53,59,61,83,89,113,127,179,181,191,211,223,593,599,601,607,659,661,691,701,757,761,853,857,859,863,947,953,977,983,991,1427,1429,1433,1439,1811,1823,2039,2879,2897,2903,2909,3061",
+    "name": "Right-truncatable primes in base 16.",
+    "comment": [
+        "Numbers with these properties: (i) a(n) is a prime and (ii) its image under the endomorphism E(k)-> k\\16 = floor(k/16) has the same properties. The sequence has 414 nonzero members."
+    ],
+    "link": [
+        "Stanislav Sykora, <a href=\"/A237600/b237600.txt\">Table of n, a(n) for n = 1..414</a>",
+        "Stanislav Sykora, <a href=\"https://oeis.org/wiki/File:GeneticThreads.txt\">PARI/GP scripts for genetic threads</a>"
+    ],
+    "example": [
+        "a(414) = 16778492037124607, in hexadecimal notation 3B9BF319BD51FF, belongs to a(n) because each of its hexadecimal prefixes (including itself) is a prime. Being the largest of such numbers, it is also a member of A023107."
+    ],
+    "mathematica": [
+        "Select[Range@ 3600, AllTrue[Most[DeleteDuplicates@ FixedPointList[f, #]], PrimeQ] &] (* _Michael De Vlieger_, Mar 07 2015, Version 10 *)"
+    ],
+    "program": [
+        "(PARI) GT_Trunc1(nmax,prop,b=10) = { \\\\ See the link for details",
+        "  my (n=0,v=vector(nmax),g=1,lgs=1,lge,an,c);",
+        "  for (k=1,b-1,if (prop(k),v[n++]=k));",
+        "  lge=n; c=lge-lgs+1;",
+        "  while (c, g++;for (k=lgs,lge,for (m=0,b-1, an=b*v[k]+m;",
+        "    if (prop(an), v[n++]=an;if (n>=nmax,return (v)));););",
+        "    lgs=lge+1; lge=n; c=lge-lgs+1;);",
+        "  if (n, return (v[1..n]));",
+        "  print(\"No solution\");}",
+        "v = GT_Trunc1(1000000,isprime,16)",
+        "(PARI) isok(n) = { while(n, if(!isprime(n),return(0));n\\=16); 1; }",
+        "for(n=2,10^9,if(isok(n),print1(n,\", \"))); \\\\ _Joerg Arndt_, Mar 07 2015",
+        "(Python)",
+        "from gmpy2 import is_prime",
+        "A237600_list = []",
+        "for n in range(1,10**9):",
+        "....if is_prime(n):",
+        "........s = format(n,'x')",
+        "........for i in range(1,len(s)):",
+        "............if not is_prime(int(s[:-i],16)):",
+        "................break",
+        "........else:",
+        "............A237600_list.append(n) # _Chai Wah Wu_, Apr 16 2015"
+    ],
+    "xref": [
+        "Cf. A023107, A024770 (base 10), A237601, A237602, A254756."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,1",
+    "author": "_Stanislav Sykora_, Feb 15 2014",
+    "references": 12,
+    "revision": 25,
+    "time": "2015-08-11T01:28:10-04:00",
+    "created": "2014-02-24T22:36:23-05:00"
+}

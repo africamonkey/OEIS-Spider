@@ -1,0 +1,43 @@
+{
+    "number": 56412,
+    "data": "4,10,20,55,76,430,460,2605,5164,26962,38572,367645,431780,3203430,8993804,33860125,63177820,636462350,803796700,6886280971,17456594380,79965550558,139069427020,1466861706095,2251803181492,14434628481170,37066691779180,214483458079665,354963555781060,4803855154772166",
+    "name": "Number of step cyclic shifted sequences using a maximum of four different symbols.",
+    "comment": [
+        "See A056371 for an explanation of step shifts. Under step cyclic shifts, abcde, bdace, bcdea, cdeab and daceb etc. are equivalent."
+    ],
+    "reference": [
+        "M. R. Nester (1999). Mathematical investigations of some plant interaction designs. PhD Thesis. University of Queensland, Brisbane, Australia. [See A056391 for pdf file of Chap. 2]"
+    ],
+    "link": [
+        "D. Z. Dokovic, I. Kotsireas et al., <a href=\"http://arxiv.org/abs/1405.7328\">Charm bracelets and their application to the construction of periodic Golay pairs</a>, arXiv:1405.7328 [math.CO], 2014.",
+        "R. C. Titsworth, <a href=\"http://projecteuclid.org/euclid.ijm/1256059671\">Equivalence classes of periodic sequences</a>, Illinois J. Math., 8 (1964), 266-270."
+    ],
+    "formula": [
+        "Refer to Titsworth or slight \"simplification\" in Nester."
+    ],
+    "mathematica": [
+        "M[j_, L_] := Module[{m = 1}, While[Sum[j^i, {i, 0, m-1}] ~Mod~ L != 0, m++]; m]; c[j_, t_, n_] := Sum[1/M[j, n / GCD[n, u*(j-1) + t]], {u, 0, n - 1}]; CB[n_, k_] = If[n==1, k, 1/(n*EulerPhi[n]) * Sum[ If[1 == GCD[n, j], k^c[j, t, n], 0] , {t, 0, n-1}, {j, 1, n-1}]]; Table[Print[cb = CB[n, 4]]; cb, {n, 1, 30}] (* _Jean-Fran\u00e7ois Alcover_, Dec 04 2015, after _Joerg Arndt_ *)"
+    ],
+    "program": [
+        "(PARI)  \\\\ see p.3 of the Dokovic et al. reference",
+        "M(j,  L)={my(m=1); while ( sum(i=0, m-1, j^i) % L != 0, m+=1 ); m; }",
+        "c(j, t, n)=sum(u=0,n-1, 1/M(j, n / gcd(n, u*(j-1)+t) ) );",
+        "CB(n, k)=if (n==1,k, 1/(n*eulerphi(n)) * sum(t=0,n-1, sum(j=1,n-1, if(1==gcd(n,j), k^c(j,t,n), 0) ) ) );",
+        "for(n=1, 66, print1(CB(n,4),\", \"));",
+        "\\\\ _Joerg Arndt_, Aug 27 2014"
+    ],
+    "xref": [
+        "Row 4 of A285548.",
+        "Cf. A002729."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Marks R. Nester_",
+    "ext": [
+        "Added more terms, _Joerg Arndt_, Aug 27 2014"
+    ],
+    "references": 8,
+    "revision": 27,
+    "time": "2017-08-22T20:53:11-04:00",
+    "created": "2000-07-22T03:00:00-04:00"
+}

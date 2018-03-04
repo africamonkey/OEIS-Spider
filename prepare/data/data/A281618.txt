@@ -1,0 +1,44 @@
+{
+    "number": 281618,
+    "data": "1,2,3,5,8,34,144,610,1134903170",
+    "name": "Fibonacci numbers F such that all the prime factors of F^2 + 1 are also Fibonacci numbers.",
+    "comment": [
+        "The corresponding indices of F are 1 or 2, 3, 4, 5, 6, 9, 12, 15, 45, ... and A245236 is in this sequence."
+    ],
+    "example": [
+        "a(9)^2+1 = Fibonacci(45)^2+1 = 1134903170^2+1 = 1288005205276048901 = 433494437 * 2971215073 = Fibonacci(43)*Fibonacci(47)."
+    ],
+    "maple": [
+        "with(numtheory):with(combinat,fibonacci):nn:=100:",
+        "for n from 1 to nn do:",
+        "  f:=fibonacci(n)^2+1:x:=factorset(f):n0:=nops(x):it:=0:",
+        "    for m from 1 to n0 do:",
+        "    c:=x[m]:",
+        "    x1:=sqrt(5*c^2-4):x2:=sqrt(5*c^2+4):",
+        "    if x1=floor(x1) or x2=floor(x2)",
+        "     then",
+        "     it:=it+1:",
+        "     else",
+        "    fi:",
+        "od:",
+        "if it=n0 then print(fibonacci(n)):else fi:od:"
+    ],
+    "mathematica": [
+        "With[{s = Rest@ Fibonacci@ Range@ 120}, Select[s, Times @@ Boole@ Map[MemberQ[s, #] &, FactorInteger[#^2 + 1][[All, 1]]] > 0 &]] (* _Michael De Vlieger_, Jan 27 2017 *)"
+    ],
+    "program": [
+        "(PARI) isfib(n) = my(k=n^2); k+=(k+1)<<2; issquare(k) || (n>0 && issquare(k-8));",
+        "isokf(n) = {my(f = factor(fibonacci(n)^2+1)); for (k=1, #f~, if (!isfib(f[k,1]), return(0));); return(1);}",
+        "for (n=2, 50, if (isokf(n), print1(fibonacci(n), \", \"))) \\\\ _Michel Marcus_, Jan 28 2017"
+    ],
+    "xref": [
+        "Cf. A000045, A245306, A245236."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Michel Lagneau_, Jan 25 2017",
+    "references": 0,
+    "revision": 20,
+    "time": "2017-01-28T13:50:21-05:00",
+    "created": "2017-01-27T13:17:18-05:00"
+}

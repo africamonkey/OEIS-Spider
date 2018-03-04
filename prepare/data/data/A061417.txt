@@ -1,0 +1,53 @@
+{
+    "number": 61417,
+    "data": "1,2,4,10,28,136,726,5100,40362,363288,3628810,39921044,479001612,6227066928,87178295296,1307675013928,20922789888016,355687438476444,6402373705728018,121645100594641896,2432902008177690360",
+    "name": "Number of permutations up to cyclic rotations; permutation siteswap necklaces.",
+    "comment": [
+        "If permutations are converted to (i,p(i)) permutation arrays, then this automorphism is obtained by their \"SW-NE diagonal toroidal shifts\" (see Matthias Engelhardt's Java program in A006841), while the Maple procedure below converts each permutation to a siteswap pattern (used in juggling), rotates it by one digit and converts the resulting new (or same) siteswap pattern back to a permutation.",
+        "When the subset of permutations listed by A064640 are subjected to the same automorphism one gets A002995.",
+        "The number of conjugacy classes of the symmetric group of degree n when conjugating only with the cyclic permutation group of degree n. - _Attila Egri-Nagy_, Aug 15 2014"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A061417/b061417.txt\">Table of n, a(n) for n=1..100</a>",
+        "<a href=\"/index/Ne#necklaces\">Index entries for sequences related to necklaces</a>"
+    ],
+    "formula": [
+        "a(n) = (1/n)*Sum_{d|n} phi(n/d)*((n/d)^d)*(d!)."
+    ],
+    "example": [
+        "If I have a five-element permutation like 25431, in cycle notation (1 2 5)(3 4), I mark the numbers 1-5 clockwise onto a circle and draw directed edges from 1 to 2, from 2 to 5, from 5 to 1 and a double-way edge between 3 and 4. All the 5-element permutations that produce some rotation (discarding the labels of the nodes) of that chord diagram belong to the same equivalence class with 25431. The sequence gives the count of such equivalence classes."
+    ],
+    "maple": [
+        "Algebraic formula: with(numtheory); SSRPCC := proc(n) local d,s; s := 0; for d in divisors(n) do s := s + phi(n/d)*((n/d)^d)*(d!); od; RETURN(s/n); end;",
+        "Empirically: with(group); SiteSwapRotationPermutationCycleCounts := proc(upto_n) local b,u,n,a,r; a := []; for n from 1 to upto_n do b := []; u := n!; for r from 0 to u-1 do b := [op(b),1+PermRank3R(SiteSwap2Perm1(rotateL(Perm2SiteSwap2(PermUnrank3Rfix(n,r)))))]; od; a := [op(a),CountCycles(b)]; od; RETURN(a); end;",
+        "PermUnrank3Rfixaux := proc(n,r,p) local s; if(0 = n) then RETURN(p); else s := floor(r/((n-1)!)); RETURN(PermUnrank3Rfixaux(n-1, r-(s*((n-1)!)), permul(p,[[n,n-s]]))); fi; end;",
+        "PermUnrank3Rfix := (n,r) -> convert(PermUnrank3Rfixaux(n,r,[]),'permlist',n);",
+        "SiteSwap2Perm1 := proc(s) local e,n,i,a; n := nops(s); a := []; for i from 1 to n do e := ((i+s[i]) mod n); if(0 = e) then e := n; fi; a := [op(a),e]; od; RETURN(convert(invperm(convert(a,'disjcyc')),'permlist',n)); end;"
+    ],
+    "mathematica": [
+        "a[n_] := (1/n)*Sum[ EulerPhi[n/d]*(n/d)^d*d!, {d, Divisors[n]}]; Table[a[n], {n, 1, 21}] (* _Jean-Fran\u00e7ois Alcover_, Oct 09 2012, from formula *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a061417 = sum . a047917_row  -- _Reinhard Zumkeller_, Mar 19 2014",
+        "(GAP) List([1..10],n->Size( OrbitsDomain( CyclicGroup(I sPermGroup,n), SymmetricGroup( IsPermGroup,n),\\^))); # _Attila Egri-Nagy_, Aug 15 2014",
+        "(PARI) a(n) = (1/n)*sumdiv(n, d, eulerphi(n/d)*(n/d)^d*d!); \\\\ _Indranil Ghosh_, Apr 10 2017",
+        "(Python)",
+        "from sympy import divisors, factorial, totient",
+        "def a(n): return sum([totient(n/d)*(n/d)**d*factorial(d) for d in divisors(n)])/n",
+        "print [a(n) for n in xrange(1, 22)] # _Indranil Ghosh_, Apr 10 2017"
+    ],
+    "xref": [
+        "Cf. A006841, A060495. For other Maple procedures, see A060501 (Perm2SiteSwap2), A057502 (CountCycles), A057509 (rotateL), A060125 (PermRank3R and permul).",
+        "A061417[p] = A061860[p] = (p-1)!+(p-1) for all prime p's.",
+        "A064636 (derangements-the same automorphism).",
+        "A061417[n] = A064649[n]/n."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, May 02 2001",
+    "references": 11,
+    "revision": 26,
+    "time": "2017-04-10T23:30:35-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

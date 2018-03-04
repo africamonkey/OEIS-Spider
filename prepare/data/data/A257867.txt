@@ -1,0 +1,51 @@
+{
+    "number": 257867,
+    "data": "314,942,2824,2826,2854,3074,3130,3212,8066,8090,8096,8170,8224,8324,8426,8450,8472,8478,8480,8512,8534,8562,8578,8588,8656,9222,9224,9390,9404,9636,9638,24198,24206,24270,24288,24510,24670,24672,24674,24676,24802,24972",
+    "name": "Nonnegative integers n such that in balanced ternary representation the number of occurrences of each trit doubles when n is squared.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A257867/b257867.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Balanced_ternary\">Balanced ternary</a>"
+    ],
+    "example": [
+        "942 is in the sequence because 942 = 110L0L0_bal3 and 942^2 = 887364 = 1LL0001L1L0100_bal3, where L represents (-1)."
+    ],
+    "maple": [
+        "p:= proc(n) local d, m, r; m:=n; r:=0;",
+        "      while m>0 do",
+        "        d:= irem(m,3,'m');",
+        "        if d=2 then m:=m+1 fi;",
+        "        r:=r+x^d",
+        "      od; r",
+        "    end:",
+        "a:= proc(n) option remember; local k;",
+        "      for k from 1+`if`(n=1, 0, a(n-1))",
+        "      while p(k)*2<>p(k^2) do od; k",
+        "    end:",
+        "seq(a(n), n=1..50);"
+    ],
+    "program": [
+        "(Python)",
+        "def a(n):",
+        "    s=[]",
+        "    x=0",
+        "    while n>0:",
+        "        x=n%3",
+        "        n=n/3",
+        "        if x==2:",
+        "            x=-1",
+        "            n+=1",
+        "        s+=[x, ]",
+        "    return s",
+        "print [n for n in xrange(1, 25001) if a(n**2).count(-1)==2*a(n).count(-1) and a(n**2).count(1)==2*a(n).count(1) and a(n**2).count(0)==2*a(n).count(0)] # _Indranil Ghosh_, Jun 07 2017"
+    ],
+    "xref": [
+        "Cf. A117967, A140267, A061656, A061657, A061658, A061659, A061660, A061661, A061662, A061663, A114258, A257868, A257869, A258411."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Alois P. Heinz_, May 11 2015",
+    "references": 4,
+    "revision": 18,
+    "time": "2017-06-07T00:44:53-04:00",
+    "created": "2015-05-13T08:33:23-04:00"
+}

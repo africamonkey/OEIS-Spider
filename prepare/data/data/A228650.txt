@@ -1,0 +1,54 @@
+{
+    "number": 228650,
+    "data": "6,8,11,12,46,57,66,120,121,145,156,162,166,217,372,386,557,596,638,750,866,1025,1038,1201,1396,1857,2042,2081,2146,2263,2301,2452,2836,2900,2926,2991,3026,3053,3288,3368,3963,3970,4511,4656,5006,5492,5890,5952",
+    "name": "Numbers n such that if an urn contains n balls, with at least one each of three colors, there exists a combination of the three colors such that it is equally probable for three balls randomly selected from the urn to all be either the same color or distinct colors.",
+    "comment": [
+        "If the urn contains 596 balls, there exist two inequivalent combinations with the desired property, {86, 246, 264} and {126, 154, 316}.",
+        "The analogous sequence for two colors are the square numbers > 1 (A000290 with first two terms truncated)."
+    ],
+    "example": [
+        "46 is a member of the sequence because if the urn contains 6 red, 18 green and 22 blue balls, then there are 6 X 18 X 22 = 2376 selections of three balls with distinct colors, and ((6 X 5 X 4) + (18 X 17 X 16) + (22 X 21 X 20))/3! = 2376 selections of three balls all the same color, and 6 + 18 + 22 = 46."
+    ],
+    "program": [
+        "(PASCAL) program a228650;",
+        "var",
+        "  p: array[1..6000] of int64;",
+        "  b1, b2, b3, k: int64;",
+        "  n, s: integer;",
+        "begin",
+        "  k:=0;",
+        "  repeat",
+        "    inc(k);",
+        "    p[k] := (k * (k - 1) * (k - 2)) div 6;",
+        "  until k = 6000;",
+        "  n := 0; k := 2;",
+        "  repeat",
+        "    inc(k); s := 0;",
+        "    b1 := 0;",
+        "    repeat",
+        "      inc(b1);",
+        "      b2 := b1 - 1;",
+        "        b3 := k - (b1 + b2);",
+        "        repeat",
+        "        inc(b2); dec(b3);",
+        "        if (b3 >= b2) and (b1 * b2 * b3 = p[b1] + p[b2] + p[b3]) then",
+        "        begin",
+        "          inc(n); inc(s);",
+        "          writeln(n,' ',k);",
+        "        end;",
+        "      until (b3 <= b2) or (s > 0);",
+        "    until (3 * b1 >= k) or (s > 0);",
+        "  until k = 6000;",
+        "end."
+    ],
+    "xref": [
+        "Cf. A228651, A228652, A228653."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_William Rex Marshall_, Aug 29 2013",
+    "references": 4,
+    "revision": 11,
+    "time": "2013-09-02T14:28:47-04:00",
+    "created": "2013-09-02T14:28:47-04:00"
+}

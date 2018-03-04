@@ -1,0 +1,33 @@
+{
+    "number": 282151,
+    "data": "11,22,33,44,55,66,77,88,99,102,110,113,124,135,146,157,168,179,201,204,215,220,226,237,248,259,306,311,317,328,330,339,402,408,419,421,440,512,531,550,603,622,641,660,713,732,751,770,804,823,842,861,880,914,933",
+    "name": "Numbers n with k digits in base x (MSD(n)=d_k, LSD(n)=d_1) such that, chosen one of their digits in position d_k < j < d_1, is Sum_{i=j..k}{(i-j+1)*d_i} = Sum_{i=1..j-1}{(j-i)*d_i}. Case x = 6.",
+    "comment": [
+        "All the palindromic numbers in base 10 with an even number of digits belong to the sequence.",
+        "Here the fulcrum is between two digits while in the sequence from A282107 to A282115 is one of the digits."
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A282151/b282151.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "If we split 2039 in 203 and 9 we have 3*1 + 0*2 + 2*3 = 9 for the left side and 9*1 = 9 for the right one."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q,h) local a,b,d,j,k,n,s;",
+        "for n from 1 to q do a:=convert(n,base,h);",
+        "for k from 1 to trunc(nops(a)/2) do b:=a[k]; a[k]:=a[nops(a)-k+1]; a[nops(a)-k+1]:=b; od;",
+        "for k from 1 to nops(a)-1 do d:=0; s:=0;",
+        "for j from 1 to k do if a[j]>0 then s:=s+a[j]*(k-j+1); fi; od; for j from nops(a) by -1 to k+1 do",
+        "if a[j]>0 then d:=d+a[j]*(j-k); fi; od; if d=s then print(n); break; fi; od; od; end: P(10^3,10);"
+    ],
+    "xref": [
+        "Cf. A282107 - A282115, A282143 - A282150."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Feb 15 2017",
+    "references": 17,
+    "revision": 4,
+    "time": "2017-02-17T08:31:19-05:00",
+    "created": "2017-02-17T08:31:19-05:00"
+}

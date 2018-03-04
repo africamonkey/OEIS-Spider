@@ -1,0 +1,46 @@
+{
+    "number": 273130,
+    "data": "1,2,3,4,5,7,8,9,11,13,16,17,19,21,23,25,27,29,31,32,33,37,39,41,43,47,49,51,53,55,57,59,61,64,65,67,69,71,73,79,81,83,85,87,89,93,95,97,101,103,107,109,111,113,115,119,121,123,125,127,128,129,131,133",
+    "name": "Numbers which have only positive entries in the difference table of their divisors.",
+    "comment": [
+        "Primes and powers of primes are in the sequence."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A273130/b273130.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "85 is in the sequence because the difference table of the divisors of 85 has only entries greater than 0:",
+        "[1, 5, 17, 85]",
+        "[4, 12, 68]",
+        "[8, 56]",
+        "[48]"
+    ],
+    "mathematica": [
+        "Select[Range@ 1000, {} == NestWhile[ Differences, Divisors @ #, # != {} && Min[#] > 0 &] &] (* _Giovanni Resta_, May 16 2016 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def sf(z) :",
+        "    D = divisors(z)",
+        "    T = matrix(ZZ, len(D))",
+        "    for (m, d) in enumerate(D):",
+        "        T[0, m] = d",
+        "        for k in range(m-1, -1, -1) :",
+        "            T[m-k, k] = T[m-k-1, k+1] - T[m-k-1, k]",
+        "            if T[m-k, k] <= 0: return false",
+        "    return true",
+        "print filter(lambda n: sf(n), range(1,100))",
+        "(PARI) has(v)=if(#v<2, v[1]>0, if(vecmin(v)<1, 0, has(vector(#v-1,i,v[i+1]-v[i]))))",
+        "is(n)=has(divisors(n)) \\\\ _Charles R Greathouse IV_, May 16 2016"
+    ],
+    "xref": [
+        "Cf. A014567, A187202, A273102, A273103, A273109, A273157 (complement)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Peter Luschny_, May 16 2016",
+    "references": 5,
+    "revision": 19,
+    "time": "2016-05-16T23:26:55-04:00",
+    "created": "2016-05-16T23:26:55-04:00"
+}

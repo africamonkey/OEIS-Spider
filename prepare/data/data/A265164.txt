@@ -1,0 +1,37 @@
+{
+    "number": 265164,
+    "data": "1,3,15,101,841,8283,93815,1198029,16997041,264864419,4492081151,82299283669,1618674299769,33997164987019,759059595497511,17945237236457533,447676430154815137,11748882878147100691,323494584038834863087,9322205037165367256837",
+    "name": "Sum of the n-th row of the array A265163(n, k).",
+    "comment": [
+        "A right-jump in a permutation consists in taking an element and moving it somewhere to its right.",
+        "The set P(k) of permutations reachable from the identity after at most k right-jumps is a permutation-pattern avoiding set: it coincides with the set of permutation avoiding a set of patterns.",
+        "We define B(k) to be the smallest such set of \"forbidden patterns\" (the permutation pattern community calls such a set a \"basis\" for P(k), and its elements can be referred to as \"right-jump basis permutations\").",
+        "The number b(n,k) of permutations of size n in B(k) is given by the array A265163.",
+        "The row sums give the present sequence (i.e. this counts the permutations of any size in the basis B(k)).",
+        "The column sums give the sequence A265165 (i.e. this counts the permutations of size n in any B(k))."
+    ],
+    "link": [
+        "Cyril Banderier, Jean-Luc Baril, C\u00e9line Moreira Dos Santos, <a href=\"https://lipn.univ-paris13.fr/~banderier/Papers/rightjump.pdf\">Right jumps in permutations</a>, Permutation Patterns 2015."
+    ],
+    "example": [
+        "G.f. = 1 + 3*x + 15*x^2 + 101*x^3 + 841*x^4 + 8283*x^5 + 93815*x^6 + 1198029*x^7 + ...",
+        "The basis permutations for B(1) are 312, 321, and 2143, thus a(1)=3.",
+        "The basis permutations for B(2) are 4123, 4132, 4213, 4231, 4312, 4321, 21534, 21543, 31254, 32154, 31524, 31542, 32514, 32541, and 214365, thus a(2)=15."
+    ],
+    "mathematica": [
+        "a[ n_] := Module[ {A, s, F}, If[ n < 0, 0, A = 1 - x + O[x]^(2 n + 3); s = Sqrt[1 + 4 y + O[y]^(n + 2)]; F = y ((1 - 1/s) A^((1 + s)/2) + (1 + 1/s) A^((1 - s)/2))/2; Sum[ SeriesCoefficient[ SeriesCoefficient[ F, {x, 0, n + k}] (n + k)!, {y, 0, k}], {k, 2, 2 + n}]]]; (* _Michael Somos_, Jan 27 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A, s, F); if( n<0, 0, A = 1 - x + x * O(x^(2*n+2)); s = sqrt(1 + 4*y + y * O(y^(n+1))); F = y * ((1 - 1/s) * A^((1 + s)/2) + (1 + 1/s) * A^((1 - s)/2)) / 2; sum(k=2, 2+n, polcoeff( polcoeff( F, n+k) * (n+k)!, k)))}; /* _Michael Somos_, Jan 27 2017 */"
+    ],
+    "xref": [
+        "Cf. A265163, A265165."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Cyril Banderier_, Dec 07 2015; revised Feb 06 2017",
+    "references": 2,
+    "revision": 58,
+    "time": "2017-02-06T19:43:57-05:00",
+    "created": "2016-05-01T17:08:56-04:00"
+}

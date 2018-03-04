@@ -1,0 +1,59 @@
+{
+    "number": 195324,
+    "data": "2,4,6,32,56,92,98,122,128,140,152,176,194,212,224,242,254,260,272,296,302,308,326,332,368,392,398,410,422,434,452,458,476,488,500,512,518,524,536,542,560,572,596,602,632,644,656,662,674,686,692,704,710,728",
+    "name": "Even numbers that cannot be represented as the sum of an odd prime and a safe prime (A005385).",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A195324/b195324.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "StackExchange, <a href=\"http://math.stackexchange.com/questions/64109/even-numbers-greater-than-6-as-sum-of-two-specific-primes/64111#64111\">Even numbers greater than 6 as sum of two specific primes</a>"
+    ],
+    "mathematica": [
+        "mx = 1000; safe = Select[Prime[Range[PrimePi[mx]]], PrimeQ[(# - 1)/2] &]; p = Prime[Range[2, PrimePi[mx]]]; Complement[Range[2, mx, 2], Union[Flatten[Outer[Plus, p, t]]]] (* _T. D. Noe_, Sep 15 2011 *)"
+    ],
+    "program": [
+        "#!/usr/bin/perl",
+        "$| = 1;",
+        "sub is_prime {",
+        "  my $n = shift;",
+        "  return 0 if $n < 2;",
+        "  return 1 if $n == 2;",
+        "  return 0 unless $n % 2;",
+        "  my $sn = int(sqrt($n));",
+        "  for (my $j = 3; $j <= $sn; $j += 2) {",
+        "    return 0 if $n % $j == 0;",
+        "  }",
+        "  return 1;",
+        "}",
+        "my $n = 0;",
+        "while (1) {",
+        "  ++$n;",
+        "  next if $n % 2;",
+        "  my $found = 0;",
+        "  for my $p (3 .. $n) {",
+        "    next unless $p % 2;",
+        "    my $q = $n - $p;",
+        "    next unless $q % 2;",
+        "    next unless is_prime($p);",
+        "    next unless is_prime($q);",
+        "    next unless is_prime(($p - 1) / 2) || is_prime(($q - 1) / 2);",
+        "    $found = 1;",
+        "    last;",
+        "  }",
+        "  print \"$n\\n\" unless $found;",
+        "}",
+        "(Haskell)",
+        "a195324 n = a195324_list !! (n-1)",
+        "a195324_list = filter p [2,4..] where",
+        "   p n = all ((== 0) . a010051) $ takeWhile (> 1) $ map (n -) a005385_list",
+        "-- _Reinhard Zumkeller_, Sep 18 2011"
+    ],
+    "xref": [
+        "Cf. A000040 (primes), A005385 (safe primes)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Dan Brumleve_, Sep 15 2011",
+    "references": 1,
+    "revision": 15,
+    "time": "2014-08-03T14:01:33-04:00",
+    "created": "2011-09-15T12:28:20-04:00"
+}

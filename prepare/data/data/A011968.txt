@@ -1,0 +1,53 @@
+{
+    "number": 11968,
+    "data": "1,2,3,7,20,67,255,1080,5017,25287,137122,794545,4892167,31858034,218543759,1573857867,11863100692,93345011951,764941675963,6514819011216,57556900440429,526593974392123",
+    "name": "Apply (1+Shift) to Bell numbers.",
+    "comment": [
+        "Number of set partitions of n+2 with at least one singleton and the smallest element in any singleton is exactly n. The maximum number of singletons is therefore 3. Alternatively, number of set partitions of n+2 with at least one singleton and the largest element in any singleton is exactly 3 (or n+2 if n+2<3). For example, a(3)=7 counts the following set partitions of [5]: {1245, 3}, {12, 3, 45}, {124, 3, 5}, {15, 24, 3}, {125, 3, 4}, {14, 25, 3}, {12, 3, 4, 5}. - _Olivier G\u00e9rard_, Oct 29 2007",
+        "Let V(N)={v(1),v(2),...,v(N)} denote an ordered set of increasing positive integers containing a pair of adjacent elements that differ by at least 2, that is, v(i),v(i+1) with v(i+1)-v(i)>1. Then for n>0, a(n) is the number of partitions of V(n+1) into blocks of nonconsecutive integers. - _Augustine O. Munagi_, Jul 17 2008"
+    ],
+    "reference": [
+        "Olivier G\u00e9rard and Karol Penson, A budget of set partitions statistics, in preparation, unpublished as of Sep 22 2011"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A011968/b011968.txt\">Table of n, a(n) for n = 0..500</a> n = 0..200 from Vincenzo Librandi.",
+        "Cohn, Martin; Even, Shimon; Menger, Karl, Jr.; Hooper, Philip K.; <a href=\"http://www.jstor.org/stable/2310780\">On the Number of Partitionings of a Set of n Distinct Objects</a>, Amer. Math. Monthly 69 (1962), no. 8, 782--785. MR1531841.",
+        "Cohn, Martin; Even, Shimon; Menger, Karl, Jr.; Hooper, Philip K.; <a href=\"/A011965/a011965.pdf\">On the Number of Partitionings of a Set of n Distinct Objects</a>, Amer. Math. Monthly 69 (1962), no. 8, 782--785. MR1531841. [Annotated scanned copy]",
+        "Augustine O. Munagi, <a href=\"http://dx.doi.org/10.1016/j.ejc.2007.06.003\">Extended set partitions with successions</a>, European J. Combin. 29(5) (2008), 1298--1308.",
+        "Jocelyn Quaintance and Harris Kwong, <a href=\"http://www.emis.de/journals/INTEGERS/papers/n29/n29.Abstract.html\">A combinatorial interpretation of the Catalan and Bell number difference tables</a>, Integers, 13 (2013), #A29."
+    ],
+    "formula": [
+        "For n >= 1, a(n+1)= exp(-1)*sum(k>=0,(k+1)/k!*k^n). - _Benoit Cloitre_, Mar 09 2008",
+        "For n >= 1, a(n) = Bell(n) + Bell(n-1). - _Augustine O. Munagi_, Jul 17 2008",
+        "G.f.: G(0) where G(k) = 1 - 2*x*(k+1)/((2*k+1)*(2*x*k-1) - x*(2*k+1)*(2*k+3)*(2*x*k-1)/(x*(2*k+3) - 2*(k+1)*(2*x*k+x-1)/G(k+1) )); (recursively defined continued fraction). - _Sergei N. Gladkovskii_, Dec 19 2012",
+        "G.f.: 1 + x*E(0) where E(k) =  1 + 1/(1-x*k-x)/(1-x/(x+1/E(k+1) )); (recursively defined continued fraction). - _Sergei N. Gladkovskii_, Jan 20 2013",
+        "G.f.: 1 + sum(k>=0, ( 1+1/(1-x-x*k) )*x^(k+1)/prod(i=0..k, (1-x*i) ) ). - _Sergei N. Gladkovskii_, Jan 20 2013"
+    ],
+    "example": [
+        "a(3)=7 because the set {1,3,4,5} has 7 different partitions into blocks of nonconsecutive integers: 14/35, 135/4, 1/35/4, 13/4/5, 14/3/5, 15/3/4, 1/3/4/5."
+    ],
+    "maple": [
+        "with(combinat): seq(`if`(n>0,bell(n)+bell(n-1),1),n=0..21); # _Augustine O. Munagi_, Jul 17 2008"
+    ],
+    "program": [
+        "(Python)",
+        "# requires python 3.2 or higher. Otherwise use def'n of accumulate in python docs.",
+        "from itertools import accumulate",
+        "A011968_list, blist, b = [1,2], [1], 1",
+        "for _ in range(10**2):",
+        "....blist = list(accumulate([b]+blist))",
+        "....A011968_list.append(b+blist[-1])",
+        "....b = blist[-1] # _Chai Wah Wu_, Sep 02 2014, updated _Chai Wah Wu_, Sep 20 2014"
+    ],
+    "xref": [
+        "Cf. A000110, A000296, A011969, A011970.",
+        "A diagonal of A011971 and A106436. - _N. J. A. Sloane_, Jul 31 2012"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_.",
+    "references": 8,
+    "revision": 69,
+    "time": "2015-08-04T15:43:20-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 294158,
+    "data": "1,1,6,52,602,8223,128917,2273716,44509914,957408649,22449011336,570032756328,15587503694363,456793916757139,14284890417759141,474896318288651220,16726743380843538668,622282429409944248297,24385251974172090147514,1004017088910699487855180",
+    "name": "Row sums of A291844.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A294158/b294158.txt\">Table of n, a(n) for n = 0..202</a>",
+        "Luca G. Molinari, Nicola Manini, <a href=\"https://arxiv.org/abs/cond-mat/0512342\">Enumeration of many-body skeleton diagrams</a>, arXiv:cond-mat/0512342 [cond-mat.str-el], 2006."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..floor((2*n-1)/3)} A291844(n,k), n > 0."
+    ],
+    "program": [
+        "(PARI)",
+        "A291843_ser(N, t='t) = {",
+        "  my(x='x+O('x^N), y=1, y1=0, n=1,",
+        "  dn = 1/(-2*t^2*x^4 - (2*t^2+3*t)*x^3 - (2*t+1)*x^2 + (2*t-1)*x + 1));",
+        "  while (n++,",
+        "   y1 = (2*x^2*y'*((-t^2 + t)*x + (-t + 1) + (t^2*x^2 + (t^2 + t)*x + t)*y) +",
+        "        (t*x^2 + t*x)*y^2 - (2*t^2*x^3 + 3*t*x^2 + (-t + 1)*x - 1))*dn;",
+        "   if (y1 == y, break); y = y1;); y;",
+        "};",
+        "A291844_ser(N, t='t) = {",
+        "  my(z = A291843_ser(N+1,t));",
+        "  ((1+x)*z - 1)*(1 + t*x)/((1-t + t*(1+x)*z)*x*z^2);",
+        "};",
+        "Vec(A291844_ser(20,t=1))"
+    ],
+    "xref": [
+        "Cf. A049464(y), A287039(x), A286799(z), A287029(u), A291844."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gheorghe Coserea_, Oct 24 2017",
+    "references": 2,
+    "revision": 12,
+    "time": "2017-11-12T06:16:47-05:00",
+    "created": "2017-11-12T06:16:47-05:00"
+}

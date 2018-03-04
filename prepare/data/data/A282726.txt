@@ -1,0 +1,49 @@
+{
+    "number": 282726,
+    "data": "2,33,95,473,944,1139,1826,2996,4585,5004,6683,8413,11394,13393,16566,20376,23946,27804,30883,36384,45671,50059,56040,62357,62874,69559,75486,81635,82795,88050,97183,104166,112030,118159,120925,138193,156613,167066,173670,187262,196026,206796,226333,242750",
+    "name": "Let p = n-th prime == 3 mod 8; a(n) = sum of quadratic nonresidues mod p .",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A282726/b282726.txt\">Table of n, a(n) for n = 1..2500</a>",
+        "Aebi, Christian, and Grant Cairns. <a href=\"http://arxiv.org/abs/1512.00896\">Sums of Quadratic residues and nonresidues</a>, arXiv preprint arXiv:1512.00896 (2015)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "Ql:=[]; Qu:=[]; Q:=[]; Nl:=[]; Nu:=[]; N:=[]; Th:=[];",
+        "for i1 from 1 to 300 do",
+        "p:=ithprime(i1);",
+        "if (p mod 8) = 3 then",
+        "ql:=0; qu:=0; q:=0; nl:=0; nu:=0; n:=0;",
+        "for j from 1 to p-1 do",
+        "if legendre(j,p)=1 then",
+        "q:=q+j;",
+        "if j<p/2 then ql:=ql+j; else qu:=qu+j; fi;",
+        "else",
+        "n:=n+j;",
+        "if j<p/2 then nl:=nl+j; else nu:=nu+j; fi;",
+        "fi;",
+        "od;",
+        "Ql:=[op(Ql),ql];",
+        "Qu:=[op(Qu),qu];",
+        "Q:=[op(Q),q];",
+        "Nl:=[op(Nl),nl];",
+        "Nu:=[op(Nu),nu];",
+        "N:=[op(N),n];",
+        "Th:=[op(Th),q+ql];",
+        "fi;",
+        "od:",
+        "Ql; Qu; Q; Nl; Nu; N; Th; # A282721 - A282727"
+    ],
+    "mathematica": [
+        "Table[Table[Mod[a^2, p/2], {a, 1, (p-1)}]//Total, {p, Select[Prime[Range[200]], Mod[#, 8] == 3 &]}] (* _Vincenzo Librandi_, Feb 22 2017 *)"
+    ],
+    "xref": [
+        "Cf. A282035-A282043 and A282721-A282727."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Feb 20 2017",
+    "references": 2,
+    "revision": 11,
+    "time": "2017-04-07T12:58:57-04:00",
+    "created": "2017-02-20T22:11:46-05:00"
+}

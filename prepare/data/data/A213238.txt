@@ -1,0 +1,51 @@
+{
+    "number": 213238,
+    "data": "1,3,8,12,18,24,32,40,42,50,60,64,72,84,88,90,98,99,105,112,120,128,130,135,144,162,168,180,182,192,200,208,210,220,231,242,252,264,266,272,280,288,294,300,312,315,320,324,330,338,340,360,364,378,392,400",
+    "name": "Triangle T(n,k) in which n-th row lists in increasing order the distinct values v satisfying v = sum of elements in S = product of elements in P for a partition of {1,...,n} into two sets S and P.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A213238/b213238.txt\">Rows n = 1..798, flattened</a>"
+    ],
+    "formula": [
+        "T(n,1) = floor((n-1)^2/2) = A007590(n-1) for n>=5."
+    ],
+    "example": [
+        "For n=1 v=1 satisfies the condition with S={1}, P={} => row 1 = [1].",
+        "For n=2 no v can be found => row 2 is empty: [].",
+        "For n=3 there is one solution: S={1,2}, P={3}, v=3 => row 3 = [3].",
+        "For n=10 we have three partitions of {1,2,...,10} into S and P satisfying v = Sum_{i:S} i = Product_{k:P} k but there are only two distinct values v: S={2,3,5,6,7,8,9}, P={1,4,10}, v=40; S={4,5,6,8,9,10}, P={1,2,3,7}, v=42; S={1,2,3,4,5,8,9,10}, P={6,7}, v=42 => row 10 = [40, 42].",
+        "Triangle T begins:",
+        "1;",
+        ";",
+        "3;",
+        ";",
+        "8;",
+        "12;",
+        "18;",
+        "24;",
+        "32;",
+        "40, 42;",
+        "50;",
+        "60, 64;",
+        "72;",
+        "84, 88, 90;"
+    ],
+    "maple": [
+        "b:= proc(n, s, p)",
+        "      `if`(s=p, {s}, `if`(n<1, {}, {b(n-1, s, p)[],",
+        "      `if`(s-n<p*n, {}, b(n-1, s-n, p*n))[]}))",
+        "    end:",
+        "T:= n-> sort([b(n, n*(n+1)/2, 1)[]])[]:",
+        "seq(T(n), n=1..30);"
+    ],
+    "xref": [
+        "Row lengths (or number of solutions) are in A213237.",
+        "T(n,1) = A007590(n-1) for n>=5."
+    ],
+    "keyword": "nonn,tabf",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Jun 07 2012",
+    "references": 2,
+    "revision": 10,
+    "time": "2014-12-22T21:05:03-05:00",
+    "created": "2012-06-07T07:10:07-04:00"
+}

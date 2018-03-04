@@ -1,0 +1,38 @@
+{
+    "number": 65641,
+    "data": "0,1,10,60,90,101,120,380,450,505,807,1020,1070,1303,1450,3810,10020,10404,10560,16056,16200,18088,20322,20580,35790,79000,80088,90877,243700,279509,330832,374330,380038,903655,1002404,1005064,1020828",
+    "name": "Smallest number with persistence n for the sort-and-subtract-sequence.",
+    "comment": [
+        "Sort the digits of an integer and subtract the result from the original. Continue with the result until you reach 0. The sequence gives the least integer that needs n steps to reach 0."
+    ],
+    "link": [
+        "David W. Wilson and Reinhard Zumkeller, <a href=\"/A065641/b065641.txt\">Table of n, a(n) for n = 0..100</a> (a(n) for n = 1..55 from Reinhard Zumkeller)."
+    ],
+    "example": [
+        "60 is the smallest number that needs 3 steps to reach 0: 60 -> 60 - 06 = 54 -> 54 - 45 = 9 -> 9 - 9 = 0, hence a(3) = 60."
+    ],
+    "mathematica": [
+        "Persist[n_] := Length[NestWhileList[# - FromDigits[Sort[IntegerDigits[#]]] &, n, # != 0 &]] - 1; nn = 20; t = Table[0, {nn}]; cnt = 0; k = 0; While[cnt < nn, k++; c = Persist[k]; If[c <= nn && t[[c]] == 0, t[[c]] = k; cnt++]]; t  (* _Harvey P. Dale_, Mar 24 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (elemIndex)",
+        "import Data.Maybe (fromJust)",
+        "a065641 n = a065641_list !! (n-1)",
+        "a065641_list = map (fromJust . (`elemIndex` a193582_list)) [1..]",
+        "-- _Reinhard Zumkeller_,Aug 10 2011"
+    ],
+    "xref": [
+        "Cf. A004185, A193582."
+    ],
+    "keyword": "nonn,base,nice",
+    "offset": "0,3",
+    "author": "Ulrich Schimke (ulrschimke(AT)aol.com), Dec 03 2001",
+    "ext": [
+        "Added a(0) = 0. _David W. Wilson_, Jan 08 2017"
+    ],
+    "references": 4,
+    "revision": 21,
+    "time": "2017-01-08T12:52:17-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

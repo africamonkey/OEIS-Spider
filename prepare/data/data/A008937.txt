@@ -1,0 +1,61 @@
+{
+    "number": 8937,
+    "data": "0,1,2,4,8,15,28,52,96,177,326,600,1104,2031,3736,6872,12640,23249,42762,78652,144664,266079,489396,900140,1655616,3045153,5600910,10301680,18947744,34850335,64099760,117897840,216847936,398845537,733591314,1349284788",
+    "name": "a(n) = Sum_{k=0..n} T(k) where T(n) are the tribonacci numbers A000073.",
+    "comment": [
+        "a(n) = number of n-bit sequences that avoid 1100. - _David Callan_, Jul 19 2004",
+        "Row sums of Riordan array (1/(1-x), x(1+x+x^2)). - _Paul Barry_, Feb 16 2005",
+        "Diagonal sums of Riordan array (1/(1-x)^2,x(1+x)/(1-x)), A104698.",
+        "a(n) = (A000213(n+2) - 1) / 2. - _Reinhard Zumkeller_, Apr 07 2012"
+    ],
+    "reference": [
+        "A. T. Benjamin and J. J. Quinn, Proofs that really count: the art of combinatorial proof, M.A.A. 2003, p. 41."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A008937/b008937.txt\">Table of n, a(n) for n = 0..200</a>",
+        "T. Langley, J. Liese, J. Remmel, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL14/Langley/langley2.html\">Generating Functions for Wilf Equivalence Under Generalized Factor Order </a>, J. Int. Seq. 14 (2011) # 11.4.2",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (2,0,0,-1)"
+    ],
+    "formula": [
+        "G.f.: x/((x-1)*(x^3+x^2+x-1)). Recurrence a(n)=2a(n-1)-a(n-4), a(0)=0, a(1)=1, a(2)=2, a(3)=4. - Mario Catalani (mario.catalani(AT)unito.it), Aug 09 2002",
+        "a(n) = 1 + a(n-1) + a(n-2) + a(n-3). E.g., a(11) = 1 +600 + 326 + 177 = 1104. - Philippe LALLOUET (philip.lallouet(AT)orange.fr), Oct 29 2007",
+        "a(n) = term (4,1) in the 4 X 4 matrix [1,1,0,0; 1,0,1,0; 1,0,0,0; 1,0,0,1]^n. - _Alois P. Heinz_, Jul 24 2008",
+        "a(n) = -A077908(-n-3). - _Alois P. Heinz_, Jul 24 2008",
+        "a(n) = Sum_{j=0..floor(n/2)} Sum_{k=0..j} binomial(n-2j,k+1)*binomial(j,k)*2^k. - _Tony Foster III_, Sep 08 2017",
+        "a(n) = Sum_{k=0..floor(n/2)} (n-2*k)*hypergeom([-k,-n+2*k+1], [2], 2). - _Peter Luschny_, Nov 09 2017"
+    ],
+    "example": [
+        "G.f. = x + 2*x^4 - x^5 + 4*x^7 - 4*x^8 + x^9 + 8*x^10 - 12*x^11 + 6*x^12 + ..."
+    ],
+    "maple": [
+        "A008937 := proc(n) option remember; if n <= 3 then 2^n else 2*procname(n-1)-procname(n-4) fi; end;",
+        "a:= n-> (Matrix([[1,1,0,0], [1,0,1,0], [1,0,0,0], [1,0,0,1]])^n)[4,1]: seq(a(n), n=0..50); # _Alois P. Heinz_, Jul 24 2008"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/(1-2x+x^4), {x, 0, 40}], x]",
+        "a=b=c=0;Table[d=a+b+c+1;a=b;b=c;c=d,{n,0,5!}] (* _Vladimir Joseph Stephan Orlovsky_, May 18 2010 *)",
+        "Accumulate[LinearRecurrence[{1,1,1},{0,1,1},40]] (* _Harvey P. Dale_, Dec 04 2017 *)"
+    ],
+    "program": [
+        "(MAGMA) [ n eq 1 select 0 else n eq 2 select 1 else n eq 3 select 2 else n eq 4 select 4 else 2*Self(n-1)-Self(n-4): n in [1..40] ]; // _Vincenzo Librandi_, Aug 21 2011",
+        "(Haskell)",
+        "a008937 n = a008937_list !! n",
+        "a008937_list = tail $ scanl1 (+) a000073_list",
+        "-- _Reinhard Zumkeller_, Apr 07 2012",
+        "(PARI) {a(n) = if( n<0, polcoeff( - x^3 / (1 - 2*x^3 + x^4) + x * O(x^-n), -n), polcoeff( x / (1 - 2*x + x^4) + x * O(x^n), n))}; /* _Michael Somos_, Aug 23 2014 */",
+        "(PARI) a(n) = sum(j=0, n\\2, sum(k=0, j, binomial(n-2*j,k+1)*binomial(j,k)*2^k)); \\\\ _Michel Marcus_, Sep 08 2017"
+    ],
+    "xref": [
+        "a(n) = A018921(n-2) = A027084(n+1)+1.",
+        "Equals (1/2) [A000073(n+2) + A000073(n+4) - 1].",
+        "Row sums of A055216.",
+        "Cf. A077908."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Alejandro Teruel (teruel(AT)usb.ve)",
+    "references": 30,
+    "revision": 69,
+    "time": "2017-12-04T22:03:21-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 292390,
+    "data": "3,9,27,35,81,175,243,245,729,875,1045,1225,1715,2187,4375,5225,6125,6561,8575,11495,12005,19683,19855,21875,24871,26125,29029,30625,42875,50065,57475,58435,59049,60025,64285,84035,87685,99275,109375,126445,130625,137885,140335,153125",
+    "name": "Numbers n such that psi(n) = 2*phi(n).",
+    "comment": [
+        "Squarefree terms are 3, 35, 1045, 24871, 29029, 50065, 58435, 64285, ... Squarefree terms of this sequence are in A062699. Note that A062699 has also terms that are not squarefree: 2011009, 3189625, 3722875, ...",
+        "If n is in the sequence, then so are all numbers that have the same set of prime factors as n. - _Robert Israel_, Sep 15 2017",
+        "All terms are odd. Terms divisible by 3 are powers of 3. - _Robert Israel_, Sep 18 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A292390/b292390.txt\">Table of n, a(n) for n = 1..400</a>"
+    ],
+    "example": [
+        "3^k is a term for all k > 0 since psi(3^k) = 4*3^(k-1) = 2*phi(3^k)."
+    ],
+    "maple": [
+        "pp:= n -> mul((p+1)/(p-1), p = numtheory:-factorset(n)):",
+        "select(pp=2, [seq(i,i=1..200000,2)]); # _Robert Israel_, Sep 15 2017"
+    ],
+    "mathematica": [
+        "psi[n_] := n*Sum[MoebiusMu[d]^2/d, {d, Divisors@n}]; Select[ Range@ 200000, 2EulerPhi[#] == psi[#] &]"
+    ],
+    "program": [
+        "(PARI) a001615(n) = my(f=factor(n)); prod(i=1, #f~, f[i, 1]^f[i, 2] + f[i, 1]^(f[i, 2]-1));",
+        "isok(n) = a001615(n)==2*eulerphi(n); \\\\ after _Charles R Greathouse IV_ at A001615"
+    ],
+    "xref": [
+        "Cf. A000010, A001615, A062699, A291051, A291932."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, _Amiram Eldar_ and _Altug Alkan_, Sep 15 2017",
+    "references": 1,
+    "revision": 25,
+    "time": "2017-09-19T03:27:39-04:00",
+    "created": "2017-09-18T15:47:23-04:00"
+}

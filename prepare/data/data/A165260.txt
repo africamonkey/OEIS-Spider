@@ -1,0 +1,47 @@
+{
+    "number": 165260,
+    "data": "3,5,15,21,24,28,36,41,59,64,89,100,101,120,131,132,141,153,155,168,180,203,204,208,209,215,220,231,244,280,288,300,309,315,336,341,348,351,395,405,408,429,448,453,455,495,520,540,551,567,568,580,592,636,648",
+    "name": "Short legs of Primitive Pythagorean Triples which have a perimeter which is an average of a twin prime pair.",
+    "example": [
+        "Triples (a,b,c) which satisfy the rules are (3,4,5), (5,12,13), (15,112,113), (21,220,221), (24,143,145), (28,195,197), (36,77,85), (41,840,841), (59,1740,1741), (64,1023,1025), (89,3960,3961), (100,2499,2501),.. 3+4+5=12 -> 11 and 13 are primes, 5+12+13=30 -> 29 and 31 are primes, .."
+    ],
+    "maple": [
+        "isA014574 := proc(n)",
+        "        return ( isprime(n-1) and isprime(n+1) ) ;",
+        "end proc:",
+        "isA165260 := proc(n)",
+        "        local d,bplc,b,c ;",
+        "        for d in numtheory[divisors](n^2) do",
+        "                bplc := n^2/d ;",
+        "                c := (d+bplc)/2 ;",
+        "                b := (bplc-d)/2 ;",
+        "                if type(c,'integer') and type(b,'integer') then",
+        "                if c > b and b >= n then",
+        "                        if igcd(n,b,c) = 1 and  isA014574(n+b+c) then",
+        "                                return true;",
+        "                        end if;",
+        "                end if;",
+        "                end if;",
+        "        end do:",
+        "        return false;",
+        "end proc:",
+        "for n from 3 to 600 do",
+        "        if isA165260(n) then",
+        "                printf(\"%d,\",n);",
+        "        end if;",
+        "end do: # R. J. Mathar, Oct 29 2011"
+    ],
+    "mathematica": [
+        "amax=10^4;lst={};k=0;q=12!;Do[If[(e=((n+1)^2-n^2))>amax,Break[]];Do[If[GCD[m,n]==1,a=m^2-n^2;b=2*m*n;If[GCD[a,b]==1,If[a>b,{a,b}={b,a}];If[a>amax,Break[]];c=m^2+n^2;x=a+b+c;If[PrimeQ[x-1]&&PrimeQ[x+1],k++;AppendTo[lst,a]]]],{m,n+1,12!,2}],{n,1,q,1}];Union@lst"
+    ],
+    "xref": [
+        "Cf. A020884, A014574, A009004, A165261, A165262."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladimir Joseph Stephan Orlovsky_, Sep 11 2009",
+    "references": 2,
+    "revision": 9,
+    "time": "2013-05-30T13:11:08-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

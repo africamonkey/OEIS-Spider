@@ -1,0 +1,42 @@
+{
+    "number": 289196,
+    "data": "1,9,325,51465,30331861,66273667449,556170787050565,18374555799096912585,2414861959450912233421141,1267166974391002542218440851129,2658149210218078451926703769353958085,22299979556058598891936157095746389850916425",
+    "name": "Number of connected dominating sets in the n X n rook graph.",
+    "comment": [
+        "A set of vertices in the n X n rook graph can be represented as a n X n binary matrix. The vertex set will be dominating if either every row contains a 1 or every column contains a 1. - _Andrew Howroyd_, Jul 18 2017"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A289196/b289196.txt\">Table of n, a(n) for n = 1..50</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ConnectedDominatingSet.html\">Connected Dominating Set</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RookGraph.html\">Rook Graph</a>"
+    ],
+    "formula": [
+        "a(n) = A262307(n,n) + 2*Sum_{k=1..n-1} binomial(n,k) * A262307(n,k). - _Andrew Howroyd_, Jul 18 2017"
+    ],
+    "mathematica": [
+        "(* b = A183109, T = A262307 *) b[m_, n_] := Sum[(-1)^j*Binomial[m, j]*(2^(m - j) - 1)^n, {j, 0, m}]; T[_, 1] = T[1, _] = 1; T[m_, n_] := T[m, n] = b[m, n] - Sum[T[i, j]*b[m-i, n-j]*Binomial[m-1, i-1]*Binomial[n, j], {i, 1, m-1}, {j, 1, n-1}]; a[n_] := T[n, n] + 2*Sum[ Binomial[n, k]*T[n, k], {k, 1, n-1}]; Array[a, 12] (* _Jean-Fran\u00e7ois Alcover_, Oct 02 2017, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "G(N)={S=matrix(N, N); T=matrix(N, N); U=matrix(N, N);",
+        "\\\\ S is A183109, T is A262307, U is m X n variant of this sequence.",
+        "for(m=1, N, for(n=1, N,",
+        "S[m, n]=sum(j=0, m, (-1)^j*binomial(m, j)*(2^(m - j) - 1)^n);",
+        "T[m, n]=S[m, n]-sum(i=1, m-1, sum(j=1, n-1, T[i, j]*S[m-i, n-j]*binomial(m-1, i-1)*binomial(n, j)));",
+        "U[m, n]=sum(i=1, m, binomial(m, i)*T[i, n])+sum(j=1, n, binomial(n,j)*T[m, j])-T[m,n] )); U}",
+        "a(n)=G(n)[n, n]; \\\\ _Andrew Howroyd_, Jul 18 2017"
+    ],
+    "xref": [
+        "Cf. A183109, A262307, A286189, A287065."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Eric W. Weisstein_, Jun 28 2017",
+    "ext": [
+        "Terms a(6) and beyond from _Andrew Howroyd_, Jul 18 2017"
+    ],
+    "references": 1,
+    "revision": 14,
+    "time": "2017-10-02T07:58:40-04:00",
+    "created": "2017-06-29T19:52:52-04:00"
+}

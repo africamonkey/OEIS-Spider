@@ -1,0 +1,35 @@
+{
+    "number": 192935,
+    "data": "1,1,4,39,592,12965,378276,14062363,643946920,35426253465,2295988778440,172565368741931,14847924324645996,1446814927797156541,158201328106874927980,19258822568210913998955,2592339296719295037808336,383513887126740027040942577",
+    "name": "E.g.f.: Sum_{n>=0} ((1+x)^n - 1)^n / n!.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A192935/b192935.txt\">Table of n, a(n) for n = 0..280</a>"
+    ],
+    "formula": [
+        "a(n) = (1/n!)* Sum_{k=0..n} Stirling1(n,k)*A108459(k), where the e.g.f. of A108459 = Sum_{n>=0} (exp(n*x)-1)^n/n! (see Vladeta Jovovic's formula in A122400)."
+    ],
+    "example": [
+        "E.g.f: A(x) = 1 + x + 4*x^2/2! + 39*x^3/3! + 592*x^4/4! + 12965*x^5/5! +...",
+        "Expansion of ((1+x)^n-1)^n suggests that the e.g.f. is related to LambertW(x):",
+        "((1+x)^2-1)^2 = 4*x^2 + 4*x^3 + x^4;",
+        "((1+x)^3-1)^3 = 27*x^3 + 81*x^4 + 108*x^5 + 81*x^6 + 36*x^7 + 9*x^8 + x^9;",
+        "((1+x)^4-1)^4 = 256*x^4 + 1536*x^5 + 4480*x^6 + 8320*x^7 + 10896*x^8 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(sum(m=0,n,((1+x+x*O(x^n))^m-1)^m/m!),n)}",
+        "for(n=0, 30, print1(a(n)*n!, \", \"))",
+        "(PARI) {Stirling1(n, k)=n!*polcoeff(binomial(x, n), k)}",
+        "{a(n)=sum(k=0, n, Stirling1(n, k)*k!*polcoeff(sum(m=0,k,(exp(m*x+x*O(x^n))-1)^m/m!),k))}",
+        "for(n=0, 30, print1(a(n)*n!, \", \"))"
+    ],
+    "xref": [
+        "Cf. A192985, A108459, A122400."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jul 13 2011",
+    "references": 2,
+    "revision": 24,
+    "time": "2016-08-16T02:33:48-04:00",
+    "created": "2011-07-14T07:13:42-04:00"
+}

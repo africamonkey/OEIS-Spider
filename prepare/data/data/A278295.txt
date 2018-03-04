@@ -1,0 +1,71 @@
+{
+    "number": 278295,
+    "data": "1,2,7,44,507,10868,437908,33421356,4860115569,1353020399536,723897398723818,746732196670027756,1489203154941738419275,5755222920272113115716592,43188989125323730167491656884,630465046596547626339663980200440",
+    "name": "Number of n X n X n triangular 0..1 arrays with horizontal row sums nondecreasing from top to bottom.",
+    "comment": [
+        "With increasing sums we get A003422(n+1). - _Alois P. Heinz_, Dec 02 2016",
+        "With nondecreasing row elements we get A000108(n+1). - _Alois P. Heinz_, Dec 04 2016"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A278295/b278295.txt\">Table of n, a(n) for n = 0..82</a>"
+    ],
+    "example": [
+        "Some solutions for n=3:",
+        "    0      0      0      0      0      0      0      0      0",
+        "   0 0    0 0    0 0    0 0    0 0    0 0    0 0    0 0    1 0",
+        "  0 0 0  1 0 0  0 1 0  0 0 1  1 1 0  1 0 1  0 1 1  1 1 1  1 0 0"
+    ],
+    "maple": [
+        "noNSumR := proc(n,s)",
+        "    binomial(n,s) ;",
+        "end proc:",
+        "A278295 := proc(n)",
+        "    local a,mtot,p,pa,weakp,c,i ;",
+        "    a := 0 ;",
+        "    mtot := n*(n+1)/2 ;",
+        "    for p from 0 to mtot do",
+        "        for pa in combinat[partition](p+n) do",
+        "            if nops(pa) = n then",
+        "                weakp := [seq(op(i,pa)-1,i=1..nops(pa))] ;",
+        "                c := 1 ;",
+        "                for i from 1 to nops(weakp) do",
+        "                    c := c*noNSumR(i,op(i,weakp)) ;",
+        "                end do:",
+        "                a := a+c ;",
+        "            end if;",
+        "        end do:",
+        "    end do:",
+        "    a;",
+        "end proc: # _R. J. Mathar_, Dec 02 2016",
+        "# second Maple program:",
+        "b:= proc(n, i, k) option remember; `if`(i>n, 1,",
+        "      add(binomial(i, j)*b(n, i+1, j), j=k..i))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Dec 02 2016"
+    ],
+    "mathematica": [
+        "b[n_, i_, k_] := b[n, i, k] = If[i>n, 1, Sum[Binomial[i, j]*b[n, i+1, j], {j, k, i}]]; a[n_] := b[n, 0, 0]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Feb 28 2017, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) rowsum(rowarr) = sum(x=1, #rowarr, rowarr[x])",
+        "is_validcombination(toprow, bottomrow) = if(rowsum(bottomrow) < rowsum(toprow), return(0), return(1))",
+        "nextrowcomb(rowarr) = my(k=#rowarr, i=0); while(rowarr[k]==1, rowarr[k]=0; i++; k--); while(rowarr[k]==0 && k > 1, k--); if(rowarr[k]==1, rowarr[k]=0; rowarr[k+1]=1; k=k+2; while(i > 0, rowarr[k]=1; k++; i--), for(x=k, k+i, rowarr[x]=1)); rowarr",
+        "terms(n) = my(toprows=[[0], [1]], bottomrow=[0, 0], validrows=[]); while(1, for(k=1, #toprows, if(is_validcombination(toprows[k], bottomrow), validrows=concat(validrows, [bottomrow]))); if(vecmin(bottomrow)==1, bottomrow=vector(#bottomrow+1); print1(#validrows, \", \"); toprows=validrows; validrows=[], bottomrow=nextrowcomb(bottomrow)); if(#bottomrow==n+2, break))",
+        "terms(4) \\\\ print initial four terms"
+    ],
+    "xref": [
+        "Cf. A000108, A003422, A256369."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Felix Fr\u00f6hlich_, Nov 30 2016",
+    "ext": [
+        "4 more terms from _R. J. Mathar_, Dec 02 2016",
+        "a(0), a(10)-a(15) from _Alois P. Heinz_, Dec 02 2016"
+    ],
+    "references": 1,
+    "revision": 54,
+    "time": "2017-02-28T22:55:21-05:00",
+    "created": "2016-11-30T13:12:21-05:00"
+}

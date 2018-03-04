@@ -1,0 +1,45 @@
+{
+    "number": 192936,
+    "data": "1,1,3,13,71,463,3497,29975,287265,3042545,35284315,444617525,6048575335,88347242335,1378930649745,22903345844335,403342641729665,7506843094993825,147226845692229875,3034786640911840925,65592491119118514375",
+    "name": "Constant term of the reduction by x^2->x+1 of the polynomial p(n,x)=(x+1)(x+2)...(x+n).",
+    "comment": [
+        "For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232.",
+        "Essentially the same as A192239.- R. J. Mathar, Aug 10 2011"
+    ],
+    "formula": [
+        "a(n) = 1/10*(5-sqrt(5))*GAMMA(n+3/2+1/2*sqrt(5))/GAMMA(3/2+1/2*sqrt(5)) - 1/10*(5+sqrt(5))*GAMMA(1/2*sqrt(5)-1/2)*sin(1/2*Pi*(5+sqrt(5)))*GAMMA(n+3/2-1/2*sqrt(5))/Pi. - _Vaclav Kotesovec_, Oct 26 2012"
+    ],
+    "example": [
+        "The first four polynomials p(n,x) and their reductions are as follows:",
+        "p(0,x)=1",
+        "p(1,x)=x+1 -> x+1",
+        "p(2,x)=(x+1)(x+2) -> 3+4x",
+        "p(3,x)=(x+1)(x+2)(x+3) -> 13+19x",
+        "From these, read",
+        "A192936=(1,1,3,13,...) and A192239=(0,1,3,13,...)"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 26;",
+        "p[0, x] := 1;",
+        "p[n_, x_] := (x + n)*p[n - 1, x];",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "  (* A192936 *)",
+        "Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "  (* A192239 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192744, A192239."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 13 2011",
+    "references": 1,
+    "revision": 13,
+    "time": "2012-10-26T14:15:27-04:00",
+    "created": "2011-07-13T20:20:52-04:00"
+}

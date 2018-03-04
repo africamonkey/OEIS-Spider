@@ -1,0 +1,36 @@
+{
+    "number": 66926,
+    "data": "1,4,9,16,18,24,25,30,36,40,48,49,60,64,70,72,81,84,90,96,100,105,108,112,120,121,126,132,144,150,154,156,160,162,168,169,180,192,196,198,204,208,210,216,220,225,228,234,240,250,252,256,264,270,273,276,280",
+    "name": "Numbers n having a partition n=sum x_i for which sum n/x_i is also a partition of n.",
+    "link": [
+        "Giovanni Resta, <a href=\"/A066926/b066926.txt\">Table of n, a(n) for n = 1..350</a>"
+    ],
+    "example": [
+        "60 is in the sequence because 60 has a partition 4+5+5+10+12+12+12 for which 60/4+60/5+60/5+60/10+60/12+60/12+60/12=5+5+5+6+12+12+15 is also a partition of 60."
+    ],
+    "mathematica": [
+        "Partitionable[n_, x_, y_, terms_] := If[Length[terms]==0||x<0||y<0, False, If[x==0&&y==0, True, If[IntegerQ[n/First[terms]]&&Partitionable[n, x-First[terms], y-n/First[terms], terms], True, Partitionable[n, x, y, Rest[terms]]]]]; TestNum[n_] := Partitionable[n, n, n, Divisors[n]]; Select[Range[100], TestNum]"
+    ],
+    "program": [
+        "(Haskell)",
+        "a066926 n = a066926_list !! (n-1)",
+        "a066926_list = filter f [1..] where",
+        "   f x = elem x $ map sum $ map (map (div x)) $ ps 1 x where",
+        "     ps u 0 = [[]]",
+        "     ps u v = [t:ts | t <- [u..v], t > 1, mod x t == 0, ts <- ps t (v - t)]",
+        "-- _Reinhard Zumkeller_, Jun 07 2015"
+    ],
+    "xref": [
+        "Cf. A066925."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_David Eppstein_, Jan 23 2002",
+    "ext": [
+        "More terms from _Dean Hickerson_, Jan 27 2002"
+    ],
+    "references": 5,
+    "revision": 11,
+    "time": "2015-06-07T04:19:45-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

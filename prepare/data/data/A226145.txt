@@ -1,0 +1,39 @@
+{
+    "number": 226145,
+    "data": "4,5,61,82,142,166,202,233,337,394,418,422,446,493,538,661,670,841,886,1101,1177,1234,1237,1266,1322,1426,1441,1477,1593,1642,1690,1713,1765,1789,1798,1885,1901,1930,1941,2041,2061,2098,2101,2161,2218,2277,2305,2350,2614",
+    "name": "Numbers n such that triangular(n) is a sum of three successive primes.",
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#include <stdlib.h>",
+        "#include <math.h>",
+        "#define TOP (1ULL<<30)",
+        "int main() {",
+        "  unsigned long long i, j, p1, p2, r, s;",
+        "  unsigned char *c = (unsigned char *)malloc(TOP/8);",
+        "  memset(c, 0, TOP/8);",
+        "  for (i=3; i < TOP; i+=2)",
+        "    if ((c[i>>4] & (1<<((i>>1) & 7)))==0 /*&& i<(1ULL<<32)*/)",
+        "        for (j=i*i>>1; j<TOP; j+=i)  c[j>>3] |= 1 << (j&7);",
+        "  for (p2=2, p1=3, i=5; i < TOP; i+=2)",
+        "    if ((c[i>>4] & (1<<((i>>1) & 7)))==0) {",
+        "      s = p2 + p1 + i;",
+        "      r = sqrt(s*2);",
+        "      if (r*(r+1)==s*2) printf(\"%llu, \", r);",
+        "      p2 = p1, p1 = i;",
+        "    }",
+        "  return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A076304, A206279, A226146, A226147, A226148, A226149, A226150.",
+        "Cf. A167788 (the corresponding triangular numbers)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, May 28 2013",
+    "references": 6,
+    "revision": 9,
+    "time": "2018-02-12T03:49:35-05:00",
+    "created": "2013-05-29T12:15:59-04:00"
+}

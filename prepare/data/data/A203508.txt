@@ -1,0 +1,37 @@
+{
+    "number": 203508,
+    "data": "1,3,12,64,354,2160,13518,88374,584409,3980736,27291825,190771995,1339606882,9539905173,68140709607,492072701284,3560322659379,25984705308156,189940383845883,1398103463338725,10302144982761213,76363018655732307,566463003067056519",
+    "name": "G.f.: Product_{n>=0} (1+a(n)*x^(n+1))^3 = Sum_{n>=0} a(n)*x^n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A203508/b203508.txt\">Table of n, a(n) for n = 0..400</a>"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 3*x + 12*x^2 + 64*x^3 + 354*x^4 + 2160*x^5 + 13518*x^6 +...",
+        "where",
+        "A(x) = ((1+x)*(1+3*x^2)*(1+12*x^3)*(1+64*x^4)*(1+354*x^5)*...)^3.",
+        "Related expansion:",
+        "A(x)^(1/3) = 1 + x + 3*x^2 + 15*x^3 + 76*x^4 + 454*x^5 + 2742*x^6 +..."
+    ],
+    "maple": [
+        "A:= proc(n) option remember; local i, p, q; if n=0 then 1 else",
+        "      p, q:= A(n-1), 1; for i from 0 to n-1 do q:= convert(",
+        "        series(q*(1+coeff(p, x, i)*x^(i+1))^3, x, n+1), polynom)",
+        "      od: q fi",
+        "    end:",
+        "a:= n-> coeff(A(n), x, n):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Aug 01 2013"
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoeff(prod(k=0, n-1, (1+a(k)*x^(k+1)+x*O(x^n)))^3, n)}"
+    ],
+    "xref": [
+        "Cf. A032305, A093635."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jan 02 2012",
+    "references": 1,
+    "revision": 9,
+    "time": "2013-08-01T19:27:46-04:00",
+    "created": "2012-01-02T15:10:05-05:00"
+}

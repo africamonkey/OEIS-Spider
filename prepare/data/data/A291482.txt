@@ -1,0 +1,35 @@
+{
+    "number": 291482,
+    "data": "0,1,2,4,8,24,80,456,2368,20352,139648,1577984,13327360,185992832,1860708096,30882985472,356724338688,6860887896064,89815091306496,1963843714723840,28724760194564096,703639672161697792,11370790299166343168,308435832182144040960,5456591088206554333184,162354575283061816197120",
+    "name": "Expansion of e.g.f. arcsin(x)*exp(x).",
+    "formula": [
+        "E.g.f.: exp(x)*x*sqrt(1 - x^2)/(1 - 1*2*x^2/(3 - 1*2*x^2/(5 - 3*4*x^2/(7 - 3*4*x^2/(9 - ...))))), a continued fraction.",
+        "a(n) ~ (exp(2) - (-1)^n) * n^(n-1) / exp(n+1). - _Vaclav Kotesovec_, Aug 26 2017",
+        "From _Emanuele Munarini_, Dec 17 2017: (Start)",
+        "a(n) = Sum_{k=0..(n-1)/2} binomial(n,2*k+1)*binomial(2*k,k)* (2k)!/4^k.",
+        "a(n+4) - 2*a(n+3) - (n^2+4*n+3)*a(n+2) + (n+2)*(2*n+3)*a(n+1) - (n+1)*(n+2)*a(n) = 0. (End)"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x/1! + 2*x^2/2! + 4*x^3/3! + 8*x^4/4! + 24*x^5/5! + ..."
+    ],
+    "mathematica": [
+        "nmax = 25; Range[0, nmax]! CoefficientList[Series[ArcSin[x] Exp[x], {x, 0, nmax}], x]",
+        "nmax = 25; Range[0, nmax]! CoefficientList[Series[Exp[x] x Sqrt[1 - x^2]/(1 + ContinuedFractionK[-2 x^2 Floor[(k + 1)/2] (2 Floor[(k + 1)/2] - 1), 2 k + 1, {k, 1, nmax}]), {x, 0, nmax}], x]",
+        "nmax = 25; Range[0, nmax]! CoefficientList[Series[Sum[(x^(2 k + 1) Pochhammer[1/2, k])/(k! + 2 k k!), {k, 0, Infinity}] Exp[x], {x, 0, nmax}], x]",
+        "Table[Sum[Binomial[n,2k+1]Binomial[2k,k] (2k)!/4^k,{k,0,(n-1)/2}],{n,0,12}] (* _Emanuele Munarini_, Dec 17 2017 *)"
+    ],
+    "program": [
+        "(Maxima) makelist(sum(binomial(n,2*k+1)*binomial(2*k,k)*(2*k)!/4^k,k,0,floor((n-1)/2)),n,0,12); /* _Emanuele Munarini_, Dec 17 2017 */",
+        "(PARI) x='x+O('x^99); concat(0, Vec(serlaplace(asin(x)*exp(x)))) \\\\ _Altug Alkan_, Dec 17 2017"
+    ],
+    "xref": [
+        "Cf. A001818, A009545, A012316, A081919 (first differences)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Aug 24 2017",
+    "references": 2,
+    "revision": 14,
+    "time": "2017-12-18T05:30:21-05:00",
+    "created": "2017-08-24T16:37:42-04:00"
+}

@@ -1,0 +1,56 @@
+{
+    "number": 1258,
+    "id": "M1678 N0660",
+    "data": "1,1,2,6,25,135,892,6937,61886,621956,6946471,85302935,1141820808,16540534553,257745010762,4298050731298,76356627952069,1439506369337319,28699241994332940,603229325513240569,13330768181611378558,308967866671489907656,7493481669479297191451,189793402599733802743015,5010686896406348299630712",
+    "name": "Number of labeled n-node trees with unlabeled end-points.",
+    "reference": [
+        "J.W. Moon, Counting Labelled Trees, Issue 1 of Canadian mathematical monographs, Canadian Mathematical Congress, 1970, Sec. 3.9.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A001258/b001258.txt\">Table of n, a(n) for n = 2..100</a>",
+        "F. Harary, A. Mowshowitz and J. Riordan, <a href=\"https://doi.org/10.1016/S0021-9800(69)80106-7\">Labeled trees with unlabeled end-points</a>, J. Combin. Theory, 6 (1969), 60-64.",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "maple": [
+        "# This gives the sequence but without the initial 1:",
+        "with(combinat);",
+        "R:=proc(n,k) # this gives A055314",
+        "if n=1 then if k=1 then RETURN(1) else RETURN(0); fi",
+        "    elif (n=2 and k=2) then RETURN(1)",
+        "    elif (n=2 and k>2) then RETURN(0)",
+        "    else stirling2(n-2,n-k)*n!/k!;",
+        "    fi;",
+        "end;",
+        "Rstar:=proc(n,k) # this gives A213262",
+        "if k=2 then",
+        "     if n <=4 then RETURN(1); else RETURN((n-2)!/2); fi;",
+        "else",
+        "   if k <= n-2 then add(binomial(n-i-1,k-i)*R(n-k,i), i=2..n-1);",
+        "   elif k=n-1 then 1;",
+        "   else 0;",
+        "   fi;",
+        "fi;",
+        "end;",
+        "[seq(add(Rstar(n,k),k=2..n-1),n=3..20)];"
+    ],
+    "mathematica": [
+        "r[n_, k_] := Which[n == 1, If[k == 1, Return[1], Return[0]], n == 2 && k == 2, Return[1], n == 2 && k > 2, Return[0], n > k > 0, StirlingS2[n-2, n-k]*n!/k!, True, 0]; rstar[n_, k_] := Which[k == 2, If[n <= 4, Return[1], Return[(n-2)!/2]], k <= n-2, Sum[Binomial[n-i-1, k-i]*r[n-k, i], {i, 2, n-1}], k == n-1, 1, True, 0]; Join[{1}, Table[Sum[rstar[n, k], {k, 2, n-1}], {n, 3, 26}]] (* _Jean-Fran\u00e7ois Alcover_, Oct 08 2012, translated from Maple *)",
+        "tStar[2] = 1;",
+        "tStar[n_] :=",
+        "  Sum[(-1)^j Binomial[n - k, j] Binomial[n - 1 - j,",
+        "     k] (n - k - j)^(n - k - 2), {k, 2, n - 1}, {j, 0, n - k - 1}];",
+        "Table[tStar[n], {n, 2, 20}] (* _David Callan_, Jul 18 2014, after Moon reference *)"
+    ],
+    "xref": [
+        "Cf. A151880."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "2,3",
+    "author": "_N. J. A. Sloane_. More terms from _N. J. A. Sloane_, Jun 07 2012",
+    "references": 3,
+    "revision": 32,
+    "time": "2017-05-14T04:36:14-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

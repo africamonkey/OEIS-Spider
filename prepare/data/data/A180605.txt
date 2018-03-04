@@ -1,0 +1,58 @@
+{
+    "number": 180605,
+    "data": "1,2,14,330,25396,6272842,4925166862,12221171869734,95482373388042562",
+    "name": "Number of commutation classes of reduced words for the longest element of a Weyl group of type B_n",
+    "link": [
+        "<a href=\"/A180605/b180605.txt\">Table of n, a(n) for n = 1..9</a>",
+        "Matthew J. Samuel, <a href=\"http://arxiv.org/abs/1101.4655\">Word posets, complexity, and Coxeter groups</a>, arXiv:1101.4655 [math.CO]"
+    ],
+    "example": [
+        "For n=2 the a(2)=2 commutation classes of words are 0101 and 1010.",
+        "For n=3 the a(3)=14 commutation classes of words are those of 210121010, 121012010, 212012010, 120101210, 101210120, 120120120, 210120101, 201012101, 012101201, 201201201, 012010121, 101201012, 010121012, 012012012."
+    ],
+    "maple": [
+        "#classes: Wrapper for computing number of commutation classes; pass a permutation of type B as a list",
+        "#Returns number of commutation classes",
+        "#Longest element is of the form [-1, -2, ..., -n]",
+        "classes:=proc(perm) option remember:",
+        "    RETURN(classesRecurse(Array(perm),-1,1)):",
+        "end:",
+        "#classesRecurse: Recursive procedure for computing number of commutation classes",
+        "classesRecurse:=proc(perm, spot, negs) local swaps, i, sums, c, doneany:",
+        "    sums:=0:",
+        "    doneany:=0:",
+        "    for i from spot to ArrayNumElems(perm)-2 do",
+        "        if i=-1 and perm[1]<0 then",
+        "            perm[1]:=-perm[1]:",
+        "            c:=classes(convert(perm,`list`)):",
+        "            sums:=sums+negs*c+classesRecurse(perm,i+2,-negs):",
+        "            perm[1]:=-perm[1]:",
+        "            doneany:=1:",
+        "        elif i>-1 and perm[i+1]>perm[i+2] then",
+        "            swaps:=perm[i+1]:",
+        "            perm[i+1]:=perm[i+2]:",
+        "            perm[i+2]:=swaps:",
+        "            c:=classes(convert(perm, `list`)):",
+        "            sums:=sums+negs*c+classesRecurse(perm,i+2,-negs):",
+        "            swaps:=perm[i+1]:",
+        "            perm[i+1]:=perm[i+2]:",
+        "            perm[i+2]:=swaps:",
+        "            doneany:=1:",
+        "        end:",
+        "    end:",
+        "    if spot=-1 and doneany=0 then RETURN(1):",
+        "    else RETURN(sums):",
+        "    end:",
+        "end:"
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,2",
+    "author": "_Matthew J. Samuel_, Jan 21 2011",
+    "ext": [
+        "a(9)=95482373388042562 computed with a Java program. - Matthew J. Samuel, Jan 30 2011"
+    ],
+    "references": 1,
+    "revision": 28,
+    "time": "2015-09-18T15:46:16-04:00",
+    "created": "2010-10-02T03:00:00-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 70550,
+    "data": "1,2,2,3,6,10,15,24,40,65,104,168,273,442,714,1155,1870,3026,4895,7920,12816,20737,33552,54288,87841,142130,229970,372099,602070,974170,1576239,2550408,4126648,6677057,10803704,17480760,28284465,45765226",
+    "name": "a(n) = a(n-1) + a(n-3) + a(n-4), starting with a(0..3) = 1, 2, 2, 3.",
+    "comment": [
+        "Shares some properties with Fibonacci sequence.",
+        "The sum of any two alternating terms (terms separated by one other term) produces a Fibonacci number (e.g., 2+6=8, 3+10=13, 24+65=89). The product of any two consecutive or alternating Fibonacci terms produces a term from this series (e.g., 5*8 = 40, 13*5 = 65, 21*8 = 168).",
+        "In Penney's game (see A171861), the number of ways that HTH beats HHH on flip 3,4,5,... - _Ed Pegg Jr_, Dec 02 2010",
+        "The Ca2 sums (see A180662 for the definition of these sums) of triangle A035607 equal the terms of this sequence. - _Johannes W. Meijer_, Aug 05 2011"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A070550/b070550.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "D. Applegate, M. LeBrun, N. J. A. Sloane, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL14/Sloane/carry2.html\">Dismal Arithmetic</a>, J. Int. Seq. 14 (2011) # 11.9.8.",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,1,1)"
+    ],
+    "formula": [
+        "a(n) = F(floor(n/2)+1)*F(ceiling(n/2)+2), with F(n) = A000045(n). - _Ralf Stephan_, Apr 14 2004",
+        "G.f.: (1+x)/(1-x-x^3-x^4) = (1+x)/((1+x^2)*(1-x-x^2))",
+        "a(n) = A126116(n+4) - F(n+3). - _Johannes W. Meijer_, Aug 05 2011",
+        "a(n) = (1+3*i)/10*(-i)^n + (1-3*i)/10*(i)^n + (2+sqrt(5))/5*((1+sqrt(5))/2)^n + (2-sqrt(5))/5*((1-sqrt(5))/2)^n, where i = sqrt(-1). - _Sergei N. Gladkovskii_, Jul 16 2013",
+        "a(n+1)*a(n+3) = a(n)*a(n+2) + a(n+1)*a(n+2) for all n in Z. - _Michael Somos_, Jan 19 2014"
+    ],
+    "example": [
+        "G.f.: 1 + 2*x + 2*x^2 + 3*x^3 + 6*x^4 + 10*x^5 + 15*x^6 + 24*x^7 + ..."
+    ],
+    "maple": [
+        "with(combinat): A070550 := proc(n): fibonacci(floor(n/2)+1) * fibonacci(ceil(n/2)+2) end: seq(A070550(n),n=0..37); # _Johannes W. Meijer_, Aug 05 2011"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1, 0, 1, 1}, {1, 2, 2, 3}, 40] (* _Jean-Fran\u00e7ois Alcover_, Jan 27 2018 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a070550 n = a070550_list !! n",
+        "a070550_list = 1 : 2 : 2 : 3 :",
+        "   zipWith (+) a070550_list",
+        "               (zipWith (+) (tail a070550_list) (drop 3 a070550_list))",
+        "-- _Reinhard Zumkeller_, Aug 06 2011",
+        "(PARI) A070550(n) = fibonacci(n\\2+1)*fibonacci((n+5)\\2) \\\\ _M. F. Hasler_, Aug 06 2011",
+        "(PARI) x='x+O('x^100); Vec((1+x)/(1-x-x^3-x^4)) \\\\ _Altug Alkan_, Dec 24 2015"
+    ],
+    "xref": [
+        "Bisections: A001654, A059929.",
+        "Cf. A049853."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "Sreyas Srinivasan (sreyas_srinivasan(AT)hotmail.com), May 02 2002",
+    "references": 10,
+    "revision": 47,
+    "time": "2018-01-27T13:28:00-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 147681,
+    "data": "1,1,1,3,7,35,139,1001,5701,53109,402985,4605271,43665667,589809987,6735960079,104899483845,1402547616085,24698838710457,378845419610773,7444522779300351,128830635114146047,2792467448952670671,53854927962971227495,1276369340371154144337,27141331409803338993193,698008560075731437652425,16228797258964121571885457,450111715263775132783135875",
+    "name": "Late-growing permutations: number of permutations of 1..n with every partial sum <= the same partial sum averaged over all permutations.",
+    "comment": [
+        "Same as A145874."
+    ],
+    "link": [
+        "David Scambler et al., <a href=\"http://list.seqfan.eu/pipermail/seqfan/2012-August/010018.html\">A147681 Late-growing permutations</a> and follow-up messages on the SeqFan list, Aug 10 2012"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local b, m; m:= n*(n+1)/2;",
+        "      b:= proc(s) option remember; local h, g; h:= nops(s);",
+        "            g:= (n-h+1)*(1+n)/2 -m +add(i, i=s); `if`(h<2, 1,",
+        "            add(`if`(s[i]<=g, b(subsop(i=NULL, s)), 0), i=1..h))",
+        "          end; forget(b);",
+        "      b([$1..n])",
+        "    end:",
+        "seq(a(n), n=0..15);  # _Alois P. Heinz_, Aug 10 2012"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = Module[{b, m}, m = n*(n+1)/2; b[s_List] := b[s] = Module[{h, g}, h = Length[s]; g = (n-h+1)*(1+n)/2 - m + Total[s]; If[h<2, 1, Sum[If[s[[i]] <= g, b[ReplacePart[s, i -> Sequence[]]], 0], {i, 1, h}]]];  b[Range[n]]]; Table[a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Mar 13 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "This the first of 19 related sequence, the others being A147682, A147684, A147686, A147687, A147692, A147694, A147695, A147697, A147698, A147700, A147705, A147707, A147712, A147713, A147714, A147715, A147717, A147769.",
+        "Column k=1 of A215561."
+    ],
+    "keyword": "nonn,hard",
+    "offset": "0,4",
+    "author": "_R. H. Hardin_, May 01 2009",
+    "ext": [
+        "a(22) from _Alois P. Heinz_, Aug 10 2012",
+        "a(23) from _Alois P. Heinz_, Nov 01 2014",
+        "a(24)-a(25) from _Vaclav Kotesovec_, Jan 31 2015",
+        "a(26)-a(27) from _Vaclav Kotesovec_, Sep 07 2016"
+    ],
+    "references": 21,
+    "revision": 27,
+    "time": "2016-09-07T07:07:43-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

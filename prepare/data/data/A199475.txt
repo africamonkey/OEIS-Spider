@@ -1,0 +1,35 @@
+{
+    "number": 199475,
+    "data": "1,2,7,34,195,1225,8146,56336,401005,2918308,21614216,162385693,1234515922,9479336440,73410868630,572719097908,4496923141241,35509806367132,281814387290431,2246608404455588,17982234787607464,144458551104066553,1164342291135424494",
+    "name": "G.f. satisfies: A(x) = Sum_{n>=0} x^n * (1 - A(x)^(2*n+2))/(1 - A(x)^2).",
+    "comment": [
+        "Compare to g.f. B(x) of A007317 (binomial transform of Catalan numbers):",
+        "B(x) = Sum_{n>=0} x^n * (1 - B(x)^(n+1))/(1 - B(x))."
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = 1/((1-x)*(1 - x*A(x)^2)).",
+        "G.f.: A(x) = (1/x)*Series_Reversion( 2*x^2/(1+x^2 - sqrt(1-4*x-2*x^2+x^4)) ).",
+        "G.f. satisfies: A(x) = G(x*A(x)) and G(x) = A(x/G(x)) = g.f. of A171199, where G(x) = exp( Sum_{n>=1} [G(x)^n + G(x)^-n]*x^n/n )."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 7*x^2 + 34*x^3 + 195*x^4 + 1225*x^5 +...",
+        "where g.f. A = A(x) satisfies the equivalent expressions:",
+        "A = 1 + x*(1-A^4)/(1-A^2) + x^2*(1-A^6)/(1-A^2) + x^3*(1-A^8)/(1-A^2) +...",
+        "A = 1 + x*(1 + A^2) + x^2*(1 + A^2 + A^4) + x^3*(1 + A^2 + A^4 + A^6) +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=sum(m=0, n, x^m*sum(k=0, m, A^(2*k))+x*O(x^n))); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,A=1/((1-x)*(1 - x*A^2+x*O(x^n))));polcoeff(A,n)}",
+        "(PARI) {a(n)=polcoeff(1/x*serreverse(2*x^2/(1+x^2-sqrt(1-4*x-2*x^2+x^4+x^3*O(x^n)))),n)}"
+    ],
+    "xref": [
+        "Cf. A171199, A199548, A007317."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 08 2011",
+    "references": 0,
+    "revision": 12,
+    "time": "2012-03-30T18:37:32-04:00",
+    "created": "2011-11-08T16:16:18-05:00"
+}

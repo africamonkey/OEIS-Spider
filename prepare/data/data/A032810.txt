@@ -1,0 +1,41 @@
+{
+    "number": 32810,
+    "data": "2,3,22,23,32,33,222,223,232,233,322,323,332,333,2222,2223,2232,2233,2322,2323,2332,2333,3222,3223,3232,3233,3322,3323,3332,3333,22222,22223,22232,22233,22322,22323,22332,22333,23222,23223",
+    "name": "Numbers using only digits 2 and 3.",
+    "comment": [
+        "Identical to A007931 with substitution of digits 2 -> 3, 1 -> 2, i.e., application of the function A048379 or A256079(n) = n + A002275(A055642(n)). - _M. F. Hasler_, Mar 21 2015"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A032810/b032810.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Ar#10-automatic\">Index entries for 10-automatic sequences</a>."
+    ],
+    "formula": [
+        "a(n) = f(n+1, 0) with f(n, x) = if n=1 then A004086(x) else f(floor(n/2), 10*x + 2 + n mod 2). - _Reinhard Zumkeller_, Sep 06 2008",
+        "a(n) is Theta(n^(log_2 10)); there are about n^(log_10 2) members of this sequence up to n. - _Charles R Greathouse IV_, Mar 18 2010",
+        "a(n) = A007931(n) + A002275(A000523(n+1)). A055642(a(n)) = A000523(n+1). - _M. F. Hasler_, Mar 21 2015"
+    ],
+    "mathematica": [
+        "Flatten[Table[FromDigits[#,10]&/@Tuples[{2,3},n],{n,5}]] (* _Vincenzo Librandi_, May 27 2012 *)"
+    ],
+    "program": [
+        "(MAGMA) [n: n in [1..24000] | Set(Intseq(n)) subset {2, 3}]; // _Vincenzo Librandi_, May 27 2012",
+        "(MAGMA) [n eq 1 select 2 else IsOdd(n) select 10*Self(Floor(n/2))+2 else Self(n-1)+1: n in [1..40]]; // _Bruno Berselli_, May 27 2012",
+        "(Haskell)",
+        "a032810 = f 0 . (+ 1) where",
+        "   f y 1 = a004086 y",
+        "   f y x = f (10 * y + m + 2) x' where (x', m) = divMod x 2",
+        "-- _Reinhard Zumkeller_, Mar 18 2015",
+        "(PARI) A032810(n)=vector(#n=binary(n+1)[2..-1],i,10^(#n-i))*n~+10^#n\\9*2 \\\\ _M. F. Hasler_, Mar 26 2015"
+    ],
+    "xref": [
+        "Cf. A020458, A143967, A248907 (permutation).",
+        "Cf. A032804-A032816 (in other bases), A007088 (digits 0 & 1), A007931 (digits 1 & 2), A032834 (digits 3 & 4), A256290 (digits 4 & 5), A256291 (digits 5 & 6), A256292 (digits 6 & 7), A256340 (digits 7 & 8), A256341 (digits 8 & 9)."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_",
+    "references": 28,
+    "revision": 31,
+    "time": "2017-02-13T00:37:50-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

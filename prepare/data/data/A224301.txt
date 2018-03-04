@@ -1,0 +1,88 @@
+{
+    "number": 224301,
+    "data": "6,12,12,24,30,36,36,42,60,60,60,60,66,72,84,84,84,84,90,90,114,120,120,120,126,126,126,132,156,156,168,168,168,180,180,198,204,210,210,210,210,210,210,216,234,240,252,252,252,264,264,270,288,300,300,306",
+    "name": "Sorted areas of primitive integer Heronian triangles.",
+    "comment": [
+        "The sequence gives the sorted areas of primitive triangles which have integer side lengths and integer areas."
+    ],
+    "link": [
+        "Michael Somos, <a href=\"http://somos.crg4.com/tritab.html\">Heronian Triangle Table</a>"
+    ],
+    "example": [
+        "The smallest Heronian triangle is (3,4,5) as perimeter and area are integers. The first term of the sequence is thus the area of this triangle, which is 6."
+    ],
+    "mathematica": [
+        "AMax=400;",
+        "Do[",
+        "  c=p/b;",
+        "  a1=Sqrt[b^2+c^2+2Sqrt[b^2c^2-4A^2]];",
+        "  a2=Sqrt[b^2+c^2-2Sqrt[b^2c^2-4A^2]];",
+        "  If[IntegerQ[a2]&&GCD[a2,b,c]==1&&a1>a2>=b,A//Sow(*{A,a2,b,c}//Sow*)];",
+        "  If[IntegerQ[a1]&&GCD[a1,b,c]==1,A//Sow(*{A,a1,b,c}//Sow*)];",
+        "  ,{A,6,AMax,6}",
+        "  ,{p,4A^2//Divisors//Select[#,EvenQ[#]&&#>=2A&]&//#/2+2A^2/#&//Select[#,IntegerQ]&}",
+        "  ,{b,p//Divisors//Select[#,#^2>=p&]&}",
+        "]//Reap//Last//Last",
+        "{a1,a2,c}=.;",
+        "(* _Albert Lau_, May 20 2016 *)"
+    ],
+    "program": [
+        "(C++)",
+        "#include<iostream.h>",
+        "#include<conio.h>",
+        "#include<math.h>",
+        "void main(){",
+        "clrscr();",
+        "int i,j,count,n;",
+        "float a,b,c,d,e,s,sa,sb,sc,area;",
+        "cout<<\"Enter maximum area\";",
+        "cin>>n;",
+        "for (i=1;i<=n;i++){",
+        "for (a=1;a<=i;a++){",
+        "for (b=1;b<=a;b++){",
+        "for (c=1;c<=b;c++){",
+        "s=(a+b+c)/2;",
+        "sa=s-a;",
+        "sb=s-b;",
+        "sc=s-c;",
+        "count=0;",
+        "if (s*sa*sb*sc>0)",
+        "area=sqrt(s*sa*sb*sc);",
+        "if (c<a+b){",
+        "if (c>unsigned(a-b)){",
+        "if (area*area==int(area*area)){",
+        "for (j=1;j<=a;j++){",
+        "if (int(a)%j==0)",
+        "if (int(b)%j==0)",
+        "if (int(c)%j==0)",
+        "count=count+j;",
+        "}",
+        "if (count==1)",
+        "if (area==i)",
+        "cout<<\"\\n\"<<c<<\",\"<<b<<\",\"<<a<<\"-->\"<<area;",
+        "}",
+        "}",
+        "}",
+        "}",
+        "}",
+        "}",
+        "}",
+        "getch();",
+        "}",
+        "_Mihir Mathur_"
+    ],
+    "xref": [
+        "Cf. A120131, A120132, A120133, A072294, A188158."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Mihir Mathur_, Apr 03 2013",
+    "ext": [
+        "Definition corrected by _Giovanni Resta_, Apr 03 2013",
+        "More terms from _Giovanni Resta_, Apr 03 2013"
+    ],
+    "references": 5,
+    "revision": 31,
+    "time": "2017-07-30T16:00:46-04:00",
+    "created": "2013-04-03T11:47:52-04:00"
+}

@@ -1,0 +1,63 @@
+{
+    "number": 118575,
+    "data": "1,2,3,4,5,6,7,8,9,12,24,111,112,132,135,144,216,312,315,432,612,624,1116,1212,1344,1416,2112,2232,3168,3312,4112,4224,6624,8112,11112,11115,11133,11172,11232,11313,11331,11424,11664,12132,12216,12312,12432",
+    "name": "Dividuus numbers: numbers which are divisible by (1) the sum of their digits,(2) the product of their digits,(3) the digital root and (4) the multiplicative digital root.",
+    "comment": [
+        "Dividuus : Latin for \"divisible\" Most of these numbers are even, but there are some odd numbers too. However, none of them seem to end on 7 (except for the obvious number 7 itself). Are there numbers in the sequence ending in 7?"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A118575/b118575.txt\">Table of n, a(n) for n = 1..2639</a>"
+    ],
+    "example": [
+        "624 is in the sequence because (1) the sum of its digits is 6+4+2=12, (2) the product of its digits is 6*4*2=48, (3) the digital root is 3, (4) the multiplicative digital root is 6 and 624 is divisible by 12,48,3 and 6."
+    ],
+    "maple": [
+        "filter:= proc(n)",
+        "local L, s,p;",
+        "  L:= convert(n,base,10);",
+        "  s:= convert(L,`+`);",
+        "  if n mod s <> 0 then return false fi;",
+        "  p:= convert(L,`*`);",
+        "  if p = 0 or n mod p <> 0 then return false fi;",
+        "  while s > 10 do",
+        "    s:= convert(convert(s,base,10),`+`);",
+        "  od:",
+        "  if n mod s <> 0 then return false fi;",
+        "  while p > 10 do",
+        "    p:= convert(convert(p, base, 10),`*`);",
+        "  od:",
+        "  p > 0 and n mod p = 0;",
+        "end proc:",
+        "select(filter, [$1..10^4]); # _Robert Israel_, Aug 24 2014"
+    ],
+    "program": [
+        "(Python)",
+        "from operator import mul",
+        "from functools import reduce",
+        "from gmpy2 import t_mod, mpz",
+        "def A031347(n):",
+        "....while (n > 9):",
+        "........n = reduce(mul,(int(d) for d in str(n)))",
+        "....return n",
+        "A118575 = [n for n in range(1,10**9) if A031347(n) and not",
+        "..........(str(n).count('0') or t_mod(n, (1+t_mod((n-1), 9))) or",
+        "..........t_mod(n, A031347(n)) or t_mod(n,sum((mpz(d) for d in str(n))))",
+        "..........or t_mod(n, reduce(mul,(mpz(d) for d in str(n)))))]",
+        "# _Chai Wah Wu_, Aug 26 2014"
+    ],
+    "xref": [
+        "Cf. A007953 (sum of digits), A007954 (product of digits), A010888 (digital root), A031347 (multiplicative digital root).",
+        "Intersection of A038186 and A064700 and A064807.",
+        "Subsequence of A005349, A007602, A038186, A064700, A064807."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "Luc Stevens (lms022(AT)yahoo.com), May 07 2006",
+    "ext": [
+        "Inserted a(17)=216 by _Chai Wah Wu_, Aug 24 2014"
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2014-08-26T09:40:07-04:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

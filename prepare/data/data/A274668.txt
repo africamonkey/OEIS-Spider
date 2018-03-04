@@ -1,0 +1,48 @@
+{
+    "number": 274668,
+    "data": "1,7,109,2095,44401,995647,23161909,552919423,13454515585,332268466327,8302478659069,209447296631503,5325782947464721,136330694520639535,3509805380065157989,90806156097601965055,2359490223343888886785,61541525049445532797735,1610570872210945422212365",
+    "name": "Diagonal of the rational function 1/(1 - x - y - z - x y + x z - y z + x y z).",
+    "comment": [
+        "Annihilating differential operator: x*(5*x+4)*(x^3+19*x^2+27*x-1)*Dx^2 + (15*x^4+206*x^3+363*x^2+216*x-4)*Dx + 5*x^3+33*x^2+36*x+28."
+    ],
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A274668/b274668.txt\">Table of n, a(n) for n = 0..310</a>",
+        "A. Bostan, S. Boukraa, J.-M. Maillard, J.-A. Weil, <a href=\"http://arxiv.org/abs/1507.03227\">Diagonals of rational functions and selected differential Galois groups</a>, arXiv preprint arXiv:1507.03227 [math-ph], 2015.",
+        "Jacques-Arthur Weil, <a href=\"http://www.unilim.fr/pages_perso/jacques-arthur.weil/diagonals/\">Supplementary Material for the Paper \"Diagonals of rational functions and selected differential Galois groups\"</a>"
+    ],
+    "formula": [
+        "G.f.: hypergeom([1/12, 5/12],[1],13824*x^4*(1-27*x-19*x^2-x^3)/(1-28*x+54*x^2+20*x^3+x^4)^3)/(1-28*x+54*x^2+20*x^3+x^4)^(1/4).",
+        "0 = x*(5*x+4)*(x^3+19*x^2+27*x-1)*y'' + (15*x^4+206*x^3+363*x^2+216*x-4)*y' + (5*x^3+33*x^2+36*x+28)*y, where y is the g.f."
+    ],
+    "mathematica": [
+        "gf = Hypergeometric2F1[1/12, 5/12, 1, 13824*x^4*(1 - 27*x - 19*x^2 - x^3) / (1 - 28*x + 54*x^2 + 20*x^3 + x^4)^3]/(1 - 28*x + 54*x^2 + 20*x^3 + x^4)^(1/4);",
+        "CoefficientList[gf + O[x]^20, x] (* _Jean-Fran\u00e7ois Alcover_, Dec 01 2017 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "my(x='x, y='y, z='z);",
+        "R = 1/(1 - x - y - z - x*y + x*z - y*z + x*y*z);",
+        "diag(n, expr, var) = {",
+        "  my(a = vector(n));",
+        "  for (i = 1, #var, expr = taylor(expr, var[#var - i + 1], n));",
+        "  for (k = 1, n, a[k] = expr;",
+        "       for (i = 1, #var, a[k] = polcoeff(a[k], k-1)));",
+        "  return(a);",
+        "};",
+        "diag(10, R, [x, y, z])",
+        "(PARI) \\\\ system(\"wget http://www.jjj.de/pari/hypergeom.gpi\");",
+        "read(\"hypergeom.gpi\");",
+        "N = 21; x = 'x + O('x^N);",
+        "Vec(hypergeom([1/12, 5/12],[1],13824*x^4*(1-27*x-19*x^2-x^3)/(1-28*x+54*x^2+20*x^3+x^4)^3, N)/(1-28*x+54*x^2+20*x^3+x^4)^(1/4))"
+    ],
+    "xref": [
+        "Cf. A268545-A268555."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gheorghe Coserea_, Jul 05 2016",
+    "references": 1,
+    "revision": 18,
+    "time": "2017-12-02T20:47:46-05:00",
+    "created": "2016-07-06T00:50:17-04:00"
+}

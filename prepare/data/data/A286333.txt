@@ -1,0 +1,48 @@
+{
+    "number": 286333,
+    "data": "19,23,29,41,43,47,53,59,61,67,83,89,101,103,107,127,149,157,163,181,191,307,317,331,359,367,701,709,727,739,757,761,787,797,907,937,941,947,983,1103,1109,1123,1181,1301,1319,1327,1949,1951,1979,1987,1993,3121,3187,3361,3373,3701",
+    "name": "Primes p where all the cyclic shifts of their digits to the left also produce primes except the last one before reaching p again.",
+    "comment": [
+        "a(144) = 733793111393, a(145) is larger than 10^16 (if it exists).",
+        "Can be considered as primitive terms of A270083, i.e. terms in A270083 can be obtained by cyclic shifts of the digits of terms in this sequence (and leading zeros are not allowed). - _Chai Wah Wu_, May 21 2017"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A286333/b286333.txt\">Table of n, a(n) for n = 1..144</a>"
+    ],
+    "example": [
+        "1123 is a member as all the cyclic shifts of its digits to the left result are primes (1231, 2311) except the last one (3112) before reaching the original prime."
+    ],
+    "mathematica": [
+        "cyclDigs[k_]:= FromDigits/@ NestList[RotateLeft, IntegerDigits[k], IntegerLength[k]-1]; lftSftNearCircPrmsInBtw[m_, n_]:= ParallelMap[If[ AllTrue[Most[cyclDigs[#]], PrimeQ] && Not@ PrimeQ[Last[cyclDigs[#]]], #, Nothing] &, Prime @ Range[PrimePi[m], PrimePi[n]]];",
+        "lftSftNearCircPrmsInBtw[19, 10^7]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "from sympy import isprime",
+        "A286333_list = []",
+        "for l in range(14):",
+        "    for w in product('1379',repeat=l):",
+        "        for d in '0123456789':",
+        "            for t in '1379':",
+        "                s = ''.join(w)+d+t",
+        "                n = int(s)",
+        "                for i in range(l+1):",
+        "                    if not isprime(int(s)):",
+        "                        break",
+        "                    s = s[1:]+s[0]",
+        "                else:",
+        "                    if n > 10 and not isprime(int(s)):",
+        "                        A286333_list.append(n) # _Chai Wah Wu_, May 21 2017"
+    ],
+    "xref": [
+        "Cf. A270083 (subsequence of), A286415."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Mikk Heidemaa_, May 07 2017",
+    "references": 2,
+    "revision": 46,
+    "time": "2017-05-24T11:35:37-04:00",
+    "created": "2017-05-20T22:09:06-04:00"
+}

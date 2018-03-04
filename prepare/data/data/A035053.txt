@@ -1,0 +1,37 @@
+{
+    "number": 35053,
+    "data": "1,1,1,2,4,9,22,59,165,496,1540,4960,16390,55408,190572,665699,2354932,8424025,30424768,110823984,406734060,1502876903,5586976572,20884546416,78460794158,296124542120,1122346648913,4270387848473",
+    "name": "Number of connected graphs on n unlabeled nodes where every block is a complete graph.",
+    "comment": [
+        "Equivalently, this is the number of \"hypertrees\" on n unlabeled nodes, i.e., connected hypergraphs that have no cycles, assuming that each edge contains at least two vertices. - _Don Knuth_, Jan 26 2008. See A134955 for hyperforests."
+    ],
+    "reference": [
+        "F. Harary and E. M. Palmer, Graphical Enumeration, Academic Press, NY, 1973, p. 71, (3.4.14)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A035053/b035053.txt\">Table of n, a(n) for n = 0..1000</a> (first 201 terms from T. D. Noe)",
+        "Maryam Bahrani and J\u00e9r\u00e9mie Lumbroso, <a href=\"http://arxiv.org/abs/1608.01465\">Enumerations, Forbidden Subgraph Characterizations, and the Split-Decomposition</a>, arXiv:1608.01465 [math.CO], 2016.",
+        "Robert Hellmann and Eckard Bich, <a href=\"http://dx.doi.org/10.1063/1.3626524\">A systematic formulation of the virial expansion for nonadditive interaction potentials</a>, J. Chem. Phys. 135, 084117 (2011); doi:10.1063/1.3626524 (7 pages)."
+    ],
+    "formula": [
+        "G.f.: A(x)=1+(C(x)-1)*(1-B(x)). B: G.f. for A007563. C: G.f. for A035052.",
+        "a(n) ~ c * d^n / n^(5/2), where d = 4.189610958393826965527036454524... (see A245566), c = 0.245899549044224207821149415964395... . - _Vaclav Kotesovec_, Jul 26 2014"
+    ],
+    "maple": [
+        "with(numtheory): etr:= proc(p) local b; b:=proc(n) option remember; `if`(n=0,1, add(add(d*p(d), d=divisors(j)) *b(n-j), j=1..n)/n) end end: b:= etr(B): c:= etr(b): B:= n-> if n=0 then 0 else c(n-1) fi: C:= etr(B): a:= n-> B(n)+C(n) -add(B(k)*C(n-k), k=0..n): seq(a(n), n=0..30); # _Alois P. Heinz_, Sep 09 2008"
+    ],
+    "mathematica": [
+        "ClearAll[etr, b, a]; etr[p_] := etr[p] = Module[{b}, b[n_] := b[n] = If[n == 0, 1, Sum[ Sum[ d*p[d], {d, Divisors[j]}]*b[n-j], {j, 1, n}]/n]; b]; b[0]=0; b[n_] := b[n] = etr[etr[b]][n-1]; a[n_] := b[n] + etr[b][n] - Sum[b[k]*etr[b][n-k], {k, 0, n}]; Table[ a[n], {n, 0, 27}] (* _Jean-Fran\u00e7ois Alcover_, Oct 09 2012, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A007549, A007563, A030019, A035051, A035052, A134957, A134959.",
+        "Cf. A245566."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,4",
+    "author": "_Christian G. Bower_, Oct 15 1998",
+    "references": 10,
+    "revision": 34,
+    "time": "2017-06-23T18:09:26-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

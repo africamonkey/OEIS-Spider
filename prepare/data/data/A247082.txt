@@ -1,0 +1,49 @@
+{
+    "number": 247082,
+    "data": "1,5,365,66605,22687565,12420052205,9972186170765,11039636939221805,16116066766061589965,29996702068513925975405,69334618695849722499185165,194843145588759580915489113005,654210085817395711127396030796365,2586566313303319454399746941903834605,11894287668430209899882926599828701863565",
+    "name": "E.g.f.: (8 - 7*cosh(x)) / (13 - 12*cosh(x)).",
+    "comment": [
+        "The number of 3-level labeled linear rooted trees with 2*n leaves.",
+        "A bisection of A050351.",
+        "a(n) == 5 (mod 360) for n>0."
+    ],
+    "formula": [
+        "E.g.f.: 1/2 + (1/6)*Sum_{n>=0} exp(n^2*x) * (2/3)^n  =  Sum_{n>=0} a(n)*x^n/n!.",
+        "a(n) = Sum_{k=0..2*n} 2^(k-1) * k! * Stirling2(2*n, k) for n>0 with a(0)=1. [After _Vladeta Jovovic_ in A050351]",
+        "a(n) ~ (2*n)! / (6 * (log(3/2))^(2*n+1)). - _Vaclav Kotesovec_, Nov 29 2014"
+    ],
+    "example": [
+        "E.g.f.: E(x) = 1 + 5*x^2/2! + 365*x^4/4! + 66605*x^6/6! + 22687565*x^8/8! +...",
+        "where E(x) = (8 - 7*cosh(x)) / (13 - 12*cosh(x)), or, equivalently,",
+        "E(x) = (7 - 16*exp(x) + 7*exp(2*x)) / (12 - 26*exp(x) + 12*exp(2*x)).",
+        "ALTERNATE GENERATING FUNCTION.",
+        "E.g.f.: A(x) = 1 + 5*x + 365*x^2/2! + 66605*x^3/3! + 22687565*x^4/4! +...",
+        "where",
+        "6*A(x) = 4 + exp(x)*(2/3) + exp(4*x)*(2/3)^2 + exp(9*x)*(2/3)^3 + exp(16*x)*(2/3)^4 + exp(25*x)*(2/3)^5 + exp(36*x)*(2/3)^6 + exp(49*x)*(2/3)^7 +..."
+    ],
+    "mathematica": [
+        "nmax=20; Table[(CoefficientList[Series[(8-7*Cosh[x]) / (13-12*Cosh[x]), {x, 0, 2*nmax}], x] * Range[0, 2*nmax]!)[[n]],{n,1,2*nmax+2,2}] (* _Vaclav Kotesovec_, Nov 29 2014 *)"
+    ],
+    "program": [
+        "(PARI) /* E.g.f.: (8 - 7*cosh(x)) / (13 - 12*cosh(x)): */",
+        "{a(n) = local(X=x+O(x^(2*n+1))); (2*n)!*polcoeff( (8 - 7*cosh(X)) / (13 - 12*cosh(X)) , 2*n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) /* Formula for a(n): */",
+        "{Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)}",
+        "{a(n) = if(n==0, 1, sum(k=0, 2*n, 2^(k-1) * k! * Stirling2(2*n, k) ))}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) /* As the Sum of an Infinite Series: */",
+        "\\p60 \\\\ set precision",
+        "Vec(serlaplace(1/2+1/6*sum(n=0,2000,exp(n^2*x)*(2/3)^n*1.)))"
+    ],
+    "xref": [
+        "Cf. A249938, A249939, A249940, A250914, A250915, A050351."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 28 2014",
+    "references": 4,
+    "revision": 29,
+    "time": "2014-11-29T18:15:53-05:00",
+    "created": "2014-11-28T16:20:26-05:00"
+}

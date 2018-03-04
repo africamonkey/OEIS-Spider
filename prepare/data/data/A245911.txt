@@ -1,0 +1,30 @@
+{
+    "number": 245911,
+    "data": "1,1,12,207,9184,173225,46097856,729481375,454190410752,30607186160529,12762075858688000,1036636706945881151,3080713389889966460928,145084860487902521548921,124325137916420574135066624,56537825009822523196823829375",
+    "name": "Number of pairs of endofunctions f, g on [n] satisfying f(g^n(i)) = f(i) for all i in [n].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A245911/b245911.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "maple": [
+        "with(combinat):",
+        "T:= proc(n, j) T(n, j):= binomial(n-1, j-1)*n^(n-j) end:",
+        "b:= proc(n, i, k) option remember; `if`(n=0 or i=1, x^n,",
+        "      expand(add((i-1)!^j*multinomial(n, n-i*j, i$j)/j!*",
+        "      x^(igcd(i, k)*j)*b(n-i*j, i-1, k), j=0..n/i)))",
+        "    end:",
+        "a:= n-> add((p-> add(n^i*T(n, j)* coeff(p, x, i),",
+        "        i=0..degree(p)))(b(j$2, n)), j=0..n):",
+        "seq(a(n), n=0..20);"
+    ],
+    "xref": [
+        "Main diagonal of A245910.",
+        "Cf. A245988."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 06 2014",
+    "references": 3,
+    "revision": 7,
+    "time": "2014-08-09T17:14:51-04:00",
+    "created": "2014-08-06T15:12:54-04:00"
+}

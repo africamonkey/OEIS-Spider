@@ -1,0 +1,45 @@
+{
+    "number": 34191,
+    "data": "1,1,6,16,103,497,3253,19735,120843,681474,3561696,16938566,73500514,290751447,1052201890,3492397119,10666911842,30064448972,78409442414,189678764492,426539774378,893346071377,1745593733454",
+    "name": "Number of binary codes of length 6 with n words.",
+    "comment": [
+        "Also number of 2-colorings of the vertices of the 6-cube having n nodes of one color.",
+        "The b-file shows the full sequence."
+    ],
+    "reference": [
+        "W. Y. C. Chen, Induced cycle structures of the hyperoctahedral group. SIAM J. Disc. Math. 6 (1993), 353-362.",
+        "H. Fripertinger, Enumeration, construction and random generation of block codes, Designs, Codes, Crypt., 14 (1998), 213-219.",
+        "R. W. Robinson, Numerical implementation of graph counting algorithms, AGRC Grant, Math. Dept., Univ. Newcastle, Australia, 1979."
+    ],
+    "link": [
+        "R. W. Robinson, <a href=\"/A034191/b034191.txt\">Table of n, a(n) for n = 0..65</a>",
+        "H. Fripertinger, <a href=\"http://www.mathe2.uni-bayreuth.de/frib/codes/tables.html\">Isometry Classes of Codes</a>"
+    ],
+    "mathematica": [
+        "From _Robert A. Russell_, May 08 2007: (Start)",
+        "P[ n_Integer ]:=P[ n ]=P[ n,n ];P[ n_Integer,_ ]:={}/;(n<0);(* partitions *)",
+        "P[ 0,_ ]:={{}};P[ n_Integer,1 ]:={Table[ 1,{n} ]};P[ _,0 ]:={};(*S.S. Skiena*)",
+        "P[ n_Integer,m_Integer ]:=Join[ Map[ (Prepend[ #,m ])&,P[ n-m,m ] ],P[ n,m-1 ] ];",
+        "AC[ d_Integer ]:=Module[ {C,M,p}, (* from W.Y.C. Chen algorithm *)",
+        "M[ p_List ]:=Plus@@p!/(Times@@p Times@@(Length/@Split[ p ]!));",
+        "C[ p_List,q_List ]:=Module[ {r,m,k,x},r=If[ 0==Length[ q ],1,2 2^",
+        "IntegerExponent[ LCM@@q,2 ] ];m=LCM@@Join[ p/GCD[ r,p ],q/GCD[ r,q ] ];",
+        "CoefficientList[ Expand[ Product[ (1+x^(k r))^((Plus@@Map[ MoebiusMu[ k/# ]",
+        "2^Plus@@GCD[ #r,Join[ p,q ] ]&,Divisors[ k ] ])/(k r)),{k,1,m} ] ],x ] ];",
+        "Sum[ Binomial[ d,p ]Plus@@Plus@@Outer[ M[ #1 ]M[ #2 ]C[ #1,#2 ]2^(d-Length[ #1 ]-Length[ #2 ])&,P[ p ],P[ d-p ],1 ],{p,0,d} ]/(d!2^d) ];AC[ 6 ]",
+        "(End)"
+    ],
+    "xref": [
+        "Cf. A034188, A034189, A034190, A034192, A034193, A034194, A034195, A034196, A034197."
+    ],
+    "keyword": "nonn,fini,full",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Edited by _N. J. A. Sloane_ at the suggestion of _Andrew Plewe_, May 11 2007"
+    ],
+    "references": 10,
+    "revision": 24,
+    "time": "2015-09-16T05:20:38-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

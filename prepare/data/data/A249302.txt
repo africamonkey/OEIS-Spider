@@ -1,0 +1,64 @@
+{
+    "number": 249302,
+    "data": "22,130,222,246,280,286,288,320,324,326,356,416,426,454,470,494,516,528,556,590,612,634,670,690,738,746,804,818,836,838,870,900,902,904,922,936,1002,1026,1074,1106,1116,1140,1144,1150,1206,1208,1262,1264,1326,1338",
+    "name": "Prime-partitionable numbers a(n) for which there exists a 2-partition of the set of primes < a(n) that has a smallest subset containing three primes only.",
+    "comment": [
+        "Prime-partitionable numbers are defined in A059756.",
+        "To demonstrate that a number is prime-partitionable a suitable 2-partition {P1, P2} of the set of primes < a(n) must be found. In this sequence we are interested in prime-partitionable numbers such that the smallest P1 contains 3 odd primes.",
+        "Conjecture:",
+        "If P1 = {p1a, p1b, p1c} with p1a, p1b and p1c odd primes and p1a < p1b < p1c then the union of the integer solutions to the three equation groups below, {{m1}, {m2}, {m3}}, contains all even members of {a(n)}:",
+        "m1 = v1*p1a + 1   = v2*p1b + p1a = p1c + p1b",
+        "m2 = v3*p1a + 1   = p1b + p1a^2  = p1c + p1a",
+        "m3 = v4*p1a + p1b = v5*p1b + 1   = p1c + p1a",
+        "where v1, v2, v3, v4 and v5 are odd naturals."
+    ],
+    "link": [
+        "Christopher Hunt Gribble, <a href=\"/A249302/b249302.txt\">Table of n, a(n) for n = 1..77</a>",
+        "Christopher Hunt Gribble, <a href=\"/A249302/a249302.txt\">Prime-partitionable numbers with min(#P1)=3</a>",
+        "W. Holsztynski, R. F. E. Strube, <a href=\"http://dx.doi.org/10.1016/0012-365X(78)90059-6\">Paths and circuits in finite groups</a>, Discr. Math. 22 (1978) 263-272.",
+        "R. J. Mathar and M. F. Hasler, <a href=\"http://list.seqfan.eu/pipermail/seqfan/2014-June/013267.html\">Is 52 prime-partitionable?</a>, Seqfan thread (Jun 29 2014), <a href=\"https://arxiv.org/abs/1510.07997\">arXiv:1510.07997</a>",
+        "W. T. Trotter, Jr. and Paul Erd\u0151s, <a href=\"https://www.renyi.hu/~p_erdos/1978-49.pdf\">When the Cartesian product of directed cycles is Hamiltonian</a>, J. Graph Theory 2 (1978) 137-142 DOI:10.1002/jgt.3190020206."
+    ],
+    "example": [
+        "a(1) = 22 because A059756(2) = 22 and both the 2-partitions {3, 13, 19}, {2, 3, 11, 13, 19} and {5, 7, 17}, {2, 5, 7, 11, 17} of the set of primes < 22 demonstrate it."
+    ],
+    "program": [
+        "(PARI)",
+        "prime_part(n)=",
+        "{",
+        "  my (P = primes(primepi(n-1)));",
+        "  for (k1 = 2, #P - 1,",
+        "    for (k2 = 1, k1 - 1,",
+        "      for (k3 = 1, k2 - 1,",
+        "        mask = 2^k1 + 2^k2 + 2^k3;",
+        "        P1 = vecextract(P, mask);",
+        "        P2 = setminus(P, P1);",
+        "        for (n1 = 1, n - 1,",
+        "          bittest(n - n1, 0) || next;",
+        "          setintersect(P1, factor(n1)[,1]~) && next;",
+        "          setintersect(P2, factor(n-n1)[,1]~) && next;",
+        "          next(2)",
+        "        );",
+        "        print1(n, \", \");",
+        "      );",
+        "    );",
+        "  );",
+        "}",
+        "# PP = {{2x, x = 1:1000} - {A245664(n), 1:145}}",
+        "PP=[2, 4, 6, 8, 10, 12, 14, 18, 20, 22, 24, 26, 28, 30, \\",
+        "    32, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, \\",
+        "    ...",
+        "    1980, 1984, 1986, 1988, 1990, 1994, 1996, 1998, 2000];",
+        "for(m=1,#PP,prime_part(PP[m]));"
+    ],
+    "xref": [
+        "Cf. A059756, A244640, A245664."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Christopher Hunt Gribble_, Oct 24 2014",
+    "references": 2,
+    "revision": 38,
+    "time": "2017-09-27T04:38:41-04:00",
+    "created": "2014-11-07T23:13:53-05:00"
+}

@@ -1,0 +1,51 @@
+{
+    "number": 238489,
+    "data": "0,4,11,23,56,80,103,135,204,248,339,395,444,508,576,635,711,860,948,1119,1219,1304,1412,1619,1739,1968,2100,2211,2351,2495,2616,2768,3055,3219,3528,3704,3851,4035,4223,4380,4576,4943,5151,5540,5760,5943,6171,6596,6836,7283",
+    "name": "Numbers k such that k+x+y is a square, where x and y are the two squares nearest to k.",
+    "comment": [
+        "If k is a square then y=k.",
+        "The sequence of terms that are perfect squares begins: 0, 4, 576, 108900, 21086464, 4090114116, 793453377600.",
+        "In other words, numbers x such that x + 2y(y+1) = z^2 has a solution with x in the interval [y^2+1, (y+1)^2], see Sage program. - _Ralf Stephan_, Mar 09 2014",
+        "The nonzero terms which are perfect squares are exactly the squares of A081065. - _Ivan Neretin_, Jun 25 2015"
+    ],
+    "example": [
+        "The two squares nearest to 4 are 1 and 4. Because 4+1+4=9 is a square, 4 is in the sequence.",
+        "The two squares nearest to 11 are 9 and 16. Because 11+9+16=36 is a square, 11 is in the sequence."
+    ],
+    "program": [
+        "(Python)",
+        "def isqrt(a):",
+        "    sr = 1L << (long.bit_length(long(a)) >> 1)",
+        "    while a < sr*sr:  sr>>=1",
+        "    b = sr>>1",
+        "    while b:",
+        "        s = sr + b",
+        "        if a >= s*s:  sr = s",
+        "        b>>=1",
+        "    return sr",
+        "for k in xrange(7777):",
+        "    s = isqrt(k)",
+        "    if s*s==k:  s-=1",
+        "    kxy = k + 2*s*(s+1) + 1   # k + s^2 + (s+1)^2",
+        "    r = isqrt(kxy)",
+        "    if r*r==kxy:  print str(k)+',',",
+        "(Sage)",
+        "def gen_a():",
+        "    n = 1",
+        "    while True:",
+        "        for t in range(n*n + 1, n*n + 2*n + 2):",
+        "            if is_square(t + 2*(n*n + n) + 1):",
+        "                yield t",
+        "    n = n+1              # _Ralf Stephan_, Mar 09 2014"
+    ],
+    "xref": [
+        "Cf. A000290, A238456."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, Feb 27 2014",
+    "references": 5,
+    "revision": 17,
+    "time": "2015-08-11T01:27:49-04:00",
+    "created": "2014-03-10T09:44:49-04:00"
+}

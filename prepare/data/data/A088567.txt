@@ -1,0 +1,52 @@
+{
+    "number": 88567,
+    "data": "1,1,1,2,2,3,4,5,6,7,9,10,13,14,18,19,24,25,31,32,40,41,50,51,63,64,77,78,95,96,114,115,138,139,163,164,194,195,226,227,266,267,307,308,357,358,408,409,471,472,535,536,612,613,690,691,785,786,881,882,995,996,1110,1111",
+    "name": "Number of \"non-squashing\" partitions of n into distinct parts.",
+    "comment": [
+        "\"Non-squashing\" refers to the property that p_1 + p_2 + ... + p_i <= p_{i+1} for all 1 <= i < k: if the parts are stacked in increasing size, at no point does the sum of the parts above a certain part exceed the size of that part."
+    ],
+    "reference": [
+        "Amanda Folsom, Youkow Homma, Jun Hwan Ryu, Benjamin Tong, On a general class of non-squashing partitions, Discrete Mathematics 339 (2016) 1482-1506.",
+        "Y. Homma, J. H. Ryu, B. Tong, Sequence non-squashing partitions, Slides from a talk, 2014; http://sumry.yale.edu/sites/default/files/files/Sequence_nonsquashing_partitions.pdf",
+        "O. J. Rodseth and J. A. Sellers, On a Restricted m-Non-Squashing Partition Function, Journal of Integer Sequences, Vol. 8 (2005), Article 05.5.4."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A088567/b088567.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "N. J. A. Sloane and J. A. Sellers, <a href=\"http://arXiv.org/abs/math.CO/0312418\">On non-squashing partitions</a>, Discrete Math., 294 (2005), 259-274."
+    ],
+    "formula": [
+        "a(0)=1, a(1)=1; and for m >= 1, a(2m) = a(2m-1) + a(m) - 1, a(2m+1) = a(2m) + 1.",
+        "Or, a(0)=1, a(1)=1; and for m >= 1, a(2m) = a(0)+a(1)+...+a(m)-1; a(2m+1) = a(0)+a(1)+...+a(m).",
+        "G.f.: 1 + x/(1-x) + Sum_{k>=1} x^(3*2^(k-1))/Product_{j=0..k} (1-x^(2^j)).",
+        "G.f.: Product_{n>=0} 1/(1-x^(2^n)) - Sum_{n >= 1} ( x^(2^n)/ ((1+x^(2^(n-1)))*Product_{j=0..n-1} (1-x^(2^j)) ) ). (The two terms correspond to A000123 and A088931 respectively.)"
+    ],
+    "example": [
+        "The partitions of n = 1 through 6 are: 1; 2; 3=1+2; 4=1+3; 5=1+4=2+3; 6=1+5=2+4=1+2+3."
+    ],
+    "maple": [
+        "f := proc(n) option remember; local t1,i; if n <= 2 then RETURN(1); fi; t1 := add(f(i),i=0..floor(n/2)); if n mod 2 = 0 then RETURN(t1-1); fi; t1; end;",
+        "t1 := 1 + x/(1-x); t2 := add( x^(3*2^(k-1))/ mul( (1-x^(2^j)),j=0..k), k=1..10); series(t1+t2, x, 256); # increase 10 to get more terms"
+    ],
+    "mathematica": [
+        "max = 63; f = 1 + x/(1-x) + Sum[x^(3*2^(k-1))/Product[(1-x^(2^j)), {j, 0, k}], {k, 1, Log[2, max]}]; s = Series[f, {x, 0, max}] // Normal; a[n_] := Coefficient[s, x, n]; Table[a[n], {n, 0, max}] (* _Jean-Fran\u00e7ois Alcover_, May 06 2014 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (transpose)",
+        "a088567 n = a088567_list !! n",
+        "a088567_list = 1 : tail xs where",
+        "   xs = 0 : 1 : zipWith (+) xs (tail $ concat $ transpose [xs, tail xs])",
+        "-- _Reinhard Zumkeller_, Nov 15 2012"
+    ],
+    "xref": [
+        "Cf. A000123, A088575, A088585, A088931, A089054. A090678 gives sequence mod 2.",
+        "Cf. A187821 (non-squashing partitions of n into odd parts)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_, Nov 30 2003",
+    "references": 17,
+    "revision": 26,
+    "time": "2016-02-22T11:23:31-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

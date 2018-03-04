@@ -1,0 +1,55 @@
+{
+    "number": 102407,
+    "data": "1,1,2,4,10,26,72,206,606,1820,5558,17206,53872,170298,542778,1742308,5627698,18277698,59652952,195541494,643506310,2125255036,7041631854,23400092142,77971706848,260458050034,872040564850,2925902656644",
+    "name": "Number of Dyck paths of semilength n having no ascents of length 1 that start at an odd level.",
+    "comment": [
+        "Number of \u0141ukasiewicz paths of length n having no level steps at an odd level. A \u0141ukasiewicz path of length n is a path in the first quadrant from (0,0) to (n,0) using rise steps (1,k) for any positive integer k, level steps (1,0) and fall steps (1,-1) (see R. P. Stanley, Enumerative Combinatorics, Vol. 2, Cambridge Univ. Press, Cambridge, 1999, p. 223, Exercise 6.19w; the integers are the slopes of the steps). Example: a(2)=2 because we have HH and UD, where U=(1,1), H=(1,0) and D=(1,-1). Column 0 of A102405.",
+        "From _David Callan_, Sep 25 2006: (Start)",
+        "a(n) = number of Dyck n-paths containing no DUDUs. For example, a(3) = 4 counts all five Dyck 3-paths except UDUDUD.",
+        "a(n) = number of Dyck n-paths containing no subpath of the form UUPDD where P is a nonempty Dyck path. For example, a(3) = 4 counts all five Dyck 3-paths except UUUDDD. Deutsch's involution phi on Dyck paths interchanges #DUDUs and #UUPDDs with P a nonempty Dyck path. Phi is defined recursively by phi({})={}, phi(UPDQ)=U phi(Q) D phi(P) where P,Q are Dyck paths.",
+        "a(n) = number of ordered trees on n edges in which each leaf is either the leftmost or rightmost child of its parent. For example, a(3) counts:",
+        ".|....|...../\\.../\\",
+        "./ \\...|....|......|",
+        "......|",
+        "(End)"
+    ],
+    "link": [
+        "E. Deutsch, <a href=\"http://dx.doi.org/10.1016/S0012-365X(98)00370-7\">An involution on Dyck paths and its consequences</a>, Discrete Math., 204 (1999), no. 1-3, 163-166.",
+        "A. Sapounakis, I. Tasoulas and P. Tsikouras, <a href=\"http://dx.doi.org/10.1016/j.disc.2007.03.005\">Counting strings in Dyck paths</a>, Discrete Math., 307 (2007), 2909-2924.",
+        "<a href=\"/index/Lu#Lukasiewicz\">Index entries for sequences related to \u0141ukasiewicz</a>"
+    ],
+    "formula": [
+        "G.f.: (1+z-z^2-sqrt(1-2z-5z^2-2z^3+z^4))/(2z).",
+        "For an explicit formula (from Sapounakis et al.) see the Maple program.",
+        "Let M = the following infinite square production matrix, (where the main diagonal is (1,0,1,0,1,0,...):",
+        "1, 1, 0, 0, 0, 0,...",
+        "1, 0, 1, 0, 0, 0,...",
+        "1, 1, 1, 1, 0, 0,...",
+        "1, 1, 1, 0, 1, 0,...",
+        "1, 1, 1, 1, 1, 1,...",
+        "1, 1, 1, 1, 1, 0,...",
+        "...",
+        "a(n) = top left term in M^n, a(n+1) = sum of top row terms in M^n. Example: top row of M^5 = (26, 19, 16, 7, 3, 1, 0, 0, 0,...) where 26 = a(5) and 72 = a(6) = (26 + 19 + 16 + 7 + 3 + 1). - _Gary W. Adamson_, Jul 11 2011",
+        "Conjecture: (n+1)*a(n) +(-2*n+1)*a(n-1) +5*(-n+2)*a(n-2) +(-2*n+7)*a(n-3) +(n-5)*a(n-4)=0. - _R. J. Mathar_, Jan 04 2017"
+    ],
+    "example": [
+        "a(3)=4 because among the five Dyck paths of semilength 3 only UUDUDD has an ascent of length 1 that starts at an odd level; here U=(1,1) and D=(1,-1)."
+    ],
+    "maple": [
+        "G:=(1+z-z^2-sqrt(1-2*z-5*z^2-2*z^3+z^4))/2/z: Gser:=series(G,z=0,31): 1,seq(coeff(Gser,z^n),n=1..29);",
+        "f:=proc(n) local i,j; add( (1/(n-j))*binomial(n-j,j)* add( binomial(n-2*j,i)*binomial(j+i, n-2*j-i+1), i=0..n-2*j), j=0..n/2 ); end; # _N. J. A. Sloane_, Dec 06 2007"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1 + x - x^2 - Sqrt[1 - 2 x - 5 x^2 - 2 x^3 + x^4]) / (2 x), {x, 0, 30}], x] (* _Vincenzo Librandi_, Mar 20 2015 *)"
+    ],
+    "xref": [
+        "Cf. A102405, A102406."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Emeric Deutsch_, Jan 06 2005",
+    "references": 2,
+    "revision": 25,
+    "time": "2017-01-04T14:27:11-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

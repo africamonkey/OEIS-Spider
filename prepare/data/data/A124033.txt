@@ -1,0 +1,40 @@
+{
+    "number": 124033,
+    "data": "4,31,225,1563,10222,63030,374264,2160300,12196405,67724342,371233523,2014305995,10841722966,57974736592,308361428628,1632877406997",
+    "name": "Number of  n-digit numbers having exactly n prime factors (counted with multiplicity).",
+    "comment": [
+        "Essentially the same as A036335.",
+        "What would be the ratio between a(n) and all possible numbers with n digits for each n?"
+    ],
+    "example": [
+        "a(1) = A006880(1) = 4.",
+        "a(2) = A066265(2) - A066265(1) = 34 - 3 = 31.",
+        "a(3) = A109251(3) - A109251(2) = 247 - 22 = 225.",
+        "a(4) = A114106(4) - A114106(3) = 1712 - 149 = 1563.",
+        "a(5) = A114453(5) - A114453(4) = 11185 - 963 = 10222.",
+        "a(6) = A120047(6) - A120047(5) = 68963 - 5933 = 63030.",
+        "a(7) = A120048(7) - A120048(6) = 409849 - 35585 = 374264.",
+        "a(8) = A120049(8) - A120049(7) = 2367507 - 207207 = 2160300.",
+        "a(9) = A120050(9) - A120050(8) = 13377156 - 1180751 = 12196405.",
+        "a(10) = A120051(10) - A120051(9) = 74342563 - 6618221 = 67724342.",
+        "a(11) = A120052(11) - A120052(10) = 407818620 - 36585097 = 371233523.",
+        "a(12) = A120053(12) - A120053(11) = 2214357712 - 200051717 = 2014305995."
+    ],
+    "mathematica": [
+        "Table[Count[Range[10^(n-1),10^n-1],_?(PrimeOmega[#]==n&)],{n,8}]  (* _Harvey P. Dale_, Apr 22 2011 *)",
+        "AlmostPrimePi[k_Integer, n_] := Module[{a, i}, a[0] = 1; If[k == 1, PrimePi[n], Sum[PrimePi[n/Times @@ Prime[Array[a, k - 1]]] - a[k - 1] + 1, Evaluate[ Sequence @@ Table[{a[i], a[i - 1], PrimePi[(n/Times @@ Prime[Array[a, i - 1]])^(1/(k - i + 1))]}, {i, k - 1}]]]]]; (* _Eric W. Weisstein_, Feb 07 2006 *)",
+        "f[n_] := AlmostPrimePi[n, 10^n - 1] - AlmostPrimePi[n, 10^(n - 1) - 1]; Array[f, 12] (* _Robert G. Wilson v_, Jul 06 2012 *)"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_, Apr 08 2011",
+    "ext": [
+        "Corrected and extended by _Ray Chandler_, Apr 11 2011",
+        "a(9)-a(12) from _Ray Chandler_, Apr 12 2011",
+        "a(13)-a(16) from _Robert G. Wilson v_, Jul 06 2012"
+    ],
+    "references": 2,
+    "revision": 29,
+    "time": "2013-11-21T12:49:00-05:00",
+    "created": "2011-04-11T18:55:07-04:00"
+}

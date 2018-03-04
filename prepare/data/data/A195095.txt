@@ -1,0 +1,37 @@
+{
+    "number": 195095,
+    "data": "1,2,3,8,15,30,63,128,252,510,1023,2040,4095,8190,16365,32768,65535,131040,262143,524280,1048509,2097150,4194303,8388480,16777200,33554430,67108608,134217720,268435455,536870370,1073741823,2147483648,4294966269,8589934590",
+    "name": "G.f.: Sum_{n>=1} -moebius(2*n)*x^n/(1 - 2*x^n).",
+    "comment": [
+        "Compare the g.f. of this sequence with the following identity: Sum_{n>=1} -moebius(2*n)*x^n/(1-x^n) = Sum_{n>=0} x^(2^n).",
+        "Conjecture: Mobius transform of A127804. - _R. J. Mathar_, Sep 14 2011",
+        "a(n) = n*A000048(n), where A000048(n) = number of n-bead necklaces with beads of 2 colors and primitive period n, when turning over is not allowed but the two colors can be interchanged. - _Paul D. Hanna_, Dec 21 2016"
+    ],
+    "formula": [
+        "a(2^n) = 2^(2^n - 1).",
+        "a(p) = 2^(p-1) for odd prime p.",
+        "a(n) = floor(2^(n-1)/n)*n  unless n=3k, k>4. - _M. F. Hasler_, Sep 08 2011",
+        "G.f.: Sum_{n>=1} moebius(2*n-1)*x^(2*n-1)/(1 - 2*x^(2*n-1)). - _Mamuka Jibladze_, Dec 04 2016",
+        "a(n) = Sum_{odd d|n} moebius(d) * 2^(n/d-1), where moebius(n) = A008683(n). - _Paul D. Hanna_, Dec 21 2016"
+    ],
+    "example": [
+        "G.f. = x + 2*x^2 + 3*x^3 + 8*x^4 + 15*x^5 + 30*x^6 + 63*x^7 + 128*x^8 + ..."
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(m=1,n,-moebius(2*m)*x^m/(1-2*x^m+x*O(x^n))^1),n)}",
+        "for(n=1,30,print1(a(n),\", \"))",
+        "(PARI) {a(n) =  sumdiv(n,d, if(d%2==1, moebius(d) * 2^(n/d-1) ) )}",
+        "for(n=1,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A011946 (differs from a(15) on). - _M. F. Hasler_, Sep 08 2011",
+        "Cf. A127804, A000048, A008683."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Sep 08 2011",
+    "references": 1,
+    "revision": 31,
+    "time": "2016-12-21T12:50:09-05:00",
+    "created": "2011-09-08T20:37:38-04:00"
+}

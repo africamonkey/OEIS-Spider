@@ -1,0 +1,43 @@
+{
+    "number": 180666,
+    "data": "0,1,2,6,15,41,106,279,729,1911,5001,13095,34281,89752,234971,615165,1610520,4216400,11038675,28899630,75660210,198081006,518582802,1357667406,3554419410,9305590831,24362353076,63781468404",
+    "name": "Golden Triangle sums: a(n)=a(n-4)+A001654(n) with a(0)=0, a(1)=1, a(2)=2 and a(3)=6.",
+    "comment": [
+        "The a(n) are the Gi2 sums of the Golden Triangle A180662. See A180662 for information about these giraffe and other chess sums."
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (2,2,-1,1,-2,-2,1)."
+    ],
+    "formula": [
+        "a(n) = a(n-4)+A001654(n) with a(0)=0, a(1)=1, a(2)=2 and a(3)=6.",
+        "G.f.: (-x)/((x^2-3*x+1)*(x-1)*(x+1)^2*(x^2+1)).",
+        "a(n) = add(A180662(n-3*k,n-4*k),k=0..floor(n/4)),n=0..nmax).",
+        "120*a(n) = 8*A001519(n) -10*A087960(n) -9*(-1)^n -15 -6*(n+1)*(-1)^n. - _R. J. Mathar_, Aug 18 2016"
+    ],
+    "maple": [
+        "nmax:=27: with(combinat): for n from 0 to nmax do A001654(n):=fibonacci(n)*fibonacci(n+1) od: a(0):=0: a(1):=1: a(2):=2: a(3):=6: for n from 4 to nmax do a(n):=a(n-4)+A001654(n) od: seq(a(n),n=0..nmax);",
+        "A180666 := proc(n)",
+        "    option remember;",
+        "    if n <=3 then",
+        "        op(n+1,[0,1,2,6]) ;",
+        "    else",
+        "        procname(n-4)+A001654(n) ;",
+        "    end if;",
+        "end proc:",
+        "seq(A180666(n),n=0..100 ) ; # _R. J. Mathar_, Aug 18 2016"
+    ],
+    "mathematica": [
+        "Take[Total@{#, PadLeft[Drop[#, -4], Length@ #]}, Length@ # - 4] &@ Table[Times @@ Fibonacci@ {n, n + 1}, {n, 0, 31}] (* or *)",
+        "CoefficientList[Series[(-x)/((x^2 - 3 x + 1) (x - 1) (x + 1)^2 (x^2 + 1)), {x, 0, 27}], x] (* _Michael De Vlieger_, Aug 18 2016 *)"
+    ],
+    "xref": [
+        "Cf. A064831, A180664, A180665, A115730, A180666."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Johannes W. Meijer_, Sep 21 2010",
+    "references": 6,
+    "revision": 10,
+    "time": "2016-08-18T09:50:36-04:00",
+    "created": "2010-10-02T03:00:00-04:00"
+}

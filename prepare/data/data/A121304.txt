@@ -1,0 +1,42 @@
+{
+    "number": 121304,
+    "data": "1,1,2,5,5,14,17,32,53,76,139,198,334,515,798,1280,1938,3075,4710,7299,11298,17296,26738,40874,62763,96036,146674,224210,341562,520767,792375,1204951,1831124,2779234,4217008,6391663,9683056,14659038,22177341",
+    "name": "Number of parts in all the compositions of n into primes (i.e., in all ordered sequences of primes having sum n).",
+    "comment": [
+        "a(n) = Sum_{k=1..floor(n/2)} k*A121303(n,k)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A121304/b121304.txt\">Table of n, a(n) for n = 2..1000</a>"
+    ],
+    "formula": [
+        "G.f.: (Sum_{i>=1} z^prime(i))/(1 - Sum_{i>=1} z^prime(i))^2."
+    ],
+    "example": [
+        "a(8) = 17 because the compositions of 8 into primes are [3,5], [5,3], [2,3,3], [3,2,3], [3,3,2] and [2,2,2,2], having a total of 2+2+3+3+3+4 = 17 parts."
+    ],
+    "maple": [
+        "g:=sum(z^ithprime(i),i=1..53)/(1-sum(z^ithprime(i),i=1..53))^2: gser:=series(g,z=0,48): seq(coeff(gser,z,n),n=2..45);",
+        "# second Maple program:",
+        "with(numtheory):",
+        "b:= proc(n) option remember; local j; if n=0 then [1]",
+        "      else []; for j to pi(n) do zip((x, y)->x+y, %,",
+        "      [0, b(n-ithprime(j))[]], 0) od; % fi",
+        "    end:",
+        "a:= n->(l-> add(l[i]*(i-1), i=2..nops(l)))(b(n)):",
+        "seq(a(n), n=2..50);  # _Alois P. Heinz_, Nov 08 2013"
+    ],
+    "mathematica": [
+        "nn=40;a[x_]:=Sum[x^Prime[n],{n,1,nn}];Drop[CoefficientList[Series[D[1/(1-y a[x]),y]/.y ->1,{x,0,nn}],x],2] (* _Geoffrey Critzer_, Nov 08 2013 *)",
+        "Table[Length[Flatten[Union[Flatten[Permutations/@Select[ IntegerPartitions[ n], AllTrue[ #,PrimeQ]&],1]]]],{n,2,40}] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Oct 24 2016 *)"
+    ],
+    "xref": [
+        "Cf. A121303."
+    ],
+    "keyword": "nonn",
+    "offset": "2,3",
+    "author": "_Emeric Deutsch_, Aug 06 2006",
+    "references": 5,
+    "revision": 18,
+    "time": "2017-07-21T13:37:24-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

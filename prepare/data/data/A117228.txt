@@ -1,0 +1,44 @@
+{
+    "number": 117228,
+    "data": "1,2,3,4,5,6,7,8,9,111,2112,4224,13131,21112,21312,31113,42624,211112,234432,1113111,2111112,2114112,2118112,21122112,61111116,111111111,211121112,211242112,211262112,213141312,2111111112,2112332112,2114114112,2131221312",
+    "name": "Palindromes which are divisible by the product and by the sum of their digits.",
+    "comment": [
+        "Intersection of A082232 and A117057.",
+        "Are there infinitely many terms that don't contain a 1? - _Derek Orr_, Aug 25 2014"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A117228/b117228.txt\">Table of n, a(n) for n = 1..91</a>"
+    ],
+    "example": [
+        "42624 is divisible by 4*2*6*2*4 and by 4+2+6+2+4."
+    ],
+    "program": [
+        "(Python)",
+        "from operator import mul",
+        "from functools import reduce",
+        "from gmpy2 import t_mod, mpz",
+        "A117228 = sorted([mpz(n) for n in (str(x)+str(x)[::-1] for x in range(1,10**8))",
+        "..........if not (n.count('0') or t_mod(mpz(n), sum((mpz(d) for d in n)))",
+        "..........or t_mod(mpz(n), reduce(mul,(mpz(d) for d in n))))]+",
+        "..........[mpz(n) for n in (str(x)+str(x)[-2::-1] for x in range(10**8))",
+        "..........if not (n.count('0') or t_mod(mpz(n), sum((mpz(d) for d in n)))",
+        "..........or t_mod(mpz(n), reduce(mul,(mpz(d) for d in n))))])",
+        "# _Chai Wah Wu_, Aug 25 2014",
+        "(PARI)",
+        "rev(n)=r=\"\";d=digits(n);for(i=1,#d,r=concat(Str(d[i]),r));eval(r)",
+        "for(n=1,10^7,d=digits(n);if(rev(n)==n,p=prod(i=1,#d,d[i]);if(p&&n%p==0&&n%sumdigits(n)==0,print1(n,\", \")))) \\\\ _Derek Orr_, Aug 25 2014"
+    ],
+    "xref": [
+        "Cf. A002113, A082232, A117057."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Giovanni Resta_, Apr 22 2006",
+    "ext": [
+        "More terms from _Chai Wah Wu_, Aug 22 2014"
+    ],
+    "references": 3,
+    "revision": 12,
+    "time": "2014-08-26T03:57:48-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

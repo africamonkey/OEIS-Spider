@@ -1,0 +1,46 @@
+{
+    "number": 295163,
+    "data": "1,5,17,53,3077,83501,425645,2270045,2717873,9038141,35452673,197759717,523608245,827370449,5734125917,46548912269,117539270981,207572633873,286185056525,439600764977,804164538869,1599998981789,20114203639877,102098975067917",
+    "name": "Max odd N reached by Collatz sequence \"record setters\".",
+    "comment": [
+        "Sequence A025587 gives the starting numbers which \"break the record\", in the Collatz problem, for the ratio of the highest (even) number reached to the starting number. This sequence gives the corresponding highest odd number reached. That is, a(n) = highest odd number reached in Collatz problem starting from A025587(n) = (highest even number reached, minus 1) divided by 3. It is therefore monotonic increasing by definition, and also a(n)/A025587(n) is monotonic increasing by definition."
+    ],
+    "link": [
+        "Howard A. Landman, <a href=\"/A295163/b295163.txt\">Table of n, a(n) for n = 0..31</a>",
+        "<a href=\"/index/3#3x1\">Index entries for sequences related to 3x+1 (or Collatz) problem</a>"
+    ],
+    "program": [
+        "(Python 3)",
+        "# Print numbers with higher ratio of max Collatz descendant to self",
+        "# than that of any previous number.",
+        "# First column is OEIS sequence A025587 (the starting numbers).",
+        "# Second column is this sequence (their max odd descendants).",
+        "# Third column is OEIS sequence A061523 (before truncation).",
+        "i = 1",
+        "max_ratio = 1.0",
+        "while(True):",
+        "    n = i",
+        "    max_n = n",
+        "    while n >= i: # Done as soon as we dip below starting point",
+        "        n = 3*n + 1",
+        "        max_n = max(n, max_n)",
+        "        while (n&1) == 0:",
+        "            n = n >> 1",
+        "    ratio = float(max_n) / i",
+        "    if ratio > max_ratio:",
+        "        max_ratio = ratio",
+        "        print(i, (max_n - 1)/3, max_ratio)",
+        "    i += 2",
+        "# _Howard A. Landman_, Nov 15 2017"
+    ],
+    "xref": [
+        "Cf. A025587 for starting numbers and A061523 for (truncated, even) blowup factors."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Howard A. Landman_, Nov 14 2017",
+    "references": 2,
+    "revision": 21,
+    "time": "2018-02-05T17:05:06-05:00",
+    "created": "2017-11-16T00:58:43-05:00"
+}

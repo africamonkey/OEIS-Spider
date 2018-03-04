@@ -1,0 +1,61 @@
+{
+    "number": 165921,
+    "data": "0,0,0,1,1,3,4,9,15,31,53,105,189,363,672,1285,2407,4599,8704,16641,31713,60787,116390,223696,429975,828495,1597440,3085465,5964488,11545611,22368256,43383477,84212475,163617801,318140816,619094385,1205595657,2349383715,4581280972,8939118925,17452532040,34093383807",
+    "name": "Number of 6-elements orbits of S3 action on irreducible polynomials of degree n>1 over GF(2).",
+    "comment": [
+        "The terms are denoted h_6 in the Michon/Ravache reference."
+    ],
+    "link": [
+        "J.-F. Michon, P. Ravache, <a href=\"http://dx.doi.org/10.1016/j.ffa.2010.01.004\">On different families of invariant irreducible polynomials over F_2[X]</a>, Finite fields & Applications, 16 (2010) 163-174."
+    ],
+    "formula": [
+        "(see PARI code)"
+    ],
+    "mathematica": [
+        "L[n_, k_] := DivisorSum[GCD[n, k], MoebiusMu[#]*Binomial[n/#, k/#] &];",
+        "A165920[n_] := Sum[If[(n + k) ~Mod~ 3 == 1, L[n, k], 0], {k, 0, n}]/n;",
+        "A001037[n_] := If[n == 0, 1, DivisorSum[n, MoebiusMu[#]*2^(n/#) &]/n];",
+        "A000048[n_] := DivisorSum[n, Mod[#, 2]*(MoebiusMu[#]*2^(n/#)) &]/(2*n);",
+        "A165921[n_] := Module[{an},",
+        "  If[n <= 2, Return[0]];",
+        "  an = A001037[n];",
+        "  If[Mod[n, 2] == 0, an -= 3*A000048[n/2]];",
+        "  If[Mod[n, 3] == 0, an -= 2*A165920[n/3]];",
+        "  an /= 6;",
+        "  Return[an]",
+        "];",
+        "Table[A165921[n], {n, 2, 50}] (* _Jean-Fran\u00e7ois Alcover_, Dec 02 2015, adapted from _Joerg Arndt_'s PARI script *)"
+    ],
+    "program": [
+        "(PARI)",
+        "L(n, k)=sumdiv(gcd(n, k), d, moebius(d) * binomial(n/d, k/d) );",
+        "A165920(n)=sum(k=0, n, if( (n+k)%3==1, L(n, k), 0 ) ) / n;",
+        "A001037(n)=if(n<1, n==0, sumdiv(n, d, moebius(d)*2^(n/d))/n);",
+        "A000048(n)=sumdiv(n, d, (d%2)*(moebius(d)*2^(n/d)))/(2*n);",
+        "A165921(n)= /* this sequence */",
+        "{",
+        "    my(an);",
+        "    if ( n<=2, return(0) );",
+        "    an = A001037(n);",
+        "    if (n%2==0, an -= 3*A000048(n/2) );",
+        "    if (n%3==0, an -= 2*A165920(n/3) );",
+        "    an /= 6;",
+        "    return( an );",
+        "}",
+        "/* _Joerg Arndt_, Jul 12 2012 */"
+    ],
+    "xref": [
+        "A001037 is the enumeration by degree of the irreducible polynomials over GF(2), A000048 is the number of 3-elements orbits, A165920 is the number of 2-elements orbits.",
+        "Cf. A011957."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "2,6",
+    "author": "_Jean Francis Michon_, Philippe Ravache (philippe.ravache(AT)univ-rouen.fr), Sep 30 2009",
+    "ext": [
+        "Incorrect formula removed, more terms added, _Joerg Arndt_, Jul 12 2012"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2015-12-02T15:24:35-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

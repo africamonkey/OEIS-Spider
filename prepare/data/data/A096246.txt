@@ -1,0 +1,31 @@
+{
+    "number": 96246,
+    "data": "2,3,5,7,11,13,19,23,29,37,43,47,53,59,61,73,79,83,101,107,109,137,149,151,157,163,167,173,179,197,211,229,277,281,293,307,311,313,317,331,347,349,359,389,397,419,421,457,461,467,557,563,569,587,599,601,613",
+    "name": "Base-2 deletable primes (written in base 10).",
+    "comment": [
+        "A prime p is a base-b deletable prime if when written in base b it has the property that removing some digit leaves either the empty string or another deletable prime. However, in base 2 we adopt the convention that 2 = 10 and 3 = 11 are deletable.",
+        "Deleting a digit cannot leave any leading zeros in the new string. For example, deleting the 2 in 2003 to obtain 003 is not allowed."
+    ],
+    "link": [
+        "Lei Zhou, <a href=\"/A096246/b096246.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "isDel := proc(n::integer) local b2,redu,rpr,d; if n = 2 or n =3 then RETURN(true); elif not isprime(n) then RETURN(false); else b2 := convert(n,base,2); for d from 1 to nops(b2) do redu := [op(1..d-1,b2),op(d+1..nops(b2),b2) ]; if op(nops(redu),redu) = 1 then rpr := sum( op(i,redu)*2^(i-1),i=1..nops(redu)); if isDel(rpr) then RETURN(true); fi; fi; od; RETURN(false); fi; end: for n from 1 to 200 do if isDel(ithprime(n)) then printf(\"%d,\",ithprime(n)); fi; od: # _R. J. Mathar_, Apr 25 2006"
+    ],
+    "mathematica": [
+        "a = {}; c = {1}; While[Length[a] < 100, b = c; c = {}; lb = Length[b]; Do[nb = b[[ib]]; cdb = RealDigits[nb, 2]; db = cdb[[1]]; ldb = cdb[[2]]; Do[dc = Insert[db, 0, j]; nc = FromDigits[dc, 2]; If[PrimeQ[nc], AppendTo[c, nc]], {j, 2, ldb + 1}]; Do[dc = Insert[db, 1, j]; nc = FromDigits[dc, 2]; If[PrimeQ[nc], AppendTo[c, nc]], {j, 2, ldb + 1}], {ib, 1, lb}]; c = Union[{}, c]; a = Union[a, c]]; a (* _Lei Zhou_, Mar 06 2015 *)"
+    ],
+    "xref": [
+        "Cf. A080608, A080603, A096235-A096245."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Michael Kleber_, Feb 28 2003",
+    "ext": [
+        "More terms from _R. J. Mathar_, Apr 25 2006"
+    ],
+    "references": 16,
+    "revision": 17,
+    "time": "2015-03-19T07:09:08-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

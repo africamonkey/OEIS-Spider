@@ -1,0 +1,44 @@
+{
+    "number": 79289,
+    "data": "1,1,2,3,6,9,17,26,47,73,128,201,345,546,923,1469,2456,3925,6509,10434,17199,27633,45344,72977,119345,192322,313715,506037,823848,1329885,2161925,3491810,5670119,9161929,14864816,24026745,38957097,62983842",
+    "name": "For even n, a(n) = a(n-2) + a(n-1) + 2^(n/2-2), n>2. For odd n, a(n) = a(n-2) + a(n-1).",
+    "comment": [
+        "Generalized Fibonacci sequence: a(n) = a(n-2) + a(n-1), and for even n a row sum of Pascal's triangle (a power of two) is added.",
+        "Call a multiset of nonzero integers good if the sum of the cubes is the square of the sum. The number of ascending chains of good multisets starting from the empty set by adding one element at a time is a(n). - _Michael Somos_, Apr 14 2005",
+        "a(n) is the number of compositions of n which consist of an initial (possibly empty) subsequence of even summands and a remaining (possibly empty) sequence of odd summands."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A079289/b079289.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (1,3,-2,-2)."
+    ],
+    "formula": [
+        "a(n) = a(n-2) + a(n-1) + floor(2^(n/2-2))*(1-(-1)^(n+1))/2 for n>1.",
+        "G.f.: (1-x^2)^2/((1-x-x^2)*(1-2*x^2)).",
+        "a(n) = -A016116(n+1)/2 +A000045(n+2), n>0. - _R. J. Mathar_, Sep 27 2012",
+        "From _Gregory L. Simay_, Jul 25 2016: (Start)",
+        "If n = 2k+1, a(n) = the convolution Sum_{j=0,..k} c(j)*F(n-2j), where c(j) = A011782(j) = 2^(j-1) and f(j)= A000045(j).",
+        "If n = 2k, a(n) = c(k) + the convolution Sum_{j=0,..(k-1)} c(j)*F(n-2j), where c(j)=A011782(j)=2^(j-1) and f(j)= A000045(j). (End)"
+    ],
+    "example": [
+        "a(4) = 6 from the good multisets {-1,-1,1,1}, {-1,1,1,2}, {-2,-1,1,2}, {-2,1,2,2}, {-3,1,2,3}, {1,2,3,4}.",
+        "a(4) = 6 because there are six compositions of four, in which the initial parts are all even and the final parts are all odd: 4, 3+1, 1+3, 2+2, 2+1+1, 1+1+1+1."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1-x^2)^2/(1-x-x^2)/(1-2x^2),{x,0,37}],x]",
+        "LinearRecurrence[{1,3,-2,-2}, {1,1,2,3}, 25] (* _G. C. Greubel_, Aug 16 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A); if(n<3,(n>=0)+(n>1), A=vector(n,i,i); for(i=3,n,A[i]=A[i-1]+A[i-2]+ if(i%2==0,2^(i/2-2))); A[n])} /* _Michael Somos_, Apr 14 2005 */",
+        "(MAGMA) I:=[1,1,2,3,6]; [n le 5 select I[n] else Self(n-1)+3*Self(n-2) -2*Self(n-3)-2*Self(n-4): n in [1..40]]; // _Vincenzo Librandi_, Aug 05 2013"
+    ],
+    "xref": [
+        "Cf. A000045, A005674, A007318, A011782, A061667 (bisection)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Paul Barry_, Feb 08 2003",
+    "references": 3,
+    "revision": 38,
+    "time": "2016-08-27T02:22:35-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

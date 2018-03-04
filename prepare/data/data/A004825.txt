@@ -1,0 +1,74 @@
+{
+    "number": 4825,
+    "data": "0,1,2,3,8,9,10,16,17,24,27,28,29,35,36,43,54,55,62,64,65,66,72,73,80,81,91,92,99,118,125,126,127,128,129,133,134,136,141,152,153,155,160,179,189,190,192,197,216,217,218,224,225,232,243,244,250,251,253",
+    "name": "Numbers that are the sum of at most 3 positive cubes.",
+    "comment": [
+        "Or: numbers which are the sum of 3 (not necessarily distinct) nonnegative cubes. - _R. J. Mathar_, Sep 09 2015",
+        "Deshouillers, Hennecart, & Landreau conjecture that this sequence has density 0.0999425... = lim_K sum_{k=1..K} exp(c*rho(k,K)/K^2)/K where c = -gamma(4/3)^3/6 = -0.1186788..., K takes increasing values in A003418 (or, equivalently, A051451), and rho(k0,K) is the number of triples 1 <= k1,k2,k3 <= K such that k0 = k1^3 + k2^3 + k3^3 mod K. - _Charles R Greathouse IV_, Sep 16 2016"
+    ],
+    "link": [
+        "T. D. Noe and Alois P. Heinz, <a href=\"/A004825/b004825.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from T. D. Noe)",
+        "Jean-Marc Deshouillers, Fran\u00e7ois Hennecart, and Bernard Landreau, <a href=\"http://link.springer.com/chapter/10.1007/11792086_11\">On the density of sums of three cubes</a>, ANTS-VII (2006), pp. 141-155.",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of cubes</a>"
+    ],
+    "maple": [
+        "isA004825 := proc(n)",
+        "    local x,y,zc ;",
+        "    for x from 0 do",
+        "        if 3*x^3 > n then",
+        "            return false;",
+        "        end if;",
+        "        for y from x do",
+        "            if x^3+2*y^3 > n then",
+        "                break;",
+        "            else",
+        "                zc := n-x^3-y^3 ;",
+        "                if zc >= y^3 and isA000578(zc) then",
+        "                    return true;",
+        "                end if;",
+        "            end if;",
+        "        end do:",
+        "    end do:",
+        "end proc:",
+        "A004825 := proc(n)",
+        "    option remember;",
+        "    local a;",
+        "    if n = 1 then",
+        "        0;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if isA004825(a) then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "seq(A004825(n),n=1..100) ; # _R. J. Mathar_, Sep 09 2015",
+        "# second Maple program:",
+        "b:= proc(n, i, t) option remember; n=0 or i>0 and t>0",
+        "      and (b(n, i-1, t) or i^3<=n and b(n-i^3, i, t-1))",
+        "    end:",
+        "a:= proc(n) option remember; local k;",
+        "      for k from 1+ `if`(n=1, -1, a(n-1))",
+        "      while not b(k, iroot(k, 3), 3) do od; k",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Sep 16 2016"
+    ],
+    "mathematica": [
+        "q=7; imax=q^3; Select[Union[Flatten[Table[x^3+y^3+z^3, {x,0,q}, {y,x,q}, {z,y,q}]]], #<=imax&] (* _Vladimir Joseph Stephan Orlovsky_, Apr 20 2011 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List(),k,t); for(x=0,sqrtnint(lim\\=1,3), for(y=0, min(sqrtnint(lim-x^3,3),x), k=x^3+y^3; for(z=0,min(sqrtnint(lim-k,3), y), listput(v, k+z^3)))); Set(v) \\\\ _Charles R Greathouse IV_, Sep 14 2015"
+    ],
+    "xref": [
+        "A003072 is a subsequence.",
+        "Cf. A004999."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_.",
+    "references": 5,
+    "revision": 35,
+    "time": "2016-09-16T14:29:35-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 173990,
+    "data": "1,1,3,13,75,530,4449,43236",
+    "name": "Dimensions of components for the operad of level algebras",
+    "comment": [
+        "a(n) is the dimension of the space of multilinear operations with n arguments built from one commutative nonassociative binary operation * that satisfies the identity (a*b)*(c*d)=(a*c)*(b*d)."
+    ],
+    "reference": [
+        "D. Chataur and M. Livernet, Adem-Cartan operads, Communications in Algebra 33 (2005), 4337-4360."
+    ],
+    "example": [
+        "For n=4 there are 15 operations on four arguments x,y,z,t built from a general commutative nonassociative binary operation (see A001147). In our case, there are two relations between them: (x*y)*(z*t)=(x*z)*(y*t) and (x*t)*(y*z)=(x*z)*(y*t), so the dimension is 15-2=13."
+    ],
+    "program": [
+        "(Other) (Haskell program, using the Operads package)",
+        ":m Math.Operad",
+        "let a = corolla 1 [1,2]",
+        "let t1_23 = shuffleCompose 2 [1,2,3] a a",
+        "let t12_34 = shuffleCompose 1 [1,2,3,4] t1_23 a",
+        "let t13_24 = shuffleCompose 1 [1,3,2,4] t1_23 a",
+        "let t14_23 = shuffleCompose 1 [1,4,2,3] t1_23 a",
+        "let r1 = (oet t12_34) - (oet t13_24) :: OperadElement Integer Rational PathPerm",
+        "let r2 = (oet t14_23) - (oet t13_24) :: OperadElement Integer Rational PathPerm",
+        "let gens = [r1,r2]",
+        "let cors = [a]",
+        "let gb = operadicBuchberger gens",
+        "let lms = map leadingMonomial gb",
+        "let computeStep d = basisElements cors lms d",
+        "map (length . computeStep) [1..]"
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Vladimir Dotsenko_, Mar 04 2010",
+    "references": 0,
+    "revision": 2,
+    "time": "2012-03-31T20:47:14-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 231373,
+    "data": "1,1,4,16,71,327,1550,7490,36720,182028,910330,4585318,23233722,118315318,605088690,3105994302,15994906965,82602799485,427662046960,2219130114108,11538302709769,60102637378353,313591732265662,1638671208390738,8574718477933404,44926247350136232",
+    "name": "G.f. A(x) satisfies: A(x-x^2-x^3) = 1/sqrt(1-2*x-3*x^2), which is the g.f. the central trinomial coefficients (A002426).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A231373/b231373.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "Self-convolution yields A038112.",
+        "G.f. A(x) satisfies:",
+        "(1) A(x) = sqrt( Sum_{n>=0} d^n/dx^n x^(2*n)*(1+x)^n/n! ).",
+        "(2) A(x) = sqrt((1+x)*(5-27*x)*A(x)^6 - 1)/2, from a formula by _Mark van Hoeij_ in A038112.",
+        "(3) A(x) = sqrt( d/dx x*G(x) ) where G(x) = Series_Reversion(x-x^2-x^3)/x is the g.f. of A001002.",
+        "(4) A(x) = 1/sqrt(1 - 2*x*G(x) - 3*x^2*G(x)^2) where G(x) = Series_Reversion(x-x^2-x^3)/x is the g.f. of A001002.",
+        "Sum_{k=0..n} a(k)*a(n-k) = Sum_{k=0..n} C(n+k, k)*C(k, n-k), from a formula by _Paul Barry_ in A038112.",
+        "Recurrence: 25*(n-2)*(n-1)*n*a(n) = 110*(n-2)*(n-1)*(2*n-3)*a(n-1) - (n-2)*(214*n^2 - 856*n + 717)*a(n-2) - 33*(2*n-5)*(18*n^2 - 90*n + 113)*a(n-3) - 81*(n-3)*(3*n-11)*(3*n-7)*a(n-4). - _Vaclav Kotesovec_, Nov 10 2013",
+        "a(n) ~ 3^(3/4) * GAMMA(3/4) * (27/5)^n / (2*10^(1/4)*Pi*n^(3/4)). - _Vaclav Kotesovec_, Dec 29 2013"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 4*x^2 + 16*x^3 + 71*x^4 + 327*x^5 + 1550*x^6 +...",
+        "where A(x-x^2-x^3)^2 = 1/(1-2*x-3*x^2):",
+        "A(x-x^2-x^3) = 1 + x + 3*x^2 + 7*x^3 + 19*x^4 + 51*x^5 + 141*x^6 + 393*x^7 + 1107*x^8 +...+ A002426(n)*x^n +...",
+        "The square of the g.f. begins (cf. A038112):",
+        "A(x)^2 = 1 + 2*x + 9*x^2 + 40*x^3 + 190*x^4 + 924*x^5 + 4578*x^6 +...",
+        "such that A(x)^2 = d/dx x*G(x) where G(x) is the g.f. of A001002:",
+        "G(x) = 1 + x + 3*x^2 + 10*x^3 + 38*x^4 + 154*x^5 + 654*x^6 +...",
+        "and satisfies G(x-x^2-x^3) = 1/(1-x-x^2)."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Sqrt[D[InverseSeries[Series[x - x^2 - x^3, {x, 0, 30}], x], x]], {x, 0, 30}], x] (* _Vaclav Kotesovec_, Mar 31 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(G=serreverse(x-x^2-x^3+x^2*O(x^n)),A);A=sqrt(deriv(G));polcoeff(A,n)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D} \\\\ = d^n/dx^n F",
+        "{a(n)=local(A2=x); A2=1+sum(m=1, n+1, Dx(m, x^(2*m)*(1+x +x*O(x^n))^m/m!)); polcoeff(sqrt(A2), n)}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A002426, A038112, A001002."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Nov 08 2013",
+    "references": 1,
+    "revision": 20,
+    "time": "2014-04-02T17:03:40-04:00",
+    "created": "2013-11-08T12:41:52-05:00"
+}

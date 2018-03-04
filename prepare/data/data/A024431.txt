@@ -1,0 +1,65 @@
+{
+    "number": 24431,
+    "data": "1,2,6,8,18,21,44,52,106,115,232,243,488,502,1006,1024,2050,2071,4144,4166,8334,8358,16718,16743,33488,33515,67032,67060,134122,134151,268304,268334,536670,536702,1073406,1073439,2146880,2146915,4293832",
+    "name": "A generalized difference set on the set of all integers (lambda = 1).",
+    "comment": [
+        "In the set of all positive differences of the sequence each integer appears exactly once, i.e., lambda = 1."
+    ],
+    "reference": [
+        "T. Baginova, R. Jajcay, Notes on subtractive properties of natural numbers, Bulletin of the ICA, Vol. 25(1999), pp. 29-40",
+        "O. Grosek, R. Jajcay, Generalized Difference Sets on an Infinite Cyclic Semigroup, JCMCC, Vol. 13 (1993), pp. 167-174."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A024431/b024431.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "Let N_1={1, 2}. Given N_i, let N_{i+1} = N_i union {2k+2, 2k+2+j} where k = max element of N_i and j = smallest number not of form x-y for x, y in N_i, x>y. Union of all N_i gives sequence.",
+        "a(A115406(n)) - a(A115407(n)) = n; a(m) - a(n) = A115409(m*(m-1)/2+n+1), 1 <= n < m. - _Reinhard Zumkeller_, Jan 22 2006",
+        "For n > 0: a(n) = A115409(n,1) + 1. - _Reinhard Zumkeller_, Sep 16 2014"
+    ],
+    "maple": [
+        "M:= 100: # to get all differences up to M",
+        "Agenda:= Array(1..M,1):",
+        "a[1]:= 1: a[2]:= 2: Agenda[1]:= 0:",
+        "for n from 2 by 2 do",
+        "  dm:= ArrayTools:-SearchArray(Agenda,1);",
+        "  if ArrayTools:-Size(dm)[1]=0  then break fi;",
+        "  dm:= dm[1];",
+        "  Agenda[dm]:= 0:",
+        "  a[n+1]:= 2*a[n]+2:",
+        "  a[n+2]:= a[n+1] + dm;",
+        "  for j from n by -1 to 1 while a[n+1] - a[j] <= M do",
+        "    Agenda[a[n+1]-a[j]]:= 0;",
+        "    if a[n+2]-a[j] <= M then Agenda[a[n+2]-a[j]]:= 0 fi",
+        "  od:",
+        "od:",
+        "seq(a[i],i=1..n); # _Robert Israel_, Oct 08 2015"
+    ],
+    "mathematica": [
+        "differenceQ[seq_, x_] := (r = False; Do[ If[ x == seq[[k]] - seq[[j]], r = True; Break[]], { j, 1, Length[seq] }, {k, 1, Length[seq] } ]; r); seq[1] = {1, 2}; seq[i_] := seq[i] = (k = Max[ seq[i-1] ]; j = First[ Select[ Range[k], !differenceQ[ seq[i-1], #] & , 1]]; Union[ seq[i-1], {2k+2, 2k+2+j} ] ); A024431 = seq[20] (* _Jean-Fran\u00e7ois Alcover_, Jan 04 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List ((\\\\))",
+        "a024431 n = a024431_list !! n",
+        "a024431_list = 1 : 2 : f [2, 1] [2 ..] where",
+        "   f ks@(k:_) (j:js) =",
+        "     x : y : f (y : x : ks) ((js \\\\ map (y -) ks) \\\\ map (x -) ks)",
+        "     where y = x + j; x = 2 * k + 2",
+        "-- _Reinhard Zumkeller_, Sep 16 2014"
+    ],
+    "xref": [
+        "Cf. A005282, A049399, A115408, A115409.",
+        "Cf. A247414 (first differences)."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,2",
+    "author": "Otokar Grosek (grosek(AT)elf.stuba.sk)",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org), May 04 2000"
+    ],
+    "references": 7,
+    "revision": 29,
+    "time": "2015-10-09T05:19:04-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

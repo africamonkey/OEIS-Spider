@@ -1,0 +1,56 @@
+{
+    "number": 275534,
+    "data": "1,2,4,5,7,9,12,15,18,22,25,29,33,37,43,46,51,56,62,68,75,79,86,93,102,107,114,119,127,136,143,150,160,169,179,184,195,206,215,223,233,242,254,264,274,285,297,307,318,330,339,350,362,376,386,400,415,428,441,452,465,483,498,510,525,541",
+    "name": "Number of primes of the form x^2 + y^2 less than or equal to 2*n^2.",
+    "comment": [
+        "Number of terms in A002313 that are less than A001105(n)."
+    ],
+    "link": [
+        "William Boyles, <a href=\"/A275534/b275534.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "mathematica": [
+        "nn = 66; Table[Count[Take[#, PrimePi[2 n^2]], k_ /; k > 0], {n, nn}] &@",
+        "SquaresR[2, Prime@ Range@ PrimePi[2 nn^2]] (* _Michael De Vlieger_, Aug 01 2016 *)"
+    ],
+    "program": [
+        "(C++)",
+        "#include <iostream>",
+        "#include <cmath>",
+        "using namespace std;",
+        "bool IsPrime(int a){",
+        "    int i = 3;",
+        "    if(a == 2)",
+        "    {return true;}",
+        "    if(a <= 1 || a%2 == 0)",
+        "    {return false;}",
+        "    else{",
+        "        while(i <= sqrt(a)){",
+        "            if(a%i == 0)",
+        "            {return false;}",
+        "            else",
+        "            {i = i+2;}}",
+        "    return true;}}",
+        "int main(){",
+        "    int Max, FourKPlusOne;",
+        "    int limit=25;            //Number of terms",
+        "    for(int TermNum=1; TermNum<=limit; TermNum++){",
+        "        Max = 2*TermNum*TermNum;",
+        "        int Term=1;",
+        "        for(int counter3=1; counter3<=(Max-1)/4; counter3++){",
+        "            FourKPlusOne=((4*(counter3))+1);",
+        "            if(IsPrime(FourKPlusOne) == true && FourKPlusOne<=Max)",
+        "            {Term++;}}",
+        "        cout<<Term<<endl;}}",
+        "(PARI) a(n)=my(s); forprime(p=2,2*n^2, if(p%4<3, s++)); s \\\\ _Charles R Greathouse IV_, Sep 02 2016"
+    ],
+    "xref": [
+        "Cf. A001105, A002313."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_William Boyles_, Jul 31 2016",
+    "references": 1,
+    "revision": 23,
+    "time": "2016-09-02T00:16:16-04:00",
+    "created": "2016-09-02T00:16:16-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 93635,
+    "data": "1,2,5,18,64,258,1061,4572,19809,88972,400600,1844602,8511540,39919338,187389085,891158688,4238242129,20365627200,97881057229,474301930632,2297986873946,11213069093460,54697034675149,268399278895406",
+    "name": "G.f.: A(x) = Product_{n>=0} (1+a(n)*x^(n+1))^2 = Sum_{n>=0} a(n)*x^n.",
+    "comment": [
+        "Equals the self-convolution of A093636."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A093635/b093635.txt\">Table of n, a(n) for n = 0..450</a>"
+    ],
+    "example": [
+        "( (1+x)(1+2x^2)(1+5x^3)(1+18x^4) )^2 = 1+2x+5x^2+18x^3+..."
+    ],
+    "maple": [
+        "A:= proc(n) option remember; local i, p, q; if n=0 then 1 else",
+        "      p, q:= A(n-1), 1; for i from 0 to n-1 do q:= convert(",
+        "        series(q*(1+coeff(p, x, i)*x^(i+1))^2, x, n+1), polynom)",
+        "      od: q fi",
+        "    end:",
+        "a:= n-> coeff(A(n), x, n):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Aug 01 2013"
+    ],
+    "program": [
+        "(PARI) a(n) =polcoeff(prod(i=0,n-1,(1+a(i)*x^(i+1))^2)+x*O(x^n),n)"
+    ],
+    "xref": [
+        "Cf. A032305, A093636."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Apr 07 2004",
+    "references": 4,
+    "revision": 6,
+    "time": "2013-08-01T19:33:42-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

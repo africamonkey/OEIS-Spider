@@ -1,0 +1,70 @@
+{
+    "number": 6330,
+    "id": "M2553",
+    "data": "1,1,3,6,12,21,38,63,106,170,272,422,653,986,1482,2191,3218,4666,6726,9592,13602,19122,26733,37102,51232,70292,95989,130356,176246,237120,317724,423840,563266,745562,983384,1292333,1692790,2209886,2876132",
+    "name": "Number of corners, or planar partitions of n with only one row and one column.",
+    "comment": [
+        "The first four terms a(0), a(1), a(2), a(3) agree with sequence A000219 for unrestricted planar partitions, since the restriction does not rule anything out. For a(4) there is just one planar partition which doesn't satisfy the restriction, four 1's arranged in a square. So A000219 has fifth term 13 and here we have 12.",
+        "a(n) + A001523(n) = A000712(n). - _Michael Somos_, Jul 22 2003",
+        "Number of unimodal compositions of n+1 where the maximal part appears once, see example. [_Joerg Arndt_, Jun 11 2013]"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "R. P. Stanley, Enumerative Combinatorics, Cambridge, Vol. 1, 1999; see page 77."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A006330/b006330.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "G. E. Andrews, <a href=\"http://dx.doi.org/10.1090/S0273-0979-07-01180-9\">Euler's \"De Partitio Numerorum\"</a>, Bull. Amer. Math. Soc., 44 (No. 4, 2007), 561-573. See (5.6).",
+        "F. C. Auluck, <a href=\"http://dx.doi.org/10.1017/S0305004100027134\">On some new types of partitions associated with generalized Ferrers graphs</a>, Proc. Cambridge Philos. Soc. 47, (1951), 679-686.",
+        "Shouvik Datta, M. R. Gaberdiel, W. Li, C. Peng, <a href=\"https://arxiv.org/abs/1606.07070\">Twisted sectors from plane partitions</a>, arXiv preprint arXiv:1606.07070 [hep-th], 2016. See Sect. 2.1.",
+        "G. Kreweras, <a href=\"http://dx.doi.org/10.1016/0012-365X(79)90163-8\">Sur les extensions lin\u00e9aires d'une famille particuli\u00e8re d'ordres partiels</a>, Discrete Math., 27 (1979), 279-295.",
+        "G. Kreweras, <a href=\"/A006330/a006330_1.pdf\">Sur les extensions lin\u00e9aires d'une famille particuli\u00e8re d'ordres partiels</a>, Discrete Math., 27 (1979), 279-295. (Annotated scanned copy)",
+        "G. Kreweras, <a href=\"/A006330/a006330.pdf\">Letter to N. J. A. Sloane</a>"
+    ],
+    "formula": [
+        "G.f.: 1+Sum_{k>0} x^k/(Product_{i=1..k} (1-x^i))^2.",
+        "G.f.: (Sum_{k>=0} (-1)^k * x^(k(k+1)/2)) / (Product_{k>0} 1 - x^k)^2. - _Michael Somos_, Jul 28 2003",
+        "Convolution product of A197870 and A000712. - _Michael Somos_, Feb 22 2015",
+        "a(n) ~ exp(2*Pi*sqrt(n/3)) / (8 * 3^(3/4) * n^(5/4)) [Auluck, 1951]. - _Vaclav Kotesovec_, Jun 22 2015"
+    ],
+    "example": [
+        "From _Joerg Arndt_, Jun 11 2013: (Start)",
+        "There are a(4)=12 unimodal compositions of 4+1=5 where the maximal part appears once:",
+        "01:  [ 1 1 1 2 ]",
+        "02:  [ 1 1 2 1 ]",
+        "03:  [ 1 1 3 ]",
+        "04:  [ 1 2 1 1 ]",
+        "05:  [ 1 3 1 ]",
+        "06:  [ 1 4 ]",
+        "07:  [ 2 1 1 1 ]",
+        "08:  [ 2 3 ]",
+        "09:  [ 3 1 1 ]",
+        "10:  [ 3 2 ]",
+        "11:  [ 4 1 ]",
+        "12:  [ 5 ]",
+        "(End)",
+        "G.f. = 1 + x + 3*x^2 + 6*x^3 + 12*x^4 + 21*x^5 + 38*x^6 + 63*x^7 + 106*x^8 + ..."
+    ],
+    "mathematica": [
+        "a[0] = 1; a[n_] := SeriesCoefficient[ Sum[x^k/Product[1 - x^i, {i, 1, k}]^2, {k, 1, n}] + 1, {x, 0, n}]; Array[a, 39, 0] (* _Jean-Fran\u00e7ois Alcover_, Mar 13 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( sum(k=1, n, x^k / prod(i=1, k, 1 - x^i, 1 + x*O(x^n))^2, 1), n))};",
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( sum(k=0, (sqrtint(1 + 8*n) - 1)\\2, (-1)^k * x^((k + k^2)/2)) / eta(x + x*O(x^n))^2, n))};"
+    ],
+    "xref": [
+        "Cf. A000219, A000712, A197870.",
+        "Column k=1 of A247255.",
+        "Row sums of A259100."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Edited and extended by _Moshe Shmuel Newman_, Jun 10 2003"
+    ],
+    "references": 13,
+    "revision": 56,
+    "time": "2017-11-07T18:15:58-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

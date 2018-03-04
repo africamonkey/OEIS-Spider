@@ -1,0 +1,26 @@
+{
+    "number": 129086,
+    "data": "1,2,5,14,42,133,443,1552,5716,22068,88830,370209,1585841,6936459,30813483,138445492,627256282,2859652414,13099023380,60225071992,277729496928,1283986487874,5948991719082,27616185153765",
+    "name": "Coefficients of solution to A(x) = (1 + x*A(x)^2) * (1-3*x) / (1-2*x)^2.",
+    "formula": [
+        "Hankel transform of a(n) is A006720(n+3).",
+        "G.f. A(x) satisfies 0 = f(x, A(x)) where f(u, v) = (v-1) + (3 - 4*v - v^2) * u + (4*v + 3*v^2) * u^2.",
+        "Let s(n)= A006769(n). Then 0 = f( s(n+4) * s(n+6) / ( s(n) * s(n+10)), -s(n) * s(n+7) / ( s(n+3) * s(n+4)) ) where f(u, v) = (v-1) + (3 - 4*v - v^2) * u + (4*v + 3*v^2) * u^2.",
+        "G.f.: ((1 - 2*x)^2 - sqrt((1 - 4*x) * (1 - 8*x + 16*x^2 - 4*x^3) )) / (2*x * (1 - 3*x)).",
+        "a(n) ~ sqrt((s^2 - 6*r - 3) / (Pi*(1 - 5*r + 6*r^2))) / (2*n^(3/2) * r^n), where r = 0.2039479457772143062225326263671960106786457685654... and s = 2.214319743377535187415497700848580488907919637219... are real roots of the system of equations 1 = r*s^2, 2*(1 - 3*r)*r*s = (1 - 2*r)^2. - _Vaclav Kotesovec_, Nov 27 2017"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[((1 - 2*x)^2 - Sqrt[(1 - 4*x) * (1 - 8*x + 16*x^2 - 4*x^3) ]) / (2*x * (1 - 3*x)), {x, 0, 25}], x] (* _Vaclav Kotesovec_, Nov 27 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( ((1 - 2*x)^2 - sqrt((1 - 4*x) * (1 - 8*x + 16*x^2 - 4*x^3) + x^2 * O(x^n))) / (2*x * (1 - 3*x)), n))};",
+        "(PARI) {a(n) = my(A); if( n<0, 0, A = 1 + O(x); for(k= 1, n, A = (1 + x*A^2) * (1 - 3*x) / (1 - 2*x)^2 ); polcoeff(A, n))};"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Michael Somos_, Mar 29 2007",
+    "references": 0,
+    "revision": 7,
+    "time": "2017-11-27T17:55:11-05:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

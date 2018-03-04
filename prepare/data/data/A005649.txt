@@ -1,0 +1,61 @@
+{
+    "number": 5649,
+    "id": "M1866",
+    "data": "1,2,8,44,308,2612,25988,296564,3816548,54667412,862440068,14857100084,277474957988,5584100659412,120462266974148,2772968936479604,67843210855558628,1757952715142990612,48093560991292628228,1385244691781856307124",
+    "name": "Expansion of (2 - e^x)^(-2).",
+    "comment": [
+        "Exponential self-convolution of numbers of preferential arrangements.",
+        "Number of compatible bipartitional relations on a set of cardinality n. - _Ralf Stephan_, Apr 27 2003",
+        "Stirling transform of A052558: 1, 1, 4, 12, 72, 360, ... - _Philippe Del\u00e9ham_, May 17 2005",
+        "With an extra 1 at the beginning, coefficients of the formal (divergent) series expansion at infinity of Sum_{k>=0} 1/binomial(x,k) = 1+1/x+2/x^2+8/x^3+... Also Sum_{k>=0} k!/x^k Product_{i=1..k-1} 1/(1- i/x) yields a generating function in 1/x. - _Roland Bacher_, Nov 21 2000",
+        "Stirling-Bernoulli transform of A001057: 1, -1, 2, -2, 3, -3, 4, ... - _Philippe Del\u00e9ham_, May 27 2015",
+        "a(n) is the total number of open sets summed over all chain topologies that can be placed on an n-set.  A chain topology is a topology whose open sets can be totally ordered by inclusion. - _Geoffrey Critzer_, Apr 06 2017"
+    ],
+    "reference": [
+        "L. Comtet, Advanced Combinatorics, Reidel, 1974, p. 294.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005649/b005649.txt\">Table of n, a(n) for n = 0..100</a>",
+        "Connor Ahlbach, Jeremy Usatine and Nicholas Pippenger, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v20i2p55\">Barred Preferential Arrangements</a>, Electron. J. Combin., Volume 20, Issue 2 (2013), #P55.",
+        "Foata, D. and Krattenthaler, C., <a href=\"http://www.mat.univie.ac.at/~kratt/artikel/graphmaj.html\">Graphical Major Indices, II</a>, S\u00e9minaire Lotharingien de Combinatoire, B34k, 16 pp., 1995.",
+        "D. Foata and D. Zeilberger, <a href=\"http://arXiv.org/abs/math.CO/9406220\">The Graphical Major Index</a>, arXiv:math/9406220 [math.CO], 1994.",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=154\">Encyclopedia of Combinatorial Structures 154</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1/(2-exp(x))^2.",
+        "a(n) = (A000670(n) + A000670(n+1)) / 2. - _Philippe Del\u00e9ham_, May 16 2005",
+        "a(n) = D^n(1/(1-x)^2) evaluated at x = 0, where D is the operator (1+x)*d/dx. Cf. A000670 and A052841. - _Peter Bala_, Nov 25 2011",
+        "E.g.f.: 1/(2-exp(x))^2 = 1/(G(0) + 4), G(k) = 1-4/((2^k)-x*(4^k)/((2^k)*x-(2*k+2)/G(k+1))); (continued fraction). - Sergei N. Gladkovskii, Dec 15 2011",
+        "O.g.f.: Sum_{n>=0} (2*n)!/n! * x^n / Product_{k=1..n} (1 + (n+k)*x). - _Paul D. Hanna_, Jan 03 2013",
+        "G.f.: (G(0) - 1)/(x-1) where G(k) =  1 - (k+1)/(1-k*x)/(1-x/(x-1/G(k+1) )); (recursively defined continued fraction). - _Sergei N. Gladkovskii_, Jan 15 2013",
+        "G.f.: 1/G(0) where G(k) = 1 - x*(k+2)/( 1 - 2*x*(k+1)/G(k+1) ); (continued fraction ). - _Sergei N. Gladkovskii_, Mar 23 2013",
+        "a(n) = Sum_{k = 0..n} A163626(n,k) * A001057(k+1). - _Philippe Del\u00e9ham_, May 27 2015"
+    ],
+    "mathematica": [
+        "f[n_] := Sum[(i + j)^n/2^(2 + i + j), {i, 0, Infinity}, {j, 0, Infinity}]; Array[f, 20, 0] (* _Vladimir Reshetnikov_, Dec 31 2008 *)",
+        "a[n_] := (-1)^n (PolyLog[-n-1, 2] - PolyLog[-n, 2])/4; Array[f, 20, 0] (* _Vladimir Reshetnikov_, Jan 23 2011 *)",
+        "Range[0, 19]! CoefficientList[Series[(2 - Exp@ x)^-2, {x, 0, 19}], x] (* _Robert G. Wilson v_, Jan 23 2011 *)",
+        "nn = 19; Range[0, nn]! CoefficientList[Series[1 + D[u^2 (Exp[z] - 1)/(1 - u (Exp[z] - 1)), u] /. u -> 1, {z, 0, nn}], z] (* _Geoffrey Critzer_, Apr 06 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,n!*polcoeff(subst(1/(1-y)^2,y,exp(x+x*O(x^n))-1),n))",
+        "(PARI) a(n)=polcoeff(sum(m=0, n,(2*m)!/m!*x^m/prod(k=1, m,1+(m+k)*x+x*O(x^n))), n)",
+        "for(n=0, 20, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Jan 03 2013",
+        "(Maxima) t(n):=sum(stirling2(n,k)*k!,k,0,n);",
+        "makelist(sum(binomial(n,k)*t(k)*t(n-k),k,0,n),n,0,20);",
+        "\\\\ _Emanuele Munarini_, Oct 02 2012"
+    ],
+    "xref": [
+        "Cf. A000670.",
+        "2*A083410(n)=a(n), if n>0.",
+        "Pairwise sums of A052841 and also of A089677."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, _Simon Plouffe_",
+    "references": 29,
+    "revision": 74,
+    "time": "2017-04-18T07:02:53-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

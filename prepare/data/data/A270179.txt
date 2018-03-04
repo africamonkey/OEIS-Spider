@@ -1,0 +1,45 @@
+{
+    "number": 270179,
+    "data": "1,5,14,46,63,151,188,372,416,713,805,1234,1346,1975,2075,2920,3060,4069,4293,5617,5842,7474,7718,9615,9995,12216,12544,15141,15605,18626,19158,22603,23163,27000,27648,32065,32857,37702,38458,43943,44883,50836,51880",
+    "name": "Partial sums of the number of active (ON,black) cells in n-th stage of growth of two-dimensional cellular automaton defined by \"Rule 113\", based on the 5-celled von Neumann neighborhood.",
+    "comment": [
+        "Initialized with a single black (ON) cell at stage zero."
+    ],
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 170."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A270179/b270179.txt\">Table of n, a(n) for n = 0..128</a>",
+        "N. J. A. Sloane, <a href=\"http://arxiv.org/abs/1503.01168\">On the Number of ON Cells in Cellular Automata</a>, arXiv:1503.01168 [math.CO], 2015",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "S. Wolfram, <a href=\"http://wolframscience.com/\">A New Kind of Science</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_2D_5-Neighbor_Cellular_Automata\">Index to 2D 5-Neighbor Cellular Automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>"
+    ],
+    "mathematica": [
+        "CAStep[rule_,a_]:=Map[rule[[10-#]]&,ListConvolve[{{0,2,0},{2,1,2},{0,2,0}},a,2],{2}];",
+        "code=113; stages=128;",
+        "rule=IntegerDigits[code,2,10];",
+        "g=2*stages+1; (* Maximum size of grid *)",
+        "a=PadLeft[{{1}},{g,g},0,Floor[{g,g}/2]]; (* Initial ON cell on grid *)",
+        "ca=a;",
+        "ca=Table[ca=CAStep[rule,ca],{n,1,stages+1}];",
+        "PrependTo[ca,a];",
+        "(* Trim full grid to reflect growth by one cell at each stage *)",
+        "k=(Length[ca[[1]]]+1)/2;",
+        "ca=Table[Table[Part[ca[[n]][[j]],Range[k+1-n,k-1+n]],{j,k+1-n,k-1+n}],{n,1,k}];",
+        "on=Map[Function[Apply[Plus,Flatten[#1]]],ca] (* Count ON cells at each stage *)",
+        "Table[Total[Part[on,Range[1,i]]],{i,1,Length[on]}] (* Sum at each stage *)"
+    ],
+    "xref": [
+        "Cf. A270177."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Robert Price_, Mar 12 2016",
+    "references": 1,
+    "revision": 7,
+    "time": "2016-03-13T10:51:33-04:00",
+    "created": "2016-03-12T23:57:07-05:00"
+}

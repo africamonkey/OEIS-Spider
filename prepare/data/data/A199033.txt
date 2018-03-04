@@ -1,0 +1,38 @@
+{
+    "number": 199033,
+    "data": "1,4,22,128,771,4744,29618,186880,1188679,7608764,48953224,316283264,2050706932,13336273528,86953633242,568221290496,3720529001823,24403423540348,160314652983158,1054635453261568,6946703172803003,45809043607167328,302395650703501688",
+    "name": "Number of ways to place n non-attacking bishops on a 2 x 2n board.",
+    "link": [
+        "V. Kotesovec, <a href=\"https://oeis.org/wiki/User:Vaclav_Kotesovec\">Non-attacking chess pieces</a>"
+    ],
+    "formula": [
+        "Recurrence: (112*n^4 + 968*n^3 + 3048*n^2 + 4136*n + 2040)*a(n+2) = (728*n^4 + 5914*n^3 + 17550*n^2 + 22510*n + 10530)*a(n+1)  +  (189*n^4 + 1539*n^3 + 4578*n^2 + 5886*n + 2760)*a(n). - _Vaclav Kotesovec_, Oct 30 2011",
+        "a(n) = Sum_{j=0..n} (binomial(2n-j+1,j)*binomial(n+j+1,n-j)).",
+        "a(n) ~ 3^(3n+4)/2^(2n+5)/sqrt(3*Pi*n).",
+        "Self-convolution of A219197. - _Paul D. Hanna_, Nov 14 2012",
+        "G.f.: A(x) = G(x)^2 / (1 - 2*x*G(x)^2 - 3*x^2*G(x)^4), where G(x) = 1 + x*G(x)^3 = g.f. of A001764. - _Paul D. Hanna_, Nov 14 2012",
+        "a(n) = [x^n] 1/((1 - x^2)*(1 - x)^(2*n+2)). - _Ilya Gutkovskiy_, Oct 25 2017"
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[2n-j+1,j]*Binomial[n+j+1,n-j],{j,0,n}],{n,1,25}]"
+    ],
+    "program": [
+        "(PARI) {a(n)=sum(k=0, n, binomial(n+k+1, n-k)*binomial(2*n-k+1, k))}",
+        "(PARI) {a(n)=local(G=1); for(i=0, n, G=1+x*G^3+O(x^(n+1))); polcoeff(G^2/(1-2*x*G^2-3*x^2*G^4), n)} \\\\ _Paul D. Hanna_, Nov 14 2012",
+        "for(n=0,25,print1(a(n),\", \"))",
+        "(Maxima) A199033(n):=sum(binomial(n+k+1, n-k)*binomial(2*n-k+1,k),k,0,n)$ makelist(A199033(n),n,0,22); /* _Martin Ettl_, Nov 15 2012 */"
+    ],
+    "xref": [
+        "Cf. A002465, A191236, A219197, A183160."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Vaclav Kotesovec_, Nov 02 2011",
+    "ext": [
+        "Offset changed to 0 and a(0)=1 added by _Paul D. Hanna_, Nov 14 2012"
+    ],
+    "references": 4,
+    "revision": 26,
+    "time": "2017-10-25T13:32:05-04:00",
+    "created": "2011-11-02T11:15:02-04:00"
+}

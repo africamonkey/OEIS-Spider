@@ -1,0 +1,43 @@
+{
+    "number": 257116,
+    "data": "3,17,487,947,947,38639,38639",
+    "name": "Smallest prime p such that none of p + 1, p + 3,... p + 2n - 1 are squarefree and all of p + 2, p + 4,... p + 2n are squarefree.",
+    "comment": [
+        "a(8) and higher do not exist because at least one of p+2, p+4, ..., p+16 is divisible by 9 unless p is divisible by 9, in which case it is not prime. - _Charles R Greathouse IV_, Apr 27 2015"
+    ],
+    "example": [
+        "a(1) = 3 because 3 + 1 = 4 is not squarefree, 3 + 2 = 5 is squarefree, 3 is prime."
+    ],
+    "maple": [
+        "p:= 0:",
+        "for i from 1 to 5000 do",
+        "  p:= nextprime(p);",
+        "  for n from 1 while numtheory:-issqrfree(p+2*n)",
+        "       and not numtheory:-issqrfree(p+2*n-1) do",
+        "        if not assigned(A[n]) then A[n]:= p",
+        "          fi",
+        "    od:",
+        "od:",
+        "seq(A[i],i=1..7); # _Robert Israel_, Apr 27 2015"
+    ],
+    "mathematica": [
+        "a[n_] := For[k=1, True, k++, p = Prime[k]; r = p + Range[1, 2*n-1, 2]; If[(And @@ ((!SquareFreeQ[#])& /@ r)) && And @@ (SquareFreeQ /@ (r+1)), Return[p]]]; Table[ a[n], {n, 1, 7}] (* _Jean-Fran\u00e7ois Alcover_, Apr 28 2015 *)"
+    ],
+    "program": [
+        "(PARI) has(p,n)=for(i=1,2*n,if(issquarefree(p+i)==i%2, return(0))); 1",
+        "a(n)=forprime(p=2,, if(has(p,n), return(p))) \\\\ _Charles R Greathouse IV_, Apr 27 2015"
+    ],
+    "xref": [
+        "Cf. A257108, A257115."
+    ],
+    "keyword": "nonn,fini,full",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Apr 25 2015",
+    "ext": [
+        "a(3) corrected, a(6)-a(7) added by _Charles R Greathouse IV_, Apr 27 2015"
+    ],
+    "references": 1,
+    "revision": 30,
+    "time": "2015-05-02T16:28:21-04:00",
+    "created": "2015-05-02T16:28:21-04:00"
+}

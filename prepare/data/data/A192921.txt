@@ -1,0 +1,63 @@
+{
+    "number": 192921,
+    "data": "1,2,2,7,16,44,113,298,778,2039,5336,13972,36577,95762,250706,656359,1718368,4498748,11777873,30834874,80726746,211345367,553309352,1448582692,3792438721,9928733474,25993761698,68052551623,178163893168,466439127884,1221153490481",
+    "name": "Constant term in the reduction by (x^2->x+1) of the polynomial p(n,x) defined below at Comments.",
+    "comment": [
+        "The titular polynomial is defined by p(n,x)=x*p(n-1,x)+(x^2)*p(n-2,x), with p(0,x)=1, p(1,x)=1+x^2.  For discussions of polynomial reduction, see A192232, A192744, and A192872."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A192921/b192921.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (2,2,-1)."
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1) + 2*a(n-2) - a(n-3).",
+        "G.f.: -(2*x-1)*(1+2*x) / ( (1+x)*(x^2-3*x+1) ). - _R. J. Mathar_, May 08 2014",
+        "a(n) = A059929(n-1)+2*A059929(n-2). - _R. J. Mathar_, May 08 2014",
+        "a(n) = F(n-4)*F(n) + F(n-1)*F(n+2), where F(-4)=-3, F(-3)=2, F(-2)=-1, F(-1)=1. - _Bruno Berselli_, Nov 03 2015",
+        "a(n) = (2^(-n)*(-3*(-2)^n-(-4+sqrt(5))*(3+sqrt(5))^n+(3-sqrt(5))^n*(4+sqrt(5))))/5. - _Colin Barker_, Oct 01 2016"
+    ],
+    "example": [
+        "The coefficients in the polynomials p(n,x) are Fibonacci numbers.  The first seven and their reductions:",
+        "...",
+        "1 -> 1",
+        "1+x^2 -> 2+x",
+        "x+x^2+x^3 -> 2+4x",
+        "2x^2+x^3+2x^4 -> 7+10x",
+        "3x^3+2x^4+3x^5 -> 16+27x",
+        "5x^4+3x^5+5x^6 -> 44+70x",
+        "8x^5+5x^6+8x^7 -> 113+184x,",
+        "so that A192921=(1,2,2,7,16,44,113,...)."
+    ],
+    "maple": [
+        "a:= n-> (<<0|1|0>, <0|0|1>, <-1|2|2>>^n. <<1,2,2>>)[1,1]:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Sep 28 2016"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 28;",
+        "p[0, x_] := 1; p[1, x_] := x^2 + 1;",
+        "p[n_, x_] := p[n - 1, x]*x + p[n - 2, x]*x^2;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "  (* A192921 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "  (* A192879 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = round((2^(-n)*(-3*(-2)^n-(-4+sqrt(5))*(3+sqrt(5))^n+(3-sqrt(5))^n*(4+sqrt(5))))/5) \\\\ _Colin Barker_, Oct 01 2016",
+        "(PARI) Vec(-(2*x-1)*(1+2*x)/((1+x)*(x^2-3*x+1)) + O(x^40)) \\\\ _Colin Barker_, Oct 01 2016"
+    ],
+    "xref": [
+        "Cf. A192232, A192744, A192872."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, Jul 12 2011",
+    "references": 1,
+    "revision": 22,
+    "time": "2016-10-01T05:46:28-04:00",
+    "created": "2011-07-13T12:21:10-04:00"
+}

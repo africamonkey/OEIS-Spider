@@ -1,0 +1,36 @@
+{
+    "number": 63019,
+    "data": "0,1,1,1,1,2,7,22,57,132,308,793,2223,6328,17578,47804,130169,360924,1019084,2900484,8252860,23445510,66717135,190750110,548178735,1580970612,4568275692,13217653582,38306172442,111248832992",
+    "name": "Reversion of y - y^2 + y^3 - y^4.",
+    "comment": [
+        "Apparently: For n>0 number of Dyck (n-1)-paths with each ascent length equal to 0 or 1 modulo 4. - _David Scambler_, May 09 2012"
+    ],
+    "link": [
+        "R. J. Mathar, <a href=\"/A063019/b063019.txt\">Table of n, a(n) for n = 0..104</a>",
+        "John Engbers, David Galvin, Clifford Smyth, <a href=\"https://arxiv.org/abs/1610.05803\">Restricted Stirling and Lah numbers and their inverses</a>, arXiv:1610.05803 [math.CO], 2016. See p. 8.",
+        "Vladimir Kruchinin, <a href=\"http://arxiv.org/abs/1211.3244\">The method for obtaining expressions for coefficients of reverse generating functions</a>, arXiv:1211.3244 [math.CO], 2012.",
+        "<a href=\"/index/Res#revert\">Index entries for reversions of series</a>"
+    ],
+    "formula": [
+        "Conjecture: 32*n*(n-1)*(n-2)*a(n) -8*(n-1)*(n-2)*(16*n-9)*a(n-1) +2*(n-2)*(71*n^2+46*n-549)*a(n-2) +(97*n^3-2250*n^2+10859*n-14850)*a(n-3) -12*(4n-15)*(4*n-14)*(4*n-17)*a(n-4)=0. - _R. J. Mathar_, Oct 01 2012",
+        "Recurrence: 16*(n-2)*(n-1)*n*(5*n-14)*a(n) = 4*(n-2)*(n-1)*(110*n^2 - 473*n + 468)*a(n-1) - (n-2)*(1015*n^3 - 6902*n^2 + 15391*n - 11232)*a(n-2) + 8*(2*n-5)*(4*n-13)*(4*n-11)*(5*n-9)*a(n-3). - _Vaclav Kotesovec_, Feb 12 2014"
+    ],
+    "mathematica": [
+        "CoefficientList[InverseSeries[Series[y - y^2 + y^3 - y^4, {y, 0, 30}], x], x]",
+        "g[d_] := g[d] = If[OddQ[d], 3, 1]; f[x_, y_, d_] := f[x, y, d] = If[x < 0 || y < x, 0, If[x == 0 && y == 0, 1, f[x - 1, y, 0] + f[x, y - If[d == 0, 1, g[d]], If[d == 0, 1, g[d] + d]]]]; Join[{0}, Table[f[n - 1, n - 1, 0], {n, 30}]] (* _David Scambler_, May 09 2012 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=if n<2 then n else (-1)^(n+1)*sum((sum(binomial(j,n-3*k+2*j-1)*(-1)^(2*j-k)*binomial(k,j),j,0,k))*binomial(n+k-1,n-1),k,1,n-1)/n; /* _Vladimir Kruchinin_, May 10 2011 */",
+        "(PARI)",
+        "x='x+O('x^66); /* that many terms */",
+        "Vec(serreverse(x-x^2+x^3-x^4)) /* show terms */ /* _Joerg Arndt_, May 12 2011 */"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,6",
+    "author": "_Olivier G\u00e9rard_, Jul 05 2001",
+    "references": 3,
+    "revision": 38,
+    "time": "2016-11-11T02:44:11-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,77 @@
+{
+    "number": 111088,
+    "data": "1,1,2,8,52,464,5184,68928,1057584,18345536,354570112,7551674624,175700025728,4433961734656,120642462777344,3520972469815296,109731998026937088,3637456413350962176,127800512612435896320",
+    "name": "a(0) = a(1) = 1, a(2) = x, a(3) = 2x^2, a(n) = x*(n-1)*a(n-1) + Sum_{j=2..n-2} (j-1)*a(j)*a(n-j), n>=4 and for x = 2.",
+    "comment": [
+        "For x = 1, this is : 1, 1, 1, 2, 7, 34, 206, 1476, 12123, ..., see A075834.",
+        "For x = 0, this is : 1, 1, 0, 0, 0, 0, 0, 0, 0, ...",
+        "For x = -1, this is : 1, 1, -1, 2, -5, 14, -42, 132, -429, ...,((-1)^(n+1)* A000108(n)).",
+        "a(n)*2^(-n) is the coefficient at the x^(n-1) term in the series reversal of the asymptotic expansion of 2 * DawsonF(sqrt(x))/sqrt(x) = sqrt(Pi) * exp(-x) * erfi(sqrt(x)) / sqrt(x) for x -> inf. - _Vladimir Reshetnikov_, Apr 23 2016"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A111088/b111088.txt\">Table of n, a(n) for n = 0..200</a>",
+        "J. Alman, C. Lian, B. Tran, <a href=\"http://www.math.umn.edu/~reiner/REU/AlmanLianTran2013.pdf\">Circular Planar Electrical Networks: Posets and Positivity</a>, 2013."
+    ],
+    "formula": [
+        "O.g.f. A(x) satisfies:",
+        "(1) A(x) = x / Series_Reversion(x*G(x)) where G(x) = A(x*G(x)) and A(x) = G(x/A(x)) such that G(x) is the g.f. of the double factorials (A001147). - _Paul D. Hanna_, Jul 09 2006",
+        "(2) A(x) = Sum_{n>=0} A001147(n) * x^n / A(x)^n, where A001147(n) = (2*n)!/(n!*2^n). - _Paul D. Hanna_, Aug 02 2014",
+        "(3) A(x) = 1 + x * (A(x) + x*A'(x)) / (A(x) - x*A'(x)). - _Paul D. Hanna_, Aug 02 2014",
+        "(4) [x^(n+1)] A(x)^n = 2*n*([x^n] A(x)^n) for n>=0. - _Paul D. Hanna_, Aug 02 2014",
+        "a(n) ~ 2^(n+1/2) * n^n / exp(n+1/2). - _Vaclav Kotesovec_, Aug 02 2014"
+    ],
+    "example": [
+        "From _Paul D. Hanna_, Aug 02 2014: (Start)",
+        "O.g.f.: A(x) = 1 + x + 2*x^2 + 8*x^3 + 52*x^4 + 464*x^5 + 5184*x^6 +...",
+        "where A(x) = x/Series_Reversion(x + x^2 + 3*x^3 + 15*x^4 + 105*x^5 + 945*x^6 +...)",
+        "and thus",
+        "A(x) = 1 + x/A(x) + 3*x^2/A(x)^2 + 15*x^3/A(x)^3 + 105*x^4/A(x)^4 + 945*x^5/A(x)^5 +...",
+        "Illustration of the initial terms:",
+        "a(2) = 2;",
+        "a(3) = 2*2^2 = 8;",
+        "a(4) = 2*3*8 + 1*2*2 = 52;",
+        "a(5) = 2*4*52 + 1*2*8 + 2*8*2 = 464;",
+        "a(6) = 2*5*464 + 1*2*52 + 2*8*8 + 3*52*2 = 5184; ...",
+        "To illustrate formula: [x^(n+1)] A(x)^n = 2*n*([x^n] A(x)^n), form a table of coefficients of x^k in A(x)^n:",
+        "n=1: [1, 1,  2,   8,   52,   464,  5184,   68928,  1057584, ...];",
+        "n=2: [1, 2,  5,  20,  124,  1064, 11568,  150912,  2283888, ...];",
+        "n=3: [1, 3,  9,  37,  222,  1836, 19412,  248256,  3703536, ...];",
+        "n=4: [1, 4, 14,  60,  353,  2824, 29032,  363696,  5345040, ...];",
+        "n=5: [1, 5, 20,  90,  525,  4081, 40810,  500480,  7241460, ...];",
+        "n=6: [1, 6, 27, 128,  747,  5670, 55205,  662460,  9431172, ...];",
+        "n=7: [1, 7, 35, 175, 1029,  7665, 72765,  854197, 11958758, ...];",
+        "n=8: [1, 8, 44, 232, 1382, 10152, 94140, 1081080, 14876033, ...]; ...",
+        "then we can see that the diagonals are related in the following way:",
+        "[2, 20, 222, 2824, 40810, 662460, 11958758, ...]",
+        "= [2*1, 4*5, 6*37, 8*353, 10*4081, 12*55205, 14*854197, ...].",
+        "Also, the diagonal",
+        "[1, 5, 37, 353, 4081, 55205, 854197, 14876033, ...]",
+        "is the logarithmic derivative of the g.f. of the double factorials.",
+        "Further, the main diagonal in the above table equals:",
+        "[1, 2*1, 3*3, 4*15, 5*105, 6*945, 7*10395, 8*135135, ...].",
+        "(End)"
+    ],
+    "mathematica": [
+        "x = 2; a[0] = a[1] = 1; a[2] = x; a[3] = 2x^2; a[n_] := a[n] = x*(n - 1)*a[n - 1] + Sum[(j - 1)*a[j]*a[n - j], {j, 2, n - 2}]; Table[ a[n], {n, 0, 18}] (* _Robert G. Wilson v_ *)",
+        "Module[{max = 20, s}, s = InverseSeries[Series[2 DawsonF[Sqrt[x]]/Sqrt[x], {x, Infinity, max + 1}][[2, 2, 2]]]; Table[SeriesCoefficient[s, n-1] 2^n, {n, 0, max}]] (* _Vladimir Reshetnikov_, Apr 23 2016 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=Vec(x/serreverse(x*Ser(vector(n+1,k,(2*(k-1))!/(k-1)!/2^(k-1)))))[n+1] /* _Paul D. Hanna_, Jul 09 2006 */",
+        "(PARI) /* From o.g.f. A = 1 + x*(A + x*A')/(A - x*A'): */",
+        "{a(n)=local(A=1+x); for(i=1, n, A=1 + x*(A+x*A')/(A-x*A' +x*O(x^n))); polcoeff(A,n)}",
+        "for(n=0,20,print1(a(n),\", \")) /* _Paul D. Hanna_, Aug 02 2014 */"
+    ],
+    "xref": [
+        "Cf. A001147, A232967, A000699."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,3",
+    "author": "_Philippe Del\u00e9ham_, Oct 10 2005",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Oct 12 2005"
+    ],
+    "references": 10,
+    "revision": 35,
+    "time": "2018-02-28T11:29:33-05:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

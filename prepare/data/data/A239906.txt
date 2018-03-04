@@ -1,0 +1,42 @@
+{
+    "number": 239906,
+    "data": "0,0,1,2,3,3,5,5,7,7,8,9,11,11,12,12,15,15,16,17,18,18,20,20,23,23,24,25,26,26,27,27,31,31,32,33,34,34,36,36,38,38,39,40,42,42,43,43,47,47,48,49,50,50,52,52,54,54,55,56,57,57,58,58,63,63,64,65,66,66,68,68,70,70,71,72,74,74",
+    "name": "Let cn(n,k) denote the number of times 11..1 (k 1's) appears in the binary representation of n; a(n) = n - cn(n,1) + cn(n,2) - cn(n,3).",
+    "link": [
+        "Michael De Vlieger, <a href=\"/A239906/b239906.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "maple": [
+        "# From A014081:",
+        "cn := proc(v, k) local n, s, nn, i, j, som, kk;",
+        "som := 0;",
+        "kk := convert(cat(seq(1, j = 1 .. k)), string);",
+        "n := convert(v, binary);",
+        "s := convert(n, string);",
+        "nn := length(s);",
+        "for i to nn - k + 1 do",
+        "if substring(s, i .. i + k - 1) = kk then som := som + 1 fi od;",
+        "som; end;",
+        "[seq(n-cn(n,1)+cn(n,2)-cn(n,3), n=0..100)];"
+    ],
+    "mathematica": [
+        "cn[n_, k_] := Count[Partition[IntegerDigits[n, 2], k, 1], Table[1, {k}]]; Table[n - Sum[cn[n, i], {i, 1, 3, 2}] + cn[n, 2], {n, 0, 77}] (* _Michael De Vlieger_, Sep 18 2015 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "a(n) = {",
+        "    my(x = bitand(n, n>>1), wt = k->hammingweight(k));",
+        "    n - wt(n) + wt(x) - wt(bitand(x, n>>2));",
+        "};",
+        "vector(78, i, a(i-1))  \\\\ _Gheorghe Coserea_, Sep 24 2015"
+    ],
+    "xref": [
+        "Cf. A000120, A012081, A014082, A239904, A239907."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_, Apr 07 2014",
+    "references": 4,
+    "revision": 13,
+    "time": "2015-10-06T18:19:26-04:00",
+    "created": "2014-04-07T10:20:31-04:00"
+}

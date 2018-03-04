@@ -1,0 +1,42 @@
+{
+    "number": 226777,
+    "data": "243,2744,6561,177147,185193,474552,614656,810000,941192,1124864,1419857,1500625,3241792,4782969,7962624,11239424,16003008,17850625,21952000,26873856,28372625,52200625,68574961,82312875,117649000,129140163,162771336,200201625,238328000",
+    "name": "Higher powers that are sums of two distinct higher powers.",
+    "comment": [
+        "x is in the sequence iff there are distinct y,z such that x = y + z and x,y,z are all in A076467."
+    ],
+    "link": [
+        "Robert Israel and Reinhard Zumkeller, <a href=\"/A226777/b226777.txt\">Table of n, a(n) for n = 1..1000</a> (first 264 terms from Robert Israel)"
+    ],
+    "example": [
+        "243 is in the sequence because 243 = 3^5 = 3^3 + 6^3."
+    ],
+    "maple": [
+        "N :=  10^12: # to get terms up to N",
+        "S := {seq(seq(a^x, a=1 .. floor(N^(1/x))), x = 3 .. floor(log[2](N)))}:",
+        "f:= proc(n) local L; L:= S[1..n-1] minus {S[n]/2}; nops(map2(`-`,S[n],L) intersect L) > 0 end proc;",
+        "A:= map(t -> S[t], select(f,[$1..nops(S)]));"
+    ],
+    "mathematica": [
+        "max = 3*10^8; pp = Join[{1}, Table[n^k, {k, 3, Floor[Log[2, max]]}, {n, 2, Floor[max^(1/k)]}] // Flatten // Union]; Select[Total /@ Subsets[pp, {2}], MemberQ[pp, #]&] // Union (* _Jean-Fran\u00e7ois Alcover_, Feb 14 2018 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import qualified Data.Set as Set (null, split, filter)",
+        "import Data.Set (Set, empty, insert, member)",
+        "a226777 n = a226777_list !! (n-1)",
+        "a226777_list = f a076467_list empty where",
+        "   f (x:xs) s | Set.null $ Set.filter ((`member` s) . (x -)) s'",
+        "                          = f xs (x `insert` s)",
+        "              | otherwise = x : f xs (x `insert` s)",
+        "              where (s', _) = Set.split (x `div` 2) s",
+        "-- _Reinhard Zumkeller_, Sep 13, Jun 19 2013"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Jun 17 2013",
+    "references": 3,
+    "revision": 21,
+    "time": "2018-02-14T04:02:29-05:00",
+    "created": "2013-06-17T18:19:26-04:00"
+}

@@ -1,0 +1,56 @@
+{
+    "number": 7341,
+    "id": "M3721",
+    "data": "1,4,192,100352,557568000,32565539635200,19872369301840986112,126231322912498539682594816,8326627661691818545121844900397056,5694319004079097795957215725765328371712000,40325021721404118513276859513497679249183623593590784,2954540993952788006228764987084443226815814190099484786032640000",
+    "name": "Number of spanning trees in n X n grid.",
+    "comment": [
+        "Kreweras calls this the complexity of the n X n grid.",
+        "a(n) = number of perfect mazes made from a grid of n X n cells. - _Leroy Quet_, Sep 08 2007",
+        "Also number of domino tilings of the (2n-1) X (2n-1) square with upper left corner removed.  For n=2 the 4 domino tilings of the 3 X 3 square with upper left corner removed are:",
+        ". .___. . .___. . .___. . .___.",
+        "._|___| ._|___| ._| | | ._|___|",
+        "| |___| | | | | | |_|_| |___| |",
+        "|_|___| |_|_|_| |_|___| |___|_| - _Alois P. Heinz_, Apr 15 2011",
+        "Indeed, more is true. Let L denote the (2*n - 1) X (2*n - 1) square lattice graph with vertices (i,j), 1 <= i,j <= 2*n-1. Call a vertex (i,j) odd if both coordinates i and j are odd. Then there is a bijection between the set of spanning trees on the square n X n grid and the set of domino tilings of L with an odd boundary point removed. See Tzeng and Wu, 2002. This is a divisibility sequence, i.e., if n divides m then a(n) divides a(m). - _Peter Bala_, Apr 29 2014"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A007341/b007341.txt\">Table of n, a(n) for n = 1..45</a>",
+        "Germain Kreweras, <a href=\"http://dx.doi.org/10.1016/0095-8956(78)90021-7\">Complexite et circuits Euleriens dans les sommes tensorielles de graphes</a>, J. Combin. Theory, B 24 (1978), 202-212.",
+        "W.-J. Tzeng, F. Y. Wu, <a href=\"http://arxiv.org/abs/cond-mat/0001408\">Spanning Trees on Hypercubic Lattices and Non-orientable Surfaces.</a> arXiv:cond-mat/0001408v1 [cond-mat.stat-mech], Jan 2000.",
+        "W.-J. Tzeng and F. Y. Wu, <a href=\"http://arxiv.org/abs/cond-mat/0203149\">Dimers on a simple-quartic net with a vacancy</a>, arXiv:cond-mat/0203149v2 [cond-mat.stat-mech], Mar 2002.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/GridGraph.html\">Grid Graph</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SpanningTree.html\">Spanning Tree</a>",
+        "<a href=\"/index/Di#divseq\">Index to divisibility sequences</a>"
+    ],
+    "formula": [
+        "a(n) = 2^(n^2-1) / n^2 * product_{n1=0..n-1, n2=0..n-1, n1 and n2 not both 0} (2 - cos(PI*n1/n) - cos(PI*n2/n) ). - Sharon Sela (sharonsela(AT)hotmail.com), Jun 04 2002",
+        "Equivalently, a(n) = Resultant( U(n-1,x/2), U(n-1,(4-x)/2) ), where U(n,x) is a Chebyshev polynomial of the second kind. _Peter Bala_, Apr 29 2014"
+    ],
+    "maple": [
+        "a:= n-> round(evalf(2^(n^2-1) /n^2 *mul(mul(`if`(j<>0 or k<>0, 2 -cos(Pi*j/n) -cos(Pi*k/n), 1), k=0..n-1), j=0..n-1), 15 +n*(n+1)/2)): seq(a(n), n=1..20);  # _Alois P. Heinz_, Apr 15 2011",
+        "# uses expression as a resultant",
+        "seq(resultant(simplify(ChebyshevU(n-1, x/2)), simplify(ChebyshevU(n-1, (4-x)/2)), x), n = 1 .. 24); # _Peter Bala_, Apr 29 2014"
+    ],
+    "mathematica": [
+        "Table[2^((n-1)^2) Product[(2 - Cos[Pi i/n] - Cos[Pi j/n]), {i, 1, n-1}, {j, 1, n-1}], {n, 12}] // Round"
+    ],
+    "program": [
+        "(PARI) {a(n) = polresultant( polchebyshev(n-1, 2, x/2), polchebyshev(n-1, 2, (4-x)/2) )}; /* _Michael Somos_, Aug 12 2017 */"
+    ],
+    "xref": [
+        "Main diagonal of A116469."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms and better description from _Roberto E. Martinez II_, Jan 07 2002"
+    ],
+    "references": 5,
+    "revision": 57,
+    "time": "2017-08-12T12:06:37-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

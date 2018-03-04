@@ -1,0 +1,40 @@
+{
+    "number": 257636,
+    "data": "2,13,16,30,31,34,37,70,73,91,97,106,112,118,124,130,133,145,151,166,181,199,300,310,346,358,361,364,370,376,382,388,391,700,709,721,727,730,739,745,751,754,757,760,763,775,778,784,787,790,904,907,916,919",
+    "name": "Numbers n such that the base 10 reversals of n and n+1 are both prime.",
+    "comment": [
+        "n such that n and n+1 are in A095179.",
+        "Leading 0's in the reversals are allowed.",
+        "Heuristically, the abundance of these numbers should be roughly similar to that of the twin primes.  Thus the sequence should be infinite but the sum of the reciprocals should converge.",
+        "All terms == 1 (mod 3) except for 2 and 3*10^k where k is in A049054."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A257636/b257636.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Math StackExchange, <a href=\"http://math.stackexchange.com/questions/1513275/consecutive-numbers-where-their-revers-numbers-are-primes/1513381#1513381\">Consecutive numbers where their revers numbers are primes</a>"
+    ],
+    "example": [
+        "13 is in the sequence because both 31 and 41 are prime."
+    ],
+    "maple": [
+        "revdigs:= proc(n) option remember; local x;",
+        "   x:= n mod 10;",
+        "   x*10^ilog10(n)+revdigs((n-x)/10);",
+        "end proc:",
+        "for i from 0 to 9 do revdigs(i):= i od:",
+        "Rprimes:= select(isprime@revdigs, [$1..10^4]):",
+        "Rprimes[select(t -> Rprimes[t+1]-Rprimes[t]=1, [$1..nops(Rprimes)-1])]; # _Robert Israel_, Nov 04 2015"
+    ],
+    "program": [
+        "(PARI) for(n=1, 1e3, if(isprime(eval(concat(Vecrev(Str(n))))) && isprime(eval(concat(Vecrev(Str(n+1))))), print1(n, \", \"))) \\\\ _Altug Alkan_, Nov 04 2015"
+    ],
+    "xref": [
+        "Cf. A000040, A004086, A049054, A095179."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Nov 04 2015",
+    "references": 1,
+    "revision": 13,
+    "time": "2015-11-05T10:40:07-05:00",
+    "created": "2015-11-05T10:40:07-05:00"
+}

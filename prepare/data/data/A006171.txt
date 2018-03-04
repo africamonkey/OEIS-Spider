@@ -1,0 +1,65 @@
+{
+    "number": 6171,
+    "id": "M2479",
+    "data": "1,1,3,5,11,17,34,52,94,145,244,370,603,899,1410,2087,3186,4650,6959,10040,14750,21077,30479,43120,61574,86308,121785,169336,236475,326201,451402,618135,848209,1153733,1571063,2123325,2871419,3857569,5182999,6924303",
+    "name": "Number of factorization patterns of polynomials of degree n over integers.",
+    "comment": [
+        "Number of partitions of n where there are unlimited distinguishable but unlabeled objects of each size. E.g., in splitting 2 into two parts of size 1, we distinguish whether the same object is used for each part. Also number of factorization patterns over rationals, or many other UFDs (but not over real or complex numbers). - _Franklin T. Adams-Watters_, Jun 19 2006",
+        "Equals the \"aerate and convolve\" convergent of A000041: (1, 1, 2, 3, 5, 7, 11, ...) * (1, 0, 1, 0, 2, 0, 3, 0, 5, ...) * (1, 0, 0, 1, 0, 0, 2, 0, 0, 3, ...). - _Gary W. Adamson_, Jun 16 2009",
+        "Also equals the number of distinct (up to unitary similarity) unital *-subalgebras of the n X n complex matrices. A unital *-subalgebra is a subspace that is closed under multiplication and the conjugate transpose, and which contains the identity matrix (see A215905 and A215925). - _Nathaniel Johnston_, Aug 27 2012",
+        "Also equals the number of partitions having parts consisting of runs of equal parts. - _Gregory L. Simay_, May 25 2017"
+    ],
+    "reference": [
+        "R. A. Hultquist, G. L. Mullen and H. Niederreiter, Association schemes and derived PBIB designs of prime power order, Ars. Combin., 25 (1988), 65-82.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe and Alois P. Heinz, <a href=\"/A006171/b006171.txt\">Table of n, a(n) for n = 0..10000</a> (first 1001 terms from T. D. Noe)",
+        "N. A. Brigham, <a href=\"https://doi.org/10.1090/S0002-9939-1950-0034409-3\">A General Asymptotic Formula for Partition Functions</a>, Proc. Amer. Math. Soc., vol. 1 (1950), pp. 182-191.",
+        "MathOverflow, <a href=\"http://mathoverflow.net/questions/159955/number-of-representations-of-an-integer-as-an-arbitrary-sum-of-products/160752\">Number of representations of an integer as an (arbitrary) sum of products</a>, 2014.",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "From _Vladeta Jovovic_, Apr 21 2001: (Start)",
+        "Euler transform of tau(n), tau(n) = the number of divisors of n, cf. A000005.",
+        "G.f.: Product_{k>=1} (1 - x^k)^(-tau(k)).",
+        "a(n) = 1/n*Sum_{k=1..n} a(n-k)*b(k), n>1, a(0)=1, b(k) = Sum_{d|k} d*tau(d), cf. A060640. (End)",
+        "a(n) = Sum_{<b(i)^k(i)> partition of n} product p(k(i)), where p(n) is the partition function A000041. E.g., for the partition [4,2^3,1^4], the product is p(1)*p(3)*p(4) = 1*3*5 = 15. - _Franklin T. Adams-Watters_, Jun 19 2006",
+        "G.f.: A(x) = exp( Sum_{n>=1} sigma(n)*x^n/(1-x^n)/n ). - _Paul D. Hanna_, Mar 28 2009",
+        "From _Paul D. Hanna_, Oct 19 2011: (Start)",
+        "Logarithmic derivative yields A060640.",
+        "G.f.: A(x) = exp( Sum_{n>=1} A060640(n)*x^n/n ), where A060640(n) = Sum_{d|n} d*sigma(n/d). (End)",
+        "G.f.: 1/Product_{n>=1} E(q^n) where E(q) = Product_{n>=1} (1-q^n). - _Joerg Arndt_, Feb 27 2014",
+        "log(a(n)) ~ Pi * sqrt(n*log(n)/3) [Brigham, 1950]. - _Vaclav Kotesovec_, Jan 04 2017",
+        "a(n) ~ exp(Pi*sqrt(n/(3*log(n))) * (log(n) - log(log(n))/2 + gamma + 6*Zeta'(2)/Pi^2 + log(2/Pi) + log(3)/2)) * Pi^(1/4) * (log(n))^(1/8) / (2^(3/4) * 3^(1/8) * n^(5/8)), where gamma is the Euler-Mascheroni constant (A001620) and Zeta'(2) = -0.9375482543158437537... (see A073002) [user Lucia, MathOverflow, 2014]. - _Vaclav Kotesovec_, Jan 05 2017"
+    ],
+    "example": [
+        "For n=3 we have 3 = (3*1) = (1*3) = (2*1) + (1*1) = (1*2) + (1*1) = (1*1) + (1*1) + (1*1) so a(3)=5.",
+        "For n=4 we have the following 11 partitions, with the additive runs indicated by \"[]\": [4], [3]+[1], [2+2], [2]+[2], [2]+[1+1], [2]+[1]+[1], [1+1+1+1], [1+1+1]+[1], [1+1]+[1+1], [1+1]+[1]+[1], [1]+[1]+[1]+[1]. - _Gregory L. Simay_, May 25 2017"
+    ],
+    "maple": [
+        "with(numtheory): etr:= proc(p) local b; b:=proc(n) option remember; local d,j; if n=0 then 1 else add(add(d*p(d), d=divisors(j)) *b(n-j), j=1..n)/n fi end end: a:=etr(tau): seq(a(n), n=0..40); # _Alois P. Heinz_, Sep 08 2008"
+    ],
+    "mathematica": [
+        "max = 38; gf[x_] := Product[(1 - x^k)^-DivisorSigma[0, k], {k, 1, max}]; CoefficientList[ Series[gf[x], {x, 0, max}], x] (* _Jean-Fran\u00e7ois Alcover_, Nov 23 2011 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if(n<0, 0, polcoeff( 1 / prod(k=1, n, (1 - x^k + x * O(x^n))^numdiv(k)), n))}; /* _Michael Somos_, Apr 01 2003 */",
+        "(PARI) N=66; x='x+O('x^N); gf=1/prod(j=1,N, eta(x^j)); Vec(gf) \\\\ _Joerg Arndt_, May 03 2008",
+        "(PARI) {a(n)=if(n==0,1,polcoeff(exp(sum(m=1,n,sigma(m)*x^m/(1-x^m+x*O(x^n))/m)),n))} /* _Paul D. Hanna_, Mar 28 2009 */",
+        "(PARI) {A060640(n)=sumdiv(n, d, d*sigma(n/d))}",
+        "{a(n)=polcoeff(exp(sum(m=1,n+1,A060640(m)*x^m/m)+x*O(x^n)),n)} /* _Paul D. Hanna_, Oct 19 2011 */"
+    ],
+    "xref": [
+        "Cf. A000005, A060640, A061255, A061256, A001970, A061257.",
+        "Cf. A006167-A006170, A006171 (log).",
+        "Cf. A000041, A115621, A215905, A215909, A215914, A215925."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "references": 34,
+    "revision": 74,
+    "time": "2017-06-27T14:02:35-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

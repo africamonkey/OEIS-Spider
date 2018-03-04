@@ -1,0 +1,53 @@
+{
+    "number": 273200,
+    "data": "2,3,4,5,7,8,9,11,13,16,17,19,21,23,25,27,29,31,32,33,37,39,41,43,47,49,53,59,61,64,65,67,71,73,79,81,83,85,89,95,97,101,103,107,109,113,115,121,125,127,128,131,133,137,139,145,149,151,155,157,161,163,167,169",
+    "name": "Prime power-like integers.",
+    "comment": [
+        "Let DTD(n) denote the difference table of the divisors of n. The DTDs of prime powers (in the sense of A246655) have only positive entries and the rows and columns of their DTD are nondecreasing.",
+        "We define an integer n>0 and not the unity to be prime power-like if and only if DTD(n) has only positive entries and nondecreasing rows and columns (read from left to right and from top to bottom).",
+        "This sequence lists the prime power-like integers and sequence A273201 lists the integers which are prime power-like but not prime powers. Thus we have the inclusions A000040 < A246655 < A273200 and the union A273200 = A273201 U A246655.",
+        "Integers which have a positive but not monotone DTD are listed in A273199. Integers with a positive DTD are listed in A273130."
+    ],
+    "example": [
+        "125 is in this sequence because it is a prime power and has the DTD:",
+        "[  1    5    25  125]",
+        "[  4   20   100]",
+        "[ 16   80]",
+        "[ 64]",
+        "161 is in this sequence because the DTD of 161 has only positive entries and nondecreasing rows and columns:",
+        "[   1    7   23  161]",
+        "[   6   16  138]",
+        "[  10  122]",
+        "[ 112]"
+    ],
+    "program": [
+        "(Sage)",
+        "def is_prime_power_like(n):",
+        "    if n == 1: return false",
+        "    D = divisors(n)",
+        "    T = matrix(ZZ, len(D))",
+        "    for (m, d) in enumerate(D):",
+        "        T[0, m] = d",
+        "        for k in range(m-1, -1, -1) :",
+        "            T[m-k, k] = T[m-k-1, k+1] - T[m-k-1, k]",
+        "            if T[m-k, k] <= 0: return false",
+        "    non_decreasing = lambda L: all(x<=y for x, y in zip(L, L[1:]))",
+        "    b = true",
+        "    for k in range(0,len(D)-1):",
+        "        b &= non_decreasing(T.row(k)[:len(D)-k])",
+        "        b &= non_decreasing(T.column(k)[:len(D)-k])",
+        "        if not b: return false",
+        "    return b",
+        "print filter(is_prime_power_like, range(1,170))"
+    ],
+    "xref": [
+        "Cf. A000040, A246655, A273102, A273130, A273199, A273201."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, May 17 2016",
+    "references": 4,
+    "revision": 16,
+    "time": "2018-01-07T21:36:04-05:00",
+    "created": "2016-05-18T23:35:51-04:00"
+}

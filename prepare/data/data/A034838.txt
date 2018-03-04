@@ -1,0 +1,71 @@
+{
+    "number": 34838,
+    "data": "1,2,3,4,5,6,7,8,9,11,12,15,22,24,33,36,44,48,55,66,77,88,99,111,112,115,122,124,126,128,132,135,144,155,162,168,175,184,212,216,222,224,244,248,264,288,312,315,324,333,336,366,384,396,412,424,432,444,448",
+    "name": "Numbers n that are divisible by every digit of n.",
+    "comment": [
+        "Integers with at least one 0 digit (A011540) are excluded.",
+        "A128635(a(n)) = n."
+    ],
+    "reference": [
+        "Charles Ashbacher, Journal of Recreational Mathematics, Vol. 33 (2005), pp. 227. See problem number 2693."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A034838/b034838.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Digit.html\">Digit</a>",
+        "<a href=\"/index/Ar#10-automatic\">Index entries for 10-automatic sequences</a>."
+    ],
+    "example": [
+        "36 is in the sequence because it is divisible by both 3 and 6.",
+        "48 is included because both 4 and 8 divide 48.",
+        "64 is not included because even though 4 divides 64, 6 does not."
+    ],
+    "maple": [
+        "a:=proc(n) local nn,j,b,bb: nn:=convert(n,base,10): for j from 1 to nops(nn) do b[j]:=n/nn[j] od: bb:=[seq(b[j],j=1..nops(nn))]: if map(floor,bb)=bb then n else fi end: 1,2,3,4,5,6,7,8,9,seq(seq(seq(a(100*m+10*n+k),k=1..9),n=1..9),m=0..6); # _Emeric Deutsch_"
+    ],
+    "mathematica": [
+        "divByEvryDigitQ[n_] := Block[{id = Union[IntegerDigits[n]]}, Union[IntegerQ[#] & /@ (n/id)] == {True}]; Select[Range[487],  divByEvryDigitQ[#] &] (* _Robert G. Wilson v_, Jun 21 2005 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a034838 n = a034838_list !! (n-1)",
+        "a034838_list = filter f a052382_list where",
+        "   f u = g u where",
+        "     g v = v == 0 || mod u d == 0 && g v' where (v',d) = divMod v 10",
+        "-- _Reinhard Zumkeller_, Jun 15 2012, Dec 21 2011",
+        "(PARI) is(n)=my(v=vecsort(eval(Vec(Str(n))),,8)); if(v[1]==0, return(0)); for(i=1, #v, if(n%v[i], return(0))); 1 \\\\ _Charles R Greathouse IV_, Apr 17 2012",
+        "(PARI) is_A034838(n)=my(d=Set(digits(n)));d[1]&&!forstep(i=#d,1,-1,n%d[i]&&return) \\\\ _M. F. Hasler_, Jan 10 2016",
+        "(Python)",
+        "from itertools import product",
+        "A034838_list = []",
+        "for g in range(1,4):",
+        "....for n in product('123456789',repeat=g):",
+        "........s = ''.join(n)",
+        "........m = int(s)",
+        "........if not any([m % int(d) for d in s]):",
+        "............A034838_list.append(m) # _Chai Wah Wu_, Sep 18 2014",
+        "(Python)",
+        "for n in range(10**3):",
+        "..s = str(n)",
+        "..if not s.count('0'):",
+        "....c = 0",
+        "....for i in s:",
+        "......if n%int(i):",
+        "........c += 1",
+        "........break",
+        "....if not c:",
+        "......print(n,end=', ') # _Derek Orr_, Sep 19 2014"
+    ],
+    "xref": [
+        "Subsequence of A002796.",
+        "Cf. A002706, A034709, A007602, A052382, A225299.",
+        "Cf. A066484 (subsequence).",
+        "Cf. A059405 (subsequence)."
+    ],
+    "keyword": "nonn,base,nice",
+    "offset": "1,2",
+    "author": "_Erich Friedman_",
+    "references": 26,
+    "revision": 46,
+    "time": "2017-09-19T12:16:18-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

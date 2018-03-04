@@ -1,0 +1,36 @@
+{
+    "number": 261224,
+    "data": "1,2,2,3,3,3,4,5,5,6,6,7,7,7,8,8,9,10,10,11,11,12,12,12,13,13,14,14,15,15,16,17,17,18,18,19,19,19,20,21,21,21,22,22,23,23,24,24,25,26,26,27,27,28,28,28,29,30,30,31,31,31,32,32,33,33,34,34,35,35,36,37,37,38,38,39,39,39,40,41,41,42,42,42,43,43,44,44,45,45,46",
+    "name": "a(n) = number of steps needed to reach (n^2)-1 when starting from k = ((n+1)^2)-1 and repeatedly applying the map that replaces k with k - A053610(k), where A053610(k) = the number of positive squares that sum to k using the greedy algorithm.",
+    "link": [
+        "Antti Karttunen, <a href=\"/A261224/b261224.txt\">Table of n, a(n) for n = 1..6000</a>"
+    ],
+    "formula": [
+        "a(n) = A261221(((n+1)^2)-1) - A261221((n^2)-1). [The definition.]",
+        "Equally, for all n >= 1:",
+        "a(n) = A261221((n+1)^2) - A261221(n^2).",
+        "a(n) = A261222(n+1) - A261222(n).",
+        "a(n) = A261223(n+1) - A261223(n)."
+    ],
+    "mathematica": [
+        "Table[-1 + Length@ NestWhileList[# - Block[{m = #, c = 1}, While[a = (# - Floor[Sqrt@ #]^2) &@ m; a != 0, c++; m = a]; c] &, ((n + 1)^2) - 1, # != n^2 - 1 &], {n, 91}] (* _Michael De Vlieger_, Sep 08 2016, after _Jud McCranie_ at A053610 *)"
+    ],
+    "program": [
+        "(Scheme, three variants, the first one utilizing memoization-macro definec)",
+        "(definec (A261224 n) (let ((end (- (A000290 n) 1))) (let loop ((k (- (A000290 (+ 1 n)) 1)) (s 0)) (if (= k end) s (loop (A260740 k) (+ 1 s))))))",
+        "(define (A261224 n) (- (A261223 (+ 1 n)) (A261223 n)))",
+        "(define (A261224 n) (- (A261221 (A000290 (+ 1 n))) (A261221 (A000290 n))))"
+    ],
+    "xref": [
+        "First differences of both A261222 and A261223.",
+        "Cf. A000290, A053610, A260740, A261221.",
+        "Cf. also A260734, A261229."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Aug 12 2015",
+    "references": 9,
+    "revision": 16,
+    "time": "2017-03-30T21:57:06-04:00",
+    "created": "2015-08-20T07:42:11-04:00"
+}

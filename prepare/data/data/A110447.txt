@@ -1,0 +1,48 @@
+{
+    "number": 110447,
+    "data": "1,1,2,6,23,104,531,2982,18109,117545,808764,5862253,44553224,353713232,2924697019,25124481690,223768976093,2062614190733,19646231085928,193102738376890,1956191484175505,20401540100814142",
+    "name": "Permutations containing 3241 patterns only as part of 35241 patterns.",
+    "comment": [
+        "a(n) = # permutations on [n] in which the (scattered) pattern 3241 only occurs as part of a 35241 pattern. For example, a(5) counts all 24 permutations on [4] except 3241 and the permutation p = 42531 is not counted by a(6) because the entries 4251 form a 3241 pattern but p fails to contain an entry larger than 5 between its entries 4 and 2.",
+        "a(n) = # (31-4-2)-avoiding perms on [n]. (31-4-2)-avoiding means the \"3\" and \"1\" must be consecutive in the permutation while the \"4\" and \"2' may be scattered. For example, 35142 contains the (scattered) pattern 3-1-4-2 but avoids 31-4-2. - _David Callan_, Oct 11 2005"
+    ],
+    "reference": [
+        "David Callan, A Combinatorial Interpretation of the Eigensequence for Composition, Journal of Integer Sequences, Vol. 9 (2006), Article 06.1.4."
+    ],
+    "link": [
+        "David Callan, <a href=\"http://arxiv.org/abs/math/0507169\">A combinatorial interpretation of the eigensequence for composition</a>, arXiv:math/0507169 (2005)",
+        "David Callan, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL9/Callan/callan96.html\">A Combinatorial Interpretation of the Eigensequence for Composition</a>, Journal of Integer Sequences, Vol. 9 (2006), Article 06.1.4.",
+        "David Callan, <a href=\"http://arxiv.org/abs/math/0510211\">A Wilf equivalence related to two stack sortable permutations</a>, arXiv:math/0510211 (2005)",
+        "D. Callan, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL14/Callan/callan2.html\">Lagrange Inversion Counts 3bar-5241-Avoiding Permutations</a>, J. Int. Seq. 14 (2011) # 11.9.4"
+    ],
+    "mathematica": [
+        "The following recurrence for a(n) is derived in the first linked paper:",
+        "a[0]=c[1]=1",
+        "a[n_]/;n>=1 := a[n] = Sum[a[i]c[n-i], {i, 0, n-1}]",
+        "c[n_]/;n>=2 := c[n] = Sum[i a[n-1, i], {i, n-1}]",
+        "a[n_, k_]/;1<=k<=n-1 := a[n, k] = Sum[a[i]a[n-1-i, j], {i, 0, k-1}, {j, k-i, n-1-i}]",
+        "a[ n_, n_ ]/;n>=1 := a[n, n] = a[n-1]",
+        "The following Mathematica code generates all the permutations counted by a(n).",
+        "Run the code; then Aset[n] returns the permutations counted by a(n).",
+        "Aset[0] = { { } }",
+        "Aset[1] = { {1} }",
+        "Cset[1] = { {1} }",
+        "Aset[n_, n_ ]/;n>=1 := Aset[n, n ] = Map[Join[{n}, # ]&, Aset[n-1 ] ]",
+        "processBn[n_, single_, i_] := Module[{base=Drop[Range[n], {i}]}, Join[{i}, base[[single]] ] ]",
+        "Cset[n_]/;n>=2 := Cset[n] = Flatten[Table[Map[processBn[n, #, i]&, Aset[n-1, j-1]], {j, 2, n}, {i, j-1}], 2]",
+        "processAn[pair_, j_]:=Module[{p1=pair[[1]], p2=pair[[2]]}, Flatten[Insert[j+p2, p1, 2] ] ]",
+        "Aset[ n_ ]/;n>=2 := Aset[ n ] = Flatten[ Table[ Map[ processAn[ #, j ]&, CartesianProduct[ Aset[ j ], Cset[ n-j ] ] ], {j, 0, n-1} ], 1 ]",
+        "processAnk[n_, k_, pair_, j_]:=Module[{p1=pair[[1]], p2=pair[[2]], base}, base=Complement[Range[j+1, n], {k}]; Join[{k}, p1, base[[p2]]] ]",
+        "Aset[ n_, k_ ]/;1<=k<=n-1 := Aset[ n, k ] = Flatten[ Table[ Map[ processAnk[ n, k, #, j ]&, CartesianProduct[ Aset[ j ], Aset[ n-1-j, r ] ] ], {j, 0, k-1}, {r, k-j, n-1-j} ], 2 ]"
+    ],
+    "xref": [
+        "This sequence is A030266 shifted left."
+    ],
+    "keyword": "nonn,tabl",
+    "offset": "0,3",
+    "author": "_David Callan_, Jul 20 2005",
+    "references": 4,
+    "revision": 11,
+    "time": "2017-09-14T14:46:08-04:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

@@ -1,0 +1,57 @@
+{
+    "number": 199936,
+    "data": "0,1,4,9,16,31,52,80,133,197,298,428,621,879,1230,1696,2329,3142,4231,5619,7447,9781,12771,16553,21391,27440,35089,44600,56510,71232,89538,112011,139759,173679,215279,265840,327527,402162,492703,601830,733550,891634",
+    "name": "Total sum of Fibonacci parts in all partitions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A199936/b199936.txt\">Table of n, a(n) for n = 0..5000</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{i>=2} Fibonacci(i)*x^Fibonacci(i)/(1 - x^Fibonacci(i)) / Product_{j>=1} (1 - x^j). - _Ilya Gutkovskiy_, Feb 01 2017"
+    ],
+    "example": [
+        "For n = 6 we have:",
+        "--------------------------------------",
+        ".                         Sum of",
+        "Partitions            Fibonacci parts",
+        "--------------------------------------",
+        "6 .......................... 0",
+        "3 + 3 ...................... 6",
+        "4 + 2 ...................... 2",
+        "2 + 2 + 2 .................. 6",
+        "5 + 1 ...................... 6",
+        "3 + 2 + 1 .................. 6",
+        "4 + 1 + 1 .................. 2",
+        "2 + 2 + 1 + 1 .............. 6",
+        "3 + 1 + 1 + 1 .............. 6",
+        "2 + 1 + 1 + 1 + 1 .......... 6",
+        "1 + 1 + 1 + 1 + 1 + 1 ...... 6",
+        "------------------------------------",
+        "Total ..................... 52",
+        "So a(6) = 52."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, [1, 0], `if`(i<1, 0,",
+        "      `if`(i>n, 0, ((p, m)-> p +`if`(issqr(m+4) or issqr(m-4),",
+        "      [0, p[1]*i], 0))(b(n-i, i), 5*i^2)) +b(n, i-1)))",
+        "    end:",
+        "a:= n-> b(n$2)[2]:",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Feb 01 2017"
+    ],
+    "mathematica": [
+        "max = 42; F = Fibonacci; gf = Sum[F[i]*x^F[i]/(1-x^F[i]), {i, 2, max}] / Product[1-x^j, {j, 1, max}] + O[x]^max; CoefficientList[gf, x] (* _Jean-Fran\u00e7ois Alcover_, Feb 21 2017, after _Ilya Gutkovskiy_ *)",
+        "b[n_, i_] := b[n, i] = If[n==0, {1, 0}, If[i<1, 0, If[i>n, 0, Function[{p, m}, p+If[IntegerQ @ Sqrt[m+4] || IntegerQ @ Sqrt[m-4], {0, p[[1]]*i}, 0] ][b[n-i, i], 5*i^2]]+b[n, i-1]]]; a[n_] := b[n, n][[2]]; Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Feb 21 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000045, A066186, A073118, A144115, A194544, A194545."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Omar E. Pol_, Nov 21 2011",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Nov 21 2011"
+    ],
+    "references": 1,
+    "revision": 37,
+    "time": "2017-02-21T02:38:12-05:00",
+    "created": "2011-11-21T12:31:22-05:00"
+}

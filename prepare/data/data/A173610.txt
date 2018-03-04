@@ -1,0 +1,34 @@
+{
+    "number": 173610,
+    "data": "1,1,2,4,10,25,60,144,384,1024,2752,7396,19436,51076,132888,345744,938448,2547216,6977712,19114384,52748180,145564225,402295360,1111822336,3045774336,8343726336,22798000896,62292173056,169191995264",
+    "name": "Bisections are {b(n)*b(n+1), n>=0} (shifted) and {b(n)^2, n>=0} where {b(n), n>=0} is the self-convolution of this sequence, with a(0)=1.",
+    "comment": [
+        "The limit a(n+1)/a(n) seems to exist, with a value near 2.81..."
+    ],
+    "formula": [
+        "G.f. satisfies: (A(x) + A(-x))/2 = 1 + x*Sum_{n>=0} b(n)*b(n+1)*x^(2n+1) and",
+        "(A(x) - A(-x))/2 = x*Sum_{n>=0} b(n)^2*x^(2n) where Sum_{n>=0} b(n)*x^n = A(x)^2 with a(0)=1."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 4*x^3 + 10*x^4 + 25*x^5 + 60*x^6 +...",
+        "The square of the g.f. begins:",
+        "A(x)^2 = 1 + 2*x + 5*x^2 + 12*x^3 + 32*x^4 + 86*x^5 +...+ b(n)*x^n +...",
+        "where the odd bisection yields the series with squared coefficients:",
+        "(A(x) - A(-x))/2 = x + 4*x^3 + 25*x^5 + 144*x^7 + 1024*x^9 +...+ b(n)^2*x^(2n+1) +...",
+        "and the even bisection yields the series:",
+        "(A(x) + A(-x))/2 = 1 + 2*x^2 + 10*x^4 + 60*x^6 + 384*x^8 +...+ b(n)*b(n+1)*x^(2n+2) +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x,B); for(i=1,n,B=(A+x*O(x^n))^2;A=1+x*sum(m=0,n\\2,polcoeff(B,m)*polcoeff(B,m+1)*x^(2*m+1)) +x*sum(m=0,n\\2,polcoeff(B,m)^2*x^(2*m)));polcoeff(A,n)}"
+    ],
+    "xref": [
+        "Cf. A173611 (square), bisections: A173612, A173613."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Feb 22 2010",
+    "references": 3,
+    "revision": 2,
+    "time": "2012-03-30T18:37:21-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

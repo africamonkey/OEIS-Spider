@@ -1,0 +1,71 @@
+{
+    "number": 1082,
+    "data": "0,1,5,8,16,21,33,40,56,65,85,96,120,133,161,176,208,225,261,280,320,341,385,408,456,481,533,560,616,645,705,736,800,833,901,936,1008,1045,1121,1160,1240,1281,1365,1408,1496,1541,1633,1680,1776,1825,1925,1976",
+    "name": "Generalized octagonal numbers: k*(3*k-2), k=0, +- 1, +- 2, +-3....",
+    "comment": [
+        "Numbers of the form 3*m^2+2*m, m an integer.",
+        "3*a(n) + 1 is a perfect square.",
+        "a(n) mod 10 belongs to a periodic sequence: 0, 1, 5, 8, 6, 1, 3, 0, 6, 5, 5, 6, 0, 3, 1, 6, 8, 5, 1, 0. [Mohamed Bouhamida (bhmd95(AT)yahoo.fr), Sep 04 2009]",
+        "A089801 is the characteristic function. - _R. J. Mathar_, Oct 07 2011.",
+        "Exponents of powers of q in one form of the quintuple product identity. (-x^-2 + 1) * q^0 + (x^-3 - x) * q^1 + (-x^-5 + x^3) * q^5 + (x^-6 - x^4) * q^8 + ... = Sum_n q^(3*n^2 + 2*n) * (x^(3*n) - x^(-3*n - 2)) = Product_{k>0} (1 - x * q^(2*k - 1)) * (1 - x^-1 * q^(2*k - 1)) * (1 - q^(2*k)) * (1 - x^2 * q^(4*k)) * (1 - x^-2 * q^(4*k - 4)). - _Michael Somos_, Dec 21 2011",
+        "The offset 0 would also be valid here, all other entries of generalized k-gonal numbers have offset 0 (see cross references). - _Omar E. Pol_, Jan 12 2013",
+        "Also, x values of the Diophantine equation x(x+3)+(x+1)(x+2) = (x+y)^2+(x-y)^2. - _Bruno Berselli_, Mar 29 2013",
+        "Numbers n such that sum_{i=1..n} 2*i*(n-i)/n is an integer (the addend is the harmonic mean of i and n-i). - _Wesley Ivan Hurt_, Sep 14 2014",
+        "Equivalently, integers of the form m*(m+2)/3 (nonnegative values of m are listed in A032766). - _Bruno Berselli_, Jul 18 2016"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A001082/b001082.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "R. Stephan, <a href=\"http://www.ark.in-berlin.de/A001082.ps\">On the solutions to 'px+1 is square'</a>",
+        "Z.-W. Sun, <a href=\"http://arxiv.org/abs/1503.03743\">A result similar to Lagrange's theorem</a>, arXiv preprint arXiv:1503.03743 [math.NT], 2015.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/QuintupleProductIdentity.html\">Quintuple Product Identity</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2,-1,1)."
+    ],
+    "formula": [
+        "a(n) = n*(3*n-4)/4 if n even, (n-1)*(3*n+1)/4 if n odd.",
+        "a(n) = n^2 - n - floor(n/2)^2.",
+        "G.f.: sum_{n=0..inf} (-1)^n*[x^(a(2n+1)) + x^(a(2n+2))] = 1/1 - (x-x^2)/1 - (x^2-x^4)/1 - (x^3-x^6)/1 - ... - (x^k - x^(2k))/1 - ... (continued fraction where k=1..inf). - _Paul D. Hanna_, Aug 16 2002",
+        "a(n+1) = ceiling(n/2)^2 + A046092(floor(n/2)).",
+        "a(2n) = n(3n-2) = A000567(n), a(2n+1) = n(3n+2) = A045944(n). - Mohamed Bouhamida (bhmd95(AT)yahoo.fr), Nov 06 2007",
+        "O.g.f.: -x^2*(x^2+4*x+1)/((x-1)^3*(1+x)^2). - _R. J. Mathar_, Apr 15 2008",
+        "a(n) = n^2+n-ceiling(n/2)^2 with offset 0 and a(0)=0. [_Gary Detlefs_, Feb 23 2010]",
+        "a(n) = (6*n^2-6*n-1-(2*n-1)*(-1)^n)/8. - _Luce ETIENNE_, Dec 11 2014",
+        "E.g.f.: (3*x^2*exp(x) + x*exp(-x) - sinh(x))/4. - _Ilya Gutkovskiy_, Jul 15 2016",
+        "Sum_{n>=2} 1/a(n) = (9 + 2*sqrt(3)*Pi)/12. - _Vaclav Kotesovec_, Oct 05 2016"
+    ],
+    "example": [
+        "For the ninth comment: 65 is in the sequence because 65 = 13*(13+2)/3 or also 65 = -15*(-15+2)/3. - _Bruno Berselli_, Jul 18 2016"
+    ],
+    "maple": [
+        "seq(n^2+n-ceil(n/2)^2, n=0..51); # _Gary Detlefs_, Feb 23 2010"
+    ],
+    "mathematica": [
+        "Table[If[EvenQ[n], n*(3*n-4)/4, (n-1) (3*n+1)/4], {n, 100}]"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n%2, (n-1) * (3*n + 1) / 4, n * (3*n - 4) / 4)}",
+        "(Haskell)",
+        "a001082 n = a001082_list !! n",
+        "a001082_list = scanl (+) 0 $ tail a022998_list",
+        "-- _Reinhard Zumkeller_, Mar 31 2012",
+        "(MAGMA) [n^2 - n - Floor(n/2)^2 : n in [1..50]]; // _Wesley Ivan Hurt_, Sep 14 2014"
+    ],
+    "xref": [
+        "Partial sums of A022998.",
+        "Cf. A000567, A005563, A085785, A089801, A245031.",
+        "Column 4 of A195152. A045944.",
+        "Generalized k-gonal numbers, k>=5: A001318, A000217, A085787, this sequence, A118277, A074377, A195160, A195162, A195313, A195818.",
+        "Cf. sequences of the form m*(m+k)/(k+1) listed in A274978. [_Bruno Berselli_, Jul 25 2016]"
+    ],
+    "keyword": "nonn,easy,changed",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_ and _Tom Duff_",
+    "ext": [
+        "New sequence name from _Matthew Vandermast_, Apr 10 2003",
+        "Editorial changes by _N. J. A. Sloane_, Feb 03 2012",
+        "Edited by _Omar E. Pol_, Jun 09 2012"
+    ],
+    "references": 98,
+    "revision": 137,
+    "time": "2018-02-26T05:59:36-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

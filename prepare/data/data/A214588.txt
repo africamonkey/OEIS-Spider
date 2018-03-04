@@ -1,0 +1,53 @@
+{
+    "number": 214588,
+    "data": "2,3,5,7,17,19,23,37,53,67,71,83,97,101,103,113,131,149,151,163,167,179,181,193,197,199,211,227,229,241,257,263,277,293,307,311,337,353,359,373,389,401,419,421,433,439,449,467,487,499,503,547,563,577,593,599",
+    "name": "Primes p such that p mod 16 < 8.",
+    "comment": [
+        "Original definition: Primes p such that p XOR 8 = p + 8.",
+        "This is an example of a class of primes p such that p XOR n = p + n.",
+        "A002144 is the case where n=2, there are no cases where n=3, in A033203 n=4, 2 is the only p for n=5, in A007519 n=6, there are no cases where n=7. This sequence occurs when n=8.",
+        "In general if n is an odd number in A004767 there are no primes, if n is an odd number in A016813, then 2 is the only prime, and if n is an even number (A005843) there is a set of primes that satisfies the relationship p XOR n = p + n."
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A214588/b214588.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "103 is in the sequence because 103 mod 16 is 7 which is less than 8. - _Indranil Ghosh_, Jan 18 2017"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[200]],Mod[#,16]<8&] (* _Harvey P. Dale_, Jan 11 2018 *)"
+    ],
+    "program": [
+        "(MAGMA)",
+        "XOR := func<a, b | Seqint([ (adigs[i] + bdigs[i]) mod 2 : i in [1..n]], 2)",
+        "                       where adigs := Intseq(a, 2, n)",
+        "                       where bdigs := Intseq(b, 2, n)",
+        "                       where n := 1 + Ilog2(Max([a, b, 1]))>;",
+        "for n in [2 .. 1000] do",
+        "   if IsPrime(n)  then  pn:=n;",
+        "      if (XOR(pn,8) eq pn+8) then pn; end if;",
+        "   end if;",
+        "end for;",
+        "(PARI) is_A214588(p)={ !bittest(p,3) & isprime(p) } \\\\ _M. F. Hasler_, Jul 24 2012",
+        "(PARI) forprime(p=1,699, bittest(p,3) || print1(p\",\")) \\\\ _M. F. Hasler_, Jul 24 2012",
+        "(Python)",
+        "from sympy import isprime",
+        "i=1",
+        "j=1",
+        "while j<=10000:",
+        "....if  isprime(i)==True and (i%16)<8:",
+        "........print str(j)+\" \"+str(i)",
+        "........j+=1",
+        "....i+=1 # _Indranil Ghosh_, Jan 18 2017"
+    ],
+    "xref": [
+        "Cf. A022144, A033203, A007519, A004767, A016813, A005843."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Brad Clardy_, Jul 22 2012",
+    "references": 1,
+    "revision": 15,
+    "time": "2018-01-11T15:20:20-05:00",
+    "created": "2012-07-24T14:50:49-04:00"
+}

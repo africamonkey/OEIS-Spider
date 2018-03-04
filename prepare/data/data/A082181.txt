@@ -1,0 +1,53 @@
+{
+    "number": 82181,
+    "data": "1,1,10,109,1270,15562,198100,2596645,34825150,475697854,6595646860,92590323058,1313427716380,18798095833012,271118225915560,3936516861402901,57494017447915150,844109420603623030",
+    "name": "a(0)=1; for n>=1, a(n) = sum(k=0..n, 9^k*N(n,k)), where N(n,k) =1/n*C(n,k)*C(n,k+1) are the Narayana numbers (A001263).",
+    "comment": [
+        "More generally, coefficients of (1+m*x-sqrt(m^2*x^2-(2*m+4)*x+1))/((2*m+2)*x) are given by: a(n) = sum(k=0..n, (m+1)^k*N(n,k)).",
+        "The Hankel transform of this sequence is 9^C(n+1,2). - _Philippe Del\u00e9ham_, Oct 29 2007",
+        "a(n) = upper left term in M^n, M = the production matrix:",
+        "1, 1",
+        "9, 9, 9",
+        "1, 1, 1, 1",
+        "9, 9, 9, 9, 9",
+        "1, 1, 1, 1, 1, 1",
+        "...",
+        "- Gary W. Adamson, Jul 08 2011",
+        "Shifts left when INVERT transform applied nine times. - _Benedict W. J. Irwin_, Feb 07 2016"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A082181/b082181.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Paul Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL9/Barry/barry91.html\">On Integer-Sequence-Based Constructions of Generalized Pascal Triangles</a>, Journal of Integer Sequences, Vol. 9 (2006), Article 06.2.4."
+    ],
+    "formula": [
+        "G.f.: (1+8*x-sqrt(64*x^2-20*x+1))/(18*x).",
+        "a(n) = Sum_{k=0..n} A088617(n, k)*9^k*(-8)^(n-k). - _Philippe Del\u00e9ham_, Jan 21 2004",
+        "a(n) = (10(2n-1)a(n-1) - 64(n-2)a(n-2)) / (n+1) for n>=2, a(0)=a(1)=1. - _Philippe Del\u00e9ham_, Aug 19 2005",
+        "a(n) ~ 2^(4*n+1)/(3*sqrt(3*Pi)*n^(3/2)). - _Vaclav Kotesovec_, Oct 14 2012",
+        "G.f.: 1/(1 - x/(1 - 9*x/(1 - x/(1 - 9*x/(1 - x/(1 - ...)))))), a continued fraction. - _Ilya Gutkovskiy_, Apr 21 2017"
+    ],
+    "maple": [
+        "A082181_list := proc(n) local j, a, w; a := array(0..n); a[0] := 1;",
+        "for w from 1 to n do a[w] := a[w-1]+9*add(a[j]*a[w-j-1],j=1..w-1) od;",
+        "convert(a, list) end: A082181_list(17); # _Peter Luschny_, May 19 2011"
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[(1+8*x-Sqrt[64*x^2-20*x+1])/(18*x),{x,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Oct 14 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,1,sum(k=0,n,9^k/n*binomial(n,k)*binomial(n,k+1)))"
+    ],
+    "xref": [
+        "Cf. A001003, A007564, A059231."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Benoit Cloitre_, May 10 2003",
+    "ext": [
+        "Corrected by _T. D. Noe_, Oct 25 2006"
+    ],
+    "references": 7,
+    "revision": 39,
+    "time": "2017-04-21T08:08:40-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

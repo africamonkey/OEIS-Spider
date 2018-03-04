@@ -1,0 +1,39 @@
+{
+    "number": 194920,
+    "data": "1,1,1,2,2,2,3,3,3,3,4,4,4,5,5,5,5,6,6,6,7,7,7,8,8,8,8,9,9,9,10,10,10,10,11,11,11,12,12,12,13,13,13,13,14,14,14,15,15,15,15,16,16,16,17,17,17,17,18,18,18,19,19,19,20,20,20,20,21,21,21,22,22,22,22,23",
+    "name": "a(n) = n - floor(n/sqrt(2)).",
+    "comment": [
+        "a(n) is the number of zeros in row n+1 in triangle A255195. - _Mats Granvik_, Feb 18 2015."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A194920/b194920.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "r = Sqrt[2]; p[n_] := n - Floor[n/r]",
+        "Table[p[n], {n, 1, 90}]  (* A194920 *)",
+        "g[1] = {1}; g[n_] := Insert[g[n - 1], n, p[n]]",
+        "f[1] = g[1]; f[n_] := Join[f[n - 1], g[n]]",
+        "f[20]  (* A194921 *)",
+        "row[n_] := Position[f[30], n];",
+        "u = TableForm[Table[row[n], {n, 1, 5}]]",
+        "v[n_, k_] := Part[row[n], k];",
+        "w = Flatten[Table[v[k, n - k + 1], {n, 1, 13},",
+        "{k, 1, n}]]  (* A194922 *)",
+        "q[n_] := Position[w, n]; Flatten[Table[q[n],",
+        "{n, 1, 80}]]   (* A195071 *)"
+    ],
+    "program": [
+        "(MAGMA) [n-Floor(n/Sqrt(2)): n in [1..80] ]; // _Vincenzo Librandi_, Sep 10 2011",
+        "(PARI) vector(100,n,n-floor(n/sqrt(2))) \\\\ _Derek Orr_, Feb 28 2015"
+    ],
+    "xref": [
+        "Cf. A194921."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,4",
+    "author": "_Clark Kimberling_, Sep 08 2011",
+    "references": 6,
+    "revision": 29,
+    "time": "2017-11-18T20:56:12-05:00",
+    "created": "2011-09-08T20:57:04-04:00"
+}

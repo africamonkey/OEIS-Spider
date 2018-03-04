@@ -1,0 +1,56 @@
+{
+    "number": 214196,
+    "data": "2,3,5,11,23,29,37,41,47,73,131,151,199,223,271,281,353,457,641,643,659,1259,1531,1747,1951,2671,2953,4259,4967,5419,5839,7013,7963,11261",
+    "name": "Primes of the \"first kind\".",
+    "comment": [
+        "See Sun 2012 for precise definition. This term is overworked, and it would be good to include a more precise definition here.",
+        "The sequence is the set of numbers m which are the minimum m for some triple 1 <= i < j <=k such that m divides none of the differences A002110(i)-A002110(j). - _R. J. Mathar_, Jul 08 2012"
+    ],
+    "link": [
+        "Z.-W. Sun, <a href=\"http://arxiv.org/abs/1202.6589\">On functions taking only prime values</a>, arXiv preprint arXiv:1202.6589 [math.NT], 2012; see p. 5."
+    ],
+    "maple": [
+        "A214196 := proc(n)",
+        "        local m ,i,j,ddvs;",
+        "        for m from 2 do",
+        "                ddvs := false ;",
+        "                for i from 1 to n-1 do",
+        "                        for j from i+1 to n do",
+        "                                if (A002110(j)-A002110(i)) mod m = 0 then",
+        "                                        ddvs := true;",
+        "                                        break;",
+        "                                end if;",
+        "                        end do:",
+        "                        if ddvs then",
+        "                                break;",
+        "                        end if;",
+        "                end do:",
+        "                if ddvs = false then",
+        "                        return m;",
+        "                end if;",
+        "        end do:",
+        "end proc:",
+        "# loop generates m multiples times (pipe through 'uniq')",
+        "for n from 1 do",
+        "        printf(\"%d,\\n\",A214196(n)) ;",
+        "end do: # _R. J. Mathar_, Jul 08 2012"
+    ],
+    "mathematica": [
+        "primorial[n_] := primorial[n] = Product[Prime[i], {i, 1, n}];",
+        "p[0] = 1; p[n_] := p[n] = Module[{m, i, j, ddvs}, For[m = 2, True, m++, ddvs = False ; For[i = 1, i <= n - 1, i++, For[j = i + 1, j <= n, j++, If[Mod[primorial[j] - primorial[i], m] == 0, ddvs = True; Break[]]]; If[ddvs, Break[]]]; If[ddvs == False, Return[m]]]];",
+        "A214196 = Reap[n = k = 1; While[n <= 400, If[p[n] != p[n - 1], a[k] = p[n]; Print[n, \" a(\", k, \") = \", a[k]]; Sow[a[k]]; k++]; n++]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Jan 20 2018, after _R. J. Mathar_ *)"
+    ],
+    "xref": [
+        "Cf. A214197."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Jul 07 2012",
+    "ext": [
+        "a(28)-a(34) from _Jean-Fran\u00e7ois Alcover_, Jan 20 2018"
+    ],
+    "references": 2,
+    "revision": 15,
+    "time": "2018-01-20T10:57:10-05:00",
+    "created": "2012-07-07T10:47:56-04:00"
+}

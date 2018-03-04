@@ -1,0 +1,57 @@
+{
+    "number": 162608,
+    "data": "1,1,2,2,4,6,6,12,18,24,24,48,72,96,120,120,240,360,480,600,720,720,1440,2160,2880,3600,4320,5040,5040,10080,15120,20160,25200,30240,35280,40320,40320,80640,120960,161280,201600,241920,282240,322560,362880",
+    "name": "Triangle read by rows in which row n lists n+1 terms, starting with n!, such that the difference between successive terms is also equal to n!.",
+    "comment": [
+        "Note that the last term of the n-th row is the factorial of (n+1) = (n+1)! = A000142(n+1).",
+        "Sequence A178883 (with shape A000041) is a \"refinement\" of Table A162608; as expected, both sequences have row sums A001710(n+2). - _Alford Arnold_, Sep 28 2010"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A162608/b162608.txt\">Rows n=0..150 of triangle, flattened</a>"
+    ],
+    "formula": [
+        "From _Robert Israel_, Jul 03 2015: (Start)",
+        "T(n,k) = n!*k, k = 1 .. n+1.",
+        "T(n+1,k) = (n+1)*T(n,k).",
+        "T(n,k+1) = T(n,k)+T(n,1). (End)"
+    ],
+    "example": [
+        "Triangle begins:",
+        "1;",
+        "1,2;",
+        "2,4,6;",
+        "6,12,18,24;",
+        "24,48,72,96,120;",
+        "120,240,360,480,600,720;",
+        "720,1440,2160,2880,3600,4320,5040;",
+        "5040,10080,15120,20160,25200,30240,35280,40320;",
+        "40320,80640,120960,161280,201600,241920,282240,322560,362880;",
+        "362880,725760,1088640,1451520,1814400,2177280,2540160,2903040,3265920,3628800;",
+        "...",
+        "Observation: It appears that rows sums = A001710(n+2)."
+    ],
+    "mathematica": [
+        "Table[k n!, {n, 0, 8}, {k, n + 1}] // Flatten (* _Michael De Vlieger_, Jul 03 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a162608 n k = a162608_tabl !! n !! k",
+        "a162608_row n = a162608_tabl !! n",
+        "a162608_tabl = map fst $ iterate f ([1], 1) where",
+        "   f (row, n) = (row' ++ [head row' + last row'], n + 1) where",
+        "     row' = map (* n) row",
+        "-- _Reinhard Zumkeller_, Mar 09 2012",
+        "(MAGMA) /* As triangle */ [[Factorial(n)*k: k in [1..n+1]]: n in [0.. 15]]; // _Vincenzo Librandi_, Jul 04 2015"
+    ],
+    "xref": [
+        "Cf. A000142, A001710, A051683, A159797, A162611, A162614, A162622.",
+        "Cf. A178883. - _Alford Arnold_, Sep 28 2010"
+    ],
+    "keyword": "easy,nonn,tabl",
+    "offset": "0,3",
+    "author": "_Omar E. Pol_, Jul 22 2009",
+    "references": 5,
+    "revision": 25,
+    "time": "2015-07-05T02:34:13-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

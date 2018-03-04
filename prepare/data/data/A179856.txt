@@ -1,0 +1,31 @@
+{
+    "number": 179856,
+    "data": "10,11,29,34,99,100,101,106,109,110,114,119,120,124,125,274,275,276,279,281,290,296,299,314,315,316,319,320,324,325,329,330,335,336,340,966,970,975,976,979,986,990,996,999,1000,1001,1004,1005,1006,1010,1020,1021,1024,1025,1034,1049,1051",
+    "name": "Numbers n such that n^3 can be obtained from n by inserting internal (but not necessarily contiguous) digits.",
+    "comment": [
+        "This is to A046851 as cubes A000578 are to squares A000290. A subset of A086458 (but note that, i.e., 104^3 = 1124864 starts and ends with the same digits as 104, but lacks an internal \"0\"). If we require the inserted digits to fill contiguous places, another sequence results, which does not contain 106, for example."
+    ],
+    "example": [
+        "34^3 = 39304 (insert \"930\" into \"34\").",
+        "106^3 = 1191016 (insert \"191\" and \"1\" into \"106\")."
+    ],
+    "maple": [
+        "A000030 := proc(n) if n= 0 then 0; else op(-1,convert(n,base,10)) ; end if; end proc:",
+        "A010879 := proc(n) n mod 10 ; end proc:",
+        "isA086458 := proc(n) A000030(n) = A000030(n^3) and A010879(n) = A010879(n^3) ; end proc:",
+        "subsI := proc(c,L) for i from 1 to nops(L) do if op(i,L) = c then return i; end if; end do; return -1 ; end proc:",
+        "isSubS := proc(Sub,Sup) if nops(Sub) = 1 then if subsI(op(1,Sub),Sup) > 0 then return true; else return false; end if; elif nops(Sub) = 0 then return true; else f := subsI(op(1,Sub),Sup) ; if f < 0 then return false; else procname( subsop(1=NULL,Sub), [op(f+1..nops(Sup),Sup)] ) ; end if; end if; end proc:",
+        "isA179856 := proc(n) if isA086458(n) then dgsn := convert(n,base,10) ; dgsn := op(2..nops(dgsn)-1,dgsn) ; dgsn3 := convert(n^3,base,10) ; dgsn3 := op(2..nops(dgsn3)-1,dgsn3) ; isSubS([dgsn],[dgsn3]) ; else false; end if; end proc:",
+        "for n from 10 to 1400 do if isA179856(n) then printf(\"%d,\",n) ; end if; end do: # _R. J. Mathar_, Jan 30 2011"
+    ],
+    "xref": [
+        "Cf. A000578, A046851, A086458."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_, Jan 28 2011",
+    "references": 1,
+    "revision": 35,
+    "time": "2015-02-08T08:49:07-05:00",
+    "created": "2010-11-12T14:29:16-05:00"
+}

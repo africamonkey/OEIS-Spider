@@ -1,0 +1,48 @@
+{
+    "number": 211223,
+    "data": "3,8,9,10,15,20,21,30,32,33,39,40,49,51,55,56,57,62,63,69,70,75,85,87,88,90,92,93,94,96,99,104,105,108,110,111,114,116,117,123,125,126,128,129,130,134,135,136,140,141,145,147,150,152,153,155,158,159,160",
+    "name": "Numbers n for which sigma(n) = sigma(x) + sigma(y), where n = x + y.",
+    "comment": [
+        "A211225(a(n)) > 0. - _Reinhard Zumkeller_, Jan 06 2013"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A211223/b211223.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "sigma(49)=sigma(8)+sigma(41) that is 57=15+42.",
+        "sigma(93)=sigma(31)+sigma(62) that is 128=32+96.",
+        "In more than one way: sigma(117)=sigma(41)+sigma(76)=sigma(52)+sigma(65)=sigma(56)+sigma(61) that is 182=42+140=98+84=120+62."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A211223:=proc(q)",
+        "local i,n;",
+        "for n from 1 to q do",
+        "  for i from 1 to trunc(n/2) do",
+        "    if sigma(i)+sigma(n-i)=sigma(n) then print(n); break; fi;",
+        "od; od; end:",
+        "A211223(10000);"
+    ],
+    "mathematica": [
+        "sigmaPartitionQ[n_] := With[{s = DivisorSigma[1, n], ip = IntegerPartitions[n, {2}]}, MemberQ[ip, {x_, y_} /; s == DivisorSigma[1, x] + DivisorSigma[1, y]]]; Select[Range[160], sigmaPartitionQ] (* _Jean-Fran\u00e7ois Alcover_, Aug 19 2013 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(t=sigma(n));for(i=1,n\\2,if(sigma(i)+sigma(n-i)==t, return(1))) \\\\ _Charles R Greathouse IV_, May 04 2012",
+        "(Haskell)",
+        "a211223 n = a211223_list !! (n-1)",
+        "a211223_list = map (+ 1) $ findIndices (> 0) a211225_list",
+        "-- _Reinhard Zumkeller_, Jan 06 2013"
+    ],
+    "xref": [
+        "Cf. A083207, A204830, A204831, A211224, A211225.",
+        "Cf. A218852.",
+        "Cf. A000203."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Apr 27 2012",
+    "references": 11,
+    "revision": 28,
+    "time": "2013-09-22T12:02:08-04:00",
+    "created": "2012-05-04T13:17:51-04:00"
+}

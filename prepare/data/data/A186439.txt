@@ -1,0 +1,49 @@
+{
+    "number": 186439,
+    "data": "38,100,200,300,400,462,500,538,600,700,800,900,962,1000,1038,1100,1200,1300,1400,1462,1500,1538,1600,1700,1800,1900,1962,2000,2038,2100,2200,2300,2400,2462,2500,2538,2600,2700,2800,2900,2962,3000,3038,3100,3200,3300,3400,3462",
+    "name": "Numbers whose squares end in three identical digits.",
+    "comment": [
+        "The three ending digits of a(n)^2 are 000 or 444.",
+        "n is in the sequence iff either n == 0 mod 100 or n == (+/-)38 mod 500. - _Robert Israel_, Jul 03 2014"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A186439/b186439.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,0,0,0,0,1,-1)."
+    ],
+    "formula": [
+        "a(n) = a(n-7) + 500 for n > 7. - _Zak Seidov_ and _Bruno Berselli_, Feb 23 2011",
+        "G.f.: 2*x*(19*x^2 +12*x +19)*(x^4 +x^3 +x^2 +x +1) / ((x -1)^2*(x^6 +x^5 +x^4 +x^3 +x^2 +x +1)). - _Colin Barker_, Jul 03 2014"
+    ],
+    "example": [
+        "462 is in the sequence because 462^2 = 213444."
+    ],
+    "maple": [
+        "with(numtheory):T:=array(1..10):for p from 1 to 10000 do:n:=p^2:l:=length(n):n0:=n:for",
+        "  m from 1 to l do:q:=n0:u:=irem(q,10):v:=iquo(q,10):n0:=v :T[m]:=u:od:if T[1]=T[2]",
+        "  and T[1]=T[3] then printf(`%d, `,p):else fi:od:",
+        "# second Maple program:",
+        "a:= proc(n) local m, r;",
+        "      r:= 1+ irem(n-1, 7, 'm');",
+        "      [38, 100, 200, 300, 400, 462, 500][r] +500*m",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Feb 24 2011"
+    ],
+    "mathematica": [
+        "Select[Range[11,10000],Mod[PowerMod[#,2,1000],111]==0&] (* _Zak Seidov_, Feb 23 2011 *)"
+    ],
+    "program": [
+        "(PARI) for(n=11,10000,if((n^2%1000)%111==0,print1(n\", \"))) \\\\ _Zak Seidov_, Feb 23 2011",
+        "(PARI) Vec(2*x*(19*x^2 +12*x +19)*(x^4 +x^3 +x^2 +x +1)/((x -1)^2*(x^6 +x^5 +x^4 +x^3 +x^2 +x +1)) + O(x^100)) \\\\ _Colin Barker_, Jul 03 2014"
+    ],
+    "xref": [
+        "Cf. A016742 (even squares), A186438.",
+        "a(A047336(n)) = A039685(n). - _Bruno Berselli_, Feb 22 2011"
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Feb 21 2011",
+    "references": 2,
+    "revision": 36,
+    "time": "2015-06-13T00:53:43-04:00",
+    "created": "2011-02-21T12:15:08-05:00"
+}

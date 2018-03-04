@@ -1,0 +1,68 @@
+{
+    "number": 5867,
+    "id": "M1880",
+    "data": "1,1,2,8,48,480,5760,92160,1658880,36495360,1021870080,30656102400,1103619686400,44144787456000,1854081073152000,85287729364992000,4434961926979584000,257227791764815872000,15433667505888952320000",
+    "name": "a(0) = 1; for n > 0, a(n) = (prime(n)-1)*a(n-1).",
+    "comment": [
+        "Local minima of Euler's phi function. - _Walter Nissen_",
+        "Number of potential primes in a modulus primorial(n+1) sieve. - _Robert G. Wilson v_, Nov 20 2000",
+        "Let p=prime(n) and let p# be the primorial (A002110), then it can be shown that any p# consecutive numbers have exactly a(n-1) numbers whose lowest prime factor is p. For a proof, see the \"Proofs Regarding Primorial Patterns\" link. For example, if we let p=7 and consider the interval [101,310] containing 210 numbers, we find the 8 numbers 119, 133, 161, 203, 217, 259, 287, 301. - Dennis Martin (dennis.martin(AT)dptechnology.com), Jul 16 2006",
+        "From _Gary W. Adamson_, Apr 21 2009: (Start)",
+        "Equals (-1)^n * (1, 1, 1, 2, 8, 48,...) dot (-1, 2, -3, 5, -7, 11,...).",
+        "a(6) = 480 = (1, 1, 1, 2, 8, 48) dot (-1, 2, -3, 5, -7, 11) = (-1, 2, -3, 10, -56, 528). (End)",
+        "It can be proved that there are at least T prime numbers less than N, where the recursive function T is: T = N- N*sum(A005867(i)/A002110(i), i=0..T(sqrt(N))) This can show for example that at least .16*N numbers are prime less than N for 29^2>N>23^2. - _Ben Paul Thurston_, Aug 23 2010",
+        "First column of A096294. - _Eric Desbiaux_, Jun 20 2013",
+        "Conjecture: The g.f. for the prime(n+1)-rough numbers (A000027, A005408, A007310, A007775, A008364, A008365, A008366, A166061, A166063) is x*P(x)/(1-x-x^a(n)+x^(a(n)+1)), where P(x) is an order a(n) polynomial with symmetric coefficients (i.e. c(0)=c(n), c(1)=c(n-1)...). - _Benedict W. J. Irwin_, Mar 18 2016",
+        "a(n)/A002110(n+1) (primorial(n+1)) is the ratio of natural numbers whose smallest prime factor is prime(n+1); i.e., prime(n+1) coprime to A002110(n). So the ratio of even numbers to natural numbers = 1/2; odd multiples of 3 = 1/6; multiples of 5 coprime to 6 (A084967) = 2/30 = 1/15; multiples of 7 coprime to 30 (A084968) = 8/210 = 4/105; etc. -  _Bob Selcoe_, Aug 11 2016"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005867/b005867.txt\">Table of n, a(n) for n=0..99</a>",
+        "Larry Deering, <a href=\"http://www.qsl.net/w2gl/blackkey.html\">The Black Key Sieve</a>, Box 275, Bellport NY 11713-0275, 1998.",
+        "F. Ellermann, <a href=\"/A005867/a005867.txt\">Illustration for A002110, A005867, A038110, A060753</a>",
+        "Dennis Martin, <a href=\"http://web.archive.org/web/20140501151819/http://primenace.com/papers/math/PrimorialPatternProofs.htm\">Proofs Regarding Primorial Patterns</a> [via Internet Archive Wayback-machine]",
+        "Dennis Martin, <a href=\"/A005867/a005867.pdf\">Proofs Regarding Primorial Patterns</a> [Cached copy, with permission of the author]",
+        "F. E. Masat, <a href=\"/A005867/a005867_1.pdf\">Letter to N. J. A. Sloane with attachment: \"A note on prime number sequences\" (unpublished manuscript), Apr. 1991</a>",
+        "Andrew V. Sutherland, <a href=\"http://hdl.handle.net/1721.1/38881\">Order Computations in Generic Groups</a>, Ph. D. Dissertation, Math. Dept., M.I.T., 2007."
+    ],
+    "formula": [
+        "a(n) = phi(product of first n primes) = A000010(A002110(n)).",
+        "a(n) = Prod_{k=1..n} (prime(k)-1) = Prod_{k=1..n} A006093(n).",
+        "Sum(n>=0, a(n)/A002110(n+1) ) = 1. - _Bob Selcoe_, Jan 09 2015"
+    ],
+    "example": [
+        "a(3): the mod 30 prime remainder set sieve representation yields the remainder set: {1, 7, 11, 13, 17, 19, 23, 29}, 8 elements."
+    ],
+    "maple": [
+        "A005867 := proc(n)",
+        "    mul(ithprime(j)-1,j=1..n) ;",
+        "end proc: # _Zerinvary Lajos_, Aug 24 2008, _R. J. Mathar_, May 03 2017"
+    ],
+    "mathematica": [
+        "Table[ Product[ EulerPhi[ Prime[ j ] ], {j, 1, n} ], {n, 1, 20} ]",
+        "RecurrenceTable[{a[0]==1,a[n]==(Prime[n]-1)a[n-1]},a,{n,20}] (* _Harvey P. Dale_, Dec 09 2013 *)",
+        "EulerPhi@ FoldList[Times, 1, Prime@ Range@ 18] (* _Michael De Vlieger_, Mar 18 2016 *)"
+    ],
+    "program": [
+        "(PARI) for(n=0,22,print(prod(k=1,n, prime(k)-1)))",
+        "(Haskell)",
+        "a005867 n = a005867_list !! n",
+        "a005867_list = scanl (*) 1 a006093_list",
+        "-- _Reinhard Zumkeller_, May 01 2013"
+    ],
+    "xref": [
+        "Cf. A002110, A006093, A058254, A055768, A101301."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Changed offset to 0, changed name, edited comments and examples by _T. D. Noe_, Apr 04 2010"
+    ],
+    "references": 60,
+    "revision": 99,
+    "time": "2017-10-16T01:58:47-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

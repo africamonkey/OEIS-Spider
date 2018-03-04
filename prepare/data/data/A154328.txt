@@ -1,0 +1,38 @@
+{
+    "number": 154328,
+    "data": "1,10,11,12,20,111,112,120,1000,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,10000,10000000000000000000,10000000800000000000,10000000800000000001,10000000800000000002",
+    "name": "Lexicographically earliest strictly increasing sequence having the property that a(n) is the sum of the first a(n) digits of the sequence.",
+    "comment": [
+        "The variant where the condition of strict monotonicity is dropped (suggested by _Paolo P. Lava_; cf. link) is less straightforward to compute.",
+        "The sequence could also be encoded in a more compact way by specifying only the indices n where it jumps (a(n) > a(n-1)+1) and the corresponding values a(n), see A154329-A154330."
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A154328/b154328.txt\">Table of n, a(n) for n = 1..73</a>",
+        "Eric Angelini, <a href=\"http://www.cetteadressecomportecinquantesignes.com/SelfSum.htm\">An ugly self-describing sequence</a>.",
+        "E. Angelini, <a href=\"/A154328/a154328.pdf\">An ugly self-describing sequence</a> [Cached copy, with permission]",
+        "E. Angelini et al., <a href=\"http://list.seqfan.eu/pipermail/seqfan/2009-January/000478.html\">\"Ugly digit sum\", SeqFan mailing list, Jan 08 2009</a>"
+    ],
+    "example": [
+        "Starting with a(1)=1, the next term a(2)>a(1) cannot be 2,...,9 (else the sum of these digits would be larger): the least possibility not leading to a contradiction is a(2)=10.",
+        "Then we can go on with a(3)=11, a(4)=12, but a(5) cannot be 13, the least possibility is a(5)=20.",
+        "See the linked web page for more details and sequences A154329-A154330 for terms beyond those given here."
+    ],
+    "program": [
+        "(PARI) /* NB: This code checks only whether there is a contradiction for the given digits (1st arg), it does not ensure minimality. If the 2nd arg is nonzero, it dumps a list of all digits and partial sums. */",
+        "check_A154328(S=[1,10,11,12,20],dump=0)={",
+        "local(d=eval(Vec(concat(concat([\"\"],S)))),t=0,ds=vector(#d,i,t+=d[i]));",
+        "dump && print(vector(#d,i,Str(i\":\"d[i]\":\"ds[i])));",
+        "for(i=1,#S, S[i]>#d && break; ds[S[i]]==S[i] || error(\"wrong at i=\",i,\": [S[i],ds[S[i]]]=\",[S[i],ds[S[i]]]));",
+        "print(\"no contradiction for terms <= \"#d) }"
+    ],
+    "xref": [
+        "Cf. A155817."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Eric Angelini_ and _M. F. Hasler_, Jan 13 2009",
+    "references": 4,
+    "revision": 20,
+    "time": "2017-06-14T01:13:02-04:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

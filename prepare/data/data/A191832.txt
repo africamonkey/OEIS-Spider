@@ -1,0 +1,48 @@
+{
+    "number": 191832,
+    "data": "0,0,0,0,1,2,7,10,22,29,51,61,99,115,163,192,262,287,385,428,528,600,730,780,963,1054,1202,1337,1545,1646,1908,2059,2269,2516,2770,2933,3298,3568,3792,4142,4493,4786,5183,5562,5831,6423,6745,7140,7639,8231,8479,9216,9603,10260,10663,11488,11752,12838,13100,13887",
+    "name": "Number of solutions to the Diophantine equation x1 x2 + x2 x3 + x3 x4 + x4 x5 + x5 x6 = n, with all xi >= 1.",
+    "comment": [
+        "Related to \"Louisville's Last Theorem\"."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A191832/b191832.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "George E. Andrews, <a href=\"http://dx.doi.org/10.1007/BF01608779\">Stacked lattice boxes</a>, Ann. Comb. 3 (1999), 115-130. See L_5(n)."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "D00:=n->add(tau(j)*tau(n-j),j=1..n-1);",
+        "D01:=n->add(tau(j)*sigma(n-j),j=1..n-1);",
+        "D000:=proc(n) local t1,i,j;",
+        "t1:=0;",
+        "for i from 1 to n-1 do",
+        "for j from 1 to n-1 do",
+        "if (i+j < n) then t1 := t1+numtheory:-tau(i)*numtheory:-tau(j)*numtheory:-tau(n-i-j); fi;",
+        "od; od;",
+        "t1;",
+        "end;",
+        "L5:=n->D000(n)/6+D00(n)+D01(n)/2+(2*n-1/6)*tau(n)-11*sigma[2](n)/6;",
+        "[seq(L5(n),n=1..60)];",
+        "# Alternate:",
+        "g:= proc(n,k,j) option remember;",
+        "     if n < k-1 then 0",
+        "     elif k = 2 then",
+        "        if n mod j = 0 then 1 else 0 fi",
+        "     else",
+        "        add(procname(n-j*x,k-1,x), x=1 .. floor((n-k+2)/j))",
+        "     fi",
+        "end proc:",
+        "f:= n -> add(g(n,6,j),j=1..n-4);",
+        "seq(f(n),n=1..100); # _Robert Israel_, Dec 02 2015"
+    ],
+    "xref": [
+        "Cf. A000005, A000203, A002133, A055507, A191822, A191829, A191831."
+    ],
+    "keyword": "nonn",
+    "offset": "1,6",
+    "author": "_N. J. A. Sloane_, Jun 17 2011",
+    "references": 1,
+    "revision": 20,
+    "time": "2015-12-03T04:45:52-05:00",
+    "created": "2011-06-17T12:58:44-04:00"
+}

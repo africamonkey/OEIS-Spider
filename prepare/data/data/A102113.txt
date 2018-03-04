@@ -1,0 +1,37 @@
+{
+    "number": 102113,
+    "data": "0,0,1,1,2,4,7,13,24,62,135,203,760,1593,1962,5980,12622,16208,39724,142606,265660,914694,1587497,2150478,10594748,27283111,120773124,216660897,649176190,1868619823,2758358381,6139199008,11266906261",
+    "name": "Iccanobirt numbers (3 of 15): a(n) = a(n-1) + R(a(n-2)) + R(a(n-3)), where R is the digit reversal function A004086.",
+    "comment": [
+        "Digit reversal variation of tribonacci numbers A000073.",
+        "Inspired by Iccanobif numbers: A001129, A014258-A014260."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A102113/b102113.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "A004086(a(n)) = A102121(n)."
+    ],
+    "maple": [
+        "R:= n-> (s-> parse(cat(s[-i]$i=1..length(s))))(\"\"||n):",
+        "a:= proc(n) option remember; `if`(n<3, binomial(n, 2),",
+        "       a(n-1) + R(a(n-2)) + R(a(n-3)) )",
+        "    end:",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Jun 18 2014"
+    ],
+    "mathematica": [
+        "R[n_]:=FromDigits[Reverse[IntegerDigits[n]]];Clear[a];a[0]=0;a[1]=0;a[2]=1;a [n_]:=a[n]=a[n-1]+R[a[n-2]]+R[a[n-3]];Table[a[n], {n, 0, 40}]",
+        "nxt[{a1_,a2_,a3_}]:={a2,a3,a3+FromDigits[Reverse[IntegerDigits[ a1]]]+ FromDigits[ Reverse[ IntegerDigits[a2]]]}; Transpose[NestList[nxt,{0,0,1},40]][[1]] (* _Harvey P. Dale_, Oct 17 2012 *)",
+        "nxt[{a_,b_,c_}]:={b,c,c+IntegerReverse[b]+IntegerReverse[a]}; NestList[ nxt,{0,0,1},40][[All,1]] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Sep 10 2016 *)"
+    ],
+    "xref": [
+        "Cf. A102111-A102125."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "0,5",
+    "author": "_Jonathan Vos Post_ and _Ray Chandler_, Dec 30 2004",
+    "references": 6,
+    "revision": 14,
+    "time": "2016-09-10T13:31:23-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

@@ -1,0 +1,71 @@
+{
+    "number": 1032,
+    "id": "M1996 N0787",
+    "data": "1,2,11,23,24,26,33,47,49,50,59,73,74,88,96,97,107,121,122,146,169,177,184,191,193,194,218,239,241,242,249,289,297,299,311,312,313,337,338,347,352,361,362,376,383,393,407,409,431,443,457,458,479,481,491,506",
+    "name": "Numbers n such that sum of squares of n consecutive integers >= 1 is a square.",
+    "comment": [
+        "It was shown by Watson (and again by Ljunggren) that if 0^2 + 1^2 + ... + r^2 is a square then r = 0, 1 or 24.",
+        "The terms up to 1391 are == 0, 1, 2, 9, 11, 16, 23 mod 24. Start number is in A007475(n). Square root of sum is in A076215(n). - _Ralf Stephan_, Nov 04 2002",
+        "The solutions in the case n=2 are in A001652 or A082291.",
+        "For k>5 and k = 1 or 5 (mod 6), it appears that all k^2 are here. When n is not a square, the solution to problem 6552 shows that there are an infinite number of sums of n consecutive squares that equal a square. There are only a finite number when n is a square. For example, the only sum having 49 terms is 25^2+...+73^2 = 357^2. - _T. D. Noe_, Jan 20 2011",
+        "In the previous comment, \"it appears\" can be removed because the k^2 squares beginning at (k^2+1)(k^2-25)/48 sum to a square. - _Thomas Andrews_, Feb 14 2011",
+        "See A180442 for the complementary problem of finding numbers n such that there are consecutive squares beginning with n^2 that sum to a square.",
+        "From _Thomas Andrews_, Feb 22 2011: (Start)",
+        "Elementary necessary conditions for n to be in this sequence:",
+        "  1. If n=s^2b where b is squarefree, then:",
+        "     a. If s is divisible by 3 then b is divisible by 3.",
+        "     b. If s is divisible by 2, then b is divisible by 2.",
+        "     c. If b is divisible by 3, then b = 6 (mod 9)",
+        "     d. b only has prime factors p where 3 is a square, modulo p.  (So, p=2, p=3, or p=12k+/-1)",
+        "  2.",
+        "     a. If n+1 is divisible by 3, then (n+1)/3 is the sum of two perfect squares.",
+        "     b. If n+1 is not divisible by 3, then n+1 is the sum of two perfect squares",
+        "The smallest number which satisfies these conditions which is not in this sequence is 842.",
+        "These conditions can be used to establish the conjecture of Ralf Stephan, above, that all the terms are == 0, 1, 2, 9, 11, 16, or 23 (mod 24.) (End)",
+        "The numbers satisfying the above conditions but which are not in this sequence can be found in A274469. - _Christopher E. Thompson_, Jun 28 2016"
+    ],
+    "reference": [
+        "W. Ljunggren, New solution of a problem proposed by E. Lucas, Norsk Mat. Tid. 34 (1952), 65-72.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Christopher E. Thompson, <a href=\"/A001032/b001032.txt\">Table of n, a(n) for n = 1..10438</a> (up to 250000, extends first 128 terms computed by T. D. Noe).",
+        "U. Alfred, <a href=\"http://www.jstor.org/stable/2688243\">Consecutive integers whose sum of squares is a perfect square</a>, Math. Mag., 37 (1964), 19-32.",
+        "L. Beeckmans, <a href=\"http://www.jstor.org/stable/2974904\">Squares expressible as sum of consecutive squares</a>, Amer. Math. Monthly, 101 (1994), 437-442.",
+        "K. S. Brown, <a href=\"http://www.mathpages.com/home/kmath147.htm\">Sum of Consecutive Nth Powers Equals an Nth Power</a>",
+        "M. Laub, <a href=\"http://www.jstor.org/stable/2324647\">Squares Expressible as a Sum of n Consecutive Squares, Advanced Problem 6552</a>, Amer. Math. Monthly 97 (1990), 622-625.",
+        "S. Philipp, <a href=\"http://www.jstor.org/stable/2688590\">Note on consecutive integers whose sum of squares is a perfect square</a>, Math. Mag., 37 (1964), 218-220.",
+        "Vladimir Pletser, <a href=\"http://arxiv.org/abs/1409.7969\">Congruence conditions on the number of terms in sums of consecutive squared integers equal to squared integers</a>, arXiv:1409.7969 [math.NT], 2014.",
+        "V. Pletser, <a href=\"http://arxiv.org/abs/1409.7972\">Finding all squared integers expressible as the sum of consecutive squared integers using generalized Pell equation solutions with Chebyshev polynomials</a>, arXiv preprint arXiv:1409.7972 [math.NT], 2014.",
+        "G. N. Watson, <a href=\"http://archive.org/stream/messengerofmathe4849cambuoft#page/n9/mode/2up\">The problem of the square pyramid</a>, Messenger of Mathematics 48 (1918), pp. 1-22.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CannonballProblem.html\">Cannonball Problem</a>",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of squares</a>"
+    ],
+    "example": [
+        "3^2 + 4^2 = 5^2, with two consecutive terms, so 2 is in the sequence."
+    ],
+    "mathematica": [
+        "(* An empirical recomputation, assuming Ralf Stephan's conjecture *) nmax = 600; min[_](* minimum start number *) = 1; max[_](* maximum start number *) = 10^5; min[457(* the first not-so-easy term *)] = 10^7; min[577] = 10^5; min[587] = 10^7; max[457] = max[577] = max[587] = Infinity; okQ[n_ /; ! MemberQ[{0, 1, 2, 9, 11, 16, 23}, Mod[n, 24]]] = False; okQ[n_] := For[m = min[n], m < max[n], m++, If[IntegerQ[ r = Sqrt[1/6*n*(1 + 6*m^2 + 6*m*(n - 1) - 3*n + 2*n^2)]], Return[True]]]; nmr = Reap[k = 1; Do[If[okQ[n] === True, Print[\"a(\", k, \") = \", n, \", start nb = A007475(\", k, \") = \", m, \", sqrt(sum) = A076215(\", k, \") = \", r]; k++; Sow[{n, m, r}]], {n, 1, nmax}]][[2, 1]]; A001032 = nmr[[All, 1]]; A007475 = nmr[[All, 2]]; A076215 = nmr[[All, 3]] (* _Jean-Fran\u00e7ois Alcover_, Sep 09 2013 *)"
+    ],
+    "program": [
+        "(PARI) is(n,L=max(999,n^5\\2e5),s=norml2([1..n-1]))={bittest(8456711,n%24) && for(x=n,L,issquare(s+=(2*x-n)*n)&&return(x))} \\\\ Returns the smallest \"ending number\" x (such that (x-n+1)^2+...+x^2 is a square) if n is in the sequence, else zero. - _M. F. Hasler_, Feb 02 2016"
+    ],
+    "xref": [
+        "Cf. A007475, A076215, A151557, A274469.",
+        "Cf. A097812 (n^2 is the sum of two or more consecutive squares)."
+    ],
+    "keyword": "nonn,easy,nice,changed",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Corrected by _T. D. Noe_, Aug 25 2004",
+        "Offset changed to 1 by _N. J. A. Sloane_, June 2008",
+        "Additional terms up to 30000 added to b-file by _Christopher E. Thompson_, Jun 10 2016",
+        "Additional terms up to 250000 added to b-file by _Christopher E. Thompson_, Feb 20 2018"
+    ],
+    "references": 28,
+    "revision": 85,
+    "time": "2018-02-24T12:09:25-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

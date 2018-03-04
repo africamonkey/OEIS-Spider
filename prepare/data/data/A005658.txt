@@ -1,0 +1,76 @@
+{
+    "number": 5658,
+    "id": "M0969",
+    "data": "1,2,4,5,8,9,10,14,15,16,17,18,20,26,27,28,29,30,32,33,34,36,40,44,47,50,51,52,53,54,56,57,58,60,62,63,64,66,68,72,80,83,86,87,88,89,92,93,94,98,99,100,101,102,104,105,106,108,110,111,112,114,116,120,122,123",
+    "name": "If n appears so do 2n, 3n+2, 6n+3.",
+    "comment": [
+        "David Klarner and coauthors studied several sequences of this type. Some of the references here apply generally to this class of sequences."
+    ],
+    "reference": [
+        "R. K. Guy, Don't try to solve these problems, Amer. Math. Monthly, 90 (1983), 35-41.",
+        "Guy, R. K., Klarner-Rado Sequences. Section E36 in Unsolved Problems in Number Theory, 2nd ed. New York: Springer-Verlag, p. 237, 1994.",
+        "Hoffman, D. G. and Klarner, D. A. Sets of integers closed under affine operators-the closure of finite sets. Pacific J. Math. 78 (1978), no. 2, 337-344.",
+        "Hoffman, D. G. and Klarner, D. A. Sets of integers closed under affine operators-the finite basis theorem. Pacific J. Math. 83 (1979), no. 1, 135-144.",
+        "Klarner, David A., m-Recognizability of sets closed under certain affine functions. Discrete Appl. Math. 21 (1988), no. 3, 207-214.",
+        "Klarner, David A. and Post, Karel Some fascinating integer sequences. A collection of contributions in honour of Jack van Lint. Discrete Math. 106/107 (1992), 303-309.",
+        "Klarner, D. A. and Rado, R. Arithmetic properties of certain recursively defined sets. Pacific J. Math. 53 (1974), 445-463.",
+        "J. C. Lagarias, ed., The Ultimate Challenge: The 3x+1 Problem, Amer. Math. Soc., 2010. See pp. 6, 280.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "R. J. Mathar, <a href=\"/A005658/b005658.txt\">Table of n, a(n) for n = 1..15889</a>",
+        "R. K. Guy, <a href=\"/A005658/a005658.pdf\">Letter to N. J. A. Sloane with attachment, 1982</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Klarner-RadoSequence.html\">Klarner-Rado Sequence.</a>",
+        "<a href=\"/index/3#3x1\">Index entries for sequences related to 3x+1 (or Collatz) problem</a>"
+    ],
+    "maple": [
+        "ina:= proc(n) evalb(n=1) end:",
+        "a:= proc(n) option remember; local k, t;",
+        "      if n=1 then 1",
+        "    else for k from a(n-1)+1 while not",
+        "           (irem(k, 2, 't')=0 and ina(t) or",
+        "            irem(k, 3, 't')=2 and ina(t) or",
+        "            irem(k, 6, 't')=3 and ina(t) )",
+        "         do od: ina(k):= true; k",
+        "      fi",
+        "    end:",
+        "seq(a(n), n=1..80);  # _Alois P. Heinz_, Mar 16 2011"
+    ],
+    "mathematica": [
+        "s={1};Do[a=s[[n]];s=Union[s,{2a,3a+2,6a+3}],{n,1000}];s (* _Zak Seidov_, Mar 15 2011 *)",
+        "nxt[n_]:=Flatten[{#,2#,3#+2,6#+3}&/@n]; Take[Union[Nest[nxt,{1},5]],100] (* _Harvey P. Dale_, Feb 06 2015 *)"
+    ],
+    "program": [
+        "(C++)",
+        "#include <stdio.h>",
+        "#include <iostream>",
+        "#include <set>",
+        "using namespace std ;",
+        "int main(int argc, char *argv[])",
+        "{ const int anmax= 40000 ; set<int> a ; a.insert(1) ; for(int i=0;i< anmax ;i++) { if( a.count(i) ) { if( 2*i<=anmax) a.insert(2*i) ; if( 3*i+2 <= anmax) a.insert(3*i+2) ; if( 6*i+3 <= anmax) a.insert(6*i+3) ; } } int n=1 ; for(int i=0; i < anmax; i++) { if( a.count(i) ) { cout << n << \" \" << i << endl ; n++ ; } } return 0 ; }",
+        "- _R. J. Mathar_, Aug 20 2006",
+        "(Haskell)",
+        "import Data.Set (Set, fromList, insert, deleteFindMin)",
+        "a005658 n = a005658_list !! (n-1)",
+        "a005658_list = klarner $ fromList [1,2] where",
+        "   klarner :: Set Integer -> [Integer]",
+        "   klarner s = m : (klarner $",
+        "                    insert (2*m) $ insert (3*m+2) $ insert (6*m+3) s')",
+        "      where (m,s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Mar 14 2011",
+        "(PARI) is(n)=if(n<3,return(n>0)); my(k=n%6); if(k==3, return(is(n\\6))); if(k==1, return(0)); if(k==5, return(is(n\\3))); if(k!=2, return(is(n/2))); is(n\\3) || is(n/2) \\\\ _Charles R Greathouse IV_, Sep 15 2015"
+    ],
+    "xref": [
+        "Cf. A002977, A185661."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org), Oct 16 2000"
+    ],
+    "references": 6,
+    "revision": 41,
+    "time": "2017-10-06T22:04:05-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

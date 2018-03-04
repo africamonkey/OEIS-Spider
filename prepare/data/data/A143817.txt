@@ -1,0 +1,65 @@
+{
+    "number": 143817,
+    "data": "0,0,1,3,7,16,46,203,1178,7242,43786,259634,1540540,9414639,61061613,428890726,3266930298,26581123093,226393705465,1986997358251,17827284972818,163278469610570,1531115974317975,14771302315885372,147267150734530892,1521022490460243316",
+    "name": "Let A(0)=1, B(0)=0 and C(0)=0. Let B(n+1) = Sum_{k = 0..n} binomial(n,k)*A(k), C(n+1) = Sum_{k = 0..n} binomial(n,k)*B(k) and A(n+1) = Sum_{k = 0..n} binomial(n,k)*C(k). This entry gives the sequence C(n).",
+    "comment": [
+        "Compare with A024429 and A024430.",
+        "This sequence and its companion sequences A(n) = A143815 and B(n) = A143816 may be viewed as generalizations of the Bell numbers A000110. Define R(n) = sum {k = 0..inf} (3k)^n/(3k)! for n = 0,1,2,... . Then the real number R(n) is an integral linear combination of R(0) = 1 + 1/3! + 1/6! + ...., R(2) - R(1) = 1/1! + 1/4! + 1/7! + ... and R(1) = 1/2! + 1/5! + 1/8! + ... . Some examples are given below. The precise result is R(n) = A(n)*R(0) + B(n)*R(1) + C(n)*(R(2)-R(1)). This generalizes the Dobinski relation for the Bell numbers: sum {k = 0..inf} k^n/k! = A000110(n)*exp(1). See A143815 for more details. Compare with A143628 - A143631. The decimal expansions of R(0), R(2) - R(1) and R(1) may be found in A143819, A143820 and A143821 respectively."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A143817/b143817.txt\">Table of n, a(n) for n = 0..576</a>"
+    ],
+    "formula": [
+        "a(n) = sum {k = 0..floor((n-2)/3)} Stirling2(n,3k+2). Let w = exp(2*Pi*i/3) and set F(x) = (exp(x) + w*exp(w*x) + w^2*exp(w^2*x))/3 = x^2/2! + x^5/5! + x^8/8! + ... . Then the e.g.f. for the sequence is F(exp(x)-1). A143815(n) + A143816(n) + A143817(n) = Bell(n)."
+    ],
+    "example": [
+        "R(n) as a linear combination of R(0),R(1)",
+        "and R(2) - R(1).",
+        "=======================================",
+        "..R(n)..|.....R(0).....R(1)...R(2)-R(1)",
+        "=======================================",
+        "..R(3)..|.......1........1........3....",
+        "..R(4)..|.......6........2........7....",
+        "..R(5)..|......25.......11.......16....",
+        "..R(6)..|......91.......66.......46....",
+        "..R(7)..|.....322......352......203....",
+        "..R(8)..|....1232.....1730.....1178....",
+        "..R(9)..|....5672.....8233.....7242....",
+        "..R(10).|...32202....39987....43786...."
+    ],
+    "maple": [
+        "# (1)",
+        "M:=24: a:=array(0..100): b:=array(0..100): c:=array(0..100):",
+        "a[0]:=1: b[0]:=0: c[0]:=0:",
+        "for n from 1 to M do",
+        "b[n]:=add(binomial(n-1,k)*a[k], k=0..n-1);",
+        "c[n]:=add(binomial(n-1,k)*b[k], k=0..n-1);",
+        "a[n]:=add(binomial(n-1,k)*c[k], k=0..n-1);",
+        "end do:",
+        "A143817:=[seq(c[n], n=0..M)];",
+        "# (2)",
+        "seq(add(Stirling2(n,3*i+2),i = 0..floor((n-2)/3)), n = 0..24);",
+        "# third Maple program:",
+        "b:= proc(n, t) option remember; `if`(n=0, irem(t, 2),",
+        "      add(b(n-j, irem(t+1, 3))*binomial(n-1, j-1), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, 2):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Feb 20 2018"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[ StirlingS2[n, 3*i+2], {i, 0, (n-2)/3}]; Table[a[n], {n, 0, 23}] (* _Jean-Fran\u00e7ois Alcover_, Mar 06 2013 *)"
+    ],
+    "xref": [
+        "Cf. A000110, A024429, A024430, A143628, A143629, A143630, A143631, A143815, A143816, A143818, A143819, A143820, A143821."
+    ],
+    "keyword": "easy,nonn,changed",
+    "offset": "0,4",
+    "author": "_Peter Bala_, Sep 03 2008",
+    "ext": [
+        "Spelling/notation corrections by _Charles R Greathouse IV_, Mar 18 2010"
+    ],
+    "references": 10,
+    "revision": 14,
+    "time": "2018-02-20T11:20:09-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

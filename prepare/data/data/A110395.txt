@@ -1,0 +1,44 @@
+{
+    "number": 110395,
+    "data": "1,18,246,3016,34920,390480,4266640,45866880,487198080,5128019200,53591788800,556898534400,5760319052800,59355533260800,609667001088000,6245327982592000,63829424295936000,651070362673152000,6629663109210112000,67406737815797760000",
+    "name": "a(1) = 1. a(n) = n times (10's complement of a(n-1)).",
+    "comment": [
+        "a(1)=1; a(n)=n*[10...0 - a(n-1)] for n>1 (00...0 and a[n-1] have the same number of digits). - _Emeric Deutsch_, Jul 31 2005"
+    ],
+    "link": [
+        "Sidney Cadot, <a href=\"/A110395/b110395.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "a(4) = 4* 10's complement of a(3) = 4*(1000-246) = 3016."
+    ],
+    "maple": [
+        "s:=proc(m) nops(convert(m,base,10)) end: a[1]:=1: for n from 2 to 21 do a[n]:=n*(10^s(a[n-1])-a[n-1]) od: seq(a[n],n=1..21); # _Emeric Deutsch_, Jul 31 2005",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n<2, n,",
+        "       n*(p-> 10^length(p)-p)(a(n-1)))",
+        "    end:",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Sep 22 2015"
+    ],
+    "mathematica": [
+        "a110395[numTerms_] := Block[{complement, a},",
+        "   complement[n_] := 10^IntegerLength[n] - n;",
+        "   a[n_] := a[n] = If[n == 1, 1, n*complement[a[n - 1]]];",
+        "   Table[a[n], {n, 1, numTerms}",
+        "]];(* _Sidney Cadot_, Sep 22 2015 *)",
+        "a110395[50]"
+    ],
+    "xref": [
+        "Cf. A110394."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, Jul 29 2005",
+    "ext": [
+        "More terms from _Emeric Deutsch_, Jul 31 2005",
+        "Incorrect formula and corresponding Mathematica program removed by _Sidney Cadot_, Sep 22 2015"
+    ],
+    "references": 2,
+    "revision": 22,
+    "time": "2015-09-22T08:20:02-04:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

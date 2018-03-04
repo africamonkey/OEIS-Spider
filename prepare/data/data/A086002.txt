@@ -1,0 +1,38 @@
+{
+    "number": 86002,
+    "data": "229,239,241,257,269,271,277,281,439,443,463,467,479,499,613,641,653,661,673,677,683,691,811,823,839,863,881,10111,10151,10169,10181,10243,10247,10253,10267,10303,10313,10331,10343,10391,10429,10453,10457",
+    "name": "Primes which when added to their own rotation yield a prime.",
+    "comment": [
+        "Let rotation rot(k) of a number k be defined by swapping the blocks of the first [d/2] and of the last [d/2] digits of k, where d=A055642(k). If the number of digits in k is odd, the center digit remains untouched during rotation.",
+        "So for example the rotation of 1234 is 3412, while the rotation of 12345 is 45312.",
+        "Differences from A004086 appear with numbers with at least 4 digits, that is, after A004087(168) if we are concerned with primes.",
+        "The sequence lists primes p such that p+rot(p) is (again) prime.",
+        "Differs from A061783, where rot(k) is replaced by reverse(k), from the 5-digit terms on. - _M. F. Hasler_, Mar 03 2011",
+        "a(n) has an odd number of digits (see RJM comment in A086004). If a(n) has 2m+1 digits, then the m-th digit of a(n) is even as otherwise a(n) + rot(a(n)) is even. - _Chai Wah Wu_, Aug 19 2015"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A086002/b086002.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(100)=12917 because (i) 12917 is prime and (ii) rotate(12917) = 17912 and 12917+17912=30829, which is also prime."
+    ],
+    "maple": [
+        "A055642 := proc(n) max(1,1+ilog10(n)) ; end:",
+        "rot := proc(n) local d,dl,dh,pre,suf ; d := A055642(n) ; dl := floor( d/2) ; dh := floor( (d+1)/2) ; pre := floor(n/10^dh) ; suf := n mod 10^dl ; if dl <> dh then suf*10^dh+pre+10^dl*( floor(n/10^dl) mod 10) ; else suf*10^dh+pre ; fi; end:",
+        "isA086002 := proc(p) if isprime(p) then isprime(p+rot(p)) ; else false; fi; end:",
+        "for n from 1 to 1500 do p := ithprime(n) ; if isA086002(p) then printf(\"%d,\",p) ; fi; od: # _R. J. Mathar_, May 27 2009"
+    ],
+    "xref": [
+        "Cf. A086003, A086004."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "Chuck Seggelin (barkeep(AT)plastereddragon.com), Jul 07 2003",
+    "ext": [
+        "Edited by _R. J. Mathar_, May 27 2009"
+    ],
+    "references": 4,
+    "revision": 16,
+    "time": "2015-08-20T22:57:12-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

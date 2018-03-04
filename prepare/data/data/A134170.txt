@@ -1,0 +1,57 @@
+{
+    "number": 134170,
+    "data": "1,2,3,4,10,12,21,24,36,40,60,60,84,84,112,112,144,144,180,180,240,252,308,336,336,400,432,432,504,540,540,651,660,660,792,792,792,936,936,936,1080,1092,1092,1260,1260,1260,1440,1440,1440,1680",
+    "name": "a(n) = the smallest positive integer which, expressed in the form d*q + r, satisfies q >= r for every d from 1 to n. In other words, when a(n) is divided by the numbers from 1 to n, the remainder is never more than the quotient.",
+    "comment": [
+        "If a prospective term is at least k(k-1) for a fixed value k, then the criterion will be satisfied for all d less than or equal to k.",
+        "Note that a(n) >= n, otherwise quotient for n would be 0 and so condition on remainder would not be satisfied. - _Michel Marcus_, Sep 04 2013"
+    ],
+    "example": [
+        "a(7)=21 because division by d=1 to 7 gives 21 r0, 10 r1, 7 r0, 5 r1, 4 r1, 3 r3 and 3 r0, respectively."
+    ],
+    "maple": [
+        "A134170 := proc(n)",
+        "    local a,wrks,d;",
+        "    for a from 1 do",
+        "        wrks := true;",
+        "        for d from 1 to n do",
+        "            if modp(a,d) > floor(a/d) then",
+        "                wrks := false;",
+        "                break;",
+        "            end if;",
+        "        end do:",
+        "        if wrks then",
+        "            return a;",
+        "        end if;",
+        "    end do:",
+        "end proc: # _R. J. Mathar_, Sep 04 2013"
+    ],
+    "program": [
+        "(PARI) isok(m, n) = {for (d = 1, n, if (m\\d < m%d, return (0));); return (1);}",
+        "a(n) = {m = 1; while (! isok(m, n), m++); m;} \\\\ _Michel Marcus_, Sep 03 2013",
+        "(Sage)",
+        "def FindM(n):",
+        "....m=n-1",
+        "....test=false",
+        "....while not(test):",
+        "........test=true",
+        "........m+=1",
+        "........for d in [1..n]:",
+        "............if Integer((m/d).floor())<m.mod(d):",
+        "................test=false",
+        "....return m",
+        "#insert blank line",
+        "n=50 #Change n for more terms",
+        "[FindM(k) for k in [1..n]] # _Tom Edgar_, Sep 03 2013"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "Bryce Herdt (mathidentity(AT)yahoo.com), Jan 12 2008",
+    "ext": [
+        "More terms added and incorrect conjecture removed by _Michel Marcus_, Sep 03 2013"
+    ],
+    "references": 1,
+    "revision": 27,
+    "time": "2017-08-06T03:19:13-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

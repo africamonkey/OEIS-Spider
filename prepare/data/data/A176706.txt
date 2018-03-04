@@ -1,0 +1,34 @@
+{
+    "number": 176706,
+    "data": "2,3,7,23,131,313,353,397,887,1307,1439,1783,2003,2027,2069,2111,2593,2777,3541,4111,4201,4889,5653,5897,6421,6823,8353,8447,9721,9749,11159,11483,12011,12073,12251,13313,14323,14431,15083,15131,15887,17029",
+    "name": "Primes p such that the p-th semiprime divided by the sum of the digits of p is a prime.",
+    "link": [
+        "Harvey P. Dale, <a href=\"/A176706/b176706.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "a(5)=131 because prime=83=semiprime(131)=415/5=sum of digits of 131."
+    ],
+    "maple": [
+        "isA001358 := proc(n) numtheory[bigomega](n) = 2 ; end proc:",
+        "A001358 := proc(n) option remember ; if n = 1 then return 4 ; else for a from procname(n-1)+1 do if isA001358(a) then return a; end if; end do; end if; end proc:",
+        "A007953 := proc(n) add(d,d=convert(n,base,10)) ; end proc:",
+        "isA176706 := proc(n) if isprime(n) then r := A001358(n)/A007953(n) ; if type(r,'integer') then isprime(r) ; else false; end if; else false; end if; end proc:",
+        "for n from 1 to 2000 do p := ithprime(n) ; if isA176706(p) then printf(\"%d,\",p) ; end if; end do: # R. J. Mathar, Apr 24 2010"
+    ],
+    "mathematica": [
+        "Module[{semis=Select[Range[100000],PrimeOmega[#]==2&]},Select[ Prime[ Range[ PrimePi[ Length[semis]]]], PrimeQ[semis[[#]]/ Total[ IntegerDigits[ #]]]&]] (* _Harvey P. Dale_, May 10 2014 *)"
+    ],
+    "xref": [
+        "Cf. A001358, A007605, A106350."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Apr 24 2010",
+    "ext": [
+        "Keyword:base added, sequence extended - _R. J. Mathar_, Apr 24 2010"
+    ],
+    "references": 1,
+    "revision": 6,
+    "time": "2014-05-10T19:12:59-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

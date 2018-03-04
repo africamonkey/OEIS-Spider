@@ -1,0 +1,56 @@
+{
+    "number": 127776,
+    "data": "1,4,100,3600,152100,7033104,344622096,17582760000,924193822500,49701090010000,2721631688947600,151241747739534400,8507348310348810000,483459012855561960000,27715027900230072360000",
+    "name": "a(n) = ( (2^n / n!) * product[ k=0..n-1 ] (4*k + 1) )^2.",
+    "comment": [
+        "Cayley (1878) refers to Gauss, Werke, t. iii, p. 424 for a slightly different form of a square of a hypergeometric series being hypergeometric. - _Michael Somos_, Jun 25 2012"
+    ],
+    "reference": [
+        "A. Cayley, An Identity, Messenger of Mathematics, 7 (1878), p. 69"
+    ],
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A127776/b127776.txt\">Table of n, a(n) for n = 0..301</a>",
+        "Robert S. Maier, <a href=\"http://arxiv.org/abs/math/0611041\">On Rationally Parametrized Modular Equations</a>, arXiv:math/0611041 [math.NT], 2006."
+    ],
+    "formula": [
+        "Expansion of K(k) / (Pi/2) in powers of (k * k'/4)^2, where K(k) is the complete elliptic integral of first kind evaluated at modulus k.",
+        "Expansion of 1 / AGM( 1, (1 - 16*x)^(1/2) ) in powers of x * (1 - 16*x) where AGM() is the arithmetic-geometric mean.",
+        "G.f.: F(1/4, 1/4; 1; 64*x).",
+        "a(n) = A004981(n)^2. Convolution square is A002897.",
+        "a(n) ~ 64^n / (Gamma(1/4)^2 * n^(3/2)). - _Vaclav Kotesovec_, Sep 08 2015",
+        "From _Gheorghe Coserea_, Aug 26 2016: (Start)",
+        "n^2 * a(n) = 4*(4*n-3)^2 * a(n-1), with a(0) = 1.",
+        "0 = 16*x*(x+64)*y'' + 8*(3*x+128)*y' + y, where y(x) = A(x/-4096). (End)"
+    ],
+    "example": [
+        "A(x) = 1 + 4*x + 100*x^2 + 3600*x^3 + 152100*x^4 + 7033104*x^5 + ... is the g.f."
+    ],
+    "mathematica": [
+        "a[ n_] := If[ n < 0, 0, (Pochhammer[ 1/4, n] 8^n / n!)^2] (* _Michael Somos_, Jun 25 2012 *)",
+        "a[ n_] := SeriesCoefficient[ Hypergeometric2F1[ 1/4, 1/4, 1, 64 x], {x, 0, n}] (* _Michael Somos_, Jun 25 2012 *)",
+        "a[ n_] := SeriesCoefficient[ HypergeometricPFQ[ {1/2, 1/2, 1/2}, {1, 1}, 64 x]^(1/2), {x, 0, n}] (* _Michael Somos_, Jun 25 2012 *)",
+        "Join[{1}, RecurrenceTable[{a[1] == 4, a[n] == (4 (4 n - 3)^2 a[n-1] / n^2)}, a, {n, 20}]] (* _Vincenzo Librandi_, Aug 26 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, prod( k=1, n, (8*k - 6) / k)^2)}",
+        "(PARI) {a(n) = local(A); if( n<1, n==0, A = x * O(x^n); polcoeff( subst( 1 / agm(1, sqrt(1 - 16*x + A) ), x, serreverse( x*(1 - 16*x) + A )), n))}",
+        "(PARI)",
+        "seq(N) = {",
+        "  my(a = vector(N)); a[1] = 4;",
+        "  for (n=2, N, a[n] = 4*(4*n-3)^2*a[n-1]/n^2);",
+        "  concat(1,a);",
+        "};",
+        "seq(15) \\\\ _Gheorghe Coserea_, Aug 26 2016",
+        "(MAGMA) [1] cat [n le 1 select 4 else (4*(4*n-3)^2*Self(n-1)/ n^2): n in [1..30]]; // _Vincenzo Librandi_, Aug 26 2016"
+    ],
+    "xref": [
+        "Cf. A002897, A004981, A091401."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Michael Somos_, Jan 14 2007",
+    "references": 3,
+    "revision": 25,
+    "time": "2016-08-26T06:15:08-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 246716,
+    "data": "1,2,3,4,5,7,8,9,11,12,13,16,17,18,19,20,23,24,25,27,28,29,30,31,32,36,37,40,41,42,43,44,45,47,48,49,50,52,53,54,56,59,60,61,63,64,66,67,68,70,71,72,73,75,76,78,79,80,81,83,84,88,89,90,92,96,97,98,99,100",
+    "name": "Positive numbers that are not the product of (exactly) two distinct primes.",
+    "comment": [
+        "Non-disjoint union of A100959 and A000961. Disjoint union of A100959 and A001248.",
+        "Complement of A006881, then inheriting the \"opposite\" of the properties of A006881.",
+        "a(n+1) - a(n) <= 4 (gap upper bound) - (that is because among four consecutive integers there is always a multiple of 4, then there is a number which is not the product of two distinct primes). E.g., a(26)-a(25) = a(62)-a(61) = 4. Is it true that for any k <= 4 there is an infinite number of n verifing: a(n+1) - a(n) = k ?",
+        "If r = A006881(n+1) - A006881(n) - 1 > 1, it indicates that there are r terms of (a(j)) starting with j = A006881(n) - n + 1 which are consecutive integers. E.g., A006881(8) - A006881(7) - 1 = 6, so there are 6 consecutive terms in (a(j)), starting with j = A006881(7) - 7 + 1 = 20."
+    ],
+    "link": [
+        "Giuseppe Coppoletta, <a href=\"/A246716/b246716.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "7 is in the sequence because 7 is prime, so it has only one prime divisor.",
+        "8 and 9 are in the sequence because neither of them has two distinct prime divisors.",
+        "30 is in the sequence because it is the product of three primes.",
+        "On the other hand, 35 is not in the sequence because it is the product of two distinct primes."
+    ],
+    "maple": [
+        "filter:= n -> map(t -> t[2],ifactors(n)[2]) <> [1,1]:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Nov 02 2014"
+    ],
+    "mathematica": [
+        "Select[Range[125], Not[PrimeOmega[#] == PrimeNu[#] == 2] &] (* _Alonso del Arte_, Nov 03 2014 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = (omega(n)!=2) || (bigomega(n) != 2); \\\\ _Michel Marcus_, Nov 01 2014",
+        "(MAGMA) [n: n in [1..100] | #PrimeDivisors(n) ne 2 or &*[t[2]: t in Factorization(n)] ne 1]; // _Bruno Berselli_, Nov 12 2014",
+        "(Sage) def A246716_list(n) :",
+        "    R = []",
+        "    for i in (1..n) :",
+        "        d = prime_divisors(i)",
+        "        if len(d) <> 2 or d[0]*d[1] <> i : R.append(i)",
+        "    return R",
+        "A246716_list(100)",
+        "(Sage) [n for n in (1..100) if sloane.A001221(n)<>2 or sloane.A001222(n)<>2] # _Giuseppe Coppoletta_, Jan 19 2015"
+    ],
+    "xref": [
+        "Cf. A001358, A100959, A006881, A007774, A001221, A001222, A007304, A000977, A001248, A000961."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Giuseppe Coppoletta_, Nov 01 2014",
+    "references": 3,
+    "revision": 70,
+    "time": "2015-01-19T17:29:53-05:00",
+    "created": "2014-11-23T02:59:06-05:00"
+}

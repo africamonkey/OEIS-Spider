@@ -1,0 +1,47 @@
+{
+    "number": 10096,
+    "data": "1,2,2,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+    "name": "log2*(n) (version 1): number of times int(log2(x)) is used in int(log2(int(log2(.....(int(log2(n))).....)))) = 0.",
+    "comment": [
+        "Contribution from _Hieronymus Fischer_, Apr 08 2012: (Start)",
+        "A possibly simpler definition could be: \"Number of iterations log_2(log_2(log_2(...(n)...))) such that the result is < 1\".",
+        "Changing \"< 1\" to \"<= 1\" produces version 3, A230864.",
+        "With the only difference in the termination criterion, the definition is essentially the same as version 2, A001069. If we change the definition to \" int(log2(... = 1\" we get A001069. Therefore we get A001069 when subtracting 1 from each term. (End)"
+    ],
+    "formula": [
+        "Contribution from _Hieronymus Fischer_, Apr 08 2012: (Start)",
+        "a(n)=A001069(n)+1.",
+        "With the exponentiation definition E_{i=1..n} c(i) := c(1)^(c(2)^(c(3)^(...(c(n-1)^(c(n))))...))); E_{i=1..0} := 1; example: E_{i=1..4} 2 = 2^(2^(2^2)) = 2^16,  we get:",
+        "a(E_{i=1..n} 2) = a(E_{i=1..n-1} 2) +1, for n>=1.",
+        "G.f.: g(x)= 1/(1-x)*sum_{k=0..infinity} x^(E_{i=1..k} 2).",
+        "The explicit first terms of this g.f. are",
+        "g(x)=(x+x^2+x^4+x^16+x^65536+\u2026)/(1-x). (End)"
+    ],
+    "example": [
+        "Becomes 5 at 65536, 6 at 2^65536, etc."
+    ],
+    "mathematica": [
+        "f[n_] := Length@ NestWhileList[ Log[2, #] &, n, # >= 1 &] - 1; Array[f, 105] (* _Robert G. Wilson v_, Apr 19 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a010096 = length . takeWhile (/= 0) . iterate a000523",
+        "-- _Reinhard Zumkeller_, Mar 16 2012",
+        "(PARI) a(n)=if(n<1,0,1+a(log(n)\\log(2))) \\\\ _Charles R Greathouse IV_, Apr 17 2012",
+        "(PARI) a(n)=if(n<1,0,1+a(logint(n,2))) \\\\ _Charles R Greathouse IV_, Oct 23 2015"
+    ],
+    "xref": [
+        "Cf. A063510, A000523, A001069 (version 2), A230864 (version 3)."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_Leonid Broukhis_",
+    "ext": [
+        "Edited by _Hieronymus Fischer_, Apr 08 2012.",
+        "Edited by _N. J. A. Sloane_, Nov 03 2013"
+    ],
+    "references": 15,
+    "revision": 35,
+    "time": "2015-10-23T16:05:33-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

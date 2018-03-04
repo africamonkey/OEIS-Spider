@@ -1,0 +1,70 @@
+{
+    "number": 232541,
+    "data": "4,6,8,9,95,159,195,249,326,762,973,995,998,1057,1086,1111,1189,1236,1255,1337,1338,1383,1389,1395,1419,1509,2139,2248,2623,2679,2737,2928,2949,3029,3065,3202,3344,3345,3419,3432,3437,3464,3706,3945,4344,4502",
+    "name": "Multiplicative Smith numbers: Composite numbers n such that the product of nonzero digits of n = product of nonzero digits of prime factors of n.",
+    "comment": [
+        "They follow the same formula for Smith numbers, however, instead of addition, we have multiplication (only nonzero digits are included).",
+        "Trivially, prime numbers satisfy this property but are not included in the sequence."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A232541/b232541.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "1236 is a member of this sequence because 1236 = 2*2*3*103 and 1*2*3*6 = 2*2*3*1*3 (zeros are not included).",
+        "998 is a member of this sequence because 998 = 2*499 and 9*9*8 = 2*4*9*9."
+    ],
+    "mathematica": [
+        "f[n_] := Times @@ DeleteCases[IntegerDigits[n], 0]; pFactors[n_] := Module[{f = FactorInteger[n]}, Flatten[ConstantArray @@@ f]]; Select[Range[2, 10000], ! PrimeQ[#] && f[#] == Times @@ f /@ pFactors[#] &] (* _T. D. Noe_, Nov 28 2013 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import sympy",
+        "from sympy import isprime",
+        "from sympy import factorint",
+        "def DigitProd(x):",
+        "..prod = 1",
+        "..for i in str(x):",
+        "....if i != '0':",
+        "......prod *= int(i)",
+        "..return prod",
+        "def f(x):",
+        "..lst = []",
+        "..for n in range(len(list(factorint(x)))):",
+        "....lst.append(str(list(factorint(x))[n])*list(factorint(x).values())[n])",
+        "..string = ''",
+        "..for i in lst:",
+        "....string += i",
+        "..prod = 1",
+        "..for a in string:",
+        "....if a != '0':",
+        "......prod *= int(a)",
+        "..if prod == DigitProd(x):",
+        "....return True",
+        "x = 1",
+        "while x < 10**3:",
+        "..if not isprime(x):",
+        "....if f(x):",
+        "......print(x)",
+        "..x += 1",
+        "(Sage)",
+        "def prodPrimeDig(x):",
+        "....F=factor(x)",
+        "....T=[item for sublist in [[y[0]]*y[1] for y in F] for item in sublist]",
+        "....return prod([prod(filter(lambda a: a!=0,h.digits(base=10))) for h in T])",
+        "n=3345 #Change n for more digits",
+        "[k for k in [1..n] if prod(filter(lambda a: a!=0,k.digits(base=10)))==prodPrimeDig(k) and not(is_prime(k))] # _Tom Edgar_, Nov 26 2013"
+    ],
+    "xref": [
+        "Cf. A006753, A051801."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Derek Orr_, Nov 25 2013",
+    "ext": [
+        "Extended by _T. D. Noe_, Nov 28 2013"
+    ],
+    "references": 1,
+    "revision": 29,
+    "time": "2014-12-09T03:32:12-05:00",
+    "created": "2013-11-28T02:18:15-05:00"
+}

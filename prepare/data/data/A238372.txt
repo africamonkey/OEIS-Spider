@@ -1,0 +1,54 @@
+{
+    "number": 238372,
+    "data": "1,2,9,40,265,1956,18529,183520,2226753,28663300,421589641,6696832704,117283627201,2190260755060,44645172510345,964646320357696,22317294448547329,547594529028427908,14246751684203363593,390309056795283743200,11276891642831796476481",
+    "name": "Number of labeled rooted trees with n nodes with every leaf at the same height.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A238372/b238372.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "formula": [
+        "E.g.f.: Sum_{i>=1} P_i with P_1 = x and P_i = x * (exp(P_{i-1})-1) for i>1.",
+        "a(n) = T(n,1), T(n,m) = n!/(n-m)!*Sum_{k=1..n-m}(stirling2(k,m)*T(n-m,k)), T(n,n)=1. - _Vladimir Kruchinin_, Apr 01 2015"
+    ],
+    "example": [
+        "On 4 vertices, there are:",
+        "24 rooted trees X-O-O-O",
+        "12 rooted trees X-O-O",
+        "                   \\",
+        "                    O",
+        "4 rooted trees    X",
+        "                 /|\\",
+        "                O O O"
+    ],
+    "maple": [
+        "p:= proc(i) p(i):= `if`(i=1, x, x*(exp(p(i-1))-1)) end:",
+        "s:= proc(n) s(n):= `if`(n=0, 0, s(n-1)+p(n)) end:",
+        "a:= n-> n! * coeff(series(s(n), x, n+1), x, n):",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Feb 26 2014"
+    ],
+    "mathematica": [
+        "T[n_, n_] = 1; T[n_, m_] := T[n, m] = n!/(n-m)!*Sum[StirlingS2[k, m]*T[n-m, k], {k, 1, n-m}]; a[n_] := T[n, 1]; Array[a, 25] (* _Jean-Fran\u00e7ois Alcover_, Jan 08 2016, after _Vladimir Kruchinin_ *)"
+    ],
+    "program": [
+        "(Sage)",
+        "x = QQ[['x']].gen()",
+        "P = {}",
+        "N = 20",
+        "P[1] = x.O(N)",
+        "for i in range(2, N):",
+        "....P[i] = x*(P[i-1].exp(N)-1)",
+        "add(P[u] for u in P)",
+        "(Maxima)",
+        "T(n,m):=if n=m then 1 else n!/(n-m)!*sum(stirling2(k,m)*T(n-m,k),k,1,n-m);",
+        "makelist(T(n,1),n,1,15); /* _Vladimir Kruchinin_, Apr 01 2015 */"
+    ],
+    "xref": [
+        "Cf. A048816 for the unlabeled version."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_F. Chapoton_, Feb 25 2014",
+    "references": 2,
+    "revision": 32,
+    "time": "2016-01-08T04:02:47-05:00",
+    "created": "2014-02-26T19:05:44-05:00"
+}

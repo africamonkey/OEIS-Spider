@@ -1,0 +1,49 @@
+{
+    "number": 182087,
+    "data": "1729,172081,294409,1773289,4463641,56052361,118901521,172947529,216821881,228842209,295643089,798770161,1150270849,1299963601,1504651681,1976295241,2301745249,9624742921,11346205609,13079177569",
+    "name": "Carmichael numbers of the form C = (30n-p)*(60n-(2p+1))*(90n-(3p+2)), where n is a natural number and p, 2p+1, 3p+2 are all three prime numbers.",
+    "comment": [
+        "These numbers can be reduced to only two possible forms: C =(30n-23)*(60n-47)*(90n-71) or C = (30n-29)*(60n-59)*(90n-89). In the first form, for the particular case when 30n-23,60n-47 and 90n-71 are all three prime numbers, we obtain the Chernick numbers of the form 10m+1 (for k = 5n-4 we have C = (6k+1)*(12k+1)*(18k+1)). In the second form,  for the particular case when 30n-29,60n-59 and 90n-89 are all three prime numbers, we obtain the Chernick numbers of the form 10m+9 (for k = 5n-5 we have C = (6k+1)*(12k+1)*(18k+1)).",
+        "So the Chernick numbers can be divided into two categories: Chernick numbers of the form (30n+7)*(60n+13)*(90n+19) and Chernick numbers of the form (30n+1)*(60n+1)*(90n+1)."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A182087/b182087.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "E. W. Weisstein, <a href=\"http://mathworld.wolfram.com/CarmichaelNumber.html\"> MathWorld: Carmichael Number</a>"
+    ],
+    "program": [
+        "(PARI) list(lim)={",
+        "    my(v=List(),f);",
+        "    for(k=1,round(solve(x=(lim/162000)^(1/3),lim^(1/3),(30*x-23)*(60*x-47)*(90*x-71)-lim)),",
+        "        n=(30*k-23)*(60*k-47)*(90*k-71)-1;",
+        "        f=factor(30*k-23);",
+        "        for(i=1,#f[,1],if(f[i,2]>1 || n%(f[i,1]-1), next(2)));",
+        "        f=factor(60*k-47);",
+        "        for(i=1,#f[,1],if(f[i,2]>1 || n%(f[i,1]-1), next(2)));",
+        "        f=factor(90*k-71);",
+        "        for(i=1,#f[,1],if(f[i,2]>1 || n%(f[i,1]-1), next(2)));",
+        "        listput(v,n+1)",
+        "    );",
+        "    for(k=2,round(solve(x=(lim/162000)^(1/3),lim^(1/3),(30*x-29)*(60*x-59)*(90*x-89)-lim)),",
+        "        n=(30*k-29)*(60*k-59)*(90*k-89)-1;",
+        "        f=factor(30*k-29);",
+        "        for(i=1,#f[,1],if(f[i,2]>1 || n%(f[i,1]-1), next(2)));",
+        "        f=factor(60*k-59);",
+        "        for(i=1,#f[,1],if(f[i,2]>1 || n%(f[i,1]-1), next(2)));",
+        "        f=factor(90*k-89);",
+        "        for(i=1,#f[,1],if(f[i,2]>1 || n%(f[i,1]-1), next(2)));",
+        "        listput(v,n+1)",
+        "    );",
+        "    vecsort(Vec(v))",
+        "}; \\\\ _Charles R Greathouse IV_, Oct 02 2012"
+    ],
+    "xref": [
+        "Cf. A033502, A206347."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Marius Coman_, Apr 11 2012",
+    "references": 2,
+    "revision": 21,
+    "time": "2013-05-13T01:54:18-04:00",
+    "created": "2012-04-23T12:24:12-04:00"
+}

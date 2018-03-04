@@ -1,0 +1,36 @@
+{
+    "number": 246663,
+    "data": "1,2,4,6,8,12,16,20,24,30,32,36,40,48,60,64,70,72,80,96,120,128,140,144,160,180,192,216,240,252,256,280,288,320,360,384,400,420,432,480,504,512,560,576,600,630,640,720,768,800,840,864,900,960,1008,1024",
+    "name": "Products of swinging factorials A056040.",
+    "mathematica": [
+        "sw[n_] := n!/(Floor[n/2]!)^2; lim = 40; For[p = 0; a = f = Table[sw[n], {n, lim}], p =!= a, p = a; a = Select[Union@@Outer[Times, f, a], #<= sw[lim]&]]; a (* _Hans Havermann_, Sep 09 2014 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "# For example prod_hull(A008578) are the natural numbers.",
+        "def prod_hull(f, K):",
+        "    S = []; newS = []",
+        "    n = 0",
+        "    while f(n) <= K:",
+        "        newS.append(f(n))",
+        "        n += 1",
+        "    while newS <> S:",
+        "        S = newS; T = []",
+        "        for s in S:",
+        "            M = map(lambda n: n*s , S)",
+        "            T.extend(filter(lambda n: n <= K, M))",
+        "        newS = Set(T).union(Set(S))",
+        "    return sorted(newS)",
+        "prod_hull(lambda n: factorial(n)/factorial(n//2)^2, 1024)"
+    ],
+    "xref": [
+        "Cf. A001013 is a sublist."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Peter Luschny_, Sep 09 2014",
+    "references": 1,
+    "revision": 9,
+    "time": "2014-09-10T17:41:35-04:00",
+    "created": "2014-09-10T17:41:35-04:00"
+}

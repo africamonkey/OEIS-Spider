@@ -1,0 +1,31 @@
+{
+    "number": 216281,
+    "data": "1,2,21,392,11980,471966,24655820,1548264752,118039822488,10482116888640,1076582148812808,125439212178037728,16473767684928836256,2410412979008498588208,390793360308270931979400,69716064087131957637475968",
+    "name": "Sum of n-th derivatives at x=1 of all functions that are representable as x^x^...^x with n x's and parentheses inserted in all possible ways.",
+    "example": [
+        "For n=4 the A000081(4) = 4 functions and their 4th derivatives at x=1 are x^(x^3)->156, x^(x^x*x)->100, x^(x^(x^2))->80, x^(x^(x^x))->56 => a(n) = 156+100+80+56 = 392."
+    ],
+    "maple": [
+        "F:= proc(n) F(n):= `if`(n=1, [x], map(h->x^h, g(n-1, n-1))) end:",
+        "g:= proc(n, i) option remember; `if`(i=1, [x^n], [seq(seq(seq(",
+        "       mul(F(i)[w[t]-t+1], t=1..j)*v, w=combinat[choose](",
+        "       [$1..nops(F(i))+j-1], j)), v=g(n-i*j, i-1)), j=0..n/i)])",
+        "    end:",
+        "a:= n-> add(n!*coeff(series(subs(x=x+1, f), x, n+1), x, n), f=F(n)):",
+        "seq(a(n), n=1..12);"
+    ],
+    "xref": [
+        "Row sums of A216349, A216350.",
+        "Cf. A000081, A215703."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Sep 04 2012",
+    "ext": [
+        "a(16) from _Alois P. Heinz_, May 09 2016"
+    ],
+    "references": 3,
+    "revision": 23,
+    "time": "2016-05-09T09:07:55-04:00",
+    "created": "2012-09-04T18:37:07-04:00"
+}

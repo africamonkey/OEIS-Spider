@@ -1,0 +1,43 @@
+{
+    "number": 275598,
+    "data": "11,13,23,47,193,383,577",
+    "name": "Primes p such that the number of odd divisors of p-1 is a prime q which is equal to the number of odd divisors of p+1.",
+    "comment": [
+        "Conjecture: this sequence is finite.",
+        "Any further terms are greater than 10^10. - _Charles R Greathouse IV_, Aug 22 2016",
+        "Any further terms are greater than 2 * 10^12. - _Dana Jacobsen_, Aug 30 2016"
+    ],
+    "example": [
+        "11 is in this sequence because there are 2 odd divisors 1 and 5 of 10 and there are 2 odd divisors 1 and 3 of 12, and 2 is a prime."
+    ],
+    "maple": [
+        "filter:= proc(p) local r,q;",
+        "   r:= numtheory:-tau((p-1)/2^padic:-ordp(p-1,2));",
+        "   if not isprime(r) then return false fi;",
+        "   r = numtheory:-tau((p+1)/2^padic:-ordp(p+1,2))",
+        "end proc:",
+        "res:= NULL: p:= 0:",
+        "while p < 1000 do",
+        "  p:= nextprime(p);",
+        "  if filter(p) then",
+        "    res:= res, p;",
+        "  fi;",
+        "od:",
+        "res; # _Robert Israel_, Aug 24 2016"
+    ],
+    "program": [
+        "(Perl) use ntheory \":all\"; forprimes { $n1 = scalar(grep { $_&1 } divisors($_-1)); say if is_prime($n1) && $n1 == scalar(grep { $_&1 } divisors($_+1)); } 1e7; # _Dana Jacobsen_, Aug 24 2016",
+        "(PARI) f(n)=numdiv(n>>valuation(n,2))",
+        "is(n)=if(!isprime(n), return(0)); my(q=f(n-1)); isprime(q) && f(n+1)==q \\\\ _Charles R Greathouse IV_, Aug 24 2016"
+    ],
+    "xref": [
+        "Cf. A001227, A275418."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Aug 23 2016",
+    "references": 3,
+    "revision": 49,
+    "time": "2016-08-30T14:58:13-04:00",
+    "created": "2016-08-23T22:19:17-04:00"
+}

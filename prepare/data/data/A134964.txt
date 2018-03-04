@@ -1,0 +1,46 @@
+{
+    "number": 134964,
+    "data": "1,1,2,4,9,19,46,108,273,696,1836,4896,13323,36541,101323,282693,793697,2237982,6335978,17992622,51235887,146228734,418181860,1197972026,3437159492,9875198568,28407202891,81807809714,235831978115",
+    "name": "Number of different unlabeled n-node graphs with at most one cycle in each connected component.",
+    "comment": [
+        "a(n) is the number of pseudoforests on n nodes. - _Eric W. Weisstein_, Jun 11 2012",
+        "In first formula, for each partition P of n, we have a product over all parts p=1..n, that could arise in P. Since binomial(A005703(p) + a_p - 1, a_p) = 1, if a_p = 0, only the parts in P are considered. See example. - _Washington Bomfim_, Jun 27 2012"
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Pseudoforest.html\">Pseudoforest</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/FrequencyRepresentation.html\">Frequency Representation</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Pseudoforest\">Pseudoforest</a>"
+    ],
+    "formula": [
+        "a(0)=1. For n >= 1 a(n) = Sum of Product_{p=1..n, binomial(A005703(p) + a_p -1, a_p)} over all the partitions of n, having parts p with frequencies a_p.",
+        "Euler transform of A001429 + A000055. - _Geoffrey Critzer_, Oct 13 2012"
+    ],
+    "example": [
+        "a(5)=19 because from the formula, the partitions of 5, in frequency representation (1^a_1 2^a_2 ...), correspond respectively to",
+        "(1^5) => C(A005703(1) + 5 -1, 5) = 1,",
+        "(2^1 1^3) => C(A005703(2)+1-1, 1) * C(A005703(1)+3-1, 3) = C(1,1)*C(3,3)=1,",
+        "(2^2 1^1) => C(A005703(2)+2-1, 2) * C(A005703(1)+1-1, 1) = C(2,2)*C(1,1)=1,",
+        "(3^1 1^2) => C(A005703(3)+1-1, 1) * C(A005703(1)+2-1, 2) = C(2,1)*C(2,2)=2,",
+        "(3^1 2^1) => C(A005703(3)+1-1, 1) * C(A005703(2)+1-1, 1) = C(2,1)*C(1,1)=2,",
+        "(4^1 1^1) => C(A005703(4)+1-1, 1) * C(A005703(1)+1-1, 1) = C(4,1)*C(1,1)=4,",
+        "(5^1) => C(A005703(5)+1-1, 1) = C(8+1-1, 1) = 8;  and 1+1+1+2+2+4+8 = 19."
+    ],
+    "mathematica": [
+        "Needs[\"Combinatorica`\"];",
+        "nn=30;s[n_,k_]:=s[n,k]=a[n+1-k]+If[n<2k,0,s[n-k,k]];a[1]=1;a[n_]:=a[n]=Sum[a[i]s[n-1,i]i,{i,1,n-1}]/(n-1);rt=Table[a[i],{i,1,nn}];cu=Drop[Apply[Plus,Table[Take[CoefficientList[CycleIndex[DihedralGroup[n],s]/.Table[s[j]->Table[Sum[rt[[i]]x^(k*i),{i,1,nn}],{k,1,nn}][[j]],{j,1,nn}],x],nn],{n,3,nn}]],1];t[n_,k_]:=t[n,k]=b[n+1-k]+If[n<2k,0,t[n-k,k]];b[1]=1;b[n_]:=b[n]=Sum[b[i]t[n-1,i]i,{i,1,n-1}]/(n-1);ft=Table[b[i]-Sum[b[j]b[i-j],{j,1,i/2}]+If[OddQ[i],0,b[i/2](b[i/2]+1)/2],{i,1,nn}];",
+        "CoefficientList[Series[Product[1/(1-x^i)^(cu[[i]]+ft[[i]]),{i,1,nn-1}],{x,0,nn}],x]  (* _Geoffrey Critzer_, Oct 13 2012, after codes given by _Robert A. Russell_ in A134964 and A000055 *)"
+    ],
+    "xref": [
+        "Cf. A005703 (number of pseudotrees), A137917 (number of maximal pseudoforests)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Washington Bomfim_, May 14 2008",
+    "ext": [
+        "Edited by _Washington Bomfim_, Jun 27 2012"
+    ],
+    "references": 6,
+    "revision": 31,
+    "time": "2017-10-02T02:11:40-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

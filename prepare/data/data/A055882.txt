@@ -1,0 +1,48 @@
+{
+    "number": 55882,
+    "data": "1,2,8,40,240,1664,12992,112256,1059840,10827264,118758400,1389711360,17258893312,226463227904,3127694491648,45316785602560,686826595745792,10861264214949888,178802342273744896",
+    "name": "a(n) = 2^n*Bell(n). E.g.f.: exp(exp(2x)-1).",
+    "comment": [
+        "a(n) is the number of set partitions of {1,2,...,n} with a (possibly empty) subset of designated elements in each block. - _Geoffrey Critzer_, Sep 16 2012"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A055882/b055882.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = exp(-1)*2^n*sum(k=>0, k^n/k!). - _Benoit Cloitre_, May 20 2002",
+        "G.f.: 1/(1-2x/(1-2x/(1-2x/(1-4x/(1-2x/(1-6x/(1-2x/(1-8x/(1-... (continued fraction). [_Paul Barry_, Oct 11 2009]",
+        "G.f.: 1/(U(0) - 2*x) where U(k)= 1 + 2*x - 2*x*(k+1)/(1 - 2*x/U(k+1)) ; (continued fraction, 2-step). - _Sergei N. Gladkovskii_, Oct 12 2012",
+        "G.f.: G(0)/(1+2*x) where G(k) = 1 - 4*x*(k+1)/((2*k+1)*(4*x*k-1) - 2*x*(2*k+1)*(2*k+3)*(4*x*k-1)/(2*x*(2*k+3) - 2*(k+1)*(4*x*k+2*x-1)/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Dec 22 2012",
+        "G.f.: G(0)/2 where G(k) = 1 - (2*x*k + 1)/(2*x*k - 1 - 2*x*(2*x*k - 1)/(2*x + (2*x*k + 1)/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Jan 30 2013",
+        "G.f.: 1/Q(0), where Q(k)= 1 - 2*(k+1)*x - 4*(k+1)*x^2/Q(k+1); (continued fraction). - _Sergei N. Gladkovskii_, May 03 2013"
+    ],
+    "maple": [
+        "seq(add(binomial(n, k)*(bell(n)), k=0..n), n=0..18); # _Zerinvary Lajos_, Dec 01 2006"
+    ],
+    "mathematica": [
+        "nn=20;a=Exp[2x]-1;Range[0,nn]!CoefficientList[Series[Exp[a],{x,0,nn}],x]  (* _Geoffrey Critzer_, Sep 16 2012 *)",
+        "Table[2^n BellB[n], {n, 0, 20}] (* _Vincenzo Librandi_, Sep 19 2014 *)"
+    ],
+    "program": [
+        "(Python)",
+        "# Python 3.2 or higher required",
+        "from itertools import accumulate",
+        "A055882_list, blist, b, n2 = [1,2], [1], 1, 4",
+        "for _ in range(2,201):",
+        "....blist = list(accumulate([b]+blist))",
+        "....b = blist[-1]",
+        "....A055882_list.append(b*n2)",
+        "....n2 *= 2 # _Chai Wah Wu_, Sep 19 2014",
+        "(MAGMA) [2^n*Bell(n): n in [0..20]]; // _Vincenzo Librandi_, Sep 19 2014"
+    ],
+    "xref": [
+        "Cf. A000079, A000110, A055883."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Christian G. Bower_, Jun 09 2000",
+    "references": 8,
+    "revision": 44,
+    "time": "2014-09-19T16:50:35-04:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

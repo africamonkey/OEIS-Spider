@@ -1,0 +1,35 @@
+{
+    "number": 105308,
+    "data": "4,6,11,45,1408,13313,41752,142122836,48792948403",
+    "name": "Indices n of primes p(n), p(n+2) such that p(n)-1 and p(n+2)-1 have the same largest prime factor.",
+    "comment": [
+        "These numbers are rare. Are they finite? Proof?",
+        "a(10) > 1.2*10^12, if it exists. - _Giovanni Resta_, May 14 2016"
+    ],
+    "example": [
+        "The prime factors of prime(45) - 1 = 2, 2, 7, 7;",
+        "the prime factors of prime(47) - 1 = 2, 3, 5, 7;",
+        "and 7 is the common largest factor."
+    ],
+    "mathematica": [
+        "t = {0, 0, 0}; Do[ t = {t[[2]], t[[3]], FactorInteger[ Prime[n + 2] - 1][[ -1, 1]]}; If[ t[[1]] == t[[3]], Print[n]], {n, 195000000}] (* _Robert G. Wilson v_, Jun 04 2005 *)"
+    ],
+    "program": [
+        "(PARI) /* prime indices such that gd of prime(x)+ k and prime(x+m) + k are equal */ divpm1(n,m,k) = { local(x,l1,l2,v1,v2); for(x=2,n, v1 = ifactor(prime(x)+ k); v2 = ifactor(prime(x+m)+k); l1 = length(v1); l2 = length(v2); if(v1[l1] == v2[l2], print1(x\",\") ) ) }",
+        "ifactor(n) = /* Vector of the prime factors of n*/ { local(f,j,k,flist); flist=[]; f=Vec(factor(n)); for(j=1,length(f[1]), for(k = 1,f[2][j],flist = concat(flist,f[1][j]) ); ); return(flist) }"
+    ],
+    "xref": [
+        "Cf. A105404."
+    ],
+    "keyword": "more,nonn",
+    "offset": "2,1",
+    "author": "_Cino Hilliard_, May 01 2005",
+    "ext": [
+        "a(8) from _Robert G. Wilson v_, Jun 04 2005",
+        "a(9) from _Giovanni Resta_, May 14 2016"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2016-05-14T16:04:08-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

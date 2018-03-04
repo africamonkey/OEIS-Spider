@@ -1,0 +1,36 @@
+{
+    "number": 261569,
+    "data": "1,5,5,30,30,55,180,205,330,480,1230,1380,2255,3030,4530,8555,10680,15330,21330,29730,39480,67380,81505,116280,153030,210930,270805,370080,534330,675480,900480,1180380,1544130,1997280,2597280,3304805,4581180,5653080",
+    "name": "Expansion of Product_{k>=1} (1 + 5*x^k).",
+    "comment": [
+        "In general, for a fixed integer m > 0, if g.f. = Product_{k>=1} (1 + m*x^k) then a(n) ~ c^(1/4) * exp(2*sqrt(c*n)) / (2*sqrt((m+1)*Pi)*n^(3/4)), where c = Pi^2/6 + log(m)^2/2 + polylog(2, -1/m). - _Vaclav Kotesovec_, Jan 04 2016"
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A261569/b261569.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "a(n) ~ c^(1/4) * exp(2*sqrt(c*n)) / (2*sqrt(6*Pi)*n^(3/4)), where c = Pi^2/6 + log(5)^2/2 + polylog(2, -1/5) = 2.74927912606080829002558751537626864449... . - _Vaclav Kotesovec_, Jan 04 2016"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(i*(i+1)/2<n, 0,",
+        "      `if`(n=0, 1, b(n, i-1)+`if`(i>n, 0, 5*b(n-i, i-1))))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Aug 24 2015"
+    ],
+    "mathematica": [
+        "nmax = 40; CoefficientList[Series[Product[1 + 5*x^k, {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 40; CoefficientList[Series[Exp[Sum[(-1)^(k+1)*5^k/k*x^k/(1-x^k), {k, 1, nmax}]], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Aug 25 2015 *)",
+        "(QPochhammer[-5, x]/6 + O[x]^58)[[3]] (* _Vladimir Reshetnikov_, Nov 20 2015 *)"
+    ],
+    "xref": [
+        "Cf. A000009, A032302, A032308, A261568."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Vaclav Kotesovec_, Aug 24 2015",
+    "references": 5,
+    "revision": 13,
+    "time": "2016-01-04T05:05:03-05:00",
+    "created": "2015-08-25T10:24:24-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 111299,
+    "data": "4,14,49,86,301,454,886,1589,1849,3101,3986,6418,9761,13766,13951,19049,22463,26798,31754,48181,51529,57026,75266,85699,93793,100561,111139,128074,137987,196249,199591,203878,263431,295969,298154,302426,426058,448259,452411",
+    "name": "Numbers n such that the Matula tree of n is a binary tree (i.e., root has degree 2 and all nodes except root and leaves have degree 3).",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A111299/b111299.txt\">Table of n, a(n) for n = 1..186</a>",
+        "Keith Briggs, <a href=\"http://keithbriggs.info/matula.html\">Matula numbers and rooted trees</a>",
+        "F. Goebel, <a href=\"http://dx.doi.org/10.1016/0095-8956(80)90049-0\">On a 1-1-correspondence between rooted trees and natural numbers</a>, J. Combin. Theory, B 29 (1980), 141-143.",
+        "D. Matula, <a href=\"http://www.jstor.org/stable/2027327?seq=30\">A natural rooted tree enumeration by prime factorization</a>, SIAM Rev. 10 (1968) 273.",
+        "<a href=\"/index/Mat#matula\">Index entries for sequences related to Matula-Goebel numbers</a>"
+    ],
+    "formula": [
+        "The Matula tree of n is defined by as follows (p_m denotes the m-th prime):",
+        "matula(n):",
+        "... create a node labeled n",
+        "... for each prime factor m of n:",
+        "...... add the subtree matula(p_m), by an edge labeled m",
+        "... return the node"
+    ],
+    "mathematica": [
+        "nn=20000;",
+        "primeMS[n_]:=If[n===1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "binQ[n_]:=Or[n===1,With[{m=primeMS[n]},And[Length[m]===2,And@@binQ/@m]]];",
+        "Select[Range[2,nn],binQ] (* _Gus Wiseman_, Aug 28 2017 *)"
+    ],
+    "program": [
+        "(PARI) i(n)=n==2 || is(primepi(n))",
+        "is(n)=if(n<14,return(n==4)); my(f=factor(n),t=#f[,1]); if(t>1, t==2 && f[1,2]==1 && f[2,2]==1 && i(f[1,1]) && i(f[2,1]), f[1,2]==2 && i(f[1,1])) \\\\ _Charles R Greathouse IV_, Mar 29 2013",
+        "(PARI) list(lim)=my(v=List(), t); forprime(p=2, sqrt(lim), t=p; forprime(q=p, lim\\t, if(i(p)&&i(q), listput(v, t*q)))); vecsort(Vec(v)) \\\\ _Charles R Greathouse IV_, Mar 29 2013"
+    ],
+    "xref": [
+        "Cf. A000081, A001190, A005517, A005518, A007097, A061773, A245824."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Keith Briggs (keith.briggs(AT)bt.com), Nov 02 2005",
+    "ext": [
+        "Definition corrected by _Charles R Greathouse IV_, Mar 29 2013",
+        "a(27)-a(39) from _Charles R Greathouse IV_, Mar 29 2013"
+    ],
+    "references": 16,
+    "revision": 21,
+    "time": "2017-08-31T21:12:49-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

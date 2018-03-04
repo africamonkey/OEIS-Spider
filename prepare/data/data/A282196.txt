@@ -1,0 +1,32 @@
+{
+    "number": 282196,
+    "data": "1,4,576,4608,16588800,66355200,104044953600,1664719257600,16441671680000,5327101624320000,92819418702151680000,742555349617213440000,98385613602882311946240000,131180818137176415928320000,1199367480111327231344640000,29850923949437477757911040000,12196892137874302548391671889920000",
+    "name": "a(n) is the denominator of Sum_{m=0..n}(Sum_{k=0..m} ((k+1)/(m-k+1)^2) * (Catalan(k)/(2^(2*k)))^2)*(Sum_{k=0..n-m} ((k+1)/(n-m-k+1)^2) * (Catalan(k)/(2^(2*k)))^2)).",
+    "comment": [
+        "The series A282195(n)/a(n) is absolutely convergent to (2/3 Pi)^2."
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A282196/b282196.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local k; denom(add(add((k+1)/(m-k+1)^2*((binomial(2*k,k)/(k+1))/(2^(2*k)))^2,k=0..m)*add((k+1)/(q-m-k+1)^2*((binomial(2*k,k)/(k+1))/(2^(2*k)))^2,k=0..q-m),m=0..q)); end: seq(P(i),i=0..100); # _Paolo P. Lava_, Feb 14 2017"
+    ],
+    "mathematica": [
+        "b[n_]=(Sum[((k+1)/(n-k+1)^2)((CatalanNumber[k])/(2^(2k)))^2, {k, 0, n}]); a[n_] = Sum[(b[k]*b[n - k]), {k, 0, n}]; Denominator /@a/@ Range[0, 10]"
+    ],
+    "program": [
+        "(PARI) C(n) = binomial(2*n,n)/(n+1);",
+        "b(n) = sum(k=0, n, ((k+1)/(n-k+1)^2) * (C(k)/(2^(2*k)))^2);",
+        "a(n) = denominator(sum(k=0, n, b(k)*b(n-k))); \\\\ _Michel Marcus_, Feb 11 2017"
+    ],
+    "xref": [
+        "Cf. A281070, A280723, A000108 (Catalan), A282195 (numerators)"
+    ],
+    "keyword": "nonn,frac",
+    "offset": "0,2",
+    "author": "_Ralf Steiner_, Feb 08 2017",
+    "references": 2,
+    "revision": 18,
+    "time": "2017-02-15T10:16:16-05:00",
+    "created": "2017-02-15T10:16:16-05:00"
+}

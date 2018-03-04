@@ -1,0 +1,38 @@
+{
+    "number": 38102,
+    "data": "0,1,10,11,100,101,110,111,1000,1001,1100,1101,10000,10001,10011,10100,10101,10111,11000,11001,11100,11101,100000,100001,101000,101010,101100,101101,101111,110000,110001,110101,111100,111101,1000000",
+    "name": "Numbers n such that n is a substring of its base 2 representation.",
+    "comment": [
+        "The number of terms < 10^k: 1, 2, 4, 8, 12, 22, 34, 48, 61, 78, 90, 114, 140, 191, 233, 283, 337, 383, 429, 486, 542, 636, 718, 789, 852, 925, 1003, 1082, 1167, . - _Robert G. Wilson v_, Jun 30 2014"
+    ],
+    "link": [
+        "Giovanni Resta and Robert G. Wilson v, <a href=\"/A038102/b038102.txt\">Table of n, a(n) for n = 1..1167</a> (first 1000 terms from Giovanni Resta).",
+        "Robert G. Wilson v, <a href=\"/A038102/a038102.txt\">Interpret a(n) as a base 2 number and convert it to a decimal number, n, a(n) for n = 1..1167</a>"
+    ],
+    "example": [
+        "101000 (in base 10) = 1100010{101000}1000 (in base 2)."
+    ],
+    "mathematica": [
+        "Select[FromDigits /@ IntegerDigits[Range[2^15]-1, 2], StringPosition[StringJoin @@ (ToString /@ IntegerDigits[#, 2]), ToString@#] != {} &] (* terms < 10^15, _Giovanni Resta_, Apr 30 2013 *)",
+        "f[n_] := Block[{a = FromDigits@ IntegerDigits[n, 2]}, If[ StringPosition[ ToString@ FromDigits@ IntegerDigits[ a, 2], ToString@ a] != {}, a, 0]]; k = 0; lst = {}; While[k < 65, AppendTo[lst, f@k]; lst = Union@ lst; k++]; lst (* _Robert G. Wilson v_, Jun 29 2014 *)"
+    ],
+    "program": [
+        "(PARI) {for(vv=0, 200, bvv=binary(vv);",
+        "mm=length(bvv); texp=0; btod=0;",
+        "forstep(i=mm, 1, -1, btod=btod+bvv[i]*10^texp; texp++);",
+        "bigb=binary(btod); lbb=length(bigb); swsq=1;",
+        "for(k=0, lbb - mm , for(j=1, mm, if(bvv[j]!=bigb[j+k], swsq=0));",
+        "if(swsq==1, print1(btod, \", \"); break, swsq=1)))}",
+        "\\\\\\ _Douglas Latimer_, Apr 29 2013"
+    ],
+    "xref": [
+        "Cf. A038103-A038106, A228050-A228052, A227549."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,3",
+    "author": "_Patrick De Geest_, Feb 15 1999.",
+    "references": 12,
+    "revision": 32,
+    "time": "2014-07-01T23:03:37-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

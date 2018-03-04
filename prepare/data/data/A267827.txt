@@ -1,0 +1,58 @@
+{
+    "number": 267827,
+    "data": "1,2,20,352,8624,266784,9896448,426577920,20918138624,1149216540160,69911382901760,4665553152081920,338942971881472000,26631920159494995968,2250690001888540950528,203595258621775065120768,19629810220331494121865216",
+    "name": "Number of closed indecomposable linear lambda terms with 2n+1 applications and abstractions.",
+    "comment": [
+        "A linear lambda term is indecomposable if it has no closed proper subterm.",
+        "Equivalently, number of closed bridgeless rooted trivalent maps (on compact oriented surfaces of arbitrary genus) with 2n+1 trivalent vertices (and 1 univalent vertex)."
+    ],
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A267827/b267827.txt\">Table of n, a(n) for n = 0..303</a>",
+        "Lawrence Dresner, <a href=\"http://www.osti.gov/scitech/biblio/6829819\">Protection of a test magnet wound with a Ag/BSCCO high-temperature superconductor</a>, Oak Ridge National Lab technical report (ORNL/HTSPC-3), 1992. See Eq. (25).",
+        "Noam Zeilberger, <a href=\"http://arxiv.org/abs/1512.06751\">Linear lambda terms as invariants of rooted trivalent maps</a>, arXiv:1512.06751 [cs.LO], 2015."
+    ],
+    "formula": [
+        "The o.g.f. f(z) = z + 2*z^3 + 20*z^5 + 352*z^7 + ... can be defined using a catalytic variable as f(z) = F(z,0), where F(z,x) satisfies the functional-differential equation F(z,x) = x + z*(F(z,x) - F(z,0))^2 + z*(d/dx)F(z,x).",
+        "From _Gheorghe Coserea_, Nov 10 2017: (Start)",
+        "0 = x^5*y*(dy/dx) + y - x^2, where y(x) = x^2*A(-x^6).",
+        "0 = 6*y*(dy/dx)*x^2 + 2*y^2*x - y + 1, where y(x) = A(x).",
+        "a(n) = (6*n-2)*a(n-1) + Sum_{k=1..n-2} (6*k+2)*a(k)*a(n-1-k), for n >= 2.",
+        "(End)",
+        "a(n) = A291843(3*n+1, 2*n), n >= 1. - _Danny Rorabaugh_, Nov 10 2017"
+    ],
+    "example": [
+        "A(x) = 1 + 2*x + 20*x^2 + 352*x^3 + 8624*x^4 + 266784*x^5 + ..."
+    ],
+    "program": [
+        "(PARI)",
+        "seq(N) = {",
+        "  my(a = vector(N)); a[1] = 2;",
+        "  for(n=2, N,",
+        "    a[n] = (6*n-2)*a[n-1] + sum(k=1, n-2, (6*k+2)*a[k]*a[n-1-k]));",
+        "  concat(1,a);",
+        "};",
+        "seq(16)",
+        "\\\\ test 1: y = x^2*subst(Ser(seq(201)),'x,-'x^6); 0 == x^5*y*y' + y - x^2",
+        "\\\\ test 2: y = Ser(seq(201)); 0 == 6*y*deriv(y,x)*x^2 + 2*y^2*x - y + 1",
+        "\\\\ _Gheorghe Coserea_, Nov 10 2017",
+        "F(N) = {",
+        "  my(x='x+O('x^N), t='t, F0=x, F1=0, n=1);",
+        "  while(n++,",
+        "    F1 = t + x*(F0 - subst(F0,t,0))^2 + x*deriv(F0,t);",
+        "    if (F1 == F0, break()); F0 = F1;);",
+        "  F0;",
+        "};",
+        "seq(N) = my(v=Vec(subst(F(2*N+2),'t,0))); vector((#v+1)\\2, n, v[2*n-1]);",
+        "seq(16) \\\\ _Gheorghe Coserea_, Apr 01 2017"
+    ],
+    "xref": [
+        "Cf. A000309, A062980."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Noam Zeilberger_, Jan 21 2016",
+    "references": 7,
+    "revision": 44,
+    "time": "2017-12-19T01:46:18-05:00",
+    "created": "2016-01-24T23:34:20-05:00"
+}

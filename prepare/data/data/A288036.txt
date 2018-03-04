@@ -1,0 +1,26 @@
+{
+    "number": 288036,
+    "data": "38,39,40,220,248,508,623,662,688,723,740,742,875,898,922,950,1078,1103,1130,1179,1208,1262,1312,1390,1598,1600,1635,1652,1678,1780,1787,2027,2198,2319,2378,2380,2495,2547,2560,2588,2770,2775,2900,2950,2963,3003",
+    "name": "Numbers x such that the trajectory of x under the map x -> A090086(x) does not enter the cycle {14, 15}.",
+    "example": [
+        "The trajectory of 220 enters the cycle {38, 39} after one step, so 220 is a term of the sequence."
+    ],
+    "mathematica": [
+        "Select[Range@ 3000, Function[k, ! MemberQ[NestWhileList[Function[n, Block[{j = 1}, While[GCD[n, j] > 1 || PrimeQ@ j || PowerMod[n, j - 1, j] != 1,i = j++]; j]], k, # != 15 &, 1, 100], 15]]] (* _Michael De Vlieger_, Jun 06 2017, after _Robert G. Wilson v_ at A090086 *)"
+    ],
+    "program": [
+        "(PARI) a090086(n) = forcomposite(c=1, , if(Mod(n, c)^(c-1)==1, return(c)))",
+        "trajectory(n, terms) = my(v=[n]); while(#v < terms, v=concat(v, a090086(v[#v]))); v",
+        "is(n) = my(len=2, t=trajectory(n, len), k=#t); while(1, k--; if(t[k]==t[#t], if(t[#t]!=14 && t[#t]!=15, return(1), return(0))); if(k==1, len++; t=trajectory(n, len); k=#t))"
+    ],
+    "xref": [
+        "Cf. A090086."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, Jun 04 2017",
+    "references": 0,
+    "revision": 6,
+    "time": "2017-07-19T08:03:31-04:00",
+    "created": "2017-07-19T08:03:31-04:00"
+}

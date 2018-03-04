@@ -1,0 +1,29 @@
+{
+    "number": 182211,
+    "data": "5,25,62,151,381,833,2163,5291,13317,33519,85179,213083,539212,1344272,3358571",
+    "name": "The number of integers k < 10^n such that both k and k^3 mod 10^n have all odd decimal digits.",
+    "comment": [
+        "Inspired by a discussion on the math-fun list on April 18, 2012 by _James R. Buddenhagen_."
+    ],
+    "program": [
+        "(Haskell)",
+        "oddDigits 0 = True",
+        "oddDigits n = let (q,r) = quotRem n 10",
+        "..............in (odd r) && oddDigits q",
+        "oddSet 0 = []",
+        "oddSet 1 = [1,3..9]",
+        "oddSet k = [n | i <- [1,3..9], x <- oddSet (k-1), let n = i*10^(k-1) + x,",
+        "...............oddDigits((n^3) `mod` 10^k)]",
+        "main = putStrLn $ map (length . oddSet) [1..]"
+    ],
+    "xref": [
+        "Cf. A085597 (n such that both n and n^3 have all odd digits)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Victor S. Miller_, Apr 18 2012",
+    "references": 0,
+    "revision": 17,
+    "time": "2017-12-09T19:12:06-05:00",
+    "created": "2012-04-21T14:20:23-04:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 86788,
+    "data": "7,113,265381,842468587426513207",
+    "name": "Primes found among the denominators of the continued fraction rational approximations to Pi.",
+    "comment": [
+        "The next term is too large to include."
+    ],
+    "link": [
+        "Joerg Arndt, <a href=\"/A086788/b086788.txt\">Table of n, a(n) for n = 1..10</a>",
+        "Cino Hilliard, <a href=\"http://groups.msn.com/BC2LCC/continuedfractions.msnw\">Continued fractions rational approximation of numeric constants</a>. [needs login]"
+    ],
+    "example": [
+        "The first 5 rational approximations to Pi are 3/1, 22/7, 333/106, 355/113, 103993/33102 where 7, 113 are primes."
+    ],
+    "program": [
+        "(PARI)",
+        "cfracdenomprime(m,f) = { default(realprecision,3000); cf = vector(m+10); x=f; for(n=0,m, i=floor(x); x=1/(x-i); cf[n+1] = i; ); for(m1=0,m, r=cf[m1+1]; forstep(n=m1,1,-1, r = 1/r; r+=cf[n]; ); numer=numerator(r); denom=denominator(r); if(ispseudoprime(denom),print1(denom,\",\")); ) }",
+        "(PARI)",
+        "default(realprecision,10^5);",
+        "cf=contfrac(Pi);",
+        "n=0;",
+        "{ for(k=1, #cf,  \\\\ generate b-file",
+        "    pq = contfracpnqn( vector(k,j, cf[j]) );",
+        "    p = pq[1,1];  q = pq[2,1];",
+        "\\\\    if ( ispseudoprime(p), n+=1; print(n,\" \",p) );  \\\\ A086785",
+        "    if ( ispseudoprime(q), n+=1; print(n,\" \",q) );  \\\\ A086788",
+        "); }",
+        "/* _Joerg Arndt_, Apr 21 2013 */"
+    ],
+    "xref": [
+        "Cf. A086791, A086785."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Aug 04 2003; corrected Jul 30 2004",
+    "ext": [
+        "Corrected offset, _Joerg Arndt_, Apr 21 2013"
+    ],
+    "references": 3,
+    "revision": 13,
+    "time": "2014-08-11T22:45:24-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

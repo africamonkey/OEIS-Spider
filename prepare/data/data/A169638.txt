@@ -1,0 +1,47 @@
+{
+    "number": 169638,
+    "data": "1,1,1,4,20,60,420,3360,30240,151200,1663200,9979200,129729600,1816214400,27243216000,217945728000,3705077376000,66691392768000,633568231296000,12671364625920000,266098657144320000,5854170457175040000,134645920515025920000,1615751046180311040000",
+    "name": "Number of multiset permutations of the n initial elements of A005229 with additional element A005229(0)=1.",
+    "link": [
+        "Robert Israel, <a href=\"/A169638/b169638.txt\">Table of n, a(n) for n = 0..429</a>"
+    ],
+    "formula": [
+        "a(n) = number of permutations of the list b[0..n] where b(0)=0 and b(n) = A005229(n) for n>=1."
+    ],
+    "maple": [
+        "N:= 100: # to get a(0) to a(N)",
+        "A005229:= proc(n) option remember;",
+        "procname(procname(n-2))+procname(n-procname(n-2))",
+        "end proc:",
+        "A005229(1):= 1: A005229(2):= 1:",
+        "V:= Vector(N):",
+        "A[0]:= 1: V[1]:= 1:",
+        "for n from 1 to N do",
+        "  r:= A005229(n);",
+        "  V[r]:= V[r]+1;",
+        "  A[n]:= A[n-1]*(n+1)/V[r];",
+        "od:",
+        "seq(A[i],i=0..N); # _Robert Israel_, Dec 23 2014"
+    ],
+    "mathematica": [
+        "Mallows[n_Integer?Positive] := Mallows[n] = Mallows[Mallows[n - 2]] + Mallows[ n - Mallows[n - 2]];",
+        "Mallows[0] = Mallows[1] = Mallows[2] = 1;",
+        "a[m_] := Length[Permutations[Table[Mallows[i], {i, 0, m}]]];",
+        "Table[a[m], {m, 0, 10}]",
+        "(* A much better way to compute the terms is to use the multinomials of the multiplicities of the terms of A005229! - _Joerg Arndt_, Dec 23 2014 *)"
+    ],
+    "xref": [
+        "Cf. A169637."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Roger L. Bagula_, Apr 04 2010",
+    "ext": [
+        "Edited and new name, _Joerg Arndt_, Dec 23 2014",
+        "a(11) to a(23) from _Robert Israel_, Dec 23 2014"
+    ],
+    "references": 1,
+    "revision": 17,
+    "time": "2014-12-26T04:07:12-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

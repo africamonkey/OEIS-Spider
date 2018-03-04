@@ -1,0 +1,55 @@
+{
+    "number": 118376,
+    "data": "1,2,6,24,112,568,3032,16768,95200,551616,3248704,19389824,117021824,712934784,4378663296,27081760768,168530142720,1054464293888,6629484729344,41860283723776,265346078982144,1687918305128448,10771600724946944,68941213290561536",
+    "name": "Number of all trees of weight n, where nodes have positive integer weights and the sum of the weights of the children of a node is equal to the weight of the node.",
+    "comment": [
+        "The number of trees with leaf nodes equal to 1 is counted by the sequence A001003 of super-Catalan numbers. The number of binary trees is counted by the sequence A007317 and the number of binary trees with leaf nodes equal to 1 is counted by the sequence A000108 of Catalan numbers."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A118376/b118376.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "H. Cambazard, N. Catusse, <a href=\"http://arxiv.org/abs/1512.06649\">Fixed-Parameter Algorithms for Rectilinear Steiner tree and Rectilinear Traveling Salesman Problem in the Plane</a>, arXiv preprint arXiv:1512.06649 [cs.DS], 2015.",
+        "S. B. Ekhad, M. Yang, <a href=\"http://sites.math.rutgers.edu/~zeilberg/tokhniot/oMathar1maple12.txt\"> Proofs of Linear Recurrences of Coefficients of Certain Algebraic Formal Power Series Conjectured in the On-Line Encyclopedia Of Integer Sequences</a>, (2017)",
+        "Pawel Hitczenko, Jeremy R. Johnson, Hung-Jen Huang, <a href=\"http://dx.doi.org/10.1016/j.tcs.2005.09.074\">Distribution of a class of divide and conquer recurrences arising from the computation of the Walsh-Hadamard transform</a>, Theoretical Computer Science, Vol. 352, 2006, pp. 8-30.",
+        "J. R. Johnson, M. P\u00fcschel, <a href=\"http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.117.1233\">In search for the optimal Walsh-Hadamard transform</a>, Proc. ICASSP, Vol. 4, 2000, pp. 3347-3350.",
+        "Vladimir Kruchinin, D. V. Kruchinin, <a href=\"http://arxiv.org/abs/1103.2582\">Composita and their properties </a>, arXiv:1103.2582 [math.CO], 2011-2013."
+    ],
+    "formula": [
+        "Recurrence: T(1) = 1; For n > 1, T(n) = 1 + sum_{n=n1+...+nt} T(n1)*...*T(nt).",
+        "G.f.: (-1+(1-8*z+8*z^2)^(1/2))/(-4+4*z).",
+        "From _Vladimir Kruchinin_, Sep 03 2010: (Start)",
+        "O.g.f.: A(x) = A001003(x/(1-x)).",
+        "a(n) = sum_{k=1..n} binomial(n-1,k-1)*A001003(k), n>0. (End)",
+        "Conjecture: n*a(n) + 3*(-3*n+4)*a(n-1) + 4*(4*n-9)*a(n-2) + 8*(-n+3)*a(n-3) = 0. - _R. J. Mathar_, Sep 27 2013",
+        "a(n) ~ sqrt(sqrt(2)-1) * 2^(n-1/2) * (2+sqrt(2))^(n-1) / (sqrt(Pi) * n^(3/2)). - _Vaclav Kotesovec_, Feb 03 2014",
+        "From _Peter Bala_, Jun 17 2015: (Start)",
+        "With offset 0, binomial transform of A001003.",
+        "O.g.f. A(x) = series reversion of x*(2*x - 1)/(2*x^2 - 1); 2*(1 - x)*A^2(x) - A(x) + x = 0.",
+        "A(x) satisfies the differential equation (x - 9*x^2 + 16*x^3 - 8*x^4)*A'(x) + x*(3 - 4*x)*A(x) + x*(2*x - 1) = 0. Extracting coefficients gives Mathar's conjectured recurrence above. (End)"
+    ],
+    "example": [
+        "T(3) = 6 because there are six trees",
+        "3 3 3 3 3 3",
+        "2 1 2 1 1 2 1 2 1 1 1",
+        "1 1 1 1"
+    ],
+    "maple": [
+        "T := proc(n) option remember; local C, s, p, tp, k, i; if n = 1 then return 1; else s := 1; for k from 2 to n do C := combinat[composition](n,k); for p in C do tp := map(T,p); s := s + mul(tp[i],i=1..nops(tp)); end do; end do; end if; return s; end;"
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[Series[(Sqrt[1-8*x+8*x^2]-1)/(4*x-4), {x, 0, 20}], x]] (* _Vaclav Kotesovec_, Feb 03 2014 *)",
+        "a[n_] := 1+Sum[Binomial[n-1, k-1]*Hypergeometric2F1[2-k, k+1, 2, -1], {k, 2, n}]; Table[a[n], {n, 1, 20}] (* _Jean-Fran\u00e7ois Alcover_, Apr 03 2015, after _Vladimir Kruchinin_ *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^25); Vec((sqrt(1-8*x+8*x^2) - 1)/(4*x-4)) \\\\ _G. C. Greubel_, Feb 08 2017"
+    ],
+    "xref": [
+        "Cf. A001003, A007317, A000108."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Jeremy Johnson (jjohnson(AT)cs.drexel.edu), May 15 2006",
+    "references": 3,
+    "revision": 35,
+    "time": "2017-07-18T13:06:57-04:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

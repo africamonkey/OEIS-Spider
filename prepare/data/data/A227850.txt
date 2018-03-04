@@ -1,0 +1,35 @@
+{
+    "number": 227850,
+    "data": "1,4,1248,5401472,114070692352,7593330670240768",
+    "name": "Number of Dyck paths of semilength n*(4*n+1) in which the run length sequence is a permutation of {1,...,4*n}.",
+    "example": [
+        "a(1) = 4: UUDUUUDDDD (2134), UUUDUUDDDD (3124), UUUUDDUDDD (4213), UUUUDDDUDD (4312)."
+    ],
+    "maple": [
+        "h:= proc(n, s) option remember;",
+        "       `if`(n>add(sort([s[]], `>`)[i], i=1..(nops(s)+1)/2), 0,",
+        "       add(g(n-i, s minus {i}), i=select(x-> x<=n, s)))",
+        "    end:",
+        "g:= proc(n, s) option remember;",
+        "       `if`(s={}, `if`(n=0, 1, 0), add(h(n+i, s minus {i}), i=s))",
+        "    end:",
+        "a:= n-> g(0, {$1..4*n}):",
+        "seq(a(n), n=0..3);"
+    ],
+    "mathematica": [
+        "h[n_, s_] := h[n, s] = If[n > Sum[Sort[s, Greater][[i]], {i, 1, (Length[s] + 1)/2}], 0, Sum[g[n - i, s ~Complement~ {i}], {i, Select[s, # <= n&]}] ];",
+        "g[n_, s_] := g[n, s] = If[s == {}, If[n == 0, 1, 0], Sum[h[n + i, s  ~Complement~ {i}], {i, s}]];",
+        "a[n_] := g[0, Range[4*n]];",
+        "Table[a[n], {n, 0, 4}] (* _Jean-Fran\u00e7ois Alcover_, Apr 23 2016, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A007742, A060005, A073410, A168238."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_David Scambler_ and _Alois P. Heinz_, Oct 31 2013",
+    "references": 3,
+    "revision": 20,
+    "time": "2016-04-23T11:16:08-04:00",
+    "created": "2013-11-01T17:54:27-04:00"
+}

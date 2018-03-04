@@ -1,0 +1,28 @@
+{
+    "number": 119425,
+    "data": "6,20,28,45,63,70,88,99,104,105,110,117,130,154,165,170,182,195,231,238,255,266,272,273,285,286,304,322,345,357,368,374,385,399,418,429,455,459,464,475,483,494,496,506,513,561,595,598,609,621,627,646,651,663",
+    "name": "Primitive terms of the sequence A119357, i.e., of the sequence of those values of n for which the number of distinct nonzero sums of distinct divisors of n is less than 2^tau(n) - 1.",
+    "comment": [
+        "The sequence A119357 is closed under multiplication by positive integers and the primitive terms are those that are not multiples of other terms."
+    ],
+    "example": [
+        "45 is in the sequence because (i) the divisors 1, 5, 9, 15 of 45 satisfy 15 = 1 + 5 + 9 (consequently the number of distinct nonzero sums of distinct divisors of 45 is less than 2^tau(45) - 1) and (ii) no proper divisor of 45 has this property.",
+        "The first terms of A119357 are 6, 12, 18, 20, 24, 28, 30, 36, 40, 42, 45, 48 and, consequently, the first terms of this sequence are 6, 20, 28, 45."
+    ],
+    "program": [
+        "(PARI) sums(n) = {my (divs = divisors(n)); my (nbdivs = #divs); my (nb = 2^nbdivs-1); my (vsd = vector(nb)); for (i=1, nb, vb = padbin(i, nbdivs); vsd[i] = sum(j=1, nbdivs, divs[j]*vb[j]);); vsd;}",
+        "isA119357(n) = {my(vsd = sums(n)); #Set(vsd) < #vsd;}",
+        "isprmi(n, v) = {for (k=1, #v, if (! (n % v[k]), return (0););); return (1);}",
+        "lista(nn) = {my(vless = []); for (n=1, nn, if (isprmi(n, vless) && isA119357(n), vless = concat(vless, n); print1(n, \", \");););} \\\\ _Michel Marcus_, Jan 13 2014"
+    ],
+    "xref": [
+        "Cf. A119357."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Emeric Deutsch_, May 20 2006",
+    "references": 1,
+    "revision": 8,
+    "time": "2017-07-22T23:45:47-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

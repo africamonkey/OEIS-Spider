@@ -1,0 +1,33 @@
+{
+    "number": 92687,
+    "data": "1,2,6,16,46,132,384,1120,3278,9612,28236,83072,244752,722048,2132704,6306304,18666190,55300732,163968612,486528288,1444571068,4291629384,12756459936,37934818112,112855778768,335867740704,999895548736",
+    "name": "First column and main diagonal of triangle A092686, in which the convolution of each row with {1,2} produces a triangle that, when flattened, equals the flattened form of A092686.",
+    "comment": [
+        "Conjecture: Limit n->infinity a(n)^(1/n) = 3. - _Vaclav Kotesovec_, Jun 29 2015"
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A092687/b092687.txt\">Table of n, a(n) for n = 0..850</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = A( x^2/(1-2x) )/(1-2x). Recurrence: a(n) = Sum_{k=0..floor(n/2)} C(n-k,k)*2^(n-2k)*a(k). - _Paul D. Hanna_, Jul 10 2006"
+    ],
+    "program": [
+        "(PARI) T(n,k)=if(n<0||k>n,0, if(n==0&k==0,1, if(n==1&k<=1,2, if(k==n,T(n,0), 2*T(n-1,k)+T(n-1,k+1)))))",
+        "a(n)=T(n,0)",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) a(n)=local(A=1+x);for(i=0,n\\2,A=subst(A,x,x^2/(1-2*x+x*O(x^n)))/(1-2*x));polcoeff(A,n) \\\\ _Paul D. Hanna_, Jul 10 2006",
+        "(PARI) /* Using Recurrence: */",
+        "a(n)=if(n==0, 1, sum(k=0, n\\2, binomial(n-k, k)*2^(n-2*k)*a(k)))",
+        "for(n=0,30,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Jul 10 2006"
+    ],
+    "xref": [
+        "Cf. A092683, A092686, A092688, A092689."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 04 2004",
+    "references": 7,
+    "revision": 14,
+    "time": "2016-07-19T10:57:08-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

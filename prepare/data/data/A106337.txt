@@ -1,0 +1,48 @@
+{
+    "number": 106337,
+    "data": "1,1,1,4,13,31,82,253,757,2173,6341,18888,56266,167324,499773,1499059,4503557,13546893,40824379,123233868,372472353,1127080252,3414310032,10353722919,31425764410,95463814056,290222666436,882954212908,2688037654049,8188468874808",
+    "name": "Number of ways of writing n as the sum of n triangular numbers.",
+    "comment": [
+        "Number of compositions of n into n triangular numbers with 0's allowed.  a(3) = 4: [1,1,1], [0,0,3], [0,3,0], [3,0,0]. - _Alois P. Heinz_, Jul 31 2017",
+        "The radius of convergence is equal to A106335. - _Vaclav Kotesovec_, Nov 15 2017"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A106337/b106337.txt\">Table of n, a(n) for n = 0..2000</a>"
+    ],
+    "formula": [
+        "Log.g.f.: Sum_{n>=1} a(n)/n*x^n = log(G106336(x)), where G106336(x) is the g.f. of A106336 and satisfies: Sum_{n>=0} (x*G106336(x))^(n*(n+1)/2) = G106336(x).",
+        "a(n) = [x^n] Product_{j=1..n} (1+x^j-x^(2*j)-x^(3*j))^n. - _Alois P. Heinz_, Aug 01 2017"
+    ],
+    "example": [
+        "G106336(x) = exp(x + 1/2*x^2 + 4/3*x^3 + 13/4*x^4 + 31/5*x^5 +...).",
+        "G106336(x) = 1 + x + x^2 + 2*x^3 + 5*x^4 + 11*x^5 +...+ A106336(n)*x^n +...",
+        "G106336(x) = 1 + x*G106336(x) + (x*G106336(x))^3 + (x*G106336(x))^6 +..."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; expand(`if`(n=0, 1,",
+        "      add(`if`(issqr(8*j+1), x*b(n-j), 0), j=1..n)))",
+        "    end:",
+        "a:= n-> (p-> add(coeff(p, x, i)*binomial(n, i), i=0..n))(b(n)):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Jul 31 2017"
+    ],
+    "mathematica": [
+        "QP = QPochhammer; a[0] = 1; a[n_] := SeriesCoefficient[(QP[-1, x]*QP[x^2]/2 )^n, {x, 0, n}]; Table[a[n], {n, 0, 27}] (* _Jean-Fran\u00e7ois Alcover_, Jun 04 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(X); if(n<1,1,X=x+x*O(x^n); polcoeff(eta(X^2)^(2*n)/eta(X)^n,n))}"
+    ],
+    "xref": [
+        "Cf. A000217, A007294, A023361, A106333, A106334, A106335, A106336.",
+        "Main diagonal of A286180."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Apr 29 2005",
+    "ext": [
+        "a(0) changed to 1 by _Alois P. Heinz_, Jul 31 2017"
+    ],
+    "references": 5,
+    "revision": 24,
+    "time": "2017-11-15T07:46:25-05:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

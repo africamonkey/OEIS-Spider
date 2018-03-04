@@ -1,0 +1,45 @@
+{
+    "number": 59429,
+    "data": "1,1,2,8,51,478,6178,105330,2290069,61839897,2030449500,79661186168,3680458880352,197781841355220,12231649482909444,862560715175755168,68799732139319891208,6162698115430291654438,615995773861169229993018",
+    "name": "Cumulative boustrophedon transform of 1, 0, 0, 0, ...",
+    "comment": [
+        "For n>0, a(n) equals the element in the upper left corner of the matrix equal to the product of n X n matrices given by: Product_{k=1..n} M_k where M_k(r,c)=k+2-r-c when r+c<=k+1 and zeros elsewhere (see example). - _Paul D. Hanna_, Feb 08 2007"
+    ],
+    "formula": [
+        "See Maple code for precise description."
+    ],
+    "example": [
+        "For n=5, the matrix product:",
+        "[1 0 0 0 0] [2 1 0 0 0] [3 2 1 0 0] [4 3 2 1 0] [5 4 3 2 1]",
+        "[0 0 0 0 0] [1 0 0 0 0] [2 1 0 0 0] [3 2 1 0 0] [4 3 2 1 0]",
+        "[0 0 0 0 0] [0 0 0 0 0] [1 0 0 0 0] [2 1 0 0 0] [3 2 1 0 0]",
+        "[0 0 0 0 0] [0 0 0 0 0] [0 0 0 0 0] [1 0 0 0 0] [2 1 0 0 0]",
+        "[0 0 0 0 0] [0 0 0 0 0] [0 0 0 0 0] [0 0 0 0 0] [1 0 0 0 0]",
+        "equals the matrix below with a(n)=a(5)=478 in the upper left corner:",
+        "[478 362 246 138 51]",
+        "[__0 __0 __0 __0 _0]",
+        "[__0 __0 __0 __0 _0]",
+        "[__0 __0 __0 __0 _0]",
+        "[__0 __0 __0 __0 _0]",
+        "also a(n-1)=a(4)=51 will be in the upper right corner."
+    ],
+    "maple": [
+        "CBOUS2 := proc(a) option remember; local c,i,j,n,r: if whattype(a) <> list then RETURN([]); fi: n := min( nops(a), 60); for i from 0 to n-1 do c[i,0] := a[i+1]; od; for i to n-1 do for j to i do c[i,j] := c[i,j-1] + add(c[i-1,i-r],r=1..j); od; od; RETURN([seq(c[i,i],i=0..n-1)]); end:"
+    ],
+    "mathematica": [
+        "m[n_, k_] := Table[If[r+c <= k+1, k+2-r-c, 0], {r, 1, n}, {c, 1, n}]; a[0] = 1; a[n_] := (Dot @@ Table[m[n, k], {k, 1, n}])[[1, 1]]; Table[a[n], {n, 0, 18}] (* _Jean-Fran\u00e7ois Alcover_, Jul 18 2012, after _Paul D. Hanna_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0,1,prod(k=1,n,matrix(n,n,r,c,if(r+c<=k+1,k+2-r-c)))[1,1])} - _Paul D. Hanna_, Feb 08 2007"
+    ],
+    "xref": [
+        "See the triangles in A059431 and A059432."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Jan 31 2001",
+    "references": 2,
+    "revision": 11,
+    "time": "2015-12-18T18:17:11-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 251700,
+    "data": "1,9,1700,700000,451770000,399077600000,448380625000000,612032839680000000,983672470878500000000,1819783935144064000000000,3809045473682732010000000000,8900000000000000000000000000000,22963427643543537169897000000000000,64847222511564256853913600000000000000",
+    "name": "a(n) = (8*n+1) * (9*n+1)^(n-2) * 10^n.",
+    "comment": [
+        "In general, sequence a(n) = (b*n+1)*(c*n+1)^(n-2)*d^n, b > 0, c > 0, d > 0, has e.g.f. (1 + (1-b/c)*LambertW(-c*d*x)/(c+1)) * (-LambertW(-c*d*x)/(c*d*x))^(1/c). - _Vaclav Kotesovec_, Dec 07 2014"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A251700/b251700.txt\">Table of n, a(n) for n = 0..230</a>"
+    ],
+    "formula": [
+        "Let G(x) = 1 + x*G(x)^10 be the g.f. of A062744, then the e.g.f. A(x) of this sequence satisfies:",
+        "(1) A(x) = exp( 10*x*A(x)^9 * G(x*A(x)^9)^9 ) / G(x*A(x)^9).",
+        "(2) A(x) = F(x*A(x)^9) where F(x) = exp(10*x*G(x)^9)/G(x) is the e.g.f. of A251670.",
+        "(3) A(x) = ( Series_Reversion( x*G(x)^9 / exp(90*x*G(x)^9) )/x )^(1/9).",
+        "E.g.f.: (-LambertW(-90*x)/(90*x))^(1/9) * (1 + LambertW(-90*x)/90). - _Vaclav Kotesovec_, Dec 07 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + 9*x + 1700*x^2/2! + 700000*x^3/3! + 451770000*x^4/4! + 399077600000*x^5/5! +...",
+        "such that A(x) = exp( 10*x*A(x)^9 * G(x*A(x)^9)^9 ) / G(x*A(x)^9),",
+        "where G(x) = 1 + x*G(x)^10 is the g.f. A062744:",
+        "G(x) = 1 + x + 10*x^2 + 145*x^3 + 2470*x^4 + 46060*x^5 + 910252*x^6 +...",
+        "Also, e.g.f. A(x) satisfies A(x) = F(x*A(x)^9) where",
+        "F(x) = 1 + 9*x + 242*x^2/2! + 11824*x^3/3! + 856824*x^4/4! + 82986080*x^5/5! +...",
+        "F(x) = exp( 10*x*G(x)^9 ) / G(x) is the e.g.f. of A251670."
+    ],
+    "mathematica": [
+        "Table[(8*n + 1)*(9*n + 1)^(n - 2)*10^n, {n, 0, 50}] (* _G. C. Greubel_, Nov 14 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = (8*n+1) * (9*n+1)^(n-2) * 10^n}",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(PARI) {a(n)=local(G=1,A=1); for(i=0, n, G = 1 + x*G^10 +x*O(x^n));",
+        "A = ( serreverse( x*G^9 / exp(90*x*G^9) )/x )^(1/9); n!*polcoeff(A, n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(MAGMA) [(8*n + 1)*(9*n + 1)^(n - 2)*10^n: n in [0..50]]; // _G. C. Greubel_, Nov 14 2017"
+    ],
+    "xref": [
+        "Cf. A251670, A062744.",
+        "Cf. Variants: A127670, A251693, A251694, A251695, A251696, A251697, A251698, A251699."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 07 2014",
+    "references": 9,
+    "revision": 11,
+    "time": "2017-11-14T03:06:30-05:00",
+    "created": "2014-12-07T15:29:41-05:00"
+}

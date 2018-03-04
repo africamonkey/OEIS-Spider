@@ -1,0 +1,92 @@
+{
+    "number": 40039,
+    "data": "1,1,2,2,3,3,5,5,7,7,10,10,13,13,18,18,23,23,30,30,37,37,47,47,57,57,70,70,83,83,101,101,119,119,142,142,165,165,195,195,225,225,262,262,299,299,346,346,393,393,450,450,507,507,577,577,647,647,730,730,813,813,914,914,1015,1015,1134,1134,1253,1253,1395,1395",
+    "name": "First differences of A033485; also A033485 with terms repeated.",
+    "comment": [
+        "Apparently a(n) = number of partitions (p_1, p_2, ..., p_k) of n+1, with p_1 >= p_2 >= ... >= p_k, such that for each i, p_i > p_{i+1}+...+p_k. - John McKay (mac(AT)mathstat.concordia.ca), Mar 06 2009",
+        "Comment from John McKay confirmed in paper by Bessenrodt, Olsson, and Sellers. Such partitions are called \"strongly decreasing\" partitions in the paper, see the function s(n) therein."
+    ],
+    "link": [
+        "Joerg Arndt, <a href=\"/A040039/b040039.txt\">Table of n, a(n) for n = 0..500</a>",
+        "Christine Bessenrodt, Jorn B. Olsson, and James A. Sellers, <a href=\"http://arxiv.org/abs/1107.1156\">Unique path partitions: Characterization and Congruences</a>, arXiv:1107.1156 [math.CO], 2011-2012.",
+        "J. Jordan and R. Southwell, <a href=\"http://dx.doi.org/10.4236/am.2010.15045\">Further Properties of Reproducing Graphs</a>, Applied Mathematics, Vol. 1 No. 5, 2010, pp. 344-350. - From _N. J. A. Sloane_, Feb 03 2013"
+    ],
+    "formula": [
+        "Let T(x) be the g.f, then T(x) = 1 + x/(1-x)*T(x^2) = 1 + x/(1-x) * ( 1 + x^2/(1-x^2) * ( 1 + x^4/(1-x^4) * ( 1 + x^8/(1-x^8) *(...) ))). [_Joerg Arndt_, May 11 2010]",
+        "From _Joerg Arndt_, Oct 02 2013: (Start)",
+        "G.f.: sum(k>=1, x^(2^k-1) / prod(j=0..k-1, 1-x^(2^k) ) ) [Bessenrodt/Olsson/Sellers].",
+        "G.f.: 1/(2*x^2) * ( 1/prod(k>=0, 1 - x^(2^k) ) - (1 + x) ).",
+        "a(n) = 1/2 * A018819(n+2).",
+        "(End)",
+        "a(n) = T(n+1,1), where T(n,m)=sum(k..0,(n-m)/2, binomial(n-2*k-1,n-2*k-m)*sum(i=1..k, binomial(m,i)*T(k,i)))+binomial(n-1,n-m). - _Vladimir Kruchinin_, Mar 19 2015"
+    ],
+    "example": [
+        "From _Joerg Arndt_, Dec 17 2012: (Start)",
+        "The a(19-1)=30 strongly decreasing partitions of 19 are (in lexicographic order)",
+        "[ 1]    [ 10 5 3 1 ]",
+        "[ 2]    [ 10 5 4 ]",
+        "[ 3]    [ 10 6 2 1 ]",
+        "[ 4]    [ 10 6 3 ]",
+        "[ 5]    [ 10 7 2 ]",
+        "[ 6]    [ 10 8 1 ]",
+        "[ 7]    [ 10 9 ]",
+        "[ 8]    [ 11 5 2 1 ]",
+        "[ 9]    [ 11 5 3 ]",
+        "[10]    [ 11 6 2 ]",
+        "[11]    [ 11 7 1 ]",
+        "[12]    [ 11 8 ]",
+        "[13]    [ 12 4 2 1 ]",
+        "[14]    [ 12 4 3 ]",
+        "[15]    [ 12 5 2 ]",
+        "[16]    [ 12 6 1 ]",
+        "[17]    [ 12 7 ]",
+        "[18]    [ 13 4 2 ]",
+        "[19]    [ 13 5 1 ]",
+        "[20]    [ 13 6 ]",
+        "[21]    [ 14 3 2 ]",
+        "[22]    [ 14 4 1 ]",
+        "[23]    [ 14 5 ]",
+        "[24]    [ 15 3 1 ]",
+        "[25]    [ 15 4 ]",
+        "[26]    [ 16 2 1 ]",
+        "[27]    [ 16 3 ]",
+        "[28]    [ 17 2 ]",
+        "[29]    [ 18 1 ]",
+        "[30]    [ 19 ]",
+        "The a(20-1)=30 strongly decreasing partitions of 20 are obtained by adding 1 to the first part in each partition in the list.",
+        "(End)"
+    ],
+    "maple": [
+        "# For example, the five partitions of 4, written in nonincreasing order, are",
+        "# [1,1,1,1], [2,1,1], [2,2], [3,1], [4].",
+        "# Only the last two satisfy the condition, and a(3)=2.",
+        "# The Maple program below verifies this for small values of n.",
+        "with(combinat); N:=8; a:=array(1..N); c:=array(1..N);",
+        "for n from 1 to N do p:=partition(n); np:=nops(p); t:=0;",
+        "for s to np do r:=p[s]; r:=sort(r,`>`); nr:=nops(r); j:=1;",
+        "while j<nr and r[j]>sum(r[k],k=j+1..nr) do j:=j+1;od; # gives A040039",
+        "#while j<nr and r[j]>= sum(r[k],k=j+1..nr) do j:=j+1;od; # gives A018819",
+        "if j=nr then t:=t+1;fi od; a[n]:=t; od;",
+        "# John McKay"
+    ],
+    "program": [
+        "(PARI) /* compute as \"A033485 with terms repeated\" */",
+        "b(n) = if(n<2, 1, b(floor(n/2))+b(n-1));  /* A033485 */",
+        "a(n) = b(n\\2+1); /* note different offsets */",
+        "for(n=0,99, print1(a(n),\", \")); /* _Joerg Arndt_, Jan 21 2011 */",
+        "(Maxima)",
+        "T(n,m):=sum(binomial(n-2*k-1,n-2*k-m)*sum(binomial(m,i)*T(k,i),i,1,k),k,0,(n-m)/2)+binomial(n-1,n-m);",
+        "makelist(T(n+1,1),n,0,40); /* _Vladimir Kruchinin_, Mar 19 2015 */"
+    ],
+    "xref": [
+        "Cf. A000123, A018819.",
+        "Cf. A018819, A088567, A089054."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_ and _J. H. Conway_",
+    "references": 12,
+    "revision": 40,
+    "time": "2015-03-19T06:44:19-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

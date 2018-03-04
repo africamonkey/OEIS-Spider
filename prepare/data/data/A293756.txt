@@ -1,0 +1,54 @@
+{
+    "number": 293756,
+    "data": "1,2,6,30,210,186162",
+    "name": "a(n) = smallest number k with n prime factors such that d + k/d is prime for every d | k.",
+    "comment": [
+        "For n > 0, a(n) is even and squarefree.",
+        "For n > 0, a(n) gives 2^(n-1) distinct primes.",
+        "If the k-tuple conjecture is true, then this sequence is infinite. - Carl Pomerance, Nov 12 2017",
+        "a(n) is the least integer k with n prime divisors such that A282849(k) = A000005(k). - _Michel Marcus_, Nov 13 2017",
+        "a(n) is the smallest k with n prime factors such that A282849(k) = 2^n. - _Thomas Ordowski_, Nov 13 2017",
+        "a(6), if it exists, has a prime divisor greater than 10^3. - _Arkadiusz Wesolowski_, Nov 14 2017"
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/k-TupleConjecture.html\">k-Tuple Conjecture</a>"
+    ],
+    "formula": [
+        "a(n) = 2*A295124(n-1) for n > 0. - _Thomas Ordowski_, Nov 15 2017"
+    ],
+    "example": [
+        "a(2) = 2*3 = 6 because k = 6 is the smallest number with 2 prime factors such that for d = {1, 2, 3, 6} we have 1 + 6/1 = 6 + 6/6 = 7 is prime and 2 + 6/2 = 3 + 6/3 = 5 is prime.",
+        "From _Michael De Vlieger_, Nov 14 2017: (Start)",
+        "First differences of prime indices of a(n):",
+        "n       a(n)   A287352(a(n))",
+        "-----------------------------",
+        "1         2    1",
+        "2         6    1, 1",
+        "3        30    1, 1, 1",
+        "4       210    1, 1, 1, 1",
+        "5    186162    1, 1, 6, 1, 11",
+        "(End)"
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,b,j,k,n,ok; print(1);for n from 1 to q do for k from 2 to q do a:=ifactors(k)[2]; a:=add(a[j][2],j=1..nops(a)); if a=n then b:=divisors(k); ok:=1;",
+        "for j from 1 to nops(b) do if not isprime(b[j]+k/b[j]) then ok:=0; break; fi; od; if ok=1 then print(k); break; fi; fi; od; od; end: P(10^8); # _Paolo P. Lava_, Nov 16 2017"
+    ],
+    "program": [
+        "(PARI) isok(k, n)=if (!issquarefree(k), return (0)); if (omega(k) != n, return (0)); fordiv(k, d, if (!isprime(d+k/d), return(0))); 1;",
+        "a(n) = {my(k=1); while( !isok(k, n), k++); k;} \\\\ _Michel Marcus_, Nov 11 2017"
+    ],
+    "xref": [
+        "Subsequence of A080715 (d + k/d is prime for every d|k).",
+        "Cf. A103787, A282849, A294925, A295124, A295169."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Thomas Ordowski_, Nov 11 2017",
+    "ext": [
+        "a(5) from _Michel Marcus_, Nov 11 2017"
+    ],
+    "references": 3,
+    "revision": 72,
+    "time": "2017-11-28T23:29:28-05:00",
+    "created": "2017-11-11T12:55:14-05:00"
+}

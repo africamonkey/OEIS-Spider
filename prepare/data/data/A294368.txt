@@ -1,0 +1,51 @@
+{
+    "number": 294368,
+    "data": "1,3,11,23,45,81,141,239,399,660,1083,1769,2880,4679,7591,12304,19931,32273,52244,84559,136848,221454,358351,579856,938260,1518171,2456488,3974718,6431267,10406048,16837380,27243495,44080944,71324510,115405527,186730112",
+    "name": "Solution of the complementary equation a(n) = a(n-1) + a(n-2) + b(n-1) + n + 1, where a(0) = 1, a(1) = 3, b(0) = 2, b(1) = 4.",
+    "comment": [
+        "The complementary sequences a() and b() are uniquely determined by the titular equation and initial values. The initial values of each sequence in the following guide are a(0) = 1, a(2) = 3, b(0) = 2, b(1) = 4:",
+        "Conjecture: a(n)/a(n-1) -> (1 + sqrt(5))/2, the golden ratio.  See A293358 for a guide to related sequences."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A294368/b294368.txt\">Table of n, a(n) for n = 0..4775</a>",
+        "Clark Kimberling, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL10/Kimberling/kimberling26.html\">Complementary equations</a>, J. Int. Seq. 19 (2007), 1-13."
+    ],
+    "example": [
+        "a(0) = 1, a(1) = 3, b(0) = 2, b(1) = 4, so that",
+        "a(2)  = a(1) + a(0) + b(1) + 3 = 11;",
+        "b(2) is the first positive integer not already seen, namely 5.",
+        "Complement: (b(n)) = (2, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, ...)"
+    ],
+    "maple": [
+        "A[0]:= 1: B[0]:= 2:",
+        "A[1]:= 3: B[1]:= 4:",
+        "Av:= {$5..200}:",
+        "for n from 2 to 100 do",
+        "  A[n]:= A[n-1]+A[n-2]+B[n-1]+n+1;",
+        "  B[n]:= min(Av minus {A[n]});",
+        "  Av:= Av minus {A[n],B[n]};",
+        "od:",
+        "seq(A[i],i=0..100); # _Robert Israel_, Oct 29 2017"
+    ],
+    "mathematica": [
+        "mex := First[Complement[Range[1, Max[#1] + 1], #1]] &;",
+        "a[0] = 1; a[1] = 3; b[0] = 2; b[1] = 4;",
+        "a[n_] := a[n] = a[n - 1] + a[n - 2] + b[n - 1] + n + 1;",
+        "b[n_] := b[n] = mex[Flatten[Table[Join[{a[n]}, {a[i], b[i]}], {i, 0, n - 1}]]];",
+        "Table[a[n], {n, 0, 40}]  (* A294368 *)",
+        "Table[b[n], {n, 0, 10}]"
+    ],
+    "xref": [
+        "Cf. A001622 (golden ratio), A293765."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, Oct 29 2017",
+    "ext": [
+        "Example clarified by _Robert Israel_, Oct 29 2017"
+    ],
+    "references": 2,
+    "revision": 14,
+    "time": "2017-11-01T23:05:01-04:00",
+    "created": "2017-10-29T20:48:36-04:00"
+}

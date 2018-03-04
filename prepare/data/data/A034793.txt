@@ -1,0 +1,62 @@
+{
+    "number": 34793,
+    "data": "1,2,3,4,9,13,16,25,36,49,64,81,100,121,144,169,196,225,256,289,324,361,400,441,484,529,576,625,676,729,784,841,900,961,1024,1089,1156,1225,1296,1369,1444,1521,1600,1681,1764,1849,1936,2025,2116,2209,2304",
+    "name": "a(1)=1; thereafter a(n+1) is the least k > a(n) such that k is a square mod a(i) for all  i<= n.",
+    "comment": [
+        "For 7 <= n < 10^12.5, a(n) = (n-3)^2. On the ERH this holds for all n >= 7; unconditionally it holds for all but finitely many n. [_Charles R Greathouse IV_, Mar 29 2012]",
+        "a(n) is the smallest integer larger than a(n-1) such that a(n) is a quadratic residuum modulo all a(i), 1<=i<n. - R. J. Mathar, Jul 27 2015"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A034793/b034793.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "formula": [
+        "Apparently includes all positive squares along with 2, 3 and 13."
+    ],
+    "maple": [
+        "A034793 := proc(n)",
+        "    option remember;",
+        "    local a,wrks ;",
+        "    if n = 1 then",
+        "        1;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            wrks := true;",
+        "            for i from 1 to n-1 do",
+        "                if numtheory[quadres](a,procname(i)) <> 1 then",
+        "                    wrks := false;",
+        "                    break;",
+        "                end if;",
+        "            end do;",
+        "            if wrks then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "end  i # _R. J. Mathar_, Jul 27 2015"
+    ],
+    "mathematica": [
+        "a[n_ ] := If[n<7, {1, 2, 3, 4, 9, 13}[[n]], (n-3)^2]; Table[a[n], {n, 1, 60}] (* _Jean-Fran\u00e7ois Alcover_, Jul 22 2015, after _Charles R Greathouse IV_ *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a034793 n = a034793_list !! (n-1)",
+        "a034793_list = 1 : f [2..] [1] where",
+        "   f (x:xs) ys | and $ map (isSquMod x) ys = x : f xs (x:ys)",
+        "               | otherwise                 = f xs ys",
+        "   isSquMod u v = u `mod` v `elem` (map ((`mod` v) . (^ 2)) [0..v-1])",
+        "-- _Reinhard Zumkeller_, Mar 27 2012",
+        "(PARI) a(n)=if(n<7,[1,2,3,4,9,13][n],(n-3)^2) \\\\ _Charles R Greathouse IV_, Mar 29 2012"
+    ],
+    "xref": [
+        "Cf. A034903, A054762."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "More precise definition from _Giovanni Resta_, Jul 22 2015"
+    ],
+    "references": 3,
+    "revision": 28,
+    "time": "2015-07-27T06:19:00-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

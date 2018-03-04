@@ -1,0 +1,35 @@
+{
+    "number": 59223,
+    "data": "149,223,593,1259,1481,1777,1999,2221,2591,2887,3109,3257,3331,3701,3923,4219,4441,4663,5107,5477,6143,6217,6661,6883,7253,7549,7919,7993,8363,8807,9029,9103,9473,9547,9769,10139,10657,11027,12211,12433",
+    "name": "Primes p such that x^37 = 2 has no solution mod p.",
+    "comment": [
+        "Complement of A049569 relative to A000040.",
+        "Presumably this is also Primes congruent to 1 mod 37 (A216970). - _N. J. A. Sloane_, Jul 11 2008",
+        "Not so. The smallest counterexample is 11471: 11471 == 1 (mod 37), but 43^37 == 2 (mod 11471), therefore this prime is not in the sequence. - _Bruno Berselli_, Sep 12 2012"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A059223/b059223.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[PrimePi[12500]]], ! MemberQ[PowerMod[Range[#], 37, #], Mod[2, #]] &] (* _T. D. Noe_, Sep 12 2012 *)",
+        "ok[p_]:= Reduce[Mod[x^37 - 2, p] == 0, x, Integers] == False; Select[Prime[Range[2000]], ok] (* _Vincenzo Librandi_, Sep 19 2012  *)"
+    ],
+    "program": [
+        "(MAGMA) [p: p in PrimesUpTo(13000) | forall{x: x in ResidueClassRing(p) | x^37 ne 2}]; // _Bruno Berselli_, Sep 12 2012",
+        "(PARI)",
+        "N=10^5;  default(primelimit,N);",
+        "ok(p, r, k)={ return ( (p==r) || (Mod(r,p)^((p-1)/gcd(k,p-1))==1) ); }",
+        "forprime(p=2,N, if (! ok(p,2,37),print1(p,\", \")));",
+        "/* _Joerg Arndt_, Sep 21 2012 */"
+    ],
+    "xref": [
+        "Cf. A000040, A049569, A216970."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Klaus Brockhaus_, Jan 19 2001",
+    "references": 4,
+    "revision": 24,
+    "time": "2012-09-21T04:33:56-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 214570,
+    "data": "1,1,1,2,3,4,6,12,24,40,60,120,240,420,840,1680",
+    "name": "a(n) = Max(c(t)), where c(t) is the number of ordered trees isomorphic - as rooted trees - to the rooted tree t and the maximum is taken over all rooted trees with n vertices.",
+    "comment": [
+        "a(n) is also the size of the largest equivalence class of function representations as x^x^...^x with n x's and parentheses inserted in all possible ways. a(4) = 2: (x^x)^(x^x) == (x^(x^x))^x; a(5) = 3: ((x^x)^x)^(x^x) == ((x^x)^(x^x))^x == ((x^(x^x))^x)^x. - _Alois P. Heinz_, Aug 31 2012"
+    ],
+    "formula": [
+        "No formula available, except a(n)=number of entries in row n of A214569."
+    ],
+    "example": [
+        "a(4) = 2 because among the four rooted trees with 4 vertices the path tree P_4, the star tree K_{1,3}, and the tree in the shape of Y are isomorphic only to themselves, while A - B - C - D with root at B is isomorphic to itself and to A - B - C - D with root at C."
+    ],
+    "maple": [
+        "F:= proc(n) option remember; `if`(n=1, [x+1],",
+        "      [seq(seq(seq(f^g, g=F(n-i)), f=F(i)), i=1..n-1)])",
+        "    end:",
+        "a:= proc(n) option remember; local i, l, m, p; m:=0;",
+        "      l:= map(f->coeff(series(f, x, n+1), x, n), F(n)):",
+        "      p:= proc() 0 end: forget(p);",
+        "      for i in l do p(i):= p(i)+1; m:= max(m, p(i))",
+        "      od: m",
+        "    end:",
+        "seq(a(n), n=1..10);  # _Alois P. Heinz_, Aug 31 2012"
+    ],
+    "mathematica": [
+        "F[n_] := F[n] = If[n == 1, {x+1}, Flatten[Table[Table[Table[f^g, {g, F[n-i]}], {f, F[i]}], {i, 1, n-1}]]]; a[n_] := a[n] = Module[{i, l, m, p}, m = 0; l = Map[ Function[ {f}, Coefficient[Series[f, {x, 0, n+1}], x, n]], F[n]]; Clear[p]; p[_] = 0; Do[p[i] = p[i]+1; m = Max[m, p[i]], {i, l}]; m]; Table[a[n], {n, 1, 10}] (* _Jean-Fran\u00e7ois Alcover_, May 28 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A214569, A206487, A214571, A215703."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,4",
+    "author": "_Emeric Deutsch_, Jul 28 2012",
+    "ext": [
+        "a(12)-a(16) from _Alois P. Heinz_, Sep 06 2012"
+    ],
+    "references": 3,
+    "revision": 29,
+    "time": "2015-05-28T10:30:39-04:00",
+    "created": "2012-07-29T12:06:21-04:00"
+}

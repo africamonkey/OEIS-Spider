@@ -1,0 +1,90 @@
+{
+    "number": 571,
+    "id": "M1189 N0459",
+    "data": "1,1,1,2,4,9,22,59,167,490,1486,4639,14805,48107,158808,531469,1799659,6157068,21258104,73996100,259451116,915695102,3251073303,11605141649,41631194766,150021775417,542875459724,1972050156181,7189259574618,26295934251565,96478910768821,354998461378719,1309755903513481",
+    "name": "Number of different score sequences that are possible in an n-team round-robin tournament.",
+    "comment": [
+        "A tournament is a complete graph with one arrow on each edge; the score of a node is its out-degree; a(n) is number of different score sequences when there are n nodes.",
+        "Also number of nonnegative integer points (p_1, p_2, ..., p_n) in polytope p_0=p_{n+1}=0, 2p_i -(p_{i+1}+p_{i-1}) <= 1, p_i >= 0, i=1, ..., n.",
+        "Also number of score sequences of length n: weakly increasing sequences a[0,1,...,n-1] where sum(j=0..k, a[j]) >= k*(k+1)/2 and sum(j=0..n-1, a[j]) = (n+1)*n/2; see example. - _Joerg Arndt_, Mar 29 2014"
+    ],
+    "reference": [
+        "L. Comtet, Advanced Combinatorics, Reidel, 1974, p. 123, Problem 21.",
+        "P. A. MacMahon, An American tournament treated by the calculus of symmetric functions, Quart. J. Pure Appl. Math., 49 (1920), 1-36. [Gives a[0)-a(8). - _N. J. A. Sloane_, Jun 11 2016)",
+        "J. W. Moon, Topics on Tournaments. Holt, NY, 1968, p. 68 (but table contains errors).",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A000571/b000571.txt\">Table of n, a(n) for n = 0..1675</a> (terms 0..100 from Sean A. Irvine)",
+        "C. Bebeacua, T. Mansour, A. Postnikov and S. Severini, <a href=\"https://arxiv.org/abs/math/0506334\">On the X-rays of permutations</a>, arXiv:math/0506334 [math.CO], 2005.",
+        "Sebrina Ruth Cropper, <a href=\"http://digitalcommons.usu.edu/gradreports/91\">Ranking Score Vectors of Tournaments</a> (2011). All Graduate Reports and Creative Projects. Paper 91. Utah State University, School of Graduate Studies.",
+        "P. A. MacMahon, <a href=\"/A274098/a274098.pdf\">An American tournament treated by the calculus of symmetric functions</a>, Quart. J. Pure Appl. Math., 49 (1920), 1-36. Gives a(1) to a(9). [Annotated scanned copy, scanned at 300 dpi. Do not replace with a smaller file as the print is very tiny and hard to read.]",
+        "John W. Moon, <a href=\"http://www.gutenberg.org/ebooks/42833\">Topics on tournaments</a>, Holt, Rinehard and Winston (1968), see page 88.",
+        "T. V. Narayana and D. H. Best, <a href=\"http://dx.doi.org/10.4153/CMB-1964-015-1\">Computation of the number of score sequences in round-robin tournaments</a>, Canad. Math. Bull., 7 (1964), 133-136 (but table contains errors).",
+        "D. Recoskie and J. Sawada, <a href=\"http://www.socs.uoguelph.ca/~sawada/papers/alley.pdf\">The Taming of Two Alley CATs</a>, 2012.",
+        "J. Riordan, <a href=\"http://dx.doi.org/10.1016/S0021-9800(68)80032-8\">The number of score sequences in tournaments</a>, J. Combin. Theory, 5 (1968), 87-89. [The main result of this paper seems to be wrong - see A210726.]",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ScoreSequence.html\">Score Sequence.</a>",
+        "K. Winston, <a href=\"/A000571/a000571.pdf\">Letter to N. J. A. Sloane, Aug 05 1978</a>",
+        "<a href=\"/index/To#tournament\">Index entries for sequences related to tournaments</a>"
+    ],
+    "formula": [
+        "Let f_1(T, E)=1 if T=E>=0, =0 else; f_n(T, E)=0 if T-E<C(n-1, 2), =Sum_{k=0..E} f_{n-1}(T-E, k) else; then a(n)=Sum_{E=[n/2]..n-1} f_n(C(n, 2), E), n >= 2.",
+        "Riordan seems to claim that a(n) = 2*a(n-1)-a(n-2) + A046919(n), but this is not true. - _N. J. A. Sloane_, May 06 2012.",
+        "Logarithmic derivative yields A145855, the number of n-member subsets of 1..2n-1 whose elements sum to a multiple of n. - _Paul D. Hanna_, Jul 17 2013",
+        "a(n) = (1/n) * Sum_{k=1..n} A145855(k) * a(n-k) for n>0 with a(0)=1. - _Paul D. Hanna_, Jul 17 2013"
+    ],
+    "example": [
+        "a(3)=2, since either one node dominates [ 2,1,0 ] or each node defeats the next [ 1,1,1 ].",
+        "G.f.: A(x) = 1 + x + x^2 + 2*x^3 + 4*x^4 + 9*x^5 + 22*x^6 + 59*x^7 + 167*x^8 +...",
+        "where the logarithm begins:",
+        "log(A(x)) = x + x^2/2 + 4*x^3/3 + 9*x^4/4 + 26*x^5/5 + 76*x^6/6 +...+ A145855(n)*x^n/n +...",
+        "From _Joerg Arndt_, Mar 29 2014: (Start)",
+        "The a(6) = 22 score sequences of length 6 are:",
+        "01:  [ 0 1 2 3 4 5 ]",
+        "02:  [ 0 1 2 4 4 4 ]",
+        "03:  [ 0 1 3 3 3 5 ]",
+        "04:  [ 0 1 3 3 4 4 ]",
+        "05:  [ 0 2 2 2 4 5 ]",
+        "06:  [ 0 2 2 3 3 5 ]",
+        "07:  [ 0 2 2 3 4 4 ]",
+        "08:  [ 0 2 3 3 3 4 ]",
+        "09:  [ 0 3 3 3 3 3 ]",
+        "10:  [ 1 1 1 3 4 5 ]",
+        "11:  [ 1 1 1 4 4 4 ]",
+        "12:  [ 1 1 2 2 4 5 ]",
+        "13:  [ 1 1 2 3 3 5 ]",
+        "14:  [ 1 1 2 3 4 4 ]",
+        "15:  [ 1 1 3 3 3 4 ]",
+        "16:  [ 1 2 2 2 3 5 ]",
+        "17:  [ 1 2 2 2 4 4 ]",
+        "18:  [ 1 2 2 3 3 4 ]",
+        "19:  [ 1 2 3 3 3 3 ]",
+        "20:  [ 2 2 2 2 2 5 ]",
+        "21:  [ 2 2 2 2 3 4 ]",
+        "22:  [ 2 2 2 3 3 3 ]",
+        "(End)"
+    ],
+    "mathematica": [
+        "max = 40; (* b = A145855 *) b[0] = 1; b[n_] := DivisorSum[n, (-1)^(n+#)* EulerPhi[n/#]*Binomial[2*#, #]/(2*n)&]; s = Exp[Sum[b[m]*x^m/m, {m, 1, max}]] + O[x]^max; CoefficientList[s, x] (* _Jean-Fran\u00e7ois Alcover_, Dec 06 2015, adapted from PARI *)"
+    ],
+    "program": [
+        "(PARI) {A145855(n)=sumdiv(n,d, (-1)^(n+d)*eulerphi(n/d)*binomial(2*d,d)/(2*n))}",
+        "{a(n)=polcoeff(exp(sum(m=1,n,A145855(m)*x^m/m)+x*O(x^n)),n)} \\\\ _Paul D. Hanna_, Jul 17 2013"
+    ],
+    "xref": [
+        "Cf. A007747, A210726, A145855.",
+        "See A274098 for the most likely score sequence."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "a(11) corrected by Kenneth Winston, Aug 05 1978",
+        "More terms from _David W. Wilson_"
+    ],
+    "references": 18,
+    "revision": 95,
+    "time": "2017-07-25T19:22:48-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

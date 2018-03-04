@@ -1,0 +1,51 @@
+{
+    "number": 259013,
+    "data": "4,16,44,88,144,208,320,408,512,672,788,948,1096,1288,1552,1768,1960,2208,2456,2708,3028,3384,3648,3964,4348,4728,5076,5448,5884,6308,6708,7176,7644,8240,8664,9132,9764,10276,10816,11404,11992,12516,13264,13816,14388",
+    "name": "a(n) is the smallest number of grains of sand placed at the center square of a (2n-1) X (2n-1) table so that some grains drop off the table by the end of the diffusion process.",
+    "comment": [
+        "The diffusion rule is that if a square has more than 3 grains of sand then it loses 4 grains and each neighbor's number of grains increases by one. Initially the center square has a(n) sand grains and all other squares are empty. The final distribution of sand grains and the number a(n) do not depend on the order of the diffusion process. For this reason, it is called an \"abelian sandpile model\"."
+    ],
+    "program": [
+        "% MATLAB Program by Sezai ATA",
+        "% S(k) gives the minimum number of grains of sand needed at the center",
+        "% of a (2n-1) X (2n-1) square table for some grains to drop off",
+        "% the table in an \"abelian sandpile model\".",
+        "firstsand=zeros(1,49);",
+        "S=zeros(1,49);",
+        "n=50;",
+        "lim=2*n-1;",
+        "A=zeros(lim,lim);",
+        "for j=1:17128;",
+        "    A(n,n)= A(n,n)+1;",
+        "    while max(max(A))>=4",
+        "        for xi=1:lim",
+        "            for yi=1:lim",
+        "                if A(xi,yi) >= 4",
+        "                    A(xi,yi)= A(xi,yi) - 4;",
+        "                    A(xi+1,yi)=A(xi+1,yi) + 1;",
+        "                    A(xi,yi+1)=A(xi,yi+1) + 1;",
+        "                    A(xi-1,yi)=A(xi-1,yi) + 1;",
+        "                    A(xi,yi-1)=A(xi,yi-1) + 1;",
+        "                end",
+        "            end",
+        "        end",
+        "    end",
+        "    for k=1:n-1",
+        "        if A(n,n+k)==1 && firstsand(k)==0",
+        "        firstsand(k)=1;",
+        "        S(k)=j;",
+        "        end",
+        "    end",
+        "end"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Sezai ATA_, Jun 16 2015",
+    "ext": [
+        "a(21)-a(45) from _Giovanni Resta_, Jun 17 2015"
+    ],
+    "references": 0,
+    "revision": 21,
+    "time": "2017-12-16T18:04:09-05:00",
+    "created": "2015-06-17T10:14:09-04:00"
+}

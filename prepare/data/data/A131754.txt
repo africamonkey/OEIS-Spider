@@ -1,0 +1,52 @@
+{
+    "number": 131754,
+    "data": "1,2,3,4,4,4,4,4,5,5,6,6,6,7,8,8,8,8,8,8,9,10,10,10,10,10,10,11,11,11,11,11,11,11,12,13,13,13,13,13,14,15,15,15,15,15,15,16,17,17,17,17,17,17,18,19,19,19,19,19,19,20,20,20,20,20,20,21,21,21,21,21,21,21,22,23,24,24,24,24,24",
+    "name": "Size of the largest subset of {1,2,...,n} such that no two distinct elements differ by a perfect square > 1.",
+    "link": [
+        "Robert Israel, <a href=\"/A131754/b131754.txt\">Table of n, a(n) for n = 1..165</a>"
+    ],
+    "maple": [
+        "f:= proc(n) uses GraphTheory; IndependenceNumber(Graph(n,",
+        "   {seq(seq({i,i+x^2},x=2..floor(sqrt(n-i))),i=1..n)}));",
+        "end proc:",
+        "map(f, [$1..58]); # _Robert Israel_, Mar 20 2017"
+    ],
+    "program": [
+        "(MATLAB with CPLEX)",
+        "function [v, X] = A131754(n)",
+        "A = sparse(0,n);",
+        "rownum = 0;",
+        "for i =1:n",
+        "  for x =2:floor(sqrt(n-i))",
+        "    rownum = rownum+1;",
+        "    A(rownum, [i,i+x^2]) = 1;",
+        "  end",
+        "end",
+        "prob.f = -ones(n,1);",
+        "prob.Aineq = A;",
+        "prob.bineq = ones(rownum,1);",
+        "prob.ctype = char(ones(1,n)*'B');",
+        "cplex = Cplex(prob);",
+        "cplex.DisplayFunc = [];",
+        "cplex.solve();",
+        "if cplex.Solution.status == 101",
+        "  v = -cplex.Solution.objval;",
+        "  x = cplex.Solution.x;",
+        "  X = find(x > 0.5);",
+        "end",
+        "end"
+    ],
+    "xref": [
+        "Cf. A100719, A131752, A131753."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Olivier G\u00e9rard_, Sep 17 2007",
+    "ext": [
+        "More terms from _Robert Israel_, Mar 20 2017"
+    ],
+    "references": 4,
+    "revision": 11,
+    "time": "2017-12-17T07:16:53-05:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

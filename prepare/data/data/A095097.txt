@@ -1,0 +1,32 @@
+{
+    "number": 95097,
+    "data": "8,13,18,21,26,29,34,39,42,47,52,55,60,63,68,73,76,81,84,89,94,97,102,107,110,115,118,123,128,131,136,141,144,149,152,157,162,165,170,173,178,183,186,191,196,199,204,207,212,217,220,225,228,233,238,241,246",
+    "name": "Fib000 numbers: those n for which the Zeckendorf expansion A014417(n) ends with three zeros.",
+    "mathematica": [
+        "With[{r = Map[Fibonacci, Range[2, 14]]}, Rest[-1 + Position[#, _Integer][[All, 1]]] &@ Table[1/1000 * Total@ Map[FromDigits@ PadRight[{1}, Flatten@ #] &@ Reverse@ Position[r, #] &, Abs@ Differences@ NestWhileList[Function[k, k - SelectFirst[Reverse@ r, # < k &]], n + 1, # > 1 &]], {n, 0, 250}]] (* _Michael De Vlieger_, Jun 08 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import fibonacci",
+        "def a(n):",
+        "    k=0",
+        "    x=0",
+        "    while n>0:",
+        "        k=0",
+        "        while fibonacci(k)<=n: k+=1",
+        "        x+=10**(k - 3)",
+        "        n-=fibonacci(k - 1)",
+        "    return x",
+        "def ok(n): return 1 if str(a(n))[-3:]==\"000\" else 0 # _Indranil Ghosh_, Jun 08 2017"
+    ],
+    "xref": [
+        "Set-wise difference of A026274 - A035337. Cf. A095085 (fib000 primes)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Jun 01 2004",
+    "references": 1,
+    "revision": 9,
+    "time": "2017-06-10T22:36:36-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

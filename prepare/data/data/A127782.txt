@@ -1,0 +1,39 @@
+{
+    "number": 127782,
+    "data": "1,1,1,2,4,11,33,114,438,1845,8458,41823,221539,1250269,7481758,47278652,314374316,2192798077,16000160519,121831654450,965946444587,7958739329386,68023023892680,602115897105136,5511499584735858",
+    "name": "G.f. satisfies: A(x) = 1 + x*A(x+x^2).",
+    "comment": [
+        "Equals eigensequence of triangle A026729 - _Gary W. Adamson_, Jan 16 2009"
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A127782/b127782.txt\">Table of n, a(n) for n = 0..500</a>",
+        "P. Barry, <a href=\"http://arxiv.org/abs/1107.5490\">Invariant number triangles, eigentriangles and Somos-4 sequences</a>, arXiv preprint arXiv:1107.5490, 2011."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..[n/2]} C(n-k,k)*a(n-k-1) for n>0 with a(0)=1.",
+        "a(n) ~ c * Bell(n) * LambertW(n) / (n*exp(LambertW(n)^2/2)), where c = 1.93210869..., or a(n) ~ c * exp(n/LambertW(n) - LambertW(n)^2/2 - 1 - n) * n^(n-1) / (LambertW(n)^(n-1) * sqrt(1+LambertW(n))). - _Vaclav Kotesovec_, Mar 12 2014"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1,",
+        "      add(a(n-i)*binomial(n-i, i-1), i=1..n))",
+        "    end:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, May 11 2016"
+    ],
+    "mathematica": [
+        "nmax = 20; b = ConstantArray[0, nmax]; b[[1]] = 1; Do[b[[n+2]] = Sum[Binomial[n-k, k]*b[[n-k+1]], {k, 0, n}], {n, 0, nmax-2}]; b (* _Vaclav Kotesovec_, Mar 12 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=local(A=1+x+x*O(x^n)); for(i=0,n,A=1+x*subst(A,x,x+x^2)); polcoeff(A,n)",
+        "(PARI) a(n)=if(n==0,1,sum(k=0,n\\2,binomial(n-k,k)*a(n-k-1)))"
+    ],
+    "xref": [
+        "Cf. A026729, A000110."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Jan 28 2007",
+    "references": 7,
+    "revision": 19,
+    "time": "2016-05-11T19:12:42-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

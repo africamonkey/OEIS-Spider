@@ -1,0 +1,59 @@
+{
+    "number": 226153,
+    "data": "5,10,14,15,22,34,49,54,64,66,81,93,104,116,121,122,146,154,156,180,194,221,222,236,270,299,320,332,334,337,346,360,369,371,374,387,416,417,429,435,444,472,492,498,511,520,551,556,617,622,637,654,657,670,674,677,680",
+    "name": "Numbers n such that triangular(n) is an average of 4 consecutive primes.",
+    "link": [
+        "Zak Seidov, <a href=\"/A226153/b226153.txt\">Table of n, a(n) for n = 1..3000</a>"
+    ],
+    "maple": [
+        "A034963 := proc(n)",
+        "    add(ithprime(i), i=n..n+3) ;",
+        "end proc:",
+        "istriangular:=proc(n) local t1; t1:=floor(sqrt(2*n)); if n = t1*(t1+1)/2 then return t1 ; else return -1; end if; end;",
+        "for n from 1 to 90000 do",
+        "    s := A034963(n)/4 ;",
+        "    if type(s,'integer') then",
+        "    tr := istriangular(s) ;",
+        "    if tr >= 0  then",
+        "        printf(\"%d, \", tr) ;",
+        "    end if;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jun 06 2013"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#include <stdlib.h>",
+        "#include <math.h>",
+        "#define TOP (1ULL<<30)",
+        "int main() {",
+        "  unsigned long long i, j, p1, p2, p3, r, s;",
+        "  unsigned char *c = (unsigned char *)malloc(TOP/8);",
+        "  memset(c, 0, TOP/8);",
+        "  for (i=3; i < TOP; i+=2)",
+        "    if ((c[i>>4] & (1<<((i>>1) & 7)))==0 /*&& i<(1ULL<<32)*/)",
+        "        for (j=i*i>>1; j<TOP; j+=i)  c[j>>3] |= 1 << (j&7);",
+        "  for (p3=2, p2=3, p1=5, i=7; i < TOP; i+=2)",
+        "    if ((c[i>>4] & (1<<((i>>1) & 7)))==0) {",
+        "      s = p3 + p2 + p1 + i;",
+        "      if (s%4==0) {",
+        "        s/=4;",
+        "        r = sqrt(s*2);",
+        "        if (r*(r+1)==s*2) printf(\"%llu, \", r);",
+        "      }",
+        "      p3 = p2, p2 = p1, p1 = i;",
+        "    }",
+        "  return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A102655, A226151."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, May 28 2013",
+    "references": 3,
+    "revision": 12,
+    "time": "2013-06-07T09:19:20-04:00",
+    "created": "2013-06-06T08:09:42-04:00"
+}

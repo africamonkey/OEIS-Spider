@@ -1,0 +1,29 @@
+{
+    "number": 86378,
+    "data": "1,2,4,6,9,12,16,20,25,30,36,42,49,55,56,64,70,72,81,90,100,110,121,132,144,153,155,156,169,180,182,196,210,225,240,256,272,289,305,306,324,342,361,377,380,400,420,441,462,484,504,505,506,529,546,552,576,600",
+    "name": "Sum of successive remainders in computing Euclidean algorithm for (1,1/sqrt(n)) is rational.",
+    "comment": [
+        "For a real number x, take (a_0,b_0) = (1,x), then (a_(i+1),b_(i+1)) = (b_i,a_i-b_i*floor(a_i/b_i)), for i>=0 and call kappa(x) = b_1+b_2+b_3+... If kappa(1/sqrt(n)) is rational (which can be easily evaluated thanks to the periodicity of the process for a quadratic number), then n is in the sequence.",
+        "An infinity of 2nd degree polynomial functions take all their values over N in the sequence (such as x^2, x^2+x, 36*x^2+17*x+2, 100*x^2+150*x+55, 196*x^2+97*x+12, ...)."
+    ],
+    "example": [
+        "7137 is in the sequence because kappa(1/sqrt(7137)) = 7/1098 (in Q)."
+    ],
+    "mathematica": [
+        "kappa[n_] := Module[{a, b, i, p}, If[(a = Sqrt[n] - Floor[Sqrt[n]]) == 0, Return[0]]; i = a = Simplify[1/a]; p = 1; b = 0; Do[p = Simplify[a*p]; b = Simplify[a*b - Floor[a] + a]; If[(a = Simplify[1/(a - Floor[a])]) == i, Break[]], {Infinity}]; Return[Simplify[(1/a + b/(p-1))/Sqrt[n], Sqrt]]];",
+        "Reap[For[n = 1, n <= 600, n++, If[Element[kappa[n], Rationals], Print[n]; Sow[n]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Apr 15 2017, translated from MuPAD *)"
+    ],
+    "program": [
+        "(MuPAD) kappa_1_over_sqrt := proc(n) local a,b,i,p; begin if (a := sqrt(n)-isqrt(n)) = 0 then return(0) end_if: i := a := simplify(1/a,sqrt); p := 1; b := 0; repeat p := simplify(p*a,sqrt); b := simplify(b*a+a-floor(a),sqrt); until (a := simplify(1/(a-floor(a)),sqrt)) = i end_repeat: return(simplify((b/(p-1) + 1/a)/sqrt(n),sqrt)); end_proc:"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Thomas Baruchel_, Sep 02 2003",
+    "ext": [
+        "Edited by _Franklin T. Adams-Watters_, Nov 30 2011"
+    ],
+    "references": 6,
+    "revision": 15,
+    "time": "2017-04-16T08:02:48-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

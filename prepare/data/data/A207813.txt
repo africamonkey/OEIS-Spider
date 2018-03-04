@@ -1,0 +1,56 @@
+{
+    "number": 207813,
+    "data": "2,4,9,17,19,25,27,30,40,43,46,53,56,59,61,67,69,72,77,82,85,93,95,98,101,103,108,111,114,119,124,129,135,137,140,150,153,161,166,169,171,177,179,182,187,195,197,205,208,211,213,218,224,229,237,239",
+    "name": "Numbers that match irreducible Zeckendorf polynomials.",
+    "comment": [
+        "The Zeckendorf representation of a positive integer n is",
+        "a unique sum",
+        "...",
+        "c(k-2)F(k) + c(k-3)F(k-1) + ... + c(1)F(3) + c(0)F(2),",
+        "...",
+        "where F=A000045 (Fibonacci numbers), c(k-2)=1, and for",
+        "j=0,1,...,k-3, there are two restrictions on",
+        "coefficients:  c(j) is 0 or 1, and c(j)c(j+1)=0; viz.,",
+        "no two consecutive Fibonacci numbers appear.  The",
+        "Zeckendorf polynomial Z(n,x) is introduced here as",
+        "...",
+        "c(k-2)x^(k-2) + c(k-3)x^(k-3) + ... + c(1)x + c(0) .",
+        "...",
+        "A207813 refers to irreduciblity over the field of",
+        "rational numbers."
+    ],
+    "example": [
+        "n...k...Z(n)....Z(n,x).......irreducible",
+        "1...2...1.......1............no",
+        "2...3...10......x............yes",
+        "3...4...100.....x^2..........no",
+        "4...4...101.....x^2 + 1......yes",
+        "5...5...1000....x^3..........no",
+        "6...5...1001....x^3 + 1......no",
+        "7...5...1010....x^3 + x .....no",
+        "8...5...10000...x^4..........no",
+        "9...5...10001...x^4 + 1......yes"
+    ],
+    "mathematica": [
+        "fb[n_] := Block[{k = Ceiling[Log[GoldenRatio, n*Sqrt[5]]],",
+        " t = n, fr = {}}, While[k > 1, If[t >= Fibonacci[k],",
+        " AppendTo[fr, 1]; t = t - Fibonacci[k],",
+        " AppendTo[fr, 0]]; k--]; fr]; t = Table[fb[n],",
+        "     {n, 1, 350}];",
+        "b[n_] := Reverse[Table[x^k, {k, 0, n}]]",
+        "p[n_, x_] := t[[n]].b[-1 + Length[t[[n]]]]",
+        "Table[p[n, x], {n, 1, 40}] (* Zeckendorf polynomials *)",
+        "u = {}; Do[n++; If[IrreduciblePolynomialQ[p[n, x]],",
+        "  AppendTo[u, n]], {n, 300}]; u     (* A207813 *)"
+    ],
+    "xref": [
+        "Cf. A206073, A206074."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Feb 20 2012",
+    "references": 7,
+    "revision": 5,
+    "time": "2012-03-30T18:58:13-04:00",
+    "created": "2012-02-24T13:45:10-05:00"
+}

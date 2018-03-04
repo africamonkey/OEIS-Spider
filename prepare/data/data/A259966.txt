@@ -1,0 +1,41 @@
+{
+    "number": 259966,
+    "data": "0,0,2,7,16,34,72,149,300,593,1158,2239,4292,8168,15450,29072,54456,101597,188878,350038,646880,1192415,2192956,4024583,7371884,13479421,24607048,44853552,81645236,148424000,269497614,488784787,885571340,1602879242,2898512344",
+    "name": "Total binary weight (cf. A000120) of all A005251(n) binary sequences of length n not containing any isolated 1's.",
+    "reference": [
+        "R. K. Guy, Letter to N. J. A. Sloane, Feb 05 1986."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A259966/b259966.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "R. K. Guy, <a href=\"/A005251/a005251.pdf\">Letter to N. J. A. Sloane, Feb 1986</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-6,6,-5,2,-1)."
+    ],
+    "formula": [
+        "a(n) = a(n-1)+a(n-2)+2*b(n)+a(n-4)+3*b(n-2), where b() is A005251().",
+        "G.f.: -x^2*(x-2) / (x^3-x^2+2*x-1)^2. - _Colin Barker_, Jul 21 2015"
+    ],
+    "program": [
+        "(Haskell)",
+        "a259966 n = a259966_list !! n",
+        "a259966_list = 0 : 0 : 2 : 7 : zipWith (+)",
+        "   (zipWith3 (((+) .) . (+))",
+        "             a259966_list (drop 2 a259966_list) (drop 3 a259966_list))",
+        "   (drop 2 $ zipWith (+)",
+        "             (map (* 2) $ drop 2 a005251_list) (map (* 3) a005251_list))",
+        "-- _Reinhard Zumkeller_, Jul 13 2015",
+        "(PARI) concat([0,0], Vec(-x^2*(x-2)/(x^3-x^2+2*x-1)^2 + O(x^50))) \\\\ _Colin Barker_, Jul 21 2015"
+    ],
+    "xref": [
+        "Cf. A005251."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Jul 11 2015",
+    "ext": [
+        "Edited by _Reinhard Zumkeller_, Jul 13 2015"
+    ],
+    "references": 1,
+    "revision": 25,
+    "time": "2017-06-28T17:15:17-04:00",
+    "created": "2015-07-11T17:25:04-04:00"
+}

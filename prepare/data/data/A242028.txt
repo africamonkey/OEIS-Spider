@@ -1,0 +1,41 @@
+{
+    "number": 242028,
+    "data": "3,4,6,9,36,54,96,216,576,1296,69984,236196,393216,497664,28697814,31850496",
+    "name": "Numbers k such that the least common multiple of the anti-divisors of k is less than k.",
+    "comment": [
+        "Numbers k such that LCM(anti-divisors(k)) < LCM(divisors(k)).",
+        "The numbers in the sequence up to a(n) = 1296 are of the form 2^x * 3^y. Checking all values of x and y between 1 and 9, there is one additional term, 69984.",
+        "Numbers in sequence up to a(n) = 31850496 are of the form 2^x * 3^y, x>= 0, y>= 0. Searching through x<=40 and y<=40, the following terms in the sequence are found: 84934656, 2038431744, 5435817984, 1174136684544, 28179280429056, 42268920643584, 75144747810816, 289207845356544, 570630428688384, 30814043149172736. - _Chai Wah Wu_, Aug 20 2014"
+    ],
+    "example": [
+        "a(6) = 9 because LCM(2, 6) = 6, which is less than 9."
+    ],
+    "mathematica": [
+        "antiDivisors[n_Integer] :=",
+        "  Cases[Range[2, n - 1], _?(Abs[Mod[n, #] - #/2] < 1 &)];",
+        "a242028[n_Integer] := Select[Range[n],",
+        "  Length[antiDivisors[#]] > 0 && LCM @@ antiDivisors[#] < # &]; a242028[5000] (* _Michael De Vlieger_, Aug 21 2014 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors, lcm",
+        "A242028 = [n for n in range(3,10**5) if lcm(",
+        "..........[2*d for d in divisors(n) if n > 2*d and n % (2*d)] +",
+        "..........[d for d in divisors(2*n-1) if n > d >=2 and n % d] +",
+        "..........[d for d in divisors(2*n+1) if n > d >=2 and n % d]) < n]",
+        "# _Chai Wah Wu_, Aug 19 2014"
+    ],
+    "xref": [
+        "Cf. A096357."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Michael De Vlieger_, suggested by _Michel Marcus_, Aug 11 2014",
+    "ext": [
+        "Corrected comment, removed 1 and 2 from sequence and added a(11)-a(16) by _Chai Wah Wu_, Aug 20 2014"
+    ],
+    "references": 1,
+    "revision": 24,
+    "time": "2014-08-27T14:13:04-04:00",
+    "created": "2014-08-19T01:02:53-04:00"
+}

@@ -1,0 +1,76 @@
+{
+    "number": 62383,
+    "data": "1,2,4,4,8,8,8,8,16,16,16,16,16,16,16,16,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,128,128,128,128,128,128",
+    "name": "a(0) = 1: for n>0, a(n) = 2^floor(log_2(n)+1) or a(n) = 2*a(floor(n/2)).",
+    "comment": [
+        "a(n) is the denominator of the form 2^k needed to make the ratio (2n-1)/2^k lie in the interval [1-2], i.e. such ratios are 1/1, 3/2, 5/4, 7/4, 9/8, 11/8, 13/8, 15/8, 17/16, 19/16, 21/16, ... where the numerators are A005408 (The odd numbers).",
+        "Let A_n be the upper triangular matrix in the group GL(n,2) that has zero entries below the diagonal and 1 elsewhere. For example for n=4 the matrix is / 1,1,1,1 / 0,1,1,1 / 0,0,1,1 / 0,0,0,1 /. The order of this matrix as an element of GL(n,2) is a(n-1). - Ahmed Fares (ahmedfares(AT)my-deja.com), Jul 14 2001",
+        "A006257(n)/a(n) = (0, 0.1, 0.01, 0.11, 0.001, ...) enumerates all binary fractions in the unit interval [0, 1). - _Fredrik Johansson_, Aug 14 2006",
+        "a(n) = maximum of row n+1 in A240769. - _Reinhard Zumkeller_, Apr 13 2014",
+        "This is the discriminator sequence for the odious numbers. - _N. J. A. Sloane_, May 10 2016",
+        "a(n-1) gives the chromatic number of the n-halved cube graph up to n = 8; larger values are not known as of Nov 2017. - _Eric W. Weisstein_, Nov 17 2017"
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A062383/b062383.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "L. K. Arnold, S. J. Benkoski and B. J. McCabe, <a href=\"http://www.jstor.org/stable/2323651\">The discriminator (a simple application of Bertrand's postulate)</a>. Amer. Math. Monthly 92 (1985), 275-277.",
+        "Sajed Haque, Chapter 2.6.1 of <a href=\"https://uwspace.uwaterloo.ca/bitstream/handle/10012/12234/Haque_Sajed.pdf\">Discriminators of Integer Sequences</a>, 2017, See p. 33.",
+        "S. Haque and J. Shallit, <a href=\"http://arxiv.org/abs/1605.00092\">Discriminators and k-regular sequences</a>, arXiv:1605.00092 [cs.DM], 2016.",
+        "R. Stephan, <a href=\"/somedcgf.html\">Some divide-and-conquer sequences ...</a>",
+        "R. Stephan, <a href=\"/A079944/a079944.ps\">Table of generating functions</a>",
+        "<a href=\"/index/Di#divseq\">Index to divisibility sequences</a>"
+    ],
+    "formula": [
+        "a(1) = 1 and a(n+1) = a(n)*ceiling(n/a(n)). - _Benoit Cloitre_, Aug 17 2002",
+        "G.f.: 1/(1-x) * (1 + Sum_{k>=0} 2^k*x^2^k). - _Ralf Stephan_, Apr 18 2003",
+        "a(n) = A142151(2*n)/2 + 1. - _Reinhard Zumkeller_, Jul 15 2008",
+        "log(a(n))/log(2) = A029837(n+1). - _Johannes W. Meijer_, Jul 06 2009",
+        "a(n+1) = a(n) + A099894(n). - _Reinhard Zumkeller_, Aug 06 2009",
+        "a(n) = A264619(n) - A264618(n). - _Reinhard Zumkeller_, Dec 01 2015",
+        "a(n) is the smallest power of 2 > n. - _Chai Wah Wu_, Nov 04 2016",
+        "a(n) = 2^ceiling(log_2(n+1)). - _M. F. Hasler_, Sep 20 2017"
+    ],
+    "maple": [
+        "[seq(2^(floor_log_2(j)+1),j=0..127)]; or [seq(coerce1st_octave((2*j)+1),j=0..127)]; or [seq(a(j),j=0..127)];",
+        "coerce1st_octave := proc(r) option remember; if(r < 1) then coerce1st_octave(2*r); else if(r >= 2) then coerce1st_octave(r/2); else (r); fi; fi; end;",
+        "A062383 := proc(n)",
+        "    option remember;",
+        "    if n = 0 then",
+        "        1 ;",
+        "    else",
+        "        2*procname(floor(n/2));",
+        "    end if;",
+        "end proc:"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = 2 a[n/2 // Floor]; a[0] = 1; Table[a[n], {n, 0, 100}] (* _Jean-Fran\u00e7ois Alcover_, Mar 04 2016 *)",
+        "Table[2^Floor[Log2[n] + 1], {n, 0, 20}] (* _Eric W. Weisstein_, Nov 17 2017 *)",
+        "2^Floor[Log2[Range[0, 20]] + 1] (* _Eric W. Weisstein_, Nov 17 2017 *)"
+    ],
+    "program": [
+        "(PARI) { a=1; for (n=0, 1000, write(\"b062383.txt\", n, \" \", a*=ceil((n + 1)/a)) ) } \\\\ _Harry J. Smith_, Aug 06 2009",
+        "(PARI) a(n)=1<<(log(2*n+1)\\log(2)) \\\\ _Charles R Greathouse IV_, Dec 08 2011",
+        "(Haskell)",
+        "import Data.List (transpose)",
+        "a062383 n = a062383_list !! n",
+        "a062383_list = 1 : zs where",
+        "   zs = 2 : (map (* 2) $ concat $ transpose [zs, zs])",
+        "-- _Reinhard Zumkeller_, Aug 27 2014, Mar 13 2014",
+        "(MAGMA) [2^Floor(Log(2,2*n+1)): n in [0..70]]; // _Bruno Berselli_, Mar 04 2016"
+    ],
+    "xref": [
+        "Apart from the initial term, A062383[n] = 2* A053644[n]. MASKTRANSi(A062383) seems to give a signed form of A038712. (See identities at A053644). floor_log_2 given in A054429.",
+        "Equals A003817(n)+1. Cf. A002884.",
+        "Bisection of A065285. Cf. A076877.",
+        "Equals for n>=1 the r(n) sequence of A160464. - _Johannes W. Meijer_, May 24 2009",
+        "Equals the r(n) sequence of A162440 for n>=1. - _Johannes W. Meijer_, Jul 06 2009",
+        "Cf. A264618, A264619.",
+        "Discriminator of the odious numbers (A000069). - _Jeffrey Shallit_, May 08 2016"
+    ],
+    "keyword": "nonn,frac,easy",
+    "offset": "0,2",
+    "author": "_Antti Karttunen_, Jun 19 2001",
+    "references": 46,
+    "revision": 78,
+    "time": "2018-02-17T12:25:25-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

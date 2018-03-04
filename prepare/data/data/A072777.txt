@@ -1,0 +1,46 @@
+{
+    "number": 72777,
+    "data": "4,8,9,16,25,27,32,36,49,64,81,100,121,125,128,169,196,216,225,243,256,289,343,361,441,484,512,529,625,676,729,841,900,961,1000,1024,1089,1156,1225,1296,1331,1369,1444,1521,1681,1764,1849",
+    "name": "Powers of squarefree numbers that are not squarefree.",
+    "comment": [
+        "For all n exists k: a(n) = A072774(k) and A072776(k) > 1."
+    ],
+    "link": [
+        "Stanislav Sykora and Reinhard Zumkeller, <a href=\"/A072777/b072777.txt\">Table of n, a(n) for n = 1..20000</a> (first 10000 terms from Reinhard Zumkeller)"
+    ],
+    "example": [
+        "The number 144 = 12^2 is not a member because 12 is not squarefree.",
+        "64 = 2^6 and 49 = 7^2 are members because, though not squarefree, they are powers of the squarefree numbers 2 and 7, respectively. Note that 64 is included even though it is also a square of a nonsquarefree number. - _Stanislav Sykora_, Jul 11 2014"
+    ],
+    "mathematica": [
+        "Select[Range[2000], Length[u = Union[FactorInteger[#][[All, 2]]]] == 1 && u[[1]] > 1 &] (* _Jean-Fran\u00e7ois Alcover_, Mar 27 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Map (singleton, findMin, deleteMin, insert)",
+        "a072777 n = a072777_list !! (n-1)",
+        "a072777_list = f 9 (drop 2 a005117_list) (singleton 4 (2, 2)) where",
+        "   f vv vs'@(v:ws@(w:_)) m",
+        "    | xx < vv = xx : f vv vs' (insert (bx*xx) (bx, ex+1) $ deleteMin m)",
+        "    | xx > vv = vv : f (w*w) ws (insert (v^3) (v, 3) m)",
+        "    where (xx, (bx, ex)) = findMin m",
+        "-- _Reinhard Zumkeller_, Apr 06 2014",
+        "(PARI) BelongsToA(n) = {my(f, k, e); if(n == 1, return(0));",
+        "f = factor(n); e = f[1, 2]; if(e == 1, return(0));",
+        "for(k = 2, #f[, 2], if(f[k, 2] != e, return(0))); return(1);}",
+        "Ntest(nmax, test) = {my(k = 1, n = 0, v); v = vector(nmax); while(1, n++; if(test(n), v[k] = n; k++; if(k > nmax, break)); ); return(v); }",
+        "a = Ntest(20000, BelongsToA) \\\\ Note: not very efficient. - _Stanislav Sykora_, Jul 11 2014",
+        "(PARI) is(n)=ispower(n,,&n) && issquarefree(n) \\\\ _Charles R Greathouse IV_, Oct 16 2015"
+    ],
+    "xref": [
+        "Cf. A013929.",
+        "Cf. A005117, subsequence of A001597 and A072774."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Jul 10 2002",
+    "references": 4,
+    "revision": 40,
+    "time": "2018-01-16T02:50:31-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

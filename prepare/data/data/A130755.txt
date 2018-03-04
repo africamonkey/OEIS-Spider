@@ -1,0 +1,49 @@
+{
+    "number": 130755,
+    "data": "3,4,7,15,32,65,129,256,511,1023,2048,4097,8193,16384,32767,65535,131072,262145,524289,1048576,2097151,4194303,8388608,16777217,33554433,67108864,134217727,268435455,536870912,1073741825,2147483649",
+    "name": "Binomial transform of periodic sequence (3, 1, 2).",
+    "comment": [
+        "The third sequence of \"less twisted numbers\"; this sequence, A130750 and A130752 form a \"suite en trio\" (cf. reference, p. 130).",
+        "First differences of A130752, second differences of A130750.",
+        "Sequence equals its third differences:",
+        "  3     4     7    15    32    65   129   256   511  1023",
+        "     1     3     8    17    33    64   127   255   512",
+        "        2     5     9    16    31    63   128   257",
+        "           3     4     7    15    32    65   129"
+    ],
+    "reference": [
+        "P. Curtz, Exercise Book, manuscript, 1995."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A130755/b130755.txt\">Table of n, a(n) for n = 0..1000</a> (terms 0..300 from Vincenzo Librandi)",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-3,2)."
+    ],
+    "formula": [
+        "G.f.: (3-5*x+4*x^2)/((1-2*x)*(1-x+x^2)).",
+        "a(0) = 3; a(1) = 4; a(2) = 7; for n > 2, a(n) = 3*a(n-1) - 3*a(n-2) + 2*a(n-3).",
+        "a(n) = 2^(n+1) + A128834(n+2).",
+        "a(0) = 3; for n > 0, a(n) = 2*a(n-1) + A057079(n+3)."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(3-5*x+4*x^2)/((1-2*x)*(1-x+x^2)), {x, 0, 50}], x] (* or *) LinearRecurrence[{3,-3,2}, {3,4,7}, 30] (* _G. C. Greubel_, Jan 15 2018 *)"
+    ],
+    "program": [
+        "(MAGMA) m:=31; S:=[ [3, 1, 2][(n-1) mod 3 +1]: n in [1..m] ]; [ &+[ Binomial(i-1, k-1)*S[k]: k in [1..i] ]: i in [1..m] ]; // _Klaus Brockhaus_, Aug 03 2007",
+        "(MAGMA) I:=[3,4,7]; [n le 3 select I[n] else 3*Self(n-1) - 3*Self(n-2) + 2*Self(n-3): n in [1..30]]; // _G. C. Greubel_, Jan 15 2018",
+        "(PARI) {m=31; v=vector(m); v[1]=3; v[2]=4; v[3]=7; for(n=4, m, v[n]=3*v[n-1]-3*v[n-2]+2*v[n-3]); v} \\\\ _Klaus Brockhaus_, Aug 03 2007",
+        "(PARI) {for(n=0, 30, print1(2^(n+1)+[1, 0, -1, -1, 0, 1][n%6+1], \",\"))} \\\\ _Klaus Brockhaus_, Aug 03 2007"
+    ],
+    "xref": [
+        "Cf. A010882 (periodic (1, 2, 3)), A128834 (periodic (0, 1, 1, 0, -1, -1)), A057079 (periodic (1, 2, 1, -1, -2, -1)), A130750 (first differences), A130752 (second differences)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,1",
+    "author": "_Paul Curtz_, Jul 13 2007",
+    "ext": [
+        "Edited and extended by _Klaus Brockhaus_, Aug 03 2007"
+    ],
+    "references": 9,
+    "revision": 22,
+    "time": "2018-01-16T02:53:47-05:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

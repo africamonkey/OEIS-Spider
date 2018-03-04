@@ -1,0 +1,47 @@
+{
+    "number": 285058,
+    "data": "1,2,5,7,10,12,13,17,24,25,26,29,34,35,36,37,38,43,47,48,49,50,53,55,58,59,60,65,67,72,73,74,85,89,91,96,97,103,106,108,109,110,113,118,120,125,127,130,137,139,144,145,146,149,156,157,158,163,168,169,170,173,175",
+    "name": "Numbers n such that n = A104714(A285057(n)).",
+    "comment": [
+        "The set of distinct values of A104714.",
+        "Leonetti & Sanna prove that this sequence is the image of A104714 for n >= 1.",
+        "Leonetti & Sanna prove that this sequence has density 0 and a(n) << n log n. - _Charles R Greathouse IV_, May 08 2017"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A285058/b285058.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Paolo Leonetti, Carlo Sanna, <a href=\"https://arxiv.org/abs/1704.00151\">On the greatest common divisor of n and the nth Fibonacci number</a>, arXiv:1704.00151 [math.NT], 2017. See Lemma 2 on page 2."
+    ],
+    "mathematica": [
+        "z[n_]:=Block[{k=1}, While[Mod[Fibonacci[k], n]!=0, k ++]; k]; l[n_]:=LCM[n, z[n]]; g[n_]:= GCD[n, Fibonacci[n]]; Select[Range[200], #==g[l[#]] &] (* _Indranil Ghosh_, Apr 09 2017 *)"
+    ],
+    "program": [
+        "(PARI) z(n)=my(k = 1); while (fibonacci(k) % n, k++); k; \\\\ A001177",
+        "l(n) = lcm(n, z(n)); \\\\ A285057",
+        "g(n) = gcd(n, fibonacci(n)); \\\\ A104714",
+        "isok(n) = n == g(l(n));",
+        "(PARI) zp(p)=my(k=p+[0,-1,1,1,-1][p%5+1],f=factor(k)); for(i=1,#f[,1], for(j=1,f[i,2], if((Mod([1,1;1,0],p)^(k/f[i,1]))[1,2], break); k/=f[i,1])); k",
+        "z(n)=if(n==1,return(1)); my(f=factor(n),v); v=vector(#f~,i, if(f[i,1]>1e14, zp(f[i,1]^f[i,2]), zp(f[i,1])*f[i,1]^(f[i,2]-1))); if(f[1,1]==2&&f[1,2]>1, v[1]=3<<max(f[1,2]-2,1)); lcm(v)",
+        "fibmod(n,m)=((Mod([1,1;1,0],m))^n)[1,2]",
+        "g(n)=gcd(lift(fibmod(n,n)), n)",
+        "is(n)=g(lcm(z(n), n))==n \\\\ _Charles R Greathouse IV_, May 08 2017",
+        "(Python)",
+        "from sympy import fibonacci, gcd, lcm",
+        "def z(n):",
+        "....k=1",
+        "....while fibonacci(k)%n!=0: k+=1",
+        "....return k",
+        "def l(n): return lcm(n, z(n))",
+        "def g(n): return gcd(n, fibonacci(n))",
+        "print [n for n in xrange(1, 201) if n==g(l(n))] # _Indranil Ghosh_, Apr 09 2017"
+    ],
+    "xref": [
+        "Cf. A001177, A104714, A285057."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Marcus_, Apr 09 2017",
+    "references": 1,
+    "revision": 15,
+    "time": "2017-05-09T08:06:24-04:00",
+    "created": "2017-04-09T10:23:36-04:00"
+}

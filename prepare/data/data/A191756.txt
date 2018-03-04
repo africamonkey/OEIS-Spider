@@ -1,0 +1,37 @@
+{
+    "number": 191756,
+    "data": "1,4,12,36,100,276,748,2012,5356,14172,37276,97604,254508,661364,1713292,4426428,11408300,29339324,75305596,192945124,493554916,1260643868,3215551292,8191635220,20843850764,52980214316,134527157780,341268196780",
+    "name": "Number of n-step four-sided prudent self-avoiding walks.",
+    "reference": [
+        "E. Duchi, On some classes of prudent walks, in: FPSAC'05, Taormina, Italy, 2005."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A191756/b191756.txt\">Table of n, a(n) for n = 0..192</a>",
+        "M. Bousquet-M\u00e9lou, <a href=\"http://www.dmtcs.org/dmtcs-ojs/index.php/proceedings/article/viewArticle/dmAJ0115\">Families of prudent self-avoiding walks</a>, DMTCS proc. AJ, 2008, 167-180."
+    ],
+    "maple": [
+        "b:= proc(n, x, y, w, s, i) option remember;",
+        "      `if`(n=0, 1, `if`(y>s, b(n, x, s, w, y, i),",
+        "                     b(n-1, max(x-1, 0), y, w+1, s, evalb(x=0))+",
+        "      `if`(y=0 or i, b(n-1, max(y-1, 0), w, s+1, x, evalb(y=0)), 0)+",
+        "      `if`(s=0 or i, b(n-1, max(s-1, 0), x, y+1, w, evalb(s=0)), 0)))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, 4*b(n-1, 0, 0, 1, 0, true)):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "b[n_, x_, y_, w_, s_, i_] := b[n, x, y, w, s, i] = If[n == 0, 1, If[y > s, b[n, x, s, w, y, i], b[n - 1, Max[x - 1, 0], y, w + 1, s, x == 0] + If[y == 0 || i, b[n - 1, Max[y - 1, 0], w, s + 1, x, y == 0], 0] + If[s == 0 || i, b[n - 1, Max[s - 1, 0], x, y + 1, w, s == 0], 0]]];",
+        "a[n_] :=  If[n == 0, 1, 4*b[n - 1, 0, 0, 1, 0, True]];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Jun 23 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A191757, A191758."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Jun 15 2011",
+    "references": 3,
+    "revision": 23,
+    "time": "2017-06-23T14:09:43-04:00",
+    "created": "2011-06-15T12:11:41-04:00"
+}

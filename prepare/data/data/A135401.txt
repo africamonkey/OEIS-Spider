@@ -1,0 +1,50 @@
+{
+    "number": 135401,
+    "data": "1,1,2,2,6,6,20,20,76,76,312,312,1384,1384,6512,6512,32400,32400,168992,168992,921184,921184,5222208,5222208,30710464,30710464,186753920,186753920,1171979904,1171979904,7573069568,7573069568,50305536256,50305536256,342949298688",
+    "name": "a(n) = number of permutations (p(1),p(2),p(3),...,p(n)) of (1,2,3,...n) each of which is its own inverse and is such that p(k) = n + 1 - p(n+1-k) for all k in the range 1 <= k <= n.",
+    "comment": [
+        "a(n) is also the number of ways to place n points on an n X n grid with pairwise distinct abscissa, pairwise distinct ordinate, mirror symmetry and 180 degrees rotational symmetry. Note that both diagonals are actually axes of symmetry. See also A297708, A000085, A001813, and A006882. - _Manfred Scheucher_, Jan 04 2018"
+    ],
+    "link": [
+        "Manfred Scheucher, <a href=\"/A135401/b135401.txt\">Table of n, a(n) for n = 0..99</a>"
+    ],
+    "formula": [
+        "a(n) = A000898(floor(n/2)). - Conjectured by _Leroy Quet_, Jan 20 2008; proved by _Max Alekseyev_, Jan 21 2008: (Start)",
+        "Let p = (p(1),...,p(n)) be a permutation such that p(k) = n + 1 - p(n+1-k) for all 1 <= k <= n.",
+        "Then 2-set {k, n+1-k} (i.e., where the sum of elements is n+1) is mapped by p into {p(k), p(n+1-k)} with the same property p(k) + p(n+1-k) = n+1. Therefore every such permutation induces a permutation q on the 2-sets {k, n+1-k}, and for odd n has a fixed point p((n+1)/2) = (n+1)/2.",
+        "Furthermore, it is easy to see that if p is self-inverse then so is q.",
+        "Let s=floor(n/2). For every permutation q on the sets {k, n+1-k}, 1 <= k <= s, let's count how many p induce it.",
+        "It is clear that if q has exactly m fixed points (and so the other s-m 2-sets form pairs of inverses under q), then there exist 2^m ways to define p on the fixed points of q and 2^((s-m)/2) ways to define p on the remaining elements.",
+        "Hence the total number of permutations p inducing q is 2^m * 2^((s-m)/2) = 2^((s+m)/2). The number of permutations q on s elements with exactly m fixed points is nonzero only if m and s are of the same oddness and in this case it is binomial(s,m) * (s-m)! / 2^((s-m)/2) / ((s-m)/2)! = binomial(s,m) * (s-m-1)!! = s! / m! / 2^((s-m)/2) / ((s-m)/2)!.",
+        "Hence a(n) = Sum s! * 2^m / m! / ((s-m)/2)!, where sum is taken over m=0,1...,s of the same oddness as s. Let s-m=2t so that m=s-2t and a(n) = Sum_{t=0..floor(s/2)} s! * 2^(s-2t) / ((s-2t)! * t!) = s! * [x^s] e^(2x) * e^(x^2) = s! * [x^s] e^(x^2+2x) = A000898(s), according to its e.g.f. QED",
+        "(End)",
+        "a(n) = Sum_{k=0..floor(n/2)} binomial(floor(n/2),2k)*binomial(2k,k)*k!*2^(floor(n/2)-2k). (See A000898 for the original formula by N. Calkin, for further equivalent expressions, and for (exponential) generating function.) - _Manfred Scheucher_, Jan 07 2018"
+    ],
+    "example": [
+        "For n = 6 we can have the permutation (3,5,1,6,2,4). This permutation is its own inverse permutation. Furthermore, 7 = p(1)+p(6) = p(2)+p(5) = p(3)+p(4) = 3+4 = 5+2 = 1+6. So this permutation among others is included in the count of permutations when n=6.",
+        "a(4)=6 because we have 1234, 1324, 3412, 2143, 4231 and 4321."
+    ],
+    "maple": [
+        "with(combinat): with(group): a:=proc(n) local P,ct,j,pc,prc: P:=permute(n): ct:= 0: for j to factorial(n) do pc:=convert(P[j], 'disjcyc'): prc:=[seq(n+1-P[j][n+1-k],k=1..n)]: if invperm(pc)=pc and P[j]=prc then ct:=ct+1 else end if end do: ct end proc: seq(a(n),n=0..9); # _Emeric Deutsch_, Dec 31 2007"
+    ],
+    "program": [
+        "(PARI) print1(1\", \"1\", \");a=0;b=1;for(n=1,25,c=2*(b+(n-1)*a);print1(c\", \"c\", \");a=b;b=c) \\\\ Herman Jamke (hermanjamke(AT)fastmail.fm), Apr 26 2008",
+        "(SAGE) def a135401(n): return sum( binomial(floor(n/2),2*k)*binomial(2*k,k)*factorial(k)*2^(floor(n/2)-2*k) for k in range(1+floor(n/4)))",
+        "for n in range(100): print n, a135401(n) # _Manfred Scheucher_, Jan 07 2018"
+    ],
+    "xref": [
+        "Cf. A000085, A001813, A006882, A297708. - _Manfred Scheucher_, Jan 07 2018"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Leroy Quet_, Dec 11 2007",
+    "ext": [
+        "5 more terms from _Emeric Deutsch_, Dec 31 2007",
+        "More terms from Herman Jamke (hermanjamke(AT)fastmail.fm), Apr 26 2008",
+        "a(0)=1 prepended by _Alois P. Heinz_, Jan 03 2018"
+    ],
+    "references": 5,
+    "revision": 37,
+    "time": "2018-01-09T22:14:11-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

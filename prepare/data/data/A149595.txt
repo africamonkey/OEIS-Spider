@@ -1,0 +1,49 @@
+{
+    "number": 149595,
+    "data": "1,1,5,15,59,219,921,3729,15511,66307,285723,1231425,5377117,23746851,104998531,465502605,2084418377,9360389879,42066742411,189986019637,861969546027,3914101686361,17807890803795,81343463279557,372217083213775,1704575842549479,7825997996053383,36010679557986875",
+    "name": "Number of walks within N^3 (the first octant of Z^3) starting at (0,0,0) and consisting of n steps taken from {(-1, -1, 0), (-1, 0, -1), (0, -1, 0), (1, 1, -1), (1, 1, 1)}.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A149595/b149595.txt\">Table of n, a(n) for n = 0..100</a>",
+        "A. Bostan and M. Kauers, <a href=\"http://arxiv.org/abs/0811.2899\">Automatic Classification of Restricted Lattice Walks</a>, arXiv:0811.2899 [math.CO], 2008."
+    ],
+    "maple": [
+        "N:= 30: # to get a(0) to a(N)",
+        "steps:= [[-1,-1,0],[-1,0,-1],[0,-1,0],[1,1,-1],[1,1,1]]:",
+        "P[0]:= {[0,0,0]}:",
+        "A[0]:= 1:",
+        "B[0,[0,0,0]]:= 1:",
+        "for n from 1 to N do",
+        "  A[n]:= 0:",
+        "  P[n]:= {}:",
+        "  for p in P[n-1] do",
+        "    for s in steps do",
+        "      pp:= p + s;",
+        "      if min(pp) < 0 then next fi;",
+        "      P[n]:= P[n] union {pp};",
+        "      A[n]:= A[n] + B[n-1,p];",
+        "      if assigned(B[n,pp]) then B[n,pp]:= B[n,pp] + B[n-1,p]",
+        "      else B[n,pp]:= B[n-1,p]",
+        "      fi;",
+        "    od",
+        "  od",
+        "od:",
+        "seq(A[n],n=0..N); # _Robert Israel_, Nov 03 2014",
+        "# second Maple program:",
+        "b:= proc(n, l) option remember; `if`(n=0, 1, add((p->",
+        "      `if`(min(p[])<0, 0, b(n-1, p)))(l+h), h=[[-1$2, 0],",
+        "       [-1, 0, -1], [0, -1, 0], [1$2, -1], [1$3]]))",
+        "    end:",
+        "a:= n-> b(n, [0$3]):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Nov 04 2014"
+    ],
+    "mathematica": [
+        "aux[i_Integer, j_Integer, k_Integer, n_Integer] := Which[Min[i, j, k, n] < 0 || Max[i, j, k] > n, 0, n == 0, KroneckerDelta[i, j, k, n], True, aux[i, j, k, n] = aux[-1 + i, -1 + j, -1 + k, -1 + n] + aux[-1 + i, -1 + j, 1 + k, -1 + n] + aux[i, 1 + j, k, -1 + n] + aux[1 + i, j, 1 + k, -1 + n] + aux[1 + i, 1 + j, k, -1 + n]]; Table[Sum[aux[i, j, k, n], {i, 0, n}, {j, 0, n}, {k, 0, n}], {n, 0, 10}]"
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Manuel Kauers_, Nov 18 2008",
+    "references": 1,
+    "revision": 12,
+    "time": "2014-11-04T17:34:22-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

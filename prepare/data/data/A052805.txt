@@ -1,0 +1,35 @@
+{
+    "number": 52805,
+    "data": "1,1,1,3,7,21,64,204,666,2236,7625,26419,92644,328370,1174234,4231898,15354424,56042372,205626906,758021598,2806143522,10427671924,38882984840,145443260702,545598228056,2052086677666,7736986142773,29236241424977",
+    "name": "If B is a collection in which there are C(n-1) [Catalan numbers, A000108] things with n points, a(n) is the number of subsets without repetition of B with a total of n points.",
+    "comment": [
+        "Euler transform of sequence [1,0,2,4,14,40,132,424,1430,...] (C(n-1) if n odd, C(n-1)-C(n/2-1) if n even)."
+    ],
+    "link": [
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=766\">Encyclopedia of Combinatorial Structures 766</a>"
+    ],
+    "formula": [
+        "a(n)=(1/n)*Sum_{k=1..n} a(n-k)*b(k), n>0, a(0)=1, b(k)=Sum_{d|k} (-1)^(k/d+1)*binomial(2*d-2, d-1). - _Vladeta Jovovic_, Jan 17 2002",
+        "G.f. A(x)=exp(Sum_{k>0} -(-1)^k* C(x^k)/k) where C(x)=(1-sqrt(1-4x))/2= g.f. A000108 (offset 1).",
+        "G.f.: Product_{k>=1} (1+x^k)^(1/k*binomial(2*k-2, k-1)). - _Vladeta Jovovic_, Jan 17 2002"
+    ],
+    "maple": [
+        "spec := [S,{C=Sequence(B),B=Prod(C,Z),S=PowerSet(B)},unlabeled]: seq(combstruct[count](spec,size=n), n=0..20);"
+    ],
+    "mathematica": [
+        "ClearAll[a]; b[k_] := Sum[ (-1)^(k/d + 1)*Binomial[2*d - 2, d - 1], {d, Divisors[k]}]; a[0] = 1; a[n_] := a[n] = (1/n)*Sum[a[n - k]*b[k], {k, 1, n}]; Table[a[n], {n, 0, 27}] (* _Jean-Fran\u00e7ois Alcover_, Oct 08 2012, after _Vladeta Jovovic_ *)"
+    ],
+    "program": [
+        "(PARI) a(n)=local(A); if(n<1,!n,A=sum(k=1,n,(2*k-2)!/k!/(k-1)!*x^k,x*O(x^n)); polcoeff(exp(sum(k=1,n,-(-1)^k*subst(A,x,x^k)/k)),n))"
+    ],
+    "xref": [
+        "Cf. A000108, A052854."
+    ],
+    "keyword": "easy,nonn,nice",
+    "offset": "0,4",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "references": 1,
+    "revision": 16,
+    "time": "2017-04-18T07:04:08-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 78465,
+    "data": "1,1,1,2,2,4,5,8,12,16,26,36,55,81,118,177,257,384,564,833,1233,1813,2685,3956,5845,8629,12731,18807,27746,40976,60481,89282,131816,194562,287253,424018,625968,924077",
+    "name": "Primonacci numbers: a(n)=a(n-2)+a(n-3)+a(n-5)+a(n-7)+a(n-11)+...+a(n-p(k))+... until n > p(k), where p(k) is the k-th prime. a(1)=a(2)=1.",
+    "comment": [
+        "a(n)/a(n-1) -> 1.476229...=1/x, where x satisfies the Sum x^p(n)=1 equation, i.e. x^2+x^3+x^5+x^7+x^11+... =1. (What constant is it?)"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A078465/b078465.txt\">Table of n, a(n) for n=1..500</a>"
+    ],
+    "example": [
+        "a(12) = 36 = a(12-2)+a(12-3)+a(12-5)+a(12-7)+a(12-11) = a(10)+a(9)+a(7)+a(5)+a(1) = 16+12+5+2+1 = 36."
+    ],
+    "mathematica": [
+        "a[1] = a[2] = 1; a[n_] := a[n] = Sum[a[n - Prime[k]], {k, 1, PrimePi[n]}]; Table[a[n], {n, 1, 38}] (* _Jean-Fran\u00e7ois Alcover_, Mar 22 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (genericIndex)",
+        "a078465 n = a078465_list `genericIndex` (n-1)",
+        "a078465_list = 1 : 1 : f 3 where",
+        "   f x = (sum $ map (a078465 . (x -)) $",
+        "         takeWhile (< x) a000040_list) : f (x + 1)",
+        "-- _Reinhard Zumkeller_, Jul 20 2012"
+    ],
+    "xref": [
+        "Cf. A078974 (the constant 1.47622...), A084256 (the constant 1/1.47622...)"
+    ],
+    "keyword": "easy,nice,nonn",
+    "offset": "1,4",
+    "author": "_Miklos Kristof_, Jan 02 2003",
+    "references": 2,
+    "revision": 15,
+    "time": "2016-02-01T10:09:00-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

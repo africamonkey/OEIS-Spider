@@ -1,0 +1,49 @@
+{
+    "number": 117513,
+    "data": "1,2,12,136,2480,66336,2446528,118984832,7378078464,568142287360,53189920492544,5949749335001088,783686338494312448,120058889459865165824,21166245289132322242560",
+    "name": "Number of ways of arranging 2n tokens in a row, with 2 copies of each token from 1 through n, such that between every pair of tokens labeled i (i=1..n-1) there is exactly one taken labeled i+1.",
+    "comment": [
+        "Contribution from _Paul Barry_, Oct 12 2009: (Start)",
+        "The aerated sequence is a(n)=(2^(n/2-1)+0^(n/2)/2)*((1+(-1)^n)/2)*n!*[x^n](1+x*tan(x/2)).",
+        "Multiples of the unsigned Genocchi numbers A110501: (1,1,3,17,155,...)*(1,2,4,8,16,...) (End)"
+    ],
+    "link": [
+        "Guo-Niu Han, <a href=\"http://www-irma.u-strasbg.fr/~guoniu/papers/p77puzzle.pdf\">Enumeration of Standard Puzzles</a>",
+        "Guo-Niu Han, <a href=\"/A196265/a196265.pdf\">Enumeration of Standard Puzzles</a> [Cached copy]"
+    ],
+    "formula": [
+        "G.f.: 1/(1-2x/(1-4x/(1-8x/(1-12x/(1-18x/(1-24x/(1-32x/(1-.../(1-2*floor((n+2)^2/4)*x/(1-... (continued fraction). [From _Paul Barry_, Dec 03 2009]",
+        "G.f.: T(0), where T(k) = 1 - x*(2*k+2)*(k+1)/( x*(2*k+2)*(k+1) - 1/( 1 - x*(2*k+2)*(k+2)/( x*(2*k+2)*(k+2) - 1/T(k+1) ))); (continued fraction). - _Sergei N. Gladkovskii_, Oct 24 2013"
+    ],
+    "program": [
+        "(Sage) # Algorithm of L. Seidel (1877)",
+        "# n -> [a(1), ..., a(n)] for n >= 1.",
+        "def A117513_list(n) :",
+        "    D = [0]*(n+2); D[1] = 1",
+        "    R = []; z = 1/2; b = True",
+        "    for i in(0..2*n-1) :",
+        "        h = i//2 + 1",
+        "        if b :",
+        "            for k in range(h-1, 0, -1) : D[k] += D[k+1]",
+        "            z *= 2",
+        "        else :",
+        "            for k in range(1, h+1, 1) :  D[k] += D[k-1]",
+        "        b = not b",
+        "        if b : R.append(D[h]*z)",
+        "    return R",
+        "A117513_list(15) # _Peter Luschny_, Jun 29 2012"
+    ],
+    "xref": [
+        "Cf. A002105, A117514, A117515."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Nan Zang (nzang(AT)cs.ucsd.edu), Apr 28 2006",
+    "ext": [
+        "More terms from _Paul Barry_, Oct 12 2009"
+    ],
+    "references": 4,
+    "revision": 13,
+    "time": "2014-01-03T00:20:04-05:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

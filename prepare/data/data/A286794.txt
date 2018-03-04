@@ -1,0 +1,47 @@
+{
+    "number": 286794,
+    "data": "1,3,20,189,2232,31130,497016,8907885,176829104,3849436062,91187523000,2335691914050,64344487654800,1897619527612692,59667237154623280,1993022006345620605,70488571028815935072,2631925423768158446390,103469607286411235941944,4272438866376100717458486",
+    "name": "Row sums of A286781.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A286794/b286794.txt\">Table of n, a(n) for n = 0..301</a>",
+        "Michael Borinsky, <a href=\"https://arxiv.org/abs/1703.00840\">Renormalized asymptotic enumeration of Feynman diagrams</a>, arXiv:1703.00840 [hep-th], 2017.",
+        "E.Z.Kuchinskii, M.V.Sadovskii, <a href=\"https://arxiv.org/pdf/cond-mat/9706062\">Combinatorics of Feynman diagrams for the problems with gaussian random field</a>, arXiv:cond-mat/9706062 [cond-mat.dis-nn], 1997.",
+        "Luca G. Molinari, <a href=\"https://arxiv.org/abs/cond-mat/0401500\">Hedin's equations and enumeration of Feynman's diagrams</a>, arXiv:cond-mat/0401500 [cond-mat.str-el], 2005."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} A286781(n,k).",
+        "A(x) = (1-x/A000699(x))/x, A208975(x) = 1 + x*A(-x).",
+        "a(n) ~ 4*exp(-1)/sqrt(Pi) * n^(3/2) * 2^n * n! * (1 - 3/(8*n) - 215/(128*n^2) + O(1/n^3)). (see Borinsky link) - _Gheorghe Coserea_, Oct 23 2017"
+    ],
+    "example": [
+        "A(x) = 1 + 3*x + 20*x^2 + 189*x^3 + 2232*x^4 + 31130*x^5 + ..."
+    ],
+    "program": [
+        "(PARI)",
+        "A286781_ser(N, t='t) = {",
+        "  my(x='x+O('x^N), y0=1+O('x^N), y1=0, n=1);",
+        "  while(n++,",
+        "    y1 = (1 + x*y0 + 2*x^2*y0')*(1 - x*y0*(1-t))/(1-x*y0)^2;",
+        "    if (y1 == y0, break()); y0 = y1;);",
+        "  y0;",
+        "};",
+        "Vec(A286781_ser(20,1))",
+        "(PARI)",
+        "A000699_seq(N) = {",
+        "  my(a = vector(N)); a[1] = 1;",
+        "  for (n=2, N, a[n] = sum(k=1, n-1, (2*k-1)*a[k]*a[n-k])); a;",
+        "};",
+        "A286794_seq(N) = Vec((1-1/Ser(A000699_seq(N+1)))/x);",
+        "A286794_seq(20)"
+    ],
+    "xref": [
+        "Cf. A208975, A286781."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gheorghe Coserea_, May 16 2017",
+    "references": 3,
+    "revision": 35,
+    "time": "2017-10-23T13:11:29-04:00",
+    "created": "2017-05-17T22:54:08-04:00"
+}

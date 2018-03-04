@@ -1,0 +1,41 @@
+{
+    "number": 133247,
+    "data": "2,17,19,23,31,53,61,79,83,107,109,137,167,173,181,197,211,227,229,241,257,271,293,317,349,379,383,409,421,439,443,467,499,503,541,571,587,593,601,617,631,647,653,683,691,739,751,769,773,797,811,827,829,857",
+    "name": "Prime numbers p with property that no odd Fibonacci number is divisible by p.",
+    "comment": [
+        "The Mathematica coding uses the fact that the Pisano period - the period with which a Fibonacci sequence (mod n) repeats itself is not more than 6n and the fact that the Fibonacci sequence starts with 0.",
+        "Subsequence of A133246 except for 2.",
+        "Primes not in A155916. - _Robert Israel_, Nov 20 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A133247/b133247.txt\">Table of n, a(n) for n = 1..2000</a>"
+    ],
+    "maple": [
+        "filter:= proc(p) local a,b,i;",
+        "  if not isprime(p) then return false fi;",
+        "  a:= 0: b:= 1;",
+        "for i from 2 do",
+        "  a,b:= b, (a+b) mod p;",
+        "  if b = 0 then",
+        "    if i mod 3 <> 0 then return false",
+        "    elif a = 1 then return true",
+        "    fi",
+        "  fi",
+        "od:",
+        "end proc:",
+        "select(filter, [2,seq(i,i=3..1000,2)]); # _Robert Israel_, Nov 20 2016"
+    ],
+    "mathematica": [
+        "Transpose[ Select[Table[{Prime[m], Select[Table[{n, Mod[Fibonacci[n], Prime[m]]}, {n, 6Prime[m] + 1}], Mod[ #[[1]], 3] != 0 && #[[2]] == 0 &]}, {m, 300}], #[[2]] == {} &]][[1]]"
+    ],
+    "xref": [
+        "Cf. A014437, A133246, A155916."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Oct 14 2007, Oct 17 2007, Nov 02 2007",
+    "references": 5,
+    "revision": 9,
+    "time": "2016-11-21T04:18:46-05:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

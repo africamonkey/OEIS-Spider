@@ -1,0 +1,50 @@
+{
+    "number": 226733,
+    "data": "1,2,18,142,1186,10152,88414,779508,6936066,62159224,560238728,5072970366,46114086446,420558296888,3846232573236,35261290343112,323952686556354,2981787128165592,27491128592627800,253835886034173848,2346892194318851016,21724880414632781472",
+    "name": "G.f.: 1 / (1 + 8*x*G(x)^2 - 10*x*G(x)^3) where G(x) = 1 + x*G(x)^4 is the g.f. of A002293.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A226733/b226733.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} C(2*k, n-k) * C(4*n-2*k, k).",
+        "a(n) = Sum_{k=0..n} C(n+2*k, n-k) * C(3*n-2*k, k).",
+        "a(n) = Sum_{k=0..n} C(2*n+2*k, n-k) * C(2*n-2*k, k).",
+        "a(n) = Sum_{k=0..n} C(3*n+2*k, n-k) * C(n-2*k, k).",
+        "a(n) = Sum_{k=0..n} C(4*n+2*k, n-k) * C(-2*k, k).",
+        "G.f.: 1 / (1 - 2*x*G(x)^2 - 10*x^2*G(x)^6) where G(x) = 1 + x*G(x)^4 is the g.f. of A002293.",
+        "a(n) ~ 2^(8*n+3/2)/(3^(3*n+3/2)*sqrt(Pi*n)). - _Vaclav Kotesovec_, Jun 16 2013"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 18*x^2 + 142*x^3 + 1186*x^4 + 10152*x^5 +...",
+        "A related series is G(x) = 1 + x*G(x)^4, where",
+        "G(x) = 1 + x + 4*x^2 + 22*x^3 + 140*x^4 + 969*x^5 + 7084*x^6 +...",
+        "G(x)^2 = 1 + 2*x + 9*x^2 + 52*x^3 + 340*x^4 + 2394*x^5 + 17710*x^6 +...",
+        "G(x)^3 = 1 + 3*x + 15*x^2 + 91*x^3 + 612*x^4 + 4389*x^5 + 32890*x^6 +...",
+        "such that A(x) = 1/(1 + 8*x*G(x)^2 - 10*x*G(x)^3)."
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[2*n+2*k,n-k]*Binomial[2*n-2*k,k],{k,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Jun 16 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(G=1+x); for(i=0, n,G=1+x*G^4+x*O(x^n)); polcoeff(1/(1+8*x*G^2-10*x*G^3), n)}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n)=local(G=1+x); for(i=0, n,G=1+x*G^4+x*O(x^n)); polcoeff(1/(1-2*x*G^2-10*x^2*G^6), n)}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n)=sum(k=0, n, binomial(2*n+2*k, n-k)*binomial(2*n-2*k, k))}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n)=sum(k=0, n, binomial(2*k, n-k)*binomial(4*n-2*k, k))}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n)=sum(k=0, n, binomial(4*n+2*k, n-k)*binomial(-2*k, k))}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A147855, A226761, A183160, A226705, A002293."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jun 16 2013",
+    "references": 4,
+    "revision": 22,
+    "time": "2013-07-18T02:32:07-04:00",
+    "created": "2013-06-16T01:28:25-04:00"
+}

@@ -1,0 +1,51 @@
+{
+    "number": 235038,
+    "data": "1,1,2,8,34,154,848,5552,40336,321616,2832752,27325088,285164944,3200979664,38513704448,494474723072,6744416517376,97390246272256,1484518880087552,23820397371219968,401324694629000705,7083386168647642624,130705210879629621248",
+    "name": "E.g.f. satisfies: A(x) = sinh(x + Integral A(x) dx).",
+    "comment": [
+        "Compare to: G(x) = sin(x + Integral G(x) dx) holds when G(x) = x*(4+2*x-x^3)/(4+x^4)."
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A'(x) = (1 + A(x))*sqrt(1 + A(x)^2).",
+        "(2) A(x) = G(x)*(2 - G(x))/(2 - 2*G(x)) such that G(x) = Series_Reversion(F(x)) where F(x) = Integral 2/(2-x^2) dx = Sum_{n>=0} (2*n)!/2^n * x^(2*n+1)/(2*n+1)!.",
+        "From _Vaclav Kotesovec_, Jan 03 2014: (Start)",
+        "E.g.f.: -1+2/(1-sinh(sqrt(2)*x-arccosh(sqrt(2)))).",
+        "E.g.f.: (-1+exp(sqrt(2)*x)) * (3+2*sqrt(2)+exp(sqrt(2)*x)) / ((3+2*sqrt(2)-exp(sqrt(2)*x)) * (1+exp(sqrt(2)*x))).",
+        "a(n) ~ n! * 2^((n+1)/2) / (arccosh(3))^(n+1).",
+        "a(n) ~ n! * 2^((n+1)/2) / (log(3+2*sqrt(2)))^(n+1).",
+        "(End)"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + x^2/2! + 2*x^3/3! + 8*x^4/4! + 34*x^5/5! + 154*x^6/6! +...",
+        "Related series:",
+        "(1 + A(x))*sqrt(1 + A(x)^2) = 1 + x + 2*x^2/2! + 8*x^3/3! + 34*x^4/4! +...",
+        "sqrt(1 + A(x)^2) = 1 + x^2/2! + 3*x^3/3! + 8*x^4/4! + 30*x^5/5! + 154*x^6/6! +...",
+        "Let G(x) = 1 + A(x) - sqrt(1 + A(x)^2), an odd function that begins:",
+        "G(x) = x - x^3/3! + 4*x^5/5! - 34*x^7/7! + 496*x^9/9! - 11056*x^11/11! +...",
+        "then A(x) = G(x)*(2 - G(x))/(2 - 2*G(x)) such that",
+        "Series_Reversion(G(x)) = x + x^3/3! + 6*x^5/5! + 90*x^7/7! + 2520*x^9/9! + 113400*x^11/11! +...+ (2*n)!/2^n*x^(2*n+1)/(2*n+1)! +...",
+        "which equals Integral 2/(2-x^2) dx = log((1+x/sqrt(2))/(1-x/sqrt(2)))/sqrt(2)."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[Series[-1+2/(1-Sinh[Sqrt[2]*x-ArcCosh[Sqrt[2]]]), {x, 0, 10}], x] * Range[0, 10]!] (* _Vaclav Kotesovec_, Jan 03 2014 *)"
+    ],
+    "program": [
+        "(PARI) /* By definition, A(x) = sinh(x + Integral A(x) dx): */",
+        "{a(n)=local(A=x);for(i=1,n,A=sinh(x+intformal(A+x*O(x^n))));n!*polcoeff(A,n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) /* From A'(x) = (1 + A(x))*sqrt(1 + A(x)^2): */",
+        "{a(n)=local(A=x);for(i=1,n,A=intformal((1+A)*sqrt(1+A^2 +x*O(x^n))));n!*polcoeff(A,n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) /* A = G*(2-G)/(2-2*G), G = Series_Reversion(Integral 2/(2-x^2) dx): */",
+        "{a(n)=local(G=serreverse(intformal(2/(2-x^2 +x*O(x^n)))));n!*polcoeff(G*(2-G)/(2-2*G),n)}",
+        "for(n=1,25,print1(a(n),\", \"))"
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Jan 02 2014",
+    "references": 0,
+    "revision": 19,
+    "time": "2014-10-29T12:56:00-04:00",
+    "created": "2014-01-02T18:36:54-05:00"
+}

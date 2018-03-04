@@ -1,0 +1,37 @@
+{
+    "number": 262038,
+    "data": "0,1,2,3,4,5,6,7,8,9,11,11,22,22,22,22,22,22,22,22,22,22,22,33,33,33,33,33,33,33,33,33,33,33,44,44,44,44,44,44,44,44,44,44,44,55,55,55,55,55,55,55,55,55,55,55,66,66,66,66,66,66,66,66,66,66,66,77,77,77,77,77,77,77,77,77,77",
+    "name": "Least palindrome >= n.",
+    "comment": [
+        "Could be called nextpalindrome() in analogy to the nextprime() function A007918. As for the latter (A151800), there is the variant \"next strictly larger palindrome\" which equals a(n+1), and thus differs from a(n) iff n is a palindrome; see PARI code.",
+        "Might also be called palindromic ceiling function in analogy to the name \"palindromic floor\" proposed for A261423."
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A262038/b262038.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PalindromicNumber.html\">Palindromic Number</a>",
+        "Wikipedia, <a href=\"http://www.wikipedia.org/wiki/Palindromic_number\">Palindromic_number</a>",
+        "<a href=\"/index/Pac#palindromes\">Index entries for sequences related to palindromes</a>"
+    ],
+    "mathematica": [
+        "palQ[n_] := Block[{d = IntegerDigits@ n}, d == Reverse@ d]; Table[k = n; While[! palQ@ k, k++]; k, {n, 0, 80}] (* _Michael De Vlieger_, Sep 09 2015 *)"
+    ],
+    "program": [
+        "(PARI) {A262038(n, d=digits(n), p(d)=sum(i=1, #d\\2, (10^(i-1)+10^(#d-i))*d[i],if(bittest(#d,0),10^(#d\\2)*d[#d\\2+1])))= for(i=(#d+3)\\2,#d,d[i]>d[#d+1-i]&&break;(d[i]<d[#d+1-i]||i==#d)&&return(p(d)));n<10&&return(n); forstep(i=(#d+1)\\2,1,-1,d[i]++>9||return(p(d));d[i]=0);10^#d+1} \\\\ For a function \"next strictly larger palindrome\", delete the i==#d and n<10... part. - _M. F. Hasler_, Sep 09 2015",
+        "(Haskell)",
+        "a262038 n = a262038_list !! n",
+        "a262038_list = f 0 a002113_list where",
+        "   f n ps'@(p:ps) = p : f (n + 1) (if p > n then ps' else ps)",
+        "-- _Reinhard Zumkeller_, Sep 16 2015"
+    ],
+    "xref": [
+        "Cf. A002113, A261423, A262037.",
+        "Sequences related to palindromic floor and ceiling: A175298, A206913, A206914, A261423, A262038, and the large block of consecutive sequences beginning at A265509."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_M. F. Hasler_, Sep 08 2015",
+    "references": 74,
+    "revision": 23,
+    "time": "2015-12-09T22:14:56-05:00",
+    "created": "2015-09-09T08:35:36-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 188457,
+    "data": "1,1,5,109,9449,3068281,3586048685,14668583277349,205716978569685329,9737002299093315531121,1536239893108209683958428885,799846636937376803320381186364509,1362900713950636674946135205457794784569",
+    "name": "G.f.: 1 = Sum_{n>=0} a(n)*x^n/(1 + 3^n*x)^(n+1).",
+    "comment": [
+        "G.f. satisfies a variant of an identity involving A003024:",
+        "1 = Sum_{n>=0} A003024(n)*x^n/(1 + 2^n*x)^(n+1),",
+        "where A003024(n) is the number of acyclic digraphs with n labeled nodes."
+    ],
+    "formula": [
+        "G.f.: 1 = Sum_{n>=0} a(n)*C(n+m-1,n)*x^n/(1 + 3^n*x)^(n+m) for m>=1.",
+        "L.g.f.: log(1+x) = Sum_{n>=1} a(n)*(x^n/n)/(1 + 3^n*x)^n.",
+        "E.g.f.: 1 = Sum_{n>=0} a(n)*exp(-3^n*x)*x^n/n!.",
+        "a(n) = Sum_{k=1..n} (-1)^(k+1)*C(n, k)*3^(k*(n-k))*a(n-k) for n>0 with a(0)=1.",
+        "From _Peter Bala_, Apr 01 2013: (Start)",
+        "Let E(x) = sum {n >= 0} x^n/(n!*3^C(n,2)). Then a generating function for this sequence is 1/E(-x) = sum {n >= 0} a(n)*x^n/(n!*3^C(n,2)) = 1 + x + 5*x^2/(2!*3) + 109*x^3/(3!*3^3) + 9449*x^4/(4!*3^6) + .... (End)",
+        "exp( Sum_{n >= 1} a(n)*x^n/n ) = 1 + x + 3*x^2 + 39*x^3 + 2403*x^4 + 616131*x^5 + ... appears to have integer coefficients. - _Peter Bala_, Jan 14 2016"
+    ],
+    "example": [
+        "Illustration of the generating functions.",
+        "E.g.f.: 1 = exp(-x) + exp(-3*x)*x + 5*exp(-9*x)*x^2/2! + 109*exp(-27*x)*x^3/3! +...",
+        "L.g.f.: log(1+x) = x/(1+3*x) + 5*(x^2/2)/(1+9*x)^2 + 109*(x^3/3)/(1+27*x)^3 +...",
+        "G.f.: 1 = 1/(1+x) + 1*x/(1+3*x)^2 + 5*x^2/(1+9*x)^3 + 109*x^3/(1+27*x)^4 +...",
+        "G.f.: 1 = 1/(1+x)^2 + 1*2*x/(1+3*x)^3 + 5*3*x^2/(1+9*x)^4 + 109*4*x^3/(1+27*x)^5 +...",
+        "G.f.: 1 = 1/(1+x)^3 + 1*3*x/(1+3*x)^4 + 5*6*x^2/(1+9*x)^5 + 109*10*x^3/(1+27*x)^6 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(1-sum(k=0, n-1, a(k)*x^k/(1+3^k*x+x*O(x^n))^(k+1)), n)}",
+        "for(n=0,20, print1(a(n),\", \"))",
+        "(PARI) /* Holds for m>=1: */",
+        "{a(n)=local(m=1);polcoeff(1-sum(k=0, n-1, a(k)*binomial(m+k-1,k)*x^k/(1+3^k*x+x*O(x^n))^(k+m)), n)/binomial(m+n-1,n)}",
+        "for(n=0,20, print1(a(n),\", \"))",
+        "(PARI) /* Recurrence: */",
+        "{a(n)=if(n<1, n==0, sum(k=1, n, -(-1)^k*binomial(n, k)*3^(k*(n-k))*a(n-k)))}",
+        "for(n=0,20, print1(a(n),\", \"))",
+        "(PARI) /* E.g.f.: */",
+        "{a(n)=n!*polcoeff(1-sum(k=0, n-1, a(k)*exp(-3^k*x+x*O(x^n))*x^k/k!), n)}",
+        "for(n=0,20, print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A003024, A137435, A188456, A188455, A135079."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Mar 31 2011",
+    "references": 5,
+    "revision": 28,
+    "time": "2016-01-16T15:46:39-05:00",
+    "created": "2011-04-01T19:36:41-04:00"
+}

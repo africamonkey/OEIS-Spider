@@ -1,0 +1,98 @@
+{
+    "number": 2975,
+    "id": "M5340",
+    "data": "70,836,4030,5830,7192,7912,9272,10792,17272,45356,73616,83312,91388,113072,243892,254012,338572,343876,388076,519712,539744,555616,682592,786208,1188256,1229152,1713592,1901728,2081824,2189024,3963968,4128448",
+    "name": "Primitive weird numbers: weird numbers with no proper weird divisors.",
+    "comment": [
+        "Sidney Kravitz notes that a(21) = 539744; it was misprinted as 539774 in the Benkoski & Erd\u0151s article. - _Charles R Greathouse IV_, Apr 04 2012",
+        "It appears that a weird number is primitive iff, divided by its largest prime factor, it is not weird. Is there a simple proof for this? - _M. F. Hasler_, Aug 20 2014 [The comment below does not answer this question.]",
+        "Yes, any primitive weird number, pwn, multiplied by any prime > sigma_1(pwn) is also weird. - _Robert G. Wilson v_, Jun 09 2015",
+        "A proper subsequence of A006037 and A091191. - _Robert G. Wilson v_, May 25 2015",
+        "Number of terms < 10^n: 0, 1, 2, 7, 13, 24, 48, 85, 152, 276, 499, 881, ..., . - _Robert G. Wilson v_, Jun 21 2017",
+        "The primitive weird number (pwn) 176405960704 is the least term which has as its abundance a pwn. Two other terms are 81152249741312, 14327148694372352. - _Robert G. Wilson v_, Sep 22 2017",
+        "Primitive weird numbers == 2 (mod 4): {70, 4030, 5830, 4199030, 1550860550, 66072609790, ...}. All the terms in A258374 appear so far. - _Robert G. Wilson v_, Nov 21 2015",
+        "See A258882 (and A258333) for terms of the form a(n)=2^k*p*q and A258401 for all other terms, with subsets A258883 (a(n)=2^k*p*q*r), A258884 (a(n)=2^k*p*q*r*s), A258885 (six distinct prime factors). A258374 and A258375 list the smallest terms with n prime factors (with / without counting multiplicity). - _M. F. Hasler_, Jul 12 2016",
+        "Sequence A273815 lists terms with nonsquarefree odd part, by definition excluded in A258883 and A258884. - _M. F. Hasler_, Feb 18 2018"
+    ],
+    "reference": [
+        "R. K. Guy, Unsolved Problems in Number Theory, B2.",
+        "R. Honsberger, Mathematical Gems, M.A.A., 1973, p. 113.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A002975/b002975.txt\">Table of n, a(n) for n = 1..1081</a> (all terms below 1311*10^9; terms a(58) - a(160) from Donovan Johnson)",
+        "Stan Benkoski, <a href=\"http://www.jstor.org/stable/2316276\">Problem E2308</a>, Amer. Math. Monthly, 79 (1972) 774.",
+        "G. Amato, M. Hasler, G. Melfi and M. Parton, <a href=\"http://rivista.math.unipr.it/vols/2016-7-1/amato-et-al.html\">Primitive weird numbers having more than three distinct prime factors</a>, Riv. Mat. Univ. Parma, Vol. 7, No. 1 (2016) 153-163.",
+        "S. J. Benkoski and P. Erd\u0151s, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1974-0347726-9\">On weird and pseudoperfect numbers</a>, Math. Comp., 28 (1974), pp. 617-623. <a href=\"http://www.renyi.hu/~p_erdos/1974-24.pdf\">Alternate link</a>; <a href=\"http://dx.doi.org/10.1090/S0025-5718-1975-0360452-6\">1975 corrigendum</a>.",
+        "R. K. Guy, <a href=\"/A001599/a001599_1.pdf\">Letter to N. J. A. Sloane with attachment, Jun. 1991</a>",
+        "Douglas E. Iannucci, <a href=\"http://arxiv.org/abs/1504.02761\">On primitive weird numbers of the form 2^k*p*q</a>, arXiv:1504.02761 [math.NT], 2015.",
+        "G. Melfi, <a href=\"http://dx.doi.org/10.1016/j.jnt.2014.07.024\">On the conditional infiniteness of primitive weird numbers</a>, Journal of Number Theory, Volume 147, February 2015, Pages 508-514.",
+        "Robert G. Wilson v, <a href=\"/A002975/a002975_19.txt\">Table of n, a(n) along with its abundance and their factorizations for n = 1..1081.</a>"
+    ],
+    "example": [
+        "10430 = A006037(8) is weird but not primitive weird because it has the proper weird divisor 70 = A006037(1)."
+    ],
+    "mathematica": [
+        "(* first do *) << Combinatorica` (* then *) fQ[n_] := Block[{d = Most@ Divisors@ n, l = 2^(DivisorSigma[0, n] - 1), i = 1}, i = 1; While[i < l && Plus @@ NthSubset[i, d] != n, i++ ]; i == l]; lst = {}; Do[m = n; If[ Mod[n, 6] != 0 && DivisorSigma[1, n] > 2 n && Union[ Mod[ n, Join[lst, {n + 1}]]][[1]] != 0 && fQ@n, AppendTo[lst, n]; Print@n], {n, 2, 42000000, 2}] (* _Robert G. Wilson v_, Aug 04 2009 *)",
+        "(* Input: Range of even numbers --- Output: Primitive weird numbers *)",
+        "Block[{$RecursionLimit = Infinity},",
+        "  subOfSum[ss_, kk_, rr_] :=",
+        "   Module[{s = ss, k = kk, r = rr},",
+        "    If[s + w[[k]] >= mm && s + w[[k]] <= m, t = False;",
+        "     Goto[done] (* Found *),",
+        "     If[s + w[[k]] + w[[k + 1]] <= m,",
+        "      subOfSum[s + w[[k]], k + 1, r - w[[k]]]];",
+        "     If[s + r - w[[k]] >= m && s + w[[k + 1]] <= m,",
+        "      subOfSum[s, k + 1, r - w[[k]] ]]]; t]; (* end subOfSum *)",
+        "  greedyQ[ab_] := Module[{abn = ab, v, sum, s, j, jj, k}, tt = False;",
+        "    jj = Length[w]; (* start search *)",
+        "    Do[s = r; sum = 0; Do[v = w[[j]]; sum = sum + v;",
+        "      If[sum > abn, sum = sum - v; Goto[nxt]];",
+        "      If[sum == abn, tt = True; Goto[doneG]]; s = s - v;",
+        "      Label[nxt], {j, jj, 1, -1}];",
+        "     jj = jj - 1, {k, 1, jj - 1}]; Label[doneG];",
+        "    (* True means found, False not found *) tt]; (* end greedyQ *)",
+        "  cnt = 0;",
+        "  Do[ If[ Mod[n, 3] == 0, Goto[agn]]; r = DivisorSigma[1, n];",
+        "   m = r - 2*n;",
+        "   If[m > 0, fi = FactorInteger[n]; largestP = fi[[Length[fi]]][[1]];",
+        "    nn = n/largestP; If[m > 2*nn || Length[fi] < 3, Goto[agn]];",
+        "    If[DivisorSigma[1, nn] > 2*nn, Goto[agn]]; t = True; r = r - n;",
+        "    ww = Divisors[n]; lenW = Length[ww];",
+        "    Do[ If[ ww[[i]] <= m, w = Drop[ww, i - lenW]; Break[],",
+        "      r = r - ww[[i]]], {i, lenW - 1, 1, -1}];",
+        "    If[r >= m,",
+        "     If[ greedyQ[m], t = False, (* Powers of 2 dropped *)",
+        "      exp2 = fi[[1]][[2]]; sig2 = 2^(exp2 + 1) - 1; mm = m - sig2;",
+        "      lenW = Length[w]; ww = {};",
+        "      If[exp2 > 1,",
+        "       Do[ Do[ If[ w[[i]] == 2^ii, ww = AppendTo[ww, w[[i]]]],",
+        "      {i, 1, lenW}], {ii, 0, exp2}];",
+        "        w = Complement[w, ww]",
+        "       (* end T if *), w = Drop[w, 2]];",
+        "      (* end Pwr2 *) t = subOfSum[0, 1, r]]]; Label[done];",
+        "    If[t, Print[++cnt, \"   \", n, \"  \", t]]];",
+        "   Label[agn], {n, 2, 10000000, 2}]]",
+        "(* from Brent Baughn via http://mathematica.stackexchange.com/questions/73301/calculating-weird-numbers, _Robert G. Wilson v_, Nov 21 2015 *)"
+    ],
+    "program": [
+        "(PARI) is_A002975(n)=is_A006037(n)&&!fordiv(n,d,!bittest(d,0)&&d<n&&is_A006037(d)&&return) \\\\ _M. F. Hasler_, Jan 07 2014"
+    ],
+    "xref": [
+        "Cf. A006037.",
+        "Cf. A258882 and A258333; A258883, A258884, A258885 and A258401; A258374 and A258375."
+    ],
+    "keyword": "nonn,nice,changed",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Jud McCranie_, Oct 21 2001",
+        "One more term from _Robert G. Wilson v_, Aug 04 2009",
+        "a(1)-a(123) double-checked by _M. F. Hasler_, Jan 07 2014",
+        "Edited by _M. F. Hasler_, Jul 12 2016"
+    ],
+    "references": 34,
+    "revision": 282,
+    "time": "2018-02-21T03:52:30-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

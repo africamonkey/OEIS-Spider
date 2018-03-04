@@ -1,0 +1,57 @@
+{
+    "number": 83137,
+    "data": "1,2,3,5,7,11,101,131,151,181,191,313,323,353,373,383,727,757,767,787,797,919,929,989,10001,10301,10501,10601,11111,11311,11411,12421,12721,12821,13031,13331,13831,13931,14141,14341,14741,14941,15151,15451",
+    "name": "Smallest palindromic number relatively prime to all the previous terms.",
+    "comment": [
+        "323 is the first composite entry. Conjecture: sequence is infinite."
+    ],
+    "link": [
+        "R. J. Mathar and Giovanni Resta, <a href=\"/A083137/b083137.txt\">Table of n, a(n) for n = 1..10000</a> (first 966 terms from R. J. Mathar)"
+    ],
+    "maple": [
+        "isA002113 := proc(n)",
+        "    if digrev(n) = n then",
+        "        true;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "A083137 := proc(n)",
+        "    option remember;",
+        "    if n =1 then",
+        "        1;",
+        "    else",
+        "        for p from procname(n-1)+1 do",
+        "            if isA002113(p) then",
+        "                rpr := true;",
+        "                for i from 1 to n-1 do",
+        "                    if igcd(procname(i),p) > 1 then",
+        "                        rpr := false;",
+        "                        break;",
+        "                    end if;",
+        "                end do:",
+        "                if rpr then",
+        "                    return p ;",
+        "                end if;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Aug 23 2014"
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := a[n] = For[k = a[n-1]+1, True, k++, If[PalindromeQ[k] && AllTrue[Array[a, n-1], CoprimeQ[#, k]&], Return[k]]]; Array[a, 50] (* _Jean-Fran\u00e7ois Alcover_, Jan 17 2018 *)"
+    ],
+    "xref": [
+        "Cf. A002113, A083136, A083139 (primes in this sequence)."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_ and Meenakshi Srikanth (menakan_s(AT)yahoo.com), Apr 24 2003",
+    "ext": [
+        "Corrected and extended by _Reinhard Zumkeller_, May 05 2003"
+    ],
+    "references": 3,
+    "revision": 23,
+    "time": "2018-01-17T03:27:14-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

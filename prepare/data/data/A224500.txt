@@ -1,0 +1,56 @@
+{
+    "number": 224500,
+    "data": "1,4,21,184,2425,42396,916909,23569456,701312049,23697421300,896146948741,37491632258664,1719091662617641,85724109916049164,4618556912276116125,267351411229327901536,16547551265061986364769,1090506038795558789135076,76234505063400211010327029",
+    "name": "Number of ordered full binary trees with labels from a set of at most n labels.",
+    "comment": [
+        "a(n) is also the maximum number of different operations with n operands for a non-associative non-commutative binary operator.",
+        "a(n) is also the second column of A185946."
+    ],
+    "link": [
+        "Laurent Orseau, <a href=\"/A224500/b224500.txt\">Table for n, a(n) for n=1..350</a>"
+    ],
+    "formula": [
+        "a(n) = sum(permutations(n, k)*catalan(k-1), k=1..n)",
+        "a(n) = sum(binom(n, k)*quadruple_factorial(k-1), k=1..n)",
+        "a(n) = sum(n!(2k-2)!/((n-k)!k!(k-1)!), k=1..n)",
+        "a(1)=1, a(2)=4, a(n) = (4n-5)*a(n-1)-(4n-4)*a(n-2)+1 for n>2. - _Giovanni Resta_, Apr 08 2013",
+        "E.g.f: exp(x)*(1-sqrt(1-4*x))/2  - _Mark van Hoeij_, Apr 10 2013",
+        "G.f.: hypergeom([1,1/2],[],4*x/(1-x))*x/(1-x)^2  - _Mark van Hoeij_, Apr 10 2013",
+        "a(n) ~ 2^(2*n-3/2)*n^(n-1)*exp(1/4-n). - _Vaclav Kotesovec_, Aug 16 2013"
+    ],
+    "example": [
+        "For n=3, the a(3)=21 solutions are:",
+        "    a b c",
+        "    ab ba ac ca bc cb",
+        "    (ab)c a(bc)",
+        "    (ac)b a(cb)",
+        "    (ba)c b(ac)",
+        "    (bc)a b(ca)",
+        "    (ca)b c(ab)",
+        "    (cb)a c(ba)"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[Binomial[n,k]*(2*k-2)! / (k-1)!, {k,n}]; Array[a,20] (* _Giovanni Resta_, Apr 08 2013 *)"
+    ],
+    "program": [
+        "(Racket)",
+        "#lang racket",
+        "(require math/number-theory)",
+        "(define (a n)",
+        "  (for/sum ([k (in-range 1 (+ n 1))])",
+        "    (* (binomial n k)",
+        "       (/ (factorial (* 2 (- k 1)))",
+        "          (factorial (- k 1))))))",
+        "(PARI) x='x+O('x^66); Vec(serlaplace(exp(x)*(1-sqrt(1-4*x))/2)) /* _Joerg Arndt_, Apr 10 2013 */"
+    ],
+    "xref": [
+        "Cf. A185946, A220452, A001813, A000108"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Laurent Orseau_, Apr 08 2013",
+    "references": 1,
+    "revision": 21,
+    "time": "2013-08-16T11:55:04-04:00",
+    "created": "2013-04-08T14:02:37-04:00"
+}

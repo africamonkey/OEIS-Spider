@@ -1,0 +1,67 @@
+{
+    "number": 216686,
+    "data": "1,2,4,5,8,10,16,17,20,32,40,41,58,64,80,128,160,185,197,219,254,256,281,320,377,512,589,640,843,917,964,1024,1247,1280,1652,1707,1804,1825,2048,2074,2157,2519,2560,2637,2642,2727,2771,3614,3755,3786,4046,4096,4227",
+    "name": "Numbers n such that n appears in the partial sums of the m-almost primes, where m=bigomega(n).",
+    "comment": [
+        "A013918 is a subsequence. - _Zak Seidov_, Sep 17 2012",
+        "Or: Numbers n equal to the sum of the first k numbers x having bigomega(x)=bigomega(n), for some k. - _M. F. Hasler_, Sep 23 2012"
+    ],
+    "example": [
+        "2 is in the sequence because 2 appears in A007504.",
+        "4 is in the sequence because 4 appears in A062198.",
+        "5 is in the sequence because 5 appears in A007504.",
+        "6 is not in the sequence because 6 is not in A062198.",
+        "8 is in the sequence because 8 appears in A086062,",
+        "10 is in the sequence because 10 appears in A062198."
+    ],
+    "maple": [
+        "alm := proc(n,m) # n-th m-almost prime",
+        "    option remember;",
+        "    if n =1 then",
+        "        2^m ;",
+        "    else",
+        "        for a from procname(n-1,m)+1 do",
+        "            if numtheory[bigomega](a) = m then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "almP := proc(n,m) #n-th partial sum of the m-almost primes",
+        "    add(alm(i,m),i=1..n) ;",
+        "end proc:",
+        "isA216686 := proc(n) # is n in the sequence?",
+        "    local m ,k,ps;",
+        "    m := numtheory[bigomega](n) ;",
+        "    for k from 1 do",
+        "        ps := almP(k,m) ;",
+        "        if ps = n then",
+        "            return true;",
+        "        elif ps > n then",
+        "            return false;",
+        "        end  if;",
+        "    end do:",
+        "end proc:",
+        "for n from 1 to 4300 do",
+        "    if isA216686(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Sep 14 2012"
+    ],
+    "program": [
+        "(PARI) is_A216686(n)={ my(m=bigomega(n),t); while(n>0, while(bigomega(t++)!=m,); n-=t); !n}  \\\\ - _M. F. Hasler_, Sep 23 2012"
+    ],
+    "xref": [
+        "Cf. A001222, A007504, A013918, A062198, A092190, A086052, A086062."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Gerasimov Sergey_, Sep 13 2012",
+    "ext": [
+        "Corrected by _R. J. Mathar_, Sep 14 2012"
+    ],
+    "references": 0,
+    "revision": 18,
+    "time": "2012-10-01T06:50:55-04:00",
+    "created": "2012-10-01T06:50:55-04:00"
+}

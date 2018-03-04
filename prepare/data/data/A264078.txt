@@ -1,0 +1,48 @@
+{
+    "number": 264078,
+    "data": "1,1,1,1,2,3,6,14,30,76,170,553,1583,5106,14090,41002,164769,603513,2418348,8335804,28704417,109618261,466318442,2114095511,10276979159,43213859606,175668903294,793946150358,3490939879402,15500974371599,82490059523125",
+    "name": "The maximal number of standard Young tableaux without a succession v, v+1 in a row that a single partition of n can have.",
+    "comment": [
+        "A standard Young tableau (SYT) without a succession v, v+1 in a row is called a nonconsecutive tableau."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A264078/b264078.txt\">Table of n, a(n) for n = 0..60</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau\">Young tableau</a>"
+    ],
+    "formula": [
+        "a(n) = max { k : A264051(n,k) > 0 }."
+    ],
+    "example": [
+        "a(6) = 6: partition [2,2,1,1] has 6 standard Young tableaux without a succession v, v+1 in a row, which is maximal for a partition of n=6:",
+        "15   14   14   13   13   13",
+        "26   26   25   26   25   24",
+        "3    3    3    4    4    5",
+        "4    5    6    5    6    6"
+    ],
+    "maple": [
+        "h:= proc(l, j) option remember; `if`(l=[], 1,",
+        "      `if`(l[1]=0, h(subsop(1=[][], l), j-1), add(",
+        "      `if`(i<>j and l[i]>0 and (i=1 or l[i]>l[i-1]),",
+        "       h(subsop(i=l[i]-1, l), i), 0), i=1..nops(l))))",
+        "    end:",
+        "g:= proc(n, i, l) `if`(n=0 or i=1, h([1$n, l[]], 0),",
+        "      `if`(i<1, 0, max(g(n, i-1, l),",
+        "      `if`(i>n, 0, g(n-i, i, [i, l[]])))))",
+        "    end:",
+        "a:= n-> g(n$2, []):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Nov 02 2015"
+    ],
+    "mathematica": [
+        "h[l_, j_] := h[l, j] = If[l == {}, 1, If[l[[1]] == 0, h[ReplacePart[l, 1 -> Sequence[]], j - 1], Sum[If[i != j && l[[i]] > 0 && (i == 1 || l[[i]] > l[[i - 1]]), h[ReplacePart[l, i -> l[[i]] - 1], i], 0], {i, 1, Length[l]} ]]]; g[n_, i_, l_] := g[n, i, l] = If[n == 0 || i == 1, h[Join[Array[1 &, n], l], 0], If[i < 1, 0, Max[g[n, i - 1, l], If[i > n, 0, g[n - i, i, Join[{i}, l]]]]]]; a[n_] := g[n, n, {}];  Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Jan 22 2016, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A237770, A264051."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Alois P. Heinz_, Nov 02 2015",
+    "references": 3,
+    "revision": 18,
+    "time": "2017-02-06T14:39:02-05:00",
+    "created": "2015-11-03T02:31:37-05:00"
+}

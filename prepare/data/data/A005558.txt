@@ -1,0 +1,67 @@
+{
+    "number": 5558,
+    "id": "M2598",
+    "data": "1,1,3,6,20,50,175,490,1764,5292,19404,60984,226512,736164,2760615,9202050,34763300,118195220,449141836,1551580888,5924217936,20734762776,79483257308,281248448936,1081724803600,3863302870000,14901311070000,53644719852000",
+    "name": "a(n) is the number of n-step walks on square lattice such that 0 <= y <= x at each step.",
+    "comment": [
+        "Number of n-step walks that start at the origin, constrained to stay in the first octant (0 <= y <= x). (Conjectured) - _Benjamin Phillabaum_, Mar 11 2011, corrected by _Robert Israel_, Oct 07 2015",
+        "For n >= 1, a(n-1) is the number of Dyck Paths with semilength n having floor((n+2)/2) U's in odd numbered positions. Example: (U is in odd numbered position and u is in even numbered position) Dyck path with n=5, floor ((5+2)/2)=3: UuddUuUddd. - _Roger Ford_, May 27 2017"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A005558/b005558.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "A. Bostan, <a href=\"https://www-apr.lip6.fr/sem-comb-slides/IHP-bostan.pdf\">Computer Algebra for Lattice Path Combinatorics</a>, Slides for S\u00e9minaire de Combinatoire Ph. Flajolet, Mar 28 2013.",
+        "R. K. Guy, <a href=\"/A005555/a005555.pdf\">Letter to N. J. A. Sloane, May 1990</a>",
+        "R. K. Guy, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/GUY/catwalks.html\">Catwalks, Sandsteps and Pascal Pyramids</a>, J. Integer Seqs., Vol. 3 (2000), #00.1.6. See Column 1 of Figure 5.",
+        "Heinrich Niederhausen, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL8/Niederhausen/niederhausen10.html\">A Note on the Enumeration of Diffusion Walks in the First Octant by Their Number of Contacts with the Diagonal</a>, Journal of Integer Sequences, Vol. 8 (2005), Article 05.4.3."
+    ],
+    "formula": [
+        "a(n) = C(n+1, ceiling(n/2))*C(n, floor(n/2)) - C(n+1, ceiling((n-1)/2))*C(n, floor((n-1)/2)). - _Paul D. Hanna_, Apr 16 2004",
+        "G.f.: (1/(4x^2))*((16*x^2-1)*(hypergeom([1/2, 1/2],[1],16*x^2)+2*x*(4*x-1)*hypergeom([3/2, 3/2],[2],16*x^2))-2*x+1). - _Mark van Hoeij_, Oct 13 2009",
+        "E.g.f (conjectured): BesselI(1,2*x)*(BesselI(0,2*x)+BesselI(1,2*x))/x. - _Benjamin Phillabaum_, Feb 25 2011",
+        "Conjecture: (2*n+1)*(n+3)*(n+2)*a(n) -4*(2*n^2+4*n+3)*a(n-1) -16*n*(2*n+3)*(n-1)*a(n-2)=0. - _R. J. Mathar_, Apr 02 2017",
+        "Conjecture: (n+3)*(n+2)*a(n) -4*(n^2+3*n+1)*a(n-1) +16*(-n^2+n+1)*a(n-2) +64*(n-1)*(n-2)*a(n-3)=0. - _R. J. Mathar_, Apr 02 2017",
+        "a(n) = Sum_{k=0..floor(n/2)} n!/(k!*k!*(floor(n/2)-k)!*(floor((n+1)/2)-k)!*(k+1)) (conjectured). - _Roger Ford_, Aug 04 2017"
+    ],
+    "maple": [
+        "A:= proc(n,x,y) option remember;",
+        "    local j, xpyp, xp,yp, res;",
+        "    xpyp:= [[x-1,y],[x+1,y],[x,y-1],[x,y+1]];",
+        "    res:= 0;",
+        "    for j from 1 to 4 do",
+        "      xp:= xpyp[j,1];",
+        "      yp:= xpyp[j,2];",
+        "      if xp < 0 or xp > yp or xp + yp > n then next fi;",
+        "      res:= res + procname(n-1,xp,yp)",
+        "    od;",
+        "return res",
+        "end proc:",
+        "A(0,0,0) := 1:",
+        "seq(add(add(A(n,x,y), y = x .. n - x), x = 0 .. floor(n/2)), n = 0 .. 50); # _Robert Israel_, Oct 07 2015"
+    ],
+    "mathematica": [
+        "a[n_] := 1/2*Binomial[2*Floor[n/2]+1, Floor[n/2]+1]*CatalanNumber[1/2*(n+Mod[n, 2])]*(Mod[n, 2]+2); Table[a[n]//Abs, {n, 0, 27}] (* _Jean-Fran\u00e7ois Alcover_, Mar 13 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=binomial(n+1,ceil(n/2))*binomial(n,floor(n/2)) - binomial(n+1,ceil((n-1)/2))*binomial(n,floor((n-1)/2))",
+        "(MAGMA) [Binomial(n+1, Ceiling(n/2))*Binomial(n, Floor(n/2)) - Binomial(n+1, Ceiling((n-1)/2))*Binomial(n, Floor((n-1)/2)): n in [0..30]]; // _Vincenzo Librandi_, Sep 30 2015",
+        "(Python)",
+        "from sympy import ceiling as c, binomial, floor",
+        "def a(n): return binomial(n + 1, c(n/2))*binomial(n, floor(n/2)) - binomial(n + 1, c((n - 1)/2))*binomial(n, floor((n - 1)/2))",
+        "print [a(n) for n in xrange(51)] # _Indranil Ghosh_, Jul 02 2017"
+    ],
+    "xref": [
+        "See A138350 for a signed version.",
+        "Bisections are A000891 and A000888/2.",
+        "Cf. A005559, A005560, A005561, A005562, A093768."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "references": 11,
+    "revision": 117,
+    "time": "2018-01-10T19:24:46-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

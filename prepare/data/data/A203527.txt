@@ -1,0 +1,38 @@
+{
+    "number": 203527,
+    "data": "1,5,350,529200,17542980000,14783258730240000,511420331138811494400000,871980665589501641034301440000000,60150685659205753788492548338089984000000000,182771197941564481989784945231570147139911680000000000000",
+    "name": "a(n) = Product_{1 <= i < j <= n} (A018252(i) + A018252(j)); A018252 = nonprime numbers.",
+    "comment": [
+        "Each term divides its successor, as in A203528. It is conjectured that each term is divisible by the corresponding superfactorial, A000178(n); as in A203529. See A093883 for a guide to related sequences."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; local k; if n=1 then 1",
+        "      else for k from 1+b(n-1) while isprime(k) do od; k fi",
+        "    end:",
+        "a:= n-> mul(mul(b(i)+b(j), i=1..j-1), j=2..n):",
+        "seq(a(n), n=1..10);  # _Alois P. Heinz_, Jul 23 2017"
+    ],
+    "mathematica": [
+        "t = Table[If[PrimeQ[k], 0, k], {k, 1, 100}];",
+        "nonprime = Rest[Union[t]]              (* A018252 *)",
+        "f[j_] := nonprime[[j]]; z = 20;",
+        "v[n_] := Product[Product[f[k] + f[j], {j, 1, k - 1}], {k, 2, n}]",
+        "d[n_] := Product[(i - 1)!, {i, 1, n}]  (* A000178 *)",
+        "Table[v[n], {n, 1, z}]                 (* A203527 *)",
+        "Table[v[n + 1]/v[n], {n, 1, z - 1}]    (* A203528 *)",
+        "Table[v[n]/d[n], {n, 1, 20}]           (* A203529 *)"
+    ],
+    "xref": [
+        "Cf. A018252, A203415, A203528, A203529."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Jan 03 2012",
+    "ext": [
+        "Name edited by _Alois P. Heinz_, Jul 23 2017"
+    ],
+    "references": 5,
+    "revision": 13,
+    "time": "2017-07-23T13:19:06-04:00",
+    "created": "2012-01-04T15:46:32-05:00"
+}

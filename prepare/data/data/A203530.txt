@@ -1,0 +1,40 @@
+{
+    "number": 203530,
+    "data": "1,10,1680,5569200,426645273600,1135354270482432000,129053267560513803386880000,556394398742051964595520667648000000,99449133623220179596974346585642106880000000000",
+    "name": "a(n) = Product_{1 <= i < j <= n} (c(i) + c(j)); c = A002808 = composite numbers.",
+    "comment": [
+        "Each term divides its successor, as in A203530.",
+        "It is conjectured that each term is divisible by the corresponding superfactorial, A000178(n); as in A203533.",
+        "See A093883 for a guide to related sequences."
+    ],
+    "maple": [
+        "c:= proc(n) option remember; local k; if n=1 then 4",
+        "      else for k from 1+c(n-1) while isprime(k) do od; k fi",
+        "    end:",
+        "a:= n-> mul(mul(c(i)+c(j), i=1..j-1), j=2..n):",
+        "seq(a(n), n=1..10);  # _Alois P. Heinz_, Jul 23 2017"
+    ],
+    "mathematica": [
+        "t = Table[If[PrimeQ[k], 0, k], {k, 1, 100}];",
+        "composite = Rest[Rest[Union[t]]]       (* A002808 *)",
+        "f[j_] := composite[[j]]; z = 20;",
+        "v[n_] := Product[Product[f[k] + f[j], {j, 1, k - 1}], {k, 2, n}]",
+        "d[n_] := Product[(i - 1)!, {i, 1, n}]  (* A000178 *)",
+        "Table[v[n], {n, 1, z}]                 (* A203530 *)",
+        "Table[v[n + 1]/v[n], {n, 1, z - 1}]    (* A203532 *)",
+        "Table[v[n]/d[n], {n, 1, 20}]           (* A203533 *)"
+    ],
+    "xref": [
+        "Cf. A002808, A203418, A203532, A203533."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Jan 03 2012",
+    "ext": [
+        "Name edited by _Alois P. Heinz_, Jul 23 2017"
+    ],
+    "references": 4,
+    "revision": 16,
+    "time": "2017-07-23T13:44:53-04:00",
+    "created": "2012-01-04T15:46:04-05:00"
+}

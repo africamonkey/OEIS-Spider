@@ -1,0 +1,61 @@
+{
+    "number": 6472,
+    "id": "M3052",
+    "data": "1,1,3,18,180,2700,56700,1587600,57153600,2571912000,141455160000,9336040560000,728211163680000,66267215894880000,6958057668962400000,834966920275488000000,113555501157466368000000,17373991677092354304000000,2970952576782792585984000000",
+    "name": "a(n) = n!*(n-1)!/2^(n-1).",
+    "comment": [
+        "Product of first (n-1) positive triangular numbers. Might be called a triangular factorial number. - _Amarnath Murthy_, May 19 2002, corrected by _Alex Ratushnyak_, Dec 03 2013",
+        "Number of ways of transforming n distinguishable objects into n singletons via a sequence of n-1 refinements. Example: a(3)=3 because we have XYZ->X|YZ->X|Y|Z, XYZ->Y|XZ->X|Y|Z and XYZ->Z|XY->X|Y|Z. - _Emeric Deutsch_, Jan 23 2005",
+        "From _David Callan_, Aug 27 2009: (Start)",
+        "With offset 0, a(n) = number of unordered increasing full binary trees of 2n edges with leaf set {n,n+1,...,2n}, where full binary means each nonleaf vertex has two children, increasing means the vertices are labeled 0,1,2,...,2n and each child is greater than its parent, unordered might as well mean ordered and each pair of sibling vertices is increasing left to right. For example, a(2)=3 counts the trees with edge lists {01,02,13,14}, {01,03,12,14}, {01,04,12,13}.",
+        "PROOF. Given such a tree of size n, to produce a tree of size n+1, two new leaves must be added to the leaf n. Choose any two of the leaf set {n+1,...,2n,2n+1,2n+2} for the new leaves and use the rest to replace the old leaves n+1,...,2n, maintaining relative order. Thus each tree of size n yields (n+2)-choose-2 trees of the next size up. Since the ratio a(n+1)/a(n)=(n+2)-choose-2, the result follows by induction.",
+        "Without the condition on the leaves, these trees are counted by the reduced tangent numbers A002105. (End)",
+        "a(n) = Sum(M(t)N(t)), where summation is over all rooted trees t with n vertices, M(t) is the number of ways to take apart t by sequentially removing terminal edges (see A206494) and N(t) is  the number of ways to build up t from the one-vertex tree by adding successively edges to the existing vertices (the Connes-Moscovici weight; see A206496). See Remark on p. 3801 of the Hoffman reference. Example: a(3) = 3; indeed, there are two rooted trees with 3 vertices: t' = the path r-a-b and t\" = V; we have M(t')=N(t')=1 and M(t\") =1, N(t\")=2, leading to M(t')N(t') + M(t\")N(t\")=3. - _Emeric Deutsch_, Jul 20 2012"
+    ],
+    "reference": [
+        "L. Comtet, Advanced Combinatorics, Reidel, 1974, p. 148.",
+        "L. Lovasz, Combin. Problems and Exercises, North-Holland, 1979, p. 165.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A006472/b006472.txt\">Table of n, a(n) for n = 1..50</a>",
+        "Karl Dienger, <a href=\"/A000217/a000217.pdf\">Beitr\u00e4ge zur Lehre von den arithmetischen und geometrischen Reihen h\u00f6herer Ordnung</a>, Jahres-Bericht Ludwig-Wilhelm-Gymnasium Rastatt, Rastatt, 1910. [Annotated scanned copy]",
+        "Daniel Dockery, <a href=\"http://danieldockery.com/res/math/polygorials.pdf\"> Polygorials, Special \"Factorials\" of Polygonal Numbers.</a>",
+        "Filippo Disanto and Thomas Wiehe, <a href=\"http://arxiv.org/abs/1112.1295\">Some combinatorial problems on binary rooted trees occurring in population genetics</a>, arXiv preprint arXiv:1112.1295 [math.CO], 2011-2012.",
+        "P. Erd\u0151s, R. K. Guy and J. W. Moon, <a href=\"http://dx.doi.org/10.1112/jlms/s2-9.4.565\">On refining partitions</a>, J. London Math. Soc., 9 (1975), 565-570.",
+        "L. Ferretti, F. Disanto and T, Wiehe, <a href=\"http://dx.doi.org/10.1371/journal.pone.0060123\">The Effect of Single Recombination Events on Coalescent Tree Height and Shape</a>, PLoS ONE 8(4): e60123.",
+        "O. Frank and K. Svensson, <a href=\"http://dx.doi.org/10.1080/00949658108810439\">On probability distributions of single-linkage dendrograms</a>, Journal of Statistical Computation and Simulation, 12 (1981), 121-131. (<a href=\"/A006472/a006472_1.pdf\">Annotated scanned copy</a>)",
+        "M. E. Hoffman, <a href=\"http://dx.doi.org/10.1090/S0002-9947-03-03317-8 \">Combinatorics of rooted trees and Hopf algebras</a>, Trans. Amer. Math. Soc., 355, 2003, 3795-3811.",
+        "C. L. Mallows, <a href=\"/A006472/a006472.pdf\">Note to N. J. A. Sloane circa 1979</a>.",
+        "F. Murtagh, <a href=\"http://dx.doi.org/10.1016/0166-218X(84)90066-0\">Counting dendrograms: a survey</a>, Discrete Applied Mathematics, 7 (1984), 191-199.",
+        "<a href=\"/index/Fa#factorial\">Index entries for sequences related to factorial numbers</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1)*A000217(n-1).",
+        "a(n) = A010790(n-1)/2^(n-1).",
+        "a(n) = Polygorial(n, 3) = A000142(n)/A000079(n)*A000142(n+1) = n!/2^n*product(i+2, i=0..n-1) = n!/2^n*pochhammer(2, n) = n!^2/2^n*(n+1) = Polygorial(n, 4)/2^n*(n+1). - Daniel Dockery (peritus(AT)gmail.com), Jun 13 2003",
+        "a(n-1) = (-1)^(n+1)/n^2/det(M_n) where M_n is the matrix M_(i, j)=abs(1/i-1/j). - _Benoit Cloitre_, Aug 21 2003",
+        "From _Ilya Gutkovskiy_, Dec 15 2016: (Start)",
+        "a(n) ~ 4*Pi*n^(2*n)/(2^n*exp(2*n)).",
+        "Sum_{n>=1} 1/a(n) = BesselI(1,2*sqrt(2))/sqrt(2) = 2.3948330992734... (End)"
+    ],
+    "maple": [
+        "A006472 := n->n!*(n-1)!/2^(n-1);"
+    ],
+    "mathematica": [
+        "FoldList[Times,1,Accumulate[Range[20]]] (* _Harvey P. Dale_, Jan 10 2013 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = n*(n-1)!^2/2^(n-1) \\\\ _Charles R Greathouse IV_, May 18 2015"
+    ],
+    "xref": [
+        "Cf. A084939, A084940, A084941, A084942, A084943, A084944."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_",
+    "references": 29,
+    "revision": 88,
+    "time": "2017-10-04T00:18:20-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

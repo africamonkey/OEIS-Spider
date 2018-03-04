@@ -1,0 +1,67 @@
+{
+    "number": 10842,
+    "data": "1,3,10,38,168,872,5296,37200,297856,2681216,26813184,294947072,3539368960,46011804672,644165281792,9662479259648,154599668219904,2628194359869440,47307498477912064,898842471080853504,17976849421618118656,377513837853982588928",
+    "name": "E.g.f.: exp(2x)/(1-x).",
+    "comment": [
+        "Incomplete Gamma Function at 2, more precisely: a(n) = exp(2)*Gamma(1+n,2).",
+        "Let P(A) be the power set of an n-element set A. Then a(n) = the total number of ways to add 0 or more elements of A to each element x of P(A) where the elements to add are not elements of x and order of addition is important. - _Ross La Haye_, Nov 19 2007"
+    ],
+    "reference": [
+        "M. Abramowitz and I. A. Stegun, eds., Handbook of Mathematical Functions, National Bureau of Standards Applied Math. Series 55, Tenth Printing, 1972, p. 262.",
+        "R. P. Stanley, Enumerative Combinatorics, Cambridge, Vol. 2, 1999; see Example 5.1.2."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A010842/b010842.txt\">Table of n, a(n) for n=0..100</a>",
+        "M. Abramowitz and I. A. Stegun, eds., <a href=\"http://www.convertit.com/Go/ConvertIt/Reference/AMS55.ASP\">Handbook of Mathematical Functions</a>, National Bureau of Standards Applied Math. Series 55, Tenth Printing, 1972, p. 262.",
+        "Ross La Haye, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL12/LaHaye/lahaye5.html\">Binary Relations on the Power Set of an n-Element Set</a>, Journal of Integer Sequences, Vol. 12 (2009), Article 09.2.6.",
+        "J. W. Layman, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL4/LAYMAN/hankel.html\">The Hankel Transform and Some of its Properties</a>, J. Integer Sequences, 4 (2001), #01.1.5."
+    ],
+    "formula": [
+        "a(n) = row sums of A090802. - _Ross La Haye_, Aug 18 2006",
+        "a(n) = n*a(n-1)+2^n = (n+2)a(n-1)-(2n-2)a(n-2) = n!*sum{0 <= j <= n}[ 2^j/j! ] - _Henry Bottomley_, Jul 12 2001",
+        "a(n) is the permanent of the n X n matrix with 3's on the diagonal and 1's elsewhere. a(n) = Sum(k=0..n, A008290(n, k)*3^k). - _Philippe Del\u00e9ham_, Dec 12 2003",
+        "Binomial transform of A000522. - _Ross La Haye_, Sep 15 2004",
+        "a(n) = sum{k=0..n, k!*C(n, k)2^(n-k)}; - _Paul Barry_, Apr 22 2005",
+        "a(n) = A066534(n) + 2^n. - _Ross La Haye_, Nov 16 2005",
+        "a(n) is the number of ways to split the set {1,2,...,n} into two disjoint subsets S,T with S union T = {1,2,...,n} and linearly order S and then choose a subset of T. - _Geoffrey Critzer_, Mar 10 2009",
+        "G.f.: hypergeom([1,k],[],x/(1-2*x))/(1-2*x) with k=1,2,3 is the generating function for A010842, A081923, and A082031. - _Mark van Hoeij_, Nov 08 2011",
+        "E.g.f.: 1/E(0), where E(k)=1-x/(1-2/(2+(k+1)/E(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, Nov 21 2011",
+        "G.f.: 1/Q(0), where Q(k)= 1 - 2*x - x*(k+1)/(1-x*(k+1)/Q(k+1)); (continued fraction). - _Sergei N. Gladkovskii_, Apr 18 2013",
+        "a(n) ~ n! * exp(2). - _Vaclav Kotesovec_, Jun 01 2013",
+        "From _Peter Bala_, Sep 25 2013: (Start)",
+        "a(n) = n!*e^2 - sum {k >= 0} 2^(n + k + 1)/((n + 1)*...*(n + k + 1))",
+        "= n!*e^2 - e^2*( int {t = 0..2} t^n*exp(-t) dt )",
+        "= e^2*( int {t = 2..inf} t^n*exp(-t) dt )",
+        "= e^2*( int {t = 0..inf} t^n*exp(-t)*Heaviside(t-2) dt ),",
+        "an integral representation of a(n) as the n-th moment of a nonnegative function on the positive half-axis.",
+        "Bottomley's second-order recurrence above a(n) = (n + 2)*a(n-1) - 2*(n - 1)*a(n-2) has n! as a second solution. This yields the finite continued fraction expansion a(n)/n! = 1/(1 - 2/(3 - 2/(4 - 4/(5 - ...- 2*(n - 1)/(n + 2))))) valid for n >= 2. Letting n tend to infinity gives the infinite continued fraction expansion e^2 = 1/(1 - 2/(3 - 2/(4 - 4/(5 - ...- 2*(n - 1)/(n + 2 - ...))))). (End)",
+        "a(n) = 2^(n+1)*U(1, n+2, 2), where U is the Bessel U function. - _Peter Luschny_, Nov 26 2014",
+        "For n>=4, a(n) = r - mod(r, 2^(n - floor((2/n) + log2(n)))) where r = {n! * e^2 - 2^(n+1)/(n+1)}. - _Stan Wagon_, Apr 28 2016",
+        "G.f.: A(x) = 1/(1 - 2*x - x/(1 - x/(1 - 2*x - 2*x/(1 - 2*x/(1 - 2*x - 3*x/(1 - 3*x/(1 - 2*x - 4*x/(1 - 4*x/(1 - 2*x - p... ))))))))). - _Peter Bala_, May 26 2017"
+    ],
+    "maple": [
+        "G(x):=exp(2*x)/(1-x): f[0]:=G(x): for n from 1 to 19 do f[n]:=diff(f[n-1],x) od: x:=0: seq(f[n],n=0..19); # _Zerinvary Lajos_, Apr 03 2009",
+        "seq(simplify(exp(1)^2*GAMMA(n+1, 2)), n=0..19); # _Peter Luschny_, Apr 28 2016"
+    ],
+    "mathematica": [
+        "With[{nn=20}, CoefficientList[Series[Exp[2x]/(1-x), {x, 0, nn}], x] Range[ 0, nn]!] (* _Harvey P. Dale_, Nov 05 2011 *)",
+        "With[{r = Round[n! E^2 - 2^(n + 1)/(n + 1)]},",
+        "r - Mod[r, 2^(n - Floor[2/n + Log2[n]])]] (* for n>=4; _Stan Wagon_, Apr 28 2016 *)",
+        "a[n_] := n! Sum[2^i/i!, {i, 0, n}]",
+        "Table[a[n], {n, 0, 21}] (* _Gerry Martens_ , May 06 2016 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^44); Vec(serlaplace(exp(2*x)/(1-x))) \\\\ _Joerg Arndt_, Apr 29 2016"
+    ],
+    "xref": [
+        "Cf. A053484, A053485, A053486, A008290.",
+        "A010843, A000023, A000166, A000142, A000522, A010842, A053486, A053487 have similar properties."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, _Simon Plouffe_",
+    "references": 24,
+    "revision": 90,
+    "time": "2017-12-18T12:00:25-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

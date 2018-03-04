@@ -1,0 +1,56 @@
+{
+    "number": 5021,
+    "id": "M3888",
+    "data": "1,5,19,66,221,728,2380,7753,25213,81927,266110,864201,2806272,9112264,29587889,96072133,311945595,1012883066,3288813893,10678716664,34673583028,112584429049,365559363741,1186963827439,3854047383798,12514013318097,40632746115136",
+    "name": "Random walks (binomial transform of A006054).",
+    "comment": [
+        "Number of walks of length 2n+5 in the path graph P_6 from one end to the other one. Example: a(1)=5 because in the path ABCDEF we have ABABCDEF, ABCBCDEF, ABCDCDEF, ABCDEDEF and ABCDEFEF. - _Emeric Deutsch_, Apr 02 2004",
+        "Since a(n) is the binomial transform of A006054 from formula (3.63) in the Witula-Slota-Warzynski paper, it follows that a(n)=A(n;1)*(B(n;-1)-C(n;-1))-B(n;1)*B(n;-1)+C(n;1)*(A(n;-1)-B(n;-1)+C(n;-1)), where A(n;1)=A077998(n), B(n;1)=A006054(n+1), C(n;1)=A006054(n), A(n;-1)=A121449(n), B(n+1;-1)=-A085810(n+1), C(n;-1)=A215404(n) and A(n;d), B(n;d), C(n;d), n in N, d in C, denote the quasi-Fibonacci numbers defined and discussed in comments in A121449 and in the cited paper. - _Roman Witula_, Aug 09 2012"
+    ],
+    "reference": [
+        "W. Feller, An Introduction to Probability Theory and its Applications, 3rd ed, Wiley, New York, 1968, p. 96.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "C. J. Everett, P. R. Stein, <a href=\"http://dx.doi.org/10.1016/0012-365X(77)90019-X\">The combinatorics of random walk with absorbing barriers</a>, Discrete Math. 17 (1977), no. 1, 27-45.",
+        "C. J. Everett, P. R. Stein, <a href=\"/A005021/a005021.pdf\">The combinatorics of random walk with absorbing barriers</a>, Discrete Math. 17 (1977), no. 1, 27-45. [Annotated scanned copy]",
+        "G. Kreweras, <a href=\"/A000108/a000108_1.pdf\">Sur les \u00e9ventails de segments</a>, Cahiers du Bureau Universitaire de Recherche Op\u00e9rationnelle, Institut de Statistique, Universit\u00e9 de Paris, #15 (1970), 3-41. [Annotated scanned copy]",
+        "S. Morier-Genoud, V. Ovsienko and S. Tabachnikov, <a href=\"http://arxiv.org/abs/1008.3359\">2-frieze patterns and the cluster structure of the space of polygons</a>, Annales de l'institut Fourier, 62 no. 3 (2012), 937-987; arXiv:1008.3359. - From _N. J. A. Sloane_, Dec 26 2012",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "Roman Witula, Damian Slota and Adam Warzynski, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL9/Slota/slota57.html\">Quasi-Fibonacci Numbers of the Seventh Order</a>, J. Integer Seq., 9 (2006), Article 06.4.3.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (5, -6, 1)."
+    ],
+    "formula": [
+        "G.f.: 1/(1-5x+6x^2-x^3). - _Emeric Deutsch_, Apr 02 2004",
+        "a(n) = 5a(n-1)-6a(n-2)+a(n-3). - _Emeric Deutsch_, Apr 02 2004",
+        "a(n) = Sum_{j=-infinity..infinity} (binomial(5+2k, 7j+k-2)-binomial(5+2k, 7j+k-1)) (a finite sum).",
+        "a(n-2) = 2^n*C(n;1/2)=(1/7)*((c(2)-c(4))*(c(4))^(2n) + (c(4)-c(1))*(c(1))^(2n) + (c(1)-c(2))*(c(2))^(2n)), where a(-2)=a(-1):=0, c(j):=2*cos(2Pi*j/7). This formula follows from the Binet formula for C(n;d)--one of the quasi-Fibonacci numbers (see comments in A121449 and the formula (3.17) in the Witula-Slota-Warzynski paper). - _Roman Witula_, Aug 09 2012"
+    ],
+    "maple": [
+        "a:=k->sum(binomial(5+2*k,7*j+k-2),j=ceil((2-k)/7)..floor((7+k)/7))-sum(binomial(5+2*k,7*j+k-1),j=ceil((1-k)/7)..floor((6+k)/7)): seq(a(k),k=0..25);",
+        "A005021:=-(z-1)*(z-5)/(-1+5*z-6*z**2+z**3); # conjectured by _Simon Plouffe_ in his 1992 dissertation; gives sequence apart from the initial 1"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{5,-6,1}, {1,5,19}, 50] (* _Roman Witula_, Aug 09 2012 *)",
+        "CoefficientList[Series[1/(1 - 5 x + 6 x^2 - x^3), {x, 0, 40}], x] (* _Vincenzo Librandi_, Sep 18 2015 *)"
+    ],
+    "program": [
+        "(MAGMA) I:=[1,5,19]; [n le 3 select I[n] else 5*Self(n-1)-6*Self(n-2)+Self(n-3): n in [1..30]]; // _Vincenzo Librandi_, Sep 18 2015"
+    ],
+    "xref": [
+        "Double partial sums of A060557. Bisection of A052547.",
+        "Cf. A094789, A094790, A080937."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "a(25)-a(26) from _Vincenzo Librandi_, Sep 18 2015"
+    ],
+    "references": 18,
+    "revision": 49,
+    "time": "2017-06-19T10:48:19-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 186082,
+    "data": "1,2,3,5,10,13,18,31,49,98,116,232,281,397,678,1075,2150,3225,4300,5375,5772,6847,7922,8997,17994,19069",
+    "name": "Numbers n such that log(A156668(n)*(1 + n mod 2))/n^2 is smaller than for any prior n.",
+    "link": [
+        "David Broadhurst, <a href=\"/A186082/b186082.txt\">Table of n for n = 1..1000</a>",
+        "Kevin Acres and David Broadhurst, <a href=\"http://listserv.nodak.edu/cgi-bin/wa.exe?A2=ind1102&amp;L=nmbrthry&amp;P=R752\">Rational points on y^2 = x^3 + 10*x^2 + 5*x</a>"
+    ],
+    "example": [
+        "[1,  0.6931471805599453094172321215]",
+        "[2,  0.5994738181995926360154858945]",
+        "[3,  0.5898075219334671955890478209]",
+        "[5,  0.5866039232314788114510488867]",
+        "[10, 0.5865963134453746145925657102]",
+        "[13, 0.5864356249925781873672553233]",
+        "[18, 0.5864232678262123920533476064]"
+    ],
+    "program": [
+        "(PARI)",
+        "T(k)={",
+        "    local(P=ellpow(ellinit([0,10,0,5,0]),[-1,2],k),s,t);",
+        "    s=P[1]^2;",
+        "    t=abs(numerator(P[2]^4/s-80*s));",
+        "    while(t%2==0,t=t/2;);",
+        "    t;",
+        "}",
+        "M(k)=1+k%2;",
+        "V(k)=log(M(k)*T(k))/k^2;",
+        "{",
+        "    lowest=1;",
+        "    for(i=1,20000,",
+        "        l=V(i);",
+        "        if(l<lowest,",
+        "            lowest=l;",
+        "            print([i,l]);",
+        "        );",
+        "    );",
+        "}"
+    ],
+    "xref": [
+        "Cf. A156668."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Kevin T. Acres_, Feb 12 2011",
+    "references": 2,
+    "revision": 20,
+    "time": "2015-12-21T02:56:59-05:00",
+    "created": "2011-02-12T04:02:20-05:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 233281,
+    "data": "2,5,13,37,73,89,113,149,157,193,233,269,277,313,353,389,397,457,557,613,673,677,733,757,877,953,977,997,1069,1093,1153,1213,1237,1453,1597,1657,1753,1873,1877,1933,1949,1993,2017,2137,2221,2237,2309,2333,2417,2473",
+    "name": "Numbers n such that the least Fibonacci number F_k which is a multiple of n has a prime index, i.e., k is in A000040.",
+    "comment": [
+        "Numbers n such that A001177(n) is prime.",
+        "Each natural number n belongs to this sequence if the smallest Fibonacci number which it divides is a term of A030426. - _Jon E. Schoenfield_, Feb 28 2014",
+        "A092395 gives all the primes in this sequence (cf. Wikipedia-link), and the first composite occurs as the 69th term, where a(69)=4181 while A092395(69)=4273. After 4181 (= 37*113 = F_19), the next term missing from A092395 is a(148)=10877 (= 73*149. A001177(10877) = 37, F_37 = 24157817 = 2221*10877). Both of these numbers (4181 and 10877) occur in various lists of Fibonacci-related pseudoprimes. Sequence A238082 gives all composites occurring in this sequence.",
+        "If n is in this sequence then all divisors d > 1 of n are in this sequence. - _Charles R Greathouse IV_, Feb 04 2014",
+        "Composite members begin 4181, 10877, 75077, 162133, 330929, .... - _Charles R Greathouse IV_, Mar 07 2014"
+    ],
+    "link": [
+        "Antti Karttunen and Charles R Greathouse IV, <a href=\"/A233281/b233281.txt\">Table of n, a(n) for n = 1..2000</a> (first 157 terms from Karttunen)",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Fibonacci_prime#Divisibility_of_Fibonacci_numbers\">Fibonacci prime, section: Divisibility of Fibonacci numbers</a>"
+    ],
+    "formula": [
+        "A010051(A001177(a(n))) = 1. - _Reinhard Zumkeller_, Apr 04 2014"
+    ],
+    "program": [
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A233281 (MATCHING-POS 1 1 (lambda (n) (prime? (A001177 n)))))",
+        "(PARI) is(n)=my(k); while(fibonacci(k++)%n, ); isprime(k) \\\\ _Charles R Greathouse IV_, Feb 04 2014",
+        "(PARI) entry(p)=my(k=1);while(fibonacci(k++)%p,);k;",
+        "is(n)={",
+        "    if(n%2==0,return(n==2));",
+        "    if(n<13, return(n==5));",
+        "    my(f=factor(n),p,F);",
+        "    if(f[1,2]>1 && f[1,1]<1e14,return(0));",
+        "    p=entry(f[1,1]);",
+        "    F=fibonacci(p);",
+        "    if(f[1,2]>1 && F%f[1,1]^f[1,2],return(0));",
+        "    if(!isprime(p), return(0));",
+        "    for(i=2,#f~,",
+        "        if(F%f[i,1]^f[i,2],return(0))",
+        "    );",
+        "    1",
+        "}; \\\\ _Charles R Greathouse IV_, Feb 04 2014",
+        "(Haskell)",
+        "a233281 n = a233281_list !! (n-1)",
+        "a233281_list = filter ((== 1) . a010051 . a001177) [1..]",
+        "-- _Reinhard Zumkeller_, Apr 04 2014"
+    ],
+    "xref": [
+        "Disjoint union of A092395 and A238082. The first 68 terms are identical with A092395, after which follows the first case of the latter sequence, with a(69) = A238082(1) = 4181.",
+        "Cf. A000045, A001177, A001602, A030426, A051694, A060442, A086597, A233282."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Dec 13 2013",
+    "references": 5,
+    "revision": 54,
+    "time": "2017-07-16T15:15:47-04:00",
+    "created": "2013-12-21T10:51:47-05:00"
+}

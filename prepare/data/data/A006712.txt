@@ -1,0 +1,36 @@
+{
+    "number": 6712,
+    "id": "M4311",
+    "data": "6,480,197820,150474240,208857587400,471804812519040,1625459273858019600,8112729590064978278400,56342429224416522460072800,527075322501595757416502976000,6466573585901882433727764077860800,101749747195531624711768653503416320000",
+    "name": "Number of 3-edge-colored trivalent graphs with 2n labeled nodes.",
+    "reference": [
+        "R. C. Read, Some Enumeration Problems in Graph Theory. Ph.D. Dissertation, Department of Mathematics, Univ. London, 1958.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A006712/b006712.txt\">Table of n, a(n) for n = 2..50</a>",
+        "Sean A. Irvine, <a href=\"/A006712/a006712.pdf\">Illustration of initial terms</a>",
+        "R. C. Read, <a href=\"/A002831/a002831.pdf\">Letter to N. J. A. Sloane, Feb 04 1971</a> (gives initial terms of this sequence)"
+    ],
+    "program": [
+        "(PARI)",
+        "dpermcount(v) = {my(m=1,s=0,k=0,t); for(i=1,#v,t=v[i]; k=if(i>1&&t==v[i-1],k+1,1); m*=2*t*k;s+=2*t); s!/m}",
+        "S(n,x)={vector(n, n, if(n>1, sum(k=0, n, binomial(2*n-k,k)*2*n/(2*n-k)*x^k), 0))}",
+        "q(n,s)={my(t=0); if(n>1, forpart(p=n, t+=dpermcount(p)*prod(i=1, #p, s[p[i]]), [2,n])); t}",
+        "a(n)={my(p=q(n,S(n,x))); sum(i=0, poldegree(p), polcoeff(p,n-i)*(-1)^(n-i)*(2*i)!/(2^i*i!))} \\\\ _Andrew Howroyd_, Dec 18 2017"
+    ],
+    "xref": [
+        "Cf. A006713 (for connected cases), A248361 (for the incorrect values). See also A002830, A002831, A005638."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "a(5)-a(6) corrected and a(7)-a(10) from _Sean A. Irvine_, Oct 05 2014",
+        "Terms a(11) and beyond from _Andrew Howroyd_, Dec 18 2017"
+    ],
+    "references": 6,
+    "revision": 25,
+    "time": "2017-12-18T22:44:55-05:00",
+    "created": "1991-07-25T03:00:00-04:00"
+}

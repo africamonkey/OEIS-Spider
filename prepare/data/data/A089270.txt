@@ -1,0 +1,55 @@
+{
+    "number": 89270,
+    "data": "1,5,11,19,29,31,41,55,59,61,71,79,89,95,101,109,121,131,139,145,149,151,155,179,181,191,199,205,209,211,229,239,241,251,269,271,281,295,305,311,319,331,341,349,355,359,361,379,389,395,401,409,419,421,431",
+    "name": "Positive numbers represented by the integer binary quadratic form x^2 + x*y - y^2 with x and y relatively prime.",
+    "comment": [
+        "The negative numbers represented by x^2 + x*y - y^2 with relative prime x and y are -a(n).",
+        "The discriminant of this binary form is D=5>0, hence this is an indefinite form.",
+        "It appears that these are also the n for which the equation x^2 = x+1 (mod n) has solutions. The number of solutions is 0 or a power of 2. It appears that n=5 is the only n for which x^2 = x+1 (mod n) has just one solution. The first n producing 4 solutions is 209. The first n producing 8 solutions is 6061. - _T. D. Noe_, Nov 04 2009",
+        "The terms are the products of primes congruent to {0,1,4} mod 5, which is A038872.",
+        "Brousseau's paper lists these numbers (less than 1000) as discriminants of Fibonacci sequences. For each number, he also lists the (a,b) pairs that are the first two terms of a unique Fibonacci sequence.",
+        "From _Matthew Staller_, Oct 01 2015: (Start)",
+        "The number of solutions to n=|y^2-x^2-xy| with relatively prime x and y is 0 or 2^k, where k is the number of distinct prime factors of n that are congruent to {1,4} mod 5. For example, n=187891=11*19*29*31 has 16=2^4 solutions; the prime n=9999999929 has 2=2^1 solutions; n=84182245951=31^3*41^4 has 4=2^2 solutions.",
+        "Recurring sequences (as Fibonacci sequences) may be ordered by determinant (|y^2-x^2-xy| for consecutive (x,y) terms), and further by individual terms to clarify where necessary. For example, the four distinct sequences that have a determinant of 209 are (13,8),(13,5),(14,13),(14,1) which shows how they were found but which would be more commonly understood as (8,21),(5,18),(13,27),(1,15). For a determinant of 1 there is exactly one sequence (Fibonacci, A000045), for a determinant of 5 there is just one (Lucas, A000032). For 11 there are two (1,4) and (2,5), the latter of which is known as the Evangelist sequence (A001060).",
+        "(End)",
+        "The linear map (x,y) -> (5x+8y, 8x+13y) maps coprime integer solutions of x^2+xy-y^2 = n to coprime integer solutions, so if there is such a solution with nonnegative x,y there must be one with y < 8 sqrt(n). - _Robert Israel_, Oct 01 2015"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A089270/b089270.txt\">Table of n, a(n) for n=1..1000</a>, matches Jagy's program output (_R. J. Mathar_, Sep 10 2016)",
+        "Alfred Brousseau, <a href=\"http://www.fq.math.ca/Scanned/1-4/alfred1.pdf\">On the ordering of Fibonacci sequences</a>, Fib. Quart. 1.4 (1963), 43-46; <a href=\"http://www.fq.math.ca/Scanned/2-1/corrections2.pdf\">Errata</a>, Fib. Quart. 2.1 (1964), 38.",
+        "V. E. Hoggatt, Jr., <a href=\"/A005676/a005676.pdf\">7-page typed letter to N. J. A. Sloane with suggestions for new sequences</a>, circa 1977.",
+        "N. J. A. Sloane et al., <a href=\"https://oeis.org/wiki/Binary_Quadratic_Forms_and_OEIS\">Binary Quadratic Forms and OEIS</a> (Index to related sequences, programs, references)"
+    ],
+    "formula": [
+        "a(n) = x^2 + x*y - y^2 with relatively prime integers x and y (proper solutions of the Diophantine equation)."
+    ],
+    "example": [
+        "n=2: a(2)=5 with, for example, (x,y)= (2,1): 4+2-1=5 (there are infinitely many proper (x,y) solutions).",
+        "n=8: a(n)=55 with, for example, (x,y)=(7,6) or (7,1). In this case there exist two fundamental proper solutions."
+    ],
+    "maple": [
+        "F:= proc(n) local x,y;",
+        "      for y from 1 to floor(8*sqrt(n)) do",
+        "         x := (-y+sqrt(5*y^2+4*n))/2;",
+        "         if x::integer and igcd(x,y) = 1 then return true fi;",
+        "      od:",
+        "      false",
+        "end proc:",
+        "select(F, [$1..1000]); # _Robert Israel_, Oct 01 2015"
+    ],
+    "mathematica": [
+        "max = 500; xmax = Sqrt[max] // Ceiling; Clear[repQ]; repQ[_] = False; Do[ If[GCD[x, y] == 1, repQ[x^2 + x*y - y^2] = True], {y, 0, xmax-1}, {x, y, xmax}]; Select[Range[max], repQ] (* _Jean-Fran\u00e7ois Alcover_, Jul 17 2013 *) [Caution: brute force search! - _N. J. A. Sloane_, Jun 11 2014]",
+        "Reap[For[n = 1, n < 1000, n++, r = Reduce[x^2 + x y - y^2 == n, {x, y}, Integers]; If[r =!= False, If[AnyTrue[{x, y} /. {ToRules[r /. C[1] -> 0]}, CoprimeQ @@ # &], Print[n]; Sow[n]]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Oct 31 2016 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Wolfdieter Lang_, Nov 07 2003",
+    "ext": [
+        "The Mma program from Alcover appears to use brute force search, which is notoriously unreliable for indefinite forms. - _N. J. A. Sloane_, Jun 11 2014",
+        "Second Mma program without brute force by _Jean-Fran\u00e7ois Alcover_, Oct 31 2016"
+    ],
+    "references": 11,
+    "revision": 67,
+    "time": "2017-10-17T13:30:12-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

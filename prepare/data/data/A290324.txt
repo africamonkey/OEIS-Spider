@@ -1,0 +1,38 @@
+{
+    "number": 290324,
+    "data": "6,396,67554,28336848,23986682550,35931274250076,87017657752978386,318992998488391738944,1683675635040443830593798,12301777316059025283613106700,120545445185882926234784081616546,1543421856441404929844846263740167376",
+    "name": "Number of (undirected) paths in the complete tripartite graph K_{n,n,n}.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A290324/b290324.txt\">Table of n, a(n) for n = 1..50</a>",
+        "Andrew Howroyd, <a href=\"/A290324/a290324.txt\">Formula for the number of paths</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CompleteTripartiteGraph.html\">Complete Tripartite Graph</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/GraphPath.html\">Graph Path</a>"
+    ],
+    "mathematica": [
+        "c[n_, k_, i_, j_, p_]:=Binomial[n, k] Binomial[n, i + p] Binomial[n, j + p] Binomial[k, i] Binomial[k - i, j] k!*(i + p)!*(j + p)!*2^(k - i - j)*Binomial[p + i + j - 1, k - 1](1 + n - k); a[n_]:=3*Sum[Sum[Sum[Sum[c[n, k, i, j, p], {p, k - i - j, n}], {j, 0, k - i}], {i, 0, k}], {k, n}]/2; Table[a[n], {n, 12}] (* _Indranil Ghosh_, Aug 14 2017, after PARI *)"
+    ],
+    "program": [
+        "(PARI)",
+        "c(n, k, i, j, p) = {binomial(n, k)*binomial(n, i+p)*binomial(n, j+p)*binomial(k, i)",
+        "* binomial(k-i, j)*k!*(i+p)!*(j+p)!*2^(k-i-j)*binomial(p+i+j-1, k-1)*(1+n-k)}",
+        "a(n)={3*(sum(k=1, n, sum(i=0, k, sum(j=0, k-i, sum(p=k-i-j, n, c(n, k, i, j, p) )))))/2} \\\\ _Andrew Howroyd_, Aug 13 2017",
+        "(Python)",
+        "from sympy import binomial, factorial",
+        "def c(n, k, i, j, p): return binomial(n, k)*binomial(n, i + p)*binomial(n, j + p)*binomial(k, i)*binomial(k - i, j)*factorial(k)*factorial(i + p)*factorial(j + p)*2**(k - i - j)*binomial(p + i + j - 1, k - 1)*(1 + n - k)",
+        "def a(n): return 3*sum([sum([sum([sum([c(n, k, i, j, p) for p in xrange(k - i - j, n + 1)]) for j in xrange(k - i + 1)]) for i in xrange(k + 1)]) for k in xrange(1, n + 1)])/2",
+        "print map(a, xrange(1, 13)) # _Indranil Ghosh_, Aug 14 2017, after PARI"
+    ],
+    "xref": [
+        "Cf. A234616, A234633."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Eric W. Weisstein_, Jul 27 2017",
+    "ext": [
+        "Terms a(5) and beyond from _Andrew Howroyd_, Aug 13 2017"
+    ],
+    "references": 1,
+    "revision": 14,
+    "time": "2017-08-14T05:20:53-04:00",
+    "created": "2017-07-27T12:39:47-04:00"
+}

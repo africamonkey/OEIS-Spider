@@ -1,0 +1,60 @@
+{
+    "number": 26376,
+    "data": "1,6,30,144,685,3258,15533,74280,356283,1713690,8263596,39938616,193419915,938430990,4560542550,22195961280,108171753355,527816696850,2578310320610,12607504827600,61706212037295,302275142049870,1481908332595625,7270432009471224",
+    "name": "a(n) = number of integer strings s(0),...,s(n) counted by array T in A026374 that have s(n)=2; also a(n)=T(2n,n-1).",
+    "comment": [
+        "Number of Schroeder paths (i.e. consisting of steps U=(1,1), D=(1,-1) and H=(2,0) and never going below the x-axis) from (0,0) to (2n+2,0), with exactly one peak at an even level. E.g. a(2)=6 because we have UUDDH, HUUDD, UDUUDD, UUDDUD, UUDHD and UHUDD. - _Emeric Deutsch_, Dec 28 2003",
+        "Number of left steps in all skew Dyck paths of semilength n+1. A skew Dyck path is a path in the first quadrant which begins at the origin, ends on the x-axis, consists of steps U=(1,1)(up), D=(1,-1)(down) and L=(-1,-1)(left) so that up and left steps do not overlap. The length of the path is defined to be the number of its steps. Example: a(2)=6 because in the 10 (=A002212(3)) skew Dyck paths of semilength 3 ( namely UDUUDL, UUUDLD, UUDUDL, UUUDDL, UUUDLL and five Dyck paths that have no left steps) we have altogether 6 left steps. - _Emeric Deutsch_, Aug 05 2007",
+        "From _Gary W. Adamson_, May 17 2009: (Start)",
+        "Equals A026378 (1, 4, 17, 75, ...) convolved with A007317 (1, 2, 5, 15, 51, ...).",
+        "Equals A081671 (1, 3, 11, 45, ...) convolved with A002212 (1, 3, 10, 36, 137, ...).",
+        "(End)"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A026376/b026376.txt\">Table of n, a(n) for n = 1..200</a>",
+        "E. Deutsch, E. Munarini, S. Rinaldi, <a href=\"http://dx.doi.org/10.1016/j.jspi.2010.01.015\">Skew Dyck paths</a>, J. Stat. Plann. Infer. 140 (8) (2010) 2191-2203"
+    ],
+    "formula": [
+        "E.g.f.: exp(3x) I_1(2x), where I_1 is Bessel function. - _Michael Somos_, Sep 09 2002.",
+        "G.f.: [1-3z-sqrt(1-6z+5z^2)]/[2zsqrt(1-6z+5z^2)] - _Emeric Deutsch_, May 25 2003",
+        "a(n) = [t^(n+1)](1+3t+t^2)^n. a := n->sum(3^(2j-n-1)*binomial(n, j)*binomial(j, n+1-j), j=ceil((n+1)/2)..n). - _Emeric Deutsch_, Jan 30 2004",
+        "a(n) = sum{k=0..n, binomial(n, k)binomial(2k, k+1)} - _Paul Barry_, Sep 20 2004",
+        "a(n) = n*A002212(n). - _Emeric Deutsch_, Aug 05 2007",
+        "Conjecture: (n+1)*a(n) -9*n*a(n-1) +(23*n-27)*a(n-2) +15*(-n+2)*a(n-3)=0. - _R. J. Mathar_, Dec 02 2012",
+        "a(n) ~ 5^(n+1/2) / (2*sqrt(Pi*n)). - _Vaclav Kotesovec_, Feb 13 2014",
+        "a(n) = n*hypergeometric([1, 3/2, 1-n],[1, 3],-4). - _Peter Luschny_, Sep 16 2014",
+        "a(n) = GegenbauerC(n-1, -n, -3/2). - _Peter Luschny_, May 09 2016"
+    ],
+    "maple": [
+        "a := n -> simplify(GegenbauerC(n-1, -n, -3/2)):",
+        "seq(a(n), n=1..24); # _Peter Luschny_, May 09 2016"
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[Series[(1-3*x-Sqrt[1-6*x+5*x^2])/(2*x*Sqrt[1-6*x+5*x^2]), {x, 0, 20}], x]] (* _Vaclav Kotesovec_, Feb 13 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,polcoeff((1+3*x+x^2)^n,n-1))",
+        "(Sage)",
+        "A026376 = lambda n : n*hypergeometric([1, 3/2, 1-n], [1, 3], -4)",
+        "[round(A026376(n).n(100)) for n in (1..24)] # _Peter Luschny_, Sep 16 2014",
+        "(Sage) # Recurrence:",
+        "def A026376():",
+        "    x, y, n = 1, 1, 1",
+        "    while true:",
+        "        x, y = y, ((6*n + 3)*y - (5*n - 5)*x) / (n + 2)",
+        "        yield n*x",
+        "        n += 1",
+        "a = A026376()",
+        "[a.next() for i in (1..24)] # _Peter Luschny_, Sep 16 2014"
+    ],
+    "xref": [
+        "Cf. A006318, A002212, A081671, A007317, A026378."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_",
+    "references": 12,
+    "revision": 38,
+    "time": "2016-07-19T10:18:40-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

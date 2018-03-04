@@ -1,0 +1,41 @@
+{
+    "number": 186698,
+    "data": "2,3,5,5,7,7,11,11,11,13,23,37,47,59,67,79,89,101,103,113,127,137,149,157,163,173,191,193,211,223,223,233,251,257,263,277,283,293,307,317,331,337,347,359,367,379,389,397,409,419,431,439,449,457,467,479,487,499,509,521,541,541,547,557,569,577,587,599,607,617,631,641,647",
+    "name": "Next prime after n-th palindrome.",
+    "comment": [
+        "There are infinitely many n for which a(n+1) = a(n).  For example, when 10^k + 1 is composite, 10^k - 1 and 10^k + 1 are successive palindromes which have the same next prime. - _Robert Israel_, Nov 04 2015"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A186698/b186698.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "digrev:= proc(x) option remember; local t;",
+        "   t:= x mod 10;",
+        "   t*10^ilog10(x)+procname((x-t)/10)",
+        "end proc:",
+        "for x from 0 to 9 do digrev(x):= x od:",
+        "N:=6;",
+        "Pals:= $1..9:",
+        "for d from 2 to N do",
+        "  if d::even then",
+        "    m:= d/2;",
+        "    Pals:= Pals, seq(n*10^m + digrev(n), n=10^(m-1)..10^m-1);",
+        "  else",
+        "    m:= (d-1)/2;",
+        "    Pals:= Pals, seq(seq(n*10^(m+1)+y*10^m+digrev(n), y=0..9), n=10^(m-1)..10^m-1);",
+        "  fi",
+        "od:",
+        "Pals:=[Pals]:",
+        "map(nextprime,Pals); # _Robert Israel_, Nov 04 2015"
+    ],
+    "xref": [
+        "Cf. A014208, A186697."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Harvey P. Dale_, Feb 25 2011",
+    "references": 2,
+    "revision": 13,
+    "time": "2015-11-04T11:59:02-05:00",
+    "created": "2011-02-25T15:48:55-05:00"
+}

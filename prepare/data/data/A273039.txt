@@ -1,0 +1,47 @@
+{
+    "number": 273039,
+    "data": "0,5,6,9,24,29,34,40,43,45,48,51,54,57,65,66,68,71,75,77,80,83,86,89,90,92,101,102,111,129,130,135,139,141,153,154,159,180,189,198,204,209,216,219,226,231,232,238,257,260,263,267,272,275,277,278,282,284,297",
+    "name": "Numbers n such that the following process converges to zero: x(0)=n, x(i+1) = x(i) XOR ror(x(i)) XOR rol(x(i)), see the Comments section for details.",
+    "comment": [
+        "Numbers n such that the following process converges to zero: x(0)=n, x(i+1) = x(i) XOR ror(x(i)) XOR rol(x(i)), where XOR is the binary exclusive-or operator, ror(x)=A038572(x) is x rotated one binary place to the right, and similarly rol(x)=A006257(n) is x rotated one binary place to the left."
+    ],
+    "example": [
+        "n=5:  x(0)=5, x(1) = 5 xor 6 xor 3 = 0.",
+        "n=6:  x(0)=6, x(1) = 6 xor 5 xor 3 = 0.",
+        "n=9:  x(0)=9, x(1) = 9 xor 12 xor 3 = 6, x(2)=0.",
+        "n=10: x(0)=10, x(1) = 10 xor 5 xor 5 = 10, and x(i)=10 for i>1.",
+        "n=17: x(0)=17, x(1) = 17 xor 24 xor 3 = 10, and x(i)=10 for i>1.",
+        "So 5, 6, 9 are in the sequence, 10 and 17 are not."
+    ],
+    "mathematica": [
+        "Select[Range[0, 300], Nest[BitXor[BitXor[#, FromDigits[ RotateRight[ IntegerDigits[#, 2]], 2]], FromDigits[ RotateLeft[ IntegerDigits[#, 2]], 2]] &, #, 120] == 0 &] (* _Michael De Vlieger_, May 14 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def ROR(n):                # returns A038572(n)",
+        "    BL = len(bin(n))-2",
+        "    return (n>>1) + ((n&1) << (BL-1))",
+        "def ROL(n):                # returns A006257(n)",
+        "    BL = len(bin(n))-2",
+        "    return (n*2) - (1<<BL) + 1",
+        "for n in range(1000):",
+        "    X = n",
+        "    Xs = []",
+        "    while not (X in Xs):",
+        "        Xs.append(X)",
+        "        if X==0:",
+        "            print str(n)+',',",
+        "            break",
+        "        X = X ^ ROR(X) ^ ROL(X)"
+    ],
+    "xref": [
+        "Cf. A038572, A006257."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, May 13 2016",
+    "references": 0,
+    "revision": 14,
+    "time": "2016-05-21T22:40:07-04:00",
+    "created": "2016-05-21T22:40:07-04:00"
+}

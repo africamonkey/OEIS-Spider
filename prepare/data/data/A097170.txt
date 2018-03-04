@@ -1,0 +1,40 @@
+{
+    "number": 97170,
+    "data": "1,2,3,40,185,3936,35917,978160,14301513,464105440,9648558161,361181788584,9884595572293,419174374377136,14317833123918885,679698565575210976,27884513269105178033,1468696946887669701312",
+    "name": "Total number of minimal vertex covers among labeled trees on n nodes.",
+    "link": [
+        "S. Coulomb and M. Bauer, <a href=\"https://arxiv.org/abs/math/0407456\">On vertex covers, matchings and random trees</a>, arXiv:math/0407456 [math.CO], 2004."
+    ],
+    "formula": [
+        "Coulomb and Bauer give a g.f."
+    ],
+    "maple": [
+        "umax := 20 : u := array(0..umax) : T := proc(z) local resul,n ; global umax,u ; resul :=0 ; for n from 1 to umax do resul := resul +n^(n-1)/n!*z^n ; od : RETURN(taylor(resul,x=0,umax+1)) ; end: U := proc() global umax,u ; local resul,n ; resul :=0 ; for n from 0 to umax do resul := resul+u[n]*x^n ; od: end: expU := proc() global umax,u ; taylor(exp(U()),x=0,umax+1) ; end: xUexpU := proc() global umax,u ; taylor(x*U()*expU(),x=0,umax+1) ; end: exexpU := proc() global umax,u ; taylor(exp(x*expU())-1,x=0,umax+1) ; end: x2e2U := taylor((x*expU())^2,x=0,umax+1) ; A := expand(taylor(xUexpU()-T(x2e2U)*exexpU(), x=0,umax+1)) ; for n from 0 to umax do u[n] := solve(coeff(A,x,n+1),u[n]) ; od ; F := proc() global umax,u ; taylor((1-U())*x*expU()-U()*T(x2e2U)+U()-U()^2/2,x=0,umax+1) ; end: egf := F() ; for n from 0 to umax-1 do n!*coeff(egf,x,n) ; od; # _R. J. Mathar_, Sep 14 2006"
+    ],
+    "mathematica": [
+        "uMax = 20; Clear[u]; u[0] = u[1] = 0; u[2] = 1;",
+        "T[x_] := Sum[n^(n - 1)/n!*x^n , {n, 1, uMax}];",
+        "U[] = Sum[u[n]*x^n, {n, 0, uMax}];",
+        "ExpU[] = Series[Exp[U[]], {x, 0, uMax + 1}];",
+        "xUExpU[] = Series[x*U[]*ExpU[], {x, 0, uMax + 1}];",
+        "exExpU[] = Series[Exp[x*ExpU[]] - 1, {x, 0, uMax + 1}];",
+        "x2e2U = Series[(x*ExpU[])^2, {x, 0, uMax + 1}];",
+        "A = Series[xUExpU[] - T[x2e2U]*exExpU[], {x, 0, uMax + 1}] // CoefficientList[#, x]&;",
+        "sol = Solve[Thread[A == 0]][[1]];",
+        "egf = Series[(1 - U[])*x*ExpU[] - U[]*T[x2e2U] + U[] - U[]^2/2 /. sol, {x, 0, uMax + 1}];",
+        "Most[CoefficientList[egf, x]]*Range[0, uMax]! // Rest (* _Jean-Fran\u00e7ois Alcover_, Dec 11 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A097171, A097172, A097173, A097174, A000169, A000272."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ralf Stephan_, Jul 30 2004",
+    "ext": [
+        "More terms from _R. J. Mathar_, Sep 14 2006"
+    ],
+    "references": 6,
+    "revision": 14,
+    "time": "2017-12-11T11:24:22-05:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

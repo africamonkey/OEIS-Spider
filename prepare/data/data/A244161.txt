@@ -1,0 +1,45 @@
+{
+    "number": 244161,
+    "data": "0,1,4,5,8,16,17,20,21,24,32,33,36,37,64,65,68,69,72,80,81,84,85,88,96,97,100,101,128,129,132,133,136,144,145,148,149,152,160,161,164,165,256,257,260,261,264,272,273,276,277,280,288,289,292,293,320,321,324,325",
+    "name": "Greedy Catalan Base (A014418) interpreted as base-4 numbers, then shown in decimal.",
+    "comment": [
+        "This representation does not lose any information, because C(n+1)/C(n) [where C(n) is the n-th Catalan number, A000108(n)] approaches 4 from below, but never attains it.",
+        "Analogously to \"Fibbinary numbers\", A003714, this sequence could be called \"Catquaternary numbers\"."
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A244161/b244161.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(0) = 0, a(n) = 4^(A244160(n)-1) + a(n-A000108(A244160(n))). [Where A244160 gives the index of the largest Catalan number that still fits into the sum].",
+        "A000035(a(n)) = A000035(A014418(n)). [This sequence and the base-10 version are equal when reduced modulo 2]."
+    ],
+    "program": [
+        "(Scheme, with memoizing definec-macro from _Antti Karttunen_'s IntSeq-library)",
+        ";; Version based on direct recurrence:",
+        "(definec (A244161 n) (if (zero? n) n (+ (expt 4 (- (A244160 n) 1)) (A244161 (- n (A000108 (A244160 n)))))))",
+        "(Python)",
+        "from sympy import catalan",
+        "def a244160(n):",
+        "    if n==0: return 0",
+        "    i=1",
+        "    while True:",
+        "        if catalan(i)>n: break",
+        "        else: i+=1",
+        "    return i - 1",
+        "def a(n):",
+        "    if n==0: return 0",
+        "    x=a244160(n)",
+        "    return 4**(x - 1) + a(n - catalan(x))",
+        "print [a(n) for n in xrange(0, 101)] # _Indranil Ghosh_, Jun 08 2017"
+    ],
+    "xref": [
+        "Cf. A000108, A014418, A003714, A085183, A085184, A244160."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Antti Karttunen_, Jun 23 2014",
+    "references": 10,
+    "revision": 14,
+    "time": "2017-06-08T18:19:51-04:00",
+    "created": "2014-06-26T18:49:34-04:00"
+}

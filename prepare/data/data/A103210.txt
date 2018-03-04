@@ -1,0 +1,66 @@
+{
+    "number": 103210,
+    "data": "1,3,15,93,645,4791,37275,299865,2474025,20819307,178003815,1541918901,13503125805,119352115551,1063366539315,9539785668657,86104685123025,781343125570515,7124072211203775,65233526296899981,599633539433039445,5531156299278726663",
+    "name": "a(n) = (1/n) * Sum_{i=0..n-1} C(n,i)*C(n,i+1)*2^i*3^(n-i), a(0)=1.",
+    "comment": [
+        "The Hankel transform of this sequence is 6^C(n+1,2). - _Philippe Del\u00e9ham_, Oct 28 2007",
+        "The Hankel transform of the sequence starting 1, 1, 3, 15, ... is A081955. - _Paul Barry_, Dec 09 2008",
+        "Number of Schroeder paths from (0,0) to (0,2n) allowing two colors for the down steps (or alternatively for the rise steps). - _Paul Barry_, Feb 01 2009",
+        "Essentially reversion of x*(1-2*x)/(1+x). - _Paul Barry_, Apr 28 2009"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A103210/b103210.txt\">Table of n, a(n) for n = 0..200</a>",
+        "J. Abate, W. Whitt, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL13/Whitt/whitt2.html\">Integer Sequences from Queueing Theory </a>, J. Int. Seq. 13 (2010), 10.5.5. b_n(2).",
+        "E. Ackerman, G. Barequet, R. Y. Pinter and D. Romik, <a href=\"http://dx.doi.org/10.1016/j.ipl.2006.01.011\">The number of guillotine partitions in d dimensions</a>, Inf. Proc. Lett. 98 (4) (2006) 162-167",
+        "Z. Chen, H. Pan, <a href=\"http://arxiv.org/abs/1608.02448\">Identities involving weighted Catalan-Schroder and Motzkin Paths</a>, arXiv:1608.02448 [math.CO], 2016, eq. (1.13), a=3, b=2.",
+        "Samuele Giraudo, <a href=\"http://arxiv.org/abs/1504.04529\">Operads from posets and Koszul duality</a>, arXiv preprint arXiv:1504.04529 [math.CO], 2015.",
+        "Samuele Giraudo, <a href=\"http://arxiv.org/abs/1603.01394\">Pluriassociative algebras II: The polydendriform operad and related operads</a>, arXiv:1603.01394 [math.CO], 2016."
+    ],
+    "formula": [
+        "G.f.: (1-z-sqrt(z^2-10*z+1))/(4*z).",
+        "a(n) = Sum_{k=0..n} C(n+k, 2k)2^k*C(k), C(n) given by A000108. - _Paul Barry_, May 21 2005",
+        "a(n) = Sum_{k=0..n} A060693(n,k)*2^(n-k). - _Philippe Del\u00e9ham_, Apr 02 2007",
+        "a(0) = 1, a(n) = a(n-1) + 2*Sum_{k=0..n-1} a(k)*a(n-1-k). - _Philippe Del\u00e9ham_, Oct 23 2007",
+        "a(n) = (3/2)*A107841(n) for n > 0. - _Philippe Del\u00e9ham_, Oct 28 2007",
+        "G.f.: 1/(1-x-2x/(1-x-2x/(1-x-2x/(1-.... (continued fraction). - _Paul Barry_, Feb 01 2009",
+        "G.f.: 1/(1-3x-6x^2/(1-5x-6x^2/(1-5x-6x^2/(1-... (continued fraction). - _Paul Barry_, Apr 28 2009",
+        "G.f.: 1/(1-3x/(1-2x/(1-3x/(1-2x/(1-3x/(1-... (continued fraction). - _Paul Barry_, May 14 2009",
+        "a(n) = Hypergeometric2F1(-n,n+1,2,-2) = sum{k=0..n, C(n+k,k) * C(n,k) * 2^k/(k+1)}. - _Paul Barry_, Feb 08 2011",
+        "G.f.: A(x) = (1-x-(x^2-10*x+1)^(1/2))/(4*x) = 1/(G(0)-x); G(k)= 1 + x - 3*x/G(k+1); (continued fraction, 1-step). - _Sergei N. Gladkovskii_, Jan 05 2012",
+        "Recurrence: (n+1)*a(n) = 5*(2*n-1)*a(n-1) - (n-2)*a(n-2). - _Vaclav Kotesovec_, Oct 17 2012",
+        "a(n) ~ sqrt(12+5*sqrt(6))*(5+2*sqrt(6))^n/(4*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Oct 17 2012"
+    ],
+    "maple": [
+        "A103210 := proc(n)",
+        "    if n = 0 then",
+        "        1;",
+        "    else",
+        "        add(binomial(n,i)*binomial(n,i+1)*2^i*3^(n-i),i=0..n-1)/n ;",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Feb 10 2015",
+        "A103210_list := proc(n) local j, a, w; a := array(0..n); a[0] := 1;",
+        "for w from 1 to n do a[w] := 3*a[w-1] + 2*add(a[j]*a[w-j-1], j=1..w-1) od;",
+        "convert(a, list) end: A103210_list(21); # _Peter Luschny_, Feb 29 2016"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1-x-Sqrt[x^2-10*x+1])/(4*x), {x, 0, 20}], x] (* _Vaclav Kotesovec_, Oct 17 2012 *)",
+        "A103210[n_] := Hypergeometric2F1[-n, n + 1, 2, -2]; Table[A103210[n], {n, 0, 21}] (* _Peter Luschny_, Jan 07 2018 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^30); Vec((1-x-sqrt(x^2-10*x+1))/(4*x)) \\\\ _G. C. Greubel_, Feb 10 2018",
+        "(MAGMA) Q:=Rationals(); R<x>:=PowerSeriesRing(Q, 40); Coefficients(R!((1-x-Sqrt(x^2-10*x+1))/(4*x))) // _G. C. Greubel_, Feb 10 2018"
+    ],
+    "xref": [
+        "Third column of array A103209."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ralf Stephan_, Jan 27 2005",
+    "ext": [
+        "Spelling/notation corrections by _Charles R Greathouse IV_, Mar 18 2010"
+    ],
+    "references": 19,
+    "revision": 64,
+    "time": "2018-02-11T10:56:41-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

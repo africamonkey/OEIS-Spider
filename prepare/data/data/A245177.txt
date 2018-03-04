@@ -1,0 +1,35 @@
+{
+    "number": 245177,
+    "data": "5,13,19,23,29,31,43,53,59,61,67,73,79,83,89,97,103,131,137,151,157,163,173,179,181,191,197,199,211,229,233,239,241,281,293,307,317,347,359,367,373,379,389,397,409,419,421,431,433,443,449",
+    "name": "Inefficient primes.",
+    "comment": [
+        "A prime p is inefficient (see Amdeberhan - Moll) if it divides A000085(n) for some n < p."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A245177/b245177.txt\">Table of n, a(n) for n = 1..1428</a>",
+        "T. Amdeberhan, V. H. Moll, <a href=\"http://dauns.math.tulane.edu/~vhm/papers_html/invo-may12.pdf\">Involutions and their progenies, 2014</a>"
+    ],
+    "maple": [
+        "N:= 1000:  # to get all terms <= N",
+        "I1:= proc(n) option remember;  I1(n-1)+(n-1)*I1(n-2) end proc:",
+        "I1(0):= 1: I1(1):= 1:",
+        "Primes:= select(isprime,{2,seq(2*i+1,i=1..floor((N-1)/2))}):",
+        "PP:= convert(Primes,`*`):",
+        "A:= {}:",
+        "for n from 1 to N-1 do",
+        "  g:= igcd(I1(n),PP):",
+        "  A:= A union select(`>`,numtheory:-factorset(g),n);",
+        "od:",
+        "A; # _Robert Israel_, Jul 20 2014"
+    ],
+    "xref": [
+        "Cf. A000085. See A264737 for another version."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Jul 19 2014",
+    "references": 2,
+    "revision": 15,
+    "time": "2015-11-26T00:35:52-05:00",
+    "created": "2014-07-20T00:09:31-04:00"
+}

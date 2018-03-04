@@ -1,0 +1,40 @@
+{
+    "number": 155034,
+    "data": "3,5,7,37,43,53,59,73,79,83,97,337,347,349,353,359,367,373,379,383,389,397,433,439,443,463,557,563,569,577,587,593,599,643,653,659,673,683,733,739,743,757,773,787,797,839,853,857,859,863,877,883,887,937,953,977",
+    "name": "Primes with smallest digit odd and prime (i.e., 3, 5 or 7).",
+    "comment": [
+        "Primes p such that A054054(p) is in the set {3, 5, 7}. - _Felix Fr\u00f6hlich_, Jan 26 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A155034/b155034.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "N:= 4: # to get all terms with <+ N digits",
+        "for j in [3,5,7] do L[1,j]:= {$j..9}; C[1,j]:= {j} od;",
+        "for d from 2 to N do",
+        "  for j in [3,5,7] do L[d,j]:= map(t -> $(10*t+j)..(10*t+9), L[d-1,j]) od:",
+        "  C[d,3]:= map(t -> (10*t+3), L[d-1,3]) union map(t ->seq(10*t+j,j=4..9),C[d-1,3]);",
+        "  C[d,5]:= map(t -> (10*t+5), L[d-1,5]) union map(t -> seq(10*t+j,j=6..9),C[d-1,5]);",
+        "  C[d,7]:= map(t -> (10*t+7), L[d-1,7]) union map(t -> seq(10*t+j,j=8..9),C[d-1,7]);",
+        "od:",
+        "sort(convert(`union`(seq(seq(select(isprime,C[d,j]),j=[3,5,7]),d=1..N)),list));",
+        "# _Robert Israel_, Jan 26 2017"
+    ],
+    "program": [
+        "(PARI) is(n) = ispseudoprime(n) && #setintersect(Set(vecmin(digits(n))), [3, 5, 7])==1 \\\\ _Felix Fr\u00f6hlich_, Jan 26 2017"
+    ],
+    "xref": [
+        "Cf. A000040, A054054."
+    ],
+    "keyword": "nonn,base,less",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Jan 19 2009",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Jan 24 2009",
+        "Corrected by _Robert Israel_, Jan 26 2017"
+    ],
+    "references": 1,
+    "revision": 14,
+    "time": "2017-01-27T13:10:25-05:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

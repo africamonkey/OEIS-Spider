@@ -1,0 +1,25 @@
+{
+    "number": 64498,
+    "data": "1,42,120,156,246,287,1434,1673,2016,5256,9799,11808,18330,19740,21385,34440,39990,44772,45990,46655,57270,60156,66815,68832,102648,115620,125255,149472,156570,170820,182665,195510,200760,208182,223944,224196",
+    "name": "Sum of unitary divisors of n^2 is a square.",
+    "link": [
+        "Harry J. Smith, <a href=\"/A064498/b064498.txt\">Table of n, a(n) for n=1,...,100</a>"
+    ],
+    "mathematica": [
+        "sudsQ[n_]:=Module[{uds=Sort[Flatten[Outer[Times,Sequence@@({1,#}&/@ Power@@@FactorInteger[n^2])]]]},IntegerQ[Sqrt[Total[uds]]]]; Join[{1}, Select[Range[230000],sudsQ]] (* _Harvey P. Dale_, Dec 09 2011 *)"
+    ],
+    "program": [
+        "(PARI) {usigma(n, s=1, fac, i)= fac=factor(n); for(i=1,matsize(fac)[1], s=s*(1+fac[i,1]^fac[i,2]); ); return(s); } for(n=1,10^6, if(issquare(usigma(n^2)),print1(n,\" \")))",
+        "(PARI) usigma(n)= { local(f,s=1); f=factor(n); for(i=1, matsize(f)[1], s*=1 + f[i, 1]^f[i, 2]); return(s) } { n=0; for (m=1, 10^9, if (issquare(usigma(m^2)), write(\"b064498.txt\", n++, \" \", m); if (n==100, break)) ) } [From _Harry J. Smith_, Sep 16 2009]"
+    ],
+    "xref": [
+        "Cf. A034448."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Jason Earls_, Oct 05 2001",
+    "references": 1,
+    "revision": 12,
+    "time": "2017-12-15T17:35:40-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

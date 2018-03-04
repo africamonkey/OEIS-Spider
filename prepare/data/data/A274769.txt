@@ -1,0 +1,42 @@
+{
+    "number": 274769,
+    "data": "1,9,37,40,43,62,70,74,160,1264,1952,2847,12799,16368,16584,42696,83793,97415,182011,352401,889871,925356,1868971,1881643,3661621,7645852,15033350,21655382,63288912,88192007,158924174,381693521,792090500,2025078249,2539401141",
+    "name": "Square analog to Keith numbers.",
+    "comment": [
+        "Like Keith numbers but starting from n^2 digits to reach n.",
+        "Consider the digits of the square of a number n. Take their sum and repeat the process deleting the first addend and adding the previous sum. The sequence lists the numbers that after some iterations reach a sum equal to themselves."
+    ],
+    "example": [
+        "1264^2 = 1597696 :",
+        "1 + 5 + 9 + 7 + 6 + 9 + 6 = 43;",
+        "5 + 9 + 7 + 6 + 9 + 6 + 43 = 85;",
+        "9 + 7 + 6 + 9 + 6 + 43 + 85 = 165;",
+        "7 + 6 + 9 + 6 + 43 + 85 + 165 = 321;",
+        "6 + 9 + 6 + 43 + 85 + 165 + 321 = 635;",
+        "9 + 6 + 43 + 85 + 165 + 321 + 635 = 1264."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q, h) local a,b,k,n,t,v; v:=array(1..h);",
+        "for n from 1 to q do b:=n^2; a:=[];",
+        "for k from 1 to ilog10(b)+1 do a:=[(b mod 10),op(a)]; b:=trunc(b/10); od;",
+        "for k from 1 to nops(a) do v[k]:=a[k]; od; b:=ilog10(n^2)+1;",
+        "t:=nops(a)+1; v[t]:=add(v[k], k=1..b); while v[t]<n do t:=t+1; v[t]:=add(v[k], k=t-b..t-1);",
+        "od; if v[t]=n then print(n); fi; od; end: P(10^6, 10000);"
+    ],
+    "mathematica": [
+        "Select[Range[10^6], Function[n, Module[{d = IntegerDigits[n^2], s, k = 0}, s = Total@ d; While[s < n, AppendTo[d, s]; k++; s = 2 s - d[[k]]]; s == n]]] (* _Michael De Vlieger_, Feb 22 2017, after _T. D. Noe_ at A007629 *)"
+    ],
+    "xref": [
+        "Cf. A007629, A246544, A263534, A274770."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Jul 06 2016",
+    "ext": [
+        "a(32)-a(35) from _Giovanni Resta_, Jul 08 2016"
+    ],
+    "references": 8,
+    "revision": 19,
+    "time": "2017-02-23T23:01:16-05:00",
+    "created": "2016-07-08T09:51:29-04:00"
+}

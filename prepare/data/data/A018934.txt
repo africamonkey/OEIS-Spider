@@ -1,0 +1,49 @@
+{
+    "number": 18934,
+    "data": "0,0,0,2,8,42,256,1810,14568,131642,1320128,14551074,174879880,2276108362,31894886208,478775722802,7664993150696,130369025763930,2347604596782208,44619881467365442,892659329531868168,18750556523491299434,412601744979927877760,9491630163800726992722",
+    "name": "From the game of Mousetrap.",
+    "comment": [
+        "Number of permutations p of [n] such that p(k) = k+2 for exactly one k in the range 0<k<n-1. - _Vladeta Jovovic_, Nov 30 2007"
+    ],
+    "link": [
+        "Daniel J. Mundfrom, <a href=\"http://dx.doi.org/10.1006/eujc.1994.1057\">A problem in permutations: the game of `Mousetrap'</a>, European J. Combin. 15 (1994), no. 6, 555-560."
+    ],
+    "formula": [
+        "a(n) = (n-2)*A055790(n-2). E.g.f.: 2*x*exp(-x)/(1-x)^3. - _Vladeta Jovovic_, Nov 30 2007",
+        "a(n) = floor((n!+1)/e)-floor(((n-2)!+1)/e), n>2. [_Gary Detlefs_, Mar 27 2011]",
+        "G.f.: (1-x)*x/Q(0) - x, where Q(k)= 1 + x - x*(k+2)/(1 - x*(k+1)/Q(k+1)); (continued fraction). - _Sergei N. Gladkovskii_, Apr 22 2013",
+        "G.f.: G(0)*x - x, where G(k) = 1 - x^2*(k+1)*(k+2)/(x^2*(k+1)*(k+2) - (1-x*(1+2*k))*(1-x*(3+2*k))/G(k+1) ); (continued fraction). - _Sergei N. Gladkovskii_, Feb 05 2014"
+    ],
+    "mathematica": [
+        "Join[{0,0},With[{nn=30},CoefficientList[Series[(2x Exp[-x])/(1-x)^3, {x,0,nn}],x] Range[0,nn]!]] (* _Harvey P. Dale_, Nov 16 2013 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "C=binomial;",
+        "a(n)=if(n<=2, 0, n! + sum(k=1,n, (-1)^k * ( C(n-1,k)+C(n-2,k-1) )*(n-k)! ) );",
+        "/* _Joerg Arndt_, Apr 22 2013 */",
+        "(Sage)",
+        "def A():",
+        "    a, b, n  = 1, 1, 1",
+        "    yield 0",
+        "    while True:",
+        "        yield b - a",
+        "        n += 1",
+        "        a, b = b, (n-2)*a+(n-1)*b",
+        "A018934 = A()",
+        "print([A018934.next() for _ in range(24)]) # _Peter Luschny_, Jan 30 2017"
+    ],
+    "xref": [
+        "Cf. A002468."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Nov 30 2007, corrected Jan 25 2008"
+    ],
+    "references": 4,
+    "revision": 32,
+    "time": "2017-01-30T13:59:58-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

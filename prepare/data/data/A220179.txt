@@ -1,0 +1,41 @@
+{
+    "number": 220179,
+    "data": "1,15,1267,316275,174397531,179770837155,310789895286907,834906367019076675,3293344593080631993211,18259284528276047000517795,137429981152689382429349060347,1365009985652048448232840864764675,17475885712645599218827214639383437691",
+    "name": "E.g.f.: Sum_{n>=1} (1 - exp(-n^2*x))^n / n.",
+    "comment": [
+        "Compare to the trivial identity: x = Sum_{n>=1} (1 - exp(-x))^n/n.",
+        "Compare to the e.g.f. of A092552: Sum_{n>=1} (1 - exp(-n*x))^n/n."
+    ],
+    "formula": [
+        "O.g.f.: Sum_{n>=1} n^(2*n-1) * n! * x^n / Product_{k=1..n} (1 - n^2*k*x). - _Paul D. Hanna_, Jan 05 2013",
+        "a(n) = Sum_{k=1..n} (-1)^(n-k) * k^(2*n-1) * k! * Stirling2(n,k). - _Paul D. Hanna_, Jan 05 2013",
+        "a(n) ~ c * d^n * (n!)^3 / n^2, where d = 6.8312860494079582446988970296645779575650627187418208311407895492635... and c = 0.175744118254830086361220160145768507562830495967... . - _Vaclav Kotesovec_, May 08 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 15*x^2/2! + 1267*x^3/3! + 316275*x^4/4! + 174397531*x^5/5! +...",
+        "where",
+        "A(x) = (1-exp(-x)) + (1-exp(-4*x))^2/2 + (1-exp(-9*x))^3/3 + (1-exp(-16*x))^4/4 + (1-exp(-25*x))^5/5 +..."
+    ],
+    "mathematica": [
+        "Table[Sum[(-1)^(n-k) * k^(2*n-1) * k! * StirlingS2[n,k], {k,1,n}], {n,1,20}] (* _Vaclav Kotesovec_, May 08 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=n!*polcoeff(sum(k=1, n, (1-exp(-k^2*x+x*O(x^n)))^k/k), n)",
+        "for(n=1,20,print1(a(n),\", \"))",
+        "(PARI) a(n)=polcoeff(sum(m=1, n, m^(2*m-1)*m!*x^m/prod(k=1, m, 1+m^2*k*x+x*O(x^n))), n) \\\\ _Paul D. Hanna_, Jan 05 2013",
+        "for(n=1,20,print1(a(n),\", \"))",
+        "(PARI) Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)",
+        "{a(n)=sum(k=1,n,(-1)^(n-k)*k^(2*n-1)*k!*Stirling2(n, k))}",
+        "for(n=1, 20, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Jan 05 2013"
+    ],
+    "xref": [
+        "Cf. A092552, A187755, A220181, A242228."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Dec 06 2012",
+    "references": 3,
+    "revision": 17,
+    "time": "2016-07-19T11:34:47-04:00",
+    "created": "2012-12-06T18:23:53-05:00"
+}

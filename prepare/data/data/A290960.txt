@@ -1,0 +1,49 @@
+{
+    "number": 290960,
+    "data": "8,32,56,64,96,128,144,155,170,176,192,196,204,215,221,224,238,248,255,256,272,288,320,322,336,341,352,368,372,374,384,432,448,465,476,496,510,512,527,544,574,576,608,612,623,635,640,644,645,658,663,672,682,697,704,714,731,736,744",
+    "name": "Numbers n such that A276976(n) > A270096(n).",
+    "comment": [
+        "Odd terms are 155, 215, 221, 255, 341, 465, 527, 623, 635, 645, 663, ..."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A290960/b290960.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "8 is a term because A276976(8) = 4 while A270096(8) = 3."
+    ],
+    "maple": [
+        "A270096:= proc(n) local d, b, t, m, c;",
+        "  d:= padic:-ordp(n, 2);",
+        "  b:= n/2^d;",
+        "  t:= 2 &^ n mod n;",
+        "  m:= numtheory:-mlog(t, 2, b, c);",
+        "  if m < d then m:= m + c*ceil((d-m)/c) fi;",
+        "  m",
+        "end proc:",
+        "A270096(1):= 0:",
+        "A276976:= proc(n) local lambda;",
+        "  lambda:= numtheory:-lambda(n);",
+        "  if n mod lambda = 0 then lambda",
+        "  elif n mod 8 = 0 and (n-2) mod lambda = 0 then lambda+2",
+        "  else n mod lambda",
+        "  fi",
+        "end proc:",
+        "A276976(1):= 0:",
+        "A276976(8):= 4:",
+        "A276976(24):= 4:",
+        "select(n -> A276976(n) > A270096(n), [$1..1000]); # _Robert Israel_, Aug 16 2017"
+    ],
+    "mathematica": [
+        "With[{nn = 750}, Select[Range@ nn, Function[n, SelectFirst[Range[nn/4 + 10], Function[m, AllTrue[Range[2, n - 1], PowerMod[#, m , n] == PowerMod[#, n , n] &]]] > SelectFirst[Range[nn/4 + 10], PowerMod[2, n, n] == PowerMod[2, #, n] &]]]] (* _Michael De Vlieger_, Aug 15 2017 *)"
+    ],
+    "xref": [
+        "Cf. A270096, A276976."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Altug Alkan_, Aug 15 2017, following a suggestion from _N. J. A. Sloane_",
+    "references": 1,
+    "revision": 13,
+    "time": "2017-08-16T23:44:33-04:00",
+    "created": "2017-08-16T08:39:01-04:00"
+}

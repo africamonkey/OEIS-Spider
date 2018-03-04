@@ -1,0 +1,49 @@
+{
+    "number": 196458,
+    "data": "1,4,112,20608,47100160,848654393344,152543949079048192,239308785705492230176768,3442046584639832610980531077120,443426848780270385458655031044167696384,515552048984399455145742768443316759297510080512",
+    "name": " E.g.f.: A(x) = Sum_{n>=0} (3^n + (-1)^n)^n * exp((3^n + (-1)^n)*x) * x^n/n!.",
+    "comment": [
+        " When p=-1, q=3, this sequence illustrates the following identity.",
+        "Given e.g.f.: Sum_{n>=0} (p^n+q^n)^n*exp((p^n+q^n)*x)*x^n/n! = Sum_{n>=0} a(n)*x^n/n!,",
+        "then a(n) = Sum_{k=0..n} C(n,k)*(p^k + q^k)^n =  Sum_{k=0..n} C(n,k)*(1 + p^(n-k)*q^k)^n;",
+        "which is a special case of the more general binomial identity:",
+        "Sum_{k=0..n} C(n,k)*(s*p^k + t*q^k)^(n-k) * (u*p^k + v*q^k)^k = Sum_{k=0..n} C(n,k)*(s + u*p^(n-k)*q^k)^(n-k) * (t + v*p^(n-k)*q^k)^k."
+    ],
+    "formula": [
+        " a(n) = Sum_{k=0..n} C(n,k)*(3^k + (-1)^k)^n.",
+        "a(n) = Sum_{k=0..n} C(n,k)*(1 + (-1)^(n-k)*3^k)^n."
+    ],
+    "example": [
+        " E.g.f.: A(x) = 1 + 4*x + 112*x^2/2! + 20608*x^3/3! + 47100160*x^4/4! +...",
+        "where",
+        "_ A(x) = exp((1+1)*x) + (3-1)*exp((3-1)*x)*x + (3^2+1)^2*exp((3^2+1)*x)*x^2/2! + (3^3-1)^3*exp((3^3-1)*x)*x^3/3! +...",
+        "or, equivalently,",
+        "_ A(x) = exp(2*x) + 2*exp(2*x)*x + 10^2*exp(10*x)*x^2/2! + 26^3*exp(26*x)*x^3/3! + 82^4*exp(82*x)*x^4/4! + 242^5*exp(242*x)*x^5/5! +...",
+        "Illustrate the formula for the terms:",
+        "a(1) = (1+1) + (3-1) = 4 ;",
+        "a(2) = (1+1)^2 + 2*(3-1)^2 + (3^2+1)^2 = 2^2 + 2*2^2 + 10^2 = 112 ;",
+        "a(3) = (1+1)^3 + 3*(3-1)^3 + 3*(3^2+1)^3 + (3^3-1)^3 = 2^3 + 3*2^3 + 3*10^3 + 26^3 = 20608 ;",
+        "a(4) = (1+1)^4 + 4*(3-1)^4 + 6*(3^2+1)^4 + 4*(3^3-1)^4 + (3^4+1)^4 = 2^4 + 4*2^4 + 6*10^4 + 4*26^4 + 82^4 = 47100160."
+    ],
+    "program": [
+        " (PARI) {a(n)=n!*polcoeff(sum(m=0,n,exp((3^m+(-1)^m+x*O(x^n))*x)*(3^m+(-1)^m)^m*x^m/m!),n)}",
+        "(PARI) {a(n)=sum(k=0,n,binomial(n,k)*(3^k + (-1)^k)^n)}",
+        "(PARI) {a(n)=sum(k=0,n,binomial(n,k)*(1 + (-1)^(n-k)*3^k)^n)}",
+        "(PARI) {a(n)=local(p=-1, q=3);n!*polcoeff(sum(m=0,n,(p^m+q^m)^m*exp((p^m+q^m+x*O(x^n))*x)*x^m/m!),n)}",
+        "(PARI) {a(n)=local(p=-1, q=3, s=1, t=1, u=1, v=1);",
+        "sum(k=0, n, binomial(n, k)*(s*p^k + t*q^k)^(n-k)*(u*p^k + v*q^k)^k)}",
+        "(PARI) /* right side of the general binomial identity: */",
+        "{a(n)=local(p=-1, q=3, s=1, t=1, u=1, v=1);",
+        "sum(k=0, n, binomial(n, k)*(s + u*p^(n-k)*q^k)^(n-k) * (t + v*p^(n-k)*q^k)^k)}"
+    ],
+    "xref": [
+        " Cf. A196457, A196459, A196460, A138247."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 20 2011",
+    "references": 1,
+    "revision": 5,
+    "time": "2012-03-30T18:37:31-04:00",
+    "created": "2011-11-21T10:39:08-05:00"
+}

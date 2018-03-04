@@ -1,0 +1,41 @@
+{
+    "number": 279410,
+    "data": "35,38,46,65,76,83,85,318,335,348,359,380,383,393,400,415,419,432,436,441,457,469,500,511,526,527,585,586,599,600,611,620,636,648,654,665,688,692,696,700,711,718,728,752,755,771,781,786,793,800,809,811,826,828,832,834,836,838,857,866,880,900,908,911,922,928,944,951,958,995",
+    "name": "Numbers whose squares have identical middle digits in base 10",
+    "comment": [
+        "The sequence of squares starts: 1225, 1444, 2116, 4225, 5776, 6889, 7225, 101124, 112225, 121104, 128881, 144400, ...",
+        "By definition the sequence only contains numbers whose square has an even number of digits in base 10.",
+        "The sequence of middle digits starts: 2, 4, 1, 2, 7, 8, 2, 1, 2, 1, 8, 4, 6, 4, 0, ..."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A279410/b279410.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"http://list.seqfan.eu/pipermail/seqfan/2016-December/017132.html\">Mail by Lars Blomberg to the Seqfan Mailing list Dec 12 2016</a>"
+    ],
+    "example": [
+        "46 is in this sequence because its square, 2116, has its two middle digits equal to 1."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k, kk, t;",
+        "      for k from 1+`if`(n=1, 0, a(n-1)) do kk:=k^2;",
+        "        t:= length(kk);",
+        "        if t::even and irem(parse(substring(\"\"||kk,",
+        "           t/2..t/2+1)), 11)=0 then return k fi",
+        "      od",
+        "    end:",
+        "seq(a(n), n=1..80);  # _Alois P. Heinz_, Dec 22 2016"
+    ],
+    "mathematica": [
+        "TakeEvenCenter[k_List] :=",
+        "If[EvenQ[Length[k]], k[[{Length[k]/2, Length[k]/2 + 1}]], {}]; Module[{rz},",
+        "Select[Range[",
+        "   1000], (rz = TakeEvenCenter[IntegerDigits[#^2, 10]];",
+        "    Length[rz] == 2 && Equal @@ rz) &]]"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Olivier G\u00e9rard_, Dec 12 2016",
+    "references": 1,
+    "revision": 11,
+    "time": "2016-12-22T19:51:33-05:00",
+    "created": "2016-12-22T17:48:48-05:00"
+}

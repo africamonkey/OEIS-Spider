@@ -1,0 +1,39 @@
+{
+    "number": 80076,
+    "data": "3,5,13,17,41,97,113,193,241,257,353,449,577,641,673,769,929,1153,1217,1409,1601,2113,2689,2753,3137,3329,3457,4481,4993,6529,7297,7681,7937,9473,9601,9857,10369,10753,11393,11777,12161,12289,13313",
+    "name": "Proth primes: primes of the form k*2^m + 1 with odd k < 2^m, m >= 1.",
+    "comment": [
+        "Conjecture: a(n) ~ (n log n)^2 / 2. - _Thomas Ordowski_, Oct 19 2014"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A080076/b080076.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "C. Caldwell's The Top Twenty, <a href=\"http://primes.utm.edu/top20/page.php?id=66\">Proth</a>.",
+        "James Grime and Brady Haran, <a href=\"https://www.youtube.com/watch?v=fcVjitaM3LY\">78557 and Proth Primes - Numberphile</a>, 2017.",
+        "Max Lewis and Victor Scharaschkin, <a href=\"https://www.emis.de/journals/INTEGERS/papers/q80/q80.Abstract.html\">k-Lehmer and k-Carmichael Numbers</a>, Integers, 16 (2016), #A80.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ProthPrime.html\">Proth Prime</a>"
+    ],
+    "maple": [
+        "N:= 20000: # to get all terms <= N",
+        "S:= select(isprime, {seq(seq(k*2^m+1, k = 1 .. min(2^m, (N-1)/2^m), 2), m=1..ilog2(N-1))}):",
+        "sort(convert(S,list)); # _Robert Israel_, Feb 02 2016"
+    ],
+    "mathematica": [
+        "r[p_, n_] := Reduce[p == (2*m + 1)*2^n + 1 && 2^n > 2*m + 1 && n > 0 && m >= 0, {a, m}, Integers]; r[p_] := Catch[ Do[ If[ r[p, n] =!= False, Throw[True]], {n, 1, Floor[Log[2, p]]}]]; A080076 = Reap[ Do[ p = Prime[k]; If[ r[p] === True, Sow[p]], {k, 1, 2000}]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Apr 06 2012 *)",
+        "nn = 13; Union[Flatten[Table[Select[1 + 2^n Range[1, 2^Min[n, nn - n + 1], 2], # < 2^(nn + 1) && PrimeQ[#] &], {n, nn}]]] (* _T. D. Noe_, Apr 06 2012 *)"
+    ],
+    "program": [
+        "(PARI) is_A080076(N)=isproth(N)&&isprime(N) \\\\ see A080075 for isproth(). - _M. F. Hasler_, Oct 18 2014"
+    ],
+    "xref": [
+        "Cf. A080075.",
+        "Cf. A134876 (number of Proth primes), A214120, A239234.",
+        "Cf. A248972."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Eric W. Weisstein_, Jan 24 2003",
+    "references": 12,
+    "revision": 42,
+    "time": "2017-11-16T00:26:07-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

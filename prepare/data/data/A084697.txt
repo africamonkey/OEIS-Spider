@@ -1,0 +1,41 @@
+{
+    "number": 84697,
+    "data": "2,3,5,11,19,29,41,83,107,179,199,331,367,419,433,463,479,547,601,677,757,883,971,1063,1087,1187,1213,1321,1433,1549,1579,1889,2017,2083,2287,2357,2393,2467,2543,2621,2741,3643,3727,4157,4201,4561,5021,5209",
+    "name": "a(1) = 2; for n >= 1, k>=1, a(n+1) = a(n) + k*n is the smallest such prime.",
+    "comment": [
+        "Successive differences are 1,2,6,8,10,12,42,24,72,20,132,36,52,14,30,16,... and the n-th term is a multiple of n.",
+        "Conjecture: a(n) ~ c n^2 log(n) for some positive constant c. - _Robert Israel_, Oct 26 2015"
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A084697/b084697.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Zak Seidov, <a href=\"/A084697/a084697.png\">Graph of first differences of A084697.</a>"
+    ],
+    "maple": [
+        "a[1]:= 2: a[2]:= 3:",
+        "for n from 2 to 1000 do",
+        "   if n::odd then delta:= 2*n",
+        "   else delta:= n",
+        "   fi:",
+        "   for q from a[n] + delta by delta while not isprime(q) do od:",
+        "   a[n+1]:= q",
+        "od:",
+        "seq(a[i],i=1..1000); # _Robert Israel_, Oct 26 2015"
+    ],
+    "mathematica": [
+        "nxt[{n_,a_}]:=Module[{k=1},While[!PrimeQ[a+k*n],k++];{n+1,a+k*n}]; Transpose[NestList[nxt,{1,2},50]][[2]] (* _Harvey P. Dale_, Apr 11 2014 *)"
+    ],
+    "program": [
+        "(PARI) lista(nn) = {print1(a=2, \", \"); for (n=1, nn, k=1; while (!isprime(na=a+k*n), k++); a = na; print1(a, \", \"););} \\\\ _Michel Marcus_, Oct 21 2015"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Jun 05 2003",
+    "ext": [
+        "More terms from _David Wasserman_, Dec 30 2004",
+        "Definition corrected by _Zak Seidov_, Apr 24 2015"
+    ],
+    "references": 3,
+    "revision": 29,
+    "time": "2016-03-18T05:43:32-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

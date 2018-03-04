@@ -1,0 +1,41 @@
+{
+    "number": 211213,
+    "data": "1,61,1513,33661,750751,17116009,398840401,9464040829,227864057851,5550936701311,136526608389601,3384729259165801,84478081828015513,2120572560190269841,53494979095639780513,1355345459896317255037,34469858667289041256051,879619727291950363099291",
+    "name": "n-alternating permutations of length 3n.",
+    "comment": [
+        "a(n) = A181985(n,3)."
+    ],
+    "link": [
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>"
+    ],
+    "formula": [
+        "a(n) = (3*n)!*(1/(3*n)!-2/(n!*(2*n)!)+1/(n!)^3). - _Peter Luschny_, Aug 13 2015"
+    ],
+    "maple": [
+        "A211213 := proc(n) local E, dim, i, k; dim := 3*n;",
+        "E := array(0..dim, 0..dim); E[0, 0] := 1;",
+        "for i from 1 to dim do",
+        "if i mod n = 0 then E[i, 0] := 0 ;",
+        "   for k from i-1 by -1 to 0 do E[k, i-k] := E[k+1, i-k-1] + E[k, i-k-1] od;",
+        "else E[0, i] := 0;",
+        "   for k from 1 by 1 to i do E[k, i-k] := E[k-1, i-k+1] + E[k-1, i-k] od;",
+        "fi od; E[0, dim] end:",
+        "seq(A211213(n), n = 1..18);",
+        "# Alternatively:",
+        "a := x -> (3*x)!*(1/(3*x)!-2/(x!*(2*x)!)+1/(x!)^3):",
+        "seq(a(n),n=1..18); # _Peter Luschny_, Aug 13 2015"
+    ],
+    "mathematica": [
+        "nmax = 18; a[n_] := Module[{e, dim = n*(nmax-1)}, e[0, 0] = 1; For[i = 1, i <= dim, i++, If[Mod[i, n] == 0 , e[i, 0] = 0; For[k = i-1, k >= 0, k--, e[k, i-k] = e[k+1, i-k-1] + e[k, i-k-1] ], e[0, i] = 0; For[k = 1, k <= i, k++, e[k, i-k] = e[k-1, i-k+1] + e[k-1, i-k] ] ]]; e[0, 3*n]] ; Table[a[n], {n, 1, nmax}] (* _Jean-Fran\u00e7ois Alcover_, Jul 26 2013, after Maple *)"
+    ],
+    "xref": [
+        "Cf. A181985, A030662, A181991."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Peter Luschny_, Apr 05 2012",
+    "references": 4,
+    "revision": 12,
+    "time": "2015-08-13T14:50:29-04:00",
+    "created": "2012-04-07T13:54:55-04:00"
+}

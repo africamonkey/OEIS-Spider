@@ -1,0 +1,75 @@
+{
+    "number": 259486,
+    "data": "1,7,19,43,73,109,157,211,271,343,421,505,601,703,811,931,1057,1189,1333,1483,1639,1807,1981,2161,2353,2551,2755,2971,3193,3421,3661,3907,4159,4423,4693,4969,5257,5551,5851,6163,6481,6805,7141,7483,7831,8191,8557",
+    "name": "a(n) = 3*n^2 - 3*n + 1 + 6*floor((n-1)*(n-2)/6).",
+    "comment": [
+        "Start with the geometric picture for the centered hex numbers (A003215). Here, each hexagonal figure in the sequence is the aggregate of smaller unit hexes (with n hexes along each side). Then, when possible, add additional unit hexes to each side except for the corners --> do this repeatedly with the same restriction until no hexes can be added. a(n) gives the area of each figure (see example).",
+        "a(n) == 1 mod 6. - _Robert Israel_, Jun 29 2015"
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (2,-1,1,-2,1)."
+    ],
+    "formula": [
+        "G.f.: (1+5*x+6*x^2+11*x^3+x^4)/((1-x)^3*(1+x+x^2)).",
+        "a(n) = 2*a(n-1)-a(n-2)+a(n-3)-2*a(n-4)+a(n-5), n>5.",
+        "a(n) = A003215(n+1) + 6*A130518(n+1).",
+        "From _Robert Israel_, Jun 29 2015: (Start)",
+        "a(n) = 4*n^2 - 6*n + 1 if 3 divides n, 4*n^2 - 6*n + 3 otherwise.",
+        "a(n) = 1 + 6 * A000969(n-2) for n >= 2. (End)",
+        "a(n) = 4*n^2 - 6*n + 3^sign(n mod 3). - _Wesley Ivan Hurt_, Jul 13 2015"
+    ],
+    "example": [
+        "-----------------------------------------------------------------------",
+        "Figure 1",
+        "-----------------------------------------------------------------------",
+        "                                                  __    __    __",
+        "                                                 /  \\__/  \\__/  \\",
+        "                                                 \\_*/  \\__/  \\*_/",
+        "                              __               __/  \\__/  \\__/  \\__",
+        "                           __/  \\__           /  \\__/  \\__/  \\__/  \\",
+        "            __          __/  \\__/  \\__        \\__/  \\__/  \\__/  \\__/",
+        "         __/  \\__      /  \\__/  \\__/  \\     __/  \\__/  \\__/  \\__/  \\__",
+        ".__     /  \\__/  \\     \\__/  \\__/  \\__/    / *\\__/  \\__/  \\__/  \\__/* \\",
+        "/  \\    \\__/  \\__/     /  \\__/  \\__/  \\    \\__/  \\__/  \\__/  \\__/  \\__/",
+        "\\__/    /  \\__/  \\     \\__/  \\__/  \\__/       \\__/  \\__/  \\__/  \\__/",
+        "        \\__/  \\__/     /  \\__/  \\__/  \\       /  \\__/  \\__/  \\__/  \\",
+        "           \\__/        \\__/  \\__/  \\__/       \\__/  \\__/  \\__/  \\__/",
+        "                          \\__/  \\__/             \\__/  \\__/  \\__/",
+        "                             \\__/                / *\\__/  \\__/* \\",
+        "                                                 \\__/  \\__/  \\__/",
+        "n=1         n=2               n=3                       n=4",
+        "-----------------------------------------------------------------------",
+        "Table 1",
+        "-----------------------------------------------------------------------",
+        "a(1) = 1                              =  1",
+        "a(2) = 3  + 2(2)                      =  7",
+        "a(3) = 5  + 2(3+4)                    =  19",
+        "a(4) = 7  + 2(4+5+6)          + 6(1)  =  43",
+        "a(5) = 9  + 2(5+6+7+8)        + 6(2)  =  73",
+        "a(6) = 11 + 2(6+7+8+9+10)     + 6(3)  =  109",
+        "a(7) = 13 + 2(7+8+9+10+11+12) + 6(5)  =  157",
+        "..."
+    ],
+    "maple": [
+        "A259486:=n->3*n^2 - 3*n + 1 + 6*floor((n-1)*(n-2)/6): seq(A259486(n), n=1..100);"
+    ],
+    "mathematica": [
+        "Table[3 n^2 - 3 n + 1 + 6 Floor[(n - 1) (n - 2)/6], {n, 50}] (* or *)",
+        "CoefficientList[Series[(1 + 5 x + 6 x^2 + 11 x^3 + x^4)/((1 - x)^3 (1 + x + x^2)), {x, 0, 50}], x]",
+        "LinearRecurrence[{2, -1, 1, -2, 1}, {1, 7, 19, 43, 73}, 50]; // _Vincenzo Librandi_, Jul 14 2015"
+    ],
+    "program": [
+        "(MAGMA) [3*n^2 - 3*n + 1 + 6*Floor((n-1)*(n-2)/6) : n in [1..100]];",
+        "(MAGMA) I:=[1,7,19,43,73]; [n le 5 select I[n] else 2*Self(n-1)-Self(n-2)+Self(n-3)-2*Self(n-4)+Self(n-5): n in [1..60]]; // _Vincenzo Librandi_, Jul 14 2015"
+    ],
+    "xref": [
+        "Cf. A003215 (hex numbers), A000969, A130518, A255840 (similar with squares)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Wesley Ivan Hurt_, Jun 28 2015",
+    "references": 1,
+    "revision": 30,
+    "time": "2015-08-17T09:49:42-04:00",
+    "created": "2015-08-16T23:04:39-04:00"
+}

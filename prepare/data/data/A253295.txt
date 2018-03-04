@@ -1,0 +1,62 @@
+{
+    "number": 253295,
+    "data": "8,32,52,22113,5317113,131167110613,1711111711229181533,1761140131560305063481,1313718313871371493773936301,125111501315199577167049112574051,33185242436199338915435977096119517,149731486009055371137303679066123116017",
+    "name": "Prime factor look-and-say sequence starting with a(0) = 8.",
+    "comment": [
+        "If prime factorization of a(n) is p_1^d_1 p_2^d_2 ... p_k^d_k with p_1 < ... < p_k, then a(n+1) is the concatenation of d_1, p_1, d_2, p_2, ..., d_k, p_k.",
+        "I suspect that eventually a prime a(n) may be reached, but haven't found one yet."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A253295/b253295.txt\">Table of n, a(n) for n = 0..20</a>",
+        "Mathematics Stack Exchange, <a href=\"http://math.stackexchange.com/questions/1084853/does-my-prime-factor-look-and-say-sequence-always-end/1084908#1084908\">Does my \"Prime Factor Look and Say\" sequence always end?</a>"
+    ],
+    "formula": [
+        "a(n+1) = A123132(a(n))."
+    ],
+    "example": [
+        "a(0) = 2^3 so a(1) = 32.",
+        "a(1) = 2^5 so a(2) = 52.",
+        "a(2) = 2^2 * 13^1 so a(3) = 22113.",
+        "a(3) = 3^5 * 7^1 * 13^1 so a(4) = 5317113."
+    ],
+    "maple": [
+        "ncat:= (x,y) -> 10^(1+ilog10(y))*x + y:",
+        "f:= proc(x) local L,y,t;",
+        "  L:= sort(ifactors(x)[2],(a,b)->a[1]<b[1]);",
+        "  y:= 0;",
+        "  for t  in L do y := ncat(y, ncat(t[2],t[1])) od:",
+        "  y",
+        "end proc:",
+        "A[0]:= 8:",
+        "y:= A[0]:",
+        "for m from 1 to 20 do",
+        "    y:= f(y);",
+        "    A[m]:= y;",
+        "od:",
+        "seq(A[i],i=0..20);"
+    ],
+    "mathematica": [
+        "a253295[n_] := Block[{a, t = Table[8, {n}]},",
+        "  a[x_] := FromDigits[Flatten[IntegerDigits[Reverse /@",
+        "  FactorInteger[x]]]]; Do[t[[i]] = a[t[[i - 1]]], {i, 2, n}]; t];",
+        "a253295[13] (* _Michael De Vlieger_, Dec 29 2014 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "A253295_list = [8]",
+        "for _ in range(10):",
+        "....A253295_list.append(int(''.join((str(e)+str(p) for p, e in sorted(factorint(A253295_list[-1]).items())))))",
+        "# _Chai Wah Wu_, Dec 30 2014"
+    ],
+    "xref": [
+        "Cf. A123132"
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,1",
+    "author": "_Robert Israel_, Dec 29 2014",
+    "references": 1,
+    "revision": 20,
+    "time": "2015-01-02T22:50:58-05:00",
+    "created": "2014-12-30T18:21:08-05:00"
+}

@@ -1,0 +1,60 @@
+{
+    "number": 1164,
+    "id": "M4878 N2091",
+    "data": "1,12,288,51840,2488320,209018880,75246796800,902961561600,86684309913600,514904800886784000,86504006548979712000,13494625021640835072000,9716130015581401251840000,116593560186976815022080000,2798245444487443560529920000,299692087104605205332754432000000,57540880724084199423888850944000000",
+    "name": "Stirling's formula: denominators of asymptotic series for Gamma function.",
+    "reference": [
+        "L. Comtet, Advanced Combinatorics, Reidel, 1974, p. 267, #23.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A001164/b001164.txt\">Table of n, a(n) for n = 0..100</a>",
+        "M. Abramowitz and I. A. Stegun, eds., <a href=\"http://www.convertit.com/Go/ConvertIt/Reference/AMS55.ASP\">Handbook of Mathematical Functions</a>, National Bureau of Standards Applied Math.Series 55, Tenth Printing, 1972, p. 257, Eq. 6.1.37.",
+        "S. Brassesco, M. A. M\u00e9ndez, <a href=\"http://arxiv.org/abs/1002.3894\">The asymptotic expansion for the factorial and Lagrange inversion formula</a>, arXiv:1002.3894 [math.CA], 2010.",
+        "V. De Angelis, <a href=\"http://www.jstor.org/stable/40391303\">Stirling's series revisited</a>, Amer. Math. Monthly, 116 (2009), 839-843.",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/FactorialFunction\">Approximations to the factorial function</a>.",
+        "G. Marsaglia and J. C. W. Marsaglia, <a href=\"http://www.jstor.org/stable/2324749\">A new derivation of Stirling's approximation to n!</a>, Amer. Math. Monthly, 97 (1990), 827-829. MR1080390 (92b:41049)",
+        "T. M\u00fcller, <a href=\"http://dx.doi.org/10.1007/BF01195003\">Finite group actions and asymptotic expansion of e^P(z)</a>, Combinatorica, 17 (4) (1997), 523-554.",
+        "Richard M. Slevinsky, <a href=\"https://arxiv.org/abs/1602.02618\">On the use of Hahn's asymptotic formula and stabilized recurrence for a fast, simple, and stable Chebyshev-Jacobi transform</a>, arXiv preprint arXiv:1602.02618 [math.NA], 2016.",
+        "N. M. Temme, <a href=\"http://dx.doi.org/10.1137/0510071\">The asymptotic expansion of the incomplete gamma function</a>, SIAM J. Math. Anal., 10 (1979), 757-766. [From _N. J. A. Sloane_, Feb 20 2012]",
+        "Nico Temme, <a href=\"http://arxiv.org/abs/math/9603218\">Uniform Asymptotics for the incomplete gamma functions starting from negative values of the parameters</a>, arXiv:math/9603218 [math.CA], 1996.",
+        "W. Wang, <a href=\"http://dx.doi.org/10.1016/j.jnt.2015.12.016\">Unified approaches to the approximations of the gamma function</a>, J. Number Theory (2016).",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/StirlingsSeries.html\">Stirlings Series</a>",
+        "J. W. Wrench, Jr., <a href=\"http://dx.doi.org/10.1090/S0025-5718-1968-0237078-4\">Concerning two series for the gamma function</a>, Math. Comp., 22 (1968), 617-626."
+    ],
+    "formula": [
+        "The coefficients c_k have g.f. 1 + Sum_{k >= 1} c_k/z^k = exp( Sum_{k >= 1} B_{2k}/(2k(2k-1)z^(2k-1)) ).",
+        "Numerators/denominators: A001163(n)/A001164(n) = (6*n+1)!!/(4^n*(2*n)!) * Sum_{i=0..2*n} Sum_{j=0..i} Sum_{k=0..j} (-1)^k*2^i*k^(2*n+i+j)*C(2*n,i)* C(i,j)*C(j,k)/((2*n+2*i+1)*(2*n+i+j)!), assuming 0^0 = 1 (when n = 0), n!! = A006882(n), C(n,k) = A007318(n,k) are binomial coefficients. - _Vladimir Reshetnikov_, Nov 04 2015",
+        "a(n) = denominator(h(2*n)*doublefactorial(2*n-1)) where h(n) = (h(k-1)/k-Sum_{j=1..k-1}((h(k-j)*h(j))/(j+1)))/(1+1/(k+1))) and h(0)=1. - _Peter Luschny_, Nov 05 2015"
+    ],
+    "example": [
+        "Gamma(z) ~ sqrt(2 Pi) z^(z-1/2) e^(-z) (1 + 1/(12 z) + 1/(288 z^2) - 139/(51840 z^3) - 571/(2488320 z^4) + ... ), z -> infinity in |arg z| < Pi."
+    ],
+    "maple": [
+        "h := proc(k) option remember; local j; `if`(k=0, 1,",
+        "(h(k-1)/k-add((h(k-j)*h(j))/(j+1),j=1..k-1))/(1+1/(k+1))) end:",
+        "coeffStirling := n -> h(2*n)*doublefactorial(2*n-1):",
+        "seq(denom(coeffStirling(n)), n=0..16); # _Peter Luschny_, Nov 05 2015"
+    ],
+    "mathematica": [
+        "Denominator[ Reverse[ Drop[ CoefficientList[ Simplify[ PowerExpand[ Normal[ Series[n!, {n, Infinity, 17}]]Exp[n]/(Sqrt[2Pi n]*n^(n - 17))]], n], 1]]]",
+        "h[k_] := h[k] = If[k==0, 1, (h[k-1]/k-Sum[h[k-j]*h[j]/(j+1), {j, 1, k-1}]) / (1+1/(k+1))]; StirlingAsympt[n_] := h[2n]*2^n*Pochhammer[1/2, n]; a[n_] := StirlingAsympt[n] // Denominator; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Oct 12 2015, after _Peter Luschny_ *)"
+    ],
+    "program": [
+        "(PARI) a(n)=local(A,m); if(n<1,n==0,A=vector(m=2*n+1,k,1); for(k=2,m,A[k]=(A[k-1]-sum(i=2,k-1,i*A[i]*A[k+1-i]))/(k+1)); denominator(A[m]*m!/2^n/n!)) /* _Michael Somos_, Jun 09 2004 */"
+    ],
+    "xref": [
+        "Cf. A001163 (numerators)."
+    ],
+    "keyword": "nonn,frac,nice",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Nov 14 2001"
+    ],
+    "references": 21,
+    "revision": 55,
+    "time": "2017-08-28T05:07:09-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

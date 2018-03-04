@@ -1,0 +1,37 @@
+{
+    "number": 75517,
+    "data": "0,1,2,3,4,5,6,7,8,9,19,28,29,37,38,39,46,47,48,49,55,56,57,58,59,64,65,66,67,68,69,73,74,75,76,77,78,79,82,83,84,85,86,87,88,89,91,92,93,94,95,96,97,98,99,109,118,119,127,128,129,136,137,138,139,145,146,147",
+    "name": "Created by removing all integers which take an odd number of nested digit sums to reach <10.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A075517/b075517.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "example": [
+        "18 -> 1+8 = 9. This takes 1 step to be reduced to a single integer, hence is not in the sequence. 99 -> 9+9 = 18, takes 2 steps and so is in the sequence."
+    ],
+    "mathematica": [
+        "ondQ[n_]:=OddQ[Length[NestWhileList[Total[IntegerDigits[#]]&,n,#>9&]]]; Select[Range[0,200],ondQ] (* _Harvey P. Dale_, Dec 22 2016 *)"
+    ],
+    "program": [
+        "(PARI) sumdigits(n)=local(c); c=0; while (n>0,c=c+n%10; n=n-n%10; n=n/10); c checkSieve(n)=local(c); c=0; while(n>9, n=sumdigits(n); c++); 1-c%2 for (n=1,2000,if (checkSieve(n),print1(n,\",\")))",
+        "(Haskell)",
+        "a075517 n = a075517_list !! n",
+        "a075517_list = [0..9] ++ f 1 [0..9] where",
+        "   f x ys = if a007953 x `elem` ys then f (x + 1) ys",
+        "                                   else x : f (x + 1) (x : ys)",
+        "-- Reinhard Zumkeller, Sep 29 2014, Apr 22 2012"
+    ],
+    "xref": [
+        "Cf. A007953, A075311."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Jon Perry_, Oct 11 2002",
+    "ext": [
+        "Offset fixed by _Reinhard Zumkeller_, Apr 22 2012",
+        "Added a(0) = 0. - _Jon Perry_, Nov 28 2012"
+    ],
+    "references": 3,
+    "revision": 28,
+    "time": "2017-09-04T09:22:42-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

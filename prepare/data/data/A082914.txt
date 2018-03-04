@@ -1,0 +1,47 @@
+{
+    "number": 82914,
+    "data": "1,2,3,8,20,45,144,448,1680,4725,17280,62208,290304,1254400,4465125,18144000,72990720,391910400,1881169920,9754214400,45660160000,205752960000,905748480000,5280992640000,28326238617600,162956344320000,853298675712000,5309413982208000",
+    "name": "a(n) = n! / A003040(n).",
+    "comment": [
+        "Minimum product of hook lengths of a partition of n. - _Eric M. Schmidt_, May 07 2013"
+    ],
+    "link": [
+        "Eric M. Schmidt, <a href=\"/A082914/b082914.txt\">Table of n, a(n) for n = 1..80</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HookLengthFormula.html\">Hook Length Formula</a>"
+    ],
+    "example": [
+        "For n=4, we can have",
+        "abcd, abc and ab (the rest are symmetric).",
+        "......d.......cd",
+        "The hook products are 4! = 24, 4*2*1*1 = 8 and 3*2*2*1 = 12, so a(4) = 8. - _Jon Perry_"
+    ],
+    "maple": [
+        "# Maple code from  _Emeric Deutsch_, May 12 2004 (Start)",
+        "H:=proc(pa) local F,j,p,Q,i,col,a,A: F:=proc(x) local i, ct: ct:=0: for i from 1 to nops(x) do if x[i]>1 then ct:=ct+1 else fi od: ct; end:",
+        "for j from 1 to nops(pa) do p[1][j]:=pa[j] od: Q[1]:=[seq(p[1][j],j=1..nops(pa))]:",
+        "for i from 2 to pa[1] do for j from 1 to F(Q[i-1]) do p[i][j]:=Q[i-1][j]-1 od:",
+        "Q[i]:=[seq(p[i][j],j=1..F(Q[i-1]))] od:",
+        "for i from 1 to pa[1] do col[i]:=[seq(Q[i][j]+ nops(Q[i])-j,j=1..nops(Q[i]))] od:",
+        "a:=proc(i,j) if i<=nops(Q[j]) and j<=pa[1] then Q[j][i]+nops(Q[j])-i else 1 fi end:",
+        "A:=matrix(nops(pa),pa[1],a): product(product(A[m,n],n=1..pa[1]),m=1..nops(pa)); end:",
+        "with(combinat):",
+        "rev:=proc(a) [seq(a[nops(a)+1-i],i=1..nops(a))] end:",
+        "seq(sort([seq(H(rev(partition(j)[i])),i=1..numbpart(j))])[1],j=1..30);",
+        "# the procedure H gives the hook product for a given partition written with parts in nonincreasing order;",
+        "# if in the definition of the procedure a we replace \"else 1\" by \"else x\", then the matrix A yields all the hooklengths corresponding to a partition.",
+        "# (End)"
+    ],
+    "xref": [
+        "Cf. A003040."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Yuval Dekel (dekelyuval(AT)hotmail.com), May 25 2003",
+    "ext": [
+        "More terms from _Eric M. Schmidt_, May 07 2013"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2017-08-17T22:20:29-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

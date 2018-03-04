@@ -1,0 +1,42 @@
+{
+    "number": 50480,
+    "data": "12,15,24,36,48,110,120,124,125,126,128,132,135,150,162,168,175,184,210,216,220,240,248,250,264,312,315,324,330,360,375,384,396,412,416,420,432,440,480,510,520,525,550,612,624,630,648,660,672,714,728,735",
+    "name": "Numbers that can be written as a concatenation of distinct proper divisors.",
+    "comment": [
+        "The number of terms less than 10^k: 0, 5, 64, 395, 2406, 13417, 78268, ..., . - _Robert G. Wilson v_, Apr 04 2011"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A050480/b050480.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "132 is divisible by 1, 3 & 2."
+    ],
+    "mathematica": [
+        "f[x_, y_] := (y == Take[x, Min[Length@ y, Length@ x]]); g[{}, _] := True; g[LL_, DD_] := Module[{a = Select[DD, f[LL, IntegerDigits@ #] &]}, Or @@ Map[ g[ Drop[ LL, Length@ IntegerDigits@ #], Complement[DD, {#}]] &, a]]; fQ[n_] := g[IntegerDigits@ n, Most@ Divisors@ n]; Select[ Range@ 2000, fQ] (* _Robert G. Wilson v_, Apr 04 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (permutations, subsequences, isInfixOf)",
+        "a050480 n = a050480_list !! (n-1)",
+        "a050480_list = filter chi [2..] where",
+        "   chi x = xs `elem` (map concat $ choices divs) where",
+        "      choices = concat . (map permutations) . subsequences",
+        "      divs = filter (`isInfixOf` xs)",
+        "                    $ map show $ filter ((== 0) . mod x) [1..a032742 x]",
+        "      xs = show x",
+        "-- _Reinhard Zumkeller_, Apr 04 2011"
+    ],
+    "xref": [
+        "Cf. A032742."
+    ],
+    "keyword": "base,easy,nice,nonn",
+    "offset": "1,1",
+    "author": "_Erich Friedman_, Dec 24 1999",
+    "ext": [
+        "Offset adjusted by _Reinhard Zumkeller_, Apr 04 2011"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2014-02-12T18:16:06-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

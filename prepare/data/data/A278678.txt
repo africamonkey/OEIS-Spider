@@ -1,0 +1,76 @@
+{
+    "number": 278678,
+    "data": "1,4,19,94,519,3144,20903,151418,1188947,10064924,91426347,887296422,9164847535,100398851344,1162831155151,14198949045106,182317628906283,2455925711626404,34632584722468115,510251350142181470,7840215226100517191,125427339735162102104",
+    "name": "Popularity of left children in treeshelves avoiding pattern T321.",
+    "comment": [
+        "Treeshelves are ordered binary (0-1-2) increasing trees where every child is connected to its parent by a left or a right link. Classical Fran\u00e7on's bijection maps bijectively treeshelves into permutations. Pattern T321 illustrated below corresponds to a treeshelf constructed from permutation 321. Popularity is the sum of a certain statistic (number of left children, in this case) over all objects of size n."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A278678/b278678.txt\">Table of n, a(n) for n = 2..483</a>",
+        "Jean-Luc Baril, Sergey Kirgizov, Vincent Vajnovszki, <a href=\"https://arxiv.org/abs/1611.07793\">Patterns in treeshelves</a>, arXiv:1611.07793 [cs.DM], 2016.",
+        "J. Fran\u00e7on, <a href=\"http://www.numdam.org/item?id=ITA_1976__10_3_35_0\">Arbres binaires de recherche : propri\u00e9t\u00e9s combinatoires et applications</a>, Revue fran\u00e7aise d'automatique informatique recherche op\u00e9rationnelle, Informatique th\u00e9orique, 10 no. 3 (1976), pp. 35-50"
+    ],
+    "formula": [
+        "E.g.f.: (-sin(z) + 1 + (z-1)*cos(z))/ (1-sin(z))^2.",
+        "a(n) = (n+1)*e(n) - e(n+1), where e(n) is the n-th Euler number (see A000111).",
+        "Asymptotic: a(n) ~ 8*(Pi-2) / Pi^3 * n^2 * (2/Pi)^n."
+    ],
+    "example": [
+        "Treeshelves of size 3:",
+        "      1  1          1    1       1        1",
+        "     /    \\        /      \\     / \\      / \\",
+        "    2      2      /        \\   2   \\    /   2",
+        "   /        \\    2          2       3  3",
+        "  3          3    \\        /",
+        "                   3      3",
+        "Pattern T321:",
+        "      1",
+        "     /",
+        "    2",
+        "   /",
+        "  3",
+        "Treeshelves of size 3 that avoid pattern T321:",
+        "  1          1    1       1        1",
+        "   \\        /      \\     / \\      / \\",
+        "    2      /        \\   2   \\    /   2",
+        "     \\    2          2       3  3",
+        "      3    \\        /",
+        "            3      3",
+        "Popularity of left children is 4."
+    ],
+    "maple": [
+        "b:= proc(u, o) option remember; `if`(u+o=0, 1,",
+        "      add(b(o-1+j, u-j), j=1..u))",
+        "    end:",
+        "a:= n-> (n+1)*b(n+1, 0)-b(n+2, 0):",
+        "seq(a(n), n=2..25);  # _Alois P. Heinz_, Oct 27 2017"
+    ],
+    "mathematica": [
+        "b[u_, o_] := b[u, o] = If[u+o == 0, 1, Sum[b[o-1+j, u-j], {j, 1, u}]];",
+        "a[n_] := (n+1)*b[n+1, 0] - b[n+2, 0];",
+        "Table[a[n], {n, 2, 25}] (* _Jean-Fran\u00e7ois Alcover_, Nov 06 2017, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "2## by Taylor expansion",
+        "from sympy import *",
+        "from sympy.abc import z",
+        "h = (-sin(z) + 1 + (z-1)*cos(z))/ (1-sin(z))**2",
+        "NUMBER_OF_COEFFS = 20",
+        "coeffs = Poly(series(h,n = NUMBER_OF_COEFFS)).coeffs()",
+        "coeffs.reverse()",
+        "## and remove first coefficient 1 that corresponds to O(n**k)",
+        "coeffs.pop(0)",
+        "print ([coeffs[n]*factorial(n+2) for n in range(len(coeffs))])"
+    ],
+    "xref": [
+        "Cf. A000110, A000111, A000142, A001286, A008292, A131178, A278677, A278679."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_Sergey Kirgizov_, Nov 26 2016",
+    "references": 6,
+    "revision": 23,
+    "time": "2017-11-06T02:39:44-05:00",
+    "created": "2016-12-24T11:20:16-05:00"
+}

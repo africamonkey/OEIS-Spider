@@ -1,0 +1,44 @@
+{
+    "number": 14342,
+    "data": "4,12,29,58,111,188,305,462,679,968,1337,1806,2391,3104,3953,4978,6175,7568,9185,11030,13143,15516,18177,21150,24471,28152,32197,36678,41543,46828,52621,58874,65659,73000,80949,89462,98631,108396,118869,130102",
+    "name": "Convolution of primes with themselves.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A014342/b014342.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{i=1..n} p(i) * p(n+1-i), where p(i) is the i-th prime.",
+        "G.f.: (b(x)^2)/x, where b(x) is the g.f. of A000040. - _Mario C. Enriquez_, Dec 13 2016"
+    ],
+    "example": [
+        "a(2)=12 because a(2) = p(1)*p(2)+p(2)*p(1) = 2*3+3*2 = 12."
+    ],
+    "maple": [
+        "A014342:=n->add(ithprime(i)*ithprime(n+1-i), i=1..n): seq(A014342(n), n=1..50); # _Wesley Ivan Hurt_, Dec 14 2016"
+    ],
+    "mathematica": [
+        "Table[Sum[Prime[i] Prime[n + 1 - i], {i, n}], {n, 40}] (* _Michael De Vlieger_, Dec 13 2016 *)"
+    ],
+    "program": [
+        "(PARI) {m=40;u=vector(m,x,prime(x));for(n=1,m,v=vecextract(u,concat(\"1..\",n)); w=vector(n,x,u[n+1-x]);print1(v*w~,\",\"))} \\\\ _Klaus Brockhaus_, Apr 28 2004",
+        "(Haskell)",
+        "a014342 n = a014342_list !! (n-1)",
+        "a014342_list= f (tail a000040_list) [head a000040_list] 1 where",
+        "   f (p:ps) qs k = sum (zipWith (*) qs $ reverse qs) :",
+        "                   f ps (p : qs) (k + 1)",
+        "-- _Reinhard Zumkeller_, Apr 07 2014, Mar 08 2012",
+        "(MAGMA) [&+[NthPrime(n-i+1)*NthPrime(i): i in [1..n]]: n in [1..40]]; // _Bruno Berselli_, Apr 12 2016"
+    ],
+    "xref": [
+        "Cf. A000040, A023626, A024697, A025129, A209403."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from Felix Goldberg (felixg(AT)tx.technion.ac.il), Feb 01 2001"
+    ],
+    "references": 10,
+    "revision": 32,
+    "time": "2016-12-17T16:05:29-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

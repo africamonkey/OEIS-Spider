@@ -1,0 +1,30 @@
+{
+    "number": 249754,
+    "data": "1,2,7,51,814,27562,1881132,252352192,66437453648,34544598832464,35670629662833824,73386908116413720320,301341520134976454507520,2471940307185604520086223360,40530105576773294054842498631680,1328619037998490196005266772240585728,87091009170221273841091095272951672891392",
+    "name": "The number of ordered pairs (G,S) where G is a simple labeled graph of order n and S is a subset of the vertices of G such that every element (vertex) in S is in the same connected component of G.",
+    "comment": [
+        "Every graph paired with the empty set is included in this count.  Every graph paired with a single vertex is also included.",
+        "a(n)/(2^binomial(n,2)*2^n) is the probability that a random simple labeled graph contains a random subset of its vertices in a single connected component."
+    ],
+    "example": [
+        "a(2)=7 because every such ordered pair is counted except (G,{1,2}) where G is the disconnected graph on 2 labeled nodes."
+    ],
+    "mathematica": [
+        "nn = 16; f[list_] :=",
+        "Table[Sum[list[[i, j]]*Binomial[i, j], {j, 1, i}] + list[[i, 1]], {i,",
+        "    1, Length[list]}];",
+        "a[x_] := Sum[2^Binomial[n, 2] x^n/n!, {n, 0, nn + 100}];",
+        "c[x_] := Log[a[x]]; Prepend[",
+        "f[Table[Table[",
+        "     PadLeft[Range[0, nn]! CoefficientList[",
+        "        Series[ D[c[ x], {x, n}] a[x], {x, 0, nn}], x], nn + n], {n,",
+        "      1, nn}][[All, j]], {j, 1, nn}]], 1]"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Geoffrey Critzer_, Nov 04 2014",
+    "references": 1,
+    "revision": 4,
+    "time": "2014-11-04T22:49:15-05:00",
+    "created": "2014-11-04T22:49:15-05:00"
+}

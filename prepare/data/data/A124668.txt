@@ -1,0 +1,21 @@
+{
+    "number": 124668,
+    "data": "10968,28651,43610,48960,50841,65821,80416,90584",
+    "name": "Numbers that together with their prime factors contain every digit exactly once.",
+    "example": [
+        "10968 = 2^3 * 3 * 457."
+    ],
+    "maple": [
+        "isA124668 := proc(n) local digs,digs2,f,fac,b ; digs := convert(n,base,10) ; f := ifactors(n)[2] ; for fac from 1 to nops(f) do b := op(1,op(fac,f)) ; digs := [op(digs),op(convert(b,base,10))] ; od ; digs2 := convert(digs,set) ; if nops(digs2) = 10 and nops(digs2)=nops(digs) then print(n,f) ; RETURN(true) ; else RETURN(false) ; fi ; end : A124668aux := proc(n,dleft) local i,nnxt,dnxt ; isA124668(n) : for i from 1 to nops(dleft) do nnxt := 10*n+op(i,dleft) ; dnxt := dleft minus {op(i,dleft)} ; if nops(dnxt) > 0 then A124668aux(nnxt,dnxt) ; fi ; od ; end : dleft := {0,1,2,3,4,5,6,7,8,9} : for i from 1 to 9 do dnxt := dleft minus {i} ; A124668aux(i,dnxt) : od : # _R. J. Mathar_, Jan 13 2007"
+    ],
+    "mathematica": [
+        "Select[Range[2, 1000000], Sort[Join[IntegerDigits[ # ], Flatten[IntegerDigits[Transpose[FactorInteger[ # ]][[1]]]]]] == {0, 1, 2, 3, 4, 5, 6, 7, 8, 9} &]"
+    ],
+    "keyword": "base,fini,full,nonn",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Dec 23 2006",
+    "references": 1,
+    "revision": 7,
+    "time": "2015-08-12T02:18:02-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 275046,
+    "data": "1,2,6,20,70,245,874,3164,11577,42694,158431,590873,2212797,8315535,31341163,118423810,448455754,1701534151,6467049185,24617030774,93834205107,358116770601,1368283768753,5233261657558,20034371696497,76763164565117,294357181436313,1129575035419485",
+    "name": "Number of binary strings with n zeros and n ones avoiding the substrings 10101101 and 1110101.",
+    "link": [
+        "Gheorghe Coserea and Alois P. Heinz, <a href=\"/A275046/b275046.txt\">Table of n, a(n) for n = 0..1000</a> (first 253 terms from Gheorghe Coserea)",
+        "Stephen Melczer and Bruno Salvy, <a href=\"http://arxiv.org/abs/1605.00402\">Symbolic-Numeric Tools for Analytic Combinatorics in Several Variables</a>, arXiv:1605.00402 [cs.SC], 2016.",
+        "R. Pemantle and M. C. Wilson, <a href=\"https://arxiv.org/abs/math/0512548\">Twenty Combinatorial Examples of Asymptotics Derived from Multivariate Generating Functions</a>, arXiv:math/0512548 [math.CO], 2007."
+    ],
+    "formula": [
+        "a(n) = [x^n y^n] (1+x^2*y^3+x^2*y^4+x^3*y^4-x^3*y^6) / (1-x-y+x^2*y^3 -x^3*y^3-x^4*y^4-x^3*y^6+x^4*y^6)."
+    ],
+    "example": [
+        "For n = 5 there are binomial(10,5) = 252 binary strings with 5 zeros and 5 ones; seven out of this 252 binary strings contain as substrings w1=10101101 or w2=1110101, i.e.",
+        "   0123456789",
+        "   ----------",
+        "1  0001110101 contains w2 at offset 3",
+        "2  0010101101 contains w1 at offset 2",
+        "3  0011101010 contains w2 at offset 2",
+        "4  0101011010 contains w1 at offset 1",
+        "5  0111010100 contains w2 at offset 1",
+        "6  1010110100 contains w1 at offset 0",
+        "7  1110101000 contains w2 at offset 0",
+        "Therefore a(5) = 252 - 7 = 245."
+    ],
+    "program": [
+        "(PARI)",
+        "my(x='x, y='y);",
+        "R1 = (1+x^2*y^3+x^2*y^4+x^3*y^4-x^3*y^6);",
+        "R2 = (1-x-y+x^2*y^3-x^3*y^3-x^4*y^4-x^3*y^6+x^4*y^6);",
+        "diag(n, expr, var) = {",
+        "  my(a = vector(n));",
+        "  for (i = 1, #var, expr = taylor(expr, var[#var - i + 1], n));",
+        "  for (k = 1, n, a[k] = expr;",
+        "       for (i = 1, #var, a[k] = polcoeff(a[k], k-1)));",
+        "  return(a);",
+        "};",
+        "diag(20, R1/R2, [x,y])"
+    ],
+    "xref": [
+        "Cf. A078678, A268545-A268555."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gheorghe Coserea_, Jul 17 2016",
+    "references": 1,
+    "revision": 30,
+    "time": "2016-07-18T09:38:24-04:00",
+    "created": "2016-07-18T09:34:48-04:00"
+}

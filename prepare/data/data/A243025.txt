@@ -1,0 +1,40 @@
+{
+    "number": 243025,
+    "data": "1,4155,4355,1953504,1954329,522169982",
+    "name": "Fixed points of the transform n = d_(k)*10^(k-1) + d_(k-1)*10^(k-2) + ... + d_(2)*10 + d_(1) -> Sum_{i=1..k-1}{d_(i)^d(i+1)}+d(k)^d(1) (A243023).",
+    "comment": [
+        "Subset of A243023.",
+        "This sequence is finite by using the same argument that Armstrong numbers (A005188) are finite. - _Robert G. Wilson v_, Jun 01 2014"
+    ],
+    "example": [
+        "1^1 = 1.",
+        "5^5 + 5^1 + 1^4 + 4^5 = 4155.",
+        "5^5 + 5^3 + 3^4 + 4^5 = 4355.",
+        "4^0 + 0^5 + 5^3 + 3^5 + 5^9 + 9^1 + 1^4 = 1953504.",
+        "9^2 + 2^3 + 3^4 + 4^5 + 5^9 + 9^1 + 1^9 = 1954329."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,b,k,ok,n; for n from 10 to q do a:=[]; b:=n;",
+        "while b>0 do a:=[op(a),b mod 10]; b:=trunc(b/10); od; b:=0; ok:=1; for k from 2 to nops(a)",
+        "do if a[k-1]=0 and a[k]=0 then ok:=0; break; else b:=b+a[k-1]^a[k]; fi; od;",
+        "if ok=1 then if n=(b+a[nops(a)]^a[nops(1)]) then print(n);",
+        "fi; fi; od; end: P(10^10);"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{r = Reverse@ IntegerDigits@ n}, n == Plus @@ (r^RotateLeft@ r)]; k = 1; lst = {}; While[k < 1000000001, If[ fQ@ k, AppendTo[ lst, k]; Print@ k]; k++] (* _Robert G. Wilson v_, Jun 01 2014 *)"
+    ],
+    "xref": [
+        "Cf. A243023, A243024.",
+        "Cf. A005188, A003321."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, May 29 2014",
+    "ext": [
+        "Added a(1) as 1 and a(6) by _Robert G. Wilson v_, Jun 01 2014"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2014-09-29T11:12:09-04:00",
+    "created": "2014-06-02T19:58:33-04:00"
+}

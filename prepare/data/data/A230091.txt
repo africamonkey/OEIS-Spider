@@ -1,0 +1,58 @@
+{
+    "number": 230091,
+    "data": "5,14,17,19,22,31,33,36,38,47,50,52,55,64,67,70,79,82,84,87,96,98,101,103,112,115,117,120,131,132,143,146,148,151,160,162,165,167,176,179,181,184,193,196,199,208,211,213,216,225,227,230,232,241,244,246,249,258,260,262,271,274,276,279,288,290,293,295",
+    "name": "Numbers of the form k + wt(k) for exactly two distinct k, where wt(k) = A000120(k) is the binary weight of k.",
+    "comment": [
+        "The positions of entries equal to 2 in A228085, or numbers that appear exactly twice in A092391.",
+        "Numbers that can be expressed as the sum of distinct terms of the form 2^n+1, n=0,1,... in exactly two ways."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A230091/b230091.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Coi#Colombian\">Index entries for Colombian or self numbers and related sequences</a>"
+    ],
+    "example": [
+        "5 = 3 + 2 = 4 + 1, so 5 is in this list."
+    ],
+    "maple": [
+        "# Maple code for A000120, A092391, A228085, A010061, A228088, A230091, A230092",
+        "with(LinearAlgebra):",
+        "read transforms;",
+        "wt := proc(n) local w, m, i; w := 0; m := n; while m > 0 do i := m mod 2; w := w+i; m := (m-i)/2; od; w; end: # A000120",
+        "M:=1000;",
+        "lis1:=Array(0..M);",
+        "lis2:=Array(0..M);",
+        "ctmax:=4;",
+        "for i from 0 to ctmax do ct[i]:=Array(0..M); od:",
+        "for n from 0 to M do",
+        "m:=n+wt(n);",
+        "lis1[n]:=m;",
+        "if (m <= M) then lis2[m]:=lis2[m]+1; fi;",
+        "od:",
+        "t1:=[seq(lis1[i],i=0..M)]; # A092391",
+        "t2:=[seq(lis2[i],i=0..M)]; # A228085",
+        "COMPl(t1); # A010061",
+        "for i from 1 to M do h:=lis2[i];",
+        "if h <= ctmax then ct[h]:=[op(ct[h]),i]; fi; od:",
+        "len:=nops(ct[0]); [seq(ct[0][i],i=1..len)]; # A010061 again",
+        "len:=nops(ct[1]); [seq(ct[1][i],i=1..len)]; # A228088",
+        "len:=nops(ct[2]); [seq(ct[2][i],i=1..len)]; # A230091",
+        "len:=nops(ct[3]); [seq(ct[3][i],i=1..len)]; # A230092"
+    ],
+    "program": [
+        "(Haskell)",
+        "a230091 n = a230091_list !! (n-1)",
+        "a230091_list = filter ((== 2) . a228085) [1..]",
+        "-- _Reinhard Zumkeller_, Oct 13 2013"
+    ],
+    "xref": [
+        "Cf. A000120, A010061, A092391, A228088, A228085, A230058, A230092.",
+        "Cf. A227915."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Oct 10 2013",
+    "references": 10,
+    "revision": 20,
+    "time": "2013-10-18T12:03:04-04:00",
+    "created": "2013-10-10T22:27:30-04:00"
+}

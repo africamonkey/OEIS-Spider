@@ -1,0 +1,40 @@
+{
+    "number": 284643,
+    "data": "1,121,169,361,1849,14161,17689,25921,41209,51529,52441,64009,69169,76729,124609,187489,247009,436921,776161,851929,935089,1207801,1951609,2582449,3179089,3829849,4363921,4481689,5094049,6911641,7382089,7722841,8116801,8743849,9186961",
+    "name": "Numbers k such that concat(k, d(k)) and concat(d(k), k) are both prime, where d(k) is the number of divisors of k.",
+    "comment": [
+        "It appears that all terms are squares. - _Michel Marcus_, Apr 02 2017",
+        "All terms are odd squares, because k and d(k) must be odd. - _Robert Israel_, Apr 04 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A284643/b284643.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "d(121) = 3 and 1213 and 3121 are both prime."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,b,n; for n from 1 by 2 to q do",
+        "a:=n*10^(ilog10(tau(n))+1)+tau(n); b:=tau(n)*10^(ilog10(n)+1)+n;",
+        "if isprime(a) and isprime(b) then print(n); fi; od; end: P(10^9);",
+        "# Alternative:",
+        "filter:= proc(k) local d; d:= numtheory:-tau(k); isprime(d + 10^(1+ilog10(d))*k) and isprime(k+10^(1+ilog10(k))*d) end proc:",
+        "select(filter, [seq(k^2, k=1..10^4,2)]); # _Robert Israel_, Apr 04 2017"
+    ],
+    "mathematica": [
+        "cnc[x_, y_] := FromDigits[Join @@ IntegerDigits@{x, y}]; Select[ Range[1, 5000, 2]^2, (t = DivisorSigma[0, #]; PrimeQ@ cnc[t, #] && PrimeQ@ cnc[#, t]) &] (* _Giovanni Resta_, Apr 04 2017 *)"
+    ],
+    "program": [
+        "(PARI) is(k)={my(v1=digits(k),v2=digits(numdiv(k)));isprime(fromdigits(concat(v1,v2)))&&isprime(fromdigits(concat(v2,v1)))};",
+        "findFirstTerms(q)={my(ans:list,k=1); ans=List(); q=max(1,q); for(c=1,q, while(!is(k),k++); listput(ans,k); k++); Vec(ans)} \\\\ _R. J. Cano_, Mar 31 2017"
+    ],
+    "xref": [
+        "Cf. A000005, A065998."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Mar 31 2017",
+    "references": 2,
+    "revision": 32,
+    "time": "2017-04-05T00:32:43-04:00",
+    "created": "2017-04-02T10:17:06-04:00"
+}

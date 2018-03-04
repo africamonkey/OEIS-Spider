@@ -1,0 +1,33 @@
+{
+    "number": 249015,
+    "data": "1,1,5,17,69,339,1677,9321,55137,343659,2285289,15910857,116120781,886308147,7033465989,58008074409,495792941337,4381170220251,39980186877537,376025841184329,3640077999981189,36224841818288547,370112212444620861,3878334404076375657",
+    "name": "A binomial convolution.",
+    "formula": [
+        "a(n) = 0^0+sum(bin(n,k)*b(k)*c(n-k-1),k=0..n-1),",
+        "where the numbers b(n) = A049425(n+1) have e.g.f (1+t)^2*exp(t+t^2+t^3/3)",
+        "and the numbers c(n) have e.g.f. exp(-(t+t^2+t^3/3)).",
+        "Recurrence: a(n+4)+n*a(n+3)-3*(n+3)*a(n+2)-3*(n+3)*(n+2)*a(n+1)-(n+3)*(n+2)*(n+1)*a(n) = 0.",
+        "E.g.f. A(t) = 1+(1+t)^2*exp(t+t^2+t^3/3)*integrate(exp(-(u+u^2+u^3/3)),{u,0,t}).",
+        "Differential equation for the e.g.f.: (1+t)*A''(t)-(2+3*t+3*t^2+t^3)*A'(t)-3*(1+t)^2*A(t) = 0"
+    ],
+    "mathematica": [
+        "b[n_] := Sum[(n!/k!)Sum[Binomial[k,i]Binomial[k-i+2,n-2i-k]/3^i,{i,0,k}],{k,0,n}]",
+        "c[n_] := Sum[(n!/k!)(-1)^k Sum[Binomial[k,i]Binomial[k-i,n-2i-k]/3^i,{i,0,k}],{k,0,n}]",
+        "Table[If[n==0,1,0]+Sum[Binomial[n,k]b[k]c[n-k-1],{k,0,n-1}],{n,0,40}]"
+    ],
+    "program": [
+        "(Maxima) b(n) := sum((n!/k!)*sum(binomial(k,i)*binomial(k-i+2,n-2*i-k)/3^i,i,0,k),k,0,n);",
+        "c(n) := sum((n!/k!)*(-1)^k*sum(binomial(k,i)*binomial(k-i,n-2*i-k)/3^i,i,0,k),k,0,n);",
+        "makelist((if n=0 then 1 else 0)+sum(binomial(n,k)*b(k)*c(n-k-1),k,0,n-1),n,0,20);"
+    ],
+    "xref": [
+        "Cf. A049425, A252284."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Emanuele Munarini_, Oct 20 2014",
+    "references": 1,
+    "revision": 14,
+    "time": "2014-12-16T13:25:35-05:00",
+    "created": "2014-12-16T13:25:35-05:00"
+}

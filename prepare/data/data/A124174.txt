@@ -1,0 +1,49 @@
+{
+    "number": 124174,
+    "data": "0,1,10,45,351,1540,11935,52326,405450,1777555,13773376,60384555,467889345,2051297326,15894464365,69683724540,539943899076,2367195337045,18342198104230,80414957735001,623094791644755,2731741367653000,21166880717817451,92798791542467010",
+    "name": "Sophie Germain triangular numbers tr: 2*tr+1 is also a triangular number.",
+    "comment": [
+        "Sophie Germain triangular numbers are one of an infinite number of triangular number sets tr where 2*tn^2*tr + tn is a triangular number: tr and tn both also being triangular numbers with tn being held constant. For the present numbers, a(n) = tr, 8*(2*tr + 1) + 1 = 16*tr + 9 is also a square, the square root of which is 2*y+1 with y being the argument of the triangular number 2*tr + 1. Now 1/2*(y^2+y) = a^2 + a +1 from the definition of Sophie Germain triangular numbers. Multiply both sides by 4 and subtract 3 to get 2*y^2 + 2*y -3 = 4*a^2 + 4*a +1 (a square). Cf. A124124: Numbers y such that 2*y^2 + 2*y - 3 is a square. The values y are the same y such that 2*y+1 = sqrt(16*tr + 9). - _Kenneth J Ramsey_, Jun 25 2011",
+        "Values of n such that 2*n+1 and 9*n+1 are both triangular numbers. - _Colin Barker_, Jun 29 2016"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A124174/b124174.txt\">Table of n, a(n) for n = 1..100</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,34,-34,-1,1)."
+    ],
+    "formula": [
+        "a(n) = (A124124(n)^2 + A124124(n)-2)/4.",
+        "a(n) = 35*(a(n-2) - a(n-4)) + a(n-6).",
+        "From Peter Pein, Dec 04 2006: (Start)",
+        "a(n) = -11/32 + (-3 - 2*sqrt(2))^n/64 + (5*(3 - 2*sqrt(2))^n)/32 + (-3 - 2*sqrt(2))^n/(32*sqrt(2)) - (5*(3 - 2*sqrt(2))^n)/(32*sqrt(2)) + (-3 + 2*sqrt(2))^n/64 - (-3 + 2*sqrt(2))^n/(32*sqrt(2)) + (5*(3 + 2*sqrt(2))^n)/32 + (5*(3 + 2*sqrt(2))^n)/(32*sqrt(2));",
+        "O.g.f.: (x*(1 + 9*x + x^2))/((1 - x)*(1 - 6*x + x^2)*(1 + 6*x + x^2));",
+        "E.g.f.: (-22*exp(x) + exp(-3*x+2*x*sqrt(2))*(1-sqrt(2)) - 5*exp(3*x-2*x*sqrt(2))*(-2 + sqrt(2)) + exp(-3*x-2*x*sqrt(2))*(1+sqrt(2)) + 5*exp(3*x+2*x*sqrt(2))*(2+sqrt(2)))/64.  (End)",
+        "a(n) = 34*a(n-2) - a(n-4) + 11. - _Kieren MacMillan_, Nov 08 2008",
+        "a(n) = a(n-1) + 34*a(n-2) - 34*a(n-3) - a(n-4) + a(n-5) with a(0)=0, a(1)=1, a(2)=10, a(3)=45, a(4)=351. - _Harvey P. Dale_, Sep 28 2011",
+        "a(n) = x*(x + 1)/2 where x = A216134(n) = (2*A000129(n) + (-1)^n*(A000129(2*floor(n/2) - 1) - (-1)^n)/2). - _Raphie Frank_, Jan 04 2013",
+        "a(n+2) = 1/2*((3/2*sqrt(8*a(n) + 1) + sqrt(16*a(n) + 9) - 1/2)*(3/2*sqrt(8*a(n) + 1) + sqrt(16*a(n) + 9) + 1/2)); a(0) = 0, a(1) = 1. - _Raphie Frank_, Jan 29 2013"
+    ],
+    "maple": [
+        "a:= n-> (Matrix([[10, 1, 0, 0, 1]]). Matrix(5, (i, j)-> if i=j-1 then 1 elif j=1 then [1, 34, -34, -1, 1][i] else 0 fi)^n)[1, 4]: seq(a(n), n=1..30); # _Alois P. Heinz_, Apr 27 2009"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1,34,-34,-1,1}, {0,1,10,45,351},30] (* _Harvey P. Dale_, Sep 28 2011 *)"
+    ],
+    "program": [
+        "(MAGMA) I:=[0,1,10,45]; [n le 4 select I[n] else 34*Self(n-2)-Self(n-4)+11: n in [1..30]]; // _Vincenzo Librandi_, Sep 29 2011",
+        "(PARI) a=[0, 1, 10, 45, 351];for(n=5,20,a=concat(a,a[#a]+34*a[#a-1]- 34*a[#a-2]-a[#a-3]+a[#a-4]));a \\\\ _Charles R Greathouse IV_, Sep 29 2011"
+    ],
+    "xref": [
+        "Cf. A005384, A077442, A124124.",
+        "Cf. A216134, A000129."
+    ],
+    "keyword": "nice,nonn,easy",
+    "offset": "1,3",
+    "author": "_Zak Seidov_, Dec 04 2006",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Apr 27 2009"
+    ],
+    "references": 14,
+    "revision": 62,
+    "time": "2018-01-20T12:29:43-05:00",
+    "created": "2006-12-06T03:00:00-05:00"
+}

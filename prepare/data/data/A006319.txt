@@ -1,0 +1,73 @@
+{
+    "number": 6319,
+    "id": "M3521",
+    "data": "1,1,4,16,68,304,1412,6752,33028,164512,831620,4255728,22004292,114781008,603308292,3192216000,16989553668,90890869312,488500827908,2636405463248,14281895003716,77631035881072,423282220216964,2314491475510816,12688544297945348",
+    "name": "Royal paths in a lattice (convolution of A006318).",
+    "comment": [
+        "Number of peaks at level 1 in all Schr\u00f6der paths of semilength n (n>=1). Example: a(2)=4 because in the six Schr\u00f6der paths of semilength two, HH, H(UD), (UD)H, (UD)(UD), UHD and UUDD (where H=(2,0), U=(1,1), D=(1,-1)), we have four peaks at level 1 (shown between parentheses). - _Emeric Deutsch_, Dec 27 2003"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A006319/b006319.txt\">Table of n, a(n) for n = 0..200</a>",
+        "A. Bacher, <a href=\"http://arxiv.org/abs/1301.1365\">Directed and multi-directed animals on the square lattice with next nearest neighbor edges</a>, arXiv preprint arXiv:1301.1365 [math.CO], 2013. See Q(t). - _N. J. A. Sloane_, Feb 14 2013",
+        "P. Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL12/Barry3/barry93.html\">Continued fractions and transformations of integer sequences</a>, JIS 12 (2009) 09.7.6",
+        "G. Kreweras, <a href=\"http://www.numdam.org/item?id=BURO_1973__20__3_0\">Sur les hi\u00e9rarchies de segments</a>, Cahiers Bureau Universitaire Recherche Op\u00e9rationnelle, Cahier 20, Inst. Statistiques, Univ. Paris, 1973.",
+        "G. Kreweras, <a href=\"/A001844/a001844.pdf\">Sur les hi\u00e9rarchies de segments</a>, Cahiers du Bureau Universitaire de Recherche Op\u00e9rationnelle, Institut de Statistique, Universit\u00e9 de Paris, #20 (1973). (Annotated scanned copy)",
+        "G. Kreweras, <a href=\"/A006318/a006318_2.pdf\">Aires des chemins surdiagonaux et application \u00e0 un probl\u00e8me \u00e9conomique</a>, Cahiers du Bureau universitaire de recherche op\u00e9rationnelle S\u00e9rie Recherche 24 (1976): 1-8. [Annotated scanned copy]",
+        "Emanuele Munarini, <a href=\"http://www.emis.de/journals/INTEGERS/papers/j29/j29.Abstract.html\">Combinatorial properties of the antichains of a garland</a>, Integers, 9 (2009), 353-374.",
+        "S.-n. Zheng and S.-l. Yang, <a href=\"http://dx.doi.org/10.1155/2014/848374\">On the-Shifted Central Coefficients of Riordan Matrices</a>, Journal of Applied Mathematics, Volume 2014, Article ID 848374, 8 pages."
+    ],
+    "formula": [
+        "All listed terms satisfy the recurrence a(1)=1 and, for n>1, a(n)=4a(n-1)+Sum[a(k)a(n-k-1), k= 2, ..., n-2]. - _John W. Layman_, Feb 23 2001",
+        "From Mario Catalani (mario.catalani(AT)unito.it), Jun 19 2003: (Start)",
+        "a(n) = Sum_{j=0..n}(n-j)*(Sum_{i=0..j} a(i)*a(j-i)) for n>0, a(0)=1.",
+        "G.f.: A(x)= (1/(2x))((1 - x)^2 - sqrt((1 - x)^4 - 4x(1 - x)^2)) (End)",
+        "a(n) = 0^n + Sum_{k=0..n-1} C(n+k, 2k+1)*A000108(k). - _Paul Barry_, Feb 01 2009",
+        "G.f.: 1/(1-z/(1-z/(1-z/(...)))) where z=x/(1-x)^2 (continued fraction); more generally g.f. C(x/(1-x)^2) where C(x) is the g.f. for the Catalan numbers (A000108). - _Joerg Arndt_, Mar 18 2011",
+        "a(n) is the sum of top row terms in M^(n-1), M = an infinite square production matrix as follows:",
+        "  2, 2, 0, 0, 0, 0, ...",
+        "  1, 1, 2, 0, 0, 0, ...",
+        "  1, 1, 1, 2, 0, 0, ...",
+        "  1, 1, 1, 1, 2, 0, ...",
+        "  1, 1, 1, 1, 1, 2, ...",
+        "  ... - _Gary W. Adamson_, Aug 23 2011",
+        "a(n) ~ 2^(1/4)*(3+2*sqrt(2))^n/(sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Aug 09 2013",
+        "Conjecture: (n+1)*a(n) +(-7*n+4)*a(n-1) +(7*n-17)*a(n-2) +(-n+4)*a(n-3)=0. - _R. J. Mathar_, Oct 16 2013",
+        "a(n) = Sum_{k=0..n} (2/(k+2))*binomial(n+k,k+1)*binomial(n-1,k) for n>=1. - _David Callan_, Jul 21 2017"
+    ],
+    "example": [
+        "a(4) = 68 since the top row of M^3 = (22, 22, 16, 8, 0, 0, 0,...); where 68 = (22 + 22 + 16 + 8)."
+    ],
+    "mathematica": [
+        "d[n_] := d[n] = Sum[(n - j)*Sum[d[i]d[j - i], {i, 0, j}], {j, 0, n-1}]; d[0] = 1; Table[d[n], {n, 0, 26}]"
+    ],
+    "program": [
+        "(Sage)",
+        "def A006319_list(n) :",
+        "    D = [0]*(n+1); D[1] = 1",
+        "    b = True; h = 2; R = [1]",
+        "    for i in range(2*n-2) :",
+        "        if b :",
+        "            for k in range(h,0,-1) : D[k] += D[k-1]",
+        "            h += 1;",
+        "        else :",
+        "            for k in range(1,h, 1) : D[k] += D[k-1]",
+        "            R.append(D[h-2]);",
+        "        b = not b",
+        "    return R",
+        "A006319_list(25) # _Peter Luschny_, Jun 03 2012",
+        "(MAGMA) [1] cat [&+[2/(k+2)*Binomial(n+k,k+1)*Binomial(n-1,k): k in [0..n]]: n in [1..25]]; // _Vincenzo Librandi_, Jul 22 2017"
+    ],
+    "xref": [
+        "First differences of A006318. Second diagonal of A033877."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "references": 16,
+    "revision": 76,
+    "time": "2017-11-10T12:20:43-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

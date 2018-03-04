@@ -1,0 +1,68 @@
+{
+    "number": 7694,
+    "id": "M0992",
+    "data": "1,2,4,6,8,12,16,18,24,32,36,48,54,64,72,96,108,128,144,162,192,216,256,288,324,384,432,486,512,576,648,768,864,972,1024,1152,1296,1458,1536,1728,1944,2048,2304,2592,2916,3072,3456,3888,4096",
+    "name": "Numbers n such that phi(n) divides n.",
+    "comment": [
+        "a(n) divides p^a(n) - 1 for all primes p >= 5. - _Benoit Cloitre_, Mar 22 2002",
+        "Also n such that sum( d divides n, mu(d)/d) has numerator of 1. - _Benoit Cloitre_, Apr 15 2002",
+        "n is here if and only if phi(n) divides also cototient(n). On the other hand, cototient(n) divides phi(n) if and only if n is a prime or power of a prime. - _Labos Elemer_, May 03 2002",
+        "It follows that n/phi(n) = 2 if n is a power of 2 and equal to 3 if n is of the form 6*A003586. - _Gary Detlefs_, Jun 28 2011",
+        "1 and even 3-smooth numbers, cf. A003586.",
+        "Numbers n such that n = (1+omega(n))*phi(n). - _Farideh Firoozbakht_, Oct 02 2014",
+        "These are the integers whose largest squarefree divisor is 1, 2 or 6. As such, this sequence is equal to the set V_infinite, defined as the intersection of the V_k for k >= 1, where V_k(x) = {phi_k(n) <= x} and phi_k is the k-th iterate of phi, the Euler function; for instance, V_1 is given by A002202 (see Theorem 7 in Pomerance and Luca). - _Michel Marcus_, Nov 09 2015",
+        "This sequence is contained in A068997. The terms of A068997 not in this sequence have largest squarefree divisor other than 1, 2, or 6, beginning with 10. - _Torlach Rush_, Dec 07 2017"
+    ],
+    "reference": [
+        "J.-M. De Koninck & A. Mercier, 1001 Problemes en Theorie Classique Des Nombres, Problem 526 pp. 71; 256, Ellipses Paris 2004.",
+        "S\u00e1rk\u00f6zy A. and Suranyi J., Number Theory Problem Book (in Hungarian), Tankonyvkiado, Budapest, 1972.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A007694/b007694.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Michael W. Ecker and Scott J. Beslin, <a href=\"http://www.jstor.org/stable/2322340\">Problem E3037</a>, Amer. Math. Monthly 93 (1986), 656-657.",
+        "Florian Luca and Carl Pomerance, <a href=\"http://www.westga.edu/~integers/j8proc/j8proc.pdf\">On the range of the iterated Euler function</a>, Article 8, Integers: Electronic Journal of Combinatorial Number Theory, Proceedings of the Integers Conference 2007, Volume 9 Supplement (2009).",
+        "Math Stack Exchange, <a href=\"http://math.stackexchange.com/questions/1328909/is-there-phin-n-6\">Is there phi(n)/n = 6</a>",
+        "W. Sierpi\u0144ski, <a href=\"http://matwbn.icm.edu.pl/kstresc.php?tom=42&amp;wyd=10\">Elementary Theory of Numbers</a>, Warszawa 1964."
+    ],
+    "formula": [
+        "n/phi(n) is an integer if and only if n = 1 or n = 2^w * 3^u for w > 0 and u >= 0.",
+        "n/phi(n) = 3 if and only if phi(n)|n and 3|n. - _Thomas Ordowski_, Nov 03 2014",
+        "a(n) is approximately exp(sqrt(2*log(2)*log(3)*n))/sqrt(3/2). - _Charles R Greathouse IV_, Nov 10 2015"
+    ],
+    "example": [
+        "12 is in the sequence because 12/phi(12) = 12/4 = 3, which is an integer.",
+        "16 is in the sequence because 16/phi(16) = 16/8 = 2, which is an integer.",
+        "20 is not in the sequence because 20/phi(20) = 20/8 = 5/2 = 2.5, which is not an integer."
+    ],
+    "maple": [
+        "select(n -> n mod numtheory:-phi(n) = 0, [$1..5000]); # _Robert Israel_, Nov 03 2014"
+    ],
+    "mathematica": [
+        "Select[ Range[5000], IntegerQ[ #/EulerPhi[ # ]] &]"
+    ],
+    "program": [
+        "(R) library(numbers); j=N=1",
+        "while(j<200) if(isNatural((N=N+1)/eulersPhi(N))) dtot[(j=j+1)]=N # _Christian N. K. Anderson_, Apr 04 2013",
+        "(PARI) for(n=1,10^6, if (n%eulerphi(n)==0,print1(n,\", \"))); \\\\ _Joerg Arndt_, Apr 04 2013",
+        "(PARI) list(lim)=my(v=List([1]),t); for(i=1,logint(lim\\1,2), listput(v,t=2^i); for(j=1,logint(lim\\t,3), listput(v,t*=3))); Set(v) \\\\ _Charles R Greathouse IV_, Nov 10 2015",
+        "(Haskell)",
+        "a007694 n = a007694_list !! (n-1)",
+        "a007694_list = 1 : filter even a003586_list",
+        "-- _Reinhard Zumkeller_, Jan 06 2014",
+        "(Sage)",
+        "is_A007694 = lambda n: euler_phi(n).divides(n)",
+        "A007694_list = lambda len: filter(is_A007694, (1..len))",
+        "A007694_list(4100) # _Peter Luschny_, Oct 03 2014"
+    ],
+    "xref": [
+        "Cf. A000010, A049237, A007694, A007947, A003557, A023200, A003586, A001221, A033950, A235353 (subsequence), A068997 (subsequence)."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, _Robert G. Wilson v_",
+    "references": 28,
+    "revision": 87,
+    "time": "2017-12-09T19:51:11-05:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

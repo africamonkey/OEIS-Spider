@@ -1,0 +1,41 @@
+{
+    "number": 73918,
+    "data": "2,3,7,31,211,2311,43891,870871,13123111,300690391,6915878971,200560490131,11406069164491,386480064480511,18826412648012971,693386350578511591,37508276737897976011,3087649419126112110271",
+    "name": "Smallest prime which is 1 more than a product of n distinct primes: a(n) is a prime and a(n) - 1 is a squarefree number with n prime factors.",
+    "comment": [
+        "Apparently the same as record values of A055734: least k such that phi(k) has n distinct prime factors, where phi is Euler's totient function. If the Mathematica program is used for large n, then \"fact\" should be reduced to, say, 1.1 in order to increase the search speed. - _T. D. Noe_, Dec 17 2003"
+    ],
+    "link": [
+        "M. F. Hasler Jun 16 2007, <a href=\"/A073918/b073918.txt\">Table of n, a(n) for n = 0..24</a>"
+    ],
+    "formula": [
+        "Theorem: For any m>0 there is K>0 such that for all k>K, a(k)-1 is divisible by the first m primes. - _M. F. Hasler_ Jun 16 2007",
+        "Corollary: For any m>1 there is K>0 such that for all k>K, a(k) = 1 (mod m). (M. F. Hasler, Jun 16 2007)",
+        "Let K(m) be the smallest possible K satisfying the Theorem. Conjecture: K(m) ~ m, i.e. a(k) ~ A002110(k), only very few of the last factors will be (insignificantly) larger. - _M. F. Hasler_ Jun 16 2007"
+    ],
+    "example": [
+        "a(6) = 43891 = 2*3*5*7*11*19+1.",
+        "a(0) = 1+1 = 2 (empty product of zero primes)."
+    ],
+    "mathematica": [
+        "Generate[pIndex_, i_] := Module[{p2, t}, p2=pIndex; While[p2[[i]]++; Do[p2[[j]]=p2[[i]]+j-i, {j, i+1, Length[p2]}]; t=Times@@Prime[p2]; t<fact*base, AppendTo[s, t]; If[i<Length[p2], Generate[p2, i+1]]]]; fact=2; Table[pin=Range[n]; base=Times@@Prime[pin]; s={base}; Do[Generate[pin, j], {j, n}]; s=Sort[s]; noPrime=True; i=0; While[noPrime&&i<Length[s], i++; noPrime=!PrimeQ[1+s[[i]]]]; If[noPrime, -1, 1+s[[i]]], {n, 20}] - from T. D. Noe"
+    ],
+    "program": [
+        "(PARI) A073918(n, b=0 /*best*/, p=1 /*product*/, f=[]/*factors*/)={ if( #f<n, f=vector( n, i, prime(i)); p=prod( i=1,n-1, f[i] ); b=prime(n); /* get upper limit by incrementing last factor until prime is found */ while( !isprime( 1+p*b), b=nextprime(b+1)); b=1+p*b; p*=f[n] ); if( isprime( 1+p ), return( 1+p )); /* always p < b */ /* increase the n-th factor to recursively explore all solutions < b */ p /= f[n]; until( b <= 1+p*f[n] || ( n < #f && f[n] >= f[n+1] ) || !b = A073918( n-1, b, p*f[n], f), f[n]= nextprime( f[n]+1 ) ); b } /* then vector(30,n,A073918(n-1)) gives the first 30 terms */ - _M. F. Hasler_ Jun 16 2007"
+    ],
+    "xref": [
+        "Cf. A055734 (number of distinct prime factors of phi(n)).",
+        "Cf. A073917, A098026.",
+        "Cf. A000040 (primes), A002110 (primorial), A081545 (same with composite instead of primes)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Amarnath Murthy_, Aug 18 2002",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Aug 20 2002"
+    ],
+    "references": 11,
+    "revision": 16,
+    "time": "2013-12-05T19:55:33-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

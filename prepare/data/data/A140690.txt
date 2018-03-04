@@ -1,0 +1,49 @@
+{
+    "number": 140690,
+    "data": "1,2,3,5,7,10,12,15,21,31,42,51,56,63,85,127,170,204,240,255,341,455,511,682,819,992,1023,1365,2047,2730,3276,3640,3855,4032,4095,5461,8191,10922,13107,16256,16383,21845,29127,31775,32767,43690,52428,61680",
+    "name": "A positive integer n is included if n written in binary can be subdivided into a number of runs all of equal-length, the first run from the left consisting of all 1's, the next run consisting of all 0's, the next run consisting of all 1's, the next run consisting of all 0's, etc.",
+    "comment": [
+        "Also: numbers of the form (2^s-1)*[4^{s*(k+1)}-1]/(4^s-1) or 2^s(2^s-1)*[4^{s*(k+1)}-1]/(4^s-1), s>=1, k>=0. Subsequences are, with the possible exception of terms at n=0, A002450(n), A043291(n), A015565(2n), A093134(2n+1), A000225(n), A020522(n). [_R. J. Mathar_, Aug 04 2008]",
+        "From _Emeric Deutsch_, Jan 25 2018: (Start)",
+        "Also the indices of the compositions having equal parts.",
+        "We define the index of a composition to be the positive integer whose binary form has run-lengths (i.e. runs of 1's, runs of 0's, etc., from left to right) equal to the parts of the composition. Example: the composition [1,1,3,1] has index 46 since the binary form of 46 is 101110. The integer 992 is in the sequence since its binary form is 1111100000 and the composition [5,5] has equal parts. The integer 100 is not in the sequence since its binary form is 1100100 and the composition [2,2,1,2] does not have equal parts.",
+        "The command c(n) from the Maple program yields the composition having index n. (End)"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A140690/b140690.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "example": [
+        "819 in binary is 1100110011. The runs of 0s and 1s are (11)(00)(11)(00)(11). Each run (alternating 1s and 0s) is the same length. So 819 is in the sequence."
+    ],
+    "maple": [
+        "Runs := proc (L) local j, r, i, k: j := 1: r[j] := L[1]: for i from 2 to nops(L) do if L[i] = L[i-1] then r[j] := r[j], L[i] else j := j+1: r[j] := L[i] end if end do: [seq([r[k]], k = 1 .. j)] end proc: RunLengths := proc (L) map(nops, Runs(L)) end proc: c := proc (n) ListTools:-Reverse(convert(n, base, 2)): RunLengths(%) end proc: A := {}: for n to 62000 do if nops(convert(c(n), set)) = 1 then A := `union`(A, {n}) else  end if end do: A; # most of the Maple program is due to W. Edwin Clark. - _Emeric Deutsch_, Jan 25 2018"
+    ],
+    "mathematica": [
+        "Select[Range[62000],Length[Union[Length/@Split[IntegerDigits[#,2]]]]==1&] (* _Harvey P. Dale_, Mar 22 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert)",
+        "a140690 n = a140690_list !! (n-1)",
+        "a140690_list = f $ singleton (1, 1, 2) where",
+        "   f s | k == 1 = m : f (insert (2*b-1, 1, 2*b) $ insert (b*m, k+1, b) s')",
+        "       | even k    = m : f (insert (b*m+b-1, k+1, b) s')",
+        "       | otherwise = m : f (insert (b*m, k+1, b) s')",
+        "       where ((m, k, b), s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Feb 21 2014"
+    ],
+    "xref": [
+        "Cf. A101211, A298644."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Jul 11 2008",
+    "ext": [
+        "Terms beyond 42 from _R. J. Mathar_, Aug 04 2008"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2018-01-25T13:52:32-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

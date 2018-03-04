@@ -1,0 +1,39 @@
+{
+    "number": 116562,
+    "data": "0,1,2,6,12,25,49,92,169,306,551,979,1729,3030,5279,9150,15792,27149,46512,79439,135300,229867,389643,659112,1112833",
+    "name": "Z-transformed determinant inverse of A000045.",
+    "comment": [
+        "The Floor[N[]] is needed in the Mathematica code to get from floating point numbers to integers. Without the floor they are only close to integers: \\!\\({0.`, 0.9999999999999999`, 1.9999999999999998`, 5.999999999999999`, \\ 11.999999999999998`, 24.999999999999996`, 48.00000000000001`, \\ 91.00000000000001`, 168.00000000000003`, 306.`, 550.0000000000001`, \\ 978.9999999999999`, 1728.0000000000007`, 3029.0000000000005`, \\ 5278.000000000001`, 9150.`, 15791.999999999998`, 27148.999999999996`, \\ 46511.99999999999`, 79439.`, 135300.`, 229866.0000000001`, 389642.0000000002`, 659111.0000000002`, \\ 1.1128320000000005`*^6}\\) Limit[a[[n + 1]]/a[[n]],n->Infinity]=(1+Sqrt[5])/2 but in a \"slow\" logarithmic limit."
+    ],
+    "formula": [
+        "f[n]=Binet[n] g[x]=ztransform[f[n]] h[x]=D[g[x],{x,1}] w[n]=Inverseztransform[h[x]] a(n) = Abs[w[n]]"
+    ],
+    "example": [
+        "Mathematica code for the function is:",
+        "\\!\\(\\*",
+        "RowBox[{\"\\[Piecewise]\", GridBox[{",
+        "{\\(1\\/5\\ 2\\^\\(\\(-1\\) -",
+        "n\\)\\ \\((\\((\\(-5\\) + \\(AT)5)\\)\\ \\((",
+        "1 + \\(AT)5)\\)\\^n - \\((1 - \\(AT)5)\\)\\^n\\ \\((5 + \\(AT)5)\\))\\)\\ \\((\\(-1\\) +",
+        "n)\\)\\), \\(n >= 1\\)},",
+        "{\\(1\\/25\\ 2\\^\\(-n\\)\\ \\((\\((1 + \\(AT)5)\\)\\^n\\ \\((\\(AT)5 - 5\\ n)\\) - \\((1 - \\",
+        "\\(AT)5)\\)\\^n\\ \\((\\(AT)5 + 5\\ n)\\))\\)\\),",
+        "TagBox[\"True\",",
+        "\"PiecewiseDefault\",",
+        "AutoDelete->False,",
+        "DeletionWarning->True]}",
+        "},",
+        "ColumnSpacings->1.2,",
+        "ColumnAlignments->{Left}]}]\\)"
+    ],
+    "mathematica": [
+        "b0 = x /. Solve[x^2 - x - 1 == 0, x][[2]] b1 = x /. Solve[x^2 - x - 1 == 0, x][[1]] a0[n_] := (b0^n - b1^n)/(b0 - b1); f[x_] = ZTransform[a0[n], n, x] dg[x_] = D[f[x],{x,1}] w[n_] = InverseZTransform[dg[x], x, n] a=Table[Abs[Floor[N[w[n]]],{n,1,25}]"
+    ],
+    "keyword": "nonn,uned,obsc",
+    "offset": "0,3",
+    "author": "_Roger L. Bagula_, Mar 17 2006",
+    "references": 0,
+    "revision": 12,
+    "time": "2013-01-19T01:28:09-05:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

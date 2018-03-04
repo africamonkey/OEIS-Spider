@@ -1,0 +1,43 @@
+{
+    "number": 65609,
+    "data": "1,2,3,4,6,7,8,10,12,14,15,16,20,24,26,28,30,31,32,36,40,42,48,50,52,54,56,58,60,62,63,64,72,80,84,96,98,100,104,106,108,112,114,116,118,120,122,124,126,127,128,136,144,160,164,168,170,192,194,196,200,202",
+    "name": "Positive n such that when written in binary, no rotated value of n is greater than n.",
+    "comment": [
+        "Rotated values of n are defined to be the numbers which occur when n is shifted 1,2, .. bits to the right with the last bits added to the front - so the rotated values of 1011 are 1011, 1101, 1110 and 0111.",
+        "The number of k-bit binary numbers in this sequence is A008965. This is the row lengths when the sequence is regarded as a table.",
+        "If n is in the sequence, then so is 2n. All odd terms are of the form 2^k - 1. - _Ivan Neretin_, Aug 04 2016"
+    ],
+    "link": [
+        "Ivan Neretin, <a href=\"/A065609/b065609.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "14 is included because 14 in binary is 1110. 1110 has the rotated values of 0111, 1011 and 1101 - 7,11 and 13 - which are all smaller than 14."
+    ],
+    "maple": [
+        "filter:= proc(n) local L, k;",
+        "  if n::odd then return evalb(n+1 = 2^ilog2(n+1)) fi;",
+        "  L:= convert(convert(n,binary),string);",
+        "  for k from 1 to length(L)-1 do",
+        "    if not lexorder(StringTools:-Rotate(L,k),L) then return false fi;",
+        "  od;",
+        "  true",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Aug 05 2016"
+    ],
+    "mathematica": [
+        "Select[Range[200], # == Max[FromDigits[#, 2] & /@ NestList[RotateLeft, dg = IntegerDigits[#, 2], Length@dg]] &] (* _Ivan Neretin_, Aug 04 2016 *)"
+    ],
+    "xref": [
+        "Cf. A008965, A163381."
+    ],
+    "keyword": "base,nonn,tabf",
+    "offset": "1,2",
+    "author": "Jonathan Ayres (jonathan.ayres(AT)btinternet.com), Nov 06 2001",
+    "ext": [
+        "Edited by _Franklin T. Adams-Watters_, Apr 09 2010"
+    ],
+    "references": 4,
+    "revision": 14,
+    "time": "2016-08-25T09:26:15-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

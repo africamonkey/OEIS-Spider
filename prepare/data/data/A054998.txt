@@ -1,0 +1,40 @@
+{
+    "number": 54998,
+    "data": "41,83,197,199,223,240,251,281,287,340,371,401,439,491,510,593,660,733,803,857,864,883,931,941,961,983,990,991,1012,1060,1061,1099,1104,1187,1236,1283,1313,1361,1381,1392,1433,1439,1493,1511,1523,1524,1553",
+    "name": "Integers that can be expressed as the sum of consecutive primes in exactly 3 ways.",
+    "reference": [
+        "R. K. Guy, Unsolved Problems in Number Theory, section C2."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A054998/b054998.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "C. Rivera, <a href=\"http://www.primepuzzles.net/puzzles/puzz_046.htm\">Problem with some terms</a>"
+    ],
+    "example": [
+        "41 can be expressed as 41 or 11+13+17 or 2+3+5+7+11+13, so 41 is in the sequence."
+    ],
+    "maple": [
+        "N:= 10^4: # to get all terms <= N",
+        "P:= [0,op(select(isprime, [2,seq(i,i=3..N,2)]))]:",
+        "nP:= nops(P);",
+        "S:= ListTools:-PartialSums(P):",
+        "V:= Vector(N):",
+        "for i from 1 to nP-1 do",
+        "  for j from i+1 to nP while S[j] - S[i] <= N do",
+        "     V[S[j]-S[i]]:= V[S[j]-S[i]]+1",
+        "od od:",
+        "select(t -> V[t] = 3, [$1..N]): # _Robert Israel_, Apr 05 2017"
+    ],
+    "mathematica": [
+        "Module[{nn = 300, s}, s = Array[Prime, nn]; Keys@ Take[Select[KeySort@ Merge[Table[PositionIndex@ Map[Total, Partition[s, k, 1]], {k, nn/2}], Identity], Length@ # == 3 &], Floor[nn/6]]] (* _Michael De Vlieger_, Apr 06 2017, Version 10 *)"
+    ],
+    "xref": [
+        "Cf. A054845, A054859, A054996-A055001."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jud McCranie_, May 30 2000",
+    "references": 3,
+    "revision": 18,
+    "time": "2017-04-14T08:49:03-04:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

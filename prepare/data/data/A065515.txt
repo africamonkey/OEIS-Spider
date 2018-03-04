@@ -1,0 +1,63 @@
+{
+    "number": 65515,
+    "data": "1,2,3,4,5,5,6,7,8,8,9,9,10,10,10,11,12,12,13,13,13,13,14,14,15,15,16,16,17,17,18,19,19,19,19,19,20,20,20,20,21,21,22,22,22,22,23,23,24,24,24,24,25,25,25,25,25,25,26,26,27,27,27,28,28,28,29,29,29,29,30,30,31",
+    "name": "Number of prime powers <= n.",
+    "comment": [
+        "a(n) > pi(n) = A000720(n).",
+        "From _Chayim Lowen_, Aug 05 2015: (Start)",
+        "a(n) <= pi(n) + A069623(n).",
+        "Conjecture: a(n) >= pi(A069623(n)) + pi(n) + 1.",
+        "Each term m is repeated A057820(m) times. (End)"
+    ],
+    "reference": [
+        "F. J. MacWilliams and N. J. A. Sloane, The Theory of Error-Correcting Codes, Elsevier-North Holland, 1978, Chapter 4."
+    ],
+    "link": [
+        "R. Zumkeller, <a href=\"/A065515/b065515.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PrimePower.html\">Prime Power</a>"
+    ],
+    "formula": [
+        "Partial sums of A010055. - _Reinhard Zumkeller_, Nov 22 2009",
+        "a(n) = 1 + Sum_{k=1..log_2(n)} pi(floor(n^(1/k))). - _Chayim Lowen_, Aug 05 2015",
+        "a(n) = 1 + Sum_{k=2..n} floor(2*A001222(k)/(tau(k^2)-1)) where tau is A000005(n). - _Anthony Browne_, May 17 2016"
+    ],
+    "example": [
+        "There are 9 prime powers <= 12: 1=2^0, 2, 3, 4=2^2, 5, 7, 8=2^3, 9=3^2 and 11, so a(12) = 9."
+    ],
+    "maple": [
+        "N:= 100: # to get a(1) to a(N)",
+        "L:= Vector(N):",
+        "L[1]:= 1:",
+        "p:= 1:",
+        "while p < N do",
+        "  p:= nextprime(p);",
+        "  for k from 1 to floor(log[p](N)) do",
+        "    L[p^k] := 1;",
+        "  od",
+        "od:",
+        "ListTools:-PartialSums(convert(L,list)); # _Robert Israel_, May 03 2015"
+    ],
+    "mathematica": [
+        "a[n_] := 1 + Count[ Range[2, n], p_ /; Length[ FactorInteger[p]] == 1]; Table[a[n], {n, 1, 73}] (* _Jean-Fran\u00e7ois Alcover_, Oct 12 2011 *)",
+        "Accumulate[Table[If[Length[FactorInteger[n]]==1,1,0],{n,80}]] (* _Harvey P. Dale_, Aug 06 2016 *)",
+        "Accumulate[Table[If[PrimePowerQ[n],1,0],{n,120}]]+1 (* _Harvey P. Dale_, Sep 29 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a065515 n = length $ takeWhile (<= n) a000961_list",
+        "-- _Reinhard Zumkeller_, Apr 25 2011",
+        "(PARI) a(n)=n+=.5;1+sum(k=1,log(n)\\log(2),primepi(n^(1/k))) \\\\ _Charles R Greathouse IV_, Apr 26 2012"
+    ],
+    "xref": [
+        "Cf. A000040, A000961, A000720.",
+        "A025528(n) = a(n) - 1.",
+        "Cf. A139555. - _Reinhard Zumkeller_, Oct 27 2010"
+    ],
+    "keyword": "nice,nonn",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Nov 27 2001",
+    "references": 13,
+    "revision": 55,
+    "time": "2016-09-29T16:37:01-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

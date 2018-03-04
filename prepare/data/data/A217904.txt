@@ -1,0 +1,50 @@
+{
+    "number": 217904,
+    "data": "1,5,40,550,11000,285380,9064560,340521520,14773539200,727281054640,40072285049600,2444188361990880,163550098793059200,11915396563502988800,939110495156447488000,79629365649015094272000,7229173136192077603737600,699726658343948617515436800",
+    "name": "O.g.f.: Sum_{n>=0} 5*n^n*(n+5)^(n-1) * exp(-n*(n+5)*x) * x^n / n!.",
+    "comment": [
+        "Compare the g.f. to the LambertW identity:",
+        "1 = Sum_{n>=0} 5*(n+5)^(n-1) * exp(-(n+5)*x) * x^n/n!.",
+        "From _Vaclav Kotesovec_, May 22 2014: (Start)",
+        "Generally, for p>=1, a(n) = 1/n!*Sum_{k=0..n} p*(-1)^(n-k) * binomial(n,k) * k^n * (k+p)^(n-1) = Sum_{j=0..n-1} binomial(n-1,j) * p^(n-j) * StirlingS2(n+j,n).",
+        "a(n) ~ p * 2^(2*n-3/2+p/2) * n^(n-3/2) / (sqrt(Pi*(1-c)) * exp(n) * (2-c)^(n-1) * c^(n+p/2)), where c = -LambertW(-2*exp(-2)) = 0.4063757399599599...",
+        "(End)"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A217904/b217904.txt\">Table of n, a(n) for n = 0..340</a>"
+    ],
+    "formula": [
+        "a(n) = 1/n! * Sum_{k=0..n} 5*(-1)^(n-k)*binomial(n,k) * k^n * (k+5)^(n-1).",
+        "a(n) = 1/n! * [x^n] Sum_{k>=0} 5*k^k*(k+5)^(k-1)*x^k / (1 + k*(k+5)*x)^(k+1).",
+        "a(n) = [x^n] 1 + 5*x*(1+5*x)^(n-1) / Product_{k=1..n} (1-k*x).",
+        "a(n) = [x^n] 1 + 5*x*(1-5*x)^(n-1) / Product_{k=1..n} (1-(k+5)*x).",
+        "a(n) ~ 5 * 2^(2*n+1) * n^(n-3/2) / (sqrt(Pi*(1-c)) * exp(n) * (2-c)^(n-1) * c^(n+5/2)), where c = -LambertW(-2*exp(-2)) = 0.4063757399599599... . - _Vaclav Kotesovec_, May 22 2014"
+    ],
+    "example": [
+        "O.g.f.: A(x) = 1 + 5*x + 40*x^2 + 550*x^3 + 11000*x^4 + 285380*x^5 + 9064560*x^6 +...",
+        "where",
+        "A(x) = 1 + 5*1^1*6^0*x*exp(-1*6*x) + 5*2^2*7^1*exp(-2*7*x)*x^2/2! + 5*3^3*8^2*exp(-3*8*x)*x^3/3! + 5*4^4*9^3*exp(-4*9*x)*x^4/4! + 5*5^5*10^4*exp(-5*10*x)*x^5/5! +...",
+        "simplifies to a power series in x with integer coefficients."
+    ],
+    "mathematica": [
+        "Flatten[{1,Table[Sum[Binomial[n-1,j]*5^(n-j)*StirlingS2[n+j,n],{j,0,n-1}],{n,1,20}]}] (* _Vaclav Kotesovec_, May 22 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(m=0,n,5*m^m*(m+5)^(m-1)*x^m*exp(-m*(m+5)*x+x*O(x^n))/m!),n)}",
+        "(PARI) {a(n)=(1/n!)*polcoeff(sum(k=0, n, 5*k^k*(k+5)^(k-1)*x^k/(1+k*(k+5)*x +x*O(x^n))^(k+1)), n)}",
+        "(PARI) {a(n)=1/n!*sum(k=0,n, 5*(-1)^(n-k)*binomial(n,k)*k^n*(k+5)^(n-1))}",
+        "(PARI) {a(n)=polcoeff(1+5*x*(1+5*x)^(n-1)/prod(k=0, n, 1-k*x +x*O(x^n)), n)}",
+        "(PARI) {a(n)=polcoeff(1+5*x*(1-5*x)^n/prod(k=0, n, 1-(k+5)*x +x*O(x^n)), n)}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A217899, A217900, A217901, A217902, A217903, A217905."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Oct 14 2012",
+    "references": 8,
+    "revision": 25,
+    "time": "2017-01-26T02:41:15-05:00",
+    "created": "2012-10-14T21:30:16-04:00"
+}

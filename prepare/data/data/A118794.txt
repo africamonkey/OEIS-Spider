@@ -1,0 +1,38 @@
+{
+    "number": 118794,
+    "data": "0,1,2,11,121,1902,38381,945989,27552260,925920081,35265751869,1501219998148,70632987480771,3639861179067661,203881981765871618,12333901891547136559,801418950244634922973,55665376886060309513990",
+    "name": "E.g.f.: 1 - exp((-1 + sqrt(5 - 4*exp(x)) )/2).",
+    "comment": [
+        "Also equals the row sums of triangle A118793 (offset without leading zero)."
+    ],
+    "formula": [
+        "a(n) = (n-1)!*Sum_{k=0..n-1} [x^k] (x/log(1-x-x^2))^n/(n-1-k)! for n>0.",
+        "a(n) = sum(m=1..n, ((-1)^(m+1)*sum(k=0..n-m, ((k+m-1)!*binomial(2*k+m-1,k+m-1)*stirling2(n,k+m))))/(m-1)!). - _Vladimir Kruchinin_, Jul 02 2011",
+        "a(n) ~ sqrt(5/2) * n^(n-1) / (2 * exp(n+1/2) * (log(5/4))^(n-1/2)). - _Vaclav Kotesovec_, Jul 31 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2/2*x^2 + 11/6*x^3 + 121/24*x^4 + 1902/120*x^5 +..."
+    ],
+    "mathematica": [
+        "With[{nn=20},CoefficientList[Series[1-Exp[(Sqrt[5-4Exp[x]]-1)/2],{x,0,nn}],x] Range[0,nn]!] (* _Harvey P. Dale_, Jun 07 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(x=X+X^2*O(X^n));n!*polcoeff(1-exp((-1+sqrt(5-4*exp(x)))/2),n,X)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) /* As the row sums of A118793: */",
+        "{a(n)=local(x=X+X^2*O(X^n));if(n<1,0, -(n-1)!*sum(k=0,n-1,polcoeff(((x/log(1-x-x^2)))^n/(n-1-k)!,k,X)))}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(Maxima)",
+        "a(n):=sum(((-1)^(m+1)*sum(((k+m-1)!*binomial(2*k+m-1,k+m-1)*stirling2(n,k+m)),k,0,n-m))/(m-1)!,m,1,n); [From Vladimir Kruchinin, Jul 02 2011]"
+    ],
+    "xref": [
+        "Cf. A118793, A118795."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 30 2006",
+    "references": 2,
+    "revision": 11,
+    "time": "2014-07-31T08:47:14-04:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

@@ -1,0 +1,65 @@
+{
+    "number": 282533,
+    "data": "41,89,113,137,593,857,2213",
+    "name": "Primes that are the sum of two proper prime powers (A246547) in more than one way.",
+    "comment": [
+        "Primes of the form 2^k + p^e in more than one way where p is an odd prime (e > 1, k > 1).",
+        "Prime terms in A225103.",
+        "a(8) > 10^8 if it exists. - _Robert Israel_, Feb 17 2017",
+        "a(8) > 10^18 if it exists. - _Charles R Greathouse IV_, Feb 19 2017"
+    ],
+    "example": [
+        "41 = 2^4 + 5^2 = 2^5 + 3^2.",
+        "89 = 2^3 + 3^4 = 2^6 + 5^2.",
+        "113 = 2^5 + 3^4 = 2^6 + 7^2.",
+        "137 = 2^7 + 3^2 = 2^4 + 11^2.",
+        "593 = 2^9 + 3^4 = 2^6 + 23^2.",
+        "857 = 2^7 + 3^6 = 2^4 + 29^2.",
+        "2213 = 2^4 + 13^3 = 2^2 + 47^2."
+    ],
+    "maple": [
+        "N:= 10^6: # to get all terms <= N",
+        "B:= Vector(N):",
+        "C:= Vector(N):",
+        "for k from 2 to ilog2(N) do B[2^k]:= 1 od:",
+        "p:= 2:",
+        "do",
+        "  p:= nextprime(p);",
+        "  if p^2 > N then break fi;",
+        "  for k from 2 to floor(log[p](N)) do C[p^k]:= 1 od:",
+        "od:",
+        "R:= SignalProcessing:-Convolution(B,C):",
+        "select(t -> isprime(t) and R[t-1] > 1.5, [seq(i,i=3..N,2)]); # _Robert Israel_, Feb 17 2017"
+    ],
+    "mathematica": [
+        "Select[Prime@ Range[10^3], Function[n, Count[Transpose@{n - #, #}, w_ /; Times @@ Boole@ Map[And[PrimePowerQ@ #, ! PrimeQ@ #] &, w] > 0] >= 2 &@ Range[4, Floor[n/2]]]] (* or *)",
+        "With[{n = 10^8}, Keys@ Select[#, Length@ # > 1 &] &@ GroupBy[#, First] &@ SortBy[Transpose@ {Map[Total, #], #}, First] &@ Select[Union@ Map[Sort, Tuples[#, 2]], PrimeQ@ Total@ # &] &@ Flatten@ Map[#^Range[2, Log[#, Prime@ n]] &, Array[Prime@ # &, Floor@ Sqrt@ n]]] (* _Michael De Vlieger_, Feb 19 2017, latter program Version 10 *)"
+    ],
+    "program": [
+        "(MATLAB)",
+        "N = 10^8; % to get all terms <= N",
+        "C = sparse(1,N);",
+        "for p = primes(sqrt(N))",
+        "  C(p .^ [2:floor(log(N)/log(p))]) = 1;",
+        "end",
+        "R = zeros(1,N);",
+        "for k = 2: floor(log2(N))",
+        "  R((2^k+1):N) = R((2^k+1):N) + C(1:(N-2^k));",
+        "end",
+        "P = primes(N);",
+        "P(R(P) > 1.5) % _Robert Israel_, Feb 17 2017",
+        "(PARI) is(n) = if(!ispseudoprime(n), return(0), my(x=n-1, y=1, i=0); while(y < x, if(isprimepower(x) > 1 && isprimepower(y) > 1, if(i==0, i++, return(1))); y++; x--)); 0 \\\\ _Felix Fr\u00f6hlich_, Feb 18 2017",
+        "(PARI) has(p)=my(t,q); p>40 && sum(k=2,logint(p-9,2), t=2^k; sum(e=2,logint(p-t,3), ispower(p-t,e,&q) && isprime(q)))>1",
+        "list(lim)=my(v=List(),t,q); lim\\=1; if(lim<9,lim=9); for(k=2,logint(lim-9,2), t=2^k; for(e=2,logint(lim-t,3), forprime(p=3,sqrtnint(lim-t,e), q=t+p^e; if(isprime(q) && has(q), listput(v,q))))); Set(v) \\\\ _Charles R Greathouse IV_, Feb 18 2017"
+    ],
+    "xref": [
+        "Cf. A225099, A225102, A225103, A246547."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Altug Alkan_, Feb 17 2017",
+    "references": 0,
+    "revision": 35,
+    "time": "2017-12-17T03:15:26-05:00",
+    "created": "2017-02-18T22:59:59-05:00"
+}

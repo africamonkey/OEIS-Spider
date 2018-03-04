@@ -1,0 +1,57 @@
+{
+    "number": 50518,
+    "data": "583200,1166400,1749600,2332800,2916000,3499200,4082400,4665600,5248800,5832000,6415200,6998400,7581600,8164800,8748000,9331200,9914400,10497600,11080800,11664000,12247200,12830400,13413600,13996800,14580000,15163200,15746400",
+    "name": "An arithmetic progression of at least 6 terms having the same value of phi starts at these numbers.",
+    "comment": [
+        "From _Mauro Fiorentini_, Apr 12 2015 (Start):",
+        "The following are all the terms between 13413600 and 10^9 with increment <= 1000:",
+        "13996800, 14580000, 15163200, 15746400, 16329600, 16912800, 17496000, 18079200, 18662400, 19245600, 65621220, 85731240, 131242440, 165488430, 171462480, 196863660, 257193720, 262484880, 330976860, 342924960, 496465290, 504932430, 544924830, 661953720, 827442150, 892306830, 992930580.",
+        "(End)",
+        "If phi is constant on the arithmetic progression A = [x, x+d, ..., x+m*d], and k is an integer such that each prime factor of k divides either all members of A or no members of A, then phi is also constant on the arithmetic progression k*A = [x*k, x*k+d*k, ..., x*k+m*(d*k)]. - _Robert Israel_, Apr 12 2015",
+        "The a.p. of 7 terms starting at 1158419010 with increment 210 have the same value of phi. - _Robert Israel_, Apr 15 2015",
+        "a(n) = 583200*n for n <= 112, but a(113) = 65621220. - _Robert Israel_, May 10 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A050518/b050518.txt\">Table of n, a(n) for n = 1..114</a> (all the terms <= 6.6*10^7).",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/NonRecursions.html\">Non Recursions</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TotientFunction.html\">Totient function.</a>"
+    ],
+    "maple": [
+        "N:= 10^7: # to get all terms <= N",
+        "with(numtheory):",
+        "Res:= NULL:",
+        "phis:= {seq(phi(i),i=2..N)}:",
+        "for m in phis do",
+        "   S:= convert(invphi(m),set);",
+        "   if nops(S) < 6 then next fi;",
+        "   for d from 0 to 4 do",
+        "     Sd[d]:= select(t-> (t mod 5 = d),S, d);",
+        "     nd:= nops(Sd[d]);",
+        "     for i0 from 1 to nd-1 do",
+        "       s0:= Sd[d][i0];",
+        "       if s0 > N then break fi;",
+        "       for i5 from i0+1 to nd do",
+        "         s5:= Sd[d][i5];",
+        "         incr:= (s5 - s0)/5;",
+        "         if {s0+incr,s0+2*incr,s0+3*incr,s0+4*incr} subset S then",
+        "           Res:= Res, [s0, incr];",
+        "         fi",
+        "       od",
+        "     od;",
+        "   od;",
+        "od:",
+        "sort([Res],(s,t)->s[1]<t[1]); # gives both A050518 and A050519 entries",
+        "map2(op,1,%); # _Robert Israel_, Apr 16 2015"
+    ],
+    "xref": [
+        "Cf. A000010, A050495, A050496, A050497, A050515-A050520.",
+        "The increments are in A050519.  The values of phi are in A050520."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jud McCranie_, Dec 28 1999",
+    "references": 3,
+    "revision": 57,
+    "time": "2015-05-12T10:16:09-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

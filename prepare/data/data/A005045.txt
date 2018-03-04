@@ -1,0 +1,64 @@
+{
+    "number": 5045,
+    "id": "M2536",
+    "data": "0,0,1,3,6,10,17,25,37,51,70,92,121,153,194,240,296,358,433,515,612,718,841,975,1129,1295,1484,1688,1917,2163,2438,2732,3058,3406,3789,4197,4644,5118,5635,6183,6777,7405,8084,8800,9571,10383,11254",
+    "name": "Number of restricted 3 X 3 matrices with row and column sums n.",
+    "comment": [
+        "More precisely, consider 3 X 3 matrices with entries chosen from {0, 1, ..., n-1}, in which each row and column sums to n, where n >= 2. Then a(n) is the number of equivalence classes of such matrices under permutions of rows and columns and transpositions."
+    ],
+    "reference": [
+        "E. J. Morgan, On 3 X 3 matrices with constant row and column sum, Abstract 763-05-13, Notices Amer. Math. Soc., 26 (1979), page A-27.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A005045/b005045.txt\">Table of n, a(n) for n=0,...,1000</a>.",
+        "E. J. Billington (n\u00e9e Morgan) and N. J. A. Sloane, <a href=\"/A005045/a005045_1.pdf\">Correspondence</a>, 1978-1991.",
+        "P. Lisonek, <a href=\"/A005045/a005045_2.pdf\">Quasi-polynomials: A case study in experimental combinatorics</a>, RISC-Linz Report Series No. 93-18, 1983. (Annotated scanned copy)",
+        "R. J. Mathar, <a href=\"/A005045/a005045.pdf\">OEIS A005045</a> [Proof of g.f.. for 3 of the 12 cases]",
+        "E. J. Morgan, <a href=\"https://doi.org/10.1017/S0004972700008546\">Construction of Block Designs and Related Results</a>, Ph.D. Dissertation, Univ. Queensland, 1978; Bull. Austral. Math. Soc., Volume 19, Issue 1 August 1978, pp. 139-140.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "<a href=\"/index/Rec#order_11\">Index entries for linear recurrences with constant coefficients</a>, signature (2,0,-1,0,-2,2,0,1,0,-2,1)."
+    ],
+    "formula": [
+        "Let n = 3k, 3k-1 or 3k-2 according as n == 0, 2 or 1 mod 3, for n>=3. Then a(n) = Sum_{ i=1,...,n-k } Sum_{ m=max(0,2i-n),...,floor(i/2) } Sum_{ r=0,...,floor(i/2)-m } c(i,m,r), where c(i,m,r) = n-2i+m+1 when m+r != i/2, or = floor((n-2i+m+2)/2) when m+r = i/2. [Typos corrected by Peter Pein, May 13 2008]",
+        "G.f.: -x**2*(-x**5+x**6-x**3+x+1)/((x**2+1)*(x**2+x+1)*(x+1)**2*(x-1)**5). This was conjectured by _Simon Plouffe_ in his 1992 dissertation and is now known to be correct, although it may be that all the details of the proof have not been written down. See the Mathar link for details."
+    ],
+    "example": [
+        "a(2) = 1:",
+        "110",
+        "101",
+        "011",
+        "a(3) = 3:",
+        "111 210 210",
+        "111 102 111",
+        "111 021 012"
+    ],
+    "maple": [
+        "A005045:=-z**2*(-z**5+z**6-z**3+z+1)/((z**2+1)*(z**2+z+1)*(z+1)**2*(z-1)**5); [Conjectured by _Simon Plouffe_ in his 1992 dissertation. See formula lines here for the proof of correctness.]"
+    ],
+    "mathematica": [
+        "Block[{k = Floor[(n + 2)/3]}, Sum[Sum[Sum[If[m + r == i/2, Floor[(n - 2*i + m + 2)/2], n - 2*i + m + 1], {r, 0, Floor[i/2 - m]}], {m, Max[2*i - n, 0], Floor[i/2]}], {i, 1, n - k}]]; Table[an, {n, 2, 100}] (from Peter Pein, May 13 2008)"
+    ],
+    "program": [
+        "(PARI)",
+        "A005045(n)={sum( i=1,n-(n+2)\\3, sum( m=max(0,2*i-n),i\\2, sum( r=0,i\\2-m, if( m+r!=i/2, n-2*i+m+1, (n-2*i+m+2)\\2))))} \\\\ _M. F. Hasler_, Version 1, May 13 2008",
+        "(PARI)",
+        "A005045(n)={sum( i=1,(2*n)\\3, sum( m=max(0,2*i-n),i\\2, (n-2*i+m+1)*((i+1)\\2-m)+(i%2==0)*(n-2*i+m+2)\\2))} \\\\ _M. F. Hasler_, Version 2, much faster, May 13 2008",
+        "(PARI) concat(vector(2), Vec(x^2*(1 + x - x^3 - x^5 + x^6) / ((1 - x)^5*(1 + x)^2*(1 + x^2)*(1 + x + x^2)) + O(x^60))) \\\\ _Colin Barker_, Apr 22 2017"
+    ],
+    "xref": [
+        "Cf. A002817 for another version."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, May 12 2008, May 13 2008",
+        "More terms from Peter Pein, May 13 2008"
+    ],
+    "references": 4,
+    "revision": 34,
+    "time": "2017-12-20T23:26:38-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

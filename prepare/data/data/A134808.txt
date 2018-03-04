@@ -1,0 +1,37 @@
+{
+    "number": 134808,
+    "data": "0,101,102,103,104,105,106,107,108,109,201,202,203,204,205,206,207,208,209,301,302,303,304,305,306,307,308,309,401,402,403,404,405,406,407,408,409,501,502,503,504,505,506,507,508,509,601,602,603,604,605,606",
+    "name": "Cyclops numbers.",
+    "comment": [
+        "Numbers with middle digit 0, that have only one digit 0, and the total number of digits is odd; the digit 0 represents the eye of a cyclops."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A134808/b134808.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Brady Haran and Simon Pampena, <a href=\"https://www.youtube.com/watch?v=HPfAnX5blO0\">Glitch Primes and Cyclops Numbers - Numberphile</a> (2015)"
+    ],
+    "example": [
+        "109 is a cyclops number because 109 has only one digit 0 and this 0 is the middle digit."
+    ],
+    "mathematica": [
+        "cyclopsQ[n_Integer, b_:10] := Module[{digitList = IntegerDigits[n, b], len, pos0s, flag}, len = Length[digitList]; pos0s = Select[Range[len], digitList[[#]] == 0 &]; flag = OddQ[len] && (Length[pos0s] == 1) && (pos0s == {(len + 1)/2}); Return[flag]]; Select[Range[0,999],cyclopsQ] (* From _Alonso del Arte_, Dec 16 2010 *)",
+        "Reap[Do[id=IntegerDigits[n];If[Position[id,0]=={{(Length[id]+1)/2}},Sow[n]],{n,0,10^3}]][[2,1]] (* _Zak Seidov_, Dec 17 2010 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def is_cyclops(n, base=10):",
+        "....dg = n.digits(base) if n > 0 else [0]",
+        "....return len(dg) % 2 == 1 and dg[len(dg)//2] == 0 and dg.count(0) == 1",
+        "is_A134808 = lambda n: is_cyclops(n) # _D. S. McNeil_, Dec 17 2010",
+        "(PARI) a(n, {base=10}) = my (l=0); my (r=n-1); while (r >= (base-1)^(2*l), r -= (base-1)^(2*l); l++); return (base^(l+1) * ( (base^l-1)/(base-1) + if (base>2, fromdigits(digits(r \\ ((base-1)^l), (base-1)), base)) ) + ( (base^l-1)/(base-1) + if (base>2, fromdigits(digits(r % ((base-1)^l), (base-1)), base)))) \\\\ _R\u00e9my Sigrist_, Apr 29 2017"
+    ],
+    "xref": [
+        "Cf. A134809, A138131, A138148, A160717, A182809."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,2",
+    "author": "_Omar E. Pol_, Nov 21 2007",
+    "references": 37,
+    "revision": 30,
+    "time": "2017-04-30T11:49:28-04:00",
+    "created": "2007-12-09T03:00:00-05:00"
+}

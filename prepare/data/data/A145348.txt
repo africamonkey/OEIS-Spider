@@ -1,0 +1,51 @@
+{
+    "number": 145348,
+    "data": "1,1,4,30,312,3965,57824,933998,16346728,305539046,6037780164,125227212342,2711254371568,61021656441091,1423063422363676,34297379607790288,852463916004336464,21812807282389353798",
+    "name": "G.f. satisfies: A(x/A(x)^2) = 1 + x*A(x)^2.",
+    "comment": [
+        "More generally, if g.f. A(x) satisfies: A(x/A(x)^k) = 1 + x*A(x)^m, then",
+        "A(x) = 1 + x*G(x)^(m+k) where G(x) = A(x*G(x)^k) and G(x/A(x)^k) = A(x);",
+        "thus a(n) = [x^(n-1)] ((m+k)/(m+k*n))*A(x)^(m+k*n) for n>=1 with a(0)=1."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A145348/b145348.txt\">Table of n, a(n) for n = 0..230</a>"
+    ],
+    "formula": [
+        "G.f.: A(x) = 1 + x*G(x)^4 where G(x) = A(x*G(x)^2) and A(x) = G(x/A(x)^2).",
+        "a(n) = [x^(n-1)] 2*A(x)^(2*n+2)/(n+1) for n>=1 with a(0)=1; i.e., a(n) equals the coefficient of x^(n-1) in 2*A(x)^(2*n+2)/(n+1) for n>=1 (see comment)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 4*x^2 + 30*x^3 + 312*x^4 + 3965*x^5 +...",
+        "A(x)^2 = 1 + 2*x + 9*x^2 + 68*x^3 + 700*x^4 + 8794*x^5 + 126974*x^6+..",
+        "A(x/A(x)^2) = 1 + x + 2*x^2 + 9*x^3 + 68*x^4 + 700*x^5 + 8794*x^6 +...",
+        "A(x) = 1 + x*G(x)^4 where G(x) = A(x*G(x)^2):",
+        "G(x) = 1 + x + 6*x^2 + 59*x^3 + 742*x^4 + 10877*x^5 + 177612*x^6 +...",
+        "G(x)^2 = 1 + 2*x + 13*x^2 + 130*x^3 + 1638*x^4 + 23946*x^5 +...",
+        "To illustrate the formula a(n) = [x^(n-1)] 2*A(x)^(2*n+2)/(n+1),",
+        "form a table of coefficients in A(x)^(2*n+2) as follows:",
+        "A^4: [(1), 4, 22, 172, 1753, 21612, 306348, ...];",
+        "A^6: [1, (6), 39, 320, 3267, 39756, 554595, ...];",
+        "A^8: [1, 8, (60), 520, 5366, 64816, 892308, ...];",
+        "A^10: [1, 10, 85, (780), 8190, 98702, 1344920,  ...];",
+        "A^12: [1, 12, 114, 1108, (11895), 143676, 1943488, ...];",
+        "A^14: [1, 14, 147, 1512, 16653, (202384), 2725541, ...]; ...",
+        "in which the main diagonal forms the initial terms of this sequence:",
+        "[2/2*(1), 2/3*(6), 2/4*(60), 2/5*(780), 2/6*(11895), 2/7*(202384), ...]."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(F=1+x,G);for(i=0,n,G=serreverse(x/(F+x*O(x^n))^2)/x;F=1+x*G^2);polcoeff(F,n)}",
+        "(PARI) /* This sequence is generated when k=2, m=2: A(x/A(x)^k) = 1 + x*A(x)^m */",
+        "{a(n, k=2, m=2)=local(A=sum(i=0, n-1, a(i, k, m)*x^i)+x*O(x^n)); if(n==0, 1, polcoeff((m+k)/(m+k*n)*A^(m+k*n), n-1))}",
+        "for(n=0,20,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A145350, A147664, A120972."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Nov 09 2008",
+    "references": 5,
+    "revision": 10,
+    "time": "2014-08-10T06:53:33-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

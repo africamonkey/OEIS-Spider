@@ -1,0 +1,38 @@
+{
+    "number": 247813,
+    "data": "0,1,2,3,4,5,6,7,8,9,21,23,26,27,28,29,31,41,42,43,46,47,48,49,51,52,53,54,56,57,58,59,61,63,67,71,73,81,83,86,87,91,93,96,97,98,231,261,263,267,271,273,281,283,286,287,291,293,296,297,298,421,423",
+    "name": "Numbers in decimal representation with distinct digits, such that in Spanish their digits are in alphabetic order.",
+    "comment": [
+        "List of decimal digits, alphabetically sorted by their names in Spanish:",
+        "0 _ cero, 5 _ cinco, 4 _ cuatro, 2 _ dos, 9 _ nueve, 8 _ ocho, 6 _ seis, 7 _ siete, 3 _ tres, 1 _ uno/una;",
+        "finite sequence with last and largest term a(512) = 542986731."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A247813/b247813.txt\">Table of n, a(n) for n = 1..512</a>",
+        "Wikipedia, <a href=\"http://de.wikipedia.org/wiki/Zahlen_in_unterschiedlichen_Sprachen#0_bis_10\">Zahlen in unterschiedlichen Sprachen</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/List_of_numbers_in_various_languages\">List of numbers in various languages</a>"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.IntSet (fromList, deleteFindMin, union)",
+        "import qualified Data.IntSet as Set (null)",
+        "a247813 n = a247813_list !! (n-1)",
+        "a247813_list = 0 : f (fromList [1..9]) where",
+        "   f s | Set.null s = []",
+        "       | otherwise  = x : f (s' `union`",
+        "         fromList (map (+ 10 * x) $ tail $ dropWhile (/= mod x 10) digs))",
+        "       where (x, s') = deleteFindMin s",
+        "   digs = [0, 5, 4, 2, 9, 8, 6, 7, 3, 1]"
+    ],
+    "xref": [
+        "Intersection of A010784 and A161390 .",
+        "Cf. A247800 (Czech), A247801 (Danish), A247802 (Dutch), A053433 (English), A247803 (Finnish), A247804 (French), A247805 (German), A247806 (Hungarian), A247807 (Italian), A247808 (Latin), A247809 (Norwegian), A247810 (Polish), A247807 (Portuguese), A247811 (Russian), A247812 (Slovak), A247809 (Swedish), A247814 (Turkish)."
+    ],
+    "keyword": "nonn,base,word,fini,full",
+    "offset": "1,3",
+    "author": "_Reinhard Zumkeller_, Oct 05 2014",
+    "references": 17,
+    "revision": 6,
+    "time": "2014-10-18T07:40:47-04:00",
+    "created": "2014-10-05T19:20:51-04:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 225603,
+    "data": "2,3,11,101,100111001,110111011,111010111,1100011100011,1100101010011,1101010101011,100110101011001,101000010000101,101011000110101,101110000011101,10000010101000001,10011010001011001,10100110001100101,10110010001001101,10111000000011101",
+    "name": "Palindromic primes whose square is also a palindrome.",
+    "comment": [
+        "Subsets of A002385, A057135 and A065378.",
+        "Palindromes in A161721.  Conjecture: a(n) for n >=3 consists only of the digits 0,1. - _Chai Wah Wu_, Jan 06 2015"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A225603/b225603.txt\">Table of n, a(n) for n = 1..27</a>"
+    ],
+    "example": [
+        "101 is a member since it is a palindromic prime such that 101^2=10201 is a palindrome."
+    ],
+    "mathematica": [
+        "palQ[n_]:=FromDigits[Reverse[IntegerDigits[n]]]==n; t={}; Do[If[palQ[p=Prime[n]] && palQ[p^2],AppendTo[t,p]],{n,10^7}]; t"
+    ],
+    "program": [
+        "(Python)",
+        "from __future__ import division",
+        "from sympy import isprime",
+        "def paloddgenrange(t,l,b=10): # generator of odd-length palindromes in base b of 2*t <=length <= 2*l",
+        "....if t == 0:",
+        "........yield 0",
+        "....else:",
+        "........for x in range(t+1,l+1):",
+        "............n = b**(x-1)",
+        "............n2 = n*b",
+        "............for y in range(n,n2):",
+        "................k, m = y//b, 0",
+        "................while k >= b:",
+        "....................k, r = divmod(k,b)",
+        "....................m = b*m + r",
+        "................yield y*n + b*m + k",
+        "A225603_list = [2,3,11]",
+        "for i in paloddgenrange(1,10):",
+        "....s = str(i*i)",
+        "....if s == s[::-1] and isprime(i):",
+        "........A225603_list.append(i) # _Chai Wah Wu_, Jan 06 2015"
+    ],
+    "xref": [
+        "Cf. A002385, A057135, A065378."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jayanta Basu_, May 11 2013",
+    "ext": [
+        "a(15)-a(19) from _Giovanni Resta_, May 11 2013"
+    ],
+    "references": 2,
+    "revision": 11,
+    "time": "2015-01-08T17:34:10-05:00",
+    "created": "2013-05-11T12:29:59-04:00"
+}

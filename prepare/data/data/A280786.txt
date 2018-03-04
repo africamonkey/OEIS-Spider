@@ -1,0 +1,56 @@
+{
+    "number": 280786,
+    "data": "1,4,15,50,162,506,1558,4727,14227,42521,126506,374969,1108476,3269902,9630631,28328999,83251569,244471484,717486860,2104777227,6172357873,18096097750,53044095421,155464365080,455601800970,1335107222743,3912330438784,11464463809180,33595343643160",
+    "name": "Number of topologically distinct sets of n circles with one pair intersecting.",
+    "link": [
+        "R. J. Mathar, <a href=\"http://arxiv.org/abs/1603.00077\">Topologically Distinct Sets of Non-intersecting Circles in the Plane</a>, arXiv:1603.00077 [math.CO], 2016, row sums Table 7."
+    ],
+    "maple": [
+        "A280786 := proc(N)",
+        "    if N < 2 then",
+        "        0;",
+        "    else",
+        "        add(A280787(N,f),f=1..N-1) ;",
+        "    end if;",
+        "end proc:",
+        "A280787 := proc(N,f)",
+        "    option remember ;",
+        "    local Npr,ct ;",
+        "    if f = N then",
+        "        return 0;",
+        "    elif f = N-1 then",
+        "        return 1;",
+        "    elif f = 1 then",
+        "        A280786(N-1)+A280788(N-2) ;",
+        "    else",
+        "        ct := 0 ;",
+        "        for Npr from 1 to N-1 do",
+        "            ct := ct+procname(Npr,1)*A033185(N-Npr,f-1) ;",
+        "        end do:",
+        "        ct ;",
+        "    end if;",
+        "end proc:",
+        "seq(A280786(n),n=2..30) ; # _R. J. Mathar_, Mar 06 2017"
+    ],
+    "mathematica": [
+        "a81[n_] := a81[n] = If[n <= 1, n, Sum[a81[n - j]*DivisorSum[j, #1*a81[#1] &], {j, n - 1}]/(n - 1)];",
+        "A027852[n_] := Module[{dh = 0, np}, For[np = 0, np <= n, np++, dh = a81[np]*a81[n - np] + dh]; If[EvenQ[n], dh = a81[n/2] + dh]; dh/2];",
+        "A280788[n_] := If[n == 0, 1, Sum[a81[np + 1]*A027852[n - np + 2], {np, 0, n}]];",
+        "t[n_] := t[n] = Module[{d, j}, If[n == 1, 1, Sum[Sum[d*t[d], {d, Divisors[j]}]*t[n - j], {j, 1, n - 1}]/(n - 1)]];",
+        "b[1, 1, 1] = 1;",
+        "b[n_, i_, p_] := b[n, i, p] = If[p > n, 0, If[n == 0, 1, If[Min[i, p] < 1, 0, Sum[b[n - i*j, i - 1, p - j]*Binomial[t[i] + j - 1, j], {j, 0, Min[n/i, p]}]]]]; A033185[n_, k_] := b[n, n, k];",
+        "A280786[n_] := If[n < 2, 0, Sum[A280787[n, f], {f, 1, n - 1}]];",
+        "A280787[n_, f_] := A280787[n, f] = Module[{ct}, Which[f == n, Return[0], f == n - 1, Return[1], f == 1, Return[A280786[n - 1] + A280788[n - 2]], True, ct = 0; Do[ct += A280787[np, 1]*A033185[n - np, f - 1], {np, 1, n - 1}]]; ct];",
+        "Table[A280786[n], {n, 2, 30}] (* _Jean-Fran\u00e7ois Alcover_, Nov 23 2017, after _R. J. Mathar_ and _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Row sums of A280787."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_N. J. A. Sloane_, Jan 20 2017",
+    "references": 4,
+    "revision": 14,
+    "time": "2017-11-23T23:51:57-05:00",
+    "created": "2017-01-20T15:12:47-05:00"
+}

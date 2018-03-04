@@ -1,0 +1,42 @@
+{
+    "number": 108427,
+    "data": "1,9,85,833,8361,85305,880685,9173505,96220561,1014889769,10753517061,114375683009,1220435354425,13058529727833,140059477112925,1505357362548737,16209464357137953,174827809500822345,1888383038494338485,20424130116241366593,221164921352046545609,2397512484385887298681",
+    "name": "Number of peaks of the form Ud in all paths from (0,0) to (3n,0) that stay in the first quadrant (but may touch the horizontal axis), consisting of steps u=(2,1),U=(1,2), or d=(1,-1).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A108427/b108427.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Emeric Deutsch, <a href=\"http://www.jstor.org/stable/2589192\">Problem 10658</a>, American Math. Monthly, 107, 2000, 368-370."
+    ],
+    "formula": [
+        "a(n) = (1/n)*Sum_{k=0..n} k*binomial(n, k)*binomial(3n-k, n-1).",
+        "Recurrence: 9*n*(2*n-3)*a(n) = (202*n^2 - 414*n + 185)*a(n-1) - (26*n^2 - 175*n + 255)*a(n-2) - 2*(n-3)*(2*n-5)*a(n-3), for n>3. - _Vaclav Kotesovec_, Oct 17 2012",
+        "a(n) ~ sqrt(30*sqrt(5)-50)*((11+5*sqrt(5))/2)^n/(20*sqrt(Pi*n)). - _Vaclav Kotesovec_, Oct 17 2012",
+        "G.f.: A(x) = 1/2*(x*B'(x)/B(x)-1), where B(x) satisfies B(x) = x*((1-2*B(x))/(2*(1-4*B(x))) + 1/(2*sqrt(1-4*B(x)))). - _Vladimir Kruchinin_, Oct 06 2015",
+        "a(n) = binomial(3*n-1, n-1)*hypergeom([1-n, -2*n], [1-3*n], -1). - _Peter Luschny_, Oct 06 2015"
+    ],
+    "example": [
+        "a(2)=9 because we have ud(Ud)d, u(Ud)dd, (Ud)dud, (Ud)d(Ud)d, (Ud)udd, (Ud)(Ud)dd, U(Ud)ddd (the peaks of the form Ud shown between parentheses)."
+    ],
+    "maple": [
+        "seq(add(k*binomial(n,k)*binomial(3*n-k,n-1)/n,k=0..n),n=1..22);",
+        "a := n -> binomial(3*n-1,n-1)*hypergeom([1-n,-2*n], [1-3* n], -1); seq(round(evalf(a(n),32)), n=1..22); # _Peter Luschny_, Oct 06 2015"
+    ],
+    "mathematica": [
+        "Table[1/n*Sum[k*Binomial[n,k]*Binomial[3n-k,n-1],{k,0,n}],{n,1,20}] (* _Vaclav Kotesovec_, Oct 17 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = (1/n)*sum(k=0,n,k*binomial(n, k)*binomial(3*n-k, n-1)); \\\\ _Joerg Arndt_, May 15 2013",
+        "(Maxima)",
+        "G(z):=z*((2/3)*sqrt((z+3)/z)*sin((1/3)*asin(sqrt(z)*(z+18) / (z+3)^(3/2)))+2/3);",
+        "taylor(diff(G(z),z,1)/G(z)-1/z,z,0,20); /* _Vladimir Kruchinin_, Oct 06 2015 */"
+    ],
+    "xref": [
+        "Cf. A027307, A108426."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Emeric Deutsch_, Jun 03 2005",
+    "references": 3,
+    "revision": 30,
+    "time": "2015-10-13T03:41:50-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

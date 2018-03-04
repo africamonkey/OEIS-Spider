@@ -1,0 +1,45 @@
+{
+    "number": 284262,
+    "data": "1,2,6,105,5005,85085,1616615,37182145,6685349671,247357937827,10141675450907,436092044389001,20496326086283047,9156001667401012567,558516101711461766587,37420578814667938361329,2656861095841423623654359,193950859996423924526768207,15322117939717490037614688353,1271735788996551673122019133299",
+    "name": "a(n) = where A284259 for the first time obtains value n (positions of its records).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A284262/b284262.txt\">Table of n, a(n) for n = 0..335</a>"
+    ],
+    "formula": [
+        "For n > 1, a(n) = Product_{i = A284263(n)+1 .. A284263(n)+n} prime(i); a(0) = 1, a(1) = 2.",
+        "a(n) = A242378(A284263(n), A002110(n)) [shift the prime factorization of the n-th primorial A284263(n) steps towards larger primes].",
+        "Other identities. For all n >= 0:",
+        "A001221(a(n)) = A001222(a(n))  = n.",
+        "A284259(a(n)) = n."
+    ],
+    "mathematica": [
+        "A[n_]:= If[n<1, 0, Block[{k=1}, While[Prime[n + k  - 1] > Prime[k]^2, k++]; k - 1]]; a[n_]:=If[n<2, n + 1, Product[Prime[i], {i, A[n] + 1, A[n] + n}]]; Table[a[n], {n, 0, 51}] (* _Indranil Ghosh_, Mar 24 2017 *)"
+    ],
+    "program": [
+        "(Scheme) (define (A284262 n) (A242378bi (A284263 n) (A002110 n))) ;; Where A242378bi(k,n) applies prime shift A003961(n) k times. See A242378.",
+        "(PARI) A(n) = { my(k=1); if(0==n, 0, while(prime(n+k-1) > (prime(k)^2), k = k+1); (k-1)); };",
+        "a(n) = prod(i=A(n) + 1, A(n) + n, prime(i));",
+        "for(n=0, 51, print1(a(n),\", \")) \\\\ _Indranil Ghosh_, after _Antti Karttunen_, Mar 24 2017",
+        "(Python)",
+        "from sympy import prime",
+        "from operator import mul",
+        "def A(n):",
+        "    if n<1: return 0",
+        "    k=1",
+        "    while prime(n + k - 1)>prime(k)**2:k+=1",
+        "    return k - 1",
+        "def a(n): return n + 1 if n<2 else reduce(mul, [prime(i) for i in xrange(A(n) + 1, A(n) + n + 1)])",
+        "print [a(n) for n in xrange(0, 51)] # _Indranil Ghosh_, Mar 24 2017"
+    ],
+    "xref": [
+        "Cf. A001221, A001222, A002110, A003961, A242378, A284259 (a left inverse), A284263.",
+        "Cf. also A109819."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Antti Karttunen_, Mar 24 2017",
+    "references": 3,
+    "revision": 24,
+    "time": "2017-08-13T21:29:01-04:00",
+    "created": "2017-03-24T21:59:55-04:00"
+}

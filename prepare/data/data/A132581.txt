@@ -1,0 +1,41 @@
+{
+    "number": 132581,
+    "data": "1,2,3,5,6,11,14,19,20,39,53,78,84,134,148,167,168,335,483,765,849,1466,1681,1988,2008,3700,4414,5489,5573,7265,7413,7580,7581,15161,22574,37252,42825,77388,92864,116454,118462,227503,286776,382574,392247,555662,574114,595481,595649,1176304,1563955",
+    "name": "Number of antichains in the first n elements of the infinite Boolean lattice.",
+    "comment": [
+        "Every nonnegative integer represents a finite set of nonnegative integers and conversely, by the mapping that takes n into the exponents of 2 in its binary representation. Thus 0 represents the empty set and 9 represents {0,3}, etc.",
+        "The sequence counts the antichains in the partial ordering {0,1,...,n}, which is really the family of sets {emptyset,{0},{1},{0,1},{2},...}.",
+        "The sequence of differences, A132582, enumerates the antichains in the infinite Boolean lattice {0,1,2,...} whose largest element is n. For example, the five such antichains when n=6 are {6}, {1,6}, {3,6}, {5,6}, {3,5,6}.",
+        "The subsequence a(2^n+1), n=0,1,2,... of the present sequence, is the Dedekind numbers sequence A000372. - _Renzo Benedetti_, Jul 24 2012"
+    ],
+    "reference": [
+        "D. E. Knuth, The Art of Computer Programming, Vol. 4, Section 7.1.4."
+    ],
+    "link": [
+        "Peter Koehler, <a href=\"/A132581/b132581.txt\">Table of n, a(n) for n = 0..160</a> (terms 0..90 from Robert Israel)",
+        "Peter Koehler, <a href=\"/A132581/a132581.cpp.txt\">C++-Program</a>"
+    ],
+    "maple": [
+        "N:= 63:",
+        "Q:= [seq(convert(n+64,base,2),n=0..N)]:",
+        "Incomp:= Array(0..N,0..N,proc(i,j) local d; d:= Q[i+1]-Q[j+1]; has(d,1) and has(d,-1) end proc):",
+        "AntichainCount:= proc(S) option cache; local t,r;",
+        "1 + add(procname(select(s -> Incomp[s,S[t]],S[1..t-1]))  , t = 1..nops(S));",
+        "end proc:",
+        "seq(AntichainCount([$0..n]), n=-1..N);",
+        "# _Robert Israel_, Mar 08 2017"
+    ],
+    "xref": [
+        "Cf. A132582."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Don Knuth_, Nov 18 2007",
+    "ext": [
+        "a(32) to a(50) from _Robert Israel_, Mar 08 2017"
+    ],
+    "references": 2,
+    "revision": 40,
+    "time": "2017-07-06T08:41:07-04:00",
+    "created": "2007-12-09T03:00:00-05:00"
+}

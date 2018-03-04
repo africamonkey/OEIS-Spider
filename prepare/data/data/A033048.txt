@@ -1,0 +1,51 @@
+{
+    "number": 33048,
+    "data": "0,1,12,13,144,145,156,157,1728,1729,1740,1741,1872,1873,1884,1885,20736,20737,20748,20749,20880,20881,20892,20893,22464,22465,22476,22477,22608,22609,22620,22621,248832,248833,248844,248845,248976",
+    "name": "Sums of distinct powers of 12.",
+    "comment": [
+        "Numbers without any base-12 digits greater than 1."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A033048/b033048.txt\">Table of n, a(n) for n = 0..1023</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Duodecimal.html\">Duodecimal</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Duodecimal\">Duodecimal</a>"
+    ],
+    "formula": [
+        "a(n) = Sum{d(i)*12^i: i=0, 1, ..., m}, where Sum{d(i)*2^i: i=0, 1, ..., m} is the base 2 representation of n.",
+        "a(n) = A097258(n)/11.",
+        "a(2n) = 12*a(n), a(2n+1) = a(2n)+1.",
+        "a(n) = Sum_{k>=0} A030308(n,k)*b(k) with b(k) = 12^k = A001021(k). - _Philippe Del\u00e9ham_, Oct 19 2011",
+        "G.f.: (1/(1 - x))*Sum_{k>=0} 12^k*x^(2^k)/(1 + x^(2^k)). - _Ilya Gutkovskiy_, Jun 04 2017"
+    ],
+    "program": [
+        "(PARI) {maxn=37;",
+        "for(vv=0,maxn,",
+        "bvv=binary(vv);",
+        "ll=length(bvv);texp=0;btod=0;",
+        "forstep(i=ll,1,-1,btod=btod+bvv[i]*12^texp;texp++);",
+        "print1(btod,\", \"))}",
+        "\\\\ _Douglas Latimer_, Apr 16 2012",
+        "(PARI) a(n)=fromdigits(binary(n),12) \\\\ _Charles R Greathouse IV_, Jan 11 2017",
+        "(Haskell)",
+        "import Data.List (unfoldr)",
+        "a033048 n = a033048_list !! (n-1)",
+        "a033048_list = filter (all (< 2) . unfoldr (\\x ->",
+        "   if x == 0 then Nothing else Just $ swap $ divMod x 12)) [1..]",
+        "-- _Reinhard Zumkeller_, Apr 17 2011"
+    ],
+    "xref": [
+        "Subsequence of A102487.",
+        "Cf. A000695, A005836, A033042-A033052.",
+        "Row 11 of array A104257."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Extended by _Ray Chandler_, Aug 03 2004"
+    ],
+    "references": 6,
+    "revision": 40,
+    "time": "2017-06-04T18:21:35-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

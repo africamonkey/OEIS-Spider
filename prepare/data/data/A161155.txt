@@ -1,0 +1,40 @@
+{
+    "number": 161155,
+    "data": "1,5,9,11,13,17,19,23,27,29,35,37,41,43,47,49,53,59,61,67,71,73,79,83,85,87,89,93,95,97,101,103,107,109,113,117,121,125,131,133,135,137,139,141,143,147,149,151,153,157,161,163,165,167,169,173,175,177,179,181",
+    "name": "Positive integers n such that {the number of (non-leading) 0's in the binary representation of n} is coprime to n, {the number of 1's in the binary representation of n} is coprime to n and {the number of digits in the binary representation of n} is coprime to n.",
+    "comment": [
+        "1 is the only integer of the form 2^k -1 (k>=0) included in this sequence, because such integers contain no binary 0's, and 0 is considered here to be coprime only to 1."
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A161155/b161155.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "mathematica": [
+        "Select[Range[181], GCD[DigitCount[#,2,0] , #]==1 && GCD[DigitCount[#,2,1],#]==1 && GCD[Length[IntegerDigits[#,2]],#]==1 &] (* _Indranil Ghosh_, Mar 08 2017 *)"
+    ],
+    "program": [
+        "(PARI) b0(n) = if(n<1, 0, b0(n\\2) + 1 - n%2);",
+        "b1(n) = if(n<1, 0, b1(n\\2) + n%2);",
+        "for (n=1, 181, if(gcd(b0(n), n) == 1 && gcd(b1(n), n) == 1 && gcd(#digits(n, 2), n) == 1, print1(n\", \"))) \\\\ _Indranil Ghosh_, Mar 08 2017",
+        "(Python)",
+        "from fractions import gcd",
+        "i=j=1",
+        "while j<=1000:",
+        "....if gcd(bin(i)[2:].count(\"0\"),i)==1 and gcd(bin(i)[2:].count(\"1\"),i)==1 and gcd(len(bin(i)[2:]),i)==1:",
+        "........print str(j)+\" \"+str(i)",
+        "........j+=1",
+        "....i+=1 # _Indranil Ghosh_, Mar 08 2017"
+    ],
+    "xref": [
+        "Cf. A094387, A161152, A161153, A161154, A161156."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Jun 03 2009",
+    "ext": [
+        "Extended by _Ray Chandler_, Jun 11 2009"
+    ],
+    "references": 5,
+    "revision": 11,
+    "time": "2017-03-08T14:21:55-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

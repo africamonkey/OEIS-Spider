@@ -1,0 +1,38 @@
+{
+    "number": 217389,
+    "data": "1,2,5,18,93,634,5317,52610,598445,7685706,109933269,1732565842,29824133437,556682481818,11198025452261,241481216430114,5557135898411469,135927902927547370,3521462566184392693,96323049885512803826",
+    "name": "Partial sums of the ordered Bell numbers (number of preferential arrangements) A000670.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A217389/b217389.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} t(k), where t = A000670 (ordered Bell numbers).",
+        "G.f. = A(x)/(1-x), where A(x) = g.f. for A000670 (see that entry). - _N. J. A. Sloane_, Apr 12 2014",
+        "a(n) ~ n! / (2* (log(2))^(n+1)). - _Vaclav Kotesovec_, Nov 08 2014"
+    ],
+    "mathematica": [
+        "t[n_] := Sum[StirlingS2[n, k]k!, {k, 0, n}]; Table[Sum[t[k], {k, 0, n}], {n, 0, 100}]",
+        "(* second program: *)",
+        "Fubini[n_, r_] := Sum[k!*Sum[(-1)^(i+k+r)(i+r)^(n-r)/(i!*(k-i-r)!), {i, 0, k-r}], {k, r, n}]; Fubini[0, 1] = 1; Table[Fubini[n, 1], {n, 0, 20}] // Accumulate (* _Jean-Fran\u00e7ois Alcover_, Mar 31 2016 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "t(n):=sum(stirling2(n,k)*k!,k,0,n);",
+        "makelist(sum(t(k),k,0,n),n,0,40);",
+        "(MAGMA)",
+        "A000670:=func<n | &+[StirlingSecond(n,i)*Factorial(i): i in [0..n]]>;",
+        "[&+[A000670(k): k in [0..n]]: n in [0..19]]; // _Bruno Berselli_, Oct 03 2012",
+        "(PARI) for(n=0,30, print1(sum(k=0,n, sum(j=0,k, j!*stirling(k,j,2))), \", \")) \\\\ _G. C. Greubel_, Feb 07 2018"
+    ],
+    "xref": [
+        "Cf. A000670, A006957, A005649, A217388, A217391, A217392.",
+        "See A239914 for another version."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Emanuele Munarini_, Oct 02 2012",
+    "references": 8,
+    "revision": 35,
+    "time": "2018-02-07T02:53:19-05:00",
+    "created": "2012-10-03T11:32:46-04:00"
+}

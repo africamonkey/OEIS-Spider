@@ -1,0 +1,55 @@
+{
+    "number": 66739,
+    "data": "1,1,2,3,6,8,14,19,32,44,67,91,139,186,269,362,518,687,960,1267,1747,2294,3106,4052,5449,7063,9365,12092,15914,20422,26639,34029,44091,56076,72110,91306,116808,147272,187224,235201,297594,372390,468844,584644,732942",
+    "name": "Number of representations of n as a sum of products of positive integers. 1 is not allowed as a factor, unless it is the only factor. Representations which differ only in the order of terms or factors are considered equivalent.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A066739/b066739.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{pi} Product_{m=1..n} binomial(k(m)+A001055(m)-1, k(m)), where pi runs through all partitions k(1) + 2 * k( 2) + ... + n * k(n) = n. a(n)=1/n*Sum_{m=1..n} a(n-m)*b(m), n > 0, a(0)=1, b(m)=Sum_{d|m} d*A001055(d). Euler transform of A001055(n): Product_{m=1..infinity} (1-x^m)^(-A001055(m)). - _Vladeta Jovovic_, Jan 21 2002"
+    ],
+    "example": [
+        "For n=5, 5 = 4+1 = 2*2+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1, so a(5) = 8.",
+        "For n=8, 8 = 4*2 = 2*2*2 = ... = 4+4 = 2*2+4 = 2*2+2*2 = ...; note that there are 3 ways to factor the terms of 4+4. In general, if a partition contains a number k exactly r times, then the number of ways to factor the k's is the binomial coefficient C(A001055(k)+r-1,r)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n, k) option remember;",
+        "      `if`(n>k, 0, 1) +`if`(isprime(n), 0,",
+        "      add(`if`(d>k, 0, b(n/d, d)), d=divisors(n) minus {1, n}))",
+        "    end:",
+        "a:= proc(n) option remember;",
+        "      `if`(n=0, 1, add(add(d*b(d, d), d=divisors(j)) *a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..60); # _Alois P. Heinz_, Apr 22 2012"
+    ],
+    "mathematica": [
+        "p[ n_, 1 ] := If[ n==1, 1, 0 ]; p[ 1, k_ ] := 1; p[ n_, k_ ] := p[ n, k ]=p[ n, k-1 ]+If[ Mod[ n, k ]==0, p[ n/k, k ], 0 ]; A001055[ n_ ] := p[ n, n ]; a[ n_, 1 ] := 1; a[ 0, k_ ] := 1; a[ n_, k_ ] := If[ k>n, a[ n, n ], a[ n, k ]=a[ n, k-1 ]+Sum[ Binomial[ A001055[ k ]+r-1, r ]a[ n-k*r, k-1 ], {r, 1, Floor[ n/k ]} ] ]; a[ n_ ] := a[ n, n ]; (* p[ n, k ]=number of factorizations of n with factors <= k. a[ n, k ]=number of representations of n as a sum of products of positive integers, with summands <= k *)",
+        "b[n_, k_] := b[n, k] = If[n>k, 0, 1] + If[PrimeQ[n], 0, Sum[If[d>k, 0, b[n/d, d]], {d, Divisors[n] ~Complement~ {1, n}}]]; a[0] = 1; a[n_] := a[n] = If[n == 0, 1, Sum[DivisorSum[j, #*b[#, #]&]*a[n-j], {j, 1, n}]/n]; Table[a[n], {n, 0, 60}] (* _Jean-Fran\u00e7ois Alcover_, Nov 10 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.core.cache import cacheit",
+        "from sympy import divisors, isprime",
+        "@cacheit",
+        "def b(n, k): return (0 if n>k else 1) + (0 if isprime(n) else sum([0 if d>k else b(n/d, d) for d in divisors(n)[1:-1]]))",
+        "@cacheit",
+        "def a(n): return 1 if n==0 else sum([sum([d*b(d, d) for d in divisors(j)])*a(n - j)  for j in xrange(1, n + 1)])/n",
+        "print map(a, xrange(61)) # _Indranil Ghosh_, Aug 19 2017, after Maple code"
+    ],
+    "xref": [
+        "Cf. A000041, A001055.",
+        "Cf. A066815, A066816, A066806."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Naohiro Nomoto_, Jan 16 2002",
+    "ext": [
+        "Edited by _Dean Hickerson_, Jan 19 2002"
+    ],
+    "references": 17,
+    "revision": 30,
+    "time": "2017-08-19T12:12:24-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

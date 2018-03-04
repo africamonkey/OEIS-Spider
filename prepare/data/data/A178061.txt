@@ -1,0 +1,45 @@
+{
+    "number": 178061,
+    "data": "0,0,1,3,9,25,120,546,4438,28134,308115,2440405,33237831,314699463,5119097074,56345113020,1065268609980,13359512435356,287786703606453,4049825314169079,97903924694681365,1527478596708475845,40946200336523631996,701409698806896677158",
+    "name": "Number of distinct cycles without repeated edges on the multigraph consisting of two vertices joined by n edges.",
+    "comment": [
+        "Cycles have at least 2 edges, and the multigraph has no loops. For this sequence, a pair p,q of cycles is equivalent if the edge-sequence of q can be formed by rotating and possibly reversing the edge sequence of p. Note that this definition ignores the starting vertex of a loop, which halves the number of distinct cycles of length >2."
+    ],
+    "link": [
+        "S. Donnelly, <a href=\"/A178061/b178061.txt\">Table of n, a(n) for n=0..400</a>",
+        "Eric W. Weisstein, <a href=\"http://mathworld.wolfram.com/Multigraph.html\">Multigraph</a>"
+    ],
+    "formula": [
+        "a(n) = n*(n-1)/2 + Sum_{k=4..n:2 divides k} (n!/((n-k)!*2*k))."
+    ],
+    "example": [
+        "for n = 4 there are 4 choose 2 = 6 distinct cycles of length 2, plus 3 of length 4: 0123, 0132, 0213. Hence a(4) = 6 + 3 = 9."
+    ],
+    "program": [
+        "(Python)",
+        "def trfact_(n, k):",
+        "    return reduce(lambda x, y: x*y, range(k+1, n+1), 1)",
+        "def choose_(n,k):",
+        "    if k > n/2:",
+        "        return trfact_(n,k)/trfact_(n-k,1)",
+        "    else:",
+        "        return trfact_(n,n-k)/trfact_(k,1)",
+        "def a_(n):",
+        "    return choose_(n,2) + sum(trfact_(n, n-k)/(2*k) for k in range(4, n+1, 2))",
+        "(PARI) a(n) = n*(n-1)/2 + sum(k=4,n, if(k%2==0, (n!/((n-k)!*2*k)),0)); \\\\ _Joerg Arndt_, Oct 11 2015"
+    ],
+    "xref": [
+        "A263102 uses a more correct definition of cycle equivalence."
+    ],
+    "keyword": "easy,nonn,walk",
+    "offset": "0,4",
+    "author": "_Simon R. Donnelly_, May 18 2010",
+    "ext": [
+        "First comment and program corrected by _Simon R. Donnelly_, Oct 10 2015",
+        "More terms from _Joerg Arndt_, Oct 11 2015"
+    ],
+    "references": 2,
+    "revision": 18,
+    "time": "2015-10-12T04:10:10-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

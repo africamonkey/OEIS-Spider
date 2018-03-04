@@ -1,0 +1,39 @@
+{
+    "number": 3123,
+    "id": "M2038",
+    "data": "2,12,92,800,7554,75664,792448,8595120,95895816,1095130728,12753454896,151017596448,1814135701956,22067487234504,271407264938656,3370796862212944,42230992336570032,533252038221313888,6781213722509638192,86790636905453265216",
+    "name": "Number of Hamiltonian rooted triangulations with n internal nodes and 4 external nodes.",
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "_Peter J. Taylor_, <a href=\"/A003123/b003123.txt\">Table of n, a(n) for n = 0..500</a>",
+        "P. N. Rathie, <a href=\"http://dx.doi.org/10.1016/0012-365X(73)90046-0\">The enumeration of Hamiltonian polygons in rooted planar triangulations</a>, Discrete Math., 6 (1973), 163-168."
+    ],
+    "formula": [
+        "a(n) = f(n, 4) where f(n, k) is defined in A003122. - _Sean A. Irvine_, Feb 02 2015"
+    ],
+    "program": [
+        "(C#) See A003122",
+        "(PARI)",
+        "P(n,k) = k*(2*n+2*k-4)!*(2*n+k-1)!/((n+k-1)!*(n+k-2)!*n!*(n+k)!);",
+        "F(K, N=23) = {",
+        "  my(x='x + O('x^(K+1)), t='t + O('t^(N+1)),",
+        "     r='t*Ser(vector(N, n, sqr(binomial(2*n,n)/(n+1))),'t),",
+        "     p=x^3*Ser(apply(k->Ser(vector(N, n, P(n-1,k)),'t), [3..K])),",
+        "     s=serreverse(t*(1+r)), f=subst(subst(p, 't, s), 'x, 'x*s/'t));",
+        "  Vec(polcoeff(f,K));",
+        "};",
+        "F(4) \\\\ _Gheorghe Coserea_, Aug 18 2017"
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms and title clarified by _Sean A. Irvine_, Feb 02 2015"
+    ],
+    "references": 2,
+    "revision": 25,
+    "time": "2017-08-21T22:35:39-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

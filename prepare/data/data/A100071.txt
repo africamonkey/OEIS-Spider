@@ -1,0 +1,70 @@
+{
+    "number": 100071,
+    "data": "0,1,2,6,12,30,60,140,280,630,1260,2772,5544,12012,24024,51480,102960,218790,437580,923780,1847560,3879876,7759752,16224936,32449872,67603900,135207800,280816200,561632400,1163381400,2326762800",
+    "name": "a(n) = n * binomial(n-1, floor((n-1)/2)) = n * max_{i=0..n} binomial(n-1, i).",
+    "comment": [
+        "Old name: An inverse Chebyshev transform of n.",
+        "sum{k = 0..floor(n/2)} binomial(n-k,k)(-1)^k*a(n-2k)=1.",
+        "Hankel transform is (-1)^n*n*2^(n-1), A085750. This is the inverse binomial transform of -n. - _Paul Barry_, Jan 11 2007",
+        "Corollary 3 of the Farhi reference mentions this sequence. - _Roger L. Bagula_, Nov 08 2009",
+        "Number of UDUD's in all length n+3 left factors of Dyck paths (here U=(1,1) and D=(1,-1)). Example: a(2)=2 because in (UDUD)U, UDUUD, UDUUU, UUDDU, U(UDUD), UUDUU, UUUDD, UUUDU, UUUUD, and UUUUU we have a total of two UDUDs (shown between parentheses).  Also number of UUDD's in all length n+3 left factors of Dyck paths (here U=(1,1) and D=(1,-1)). Example: a(2)=2 because in UDUDU, UDUUD, UDUUU, (UUDD)U, UUDUD, UUDUU, U(UUDD), UUUDU, UUUUD, and UUUUU we have a total of two UUDDs (shown between parentheses). - _Emeric Deutsch_, Jun 19 2011",
+        "Apparently the number of long ascents in all symmetric Dyck (n+1)-paths. - _David Scambler_, Aug 17 2012",
+        "Beginning with the least positive term multiple of an odd prime p (which is a(p)), we have exactly p+1 consecutive terms multiple of p. - _Vladimir Shevelev_, Aug 17 2012",
+        "Apparently also the count of 'unmatched symbols' in the binary strings of length n (see A008314). - _Wouter Meeussen_, May 26 2013"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A100071/b100071.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Ruggero Bandiera, Florian Schaetz, <a href=\"https://arxiv.org/abs/1702.08907\">Eulerian idempotent, pre-Lie logarithm and combinatorics of trees</a>, arXiv:1702.08907 [math.CO], 2017. See p. 34.",
+        "F. Disanto, A. Frosini, S. Rinaldie, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL14/Rinaldi/square.html\">Square involuations</a>, J. Int. Seq. 14 (2011) # 11.3.5",
+        "Bakir Farhi, <a href=\"http://arxiv.org/abs/0906.2295\">An Identity Involving the Least Common Multiple of Binomial Coefficients and its Application</a>, American Mathematical Monthly, Nov. 2009, page 838"
+    ],
+    "formula": [
+        "G.f.: 2*x*(1 - sqrt(1 - 4*x^2))/(sqrt(1 - 4*x^2)*(sqrt(1 - 4*x^2) + 2*x - 1)^2).",
+        "G.f.: (1/sqrt(1 - 4*x^2))*x*c(x^2)/(1 - x*c(x^2))^2.",
+        "a(n) = Sum_{k = 0..floor(n/2)} binomial(n,k)*(n - 2*k).",
+        "a(n) = n*C(n-1,floor((n-1)/2)); a(n) = Sum_{k = 0..n} C(n,k)*2^(n-k)*C(2*k - 2,k - 1)(-1)^(k-1). - _Paul Barry_, Jan 11 2007",
+        "Starting (1, 2, 6, 12,...), = inverse binomial transform of A134757: (1, 3, 11, 37, 123, 401, ...). - _Gary W. Adamson_, Nov 08 2007",
+        "a(n) = a(n-1)*n/floor(n/2) for n > 0. - _Reinhard Zumkeller_, Jan 20 2008",
+        "G.f.: x/((1 - 2*x)*sqrt(1 - 4*x^2)). - _Paul Barry_, Apr 25 2008",
+        "a(n) = (floor(n/2) + ceiling(n/2) + 1)!/(floor(n/2)! * ceiling(n/2)!). - _Stefan Steinerberger_, Nov 04 2008",
+        "a(n) = A056040(n)*(n/2)^(n-1 mod 2). - _Peter Luschny_, Aug 31 2011",
+        "Asymptotic: a(n) ~ b(n) where b(n) = ceil(2^(n-1)*sqrt(2*n-(-1)^n)/sqrt(Pi)). b(n) is also a lower bound of a(n) and an upper bound of 2^(n-1). With corollary 3 from Bakir Farhi (see reference) lcm(1,2,...n) >= a(n) >= b(n) >= 2^(n-1). - _Peter Luschny_, Aug 17 2012",
+        "a(n) = n for n < 3, a(n) = 4*a(n-2) + 2*a(n-1)/(n - 1) for n>=3. - _Alexander R. Povolotsky_, Aug 17 2012",
+        "E.g.f.: x*(BesselI(0,2*x) + BesselI(1,2*x)). - _Peter Luschny_, Aug 19 2012",
+        "a(n) = (-1)^(n*(n+1)/2) * Sum_{k = 0..n} (-1)^k*k* binomial(n,k)^2. - _Peter Bala_, Jul 25 2016",
+        "a(n) = n!/(floor((n-1)/2)!*ceiling((n-1)/2)!)). See the Banderia link. - _Michel Marcus_, Feb 28 2017",
+        "(-n+1)*a(n) +2*a(n-1) +4*(n-1)*a(n-2)=0. - _R. J. Mathar_, Aug 09 2017"
+    ],
+    "maple": [
+        "swing := n -> n!/iquo(n,2)!^2:",
+        "A100071 := n -> swing(n)*(n/2)^(n-1 mod 2):",
+        "seq(A100071(i),i=0..30); # _Peter Luschny_, Aug 31 2011"
+    ],
+    "mathematica": [
+        "Table[(Floor[n/2] + Ceiling[n/2] + 1)!/(Floor[n/2]!*Ceiling[n/2]!), {n, 1, 40}] (* _Stefan Steinerberger_, Nov 04 2008 *)",
+        "Table[If[n == 0, 0, n*Binomial[n - 1, Floor[(n - 1)/2]]], {n, 0, 30}] (* _Roger L. Bagula_, Nov 08 2009 *);",
+        "Table[ Tr[ Table[Count[match[-1 + 2*IntegerDigits[n, 2, k]], 0], {n, 2^(k - 1), 2^k - 1}]], {k, 16}] (* function 'match' see A008314; _Wouter Meeussen_, May 26 2013 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A100071(n):",
+        "    f = factorial(n)/factorial(n//2)^2",
+        "    return f if is_odd(n) else f*(n/2)",
+        "[A100071(n) for n in (0..50)]  # _Peter Luschny_, Aug 17 2012",
+        "(MAGMA) [n*Binomial(n-1, Floor((n-1)/2)): n in [0..35]]; // _Vincenzo Librandi_, Sep 14 2015",
+        "(PARI) a(n) = n * binomial(n-1, (n-1)\\2); \\\\ _Michel Marcus_, Sep 14 2015"
+    ],
+    "xref": [
+        "Cf. A134757, A008314."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Paul Barry_, Nov 02 2004",
+    "ext": [
+        "Name changed, using part of a comment from _Paul Barry_, by _Peter Luschny_, Aug 17 2012"
+    ],
+    "references": 17,
+    "revision": 89,
+    "time": "2017-08-09T13:24:24-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

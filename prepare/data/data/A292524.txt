@@ -1,0 +1,47 @@
+{
+    "number": 292524,
+    "data": "0,1,2,5,15,44,133,398,1194,3582,10747,32240,96720,290159,870478,2611435,7834305,23502914,70508742,211526225,634578675,1903736026,5711208079,17133624236,51400872708,154202618124,462607854373,1387823563119,4163470689357",
+    "name": "Interpret the values of the Moebius function mu(k) for k = 1 to n as a balanced ternary number.",
+    "comment": [
+        "Balanced ternary is much like regular ternary, but with the crucial difference of using the digit -1 instead of the digit 2. Then some powers of 3 are added, others are subtracted.",
+        "If mu(n) = 0, then a(n) is a multiple of 3, specifically, it is thrice a(n - 1). Otherwise, a(n) is not a multiple of 3."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A292524/b292524.txt\">Table of n, a(n) for n = 0..2097</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Balanced_ternary\">Balanced ternary</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k = 1..n} mu(k) 3^(n - k)."
+    ],
+    "example": [
+        "mu(1) = 1, so a(1) = 1 * 3^0 = 1.",
+        "mu(2) = -1, so a(2) = 1 * 3^1 + -1 * 3^0 = 3 - 1 = 2.",
+        "mu(3) = -1, so a(3) = 1 * 3^2 + -1 * 3^1 + -1 * 3^0 = 9 - 3 - 1 = 5.",
+        "mu(4) = 0, so a(4) = 1 * 3^3 + -1 * 3^2 + -1 * 3^1 + 0 * 3^0 = 27 - 9 - 3 + 0 = 15."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 0,",
+        "      a(n-1)*3+numtheory[mobius](n))",
+        "    end:",
+        "seq(a(n), n=0..33);  # _Alois P. Heinz_, Oct 13 2017"
+    ],
+    "mathematica": [
+        "Table[Plus@@(3^Range[n - 1, 0, -1] MoebiusMu[Range[n]]), {n, 50}]"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n, moebius(k)*3^(n-k)); \\\\ _Michel Marcus_, Oct 01 2017"
+    ],
+    "xref": [
+        "Cf. A008683, A292779."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "0,3",
+    "author": "_Alonso del Arte_, Sep 18 2017",
+    "ext": [
+        "a(0)=0 prepended by _Alois P. Heinz_, Oct 13 2017"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2017-10-13T09:08:55-04:00",
+    "created": "2017-10-01T00:18:00-04:00"
+}

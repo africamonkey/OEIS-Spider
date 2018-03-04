@@ -1,0 +1,56 @@
+{
+    "number": 6036,
+    "id": "M4133",
+    "data": "6,20,28,88,104,272,304,350,368,464,490,496,550,572,650,748,770,910,945,1184,1190,1312,1330,1376,1430,1504,1575,1610,1696,1870,1888,1952,2002,2030,2090,2170,2205,2210,2470,2530,2584,2590,2870,2990,3010,3128,3190,3230,3290,3410,3465,3496,3710,3770,3944,4070,4095,4130,4216,4270,4288,4408,4510,4544,4672,4690,4712,4730,4970",
+    "name": "Primitive pseudoperfect numbers.",
+    "comment": [
+        "A primitive pseudoperfect number is a pseudoperfect number that is not a multiple of any other pseudoperfect number.",
+        "The odd entries so far are identical to the odd primitive abundant A006038. - _Walter Kehowski_, Aug 12 2005"
+    ],
+    "reference": [
+        "R. K. Guy, Unsolved Problems in Number Theory, B2.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Donovan Johnson, <a href=\"/A006036/b006036.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "R. K. Guy, <a href=\"/A001599/a001599_1.pdf\">Letter to N. J. A. Sloane with attachment, Jun. 1991</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PrimitivePseudoperfectNumber.html\">Primitive Pseudoperfect Number</a>"
+    ],
+    "maple": [
+        "with(numtheory): with(combinat): issemiperfect := proc(n) local b, S;",
+        "b:=false; S:=subsets(divisors(n) minus {n}); while not S[finished] do if",
+        "convert(S[nextvalue](),`+`)=n then b:=true; break fi od; return b end:",
+        "L:=remove(proc(z) isprime(z) end,[$1..5000]): PP:=[]: for zz from 1 to 1 do",
+        "for n in L do if issemiperfect(n) then PP:=[op(PP),n] fi od od;",
+        "sr := proc(l::list) local x, R, S, P, L; S:=sort(l); R:=[]; P:=S;",
+        "for x in S do",
+        "if not(x in R) then",
+        "L:=selectremove(proc(z) z>x and z mod x = 0 end, P);",
+        "R:=[op(R),op(L[1])]; P:=L[2];",
+        "fi; od; return P; end:",
+        "PPP:=sr(PP); # primitive pseudoperfect numbers less than 5000 # _Walter A. Kehowski_, Aug 12 2005"
+    ],
+    "mathematica": [
+        "(* First run one of the programs for A005835 *) A006036 = A005835; curr = 1; max = A005835[[-1]]; While[curr < Length[A006036], currMult = A006036[[curr]]; A006036 = Complement[A006036, Range[2currMult, Ceiling[max/currMult] currMult, currMult]]; curr++]; A006036 (* _Alonso del Arte_, Sep 08 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a006036 n = a006036_list !! (n-1)",
+        "a006036_list = filter (all (== 0) . map a210455 . a027751_row) a005835_list",
+        "-- _Reinhard Zumkeller_, Jan 21 2013"
+    ],
+    "xref": [
+        "Cf. A005835.",
+        "Cf. A210455, A027751."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, _R. K. Guy_",
+    "ext": [
+        "More terms from _Walter Kehowski_, Aug 12 2005"
+    ],
+    "references": 5,
+    "revision": 30,
+    "time": "2017-10-23T17:17:02-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

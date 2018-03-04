@@ -1,0 +1,55 @@
+{
+    "number": 268480,
+    "data": "2,3,5,8,38,40,64,73,89,236,480,486",
+    "name": "Integers n such that A002110(n) is the average of two consecutive primes.",
+    "comment": [
+        "In other words, the primorial numbers that are considered are those of the form (p + q)/2 where p and q are consecutive primes. Note that the initial values of (p - q)/2 are 1, 1, 1, 23, 239, 191, 331, 373, 1021.",
+        "A088256 is a subsequence of these primorials, which in turn are a subsequence of A024675."
+    ],
+    "link": [
+        "<a href=\"/index/Pri#primorial_numbers\">Index entries for sequences related to primorial numbers</a>"
+    ],
+    "example": [
+        "5 is a term because 2*3*5*7*11 = 2310 = (2309 + 2311)/2.",
+        "8 is a term because 2*3*5*7*11*13*17*19 = 9699690 = (9699667 + 9699713)/2."
+    ],
+    "maple": [
+        "P:= 2: count:= 0:",
+        "for n from 2 to 500 do",
+        "  P:= P*ithprime(n);",
+        "  # first try d=1",
+        "  if isprime(P+1) then",
+        "    good:= isprime(P-1);",
+        "  elif isprime(P-1) then good:= false",
+        "  else",
+        "    for d from ithprime(n+1) by 2 do",
+        "      if igcd(d,P) > 1 then next fi;",
+        "      if isprime(P+d) then",
+        "        good:= isprime(P-d); break",
+        "      elif isprime(P-d) then",
+        "        good:= false; break",
+        "      fi",
+        "    od;",
+        "  fi;",
+        "  if good then",
+        "     count:= count+1;",
+        "     A[count]:= n;",
+        "  fi",
+        "od:",
+        "seq(A[i],i=1..count);  # _Robert Israel_, Aug 29 2016"
+    ],
+    "program": [
+        "(PARI) a002110(n) = prod(k=1, n, prime(k));",
+        "for(n=2, 1e3, if((nextprime(a002110(n)) - a002110(n)) == (a002110(n) - precprime(a002110(n))), print1(n, \", \")))"
+    ],
+    "xref": [
+        "Cf. A002110, A024675, A088256."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Altug Alkan_, Mar 21 2016",
+    "references": 0,
+    "revision": 33,
+    "time": "2016-09-05T15:50:05-04:00",
+    "created": "2016-03-21T21:32:03-04:00"
+}

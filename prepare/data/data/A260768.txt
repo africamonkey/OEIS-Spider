@@ -1,0 +1,46 @@
+{
+    "number": 260768,
+    "data": "0,1,2,3,4,5,6,7,8,9,10,12,15,18,24,27,30,54,57,66,93,100,107,110,111,120,125,138,143,159,168,170,179,225,243,261,300,309,338,339,347,354,381,438,441,501,521,528,534,552,567,573,576,593,645,661,709,724,738,807,849,903,926,927",
+    "name": "Numbers n such that n equals the sum of digit_sum(n^p) for p = 1 to some k>=1, where digit_sum = A007953.",
+    "comment": [
+        "'digit_sum' is the 'sum of the digits' as defined in A007953.",
+        "The number of terms < 10^k: 9, 20, 63, 160, 454, 1333, 3704, ..., .",
+        "So far, 3705 terms, 70.93% are congruent to 0 (mod 3), 8.26% congruent to 1 (mod 3) and 20.81% congruent to 2 (mod 3)."
+    ],
+    "link": [
+        "Pieter Post and Robert G. Wilson v, <a href=\"/A260768/b260768.txt\">Table of n, a(n) for n = 1..3705</a>"
+    ],
+    "formula": [
+        "All numbers of the form 10^p are members; for n = 1-9, a(n)=n are trivial solutions."
+    ],
+    "example": [
+        "57 is in the sequence because digit_sum(57) + digit_sum(57^2) + digit_sum(57^3) = 12 + 18 + 27 = 57. In this example, k is 3."
+    ],
+    "maple": [
+        "filter:= proc(n)",
+        "  local t,p;",
+        "  t:= 0;",
+        "  for p from 1 while t < n do",
+        "    t:= t+ sod(n^p);",
+        "  od:",
+        "  evalb(t = n)",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Aug 16 2015"
+    ],
+    "mathematica": [
+        "fQ[n_] := If[ IntegerQ@ Log10@ n, True, Block[{pwr = 1, s = 0}, While[s = s + Plus @@ IntegerDigits[n^pwr]; s < n, pwr++]; s == n]]; Select[ Range[0, 1000], fQ]"
+    ],
+    "program": [
+        "(PARI) is(n)=my(s); for(p=1,n,s+=sumdigits(n^p); if(s>=n, return(s==n))) \\\\ _Charles R Greathouse IV_, Aug 07 2015"
+    ],
+    "xref": [
+        "Cf. A007953, A259313."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Pieter Post_ and _Robert G. Wilson v_, Jul 30 2015",
+    "references": 1,
+    "revision": 50,
+    "time": "2015-09-08T03:51:05-04:00",
+    "created": "2015-08-24T17:24:33-04:00"
+}

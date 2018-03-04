@@ -1,0 +1,67 @@
+{
+    "number": 276452,
+    "data": "0,1,20,448,13266,486744,21474640,1106532352,65221935740,4327576834420,319187489891256,25904823417117120,2294089575084464472,220132629092378694832,22751391952785312551232,2519687900505221042995200,297684761086121821704009432,37370623083548749203599933004",
+    "name": "Number of 4-orbits of the cyclic group C_4 for a bi-colored square n X n grid with n squares of one color.",
+    "comment": [
+        "For a definition and examples of this problem see the comment section of A276449. The present sequence a(n) gives the number of 4-orbits under C_4 of such 2-colored n X n grids with n squares of one color."
+    ],
+    "link": [
+        "Hong-Chang Wang, <a href=\"/A276452/b276452.txt\">Table of n, a(n) for n = 1..69</a>"
+    ],
+    "formula": [
+        "a(n) = (A014062(n) - A276451(n)*2 - A276449(n))/4 for n = 1, 2, 3, ..."
+    ],
+    "example": [
+        "a(2) = 1: the 4-orbit is",
+        "+ +   o +   o o   + o",
+        "o o   o +   + +   + o  ,",
+        "and one can take the first one as representative.",
+        "For n = 3 there are a(3) = 20 4-orbits, represented by",
+        "+ + +   + + o   + + o   + + o   + + o",
+        "o o o   + o o   o + o   o o +   o o o",
+        "o o o   o o o   o o o   o o o   + o o",
+        "--------------------------------------",
+        "+ + o   + + o   + o +   + o +   + o +",
+        "o o o   o o o   + o o   o + o   o o o",
+        "o + o   o o +   o o o   o o o   + o o",
+        "--------------------------------------",
+        "+ o +   + o o   + o o   + o o   + o o",
+        "o o o   + + o   + o +   + o o   + o o",
+        "o + o   o o o   o o o   o + o   o o +",
+        "--------------------------------------",
+        "+ o o   + o o   + o o   o + o   o + o",
+        "o + +   o + o   o o +   + + o   + o +",
+        "o o o   o + o   o + o   o o o   o o o .",
+        "--------------------------------------",
+        "The complete orbit structure for n=3 is 1^0 2^2 4^20, see A276449(3) = 0, A276451(3) = 2, a(3) = 20"
+    ],
+    "mathematica": [
+        "f[n_] := If[MemberQ[{2, 3}, #], 0, Function[i, Binomial[(2 i) (2 i + #), i]]@ Floor[n/4]] &@ Mod[n, 4]; g[n_] := (Function[j, Binomial[2 j (j + Boole@ OddQ@ n), j]]@ Floor[n/2] - f@ n)/2; Table[(Binomial[n^2, n] - 2 g@ n - f@ n)/4, {n, 18}] (* _Michael De Vlieger_, Sep 07 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "def nCr(n,r):",
+        "    f = math.factorial",
+        "    return f(n) / f(r) / f(n-r)",
+        "# main program",
+        "for j in range(101):",
+        "    a = nCr(j*j,j)",
+        "    i = j/2",
+        "    if j%2==0:",
+        "        b = nCr(2*i*i,i)",
+        "    else:",
+        "        b = nCr(2*i*(i+1),i)",
+        "    print(str(j)+\" \"+str((a-b)/4))"
+    ],
+    "xref": [
+        "Cf. A014062, A276449, A276451, A276454."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Hong-Chang Wang_, _Jason Y.S. Chiu_, _Chiang, Tung-Ying_, Sep 03 2016",
+    "references": 4,
+    "revision": 21,
+    "time": "2016-10-17T16:05:15-04:00",
+    "created": "2016-10-17T16:05:15-04:00"
+}

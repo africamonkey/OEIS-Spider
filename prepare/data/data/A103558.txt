@@ -1,0 +1,46 @@
+{
+    "number": 103558,
+    "data": "34,58,74,146,178,194,218,298,314,365,386,458,482,533,538,554,698,818,866,965,1082,1202,1322,1418,1538,1658,1685,1706,1853,1858,1874,2018,2042,2138,2218,2234,2258,2498,2642,2813,2818,2858,2978,3098,3218,3338",
+    "name": "Semiprimes of the form p^2 + q^2, where p and q are primes.",
+    "comment": [
+        "p and q must be distinct, otherwise p^2 + q^2 = 2*p*p has three prime factors. - _Klaus Brockhaus_",
+        "Even terms are 2*A103739. - _Robert Israel_, Nov 03 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A103558/b103558.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "34 is a term because 3^2 + 5^2 = 34 = 2*17; 58 is a term because 3^2 + 7^2 = 58 = 2*29; 74 is a term because 5^2 + 7^2 = 74 = 2*37."
+    ],
+    "maple": [
+        "N:= 10000: # to get all terms <= N",
+        "P:= select(isprime, [$1..floor(sqrt(N))]):",
+        "Res:= NULL:",
+        "for i from 1 to nops(P) do",
+        "  for j from 1 to i-1 do",
+        "    r:= P[i]^2 + P[j]^2;",
+        "    if r > N then break fi;",
+        "    if numtheory:-bigomega(r) = 2 then Res:= Res, r fi;",
+        "od od:",
+        "sort(convert({Res},list)); # _Robert Israel_, Nov 03 2017"
+    ],
+    "mathematica": [
+        "fQ[n_] := Plus @@ Last /@ FactorInteger[n] == 2; Select[ Sort[ Flatten[ Table[ Prime[p]^2 + Prime[q]^2, {p, 16}, {q, p - 1}]]], fQ[ # ] &] (* _Robert G. Wilson v_, Mar 23 2005 *)"
+    ],
+    "program": [
+        "(PARI) {m=53;v=[];forprime(p=2,m, forprime(q=nextprime(p+1),m,if(bigomega(k=p^2+q^2)==2, v=concat(v,k))));v=vecsort(v);stop=nextprime(m+1)^2;for(j=1,length(v),if(v[j]<stop,print1(v[j],\",\")))} \\\\ _Klaus Brockhaus_"
+    ],
+    "xref": [
+        "Cf. A001358, A006881, A103739."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Giovanni Teofilatto_, Mar 23 2005",
+    "ext": [
+        "More terms from _Klaus Brockhaus_ and _Robert G. Wilson v_, Mar 23 2005"
+    ],
+    "references": 2,
+    "revision": 15,
+    "time": "2017-11-04T06:58:23-04:00",
+    "created": "2005-04-09T03:00:00-04:00"
+}

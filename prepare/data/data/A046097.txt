@@ -1,0 +1,65 @@
+{
+    "number": 46097,
+    "data": "1,2,3,4,6,9,10,12,36",
+    "name": "Values of n for which binomial(2n-1, n) is squarefree.",
+    "comment": [
+        "No more terms up to 2^300.  The sequence is finite by results of Sander and of Granville and Ramar\u00e9 (see links). - _Robert Israel_, Dec 10 2015"
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/BinomialCoefficient.html\">Binomial Coefficient.</a>",
+        "A. Granville and O. Ramar\u00e9, <a href=\"http://dx.doi.org/10.1112/S0025579300011608\">Explicit bounds on exponential sums and the scarcity of squarefree binomial coefficients</a>, Mathematika 43 (1996), 73-107.",
+        "J. W. Sander, <a href=\"https://eudml.org/doc/153440\">Prime power divisors of binomial coefficients</a>, Journal f\u00fcr die reine und angewandte Mathematik 430 (1992), 1-20."
+    ],
+    "maple": [
+        "select(n -> numtheory:-issqrfree(binomial(2*n-1,n)), [$1..2000]); # _Robert Israel_, Dec 09 2015",
+        "N:= 300: # to find all terms <= 2^N",
+        "carries:= proc(n,m,p)",
+        "# number of carries when adding n + m in base p.",
+        "local A,B,C,j,nc, t;",
+        "   A:= convert(m,base,p);",
+        "   B:= convert(n,base,p);",
+        "C:= 0; nc:= 0;",
+        "   if nops(A) < nops(B) then A = [op(A),0$(nops(B)-nops(A))]",
+        "   elif nops(A) > nops(B) then B:= [op(B), 0$(nops(A)-nops(B))]",
+        "   fi;",
+        "for j from 1 to nops(A) do",
+        "    t:= C + A[j] + B[j];",
+        "    if t >= p then",
+        "       nc:= nc+1;",
+        "       C:= 1;",
+        "    else",
+        "       C:= 0",
+        "    fi",
+        "od:",
+        "nc;",
+        "end proc:",
+        "Cands:=  {seq(2^j,j=0..N), seq(seq(2^j + 2^k, k=0..j-1),j=1..N-1)}:",
+        "for i from 2 to 10 do",
+        "  Cands:= select(n -> carries(n-1,n,ithprime(i)) <= 1, Cands)",
+        "od:",
+        "select(n -> numtheory:-issqrfree(binomial(2*n-1,n)),Cands); # _Robert Israel_, Dec 10 2015"
+    ],
+    "mathematica": [
+        "Select[ Range[1500], SquareFreeQ[ Binomial[ 2#-1, #]] &] (* _Jean-Fran\u00e7ois Alcover_, Oct 25 2012 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=issquarefree(binomial(2*n-1,n)) \\\\ _Anders Hellstr\u00f6m_, Dec 09 2015",
+        "(MAGMA) [n: n in [1..150] | IsSquarefree(Binomial(2*n-1,n))]; // _Vincenzo Librandi_, Dec 10 2015"
+    ],
+    "xref": [
+        "Cf. A001700.",
+        "For a term to be here, it needs to be at least in the intersection of A048645, A051382, A050607, A050608 and an infinitude of similar sequences. The corresponding location in next-to-center column should be nonzero in A034931 (Pascal's triangle mod 4) and all similarly constructed fractal triangles (Pascal's triangle mod p^2)."
+    ],
+    "keyword": "nonn,fini",
+    "offset": "1,2",
+    "author": "_Eric W. Weisstein_",
+    "ext": [
+        "_James A. Sellers_ reports no further terms below 1500.",
+        "_Michael Somos_ checked to 99999. Probably there are no more terms.",
+        "_Mauro Fiorentini_ checked up to 2^64, as for n = 545259520, the binomial coefficient is a multiple of 5^4 and other possible exceptions have been checked (see Weisstein page for details)."
+    ],
+    "references": 5,
+    "revision": 38,
+    "time": "2015-12-10T16:50:03-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

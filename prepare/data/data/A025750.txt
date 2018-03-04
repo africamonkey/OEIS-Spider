@@ -1,0 +1,36 @@
+{
+    "number": 25750,
+    "data": "1,1,10,150,2625,49875,997500,20662500,439078125,9513359375,209293906250,4661546093750,104884787109375,2380077861328125,54401779687500000,1251240932812500000,28934946571289062500",
+    "name": "5th-order Patalan numbers (generalization of Catalan numbers).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A025750/b025750.txt\">Table of n, a(n) for n = 0..200</a>",
+        "W. Lang, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/LANG/lang.html\">On generalizations of Stirling number triangles</a>, J. Integer Seqs., Vol. 3 (2000), #00.2.4.",
+        "T. M. Richardson, <a href=\"http://arxiv.org/abs/1410.5880\">The Super Patalan Numbers</a>, arXiv preprint arXiv:1410.5880 [math.CO], 2014."
+    ],
+    "formula": [
+        "G.f.: (6-(1-25*x)^(1/5))/5.",
+        "a(n) = 5^(n-1)*4*A034301(n-1)/n!, n >= 2; 4*A034301(n-1)= (5*n-6)(!^5) := product(5*j-6, j=2..n). - _Wolfdieter Lang_",
+        "a(n) = (sum(k=0..n-1, (-1)^(n-k-1)*binomial(n+k-1,n-1)*sum(j=0..k, 2^j*binomial(k,j)*sum(i=j..n-k+j-1, binomial(j,i-j)*binomial(k-j,n-3*(k-j)-i-1)*5^(3*(k-j)+i)))))/n, n>0, a(0)=1. - _Vladimir Kruchinin_, Dec 10 2011",
+        "a(n) = ((-5)^(n-1)*sum(k=1..n, (5)^(n-k)*stirling1(n,k)))/n!, n>0, a(0)=1. - _Vladimir Kruchinin_, Mar 19 2013"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(6-(1-25x)^(1/5))/5,{x,0,20}],x] (* _Harvey P. Dale_, Dec 06 2012 *)",
+        "a[0] = 1; a[n_] := ((-5)^(n - 1)*Sum[5^(n - k)*StirlingS1[n, k], {k, 1, n}])/n!; Table[a[n], {n, 0, 16}] (* _Jean-Fran\u00e7ois Alcover_, Mar 19 2013, after _Vladimir Kruchinin_ *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=if n=0 then 1 else (sum((-1)^(n-k-1)*binomial(n+k-1,n-1)*sum(2^j*binomial(k,j)*sum(binomial(j,i-j)*binomial(k-j,n-3*(k-j)-i-1)*5^(3*(k-j)+i),i,j,n-k+j-1),j,0,k),k,0,n-1))/(n); /* _Vladimir Kruchinin_, Dec 10 2011 */",
+        "(Maxima)",
+        "a(n):=if n=0 then 1 else -binomial(1/5,n)*(-25)^n/5; /* _Tani Akinari_, Sep 17 2015 */"
+    ],
+    "xref": [
+        "Cf. A034687, A049393."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 5,
+    "revision": 42,
+    "time": "2015-09-19T13:19:01-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

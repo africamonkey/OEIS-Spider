@@ -1,0 +1,43 @@
+{
+    "number": 136632,
+    "data": "1,2,16,520,66560,33882144,69055086592,564152735105152,18462508115518554112,2418626436468567646929408,1267795674038260517176495570944,2658560573512321601282555747644737536",
+    "name": "a(n) = Sum_{k=0..n} A136630(n,k) * 2^(nk).",
+    "link": [
+        "Robert Israel, <a href=\"/A136632/b136632.txt\">Table of n, a(n) for n = 0..57</a>"
+    ],
+    "formula": [
+        "From _Paul D. Hanna_, Nov 25 2009: (Start)",
+        "E.g.f.: Sum_{n>=0} sinh(2^n*x)^n/n!.",
+        "a(n) = [x^n/n! ] exp(2^n*sinh(x)).",
+        "(End)"
+    ],
+    "example": [
+        "From _Paul D. Hanna_, Nov 25 2009: (Start)",
+        "E.g.f.: A(x) = 1 + 2*x + 16*x^2/2! + 520*x^3/3! + 66560*x^4/4! +...",
+        "A(x) = 1 + sinh(2*x) + sinh(4*x)^2/2! + sinh(8*x)^3/3! + sinh(16*x)^4/4! +...+ sinh(2^n*x)^n/n! +...",
+        "a(n) = coefficient of x^n/n! in G(x)^(2^n) where G(x) = exp(sinh(x)):",
+        "G(x) = 1 + x + x^2/2! + 2*x^3/3! + 5*x^4/4! + 12*x^5/5! + 37*x^6/6! +...+ A003724(n)*x^n/n! +... (End)"
+    ],
+    "maple": [
+        "N:= 20: # to get a(0)..a(N)",
+        "E:= add(sinh(2^n*x)^n/n!,n=0..N):",
+        "S:= series(E,x,N+1):",
+        "seq(coeff(S,x,j)*j!,j=0..N); # _Robert Israel_, Jan 17 2018"
+    ],
+    "program": [
+        "(PARI) {a(n)=sum(k=0,n,2^(n*k)*polcoeff(x^k/prod(j=0,k\\2,1-(2*j+k-2*(k\\2))^2*x^2 +x*O(x^n)),n))}",
+        "(PARI) {a(n)=n!*polcoeff(sum(k=0,n,sinh(2^k*x +x*O(x^n))^k/k!),n)} \\\\ _Paul D. Hanna_, Nov 25 2009",
+        "(PARI) {a(n)=n!*polcoeff(exp(2^n*sinh(x +x*O(x^n))),n)} \\\\ _Paul D. Hanna_, Nov 25 2009"
+    ],
+    "xref": [
+        "Cf. A136630, A003724 (row sums of A136630).",
+        "Cf. A003724 (exp(sinh x)). [From _Paul D. Hanna_, Nov 25 2009]"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jan 14 2008",
+    "references": 7,
+    "revision": 8,
+    "time": "2018-01-17T02:49:28-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

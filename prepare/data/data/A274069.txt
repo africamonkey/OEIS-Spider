@@ -1,0 +1,43 @@
+{
+    "number": 274069,
+    "data": "1,10,1010,1010100,101010010,101010010110,101010010110100,101010010110100100,1010100101101001001000",
+    "name": "s(n) is the number of bitflips required to make the concatenation of s(1), ..., s(n) the same as its reverse. (All numbers are written in binary.)",
+    "comment": [
+        "Observations after 10^5 iterations:",
+        "The number of bitflips required to make the sequence equivalent to its reverse (to be entered as another sequence) increases on average.",
+        "A plot shows that the variance in the number of bitflips increases on average, but with phases of higher and lower average variance.",
+        "A plot of string length (to be entered as another sequence) shows that string length increases somewhat more than linearly.",
+        "For the first 10^5 iterations, the concatenated sequence usually has more 0's than 1's (to be entered as two more sequences).",
+        "A plot shows that the proportion of the sequence composed of 1's rises and falls periodically, with the number of terms between peaks approximately doubling."
+    ],
+    "example": [
+        "s(1):=1. Since this is a palindrome, there are 0 bitflips; so s(2) = 0. Concatenated, we have 10, which differs from its reverse in two places; so s(3) is 2 = 10 in binary. Now 1010 differs from itself backwards, i.e., 0101, in four place; so s(4) = 4 = 100."
+    ],
+    "program": [
+        "(MATLAB)",
+        "seq10 = [1 zeros(1,NN-1)];",
+        "str = '1';",
+        "strlength = zeros(1,NN);",
+        "strgrow = cell(NN,1);",
+        "strgrow(1,1) = {'1'};",
+        "chckfun = @(a,b) a~=b;",
+        "for nn = 2:NN",
+        "    bitflips = chckfun(str(1:end), str(end:-1:1));",
+        "    seq10(nn) = sum(bitflips);",
+        "    str = [str dec2bin(seq10(nn))];",
+        "    strgrow(nn,1) = {str};",
+        "    strlength(nn) = length(str);",
+        "end",
+        "end"
+    ],
+    "xref": [
+        "(Coming as referenced above)"
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_Meir-Simchah Panzer_, Jun 09 2016",
+    "references": 0,
+    "revision": 15,
+    "time": "2017-12-16T18:10:59-05:00",
+    "created": "2016-06-17T09:38:06-04:00"
+}

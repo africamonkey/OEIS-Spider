@@ -1,0 +1,41 @@
+{
+    "number": 129637,
+    "data": "1,3,11,41,157,607,2367,9277,36505,144059,569779,2257521,8957109,35579351,141460391,562871557,2241129905,8928207987,35584894299,141886838329,565938926669",
+    "name": "Number of n-step paths that can go {west, southeast, southwest, northwest} on a 240-degree wedge on the equilateral triangular lattice.",
+    "comment": [
+        "If we use the \"hour hand\" positions at 1, 3, 5, 7, 9, and 11 o'clock on a 12-hour clock to specify directions in the triangular lattice, the allowable steps are in directions 5, 7, 9, and 11 and the path is restricted to stay on or above the 1-7 line. In the Mathematica recurrence below, a(n,k) denotes the number of paths of length n ending k units from the 1-7 line, counted by the last step. - _David Callan_, Jul 22 2008"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A129637/b129637.txt\">Table of n, a(n) for n = 0..200</a>",
+        "A. Bostan, <a href=\"http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.410.1160&amp;rep=rep1&amp;type=pdf\">Computer Algebra for Lattice Path Combinatorics</a>, Seminaire de Combinatoire Ph. Flajolet, March 28 2013."
+    ],
+    "formula": [
+        "Recurrence: (-28-28*n)*a(n) + (-13-n)*a(1+n) + (21+6*n)*a(n+2) + (-4-n)*a(n+3), a(0) = 1, a(1) = 3, a(2) = 11.",
+        "G.f.: (1/4*i)*sqrt(-1+2*t+7*t^2)/((-1+4*t)*t)-(1/4)*(-1+5*t)/(t*(-1+4*t)), where i is the imaginary unit.",
+        "Differential equation: -(1+28*t^3-6*t+t^2)*t*((d/dt)f(t)) + (9*t-12*t^2-1-28*t^3)*f(t) + 1 - 3*t, f(0) = 1.",
+        "a(n) = Sum_{k=0..n+1}(binomial(n+1,k)*Sum_{i=0..n}(2^(i+k-1)*binomial(k,i)*(-1)^(n-i)*binomial(n-i-1,k-i-1)))/(n+1). - _Vladimir Kruchinin_, Feb 28 2016",
+        "a(n) ~ 2^(2*n-1). - _Vaclav Kotesovec_, Feb 28 2016"
+    ],
+    "example": [
+        "a(1) = 3 because only 3 out of the 4 steps are permissible from the origin;",
+        "a(2) = 11 because the northwest and west steps are followed by 4 permissible steps each, but the southwest step is only followed by 3 permissible steps."
+    ],
+    "mathematica": [
+        "a[0,0]=1; a[n_,k_]/;k<0 || k>n := 0; a[n_,k_]/;0<=k<=n := a[n,k] = 2a[n-1,k-1] + a[n-1,k] + a[n-1,k+1]; a[n_]:=Sum[a[n,k],{k,0,n}]; Table[a[n],{n,0,10}] (* _David Callan_, Jul 22 2008 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum(binomial(n+1,k)*sum(2^(i+k-1)*binomial(k,i)*(-1)^(n-i)*binomial(n-i-1,k-i-1),i,0,n),k,0,n+1)/(n+1); /* _Vladimir Kruchinin_, Feb 28 2016 */",
+        "(PARI) a(n) = {sum(k=0, n+1, binomial(n+1, k) * sum(i=0,n, 2^(i+k-1)*binomial(k,i)*(-1)^(n-i)*binomial(n-i-1,k-i-1)))/(n+1)} \\\\ _Andrew Howroyd_, Dec 22 2017"
+    ],
+    "xref": [
+        "Cf. A129400."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "Rebecca Xiaoxi Nie (rebecca.nie(AT)utoronto.ca), May 31 2007",
+    "references": 2,
+    "revision": 23,
+    "time": "2017-12-25T03:56:59-05:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

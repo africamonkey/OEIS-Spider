@@ -1,0 +1,46 @@
+{
+    "number": 65847,
+    "data": "1,2,4,8,21,60,269,1147,4250,17883,71966,342060,1724337",
+    "name": "Let u be any string of n digits from {0,...,5}; let f(u) = number of distinct primes, not beginning with 0, formed by permuting the digits of u; then a(n) = max_u f(u).",
+    "example": [
+        "a(2)=2 because 15 and 51 (written in base 6) are primes (11 and 31)."
+    ],
+    "maple": [
+        "A065847 := proc(n)",
+        "    local b,u,udgs,uperm,a;",
+        "    b :=6 ;",
+        "    a := 0 ;",
+        "    for u from b^(n-1) to b^n-1 do",
+        "        udgs := convert(u,base,b) ;",
+        "        prs := {} ;",
+        "        for uperm in combinat[permute](udgs) do",
+        "            if op(-1,uperm) <> 0 then",
+        "                p := add( op(i,uperm)*b^(i-1),i=1..nops(uperm)) ;",
+        "                if isprime(p) then",
+        "                    prs := prs union {p} ;",
+        "                end if;",
+        "            end if;",
+        "        end do:",
+        "        a := max(a,nops(prs)) ;",
+        "    end do:",
+        "    a ;",
+        "end proc:",
+        "for n from 1 do",
+        "    print(n,A065847(n)) ;",
+        "end do: # _R. J. Mathar_, Apr 23 2016"
+    ],
+    "xref": [
+        "Cf. A065843, A065844, A065845, A065846, A065848, A065849, A065850, A065851, A065852, A065853"
+    ],
+    "keyword": "base,more,nonn",
+    "offset": "1,2",
+    "author": "_Sascha Kurz_, Nov 24 2001",
+    "ext": [
+        "2 more terms _Sean A. Irvine_, Sep 06 2009",
+        "Definition corrected by _David A. Corneth_, Apr 23 2016"
+    ],
+    "references": 10,
+    "revision": 11,
+    "time": "2016-04-23T17:24:01-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

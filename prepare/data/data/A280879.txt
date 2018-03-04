@@ -1,0 +1,56 @@
+{
+    "number": 280879,
+    "data": "5005,6545,7315,7735,8645,8855,10465,11165,11935,14245,25025,32725,35035,36575,38675,43225,44275,45815,51205,52325,54145,55055,55825,59675,60515,61985,65065,71225,71995,73255,78155,80465,83545,85085,95095,97405,99715",
+    "name": "Occurrences of decrease of the probability density P(n) of coprime numbers k,m, satisfying 1 <= k <= a(n) and 1 <= m <= a(n), and a(n) congruent to 1 (mod 2) and a(n) not congruent to 3 (mod 6).",
+    "comment": [
+        "Probability densities satisfying P(a(n)) < P(a(n)-1) and a(n) congruent to 1 (mod 2) and a(n) not congruent to 3 (mod 6).",
+        "It appears that most numbers satisfy a(n) congruent to 35 (mod 70), but a(74) congruent to 15 (mod 70) and a(93) congruent to 55 (mod 70).",
+        "Subset of A280877.",
+        "P(n) = ((2*Sum_{m=1..a(n)} phi(m))-1)/a(n)^2 (Cf. Euler phi function A000010)."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A280879/b280879.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..102 from A.H.M. Smeets)"
+    ],
+    "program": [
+        "(Python)",
+        "from fraction import gcd",
+        "t = 1",
+        "to = 1",
+        "i = 1",
+        "x = 1",
+        "while x > 0:",
+        "....x = x + 1",
+        "....y = 0",
+        "....while y < x:",
+        "........y = y + 1",
+        "........if gcd(x,y) == 1:",
+        "............t = t + 2",
+        "....e = t*(x-1)*(x-1) - to*x*x",
+        "....if (e < 0 and x%2 == 1 and x%6 != 3):",
+        "........print(i,x)",
+        "........i = i + 1",
+        "....to = t",
+        "(PARI) P(n) = (2 *sum(j=1, n, eulerphi(j)) - 1)/n^2;",
+        "isok(n) = (n % 2) && ((n % 6) != 3) && (P(n) < P(n-1)); \\\\ _Michel Marcus_, Jan 29 2017",
+        "(Python)",
+        "from sympy import totient",
+        "A280879_list, n, t = [], 1, 1",
+        "while len(A280879_list) < 1000:",
+        "    n += 1",
+        "    h = totient(n)",
+        "    t2 = t+h",
+        "    if n % 2 and n % 6 != 3 and 2*(n*(h*n - 2*t2 + 1) + t2) <  1:",
+        "        A280879_list.append(n)",
+        "    t = t2 # _Chai Wah Wu_, Feb 11 2017"
+    ],
+    "xref": [
+        "Cf. A018805, A280877, A280878."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_A.H.M. Smeets_, Jan 09 2017",
+    "references": 2,
+    "revision": 29,
+    "time": "2017-02-11T16:01:15-05:00",
+    "created": "2017-02-10T21:20:09-05:00"
+}

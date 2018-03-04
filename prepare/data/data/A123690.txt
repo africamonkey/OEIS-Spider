@@ -1,0 +1,47 @@
+{
+    "number": 123690,
+    "data": "2,5,9,14,22,32,41,52,69,81,97,116,137,157,180,208,231,258,293,319,351,384,421,457,495,540,578,623,667,716,761,812,861,914,973,1025,1085,1142,1201,1268,1328,1396,1460,1528,1597,1669,1745,1816,1893,1976,2053",
+    "name": "Number of points in a square lattice covered by a circle of diameter n if the center of the circle is chosen such that the circle covers the maximum possible number of lattice points.",
+    "comment": [
+        "a(n) >= max(A053411(n), A053414(n), A053415(n)).",
+        "a(n) is an upper bound for the number of segments of a self avoiding path on the 2-dimensional square lattice such that the path fits into a circle of diameter n. A122224(n) <= a(n)."
+    ],
+    "link": [
+        "Hugo Pfoertner, <a href=\"/A123690/a123690.pdf\">Maximum number of points in the square lattice covered by circular disks.</a> Illustrations."
+    ],
+    "example": [
+        "a(1)=2: Circle with diameter 1 and center (0,0.5) covers 2 lattice points;",
+        "a(2)=5: Circle with diameter 2 and center (0,0) covers 5 lattice points;",
+        "a(3)=4: Circle with diameter 3 and center (0,0) covers 9 lattice points;",
+        "a(4)=14: Circle with diameter 4 and center (0.5,0.2) covers 14 lattice points."
+    ],
+    "mathematica": [
+        "dx[n_] := If[n < 20, 1/24, 1/400]; (* step dx adjusted to speed-up computation *)",
+        "cnt[pts_, ctr_, r_] := Count[pts, pt_ /; Norm[pt - ctr] <= r];",
+        "a[n_] := Module[{r, pts, innerCnt, an, center}, r = n/2; pts = Select[ Flatten[Table[{x, y}, {x, -r - 1, r + 1}, {y, -r - 1, r + 1}], 1], r - 1 <= Norm[#] <= r + 1 &]; innerCnt = Sum[If[Norm[{x, y}] < r - 1, 1, 0], {x, -r - 1, r + 1}, {y, -r - 1, r + 1}]; {an, center} = Table[{innerCnt + cnt[pts, {x0, y0}, r], {x0, y0}}, {x0, 0, 1/2, dx[n]}, {y0, 0, 1/2, dx[n]}] // Flatten[#, 1] & // Sort // Last; Print[\"a(\", n, \") = \", an, \" center = \", center // InputForm]; an];",
+        "Table[a[n], {n, 1, 20}] (* _Jean-Fran\u00e7ois Alcover_, Jan 02 2018, updated Jan 06 2018 *)",
+        "(* An exact program using the functions from A291259: *)",
+        "Clear[a]; a[n_] := Module[{points, pairc, expcent, innerpoints, cn=Ceiling[n], allpairs},",
+        "allpairs = Flatten[Table[{i, j}, {i, -cn, cn+1}, {j, -cn, cn+1}], 1]",
+        "points = Select[allpairs, candidatePointQ[#, n]&]",
+        "pairc = Select[Subsets[points, {2}], dd2@@#<=4n^2&];",
+        "expcent = explorativeCenters[pairc, n];",
+        "innerpoints = Count[allpairs, _?(innerPointQ[#, n]&)];",
+        "Max[Table[Count[points, _?(dd2[#, center]<=n^2&)], {center, expcent}]] + innerpoints];",
+        "Table[a[n/2], {n, 20}] (* _Andrey Zabolotskiy_, Feb 21 2018 *)"
+    ],
+    "xref": [
+        "Cf. A123689, A053411, A053414, A053415, A122224, A295344, A291259.",
+        "The corresponding sequences for the hexagonal lattice and the honeycomb net are A125852 and A127406, respectively."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "1,1",
+    "author": "_Hugo Pfoertner_, Oct 09 2006, Feb 11 2007",
+    "ext": [
+        "a(21)-a(40) originally conjectured by _Jean-Fran\u00e7ois Alcover_ confirmed and moved to Data and more terms added by _Andrey Zabolotskiy_, Feb 21 2018"
+    ],
+    "references": 6,
+    "revision": 34,
+    "time": "2018-02-21T05:41:59-05:00",
+    "created": "2006-12-06T03:00:00-05:00"
+}

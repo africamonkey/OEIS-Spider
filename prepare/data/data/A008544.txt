@@ -1,0 +1,83 @@
+{
+    "number": 8544,
+    "data": "1,2,10,80,880,12320,209440,4188800,96342400,2504902400,72642169600,2324549427200,81359229952000,3091650738176000,126757680265216000,5577337931669504000,262134882788466688000",
+    "name": "Triple factorial numbers: product_{k=0..n-1} (3*k+2).",
+    "comment": [
+        "a(n-1), n>=1, enumerates increasing plane (aka ordered) trees with n vertices (one of them a root labeled 1) where each vertex with out-degree r>=0 comes in r+1 types (like an (r+1)-ary vertex). See the increasing tree comments under A004747. - _Wolfdieter Lang_, Oct 12 2007.",
+        "An example for the case of 3 vertices is shown below. For the enumeration of non-plane trees of this type see A029768. - _Peter Bala_, Aug 30 2011",
+        "a(n) is the product of the positive integers k <= 3*n that have k modulo 3 = 2. - _Peter Luschny_, Jun 23 2011",
+        "See A094638 for connections to differential operators. - _Tom Copeland_, Sep 20 2011",
+        "Partial products of A016789. - _Reinhard Zumkeller_, Sep 20 2013",
+        "The Mathar conjecture is true. Generally from the factorial form, the last term is the \"extra\" product beyond the prior term, from k=n-1 and 3k+2 evaluates to 3*(n-1)+2 = 3n-1, yielding a(n) = a(n-1)*(3n-1) (eqn1). Similarly, a(n) = a(n-2)*(3n-1)*(3(n-2)+2) = a(n-2)*(3n-1)*(3n-4) (eqn2) and a(n) = a(n-3)*(3n-1)*(3n-4)*(3*(n-2)+2) = a(n-3)*(3n-1)*(3n-4)*(3n-7) (eqn3). We equate (eqn2) and (eqn3) to get a(n-2)*(3n-1)*(3n-4) = a(n-3*(3n-1)*(3n-4)*(3n-7) or a(n-2)+(7-3n)*a(n-3) = 0 (eqn4). From (eqn1) we have a(n)+(1-3n)*a(n-1) = 0 (eqn5). Combining (eqn4) and (eqn5) yields a(n)+(1-3n)*a(n-1)+a(n-2)+(7-3n)*a(n-3) = 0. - _Bill McEachen_, Jan 01 2016"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A008544/b008544.txt\">Table of n, a(n) for n=0..100</a>",
+        "W. Lang, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/LANG/lang.html\">On generalizations of Stirling number triangles</a>, J. Integer Seqs., Vol. 3 (2000), #00.2.4."
+    ],
+    "formula": [
+        "a(n) = Product_{k=0..n-1} (3*k+2) = A007661(3*n-1) (with A007661(-1) = 1).",
+        "E.g.f.: (1-3*x)^(-2/3).",
+        "a(n) = 2*A034000(n), n >= 1, a(0) = 1.",
+        "a(n) ~ 2^(1/2)*Pi^(1/2)*Gamma(2/3)^-1*n^(1/6)*3^n*e^-n*n^n*{1 - 1/36*n^-1 + ...}. - Joe Keane (jgk(AT)jgk.org), Nov 22 2001",
+        "a(n) = (GAMMA(2*n-5/3)/GAMMA(n-5/6)*GAMMA(2/3)/GAMMA(5/6))/sqrt(3)*3^n/4^(n-1). - _Jeremy L. Martin_, Mar 31 2002 (typo fixed by _Vincenzo Librandi_, Feb 21 2015)",
+        "a(n) = A084939(n)/A000142(n)*A000079(n) = 3^n*pochhammer(2/3, n) = 3^n*GAMMA(n+2/3)/GAMMA(2/3). - Daniel Dockery (peritus(AT)gmail.com), Jun 13 2003",
+        "Let T = A094638 and c(t) = column vector(1, t, t^2, t^3, t^4, t^5,...), then A008544 = unsigned [ T * c(-3) ] and the list partition transform A133314 of [1,T * c(-3)] gives [1,T * c(3)] with all odd terms negated, which equals a signed version of A007559; i.e., LPT[(1,signed A008544)] = signed A007559. Also LPT[A007559] = (1,-A008544) and e.g.f. [1,T * c(t)] = (1-x*t)^(-1/t) for t = 3 or -3. Analogous results hold for the double factorial, quadruple factorial and so on. - _Tom Copeland_, Dec 22 2007",
+        "Conjecture: a(n) + (1-3*n)*a(n-1) + a(n-2) + (7-3*n)*a(n-3) = 0. - _R. J. Mathar_, Nov 14 2011",
+        "G.f.: 1/(1-2x/(1-3x/(1-5x/(1-6x/(1-8x/(1-9x/(1-11x/(1-12x/(1-... (continued fraction). - _Philippe Del\u00e9ham_, Jan 08 2012",
+        "a(n) = (-1)^n*Sum_{k=0..n} 3^k*s(n+1,n+1-k), where s(n,k) are the Stirling numbers of the first kind, A048994. - _Mircea Merca_, May 03 2012",
+        "G.f.: 1/Q(0) where Q(k) = 1 - x*(3*k+2)/(1 - x*(3*k+3)/Q(k+1) ); (continued fraction). - _Sergei N. Gladkovskii_, Mar 20 2013",
+        "G.f.: G(0)/2, where G(k)= 1 + 1/(1 - x*(3*k+2)/(x*(3*k+2) + 1/G(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, May 25 2013",
+        "a(n) = (9*(n-2)*(n-1)+2)*a(n-2) + 4*a(n-1), n>=2. - _Ivan N. Ianakiev_, Aug 09 2013",
+        "a(n) = n!*Sum_{k=floor(n/2)..n} binomial(k,n-k)*binomial(n+k,k)*3^(-n+k)*(-1)^(n-k). - _Vladimir Kruchinin_, Sep 28 2013",
+        "Recurrence equation: a(n) = 3*a(n-1) + (3*n - 4)^2*a(n-2) with a(0) = 1 and a(1) = 2. A024396 satisfies the same recurrence (but with different initial conditions). This observation leads to a continued fraction expansion for the constant A193534 due to Euler. - _Peter Bala_, Feb 20 2015",
+        "a(n) = A225470(n, 0), n >= 0. - _Wolfdieter Lang_, May 29 2017"
+    ],
+    "example": [
+        "a(2)=10 from the described trees with 3 vertices: there are three trees with a root vertex (label 1) with out-degree r=2 (like the three 3-stars each with one different ray missing) and the four trees with a root (r=1 and label 1) a vertex with (r=1) and a leaf (r=0). Assigning labels 2 and 3 yields 2*3+4=10 such trees.",
+        "a(2) = 10. The 10 possible plane increasing trees on 3 vertices, where vertices of out degree 1 come in 2 colors (denoted a or b) and vertices of outdegree 2 come in 3 colors (a,b or c}, are:",
+        ".",
+        "   1a    1b    1a    1b        1a       1b       1c",
+        "   |     |     |     |        / \\      / \\      / \\",
+        "   2a    2b    2b    2a      2   3    2   3    2   3",
+        "   |     |     |     |",
+        "   3     3     3     3         1a       1b       1c",
+        "                              / \\      / \\      / \\",
+        "                             3   2    3   2    3   2"
+    ],
+    "maple": [
+        "a := n -> mul(3*k-1, k = 1..n);",
+        "A008544 := n -> mul(k, k = select(k-> k mod 3 = 2, [$1 .. 3*n])): seq(A008544(n), n = 0 .. 16); # _Peter Luschny_, Jun 23 2011"
+    ],
+    "mathematica": [
+        "k = 3; b[1] = 2; b[n_] := b[n] = b[n - 1] + k; a[0] = 1; a[1] = 2; a[n_] := a[n] = a[n - 1]*b[n]; Table[a[n], {n, 0, 20}] (* _Roger L. Bagula_, Sep 17 2008 *)",
+        "Product[3 k + 2, {k, 0, # - 1}] & /@ Range[0, 16] (* _Michael De Vlieger_, Jan 02 2016 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = prod(k=0,n-1, 3*k+2 );",
+        "(Sage)",
+        "@CachedFunction",
+        "def A008544(n): return 1 if n == 0 else (3*n-1)*A008544(n-1)",
+        "[A008544(n) for n in (0..16)]  # _Peter Luschny_, May 20 2013",
+        "(Haskell)",
+        "a008544 n = a008544_list !! n",
+        "a008544_list = scanl (*) 1 a016789_list",
+        "-- _Reinhard Zumkeller_, Sep 20 2013",
+        "(Maxima)",
+        "a(n):=((n)!*sum(binomial(k,n-k)*binomial(n+k,k)*3^(-n+k)*(-1)^(n-k),k,floor(n/2),n)); /* _Vladimir Kruchinin_, Sep 28 2013 */",
+        "(MAGMA) [Round((Gamma(2*n-5/3)/Gamma(n-5/6)*Gamma(2/3)/Gamma(5/6))/Sqrt(3)*3^n/4^(n-1)): n in [1..20]]; // _Vincenzo Librandi_, Feb 21 2015"
+    ],
+    "xref": [
+        "a(n) = A004747(n+1, 1) (first column of triangle). Cf. A051141.",
+        "Cf. A000165, A001813, A047055, A047657, A084947, A084948, A084949.",
+        "Cf. A049308, A034724, A029768.",
+        "Cf. Subsequence of A007661. Cf. A024396, A193534.",
+        "Cf. A225470, A290596 (first columns)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "Joe Keane (jgk(AT)jgk.org)",
+    "references": 64,
+    "revision": 105,
+    "time": "2017-09-15T03:47:50-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

@@ -1,0 +1,33 @@
+{
+    "number": 53467,
+    "data": "1,6,138,22815,29197989,286181094816,21712697070199704,12980080058620326927885,62082385554465497895132149640,2405193620328895144597707267893468286,762399006478986275307113015668690102196187810",
+    "name": "Number of directed 2-multigraphs on n nodes.",
+    "comment": [
+        "A 2-multigraph is similar to an ordinary graph except there are 0, 1 or 2 edges between any two nodes (self-loops are not allowed)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A053467/b053467.txt\">Table of n, a(n) for n = 1..40</a>"
+    ],
+    "mathematica": [
+        "Table[CycleIndex[PairGroup[SymmetricGroup[n], Ordered], t] /.Table[t[i] -> 1 + x^i + y^i, {i, 1, n^2}] /. {x -> 1, y -> 1}, {n, 1, 7}] (* _Geoffrey Critzer_, Mar 08 2011 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1,s=0,k=0,t); for(i=1,#v,t=v[i]; k=if(i>1&&t==v[i-1],k+1,1); m*=t*k;s+=t); s!/m}",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, 2*gcd(v[i],v[j]))) + sum(i=1, #v, v[i]-1)}",
+        "a(n) = {my(s=0); forpart(p=n, s+=permcount(p)*3^edges(p)); s/n!} \\\\ _Andrew Howroyd_, Oct 22 2017"
+    ],
+    "xref": [
+        "Cf. A000273, A053468."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Vladeta Jovovic_, Jan 13 2000",
+    "ext": [
+        "a(11) from _Andrew Howroyd_, Oct 22 2017"
+    ],
+    "references": 5,
+    "revision": 16,
+    "time": "2017-10-23T13:07:47-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

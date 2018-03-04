@@ -1,0 +1,49 @@
+{
+    "number": 216454,
+    "data": "1,3,9,30,107,396,1503,5820,22907,91371,368523,1500354,6157669,25448907,105821865,442409844,1858482563,7840766601,33207750819,141137445258,601768494201,2573246794374,11032997250357,47421297986868,204286464525165,881900059488741",
+    "name": "G.f. satisfies: A(x) = (1 + x*(3-x)*A(x)) * (1 + x^2*A(x)).",
+    "comment": [
+        "The radius of convergence of the g.f. A(x) is r = 2/(5+sqrt(17)) with A(r) = 2/(1-3*r) = (11+3*sqrt(17))/4.",
+        "More generally, if A(x) = (1 + x*(t-x)*A(x)) * (1 + x^2*A(x)), |t|>0, then",
+        "A(x) = exp( Sum_{n>=1} x^n/n * Sum_{k=0..n} binomial(n,k)^2 * x^k*(t-x)^(n-k) )",
+        "where the radius of convergence r of the g.f. A(x) satisfies",
+        "r = (1-r)^2/(t-r) = (1-t*r)/(2*(1-r)) with A(r) = 1/(r*(1-r)) = 2/(1-t*r)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A216454/b216454.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: exp( Sum_{n>=1} x^n/n * Sum_{k=0..n} binomial(n,k)^2 * x^k*(3-x)^(n-k) ).",
+        "G.f.: 2 / ( 1-3*x + sqrt( (1-3*x)^2 - 4*x^3*(3-x) ) ).",
+        "Recurrence: 3*(n+3)*a(n) = (19*n+30)*a(n-1) - 3*(11*n+3)*a(n-2) + 9*(5*n-6)*a(n-3) - 6*(4*n-9)*a(n-4) + 4*(n-3)*a(n-5). - _Vaclav Kotesovec_, Sep 17 2013",
+        "a(n) ~ sqrt(7378+1794*sqrt(17)) * ((5+sqrt(17))/2)^n / (16*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Sep 17 2013"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 3*x + 9*x^2 + 30*x^3 + 107*x^4 + 396*x^5 + 1503*x^6 +...",
+        "The logarithm of the g.f. begins:",
+        "log(A(x)) = ((3-x) + x)*x + ((3-x)^2 + 2^2*x*(3-x) + x^2)*x^2/2 +",
+        "((3-x)^3 + 3^2*x*(3-x)^2 + 3^2*x^2*(3-x) + x^3)*x^3/3 +",
+        "((3-x)^4 + 4^2*x*(3-x)^3 + 6^2*x^2*(3-x)^2 + 4^2*x^3*(3-x) + x^4)*x^4/4 +",
+        "((3-x)^5 + 5^2*x*(3-x)^4 + 10^2*x^2*(3-x)^3 + 10^2*x^3*(3-x)^2 + 5^2*x^4*(3-x) + x^5)*x^5/5 +...",
+        "Explicitly,",
+        "log(A(x)) = 3*x + 9*x^2/2 + 36*x^3/3 + 149*x^4/4 + 618*x^5/5 + 2592*x^6/6 + 11007*x^7/7 + 47181*x^8/8 + 203634*x^9/9 + 883674*x^10/10 +..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[2/(1-3*x+Sqrt[(1-3*x)^2-4*x^3*(3-x)]), {x, 0, 20}], x] (* _Vaclav Kotesovec_, Sep 17 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1,n+1,x^m/m*sum(k=0,m,binomial(m,k)^2*x^k*(3-x)^(m-k) + x*O(x^n)))),n)}",
+        "(PARI) {a(n)=polcoeff(2/(1-3*x+sqrt((1-3*x)^2-4*x^3*(3-x) +x*O(x^n))),n)}",
+        "for(n=0,40,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A216604, A216434."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Sep 10 2012",
+    "references": 4,
+    "revision": 18,
+    "time": "2013-09-18T10:17:57-04:00",
+    "created": "2012-09-10T20:25:49-04:00"
+}

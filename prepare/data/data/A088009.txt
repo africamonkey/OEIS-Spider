@@ -1,0 +1,54 @@
+{
+    "number": 88009,
+    "data": "1,1,1,7,25,181,1201,10291,97777,1013545,12202561,151573951,2173233481,31758579997,524057015665,8838296029291,164416415570401,3145357419120721,65057767274601217,1391243470549894135,31671795881695430521,747996624368605997701",
+    "name": "Number of \"sets of odd lists\", cf. A000262.",
+    "comment": [
+        "The Brauer algebra has a basis consisting of all graphs on the vertex set {1,...,2n} whose vertices all have degree 1. The multiplication is defined in Halverson and Ram. a(n) is also the number of idempotent basis elements (i.e., those satisfying b^2=b) of the Brauer algebra. - _James East_, Dec 27 2013",
+        "From _Peter Bala_, Nov 26 2017: (Start)",
+        "The sequence terms have the form 6*m + 1 (follows from the recurrence).",
+        "a(n+k) = a(n) (mod k) for all n and k. It follows that the sequence a(n) (mod k) is periodic with the exact period dividing k. For example, modulo 10 the sequence becomes 1, 1, 1, 7, 5, 1, 1, 1, 7, 5, ... with exact period 5. (End)"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A088009/b088009.txt\">Table of n, a(n) for n = 0..446</a> (terms 0..200 from Alois P. Heinz)",
+        "I. Dolinka, J. East, A. Evangelou, D. FitzGerald, N. Ham, et al., <a href=\"http://arxiv.org/abs/1408.2021\">Enumeration of idempotents in diagram semigroups and algebras</a>, arXiv preprint arXiv:1408.2021 [math.GR], 2014.",
+        "T. Halverson, A. Ram, <a href=\"http://arxiv.org/abs/math/0401314\">Partition algebras</a>, arXiv:math/0401314 [math.RT], 2004.",
+        "T. Halverson, A. Ram, <a href=\"http://dx.doi.org/10.1016/j.ejc.2004.06.005\">Partition algebras</a>, European J. Combin. 26 (6) (2005) 869-921."
+    ],
+    "formula": [
+        "E.g.f.: exp(x/(1-x^2)).",
+        "a(n) = n!*Sum_{k=1..n} A168561(n-1,k-1)/k!. - _Vladimir Kruchinin_, Mar 07 2011",
+        "E.g.f.: 1 + x/(G(0)-x) where G(k)= (1-x^2)*k + 1+x-x^2 - x*(1-x^2)*(k+1)/G(k+1); (continued fraction, Euler's 1st kind, 1-step). - _Sergei N. Gladkovskii_, Aug 02 2012",
+        "E.g.f.: 1 + x/(1+x)*(G(0) - 1) where G(k) = 1 + 1/(1+x^2)/(k+1)/(1-x/(x+(1)/G(k+1))), (continued fraction). - _Sergei N. Gladkovskii_, Feb 04 2013",
+        "a(n) ~ 2^(-3/4)*n^(n-1/4)*exp(sqrt(2*n)-n) * (1-11/(24*sqrt(2*n))). - _Vaclav Kotesovec_, Aug 10 2013",
+        "a(n) = a(n-1) + 2*(n-2)*(n-1)*a(n-2) + (n-2)*(n-1)*a(n-3) - (n-4)*(n-3)*(n-2)*(n-1)*a(n-4). - _Vaclav Kotesovec_, Aug 10 2013",
+        "E.g.f.: Product_{n >= 1} (1 + x^n)^(phi(n)/n) = Product_{n >= 0} ( (1 + x^(2*n+1))/(1 - x^(2*n+1)) )^( phi(2*n+1)/(4*n + 2) ), where phi(n) = A000010(n) is the Euler totient function. Cf. A066668 and A000262. - _Peter Bala_, Jan 01 2014",
+        "E.g.f.: Product_{k>0} exp(x^(2*k-1)). - _Seiichi Manyama_, Oct 10 2017"
+    ],
+    "maple": [
+        "T:= (n, k)-> `if`(n-k mod 2 = 0, binomial((n+k)/2, k), 0):",
+        "a:= n-> n! * add(T(n-1, k-1)/k!, k=0..n):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Mar 07 2011"
+    ],
+    "mathematica": [
+        "a[n_] := SeriesCoefficient[ Exp[x/(1 - x^2) ], {x, 0, n}]*n!; Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Feb 24 2015 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "x='x+O('x^33);",
+        "Vec(serlaplace(exp(x/(1-x^2))))",
+        "/* _Joerg Arndt_, Mar 09 2011 */"
+    ],
+    "xref": [
+        "Cf. A052845, A088026, A000010, A000262, A168561."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Vladeta Jovovic_, Nov 02 2003",
+    "ext": [
+        "Prepended a(0)=1 by _Joerg Arndt_, Jul 29 2012"
+    ],
+    "references": 15,
+    "revision": 79,
+    "time": "2017-12-04T02:59:44-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

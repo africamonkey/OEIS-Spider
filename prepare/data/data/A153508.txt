@@ -1,0 +1,44 @@
+{
+    "number": 153508,
+    "data": "341,645,1387,1905,2047,2701,3277,4033,4369,4371,4681,5461,7957,8321,8481,10261,11305,12801,13741,13747,13981,14491,15709,16705,18705,18721,19951,23001,23377,25761,30121,30889,31417,31609,31621,33153,34945",
+    "name": "Sarrus numbers A001567 that are not Carmichael numbers A002997.",
+    "comment": [
+        "A composite number n is a Fermat pseudoprime to base b if and only if b^(n-1) == 1 (mod n). Fermat pseudoprimes to base 2 are sometimes called Poulet numbers, Sarrus numbers, or frequently just pseudoprimes. For any given base pseudoprimes will contain Carmichael numbers as a subset. This sequence consists of base 2 Fermat pseudoprimes without the Carmichaels."
+    ],
+    "link": [
+        "Brad Clardy, <a href=\"/A153508/b153508.txt\">Table of n, a(n) for n = 1..306</a>"
+    ],
+    "maple": [
+        "filter:= proc(n)",
+        "local q;",
+        "   if isprime(n) then return false fi;",
+        "   if 2 &^(n-1) mod n <> 1 then return false fi;",
+        "   if not numtheory:-issqrfree(n) then return true fi;",
+        "   for q in numtheory:-factorset(n) do",
+        "     if (n-1) mod (q-1) <> 0 then return true fi;",
+        "   od:",
+        "   false",
+        "end proc:",
+        "select(filter, [$1..10^5]); # _Robert Israel_, Dec 29 2014"
+    ],
+    "program": [
+        "(MAGMA)",
+        "for n:= 3 to 1052503 by 2 do",
+        "  if (IsOne(2^(n-1) mod n)",
+        "      and not IsPrime(n)",
+        "      and not n mod CarmichaelLambda(n) eq 1)",
+        "      then n;",
+        "      end if;",
+        "end for; // _Brad Clardy_, Dec 25 2014"
+    ],
+    "xref": [
+        "Cf. A001567, A002997."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Artur Jasinski_, Dec 28 2008",
+    "references": 9,
+    "revision": 14,
+    "time": "2015-01-08T17:04:19-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

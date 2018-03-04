@@ -1,0 +1,44 @@
+{
+    "number": 259064,
+    "data": "1,6,117,3792,172005,10030248,714843885,60207412128,5850995291397,644410711219800,79322681596610661,10791841135527454896,1608054016025580893445,260445389091217967677992,45557042043723212142506205,8559094926999510089793332544,1718950045690606262911636792677",
+    "name": "E.g.f.: Series_Reversion( 4*x - 3*x*exp(x) ).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A259064/b259064.txt\">Table of n, a(n) for n = 1..315</a>"
+    ],
+    "formula": [
+        "O.g.f.: x * Sum_{n>=0}  3^n / (4 - n*x)^(n+1).",
+        "E.g.f.: x + Sum_{n>=1} d^(n-1)/dx^(n-1) 3^n * (exp(x)-1)^n * x^n / n!.",
+        "E.g.f.: x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) 3^n * (exp(x)-1)^n * x^(n-1) / n! ).",
+        "a(n) ~ (c/(4*exp(1)))^n * n^(n-1) / (sqrt(c+1) * (c-1)^(2*n-1)), where c = LambertW(4*exp(1)/3). - _Vaclav Kotesovec_, Jun 19 2015"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 6*x^2/2! + 117*x^3/3! + 3792*x^4/4! + 172005*x^5/5! +...",
+        "where A(4*x - 3*x*exp(x)) = x.",
+        "Also we have the related infinite series.",
+        "O.g.f.: F(x) = x + 6*x^2 + 117*x^3 + 3792*x^4 + 172005*x^5 + 10030248*x^6 +...",
+        "where F(x)/x = 1/4 + 3/(4-x)^2 + 3^2/(4-2*x)^3 + 3^3/(4-3*x)^4 + 3^4/(4-4*x)^5 +..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[4*x - 3*x*E^x, {x, 0, 20}], x],x] * Range[0, 20]!] (* _Vaclav Kotesovec_, Jun 19 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = local(A=x); A = serreverse(4*x - 3*x*exp(x +x*O(x^n) )); n!*polcoeff(A,n)}",
+        "for(n=1,20,print1(a(n),\", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, 3^m*(exp(x+x*O(x^n))-1)^m*x^m/m!)); n!*polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, 3^m*(exp(x+x*O(x^n))-1)^m*x^(m-1)/m!)+x*O(x^n))); n!*polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A053492, A259063, A259065, A259066."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jun 17 2015",
+    "references": 6,
+    "revision": 18,
+    "time": "2017-11-16T02:56:08-05:00",
+    "created": "2015-06-17T22:46:02-04:00"
+}

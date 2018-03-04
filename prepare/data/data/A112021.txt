@@ -1,0 +1,33 @@
+{
+    "number": 112021,
+    "data": "0,1,1,1,2,2,3,3,4,5,6,7,9,10,12,14,17,19,23,26,30,35,40,46,52,60,67,77,87,98,111,124,140,157,175,197,219,244,272,302,336,372,412,456,503,556,613,675,742,816,896,983,1078,1180,1291,1411,1542,1683,1836,2001,2178",
+    "name": "Number of partitions of n into Chen primes.",
+    "comment": [
+        "a(n) = A000607(n) for n <= 42."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A112021/b112021.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} 1/(1 - x^A109611(k)). - _Andrew Howroyd_, Dec 28 2017"
+    ],
+    "mathematica": [
+        "fQ[n_] := PrimeQ@n && (PrimeQ[n + 2] || 2 == Plus @@ Last /@ FactorInteger[n + 2]); f[n_] := Block[{c = k = 0, l = PartitionsP@n, p = Union /@ IntegerPartitions@n}, While[k++; k < l, If[Union[fQ /@ p[[k]]] == {True}, c++ ]]; c]; lst = {}; Do[ AppendTo[lst, f[n]], {n, 61}]; lst (* or *)",
+        "Rest@ CoefficientList[ Series[1/Times @@ (1 - x^Select[ Range@100, fQ@# &]), {x, 0, 61}], x] (* _Robert G. Wilson v_, Jun 16 2006 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "ok(n)={isprime(n) && bigomega(n+2)<3}",
+        "{my(n=80); Vec(prod(k=1, n, if(ok(k), 1/(1-x^k) + O(x*x^n), 1))-1,-n)} \\\\ _Andrew Howroyd_, Dec 28 2017"
+    ],
+    "xref": [
+        "Cf. A112022, A101048, A109611."
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "_Reinhard Zumkeller_, Aug 26 2005",
+    "references": 5,
+    "revision": 16,
+    "time": "2017-12-28T21:30:34-05:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

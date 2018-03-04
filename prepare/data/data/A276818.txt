@@ -1,0 +1,44 @@
+{
+    "number": 276818,
+    "data": "6,10,14,15,21,22,26,30,33,34,38,39,42,46,51,57,58,62,65,66,69,74,78,82,85,86,87,91,93,94,102,106,111,114,118,122,123,129,130,133,134,138,141,142,145,146,158,159,166,170,174,177,178,182,183,185,186,194",
+    "name": "Composite numbers n such that b^gpf(n) == b (mod n) for every integer b, where gpf(n) = A006530(n).",
+    "comment": [
+        "It suffices to check all bases 2 <= b <= (n+1)/2.",
+        "Squarefree composite numbers n such that for every prime p dividing n, p-1 divides gpf(n)-1. - _Robert Israel_, Sep 18 2016",
+        "An even number 2m is in the sequence iff m is an odd prime or odd m is in the sequence. - _Altug Alkan_ and _Thomas Ordowski_, Sep 19 2016",
+        "Problem: are there infinitely many Carmichael numbers A002997 in the sequence? These numbers must have at least four prime factors. They are a subset of A214758. - _Thomas Ordowski_ and _Altug Alkan_, Sep 19 2016",
+        "Squarefree composite numbers n such that A002322(n) divides gpf(n)-1. - _Thomas Ordowski_, Aug 29 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A276818/b276818.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "filter:= proc(n) local F,p;",
+        "  if isprime(n) or not numtheory:-issqrfree(n) then return false fi;",
+        "  F:= numtheory:-factorset(n);",
+        "  p:= max(F);",
+        "  evalb(map(t -> (p-1) mod (t-1), F) = {0})",
+        "end proc:",
+        "select(filter, [$2..1000]); # _Robert Israel_, Sep 18 2016"
+    ],
+    "mathematica": [
+        "Select[DeleteCases[Range@ 200, k_ /; ! CompositeQ@ k], Function[n, Times @@ Boole@ Map[Mod[#, n] == Mod[#^(FactorInteger[n][[-1, 1]]), n] &, Range[2, Floor[(n + 1)/2]]] == 1]] (* _Michael De Vlieger_, Sep 19 2016 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=if(n%2==0, if(n%4, if(isprime(n/2), return(1), n>>=1), return(0))); my(f=factor(n)); if(#f~ < 2 || vecmax(f[,2])>1, return(0)); for(i=1,#f~, if((f[#f~,1]-1)%(f[i,1]-1), return(0))); 1 \\\\ _Charles R Greathouse IV_, Sep 19 2016",
+        "(PARI) lista(nn) = forcomposite(n=1, nn, if ( issquarefree(n) && !((vecmax(factor(n)[,1]) - 1) % lcm(znstar(n)[2])), print1(n, \", \"))); \\\\ _Michel Marcus_, Sep 11 2017"
+    ],
+    "xref": [
+        "Cf. A002322, A002997, A006530, A177516, A276832."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Thomas Ordowski_, Sep 18 2016",
+    "ext": [
+        "More terms from _Michel Marcus_ and _Robert Israel_, Sep 18 2016"
+    ],
+    "references": 2,
+    "revision": 57,
+    "time": "2017-10-22T07:50:55-04:00",
+    "created": "2016-09-30T13:28:20-04:00"
+}

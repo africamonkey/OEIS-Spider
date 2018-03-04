@@ -1,0 +1,30 @@
+{
+    "number": 34826,
+    "data": "1,1,1,2,4,9,20,48,115,286,719,1841,4755,12410,32558,85849,226980,601373,1594870,4232100,11230771,29798539,79034638,209526631,555172356,1470195001,3891131705,10292857772,27212082536,71905725130,189911518888",
+    "name": "Number of n-node rooted trees of height at most 9.",
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A034826/b034826.txt\">Table of n, a(n) for n=0..200</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "Take Euler transform of A034825 and shift right. (_Christian G. Bower_)."
+    ],
+    "maple": [
+        "For Maple program see link in A000235.",
+        "with(numtheory): etr:= proc(p) local b; b:=proc(n) option remember; local d,j; if n=0 then 1 else add(add(d*p(d), d=divisors(j)) *b(n-j), j=1..n)/n fi end end: shr:= proc(p) n->`if`(n=0, 1,p(n-1)) end: b[0]:= etr(n->1): for j from 1 to 7 do b[j]:= etr(shr(b[j-1])) od: a:= shr(b[7]): seq(a(n), n=0..40); # _Alois P. Heinz_, Sep 08 2008"
+    ],
+    "mathematica": [
+        "etr[p_] := Module[{b}, b[n_] := b[n] = If[n == 0, 1, Sum[Sum[d*p[d], {d, Divisors[j]}]*b[n-j], {j, 1, n}]/n]; b]; shr[p_] = If[# == 0, 1, p[#-1]]&; b[0] = etr[1&]; For[j = 1, j <= 7, j++, b[j] = etr[shr[b[j-1]]]]; a = shr[b[7]]; Table[a[n], {n, 0, 31}] (* _Jean-Fran\u00e7ois Alcover_, Mar 10 2014, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "See A001383 for details."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_.",
+    "references": 2,
+    "revision": 20,
+    "time": "2014-12-19T20:27:38-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

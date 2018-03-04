@@ -1,0 +1,34 @@
+{
+    "number": 227653,
+    "data": "8,21,54,138,352,897,2285,5820,14823,37752,96148,244872,623645,1588311,4045140,10302237,26237926,66823230,170186624,433434405,1103878665,2811378360,7160069791,18235396608,46442241368,118279949136,301237536249,767197263003",
+    "name": "a(1) = least k such that 1/2 + 1/3 < H(k) - H(3); a(2) = least k such that H(a(1)) - H(3) < H(k) -H(a(1)), and for n > 2, a(n) = least k such that H(a(n-1)) - H(a(n-2) > H(k) - H(a(n-1)), where H = harmonic number.",
+    "comment": [
+        "Suppose that x and y are positive integers and that x <=y.  Let a(1) = least k such that H(y) - H(x-1) < H(k) - H(y); let a(2) = least k such that H(a(1)) - H(y) < H(k) - H(a(1)); and for n > 2, let a(n) = least k such that greatest such H(a(n-1)) - H(a(n-2)) < H(k) - H(a(n-1)).  The increasing sequences H(a(n)) - H(a(n-1)) and a(n)/a(n-1) converge.  For what choices of (x,y) is the sequence a(n) linearly recurrent?",
+        "For A227965, (x,y) = (2,3); H(a(n)) - H(a(n-1)) approaches a limit 0.9348448455..., and a(n)/a(n-1) approaches a limit 2.546818276..."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A227653/b227653.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "formula": [
+        "a(n) = A077849(n+1)  (conjectured).",
+        "a(n) = 3*a(n-1) - a(n-2) - a(n-4)  (conjectured).G.f.: (8 - 3 x - x^2 - 3 x^3)/(1 - 3 x + x^2 + x^4)  (conjectured)."
+    ],
+    "example": [
+        "The first two values (a(1),a(2)) = (8,21) match the beginning of the following inequality chain:  1/2 + 1/3 < 1/4 + ... + 1/8 < 1/9 + ... + 1/21 < ..."
+    ],
+    "mathematica": [
+        "z = 100; h[n_] := h[n] = HarmonicNumber[N[n, 500]]; x = 2; y = 3;",
+        "a[1] = Ceiling[w /. FindRoot[h[w] == 2 h[y] - h[x - 1], {w, 1}, WorkingPrecision -> 400]]; a[2] = Ceiling[w /. FindRoot[h[w] == 2 h[a[1]] - h[y], {w, a[1]}, WorkingPrecision -> 400]]; Do[s = 0; a[t] = Ceiling[w /. FindRoot[h[w] == 2 h[a[t - 1]] - h[a[t - 2]], {w, a[t - 1]}, WorkingPrecision -> 400]], {t, 3, z}];",
+        "m = Map[a, Range[z]] (* A227653, _Peter J. C. Moses_, Jul 12 2013 *)"
+    ],
+    "xref": [
+        "Cf. A224820, A224965."
+    ],
+    "keyword": "nonn,frac,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Aug 02 2013",
+    "references": 3,
+    "revision": 53,
+    "time": "2016-12-04T19:46:32-05:00",
+    "created": "2013-08-05T16:23:43-04:00"
+}

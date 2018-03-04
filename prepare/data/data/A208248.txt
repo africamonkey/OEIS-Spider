@@ -1,0 +1,34 @@
+{
+    "number": 208248,
+    "data": "0,1,5,40,431,5826,94657,1795900,38963535,951398890,25819760021,770959012704,25117397416795,886626537549130,33708625339151505,1373237757290215156,59677939242566840303,2755753623830236494930,134746033233724391374765,6954962673986411576581000",
+    "name": "Sum of the maximum cycle length over all functions f:{1,2,...,n} -> {1,2,...,n} (endofunctions).",
+    "comment": [
+        "a(n) is also the sum of the number of endofunctions with at least one cycle >= i for all i>=1. In other words A000312 + A101334 + A208240 + ... ."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A208248/b208248.txt\">Table of n, a(n) for n = 0..386</a>"
+    ],
+    "formula": [
+        "E.g.f.: Sum_{k>=0} 1/(1-T(x)) - exp(Sum_{i=1...k} T(x)^i/i) = A(T(x)) where A(x) is the e.g.f. for A028418 and T(x) is the e.g.f. for A000169."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0, m, add((j-1)!*",
+        "      b(n-j, max(m, j))*binomial(n-1, j-1), j=1..n))",
+        "    end:",
+        "a:= n-> add(b(j, 0)*n^(n-j)*binomial(n-1, j-1), j=0..n):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, May 20 2016"
+    ],
+    "mathematica": [
+        "nn=20; t=Sum[n^(n-1)x^n/n!, {n,1,nn}]; Apply[Plus, Table[Range[0,nn]! CoefficientList[Series[1/(1-t) - Exp[Sum[t^i/i, {i,1,n}]], {x,0,nn}], x], {n, 0, nn-1}]]"
+    ],
+    "xref": [
+        "Cf. A000169, A028418, A000312, A101334, A208231, A208240, A290932."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Geoffrey Critzer_, Jan 12 2013",
+    "references": 3,
+    "revision": 20,
+    "time": "2017-08-14T19:57:01-04:00",
+    "created": "2013-01-15T17:21:48-05:00"
+}

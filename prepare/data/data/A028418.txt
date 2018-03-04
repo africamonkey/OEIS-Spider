@@ -1,0 +1,47 @@
+{
+    "number": 28418,
+    "data": "1,3,13,67,411,2911,23563,213543,2149927,23759791,286370151,3734929903,52455166063,788704078527,12648867695311,215433088624351,3884791172487903,73919882720901823,1480542628345939807,31128584449987511871,685635398619169059391",
+    "name": "Sum over all n! permutations of n letters of maximum cycle length.",
+    "comment": [
+        "Sum the n-permutations having at least 1 cycle of length >= i for all i >= 1. A000142 + A033312 + A066052 + A202364 + ... The summation is precisely that indicated in the title since each permutation whose longest cycle = i is counted i times. - _Geoffrey Critzer_, Jan 09 2013"
+    ],
+    "reference": [
+        "S. W. Golomb, Shift-Register Sequences, Holden-Day, San Francisco, 1967, p. 183.",
+        "R. Sedgewick and P. Flajolet, Analysis of Algorithms, Addison Wesley, 1996, page 358."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A028418/b028418.txt\">Table of n, a(n) for n = 1..450</a> (first 142 terms from Thomas Dybdahl Ahle)",
+        "Ph. Flajolet and A. Odlyzko, <a href=\"http://algo.inria.fr/flajolet/Publications/FlOd90b.pdf\">Singularity analysis of generating functions</a>, p. 22."
+    ],
+    "formula": [
+        "E.g.f.: Sum_{k>=0} (1/(1-x) - exp(Sum_{j=1..k} x^j/j)).",
+        "a(n) = f(n, 0, n, n!) where f(L, r, n, m) = m*r if r >= l, otherwise Sum_{k=0..L-1} (f(k, max(L-k,r), n-1, m/n) + (n-L)*f(L, r, n-1, m/n)). - _Thomas Dybdahl Ahle_, Aug 15 2011",
+        "a(n) = Sum_{k=1..n} k * A126074(n,k). - _Alois P. Heinz_, May 17 2016"
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0, m, add((j-1)!*",
+        "      b(n-j, max(m,j))*binomial(n-1, j-1), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, May 14 2016"
+    ],
+    "mathematica": [
+        "kmax = 19; gf[x_] = Sum[ 1/(1-x) - 1/(E^((x^(1+k)*Hypergeometric2F1[1+k, 1, 2+k, x])/ (1+k))*(1-x)), {k, 0, kmax}];",
+        "a[n_] := n!*Coefficient[Series[gf[x], {x, 0, kmax}], x^n]; Array[a, kmax]",
+        "(* _Jean-Fran\u00e7ois Alcover_, Jun 22 2011, after e.g.f. *)"
+    ],
+    "xref": [
+        "Cf. A006128, A028417, A060014, A126074."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Joe Keane (jgk(AT)jgk.org)",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Sep 19 2002",
+        "More terms from _Thomas Dybdahl Ahle_, Aug 15 2011"
+    ],
+    "references": 11,
+    "revision": 37,
+    "time": "2017-07-23T03:00:55-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

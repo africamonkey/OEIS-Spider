@@ -1,0 +1,70 @@
+{
+    "number": 151999,
+    "data": "1,2,4,6,8,10,12,16,18,20,24,30,32,34,36,40,42,48,50,54,60,64,68,72,78,80,84,90,96,100,102,108,110,114,120,126,128,136,144,150,156,160,162,168,170,180,192,200,204,210,216,220,222,228,234,240,250,252,256,270",
+    "name": "Numbers n such that every prime that divides phi(n) also divides n.",
+    "comment": [
+        "Alternative descriptions:",
+        "(a) For every prime p|n and every prime q|p-1 we have q|n;",
+        "(b) Numbers n such that radical of phi(n) divides radical of n, where phi is Euler's totient function and radical is the squarefree kernel function.",
+        "These numbers are \"valid bases\".",
+        "Numbers n such that radical of phi(n) divides n. - _Michel Marcus_, Nov 06 2017"
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A151999/b151999.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "J. Jimenez Urroz and J. Luis A. Yebra, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL12/Yebra/yebra4.html\">On the equation a^x=x mod b^n</a>, Journal of Integer Sequences, Vol. 12 (2009), Article 09.8.8"
+    ],
+    "maple": [
+        "A151999 := proc(n)",
+        "    if n = 1 then",
+        "        2;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            pdvs := numtheory[factorset](a) ;",
+        "            aworks := true;",
+        "            for p in numtheory[factorset](a) do",
+        "                for q in numtheory[factorset](p-1) do",
+        "                    if a mod q = 0 then",
+        "                        ;",
+        "                    else",
+        "                        aworks := false;",
+        "                    end if;",
+        "                end do:",
+        "            end do:",
+        "            if aworks then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Jun 01 2013",
+        "Alternative code:",
+        "with(numtheory): P:=proc(n) local a,k,ok; a:=ifactors(phi(n))[2]; ok:=1;",
+        "  for k from 1 to nops(a) do if n mod a[k][1]>0 then ok:=0; break; fi;",
+        "od; if ok=1 then n; fi; end: seq(P(i),i=1..270); # _Paolo P. Lava_, Nov 06 2017"
+    ],
+    "mathematica": [
+        "Rad[n_]:=Times@@Transpose[FactorInteger[n]][[1]]; Select[1 + Range[300], Mod[Rad[#], Rad[EulerPhi[#]]]==0 &] (* _Jos\u00e9 Mar\u00eda Grau Ribas_, Jan 09 2012 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {fp = factor(n); for (i=1, #fp[, 1], fq = factor(fp[i, 1] - 1); for (j=1, #fq[, 1], if (n % fq[j, 1], return (0)););); return (1);} \\\\ _Michel Marcus_, Jun 01 2013",
+        "(PARI) isok(n) = (n % factorback(factor(eulerphi(n))[, 1])) == 0; \\\\ _Michel Marcus_, Nov 04 2017",
+        "(MAGMA) [n: n in [1..300] | forall{d: d in PrimeDivisors(EulerPhi(n)) | IsIntegral(n/d)}]; // _Bruno Berselli_, Nov 04 2017"
+    ],
+    "xref": [
+        "Cf. A005117.",
+        "Cf. A007947 (radical of n), A007694 (phi(n) divides n, a subsequence).",
+        "Cf. A080400 (radical of phi(n)).",
+        "Cf. A152000."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "J. Luis A. Yebra and J. Jimenez Urroz (yebra(AT)mat.upc.es), Nov 19 2008",
+    "ext": [
+        "Corrected by _Michel Marcus_, Jun 01 2013",
+        "Edited by _N. J. A. Sloane_, Jun 02 2013 at the suggestion of _Michel Marcus_, merging this with A204010",
+        "Deleted erroneous comment and added correct b-file by _Paolo P. Lava_, Nov 06 2017"
+    ],
+    "references": 3,
+    "revision": 43,
+    "time": "2017-11-08T02:24:26-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

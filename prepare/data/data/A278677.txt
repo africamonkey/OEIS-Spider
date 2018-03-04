@@ -1,0 +1,73 @@
+{
+    "number": 278677,
+    "data": "1,5,23,109,544,2876,16113,95495,597155,3929243,27132324,196122796,1480531285,11647194573,95297546695,809490850313,7126717111964,64930685865768,611337506786061,5940420217001199,59502456129204083,613689271227219015,6510381400140132872",
+    "name": "Popularity of left children in treeshelves avoiding pattern T231.",
+    "comment": [
+        "Treeshelves are ordered binary (0-1-2) increasing trees where every child is connected to its parent by a left or a right link. Classical Fran\u00e7on's bijection maps bijectively treeshelves into permutations. Pattern T231 illustrated below corresponds to a treeshelf constructed from permutation 231. Popularity is the sum of a certain statistic (number of left children, in this case) over all objects of size n.",
+        "a(n) is also the sum of the last entries in all blocks of all set partitions of [n-1]. a(4) = 23 because the sum of the last entries in all blocks of all set partitions of [3] (123, 12|3, 13|2, 1|23, 1|2|3) is 3+5+5+4+6  = 23. - _Alois P. Heinz_, Apr 24 2017"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A278677/b278677.txt\">Table of n, a(n) for n = 2..575</a>",
+        "Jean-Luc Baril, Sergey Kirgizov, Vincent Vajnovszki, <a href=\"https://arxiv.org/abs/1611.07793\">Patterns in treeshelves</a>, arXiv:1611.07793 [cs.DM], 2016.",
+        "J. Fran\u00e7on, <a href=\"http://www.numdam.org/numdam-bin/item?id=ITA_1976__10_3_35_0\">Arbres binaires de recherche : propri\u00e9t\u00e9s combinatoires et applications</a>, Revue fran\u00e7aise d'automatique informatique recherche op\u00e9rationnelle, Informatique th\u00e9orique, 10 no. 3 (1976), pp. 35-50."
+    ],
+    "formula": [
+        "E.g.f.: (z*e^z - e^z + 1)*e^(e^z-1).",
+        "a(n) = (n + 1)*b(n) - b(n+1) where b(n) is the n-th Bell number (see A000110).",
+        "Asymtotics: a(n) ~ n*b(n).",
+        "a(n) = Sum_{k=1..n-1} A285595(n-1,k)/k. - _Alois P. Heinz_, Apr 24 2017"
+    ],
+    "example": [
+        "Treeshelves of size 3:",
+        "      1  1          1    1       1        1",
+        "     /    \\        /      \\     / \\      / \\",
+        "    2      2      /        \\   2   \\    /   2",
+        "   /        \\    2          2       3  3",
+        "  3          3    \\        /",
+        "                   3      3",
+        "Pattern T231:",
+        "     1",
+        "    /",
+        "   /",
+        "  2",
+        "   \\",
+        "    3",
+        "Treeshelves of size 3 that avoid pattern T231:",
+        "      1  1      1       1        1",
+        "     /    \\      \\     / \\      / \\",
+        "    2      2      \\   2   \\    /   2",
+        "   /        \\      2       3  3",
+        "  3          3    /",
+        "                 3",
+        "Popularity of left children here is 5."
+    ],
+    "program": [
+        "(Python)",
+        "## First version, simple recursion",
+        "from sympy import bell",
+        "HOW_MANY = 30",
+        "print ([ (n+1)*bell(n) - bell(n+1) for n in range(HOW_MANY)])",
+        "(Python)",
+        "## Second version by Taylor expansion",
+        "from sympy import *",
+        "from sympy.abc import z",
+        "bell = exp( exp (z) - 1)",
+        "h = (z * exp (z) - exp (z) + 1) * bell",
+        "NUMBER_OF_COEFFS = 8",
+        "coeffs = Poly(series(h,n = NUMBER_OF_COEFFS)).coeffs()",
+        "coeffs.reverse()",
+        "## and remove first coefficient 1 that corresponds to O(n**k)",
+        "coeffs.pop(0)",
+        "print ([coeffs[n]*factorial(n+2) for n in range(len(coeffs))])"
+    ],
+    "xref": [
+        "Cf. A000110, A000111, A000142, A001286, A008292, A131178, A278678, A278679, A285595, A286897."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_Sergey Kirgizov_, Nov 26 2016",
+    "references": 8,
+    "revision": 29,
+    "time": "2017-05-16T17:09:42-04:00",
+    "created": "2016-12-24T11:20:07-05:00"
+}

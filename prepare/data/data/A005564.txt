@@ -1,0 +1,73 @@
+{
+    "number": 5564,
+    "id": "M4134",
+    "data": "6,20,45,84,140,216,315,440,594,780,1001,1260,1560,1904,2295,2736,3230,3780,4389,5060,5796,6600,7475,8424,9450,10556,11745,13020,14384,15840,17391,19040,20790,22644,24605,26676,28860,31160,33579,36120,38786,41580,44505",
+    "name": "Number of n-step walks on square lattice in the first quadrant which finish at distance n-3 from the x-axis.",
+    "comment": [
+        "The steps are N, S, E or W.",
+        "For n>=4, a(n-1)/2 is the coefficient c(n-2) of the m^(n-2) term of P(m,n) = (c(m-1)* m^(n-1) + c(m-2)* m^(n-2) +...+ c(0)* m^0)/((a!)* (a-1)!), the polynomial for the number of partitions of m with exactly n parts. - _Gregory L. Simay_, Jun 28 2016"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A005564/b005564.txt\">Table of n, a(n) for n = 3..1000</a>",
+        "R. K. Guy, <a href=\"/A005555/a005555.pdf\">Letter to N. J. A. Sloane, May 1990</a>",
+        "R. K. Guy, Catwalks, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/GUY/catwalks.html\">Sandsteps and Pascal Pyramids</a>, J. Integer Seqs., Vol. 3 (2000), #00.1.6. See figure 4, sum of terms in (n-2)-nd row.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-6,4,-1)."
+    ],
+    "formula": [
+        "G.f.: x^3 * ( 6 - 4*x + x^2 ) / ( 1 - x )^4. [_Simon Plouffe_ in his 1992 dissertation]",
+        "a(n) = (n-2)*n*(n+1)/2 = (n-2)*A000217(n).",
+        "a(n) = Sum_{j=0..n} ((n+j-1)^2-(n-j+1)^2)/4. - _Zerinvary Lajos_, Sep 13 2006",
+        "a(n) = Sum_{k=2..n-1} k*n. - _Zerinvary Lajos_, Jan 29 2008",
+        "a(n) = 4*binomial(n+4,2)*binomial(n+4,4)/binomial(n+4,3) = (n+1)*binomial(n+4,2). - _Gary Detlefs_, Dec 08 2011, corrected by _R. J. Mathar_, Dec 09 2011",
+        "a(n) = 4*a(n-1) -6*a(n-2) +4*a(n-3) -a(n-4). - _Vincenzo Librandi_, Jun 18 2012",
+        "E.g.f.: x - x*(2 - 2*x - x^2)*exp(x)/2. - _Ilya Gutkovskiy_, Jun 29 2016"
+    ],
+    "example": [
+        "The n=4 diagram in Fig. 4 of Guy's paper is",
+        "1",
+        "0 4",
+        "9 0 6",
+        "0 16 0 4",
+        "10 0 9 0 1",
+        "Adding 16+4 we get a(4)=20.",
+        "The a(3) = 6 walks are EEN, ENE, ENW, NEW, NSN, NNS. - _Michael Somos_, Jun 09 2014",
+        "G.f. = 6*x^3 + 20*x^4 + 45*x^5 + 84*x^6 + 140*x^7 + 216*x^8 + 315*x^9 + ...",
+        "From _Gregory L. Simay_ Jun 28 2016: (Start)",
+        "P(m,4) = (m^3 + 3*m^2 + ...)/(3!*4!) with 3 = a(3)/2 = 6/2",
+        "P(m,5) = (m^4 + 10*m^3 + ...)/(4!*5!) with 10 = a(4)/2 = 20/2",
+        "P(m,6) = (m^5 + (45/2)*m^4 +...)/(5!*6!) with 45/2 = a(5)/2 = 45/2",
+        "P(m,7) = (m^6 + 42*m^5 +...)/(6!*7!) with 42 = a(6)/2 = 84/2. (End)"
+    ],
+    "maple": [
+        "A005564 := proc(n)",
+        "        (n-2)*(n)*(n+1)/2 ;",
+        "end proc: seq(A005564(n),n=0..10) ; # _R. J. Mathar_, Dec 09 2011"
+    ],
+    "mathematica": [
+        "Table[(n-2)*Binomial[n+1, 2], {n, 3, 40}]",
+        "LinearRecurrence[{4,-6,4,-1},{6,20,45,84},50] (* _Vincenzo Librandi_, Jun 18 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=(n-2)*(n)*(n+1)/2 \\\\ _Charles R Greathouse IV_, Dec 12 2011",
+        "(MAGMA) I:=[6, 20, 45, 84]; [n le 4 select I[n] else 4*Self(n-1)-6*Self(n-2)+4*Self(n-3)-Self(n-4): n in [1..45]]; // _Vincenzo Librandi_, Jun 18 2012",
+        "(GAP) a:=List([0..45],n->(n+1)*Binomial(n+4,2)); # _Muniru A Asiru_, Feb 15 2018"
+    ],
+    "xref": [
+        "First differences of A001701. Fourth column of A093768."
+    ],
+    "keyword": "nonn,walk,easy",
+    "offset": "3,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Entry revised by _N. J. A. Sloane_, Jul 06 2012"
+    ],
+    "references": 10,
+    "revision": 98,
+    "time": "2018-02-15T20:37:14-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

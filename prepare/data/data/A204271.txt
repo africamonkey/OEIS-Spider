@@ -1,0 +1,38 @@
+{
+    "number": 204271,
+    "data": "1,6,20,84,174,840,1352,6120,12805,42804,68892,388080,468454,1938768,4680600,14595792,20460402,107024190,132502180,671765976,1235646880,3356004888,5401408344,32600383200,40663881751,133006270404,305814801800",
+    "name": "a(n) = sigma(n)*Pell(n), where sigma(n) = A000203(n), the sum of divisors of n.",
+    "comment": [
+        "Compare g.f. to the Lambert series identity: Sum_{n>=1} n*x^n/(1-x^n) = Sum_{n>=1} sigma(n)*x^n."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A204271/b204271.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{n>=1} n*Pell(n)*x^n/(1 - A002203(n)*x^n + (-1)^n*x^(2*n)) = Sum_{n>=1} sigma(n)*Pell(n)*x^n, where Pell(n) = A000129(n) and A002203 is the companion Pell numbers."
+    ],
+    "example": [
+        "G.f.: A(x) = x + 6*x^2 + 20*x^3 + 84*x^4 + 174*x^5 + 840*x^6 + 1352*x^7 +...",
+        "where A(x) = x/(1-2*x-x^2) + 2*2*x^2/(1-6*x^2+x^4) + 3*5*x^3/(1-14*x^3-x^6) + 4*12*x^4/(1-34*x^4+x^8) + 5*29*x^5/(1-82*x^5-x^10) + 6*70*x^6/(1-198*x^6+x^12) +...+ n*Pell(n)*x^n/(1 - A002203(n)*x^n + (-1)^n*x^(2*n)) +..."
+    ],
+    "mathematica": [
+        "Table[DivisorSigma[1, n] Fibonacci[n, 2], {n, 1, 50}] (* _G. C. Greubel_, Jan 05 2018 *)"
+    ],
+    "program": [
+        "(PARI) /* Subroutines used in PARI programs below: */",
+        "{Pell(n)=polcoeff(x/(1-2*x-x^2+x*O(x^n)), n)}",
+        "{A002203(n)=polcoeff(2*(1-x)/(1-2*x-x^2+x*O(x^n)), n)}",
+        "(PARI) {a(n)=sigma(n)*Pell(n)}",
+        "(PARI) {a(n)=polcoeff(sum(m=1,n,m*Pell(m)*x^m/(1-A002203(m)*x^m+(-1)^m*x^(2*m)+x*O(x^n))),n)}"
+    ],
+    "xref": [
+        "Cf. A000203 (sigma), A000129, A203848, A204270, A204272, A204273, A204274, A204275, A002203, A000045."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jan 14 2012",
+    "references": 5,
+    "revision": 10,
+    "time": "2018-01-06T13:27:34-05:00",
+    "created": "2012-01-14T13:58:31-05:00"
+}

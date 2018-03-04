@@ -1,0 +1,45 @@
+{
+    "number": 284642,
+    "data": "1,49,961,1089,25281,52441,73441,76729,361201,375769,499849,1315609,1968409,2961841,3470769,4289041,4669921,4748041,5536609,7392961,7912969,9296401,9628609,10556001,13039321,13830961,14737921,14753281,17330569,17380561,18088009",
+    "name": "Numbers k such that concat(k, sigma(k)) and concat(sigma(k), k) are both prime.",
+    "comment": [
+        "All terms are odd squares. - _Robert Israel_, Apr 03 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A284642/b284642.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "sigma(49) = 57 and 5749 and 4957 are both prime."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,b,n; for n from 1 by 2 to q do",
+        "a:=n*10^(ilog10(sigma(n))+1)+sigma(n); b:=sigma(n)*10^(ilog10(n)+1)+n;",
+        "if isprime(a) and isprime(b) then print(n); fi; od; end: P(10^9);",
+        "# Alternative:",
+        "filter:= proc(n) local s;",
+        "  s:= numtheory:-sigma(n);",
+        "  isprime(n*10^(1+ilog10(s))+s) and isprime(s*10^(1+ilog10(n))+n)",
+        "end proc:",
+        "select(filter, [seq(i^2,i=1..10000,2)]); # _Robert Israel_, Apr 03 2017"
+    ],
+    "mathematica": [
+        "cnc[x_, y_] := FromDigits@ Flatten@ IntegerDigits[{x, y}]; Select[ Range[10^5], (d = DivisorSigma[1, #]; PrimeQ@ cnc[d, #] && PrimeQ@ cnc[#, d]) &] (* _Giovanni Resta_, Mar 31 2017 *)"
+    ],
+    "program": [
+        "(PARI)is(k)={my(v1=digits(k),v2=digits(sigma(k)));isprime(fromdigits(concat(v1,v2)))&&isprime(fromdigits(concat(v2,v1)))};",
+        "findFirstTerms(q)={my(ans:list,k=1);ans=List();q=max(1,q);for(c=1,q,while(!is(k),k++);listput(ans,k);k++);Vec(ans)} \\\\ _R. J. Cano_, Mar 31 2017"
+    ],
+    "xref": [
+        "Cf. A000203, A284643."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Mar 31 2017",
+    "ext": [
+        "a(20)-a(31) from _Giovanni Resta_, Mar 31 2017"
+    ],
+    "references": 1,
+    "revision": 22,
+    "time": "2017-04-03T14:25:20-04:00",
+    "created": "2017-04-02T10:15:49-04:00"
+}

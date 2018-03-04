@@ -1,0 +1,59 @@
+{
+    "number": 63171,
+    "data": "0,10,1010,1100,101010,101100,110010,110100,111000,10101010,10101100,10110010,10110100,10111000,11001010,11001100,11010010,11010100,11011000,11100010,11100100,11101000,11110000,1010101010,1010101100",
+    "name": "Dyck language interpreted as binary numbers in ascending order.",
+    "comment": [
+        "a(n) is the binary expansion of A014486(n). - _Joerg Arndt_, Feb 27 2013",
+        "Replacing \"1\" by \"(\" and \"0\" by \")\" yields well-formed bracket expressions (the first term being the empty string)",
+        "  , (), ()(), (()), ()()(), ()(()), (())(), (()()), ((())), ()()()(), ()()(()), ()(())(), ()(()()), ()((())), (())()(), (())(()), (()())(), (()()()), (()(())), ((()))(), ((())()), ((()())), (((()))), ()()()()(), ()()()(()), ()()(())(), ()()(()()), ()()((())), ()(())()(), ()(())(()), ()(()())(), ()(()()()), ()(()(())), ()((()))(), ()((())()), ()((()())), ()(((()))), (())()()(), (())()(()), (())(())(), (())(()()), (())((())), (()())()(), (()())(()), (()()())(), (()()()()), (()()(())), (()(()))(), (()(())()), (()(()())), (()((()))), ((()))()(), ((()))(()), ((())())(), ((())()()), ((())(())), ((()()))(), ((()())()), ((()()())), ((()(()))), (((())))(), (((()))()), (((())())), (((()()))), ((((()))))",
+        "The term a(0)=0 stands for the empty string. - _Joerg Arndt_, Feb 27 2013",
+        "(Which is actually a leading 0, shown only for zero so that it has a visible representation.) - _Daniel Forgues_, Feb 27 2013"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A063171/b063171.txt\">Table of n, a(n) for n = 0..2055</a>",
+        "FindStat - Combinatorial Statistic Finder, <a href=\"http://www.findstat.org/DyckPaths\">Dyck paths</a>",
+        "A. Karttunen, <a href=\"http://ndirty.cute.fi/%7Ekarttu/matikka/Nekomorphisms/a014486.ps.gz\">Illustration of initial terms up to size n=7</a>",
+        "A. Karttunen, <a href=\"http://oeis.org/wiki/Catalan_Automorphisms\">Catalan Automorphisms</a>",
+        "R. J. Mathar, <a href=\"http://arxiv.org/abs/1603.00077\">Topologically Distinct Sets of Non-intersecting Circles in the Plane</a>, arXiv:1603.00077, 2016.",
+        "Indranil Ghosh, <a href=\"/A063171/a063171.txt\">Python program for computing this sequence</a>"
+    ],
+    "formula": [
+        "Chomsky-2 grammar with axiom s, terminal alphabet {0, 1} and three rules s -> ss, s -> 1s0, s ->10"
+    ],
+    "example": [
+        "s -> ss -> 1s0s -> 11s00s -> 111000s -> 11100010"
+    ],
+    "mathematica": [
+        "balancedQ[0] = True; balancedQ[n_] := (s = 0; Do[s += If[b == 1, 1, -1]; If[s < 0, Return[False]], {b, IntegerDigits[n, 2]}]; Return[s == 0]); FromDigits /@ IntegerDigits[ Select[Range[0, 684], balancedQ], 2] (* _Jean-Fran\u00e7ois Alcover_, Jul 24 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, union, fromList)",
+        "newtype Word = Word String deriving (Eq, Show, Read)",
+        "instance Ord Word where",
+        "   Word us <= Word vs | length us == length vs = us <= vs",
+        "                      | otherwise              = length us <= length vs",
+        "a063171 n = a063171_list !! (n-1)",
+        "a063171_list = dyck $ singleton (Word \"S\") where",
+        "   dyck s | null ws   = (read w :: Integer) : dyck s'",
+        "          | otherwise = dyck $ union s' (fromList $ concatMap gen ws)",
+        "          where ws = filter ((== 'S') . head . snd) $",
+        "                            map (`splitAt` w) [0..length w - 1]",
+        "                (Word w, s') = deleteFindMin s",
+        "   gen (us,vs) = map (Word . (us ++) . (++ tail vs)) [\"10\", \"1S0\", \"SS\"]",
+        "-- _Reinhard Zumkeller_, Mar 09 2011"
+    ],
+    "xref": [
+        "a(n) = A071152(n)/2. A014486 gives these terms as converted from decimal to binary system. Cf. also A071153."
+    ],
+    "keyword": "base,nonn",
+    "offset": "0,2",
+    "author": "_Reinhard Zumkeller_, Jul 09 2001",
+    "ext": [
+        "Prepended a(0)=0, _Joerg Arndt_, Feb 27 2013"
+    ],
+    "references": 124,
+    "revision": 44,
+    "time": "2017-06-23T08:33:07-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

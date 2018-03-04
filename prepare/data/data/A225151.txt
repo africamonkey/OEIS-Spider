@@ -1,0 +1,36 @@
+{
+    "number": 225151,
+    "data": "12544,15376,19044,20164,27556,28561,42436,45369,45796,75076,81796,86436,87025,89401,98596,114244,116964,123201,124609,125316,126025,127449,128164,131044,139876,141376,150544,174724,175561,184041,188356,190969,191844,207025",
+    "name": "Squares which are a decimal concatenation of triprimes.",
+    "link": [
+        "Christian N. K. Anderson, <a href=\"/A225151/b225151.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Christian N. K. Anderson, <a href=\"/A225151/a225151.txt\">Table of n, a(n), sqrt(a(n)), all possible separations of a(n) into triprimes</a>"
+    ],
+    "example": [
+        "a(10) is 75076, which splits into 75|076. 75 = 3*5*5; 76 = 2*2*19."
+    ],
+    "program": [
+        "(R) library(gmp); istriprime=function(x) ifelse(x<8, F, length(factorize(x))==3)",
+        "splithasproperty<-function(n, FUN, curdig=1, res=list(), curspl=c()) {",
+        "no0<-function(s){ while(substr(s, 1, 1)==\"0\" & nchar(s)>1) s=substr(s, 2, nchar(s)); s}",
+        "    s=as.character(n)",
+        "    if(curdig>nchar(s)) return(res)",
+        "    if(length(curspl)>0) if(FUN(as.bigz(no0(substr(s, curdig, nchar(s)))))) res[[length(res)+1]]=curspl",
+        "    for(i in curdig:nchar(s))",
+        "        if(FUN(as.bigz(no0(substr(s, curdig, i)))))",
+        "            res=splithasproperty(n, FUN, i+1, res, c(curspl, i))",
+        "    res",
+        "}",
+        "which(sapply(1:500, function(x) length(splithasproperty(x^2, istriprime)))>0)^2"
+    ],
+    "xref": [
+        "Cf. A014612, A030459, A030461, A000290, A019547."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Kevin L. Schwartz_ and _Christian N. K. Anderson_, Apr 30 2013",
+    "references": 1,
+    "revision": 16,
+    "time": "2013-05-03T20:57:58-04:00",
+    "created": "2013-05-03T20:57:58-04:00"
+}

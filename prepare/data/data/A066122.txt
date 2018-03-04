@@ -1,0 +1,29 @@
+{
+    "number": 66122,
+    "data": "2,4,6,8,10,12,14,16,18,24,30,32,34,36,38,40,42,48,52,56,62,64,66,68,70,80,82,96,100,102,112,114,126,128,130,132,134,136,138,140,142,144,146,148,150,160,162,168,170,176,178,192,196,198,200,204,208,212,224",
+    "name": "In base 2, one 'Reverse and Add' step is needed to reach a palindrome.",
+    "comment": [
+        "The analog of A065206 in base 2. The number of steps starts at 0, so palindromes (cf. A006995) are excluded."
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A066122/b066122.txt\">Table of n, a(n) for n=1..1000</a>",
+        "<a href=\"/index/Res#RAA\">Index entries for sequences related to Reverse and Add!</a>"
+    ],
+    "program": [
+        "(ARIBAS): function b2revadd_steps(k,stop: integer); var c,n,m,steps,rev: integer; begin n := 0; c := 0; while c < stop do m := n; rev := b2reverse(m); steps := 0; while steps < k and m <> rev do m := m + rev; rev := b2reverse(m); inc(steps); end; if steps = k and m = rev then write(n,\" \"); inc(c); end; inc(n); end; end; b2revadd_steps(1,66).",
+        "(PARI) Rev(x)= { local(d, r=0); while (x>0, d=x%10; x\\=10; r=r*10 + d); return(r) } digitsIn(x)= { local(d); if (x==0, return(1)); d=1 + log(x)\\log(10); if (10^d == x, d++, if (10^(d-1) > x, d--)); return(d) } Palin(x)= { local(d,e,f,i,t,y); if (x==0, return(1)); y=x; d=digitsIn(x); t=10^(d - 1); for (i=1, d\\2, f=y-10*(y\\10); y\\=10; e=x\\t; x-=t*e; t/=10; if (e!=f, return(0)) ); return(1) } baseE(x, b)= { local(d, e=0, f=1); while (x>0, d=x-b*(x\\b); x\\=b; e+=d*f; f*=10); return(e) } baseI(x, b)= { local(d, e=0, f=1); while (x>0, d=x-10*(x\\10); x\\=10; e+=d*f; f*=b); return(e) } { n=0; for (m=1, 10^9, b=baseE(m, 2); r=Rev(b); d=baseI(r, 2) + m; b=baseE(d, 2); if (Palin(b), write(\"b066122.txt\", n++, \" \", m); if (n==1000, return)) ) } \\\\ _Harry J. Smith_, Feb 01 2010"
+    ],
+    "xref": [
+        "Cf. A006995, A065206."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Klaus Brockhaus_, Dec 08 2001",
+    "ext": [
+        "OFFSET changed from 0,1 to 1,1 by _Harry J. Smith_, Feb 01 2010"
+    ],
+    "references": 12,
+    "revision": 9,
+    "time": "2015-07-11T00:08:48-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

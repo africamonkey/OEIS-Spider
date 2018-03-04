@@ -1,0 +1,49 @@
+{
+    "number": 100330,
+    "data": "1,2,3,5,6,13,14,17,26,31,38,40,46,56,60,61,66,68,72,73,80,87,89,93,95,115,122,126,128,146,149,156,158,160,163,180,186,192,203,206,208,220,221,235,237,238,251,264,266,280,282,290,294,300,303,320,341,349,350",
+    "name": "Positive integers n such that n^6 + n^5 + n^4 + n^3 + n^2 + n + 1 is prime.",
+    "comment": [
+        "The corresponding primes are A088550. - _Bernard Schott_, Dec 20 2012",
+        "n = 5978493 * 2^150006 - 1 is an example of a very large member of this sequence. The generated prime is proved by the N-1 method (because n is prime and n*(n+1) is fully factored and this provides for an exactly 33.33...% factorization for Phi_7(n) - 1). - _Serge Batalov_, Mar 13 2015"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A100330/b100330.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "2 is in the sequence because 2^6 + 2^5 + 2^4 + 2^3 + 2^2 + 2 + 1 = 127, which is prime."
+    ],
+    "maple": [
+        "A100330 := proc(n)",
+        "    option remember;",
+        "    local a;",
+        "    if n = 1 then",
+        "        1;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if isprime(numtheory[cyclotomic](7,a)) then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "seq(A100330(n),n=1..30) ; # _R. J. Mathar_, Feb 07 2014"
+    ],
+    "mathematica": [
+        "Select[Range[350], PrimeQ[Sum[ #^i, {i, 0, 6}]] &] (* _Ray Chandler_, Nov 17 2004 *)",
+        "Do[If[PrimeQ[n^6 + n^5 + n^4 + n^3 + n^2 + n + 1], Print[n]], {n, 1, 500}] (* _Vincenzo Librandi_, Feb 08 2014 *)"
+    ],
+    "program": [
+        "(MAGMA) [n: n in [1..500]| IsPrime(n^6 + n^5 + n^4 + n^3 + n^2 + n + 1)]; // _Vincenzo Librandi_, Feb 08 2014",
+        "(PARI) is(n)=isprime(polcyclo(7,n)) \\\\ _Charles R Greathouse IV_, Apr 28 2015"
+    ],
+    "xref": [
+        "Cf. A100331, A250174 (Phi_14(n) = n^6 - n^5 + n^4 - n^3 + n^2 - n + 1 primes; these two sequences can also be considered an extension of each other into negative n values), A250177 (Phi_21(n) primes)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ray G. Opao_, Nov 16 2004",
+    "references": 37,
+    "revision": 39,
+    "time": "2015-08-08T20:38:13-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

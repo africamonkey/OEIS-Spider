@@ -1,0 +1,60 @@
+{
+    "number": 107354,
+    "data": "1,1,2,7,44,516,11622,512022,44588536,7718806044,2664170119608,1836214076324153,2529135272371085496,6964321029630556852944,38346813253279804426846032,422247020982575523983378003936",
+    "name": "To compute a(n) we first write down 2^n 1's in a row. Each row takes the right half of the previous row and each element in it equals sum of the elements in the previous row starting at the middle. The single element in the last row is a(n).",
+    "comment": [
+        "Number of subpartitions of partition [1,3,7,...,2^n-1]. - _Franklin T. Adams-Watters_, Mar 11 2006",
+        "Can also be computed summing forwards:",
+        "1,1",
+        "1,2,2,2",
+        "1,3,5,7,7,7,7,7",
+        "1,4,9,16,23,30,37,44,44,44,44,44,44,44,44,44"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A107354/b107354.txt\">Table of n, a(n) for n = 0..25</a>"
+    ],
+    "formula": [
+        "a(n) = C(2^(n-1)+n-2, n-1) - Sum_{k=1..n-2} a(k)*C(2^(n-1)-2^k+n-k-1, n-k) for n>2, with a(0)=1, a(1)=1, a(2)=2, where C(n, k)=binomial(n, k). - _Paul D. Hanna_, May 24 2005",
+        "The first number in row 3 is 2^(n-2)+1. - _Ralf Stephan_, May 24 2005",
+        "G.f.: 1/(1-x) = Sum_{n>=0} a(n)*x^n*(1-x)^(2^n-1) (g.f. of subpartitions). - _Paul D. Hanna_, Jul 03 2006",
+        "G.f.: 1 = Sum_{n>=0} a(n)*x^n/(1+x)^(2^n+n). - _Paul D. Hanna_, Jul 03 2006"
+    ],
+    "example": [
+        "For n=4, the array looks like this:",
+        "  1..1..1..1..1..1..1..1..1..1..1..1..1..1..1..1",
+        "  ........................1..2..3..4..5..6..7..8",
+        "  ....................................5.11.18.26",
+        "  .........................................18.44",
+        "  ............................................44",
+        "  Therefore a(n)=44.",
+        "For n=5, we can illustrate the recurrence by:",
+        " a(5) = 516 = C(19, 4) - ( 1*C(17, 4) + 2*C(14, 3) + 7*C(9, 2) ) = C(16+4-1, 4) - ( 1*C(16-2+4-1, 4) + 2*C(16-4+3-1, 3) + 7*C(16-8+2-1, 2) )."
+    ],
+    "mathematica": [
+        "f[n_] := If[n == 0, 1, Binomial[2^(n - 1) + n - 2, n - 1] - Sum[ f[k]*Binomial[2^(n - 1) - 2^k + n - k - 1, n - k], {k, n - 2}]]; Table[ f[n], {n, 0, 15}] (* _Robert G. Wilson v_, May 25 2005 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0,1,binomial(2^(n-1)+n-2,n-1)- sum(k=1,n-2,a(k)*binomial(2^(n-1)-2^k+n-k-1,n-k)))} (Hanna)",
+        "(PARI) {a(n)=polcoeff(x^n-sum(k=0, n-1, a(k)*x^k*(1-x+x*O(x^n))^(2^k-1) ), n)} (Hanna)",
+        "(Haskell)",
+        "a107354 n = head $ snd $ until ((== 1) . fst)",
+        "                               f (2^n, replicate (2^n) 1) where",
+        "   f (len, xs) = (len', scanl1 (+) $ drop len' xs) where",
+        "      len' = len `div` 2",
+        "-- Feasible only for small n.",
+        "-- _Reinhard Zumkeller_, Nov 20 2011"
+    ],
+    "xref": [
+        "Cf. A105996; variants: A109055 - A109061; subpartitions defined: A115728, A115729."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,3",
+    "author": "_Max Alekseyev_, May 24 2005",
+    "ext": [
+        "Edited by Paul Hanna, Jul 03 2006"
+    ],
+    "references": 10,
+    "revision": 20,
+    "time": "2015-08-13T11:07:36-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

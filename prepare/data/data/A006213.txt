@@ -1,0 +1,47 @@
+{
+    "number": 6213,
+    "id": "M1970",
+    "data": "0,2,10,46,224,1202,7120,46366,329984,2551202,21306880,191252686,1836652544,18793429202,204154071040,2346705139006,28459289083904,363156549211202,4864231397785600,68237760828425326,1000569392347480064,15306487540377673202",
+    "name": "Number of down-up permutations of n+4 starting with n+1.",
+    "comment": [
+        "Entringer numbers."
+    ],
+    "reference": [
+        "B. Bauslaugh and F. Ruskey, Generating alternating permutations lexicographically, Nordisk Tidskr. Informationsbehandling (BIT) 30 16-26 1990.",
+        "R. C. Entringer, A combinatorial interpretation of the Euler and Bernoulli numbers, Nieuw Archief voor Wiskunde, 14 (1966), 241-246.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "J. Millar, N. J. A. Sloane and N. E. Young, A new operation on sequences: the Boustrophedon on transform, J. Combin. Theory, 17A 44-54 1996 (<a href=\"http://neilsloane.com/doc/bous.txt\">Abstract</a>, <a href=\"http://neilsloane.com/doc/bous.pdf\">pdf</a>, <a href=\"http://neilsloane.com/doc/bous.ps\">ps</a>).",
+        "C. Poupard, <a href=\"http://dx.doi.org/10.1016/0012-365X(82)90293-X\">De nouvelles significations \u00e9numeratives des nombres d'Entringer</a>, Discrete Math., 38 (1982), 265-271."
+    ],
+    "formula": [
+        "a(n) = sum((-1)^i*binomial(n, 2i+1)*E[n+2-2i], i=0..1+floor((n+1)/2)), where E[j] = A000111(j) = j!*[x^j]((sec(x)+tan(x)) are the up/down or Euler numbers. a(n) = T(n+3, n), where T is the triangle in A008282. - _Emeric Deutsch_, May 15 2004"
+    ],
+    "example": [
+        "a(1) = 2 because we have 21435 and 21534."
+    ],
+    "maple": [
+        "f:=sec(x)+tan(x): fser:=series(f,x=0,30): E[0]:=1: for n from 1 to 25 do E[n]:=n!*coeff(fser,x^n) od: a:=n->sum((-1)^i*binomial(n,2*i+1)*E[n+2-2*i],i=0..1+floor((n+1)/2)): seq(a(n),n=0..17);",
+        "# Alternatively after _Alois P. Heinz_ in A000111:",
+        "b := proc(u, o) option remember;",
+        "`if`(u + o = 0, 1, add(b(o - 1 + j, u - j), j = 1..u)) end:",
+        "a := n -> b(n, 3): seq(a(n), n = 0..21); # _Peter Luschny_, Oct 27 2017"
+    ],
+    "mathematica": [
+        "t[n_, 0] := If[n == 0, 1, 0]; t[n_ , k_ ] := t[n, k] = t[n, k - 1] + t[n - 1, n - k]; a[n_] := t[n + 3, n]; Array[a, 30, 0] (* _Jean-Fran\u00e7ois Alcover_, Feb 12 2016 *)"
+    ],
+    "xref": [
+        "Cf. A000111, A008282."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Jean-Fran\u00e7ois Alcover_, Feb 12 2016"
+    ],
+    "references": 0,
+    "revision": 24,
+    "time": "2017-10-27T10:14:13-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

@@ -1,0 +1,65 @@
+{
+    "number": 26007,
+    "data": "1,1,2,5,8,16,28,49,83,142,235,385,627,1004,1599,2521,3940,6111,9421,14409,21916,33134,49808,74484,110837,164132,241960,355169,519158,755894,1096411,1584519,2281926,3275276,4685731,6682699,9501979,13471239,19044780,26850921,37756561,52955699",
+    "name": "Expansion of Product_{m>=1} (1 + q^m)^m; number of partitions of n into distinct parts, where n different parts of size n are available.",
+    "comment": [
+        "Equals A000219: (1, 1, 3, 6, 13, 24, 48, 86, ...) convolved with the aerated version of the latter: (1, 0, 1, 0, 3, 0, 6, 0, 13, ...). - _Gary W. Adamson_, Jun 13 2009",
+        "In general, for t > 0, if g.f. = Product_{m>=1} (1 + t*q^m)^m then a(n) ~ c^(1/6) * exp(3^(2/3) * c^(1/3) * n^(2/3) / 2) / (3^(2/3) * (t+1)^(1/12) * sqrt(2*Pi) * n^(2/3)), where c = Pi^2*log(t) + log(t)^3 - 6*polylog(3, -1/t). - _Vaclav Kotesovec_, Jan 04 2016"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A026007/b026007.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Vaclav Kotesovec, <a href=\"/A026007/a026007.jpg\">Graph - The asymptotic ratio</a>",
+        "Vaclav Kotesovec, <a href=\"http://arxiv.org/abs/1509.08708\">A method of finding the asymptotics of q-series based on the convolution of generating functions</a>, arXiv:1509.08708 [math.CO], Sep 30 2015, p. 18."
+    ],
+    "formula": [
+        "a(n) = 1/n*Sum_{k=1..n} A078306(k)*a(n-k). - _Vladeta Jovovic_, Nov 22 2002",
+        "G.f. Product_{m>=1} (1+x^m)^m. Weighout transform of natural numbers (A000027). Euler transform of A026741. - _Franklin T. Adams-Watters_, Mar 16 2006",
+        "a(n) ~ Zeta(3)^(1/6) * exp((3/2)^(4/3) * Zeta(3)^(1/3) * n^(2/3)) / (2^(3/4) * 3^(1/3) * sqrt(Pi) * n^(2/3)), where Zeta(3) = A002117. - _Vaclav Kotesovec_, Mar 05 2015"
+    ],
+    "example": [
+        "For n = 4, we have 8 partitions",
+        "01: [4]",
+        "02: [4']",
+        "03: [4'']",
+        "04: [4''']",
+        "05: [3, 1]",
+        "06: [3', 1]",
+        "07: [3'', 1]",
+        "08: [2, 2']"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember;",
+        "      add((-1)^(n/d+1)*d^2, d=divisors(n))",
+        "    end:",
+        "a:= proc(n) option remember;",
+        "      `if`(n=0, 1, add(b(k)*a(n-k), k=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..45);  # _Alois P. Heinz_, Aug 03 2013"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = 1/n*Sum[Sum[(-1)^(k/d+1)*d^2, {d, Divisors[k]}]*a[n-k], {k, 1, n}]; a[0] = 1; Table[a[n], {n, 0, 41}] (* _Jean-Fran\u00e7ois Alcover_, Apr 17 2014, after _Vladeta Jovovic_ *)",
+        "nmax=50; CoefficientList[Series[Exp[Sum[(-1)^(k+1)*x^k/(k*(1-x^k)^2),{k,1,nmax}]],{x,0,nmax}],x] (* _Vaclav Kotesovec_, Feb 28 2015 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=66; q='q+O('q^N);",
+        "gf= prod(n=1,N, (1+q^n)^n );",
+        "Vec(gf)",
+        "/* _Joerg Arndt_, Oct 06 2012 */"
+    ],
+    "xref": [
+        "Cf. A000009, A000027, A026741, A073592, A255528, A261562, A266857, A285223.",
+        "Cf. A000219. - _Gary W. Adamson_, Jun 13 2009",
+        "Cf. A027998, A248882, A248883, A248884.",
+        "Cf. A026011, A027346, A027906.",
+        "Column k=1 of A284992."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "references": 52,
+    "revision": 57,
+    "time": "2017-10-16T10:42:07-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

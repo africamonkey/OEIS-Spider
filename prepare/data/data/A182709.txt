@@ -1,0 +1,68 @@
+{
+    "number": 182709,
+    "data": "0,0,0,2,3,11,14,33,45,81,109,185,237,372,490,715,928,1326,1693,2348,2998,4032,5119,6795,8530,11132,13952,17927,22314,28417,35126,44279,54532,68062,83422,103427,126063,155207,188506,230547,278788,339223,408482",
+    "name": "Sum of the emergent parts of the partitions of n.",
+    "comment": [
+        "Here the \"emergent parts\" of the partitions of n are defined to be the parts (with multiplicity) of all the partitions that do not contain \"1\" as a part, removed by one copy of the smallest part of every partition. Note that these parts are located in the head of the last section of the set of partitions of n. For more information see A182699.",
+        "Also total sum of parts of the regions that do not contain 1 as a part in the last section of the set of partitions of n (Cf. A083751, A187219). - _Omar E. Pol_, Mar 04 2012"
+    ],
+    "link": [
+        "Jason Kimberley, <a href=\"/A182709/b182709.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Omar E. Pol, <a href=\"http://www.polprimos.com/imagenespub/polpanxt.jpg\">Illustration: How to build the last section of the set of partitions (copy, paste and fill)</a>",
+        "Omar E. Pol, <a href=\"http://www.polprimos.com/imagenespub/polpa2dt.jpg\">Illustration of the shell model of partitions (2D view)</a>"
+    ],
+    "formula": [
+        "a(n) = A138880(n) - A182708(n).",
+        "a(n) = A066186(n) - A066186(n-1) - A046746(n) = A138879(n) - A046746(n). - _Omar E. Pol_, Aug 01 2013"
+    ],
+    "example": [
+        "For n=7 the partitions of 7 that do not contain \"1\" as a part are",
+        "7",
+        "4 + 3",
+        "5 + 2",
+        "3 + 2 + 2",
+        "Then remove one copy of the smallest part of every partition. The rest are the emergent parts:",
+        ".,",
+        "4, .",
+        "5, .",
+        "3, 2, .",
+        "The sum of these parts is 4 + 5 + 3 + 2 = 14, so a(7)=14.",
+        "For n=10 the illustration in the link shows the location of the emergent parts (colored yellow and green) and the location of the filler parts (colored blue) in the last section of the set of partitions of 10."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember;",
+        "      if n<0 then 0",
+        "    elif n=0 then 1",
+        "    elif i<2 then 0",
+        "    else b(n, i-1) +b(n-i, i)",
+        "      fi",
+        "    end:",
+        "c:= proc(n, i, k) option remember;",
+        "      if n<0 then 0",
+        "    elif n=0 then k",
+        "    elif i<2 then 0",
+        "    else c(n, i-1, k) +c(n-i, i, i)",
+        "      fi",
+        "    end:",
+        "a:= n-> n*b(n, n) - c(n, n, 0):",
+        "seq(a(n), n=1..40);  #  _Alois P. Heinz_, Dec 01 2010"
+    ],
+    "mathematica": [
+        "f[n_]:=Total[Flatten[Most/@Select[IntegerPartitions[n],!MemberQ[#,1]&]]]; Table[f[i],{i,50}] (* _Harvey P. Dale_, Dec 28 2010 *)",
+        "b[n_, i_] := b[n, i] = Which[n<0, 0, n==0, 1, i<2, 0, True, b[n, i-1] + b[n - i, i]]; c[n_, i_, k_] := c[n, i, k] = Which[n<0, 0, n==0, k, i<2, 0, True, c[n, i-1, k] + c[n-i, i, i]]; a[n_] := n*b[n, n] - c[n, n, 0]; Table[a[n], {n, 1, 40}] (* _Jean-Fran\u00e7ois Alcover_, Oct 08 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000041, A135010, A138121, A138879, A138880, A182699, A182703, A182708, A182740, A182742, A182743.",
+        "Row sums of A183152."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,4",
+    "author": "_Omar E. Pol_, Nov 28 2010, Nov 29 2010",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Dec 01 2010"
+    ],
+    "references": 22,
+    "revision": 44,
+    "time": "2015-10-08T12:41:21-04:00",
+    "created": "2010-11-27T17:24:30-05:00"
+}

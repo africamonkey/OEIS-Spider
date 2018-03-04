@@ -1,0 +1,28 @@
+{
+    "number": 121046,
+    "data": "29,536,7923,104768,1299733,15484040,179431239,2038076587,22801797576,252097715777,2760727752353,29996225393465,323780512411510,3475385760290723,37124508056355511,394906913798224975",
+    "name": "Very good approximation to the (10^n)-th prime.",
+    "comment": [
+        "The algorithm primex(x) uses an exponent bisection routine and Gram's Riemann approximation, Rg(x) for the prime counting function Pi(x). We know that Rg(x) is relatively close to Pi(x) as x gets large. We take advantage of this relatively small error noting that Pi(prime(x)) = x ~ Rg(prime(x)). A reasonable approximation of prime(x) is xlog(x) while for x = 10^n, often, 10^nlog(10^(n+1) is a much better approximation. The PARI program shows the flow of this algorithm."
+    ],
+    "link": [
+        "David Broadhurst, <a href=\"http://groups.yahoo.com/group/primeform/message/7223\">Primeform yahoo group</a>.",
+        "Chris Caldwell, <a href=\"http://primes.utm.edu/\">The Prime Page</a>."
+    ],
+    "example": [
+        "The largest known prime(10^n) = A006988(18) = 44211790234832169331 and a(18) = 44211790234127235470. So the approximation primex(10^18) is accurate to 11 places."
+    ],
+    "program": [
+        "(PARI) primex3(n) = \\List the approximations to the (10^n)-th prime \\ By Cino hilliard { for(x=1,n,print1(primex(10^x)\",\")) } primex(n) = { local(x,px,r1,r2,r,p10,b,e); b=10; p10=log(n)/log(10); if(Rg(b^p10*log(b^(p10+1)))< b^p10,m=p10+1,m=p10); r1 = 0; r2 = 1; for(x=1,400, r=(r1+r2)/2; px = Rg(b^p10*log(b^(m+r))); if(px <= b^p10,r1=r,r2=r); r=(r1+r2)/2; ); floor(b^p10*log(b^(m+r))+.5); } Rg(x) = \\Gram's Riemann's Approx of Pi(x) { local(n=1,L,s=1,r); L=r=log(x); while(s<10^120*r, s=s+r/zeta(n+1)/n; n=n+1; r=r*L/n); (s) }"
+    ],
+    "xref": [
+        "Cf. A006988."
+    ],
+    "keyword": "base,nonn,uned",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Aug 08 2006, Aug 17 2006",
+    "references": 0,
+    "revision": 5,
+    "time": "2013-10-01T17:58:26-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

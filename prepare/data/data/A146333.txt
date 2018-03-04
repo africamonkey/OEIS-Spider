@@ -1,0 +1,34 @@
+{
+    "number": 146333,
+    "data": "31,40,46,71,76,88,91,92,96,104,108,152,153,155,176,188,192,200,206,207,234,238,261,266,276,279,280,282,320,328,335,336,348,366,378,383,386,392,408,414,450,476,477,480,488,501,503,504,505,540,542,555,558,581",
+    "name": "Numbers k such that continued fraction of (1 + sqrt(k))/2 has period 8.",
+    "comment": [
+        "For primes in this sequence see A146353."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A146333/b146333.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(1) = 31 because continued fraction of (1+sqrt(31))/2 = 3, 3, 1, 1, 10, 1, 1, 3, 5, 3, 1, 1, 10, 1, 1, 3, 5, 3, 1, 1, 10, 1, ... has period (3, 1, 1, 10, 1, 1, 3, 5) length 8."
+    ],
+    "maple": [
+        "A146326 := proc(n) if not issqr(n) then numtheory[cfrac]( (1+sqrt(n))/2, 'periodic','quotients') ; nops(%[2]) ; else 0 ; fi; end: isA146333 := proc(n) RETURN(A146326(n) = 8) ; end: for n from 2 to 700 do if isA146333(n) then printf(\"%d,\",n) ; fi; od: # _R. J. Mathar_, Sep 06 2009"
+    ],
+    "mathematica": [
+        "s = 10; aa = {}; Do[k = ContinuedFraction[(1 + Sqrt[n])/2, 1000]; If[Length[k] < 190, AppendTo[aa, 0], m = 1; While[k[[s ]] != k[[s + m]] || k[[s + m]] != k[[s + 2 m]] || k[[s + 2 m]] != k[[s + 3 m]] || k[[s + 3 m]] != k[[s + 4 m]], m++ ]; s = s + 1; While[k[[s ]] != k[[s + m]] || k[[s + m]] != k[[s + 2 m]] || k[[s + 2 m]] != k[[s + 3 m]] || k[[s + 3 m]] != k[[s + 4 m]], m++ ]; s = s + 1; While[k[[s ]] != k[[s + m]] || k[[s + m]] != k[[s + 2 m]] || k[[s + 2 m]] != k[[s + 3 m]] || k[[s + 3 m]] != k[[s + 4 m]], m++ ]; AppendTo[aa, m]], {n, 1, 500}]; bb = {}; Do[If[aa[[n]] == 8, AppendTo[bb, n]], {n, 1, Length[aa]}]; bb (* _Artur Jasinski_ *)",
+        "cf8Q[n_]:=Module[{sqrt=Sqrt[n]},!IntegerQ[sqrt]&&Length[ ContinuedFraction[ (1+sqrt)/2][[2]]]==8]; Select[Range[600],cf8Q] (* _Harvey P. Dale_, Sep 06 2012 *)"
+    ],
+    "xref": [
+        "Cf. A000290, A078370, A146326-A146345, A146348-A146360."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Artur Jasinski_, Oct 30 2008",
+    "ext": [
+        "155 and 279 etc. added, 311 etc. removed by _R. J. Mathar_, Sep 06 2009"
+    ],
+    "references": 3,
+    "revision": 12,
+    "time": "2017-08-06T22:27:49-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

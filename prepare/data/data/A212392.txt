@@ -1,0 +1,42 @@
+{
+    "number": 212392,
+    "data": "1,2,9,56,400,3096,25256,213832,1861272,16552320,149737632,1373597892,12747475260,119465392536,1129016386080,10747541655584,102960795706704,991886971036248,9603034303017640,93386133268757760,911779906476551616,8934398271363272642",
+    "name": "G.f. satisfies: A(x) = (x + A(A(x)))^2 where g.f. A(x) = Sum_{n>=1} a(n)*x^(3*n-1).",
+    "comment": [
+        "Conjecture: n divides a(n); see A212391.",
+        "More generally, we have the conjecture:",
+        "If    A(x) = ( x + A(A(x)) )^b",
+        "where A(x) = Sum_{n>=1} a(n) * x^((b^2-1)*(n-1)+b)",
+        "then  ((b-1)*(n-1)+1) divides a(n)."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A212392/b212392.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "formula": [
+        "a(n) = n*A212391(n)."
+    ],
+    "example": [
+        "G.f.: A(x) = x^2 + 2*x^5 + 9*x^8 + 56*x^11 + 400*x^14 + 3096*x^17 + 25256*x^20 +...",
+        "such that A(x) = (x + A(A(x)))^2, where",
+        "A(A(x)) = x^4 + 4*x^7 + 24*x^10 + 168*x^13 + 1284*x^16 + 10384*x^19 + 87364*x^22 + 756808*x^25 + 6704968*x^28 + 60471040*x^31 +...+ A212277(n+1)*x^(3*n+1) +...",
+        "Note that sqrt(A(A(x))) = A(x) + A(A(A(x))), where",
+        "sqrt(A(A(x))) = x^2 + 2*x^5 + 10*x^8 + 64*x^11 + 464*x^14 + 3624*x^17 + 29746*x^20 + 252976*x^23 + 2209488*x^26 + 19701504*x^29 +...",
+        "A(A(A(x))) = x^8 + 8*x^11 + 64*x^14 + 528*x^17 + 4490*x^20 + 39144*x^23 + 348216*x^26 + 3149184*x^29 + 28872401*x^32 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x^2+x^3);for(i=1,n,A=(x+subst(A,x,A+O(x^(3*n))))^2);polcoeff(A,3*n-1)}",
+        "for(n=1,30,print1(a(n),\", \"))",
+        "(Maxima) A(n,k):= if  n<2*k then 0 else if n/2=k then 1 else sum(binomial(2*k,j)*sum(A(i,2*k-j)*A(n-j,i),i,2*k-j+1,n-j-1),j,0,2*k-1);",
+        "makelist(A(n,1),n,1,17); [_Vladimir Kruchinin_, May 15 2012]"
+    ],
+    "xref": [
+        "Cf. A212391, A212277."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, May 12 2012",
+    "references": 4,
+    "revision": 14,
+    "time": "2012-05-15T06:16:59-04:00",
+    "created": "2012-05-12T23:29:18-04:00"
+}

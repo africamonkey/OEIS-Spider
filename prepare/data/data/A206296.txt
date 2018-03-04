@@ -1,0 +1,73 @@
+{
+    "number": 206296,
+    "data": "1,2,3,10,63,2750,842751,85558343750,2098355820117528699,769999781728184386440152910156250,2359414683424785920146467280333749864720543920418139851",
+    "name": "Prime factorization representation of Fibonacci polynomials: a(0) = 1, a(1) = 2, and for n > 1, a(n) = A003961(a(n-1)) * a(n-2).",
+    "comment": [
+        "These are numbers matched to the Fibonacci polynomials according to the scheme explained in A206284 (see also A104244). In this case, the exponent of the k-th prime p_k in the prime factorization of a(n) indicates the coefficient of term x^(k-1) in the n-th Fibonacci polynomial. See the examples."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics,  <a href=\"http://mathworld.wolfram.com/FibonacciPolynomial.html\">Fibonacci polynomial</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Fibonacci_polynomials\">Fibonacci polynomials</a>"
+    ],
+    "formula": [
+        "From _Antti Karttunen_, Jul 29 2015: (Start)",
+        "a(0) = 1, a(1) = 2, and for n >= 2, a(n) = A003961(a(n-1)) * a(n-2).",
+        "Other identities. For all n >= 0:",
+        "A001222(a(n)) = A000045(n). [When each polynomial is evaluated at x=1.]",
+        "A048675(a(n)) = A000129(n). [at x=2.]",
+        "A090880(a(n)) = A006190(n). [at x=3.]",
+        "(End)"
+    ],
+    "example": [
+        "n    a(n)   prime factorization    Fibonacci polynomial",
+        "------------------------------------------------------------",
+        "0       1   (empty)                F_0(x) = 0",
+        "1       2   p_1                    F_1(x) = 1",
+        "2       3   p_2                    F_2(x) = x",
+        "3      10   p_3 * p_1              F_3(x) = x^2 + 1",
+        "4      63   p_4 * p_2^2            F_4(x) = x^3 + 2x",
+        "5    2750   p_5 * p_3^3 * p_1      F_5(x) = x^4 + 3x^2 + 1",
+        "6  842751   p_6 * p_4^4 * p_2^3    F_6(x) = x^5 + 4x^3 + 3x"
+    ],
+    "mathematica": [
+        "c[n_] := CoefficientList[Fibonacci[n, x], x]",
+        "f[n_] := Product[Prime[k]^c[n][[k]], {k, 1, Length[c[n]]}]",
+        "Table[f[n], {n, 1, 11}]  (* A206296 *)"
+    ],
+    "program": [
+        "(Scheme, with memoization-macro definec)",
+        "(definec (A206296 n) (cond ((<= n 1) (+ 1 n)) (else (* (A003961 (A206296 (- n 1))) (A206296 (- n 2))))))",
+        "(Python)",
+        "from sympy import factorint, prime, primepi",
+        "from operator import mul",
+        "def a003961(n):",
+        "    F=factorint(n)",
+        "    return 1 if n==1 else reduce(mul, [prime(primepi(i) + 1)**F[i] for i in F])",
+        "l=[1, 2]",
+        "for n in xrange(2, 11):",
+        "    l+=[a003961(l[n - 1])*l[n - 2], ]",
+        "print l # _Indranil Ghosh_, Jun 21 2017"
+    ],
+    "xref": [
+        "Cf. A000045, A000129, A001222, A003961, A006190, A049310, A048675, A090880, A104244, A206284.",
+        "Other such mappings:",
+        "  polynomial sequence      integer sequence",
+        "  -----------------------------------------",
+        "  x^n                      A000040",
+        "  (x+1)^n                  A007188",
+        "  n*x^(n-1)                A062457",
+        "  (1-x^n)/(1-x)            A002110",
+        "  n + (n-1)x + ... +x^n    A006939",
+        "  Stern polynomials        A260443"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, Feb 05 2012",
+    "ext": [
+        "a(0) = 1 prepended (to indicate 0-polynomial), Name changed, Comments and Example section rewritten by _Antti Karttunen_, Jul 29 2015"
+    ],
+    "references": 19,
+    "revision": 41,
+    "time": "2017-09-09T19:36:52-04:00",
+    "created": "2012-02-06T11:12:00-05:00"
+}

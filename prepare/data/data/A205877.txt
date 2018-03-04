@@ -1,0 +1,41 @@
+{
+    "number": 205877,
+    "data": "6,7,9,11,12,12,15,16,16,17,17,18,18,19,19,21,21,21,22,22,22,23,24,24,24,25,25,25,26,26,27,27,27,27,28,29,30,30,31,31,31,32,32,32,33,33,33,33,34,34",
+    "name": "Numbers k for which 10 divides s(k)-s(j) for some j<k; each k occurs once for each such j; s(k) denotes the (k+1)-st Fibonacci number.",
+    "comment": [
+        "For a guide to related sequences, see A205840."
+    ],
+    "example": [
+        "The first three terms match these differences:",
+        "s(6)-s(3) = 13-3 = 10 = 10*1",
+        "s(7)-s(1) = 21-1 = 20 = 10*2",
+        "s(9)-s(4) = 55-5 = 50 = 10*5"
+    ],
+    "mathematica": [
+        "s[n_] := s[n] = Fibonacci[n + 1]; z1 = 600; z2 = 50;",
+        "f[n_] := f[n] = Floor[(-1 + Sqrt[8 n - 7])/2];",
+        "Table[s[n], {n, 1, 30}]",
+        "u[m_] := u[m] = Flatten[Table[s[k] - s[j], {k, 2, z1}, {j, 1, k - 1}]][[m]]",
+        "Table[u[m], {m, 1, z1}]     (* A204922 *)",
+        "v[n_, h_] := v[n, h] = If[IntegerQ[u[h]/n], h, 0]",
+        "w[n_] := w[n] = Table[v[n, h], {h, 1, z1}]",
+        "d[n_] := d[n] = Delete[w[n], Position[w[n], 0]]",
+        "c = 10; t = d[c]    (* A205876 *)",
+        "k[n_] := k[n] = Floor[(3 + Sqrt[8 t[[n]] - 1])/2]",
+        "j[n_] := j[n] = t[[n]] - f[t][[n]] (f[t[[n]]] + 1)/2",
+        "Table[k[n], {n, 1, z2}]     (* A205877 *)",
+        "Table[j[n], {n, 1, z2}]      (* A205878 *)",
+        "Table[s[k[n]] - s[j[n]], {n, 1, z2}] (* A205879 *)",
+        "Table[(s[k[n]] - s[j[n]])/c, {n, 1, z2}]  (* A205880 *)"
+    ],
+    "xref": [
+        "Cf. A204892, A205878, A205880."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Feb 02 2012",
+    "references": 6,
+    "revision": 5,
+    "time": "2012-03-30T18:58:12-04:00",
+    "created": "2012-02-02T22:39:45-05:00"
+}

@@ -1,0 +1,71 @@
+{
+    "number": 30186,
+    "data": "1,2,7,22,71,228,733,2356,7573,24342,78243,251498,808395,2598440,8352217,26846696,86293865,277376074,891575391,2865808382,9211624463,29609106380,95173135221,305916887580,983314691581,3160687827102",
+    "name": "a(n) = 3*a(n-1) + a(n-2) - a(n-3) for n >= 3, a(0)=1, a(1)=2, a(2)=7.",
+    "comment": [
+        "Number of matchings in ladder graph L_n = P_2 X P_n.",
+        "Cycle-path coverings of a family of digraphs.",
+        "a(n+1) = Fibonacci(n+1)^2 + Sum_{k=0..n} Fibonacci(k)^2*a(n-k) (with the offset convention Fibonacci(2)=2). - _Barry Cipra_, Jun 11 2003",
+        "Equivalently, ways of paving a 2xn grid cells using only singletons and dominoes. - _Lekraj Beedassy_, Mar 25 2005",
+        "It is easy to see that the g.f. for indecomposable tilings (pavings) i.e. those that cannot be split vertically into smaller tilings, is g=2x+3x^2+2x^3+2x^4+2x^5+...=x(2+x-x^2)/(1-x); then G.f.=1/(1-g)=(1-x)/(1-3x-x^2+x^3). - _Emeric Deutsch_, Oct 16 2006",
+        "Row sums of A046741. - _Emeric Deutsch_, Oct 16 2006",
+        "Equals binomial transform of A156096. - _Gary W. Adamson_, Feb 03 2009"
+    ],
+    "reference": [
+        "J. D. E. Konhauser et al., Which Way Did The Bicycle Go? Problem 140 \"Count The Tilings\" pp. 42; 180-1 Dolciani Math. Exp. No. 18 MAA Washington DC 1996."
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A030186/b030186.txt\">Table of n, a(n) for n = 0..1968</a> (terms 0..200 from T. D. Noe)",
+        "O. M. D'Antona and E. Munarini, <a href=\"https://doi.org/10.1006/aama.2000.0689\">The Cycle-path Indicator Polynomial of a Digraph</a>, Advances in Applied Mathematics 25 (2000), 41-56.",
+        "R. C. Grimson, <a href=\"https://doi.org/10.1063/1.1666624\">Exact formulas for 2 x n arrays of dumbbells</a>, J. Math. Phys., 15 (1974), 214-216.",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=473\">Encyclopedia of Combinatorial Structures 473</a>",
+        "M. Katz, C. Stenson, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL12/Stenson/stenson8.html\"> Tiling a (2xn)-Board with Squares and Dominoes</a>, JIS 12 (2009) 09.2.2, Table 1.",
+        "Richard M. Low and Ardak Kapbasov, <a href=\"https://www.emis.de/journals/JIS/VOL20/Low/low2.html\">Non-Attacking Bishop and King Positions on Regular and Cylindrical Chessboards</a>, Journal of Integer Sequences, Vol. 20 (2017), Article 17.6.1, Table 2.",
+        "Per Hakan Lundow, <a href=\"http://www.theophys.kth.se/~phl/Text/1factors.pdf\">Computation of matching polynomials and the number of 1-factors in polygraphs</a>, Research report, No 12, 1996, Department of Math., Umea University, Sweden.",
+        "Per Hakan Lundow, <a href=\"http://www.theophys.kth.se/~phl/Text/1factors2.ps.gz\">Enumeration of matchings in polygraphs</a>, 1998.",
+        "R. B. McQuistan and S. J. Lichtman, <a href=\"https://doi.org/10.1063/1.1665098\">Exact recursion relation for (2 \u00d7 N) arrays of dumbbells</a>, J. Math Phys. 11 (1970), 3095-3099.",
+        "N. J. A. Sloane <a href=\"/A030186/a030186.txt\">Notes on A030186 and A033505</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/IndependentEdgeSet.html\">Independent Edge Set</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/LadderGraph.html\">Ladder Graph</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Matching.html\">Matching</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (3,1,-1)."
+    ],
+    "formula": [
+        "G.f.: (1-x)/(1-3x-x^2+x^3).",
+        "a(n) = ( [Sum_{k=0..n-1} a(k)]^2 + [Sum_{k=0..n-1} a(k)^2] ) / a(n-1) for n>1 with a(0)=1, a(1)=2 (similar to A088016). - _Paul D. Hanna_, Nov 20 2012"
+    ],
+    "maple": [
+        "a[0]:=1: a[1]:=2: a[2]:=7: for n from 3 to 25 do a[n]:=3*a[n-1]+a[n-2]-a[n-3] od: seq(a[n],n=0..25); # _Emeric Deutsch_, Oct 16 2006"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{3, 1, -1}, {1, 2, 7}, 26] (* _Robert G. Wilson v_, Nov 20 2012 *)",
+        "Table[RootSum[1 - # - 3 #^2 + #^3 &, 9 #^n - 10 #^(n + 1) + 7 #^(n + 2) &]/74, {n, 0, 20}] (* _Eric W. Weisstein_, Oct 03 2017 *)",
+        "CoefficientList[Series[(1 - x)/(1 - 3 x - x^2 + x^3), {x, 0, 20}], x] (* _Eric W. Weisstein_, Oct 03 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a030186 n = a030186_list !! n",
+        "a030186_list = 1 : 2 : 7 : zipWith (-) (tail $",
+        "   zipWith (+) a030186_list $ tail $ map (* 3) a030186_list) a030186_list",
+        "-- _Reinhard Zumkeller_, Oct 20 2011",
+        "(PARI) {a(n)=if(n==0,1,if(n==1,2,(sum(k=0, n-1, a(k))^2+sum(k=0, n-1, a(k)^2))/a(n-1)))} \\\\ _Paul D. Hanna_, Nov 20 2012"
+    ],
+    "xref": [
+        "Partial sums give A033505.",
+        "Column 2 of triangle A210662.",
+        "Cf. A054894, A055518, A055519, A088016.",
+        "Cf. A156096. - _Gary W. Adamson_, Feb 03 2009",
+        "Bisection (even part) gives A260033."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,2",
+    "author": "Ottavio D'Antona (dantona(AT)dsi.unimi.it)",
+    "ext": [
+        "More terms from _James A. Sellers_",
+        "Entry revised by _N. J. A. Sloane_, Feb 13 2002"
+    ],
+    "references": 24,
+    "revision": 59,
+    "time": "2017-12-22T03:17:32-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

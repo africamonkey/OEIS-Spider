@@ -1,0 +1,65 @@
+{
+    "number": 218782,
+    "data": "2,12,52,216,872,3496,14024,56200,224904,899720,3599496,14398600,57599112,230398088,921606280,3686471816,14745933960,58983782536,235935438984,943742064776,3774970665096,15099883493512,60399541098632,241598171519112,966392760309896",
+    "name": "A014486-codes for the compact representation of Beanstalk-tree, growing by two natural numbers at time, starting from the tree of one internal node (1) and two leaves (3 and 2), with the larger numbers coming to the left hand side.",
+    "comment": [
+        "The active middle region of the triangle (see attached \"Wolframesque\" illustration) corresponds to the area where the growing tip(s) of the beanstalk are located. Successively larger \"turbulences\" occurring in that area appear approximately at the row numbers given by A218548 divided by two. The larger tendrils, (the finite side-trees) are, the longer there is vacillation in the direction of the growing region, which lasts until the growing tip of the infinite stem (A179016) has passed the topmost tips of the tendril. See also A218612.",
+        "These are the mirror-images (in binary tree sense) of the terms in sequence A218780. For less compact versions, see A218778 & A218776."
+    ],
+    "link": [
+        "A. Karttunen, <a href=\"/A218782/b218782.txt\">Table of n, a(n) for n = 1..256</a>",
+        "A. Karttunen, <a href=\"/A218782/a218782.png\">Terms a(1)-a(4096) drawn as binary strings, in Wolframesque fashion.</a>"
+    ],
+    "example": [
+        "Illustration how the growing beanstalk-tree produces the first four terms of this sequence. In this \"compact\" variant, each successive pair of numbers ((2,3), (4,5), (6,7), etc.) adds a new bud (\\/) to the beanstalk, with the lesser numbers coming to the right hand side:",
+        "----------",
+        "..3...2...",
+        "...\\./.... Coded by A014486(A218783(1)) = A014486(1) = 2 (binary 10).",
+        "....1.....",
+        "----------",
+        "5...4.....",
+        ".\\./......",
+        "..3...2...",
+        "...\\./.... Coded by A014486(A218783(2)) = A014486(3) = 12 (bin. 1100).",
+        "....1.....",
+        "----------",
+        "..7...6...",
+        "...\\./....",
+        "5...4.....",
+        ".\\./......",
+        "..3...2...",
+        "...\\./.... Coded by A014486(A218783(3)) = A014486(7) = 52 (110100).",
+        "....1.....",
+        "----------",
+        "9...8.....",
+        ".\\./......",
+        "..7...6...",
+        "...\\./....",
+        "5...4.....",
+        ".\\./......",
+        "..3...2...",
+        "...\\./.... Coded by A014486(A218783(4)) = A014486(18) = 216 (11011000).",
+        "....1.....",
+        "----------",
+        "Thus the first four terms of this sequence are 2, 12, 52 and 216."
+    ],
+    "program": [
+        "(Scheme with memoization macro definec from _Antti Karttunen_'s Intseq-library):",
+        "(definec (A218782 n) (parenthesization->A014486 (tree_for_A218782 n)))",
+        "(definec (tree_for_A218782 n) (cond ((zero? n) (list)) ((= 1 n) (list (list))) (else (let ((new-tree (copy-tree (tree_for_A218782 (-1+ n))))) (add-bud-for-the-n-th-unbranching-tree-with-car-cdr-code! new-tree (A218790 n))))))",
+        "(define (add-bud-for-the-n-th-unbranching-tree-with-car-cdr-code! tree n) (let loop ((n n) (t tree)) (cond ((zero? n) (list)) ((= n 1) (list (list))) ((= n 2) (set-cdr! t (list (list)))) ((= n 3) (set-car! t (list (list)))) ((even? n) (loop (/ n 2) (cdr t))) (else (loop (/ (- n 1) 2) (car t))))) tree)",
+        "(define (copy-tree bt) (cond ((not (pair? bt)) bt) (else (cons (copy-tree (car bt)) (copy-tree (cdr bt))))))",
+        "(define (parenthesization->a014486 p) (let loop ((s 0) (p p)) (if (null? p) s (let* ((x (parenthesization->a014486 (car p))) (w (binwidth x))) (loop (+ (* s (expt 2 (+ w 2))) (expt 2 (1+ w)) (* 2 x)) (cdr p))))))",
+        "(define (binwidth n) (let loop ((n n) (i 0)) (if (zero? n) i (loop (floor->exact (/ n 2)) (1+ i))))) ;; (binwidth n) = A029837(n+1)."
+    ],
+    "xref": [
+        "a(n) = A014486(A218783(n)). Cf. A014486, A218790, A218778, A218776, A218780, A218788."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Nov 17 2012",
+    "references": 6,
+    "revision": 10,
+    "time": "2014-11-02T12:18:35-05:00",
+    "created": "2012-11-17T23:46:14-05:00"
+}

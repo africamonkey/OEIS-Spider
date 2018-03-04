@@ -1,0 +1,62 @@
+{
+    "number": 176503,
+    "data": "1,1,1,2,4,8,15,29,57,112,220,432,848,1666,3273,6430,12632,24816,48754,95783,188177,369696,726312,1426930,2803381,5507590,10820345,21257915,41763825,82050242,161197933,316693445,622183778,1222357651,2401474098,4717995460",
+    "name": "Leading column of triangle in A176463.",
+    "comment": [
+        "a(n+1) is the number of compositions n=p(1)+p(2)+...+p(m) with p(1)=1 and p(k) <= 4*p(k+1), see example.  [_Joerg Arndt_, Dec 18 2012]"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A176503/b176503.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Christian Elsholtz, Clemens Heuberger, Helmut Prodinger, <a href=\"http://arxiv.org/abs/1108.5964\">The number of Huffman codes, compact trees, and sums of unit fractions</a>, arXiv:1108.5964v1 [math.CO], Aug 30, 2011."
+    ],
+    "formula": [
+        "a(n) = A294775(n-1,3). - _Alois P. Heinz_, Nov 08 2017"
+    ],
+    "example": [
+        "From _Joerg Arndt_, Dec 18 2012: (Start)",
+        "There are a(6+1)=15 compositions 6=p(1)+p(2)+...+p(m) with p(1)=1 and p(k) <= 4*p(k+1):",
+        "[ 1]  [ 1 1 1 1 1 1 ]",
+        "[ 2]  [ 1 1 1 1 2 ]",
+        "[ 3]  [ 1 1 1 2 1 ]",
+        "[ 4]  [ 1 1 1 3 ]",
+        "[ 5]  [ 1 1 2 1 1 ]",
+        "[ 6]  [ 1 1 2 2 ]",
+        "[ 7]  [ 1 1 3 1 ]",
+        "[ 8]  [ 1 1 4 ]",
+        "[ 9]  [ 1 2 1 1 1 ]",
+        "[10]  [ 1 2 1 2 ]",
+        "[11]  [ 1 2 2 1 ]",
+        "[12]  [ 1 2 3 ]",
+        "[13]  [ 1 3 1 1 ]",
+        "[14]  [ 1 3 2 ]",
+        "[15]  [ 1 4 1 ]",
+        "(End)"
+    ],
+    "program": [
+        "(PARI)",
+        "/* g.f. as given in the Elsholtz/Heuberger/Prodinger reference */",
+        "N=66;  q='q+O('q^N);",
+        "t=4;  /* t-ary: t=2 for A002572, t=3 for A176485, t=4 for A176503  */",
+        "L=2 + 2*ceil( log(N) / log(t) );",
+        "f(k) = (1-t^k)/(1-t);",
+        "la(j) = prod(i=1, j, q^f(i) / ( 1 - q^f(i) ) );",
+        "nm=sum(j=0, L, (-1)^j * q^f(j) * la(j) );",
+        "dn=sum(j=0, L, (-1)^j * la(j) );",
+        "gf = nm / dn;",
+        "Vec( gf )",
+        "/* _Joerg Arndt_, Dec 27 2012 */"
+    ],
+    "xref": [
+        "Cf. A176463, A194628 - A194633, A294775."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_N. J. A. Sloane_, Dec 07 2010",
+    "ext": [
+        "Added terms beyond a(13)=848, _Joerg Arndt_, Dec 18 2012."
+    ],
+    "references": 11,
+    "revision": 20,
+    "time": "2017-11-08T16:56:14-05:00",
+    "created": "2010-11-12T14:25:08-05:00"
+}

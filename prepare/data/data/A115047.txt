@@ -1,0 +1,49 @@
+{
+    "number": 115047,
+    "data": "1,1,5,61,1379,49946,2648967,193530835,18634276859,2286742481794,348390662991293,64519134394428000,14273926322439378685,3718118808742139574436,1126348335942168962657751,392634641364638381277506199,156052858498185218872911914627,70147998632789834910508237254650",
+    "name": "a(3)=1 and recursively a(n) = sum_{i=1..n-3} binomial(n-4,i-1) * binomial(n,i+1) * a(i+2) * a(n-i) *i *(n-i-2) /(2*(n-1)), if n>3.",
+    "comment": [
+        "The sequence is denoted by V_n in Bertoldi, et. al. 2004 in equation (2.27) on page 13. - _Michael Somos_, Sep 20 2014",
+        "I conjecture that a(n) is divisible by n if n is a prime. - _Michael Somos_, Sep 20 2014"
+    ],
+    "link": [
+        "G. Bertoldi, S. Bolognesi, M. Matone, L. Mazzucato, Y. Nakayama, <a href=\"http://arxiv.org/abs/hep-th/0405117\">The Liouville Geometry of N=2 Instantons and the Moduli of Punctured Spheres</a>, arXiv:hep-th/0405117",
+        "R. Kaufmann, Yu. Manin, D. Zagier, <a href=\"http://arxiv.org/abs/alg-geom/9604001\">Higher Weil-Petersson Volumes of Moduli Spaces of Stable n-pointed Curves</a>, arXiv:alg-geom/9604001"
+    ],
+    "formula": [
+        "If g(x) = Sum_{k>1} a(k+1) / (k * (k-2)!^2) * x^k, then 0 = x*(x - g(x))*g''(x) + x*g'(x)^2 - (x - g(x))*g'(x). [Bertoldi, et. al. equation (2.31) page 14] - _Michael Somos_, Sep 20 2014",
+        "If y(x) = Sum_{k>0} a(k+2) / (k! * (k-1)!) * x^k, then x(y) = Sum_{k>0} -(-1)^k / (k! * (k-1)!) y^k. [Bertoldi, et. al. equation (2.37) page 14] - _Michael Somos_, Sep 20 2014",
+        "Asymptotics (Kaufmann, et. al., 1996, page 3): a(n) ~ b * (2*n-6)! / C^(n-3), where C = 2.49691833939101330106869449429726103117269753436051258..., b = 1.362053722455447392992552565765491313... . - _Vaclav Kotesovec_, Oct 04 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + x^2/(1!*2!) + 5*x^3/(2!*3!) + 61*x^4/(3!*4!) + 1379*x^5/(4!*5!) + 49946*x^6/(5!*6!) +... (if offset 1);",
+        "where Series_Reversion(A(x)) = x - x^2/(1!*2!) + x^3/(2!*3!) - x^4/(3!*4!) + x^5/(4!*5!) - x^6/(5!*6!) +-...."
+    ],
+    "maple": [
+        "A115047 := proc(n)",
+        "   option remember;",
+        "   if n = 3 then",
+        "       1;",
+        "   else",
+        "       add( binomial(n-4,i-1) *binomial(n,i+1) *procname(i+2) *procname(n-i) *i *(n-i-2) /(n-1)/2, i =1..n-3)",
+        "     end if;",
+        "end proc:",
+        "seq(A115047(n),n=3..20) ; # _R. J. Mathar_, Nov 12 2011"
+    ],
+    "mathematica": [
+        "a[3] = 1; a[n_] := a[n] = Sum[Binomial[n-4, i-1]*Binomial[n, i+1]*a[i+2]*a[n-i]*i*(n-i-2)/(2*(n-1)), {i, 1, n-3}]; Table[a[n], {n, 3, 20}] (* _Jean-Fran\u00e7ois Alcover_, Mar 20 2014 *)",
+        "a[ n_] := With[{m = n - 2}, If[ m < 1, 0, m! (m - 1)! SeriesCoefficient[ InverseSeries[ Series[Integrate[ BesselJ[ 0, 2 Sqrt[x]], x], {x, 0, m}]], {x, 0, m}]]]; (* _Michael Somos_, Sep 20 2014 *)"
+    ],
+    "program": [
+        "(PARI) v=vector(30);v[3]=1;for(n=4,#v,v[n]=sum(i=1,n-3,binomial(n-4,i-1)*binomial(n,i+1)*v[i+2]*v[n-i]*i*(n-i-2)/(n-1)/2));v \\\\ _Charles R Greathouse IV_, Nov 08 2011",
+        "(PARI) {a(n)=if(n<1,0,n!*(n-1)!*polcoeff(serreverse(sum(m=1,n,-(-x)^m/m!/(m-1)! +x*O(x^n))),n))}",
+        "for(n=3,25,print1(a(n-2),\", \")) \\\\ _Paul D. Hanna_, Oct 01 2014"
+    ],
+    "keyword": "nonn",
+    "offset": "3,3",
+    "author": "_N. J. A. Sloane_, based on an email message from John McKay, Feb 28 2006",
+    "references": 1,
+    "revision": 29,
+    "time": "2015-04-24T20:24:04-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

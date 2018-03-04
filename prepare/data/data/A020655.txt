@@ -1,0 +1,50 @@
+{
+    "number": 20655,
+    "data": "1,2,3,4,6,7,8,9,11,12,13,14,16,17,18,19,26,27,28,29,31,32,33,34,36,37,38,39,41,42,43,44,51,52,53,54,56,57,58,59,61,62,63,64,66,67,68,69,76,77,78,79,81,82,83,84,86,87,88,89,91,92,93,94,126,127,128,129,131,132,133",
+    "name": "Lexicographically earliest increasing sequence of positive numbers that contains no arithmetic progression of length 5.",
+    "link": [
+        "Robert Israel, <a href=\"/A020655/b020655.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "Noap:= proc(N,m)",
+        "# N terms of earliest increasing seq with no m-term arithmetic progression",
+        "local A,forbid,n,c,ds,j;",
+        "A:= Vector(N):",
+        "A[1..m-1]:= <($1..m-1)>:",
+        "forbid:= {m}:",
+        "for n from m to N do",
+        "  c:= min({$A[n-1]+1..max(max(forbid)+1, A[n-1]+1)} minus forbid);",
+        "  A[n]:= c;",
+        "  ds:= convert(map(t -> c-t, A[m-2..n-1]),set);",
+        "  for j from m-2 to 2 by -1 do",
+        "    ds:= ds intersect convert(map(t -> (c-t)/j, A[m-j-1..n-j]),set);",
+        "    if ds = {} then break fi;",
+        "  od;",
+        "  forbid:= select(`>`,forbid,c) union map(`+`,ds,c);",
+        "od:",
+        "convert(A,list)",
+        "end proc:",
+        "Noap(100, 5); # _Robert Israel_, Jan 04 2016"
+    ],
+    "mathematica": [
+        "t = {1, 2, 3, 4}; Do[s = Table[Append[i, n], {i, Subsets[t, {4}]}]; If[! MemberQ[Table[Differences[i, 2], {i, s}], {0, 0, 0}], AppendTo[t, n]], {n, 5, 100}]; t (* _T. D. Noe_, Apr 17 2014 *)"
+    ],
+    "xref": [
+        "Summary of increasing sequences avoiding arithmetic progressions of specified lengths (the second of each pair is obtained by adding 1 to the first):",
+        "3-term AP: A005836 (>=0), A003278 (>0);",
+        "4-term AP: A005839 (>=0), A005837 (>0);",
+        "5-term AP: A020654 (>=0), A020655 (>0);",
+        "6-term AP: A020656 (>=0), A005838 (>0);",
+        "7-term AP: A020657 (>=0), A020658 (>0);",
+        "8-term AP: A020659 (>=0), A020660 (>0);",
+        "9-term AP: A020661 (>=0), A020662 (>0);",
+        "10-term AP: A020663 (>=0), A020664 (>0)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_David W. Wilson_",
+    "references": 28,
+    "revision": 19,
+    "time": "2016-01-04T17:38:01-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,60 @@
+{
+    "number": 33291,
+    "data": "1,2,4,6,9,12,16,20,24,28,30,35,40,45,50,54,60,66,72,78,84,91,98,105,112,119,126,133,136,144,152,160,168,176,184,192,198,207,216,225,234,243,252,261,270,280,290,300,310,320,330,340,350,360,370,374,385,396,407,418,429,440,451,462",
+    "name": "A Connell-like sequence: take the first multiple of 1, the next 2 multiples of 2, the next 3 multiples of 3, etc.",
+    "comment": [
+        "Row sums are 0, 1, 6, 27, 88, 200,... with g.f. -x*(1 +4*x +16*x^2 +37*x^3 +39*x^4 +54*x^5 +39*x^6 +17*x^7 +8*x^8 +x^9) / ( (1+x+x^2)^3*(x-1)^5 ). - _R. J. Mathar_, Aug 10 2017"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A033291/b033291.txt\">Rows n = 1..100, flattened</a>",
+        "Gary E. Stevens, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/stevens.html\">A Connell-Like Sequence</a>, J. Integer Sequences, 1 (1998), #98.1.4."
+    ],
+    "formula": [
+        "a(n) = q(n)*n-q(n)*floor(q(n)*(q(n)+1)/6) with q(n) = ceil((1/2)*(-1+sqrt(1+8*(n))))."
+    ],
+    "example": [
+        "Triangle begins",
+        "   1;",
+        "   2,  4;",
+        "   6,  9,  12;",
+        "  16, 20,  24,  28;",
+        "  30, 35,  40,  45,  50;",
+        "  54, 60,  66,  72,  78,  84;",
+        "  91, 98, 105, 112, 119, 126, 133; ..."
+    ],
+    "maple": [
+        "A033291 := proc(n,k)",
+        "    A192735(n)+(k-1)*n ;",
+        "end proc:",
+        "seq(seq(A033291(n,k),k=1..n),n=1..10) ; # _R. J. Mathar_, Aug 10 2017"
+    ],
+    "mathematica": [
+        "Flatten[ Table[ n*(Floor[ (n-1)^2/3] + k), {n, 1, 12}, {k, 1, n}]] (* _Jean-Fran\u00e7ois Alcover_, Sep 30 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a033291 n k = a033291_tabl !! (n-1) !! (k-1)",
+        "a033291_row n = a033291_tabl !! (n-1)",
+        "a033291_tabl = f 1 [1..] where",
+        "   f k xs = ys : f (k+1) (dropWhile (<= last ys) xs) where",
+        "     ys  = take k $ filter ((== 0) . (`mod` k)) xs",
+        "a192735 n = head $ a033291_tabl !! (n-1)",
+        "a192736 n = last $ a033291_tabl !! (n-1)",
+        "-- _Reinhard Zumkeller_, Jan 18 2012, Jul 08 2011",
+        "(PARI) a(n)=my(q=(sqrtint(8*n-7)+1)\\2); q*n-q*(q+1)\\6*q \\\\ _Charles R Greathouse IV_, Jan 06 2016"
+    ],
+    "xref": [
+        "Cf. A192735 (left edge), A192736 (right edge).",
+        "Cf. A045975, A033292, A033293."
+    ],
+    "keyword": "nonn,easy,nice,tabl",
+    "offset": "1,2",
+    "author": "_Gary E. Stevens_",
+    "ext": [
+        "Corrected and formula added by _Johannes W. Meijer_, Oct 07 2010"
+    ],
+    "references": 6,
+    "revision": 39,
+    "time": "2017-08-10T10:29:37-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

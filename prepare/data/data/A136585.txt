@@ -1,0 +1,35 @@
+{
+    "number": 136585,
+    "data": "2,4,5,6,9,20,33,35,42,44,57,68,104,114,117,119,145,174,279,301,310,322,345,376,410,430,517,533,590,649,740,777,976,1159,1537,1590,2345,2412",
+    "name": "Solutions of an a*x+b*y=c Prime Diophantine Equation: Prime[m]x+Prime[m+1]*y=Prime[m-1] : as Abs[n*Prime[m]] Or Abs[n*Prime[m+1]] in x+y*n=Prime[m-1].",
+    "comment": [
+        "Starting at the second prime 3, solutions are obtained to the Equation",
+        "x+y*n=Prime[m-1]",
+        "or",
+        "n=(Prime[m-1]+x)/y",
+        "Either n*Prime[m]/or n*Prime[m+1] is an Integer.",
+        "using the Wagon Diophantine solver Module for n and then the specific prime that it is a rational number of is multiplied out to give an Integer.",
+        "The resulting numbers are made positive and sorted for magnitude",
+        "to give the output sequence.",
+        "This sequence is an effort to get some sequence related by the primes:",
+        "{Prime[m-1],Prime[m],Prime[m+1]}",
+        "by",
+        "Prime[m]x+Prime[m+1]*y=Prime[m-1]"
+    ],
+    "reference": [
+        "A Course in Computational Number Theory by Bressoud and Wagon,2001"
+    ],
+    "formula": [
+        "a[out]=Abs[If[ IntegerQ[n*Prime[m+1]],n*Prime[m+1] else n*Prime[m]]] where n is a rational number: n=(Prime[m-1]+x)/y Sequence is sorted by magnitude."
+    ],
+    "mathematica": [
+        "Clear[n, m, l] DiophantineSolve[{a_, b_}, c_, n_] := Module[{d, e}, {d, e} = ExtendedGCD[a, b]; If[Mod[c, d] == 0, Transpose[{c*e, {b, -a}}/d].{1, n}, {}]]; a = Table[Table[Simplify[If[l == 2,Prime[m], Prime[m + 1]]*(n /. Solve[DiophantineSolve[{Prime[m], Prime[m + 1]}, Prime[m - 1], n][[l]] - Prime[m - 1] == 0, n])], {l, 2, 1, -1}], {m, 2, 20}]; Union[Abs[Flatten[a]]]"
+    ],
+    "keyword": "nonn,uned",
+    "offset": "1,1",
+    "author": "_Roger L. Bagula_, Mar 26 2008",
+    "references": 0,
+    "revision": 3,
+    "time": "2012-03-30T17:34:23-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

@@ -1,0 +1,28 @@
+{
+    "number": 290941,
+    "data": "1,5,45,801,27825,1888509,251530965,66071455065,34377356632185,35547790276600245,73223899601462711325,300932502371711624263185,2469959282065905379932069825,40511383384524208761581247597165,1328271546538715856399886647330605925",
+    "name": "Number of dominating sets in the triangular honeycomb bishop graph.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A290941/b290941.txt\">Table of n, a(n) for n = 1..50</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/DominatingSet.html\">Dominating Set</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "Collect(sig,v,r,x)={forstep(r=r, 1, -1, my(w=sig[r]+1); v=vector(#v, k, sum(j=1, k, binomial(#v-j,k-j)*v[j]*x^(k-j)*(1+x)^(w-#v+j-1))-v[k])); v[#v]}",
+        "DomSetCount(sig,x)={my(v=[1]); my(total=Collect(sig,v,#sig,x)); forstep(r=#sig, 1, -1, my(w=sig[r]+1); total+=Collect(sig, vector(w,k,if(k<=#v,v[k])), r-1, x); v=vector(w, k, sum(j=1, min(k,#v), binomial(w-j, k-j)*v[j]*x^(k-j)*(1+x)^(j-1)))); total}",
+        "a(n)=DomSetCount(Vecrev([1..n]),1); \\\\ _Andrew Howroyd_, Nov 05 2017"
+    ],
+    "xref": [
+        "Cf. A290875 (minimal dominating sets)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Eric W. Weisstein_, Aug 14 2017",
+    "ext": [
+        "Terms a(8) and beyond from _Andrew Howroyd_, Nov 05 2017"
+    ],
+    "references": 2,
+    "revision": 9,
+    "time": "2017-11-05T18:57:10-05:00",
+    "created": "2017-08-15T08:44:12-04:00"
+}

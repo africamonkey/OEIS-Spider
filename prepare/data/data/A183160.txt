@@ -1,0 +1,60 @@
+{
+    "number": 183160,
+    "data": "1,2,11,62,367,2232,13820,86662,548591,3498146,22436251,144583496,935394436,6071718512,39523955552,257913792342,1686627623151,11050540084902,72522925038257,476669316338542,3137209052543927,20672732229560032,136374124374593072,900541325129687272",
+    "name": "a(n) = Sum_{k=0..n} C(n+k,n-k)*C(2*n-k,k).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A183160/b183160.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} A085478(n,k)*A085478(n,n-k).",
+        "Self-convolution of A183161 (an integer sequence):",
+        "a(n) = Sum_{k=0..n} A183161(k)*A183161(n-k).",
+        "a(n) = sum(k=0..n, binomial(2*n+k,k)*cos((n+k)*Pi)). [Arkadiusz Wesolowski, Apr 02 2012]",
+        "Recurrence: 320*n*(2*n-1)*a(n) = 8*(346*n^2 + 79*n - 327)*a(n-1) + 6*(1688*n^2-6241*n+5981)*a(n-2) + 261*(3*n-7)*(3*n-5)*a(n-3). - _Vaclav Kotesovec_, Oct 20 2012",
+        "a(n) ~ 3^(3*n+3/2)/(2^(2*n+3)*sqrt(Pi*n)). - _Vaclav Kotesovec_, Oct 20 2012",
+        "...",
+        "G.f.: A(x) = 1/(1 - 2*x*G(x)^2 - 3*x^2*G(x)^4), where G(x) = 1 + x*G(x)^3 = g.f. of A001764. - _Paul D. Hanna_, Nov 03 2012",
+        "G.f.: A(x) = 1 + x*d/dx { log( G(x)^5/(1+x*G(x)^2) )/2 }, where G(x) = 1 + x*G(x)^3 = g.f. of A001764. - _Paul D. Hanna_, Nov 04 2012",
+        "G.f.: A(x) = 1/(1 + 3*x*G(x) - 5*x*G(x)^2), where G(x) = 1 + x*G(x)^3 = g.f. of A001764. - _Paul D. Hanna_, Jun 16 2013",
+        "a(n) = C(3*n+1,n)*Hyper2F1([1,-n],[2*n+2],2). - _Peter Luschny_, May 19 2015",
+        "a(n) = [x^n] 1/((1 - x^2)*(1 - x)^(2*n)). - _Ilya Gutkovskiy_, Oct 25 2017"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 11*x^2 + 62*x^3 + 367*x^4 + 2232*x^5 +...",
+        "A(x)^(1/2) = 1 + x + 5*x^2 + 26*x^3 + 145*x^4 + 841*x^5 + 5006*x^6 +...+ A183161(n)*x^n +...",
+        "Given triangle A085478(n,k) = C(n+k,n-k), which begins:",
+        "1;",
+        "1, 1;",
+        "1, 3, 1;",
+        "1, 6, 5, 1;",
+        "1, 10, 15, 7, 1;",
+        "1, 15, 35, 28, 9, 1; ...",
+        "ILLUSTRATE formula a(n) = Sum_{k=0..n} A085478(n,k)*A085478(n,n-k):",
+        "a(2) = 11 = 1*1 + 3*3 + 1*1;",
+        "a(3) = 62 = 1*1 + 6*5 + 5*6 + 1*1;",
+        "a(4) = 367 = 1*1 + 10*7 + 15*15 + 7*10 + 1*1;",
+        "a(5) = 2232 = 1*1 + 15*9 + 35*28 + 28*35 + 9*15 + 1*1; ..."
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[n+k,n-k]Binomial[2n-k,k],{k,0,n}],{n,0,20}] (* _Harvey P. Dale_, Jul 19 2011 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=sum(k=0,n,binomial(n+k,n-k)*binomial(2*n-k,k))}",
+        "(PARI) {a(n)=local(G=1); for(i=0, n, G=1+x*G^3+O(x^(n+1))); polcoeff(1/(1-2*x*G^2-3*x^2*G^4), n)} \\\\ Paul D. Hanna, Nov 03 2012",
+        "(PARI) {a(n)=local(G=1); for(i=0, n, G=1+x*G^3+O(x^(n+1))); polcoeff(1/(1+3*x*G-5*x*G^2), n)} \\\\ _Paul D. Hanna_, Jun 16 2013",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(Sage)",
+        "a = lambda n: binomial(3*n+1,n)*hypergeometric([1,-n],[2*n+2],2)",
+        "[simplify(a(n)) for n in range(26)] # _Peter Luschny_, May 19 2015"
+    ],
+    "xref": [
+        "Cf. A183161, A085478, A218622, A199033, A001764."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 27 2010",
+    "references": 11,
+    "revision": 39,
+    "time": "2017-10-25T14:37:31-04:00",
+    "created": "2010-12-27T12:22:24-05:00"
+}

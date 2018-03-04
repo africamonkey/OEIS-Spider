@@ -1,0 +1,39 @@
+{
+    "number": 85765,
+    "data": "1,2,4,5,9,11,16,17,26,30,41,43,59,64,81,82,108,117,147,151,192,203,246,248,307,323,387,392,473,490,572,573,681,707,824,833,980,1010,1161,1165,1357,1398,1601,1612,1858,1901,2149,2151,2458,2517",
+    "name": "Partial sums and bisection of A086450.",
+    "comment": [
+        "Sum of inverses of a(n) is 1.5398789314089581123...",
+        "Conjecture: log(a(n))/log(n) grows unboundedly.",
+        "Conjecture: a(n) mod 2 repeats the 7-pattern 0,0,1,1,1,0,1.",
+        "The conjecture concerning the mod 2 pattern follows directly from the corresponding conjecture proved in A086450. - Lambert Herrgesell (zero815(AT)googlemail.com), May 08 2007"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A085765/b085765.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "a(n) = A086450(2n) = A086450(0) + ... + A086450(n). - _Charles R Greathouse IV_, Sep 26 2013"
+    ],
+    "maple": [
+        "b:= proc(n) local m; b(n):= `if`(n=0, 1,",
+        "      `if`(irem(n, 2, 'm')=1, b(m), a(m)))",
+        "    end:",
+        "a:= proc(n) a(n):= b(n) +`if`(n=0, 0, a(n-1)) end:",
+        "seq(a(n), n=0..100);  # _Alois P. Heinz_, Sep 26 2013"
+    ],
+    "mathematica": [
+        "b[0] = 1;",
+        "b[n_] := b[n] = If[EvenQ[n], Sum[b[n/2-k], {k, 0, n/2}], b[(n-1)/2]]; A085765 = Table[b[n], {n, 0, 100}] // Accumulate (* _Jean-Fran\u00e7ois Alcover_, Mar 28 2017 *)"
+    ],
+    "program": [
+        "(PARI) v=vector(1000);v[1]=1;s=1;for(n=2,1000,v[n]=if(n%2==0,v[n/2],s=s+v[(n+1)/2];print1(s\",\");s))",
+        "(PARI) lista(nn) = {v=vector(nn); v[1]=1; s=1; for(n = 2, nn, v[n]= if(n%2==0, v[n/2], s=s+v[(n+1)/2])); forstep(i = 1, nn, 2, print1(v[i], \", \"););} \\\\ _Michel Marcus_, Sep 26 2013"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Ralf Stephan_, Jul 22 2003",
+    "references": 3,
+    "revision": 21,
+    "time": "2017-03-28T14:55:19-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

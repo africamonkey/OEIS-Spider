@@ -1,0 +1,60 @@
+{
+    "number": 6558,
+    "id": "M2155",
+    "data": "1,2,33,242,11605,28374,171893,1043710445721,2197379769820",
+    "name": "Start of first run of n consecutive integers with same number of divisors.",
+    "comment": [
+        "The entry 40311 given in Guy and Wells is incorrect. - _Jud McCranie_, Jan 20 2002",
+        "a(10)<=14366256627859031643, a(11)<=193729158984658237901148, a(12)<=1284696910355238430481207644 - Bilgin Ali and Bruno Mishutka (bruno_mishutka(AT)hotmail.com), Dec 29 2006",
+        "a(10) <= 2642166652554075, a(11) <= 17707503256664346, a(12) <= 9827470582657267545. - _David Wasserman_, Feb 22 2008",
+        "a(13) <= 58032555961853414629544105797569, a(14) <= 25335305376270095455498383578391968. - _Vladimir Letsko_, Jun 13 2015",
+        "a(10) > 10^13. - _Giovanni Resta_, Jul 13 2015",
+        "a(15) <= 1956636199634182220409498715768827417. - _Vladimir Letsko_, Mar 01 2017",
+        "a(16) <= 37981337212463143311694743672867136611416. - _Vladimir Letsko_, Mar 17 2017",
+        "a(17) <= 768369049267672356024049141254832375543516. - _Vladimir Letsko_, Sep 12 2017"
+    ],
+    "reference": [
+        "J.-M. De Koninck, Ces nombres qui nous fascinent, Entry 33, pp 12, Ellipses, Paris 2008.",
+        "R. K. Guy \"Unsolved Problems in Number Theory\", section B18.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "D. Wells, \"The Penguin Dictionary of Curious and Interesting Numbers,\" Penguin Books, NY, 1986, pages 147 and 176."
+    ],
+    "link": [
+        "Vladimir A. Letsko, <a href=\"http://arxiv.org/abs/1510.07081\">Some new results on consecutive equidivisible integers</a>, arXiv:1510.07081 [math.NT], 2015.",
+        "Vladimir A. Letsko, Vasilii Dziubenko <a href=\"http://grani.vspu.ru/files/publics/1464684416.pdf\">On consecutive equidivisible integers</a> (in Russian)",
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/problems/prob_020.htm\">Problem 20: k consecutive numbers with the same number of divisors</a>",
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/problems/prob_061.htm\">Problem 61: problem 20 revisited</a>"
+    ],
+    "maple": [
+        "with(numtheory); A006558:=proc(q,w) local a,k,j,ok,n;",
+        "for j from 0 to w do for n from 1 to q do ok:=1; a:=tau(n);",
+        "  for k from 1 to j do if a<>tau(n+k) then ok:=0; break; fi; od;",
+        "  if ok=1 then print(n); break; fi;",
+        "od; od; end: A006558(10^10,20); # _Paolo P. Lava_, May 03 2013"
+    ],
+    "mathematica": [
+        "tau = DivisorSigma[0, #]&;",
+        "A006558[q_, w_] := Module[{a, k, j, ok, n}, For[j = 0, j <= w, j++, For[n = 1, n <= q, n++, ok = 1; a = tau[n]; For[k = 1, k <= j, k++, If[a != tau[n + k], ok = 0; Break[]]]; If [ok == 1, Print[n]; Break[]]]]];",
+        "A006558[2*10^5, 7] (* _Jean-Fran\u00e7ois Alcover_, Dec 10 2017, after _Paolo P. Lava_ *)"
+    ],
+    "program": [
+        "(PARI) isok(n, k) = {nb = numdiv(k); for (j=k+1, k+n-1, if (numdiv(j) != nb, return(0));); 1;}",
+        "a(n) = {k=1; while (!isok(n, k), k++); k;} \\\\ _Michel Marcus_, Feb 17 2016"
+    ],
+    "xref": [
+        "Cf. A000005, A005237, A005238, A006601, A049051, A019273, A039665.",
+        "Cf. A034173, A115158, A119479."
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, _Robert G. Wilson v_",
+    "ext": [
+        "a(8) from _Jud McCranie_, Jan 20 2002",
+        "a(9) conjectured by _David Wasserman_, Jan 08 2006",
+        "a(9) confirmed by _Jud McCranie_, Jan 14 2006"
+    ],
+    "references": 25,
+    "revision": 81,
+    "time": "2017-12-10T13:21:48-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

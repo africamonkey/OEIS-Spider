@@ -1,0 +1,62 @@
+{
+    "number": 160078,
+    "data": "22,26,28,35,37,41,45,46,47,49,60,61,67,75,77,78,84,86,89,90,93,94,95,97,105,106,108,110,116,120,122,124,125,131,135,139,141,147,149,152",
+    "name": "Positive integers which apparently never result in a palindrome under repeated applications of the function f(x) = x + (x with digits in binary expansion reversed). Binary analog of Lychrel numbers.",
+    "comment": [
+        "Number of iterations equals 1000, but all non-seeded numbers (under) fall out in 32 iterations"
+    ],
+    "link": [
+        "Diofant.ru <a href=\"http://diofant.ru/problem/287/\"> Problem: binary Lychrel numbers under 1024.</a> (Russian language!) [From Dremov Dmitry (dremovd(AT)gmail.com), May 03 2009]"
+    ],
+    "example": [
+        "22 = 10110",
+        "10110 + 01101 = 100011",
+        "100011 + 110001 = 1010100...",
+        "Not forming polyndrom in 1000 iterations."
+    ],
+    "program": [
+        "(Python) def toSystem( n, k ) :",
+        "....d = []",
+        "....while n > 0 :",
+        "........d.append( n % k )",
+        "........n /= k",
+        "....return d[ -1::-1]",
+        "def makeint( l, system = 10 ) :",
+        "....i = 0",
+        "....for d in l :",
+        "........i = i * system + d",
+        "....return i",
+        "maxn = 1024",
+        "it = []",
+        "for i in range( 1, maxn ) :",
+        "....d = toSystem( i, 2 )",
+        "....isLychrel = True",
+        "....for j in range( 1000 ) :",
+        "........d = toSystem( makeint( d, 2 ) + makeint( d[::-1], 2 ), 2 )",
+        "........if d == d[::-1] :",
+        "............it.append( j + 1 )",
+        "............isLychrel = False",
+        "............break",
+        "....if isLychrel :",
+        "........it.append( 0 )",
+        "print 'Maximum iterations for non-seed numbers', max( it )",
+        "Lychrel = []",
+        "for i in range( len(it) ) :",
+        "....if it[i] == 0 :",
+        "........Lychrel.append( i + 1 )",
+        "print 'Count of binary Lychrel numbers', len( Lychrel )",
+        "print 'All binary lichler under', maxn",
+        "print 'Decimal form', Lychrel",
+        "print 'Binary form', map( lambda x: ''.join( map( str, toSystem( x, 2 ) ) ), Lychrel )"
+    ],
+    "xref": [
+        "Binary A023108"
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "Dremov Dmitry (dremovd(AT)gmail.com), May 01 2009",
+    "references": 0,
+    "revision": 4,
+    "time": "2012-12-31T04:52:03-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

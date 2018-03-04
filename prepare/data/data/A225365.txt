@@ -1,0 +1,45 @@
+{
+    "number": 225365,
+    "data": "3,15,23,39,47,71,84,87,95,119,167,191,199,215,231,239,260,311,327,335,383,399,407,420,431,455,479,551,591,647,671,695,719,759,776,791,831,839,887,935,959,983,1031,1079,1140,1151,1199,1239,1271,1295,1319,1391,1439,1487,1511,1559,1679,1751,1799,1847,1959,1991,2015",
+    "name": "Negative fundamental discriminants with non-isomorphic class groups (negated).",
+    "comment": [
+        "More precisely, the least absolute values of negative fundamental discriminants with class groups non-isomorphic to all class groups for negative fundamental discriminants with smaller absolute values.",
+        "The n-th line of the linked file gives the invariant factor decomposition of the class group corresponding to the fundamental discriminant -a(n)."
+    ],
+    "link": [
+        "Rick L. Shepherd and Charles R Greathouse IV, <a href=\"/A225365/b225365.txt\">Table of n, a(n) for n = 1..10000</a> (first 7194 terms from Shepherd)",
+        "Rick L. Shepherd, <a href=\"http://libres.uncg.edu/ir/uncg/f/Shepherd_uncg_0154M_11099.pdf\">Binary quadratic forms and genus theory</a>, Master of Arts Thesis, University of North Carolina at Greensboro, 2013.",
+        "Rick L. Shepherd, <a href=\"/A225365/a225365.txt\">Invariant factor decompositions for corresponding class groups</a>"
+    ],
+    "example": [
+        "The fundamental discriminant -3 corresponds to the trivial class group. The fundamental discriminant -15 is the first negative fundamental discriminant encountered (least absolute value) whose class group has a different structure, isomorphic to Z_2. The fundamental discriminant -84 is the one with least absolute value whose class group is isomorphic to the Klein-4 group."
+    ],
+    "program": [
+        "(PARI)",
+        "{allocatemem(32000000);",
+        "\\\\ Increase precision to more than 100 digits to go beyond 7194 terms.",
+        "default(realprecision, 100);",
+        "terms_wanted = 7194;",
+        "G = Set(); k = 0;",
+        "while(length(G)<terms_wanted,",
+        "  k++;",
+        "  if(isfundamental(-k),",
+        "    F = bnfinit(quadpoly(-k,x), , [6,6,4]); \\\\ Without optional 3rd argument, Generalized Riemann Hypothesis assumed",
+        "    if(bnfcertify(F)<>1, print(\"Certify failed for \", -k, \" -- exiting (\", length(G), \" terms found)\"); break);",
+        "    if(setsearch(G, F.clgp.cyc)==0,",
+        "      G = setunion(G, [F.clgp.cyc]);",
+        "      write(\"b225365.txt\", length(G), \" \", k);",
+        "      write(\"a225365.txt\", length(G), \" \", F.clgp.cyc);",
+        "      if(length(G)%100==0, print1(\"...\", length(G), \"... \")))))}"
+    ],
+    "xref": [
+        "Cf. A003657."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Rick L. Shepherd_, May 05 2013",
+    "references": 2,
+    "revision": 16,
+    "time": "2015-12-26T02:21:26-05:00",
+    "created": "2013-05-06T01:49:04-04:00"
+}

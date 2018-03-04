@@ -1,0 +1,46 @@
+{
+    "number": 69490,
+    "data": "1373,3137,3797,6131,6173,6197,9719,11311,11317,17971,31379,61379,71971,113131,113173,113797,131311,131317,131797,179719,317971,431311,431797,617971,1131131,1131379,1311311,1313797,1317971,3131137,3131311",
+    "name": "Primes > 1000 in which every substring of lengths 2 and 3 are also prime.",
+    "comment": [
+        "For all terms: substrings of length 3 correspond to one of the 21 first terms of A069489. - _Reinhard Zumkeller_, Jun 08 2015"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A069490/b069490.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "example": [
+        "11317 is a term as the substrings of length 2 i.e. 11,13,31,17 and the three substrings of length 3 i.e. 113,131 and 317 are all prime."
+    ],
+    "mathematica": [
+        "Do[ If[ Union[ PrimeQ[ Map[ FromDigits, Partition[ IntegerDigits[ Prime[n]], 2, 1]]]] == Union[ PrimeQ[ Map[ FromDigits, Partition[ IntegerDigits[ Prime[n]], 3, 1]]]] == {True}, Print[ Prime[n]]], {n, PrimePi[1000] + 1, 10^5}]"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (fromList, deleteFindMin, union)",
+        "a069490 n = a069490_list !! (n-1)",
+        "a069490_list = f $ fromList [1..9] where",
+        "   f s | m < 1000               = f s''",
+        "       | h m && a010051' m == 1 = m : f s''",
+        "       | otherwise              = f s''",
+        "       where s'' = union s' $ fromList $ map (+ (m * 10)) [1, 3, 7, 9]",
+        "             (m, s') = deleteFindMin s",
+        "   h x = x < 100 && a010051' x == 1 ||",
+        "         a010051' (x `mod` 1000) == 1 &&",
+        "         a010051' (x `mod` 100) == 1 && h (x `div` 10)",
+        "-- _Reinhard Zumkeller_, Jun 08 2015"
+    ],
+    "xref": [
+        "Cf. A069488 and A069489.",
+        "Cf. A010051, A038618."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Mar 30 2002",
+    "ext": [
+        "Edited, corrected and extended by _Robert G. Wilson v_, Apr 12 2002"
+    ],
+    "references": 5,
+    "revision": 8,
+    "time": "2015-06-08T16:06:57-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

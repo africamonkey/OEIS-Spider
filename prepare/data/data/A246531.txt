@@ -1,0 +1,36 @@
+{
+    "number": 246531,
+    "data": "1,1,4,18,224,1320,42552,262864,12232320,169594560,6117023600,61920993024,8022787347456,56694391376896,5193025319432160,174746314698336000,10338252997184749568,121439552019384139776,26096843176349347142208,262144006402373705728000",
+    "name": "Number of endofunctions on [n] whose cycle lengths are divisors of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A246531/b246531.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = n! * [x^n] exp(Sum_{d|n} (-LambertW(-x))^d/d).",
+        "a(n) = A246522(n,n)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "egf:= k-> exp(add((-LambertW(-x))^d/d, d=divisors(k))):",
+        "a:= n-> n!*coeff(series(egf(n), x, n+1), x, n):",
+        "seq(a(n), n=0..20);",
+        "# second Maple program:",
+        "with(combinat):",
+        "b:= proc(n, i, k) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(multinomial(n, n-i*j, i$j)/j!*b(n-i*j, i-1, k)*",
+        "      (i-1)!^j, j=0..`if`(irem(k, i)=0, n/i, 0))))",
+        "    end:",
+        "a:= n-> add(b(j$2, n)*n^(n-j)*binomial(n-1, j-1), j=0..n):",
+        "seq(a(n), n=0..20);"
+    ],
+    "xref": [
+        "Main diagonal of A246522."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 28 2014",
+    "references": 2,
+    "revision": 6,
+    "time": "2014-08-28T17:02:00-04:00",
+    "created": "2014-08-28T17:02:00-04:00"
+}

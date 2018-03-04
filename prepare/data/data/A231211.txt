@@ -1,0 +1,43 @@
+{
+    "number": 231211,
+    "data": "1,1,2,5,14,46,177,790,4024,23056,146777,1027850,7852184,64985116,579191277,5530869310,56336971744,609708912976,6986749484177,84510154473170,1076016705993704,14385283719409636,201475033030143477,2950048762311387430,45073424916825354064",
+    "name": "Number of permutations of [n] avoiding simultaneously consecutive patterns 123, 1432, 2431, and 3421.",
+    "comment": [
+        "Number of permutations of [n] avoiding simultaneously consecutive step patterns up, up and up, down, down."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A231211/b231211.txt\">Table of n, a(n) for n = 0..250</a>",
+        "A. Baxter, B. Nakamura, and D. Zeilberger, <a href=\"http://www.math.rutgers.edu/~zeilberg/mamarim/mamarimhtml/auto.html\">Automatic generation of theorems and proofs on enumerating consecutive Wilf-classes</a>",
+        "S. Kitaev and T. Mansour, <a href=\"http://www.ru.is/kennarar/sergey/index_files/Papers/multi_avoid_gen_patterns.pdf\">On multi-avoidance of generalized patterns</a>"
+    ],
+    "formula": [
+        "a(n) ~ (1+exp(Pi/2)) * (2/Pi)^(n+1) * n!. - _Vaclav Kotesovec_, Aug 28 2014"
+    ],
+    "example": [
+        "a(3) = 5: 132, 213, 231, 312, 321.",
+        "a(4) = 14: 1324, 1423, 2143, 2314, 2413, 3142, 3214, 3241, 3412, 4132, 4213, 4231, 4312, 4321.",
+        "a(5) = 46: 13254, 14253, 14352, ..., 54231, 54312, 54321.",
+        "a(6) = 177: 132546, 132645, 142536, ..., 654231, 654312, 654321."
+    ],
+    "maple": [
+        "b:= proc(u, o, t) option remember; `if`(t=4, 0, `if`(u+o=0, 1,",
+        "      add(b(u+j-1, o-j, [2, 4, 2][t]), j=1..o)+",
+        "      add(b(u-j, o+j-1, [1, 3, 4][t]), j=1..u)))",
+        "    end:",
+        "a:= n-> b(n, 0, 1):",
+        "seq(a(n), n=0..30);",
+        "# second Maple program",
+        "n:=40: c[0,0]:=1: for i to n-1 do c[i,0]:=0 end do: for i to n-1 do for j to i do c[i,j] := c[i,j-1] + c[i-1,i-j] + 1 end do end do: 1, seq(c[k, k]/2, k=1..n-1); # _Sergei N. Gladkovskii_, Jul 27 2015"
+    ],
+    "xref": [
+        "Column k=0 of A231210.",
+        "Cf. A049774, A177479."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Nov 05 2013",
+    "references": 2,
+    "revision": 18,
+    "time": "2015-07-28T04:22:25-04:00",
+    "created": "2013-11-05T19:47:57-05:00"
+}

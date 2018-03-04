@@ -1,0 +1,53 @@
+{
+    "number": 217758,
+    "data": "1,55,1891,64261,2183005,74157931,2519186671,85578188905,2907139236121,98757155839231,3354836159297755,113965672260284461,3871478020690373941,131516287031212429555,4467682281040532230951,151769681268346883422801",
+    "name": "Triangular numbers of the form k^2 + k - 1.",
+    "link": [
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (35,-35,1)."
+    ],
+    "formula": [
+        "G.f.: -x*(1+20*x+x^2) / ( (x-1)*(x^2-34*x+1) ). a(n) = floor(9 * (17+sqrt(288))^n * (3-sqrt(8))/32). - _Giovanni Resta_, Mar 24 2013"
+    ],
+    "example": [
+        "Triangular(10) = 55 = 7^2 + 7 - 1, so 55 is in the sequence."
+    ],
+    "mathematica": [
+        "a[1]=1; a[2]=55; a[3]=1891; a[n_] := a[n] = 35*a[n-1] - 35*a[n-2] + a[n-3]; Array[a,20] (* _Giovanni Resta_, Mar 24 2013 *)",
+        "Table[Floor@(9 (17 + Sqrt@ 288)^n*(3 - Sqrt@ 8)/32), {n, 0, 16}] (* or *)",
+        "CoefficientList[Series[-x (1 + 20 x + x^2)/((x - 1) (x^2 - 34 x + 1)), {x, 0, 16}], x] (* _Michael De Vlieger_, Oct 08 2016 *)"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "typedef unsigned long long U64;",
+        "U64 rootPronic(U64 a) {",
+        "    U64 sr = 1L<<32, s, b;",
+        "    while (a < sr*(sr-1))  sr>>=1;",
+        "    for (b = sr>>1; b; b>>=1) {",
+        "        s = sr+b;",
+        "        if (a >= s*(s-1))  sr = s;",
+        "    }",
+        "    return sr;",
+        "}",
+        "int main() {",
+        "  U64 a, i, t;",
+        "  for (i=0; i < 1L<<32; ++i) {",
+        "      a = i*(i+1)/2 + 1;",
+        "      t = rootPronic(a);",
+        "      if (a == t*(t-1))  printf(\"%llu %llu %llu\\n\", i, t, a-1);",
+        "  }",
+        "  return 0;",
+        "}",
+        "(PARI) Vec(x*(1+20*x+x^2)/(1-35*x+35*x^2-x^3)+O(x^66)) \\\\ _Joerg Arndt_, Mar 25 2013"
+    ],
+    "xref": [
+        "Cf. A000217, A069017."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, Mar 23 2013",
+    "references": 0,
+    "revision": 22,
+    "time": "2016-10-08T10:08:52-04:00",
+    "created": "2013-03-27T06:05:10-04:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 2026,
+    "id": "M1416 N0554",
+    "data": "0,1,2,5,12,30,76,196,512,1353,3610,9713,26324,71799,196938,542895,1503312,4179603,11662902,32652735,91695540,258215664,728997192,2062967382,5850674704,16626415975,47337954326,135015505407,385719506620,1103642686382,3162376205180,9073807670316,26068895429376",
+    "name": "Generalized ballot numbers (first differences of Motzkin numbers).",
+    "comment": [
+        "Number of ordered trees with n+1 edges, having root of degree 2 and nonroot nodes of outdegree at most 2.",
+        "Sequence without the initial 0 is the convolution of the sequence of Motzkin numbers (A001006) with itself.",
+        "Number of horizontal steps at level zero in all Motzkin paths of length n. Example: a(3)=5 because in the four Motzkin paths of length 3, (HHH), (H)UD, UD(H) and UHD, where H=(1,0), U=(1,1), D=(1,-1), we have altogether five horizontal steps H at level zero (shown in parentheses).",
+        "Number of peaks at level 1 in all Motzkin paths of length n+1. Example: a(3)=5 because in the nine Motzkin paths of length 4, HHHH, HH(UD), H(UD)H, HUHD, (UD)HH, (UD)(UD), UHDH, UHHD and UUDD (where H=(1,0), U=(1,1), D=(1,-1)), we have five peaks at level 1 (shown between parentheses).",
+        "a(n) = number of Motzkin paths of length n+1 that start with an up step. - _David Callan_, Jul 19 2004",
+        "Could be called a Motzkin transform of A130716 because the g.f. is obtained from the g.f. x*A130716(x)= x(1+x+x^2) (offset changed to 1) by the substitution x -> x*A001006(x) of the independent variable. [_R. J. Mathar_, Nov 08 2008]"
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A002026/b002026.txt\">Table of n, a(n) for n = 0..500</a>",
+        "L. Carlitz, <a href=\"http://www.jstor.org/stable/2099558\">Solution of certain recurrences</a>, SIAM J. Appl. Math., 17 (1969), 251-259.",
+        "J. B. Cosgrave, <a href=\"/A103772/a103772.txt\">The Gauss-Factorial Motzkin connection</a> (Maple worksheet, change suffix to .mw)",
+        "R. De Castro, A. L. Ram\u00edrez and J. L. Ram\u00edrez, <a href=\"http://arxiv.org/abs/1310.2499\">Applications in Enumerative Combinatorics of Infinite Weighted Automata and Graphs</a>, arXiv preprint arXiv:1310.2449 [hep-ph], 2013.",
+        "R. Donaghey and L. W. Shapiro, <a href=\"http://dx.doi.org/10.1016/0097-3165(77)90020-6\">Motzkin numbers</a>, J. Combin. Theory, Series A, 23 (1977), 291-301.",
+        "Nancy S. S. Gu, Nelson Y. Li, and Toufik Mansour, <a href=\"http://dx.doi.org/10.1016/j.disc.2007.04.007\">2-Binary trees: bijections and related issues</a>, Discr. Math., 308 (2008), 1209-1221.",
+        "J. A. Sharp & N. J. A. Sloane, <a href=\"/A002026/a002026.pdf\">Correspondence, 1977</a>"
+    ],
+    "formula": [
+        "a(n) = sum(b = 1 to (n+1)/2) [ n choose (2b-1) ][ 2b choose b ]/(b+1).",
+        "Number of (s(0), s(1), ..., s(n)) such that s(i) is a nonnegative integer, s(0) = 0 = s(n), s(1) = 1, |s(i) - s(i-1)| <= 1 for i >= 2, Also T(n, n), where T is the array defined in A026105.",
+        "a(n) = sum{k=0..n-1, sum{i=0..k, C(k, 2i)*A000108(i+1) }}. - _Paul Barry_, Jul 18 2003",
+        "G.f. 4*z/(1-z+sqrt(1-2*z-3*z^2))^2. - _Emeric Deutsch_, Dec 27 2003.",
+        "a(n)=A005043(n+2)-A005043(n). - _Paul Barry_, Apr 17 2005",
+        "(n+3)*a(n) +(-3*n-4)*a(n-1) +(-n-1)*a(n-2) +3*(n-2)*a(n-3)=0. - _R. J. Mathar_, Dec 03 2012",
+        "a(n) ~ 3^(n+3/2) / (sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Feb 01 2014"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[4x/(1-x+Sqrt[1-2x-3x^2])^2,{x,0,30}],x] (* _Harvey P. Dale_, Jul 18 2011 *)",
+        "a[n_] := n*Hypergeometric2F1[(1-n)/2, 1-n/2, 3, 4]; Table[a[n], {n, 0, 26}] (* _Jean-Fran\u00e7ois Alcover_, Aug 13 2012 *)"
+    ],
+    "program": [
+        "(PARI) z='z+O('z^66); concat(0,Vec(4*z/(1-z+sqrt(1-2*z-3*z^2))^2)) \\\\ _Joerg Arndt_, Mar 08 2016"
+    ],
+    "xref": [
+        "Cf. A001006, A026300, A026107.",
+        "A diagonal of triangle A020474.",
+        "See A244884 for a variant."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Additional comments from _Emeric Deutsch_, Dec 27 2003"
+    ],
+    "references": 18,
+    "revision": 62,
+    "time": "2017-11-07T18:14:03-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

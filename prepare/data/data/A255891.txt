@@ -1,0 +1,63 @@
+{
+    "number": 255891,
+    "data": "2,4,240,348,368,380,19364665320,20210069880,20328267960,20673770040,20681420760,20735165880,20940748920,20959618680,21135474360,21196014840,21256222680,21302746920,21380630040,21405023640,21426252120,21465896760,21522002040,21544621560",
+    "name": "Numbers n such that the sum of the even divisors of n is equal to m! and the sum of the odd divisors of n is equal to k! for some integers m and k.",
+    "comment": [
+        "Numbers n such that A000593(n) = m! and A146076(n) = k! for some m and k.",
+        "Is this sequence finite? No further terms less than 10^6.",
+        "No further terms less than 10^9. - _Michel Marcus_, Mar 10 2015",
+        "sigma(a(25711)) >= 29! + 30!. - _Hiroaki Yamanouchi_, Mar 26 2015"
+    ],
+    "link": [
+        "Hiroaki Yamanouchi, <a href=\"/A255891/b255891.txt\">Table of n, a(n) for n = 1..25710</a>"
+    ],
+    "example": [
+        "240 is in the sequence because A000593(240)= 24 = 4! and A146076(240)= 720 = 6!"
+    ],
+    "maple": [
+        "for n from 2 by 2  to 20000 do:",
+        "   y:=divisors(n):n1:=nops(y):s0:=0:s1:=0:",
+        "     for k from 1 to n1 do:",
+        "       if irem(y[k],2)=0",
+        "        then",
+        "        s0:=s0+ y[k]:",
+        "        else",
+        "        s1:=s1+ y[k]:",
+        "      fi:",
+        "     od:",
+        "     ii:=0:",
+        "        for a from 1 to 20 while(ii=0)do:",
+        "         if s0=a!",
+        "          then",
+        "           for b from 1 to 20 while(ii=0) do:",
+        "             if s1=b!",
+        "              then",
+        "              ii:=1:print(n):",
+        "              else",
+        "             fi:",
+        "           od:",
+        "          fi:",
+        "        od:",
+        "      od:"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{d = Divisors@ n, lst = Array[Factorial, {449}]}, MemberQ[lst, Plus @@ Select[d, EvenQ]] && MemberQ[lst, Plus @@ Select[d, OddQ]]]; Select[Range@10000, fQ] (* _Michael De Vlieger_, Mar 10 2015 *)"
+    ],
+    "program": [
+        "(PARI) isoks(s) = {if (s==1, return (1)); f = 1; for (k=2, s, f *= k; if (f == s, return (1)); if (f > s, return (0)););}",
+        "isok(n) = my(sod = sumdiv(n, d, d*(d%2))); my(sed = sigma(n) - sod); sod && sed && isoks(sed) && isoks(sod); \\\\ _Michel Marcus_, Mar 10 2015"
+    ],
+    "xref": [
+        "Cf. A000593, A146076, A245015."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Mar 09 2015",
+    "ext": [
+        "a(7)-a(24) from _Hiroaki Yamanouchi_, Mar 26 2015"
+    ],
+    "references": 1,
+    "revision": 23,
+    "time": "2015-03-26T17:19:05-04:00",
+    "created": "2015-03-26T06:55:40-04:00"
+}

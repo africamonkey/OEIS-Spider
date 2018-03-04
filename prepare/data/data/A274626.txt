@@ -1,0 +1,52 @@
+{
+    "number": 274626,
+    "data": "0,0,0,1,3,9,27,63,147,343,735,1575,3375,6975,14415,29791,60543,123039,250047,504063,1016127,2048383,4112895,8258175,16581375,33227775,66585855,133432831,267126783,534776319,1070599167,2142244863,4286583807,8577357823,17158905855,34326194175,68669157375",
+    "name": "a(n) = Product_{i=0..2} (2^floor((n+i)/3)-1).",
+    "comment": [
+        "Tom Karzes, Jul 05 2016: (Start)",
+        "This is a three-dimensional analog of the holes-in-sheet-of-paper sequence A274230.",
+        "In d dimensions, assuming the axes for folding are selected in a round-robin fashion, the number of times a given dimension is folded is:",
+        "    floor((n+i)/d)",
+        "where i runs from 0 (for the last dimension to be folded) through d-1 (for the first dimension to be folded).",
+        "The corresponding number of internal dividing lines/planes/etc. is (2^floor((n+i)/d)-1).  The number of internal d-way intersections, which corresponds to the number of holes, is:",
+        "    Product_{i=0..d-1}(2^floor((n+i)/d)-1)",
+        "where d is the number of dimensions and n is the total number of folds.",
+        "Note that the first several nonzero entries in these sequences are the powers of 3. Specifically, in d dimensions, the first d entries are 0, followed by the first (d+1) powers of 3.",
+        "It's not hard to see why this is so. The first nonzero entry occurs at d folds, and the value is 1.  This is when you've folded once along each dimension.",
+        "After that, the next d folds each divide 2 old partitions into 4 new ones, i.e., they change the internal folds from 1 to 3. So for the next d entries you just multiply the previous entry by 3 (or more generally, by 3/1).",
+        "After that you multiply by 7/3 for the next d entries, then 15/7, then 31/15, etc. Each time you're just replacing one of the old factors with a new one, where each factor is one less than a power of two.",
+        "Here's an alternative formulation that avoids the iterated product.",
+        "For a given number of folds, there are only two factors, each raised to some exponent (with the sum of the exponents being the dimension d):",
+        "    v1 = 2^(n/d)-1",
+        "    v2 = 2^(n/d+1)-1",
+        "    p1 = d-mod(n,d)",
+        "    p2 = mod(n,d)",
+        "    holes = (v1^p1)*(v2^p2)",
+        "This flattens to:",
+        "    ((2^(n/d)-1)^(d-mod(n,d))) * ((2^(n/d+1)-1)^(mod(n,d)))",
+        "(End)"
+    ],
+    "reference": [
+        "Tom Karzes, Posting to Math Fun Mailing List, Jul 05 2016."
+    ],
+    "formula": [
+        "Empirical g.f.: x^3*(1+2*x^2) / ((1-x)*(1-2*x)*(1-2*x^3)*(1-4*x^3)). - _Colin Barker_, Jul 06 2016"
+    ],
+    "maple": [
+        "f:=(n,d) ->  mul(2^floor((n+i)/d)-1, i = 0 .. d-1);",
+        "[seq(f(n,3),n=0..40)];"
+    ],
+    "program": [
+        "(PARI) a(n) = prod(i=0, 2, 2^floor((n+i)/3)-1) \\\\ _Colin Barker_, Jul 06 2016"
+    ],
+    "xref": [
+        "Cf. A274230, A274627."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_, Jul 05 2016",
+    "references": 2,
+    "revision": 24,
+    "time": "2016-11-08T22:18:39-05:00",
+    "created": "2016-07-05T13:04:32-04:00"
+}

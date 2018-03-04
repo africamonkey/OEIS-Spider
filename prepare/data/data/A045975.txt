@@ -1,0 +1,49 @@
+{
+    "number": 45975,
+    "data": "1,2,4,9,15,21,24,28,32,36,45,55,65,75,85,90,96,102,108,114,120,133,147,161,175,189,203,217,224,232,240,248,256,264,272,280,297,315,333,351,369,387,405,423,441,450,460,470,480,490,500,510,520,530,540,561,583,605,627,649,671,693",
+    "name": "Take the first odd integer and multiple of 1, the next 2 even integers and multiples of 2, the next 3 odd integers and multiples of 3, the next 4 even integers and multiples of 4,...",
+    "comment": [
+        "A generalized Connell sequence."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A045975/b045975.txt\">Rows n=1..150 of triangle, flattened</a>"
+    ],
+    "example": [
+        "1;",
+        "2, 4;",
+        "9, 15, 21;",
+        "24, 28, 32, 36;",
+        "45, 55, 65, 75, 85;",
+        "90, 96, 102, 108, 114, 120;",
+        "133, 147, 161, 175, 189, 203, ..."
+    ],
+    "mathematica": [
+        "first[n_?EvenQ] := (n - 1)*n^2/2; first[n_?OddQ] := n*(n^2 - 2n + 3)/2; row[n_] := (ro = {first[n]}; next = first[n] + n; While[ Length[ro] < n, If[Mod[next , 2] == Mod[n, 2], AppendTo[ro, next]]; next = next + n]; ro); Flatten[ Table[row[n], {n, 1, 11}]](* _Jean-Fran\u00e7ois Alcover_, Jun 08 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a045975 n k = a045975_tabl !! (n-1) !! (k-1)",
+        "a045975_row n = a045975_tabl !! (n-1)",
+        "a045975_tabl = f 1 [1..] where",
+        "   f k xs = ys : f (k+1) (dropWhile (<= last ys) xs) where",
+        "     ys | even k    = take k ms",
+        "        | otherwise = take k $ filter odd ms",
+        "     ms = filter ((== 0) . (`mod` k)) xs",
+        "-- _Reinhard Zumkeller_, Jan 18 2012"
+    ],
+    "xref": [
+        "Cf. A001614, A033291.",
+        "Seen as a triangle read by rows: cf. A204558 (row sums), A005917 (central terms), A204556 (left edge), A204557 (right edge)."
+    ],
+    "keyword": "nonn,easy,nice,tabl",
+    "offset": "1,2",
+    "author": "Fang-kuo Huang (gsyps(AT)ms17.hinet.net)",
+    "ext": [
+        "More terms from _James A. Sellers_",
+        "Keyword tabl added by _Reinhard Zumkeller_, Jan 18 2012"
+    ],
+    "references": 6,
+    "revision": 16,
+    "time": "2013-07-13T12:02:06-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

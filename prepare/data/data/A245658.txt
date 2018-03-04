@@ -1,0 +1,44 @@
+{
+    "number": 245658,
+    "data": "1,1,22,1624,264962,79136637,38671111558,28642761340956,30413158977739302,44371247722932580948,86030010617294195269924,215785986252313362542154058,684854225048414942925120331598,2699657503162253569920254747627596,13010506207186236974375590663943378970",
+    "name": "G.f. A(x) satisfies: A(x)^3 = Sum_{n>=0} A247031(n)*x^n.",
+    "comment": [
+        "The terms of A247031 satisfy:",
+        "1 = Sum_{n>=0} A247031(n)*x^n * [Sum_{k=0..n+1} C(n+1, k)^3 * (-x)^k]^3.",
+        "Limit a(n)/A247031(n) = 1/3.",
+        "a(n) == 1 (mod 2) iff n = (4^k - 1)/3 for k>=0 (conjecture).",
+        "a(n) == 2 (mod 3) iff A247031(3*n) == 2 for n>=0 (mod 3) (conjecture), where A247031 is the self-convolution cube of this sequence."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A245658/b245658.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 22*x^2 + 1624*x^3 + 264962*x^4 + 79136637*x^5 +...",
+        "where the coefficients of the cube of the g.f.",
+        "A(x)^3 = 1 + 3*x + 69*x^2 + 5005*x^3 + 806148*x^4 + 239220375*x^5 +...",
+        "satisfies:",
+        "1 = 1*(1-x)^3 + 3*x*(1-2^3*x+x^2)^3 + 69*x^2*(1-3^3*x+3^3*x^2-x^3)^3 + 5005*x^3*(1-4^3*x+6^3*x^2-4^3*x^3+x^4)^3 + 806148*x^4*(1-5^3*x+10^3*x^2-10^3*x^3+5^3*x^4-x^5)^3 +...",
+        "OBSERVATIONS.",
+        "The terms of this sequence are odd at positions:",
+        "[0, 1, 5, 21, 85, 341, ..., (4^k-1)/3, ...].",
+        "The terms of this sequence are congruent to 2 modulo 3 at positions:",
+        "[4,12,31,36,37,38,40,58,85,93,108,109,110,111,114,120,166,174,247,255,...].",
+        "The terms of A247031 are congruent to 2 modulo 3 at positions:",
+        "[12,36,93,108,111,114,120,174,255,279,324,327,330,333,342,360,...]."
+    ],
+    "program": [
+        "(PARI) {A247031(n)=if(n==0, 1, -polcoeff(sum(m=0, n-1, A247031(m)*x^m*sum(k=0, m+1, binomial(m+1, k)^3 * (-x)^k +x*O(x^n) )^3 ), n))}",
+        "{a(n)=polcoeff(sum(m=0,n,A247031(m)*x^m +x*O(x^n))^(1/3), n)}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A247031."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Sep 13 2014",
+    "references": 2,
+    "revision": 24,
+    "time": "2014-09-13T18:49:31-04:00",
+    "created": "2014-09-13T18:45:49-04:00"
+}

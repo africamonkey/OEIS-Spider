@@ -1,0 +1,62 @@
+{
+    "number": 33496,
+    "data": "1,2,4,8,16,20,24,32,40,48,52,56,64,68,72,80,84,88,96,100,104,112,116,128,132,136,144,148,152,160,168,176,180,184,192,196,200,208,212,224,228,232,240,244,256,260,264,272,276,280,288,296,304,308,312,320,324",
+    "name": "Numbers n such that initial number is largest number in trajectory of Collatz (3x+1) problem.",
+    "comment": [
+        "Or, possible peak values in 3x+1 trajectories: 1,2 and n=16k+4,16k+8,16k but not for all k; those 4k numbers [like n=16k+12 and others] which cannot be such peaks are listed in A087252.",
+        "A008908(a(n)) = A159999(a(n)). - _Reinhard Zumkeller_, May 04 2009",
+        "Max(A070165(a(n),k): k=1..A008908(a(n))) = A070165(a(n),1) = a(n). - _Reinhard Zumkeller_, Oct 22 2015",
+        "a(n) = possible values of A025586(m) in increasing order. See A275109 (number of times each value of a(n) occurs in A025586). - _Jaroslav Krizek_, Jul 17 2016"
+    ],
+    "link": [
+        "T. D. Noe and Reinhard Zumkeller, <a href=\"/A033496/b033496.txt\">Table of n, a(n) for n = 1..10000</a>, first 2000 terms from T. D. Noe",
+        "Hartmut F. W. Hoft, <a href=\"/A033496/a033496.pdf\">initial Collatz fans</a>",
+        "<a href=\"/index/3#3x1\">Index entries for sequences related to 3x+1 (or Collatz) problem</a>"
+    ],
+    "example": [
+        "These peak values occur in 1, 3, 6, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 21, 22, 27, 30, 39, 44, 71, 75, 1579 [3x+1]-iteration trajectories started with different initial values. This list most probably is incomplete.",
+        "From _Hartmut F. W. Hoft_, Jun 24 2016: (Start)",
+        "Let n be the maximum in some Collatz trajectory and let F(n), the initial fan of n, be the set of all initial values less than or equal to n whose Collatz trajectories lead to n as their maximum. Then the size of F(n) never equals 2, 4, 5, 7 or 10 (see the link).",
+        "Conjecture: Every number k > 10 occurs as the size of F(n) for some n.",
+        "Fans F(n) of size k, for all 10 < k < 355, exist for 4 <= n <= 50,000,000. The largest fan in this range, F(41163712), has size 7450.",
+        "(End)"
+    ],
+    "mathematica": [
+        "Collatz[a0_Integer, maxits_:1000] := NestWhileList[If[EvenQ[ # ], #/2, 3# + 1] &, a0, Unequal[ #, 1, -1, -10, -34] &, 1, maxits]; (* Collatz[n] function definition by Eric Weisstein *)",
+        "Select[Range[324], Max[Collatz[#]] == # &] (* _T. D. Noe_, Feb 28 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a033496 n = a033496_list !! (n-1)",
+        "a033496_list = 1 : filter f [2, 4 ..] where",
+        "   f x = x == maximum (takeWhile (/= 1) $ iterate a006370 x)",
+        "-- _Reinhard Zumkeller_, Oct 22 2015",
+        "(MAGMA) Set(Sort([Max([k eq 1 select n else IsOdd(Self(k-1)) and not IsOne(Self(k-1)) select 3*Self(k-1)+1 else Self(k-1) div 2: k in [1..5*n]]): n in [1..2^10] | Max([k eq 1 select n else IsOdd(Self(k-1)) and not IsOne(Self(k-1)) select 3*Self(k-1)+1 else Self(k-1) div 2: k in [1..5*n]]) le 2^10])) - _Jaroslav Krizek_, Jul 17 2016",
+        "(Python)",
+        "def a(n):",
+        "    if n<2: return [1]",
+        "    l=[n, ]",
+        "    while True:",
+        "        if n%2==0: n/=2",
+        "        else: n = 3*n + 1",
+        "        if not n in l:",
+        "            l+=[n, ]",
+        "            if n<2: break",
+        "        else: break",
+        "    return l",
+        "print [n for n in xrange(1, 501) if max(a(n)) == n] # _Indranil Ghosh_, Apr 14 2017"
+    ],
+    "xref": [
+        "Cf. A025586, A087251-A087256, A015999, A275109.",
+        "Cf. A006370, A008908, A070165.",
+        "Cf. A095384 (contains a definition of Collatz[]).",
+        "Cf. A105730, A233293."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_Jeff Burch_",
+    "references": 14,
+    "revision": 44,
+    "time": "2018-01-08T02:11:48-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

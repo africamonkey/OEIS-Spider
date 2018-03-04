@@ -1,0 +1,40 @@
+{
+    "number": 127542,
+    "data": "0,2,4,7,12,22,42,76,139,267,516,999,1951,3824,7486,14681,28797,56191,108921,210746,410016,804971,1591352,3153835,6249154,12380967,24553237,48731373,96622022,191012244,376293782,739671592,1454332766,2867413428",
+    "name": "Number of subsets of {1,2,3,...,n} whose sum is prime.",
+    "link": [
+        "T. D. Noe and Charles R Greathouse IV, <a href=\"/A127542/b127542.txt\">Table of n, a(n) for n = 1..1000</a> (first 100 terms from Noe)"
+    ],
+    "example": [
+        "The subsets of {1,2,3} that sum to a prime are {1,2}, {2}, {3}, {2,3}. Thus a(3)=4."
+    ],
+    "maple": [
+        "with(combinat): a:=proc(n) local ct, pn, j:ct:=0: pn:=powerset(n): for j from 1 to 2^n do if isprime(add(pn[j][i],i=1..nops(pn[j]))) =true then ct:=ct+1 else ct:=ct fi: od: end: seq(a(n),n=1..18);"
+    ],
+    "mathematica": [
+        "g[n_] := Block[{p = Product[1 + z^i, {i, n}]},Sum[Boole[PrimeQ[k]]*Coefficient[p, z, k], {k, 0, n*(n + 1)/2}]];Array[g, 34] (* _Ray Chandler_, Mar 05 2007 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (subsequences)",
+        "a127542 = length . filter ((== 1) . a010051 . sum) .",
+        "                          subsequences . enumFromTo 1",
+        "-- _Reinhard Zumkeller_, Feb 22 2012, Oct 27 2010",
+        "(PARI) a(n)=my(v=Vec(prod(i=1,n,x^i+1)),s);forprime(p=2,#v,s+=v[p]);s \\\\ _Charles R Greathouse IV_, Dec 19 2014",
+        "(PARI) first(n)=my(v=vector(n),P=1,s); for(k=1,n, P*=1+'x^n; s=0; forprime(p=2,k*(k+1)/2,s+=polcoeff(P,p)); v[k]=s); v \\\\ _Charles R Greathouse IV_, Dec 19 2014"
+    ],
+    "xref": [
+        "Cf. A053632, A126024, A181522, A010051.",
+        "Row sums of A282516."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Emeric Deutsch_, Mar 03 2007",
+    "ext": [
+        "Extended by _Ray Chandler_, Mar 05 2007"
+    ],
+    "references": 5,
+    "revision": 21,
+    "time": "2017-02-17T19:51:23-05:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

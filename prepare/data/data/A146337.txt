@@ -1,0 +1,31 @@
+{
+    "number": 146337,
+    "data": "118,154,179,201,212,244,251,262,286,292,307,340,347,388,403,418,422,430,467,471,474,494,497,500,519,543,548,566,587,594,598,670,683,687,692,698,699,703,713,722,742,745,754,831,833,847,873,879,932,939,945",
+    "name": "Numbers k such that continued fraction of (1+sqrt(k))/2 has period 14.",
+    "comment": [
+        "For primes in this sequence see A146359."
+    ],
+    "example": [
+        "a(1) = 421 because continued fraction of (1+sqrt(421))/2 = 17, 5, 3, 1, 1, 1, 2, 26, 2, 1, 1, 1, 3, 5, 13, 5, 3, 1, 1, 1, 2, 26, 2, 1, 1, 1, 3, 5, 13, 5, 3, 1, 1, 1, 2, 26... has period (5, 3, 1, 1, 1, 2, 26, 2, 1, 1, 1, 3, 5, 13) length 14."
+    ],
+    "maple": [
+        "A := proc(n) option remember ; local c; try c := numtheory[cfrac](1/2+sqrt(n)/2,'periodic','quotients') ; RETURN(nops(c[2]) ); catch: RETURN(-1) end try ; end: isA146337 := proc(n) if A(n) = 14 then RETURN(true); else RETURN(false); fi; end: for k from 1 do if isA146337(k) then printf(\"%d, \",k) ; fi; od: [_R. J. Mathar_, Nov 08 2008]"
+    ],
+    "mathematica": [
+        "s = 10; aa = {}; Do[k = ContinuedFraction[(1 + Sqrt[n])/2, 1000]; If[Length[k] < 190, AppendTo[aa, 0], m = 1; While[k[[s ]] != k[[s + m]] || k[[s + m]] != k[[s + 2 m]] || k[[s + 2 m]] != k[[s + 3 m]] || k[[s + 3 m]] != k[[s + 4 m]], m++ ]; s = s + 1; While[k[[s ]] != k[[s + m]] || k[[s + m]] != k[[s + 2 m]] || k[[s + 2 m]] != k[[s + 3 m]] || k[[s + 3 m]] != k[[s + 4 m]], m++ ]; s = s + 1; While[k[[s ]] != k[[s + m]] || k[[s + m]] != k[[s + 2 m]] || k[[s + 2 m]] != k[[s + 3 m]] || k[[s + 3 m]] != k[[s + 4 m]], m++ ]; AppendTo[aa, m]], {n, 1, 500}]; bb = {}; Do[If[aa[[n]] == 14, AppendTo[bb, n]], {n, 1, Length[aa]}]; bb",
+        "cf14Q[n_]:=Module[{s=(1+Sqrt[n])/2},!IntegerQ[s]&&Length[ ContinuedFraction[ s][[2]]] == 14]; Select[Range[1000],cf14Q] (* _Harvey P. Dale_, Oct 15 2015 *)"
+    ],
+    "xref": [
+        "Cf. A000290, A078370, A146326-A146345, A146348-A146360."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Artur Jasinski_, Oct 30 2008",
+    "ext": [
+        "More terms from _R. J. Mathar_, Nov 08 2008"
+    ],
+    "references": 2,
+    "revision": 10,
+    "time": "2015-10-15T17:26:41-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

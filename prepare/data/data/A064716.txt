@@ -1,0 +1,42 @@
+{
+    "number": 64716,
+    "data": "72,232,288,520,584,800,808,1096,1152,1224,1312,1600,1664,1744,1800,1872,1960,2248,2312,2384,2592,2600,2824,3328,3392,3528,3600,4112,4176,4328,4624,5120,5328,5408,5904,6056,6120,6272,6352,6408,6568,6920,8080",
+    "name": "Smallest member of three consecutive numbers each of which is the sum of two nonzero squares (not necessarily different).",
+    "comment": [
+        "a(n) == 0 (modulo 4) since no integer == 3 (modulo 4) can be represented as the sum of two squares.",
+        "This sequence has as a subsequence 72, 288, 800, 1800, ... which is 8 * (triangular numbers)^2. Proof: If x = 8*(n(n+1)/2)^2 then x = (n(n+1))^2 + (n(n+1))^2, x+1 = ((n-1)(n+1))^2 + (n(n+2))^2 and x+2 = (n^2+n-1)^2 + (n^2+n+1)^2. - _Joshua Zucker_, Nov 01 2002",
+        "From _Altug Alkan_, Apr 13 2016",
+        "If n is in this sequence, so is n*(n+2). Proof:",
+        "If n is in this sequence, then n = a^2 + b^2, n+1 = c^2 + d^2, n+2 = e^2 + f^2 for a, b, c, d, e, f being nonzero integers.",
+        "So, n*(n+2) = (a^2 + b^2)*(e^2 + f^2) = (a*e + b*f)^2 + (a*f - b*e)^2. Note that a*f cannot be equal to b*e because of their definitions.",
+        "n*(n+2) + 1 = n^2 + 2*n + 1 = (n+1)^2. Since we know that n mod 4 = 0, then n+1 cannot be of the form 2*k^2, that is, c and d must be different. So (n+1)^2 is the sum of two nonzero squares because n+1 = c^2 + d^2.",
+        "n*(n+2) + 2 = (n+1)^2 + 1, that is obviously the sum of two nonzero squares.",
+        "So if n is in this sequence, then n*(n+2), n*(n+2) + 1 and n*(n+2) + 2 are the sums of two nonzero squares, that is n*(n+2) must also be member of this sequence.",
+        "Note that it can be produced by repeating of this result and n*(n+2)*(n*(n+2)+2)*(n*(n+2)*(n*(n+2)+2)+2)... is always a member, if n is a member. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A064716/b064716.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "72 = 6^2 + 6^2, 73 = 3^2 + 8^2, 74 = 5^2 + 7^2."
+    ],
+    "maple": [
+        "N:= 10000: # to get all terms <= N",
+        "S:= {seq(seq(a^2+b^2, b=1..floor(sqrt(N+2-a^2))),a=1..floor(sqrt(N+2)))}:",
+        "sort(convert(S intersect map(`-`,S,1) intersect map(`-`,S,2),list)); # _Robert Israel_, Apr 14 2016"
+    ],
+    "mathematica": [
+        "a = Table[n^2, {n, 1, 100}]; c = {}; Do[ c = Append[c, a[[i]] + a[[j]]], {i, 1, 100}, {j, 1, i} ]; c = Union[c]; c[[ Select[ Range[ Length[c] - 2], c[[ # ]] + 2 == c[[ # + 2 ]] & ]]]",
+        "Select[Range@ 8080, AllTrue[# + {0, 1, 2}, Length[ PowersRepresentations[#, 2, 2] /. {0, _} -> Nothing] > 0 &] &] (* _Michael De Vlieger_, Apr 13 2016, Version 10 *)"
+    ],
+    "xref": [
+        "Cf. A000404."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Oct 13 2001",
+    "references": 5,
+    "revision": 17,
+    "time": "2017-03-31T01:08:25-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

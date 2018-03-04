@@ -1,0 +1,65 @@
+{
+    "number": 81650,
+    "data": "2,5,13,73,409,801,1584,2241,30601,30601,78409,156825,862416,862416,7929009,28173825,196668004,196668004",
+    "name": "Least nonsquare whose remainder modulo k^2 is a square for all 0 < k <= n.",
+    "comment": [
+        "See A260709 for the (maybe more natural) variant of squares (mod k^2) instead of remainders equal to a square. - _M. F. Hasler_, Nov 17 2015"
+    ],
+    "reference": [
+        "Mark A. Herkommer, Number Theory, A Programmer's Guide, McGraw-Hill, New York, 1999, page 315."
+    ],
+    "example": [
+        "a(3) = 13 because for (mod 1) (A000037) is the set of all nonsquares, for (mod 4) (A079896) is the set beginning {5, 8, 12, 13, 17, 20, 21, 24, 28, 29, ...} and for (mod 9) (A081642) is the set beginning {10, 13, 18, 19, 22, 27, 28, 31, 37, 40, ...}. The first element of the intersection of these three sets is 13."
+    ],
+    "maple": [
+        "M:= 0:",
+        "for m from 2 while M < 15 do",
+        "   if (not issqr(m)) and andmap(issqr, [seq(m mod k^2, k=1..M+1)]) then",
+        "       A[M+1]:= m;",
+        "       for k from M+2 while issqr(m mod k^2) do A[k]:= m od:",
+        "       M:= k-1;",
+        "   fi",
+        "od:",
+        "seq(A[m],m=1..15); # _Robert Israel_, Nov 17 2015"
+    ],
+    "program": [
+        "(PARI) t=2; for(n=1,50, for(m=t,10^9, if(issquare(m), next); f=0; for(k=1,n,if(!issquare(m % k^2),f=1;break)); if(!f,print1(m\",\"); t=m; break)))",
+        "From _M. F. Hasler_, Nov 17 2015: (Start)",
+        "(PARI) A081650(n,t=2)=for(m=t,9e9,issquare(m)&&next; for(k=1,n,issquare(m%k^2)||next(2));return(m)) \\\\ The 2nd optional arg allows us to give a lower search limit, useful since a(n+1) >= a(n) by definition: see usage below.",
+        "(PARI) t=2;for(n=1,50, print1(t=A081650(n,t),\",\")) \\\\ (End)",
+        "(MATLAB)",
+        "N = 10^8;  % to get all terms <= N",
+        "B = ones(1,N);",
+        "B([1:floor(sqrt(N))].^2) = 0;",
+        "m = 1;",
+        "while true",
+        "  nsq = ones(m^2,1);",
+        "  nsq([1:m].^2)=0;",
+        "  S = nsq * ones(1,ceil(N/m^2));",
+        "  S = reshape(S,1,numel(S));",
+        "  B(S(1:N)>0) = 0;",
+        "  v = find(B,1,'first');",
+        "  if numel(v) == 0",
+        "    break",
+        "  end",
+        "  A(m) = v;",
+        "  m = m + 1;",
+        "end",
+        "A  % _Robert Israel_, Nov 17 2015"
+    ],
+    "xref": [
+        "Cf. A000037, A079896, A081642, A081643, A081644, A081645, A081646, A081647, A081648, A081649."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Mar 26 2003",
+    "ext": [
+        "Edited by _Ralf Stephan_, Mar 27 2003",
+        "Definition corrected and original PARI code updated by _M. F. Hasler_, Nov 17 2015",
+        "a(16) to a(18) from _Robert Israel_, Nov 17 2015"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2016-04-25T12:05:00-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

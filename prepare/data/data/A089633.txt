@@ -1,0 +1,61 @@
+{
+    "number": 89633,
+    "data": "0,1,2,3,5,6,7,11,13,14,15,23,27,29,30,31,47,55,59,61,62,63,95,111,119,123,125,126,127,191,223,239,247,251,253,254,255,383,447,479,495,503,507,509,510,511,767,895,959,991,1007,1015,1019,1021,1022,1023",
+    "name": "Numbers having not more than one 0 in their binary representation.",
+    "comment": [
+        "A023416(a(n))<=1; A023416(a(n))=A023532(n-2) for n>1;",
+        "A000120(a(u))<=A000120(a(v)) for u<v; A000120(a(n))=A003056(n).",
+        "Complement of A158582. - _Reinhard Zumkeller_, Apr 16 2009",
+        "Also union of A168604 and A030130. - _Douglas Latimer_, Jul 19 2012",
+        "Numbers of the form 2^t - 2^k - 1, 0 <= k < t.",
+        "A029931(a(n)) = n and A029931(m) != n for m < a(n). - _Reinhard Zumkeller_, Feb 28 2014",
+        "A265705(a(n),k) = A265705(a(n),a(n)-k), k = 0 .. a(n). - _Reinhard Zumkeller_, Dec 15 2015"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A089633/b089633.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Vladimir Shevelev, <a href=\"http://arxiv.org/abs/0801.0072\">On the Basis Polynomials in the Theory of Permutations with Prescribed Up-Down Structure</a>, arXiv:math.CO/0801.0072. See Section 14.",
+        "V. Shevelev, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL14/Shevelev/shevelev14.html\">Binomial Coefficient Predictors</a>, Journal of Integer Sequences, Vol. 14 (2011), Article 11.2.8",
+        "Vladimir Shevelev, <a href=\"http://www.emis.de/journals/INTEGERS/papers/m1/m1.Abstract.html\">The number of permutations with prescribed up-down structure as a function of two variables</a>, INTEGERS, 12 (2012), #A1.",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "formula": [
+        "a(0)=0, n>0: a(n+1) = Min{m>n: BinOnes(a(n))<=BinOnes(m)} with BinOnes=A000120.",
+        "If m = floor((sqrt(8*n+1) - 1) / 2), then a(n) = 2^(m+1) - 2^(m*(m+3)/2 - n) - 1. - _Carl R. White_, Feb 10 2009"
+    ],
+    "example": [
+        "From _Tilman Piesk_, May 09 2012: (Start)",
+        "This may also be viewed as a triangle:             In binary:",
+        "                  0                                         0",
+        "               1     2                                 01       10",
+        "             3    5    6                          011      101      110",
+        "           7   11   13   14                  0111     1011     1101     1110",
+        "        15   23   27   29   30          01111    10111    11011    11101    11110",
+        "      31  47   55   59   61   62",
+        "   63   95  111  119  123  125  126",
+        "Left three diagonals are A000225,  A055010, A086224. Right diagonal is A000918. Central column is A129868. Numbers in row n (counted from 0) have n binary 1s. (End)"
+    ],
+    "mathematica": [
+        "fQ[n_] := DigitCount[n, 2, 0] < 2; Select[ Range[0, 2^10], fQ] (* _Robert G. Wilson v_, Aug 02 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a089633 n = a089633_list !! (n-1)",
+        "a089633_list = [2 ^ t - 2 ^ k - 1 | t <- [1..], k <- [t-1,t-2..0]]",
+        "-- _Reinhard Zumkeller_, Feb 23 2012",
+        "(PARI) {insq(n) = local(dd, hf, v); v=binary(n);hf=length(v);dd=sum(i=1,hf,v[i]);if(dd<=hf-2,-1,1)}",
+        "{for(w=0,1536,if(insq(w)>=0,print1(w,\", \")))}",
+        "\\\\\\ _Douglas Latimer_, May 07 2013"
+    ],
+    "xref": [
+        "Cf. A007088, A011371.",
+        "Cf. A181741 (primes), union of A081118 and A000918, apart from initial -1.",
+        "Cf. A265705."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Reinhard Zumkeller_, Jan 01 2004",
+    "references": 20,
+    "revision": 60,
+    "time": "2016-05-31T11:46:00-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

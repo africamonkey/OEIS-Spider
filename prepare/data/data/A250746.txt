@@ -1,0 +1,42 @@
+{
+    "number": 250746,
+    "data": "0,1,2,3,5,10,15,18,19,35,42,51,55,70,85,93,95,106,155,217,310,745,1210,1342,3355,5185,6222,6330,9495,10413,11115,12070,13774,34435,41322,61983,68870,1601065116264571,2217993924228622,2324778503347862,2325380783693255",
+    "name": "Start with a(0) = 0; then a(n) = smallest number > a(n-1) such that a(n) divides concat(a(n), a(n-1), ..., a(0)).",
+    "comment": [
+        "This sequence is infinite. - _Robert G. Wilson v_, Dec 09 2014"
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A250746/b250746.txt\">Table of n, a(n) for n = 0..46</a>"
+    ],
+    "example": [
+        "a(0) = 0;",
+        "a(1) = 1 -> 10 / 1 = 10;",
+        "a(2) = 2 -> 210 / 2 = 105;",
+        "a(3) = 3 -> 3210 / 3 = 1070;",
+        "Now we cannot use 4 as the next term because 43210 / 4 = 21605 / 2.",
+        "a(4) = 5 -> 32105 / 5 = 6421; etc."
+    ],
+    "maple": [
+        "with(numtheory); P:=proc(q) local a,k,n; print(0); print(1); a:=10;",
+        "for n from 2 to q do if type((n*10^(1+ilog10(a))+a)/n,integer)",
+        "then a:=n*10^(1+ilog10(a))+a; print(n);",
+        "fi; od; end: P(10^9);"
+    ],
+    "mathematica": [
+        "f[lst_List] := Block[{k = lst[[-1]] + 1, id = FromDigits@ Flatten@ IntegerDigits@ Reverse@ lst}, While[ Mod[ id, k] > 0, k++]; Append[lst, k]]; Nest[f, {0}, 36] (* or *)",
+        "f[lst_List] := Block[{mn = lst[[-1]], id = FromDigits@ Flatten@ IntegerDigits@ Reverse@ lst}, d = Divisors@ id; Append[lst, Min@ Select[d, # > mn &]]]; Nest[f, {0, 1}, 36] (* _Robert G. Wilson v_, Dec 08 2014 *)"
+    ],
+    "xref": [
+        "Cf. A171785, A240588, A241811, A249398, A249399, A250745, A250747."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Paolo P. Lava_, Nov 27 2014",
+    "ext": [
+        "a(37) - a(46) from _Robert G. Wilson v_, Dec 08 2014"
+    ],
+    "references": 5,
+    "revision": 24,
+    "time": "2014-12-10T03:58:12-05:00",
+    "created": "2014-12-10T03:58:12-05:00"
+}

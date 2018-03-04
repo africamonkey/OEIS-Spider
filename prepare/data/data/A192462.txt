@@ -1,0 +1,40 @@
+{
+    "number": 192462,
+    "data": "1,1,3,18,134,1219,13051,160877,2243285,34910810,599778960,11274872675,230192376755,5072160696515,119969157163845,3031681775228370,81517508176185730,2323785190405594685,70003126753631869325,2222084456557049981875",
+    "name": "Constant term of the reduction by x^2->x+1 of the polynomial p(n,x) defined below in Comments.",
+    "comment": [
+        "The polynomial p(n,x) is defined by recursively by p(n,x)=(nx+1)*p(n-1,x) with p[0,x]=1.  For an introduction to reductions of polynomials by substitutions such as x^2->x+2, see A192232."
+    ],
+    "example": [
+        "The first four polynomials p(n,x) and their reductions are as follows:",
+        "p(0,x) = 1.",
+        "p(1,x)=1+x -> 1+x.",
+        "p(2,x)=(1+x)(1+2x) -> 3+5x.",
+        "p(3,x)=(1+x)(1+2x)(1+3x) -> 18+29x.",
+        "p(4,x)=(1+x)(1+2x)(1+3x)(1+4x) -> 134+217x.",
+        "From these, read",
+        "A192462=(1,1,3,18,134,...) and A192463=(0,1,5,29,217,...)"
+    ],
+    "mathematica": [
+        "q[x_] := x + 1; p[0, x_] := 1;",
+        "p[n_, x_] := (n*x + 1)*p[n - 1, x] /; n > 0",
+        "Table[Simplify[p[n, x]], {n, 1, 5}]",
+        "reductionRules = {x^y_?EvenQ -> q[x]^(y/2),",
+        "   x^y_?OddQ -> x q[x]^((y - 1)/2)};",
+        "t = Table[FixedPoint[Expand[#1 /. reductionRules] &, p[n, x]], {n, 1, 20}]",
+        "Table[Coefficient[Part[t, n], x, 0], {n, 1, 20}]",
+        "  (* A192462 *)",
+        "Table[Coefficient[Part[t, n], x, 1], {n, 1, 20}]",
+        "  (* A192463 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192463."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 01 2011",
+    "references": 2,
+    "revision": 7,
+    "time": "2012-03-30T18:57:34-04:00",
+    "created": "2011-07-05T13:05:53-04:00"
+}

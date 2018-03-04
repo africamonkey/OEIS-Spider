@@ -1,0 +1,56 @@
+{
+    "number": 52404,
+    "data": "0,1,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,30,31,33,34,35,36,37,38,39,40,41,43,44,45,46,47,48,49,50,51,53,54,55,56,57,58,59,60,61,63,64,65,66,67,68,69,70,71,73,74,75,76,77,78,79,80,81,83,84,85,86,87,88,89",
+    "name": "Numbers without 2 as a digit.",
+    "comment": [
+        "\"Bantu numbers\". - _Michael Joseph Halm_, Aug 13 2002"
+    ],
+    "reference": [
+        "M. J. Halm, Word Weirdness, Mpossibilities 66 (Feb. 1998), p. 5."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A052404/b052404.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "M. J. Halm, <a href=\"http://michaelhalm.tripod.com/id76.htm\">Games</a>",
+        "<a href=\"/index/Ar#10-automatic\">Index entries for 10-automatic sequences</a>."
+    ],
+    "formula": [
+        "If the offset were changed to 0: a(0) = 0, a(n+1) = f(a(n)+1,f(a(n)+1) where f(x,y) = if x<10 and x<>2 then y else if x mod 10 = 2 then f(y+1,y+1) else f(floor(x/10),y). - _Reinhard Zumkeller_, Mar 02 2008",
+        "a(n) = replace digits d > 1 by d + 1 in base-9 representation of n - 1. - _Reinhard Zumkeller_, Oct 07 2014"
+    ],
+    "maple": [
+        "a:= proc(n) local l, m; l, m:= 0, n-1;",
+        "      while m>0 do l:= (d->",
+        "        `if`(d<2, d, d+1))(irem(m, 9, 'm')), l",
+        "      od; parse(cat(l))/10",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Aug 01 2016"
+    ],
+    "mathematica": [
+        "ban2Q[n_]:=FreeQ[IntegerDigits[n],2]==True; Select[Range[0,89],ban2Q[#] &] (* _Jayanta Basu_, May 17 2013 *)",
+        "Select[Range[0,100],DigitCount[#,10,2]==0&] (* _Harvey P. Dale_, Apr 13 2015 *)"
+    ],
+    "program": [
+        "(MAGMA) [ n: n in [0..89] | not 2 in Intseq(n) ];  // Bruno Berselli, May 28 2011",
+        "(sh) seq 0 1000 | grep -v 2; # _Joerg Arndt_, May 29 2011",
+        "(Haskell)",
+        "a052404 = f . subtract 1 where",
+        "   f 0 = 0",
+        "   f v = 10 * f w + if r > 1 then r + 1 else r  where (w, r) = divMod v 9",
+        "-- _Reinhard Zumkeller_, Oct 07 2014",
+        "(PARI) lista(nn, d=2) = {for (n=0, nn, if (!vecsearch(vecsort(digits(n),,8),d), print1(n, \", \")););} \\\\ _Michel Marcus_, Feb 21 2015"
+    ],
+    "xref": [
+        "Cf. A004177, A004721, A072809.",
+        "Cf. A052382 (without 0), A052383 (without 1), A052405 (without 3), A052406 (without 4), A052413 (without 5), A052414 (without 6), A052419 (without 7), A052421 (without 8), A007095 (without 9)."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,3",
+    "author": "_Henry Bottomley_, Mar 13 2000",
+    "ext": [
+        "Offset changed by _Reinhard Zumkeller_, Oct 07 2014"
+    ],
+    "references": 12,
+    "revision": 38,
+    "time": "2017-02-12T19:05:42-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

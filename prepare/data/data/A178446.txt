@@ -1,0 +1,63 @@
+{
+    "number": 178446,
+    "data": "1,1,1,2,6,28,200,2196,37004,957304,38016960,2317631400,216893681800,31159166587056,6871649018572800,2326335506123418128,1208982377794384163088,964503557426086478029152,1181201363574177619007442944,2220650888749669503773432361504,6408743336016148761893699822360672",
+    "name": "Number of perfect matchings in the Triangle Graph of order n, reduced by the spire vertex if n mod 4 equals 1 or 2.",
+    "comment": [
+        "The Triangle Graph of order n has n rows with i vertices in row i. Each vertex is connected to the neighbors in the same row and up to two vertices in each of the neighboring rows. The Graph has A000217(n) vertices and 3*A000217(n-1) edges altogether.",
+        "In order to be able to find matchings the Triangle Graph of order n is reduced by the spire vertex (one vertex in row 1) and the incident edges if n mod 4 is in {1, 2}.  The resulting graph has an even number of vertices."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A178446/b178446.txt\">Table of n, a(n) for n = 0..60</a>",
+        "Propp, J., Enumeration of matchings: problems and progress, in L. J. Billera et al. (eds.), <a href=\"http://www.msri.org/publications/books/Book38/contents.html\">New Perspectives in Algebraic Combinatorics</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PerfectMatching.html\">Perfect Matching</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TriangleGraph.html\">Triangle Graph</a>"
+    ],
+    "example": [
+        "4 example graphs:                       o",
+        ".                                      / \\",
+        ".                          o          o---o",
+        ".                         / \\        / \\ / \\",
+        ".                ( )     o---o      o---o---o",
+        ".                       / \\ / \\    / \\ / \\ / \\",
+        ".           ( ) o---o  o---o---o  o---o---o---o",
+        "Order:       1    2        3            4",
+        "Vertices:    0    2        6           10",
+        "Edges:       0    1        9           18",
+        "Matchings:   1    1        2            6"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "a:= proc(n) option remember; local i, j, h0, h1, M, s, t;",
+        "      if n<2 then 1",
+        "    else s:= `if`(member(irem(n, 4), [1, 2]), 1, 0);",
+        "         M:= Matrix((n+1)*n/2 -s, shape=skewsymmetric);",
+        "         if s=1 then M[1,2]:=1 fi;",
+        "         for j from 1+s to n-1 do",
+        "           h0:= j*(j-1)/2 +1-s;",
+        "           h1:= h0+j;",
+        "           t:= 1;",
+        "           for i from 1 to j do",
+        "             M[h1, h1+1]:= 1;",
+        "             M[h1, h0]:= t;",
+        "             h1:= h1+1;",
+        "             M[h1, h0]:= t;",
+        "             h0:= h0+1;",
+        "             t:= -t",
+        "           od",
+        "         od;",
+        "         sqrt(Determinant(M))",
+        "      fi",
+        "    end:",
+        "seq(a(n), n=0..15);"
+    ],
+    "xref": [
+        "Cf. A039907, A071093, A182797."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Dec 24 2010",
+    "references": 4,
+    "revision": 26,
+    "time": "2014-11-16T11:01:35-05:00",
+    "created": "2010-11-12T14:27:01-05:00"
+}

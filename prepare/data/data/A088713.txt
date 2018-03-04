@@ -1,0 +1,65 @@
+{
+    "number": 88713,
+    "data": "1,1,2,6,24,118,674,4308,30062,225266,1791964,15009118,131566314,1201452248,11389283418,111761444078,1132680800640,11834071103246,127261591139010,1406778021294220,15967144849210158,185897394076705298",
+    "name": "G.f. A(x) satisfies A(x/A(x)) = 1/(1-x).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A088713/b088713.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = 1 + x*A(x)*A(1-1/A(x)).",
+        "G.f.: A(x*g(x)) = g(x) = (1-1/A(x))/x where g(x) is the g.f. of A088714.",
+        "From _Paul D. Hanna_, Dec 06 2009: (Start)",
+        "G.f. satisfies: A(x) = 1 + A(x)*Series_Reversion(x/A(x)).",
+        "G.f. satisfies: A( (x/(1+x)) / A(x/(1+x)) ) = 1 + x.",
+        "(End)",
+        "Logarithmic derivative: given g.f. A(x), let G(x) = A(x*G(x)) be the g.f. of A088714, then A'(x)/A(x) = (G(x) + x*G'(x)) / (1 - x*G(x))."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 6*x^3 + 24*x^4 + 118*x^5 + 674*x^6 +...",
+        "Illustration of logarithmic derivation.",
+        "If we form an array of coefficients of x^k in A(x)^n, n>=1, like so:",
+        "A^1: [1],1,  2,   6,   24,   118,   674,    4308, ...;",
+        "A^2: [1, 2], 5,  16,   64,   308,  1716,   10724, ...;",
+        "A^3: [1, 3,  9], 31,  126,   600,  3278,   20070, ...;",
+        "A^4: [1, 4, 14,  52], 217,  1032,  5560,   33440, ...;",
+        "A^5: [1, 5, 20,  80,  345], 1651,  8820,   52270, ...;",
+        "A^6: [1, 6, 27, 116,  519,  2514],13385,   78420, ...;",
+        "A^7: [1, 7, 35, 161,  749,  3689, 19663], 114269, ...; ...",
+        "then the sums of the coefficients of x^k, k=0..n-1, in A(x)^n (shown above in brackets) begin:",
+        "1 = 1;",
+        "1 + 2 = 3;",
+        "1 + 3 +  9 = 13;",
+        "1 + 4 + 14 +  52 = 71;",
+        "1 + 5 + 20 +  80 +  345 = 451;",
+        "1 + 6 + 27 + 116 +  519 +  2514 = 3183;",
+        "1 + 7 + 35 + 161 +  749 +  3689 + 19663 = 24305; ...",
+        "and equal the coefficients in log(A(x)):",
+        "log(A(x)) = x + 3*x^2/2 + 13*x^3/3 + 71*x^4/4 + 451*x^5/5 + 3183*x^6/6 + 24305*x^7/7 + 197551*x^8/8 +...",
+        "The main diagonal in the above table forms the g.f. G(x) of A088714:",
+        "[1/1, 2/2, 9/3, 52/4, 345/5, 2514/6, 19663/7, ...]",
+        "where G(x) = 1 + x + 3*x^2 + 13*x^3 + 69*x^4 + 419*x^5 + 2809*x^6 +...",
+        "satisfies A'(x)/A(x) = (G(x) + x*G'(x)) / (1 - x*G(x))."
+    ],
+    "mathematica": [
+        "terms = 22; A[_] = 1; Do[A[x_] = 1 + x*A[x]*A[1 - 1/A[x]] + O[x]^j // Normal, {j, terms}]; CoefficientList[A[x], x] (* _Jean-Fran\u00e7ois Alcover_, Jan 15 2018 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=local(A=1+x);for(i=1,n,A=(1+A*serreverse(x/(A+x*O(x^n))))^1);polcoeff(A,n)",
+        "for(n=0,30,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Dec 06 2009",
+        "(PARI) {a(n)=local(A=1+x);if(n==0,1,for(i=1,n,",
+        "A=1+x*exp(sum(k=1,n-1,sum(j=0,k,polcoeff(A^k+x*O(x^j),j))*x^k/k)+x*O(x^n))));",
+        "polcoeff(A+x*O(x^n),n)}",
+        "for(n=0,30,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Dec 09 2013"
+    ],
+    "xref": [
+        "Cf. A088714.",
+        "Variants: A154677, A168448, A168449, A168478, A168479."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Oct 12 2003",
+    "references": 8,
+    "revision": 19,
+    "time": "2018-01-15T08:52:24-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

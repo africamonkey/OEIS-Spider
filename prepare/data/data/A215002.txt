@@ -1,0 +1,47 @@
+{
+    "number": 215002,
+    "data": "1,2,10,60,398,2764,19796,144536,1070294,8007052,60380940,458185992,3494554380,26764583096,205711091880,1585822364592,12256625999718,94942581080204,736895626109148,5729374337686696,44615143884080996,347905737091032552,2716349710039969688",
+    "name": "Number of all solid standard Young tableaux of shape [[n,k],[n-k]] for 0<=k<=n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A215002/b215002.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "S. B. Ekhad, D. Zeilberger, <a href=\"https://arxiv.org/abs/1202.6229\">Computational and Theoretical Challenges on Counting Solid Standard Young Tableaux</a>, arXiv:1202.6229v1 [math.CO], 2012",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau\">Young tableau</a>"
+    ],
+    "formula": [
+        "See Maple programs.",
+        "a(n) ~ sqrt((5*sqrt(5))/2-11/2) * 8^n / sqrt(Pi*n). - _Vaclav Kotesovec_, Jul 16 2014"
+    ],
+    "maple": [
+        "b:= proc(x, y, z) option remember; `if`(z>y, b(x, z, y),",
+        "      `if`({x, y, z}={0}, 1, `if`(x>y and x>z, b(x-1, y, z), 0)+",
+        "      `if`(y>0, b(x, y-1, z), 0)+ `if`(z>0, b(x, y, z-1), 0)))",
+        "    end:",
+        "a:= n-> add(b(n, k, n-k), k=0..n):",
+        "seq(a(n), n=0..25);",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n<4, [1, 2, 10, 60][n+1],",
+        "      ((1640*n^8 -1180*n^7 -7114*n^6 +5615*n^5 +20240*n^4 -35170*n^3",
+        "       +20379*n^2 -4050*n) *a(n-1) +(-7640*n^8 +14560*n^7 +47374*n^6",
+        "       -140900*n^5 -37160*n^4 +601810*n^3 -944154*n^2 +580680*n -113400)",
+        "       *a(n-2) +(-28800*n^8 +181440*n^7 -138240*n^6 -874800*n^5 +670680*n^4",
+        "       +3165480*n^3 -3646440*n^2 -12960*n -453600) *a(n-3) +(207360*n^8",
+        "       -1451520*n^7 +912384*n^6 +11767680*n^5 -15720480*n^4 -42042240*n^3",
+        "       +92516256*n^2 -50388480*n +16329600) *a(n-4)) / (n* (n+1) *(2*n-1)",
+        "       *(2*n+1) *(20*n^4-47*n^2-33*n+90)))",
+        "    end:",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[x_, y_, z_] := b[x, y, z] = If[z>y, b[x, z, y], If[Union[{x, y, z}] == {0}, 1, If[x>y && x>z, b[x-1, y, z], 0] + If[y>0, b[x, y-1, z], 0] + If[z>0, b[x, y, z-1], 0]]]; T[n_, k_] := b[n, k, n-k]; a[n_] := Sum[T[n, k], {k, 0, n}]; Table[a[n], {n, 0, 22}] (* _Jean-Fran\u00e7ois Alcover_, Feb 05 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Row sums of A214775."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Jul 30 2012",
+    "references": 7,
+    "revision": 26,
+    "time": "2017-07-19T19:42:00-04:00",
+    "created": "2012-07-31T20:21:53-04:00"
+}

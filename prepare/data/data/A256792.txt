@@ -1,0 +1,37 @@
+{
+    "number": 256792,
+    "data": "1,4,6,7,9,11,13,14,16,17,20,22,23,25,26,28,31,33,34,36,37,39,41,44,46,47,49,52,54,56,59,61,62,64,66,69,71,73,76,78,79,81,82,85,88,90,92,95,97,98,100,102,103,106,109,111,113,116,118,119,121,123,125",
+    "name": "Numbers whose minimal alternating squares representation has positive trace.",
+    "comment": [
+        "See A256789 for definitions."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A256792/b256792.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "R(1) = 1; trace = 1, positive.",
+        "R(2) = 4 - 2; trace = -2, negative.",
+        "R(3) = 4 - 1; trace = -1, negative."
+    ],
+    "mathematica": [
+        "b[n_] := n^2; bb = Table[b[n], {n, 0, 1000}];",
+        "s[n_] := Table[b[n], {k, 1, 2 n - 1}];",
+        "h[1] = {1}; h[n_] := Join[h[n - 1], s[n]];",
+        "g = h[100]; r[0] = {0}; r[1] = {1}; r[2] = {4, -2};",
+        "r[n_] := If[MemberQ[bb, n], {n}, Join[{g[[n]]}, -r[g[[n]] - n]]];",
+        "Table[r[n], {n, 0, 120}] (* A256789 *)",
+        "u = Flatten[Table[Last[r[n]], {n, 1, 1000}]];  (* A256791 *)",
+        "Select[Range[800], u[[#]] > 0 &] (* A256792 *)",
+        "Select[Range[800], u[[#]] < 0 &] (* A256793 *)"
+    ],
+    "xref": [
+        "Cf. A256789, A256793 (complement)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Apr 13 2015",
+    "references": 4,
+    "revision": 7,
+    "time": "2015-04-14T11:04:49-04:00",
+    "created": "2015-04-14T11:04:49-04:00"
+}

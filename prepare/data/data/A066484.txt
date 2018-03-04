@@ -1,0 +1,41 @@
+{
+    "number": 66484,
+    "data": "1113,1131,1311,2226,2262,2622,3111,3339,3393,3933,6222,9333,11133,11313,11331,13113,13131,13311,22266,22626,22662,26226,26262,26622,31113,31131,31311,33111,33399,33939,33993,39339,39393,39933,62226,62262,62622,66222,93339,93393,93933,99333,111333,111339,111393",
+    "name": "Consists of at least 2 distinct digits (repetition of digits allowed but zeros not allowed), all of whose \"rotations\" (including the number itself) are exact multiples of its distinct digits.",
+    "comment": [
+        "\"Rotation\" of a (multi-digit) number involves taking the first digit of the number and putting it at the end to form a new number. For example, successive rotations of 1234 yield the numbers 2341, 3412 and 4123 (another rotation would give you back the original number).",
+        "Subsequence of A034838, A052382 and of A139819. - _Reinhard Zumkeller_, Nov 29 2012"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A066484/b066484.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Ken Duisenberg, Puzzle of the Week (Dec 14, 2001), <a href=\"http://www.ecst.csuchico.edu/~kend/potw/archive/011214.html\">Dividing Rotated Numbers</a>"
+    ],
+    "example": [
+        "The rotations of 137179 are 371791, 717913, 179137, 791371, 913717, 137179; all these are divisible by 1,3,7,9."
+    ],
+    "mathematica": [
+        "ddQ[n_]:=Module[{idn=IntegerDigits[n]},DigitCount[n,10,0]==0 && Length[Union[idn]]>1 && And@@Flatten[Divisible[#,Union[idn]]&/@ (FromDigits/@Table[RotateRight[idn,i], {i,Length[idn]}])]]; Select[Range[10,200000],ddQ]  (* _Harvey P. Dale_, Mar 30 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "-- import Data.List (nub, inits, tails)",
+        "a066484 n = a066484_list !! (n-1)",
+        "a066484_list = filter h [1..] where",
+        "   h x = notElem '0' xs && length (nub xs) > 1 &&",
+        "         all d (map read $ zipWith (++)",
+        "               (tail $ tails xs) (tail $ inits xs)) where xs = show x",
+        "   d u = g u where",
+        "         g v = v == 0 || mod u d == 0 && g v' where (v', d) = divMod v 10",
+        "-- _Reinhard Zumkeller_, Nov 29 2012"
+    ],
+    "keyword": "base,nice,nonn",
+    "offset": "1,1",
+    "author": "Sudipta Das (juitech(AT)vsnl.net), Jan 02 2002",
+    "ext": [
+        "Corrected and extended by _Harvey P. Dale_, Mar 30 2011"
+    ],
+    "references": 4,
+    "revision": 17,
+    "time": "2015-02-06T13:20:15-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 82173,
+    "data": "1,1,12,155,2124,30482,453432,6936799,108507180,1727970542,27924685416,456820603086,7550600079672,125905525750500,2115511349837040,35782547891727495,608787760350045420,10411451736723707990",
+    "name": "a(0)=1, for n>=1 a(n)=sum(k=0,n,11^k*N(n,k)) where N(n,k) =1/n*C(n,k)*C(n,k+1) are the Narayana numbers (A001263).",
+    "comment": [
+        "More generally coefficients of (1+m*x-sqrt(m^2*x^2-(2*m+4)*x+1))/((2*m+2)*x) are given by : a(n)=sum(k=0,n,(m+1)^k*N(n,k))",
+        "The Hankel transform of this sequence is 11^C(n+1,2) . - _Philippe Del\u00e9ham_, Oct 29 2007"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A082173/b082173.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "G.f. (1+10*x-sqrt(100*x^2-24*x+1))/(22*x)",
+        "a(n) = Sum_{k=0..n} A088617(n, k)*11^k*(-10)^(n-k) . - _Philippe Del\u00e9ham_, Jan 21 2004",
+        "a(n) = [12(2n-1)a(n-1) - 100(n-2)a(n-2)] / (n+1) for n>=2, a(0) = a(1) = 1 . - _Philippe Del\u00e9ham_, Aug 19 2005",
+        "a(n) = upper left term in M^n, M = the production matrix:",
+        "1, 1",
+        "11, 11, 11",
+        "1, 1, 1, 1",
+        "11, 11, 11, 11, 11",
+        "1, 1, 1, 1, 1, 1",
+        "...",
+        "- _Gary W. Adamson_, Jul 08 2011",
+        "a(n) ~ sqrt(22+12*sqrt(11))*(12+2*sqrt(11))^n/(22*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Oct 14 2012",
+        "G.f.: 1/(1 - x/(1 - 11*x/(1 - x/(1 - 11*x/(1 - x/(1 - ...)))))), a continued fraction. - _Ilya Gutkovskiy_, Aug 10 2017"
+    ],
+    "maple": [
+        "A082173_list := proc(n) local j, a, w; a := array(0..n); a[0] := 1;",
+        "for w from 1 to n do a[w] := a[w-1]+11*add(a[j]*a[w-j-1],j=1..w-1)od;",
+        "convert(a, list) end: A082173_list(17); # _Peter Luschny_, May 19 2011"
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[(1+10*x-Sqrt[100*x^2-24*x+1])/(22*x),{x,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Oct 14 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,1,sum(k=0,n,11^k/n*binomial(n,k)*binomial(n,k+1)))"
+    ],
+    "xref": [
+        "Cf. A001003, A007564, A059231."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Benoit Cloitre_, May 10 2003",
+    "references": 7,
+    "revision": 30,
+    "time": "2017-08-10T09:08:12-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

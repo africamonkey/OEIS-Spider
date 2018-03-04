@@ -1,0 +1,52 @@
+{
+    "number": 215160,
+    "data": "1,21,2231,28261,611123,1200341,3427673,2202416417,11102657671",
+    "name": "Odd numbers n with the property that the binary representation of n is the same as the decimal representation of the smallest multiple of n that can be represented with only 1's and 0's.",
+    "comment": [
+        "All numbers that are a power of 2 times a member of the sequence share the property that the binary representation is the same as the decimal representation of the first 1's and 0's multiple.",
+        "Of the values listed, only 1200341 and 3427673 are primes. - _Jonathan Vos Post_, Aug 09 2012"
+    ],
+    "formula": [
+        "{odd n: n*A079339(n) = A007088(n)} . - _R. J. Mathar_, Aug 09 2012"
+    ],
+    "example": [
+        "For example 21*481=10101 (the first multiple of 21 containing only 1's and 0's) and the binary representation of 21 is 10101."
+    ],
+    "maple": [
+        "rebase := proc(n,bin,bout)",
+        "    local a,c,i;",
+        "    a := 0 ;",
+        "    c := convert(n,base,bin) ;",
+        "    add( op(i,c)*bout^(i-1),i=1..nops(c)) ;",
+        "end proc:",
+        "isA079339 := proc(n,c)",
+        "    local c2,b;",
+        "    if modp(c,n) > 0 then",
+        "        return false;",
+        "    end if;",
+        "    c2 := rebase(c,10,2) ;",
+        "    for b from 1 to c2-1 do",
+        "        if modp( rebase(b,2,10),n) = 0 then",
+        "            return false;",
+        "        end if;",
+        "    end do:",
+        "    return true ;",
+        "end proc:",
+        "for n from 1 by 2 do",
+        "    sb := rebase(n,2,10) ;",
+        "    if isA079339(n,sb) then",
+        "        print(n);",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Aug 09 2012"
+    ],
+    "xref": [
+        "Cf. A079339."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "_Patrick McKinley_, Aug 05 2012",
+    "references": 0,
+    "revision": 21,
+    "time": "2014-03-08T01:53:13-05:00",
+    "created": "2012-08-09T11:00:53-04:00"
+}

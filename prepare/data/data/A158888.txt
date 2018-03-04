@@ -1,0 +1,35 @@
+{
+    "number": 158888,
+    "data": "1,1,3,21,305,8785,497089,55504321,12305179649,5437293562113,4797448178045953,8459278545576012801,29821007074850747998209,210213196038821563873677313,2963378701144932768795387346945",
+    "name": "G.f. satisfies: A(x) = Sum_{n>=0} x^n * A(2^n*x)^n.",
+    "comment": [
+        "Compare g.f. to the g.f. C(x) of the Catalan numbers:",
+        "C(x) = Sum_{n>=0} x^n * C(x)^n."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} 2^((n-k)*k) * { [x^(n-k)] A(x)^k }, where [x^(n-k)] A(x)^k denotes the coefficient of x^(n-k) in A(x)^k."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 3*x^2 + 21*x^3 + 305*x^4 + 8785*x^5 +...",
+        "A(2x) = 1 + 2*x + 12*x^2 + 168*x^3 + 4880*x^4 + 281120*x^5 +...",
+        "A(4x)^2 = 1 + 8*x + 112*x^2 + 3072*x^3 + 169216*x^4 +...",
+        "A(8x)^3 = 1 + 24*x + 768*x^2 + 41984*x^3 + 4411392*x^4 +...",
+        "A(16x)^4 = 1 + 64*x + 4608*x^2 + 507904*x^3 + 102432768*x^4 +...",
+        "A(32x)^5 = 1 + 160*x + 25600*x^2 + 5734400*x^3 + 2233466880*x^4 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x);for(n=2,n, A=sum(k=0,n,x^k*subst(A,x,x*2^k+x*O(x^n))^k));polcoeff(A,n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n)=local(A=1+x); for(n=2, n, A=sum(k=0, n, x^k*subst(A, x, x*2^k+x*O(x^n))^k)); sum(k=0,n,2^((n-k)*k)*polcoeff(A^k,n-k))}"
+    ],
+    "xref": [
+        "Cf. A178089, A230316."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, May 01 2009",
+    "references": 2,
+    "revision": 6,
+    "time": "2013-10-15T21:33:10-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 216239,
+    "data": "0,0,1,4,34,260,2275,21784,228676,2614296,32372805,431971100,6182204006,94495208444,1536740258599,26498747241680,482990781797000,9279452377499504,187442757190618761,3971627425918503156,88084356619901450410,2040857112777615061300",
+    "name": "Total number of inversions in all derangement permutations of [n].",
+    "link": [
+        "Max Alekseyev and Alois P. Heinz, <a href=\"/A216239/b216239.txt\">Table of n, a(n) for n = 0..450</a> (first 100 terms from Max Alekseyev)",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Derangements\">Derangement</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Inversion_(discrete_mathematics)\">Inversion</a>"
+    ],
+    "formula": [
+        "a(n) = SUM(k=0..n-2, (-1)^k * n!/k! * (3*n+k)*(n-k-1) )/12. - _Max Alekseyev_, Aug 13 2013",
+        "a(n) = ( (3*n^2-n+1)*A000166(n) + (n-1)*(-1)^n )/12. - _Max Alekseyev_, Aug 14 2013",
+        "a(n) = Sum_{k>=1} A228924(n,k) * k. - _Alois P. Heinz_, Sep 22 2013",
+        "a(n) ~ n! * n^2 / (4*exp(1)). - _Vaclav Kotesovec_, Sep 10 2014"
+    ],
+    "example": [
+        "a(2) = 1: (2,1) has 1 inversion.",
+        "a(3) = 4: (2,3,1), (3,1,2) have 2+2 = 4 inversions.",
+        "a(4) = 34: (2,1,4,3), (2,3,4,1), (2,4,1,3), (3,1,4,2), (3,4,1,2), (3,4,2,1), (4,1,2,3), (4,3,1,2), (4,3,2,1) have 2+3+3+3+4+5+3+5+6 = 34 inversions."
+    ],
+    "maple": [
+        "v:= proc(l) local i; for i to nops(l) do if l[i]=i then return 0 fi od;",
+        "      add(add(`if`(l[i]>l[j], 1, 0), j=i+1..nops(l)), i=1..nops(l)-1)",
+        "    end:",
+        "a:= n-> add(v(d), d=combinat[permute](n)):",
+        "seq(a(n), n=0..8);",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n<3, n*(n-1)/2,",
+        "      n*((6*n^3-26*n^2+31*n-9)*a(n-1)+(n-1)*",
+        "      (6*n^2-8*n+1)*a(n-2))/((n-2)*(15-20*n+6*n^2)))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Aug 13 2013"
+    ],
+    "mathematica": [
+        "A216239[n_] := (1/12)*n*(3*(-1)^n*n + (n*(3*n - 1) + 1)*Subfactorial[n-1]); Table[a[n], {n, 0, 21}] (* _Jean-Fran\u00e7ois Alcover_, Feb 05 2015, after _Max Alekseyev_ *)"
+    ],
+    "program": [
+        "(PARI) A216239(n) = sum(k=0,n-2, (-1)^k * n!/k! * (3*n+k) * (n-k-1) )/12; /* _Max Alekseyev_, Aug 13 2013 */"
+    ],
+    "xref": [
+        "Cf. A000166, A001809, A161124, A211606, A227404, A228924."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Mar 15 2013",
+    "ext": [
+        "Formula and terms a(15) onward from _Max Alekseyev_, Aug 13 2013"
+    ],
+    "references": 5,
+    "revision": 56,
+    "time": "2018-01-05T10:30:34-05:00",
+    "created": "2013-03-23T16:35:25-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 225120,
+    "data": "49,64,144,256,576,625,1156,1296,1444,1521,2209,2916,3364,3844,3969,4096,4356,4489,4624,6889,7744,8649,9025,9216,9409,9604,10201,10404,10609,10816,12321,12996,13456,14161,15129,15376,15625,15876,17956,18496,18769,20164",
+    "name": "Square numbers whose decimal representation can be divided into two or more semiprimes.",
+    "comment": [
+        "For 300 < n < 10000, 12.77*n^1.86 provides an estimate of a(n) to within 10%.",
+        "The density of squares included in the sequence asymptotically approaches 1.",
+        "There are infinitely many squares that are not in the sequence. For example, no square ending in 0 can be in the sequence. Another such infinite class is given by (50k+5)^2, for k>0. Indeed, these squares all end in \"025\" and since the only semiprime ending in 25 is 25 itself, then the other semiprime must end in 0, but this is impossible since the only semiprime ending in 0 is 10. - _Giovanni Resta_, May 03 2013"
+    ],
+    "link": [
+        "Christian N. K. Anderson, <a href=\"/A225120/b225120.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Christian N. K. Anderson, <a href=\"/A225120/a225120.txt\">Table of n, a(n), sqrt(a(n)), all possible separations of a(n) into semiprimes for n = 1...10000.</a>"
+    ],
+    "example": [
+        "a(50) = 25921, which is 161^2, and can be separated into semiprimes three ways: 25|921, 25|9|21, and 259|21."
+    ],
+    "program": [
+        "(R) issemipr<-function(n) ifelse(n<4,F,length(factorize(n))==2)",
+        "splithasproperty<-function(n,FUN,curdig=1,res=list(),curspl=c()) {",
+        "    no0<-function(s){ while(substr(s,1,1)==\"0\" & nchar(s)>1) s=substr(s,2,nchar(s)); s}",
+        "    s=as.character(n)",
+        "    if(curdig>nchar(s)) return(res)",
+        "    if(length(curspl)>0) if(FUN(as.bigz(no0(substr(s,curdig,nchar(s)))))) res[[length(res)+1]]=curspl",
+        "    for(i in curdig:nchar(s))",
+        "        if(FUN(as.bigz(no0(substr(s,curdig,i)))))",
+        "            res=splithasproperty(n,FUN,i+1,res,c(curspl,i))",
+        "    res",
+        "}",
+        "which(sapply(1:100,function(x) length(splithasproperty(x^2,issemipr))>0))^2"
+    ],
+    "xref": [
+        "Cf. A001358, A030459, A030461, A000290."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Kevin L. Schwartz_ and _Christian N. K. Anderson_, Apr 29 2013",
+    "references": 1,
+    "revision": 45,
+    "time": "2016-01-03T15:07:34-05:00",
+    "created": "2013-05-02T06:27:27-04:00"
+}

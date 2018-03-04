@@ -1,0 +1,32 @@
+{
+    "number": 252727,
+    "data": "1,2,14,178,3270,78316,2308876,80775780,3269037596,150194207800,7721544428136,439128840082648,27369393580944520,1855079496872679312,135846807056384160080,10688153505317713069936,899138432350085506208784,80536073356838110790279200",
+    "name": "a(n) = n-th number of the n-th iteration of the hyperbinomial transform on sequence A001858 (number of forests of trees on n labeled nodes).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A252727/b252727.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "maple": [
+        "hymtr:= proc(p) proc(n, m) `if`(m=0, p(n), m*",
+        "          add(p(k)*binomial(n, k) *(n-k+m)^(n-k-1), k=0..n))",
+        "        end end:",
+        "f:= proc(n) option remember; add(add(binomial(n-1, n-m-j)*",
+        "      binomial(m, j)*n^(n-m-j)*(m+j)!/(-2)^j/m!, j=0..m), m=0..n)",
+        "    end:",
+        "A:= hymtr(f): a:= n-> A(n$2):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "hymtr[p_] := Function[{n, m}, If[m==0, p[n], m*Sum[p[k]*Binomial[n, k]*(n - k + m)^(n-k-1), {k, 0, n}]]]; f[0] = 1; f[n_] := f[n] = Sum[ Sum[ Binomial[m, j] * Binomial[n-1, n-m-j]*n^(n-m-j)*(m+j)!/(-2)^j/m!, {j, 0, m}], {m, 0, n}]; A[0, _] = 1; A[1, k_] := k+1; A[n_, m_] := hymtr[f][n, n]; a[n_] := A[n, n]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Feb 26 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Main diagonal of A144304.",
+        "Cf. A001858."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Dec 20 2014",
+    "references": 2,
+    "revision": 8,
+    "time": "2017-02-26T10:54:31-05:00",
+    "created": "2014-12-20T19:05:31-05:00"
+}

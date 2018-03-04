@@ -1,0 +1,34 @@
+{
+    "number": 192748,
+    "data": "0,1,4,11,24,47,86,151,258,433,718,1181,1932,3149,5120,8311,13476,21835,35362,57251,92670,149981,242714,392761,635544,1028377,1663996,2692451,4356528,7049063,11405678,18454831,29860602,48315529,78176230",
+    "name": "Constant term of the reduction by x^2->x+1 of the polynomial p(n,x) defined below in Comments.",
+    "comment": [
+        "The titular polynomial is defined recursively by p(n,x)=x*(n-1,x)+3n for n>0, where p(0,x)=1.  For discussions of polynomial reduction, see A192232 and A192744."
+    ],
+    "formula": [
+        "Conjecture: G.f.: -x^2*(1+x+x^2) / ( (x^2+x-1)*(x-1)^2 ), so the first differences are in A154691. - _R. J. Mathar_, May 04 2014"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 40;",
+        "p[0, n_] := 1; p[n_, x_] := x*p[n - 1, x] + 3 n;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "  (* A154691 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "  (* A192748 *)"
+    ],
+    "xref": [
+        "Cf. A192744, A192232."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Clark Kimberling_, Jul 09 2011",
+    "references": 2,
+    "revision": 6,
+    "time": "2014-05-04T16:52:09-04:00",
+    "created": "2011-07-10T00:54:32-04:00"
+}

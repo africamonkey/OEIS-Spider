@@ -1,0 +1,51 @@
+{
+    "number": 144128,
+    "data": "1,36,1295,46584,1675729,60279660,2168392031,78001833456,2805897612385,100934312212404,3630829342034159,130608922001017320,4698290362694589361,169007844135004199676,6079584098497456598975",
+    "name": "Chebyshev U(n,x) polynomial evaluated at x=18.",
+    "comment": [
+        "From _Bruno Berselli_, Nov 21 2011: (Start)",
+        "A Diophantine property of these numbers: ((a(n+1)-a(n-1))/2)^2 - 323*a(n)^2 = 1.",
+        "More generally, for t(m)=m+sqrt(m^2-1) and u(n)=(t(m)^n-1/t(m)^n)/(t(m)-1/t(m)), we can verify that ((u(n+1)-u(n-1))/2)^2-(m^2-1)*u(n)^2=1. (End)",
+        "a(n) equals the number of 01-avoiding words of length n-1 on alphabet {0,1,...,35}. - _Milan Janjic_, Jan 26 2015"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A144128/b144128.txt\">Table of n, a(n) for n = 1..200</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (36,-1)."
+    ],
+    "formula": [
+        "From _Bruno Berselli_, Nov 21 2011: (Start)",
+        "G.f.: x/(1-36*+x^2).",
+        "a(n) = 36*a(n-1)-a(n-2) with a(1)=1, a(2)=36.",
+        "a(n) = (t^n-1/t^n)/(t-1/t) for t = 18+sqrt(323).",
+        "a(n) = sum((-1)^k*binomial(n-1-k, k)*36^(n-1-2k), k=0..floor(n/2)). (End)",
+        "a(n) = Sum_{k=0..n} A101950(n,k)*35^k. - _Philippe Del\u00e9ham_, Feb 10 2012",
+        "Product {n >= 1} (1 + 1/a(n)) = 1/17*(17 + sqrt(323)). - _Peter Bala_, Dec 23 2012",
+        "Product {n >= 2} (1 - 1/a(n)) = 1/36*(17 + sqrt(323)). - _Peter Bala_, Dec 23 2012"
+    ],
+    "mathematica": [
+        "lst={};Do[AppendTo[lst,GegenbauerC[n,1,18]],{n,0,8^2}];lst",
+        "LinearRecurrence[{36,-1},{1,36},20] (* _Vincenzo Librandi_, Nov 22 2011 *)"
+    ],
+    "program": [
+        "(Sage) [lucas_number1(n,36,1) for n in xrange(1, 16)] # _Zerinvary Lajos_, Nov 07 2009",
+        "(PARI) Vec(x/(1-36*x+x^2)+O(x^16)) \\\\ _Bruno Berselli_, Nov 21 2011",
+        "(PARI) a(n) = polchebyshev(n, 2, 18); \\\\ _Michel Marcus_, Feb 09 2018",
+        "(MAGMA) Z<x>:=PolynomialRing(Integers()); N<r>:=NumberField(x^2-323); S:=[((18+r)^n-1/(18+r)^n)/(2*r): n in [1..15]]; [Integers()!S[j]: j in [1..#S]]; // _Bruno Berselli_, Nov 21 2011",
+        "(MAGMA) I:=[1,36]; [n le 2 select I[n] else 36*Self(n-1)-Self(n-2): n in [1..20]]; // _Vincenzo Librandi_, Nov 22 2011",
+        "(Maxima) makelist(sum((-1)^k*binomial(n-1-k,k)*36^(n-1-2*k),k,0,floor(n/2)),n,1,15); \\\\ _Bruno Berselli_, Nov 21 2011",
+        "(GAP) a:=[1,36];; for n in [3..20] do a[n]:=36*a[n-1]-a[n-2]; od; a; # _Muniru A Asiru_, Feb 09 2018"
+    ],
+    "xref": [
+        "Cf. A029547, A029548, A200441, A200442, A200724 (incomplete list)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Vladimir Joseph Stephan Orlovsky_, Sep 11 2008",
+    "ext": [
+        "As _Michel Marcus_ points out, some parts of this entry assume the offset is 1, others parts assume the offset is 0. The whole entry needs careful editing. - _N. J. A. Sloane_, Feb 10 2018"
+    ],
+    "references": 5,
+    "revision": 45,
+    "time": "2018-02-10T22:39:47-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

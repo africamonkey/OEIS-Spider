@@ -1,0 +1,45 @@
+{
+    "number": 228713,
+    "data": "1,1,9,153,3255,77577,1981126,53004150,1466474670,41614008260,1204502970165,35423409847293,1055483705642665,31795106260418235,966712615856886300,29627547245811631436,914323870342824231237,28388314363804297836633,886151892114118028053027",
+    "name": "G.f. satisfies: A(x) = -1 + x + A(x)^3 + 1/A(x)^3.",
+    "comment": [
+        "Compare to the trivial identity:",
+        "G(x) = -1 + x + G(x) + 1/G(x) is satisfied when G(x) = 1/(1-x)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A228713/b228713.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Vaclav Kotesovec, <a href=\"/A228713/a228713.txt\">Recurrence</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: 0 = 1 - (1-x)*A(x)^3 - A(x)^4 + A(x)^6.",
+        "a(n) ~ c*d^n/(sqrt(Pi)*n^(3/2)), where d = 34.05333752261152244... is the root of the equation 729 - 4374*d + 2079*d^2 + 20844*d^3 + 1431*d^4 - 56214*d^5 + 1649*d^6 = 0 and c = 0.03096414033189124248457768352179346154431144356... - _Vaclav Kotesovec_, Sep 19 2013"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 9*x^2 + 153*x^3 + 3255*x^4 + 77577*x^5 + 1981126*x^6 +...",
+        "where",
+        "A(x)^3 = 1 + 3*x + 30*x^2 + 514*x^3 + 10953*x^4 + 261225*x^5 + 6673593*x^6 +...",
+        "1/A(x)^3 = 1 - 3*x - 21*x^2 - 361*x^3 - 7698*x^4 - 183648*x^5 - 4692467*x^6 -...",
+        "so that A(x) = -1 + x + A(x)^3 + 1/A(x)^3."
+    ],
+    "maple": [
+        "a:= n-> coeff(series(RootOf(A= -1+x+A^3+1/A^3, A), x, n+1), x, n):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Sep 19 2013"
+    ],
+    "mathematica": [
+        "nmax=20; aa=ConstantArray[0,nmax]; aa[[1]]=1; Do[AGF=1+Sum[aa[[n]]*x^n,{n,1,j-1}]+koef*x^j; sol=Solve[Coefficient[1 - (1-x)*AGF^3 - AGF^4 + AGF^6,x,j]==0,koef][[1]];aa[[j]]=koef/.sol[[1]],{j,2,nmax}]; Flatten[{1,aa}] (* _Vaclav Kotesovec_, Sep 19 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n)); for(i=1, n, A=-1+x + A^3 + 1/(A^3 +x*O(x^n))); polcoeff(A, n)}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A228714."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Sep 06 2013",
+    "references": 2,
+    "revision": 9,
+    "time": "2013-09-19T16:18:18-04:00",
+    "created": "2013-09-06T03:23:14-04:00"
+}

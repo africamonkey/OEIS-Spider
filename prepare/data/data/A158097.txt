@@ -1,0 +1,33 @@
+{
+    "number": 158097,
+    "data": "1,2,14,204,16982,6746636,11467009772,80444425963128,2306004014991374374,268654794950955551450892,126765597355485863873077402788,241678070949320869650125781001909864",
+    "name": "G.f.: A(x) = exp( Sum_{n>=1} x^n/n * 2^(n^2)/(1 - 2^(n^2)*x^n) ).",
+    "comment": [
+        "Compare to g.f. of the partition numbers A000041:",
+        "exp( Sum_{n>=1} x^n/(1 - x^n)/n ) = 1 + x + 2*x^2 + 3*x^3 + 5*x^4 +..."
+    ],
+    "formula": [
+        " G.f.: exp( Sum_{n>=1} x^n/n * Sum_{d|n} 2^(n*d) * n/d )."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 14*x^2 + 204*x^3 + 16982*x^4 + 6746636*x^5 +...",
+        "log(A(x)) = 2*x + 24*x^2/2 + 536*x^3/3 + 66112*x^4/4 + 33554592*x^5/5 +...",
+        "log(A(x)) = 2*x/(1-2*x) + 2^4*x^2/(1-2^4*x^2)/2 + 2^9*x^3/(1-2^9*x^3)/3 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0,1,polcoeff(exp(sum(k=1,n,(2^k*x)^k/(1-(2^k*x)^k +x*O(x^n))/k)),n))}",
+        "for(n=0, 15, print1(a(n), \", \"))",
+        "(PARI) {a(n) = polcoeff( exp( sum(m=1, n, x^m/m * sumdiv(m, d, 2^(m*d) * m/d) ) +x*O(x^n)), n)}",
+        "for(n=0, 15, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Sep 30 2015"
+    ],
+    "xref": [
+        "Cf. A158096, A155200."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 26 2009",
+    "references": 2,
+    "revision": 4,
+    "time": "2015-09-30T21:59:42-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

@@ -1,0 +1,26 @@
+{
+    "number": 118501,
+    "data": "2,5,17,23,53,83,127,167,181,211,281,347,449,467,499,509,641,677,821,887,941,953,1097,1193,1283,1327,1399,1471,1583,1721,1949,2029,2111,2213,2351,2381,2447,2549,2609,2777,3061,3137,3257,3307,3511,3539,3797",
+    "name": "A variation on Flavius's sieves (A099204, A099243): Start with the Chen numbers; at the k-th sieving step, remove every p-th term of the sequence remaining after the (k-1)-st sieving step, where p is the k-th prime; iterate.",
+    "example": [
+        "Start with",
+        "2 3 5 7 11 13 17 19 23 29 31 37 41 47 53 59 67 71 83 89 101 107 109 113 127 131 ... and delete every second term, giving",
+        "2 5 11 17 23 31 41 53 67 83 101 109 127 ... and delete every 3rd term, giving",
+        "2 5 17 23 41 53 83 101 127 ... and delete every 5th term, giving",
+        "2 5 17 23 53 83 101 127",
+        ".... Continue for ever and what's left is the sequence."
+    ],
+    "maple": [
+        "ts_chen:= proc(n) local i, ans; ans:=[ ]: for i from 1 to n do if ( isprime(i) = 'true') then if ( isprime(i+2) = 'true' or numtheory[bigomega](i+2) = 2) then ans:=[ op(ans), i ] fi fi od: return ans end: S[1]:=convert(ts_chen(25000), set): for n from 2 to 390 do S[n]:=S[n-1] minus {seq(S[n-1][ithprime(n-1)*i], i=1..nops(S[n-1])/ithprime(n-1))} od: convert(S[390],list);"
+    ],
+    "xref": [
+        "Cf. A099204, A099243, A109611."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jani Melik_, May 05 2006",
+    "references": 0,
+    "revision": 3,
+    "time": "2012-03-31T14:40:00-04:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

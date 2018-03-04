@@ -1,0 +1,43 @@
+{
+    "number": 95000,
+    "data": "1,5,29,193,1457,12341,116125,1203329,13627073,167525317,2222710781,31665408545,482196718129,7817359305653,134443910166077,2444991262876321,46883166605035265,945426638499719429,20002372214708227933,443036881445294292737,10252840082607606694961",
+    "name": "E.g.f.: exp(x)/(1-x)^4.",
+    "comment": [
+        "Sum{k = 0..n} A094816(n,k)*x^k give A000522(n), A001339(n), A082030(n) for x = 1, 2, 3 respectively.",
+        "From _Peter Bala_, Jul 10 2008: (Start)",
+        "Recurrence relation: a(0) = 1, a(1) = 5, a(n) = (n+4)*a(n-1) - (n-1)*a(n-2) for n >= 2. Let p_3(n) = n^3+2*n-1 = n^(3)-3*n^(2)+3*n^(1)-1, where n^(k) denotes the rising factorial n*(n+1)*...*(n+k-1). The polynomial p_3(n) is an example of a Poisson-Charlier polynomial c_k(x;a) at k = 3, x = -n and a = -1.",
+        "The sequence b(n) := n!*p_3(n+1) = A001565(n) satisfies the same recurrence as a(n) but with the initial conditions b(0) = 2, b(1) = 11. This leads to the finite continued fraction expansion a(n)/b(n) = 1/(2+1/(5-1/(6-2/(7-...-(n-1)/(n+4))))).",
+        "Lim n -> infinity a(n)/b(n) = e/6 = 1/(2+1/(5-1/(6-2/(7-...-n/((n+5)-...))))).",
+        "a(n) = -b(n) * sum {k = 0..n} 1/(k!*p_3(k)*p_3(k+1)) - since the rhs satisfies the above recurrence with the same initial conditions. Hence e = -6 * sum {k = 0..inf} 1/(k!*p_3(k)*p_3(k+1)).",
+        "For sequences satisfying the more general recurrence a(n) = (n+1+r)*a(n-1) - (n-1)*a(n-2), which yield series acceleration formulas for e/r! that involve the Poisson-Charlier polynomials c_r(-n;-1), refer to A000522 (r = 0), A001339 (r=1), A082030 (r=2) and A095177 (r=4). (End)"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A095000/b095000.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Weisstein, Eric W., <a href=\"http://mathworld.wolfram.com/Poisson-CharlierPolynomial.html\">Poisson-Charlier polynomial</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k = 0..n} A094816(n, k)*4^k . a(n) = Sum{k= 0..n} binomial(n, k)*(k+3)!/6.",
+        "a(n) is a difference divisibility sequence, that is, the difference a(n) - a(m) is divisible by n - m for all n and m (provided n is not equal to m). See A000522 for further properties of difference divisibility sequences. - _Peter Bala_, Jul 10 2008",
+        "a(n) ~ n!*n^3*e/6. - _Vaclav Kotesovec_, Oct 14 2012",
+        "a(n) = hypergeom([4, -n], [], -1). - _Peter Luschny_, Sep 20 2014"
+    ],
+    "maple": [
+        "a := n -> hypergeom([4, -n], [], -1); seq(round(evalf(a(n), 100)), n=0..18); # _Peter Luschny_, Sep 20 2014"
+    ],
+    "mathematica": [
+        "Table[n!*SeriesCoefficient[E^(x)/(1-x)^4,{x,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Oct 14 2012 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^66); Vec(serlaplace(exp(x)/(1-x)^4)) \\\\ _Joerg Arndt_, May 11 2013"
+    ],
+    "xref": [
+        "Cf. A000522, A001339, A082030, A095177."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Philippe Del\u00e9ham_, Jun 19 2004",
+    "references": 12,
+    "revision": 20,
+    "time": "2014-09-21T06:39:09-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 249373,
+    "data": "3,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,107,109,113,127,131,137,139,149,151,163,167,173,179,191,193,197,211,223,229,233,239,241,257,263,269,277,281,283,293,313",
+    "name": "Prime numbers Q such that the concatenation Q,d,Q is prime for at least one d in the set {1, 2, 3, 4, 5, 6, 7, 8, 9}.",
+    "link": [
+        "Pierre CAMI, <a href=\"/A249373/b249373.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "313, 353, 373 as 383 are prime numbers so a(1)=3.",
+        "727, 757, 787 as 797 are prime numbers so a(2)=7."
+    ],
+    "mathematica": [
+        "Select[Prime[Range[100]],AnyTrue[FromDigits/@Table[Join[ IntegerDigits[ #], {n},IntegerDigits[#]],{n,9}],PrimeQ]&] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Dec 21 2016 *)"
+    ],
+    "program": [
+        "(PFGW & SCRIPT), pre10.txt file with the first 10000000 prime numbers.",
+        "SCRIPT",
+        "DIM i,0",
+        "DIM j",
+        "DIM k",
+        "DIM n,1",
+        "DIM o",
+        "OPENFILEOUT myf,a(n).txt",
+        "OPENFILEIN maf,pre10.txt",
+        "GETNEXT j,maf",
+        "LABEL loop1",
+        "GETNEXT j,maf",
+        "IF j>10^n THEN SET n,n+1",
+        "SET o,0",
+        "LABEL loop2",
+        "SET o,o+1",
+        "IF o>9 THEN  GOTO loop1",
+        "SET k,j*10^(n+1)+o*10^n+j",
+        "PRP k",
+        "IF ISPRP THEN GOTO w",
+        "GOTO loop2",
+        "LABEL w",
+        "SET i,i+1",
+        "WRITE myf,j",
+        "IF i>9999 THEN END",
+        "GOTO loop1",
+        "(PARI) lista(nn) = {forprime(p=2, nn, len = #Str(p); if (sum(i=1, 9, isprime(p+(10*p+i)*10^len)), print1(p, \", \")););} \\\\ _Michel Marcus_, Oct 28 2014"
+    ],
+    "xref": [
+        "Cf. A249350, A249374, A249375, A249376, A249377, A249378, A249379, A249380, A249381."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Pierre CAMI_, Oct 27 2014",
+    "references": 1,
+    "revision": 24,
+    "time": "2016-12-21T16:30:12-05:00",
+    "created": "2014-11-21T21:27:54-05:00"
+}

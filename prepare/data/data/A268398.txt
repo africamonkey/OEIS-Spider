@@ -1,0 +1,39 @@
+{
+    "number": 268398,
+    "data": "1,2,3,7,8,9,10,14,17,18,19,23,24,25,26,42,43,46,47,51,52,53,54,58,63,64,91,95,96,97,98,114,115,116,117,129,130,131,132,136,137,138,139,143,146,147,148,164,171,176,177,181,182,209,210,214,215,216,217",
+    "name": "Partial sums of A085731.",
+    "link": [
+        "Peter Kagey, <a href=\"/A268398/b268398.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Project Euler, <a href=\"https://projecteuler.net/problem=484\">Problem 484: Arithmetic Derivative</a>"
+    ],
+    "mathematica": [
+        "Accumulate@ Table[GCD[n, If[Abs@ n < 2, 0, n Total[#2/#1 & @@@ FactorInteger@ Abs@ n]]], {n, 58}] (* _Michael De Vlieger_, Feb 14 2016, after _Michael Somos_ at A003415  *)",
+        "Accumulate@ Table[GCD[n, If[Abs@ n < 2, 0, n Total[#2/#1 & @@@ FactorInteger@ Abs@ n]]], {n, 58}] (* _Michael De Vlieger_, Feb 14 2016 *)"
+    ],
+    "program": [
+        "(Ruby)",
+        "require 'prime'",
+        "def a003415(n)",
+        "  return 0 if n == 1",
+        "  return 1 if Prime.prime?(n)",
+        "  a = Prime.each.find { |i| n % i == 0 }",
+        "  a * a003415(n/a) + n/a * a003415(a)",
+        "end",
+        "def a268398(n)",
+        "  sum = 0",
+        "  (1..n).map { |n| sum += a003415(n).gcd(n) }.last",
+        "end",
+        "(PARI) a085731(n) = {my(f = factor(n)); for (i=1, #f~, if (f[i,2] % f[i,1], f[i,2]--);); factorback(f);}",
+        "a(n) = sum(k=1, n, a085731(k)); \\\\ _Michel Marcus_, Feb 14 2016"
+    ],
+    "xref": [
+        "Cf. A003415, A085731."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Peter Kagey_, Feb 03 2016",
+    "references": 1,
+    "revision": 17,
+    "time": "2016-02-14T14:37:39-05:00",
+    "created": "2016-02-13T23:19:46-05:00"
+}

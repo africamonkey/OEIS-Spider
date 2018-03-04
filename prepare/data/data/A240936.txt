@@ -1,0 +1,39 @@
+{
+    "number": 240936,
+    "data": "1,1,3,21,337,11985,930241,155643329,55638770689,42200814258433,67536939792143361,227017234854393949185,1596674435594864988020737,23421099407847007850007154689,714530983411175509576743561314305,45227689798343820164634911814524846081",
+    "name": "Number of ways to partition the (vertex) set {1,2,...,n} into any number of classes and then select some unordered pairs (edges) <a,b> such that a and b are in distinct classes of the partition.",
+    "comment": [
+        "The elements of a class are allowed to be used multiple times to form the unordered pairs.",
+        "Equivalently, a(n) is the sum of the number of k-colored graphs on n labeled nodes taken over k colors, 1<=k<=n, where labeled graphs using k colors that differ only by a permutation of the k colors are considered to be the same."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A240936/b240936.txt\">Table of n, a(n) for n = 0..75</a>"
+    ],
+    "formula": [
+        "a(n) = n! * 2^C(n,2) * [x^n] exp(E(x)-1) where E(x) is Sum_{n>=0} x^n/(n!*2^C(n,2)).",
+        "a(n) = Sum_{k=1..n} A058843(n,k) for n>0."
+    ],
+    "example": [
+        "a(2)=3 because the empty graph with 2 nodes is counted twice (once for each partition of 2) and the complete graph is counted once. 2+1=3."
+    ],
+    "maple": [
+        "b:= proc(n, k) b(n, k):= `if`(k=1, 1, add(binomial(n, i)*",
+        "      2^(i*(n-i))*b(i, k-1)/k, i=1..n-1))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, add(b(n, k), k=1..n)):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Aug 04 2014"
+    ],
+    "mathematica": [
+        "nn=15;e[x_]:=Sum[x^n/(n!*2^Binomial[n,2]),{n,0,nn}];Table[n!2^Binomial[n,2],{n,0,nn}]CoefficientList[Series[Exp[(e[x]-1)],{x,0,nn}],x]"
+    ],
+    "xref": [
+        "Cf. A058843."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Geoffrey Critzer_, Aug 03 2014",
+    "references": 2,
+    "revision": 20,
+    "time": "2014-08-04T18:14:29-04:00",
+    "created": "2014-08-04T18:14:29-04:00"
+}

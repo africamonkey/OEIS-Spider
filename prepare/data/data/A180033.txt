@@ -1,0 +1,43 @@
+{
+    "number": 180033,
+    "data": "1,6,35,205,1200,7025,41125,240750,1409375,8250625,48300000,282753125,1655265625,9690093750,56726796875,332084453125,1944056250000,11380703515625,66623798828125,390022511718750,2283231552734375",
+    "name": "Eight white queens and one red queen on a 3 X 3 chessboard. G.f.: (1+x)/(1-5*x-5*x^2).",
+    "comment": [
+        "The a(n) represent the number of n-move routes of a fairy chess piece starting in the corner and side squares (m = 1, 3, 7, 9; 2, 4, 6, 8) on a 3 X 3 chessboard. This fairy chess piece behaves like a white queen on the eight side and corner squares but on the central square the queen explodes with fury and turns into a red queen, see A180032.",
+        "The sequence above corresponds to 56 red queen vectors, i.e. A[5] vector, with decimal values between 47 and 488. The central squares lead for these vectors to A057088.",
+        "Inverse binomial transform of A004187 (without the leading 0).",
+        "Equals the INVERT transform of A086347 and the INVERTi transform of A180167 [From _Gary W. Adamson_, Aug 14 2010]"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A180033/b180033.txt\">Table of n, a(n) for n = 0..200</a>",
+        "M. Janjic, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Janjic/janjic63.html\">On Linear Recurrence Equations Arising from Compositions of Positive Integers</a>, Journal of Integer Sequences, Vol. 18 (2015), Article 15.4.7.",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (5, 5)."
+    ],
+    "formula": [
+        "GF(x) = (1+x)/(1-5*x-5*x^2)",
+        "a(n) = 5*a(n-1) + 5*a(n-2) with a(0) = 1 and a(1) = 6.",
+        "a(n) = ((7+5*A)*A^(-n-1)+(7+5*B)*B^(-n-1))/45 with A = (-5+3*sqrt(5))/10 and B = (-5-3*sqrt(5))/10.",
+        "Limit(a(n+k)/a(k), k=infinity) = 2*5^(n/2)/(L(2*n) - F(2*n)*sqrt(5)) with L(n) = A000032(n) and F(n) = A000045(n).",
+        "Limit(a(2*n+k)/a(k), k=infinity) = 2*A000351(n)/(A056854(n) - 3*A004187(n)*sqrt(5)) for n>=1.",
+        "Limit(a(2*n-1+k)/a(k), k=infinity) = 2*A000351(n)/(3*A049685(n-1)*sqrt(5) - 5*A033890(n-1)) for n>=1."
+    ],
+    "maple": [
+        "with(LinearAlgebra): nmax:=20; m:=1; A[5]:= [0,0,0,1,0,1,1,1,1]: A:=Matrix([[0,1,1,1,1,0,1,0,1], [1,0,1,1,1,1,0,1,0], [1,1,0,0,1,1,1,0,1], [1,1,0,0,1,1,1,1,0], A[5], [0,1,1,1,1,0,0,1,1], [1,0,1,1,1,0,0,1,1], [0,1,0,1,1,1,1,0,1], [1,0,1,0,1,1,1,1,0]]): for n from 0 to nmax do B(n):=A^n: a(n):= add(B(n)[m,k],k=1..9): od: seq(a(n), n=0..nmax);"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{5,5},{1,6},201] (* _Vincenzo Librandi_, Nov 15 2011 *)"
+    ],
+    "program": [
+        "(MAGMA) I:=[1,6]; [n le 2 select I[n] else 5*Self(n-1)+5*Self(n-2): n in [1..30]]; // Vincenzo Librandi, Nov 15 2011"
+    ],
+    "xref": [
+        "Cf. A086347, A180167 [From _Gary W. Adamson_, Aug 14 2010]"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Johannes W. Meijer_, Aug 09 2010",
+    "references": 4,
+    "revision": 12,
+    "time": "2017-06-26T08:18:47-04:00",
+    "created": "2010-08-27T03:00:00-04:00"
+}

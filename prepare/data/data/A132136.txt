@@ -1,0 +1,43 @@
+{
+    "number": 132136,
+    "data": "16,128,704,3072,11488,38400,117632,335872,904784,2320128,5702208,13504512,30952544,68901888,149403264,316342272,655445792,1331327616,2655115712,5206288384,10049485312,19115905536,35867019904,66437873664",
+    "name": "Expansion of -lambda(t + 1) in powers of the nome q = exp(Pi i t).",
+    "comment": [
+        "Ramanujan theta functions: f(q) (see A121373), phi(q) (A000122), psi(q) (A010054), chi(q) (A000700)."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A132136/b132136.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "M. Somos, <a href=\"http://somos.crg4.com/multiq.html\">Introduction to Ramanujan theta functions</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RamanujanThetaFunctions.html\">Ramanujan Theta Functions</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/EllipticLambdaFunction.html\">Elliptic Lambda Function</a>"
+    ],
+    "formula": [
+        "Expansion of lambda(t) / ( 1 - lambda(t)) in powers of the nome q = exp(Pi i t).",
+        "Expansion of 16 * q * (psi(q^2) / phi(-q))^4 = 16 * q * (psi(q^2) / psi(-q))^8 = 16 * q * (psi(q) / phi(-q^2))^8 = 16 * q * (psi(-q) / phi(-q))^8 = 16 * q * (f(-q^4) / f(-q))^8 = 16 * q / (chi(-q) * chi(-q^2))^8 in powers of q where phi(), psi(), chi(), f() are Ramanujan theta functions.",
+        "Expansion of 16 * (eta(q^4) / eta(q))^8 in powers of q.",
+        "Given G.f. A(x), then B(x) = A(x) / 16 satisfies 0 = f(B(x), B(x^2)) where f(u, v) = u^2 - v - 16*u*v - 16*v^2 - 256*u*v^2.",
+        "G.f.: 16 * x * (Product_{k>0} (1 + x^(2*k)) / (1 - x^(2*k - 1)))^8.",
+        "a(n) = 16 * A092877(n) = -(-1)^n * A115977(n). a(n) = A014972(n) unless n=0."
+    ],
+    "example": [
+        "G.f. = 16*q + 128*q^2 + 704*q^3 + 3072*q^4 + 11488*q^5 + 38400*q^6 + 117632*q^7 + ..."
+    ],
+    "mathematica": [
+        "a[ n_] := SeriesCoefficient[ With[ {m = InverseEllipticNomeQ@q}, m / (1 - m)], {q, 0, n}]; (* _Michael Somos_, Jun 03 2015 *)",
+        "a[ n_] := SeriesCoefficient[ 16 q (QPochhammer[ q^4] / QPochhammer[ q])^8, {q, 0, n}]; (* _Michael Somos_, Jun 03 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A); if( n<1, 0, n--; A = x * O(x^n); 16 * polcoeff( (eta(x^4 + A) / eta(x + A))^8, n))};",
+        "(PARI) {a(n) = my(A); if( n<0, 0, A = x * O(x^n); polcoeff( (eta(x^2 + A)^3 / (eta(x + A)^2 * eta(x^4 + A)))^8 - 1, n))};"
+    ],
+    "xref": [
+        "Cf. A014972, A092877, A115977."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michael Somos_, Aug 11 2007",
+    "references": 3,
+    "revision": 13,
+    "time": "2018-02-15T10:43:38-05:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

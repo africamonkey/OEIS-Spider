@@ -1,0 +1,40 @@
+{
+    "number": 167939,
+    "data": "1,3,10,64,973,31743,2069970,267270040,68629753649,35171000942707,36024807353574290,73784587576805254664,302228602363365451957805,2475873310144021668263093215,40564787336902311168400640561098,1329227697997490307154018925966130320",
+    "name": "The number of connected subgraphs of the complete graph with n nodes.",
+    "comment": [
+        "The problem originated from Attila Szabss."
+    ],
+    "formula": [
+        "E.g.f.: exp(x)*log(A(x)) where A(x) is the e.g.f. for A006125. - _Geoffrey Critzer_, Nov 23 2016"
+    ],
+    "example": [
+        "For n = 3, consider the complete graph with nodes A, B and C. a(3) = 10, the 10 connected subgraphs being: A, B, C, AB, AC, BC, AB+AC, AB+BC, AC+BC, AB+AC+BC."
+    ],
+    "mathematica": [
+        "nn = 25; g[z_] := Sum[2^Binomial[n, 2] z^n/n!, {n, 0, nn}]; Drop[Range[0, nn]! CoefficientList[Series[Exp[z] Log[g[z]], {z, 0, nn}],z], 1] (* _Geoffrey Critzer_, Nov 23 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Function (fix)",
+        "import Data.List (transpose)",
+        "a :: [Integer]",
+        "a = scanl1 (+) . (!! 1) . transpose . fix $ map ((1:) . zipWith (*) (scanl1 (*) l) . zipWith poly (scanl1 (+) l)) . scanl (flip (:)) [] . zipWith (zipWith (*)) pascal where l = iterate (2*) 1",
+        "-- the Pascal triangle",
+        "pascal :: [[Integer]]",
+        "pascal = iterate (\\l -> zipWith (+) (0: l) l) (1: repeat 0)",
+        "-- evaluate a polynomial at a given value",
+        "poly :: (Num a) => a -> [a] -> a",
+        "poly t = foldr (\\e i -> e + t*i) 0"
+    ],
+    "xref": [
+        "Cf. A006125, A006896."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Peter Divianszky (divip(AT)aszt.inf.elte.hu), Nov 15 2009",
+    "references": 0,
+    "revision": 16,
+    "time": "2016-11-23T16:15:32-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

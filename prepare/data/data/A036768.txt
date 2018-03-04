@@ -1,0 +1,48 @@
+{
+    "number": 36768,
+    "data": "1,1,2,5,14,42,132,428,1421,4807,16510,57421,201824,715768,2558167,9204651,33315919,121218195,443107245,1626546453,5993256280,22158739970,82182744284,305670888560,1139892935454,4261095044346,15964169665031,59933390160322",
+    "name": "Number of ordered rooted trees with n non-root nodes and all outdegrees <= six.",
+    "reference": [
+        "L. Takacs, Enumeration of rooted trees and forests, Math. Scientist 18 (1993), 1-10, esp. Eq. (6)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A036768/b036768.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Vladimir Kruchinin, D. V. Kruchinin, <a href=\"http://arxiv.org/abs/1103.2582\">Composita and their properties</a>, arXiv:1103.2582 [math.CO], 2011-2013.",
+        "Nickolas Hein and Jia Huang, <a href=\"http://arxiv.org/abs/1508.01688\">Modular Catalan Numbers</a>, arXiv:1508.01688 [math.CO], 2015.",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies A(x)=1+sum(n=1..6, (x*A(x))^n). - _Vladimir Kruchinin_, Feb 22 2011"
+    ],
+    "maple": [
+        "r := 6; [ seq((1/n)*add( (-1)^j*binomial(n,j)*binomial(2*n-2-j*(r+1), n-1),j=0..floor((n-1)/(r+1))), n=1..30) ];",
+        "# second Maple program:",
+        "b:= proc(u, o) option remember; `if`(u+o=0, 1,",
+        "      add(b(u-j, o+j-1), j=1..min(1, u))+",
+        "      add(b(u+j-1, o-j), j=1..min(6, o)))",
+        "    end:",
+        "a:= n-> b(0, n):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Aug 28 2017"
+    ],
+    "mathematica": [
+        "b[u_, o_, k_] := b[u, o, k] = If[u + o == 0, 1, Sum[b[u - j, o + j - 1, k], {j, 1, Min[1, u]}] + Sum[b[u + j - 1, o - j, k], {j, 1, Min[k, o]}]];",
+        "a[n_] := b[0, n, 6];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Nov 07 2017, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,polcoeff(serreverse(x/polcyclo(7)+O(x^(n+2))),n+1)) /* _Ralf Stephan_ */"
+    ],
+    "xref": [
+        "Column k=6 of A288942."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Name clarified by _Andrew Howroyd_, Dec 04 2017"
+    ],
+    "references": 3,
+    "revision": 38,
+    "time": "2017-12-04T15:26:34-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

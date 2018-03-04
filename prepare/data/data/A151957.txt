@@ -1,0 +1,50 @@
+{
+    "number": 151957,
+    "data": "0,495,6174,62964,420876,7509843,64308654,753098643,6431088654,86420987532,643330866654,8764209875322,64333308666654,885432098765412,6543331088666544,88543320987665412,975533110888664421",
+    "name": "Iterate the Kaprekar map of A151949 starting at the n-digit number 100...02; sequence gives the lowest number in the resulting cycle.",
+    "link": [
+        "Joseph Myers, <a href=\"/A151957/b151957.txt\">Table of n, a(n) for n=2..1000</a> [From _Joseph Myers_, Aug 21 2009]",
+        "<a href=\"/index/K#Kaprekar_map\">Index entries for the Kaprekar map</a>"
+    ],
+    "maple": [
+        "A151949 := proc(n)",
+        "local tup;",
+        "tup := sort(convert(n,base,10)) ;",
+        "add( (op(i,tup)-op(-i,tup)) *10^(i-1),i=1..nops(tup)) :",
+        "end:",
+        "A151957 := proc(n)",
+        "local tra,x ;",
+        "x := 10^(n-1)+2 ;",
+        "tra := [x] ;",
+        "while true do",
+        "x := A151949(x) ;",
+        "if member(x,tra,'l') then",
+        "op(l..nops(tra),tra) ;",
+        "RETURN(min(%)) ;",
+        "fi;",
+        "tra := [op(tra),x] :",
+        "od:",
+        "end:",
+        "seq(A151957(n),n=2..60) ;",
+        "# _R. J. Mathar_, Aug 20 2009"
+    ],
+    "mathematica": [
+        "To find the first 20 terms of the trajectory of 10002, for instance:",
+        "f[n_]:=Module[{idn=IntegerDigits[n],idns},idns=Sort[idn];Abs[FromDigits[ idns]-FromDigits[Reverse[idns]]]]",
+        "NestList[f,10002,20]"
+    ],
+    "xref": [
+        "See A151958 for the length of the cycles. Cf. A151949, A151955 (the trajectory of 102), A151956 (the trajectory of 1002).",
+        "See also A151967, A151968."
+    ],
+    "keyword": "nonn,base",
+    "offset": "2,2",
+    "author": "_Harvey P. Dale_ and _N. J. A. Sloane_, Aug 18 2009, Aug 19 2009",
+    "ext": [
+        "Extended by _R. J. Mathar_ and _Joseph Myers_, Aug 20 2009"
+    ],
+    "references": 5,
+    "revision": 9,
+    "time": "2014-12-05T04:52:52-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

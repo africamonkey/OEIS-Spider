@@ -1,0 +1,61 @@
+{
+    "number": 61588,
+    "data": "2,4,16,136,1936,181936,164181936,13616164181936,193613613616164181936,1819361936193613613616164181936,1641819361819361819361936193613613616164181936",
+    "name": "a(1) = 2, a(n) = number obtained by replacing each digit of a(n-1) with its square.",
+    "reference": [
+        "William Davidson, Introducing the peculiar 'Davidson Sequence', MathFest 2012."
+    ],
+    "formula": [
+        "From William Davidson, Aug 15 2012: (Start)",
+        "For integer n > 5,",
+        "a(n) = a(n-4)x10^(L(a(n-5))+L(a(n-1))) + a(n-5)x10^(L(a(n-1)))+a(n-1), where L(a(n)) is the number of digits in a(n).",
+        "L(a(n)) = (W^(n-1)*[s1]^T)^T*[d]^T, with the 5 x 5 square matrix W = [(0 1 0 0 0) (0 0 1 0 0) (0 0 0 1 0) (0 0 0 0 1) ( 1 1 0 0 1)], [s1] = [1 2 3 4 6], [d] = [1 0 0 0 0], and ^T is the transformation of a matrix.",
+        "To determine the starting integers of any a(n), for any integer n > 5, first let b = (((n + 2)mod(4)) + 2). Then using a(2), a(3), a(4), and a(5), any n > 5, a(n) begins with a(b). Let n = 100, b = 4, a(100) = 1936... (End)"
+    ],
+    "example": [
+        "After 136: the squares of 1, 3, 6 are 1, 9, 36 respectively hence the next term is 1936.",
+        "a(11)=a(7)*10^L(a(6)+a(10))+a(6)*10^L(a(10))+a(10)",
+        "     =13616164181936*10^55 + 164181936*10^46 +",
+        "      1641819361819361819361936193613613616164181936",
+        "     =136161641819361641819361641819361819361819361936193613613616164181936",
+        "a(100)=1936...*10^L(a(96)+a(99))+136...*10^L(a(99))+136...936, where L(100)",
+        "has approximately 2.74*10^17 digits. - William Davidson, Aug 15 2012"
+    ],
+    "program": [
+        "(Python)",
+        "def digits(n):",
+        ".d=[]",
+        ".while n>0:",
+        "..d.append(n%10)",
+        "..n=n//10",
+        ".return d",
+        "def sqdig(n):",
+        ".new=0",
+        ".num=digits(n)",
+        ".spacing=0",
+        ".while num:",
+        "..k=num.pop(0)",
+        "..new+=(10**(spacing))*(k**2)",
+        "..if k>3:",
+        "...spacing+=1",
+        "..spacing+=1",
+        ".return new",
+        "def davidson(n):",
+        ".i=2",
+        ".while n>1:",
+        "..i=sqdig(i)",
+        "..n-=1",
+        ".return i",
+        "#(from David Nacin, Aug 19 2012)"
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, May 13 2001",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org) and Asher Natan Auel (auela(AT)reed.edu), May 15 2001. Corrected by _Matthew Vandermast_, Apr 23 2003"
+    ],
+    "references": 2,
+    "revision": 14,
+    "time": "2017-03-31T22:09:50-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

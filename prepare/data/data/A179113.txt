@@ -1,0 +1,45 @@
+{
+    "number": 179113,
+    "data": "31,89,127,223,233,431,601,881,911,1103,1801,2089,2351,3191,3391,4513,5209,6361,8191,9623,9719,11447,11471,13367,14951,15193,15809,18041,18121,18199,18287,20231,23279,23671,39551,43441,50023,53993,54217,55441,55871,59233",
+    "name": "Odd primes which can never divide 2^a+2^b+1.",
+    "comment": [
+        "Contains the Mersenne primes M_p for p>3 as a subsequence, as 2^a+2^b cannot exceed 2^(p-1)+2^(p-2) which is less than 2^p-2 is p>3."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A179113/b179113.txt\">Table of n, a(n) for n = 1..129</a>"
+    ],
+    "example": [
+        "31 is on the list as you can't sum any two of {1, 2, 4, 8, 16} to make 30 (mod 31)."
+    ],
+    "maple": [
+        "N:= 10000; # to test the first N primes for membership",
+        "A179113:= proc(p)",
+        "          local x, R;",
+        "x:= 1; R:= {};",
+        "do",
+        "  R:= R union {p-1-x};",
+        "  if member(x,R) then return(false) end if;",
+        "  x:= 2*x mod p;",
+        "  if x = 1 then return(true) end if;",
+        "end do;",
+        "end proc;",
+        "select(A179113,[seq(ithprime(i),i=2..N)]);",
+        "# _Robert Israel_, May 19 2013"
+    ],
+    "mathematica": [
+        "n = 10000; (* to test the first n primes for membership *) A179113[p_] := Module[{x = 1, r = {}}, While[True, r = r ~Union~ {p-1-x}; If[MemberQ[r, x], Return[False]]; x = Mod[2*x, p]; If[x == 1, Return[True]]]];Reap[Do[If[A179113[p], Print[p]; Sow[p]], {p, Prime /@ Range[2, n]}]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Dec 02 2013, translated from _Robert Israel_'s Maple program *)"
+    ],
+    "program": [
+        "(PARI) forprime(p=3,1000,pol=x+O(x^p);t=2;while(t-1,pol+=x^t;t=t*2%p);pol2=pol*pol;if(!polcoeff(pol2,p-1),print1(p\", \")))"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Phil Carmody_, Jan 04 2011",
+    "ext": [
+        "More terms from _Robert Israel_, May 19 2013"
+    ],
+    "references": 1,
+    "revision": 22,
+    "time": "2013-12-02T05:06:17-05:00",
+    "created": "2010-11-12T14:28:36-05:00"
+}

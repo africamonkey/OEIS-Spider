@@ -1,0 +1,44 @@
+{
+    "number": 192966,
+    "data": "0,1,2,6,14,30,59,110,197,343,585,983,1634,2695,4420,7220,11760,19116,31029,50316,81535,132061,213827,346141,560244,906685,1467254,2374290,3841922,6216618,10058975,16276058,26335529,42612115,68948205,111560915",
+    "name": "Coefficient of x in the reduction by x^2->x+1 of the polynomial p(n,x) defined at Comments.",
+    "comment": [
+        "The titular polynomials are defined recursively:  p(n,x)=x*p(n-1,x)+n(n+1)/2, with p(0,x)=1.  For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232 and A192744."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A192966/b192966.txt\">Table of n, a(n) for n = 0..400</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-5,1,2,-1)."
+    ],
+    "formula": [
+        "a(n) = 4*a(n-1)-5*a(n-2)+a(n-3)+2*a(n-4)-a(n-5).",
+        "G.f.: -x*(-1+2*x-3*x^2+x^3) / ( (x^2+x-1)*(x-1)^3 ). - _R. J. Mathar_, May 11 2014"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 40;",
+        "p[0, x] := 1;",
+        "p[n_, x_] := x*p[n - 1, x] + n (n + 1)/2;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "  (* A030119 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "  (* A192966 *)",
+        "LinearRecurrence[{4,-5,1,2,-1},{0,1,2,6,14},40] (* _Vincenzo Librandi_, Nov 16 2011 *)"
+    ],
+    "program": [
+        "(MAGMA) I:=[0, 1, 2, 6, 14]; [n le 5 select I[n] else 4*Self(n-1)-5*Self(n-2)+Self(n-3)+2*Self(n-4)-Self(n-5): n in [1..40]]; // Vincenzo Librandi, Nov 16 2011"
+    ],
+    "xref": [
+        "Cf. A192232, A192744, A192951."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 13 2011",
+    "references": 2,
+    "revision": 13,
+    "time": "2015-06-13T00:53:55-04:00",
+    "created": "2011-07-13T20:18:47-04:00"
+}

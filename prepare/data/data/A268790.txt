@@ -1,0 +1,79 @@
+{
+    "number": 268790,
+    "data": "177,213,219,267,309,327,381,393,411,417,447,453,471,501,519,537,573,579,633,681,717,723,753,771,789,807,813,843,849,879,921,933,1011,1041,1047,1059,1077,1101,1119,1137,1149,1167,1191,1203,1227,1257,1263,1293",
+    "name": "Magic sums of 3 X 3 magic squares composed of primes.",
+    "comment": [
+        "From _Robert Israel_, Feb 16 2016: (Start)",
+        "All terms are 3 times odd primes.",
+        "3*p is a term if and only if p is a prime not in A073350.",
+        "Conjecture: 3*p is a term for every prime > 859.",
+        "I verified this for all primes < 100000.",
+        "The Green-Tao theorem implies the sequence is infinite: given one magic square with entries a(i,j), there are infinitely many pairs of positive integers x,y such that b(i,j) = x + y*a(i,j) are all prime.  Then b(i,j) form another magic square. (End)",
+        "Every number of the form 3*(A227284(n) + 840) is in this sequence. - _Arkadiusz Wesolowski_, Feb 22 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A268790/b268790.txt\">Table of n, a(n) for n = 1..9552</a>",
+        "G. L. Honaker, Jr. and Chris Caldwell, <a href=\"http://primes.utm.edu/curios/cpage/1341.html\">Prime Curios!: 859</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Magic_square\">Magic square</a>",
+        "<a href=\"/index/Mag#magic\">Index entries for sequences related to magic squares</a>"
+    ],
+    "formula": [
+        "If conjecture is true, a(n) = 3*prime(n+40) for n >= 110. - _Robert Israel_, Feb 16 2016"
+    ],
+    "example": [
+        "Examples of 3 X 3 magic squares composed of primes.",
+        ".",
+        "|---|---|---|",
+        "| 17| 89| 71|",
+        "|---|---|---|",
+        "|113| 59| 5 |",
+        "|---|---|---|",
+        "| 47| 29|101|",
+        "|---|---|---|",
+        "The magic constant is 177 = a(1).",
+        ".",
+        "|---|---|---|",
+        "| 41| 89| 83|",
+        "|---|---|---|",
+        "|113| 71| 29|",
+        "|---|---|---|",
+        "| 59| 53|101|",
+        "|---|---|---|",
+        "The magic constant is 213 = a(2)."
+    ],
+    "maple": [
+        "N:= 10000: # to get all terms <= N P:= select(isprime,{seq(p,p=3..2*N/3,2)}):",
+        "count:= 0:",
+        "for ic from 1 while P[ic] <= N/3 do",
+        "   c:= P[ic];",
+        "   V:= map(`-`,P[ic+1..-1],c) intersect map(t -> c-t, P[1..ic-1]);",
+        "   nv:= nops(V);",
+        "   VV:= {seq(seq(V[j]-V[i],j=i+1..nv),i=1..nv-1)} intersect V;",
+        "   nvv:= nops(VV);",
+        "   found:= false;",
+        "   for ia from 1 to nvv while not found do",
+        "     a:= VV[ia];",
+        "     for ib from ia+1 to nvv while VV[ib] < c - a do",
+        "       b:= VV[ib];",
+        "       if b <> 2*a and {c-a-b,c-a+b,c-b+a,c+a+b} subset P then",
+        "          found:= true;",
+        "          count:= count+1;",
+        "          A[count]:= 3*c;",
+        "          break",
+        "       fi",
+        "     od",
+        "   od:",
+        "od:",
+        "seq(A[i],i=1..count); # _Robert Israel_, Feb 16 2016"
+    ],
+    "xref": [
+        "Cf. A000040, A024351, A073350, A164843, A227284."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Arkadiusz Wesolowski_, Feb 13 2016",
+    "references": 4,
+    "revision": 31,
+    "time": "2016-02-22T04:23:40-05:00",
+    "created": "2016-02-20T21:08:17-05:00"
+}

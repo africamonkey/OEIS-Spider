@@ -1,0 +1,37 @@
+{
+    "number": 204262,
+    "data": "1,1,3,19,209,3545,85803,2807723,119377321,6397099105,421772316915,33552418294339,3168847554832961,350514662908385321,44885099167514403963,6587836555407268741019,1098597117953239632728089,206564512095561068049417265",
+    "name": "Permanent of the n-th principal submatrix of A003983.",
+    "maple": [
+        "with(LinearAlgebra):",
+        "a:= n-> `if`(n=0, 1, Permanent(Matrix(n, ()-> min(args)))):",
+        "seq(a(n), n=0..16);  # _Alois P. Heinz_, Nov 14 2016"
+    ],
+    "mathematica": [
+        "f[i_, j_] := Min[i, j];",
+        "m[n_] := Table[f[i, j], {i, 1, n}, {j, 1, n}]",
+        "TableForm[m[8]] (* 8x8 principal submatrix *)",
+        "Flatten[Table[f[i, n + 1 - i],",
+        "  {n, 1, 12}, {i, 1, n}]]      (* A003983 *)",
+        "Permanent[m_] :=",
+        "  With[{a = Array[x, Length[m]]},",
+        "   Coefficient[Times @@ (m.a), Times @@ a]];",
+        "Table[Permanent[m[n]], {n, 1, 15}]    (* A204262 *)"
+    ],
+    "program": [
+        "(PARI) a(n)={my(S,z,v=vector(n));for(i=0,n!-1,v=numtoperm(n,i);z=1;for(j=1,n,z*= n+1-max(j,v[j]));S+=z);return(S)} \\\\ _R. J. Cano_, Nov 14 2016"
+    ],
+    "xref": [
+        "Cf. A003983, A204264."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jan 14 2012",
+    "ext": [
+        "a(0)=1 prepended and more terms added by _Alois P. Heinz_, Nov 14 2016"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2016-11-14T13:36:13-05:00",
+    "created": "2012-01-14T22:52:51-05:00"
+}

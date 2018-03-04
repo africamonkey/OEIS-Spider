@@ -1,0 +1,49 @@
+{
+    "number": 274695,
+    "data": "1,2,6,133,97479304649455554938377",
+    "name": "a(1) = 1; for n>1, a(n) = smallest number > a(n-1) such that a(1)*a(2)*...*a(n) + 1 is a Fibonacci number.",
+    "comment": [
+        "a(6) = (Fibonacci(7937)-1)/(a(2)*a(3)*a(4)*a(5)) has 1633 digits and it is thus too large to be included in Data section or in a b-file. - _Giovanni Resta_, Jul 05 2016"
+    ],
+    "example": [
+        "After a(1)=1 and a(2)=2, we want m, the smallest number > 2 such that 1*2*m+1 is a Fibonacci number: this is m = 6 = a(3)."
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := a[n] = Block[{p = Times @@ Array[a, n-1], i, m}, For[i=2, ! (IntegerQ[m = (Fibonacci[i] - 1)/p] && m > a[n-1]), i++]; m]; Array[a, 6] (* _Giovanni Resta_, Jul 05 2016 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "product = 1",
+        "seq = [ product ]",
+        "prev_fib_index = 0",
+        "max_n = 5",
+        "for n in xrange(2, max_n+1):",
+        "    fib_index = prev_fib_index + 1",
+        "    found = False",
+        "    while not found:",
+        "        fib_minus_1 = fibonacci(fib_index) - 1",
+        "        if product.divides(fib_minus_1):",
+        "            m = int( fib_minus_1 / product )",
+        "            if m > seq[-1]:",
+        "                product = product * m",
+        "                seq.append( m )",
+        "                found = True",
+        "                prev_fib_index = fib_index",
+        "                break",
+        "        fib_index += 1",
+        "print seq"
+    ],
+    "xref": [
+        "Cf. A000045, A046966."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Robert C. Lyons_, Jul 04 2016",
+    "ext": [
+        "a(5) from _Giovanni Resta_, Jul 05 2016"
+    ],
+    "references": 0,
+    "revision": 12,
+    "time": "2016-07-06T00:28:17-04:00",
+    "created": "2016-07-06T00:28:17-04:00"
+}

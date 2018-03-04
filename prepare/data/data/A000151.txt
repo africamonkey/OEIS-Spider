@@ -1,0 +1,61 @@
+{
+    "number": 151,
+    "id": "M1770 N0701",
+    "data": "1,2,7,26,107,458,2058,9498,44947,216598,1059952,5251806,26297238,132856766,676398395,3466799104,17873508798,92630098886,482292684506,2521610175006,13233573019372,69687684810980,368114512431638,1950037285256658,10357028326495097,55140508518522726,294219119815868952,1573132563600386854,8427354035116949486,45226421721391554194",
+    "name": "Number of oriented rooted trees with n nodes. Also rooted trees with n nodes and 2-colored non-root nodes.",
+    "reference": [
+        "F. Bergeron, G. Labelle and P. Leroux, Combinatorial Species and Tree-Like Structures, Camb. 1998, p. 286.",
+        "S. R. Finch, Mathematical Constants, Cambridge, 2003, p. 307 and 564.",
+        "F. Harary and E. M. Palmer, Graphical Enumeration, Academic Press, NY, 1973, p. 60, R(x).",
+        "J. Riordan, An Introduction to Combinatorial Analysis, Wiley, 1958, p. 138.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A000151/b000151.txt\">Table of n, a(n) for n = 1..500</a>",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=387\">Encyclopedia of Combinatorial Structures 387</a>",
+        "P. Leroux and B. Miloudi, <a href=\"http://www.labmath.uqam.ca/~annales/english/volumes/16-1.html\">Generalisations de la formule d'Otter</a>, Ann. Sci. Math. Quebec 16 (1992), no 1, 53-80.",
+        "P. Leroux and B. Miloudi, <a href=\"/A000081/a000081_2.pdf\">G\u00e9n\u00e9ralisations de la formule d'Otter</a>, Ann. Sci. Math. Qu\u00e9bec, Vol. 16, No. 1, pp. 53-80, 1992. (Annotated scanned copy)",
+        "R. J. Mathar, <a href=\"http://arxiv.org/abs/1603.00077\">Topologically Distinct Sets of Non-intersecting Circles in the Plane</a>, arXiv:1603.00077 [math.CO], 2016.",
+        "R. Simon, <a href=\"https://doi.org/10.1016/0012-365X(91)90061-6\">Trees with 1-factors and oriented trees</a>, Discrete Math., 88 (1981), 97.",
+        "R. Simon, <a href=\"/A005750/a005750.pdf\">Trees with 1-factors and oriented trees</a>, Discrete Math., 88 (1981), 97. (Annotated scanned copy)",
+        "S. G. Wagner, <a href=\"http://finanz.math.tu-graz.ac.at/~wagner/identity.pdf\">An identity for the cycle indices of rooted tree automorphism groups</a>, Elec. J. Combinat., 13 (2006), #R00.",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "Generating function A(x) = x+2*x^2+7*x^3+26*x^4+... satisfies A(x)=x*exp( 2*sum_{k>=1}(A(x^k)/k) ) [Harary]. - Pab Ter (pabrlos2(AT)yahoo.com), Oct 12 2005",
+        "G.f.: x*Product_{n>=1} 1/(1 - x^n)^(2*a(n)) = Sum_{n>=1} a(n)*x^n.",
+        "a(n) ~ c * d^n / n^(3/2), where d = A245870 = 5.64654261623294971289271351621..., c = 0.207861597422917421321653492... . - _Vaclav Kotesovec_, Aug 20 2014"
+    ],
+    "maple": [
+        "R:=series(x+2*x^2+7*x^3+26*x^4,x,5); M:=500;",
+        "for n from 5 to M do",
+        "series(add( subs(x=x^k,R)/k, k=1..n-1),x,n);",
+        "t4:=coeff(series(x*exp(%)^2,x,n+1),x,n);",
+        "R:=series(R+t4*x^n,x,n+1); od:",
+        "for n from 1 to M do lprint(n,coeff(R,x,n)); od: # _N. J. A. Sloane_, Mar 10 2007",
+        "with(combstruct):norootree:=[S, {B = Set(S), S = Prod(Z,B,B)}, unlabeled] :seq(count(norootree,size=i),i=1..30); # with Algolib (Pab Ter)"
+    ],
+    "mathematica": [
+        "terms = 30; A[_] = 0; Do[A[x_] = x*Exp[2*Sum[A[x^k]/k, {k, 1, terms}]] + O[x]^(terms+1) // Normal, terms+1]; CoefficientList[A[x], x] // Rest",
+        "(* _Jean-Fran\u00e7ois Alcover_, Jun 08 2011, updated Jan 11 2018 *)"
+    ],
+    "xref": [
+        "Cf. A000238, A038055.",
+        "Also the self-convolution of A005750. - _Paul D. Hanna_, Aug 17 2002",
+        "Column k=2 of A242249.",
+        "Cf. A005751, A245870."
+    ],
+    "keyword": "nonn,eigen,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Extended with alternate description by _Christian G. Bower_, Apr 15 1998",
+        "More terms from Pab Ter (pabrlos2(AT)yahoo.com), Oct 12 2005"
+    ],
+    "references": 11,
+    "revision": 67,
+    "time": "2018-01-11T09:30:12-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 116540,
+    "data": "1,3,10,41,192,1025,6087,39754,282241,2159916,17691161,154192692,1423127819,13851559475,141670442163,1517880400352,16989834719706,198191448685735,2404300796114642,30273340418567819,394948562421362392",
+    "name": "Number of zero-one matrices with n ones and no zero rows or columns, up to permutation of rows.",
+    "comment": [
+        "Also number of normal set multipartitions of weight n. These are defined as multisets of sets that together partition a normal multiset of weight n, where a multiset is normal if it spans an initial interval of positive integers. Set multipartitions are involved in the expansion of elementary symmetric functions in terms of augmented monomial symmetric functions. - _Gus Wiseman_, Oct 22 2015"
+    ],
+    "link": [
+        "P. J. Cameron, T. Prellberg and D. Stark, <a href=\"http://arxiv.org/abs/math/0510155\">Asymptotics for incidence matrix classes </a>, arXiv:math/0510155 [math.CO], 2005-2006.",
+        "M. Klazar, <a href=\"http://arXiv.org/abs/math.CO/0305048\">Extremal problems for ordered hypergraphs</a>, arXiv:math/0305048 [math.CO], 2003.",
+        "Gus Wiseman, <a href=\"https://plus.google.com/114451380451684885774/posts/ix4rbCCY9Dj\">Four symmetric function identities</a>"
+    ],
+    "example": [
+        "The a(3) = 10 normal set multipartitions are: {1,1,1}, {1,12}, {1,1,2}, {2,12}, {1,2,2}, {123}, {1,23}, {2,13}, {3,12}, {1,2,3}."
+    ],
+    "mathematica": [
+        "MSOSA[s_List] :=",
+        "  MSOSA[s] = If[Length[s] === 0, {{}}, Module[{sbs, fms},",
+        "     sbs = Rest[Subsets[Union[s]]];",
+        "     fms =",
+        "      Function[r,",
+        "        Append[#, r] & /@",
+        "         MSOSA[Fold[DeleteCases[#1, #2, {1}, 1] &, s, r]]] /@ sbs;",
+        "     Select[Join @@ fms, OrderedQ]",
+        "     ]];",
+        "mmallnorm[n_Integer] :=",
+        "  Function[s, Array[Count[s, y_ /; y <= #] + 1 &, n]] /@",
+        "   Subsets[Range[n - 1] + 1];",
+        "Array[Plus @@ Length /@ MSOSA /@ mmallnorm[#] &, 9]",
+        "(* _Gus Wiseman_, Oct 22 2015 *)"
+    ],
+    "xref": [
+        "Cf. A049311, A101370."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vladeta Jovovic_, Mar 27 2006",
+    "references": 9,
+    "revision": 15,
+    "time": "2015-11-25T22:18:59-05:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

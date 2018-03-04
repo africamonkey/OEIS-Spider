@@ -1,0 +1,95 @@
+{
+    "number": 83207,
+    "data": "6,12,20,24,28,30,40,42,48,54,56,60,66,70,78,80,84,88,90,96,102,104,108,112,114,120,126,132,138,140,150,156,160,168,174,176,180,186,192,198,204,208,210,216,220,222,224,228,234,240,246,252,258,260,264,270,272",
+    "name": "Zumkeller numbers: numbers n whose divisors can be partitioned into two disjoint sets whose sums are both sigma(n)/2.",
+    "comment": [
+        "A083206(a(n)) > 0; complement of A083210; subsequence of A023196; A083208(n) = A083206(a(n)).",
+        "The 229026 Zumkeller numbers less than 10^6 have a maximum difference of 12. This leads to the conjecture that any 12 consecutive numbers include at least one Zumkeller number. There are 1989 odd Zumkeller numbers less than 10^6; they are exactly the odd abundant numbers that have even abundance, A174865. - _T. D. Noe_, Mar 31 2010",
+        "A179529(a(n)) = 1. - _Reinhard Zumkeller_, Jul 19 2010",
+        "A118372 is a subsequence, the S-perfect numbers. - _Reinhard Zumkeller_, Oct 28 2010",
+        "All 205283 odd abundant numbers less than 10^8 that have even abundance are Zumkeller numbers. - _T. D. Noe_, Nov 14 2010",
+        "Except for 1 and 2, all primorials (A002110) are Zumkeller numbers (follows from Fact 6 in the Rao/Peng paper). - _Ivan N. Ianakiev_, Mar 23 2016",
+        "Supersequence of A111592 (follows from Fact 3 in the Rao/Peng paper). - _Ivan N. Ianakiev_, Mar 20 2017",
+        "Conjecture: Any 4 consecutive terms include at least one number k such that sigma(k)/2 is also a Zumkeller number (verified for the first 10^5 Zumkeller numbers). - _Ivan N. Ianakiev_, Apr 03 2017"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A083207/b083207.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "K. P. S. Bhaskara Rao and Yuejian Peng, <a href=\"http://arxiv.org/abs/0912.0052\">On Zumkeller Numbers</a>, arXiv:0912.0052 [math.NT], 2009.",
+        "K. P. S. Bhaskara Rao and Yuejian Peng, <a href=\"https://doi.org/10.1016/j.jnt.2012.09.020\">On Zumkeller Numbers</a>, Journal of Number Theory, Volume 133, Issue 4, April 2013, pp. 1135-1155.",
+        "Peter Luschny, <a href=\"http://www.luschny.de/math/seq/ZumkellerNumbers.html\">Zumkeller Numbers</a>.",
+        "Reinhard Zumkeller, <a href=\"/A083206/a083206.txt\">Illustration of initial terms</a>"
+    ],
+    "example": [
+        "Given n = 48, we can partition the divisors thus: 1 + 3 + 4 + 6 + 8 + 16 + 24 = 2 + 12 + 48, therefore 48 is a term (A083206(48) = 5)."
+    ],
+    "maple": [
+        "with(numtheory): with(combstruct):",
+        "is_A083207 := proc(n) local S, R, Found, Comb, a, s; s := sigma(n);",
+        "if not(modp(s, 2) = 0 and n * 2 <= s) then RETURN(false) fi;",
+        "S := s / 2 - n; R := select(m -> m <= S, divisors(n)); Found := false;",
+        "Comb := iterstructs(Combination(R)):",
+        "while not finished(Comb) and not Found do",
+        "   Found := add(a, a = nextstruct(Comb)) = S",
+        "od; Found end:",
+        "A083207_list := upto -> select(is_A083207, [$1..upto]):",
+        "A083207_list(272); # _Peter Luschny_, Dec 14 2009, updated Aug 15 2014"
+    ],
+    "mathematica": [
+        "ZumkellerQ[n_] := Module[{d=Divisors[n], t, ds, x}, ds = Plus@@d; If[Mod[ds, 2] > 0, False, t = CoefficientList[Product[1 + x^i, {i, d}], x]; t[[1 + ds/2]] > 0]]; Select[Range[1000], ZumkellerQ] (* _T. D. Noe_, Mar 31 2010 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a083207 n = a083207_list !! (n-1)",
+        "a083207_list = filter (z 0 0 . a027750_row) $ [1..] where",
+        "   z u v []     = u == v",
+        "   z u v (p:ps) = z (u + p) v ps || z u (v + p) ps",
+        "-- _Reinhard Zumkeller_, Apr 18 2013",
+        "(PARI) part(n,v)=if(n<1, return(n==0)); forstep(i=#v,2,-1,if(part(n-v[i],v[1..i-1]), return(1))); n==v[1]",
+        "is(n)=my(d=divisors(n),s=sum(i=1,#d,d[i])); s%2==0 && part(s/2-n,d[1..#d-1]) \\\\ _Charles R Greathouse IV_, Mar 09 2014",
+        "(Python3)",
+        "from sympy import divisors",
+        "from sympy.combinatorics.subsets import Subset",
+        "for n in range(1,10**3):",
+        "....d = divisors(n)",
+        "....s = sum(d)",
+        "....if not s % 2 and max(d) <= s/2:",
+        "........for x in range(1,2**len(d)):",
+        "............if sum(Subset.unrank_binary(x,d).subset) == s/2:",
+        "................print(n,end=', ')",
+        "................break",
+        "# _Chai Wah Wu_, Aug 13 2014",
+        "(Python)",
+        "from sympy import divisors",
+        "import numpy as np",
+        "A083207 = []",
+        "for n in range(2,10**3):",
+        "....d = divisors(n)",
+        "....s = sum(d)",
+        "....if not s % 2 and 2*n <= s:",
+        "........d.remove(n)",
+        "........s2, ld = int(s/2-n), len(d)",
+        "........z = np.zeros((ld+1,s2+1),dtype=int)",
+        "........for i in range(1,ld+1):",
+        "............y = min(d[i-1],s2+1)",
+        "............z[i,range(y)] = z[i-1,range(y)]",
+        "............z[i,range(y,s2+1)] = np.maximum(z[i-1,range(y,s2+1)],z[i-1,range(0,s2+1-y)]+y)",
+        "............if z[i,s2] == s2:",
+        "................A083207.append(n)",
+        "................break",
+        "# _Chai Wah Wu_, Aug 19 2014"
+    ],
+    "xref": [
+        "Cf. A083209, A083211, A000203, A005101, A000396, A005835, A048055, A171641, A027750, A175592, A221054, A293453."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Apr 22 2003",
+    "ext": [
+        "Name improved by _T. D. Noe_, Mar 31 2010",
+        "Name \"Zumkeller numbers\" added by _N. J. A. Sloane_, Jul 08 2010"
+    ],
+    "references": 39,
+    "revision": 84,
+    "time": "2017-11-22T03:19:46-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

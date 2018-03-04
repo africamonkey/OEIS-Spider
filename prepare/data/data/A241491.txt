@@ -1,0 +1,43 @@
+{
+    "number": 241491,
+    "data": "88,94,104,121,122,155,262,314,328,368,377,397,416,431,433,434,440,466,472,497,500,590,620,654,655,664,671,676,688,704,710,716,720,905,945,961,973,977,1063,1103,1114,1131,1228,1234,1249,1250,1270,1312,1343,1348",
+    "name": "2*n is not the sum of two base-2 palindromes",
+    "comment": [
+        "Note that since all nonzero base-2 palindromes are odd, the sum of two nonzero base-2 palindromes is even."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A241491/b241491.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "86 is not in the sequence because 2*86 = 7 + 165, and 7 and 165 are in A006995."
+    ],
+    "maple": [
+        "  N:= 15; # for all entries up to 2^(N-1)",
+        "with(SignalProcessing): # requires Maple 17+",
+        "rev2:= proc(n) option remember;",
+        "  rev2(floor(n/2)) + (n mod 2)*2^ilog2(n)",
+        "end;",
+        "rev2(0) := 0; rev2(1):= 1;",
+        "B:= Array(1..2^N,datatype=float[8]);",
+        "for d from 1 to N do",
+        "  d1:= ceil(d/2);",
+        "  for x from 2^(d1-1) to 2^d1-1 do",
+        "    if d::even then y:= x*2^d1+rev2(x)",
+        "    else y:= x*2^(d1-1)+rev2(floor(x/2));",
+        "    fi;",
+        "  B[y]:= 1;",
+        "od od:",
+        "B2:= Convolution(B,B);",
+        "A241491:= select(t -> B2[2*t-1] < 0.5, [$1..2^(N-1)]); # _Robert Israel_, Apr 24 2014"
+    ],
+    "xref": [
+        "Cf. A006995, A261678 (values of 2n)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Apr 24 2014",
+    "references": 7,
+    "revision": 8,
+    "time": "2015-09-04T04:22:11-04:00",
+    "created": "2014-04-24T05:03:51-04:00"
+}

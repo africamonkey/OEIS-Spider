@@ -1,0 +1,40 @@
+{
+    "number": 224704,
+    "data": "1,1,1,2,4,7,13,24,45,84,156,291,543,1013,1889,3524,6575,12266,22883,42691,79647,148593,277221,517197,964911,1800189,3358526,6265846,11689902,21809313,40688632,75910917,141623529,264220545,492944193,919663462,1715774125",
+    "name": "Number of stacks of n triangles, pointing upwards or downwards depending on row parity.",
+    "comment": [
+        "A stack is formed by starting with a row of triangles pointing upwards, and then additional triangles pointing downwards can be inserted between adjacent triangles pointing upwards, and additional triangles pointing upwards can be put on top of triangles pointing downwards.",
+        "Number of compositions of n with a(1) = 1 and a(i+1) <= a(i) + 1 + mod(a(i),2)."
+    ],
+    "link": [
+        "Paul Tek, <a href=\"/A224704/b224704.txt\">Table of n, a(n) for n = 0..500</a>",
+        "Paul Tek, <a href=\"/A224704/a224704.png\">Illustration of the first terms</a>"
+    ],
+    "program": [
+        "(Perl)",
+        "use bigint;",
+        "my $max = 100;",
+        "my @d = ( [1] );",
+        "foreach my $n (0..$max) {",
+        "    my $a = 0;",
+        "    foreach my $h (0..$#{$d[$n]}) {",
+        "        $a += $d[$n][$h];",
+        "        my $maxh = ($h % 2) ? ($h+2) : ($h+1);",
+        "        foreach my $newh (1..$maxh) {",
+        "            $d[$n+$newh][$newh] += $d[$n][$h];",
+        "        }",
+        "    }",
+        "    print \"$a,\";",
+        "}"
+    ],
+    "xref": [
+        "Cf. A005169, A001524."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul Tek_, Apr 16 2013",
+    "references": 1,
+    "revision": 17,
+    "time": "2013-04-19T11:53:30-04:00",
+    "created": "2013-04-18T16:32:25-04:00"
+}

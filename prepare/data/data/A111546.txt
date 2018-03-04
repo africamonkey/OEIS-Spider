@@ -1,0 +1,46 @@
+{
+    "number": 111546,
+    "data": "1,3,15,99,783,7083,71415,789939,9485343,122721723,1701224775,25156450179,395362560303,6583219735563,115817825451735,2147443419579219,41868118883289663,856527397513863003",
+    "name": "Column 2 of triangle A111544.",
+    "comment": [
+        "Also forms the columns of triangle A111548, which is the matrix inverse of triangle A111544."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A111546/b111546.txt\">Table of n, a(n) for n = 0..250</a>"
+    ],
+    "formula": [
+        "G.f.: log(Sum_{n>=0} (n+2)!/2!*x^n) = Sum_{n>=1} a(n)*x^n/n. a(n) = 3*A111530(n) = -A111548(n+1, 0) for n>0.",
+        "a(n+1)=(1/2)*((n+4)!-3*(n+3)!-sum((n+2-k)!*a(k+1),k=0..n-1))",
+        "a(n+1) is the moment of order n for the measure of density: 2*x^2*exp(-x)/((x^2*exp(-x)*Ei(x)-x-1)^2+Pi^2*x^4*exp(-2*x)), on the interval 0..infinity. [_Groux Roland_, Dec 10 2010]",
+        "a(n) = Sum_{k, 0<=k<=n} A200659(n,k)*2^k. - _Philippe Del\u00e9ham_, Nov 21 2011",
+        "G.f.: 1/(1-3x/(1-2x/(1-4x/(1-3x/(1-5x/(1-4x/(1-...(continued fraction). - _Philippe Del\u00e9ham_, Nov 21 2011",
+        "G.f. 2 - U(0) where U(k)= 1 - x*(k+1)/(1 - x*(k+3)/U(k+1)); (continued fraction, 2-step). - _Sergei N. Gladkovskii_, Jun 29 2012",
+        "G.f. -1/G(0) where G(k)=  x - 1 - k*x - x*(k+2)/G(k+1); (continued fraction, Euler's 1st kind, 1-step). - _Sergei N. Gladkovskii_, Aug 13 2012",
+        "G.f.: A(x) = 1/(G(0) - x) where G(k) = 1 + (k+1)*x - x*(k+3)/G(k+1) ; (recursively defined continued fraction). - _Sergei N. Gladkovskii_, Dec 26 2012",
+        "G.f.: 1/Q(0), where Q(k)= 1 - x + k*x - x*(k+2)/Q(k+1); (continued fraction). - _Sergei N. Gladkovskii_, May 03 2013",
+        "G.f.: 1/x -2 -2/(x*G(0)), where G(k)= 1 + 1/(1 - x*(k+3)/(x*(k+3) + 1/G(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, Jun 06 2013",
+        "G.f.: 1/x - 2 - 1/(x*W(0)), where W(k) = 1 - x*(k+3)/( x*(k+3) - 1/(1 - x*(k+1)/( x*(k+1) - 1/W(k+1) ))); (continued fraction). - _Sergei N. Gladkovskii_, Aug 25 2013",
+        "G.f.: W(0), where W(k) = 1 - x*(k+3)/( x*(k+3) - 1/(1 - x*(k+2)/( x*(k+2) - 1/W(k+1) ))); (continued fraction). - _Sergei N. Gladkovskii_, Aug 26 2013"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n<0,0,(matrix(n+3,n+3,m,j,if(m==j,1,if(m==j+1,-m+1, -(m-j-1)*polcoeff(log(sum(i=0,m,(i+2)!/2!*x^i)),m-j-1))))^-1)[n+3,3])}",
+        "(PARI) a(n)=(1/2)*((n+3)!-3*(n+2)!-sum(k=0,n-2,(n+1-k)!*a(k+1))) \\\\ Formula by R. Groux, implemented & checked to conform to given terms by _M. F. Hasler_, Dec 12 2010",
+        "(Haskell)",
+        "a111546 n = a111546_list !! n",
+        "a111546_list = 1 : f 2 [1] where",
+        "   f v ws@(w:_) = y : f (v + 1) (y : ws) where",
+        "                  y = v * w + (sum $ zipWith (*) ws $ reverse ws)",
+        "-- _Reinhard Zumkeller_, Jan 24 2014"
+    ],
+    "xref": [
+        "Cf. A111544, A111530, A111548, A230253.",
+        "Cf. A005412."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Aug 07 2005",
+    "references": 8,
+    "revision": 43,
+    "time": "2014-01-24T07:03:22-05:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

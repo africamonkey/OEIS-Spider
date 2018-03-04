@@ -1,0 +1,32 @@
+{
+    "number": 66740,
+    "data": "1,1,2,5,13,44,151,614,2446,11066,53368,253927,1316375,7213979",
+    "name": "Number of distinct partitions of A007504(n) which can be obtained by merging parts in the partition 2+3+5+...+prime(n), where prime(n) is the n-th prime.",
+    "example": [
+        "For n=4, the 13 partitions are 17, 2+15, 3+14, 5+12, 7+10, 8+9, 2+3+12, 2+5+10, 2+7+8, 3+5+9, 3+7+7, 5+5+7, 2+3+5+7. 5+12 and 7+10 can be obtained in two ways each: 5+12 = (5)+(2+3+7) = (2+3)+(5+7), 7+10 = (7)+(2+3+5) = (2+5)+(3+7)."
+    ],
+    "maple": [
+        "b:= proc(n) local p; p:= `if`(n=0, 1, ithprime(n));",
+        "      b(n):= `if`(n<2, {[p$n]}, map(x-> [sort([x[], p]),",
+        "      seq(sort(subsop(i=x[i]+p, x)), i=1..nops(x))][], b(n-1)))",
+        "    end:",
+        "a:= n-> nops(b(n)):",
+        "seq(a(n), n=0..10);  # _Alois P. Heinz_, May 31 2013"
+    ],
+    "mathematica": [
+        "addto[ p_, k_ ] := Module[ {}, lth=Length[ p ]; Union[ Sort/@Append[ Table[ Join[ Take[ p, i-1 ], {p[ [ i ] ]+k}, Take[ p, i-lth ] ], {i, 1, lth} ], Append[ p, k ] ] ] ]; addtolist[ plist_, k_ ] := Union[ Join@@(addto[ #, k ]&/@plist) ]; l[ 0 ]={{}}; l[ n_ ] := l[ n ]=addtolist[ l[ n-1 ], Prime[ n ] ]; a[ n_ ] := Length[ l[ n ] ]"
+    ],
+    "xref": [
+        "Cf. A007504, A066723."
+    ],
+    "keyword": "more,nonn",
+    "offset": "0,3",
+    "author": "_Naohiro Nomoto_, Jan 16 2002",
+    "ext": [
+        "Edited by _Dean Hickerson_, Jan 18 2002"
+    ],
+    "references": 1,
+    "revision": 9,
+    "time": "2014-06-24T01:08:19-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

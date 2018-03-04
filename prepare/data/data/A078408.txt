@@ -1,0 +1,53 @@
+{
+    "number": 78408,
+    "data": "1,2,3,5,8,12,18,27,38,54,76,104,142,192,256,340,448,585,760,982,1260,1610,2048,2590,3264,4097,5120,6378,7917,9792,12076,14848,18200,22250,27130,32992,40026,48446,58499,70488,84756,101698,121792,145578,173682",
+    "name": "Number of ways to partition 2n+1 into distinct positive integers.",
+    "comment": [
+        "a(n) is also the number of partitions of 2n+1 in which all parts are odd, due to Euler's partition theorem. See A000009. - _Wolfdieter Lang_, Jul 08 2012"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A078408/b078408.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "M. Somos, <a href=\"http://somos.crg4.com/multiq.html\">Introduction to Ramanujan theta functions</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RamanujanThetaFunctions.html\">Ramanujan Theta Functions</a>"
+    ],
+    "formula": [
+        "a(n) = t(2*n+1, 0), t as defined in A079211.",
+        "Euler transform of period 16 sequence [ 2, 0, 1, 1, 1, 1, 2, 0, 2, 1, 1, 1, 1, 0, 2, 0, ...]. - _Michael Somos_, Mar 04 2003",
+        "a(n)=A000009(2n+1). G.f.: 1/[(1-x)(1-x^3)(1-x^5)...] - _Jon Perry_, May 27 2004",
+        "Expansion of f(x, x^7) / f(-x, -x^2) where f(, ) is Ramanujan's general theta function. - _Michael Somos_, Oct 06 2015"
+    ],
+    "example": [
+        "a(3) = 5 because 7 = 1+6 = 2+5 = 3+4 = 1+2+4 (partitions into distinct parts) and 7 = 1+1+5 = 1+3+3 = 1+1+1+1+3 = 1+1+1+1+1+1+1 (partitions into odd parts). [_Wolfdieter Lang_, Jul 08 2012]",
+        "G.f. = 1 + 2*x + 3*x^2 + 5*x^3 + 8*x^4 + 12*x^5 + 18*x^6 + 27*x^7 + 38*x^8 + ...",
+        "G.f. = q^25 + 2*q^73 + 3*q^121 + 5*q^169 + 8*q^217 + 12*q^265 + 18*q^313 + ..."
+    ],
+    "mathematica": [
+        "a[ n_] := SeriesCoefficient[ QPochhammer[ x^2] / QPochhammer[ x], {x, 0, 2 n + 1}]; (* _Michael Somos_, Oct 06 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A); if( n<0, 0, n = 2*n + 1; A = x * O(x^n); polcoeff( eta(x^2 + A) / eta(x + A), n))};",
+        "(Haskell)",
+        "import Data.MemoCombinators (memo2, integral)",
+        "a078408 n = a078408_list !! n",
+        "a078408_list = f 1 where",
+        "   f x = (p' 1 x) : f (x + 2)",
+        "   p' = memo2 integral integral p",
+        "   p _ 0 = 1",
+        "   p k m = if m < k then 0 else p' k (m - k) + p' (k + 2) m",
+        "-- _Reinhard Zumkeller_, Nov 27 2015"
+    ],
+    "xref": [
+        "Cf. A035294, A078409, A078410.",
+        " Cf. A005408, A000009."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Dec 27 2002",
+    "ext": [
+        "More terms from _Reinhard Zumkeller_, Dec 28 2002"
+    ],
+    "references": 15,
+    "revision": 20,
+    "time": "2015-11-27T20:47:53-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

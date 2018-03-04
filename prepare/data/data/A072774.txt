@@ -1,0 +1,43 @@
+{
+    "number": 72774,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,19,21,22,23,25,26,27,29,30,31,32,33,34,35,36,37,38,39,41,42,43,46,47,49,51,53,55,57,58,59,61,62,64,65,66,67,69,70,71,73,74,77,78,79,81,82,83,85,86,87,89,91,93,94,95,97",
+    "name": "Powers of squarefree numbers.",
+    "comment": [
+        "a(n) = A072775(n)^A072776(n); complement of A059404.",
+        "Essentially the same as A062770. - _R. J. Mathar_, Sep 25 2008",
+        "Numbers m such that in canonical prime factorization all prime exponents are identical: A124010(m,k) = A124010(m,1) for k = 2..A000005(m). - _Reinhard Zumkeller_, Apr 06 2014"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A072774/b072774.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "Select[Range[100], Length[Union[FactorInteger[#][[All, 2]]]] == 1 &] (* _Geoffrey Critzer_, Mar 30 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Map (empty, findMin, deleteMin, insert)",
+        "import qualified Data.Map.Lazy as Map (null)",
+        "a072774 n = a072774_list !! (n-1)",
+        "(a072774_list, a072775_list, a072776_list) = unzip3 $",
+        "   (1, 1, 1) : f (tail a005117_list) empty where",
+        "   f vs'@(v:vs) m",
+        "    | Map.null m || xx > v = (v, v, 1) :",
+        "                             f vs (insert (v^2) (v, 2) m)",
+        "    | otherwise = (xx, bx, ex) :",
+        "                  f vs' (insert (bx*xx) (bx, ex+1) $ deleteMin m)",
+        "    where (xx, (bx, ex)) = findMin m",
+        "-- _Reinhard Zumkeller_, Apr 06 2014",
+        "(PARI) is(n)=ispower(n,,&n); issquarefree(n) \\\\ _Charles R Greathouse IV_, Oct 16 2015"
+    ],
+    "xref": [
+        "Cf. A072777 (subsequence), A005117, A072778.",
+        "A subsequence of A242414."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Jul 10 2002",
+    "references": 16,
+    "revision": 19,
+    "time": "2015-10-16T08:52:03-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

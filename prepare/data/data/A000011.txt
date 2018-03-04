@@ -1,0 +1,72 @@
+{
+    "number": 11,
+    "id": "M0312 N0114",
+    "data": "1,1,2,2,4,4,8,9,18,23,44,63,122,190,362,612,1162,2056,3914,7155,13648,25482,48734,92205,176906,337594,649532,1246863,2405236,4636390,8964800,17334801,33588234,65108062,126390032,245492244,477353376,928772650,1808676326,3524337980",
+    "name": "Number of n-bead necklaces (turning over is allowed) where complements are equivalent.",
+    "comment": [
+        "a(n) is also the number of minimal fibrations of a bidirectional n-cycle over the 2-bouquet up to precompositions with automorphisms of the n-cycle and postcomposition with automorphisms of the 2-bouquet. (Boldi et al.) - _Sebastiano Vigna_, Jan 08 2018"
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A000011/b000011.txt\">Table of n, a(n) for n = 0..3335</a> (first 201 terms from T. D. Noe)",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>",
+        "Paolo Boldi, Sebastiano Vigna, <a href=\"https://doi.org/10.1016/S0012-365X(00)00455-6\">Fibrations of Graphs</a>, Discrete Math., 243 (2002), 21-66.",
+        "H. Bottomley, <a href=\"/A000011/a000011_a000013.gif\">Initial terms of A000011 and A000013</a>",
+        "N. J. Fine, <a href=\"http://projecteuclid.org/euclid.ijm/1255381350\">Classes of periodic sequences</a>, Illinois J. Math., 2 (1958), 285-302.",
+        "Shinsaku Fujita, <a href=\"https://doi.org/10.1246/bcsj.20160369\">alpha-beta Itemized Enumeration of Inositol Derivatives and m-Gonal Homologs by Extending Fujita's Proligand Method</a>, Bull. Chem. Soc. Jpn. 2017, 90, 343-366; doi:10.1246/bcsj.20160369. See Table 8.",
+        "E. N. Gilbert and J. Riordan, <a href=\"http://projecteuclid.org/euclid.ijm/1255631587\">Symmetry types of periodic sequences</a>, Illinois J. Math., 5 (1961), 657-665.",
+        "W. D. Hoskins and Anne Penfold Street, <a href=\"http://dx.doi.org/10.1017/S1446788700017547\">Twills on a given number of harnesses</a>, J. Austral. Math. Soc. Ser. A 33 (1982), no. 1, 1-15.",
+        "W. D. Hoskins and A. P. Street, <a href=\"/A005513/a005513_1.pdf\">Twills on a given number of harnesses</a>, J. Austral. Math. Soc. (Series A), 33 (1982), 1-15. (Annotated scanned copy)",
+        "Karyn McLellan, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v20i4p32\">Periodic coefficients and random Fibonacci sequences</a>, Electronic Journal of Combinatorics, 20(4), 2013, #P32.",
+        "F. Ruskey, <a href=\"http://web.archive.org/web/20170113110237/www.theory.cs.uvic.ca/~cos/inf/neck/NecklaceInfo.html\">Necklaces, Lyndon words, De Bruijn sequences, etc.</a>",
+        "A. P. Street, <a href=\"/A005513/a005513.pdf\">Letter to N. J. A. Sloane, N.D.</a>",
+        "Zhe Sun, T. Suenaga, P. Sarkar, S. Sato, M. Kotani, H. Isobe, <a href=\"https://doi.org/10.1073/pnas.1606530113\">Stereoisomerism, crystal structures, and dynamics of belt-shaped cyclonaphthylenes</a>, Proc. Nat. Acad. Sci. USA, vol. 113 no. 29, pp. 8109-8114, doi: 10.1073/pnas.1606530113.",
+        "A. Yajima, <a href=\"http://dx.doi.org/10.1246/bcsj.20140204\">How to calculate the number of stereoisomers of inositol-homologs</a>, Bull. Chem. Soc. Jpn. 2014, 87, 1260-1264; doi:10.1246/bcsj.20140204. See Tables 1 and 2 (and text).",
+        "<a href=\"/index/Ne#necklaces\">Index entries for sequences related to necklaces</a>",
+        "<a href=\"/index/Br#bracelets\">Index entries for sequences related to bracelets</a>"
+    ],
+    "formula": [
+        "a(n) = (A000013(n) + 2^floor(n/2))/2."
+    ],
+    "example": [
+        "From Jason Orendorff (jason.orendorff(AT)gmail.com), Jan 09 2009: (Start)",
+        "The binary bracelets for small n are:",
+        "n: bracelets",
+        "0: (the empty bracelet)",
+        "1: 0",
+        "2: 00, 01",
+        "3: 000, 001",
+        "4: 0000, 0001, 0011, 0101",
+        "5: 00000, 00001, 00011, 00101",
+        "6: 000000, 000001, 000011, 000101, 000111, 001001, 001011, 010101",
+        "(End)"
+    ],
+    "maple": [
+        "with(numtheory): A000011 := proc(n) local s,d; if n = 0 then RETURN(1) else s := 2^(floor(n/2)); for d in divisors(n) do s := s+(phi(2*d)*2^(n/d))/(2*n); od; RETURN(s/2); fi; end;"
+    ],
+    "mathematica": [
+        "a[n_] := Fold[ #1 + EulerPhi[2#2]2^(n/#2)/(2n) &, 2^Floor[n/2], Divisors[n]]/2",
+        "a[ n_] := If[ n < 1, Boole[n == 0], 2^Quotient[n, 2] / 2 + DivisorSum[ n, EulerPhi[2 #] 2^(n/#) &] / (4 n)]; (* _Michael Somos_, Dec 19 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<1, n==0, 2^(n\\2) / 2 + sumdiv(n, k, eulerphi(2*k) * 2^(n/k)) / (4*n))}; /* _Michael Somos_, Jun 03 2002 */"
+    ],
+    "xref": [
+        "Cf. A000013. Bisections give A000117 and A092668.",
+        "The 8 sequences in Table 8 of Fujita (2017) are A053656, A000011, A256216, A256217, A123045, A283846, A283847, A283848."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Better description from _Christian G. Bower_",
+        "More terms from _David W. Wilson_, Jan 13 2000"
+    ],
+    "references": 27,
+    "revision": 72,
+    "time": "2018-01-10T16:19:41-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

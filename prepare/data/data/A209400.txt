@@ -1,0 +1,69 @@
+{
+    "number": 209400,
+    "data": "0,0,0,0,2,7,19,46,107,242,535,1162,2490,5281,11108,23206,48206,99663,205218,421115,861585,1758249,3580075,7275377,14759592,29897683,60481359,122206014,246665382,497414751,1002231335,2017877779,4060069150,8164204342",
+    "name": "Number of subsets of {1,...,n} containing a subset of the form {k,k+1,k+3} for some k.",
+    "comment": [
+        "Also, number of subsets of {1,...,n} containing {a,a+2,a+3} for some a.",
+        "Also, number of bitstrings of length n containing 1101 or 1111."
+    ],
+    "link": [
+        "David Nacin, <a href=\"/A209400/b209400.txt\">Table of n, a(n) for n = 0..500</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-1,-2,1,-1,-2)."
+    ],
+    "formula": [
+        "a(n) = 3*a(n-1) - a(n-2) - 2*a(n-3) + a(n-4) - a(n-5) - 2*a(n-6), a(4)=2, a(5)=7, a(i)=0 for i<4.",
+        "G.f.: x^4*(2 + x)/(1 - 3*x + x^2 + 2*x^3 - x^4 + x^5 + 2*x^6) = x^4*(2 + x)/((1 - 2*x)*(1 - x - x^2 - x^4 - x^5)).",
+        "a(n) = 2^n - A164387(n)."
+    ],
+    "example": [
+        "When n=4 the only subsets containing an {a,a+1,a+3} happen when a=1 with the two subsets {1,2,3,4} and {1,2,4}.  Thus a(4)=2."
+    ],
+    "mathematica": [
+        "LinearRecurrence[{3, -1, -2, 1, -1, -2}, {0, 0, 0, 0, 2, 7}, 40]",
+        "CoefficientList[Series[x^4*(2+x)/(1-3*x+x^2+2*x^3-x^4+x^5+2*x^6), {x,0, 50}], x] (* _G. C. Greubel_, Jan 03 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "#From recurrence",
+        "def a(n, adict={0:0, 1:0, 2:0, 3:0, 4:2, 5:7}):",
+        ".if n in adict:",
+        "..return adict[n]",
+        ".adict[n]=3*a(n-1)-a(n-2)-2*a(n-3)+a(n-4)-a(n-5)-2*a(n-6)",
+        ".return adict[n]",
+        "(Python)",
+        "#Returns the actual list of valid subsets",
+        "def contains1101(n):",
+        ".patterns=list()",
+        ".for start in range (1,n-2):",
+        "..s=set()",
+        "..for i in range(4):",
+        "...if (1,1,0,1)[i]:",
+        "....s.add(start+i)",
+        "..patterns.append(s)",
+        ".s=list()",
+        ".for i in range(2,n+1):",
+        "..for temptuple in comb(range(1,n+1),i):",
+        "...tempset=set(temptuple)",
+        "...for sub in patterns:",
+        "....if sub <= tempset:",
+        ".....s.append(tempset)",
+        ".....break",
+        ".return s",
+        "#Counts all such sets",
+        "def countcontains1101(n):",
+        ".return len(contains1101(n))",
+        "(PARI) x='x+O('x^30); concat([0,0,0,0], Vec(x^4*(2+x)/(1-3*x+x^2+2*x^3-x^4+x^5+2*x^6))) \\\\ _G. C. Greubel_, Jan 03 2018",
+        "(MAGMA) I:=[0, 0, 0, 0, 2, 7]; [n le 6 select I[n] else 3*Self(n-1) - Self(n-2)-2*Self(n-3)+Self(n-4)-Self(n-5)-2*Self(n-6): n in [0..30]]; //",
+        "_G. C. Greubel_, Jan 03 2018"
+    ],
+    "xref": [
+        "Cf. A209398, A209399, A164387"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,5",
+    "author": "_David Nacin_, Mar 07 2012",
+    "references": 4,
+    "revision": 17,
+    "time": "2018-01-03T17:53:36-05:00",
+    "created": "2012-03-08T17:01:29-05:00"
+}

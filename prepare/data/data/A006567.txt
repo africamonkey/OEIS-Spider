@@ -1,0 +1,52 @@
+{
+    "number": 6567,
+    "id": "M4887",
+    "data": "13,17,31,37,71,73,79,97,107,113,149,157,167,179,199,311,337,347,359,389,701,709,733,739,743,751,761,769,907,937,941,953,967,971,983,991,1009,1021,1031,1033,1061,1069,1091,1097,1103,1109,1151,1153,1181,1193",
+    "name": "Emirps (primes whose reversal is a different prime).",
+    "comment": [
+        "A palindrome is a word that when written in reverse results in the same word. for example, \"racecar\" reversed is still \"racecar\". Related to palindromes are semordnilaps. These are words that when written in reverse result in a distinct valid word. For example, \"stressed\" written in reverse is \"desserts\". Not all words are palindromes or semordnilaps. While certainly not all numbers are palindromes, all non-palindromic numbers when written in reverse will form semordnilaps. Narrowing to primes brings back the same trichotomy as with words: some numbers are emirps, some numbers are palindromic primes, but some words are neither."
+    ],
+    "reference": [
+        "M. Gardner, The Magic Numbers of Dr Matrix. Prometheus, Buffalo, NY, 1985, p. 230.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A006567/b006567.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "C. K. Caldwell, The Prime Glossary, <a href=\"http://primes.utm.edu/glossary/page.php?sort=emirp\">emirp</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Emirp.html\">Emirp.</a>"
+    ],
+    "maple": [
+        "read(\"transforms\") ; isA006567 := proc(n) local R ; if isprime(n) then R := digrev(n) ; isprime(R) and R <> n ; else false; end if; end proc:",
+        "A006567 := proc(n) option remember ; local a; if n = 1 then 13; else a := nextprime(procname(n-1)) ; while not isA006567(a) do a := nextprime(a) ; end do; return a; end if; end proc:",
+        "seq(A006567(n),n=1..120) ; # _R. J. Mathar_, May 24 2010"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{idn = IntegerReverse@ n}, PrimeQ@ idn && n != idn]; Select[Prime@ Range@ 200, fQ] (* _Santi Spadaro_, Oct 14 2001 and modified by _Robert G. Wilson v_, Nov 08 2015 *)"
+    ],
+    "program": [
+        "(MAGMA) [ n : n in [1..1194] | n ne rev and IsPrime(n) and IsPrime(rev) where rev is Seqint(Reverse(Intseq(n))) ]; // Sergei Haller (sergei(AT)sergei-haller.de), Dec 21 2006",
+        "(PARI) is(n)=my(r=eval(concat(Vecrev(Str(n)))));isprime(r)&&r!=n&&isprime(n) \\\\ _Charles R Greathouse IV_, Nov 20 2012",
+        "(Haskell)",
+        "a006567 n = a006567_list !! (n-1)",
+        "a006567_list = filter f a000040_list where",
+        "   f p = a010051' q == 1 && q /= p  where q = a004086 p",
+        "-- _Reinhard Zumkeller_, Jul 16 2014",
+        "(Python)",
+        "from sympy import prime, isprime",
+        "A006567 = [p for p in (prime(n) for n in xrange(1,10**6)) if str(p) != str(p)[::-1] and isprime(int(str(p)[::-1]))] # _Chai Wah Wu_, Aug 14 2014"
+    ],
+    "xref": [
+        "Cf. A003684, A007628 (subsequence), A046732, A048051, A048052, A048053, A048054, A048895, A000040, A010051, A004086.",
+        "A007500 = A002385 union this sequence."
+    ],
+    "keyword": "nonn,nice,easy,base",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _James A. Sellers_, Jan 22 2000"
+    ],
+    "references": 149,
+    "revision": 52,
+    "time": "2017-09-27T07:52:29-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

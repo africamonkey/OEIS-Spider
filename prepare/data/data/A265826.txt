@@ -1,0 +1,44 @@
+{
+    "number": 265826,
+    "data": "1,1,2,4,7,13,24,45,84,157,293,547,1021,1906,3558,6642,12399,23146,43208,80659,150571,281080,524709,979506,1828503,3413376,6371955,11894912,22204949,41451316,77379669,144449290,269652192,503375992,939682290",
+    "name": "a(0) = 1, a(n) = Sum_{k=1..n, a(n-k)*ceiling(sin(k))}",
+    "comment": [
+        "It appears that a(n) <= A088353(n). It is identical until n=11 where a(11) = 547, but A088353(n) = 548.",
+        "It also appears that a(n) <= A059633(n+2). It is identical until n=25 where a(25) = 3413376, but A059633(27) = 3413377."
+    ],
+    "link": [
+        "Griffin N. Macris, <a href=\"/A265826/b265826.txt\">Table of n, a(n) for n = 0..999</a>"
+    ],
+    "formula": [
+        "a(0) = 1",
+        "a(n) = Sum_{k=1..n, a(n-k)*ceiling(sin(k))}"
+    ],
+    "example": [
+        "a(4) = 1*ceiling(sin(4)) + 1*ceiling(sin(3)) + 2*ceiling(sin(2)) + 4*ceiling(sin(1)) = 1*0 + 1*1 + 2*1 + 4*1 = 7"
+    ],
+    "mathematica": [
+        "A[0] := 1",
+        "A[n_] := A[n] = If[n <= 0, 0, Sum[A[n - k]Ceiling[Sin[k]], {k, 1, n}]]"
+    ],
+    "program": [
+        "(Java)",
+        "int limit = 500; //limit index, can be changed for more terms",
+        "BigInteger[] n = new BigInteger[limit];",
+        "n[0] = BigInteger.ONE;",
+        "System.out.println(\"0 1\");",
+        "for ( int i = 1; i < n.length; i++ ) {",
+        "   n[i] = BigInteger.ZERO;",
+        "   for(int k = 1; k <= i; k++) {",
+        "      n[i] = n[i].add(n[i-k].multiply(BigInteger.valueOf((long) Math.ceil(Math.sin(k)))));",
+        "   }",
+        "   System.out.println(i+\" \"+n[i]);",
+        "}"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Griffin N. Macris_, Apr 06 2016",
+    "references": 1,
+    "revision": 31,
+    "time": "2016-04-09T16:52:20-04:00",
+    "created": "2016-04-09T16:52:20-04:00"
+}

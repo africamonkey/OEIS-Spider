@@ -1,0 +1,41 @@
+{
+    "number": 130899,
+    "data": "1,2,3,4,6,9,11,15,19,25,31,41,49,61,75,91,109,134,156,188,221,262,305,361,416,485,560,648,740,858,972,1115,1266,1441,1627,1851,2078,2348,2634,2965,3309,3721,4138,4625,5143,5728,6344,7059,7792,8637,9525,10529",
+    "name": "Number of partitions of n into \"number of partitions of n into 'number of partitions of n into partition numbers' numbers\" numbers.",
+    "comment": [
+        "The \"partition transformation\" of sequence A can be defined as the number of partitions of n into elements of sequence A. This sequence (A130899) is the partition transformation composed with itself four times on the positive integers."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A130899/b130899.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(6) = 9 because there are 9 partitions of 6 whose parts are 1,2,3,5,6 which are terms of sequence A130898, which is the number of partitions of n into numbers of partitions of n into partition numbers."
+    ],
+    "maple": [
+        "pp:= proc(p) local b;",
+        "       b:= proc(n, i)",
+        "             if n<0 then 0",
+        "           elif n=0 then 1",
+        "           elif i<1 then 0",
+        "           else b(n,i):= b(n,i-1) +b(n-p(i), i)",
+        "             fi",
+        "           end;",
+        "       n-> b(n, n)",
+        "     end:",
+        "a:= (pp@@4)(n->n):",
+        "seq(a(n), n=1..100); # _Alois P. Heinz_, Sep 13 2011"
+    ],
+    "mathematica": [
+        "pp[p_] := Module[{b}, b[n_, i_] := Which[n < 0, 0, n == 0, 1, i < 1, 0, True, b[n, i] = b[n, i-1] + b[n-p[i], i]]; b[#, #]&]; a = Nest[pp, Identity, 4]; Table[a[n], {n, 1, 100}] (* _Jean-Fran\u00e7ois Alcover_, Oct 26 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000027, A000041, A007279, A130898, A130900 which are m-fold self-compositions of the \"partition transformation\" on the counting numbers, for m=0, 1, 2, 4, 5."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Graeme McRae_, Jun 07 2007",
+    "references": 3,
+    "revision": 10,
+    "time": "2015-10-26T10:37:21-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 290579,
+    "data": "1,1,3,17,145,1661,23947,416765,8504865,199200985,5268047411,155282897065,5048546868209,179483438440021,6927036355244475,288439692143197397,12889578930617144641,615304922810783744561,31249797537098034966499,1682478707717022082757441,95721167135792642044679505,5738213812249917154871122861,361520344958259229318337826923,23881324878748364254507881173677",
+    "name": "E.g.f. satisfies: A(x) = (1 + sin(x*A(x))) / cos(x*A(x)).",
+    "comment": [
+        "Equals row sums of irregular triangle A290580.",
+        "A diagonal in square array A185414."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A290579/b290579.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "E.g.f.: A(x) = (1/x) * Series_Reversion( x*cos(x)/(1 + sin(x)) ).",
+        "E.g.f. satisfies: A(x) = Sum_{n>=0} A000111(n) * x^n * A(x)^n / n!.",
+        "E.g.f.: A(x) = exp( sum_{n>=1} A185414(n,n)*x^n/n! ).",
+        "a(n) = A185414(n,n+1) for n>=1.",
+        "a(n) = [x^n/n!] ( (1 + sin(x)) / cos(x) )^(n+1) / (n+1) for n>=0.",
+        "a(n) ~ n^(n-1) / (exp(n) * r^(n+1/2)), where r = 0.3263879708167851846572540343... is the root of the equation r = 1 - sin(sqrt(r*(2-r))). - _Vaclav Kotesovec_, Aug 20 2017"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 3*x^2/2! + 17*x^3/3! + 145*x^4/4! + 1661*x^5/5! + 23947*x^6/6! + 416765*x^7/7! + 8504865*x^8/8! +...",
+        "such that A(x) = (1 + sin(x*A(x))) / cos(x*A(x)).",
+        "RELATED SERIES.",
+        "(1 + sin(x)) / cos(x) = 1 + x + x^2/2! + 2*x^3/3! + 5*x^4/4! + 16*x^5/5! + 61*x^6/6! + 272*x^7/7! + 1385*x^8/8! +...+ A000111(n)*x^n/n! +...",
+        "where A000111 is the sequence of zigzag numbers.",
+        "Given e.g.f. A(x), then the logarithm of A(x) begins:",
+        "log(A(x)) = x + 2*x^2/2! + 10*x^3/3! + 80*x^4/4! + 880*x^5/5! + 12336*x^6/6! + 210320*x^7/7! + 4225024*x^8/8! +...+ A185414(n,n)*x^n/n! +..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=1); for(i=0,n, A = (1 + sin(x*A)) / cos(x*A +x*O(x^n)) ); n!*polcoeff(A,n)}",
+        "for(n=0,25, print1(a(n),\", \"))",
+        "(PARI) {a(n) = my(X=x +O(x^(n+2))); A = (1/x) * serreverse( x*cos(X)/(1 + sin(X)) ); n!*polcoeff(A,n)}",
+        "for(n=0,25, print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A000111, A290580, A185414."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Aug 06 2017",
+    "references": 3,
+    "revision": 13,
+    "time": "2017-08-20T06:32:11-04:00",
+    "created": "2017-08-06T19:50:59-04:00"
+}

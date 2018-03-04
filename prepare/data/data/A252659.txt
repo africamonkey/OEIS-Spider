@@ -1,0 +1,46 @@
+{
+    "number": 252659,
+    "data": "2,3,5,10,15,23,34,37,47,70",
+    "name": "Numbers m such that 6^m - m is a semiprime.",
+    "comment": [
+        "From _Robert Israel_, Sep 06 2016: (Start)",
+        "Even n is in this sequence iff (6^n-n)/2 is prime.",
+        "3*k is in this sequence iff (2*6^(3*k-1)-k is prime.",
+        "Also contains 275, 278 and 683.",
+        "The only other possible member less than 275 is 259. (End)"
+    ],
+    "example": [
+        "2 is in this sequence because 6^2-2 = 2*17 is semiprime.",
+        "10 is in this sequence because 6^10-10 = 2*30233083 and these two factors are prime."
+    ],
+    "maple": [
+        "Res:= NULL:",
+        "for n from 1 to 100 do",
+        "    F:= ifactors(6^n-n, easy)[2];",
+        "    if add(t[2], t=F) >= 3 or (hastype(F, symbol) and add(t[2], t=F) >= 2)",
+        "       then flag:= false",
+        "    elif add(t[2], t=F) = 2 and not hastype(F, symbol) then flag:= true",
+        "    else",
+        "     flag:= evalb(numtheory:-bigomega(6^n-n)=2)",
+        "    fi;",
+        "  if flag then  Res:= Res, n fi",
+        "od:",
+        "Res; # _Robert Israel_, Sep 06 2016"
+    ],
+    "mathematica": [
+        "Select[Range[90], PrimeOmega[6^# - #]== 2&]"
+    ],
+    "program": [
+        "(MAGMA) IsSemiprime:=func<i | &+[d[2]: d in Factorization(i)] eq 2>; [m: m in [1..90] | IsSemiprime(s) where s is 6^m-m];"
+    ],
+    "xref": [
+        "Cf. similar sequences listed in A252656."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Vincenzo Librandi_, Dec 21 2014",
+    "references": 2,
+    "revision": 10,
+    "time": "2016-09-07T03:51:56-04:00",
+    "created": "2014-12-21T11:12:53-05:00"
+}

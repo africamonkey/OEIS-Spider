@@ -1,0 +1,45 @@
+{
+    "number": 158102,
+    "data": "1,2,14,192,6460,604352,176638592,175532923904,624721970104800,8175475971987294720,397644417676499319116800,72130520531109535961648537600,48849638890950023005189368829890560",
+    "name": "a(n) = [x^n] 1/eta(x)^(2^n).",
+    "comment": [
+        "Here eta(q) is the q-expansion of the Dedekind eta function without the q^(1/24) factor (A010815)."
+    ],
+    "formula": [
+        "G.f.: A(x) = Sum_{n>=0} (-1)^n*log( eta(2^n*x) )^n/n!.",
+        "G.f.: A(x) = Sum_{n>=0} [ Sum_{k>=1} ( (2^n*x)^k/(1 - (2^n*x)^k) )/k ]^n/n!.",
+        "a(n) = [x^n] P(x)^(2^n) where P(x) = 1/eta(x) = Product_{n>0} 1/(1-x^n) = g.f. of the partition numbers (A000041)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 14*x^2 + 192*x^3 + 6460*x^4 + 604352*x^5 +...",
+        "Let P(x) = 1/eta(x) denote the g.f. of the partition numbers A000041:",
+        "P(x) = 1 + x + 2*x^2 + 3*x^3 + 5*x^4 + 7*x^5 + 11*x^6 +...",
+        "then a(n) is the coefficient of x^n in P(x)^(2^n):",
+        "P(x)^(2^0): [(1),1,2,3,5,7,11,15,22,30,42,56,77,101,135,176,...];",
+        "P(x)^(2^1): [1,(2),5,10,20,36,65,110,185,300,481,752,1165,...];",
+        "P(x)^(2^2): [1,4,(14),40,105,252,574,1240,2580,5180,10108,...];",
+        "P(x)^(2^3): [1,8,44,(192),726,2464,7704,22528,62337,164560,...];",
+        "P(x)^(2^4): [1,16,152,1088,(6460),33440,155584,663936,...];",
+        "P(x)^(2^5): [1,32,560,7040,70840,(604352),4528832,30529280,...];",
+        "P(x)^(2^6): [1,64,2144,49920,905840,13627264,(176638592),...]; ...",
+        "where terms in parenthesis form the initial terms of this sequence."
+    ],
+    "mathematica": [
+        "a[n_] := SeriesCoefficient[1/QPochhammer[q]^(2^n), {q, 0, n}]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Nov 24 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(1/eta(x+x*O(x^n))^(2^n), n)}",
+        "(PARI) {a(n)=polcoeff(sum(m=0,n,(-1)^m*log(eta(2^m*x+x*O(x^n)))^m/m!), n)}",
+        "(PARI) {a(n)=polcoeff(sum(m=0,n,sum(k=1,n,(2^m*x)^k/(1-(2^m*x)^k)/k+x*O(x^n))^m/m!),n)}"
+    ],
+    "xref": [
+        "Cf. A000041, A158103, A158104, A158105, A158112, A158113, A158114, A158115."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 12 2009",
+    "references": 7,
+    "revision": 5,
+    "time": "2015-11-24T03:38:41-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

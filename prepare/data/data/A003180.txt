@@ -1,0 +1,55 @@
+{
+    "number": 3180,
+    "id": "M1265 N1405",
+    "data": "2,4,12,80,3984,37333248,25626412338274304,67516342973185974328175690087661568,2871827610052485009904013737758920847669809829897636746529411152822140928",
+    "name": "Number of equivalence classes of Boolean functions of n variables under action of symmetric group.",
+    "comment": [
+        "A003180(n-1) is the number of equivalence classes of Boolean functions of n variables from Post class F(8,inf) under action of symmetric group.",
+        "Also number of nonisomorphic sets of subsets of an n-set.",
+        "Also the number of unlabeled hypergraphs on n nodes [Qian]. - _N. J. A. Sloane_, May 12 2014",
+        "In the 1995 Encyclopedia of Integer Sequences this sequence appears twice, as both M1265 and M3458 (one entry began at n=0, the other at n=1)."
+    ],
+    "reference": [
+        "M. A. Harrison, Introduction to Switching and Automata Theory. McGraw Hill, NY, 1965, p. 147.",
+        "D. E. Knuth, The Art of Computer Programming, Vol. 4A, Section 7.1.1, p. 79.",
+        "S. Muroga, Threshold Logic and Its Applications. Wiley, NY, 1971, p. 38, Table 2.3.2. - Row 5.",
+        "Qian, Jianguo. Enumeration of unlabeled uniform hypergraphs. Discrete Math. 326 (2014), 66--74. MR3188989. See Table 1, p. 71. - _N. J. A. Sloane_, May 12 2014",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vladeta Jovovic, <a href=\"/A003180/b003180.txt\">Table of n, a(n) for n = 0..11</a>",
+        "S. Muroga, <a href=\"/A000371/a000371.pdf\">Threshold Logic and Its Applications</a>, Wiley, NY, 1971 [Annotated scans of a few pages]",
+        "<a href=\"/index/Bo#Boolean\">Index entries for sequences related to Boolean functions</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{1*s_1+2*s_2+...=n} (fix A[s_1, s_2, ...]/(1^s_1*s_1!*2^s_2*s_2!*...)) where fix A[s_1, s_2, ...] = 2^Sum_{i>=1} ( Sum_{d|i} ( mu(i/d)*( 2^Sum_{j>=1} ( gcd(j, d)*s_j))))/i."
+    ],
+    "maple": [
+        "with(numtheory):with(combinat):",
+        "for n from 1 to 10 do",
+        "p:=partition(n): s:=0: for k from 1 to nops(p) do q:=convert(p[k],multiset): for i from 0 to n do a(i):=0: od:",
+        "  for i from 1 to nops(q) do a(q[i][1]):=q[i][2]: od:",
+        "  c:=1: ord:=1: for i from 1 to n do c:=c*a(i)!*i^a(i):ord:=lcm(ord,i): od: ss:=0:",
+        "  for i from 1 to ord do if ord mod i=0 then ss:=ss+phi(ord/i)*2^add(gcd(j,i)*a(j),j=1..n): fi: od:",
+        "  s:=s+2^(ss/ord)/c:",
+        "od:",
+        "printf(`%d `,n):",
+        "printf(\"%d \",s):",
+        "od: - _Vladeta Jovovic_, Sep 19 2006"
+    ],
+    "xref": [
+        "a(n) = 2*A000612(n). Cf. A001146. Row sums of A052265."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Vladeta Jovovic_",
+        "Edited with formula by _Christian G. Bower_, Jan 08 2004"
+    ],
+    "references": 12,
+    "revision": 38,
+    "time": "2015-07-28T11:53:35-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

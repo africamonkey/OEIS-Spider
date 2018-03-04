@@ -1,0 +1,54 @@
+{
+    "number": 238184,
+    "data": "1,1,1,1,2,2,4,7,16,37,107,282,1020,2879,12507,39347,179231,687974,3225246,14955561,75999551,392585613,2271201137,12183159188,81562521256,446611878413,3336304592155,19202329389234,152803821604669,958953289839930,7835058287650579",
+    "name": "Sum of the squares of numbers of nonconsecutive chess tableaux over all partitions of n.",
+    "comment": [
+        "A standard Young tableau (SYT) with cell(i,j)+i+j == 1 mod 2 for all cells where entries m and m+1 never appear in the same row is called a nonconsecutive chess tableau."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A238184/b238184.txt\">Table of n, a(n) for n = 0..50</a>",
+        "T. Y. Chow, H. Eriksson and C. K. Fan, <a href=\"http://www.combinatorics.org/Volume_11/Abstracts/v11i2a3.html\">Chess tableaux</a>, Elect. J. Combin., 11 (2) (2005), #A3.",
+        "Jonas Sj\u00f6strand, <a href=\"https://arxiv.org/abs/math/0309231v3\">On the sign-imbalance of partition shapes</a>, arXiv:math/0309231v3 [math.CO], 2005.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau\">Young tableau</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{lambda : partitions(n)} ncc(lambda)^2, where ncc(k) is the number of nonconsecutive chess tableaux of shape k."
+    ],
+    "example": [
+        "a(7) = 1 + 2^2 + 1 + 1 = 7:",
+        ".",
+        ": [1111111] :   [22111]    : [3211]  :  [322]  : <- shapes",
+        ":-----------+--------------+---------+---------:",
+        ":    [1]    : [1 6]  [1 4] : [1 4 7] : [1 4 7] :",
+        ":    [2]    : [2 7]  [2 5] : [2 5]   : [2 5]   :",
+        ":    [3]    : [3]    [3]   : [3]     : [3 6]   :",
+        ":    [4]    : [4]    [6]   : [6]     :         :",
+        ":    [5]    : [5]    [7]   :         :         :",
+        ":    [6]    :              :         :         :",
+        ":    [7]    :              :         :         :"
+    ],
+    "maple": [
+        "b:= proc(l, t) option remember; local n, s;",
+        "      n, s:= nops(l), add(i, i=l); `if`(s=0, 1, add(`if`(t<>i and",
+        "      irem(s+i-l[i], 2)=1 and l[i]>`if`(i=n, 0, l[i+1]), b(subsop(",
+        "      i=`if`(i=n and l[n]=1, [][], l[i]-1), l), i), 0), i=1..n))",
+        "    end:",
+        "g:= (n, i, l)-> `if`(n=0 or i=1, b([l[], 1$n], 0)^2, `if`(i<1, 0,",
+        "                 add(g(n-i*j, i-1, [l[], i$j]), j=0..n/i))):",
+        "a:= n-> g(n, n, []):",
+        "seq(a(n), n=0..32);"
+    ],
+    "mathematica": [
+        "b[l_, t_] := b[l, t] = Module[{n, s}, {n, s} = {Length[l], Total[l]}; If[s == 0, 1, Sum[If[t != i && Mod[s+i-l[[i]], 2] == 1 && l[[i]] > If[i==n, 0, l[[i+1]]], b[ReplacePart[l, i -> If[i==n && l[[n]]==1, Nothing, l[[i]]-1]], i], 0], {i, 1, n}]]]; g[n_, i_, l_] := g[n, i, l] = If[n==0 || i==1, b[Join[l, Array[1&, n]], 0]^2, If[i<1, 0, Sum[g[n-i*j, i-1, Join[l, Array[i&, j]]], {j, 0, n/i}]]]; a[n_] := g[n, n, {}]; Table[a[n], {n, 0, 32}] (* _Jean-Fran\u00e7ois Alcover_, Feb 17 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A108774, A214088, A214459, A214460, A214461, A238020."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Alois P. Heinz_, Feb 19 2014",
+    "references": 2,
+    "revision": 19,
+    "time": "2017-07-19T15:48:40-04:00",
+    "created": "2014-02-23T19:36:54-05:00"
+}

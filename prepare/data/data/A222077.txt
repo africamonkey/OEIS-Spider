@@ -1,0 +1,40 @@
+{
+    "number": 222077,
+    "data": "1,4,34,504,10572,285408,9419440,367571200,16562241744,846509123520,48401180913824,3061687935718272,212316590908782336,16018267935253721088,1306322033185206970368,114519518777575592865792,10740222055670467832259840,1073051903942317493993088000",
+    "name": "O.g.f.: Sum_{n>=0} n^n*(n+3)^n * exp(-n*(n+3)*x) * x^n / n!.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A222077/b222077.txt\">Table of n, a(n) for n = 0..340</a>"
+    ],
+    "formula": [
+        "a(n) = 1/n! * [x^n] Sum_{k>=0} k^k*(k+3)^k * x^k / (1 + k*(k+3)*x)^(k+1).",
+        "a(n) = 1/n! * Sum_{k=0..n} (-1)^(n-k)*binomial(n,k) * k^n * (k+3)^n.",
+        "a(n) ~ n^n * 2^(2*n+1) / (sqrt(Pi*(1-c)*n) * exp(n) * (2-c)^n * c^(n+3/2)), where c = -LambertW(-2*exp(-2)) = 0.4063757399599599... . - _Vaclav Kotesovec_, May 22 2014"
+    ],
+    "example": [
+        "O.g.f.: A(x) = 1 + 4*x + 34*x^2 + 504*x^3 + 10572*x^4 + 285408*x^5 +...",
+        "where",
+        "A(x) = 1 + 4*x*exp(-4*x) + 10^2*exp(-10*x)*x^2/2! + 18^3*exp(-18*x)*x^3/3! + 28^4*exp(-28*x)*x^4/4! + 40^5*exp(-40*x)*x^5/5! +...",
+        "is a power series in x with integer coefficients."
+    ],
+    "mathematica": [
+        "Flatten[{1,Table[Sum[Binomial[n,j] * 3^(n-j) * StirlingS2[n+j,n],{j,0,n}],{n,1,20}]}] (* _Vaclav Kotesovec_, May 22 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(m=0, n, m^m*(m+3)^m*x^m*exp(-m*(m+3)*x+x*O(x^n))/m!), n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n)=(1/n!)*polcoeff(sum(k=0, n, k^k*(k+3)^k*x^k/(1+k*(k+3)*x +x*O(x^n))^(k+1)), n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n)=1/n!*sum(k=0, n, (-1)^(n-k)*binomial(n, k)*k^n*(k+3)^n)}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A217902, A217900, A222076, A222078, A222079."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Feb 24 2013",
+    "references": 4,
+    "revision": 13,
+    "time": "2017-02-04T19:12:46-05:00",
+    "created": "2013-02-24T14:37:02-05:00"
+}

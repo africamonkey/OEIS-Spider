@@ -1,0 +1,37 @@
+{
+    "number": 284462,
+    "data": "2,2,6,10,22,44,92,178,362,724,1444,2888,5792,11616,23300,46670,93434,186988,374012,747976,1495656,2990440,5979368,11956444,23910164,47819272,95645168,191318496,382719072,765644448,1531761528,3064550802",
+    "name": "Number of length-n binary strings s whose longest repeated suffix appears exactly twice in s.",
+    "comment": [
+        "By \"longest repeated suffix\" we mean the longest suffix that occurs in at least one other position in the string; occurrences may overlap. Thus the longest repeated suffix of \"alfalfa\" is \"alfa\"."
+    ],
+    "example": [
+        "For n = 4 the exceptions are 0001 and 1110 (longest repeated suffix is empty); 0010 and 0100 (longest repeated suffix is 0, which appears three times); and 1011 and 1101 (longest repeated suffix is 1, which appears three times)."
+    ],
+    "maple": [
+        "g:= proc(S) local m,n,t;",
+        "  n:= nops(S);",
+        "for m from n-1 to 1 by -1 do",
+        "  t:= nops(select(j -> S[1..m] = S[j..m+j-1], [$2..n-m+1]));",
+        "  if t >= 1 then return evalb(t=1) fi;",
+        "od;",
+        "false",
+        "end proc:",
+        "f:= proc(n) add(`if`(g(convert(x,base,2)),2,0), x=2^(n-1)..2^n-1) end proc:",
+        "f(1):= 2:",
+        "map(f, [$1..20]); # _Robert Israel_, Mar 27 2017"
+    ],
+    "xref": [
+        "Cf. A059412, A284125."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Mar 27 2017",
+    "ext": [
+        "a(21)-a(32) from _Lars Blomberg_, Jun 06 2017"
+    ],
+    "references": 0,
+    "revision": 17,
+    "time": "2017-10-26T21:42:07-04:00",
+    "created": "2017-03-29T12:56:33-04:00"
+}

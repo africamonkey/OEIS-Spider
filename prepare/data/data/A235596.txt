@@ -1,0 +1,34 @@
+{
+    "number": 235596,
+    "data": "0,0,2,9,40,195,1056,6321,41392,293607,2237920,18210093,157329096,1436630091,13810863808,139305550065,1469959371232,16184586405327,185504221191744,2208841954063317,27272621155678840,348586218389733555,4605223387997411872,62797451641106266329,882730631284319415504",
+    "name": "Second column of triangle in A235595.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A235596/b235596.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "G.f. = 2*x^3 + 9*x^4 + 40*x^5 + 195*x^6 + 1056*x^7 + 6321*x^8 + 41392*x^9 + ..."
+    ],
+    "mathematica": [
+        "gf[k_] := gf[k] = If[k == 0, x, x*E^gf[k-1]]; a[n_, k_] := n!*Coefficient[Series[gf[k], {x, 0, n+1}], x, n]; a[n_] := (a[n, 2] - a[n, 1])/n; Array[a, 25] (* _Jean-Fran\u00e7ois Alcover_, Mar 18 2014, after _Alois P. Heinz_ *)",
+        "Table[Sum[BellY[n - 1, k, Range[n - 1]], {k, 0, n - 2}], {n, 1, 25}] (* _Vladimir Reshetnikov_, Nov 09 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import binomial",
+        "from sympy.core.cache import cacheit",
+        "@cacheit",
+        "def b(n, h): return 1 if min(n, h)==0 else sum([binomial(n - 1, j - 1)*j*b(j - 1, h - 1)*b(n - j, h) for j in xrange(1, n + 1)])",
+        "def a(n): return b(n - 1, 1) - b(n - 1, 0)",
+        "print map(a, xrange(1, 31)) # _Indranil Ghosh_, Aug 26 2017"
+    ],
+    "xref": [
+        "Cf. A235595."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, Jan 15 2014",
+    "references": 3,
+    "revision": 18,
+    "time": "2017-08-26T17:55:38-04:00",
+    "created": "2014-01-15T12:00:30-05:00"
+}

@@ -1,0 +1,89 @@
+{
+    "number": 187761,
+    "data": "1,1,2,6,23,106,568,3459,23544,176850,1451253,12904312,123489888,1264591561,13790277294,159466823794,1948259002647,25066729706582,338670605492700,4792623436607059,70873649458154500,1092969062435462254,17543703470388927229,292600906102204630092",
+    "name": "Number of maps f: [n] -> [n] with f(x)<=x and f(f(x)) = f(f(f(x))).",
+    "comment": [
+        "This sequence and A187771 and A187824 are winners in the contest held at the 2013 AMS/MAA Joint Mathematics Meetings. - _T. D. Noe_, Jan 14 2013",
+        "Number of monotonic-labeled forests on n vertices with rooted trees of height less than 3. A labeled rooted tree is monotonic-labeled if the label of any parent vertex is (strictly) smaller than the label of any offspring vertex. (See comment by Dennis P. Walsh in A000110; with \"greater\" instead of \"smaller\"). To see this, consider the maps [1,2,...n] -> [0,1,..n-1] with f(x) < x.",
+        "As the maps are valid (left) inversion tables for permutations (see example), we obtain a simple bijection between permutations and such forests.",
+        "For n>=3 column 3 of A179455; maps such that f^[k](x) = f^[k-1](x) correspond to column k of A179455 (for n>=k).",
+        "Explanation of the Maple routine by _Alois P. Heinz_, Jan 15 2013: (Start)",
+        "b(n,x,y) is the number of forests consisting of trees we want to count, where n nodes are still to be inserted and x nodes at level 0 (the roots) and y nodes at level 1 are already present, plus perhaps some nodes at level 2 (whose number is not of interest).",
+        "If the next node is inserted at level 0 then n-1 remaining nodes are to be inserted (and level 0 has one more node: x+1).  There is only one possibility to do that.",
+        "If the next node is inserted at level 1 then again n-1 nodes are to be inserted (and level 1 has one more node: y+1).  The inserted node can have x different predecessors (at level 0), accounted by the multiplication by x.",
+        "If a node is inserted at level 2 then (again) n-1 nodes are to be inserted and level 2 has one more node (which is not counted).  The inserted node can have y predecessors, accounted by the multiplication by y.",
+        "b(0,x,y) = 1 counts any fixed forest that has received all its nodes.",
+        "b(n,0,0) counts all forests that can be constructed by inserting n nodes into the empty forest.",
+        "(End)",
+        "Also the row sums of the Bell transform of the Bell numbers. Since the Bell numbers are the row sums of the Bell transform of the Stirling_2 numbers they might also be called second order Bell numbers. (Also note that the Stirling_2 numbers are the row sums of the Bell transform of the simplest sequence of positive numbers 1,1,1,... which in turn are the row sums of the Bell transform of the characteristic function of 0. See the link 'Bell Transform' for more about this hierarchy which might be called the Bell hirarchy.) - _Peter Luschny_, Jan 23 2016"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A187761/b187761.txt\">Table of n, a(n) for n = 0..493</a>",
+        "Peter Luschny, <a href=\"https://oeis.org/wiki/User:Peter_Luschny/BellTransform\">The Bell transform</a>",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/PermutationTrees\">Permutation Trees</a>",
+        "D. P. Walsh, <a href=\"http://frank.mtsu.edu/~dwalsh/STIRFORT.pdf\">Counting forests with Stirling and Bell numbers</a>"
+    ],
+    "formula": [
+        "Conjecture (confirmed below) about the e.g.f. A(x): Let B(x) = sum(n>=0, b(n) * x^n/n! ) = exp(exp(x)-1)) the e.g.f. of the Bell numbers (A000110).  Then A(x)=sum(n>=0, a(n) * x^n/n! )  = exp( sum(n>=0, b(n) * x^(n+1)/(n+1)! ) ), see Pari program.",
+        "From _Joerg Arndt_, Jan 14 2013: (Start)",
+        "Conjecture (confirmed below):  Let C(0,x) = 1 and for k>=1 C(k, x) = exp( integral(C(k-1,x)) ) then C(k,x) is the e.g.f. for monotonic-labeled forests on n vertices with rooted trees of height less than k (column k of A179455(n,k) for k>=1, n>=k).",
+        "For k=1 (C(1,x)=exp(x)) and k=2 (C(2,x)=exp(exp(x)-1)) this is known to be true, for k=3 this is the conjecture above. (End)",
+        "From _Joerg Arndt_, Jan 15 2013: (Start)",
+        "Gareth McCaughan, on the math-fun mailing list (Jan 14 2013), writes",
+        "\"If F is the e.g.f. for Things Of Size n, then exp(F) is the e.g.f. for Multisets Of Things Whose Sizes Add Up To n. (The factorials turn into multinomial coefficients.)",
+        "Which means the conjecture is right. (The integral turns that into \"multisets of things whose sizes plus 1 add up to n\"; a tree is a forest together with a new node on top.)\"",
+        "(End)"
+    ],
+    "example": [
+        "There are a(4)=23 such maps f: [0,1,2,3] -> [0,1,2,3], all 4 digit mixed radix numbers [f(0), f(1), f(2), f(3)] where 0<=f(k)<=k (rising factorial basis) except for [ 0 0 1 2 ], as f(3)=2 and f(f(3)) = f(2) = 1 != f(f(f(3))) = f(f(2)) = f(1) = 0.",
+        "The exception corresponds to the tree  0 -- 1 -- 2 -- 3 (0 is the root), which can be identified with the map [1,2,3,4] -> [0,1,2,3] where f(k)=k-1."
+    ],
+    "maple": [
+        "b:= proc(n, x, y) option remember; `if`(n=0, 1,",
+        "       b(n-1, x+1, y) +x*b(n-1, x, y+1) +y*b(n-1, x, y))",
+        "    end:",
+        "a:= n-> b(n, 0, 0):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jan 09 2013",
+        "# The function BellMatrix is defined in A264428.",
+        "B := BellMatrix(n -> combinat:-bell(n), 24):",
+        "seq(add(i, i=LinearAlgebra:-Row(B,n)), n=1..24); # _Peter Luschny_, Jan 23 2016",
+        "# alternative Maple program:",
+        "b:= proc(n, h) option remember; `if`(min(n, h)=0, 1, add(",
+        "      binomial(n-1, j-1)*b(j-1, h-1)*b(n-j, h), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, 2):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Aug 21 2017"
+    ],
+    "mathematica": [
+        "b[n_, x_, y_] := b[n, x, y] = If[n == 0, 1, b[n-1, x+1, y]+x*b[n-1, x, y+1]+y*b[n-1, x, y]]; a[n_] := b[n, 0, 0]; Table[a[n], {n, 0, 23}] (* _Jean-Fran\u00e7ois Alcover_, Feb 25 2014, after _Alois P. Heinz_ *)",
+        "Table[Sum[BellY[n, k, BellB[Range[n] - 1]], {k, 0, n}], {n, 0, 20}] (* _Vladimir Reshetnikov_, Nov 09 2016 *)"
+    ],
+    "program": [
+        "(PARI) /* using e.g.f. A(x) */",
+        "x = 'x + O('x^66);",
+        "B = exp( exp(x) - 1 );  /* e.g.f. of Bell numbers */",
+        "A = serconvol( x * B, -log(1-x) );",
+        "/* A = intformal(B) */ /* alternative to last line */",
+        "A = exp( A );",
+        "Vec( serlaplace( A ) )",
+        "(Python)",
+        "from sympy.core.cache import cacheit",
+        "from sympy import binomial",
+        "@cacheit",
+        "def b(n, h): return 1 if min(n, h)==0 else sum([binomial(n - 1, j - 1)*b(j - 1, h - 1)*b(n - j, h) for j in xrange(1, n + 1)])",
+        "def a(n): return b(n, 2)",
+        "print map(a, xrange(31)) # _Indranil Ghosh_, Aug 21 2017, after second Maple program by _Alois P. Heinz_"
+    ],
+    "xref": [
+        "Cf. A000110 (Number of maps f: [n] -> [n] where f(x)<=x and f(f(x))=f(x) ).",
+        "Cf. A179455 (permutation trees of power n and height <= k+1 ).",
+        "Cf. A000949 (maps f: [n] -> [n] where f(f(x)) = f(f(f(x))) )."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,3",
+    "author": "_Joerg Arndt_, Jan 04 2013",
+    "references": 9,
+    "revision": 91,
+    "time": "2017-08-21T13:08:29-04:00",
+    "created": "2013-01-06T13:20:55-05:00"
+}

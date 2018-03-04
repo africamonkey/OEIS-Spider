@@ -1,0 +1,25 @@
+{
+    "number": 129700,
+    "data": "1,1,2,3,8,14,36,70,177,372,942,2056,5222,11736,29878,68576,175038,408328,1044533,2468261,6326688,15107015,38791865,93432564,240296399,583001850,1501520574",
+    "name": "Number of n-step self-avoiding paths on octant grid starting at octant origin.",
+    "comment": [
+        "Similar to A038373 but with octant grid instead of quadrant. An octant grid is either half of a quadrant grid when divided on the diagonal and including the diagonal grid squares. Its shape is that of a right triangle with a stair step edge on the hypotenuse. Coordinates of squares satisfy x>=0 and y>=0 and x>=y.",
+        "Guttmann-Torrie series coefficients c_{n}^{2} for square lattice, with wedge angle Pi/4. - _N. J. A. Sloane_, Jul 06 2015"
+    ],
+    "reference": [
+        "A. J. Guttmann and G. M. Torrie, Critical behavior at an edge for the SAW and Ising model, J. Phys. A 17 (1984), 3539-3552."
+    ],
+    "program": [
+        "// C++ code #define GRIDSIZE 20 void Recur(int level, int maxlevel, int rgBd[][GRIDSIZE], int i, int j, int rgCt[]) { if (i < 0 || j < 0 || i >= GRIDSIZE || j >= GRIDSIZE || level >= maxlevel || j > i || rgBd[i][j] != 0) return; rgCt[level] += 1; rgBd[i][j] = 1; Recur(level + 1, maxlevel, rgBd, i + 1, j, rgCt); Recur(level + 1, maxlevel, rgBd, i - 1, j, rgCt); Recur(level + 1, maxlevel, rgBd, i, j + 1, rgCt); Recur(level + 1, maxlevel, rgBd, i, j - 1, rgCt); rgBd[i][j] = 0; } int main(int argc, char **argv) { int rgBd[GRIDSIZE][GRIDSIZE] = {0}; int rgCt[GRIDSIZE] = {0}; int maxlevel = GRIDSIZE; if (argc > 1) { maxlevel = atoi(argv[1]); if (maxlevel < 0 || maxlevel > GRIDSIZE) { printf(\"Bad argument\"); return 0; } } Recur(0, maxlevel, rgBd, 0, 0, rgCt); for (int i = 0; i < maxlevel; i++) printf(\"%2d \", rgCt[i]); return 0; }"
+    ],
+    "xref": [
+        "Cf. A038373."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Bill Blewett_, Jun 01 2007",
+    "references": 0,
+    "revision": 10,
+    "time": "2015-07-06T22:08:59-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

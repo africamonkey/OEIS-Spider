@@ -1,0 +1,42 @@
+{
+    "number": 27686,
+    "data": "1,1,1,2,9,98,2981,340549,216569887,994441978397,36812710172987995,12001387004225881846755,37783429241635794906272195147,1255674108542254217846031366276646429,478743486470659944952229546087586449114251007,2262324605850021060149051111359520226936424091385392945",
+    "name": "Number of ways to transform say (((((((ab)c)d)e)f)g)h) to (a(b(c(d(e(f(gh))))))) where there are n multiplications (hence n+1 variables) by repeatedly applying the one-way associative law ((xy)z) -> (x(yz)).",
+    "comment": [
+        "Number of maximal chains in the Tamari lattice T_n. For n=3 there are 2 maximal chains in the Tamari lattice T3, whose Hasse diagram is a pentagon. - _F. Chapoton_, Mar 15 2013"
+    ],
+    "reference": [
+        "D. E. Knuth, The Art of Computer Programming, Vol. 4, Section 7.2.1.6, see solution to Exercise 34."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A027686/b027686.txt\">Table of n, a(n) for n = 0..18</a>",
+        "Luke Nelson, <a href=\"https://doi.org/10.1016/j.disc.2016.11.030\">A recursion on maximal chains in the Tamari lattices</a>, Discrete Mathematics 340.4 (2017): 661-677.",
+        "Luke Nelson, <a href=\"https://arxiv.org/abs/1709.02987\">A recursion on maximal chains in the Tamari lattices</a>, arXiv:1709.02987 [math.CO], Sep 2017",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Tamari_lattice\">Tamari lattice</a>"
+    ],
+    "maple": [
+        "s:= proc(n) s(n):=`if`(n=0, [], [s(n-1), []]) end:",
+        "f:= l-> l=[] or l[1]=[] and f(l[2]):",
+        "v:= proc(l) v(l):=`if`(f(l), [], [`if`(l[1]<>[],",
+        "      [l[1][1], [l[1][2], l[2]]], [][]),",
+        "      seq([w, l[2]], w=v(l[1])), seq([l[1], w], w=v(l[2]))])",
+        "    end:",
+        "p:= proc(l) p(l):=`if`(f(l), 1, add(p(w), w=v(l))) end:",
+        "a:= n-> p(s(n)):",
+        "seq(a(n), n=0..10);  # _Alois P. Heinz_, Mar 17 2013"
+    ],
+    "xref": [
+        "Row sums of A282698.",
+        "Cf. A000108."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Don Knuth_",
+    "ext": [
+        "a(9)-a(14), a(15) from _Alois P. Heinz_, Mar 17 2013, Mar 27 2013"
+    ],
+    "references": 4,
+    "revision": 48,
+    "time": "2018-01-22T09:51:34-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

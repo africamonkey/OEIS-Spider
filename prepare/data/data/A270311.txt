@@ -1,0 +1,62 @@
+{
+    "number": 270311,
+    "data": "34,35,42,43,53,54,61,62,68,69,80,81,82,83,101,102,106,107,115,116,125,126,127,128,138,139,141,142,145,146,154,155,157,158,172,173,175,176,177,178,191,192,193,194,204,205,222,223,233,234,258,259,260,266,267,269,270,279,280,289,290,306,307",
+    "name": "Indices of primes ending with the same decimal digit as the previous or next prime.",
+    "mathematica": [
+        "Select[Range@ 307, Function[k, Or[k == Mod[NextPrime@ Prime@ #, 10], k == Mod[NextPrime[Prime@ #, -1], 10]]]@ Mod[Prime@ #, 10] &] (* _Michael De Vlieger_, Mar 15 2016 *)"
+    ],
+    "program": [
+        "(Javascript)",
+        "function computeBuddyPrimesIndex(max)",
+        "{",
+        "    const list = []",
+        "    var prev_digit = 0",
+        "    var curr_digit = 0",
+        "    var curr_index = 0",
+        "    var first_friend = true",
+        "    for (var n=2; n<=max; n++)",
+        "    {",
+        "        if (!isPrime(n)) continue;",
+        "        curr_index++;",
+        "        curr_digit = n % 10",
+        "        if (curr_digit === prev_digit){",
+        "            // add previous prime if it was first in current group",
+        "            if (first_friend) {",
+        "                list.push(curr_index-1)",
+        "                first_friend = false",
+        "            }",
+        "            // add current prime",
+        "            list.push(curr_index)",
+        "        }else{",
+        "            prev_digit = curr_digit",
+        "            first_friend = true",
+        "        }",
+        "   }",
+        "    return list",
+        "}",
+        "function isPrime(n)",
+        "{",
+        "    if (n<2) return false;",
+        "    const sqrt = Math.sqrt(n)",
+        "    var div = 2",
+        "    while (div <= sqrt) {",
+        "        if (n % div < 1) return false;",
+        "        div++",
+        "    }",
+        "    return true",
+        "}"
+    ],
+    "xref": [
+        "Cf. A270310."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Francois Alcover_, Mar 15 2016",
+    "ext": [
+        "More terms from _Michael De Vlieger_, Mar 15 2016"
+    ],
+    "references": 1,
+    "revision": 9,
+    "time": "2016-03-16T17:19:44-04:00",
+    "created": "2016-03-16T17:19:44-04:00"
+}

@@ -1,0 +1,61 @@
+{
+    "number": 266281,
+    "data": "1,4,11,13,14,17,19,22,23,29,34,47,58,61,65,87,89,93,94,97,102,103,105,109,113,115,116,118,121,130,131,136,139,141,149,152,157,159,161,166,167,169,174,177,179,181,184,188,191,193,194,197,199,203,218,223,224",
+    "name": "a(1)=1; a(n) is the first integer > a(n-1) with which, in the a(n-1)/a(n) decimal expansion, n is present.",
+    "comment": [
+        "Two other sequences are possible without the a(n)>a(n-1) limitation, one with a(n) terms already used in the sequences (where the n growth does not allow data looping), another only with a(n) terms not yet used."
+    ],
+    "link": [
+        "Francesco Di Matteo, <a href=\"/A266281/b266281.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(8) = 22 because a(7) = 19 and \"8\" does not appear in the digital expansion of 19/20 = 0.95 nor of 19/21 = 0.904761904761..., but it does appear in 19/22 = 0.86363...;",
+        "a(9) = 23 because 22/23 = 0.9565217391304..., where \"9\" does appear;",
+        "a(10) = 29 because \"10\" does not appear in the digital expansion of 23/k for k=24..28, but it does appear in 23/29 = 0.7931034..."
+    ],
+    "mathematica": [
+        "f[n_] := Block[{a = {1}, k}, Do[k = a[[m - 1]] + 1; While[SequenceCount[Flatten@ First@ RealDigits[a[[m - 1]]/k], IntegerDigits@ m] < 1, k++]; AppendTo[a, k], {m, 2, n}]; a]; f@ 57 (* Version 10.1, or *)",
+        "f[n_] := Block[{a = {1}, k}, Do[k = a[[m - 1]] + 1; While[StringCount[",
+        "ToString[FromDigits@ Flatten@ First@ RealDigits[a[[m - 1]]/k]], ToString@ m] < 1, k++]; AppendTo[a, k], {m, 2, n}]; a]; f@ 57 (* _Michael De Vlieger_, Dec 30 2015, Version 5.1 *)"
+    ],
+    "program": [
+        "(Python)",
+        "alfa = 1",
+        "for n in range(2,101):",
+        "    beta = alfa",
+        "    aflag = 0",
+        "    while aflag == 0:",
+        "        beta = beta + 1",
+        "        restlist = []",
+        "        result = \"\"",
+        "        dividend = alfa",
+        "        lenn = len(str(n))",
+        "        bflag = 0",
+        "        while bflag < lenn:",
+        "            dividend = dividend * 10",
+        "            q = dividend/beta",
+        "            resto = dividend - (q * beta)",
+        "            if resto == 0:",
+        "                bflag = lenn",
+        "            if resto in restlist:",
+        "                bflag = bflag + 1",
+        "            restlist.append(resto)",
+        "            dividend = resto",
+        "            result = result + str(q)",
+        "            if str(n) in result:",
+        "                bflag = lenn",
+        "                aflag = 1",
+        "    print alfa",
+        "    alfa = beta"
+    ],
+    "xref": [
+        "Cf. A257664, A265740, A265756."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Francesco Di Matteo_, Dec 26 2015",
+    "references": 1,
+    "revision": 28,
+    "time": "2016-02-19T05:53:50-05:00",
+    "created": "2016-02-19T05:53:50-05:00"
+}

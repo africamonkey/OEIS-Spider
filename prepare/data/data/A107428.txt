@@ -1,0 +1,40 @@
+{
+    "number": 107428,
+    "data": "1,2,4,6,11,21,39,71,141,276,542,1070,2110,4189,8351,16618,33134,66129,131937,263483,526453,1051984,2102582,4203177,8403116,16800894,33593742,67174863,134328816,268624026,537192064,1074288649,2148414285,4296543181,8592585289",
+    "name": "Number of gap-free compositions of n.",
+    "comment": [
+        "A gap-free composition contains all the parts between its smallest and largest part. a(5)=11 because we have: 5, 3+2, 2+3, 2+2+1, 2+1+2, 1+2+2, 2+1+1+1, 1+2+1+1, 1+1+2+1, 1+1+1+2, 1+1+1+1+1. - _Geoffrey Critzer_, Apr 13 2014"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A107428/b107428.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Alois P. Heinz, <a href=\"/A107428/a107428.jpg\">Plot of (a(n)-2^(n-2))/2^(n-2) for n = 42..1000</a>",
+        "P. Hitczenko and A. Knopfmacher, <a href=\"http://dx.doi.org/10.1016/j.disc.2005.02.008\">Gap-free compositions and gap-free samples of geometric random variables</a>, Discrete Math., 294 (2005), 225-239."
+    ],
+    "formula": [
+        "a(n) ~ 2^(n-2). - _Alois P. Heinz_, Dec 07 2014"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, t!,",
+        "      `if`(i<1 or n<i, 0, add(b(n-i*j, i-1, t+j)/j!, j=1..n/i)))",
+        "    end:",
+        "a:= n-> add(b(n, i, 0), i=1..n):",
+        "seq(a(n), n=1..40);  # _Alois P. Heinz_, Apr 14 2014"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Level[Map[Permutations,IntegerPartitions[n]],{2}],Length[Union[#]]==Max[#]-Min[#]+1&]],{n,1,20}] (* _Geoffrey Critzer_, Apr 13 2014 *)",
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0, t!, If[i < 1 || n < i, 0, Sum[b[n - i*j, i - 1, t + j]/j!, {j, 1, n/i}]]]; a[n_] := Sum[b[n, i, 0], {i, 1, n}]; Table[a[n], {n, 1, 40}] (* _Jean-Fran\u00e7ois Alcover_, Aug 30 2016, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A107429, A034296, A251729."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, May 26 2005",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, May 26 2005"
+    ],
+    "references": 4,
+    "revision": 34,
+    "time": "2016-08-30T09:20:27-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

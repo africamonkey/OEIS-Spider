@@ -1,0 +1,36 @@
+{
+    "number": 240959,
+    "data": "2,23,235,2357,112357,113257,231175,11325719,11325719,11329175,11329175,113291735,3117329145,11329143715,411329173475,3114329173547,31143291735947,1132914347167359,1132914347167359,1132914347167359,1132914347167359,11329143471673597",
+    "name": "Smallest number that contains the first n primes as substrings. Substrings can go from left to right or right to left.",
+    "comment": [
+        "In this version substrings can go from left to right or right to left. The version that only allows substrings to go from left to right is A054261."
+    ],
+    "link": [
+        "Dmitry Kamenetsky, <a href=\"/A240959/b240959.txt\">Table of n, a(n) for n = 1..32</a>",
+        "Dmitry Kamenetsky, <a href=\"/A240959/a240959_1.txt\">Results for larger n.</a>"
+    ],
+    "formula": [
+        "a(n) = A054261(n) for n=1 to 6."
+    ],
+    "example": [
+        "a(7) = 231175, because 231175 is the smallest number that contains the first 7 primes as substrings: 2, 3, 5, 7, 11 and 13. Note that number 13 is contained from right to left."
+    ],
+    "program": [
+        "(PARI) allss(d, ss, nbc) = {for (i=1, nbc, for (j=1, #d -i +1, subd = []; subd = concat(subd, d[j]); for (k=1, i-1, subd = concat(subd, d[j+k]);); ss = vecsort(concat(ss, subst(Pol(subd), x, 10)),,8););); return (ss);}",
+        "isoks(k, n, vp) = {nbc = #Str(prime(n)); d = digits(k); sd = vecsort(d,, 8); for (j=1, #vp, if (!vecsearch(sd, vp[j]), return(0));); ss = []; if (#d < nbc, return(0)); ss = allss(d, ss, nbc); rd = vector(#d, i, d[#d - i +1]); ss = allss(rd, ss, nbc); for (i=1, n, if (! vecsearch (ss, prime(i)), return (0));); return (1);}",
+        "a(n) = {vp = []; for (i=1, n, dp = digits(prime(i)); for (k=1, #dp, vp = vecsort(concat(vp, dp[k]), ,8););); k = subst(Pol(vp), x, 10); while (!isoks(k, n, vp), k++); k;} \\\\ _Michel Marcus_, Aug 28 2014"
+    ],
+    "xref": [
+        "Cf. A054261."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Dmitry Kamenetsky_, Aug 04 2014",
+    "ext": [
+        "The author says he is not 100% certain that the later terms are correct, and would appreciate an independent verification. - _N. J. A. Sloane_, Sep 04 2014"
+    ],
+    "references": 2,
+    "revision": 34,
+    "time": "2014-10-15T20:44:17-04:00",
+    "created": "2014-08-21T23:20:09-04:00"
+}

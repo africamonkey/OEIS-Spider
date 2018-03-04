@@ -1,0 +1,40 @@
+{
+    "number": 78440,
+    "data": "21,42,84,85,168,170,336,340,341,453,672,680,682,906,909,1344,1360,1364,1365,1812,1813,1818,2688,2720,2728,2730,3624,3626,3636,5376,5440,5456,5460,5461,7248,7252,7272,7281,9669",
+    "name": "Numbers n with property that n is not a power of 2 and the finite sequence n, f(n), f(f(n)), ...., 1 in the Collatz (or 3x + 1) problem contains exactly one prime. (The earliest \"1\" is meant.)",
+    "comment": [
+        "f(n) = n/2 if n is even, = 3n + 1 if n is odd. Powers 2^n trivially have exactly one prime in n, f(n), f(f(n)), ..., 2, 1, namely 2 and so are excluded from the sequence.",
+        "A055509(a(n)) = 0; A078350(a(n)) <= 1."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A078440/b078440.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CollatzProblem.html\">CollatzProblem</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Collatz_conjecture\">Collatz conjecture</a>",
+        "<a href=\"/index/3#3x1\">Index entries for sequences related to 3x+1 (or Collatz) problem</a>"
+    ],
+    "example": [
+        "n, f(n), f(f(n)), .... for n = 21 is: 21, 64, 32, 16, 8, 4, 2, 1, which has exactly one prime, that is, 2. Hence 21 belongs to the sequence."
+    ],
+    "mathematica": [
+        "f[n_] := n/2 /; Mod[n, 2] == 0 f[n_] := 3 n + 1 /; Mod[n, 2] == 1 g[n_] := Module[{i, p}, i = n; p = 0; While[i > 1, If[PrimeQ[i], p = p + 1]; i = f[i]]; p]; Select[Range[10^4], g[ # ] == 1 && ! IntegerQ[Log[2, # ]] &]",
+        "pQ[n_]:=Count[NestWhileList[If[EvenQ[#],#/2,3#+1]&,n, #>1&], _?PrimeQ]==1; With[{nn=10000},Complement[Select[Range[nn],pQ],2^Range[Floor[Log[2,nn]]]]] (* _Harvey P. Dale_, Oct 19 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a078440 n = a078440_list !! (n-1)",
+        "a078440_list = filter notbp a196871_list where",
+        "   notbp x = m > 0 && x > 1 || m == 0 && notbp x' where",
+        "      (x',m) = divMod x 2",
+        "-- _Reinhard Zumkeller_, Oct 08 2011"
+    ],
+    "xref": [
+        "A006370; subsequence of A196871 (with binary powers)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Joseph L. Pe_, Dec 31 2002",
+    "references": 2,
+    "revision": 16,
+    "time": "2014-02-11T19:05:33-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

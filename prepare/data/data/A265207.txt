@@ -1,0 +1,65 @@
+{
+    "number": 265207,
+    "data": "1,8,20,36,60,92,140,204,300,428,620,876,1260,1772,2540,3564,5100,7148,10220,14316,20460,28652,40940,57324,81900,114668,163820,229356,327660,458732,655340,917484,1310700,1834988,2621420,3669996,5242860,7340012,10485740,14680044,20971500,29360108,41943020,58720236",
+    "name": "Draw a square and follow these steps: Take a square and place at its edges isosceles right triangles with the edge as hypotenuse. Draw a square at every new edge of the triangles. Repeat for all the new squares of the same size. New figures are only placed on empty space. The structure is symmetric about the first square. The sequence gives the numbers of squares of equal size in successive rings around the center.",
+    "link": [
+        "Marian Kraus, <a href=\"/A265207/a265207_1.pdf\">Illustration for a(4)</a>"
+    ],
+    "formula": [
+        "Conjectured recurrence:",
+        "a(0)=1,",
+        "a(1)=8,",
+        "a(2)=20, and thereafter",
+        "a(n)=2*a(n-2)+20.",
+        "Conjectured formula: (\"[]\" is the floor function)",
+        "a(n)=4*sum_{k=1}^{[(n+1)/2]}(2^k)+6*sum_{k=1}^{[n/2]}(2^k).",
+        "Conjectures from _Colin Barker_, Dec 07 2015: (Start)",
+        "a(n) = (-20+2^(1/2*(-1+n))*(10-10*(-1)^n+7*sqrt(2)+7*(-1)^n*sqrt(2))) for n>1.",
+        "a(n) = 5*2^(n/2+1/2)-5*(-1)^n*2^(n/2+1/2)+7*2^(n/2)+7*(-1)^n*2^(n/2)-20 for n>1.",
+        "a(n) = a(n-1)+2*a(n-2)-2*a(n-3) for n>4.",
+        "G.f.: x*(1+7*x+10*x^2+2*x^3) / ((1-x)*(1-2*x^2)).",
+        "(End)"
+    ],
+    "example": [
+        "By recursion:",
+        "a(3)=2*a(1)+20=2*8+20=36",
+        "a(4)=2*a(2)+20=2*20+20=60",
+        "By function:",
+        "a(3)=4*sum_{k=1}^{[(3+1)/2]}(2^k)+6*sum_{k=1}^{[3/2]}(2^k)",
+        "=4*sum_{k=1}^{[2]}(2^k)+6*sum_{k=1}^{[1.5]}(2^k)",
+        "=4*sum_{k=1}^{2}(2^k)+6*sum_{k=1}^{1}(2^k)",
+        "=4*(2^1+2^2)+6*(2^1)",
+        "=4*(2+4)+6*(2)=24+12=36",
+        "a(4)=4*sum_{k=1}^{[(4+1)/2]}(2^k)+6*sum_{k=1}^{[4/2]}(2^k)",
+        "=4*sum_{k=1}^{[2.5]}(2^k)+6*sum_{k=1}^{[2]}(2^k)",
+        "=4*sum_{k=1}^{2}(2^k)+6*sum_{k=1}^{2}(2^k)",
+        "=4*(2^1+2^2)+6*(2^1+2^2)",
+        "=4*(2+4)+6*(2+4)=24+36=60"
+    ],
+    "program": [
+        "(R)",
+        "rm(a)",
+        "a <- vector() powerof2 <- vector()",
+        "x <- 300",
+        "n <- x/2",
+        "for (i in 1:x){",
+        "   powerof2[i] <- 2^(i-1)}",
+        "powerof2 for (i in 1:n){",
+        "   a[2*i]   <- 8*(sum(powerof2[1:i]))+12*(sum(powerof2[1:i]))}",
+        "for (i in 1:(n+1)){",
+        "   a[2*i+1] <- 8*(sum(powerof2[1:(i+1)]))+12*(sum(powerof2[1:i]))}",
+        "a[1]<-8",
+        "a"
+    ],
+    "xref": [
+        "For the differences (a(n)-a(n-1))/4, n>2, see A163978.",
+        "Cf. A029744, A063759, A164090."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Marian Kraus_, Dec 04 2015",
+    "references": 1,
+    "revision": 37,
+    "time": "2015-12-07T10:56:28-05:00",
+    "created": "2015-12-05T17:39:35-05:00"
+}

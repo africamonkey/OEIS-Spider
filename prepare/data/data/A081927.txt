@@ -1,0 +1,57 @@
+{
+    "number": 81927,
+    "data": "1,11,21,31,41,51,61,71,81,109,137,165,193,257,294,376,467,567,676,785,894,1399,1778,1986,2887,3869,4869,5878,6887,7896,8959,9968,18798,26998,35999,45999,56899,66989,76998,87799,97889,178899,199798,298988,398988",
+    "name": "n-th positive integer whose digits sum up to n.",
+    "link": [
+        "Robert Israel, <a href=\"/A081927/b081927.txt\">Table of n, a(n) for n = 1..8989</a>"
+    ],
+    "formula": [
+        "From _Robert Israel_, Feb 20 2018: (Start)",
+        "a(9*k-j) = (12-j)*10^(k-1) - 10^(k-10) - 10^(j+k-45) - 1 for j=2..9, k >= 45-j.",
+        "a(9*k-1) = 2*10^k - 10^(k-9) - 10^(k-35) - 1, k >= 35. (End)"
+    ],
+    "example": [
+        "31 is the 4th integer of the sequence and the 4th number whose digits sum up to 4 : 4, 13, 22, [31], 103, 112, 121, 130, ...",
+        "109 is the 10th integer of the sequence and the 10th number whose digits sum up to 10 : 19, 28, 37, 46, 55, 64, 73, 82, 91, [109], 118, 127, 136, ..."
+    ],
+    "maple": [
+        "f:= proc(n) local Res, d, v, count;",
+        "    count:= 0;",
+        "    for d from ceil(n/9) while count < n do",
+        "       v:= g(n,d,n-count,1);",
+        "       Res:= v[-1];",
+        "       count:= count + nops(v);",
+        "    od:",
+        "    Res",
+        "end proc:",
+        "g:= proc(n,d,remain) local rem, Res, j, j0, v;",
+        "      if remain = 0 then return [] else rem:= remain fi;",
+        "      if nargs = 4 then j0:= 1 else j0:= 0 fi;",
+        "      if d = 1 then if n >= j0 and n <= 9 then [n] else [] fi",
+        "      else",
+        "        Res:= NULL;",
+        "        for j from max(j0, ceil(n-9*(d-1))) to min(9,n) while rem > 0 do",
+        "          v:= map(t -> j*10^(d-1)+t, procname(n-j,d-1,rem));",
+        "          Res:= Res, op(v);",
+        "          rem:= rem - nops(v);",
+        "        od;",
+        "        [Res]",
+        "      fi",
+        "end proc:",
+        "map(f, [$1..200]); # _Robert Israel_, Feb 19 2018"
+    ],
+    "xref": [
+        "Leading diagonal of A081926.",
+        "Cf. A081928, A181178"
+    ],
+    "keyword": "base,nonn,changed",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, Apr 01 2003",
+    "ext": [
+        "Corrected and extended by _Ray Chandler_, Oct 29 2003"
+    ],
+    "references": 5,
+    "revision": 12,
+    "time": "2018-02-20T22:50:42-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

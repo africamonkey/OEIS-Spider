@@ -1,0 +1,38 @@
+{
+    "number": 225136,
+    "data": "88,128,188,208,278,288,308,428,448,458,508,528,638,668,688,708,758,768,788,808,812,818,820,827,828,830,842,844,845,850,852,863,866,868,870,875,876,878,888,892,898,899,928,988,998,1028,1058,1108,1148,1168,1178",
+    "name": "Numbers that are concatenations of triprimes.",
+    "link": [
+        "Christian N. K. Anderson, <a href=\"/A225136/b225136.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Christian N. K. Anderson, <a href=\"/A225136/a225136.txt\">Table of n, a(n), all possible separations of a(n) into triprimes</a> for n=1..10000."
+    ],
+    "example": [
+        "88 = 8|8, both of which are triprime because 8=2*2*2.",
+        "458 = 45 | 8 = 3*3*5 | 2*2*2.",
+        "12428 can be split into triprimes in three ways: 12|428, 12|42|8, and 124|28."
+    ],
+    "program": [
+        "(R) library(gmp); istriprime=function(x) ifelse(x<8,F,length(factorize(x))==3)",
+        "splithasproperty<-function(n,FUN,curdig=1,res=list(),curspl=c()) {",
+        "no0<-function(s){ while(substr(s,1,1)==\"0\" & nchar(s)>1) s=substr(s,2,nchar(s)); s}",
+        "    s=as.character(n)",
+        "    if(curdig>nchar(s)) return(res)",
+        "    if(length(curspl)>0) if(FUN(as.bigz(no0(substr(s,curdig,nchar(s)))))) res[[length(res)+1]]=curspl",
+        "    for(i in curdig:nchar(s))",
+        "        if(FUN(as.bigz(no0(substr(s,curdig,i)))))",
+        "            res=splithasproperty(n,FUN,i+1,res,c(curspl,i))",
+        "    res",
+        "}",
+        "which(sapply(1:500,function(x) length(splithasproperty(x,istriprime)))>0)"
+    ],
+    "xref": [
+        "Cf. A106582, A019549, A030459."
+    ],
+    "keyword": "nonn,base,less",
+    "offset": "1,1",
+    "author": "_Kevin L. Schwartz_ and _Christian N. K. Anderson_, Apr 29 2013",
+    "references": 1,
+    "revision": 13,
+    "time": "2013-05-06T11:28:01-04:00",
+    "created": "2013-05-06T11:28:01-04:00"
+}

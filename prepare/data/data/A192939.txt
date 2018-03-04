@@ -1,0 +1,44 @@
+{
+    "number": 192939,
+    "data": "1,2,9,61,546,6043,79475,1209160,20873685,402896615,8595041400,200773098515,5095839723205,139624739872970,4107177047046645,129087781738773385,4316962772836390050,153048896045632212175,5733602882337419294975",
+    "name": "Constant term of the reduction by x^2->x+1 of the polynomial p(n,x)=(x+2)(x+4)...(x+2n).",
+    "comment": [
+        "For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232."
+    ],
+    "formula": [
+        "Conjecture: a(n) +(-4*n+1)*a(n-1) +(4*n^2-6*n+1)*a(n-2)=0. - _R. J. Mathar_, May 08 2014"
+    ],
+    "example": [
+        "The first four polynomials p(n,x) and their reductions are as follows:",
+        "p(0,x)=1",
+        "p(1,x)=x+2 -> x+2",
+        "p(2,x)=(x+2)(x+4) -> 9+7x",
+        "p(3,x)=(x+2)(x+4)(x+6) -> 61+58x",
+        "From these, read",
+        "A192939=(1,2,9,61,...) and A192940=(0,1,7,58,...)"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 26;",
+        "p[0, x] := 1;",
+        "p[n_, x_] := (x + 2 n)*p[n - 1, x];",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "  (* A192939 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "  (* A192940 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192744, A192940."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, Jul 13 2011",
+    "references": 2,
+    "revision": 8,
+    "time": "2014-05-08T15:18:42-04:00",
+    "created": "2011-07-13T20:21:17-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 34020,
+    "data": "2,5,6,8,10,11,14,15,17,18,20,22,23,24,26,29,30,32,33,34,35,38,40,41,42,44,45,46,47,50,51,53,54,55,56,58,59,60,62,65,66,68,69,70,71,72,74,77,78,80,82,83,85,86,87,88,89,90,92,94,95,96,98,99,101,102,104,105",
+    "name": "Not of the form x^2 + x*y + y^2.",
+    "comment": [
+        "Appears to be the sequence of nonsquare n such that sigma(n)==0 (mod 3). - _Benoit Cloitre_, Sep 17 2002",
+        "First counterexample is 147 = 11^2 + 11*2 + 2^2 since sigma(147) = 3 * 76. - _Charles R Greathouse IV_, Jun 29 2011",
+        "Numbers n such that n-th coefficient of eta(x)^3/eta(x^3) is zero where eta(x) coefficients are given by A010815. - _Benoit Cloitre_, Oct 06 2005",
+        "A088534(a(n)) = 0. - _Reinhard Zumkeller_, Oct 30 2011"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A034020/b034020.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) ~ n. - _Charles R Greathouse IV_, Jul 05 2017"
+    ],
+    "mathematica": [
+        "Select[Range@ 105, ! Resolve[Exists[{x, y}, Reduce[# == x^2 + x y + y^2, {x, y}, Integers]]] &] (* _Michael De Vlieger_, Jan 06 2016 *)"
+    ],
+    "program": [
+        "(PARI) default(seriesprecision, 105); for(n=1, 105, if (polcoeff(eta(x)^3/eta(x^3)+O(x^(n+1)), n) == 0, print1(n,\",\"))) \\\\ _Benoit Cloitre_, Oct 06 2005",
+        "(PARI) x='x+O('x^100); p=eta(x)^3/eta(x^3); for(n=1, 99, if(polcoeff(p, n)==0, print1(n, \", \"))); \\\\ _Altug Alkan_, Nov 08 2015",
+        "(PARI) list(lim)=my(v=List(), y, t); lim\\=1; for(x=0, sqrtint(lim\\3), my(y=x, t); while((t=x^2+x*y+y^2)<=lim, listput(v, t); y++)); v=Set(v); setminus([2..lim], v) \\\\ _Charles R Greathouse IV_, Jul 05 2017",
+        "(Haskell)",
+        "a034020 n = a034020_list !! (n-1)",
+        "a034020_list = f [0..] a003136_list where",
+        "   f (x:xs) ys'@(y:ys) | x < y = x : f xs ys'",
+        "                       | otherwise = f xs ys",
+        "-- _Reinhard Zumkeller_, Oct 30 2011"
+    ],
+    "xref": [
+        "Cf. A003136 (complement), A003627 (primes)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _James A. Sellers_, May 04 2000",
+        "Correct offset=1 by _Ray Chandler_, Jan 29 2009"
+    ],
+    "references": 8,
+    "revision": 43,
+    "time": "2017-07-05T22:54:18-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

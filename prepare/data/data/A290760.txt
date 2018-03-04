@@ -1,0 +1,48 @@
+{
+    "number": 290760,
+    "data": "1,2,6,30,78,330,390,870,1410,3198,3390,4290,7878,9570,10230,11310,13026,15510,15990,18330,26070,30966,37290,39390,40890,44070,45210,65130,84810,94830,98310,104610,122070,124410,132990,154830,159330,175890,198330,201630",
+    "name": "Matula-Goebel numbers of transitive rooted identity trees (or transitive finitary sets).",
+    "comment": [
+        "A rooted tree is transitive if every terminal subtree is a branch of the root. A finitary set is transitive if every element is also a subset."
+    ],
+    "example": [
+        "Let o = {}. The sequence of transitive finitary sets begins:",
+        "1     o",
+        "2     {o}",
+        "6     {o,{o}}",
+        "30    {o,{o},{{o}}}",
+        "78    {o,{o},{o,{o}}}",
+        "330   {o,{o},{{o}},{{{o}}}}",
+        "390   {o,{o},{{o}},{o,{o}}}",
+        "870   {o,{o},{{o}},{o,{{o}}}}",
+        "1410  {o,{o},{{o}},{{o},{{o}}}}",
+        "3198  {o,{o},{o,{o}},{{o,{o}}}}",
+        "3390  {o,{o},{{o}},{o,{o},{{o}}}}",
+        "4290  {o,{o},{{o}},{{{o}}},{o,{o}}}",
+        "7878  {o,{o},{o,{o}},{o,{o,{o}}}}",
+        "9570  {o,{o},{{o}},{{{o}}},{o,{{o}}}}",
+        "10230 {o,{o},{{o}},{{{o}}},{{{{o}}}}}",
+        "11310 {o,{o},{{o}},{o,{o}},{o,{{o}}}}",
+        "13026 {o,{o},{o,{o}},{{o},{o,{o}}}}",
+        "15510 {o,{o},{{o}},{{{o}}},{{o},{{o}}}}",
+        "15990 {o,{o},{{o}},{o,{o}},{{o,{o}}}}",
+        "18330 {o,{o},{{o}},{o,{o}},{{o},{{o}}}}"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n===1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "finitaryQ[n_]:=finitaryQ[n]=Or[n===1,With[{m=primeMS[n]},{UnsameQ@@m,finitaryQ/@m}]/.List->And];",
+        "subprimes[n_]:=If[n===1,{},Union@@Cases[FactorInteger[n],{p_,_}:>FactorInteger[PrimePi[p]][[All,1]]]];",
+        "transitaryQ[n_]:=Divisible[n,Times@@subprimes[n]];",
+        "nn=100000;Fold[Select,Range[nn],{finitaryQ,transitaryQ}]"
+    ],
+    "xref": [
+        "Cf. A000081, A001192, A004111, A007097, A076146, A276625, A279861, A290689, A290822."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Oct 19 2017",
+    "references": 12,
+    "revision": 14,
+    "time": "2017-10-20T15:40:40-04:00",
+    "created": "2017-10-20T15:40:40-04:00"
+}

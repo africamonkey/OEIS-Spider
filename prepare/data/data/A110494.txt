@@ -1,0 +1,34 @@
+{
+    "number": 110494,
+    "data": "3,5,13,25,61,85,145,181,265,421,481,685,841,925,1105,1405,1741,1861,2245,2521,2665,3121,3445,3961,4705,5101,5305,5725,5941,6385,8065,8581,9385,9661,11101,11401,12325,13285,13945,14965,16021,16381,18241,18625,19405",
+    "name": "Least k such that prime(n)^2 divides binomial(2k,k).",
+    "comment": [
+        "For prime p > sqrt(2n), p^2 does not divide binomial(2n,n)."
+    ],
+    "link": [
+        "T. D. Noe and Charles R Greathouse IV, <a href=\"/A110494/b110494.txt\">Table of n, a(n) for n = 1..10000</a> (first 60 terms from T. D. Noe)"
+    ],
+    "formula": [
+        "a(n) = (prime(n)^2+1)/2 for n > 1.",
+        "a(n) = A066885(n), n > 1. - _R. J. Mathar_, Aug 18 2008"
+    ],
+    "mathematica": [
+        "t=Table[f=FactorInteger[Binomial[2n, n]]; s=Select[f, #[[2]]>1&]; If[s=={}, 0, s[[ -1, 1]]], {n, 100}]; Table[p=Prime[i]; First[Flatten[Position[t, p]]], {i, PrimePi[Max[t]]}]",
+        "lk[n_]:=Module[{k=1,c=Prime[n]^2},While[!Divisible[Binomial[2k,k],c], k=k+2]; k]; Array[lk,40] (* _Harvey P. Dale_, Oct 10 2012 *)"
+    ],
+    "program": [
+        "(PARI) fv(n,p)=my(s); while(n\\=p, s+=n); s",
+        "a(n)=my(p=prime(n),k=p^2\\2+1); while(fv(2*k,p)-2*fv(k,p)<2,k++); k \\\\ _Charles R Greathouse IV_, Mar 27 2014",
+        "(PARI) a(n)=prime(n)^2\\2+1 \\\\ _Charles R Greathouse IV_, Mar 27 2014"
+    ],
+    "xref": [
+        "Cf. A110493 (largest prime p such that p^2 divides binomial(2n, n))."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_T. D. Noe_, Jul 22 2005",
+    "references": 8,
+    "revision": 17,
+    "time": "2014-03-27T17:55:08-04:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

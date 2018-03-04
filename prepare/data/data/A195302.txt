@@ -1,0 +1,63 @@
+{
+    "number": 195302,
+    "data": "2,3,5,7,211,223,229,241,271,283,311,313,317,331,337,347,353,359,367,373,379,383,389,397,523,541,547,571,719,743,761,773,797,211151,211193,211199,211229,211241,211271,211283,211313,211349,211373,211433,211457,211499,211571,211619,211643,211661,211691,211727,211811,211859,211877,211997,213131",
+    "name": "Xmas tree primes.",
+    "link": [
+        "Terry Trotter, <a href=\"http://trottermath.net/numtrivia/potpourri.html\">POTPOURRI</a>"
+    ],
+    "example": [
+        "359 is a Xmas tree prime because it is prime and 3 and 59 are prime. 503 is not a Xmas tree prime although 5 and 3 are prime, because the leading 0 in front of the 3 is not allowed by definition."
+    ],
+    "maple": [
+        "isA000217 := proc(n)",
+        "        for k from 0 do",
+        "                if n = k*(k+1)/2 then",
+        "                        return k;",
+        "                elif n < k*(k+1)/2 then",
+        "                        return -1 ;",
+        "                end if;",
+        "        end do;",
+        "end proc:",
+        "isA195302 := proc(n)",
+        "        local dgs,T,d,std,kList,k ;",
+        "        if isprime(n) then",
+        "                dgs := convert(n,base,10) ;",
+        "                T := isA000217(nops(dgs)) ;",
+        "                if T > 0 then",
+        "                        std := 1 ;",
+        "                        for d from T to 1 by -1 do",
+        "                                kList := [op(std..std+d-1,dgs)] ;",
+        "                                if op(-1,kList) = 0 then",
+        "                                        return false;",
+        "                                end if;",
+        "                                k := add(op(i,kList)*10^(i-1),i=1..nops(kList)) ;",
+        "                                if not isprime(k) then",
+        "                                        return false;",
+        "                                end if;",
+        "                                std := std+d ;",
+        "                        end do:",
+        "                        return true;",
+        "                else",
+        "                        false;",
+        "                end if;",
+        "        else",
+        "                false;",
+        "        end if;",
+        "end proc:",
+        "for i from 2 to 300000 do",
+        "        if isA195302(i) then",
+        "                printf(\"%d,\",i) ;",
+        "        end if;",
+        "end do: # R. J. Mathar, Sep 20 2011"
+    ],
+    "xref": [
+        "Cf. A195335."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Kausthub Gudipati_, Sep 16 2011",
+    "references": 0,
+    "revision": 21,
+    "time": "2012-03-31T10:28:38-04:00",
+    "created": "2011-09-20T12:57:13-04:00"
+}

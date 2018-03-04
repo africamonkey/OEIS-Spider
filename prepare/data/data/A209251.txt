@@ -1,0 +1,40 @@
+{
+    "number": 209251,
+    "data": "1,2,7,36,1459,340880,478070832,2872221202512,72057630729710704,7462505061854009276768,3169126500599982009308551168,5492677668532714149024993226980288,38716571525226776692749451887896112574464",
+    "name": "Number of n X n checkered tori, allowing rotation and/or reflection of the rows and/or the columns.",
+    "comment": [
+        "Main diagonal from p. 8, Ethier, of Table 4: The number b(m, n) of toroidal m X n binary arrays, allowing rotation and/or reflection of the rows and/or the columns, for m, n = 1, 2, ..., 8 (cf. A222188)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A209251/b209251.txt\">Table of n, a(n) for n = 0..50</a>",
+        "S. N. Ethier, <a href=\"http://arxiv.org/abs/1301.2352\">Counting toroidal binary arrays</a>, arXiv:1301.2352v1 [math.CO], Jan 10, 2013 and <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL16/Ethier/ethier2.html\">J. Int. Seq. 16 (2013) #13.4.7</a>.",
+        "S. N. Ethier and Jiyeon Lee, <a href=\"http://arxiv.org/abs/1502.03792\">Counting toroidal binary arrays, II</a>, arXiv:1502.03792v1 [math.CO], Feb 12, 2015."
+    ],
+    "mathematica": [
+        "b1[m_, n_] := Sum[EulerPhi[c]*EulerPhi[d]*2^(m*n/LCM[c, d]), {c, Divisors[m]}, {d, Divisors[n]}]/(4*m*n);",
+        "b2a[m_, n_] := If[OddQ[m], 2^((m + 1)*n/2)/(4*n), (2^(m*n/2) + 2^((m + 2)*n/2))/(8*n)];",
+        "b2b[m_, n_] := DivisorSum[n, If[# >= 2, EulerPhi[#]*2^((m*n)/#), 0] &]/(4*n);",
+        "b2c[m_, n_] := If[OddQ[m], Sum[If[OddQ[n/GCD[j, n]], 2^((m + 1)*GCD[j, n]/2) - 2^(m*GCD[j, n]), 0], {j, 1, n - 1}]/(4*n), Sum[If[OddQ[n/GCD[j, n]], 2^(m*GCD[j, n]/2) + 2^((m + 2)*GCD[j, n]/2) - 2^(m*GCD[j, n] + 1), 0], {j, 1, n - 1}]/(8*n)];",
+        "b2[m_, n_] := b2a[m, n] + b2b[m, n] + b2c[m, n];",
+        "b3[m_, n_] := b2[n, m]; b4oo[m_, n_] := 2^((m*n - 3)/2);",
+        "b4eo[m_, n_] := 3*2^(m*n/2 - 3); b4ee[m_, n_] := 7*2^(m*n/2 - 4);",
+        "a[m_, n_] := Module[{b}, If[OddQ[m], If[OddQ[n], b = b4oo[m, n], b = b4eo[m, n]], If[OddQ[n], b = b4eo[m, n], b = b4ee[m, n]]]; b += b1[m, n] + b2[m, n] + b3[m, n]; Return[b]];",
+        "a[0] = 1; a[n_] := a[n, n];",
+        "Table[a[n], {n, 0, 12}] (* _Jean-Fran\u00e7ois Alcover_, Oct 08 2017, after _Michel Marcus_'s code for A222188 *)"
+    ],
+    "xref": [
+        "Main diagonal of A222188.",
+        "Cf. A179043, A184271 (n X k toroidal binary arrays)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Jonathan Vos Post_, Jan 14 2013",
+    "ext": [
+        "More terms from _Michel Marcus_, Feb 13 2013",
+        "a(0)=1 prepended by _Andrew Howroyd_, Sep 30 2017"
+    ],
+    "references": 4,
+    "revision": 31,
+    "time": "2018-01-20T16:16:16-05:00",
+    "created": "2013-01-23T04:31:52-05:00"
+}

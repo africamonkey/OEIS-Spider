@@ -1,0 +1,47 @@
+{
+    "number": 660,
+    "data": "1,2,5,14,41,136,523,2330,11857,67912,432291,3027166,23125673,191389108,1705788659,16289080922,165919213089,1795666675824,20576824369027,248892651678198,3168999664907705,42366404751871660",
+    "name": "Boustrophedon transform of 1,1,2,3,4,5,...",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A000660/b000660.txt\">Table of n, a(n) for n = 0..400</a>",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>",
+        "J. Millar, N. J. A. Sloane and N. E. Young, A new operation on sequences: the Boustrophedon on transform, J. Combin. Theory, 17A 44-54 1996 (<a href=\"http://neilsloane.com/doc/bous.txt\">Abstract</a>, <a href=\"http://neilsloane.com/doc/bous.pdf\">pdf</a>, <a href=\"http://neilsloane.com/doc/bous.ps\">ps</a>).",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Boustrophedon_transform\">Boustrophedon_transform</a>",
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "formula": [
+        "a(n) = sum(A109449(n,k)*A028310(k): k=0..n). - _Reinhard Zumkeller_, Nov 04 2013",
+        "E.g.f.:  (x*exp(x) + 1)*(sec(x) + tan(x)). - _Sergei N. Gladkovskii_, Oct 28 2014",
+        "a(n) = A231179(n) + A000111(n). - _Sergei N. Gladkovskii_, Oct 28 2014",
+        "a(n) ~ n! * (2 + Pi*exp(Pi/2)) * (2/Pi)^(n+1). - _Vaclav Kotesovec_, Jun 12 2015"
+    ],
+    "program": [
+        "(Sage) # Algorithm of L. Seidel (1877)",
+        "def A000660_list(n) :",
+        "    R = []; A = {-1:0, 0:1}",
+        "    k = 0; e = 1",
+        "    for i in range(n) :",
+        "        Am = i",
+        "        A[k + e] = 0",
+        "        e = -e",
+        "        for j in (0..i) :",
+        "            Am += A[k]",
+        "            A[k] = Am",
+        "            k += e",
+        "        print [A[z] for z in (-i//2..i//2)]",
+        "        R.append(A[e*i//2])",
+        "    return R",
+        "A000660_list(10) # _Peter Luschny_, Jun 02 2012",
+        "(Haskell)",
+        "a000660 n = sum $ zipWith (*) (a109449_row n) (1 : [1..])",
+        "-- _Reinhard Zumkeller_, Nov 04 2013"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, _Simon Plouffe_",
+    "references": 3,
+    "revision": 26,
+    "time": "2015-06-12T04:38:05-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

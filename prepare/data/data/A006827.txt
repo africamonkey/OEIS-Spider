@@ -1,0 +1,43 @@
+{
+    "number": 6827,
+    "id": "M1351",
+    "data": "1,2,5,8,17,24,46,64,107,147,242,302,488,629,922,1172,1745,2108,3104,3737,5232,6419,8988,10390,14552,17292,23160,27206,36975,41945,57058,65291,85895,99384,130443,145283,193554,218947,281860,316326,413322,454229,594048",
+    "name": "Number of partitions of 2n with all subsums different from n.",
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A006827/b006827.txt\">Table of n, a(n) for n = 1..89</a>",
+        "P. Erd\u0151s, J. L. Nicolas and A. S\u00e1rk\u00f6zy, <a href=\"http://dx.doi.org/10.1016/0012-365X(89)90086-1\">On the number of partitions of n without a given subsum (I)</a>, Discrete Math., 75 (1989), 155-166 = Annals Discrete Math. Vol. 43, Graph Theory and Combinatorics 1988, ed. B. Bollobas."
+    ],
+    "formula": [
+        "a(n) = A000041(2*n) - A002219(n).",
+        "a(n) = A046663(2*n,n)."
+    ],
+    "maple": [
+        "b:= proc(n, i, s) option remember;",
+        "      `if`(0 in s or n in s, 0, `if`(n=0, 1, `if`(i<1, 0, b(n, i-1, s)+",
+        "      `if`(i<=n, b(n-i, i, select(y-> 0<=y and y<=n-i,",
+        "                 map(x-> [x, x-i][], s))), 0))))",
+        "    end:",
+        "a:= n-> b(2*n, 2*n, {n}):",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Jul 10 2012"
+    ],
+    "mathematica": [
+        "b[n_, i_, s_] := b[n, i, s] = If[MemberQ[s, 0 | n], 0, If[n == 0, 1, If[i < 1, 0, b[n, i-1, s] + If[i <= n, b[n-i, i, Select[Flatten[Transpose[{s, s-i}]], 0 <= # <= n-i &]], 0]]]]; a[n_] := b[2*n, 2*n, {n}]; Table[Print[an = a[n]]; an, {n, 1, 25}] (* _Jean-Fran\u00e7ois Alcover_, Nov 12 2013, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A046663."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Don Reble_, Nov 03 2001",
+        "More terms from _Alois P. Heinz_, Jul 10 2012"
+    ],
+    "references": 3,
+    "revision": 38,
+    "time": "2017-10-19T03:13:43-04:00",
+    "created": "1991-07-25T03:00:00-04:00"
+}

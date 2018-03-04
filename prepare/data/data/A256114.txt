@@ -1,0 +1,47 @@
+{
+    "number": 256114,
+    "data": "1,2,3,101,102,103,104,105,201,202,203,205,301,302,303,305,401,402,403,405,501,502,503,504,505,506,507,508,509,601,602,603,605,609,661,701,702,703,705,708,709,801,802,803,805,901,902,903,905,906,983",
+    "name": "Numbers n such that digit_product(n^2) = (digit_product(n))^2 and n mod 10 > 0.",
+    "comment": [
+        "Contains i*10^d + j for i>=1, j mod 10 > 0, j < 10^d/(20*i+1). - _Robert Israel_, Jun 05 2015"
+    ],
+    "link": [
+        "Reiner Moewald, <a href=\"/A256114/b256114.txt\">Table of n, a(n) for n = 1..15212</a>"
+    ],
+    "example": [
+        "digit_product(661^2) = digit_product(436921) = 1296 = 36^2 = (digit_product(661))^2."
+    ],
+    "maple": [
+        "pdigs:= n -> convert(convert(n,base,10),`*`):",
+        "select(t -> pdigs(t^2)=pdigs(t)^2, [seq(seq(10*k+j,j=1..9),k=0..1000)]); # _Robert Israel_, Jun 05 2015"
+    ],
+    "mathematica": [
+        "pod[n_] := Times@@ IntegerDigits@ n; Select[ Range[10^4], Mod[#, 10] > 0 && pod[#]^2 == pod[#^2] &] (* _Giovanni Resta_, Jun 23 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def product_digits(n):",
+        "...results = 1",
+        "...while n > 0:",
+        "......remainder = n % 10",
+        "......results *= remainder",
+        "......n = (n-remainder)/10",
+        "...return results",
+        "pos = 0",
+        "for a in range(1,1000000):",
+        "...if product_digits(a*a) == (product_digits(a))*(product_digits(a)) and (a%10 > 0):",
+        "......pos += 1",
+        "......print(pos, a)",
+        "(MAGMA) [t: j in [1..9], k in [0..100] | &*Intseq(t^2) eq &*Intseq(t)^2 where t is 10*k+j]; // _Bruno Berselli_, Jun 23 2015"
+    ],
+    "xref": [
+        "Cf. A007954, A256115."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Reiner Moewald_, Mar 15 2015",
+    "references": 2,
+    "revision": 25,
+    "time": "2015-06-23T11:39:59-04:00",
+    "created": "2015-06-23T11:39:59-04:00"
+}

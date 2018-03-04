@@ -1,0 +1,81 @@
+{
+    "number": 6951,
+    "id": "M2577",
+    "data": "1,1,3,6,14,27,60,117,246,490,1002,1998,4053,8088,16284,32559,65330,130626,261726,523374,1047690,2095314,4192479,8384808,16773552,33546736,67101273,134202258,268420086,536839446,1073710914,2147420250,4294904430,8589807438",
+    "name": "Number of conjugacy classes in GL(n,2).",
+    "comment": [
+        "Unlabeled permutations of sets. - _Christian G. Bower_, Jan 29 2004",
+        "From _Joerg Arndt_, Jan 02 2013: (Start)",
+        "Set q=2 and f(m)=q^(m-1)*(q-1), then a(n) is the sum over all partitions P of n over all products prod(k=1..L, f(m_k) ) where L is the number of different parts in the partition P=[p_1^m_1, p_2^m_2, ..., p_L^m_L], see the Macdonald reference.",
+        "Setting q to a prime power gives the sequence \"Number of conjugacy classes in GL(n,q)\":",
+        "q=3: A006952, q=4: A049314, q=5: A049315, q=7: A049316, q=8: A182603,",
+        "q=9: A182604, q=11: A182605, q=13: A182606, q=16: A182607, q=17: A182608,",
+        "q=19: A182609, q=23: A182610, q=25: A182611, q=27: A182612.",
+        "Sequences where q is not a prime power are:",
+        "q=6: A221578, q=10: A221579, q=12: A221580,",
+        "q=14: A221581, q=15: A221582, q=18: A221583, q=20: A221584.",
+        "(End)"
+    ],
+    "reference": [
+        "W. Feit and N. J. Fine, Pairs of commuting matrices over a finite field. Duke Math. Journal, 27 (1960) 91-94.",
+        "I. G. Macdonald, Numbers of conjugacy classes in some finite classical groups, Bulletin of the Australian Mathematical Society, vol.23, no.01, pp.23-48, (February-1981).",
+        "W. D. Smith, personal communication.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A006951/b006951.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=161\">Encyclopedia of Combinatorial Structures 161</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "G.f. prod(n>=1, (1-x^n)/(1-2*x^n)  ). [_Joerg Arndt_, Jan 02 2013]",
+        "The number a(n) of conjugacy classes in the group GL(n, q) is the coefficient of t^n in prod(k>=1, (1-t^k)/(1-q*t^k) ). - Noam Katz (noamkj(AT)hotmail.com), Mar 30 2001.",
+        "Euler transform of A008965. - _Christian G. Bower_, Jan 29 2004",
+        "a(n) ~ 2^n - (1+sqrt(2) + (-1)^n*(1-sqrt(2))) * 2^(n/2-1). - _Vaclav Kotesovec_, Nov 21 2015"
+    ],
+    "example": [
+        "For the 5 partitions of 4 (namely [1^4]; [2,1^2]; [2^2]; [3,1]; [4]) we have",
+        "(f(m) = 2^(m-1)*(2-1) = 2^(m-1) and)",
+        "f([1^4]) = 2^3 = 8,",
+        "f([2,1^2]) = 1*2^1 = 2,",
+        "f([2^2]) = 2^1 = 2,",
+        "f([3,1]) = 1*1 = 1,",
+        "f([4]) = 1,",
+        "the sum is 8+2+2+1+1 = 14 = a(4).",
+        "- _Joerg Arndt_, Jan 02 2013"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= n-> add(phi(d)*2^(n/d), d=divisors(n))/n-1:",
+        "a:= proc(n) option remember; `if`(n=0, 1,",
+        "       add(add(d*b(d), d=divisors(j)) *a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Oct 20 2012"
+    ],
+    "mathematica": [
+        "b[n_] := Sum[EulerPhi[d]*2^(n/d), {d, Divisors[n]}]/n-1; a[n_] := a[n] = If[n == 0, 1, Sum[Sum[d*b[d], {d, Divisors[j]}]*a[n-j], {j, 1, n}]/n]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Feb 17 2014, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(MAGMA)/* The program does not work for n>19: */  [1] cat [NumberOfClasses(GL(n,2)): n in [1..19]]; // Sergei Haller (sergei(AT)sergei-haller.de), Dec 21 2006",
+        "(PARI)",
+        "N=66; x='x+O('x^N);",
+        "gf=prod(n=1,N, (1-x^n)/(1-2*x^n)  );",
+        "v=Vec(gf)",
+        "/* _Joerg Arndt_, Jan 02 2013 */"
+    ],
+    "xref": [
+        "Cf. A006952, A049314, A049315, A049316, A070933, A264685, A264687.",
+        "Column k=0 of A218698. - _Alois P. Heinz_, Nov 04 2012"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Christian G. Bower_, Jan 29 2004",
+        "MAGMA code edited by _Vincenzo Librandi_ Jan 24 2013"
+    ],
+    "references": 27,
+    "revision": 60,
+    "time": "2017-04-18T07:02:56-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

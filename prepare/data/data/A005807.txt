@@ -1,0 +1,68 @@
+{
+    "number": 5807,
+    "id": "M0850",
+    "data": "2,3,7,19,56,174,561,1859,6292,21658,75582,266798,950912,3417340,12369285,45052515,165002460,607283490,2244901890,8331383610,31030387440,115948830660,434542177290,1632963760974,6151850548776",
+    "name": "Sum of adjacent Catalan numbers.",
+    "comment": [
+        "The aerated sequence has Hankel transform F(n+2)*F(n+3) (A001654(n+2)). - _Paul Barry_, Nov 04 2008"
+    ],
+    "reference": [
+        "D. E. Knuth, personal communication.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A005807/b005807.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Daniel Birmajer, Juan B. Gil, Michael D. Weiner, <a href=\"http://arxiv.org/abs/1606.02183\">On rational Dyck paths and the enumeration of factor-free Dyck words</a>, arXiv:1606.02183 [math.CO], (7-June-2016); see p. 9",
+        "Aleksandar Cvetkovic, Predrag Rajkovic and Milos Ivkovic, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL5/Ivkovic/ivkovic3.html\">Catalan Numbers, the Hankel Transform and Fibonacci Numbers</a>, Journal of Integer Sequences, Vol. 5 (2002), Article 02.1.3",
+        "Sergio Falcon, <a href=\"http://www.mathnet.or.kr/mathnet/thesis_file/CKMS-28-4-827-832.pdf\">Catalan transform of the K-Fibonacci sequence</a>, Commun. Korean Math. Soc. 28 (2013), No. 4, pp. 827-832; http://dx.doi.org/10.4134/CKMS.2013.28.4.827.",
+        "Guo-Niu Han, <a href=\"http://www-irma.u-strasbg.fr/~guoniu/papers/p77puzzle.pdf\">Enumeration of Standard Puzzles</a>",
+        "Guo-Niu Han, <a href=\"/A196265/a196265.pdf\">Enumeration of Standard Puzzles</a> [Cached copy]",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=431\">Encyclopedia of Combinatorial Structures 431</a>",
+        "Fumitaka Yura, <a href=\"http://arxiv.org/abs/1411.6972\">Hankel Determinant Solution for Elliptic Sequence</a>, arXiv:1411.6972 [nlin.SI], (25-November-2014); see p. 7"
+    ],
+    "formula": [
+        "a(n) = C(n)+C(n+1) = ((5*n+4)*(2*n)!)/(n!*(n+2)!).",
+        "G.f. A(x) satisfies x^2*A(x)^2 + (x-1)*A(x) + (x+2) = 0. - _Michael Somos_, Sep 11 2003",
+        "G.f.: (1-x - (1+x)*sqrt(1-4*x)) / (2*x^2) = (4+2*x) / (1-x + (1+x)*sqrt(1-4*x)). a(n)*(n+2)*(5*n-1) = a(n-1)*2*(2*n-1)*(5*n+4), n>0. - _Michael Somos_, Sep 11 2003",
+        "a(n) ~ 5*Pi^(-1/2)*n^(-3/2)*2^(2*n)*{1 - 93/40*n^-1 + 625/128*n^-2 - 10227/1024*n^-3 + 661899/32768*n^-4 ...}. - Joe Keane (jgk(AT)jgk.org), Sep 13 2002",
+        "G.f.: c(x)*(1+c(x))= (-1 +(1+x)*c(x))/x with the g.f. c(x) of A000108 (Catalan).",
+        "a(n) = binomial(2*n,n)/(n+1)*hypergeom([-1,n+1/2],[n+2],-4). - _Peter Luschny_, Aug 15 2012",
+        "(n+2)*a(n) + (-3*n-2)*a(n-1) + 2*(-2*n+3)*a(n-2)=0. - _R. J. Mathar_, Dec 02 2012",
+        "0 = a(n)*(+16*a(n+1) + 38*a(n+2) - 18*a(n+3)) + a(n+1)*(-14*a(n+1) + 19*a(n+2) - 7*a(n+3)) + a(n+2)*(+a(n+2) + a(n+3)) for all n>=0. - _Michael Somos_, Jan 17 2015",
+        "0 = a(n)^2*(+368*a(n+1) - 182*a(n+2)) + a(n)*a(n+1)*(-306*a(n+1) + 317*a(n+2)) + a(n)*a(n+2)*(-77*a(n+2)) + a(n+1)^2*(-14*a(n+1) - 6*a(n+2)) + a(n+1)*a(n+2)*(+8*a(n+2)) for all n>=0. - _Michael Somos_, Jan 17 2015",
+        "E.g.f.: (BesselI(0,2*x) - (x - 1)*BesselI(1,2*x)/x)*exp(2*x). - _Ilya Gutkovskiy_, Jun 08 2016"
+    ],
+    "example": [
+        "G.f. = 2 + 3*x+ 7*x^2 + 19*x^3 + 56*x^4 + 174*x^5 + 561*x^6 + 1859*x^7 + ..."
+    ],
+    "mathematica": [
+        "a[n_]:=Binomial[2*n, n]*(5*n+4)/(n+1)/(n+2); (* _Vladimir Joseph Stephan Orlovsky_, Dec 13 2008 *)",
+        "a[ n_] := If[ n < 0, 0, CatalanNumber[n] + CatalanNumber[n + 1]]; (* _Michael Somos_, Jan 17 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, binomial(2*n, n) * (5*n+4) / ((n+1) * (n+2)))};",
+        "(Sage) [catalan_number(i)+catalan_number(i+1) for i in xrange(0,25)] # _Zerinvary Lajos_, May 17 2009",
+        "(MAGMA) [((5*n+4)*Factorial(2*n))/(Factorial(n)*Factorial(n+2)): n in [0..30] ];  // _Vincenzo Librandi_, Aug 19 2011",
+        "(Python)",
+        "from __future__ import division",
+        "A005807_list, b = [], 2",
+        "for n in range(10**3):",
+        "    A005807_list.append(b)",
+        "    b = b*(4*n+2)*(5*n+9)//((n+3)*(5*n+4)) # _Chai Wah Wu_, Jan 28 2016"
+    ],
+    "xref": [
+        "Cf. A000108.",
+        "Cf. A071716, A000778."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from Joe Keane (jgk(AT)jgk.org), Feb 08 2000",
+        "Asymptotic series corrected and extended by _Michael Somos_, Sep 11 2003"
+    ],
+    "references": 19,
+    "revision": 59,
+    "time": "2017-04-18T07:02:54-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

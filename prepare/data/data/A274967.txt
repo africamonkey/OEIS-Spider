@@ -1,0 +1,76 @@
+{
+    "number": 274967,
+    "data": "77,119,143,161,187,203,209,221,299,319,323,329,371,377,391,407,413,437,473,493,497,517,527,533,539,551,581,583,589,611,623,629,649,667,689,707,713,731,737,749,767,779,791,799,803,817,851,869,893,899,901,913",
+    "name": "Odd composite numbers n which are not m-gonal number for 3 <= m < n.",
+    "comment": [
+        "An m-gonal number, m >= 3, i.e. of form n = (k/2)*[(m-2)*k - (m-4)], yields a nontrivial factorization of n if and only if of order k >= 3.",
+        "Odd composite numbers n for which A176948(n) = n.",
+        "All odd composite n are coprime to 30 (see next comment) and have smallest prime factor >= 7, e.g.",
+        "   77 =   7\u00b711, 119 =  7\u00b717, 143 = 11\u00b713, 161 =  7\u00b723,",
+        "  187 =  11\u00b717, 203 =  7\u00b729, 209 = 11\u00b719, 221 = 13\u00b717,",
+        "  299 =  13\u00b723, 319 = 11\u00b729, 323 = 17\u00b719, 329 =  7\u00b747,",
+        "  371 =   7\u00b753, 377 = 13\u00b729, 391 = 17\u00b723, 407 = 11\u00b737,",
+        "  413 =   7\u00b759, 437 = 19\u00b723, 473 = 11\u00b743, 493 = 17\u00b729,",
+        "  497 =   7\u00b771, 517 = 11\u00b747, 527 = 17\u00b731, 533 = 13\u00b741,",
+        "  539 = 7\u00b77\u00b711, 551 = 19\u00b729, 581 =  7\u00b783, 583 = 11\u00b753,",
+        "  589 =  19\u00b731, 611 = 13\u00b747, 623 =  7\u00b789, 629 = 17\u00b737,",
+        "  649 =  11\u00b759, 667 = 23\u00b729, 689 = 13\u00b753, 707 = 7\u00b7101,",
+        "  713 =  23\u00b731, 731 = 17\u00b743, 737 = 11\u00b767, 749 = 7\u00b7107,",
+        "  767 =  13\u00b759, 779 = 19\u00b741, 791 = 7\u00b7113, 799 = 17\u00b747,",
+        "  803 =  11\u00b773, 817 = 19\u00b743, 851 = 23\u00b737, 869 = 11\u00b779,",
+        "  893 =  19\u00b747, 899 = 29\u00b731, 901 = 17\u00b753, 913 = 11\u00b783.",
+        "Composite numbers n which are divisible by 3 are m-gonal numbers of order 3, with m = (n + 3)/3. Thus all a(n) are coprime to 3.",
+        "Odd composite numbers n which are divisible by 5 are m-gonal numbers of order 5, with m = (n + 15)/10. Thus all a(n) are coprime to 5.",
+        "Since we are looking for solutions of (m-2)*k^2 - (m-4)*k - 2*n = 0, with m >= 3 and k >= 3, the largest k we need to consider is",
+        "    k = {(m-4) + sqrt[(m-4)^2 + 8*(m-2)*n]}/[2*(m-2)] with m = 3, thus",
+        "    k <= (1/2)*{-1 + sqrt[1 + 8*n]}.",
+        "Or, since we are looking for solutions of 2n = m*k*(k-1) - 2*k*(k-2), with m >= 3 and k >= 3, the largest m we need to consider is",
+        "    m = [2n + 2*k*(k-2)]/[k*(k-1)] with k = 3, thus m <= (n+3)/3."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A274967/b274967.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "OEIS Wiki, <a href=\"/wiki/Polygonal_numbers\">Polygonal numbers</a>"
+    ],
+    "example": [
+        "77 is in this sequence because 77 is trivially a 77-gonal number of order k = 2, but not an m-gonal number for 3 <= k <= (1/2)*{-1 + sqrt[1 + 8*77]}."
+    ],
+    "mathematica": [
+        "Select[Range[500]2+1, ! PrimeQ[#] && FindInstance[n*(4 + n*(s-2)-s)/2 == # && s >= 3 && n >= 3, {s, n}, Integers] == {} &] (* _Giovanni Resta_, Jul 13 2016 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def is_a(n):",
+        "    if is_even(n): return false",
+        "    if is_prime(n): return false",
+        "    for m in (3..(n+3)//3):",
+        "        if pari('ispolygonal')(n, m):",
+        "            return false",
+        "    return true",
+        "print [n for n in (3..913) if is_a(n)] # _Peter Luschny_, Jul 28 2016",
+        "(Python)",
+        "from sympy import isprime",
+        "A274967_list = []",
+        "for n in range(3,10**6,2):",
+        "    if not isprime(n):",
+        "        k = 3",
+        "        while k*(k+1) <= 2*n:",
+        "            if not (2*(k*(k-2)+n)) % (k*(k - 1)):",
+        "                break",
+        "            k += 1",
+        "        else:",
+        "            A274967_list.append(n) # _Chai Wah Wu_, Jul 28 2016"
+    ],
+    "xref": [
+        "Cf. A176774, A176948, A176949, A274968."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Daniel Forgues_, Jul 12 2016",
+    "ext": [
+        "a(10)-a(52) from _Giovanni Resta_, Jul 13 2016"
+    ],
+    "references": 3,
+    "revision": 49,
+    "time": "2016-07-28T21:16:15-04:00",
+    "created": "2016-07-16T10:32:51-04:00"
+}

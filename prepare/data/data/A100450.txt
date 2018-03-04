@@ -1,0 +1,50 @@
+{
+    "number": 100450,
+    "data": "1,7,19,51,99,195,291,483,675,963,1251,1731,2115,2787,3363,4131,4899,6051,6915,8355,9507,11043,12483,14595,16131,18531,20547,23139,25443,28803,31107,34947,38019,41859,45315,49923,53379,58851,63171,68547",
+    "name": "Number of ordered triples (i,j,k) with |i| + |j| + |k| <= n and GCD{i,j,k} <= 1.",
+    "comment": [
+        "Note that GCD{0,m} = m for any m.",
+        "From _Robert Price_, Mar 05 2013: (Start)",
+        "Distinct sums i+j+k with or without the GCD qualifier results in a(n)=2n+1 (A005408).",
+        "Distinct products i*j*k without the GCD qualifier is given by A213207.",
+        "Distinct products i*j*k with    the GCD qualifier is given by A213208.",
+        "With the restriction i,j,k >= 0 ...",
+        "  Distinct sums or products equal to n is trivial and always equals one (A000012).",
+        "  Distinct sums <=n results in a(n)=n (A001477).",
+        "  Distinct products <=n without the GCD qualifier is given by A213213.",
+        "  Distinct products <=n with    the GCD qualifier is given by A213212.",
+        "  Ordered triples with the sum =n without the GCD qualifier is A000217(n+1).",
+        "  Ordered triples with the sum =n with    the GCD qualifier is A048240.",
+        "  Ordered triples with the sum <=n without the GCD qualifier is A000292.",
+        "  Ordered triples with the sum <=n with    the GCD qualifier is A048241. (End)",
+        "This sequence (A100450) without the GCD qualifier results in A001845. - _Robert Price_, Jun 04 2013"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A100450/b100450.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: (3+Sum(moebius(k)*((1+x^k)/(1-x^k))^3, k=1..infinity))/(1-x). - _Vladeta Jovovic_, Nov 22 2004. [Sketch of proof: Let b(n) = number of ordered triples (i, j, k) with |i| + |j| + |k| = n and GCD{i, j, k}<= 1. Then a(n) = A100450(n) = partial sums of b(n) and Sum_{d divides n} b(d) = 4*n^2+2 = A005899(n) with g.f. ((1+x)/(1-x))^3.]"
+    ],
+    "maple": [
+        "f:=proc(n) local i,j,k,t1,t2,t3; t1:=0; for i from -n to n do for j from -n to n do t2:=gcd(i,j); for k from -n to n do if abs(i) + abs(j) + abs(k) <= n then t3:=gcd(t2,k); if t3 <= 1 then t1:=t1+1; fi; fi; od: od: od: t1; end;"
+    ],
+    "mathematica": [
+        "f[n_] := Length[ Union[ Flatten[ Table[ If[ Abs[i] + Abs[j] + Abs[k] <= n && GCD[i, j, k] <= 1, {i, j, k}, {0, 0, 0}], {i, -n, n}, {j, -n, n}, {k, -n, n}], 2]]]; Table[ f[n], {n, 0, 40}] (* _Robert G. Wilson v_, Dec 14 2004 *)"
+    ],
+    "xref": [
+        "Cf. A000124, A000292, A018805, A027430, A048240, A048241, A100448, A100449, A213207, A213208, A213212, A213213."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Nov 21 2004",
+    "ext": [
+        "The keyword \"more\" refers to the fact that I would also like to get the sequences of the numbers of distinct sums i+j+k (also distinct products i*j*k) over all ordered triples (i,j,k) with |i| + |j| + |k| <= n; also over all ordered triples (i,j,k) with |i| + |j| + |k| <= n and GCD{i,j,k} <= 1.",
+        "Also the sequences of the numbers of distinct sums i+j+k (also distinct products i*j*k) over all ordered triples (i,j,k) with i >= 0, j >= 0, k >= 0 and i + j + k = n; also over all ordered triples (i,j,k) with i >= 0, j >= 0, k >= 0, i + j + k = n and GCD{i,j,k} <= 1.",
+        "Also the number of ordered triples (i,j,k) with i >= 0, j >= 0, k >= 0, i + j + k = n and GCD{i,j,k} <= 1.",
+        "See the Comments section for sequences that address these extensions. - _Robert Price_, Mar 05 2013"
+    ],
+    "references": 17,
+    "revision": 37,
+    "time": "2015-03-29T16:47:37-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

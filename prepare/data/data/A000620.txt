@@ -1,0 +1,45 @@
+{
+    "number": 620,
+    "id": "M1642 N0642",
+    "data": "0,0,0,0,2,6,20,60,176,512,1488,4326,12648,37186,109980,327216,979020,2944414,8897732,27005290,82288516,251650788,772127678,2376238138,7333188770,22688297950,70360977228,218678818026,681017928476,2124840874610,6641336507270,20791999731518",
+    "name": "Number of monosubstituted alkanes C(n-1)H(2n-1)-X with n-1 carbon atoms that are stereoisomers.",
+    "comment": [
+        "Also number of monosubstituted alkanes C(n)H(2n+1)-X of the form R-CH2-X (primary) that are stereoisomers.",
+        "Let the entries in the nine columns of Blair and Henze's Table I (JACS 54 (1932), p. 1098) be denoted by Ps(n), Pn(n), Ss(n), Sn(n), Ts(n), Tn(n), As(n), An(n), T(n) respectively (here P = Primary, S = Secondary, T = Tertiary, s = stereoisomers, n = non-stereoisomers and the last column T(n) gives total).",
+        "Then Ps (and As) = this sequence, Pn (and An, Sn) = A000621, Ss = A000622, Ts = A000623, Tn = A000624, T = A000625. Recurrences generating these sequences are given in the Maple program in A000620."
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A000620/b000620.txt\">Table of n, a(n) for n = 1..1930</a>",
+        "C. M. Blair and H. R. Henze, <a href=\"http://dx.doi.org/10.1021/ja01342a036\">The number of stereoisomeric and non-stereoisomeric mono-substitution products of the paraffins</a>, J. Amer. Chem. Soc., 54 (3) (1932), 1098-1106.",
+        "C. M. Blair and H. R. Henze, <a href=\"/A000620/a000620.pdf\">The number of stereoisomeric and non-stereoisomeric mono-substitution products of the paraffins</a>, J. Amer. Chem. Soc., 54 (3) (1932), 1098-1105. (Annotated scanned copy)"
+    ],
+    "formula": [
+        "See Maple program for recurrences for this sequence and A000621-A000625.",
+        "a(n) ~ c * b^n / n^(3/2), where b = 3.287112055584474991259... (see A239803), c = 0.105352133282419523497... (see A239805). - _Vaclav Kotesovec_, Mar 27 2014"
+    ],
+    "maple": [
+        "# Blair and Henze's recurrences for A000620-A000625 (see comments lines for relationship between the sequences and their symbols).",
+        "Ps := [0,0,0]; Pn := [1,1,1]; Ss := [0,0,0]; Sn := [0,0,1]; Ts := [0,0,0]; Tn := [0,0,0]; As := [0,0,0]; An := [1,1,2]; T := [1,1,2];",
+        "for n from 4 to 60 do Ps := [op(Ps),As[n-1]]; Pn := [op(Pn),An[n-1]]; t1 := add( 2*T[n-1-j]*T[j],j=1..floor((n-2)/2) ); if n mod 2 = 1 then i := (n-1)/2; t1 := t1+T[i]^2-An[i]; fi; Ss := [op(Ss),t1];",
+        "t2 := 0; if n mod 2 = 1 then i := (n-1)/2; t2 := An[i]; fi; Sn := [op(Sn),t2]; t3 := 0; for i from 1 to (n-1)/3 do for j from i+1 to (n-2)/2 do k := n-1-i-j; if j<k then t3 := t3+2*T[i]*T[j]*T[k]; fi; od: od:",
+        "t4 := 0; t5 := 0; for i from 1 to (n-2)/2 do j := n-1-2*i; if j > 0 and i <> j then t4 := t4+(T[i]^2-An[i])*T[j]+An[i]*As[j]; t5 := t5+An[i]*An[j]; fi; od; t6 := 0; t7 := 0; if n mod 3 = 1 then i := (n-1)/3; t6 := (2*T[i]+T[i]^3)/3-An[i]^2; t7 := An[i]^2; fi;",
+        "Ts := [op(Ts), t3+t4+t6]; Tn := [op(Tn), t5+t7]; As := [op(As), Ps[n]+Ss[n]+Ts[n]]; An := [op(An), Pn[n]+Sn[n]+Tn[n]]; T := [op(T),As[n]+An[n]]; od: Ps; Pn; Ss; Ts; Tn; T;"
+    ],
+    "xref": [
+        "Cf. A000621-A000625, A239803, A239805."
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "Additional comments from Bruce Corrigan, Nov 04, 2002"
+    ],
+    "references": 8,
+    "revision": 22,
+    "time": "2018-01-22T18:26:53-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

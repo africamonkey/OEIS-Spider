@@ -1,0 +1,51 @@
+{
+    "number": 238599,
+    "data": "0,29,171,476,1015,1044,1907,3142,4815,7093,9882,13313,17452,22580,28393,35118,42821,43120,51939,61874,72991,85835,99604,114759,131366,150192,170009,191482,214677,240625,267588,296477,327358,361568,396775,434178,473843,475306,517455",
+    "name": "Numbers k such that k+x+y is a perfect cube, where x and y are the two cubes nearest to k.",
+    "example": [
+        "The two cubes nearest to 0 are 0 and 1, because 0+0+1 is a perfect cube, 0 is in the sequence.",
+        "The two cubes nearest to 1 are 0 and 1, because 1+0+1=2 is not a perfect cube, 1 is not in the sequence.",
+        "The two cubes nearest to 29 are 27 and 8, because 29+27+8=64=4^3 is a perfect cube, 29 is in the sequence."
+    ],
+    "program": [
+        "(Python)",
+        "def icbrt(a):",
+        "    sr = 1L << (long.bit_length(long(a)) >> 1)",
+        "    while a < sr*sr*sr:  sr>>=1",
+        "    b = sr>>1",
+        "    while b:",
+        "        s = sr + b",
+        "        if a >= s*s*s:  sr = s",
+        "        b>>=1",
+        "    return sr",
+        "for k in xrange(1000000):",
+        "    s = icbrt(k)",
+        "    if k and s*s*s==k:  s-=1",
+        "    d1 = abs(k-s**3)",
+        "    d2 = abs(k-(s+1)**3)",
+        "    d3 = abs(k-(s-1)**3)",
+        "    kxy = k + s**3 + (s+1)**3",
+        "    if s and d3<d2:  kxy = k + s**3 + (s-1)**3",
+        "    r = icbrt(kxy)",
+        "    if r*r*r==kxy:  print str(k)+',',",
+        "(Sage)",
+        "def gen_a():",
+        "    n = 1",
+        "    while True:",
+        "        for t in range(n*(n*n + 3), (n+1)*(n*n + 2*n + 4) + 1):",
+        "            c = t + (2*n + 1)*(n*n + n + 1)",
+        "            if round(floor(c^(1/3)))^3 == c:",
+        "                yield t",
+        "        n = n+1               # _Ralf Stephan_, Mar 09 2014"
+    ],
+    "xref": [
+        "Cf. A000578, A238489."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, Mar 01 2014",
+    "references": 1,
+    "revision": 9,
+    "time": "2014-03-10T09:44:27-04:00",
+    "created": "2014-03-10T09:44:27-04:00"
+}

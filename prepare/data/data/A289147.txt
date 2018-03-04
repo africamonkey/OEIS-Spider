@@ -1,0 +1,87 @@
+{
+    "number": 289147,
+    "data": "1,5,34,286,2840,32344,414160,5876336,91356544,1542401920,28075364096,547643910400,11389266525184,251428006132736,5869482147358720,144413021660821504,3733822274973040640,101181690628832198656,2867011297057247002624,84764595415605494743040",
+    "name": "Number of (n+1) X (n+1) binary matrices M with at most one 1 in each of the first n rows and each of the first n columns and M[n+1,n+1] = 0.",
+    "comment": [
+        "Number of marriage patterns between a labeled set X of n women and a labeled set Y of n men (all heterosexual): some couples can be formed where one partner is from X and the other from Y, some members of X and Y marry external (unlabeled) partners, and some do not marry."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A289147/b289147.txt\">Table of n, a(n) for n = 0..437</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/LaguerrePolynomial.html\">Laguerre Polynomial</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Laguerre_polynomials\">Laguerre polynomials</a>",
+        "<a href=\"/index/La#Laguerre\">Index entries for sequences related to Laguerre polynomials</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp(4*x/(1-x))/(1-x).",
+        "a(n) = Sum_{i=0..n} i! * (2^(n-i)*binomial(n,i))^2.",
+        "a(n) = Sum_{i=0..n} (n-i)! * 4^i * binomial(n,i)^2.",
+        "a(n) = n! * Sum_{i=0..n} 4^i/i! * binomial(n,i).",
+        "a(n) = (2*n+3)*a(n-1)-(n-1)^2*a(n-2) for n>=2, a(n) = 4*n+1 for n<2.",
+        "a(n) = n! * Laguerre(n,-4) = n! * A160611(n)/A160612(n).",
+        "a(n) ~ exp(-2 + 4*sqrt(n) - n) * n^(n + 1/4) / 2 * (1 + 163/(96*sqrt(n))). - _Vaclav Kotesovec_, Nov 13 2017"
+    ],
+    "example": [
+        "a(1) = 5:",
+        "[0 0]  [1 0]  [0 1]  [0 0]  [0 1]",
+        "[0 0]  [0 0]  [0 0]  [1 0]  [1 0] .",
+        ".",
+        "a(2) = 34:",
+        "[0 0 0]  [0 0 0]  [0 0 0]  [0 0 0]  [0 0 0]  [0 0 0]  [0 0 0]",
+        "[0 0 0]  [0 0 0]  [0 0 0]  [0 0 0]  [0 0 1]  [0 0 1]  [0 0 1]",
+        "[0 0 0]  [0 1 0]  [1 0 0]  [1 1 0]  [0 0 0]  [0 1 0]  [1 0 0]",
+        ".",
+        "[0 0 0]  [0 0 0]  [0 0 0]  [0 0 0]  [0 0 0]  [0 0 1]  [0 0 1]",
+        "[0 0 1]  [0 1 0]  [0 1 0]  [1 0 0]  [1 0 0]  [0 0 0]  [0 0 0]",
+        "[1 1 0]  [0 0 0]  [1 0 0]  [0 0 0]  [0 1 0]  [0 0 0]  [0 1 0]",
+        ".",
+        "[0 0 1]  [0 0 1]  [0 0 1]  [0 0 1]  [0 0 1]  [0 0 1]  [0 0 1]",
+        "[0 0 0]  [0 0 0]  [0 0 1]  [0 0 1]  [0 0 1]  [0 0 1]  [0 1 0]",
+        "[1 0 0]  [1 1 0]  [0 0 0]  [0 1 0]  [1 0 0]  [1 1 0]  [0 0 0]",
+        ".",
+        "[0 0 1]  [0 0 1]  [0 0 1]  [0 1 0]  [0 1 0]  [0 1 0]  [0 1 0]",
+        "[0 1 0]  [1 0 0]  [1 0 0]  [0 0 0]  [0 0 0]  [0 0 1]  [0 0 1]",
+        "[1 0 0]  [0 0 0]  [0 1 0]  [0 0 0]  [1 0 0]  [0 0 0]  [1 0 0]",
+        ".",
+        "[0 1 0]  [1 0 0]  [1 0 0]  [1 0 0]  [1 0 0]  [1 0 0]",
+        "[1 0 0]  [0 0 0]  [0 0 0]  [0 0 1]  [0 0 1]  [0 1 0]",
+        "[0 0 0]  [0 0 0]  [0 1 0]  [0 0 0]  [0 1 0]  [0 0 0]  ."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<2, 4*n+1,",
+        "      (2*n+3)*a(n-1)-(n-1)^2*a(n-2))",
+        "    end:",
+        "seq(a(n), n=0..25);",
+        "# second Maple program:",
+        "a:= n-> n-> n! * add(binomial(n, i)*4^i/i!, i=0..n):",
+        "seq(a(n), n=0..25);",
+        "# third Maple program:",
+        "a:= n-> n!* simplify(LaguerreL(n, -4), 'LaguerreL'):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "Table[n! LaguerreL[n, -4], {n, 0, 30}] (* _Indranil Ghosh_, Jul 06 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from mpmath import *",
+        "mp.dps=150",
+        "l=chop(taylor(lambda x:exp(4*x/(1-x))/(1-x), 0, 31))",
+        "print [int(fac(i)*l[i]) for i in xrange(len(l))] # _Indranil Ghosh_, Jul 06 2017",
+        "# or #",
+        "from mpmath import *",
+        "mp.dps=100",
+        "def a(n): return int(fac(n)*laguerre(n, 0, -4))",
+        "print [a(n) for n in xrange(31)] # _Indranil Ghosh_, Jul 06 2017"
+    ],
+    "xref": [
+        "Column k=4 of A289192.",
+        "Cf.: A000142, A000165, A000302, A002720, A025167, A084771, A087912, A102773, A160611, A160612, A277382."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Jun 26 2017",
+    "references": 5,
+    "revision": 33,
+    "time": "2017-11-13T16:52:42-05:00",
+    "created": "2017-06-28T11:04:32-04:00"
+}

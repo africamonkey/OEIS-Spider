@@ -1,0 +1,42 @@
+{
+    "number": 7620,
+    "id": "M4095",
+    "data": "1,6,12,18,20,24,28,30,36,40,42,48,54,56,60,66,72,78,80,84,88,90,96,100,104,108,112,120,126,132,140,144,150,156,160,162,168,176,180,192,196,198,200,204,208,210,216,220,224,228,234,240,252,260,264,270,272,276,280,288,294,300,304,306",
+    "name": "Numbers n such that every k <= n is a sum of proper divisors of n (for n>1).",
+    "comment": [
+        "This sequence was formerly called \"practical numbers (second definition)\" because it was thought this was the definition used in Srinivasan's original paper. However, in Srinivasan's paper, one can read that his definition is \"k < n\". Stewart proves that Srinivasan's definition is equivalent to requiring every k <= sigma(n) be the sum of distinct divisors of n. This sequence is a subsequence of the practical numbers, A005153. [_T. D. Noe_, Apr 02 2010]"
+    ],
+    "reference": [
+        "R. Honsberger, Mathematical Gems, M.A.A., 1973, p. 113.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "B. M. Stewart, Sums of distinct divisors, Amer. J. Math., 76 (1954), 779-785."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A007620/b007620.txt\">Table of n, a(n) for n=1..1000</a>",
+        "A. K. Srinivasan, <a href=\"http://www.ias.ac.in/jarch/currsci/17/179.pdf\">Practical numbers</a>, Current Science, 17 (1948), 179-180.",
+        "Robert G. Wilson v, <a href=\"/A007621/a007621.pdf\">Letter to N. J. A. Sloane</a>, date unknown."
+    ],
+    "mathematica": [
+        "DeleteCases[ A005835, q_/; (Count[ CoefficientList[ Series[ Times@@( (1+z^#)& /@ Divisors[ q ] ), {z, 0, q} ], z ], 0 ]>0) ] { _Wouter Meeussen_ }"
+    ],
+    "program": [
+        "(Haskell)",
+        "a007620 n = a007620_list !! (n-1)",
+        "a007620_list = 1 : filter (\\x -> all (p $ a027751_row x) [1..x]) [2..]",
+        "   where p _  0 = True",
+        "         p [] _ = False",
+        "         p ds'@(d:ds) m = d <= m && (p ds (m - d) || p ds m)",
+        "-- _Reinhard Zumkeller_, Feb 23 2014"
+    ],
+    "xref": [
+        "Cf. A005153 (first definition).",
+        "Cf. A027751."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, _Robert G. Wilson v_",
+    "references": 4,
+    "revision": 24,
+    "time": "2017-06-22T10:58:24-04:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

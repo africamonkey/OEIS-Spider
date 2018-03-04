@@ -1,0 +1,45 @@
+{
+    "number": 56231,
+    "data": "1,2,4,7,8,10,12,13,14,16,19,20,21,23,28,31,32,34,36,37,38,43,45,46,48,49,50,53,54,55,56,58,60,61,62,64,67,68,69,71,76,77,78,79,82,83,84,86,87,89,92,96,98,100,101,102,104,105,106,108,113,115",
+    "name": "Form an array with 3 rows: row 1 begins with 1; all rows are increasing; each entry is sum of 2 entries above it; each number appears at most once; smallest unused number is appended to first row if possible. Sequence gives row 1.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A056231/b056231.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "Array begins",
+        "1 2 4 7 8 10 12 ...",
+        ".3 6 11 15 18 ...",
+        ". 9 17 26 33 ..."
+    ],
+    "maple": [
+        "a := [1,2,4]; an := 3; b := [3,6]; bn := 2; c := [9]; cn := 1; h := array(1..10000); h[1] := 1; h[2] := 1; h[3] := 1; h[4] := 1; h[6] := 1; h[9] := 1; m := []; k := 5;",
+        "for i from 1 to 200 do for n from k to k+100 do n1 := a[an]+n; n2 := b[bn]+n1; if h[n]<>1 and h[n1]<>1 and h[n2]<>1 then h[n] := 1; h[n1] := 1; h[n2] := 1; an := an+1; bn := bn+1; cn := cn+1; a := [op(a), n]; b := [op(b), n1]; c := [op(c), n2]; k := n+1; break;",
+        "else if h[n]<>1 then m := [op(m), n]; fi; fi; od; od; a; b; c; m;"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (transpose)",
+        "a056231 n = ([1,2] ++ threeRows !! 0) !! (n-1)",
+        "a056232 n = ([3] ++ threeRows !! 1) !! (n-1)",
+        "a056233 n = threeRows !! 2 !! (n-1)",
+        "threeRows = transpose $ f [4..] [1,2,3] [2,1] [3] [] where",
+        "   f (u:free) used us vs ws",
+        "       | u `notElem` used &&",
+        "         v `notElem` used &&",
+        "         w `notElem` used = [u, v, w] :",
+        "                            f free (w:v:u:used) (u:us) (v:vs) (w:ws)",
+        "       | otherwise        = f free used us vs ws",
+        "       where v = u + head us; w = v + head vs",
+        "-- _Reinhard Zumkeller_, Oct 18 2011"
+    ],
+    "xref": [
+        "Cf. A056232, A056233, A056234. See also A057153, A052474, A057154, A056230."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, E. M. Rains, Aug 22 2000",
+    "references": 8,
+    "revision": 10,
+    "time": "2013-07-13T12:02:31-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 65435,
+    "data": "2,3,5,8,12,18,28,40,60,96,148,228,366,586,936,1506,2428,3922,6342,10256,16590,26826,43394,70212,113598,183798,297388,481174,778548,1259712,2038242,3297918,5336130,8634042,13970112,22604076,36574162",
+    "name": "a(3) = 2, a(4) = 3; for n > 4, a(n) = {a(n-2)}+{a(n-1)}, where {a} means largest prime <= a.",
+    "link": [
+        "Harry J. Smith, <a href=\"/A065435/b065435.txt\">Table of n, a(n) for n = 3..300</a>"
+    ],
+    "formula": [
+        "a(n) = A007917(a(n-2)) + A007917(a(n-1)). - _Jonathan Vos Post_, Jul 10 2008"
+    ],
+    "example": [
+        "a(9) = 28 because 11+17 = 28 and 11 largest prime <= a(7) = 12 and 17 is largest prime <= a(8) = 18"
+    ],
+    "mathematica": [
+        "PrevPrim[n_] := Block[ {k = n}, While[ !PrimeQ[k], k-- ]; Return[k]]; a[3] = 2; a[4] = 3; a[n_] := a[n] = PrevPrim[ a[n - 1]] + PrevPrim[ a[n - 2]]; Table[ a[n], {n, 3, 45} ]",
+        "np[n_]:=If[PrimeQ[n],n,NextPrime[n,-1]]; Transpose[NestList[{Last[#], np[Last[#]]+np[First[#]]}&,{2,3},40]][[1]] (* _Harvey P. Dale_, Oct 01 2011 *)"
+    ],
+    "program": [
+        "(PARI) for (n=3, 300, if (n>4, a=precprime(a2) + precprime(a1); a2=a1; a1=a, if (n==4, a=a1=3, a=a2=2)); write(\"b065435.txt\", n, \" \", a) ) \\\\ _Harry J. Smith_, Oct 18 2009",
+        "(Haskell)",
+        "a065435 n = a065435_list !! (n-3)",
+        "a065435_list = 2 : 3 : zipWith (+) xs (tail xs) where",
+        "               xs = map (a007917 . fromInteger) a065435_list",
+        "-- _Reinhard Zumkeller_, Aug 10 2012"
+    ],
+    "xref": [
+        "Cf. A055500, A000040, A000045, A007917, A055500."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "3,1",
+    "author": "_Bodo Zinser_, Nov 17 2001",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Nov 19 2001",
+        "Definition corrected by _Harry J. Smith_, Oct 18 2009"
+    ],
+    "references": 2,
+    "revision": 18,
+    "time": "2013-11-21T12:47:34-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

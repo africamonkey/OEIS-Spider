@@ -1,0 +1,43 @@
+{
+    "number": 227460,
+    "data": "1,2,12,112,1440,23664,473984,11203200,305268480,9421739520,324874716672,12377880797184,516412532213760,23414906122352640,1146462496418119680,60286544709800361984,3388531521749583790080,202734601173679682027520,12863997904326532359782400",
+    "name": "E.g.f. equals the series reversion of x - x*arctan(x).",
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A(x - x*arctan(x)) = x.",
+        "(2) A(x) = x/(1 - arctan(A(x))).",
+        "(3) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) x^n * arctan(x)^n / n!.",
+        "(4) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(n-1) * arctan(x)^n / n! ).",
+        "a(n) ~ n^(n-1) * s^2 * (1+1/s^2)^(n+1/2) / (sqrt(2)*exp(n)), where s = 0.61728206508912310932... is the root of the equation (1+s^2)*(1-arctan(s)) = s. - _Vaclav Kotesovec_, Jan 13 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 12*x^3/3! + 112*x^4/4! + 1440*x^5/5! + ...",
+        "where A(x) = x/(1 - arctan(A(x))).",
+        "The e.g.f. satisfies:",
+        "(3) A(x) = x + x*arctan(x) + d/dx x^2*arctan(x)^2/2! + d^2/dx^2 x^3*arctan(x)^3/3! + d^3/dx^3 x^4*arctan(x)^4/4! + ...",
+        "(4) log(A(x)/x) = arctan(x) + d/dx x*arctan(x)^2/2! + d^2/dx^2 x^2*arctan(x)^3/3! + d^3/dx^3 x^3*arctan(x)^4/4! + ..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[x - x*ArcTan[x], {x, 0, 20}], x],x] * Range[0, 20]!] (* _Vaclav Kotesovec_, Jan 13 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(serreverse(x-x*atan(x +x*O(x^n))), n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, x^m*atan(x+x*O(x^n))^m/m!)); n!*polcoeff(A, n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, x^(m-1)*atan(x+x*O(x^n))^m/m!)+x*O(x^n))); n!*polcoeff(A, n)}",
+        "for(n=1,25,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A227461."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jul 13 2013",
+    "references": 1,
+    "revision": 9,
+    "time": "2018-01-15T14:58:15-05:00",
+    "created": "2013-07-13T11:08:09-04:00"
+}

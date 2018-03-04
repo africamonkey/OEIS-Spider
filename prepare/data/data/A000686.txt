@@ -1,0 +1,50 @@
+{
+    "number": 686,
+    "id": "M4449 N1884",
+    "data": "1,7,85,1777,63601,3882817,403308865,71139019777,21276992674561,10778161937857537,9238819435213784065,13390649605615389843457,32796747486424209782108161,135669064080920007649863745537,947468281528010179181982467702785,11166618111585805201637975219611631617",
+    "name": "Number of 4-colored labeled graphs on n nodes, divided by 4.",
+    "comment": [
+        "Sequence represents 1/4 of the number of 4-colored labeled graphs on n nodes. Indeed, on p. 413 of the Read paper, column 4 is 4, 28, 340, 7108, ... - _Emeric Deutsch_, May 06 2004"
+    ],
+    "reference": [
+        "R. C. Read, personal communication.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "S. R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/\">Bipartite, k-colorable and k-colored graphs</a> (4*A000686)",
+        "R. C. Read, <a href=\"http://cms.math.ca/10.4153/CJM-1960-035-0\">The number of k-colored graphs on labelled nodes</a>, Canad. J. Math., 12 (1960), 410\u2014414.",
+        "R. C. Read, <a href=\"/A000684/a000684_1.pdf\">Letter to N. J. A. Sloane, Oct. 29, 1976</a>"
+    ],
+    "formula": [
+        "a(n) = (1/4)Sum_{k=0..n} binomial(n, k)*2^(k(n-k))*b(k), where b(0)=1 and b(k)=3*A000685(k) for k > 0. - _Emeric Deutsch_, May 06 2004",
+        "From _Peter Bala_, Apr 12 2013: (Start)",
+        "a(n) = (1/4)*A223887(n).",
+        "a(n) = (1/4)*Sum_{k = 0..n} binomial(n,k)*2^(k*(n-k))*b(k)*b(n-k), where b(n) := Sum_{k = 0..n} binomial(n,k)*2^(k*(n-k)).",
+        "Let E(x) = Sum_{n >= 0} x^n/(n!*2^C(n,2)). Then a generating function for this sequence is 1/4*(E(x)^4 - 1) = Sum_{n >= 0} a(n)*x^n/(n!*2^C(n,2)) = x + 7*x^2/(2!*2) + 85*x^3/(3!*2^3) + .... (End)"
+    ],
+    "mathematica": [
+        "b[n_] := Sum[ 2^((i-j)*j + i*(n-i))*Binomial[n, i]*Binomial[i, j], {i, 0, n}, {j, 0, i}]; a[n_] := 1/4*Sum[ Binomial[n, k]*2^(k*(n-k))*b[k], {k, 0, n}]; Table[a[n], {n, 1, 14}] (* _Jean-Fran\u00e7ois Alcover_, Dec 07 2011, after _Emeric Deutsch_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=66;  x='x+O('x^N);",
+        "E=sum(n=0, N, x^n/(n!*2^binomial(n,2)) );",
+        "tgf=E^4-1;  v=Vec(tgf);",
+        "v=vector(#v, n, v[n] * n! * 2^(n*(n-1)/2) ) / 4",
+        "/* _Joerg Arndt_, Apr 10 2013 */"
+    ],
+    "xref": [
+        "Cf. A000683, A000685, A223887."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from Pab Ter (pabrlos(AT)yahoo.com) and _Emeric Deutsch_, May 05 2004"
+    ],
+    "references": 4,
+    "revision": 39,
+    "time": "2017-10-02T02:13:12-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

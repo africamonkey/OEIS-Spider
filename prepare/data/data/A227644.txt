@@ -1,0 +1,60 @@
+{
+    "number": 227644,
+    "data": "4,8,25,121,144,5041",
+    "name": "Perfect powers equal to the sum of 2 factorial numbers.",
+    "comment": [
+        "a(7), if it exists, is greater than 10^100.",
+        "a(7), if it exists, is greater than 10000!. - _Filip Zaludek_, Jul 18 2017"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A227644/a227644.txt\">Decompositions of a(1)-a(6)</a>"
+    ],
+    "example": [
+        "5041 = 71^2 = 1! + 7!."
+    ],
+    "program": [
+        "(C)",
+        "/* To compile: gcc -Wall -O2 A227644.c -o A227644 -lgmp */",
+        "#include <stdio.h>",
+        "#include <stdlib.h>",
+        "#include <gmp.h>",
+        "int main()",
+        "{",
+        "   int bsz=256, a=0;",
+        "   mpz_t *f, t;",
+        "   f = malloc(sizeof(mpz_t) * bsz);",
+        "   mpz_init(t); mpz_init(f[0]); mpz_set_ui(f[0], 1);",
+        "   while (1)",
+        "   {",
+        "       a += 1;",
+        "       if (a == bsz)",
+        "       {",
+        "           bsz *= 2;",
+        "           f = (mpz_t *) realloc(f, sizeof(mpz_t) * bsz);",
+        "       }",
+        "       mpz_init(f[a]);",
+        "       mpz_mul_ui(f[a], f[a-1], a);",
+        "       for (int i=1; i<=a; i++)",
+        "       {",
+        "           mpz_add(t, f[a], f[i]);",
+        "           if (mpz_perfect_power_p(t))",
+        "           {",
+        "               gmp_printf(\"%Zd, \", t);",
+        "               fflush(stdout);",
+        "           }",
+        "       }",
+        "   }",
+        "   return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A114377, A227645, A227646, A227647, A227648, A227649, A227650, A227651, A065433, A085692."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Giovanni Resta_, Jul 19 2013",
+    "references": 9,
+    "revision": 15,
+    "time": "2017-07-19T09:35:58-04:00",
+    "created": "2013-07-19T06:03:58-04:00"
+}

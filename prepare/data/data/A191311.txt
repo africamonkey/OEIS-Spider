@@ -1,0 +1,51 @@
+{
+    "number": 191311,
+    "data": "4,6,15,91,703,1891,2701,11305,12403,13981,18721,23001,30889,38503,39865,49141,68101,79003,88561,88831,91001,93961,104653,107185,137149,146611,152551,157641,176149,188191,204001,218791,226801,228241",
+    "name": "Numbers n such that exactly half of the a such that 0<a<n and (a,n)=1 satisfy a^(n-1) = 1 (mod n).",
+    "comment": [
+        "Values of n for which half the witnesses in the Fermat primality test are false.",
+        "When n=pq with p,q=2p-1 prime, a^(n-1) = 1 (mod p) iff a is a quadratic residue mod q. So A129521 is a subsequence. - Gareth McCaughan, Jun 05 2011",
+        "From _Robert G. Wilson v_, Aug 13 2011: (Start)",
+        "Number of terms less than 10^n: 2, 4, 5, 7, 22, 60, 129, 303, 690, 1785, \u2026, .",
+        "In reference to the numbers in the b-file: (1) number of terms which have k>0 prime factors: 1, 1058, 139, 512, 339, 102, 6; (2) about half of the terms, 1058, are members of A129521, those which have just two prime factors; (3) except for the first term, all terms are squarefree, except for the first two terms, all terms are odd; and (4) most terms, more than 98.5%, are congruent to 1 modulo 6. (End)"
+    ],
+    "link": [
+        "David W. Wilson and Robert G. Wilson v, <a href=\"/A191311/b191311.txt\">Table of n, a(n) for n = 1..2157</a>",
+        "While exploring Carmichael numbers, I noticed a few values on the <a href=\"http://credentiality2.blogspot.com/2010/12/guess-mystery-plot.html\">chart on this page</a> for which exactly half of the relatively prime witnesses to the Fermat primality test were false witnesses."
+    ],
+    "formula": [
+        "Integers, n, such that A063994(n) = 2*A000010(n). - _Robert G. Wilson v_, Aug 13 2011"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{pf = First /@ FactorInteger@ n}, 2Times @@ GCD[n - 1, pf - 1] == n*Times @@ (1 - 1/pf)]; Select[ Range@ 250000, fQ] (* _Robert G. Wilson v_, Aug 08 2011 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "import fractions",
+        "for x in range(2, 1000):",
+        "false_witnesses = 0",
+        "relatively_prime_values = 0",
+        "for y in range(x):",
+        "  if fractions.gcd(y, x) == 1:",
+        "    relatively_prime_values += 1",
+        "  if (pow(y, x-1, x) == 1):",
+        "    false_witnesses += 1",
+        "if false_witnesses * 2 == relatively_prime_values:",
+        "  print x, \"is a Fermat Half-Prime\""
+    ],
+    "xref": [
+        "A063994 gives the number of false witnesses for every n.",
+        "A129521 is a subsequence. See also A191592."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Jason Holt_, Jun 04 2011",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Jun 07 2011. I made use of a more explicit definition due to Gareth McCaughan, Jun 05 2011."
+    ],
+    "references": 4,
+    "revision": 61,
+    "time": "2015-08-09T15:58:42-04:00",
+    "created": "2011-06-07T18:57:35-04:00"
+}

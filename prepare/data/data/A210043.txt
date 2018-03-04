@@ -1,0 +1,39 @@
+{
+    "number": 210043,
+    "data": "1,1,2,4,10,26,73,211,629,1912,5913,18531,58739,187963,606416,1970326,6441623,21175056,69946082,232054411,772886274,2583325555,8662455004,29132638803,98240253058,332105822674,1125273780474,3820859749502,12999287203624",
+    "name": "G.f. A(x) satisfies: A(x) = 1 / Product_{n>=1} (1 - x^n*A(x)^(n-1)).",
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x) = 1 + Sum_{n>=1} x^n / Product_{k=1..n} (1 - x^k*A(x)^k).",
+        "(2) A(x) = 1 + Sum_{n>=1} x^n*A(x)^(n-1) / Product_{k=1..n} (1 - x^k*A(x)^(k-1)).",
+        "(3) A(x) = 1 + Sum_{n>=1} x^(n^2)*A(x)^(n^2-n) / [Product_{k=1..n} (1 - x^k*A(x)^(k-1))*(1 - x^k*A(x)^k)].",
+        "(4) A(x) = exp( Sum_{n>=1} x^n/n / (1 - x^n*A(x)^n) )."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 4*x^3 + 10*x^4 + 26*x^5 + 73*x^6 + 211*x^7 +...",
+        "The g.f. satisfies the q-series identities:",
+        "(0) A(x) = 1/( (1-x) * (1-x^2*A(x)) * (1-x^3*A(x)^2) * (1-x^4*A(x)^3) *...).",
+        "(1) A(x) = 1 + x/(1-x*A(x)) + x^2/((1-x*A(x))*(1-x^2*A(x)^2)) + x^3/((1-x*A(x))*(1-x^2*A(x)^2)*(1-x^3*A(x)^3)) +...",
+        "(2) A(x) = 1 + x/(1-x) + x^2*A(x)/((1-x)*(1-x^2*A(x))) + x^3*A(x)^2/((1-x)*(1-x^2*A(x))*(1-x^3*A(x)^2)) +...",
+        "(3) A(x) = 1 + x/((1-x)*(1-x*A(x))) + x^4*A(x)^2/((1-x)*(1-x^2*A(x))*(1-x*A(x))*(1-x^2*A(x)^2)) + x^9*A(x)^6/((1-x)*(1-x^2*A(x))*(1-x^3*A(x)^2)*(1-x*A(x))*(1-x^2*A(x)^2)*(1-x^3*A(x)^3)) +...",
+        "(4) A(x) = exp( x/(1-x*A(x)) + x^2/(2*(1-x^2*A(x)^2)) + x^3/(3*(1-x^3*A(x)^3)) +...)."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1/prod(k=1, n, (1-x^k*A^(k-1)+x*O(x^n)))); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1+sum(m=1, n, x^m*A^(m-1)/prod(k=1, m, (1-x^k*A^(k-1)+x*O(x^n))))); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1+sum(m=1, n, x^m/prod(k=1, m, (1-x^k*A^k +x*O(x^n))))); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1+sum(m=1, sqrtint(n+1), x^(m^2)*A^(m^2-m)/prod(k=1, m, (1-x^k*A^(k-1))*(1-x^k*A^k+x*O(x^n))))); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=exp(sum(m=1, n, x^m/m/(1-x^m*A^m +x*O(x^n))))); polcoeff(A, n)}",
+        "for(n=0,35,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A145268, A145267, A196150, A109085."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Mar 16 2012",
+    "references": 1,
+    "revision": 9,
+    "time": "2013-04-16T04:56:02-04:00",
+    "created": "2012-03-16T18:30:47-04:00"
+}

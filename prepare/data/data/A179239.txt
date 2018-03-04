@@ -1,0 +1,36 @@
+{
+    "number": 179239,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,33,34,35,36,37,38,39,40,44,45,46,47,48,49,50,55,56,57,58,59,60,66,67,68,69,70,77,78,79,80,88,89,90,99,100,101,102,103",
+    "name": "Permutation classes of integers, each identified by its smallest member.",
+    "comment": [
+        "Let the \"permutation set\" of a positive integer n be the set of all integers formed by permuting the digits of n. Two integers are \"permutationally congruent\" if they generate the same permutation set. A \"permutation class\" is a set of all permutationally congruent integers. This sequence lists each permutation class, identified by its smallest member.",
+        "These are also the positive integers in order, omitting any d-digit number n if a previously listed d-digit number is a permutation of the digits of n."
+    ],
+    "link": [
+        "Aaron Dunigan AtLee and Michael De Vlieger, <a href=\"/A179239/b179239.txt\">Table of n, a(n) for n = 1..10000</a> (first 2997 terms from Aaron Dunigan AtLee)"
+    ],
+    "example": [
+        "For example, the permutation set of 30 is {3, 30}, and the permutation set of 24 is {24, 42}. The numbers 89 and 98 are permutationally congruent and form a permutation class."
+    ],
+    "mathematica": [
+        "maxTerm = 103; (*maxTerm is the greatest term you wish to see*) permutationSet[n_Integer] := FromDigits /@ Permutations[IntegerDigits[n]]; permutationCongruentQ[x_Integer, y_Integer] := Sort[permutationSet[x]] == Sort[permutationSet[y]]; DeleteDuplicates[Range[maxTerm], permutationCongruentQ]",
+        "f[n_] := Block[{a = {0}, b = {DigitCount[0]}, i, w}, Do[w = DigitCount@ i; AppendTo[b, w]; If[! MemberQ[Most@ b, w], AppendTo[a, i]], {i, n}]; Rest@ a]; f@ 103 (* or faster: *)",
+        "Select[Range@ 103, LessEqual @@ IntegerDigits@ # || And[Take[IntegerDigits@ #, Last@ DigitCount@ # + 1] == Reverse@ Take[Sort@ IntegerDigits@ #, Last@ DigitCount@ # + 1], LessEqual @@ DeleteCases[IntegerDigits@ #, d_ /; d == 0]] &] (* _Michael De Vlieger_, Jul 14 2015 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = {my(d=digits(n),i); for(i=2,#d, if(d[i]!=0, d=vecextract(d,concat([1],vector(#d-i+1,j,i-1+j))); break));d==vecsort(d)||n/10^valuation(n,10)<10}",
+        "\\\\given an element n, in base b, find the next element from the sequence.",
+        "nxt(n,{b=10}) = {my(d = digits(n)); i = #d; while(i>0&&d[i]==b-1,i--); if(i>1, if(d[i]>0, d[i]++, d[i]=d[1];);for(j=i+1,#d,d[j]=d[i]), if(i==1, d[i]++;for(j=2,#d,d[j]=0), return(10^(#d))));sum(j=1,#d,d[j]*10^(#d-j))} \\\\ _David A. Corneth_, Apr 23 2016"
+    ],
+    "xref": [
+        "A variant of A009994.",
+        "Cf. A047726, A035927 (Number of distinct n-digit numbers up to permutations of digits)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Aaron Dunigan AtLee_, Jul 04 2010",
+    "references": 11,
+    "revision": 23,
+    "time": "2016-05-01T17:23:11-04:00",
+    "created": "2010-07-11T03:00:00-04:00"
+}

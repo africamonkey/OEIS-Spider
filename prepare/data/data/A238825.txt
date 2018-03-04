@@ -1,0 +1,43 @@
+{
+    "number": 238825,
+    "data": "0,0,0,1,2,5,11,27,64,158,387,956,2355,5809,14313,35272,86894,214075,527368,1299185,3200551,7884653,19424072,47851896,117884841,290413626,715444487,1762523473,4342040215,10696772780,26351885188,64918818701",
+    "name": "a(1)..a(4) = 0,0,0,1; thereafter a(n) = a(n-2)+a(n-3)+2*(d(n-3)+d(n-4)) where d(n) = A238824(n).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A238825/b238825.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "V. M. Zhuravlev, <a href=\"http://www.mccme.ru/free-books/matpros/mph.pdf\">Horizontally-convex polyiamonds and their generating functions</a>, Mat. Pros. 17 (2013), 107-129 (in Russian). See the sequence p(n).",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (3,0,-4,1,1,3,-1)."
+    ],
+    "formula": [
+        "G.f.: x^4*(x-1)*(x^3+x^2-1) / ( 1-3*x+4*x^3-x^4-x^5-3*x^6+x^7 ). - _R. J. Mathar_, Mar 20 2014"
+    ],
+    "maple": [
+        "g:=proc(n) option remember; local t1;",
+        "t1:=[2,3,6,14,34,84,208,515];",
+        "if n <= 7 then t1[n] else",
+        "3*g(n-1)-4*g(n-3)+g(n-4)+g(n-5)+3*g(n-6)-g(n-7); fi; end proc;",
+        "[seq(g(n),n=1..32)]; # A238823",
+        "d:=proc(n) option remember; global g; local t1;",
+        "t1:=[0,1];",
+        "if n <= 2 then t1[n] else",
+        "g(n-1)-2*d(n-1)-d(n-2); fi; end proc;",
+        "[seq(d(n),n=1..32)]; # A238824",
+        "p:=proc(n) option remember; global d; local t1;",
+        "t1:=[0,0,0,1];",
+        "if n <= 4 then t1[n] else",
+        "p(n-2)+p(n-3)+2*(d(n-3)+d(n-4)); fi; end proc;",
+        "[seq(p(n),n=1..32)]; # A238825"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[x^3 (x - 1) (x^3 + x^2 - 1)/(1 - 3 x + 4 x^3 - x^4 - x^5 - 3 x^6 + x^7), {x, 0, 40}], x] (* _Vincenzo Librandi_, Mar 21 2014 *)"
+    ],
+    "program": [
+        "(MAGMA) m:=40; R<x>:=LaurentSeriesRing(RationalField(), m); [0,0,0] cat Coefficients(R! x^4*(x-1)*(x^3+x^2-1) / ( 1-3*x+4*x^3-x^4-x^5-3*x^6+x^7)); // _Vincenzo Librandi_, Mar 21 2014"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,5",
+    "author": "_N. J. A. Sloane_, Mar 08 2014",
+    "references": 10,
+    "revision": 15,
+    "time": "2015-06-13T00:54:59-04:00",
+    "created": "2014-03-08T09:26:34-05:00"
+}

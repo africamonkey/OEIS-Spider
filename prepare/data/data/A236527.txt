@@ -1,0 +1,43 @@
+{
+    "number": 236527,
+    "data": "3,31,311,3119,31193,3119317,31193171,311931713,3119317139,311931713939,31193171393933,3119317139393353,31193171393933531,3119317139393353121,311931713939335312127,311931713939335312127113,31193171393933531212711399,31193171393933531212711399123",
+    "name": "Primes obtained by concatenating to the end of previous term the next smallest number that will produce a prime, starting with 3.",
+    "comment": [
+        "a(n + 1) is the next smallest prime beginning with a(n). Initial term is 3. These are the primes arising in A069605."
+    ],
+    "example": [
+        "a(1) = 3 by definition.",
+        "a(2) is the next smallest prime beginning with 3, so a(2) = 31.",
+        "a(3) is the next smallest prime beginning with 31, so a(3) = 311."
+    ],
+    "mathematica": [
+        "A069605[1] = 3; A236527[1] = 3; A069605[n_] := A069605[n] = Block[{k = 1, c = IntegerDigits @ Table[ a[i], {i, n - 1}]}, While[ !PrimeQ[ FromDigits[Flatten[Append[c, IntegerDigits[k]]]]], k += 2]; k]; A236527[n_] := A236527[n] = FromDigits[Flatten[IntegerDigits[A236527[n - 1]], IntegerDigits[A069605[n]]]]; Table[A236527[n], {n, 20}] (* _Alonso del Arte_, Jan 28 2014 based on _Robert G. Wilson v_'s program for A069605 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import sympy",
+        "from sympy import isprime",
+        "def b(x):",
+        "..num = str(x)",
+        "..n = 1",
+        "..while n < 10**3:",
+        "....new_num = str(x) + str(n)",
+        "....if isprime(int(new_num)):",
+        "......print(int(new_num))",
+        "......x = new_num",
+        "......n = 1",
+        "....else:",
+        "......n += 1",
+        "b(3)"
+    ],
+    "xref": [
+        "Cf. A048553, A110773, A069605."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Derek Orr_, Jan 27 2014",
+    "references": 1,
+    "revision": 16,
+    "time": "2015-03-15T18:57:51-04:00",
+    "created": "2014-01-29T13:09:29-05:00"
+}

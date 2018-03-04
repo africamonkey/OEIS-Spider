@@ -1,0 +1,37 @@
+{
+    "number": 247651,
+    "data": "1,2,3,12,30,60,210,840,2520,7560,27720,83160,240240,840840,2702700,10810800,36756720,122522400,465585120,1551950400,4888643760,19554575040,74959204320,257002986240,936990054000,3480248772000",
+    "name": "Maximum number of binary strings of length 2n obtained from a partition of n.",
+    "comment": [
+        "The number of different binary strings of length 2n that can be constructed with an equal number (n) of 0's and 1's, based on a given partition of the 0's (or 1's) into uninterrupted runs, can be written as Nseq(n,partition)=(n+1)!/(Prod_j(m_j!)(n-m+1)!) where:",
+        "m is the number of partition members (total number of runs of 0's or 1's);",
+        "and m_j is the multiplicity of runs of length j of 0's (or 1's) (j=positive integer).",
+        "The numbers satisfy the relations Sum_j(m_j)=m, Sum_j(j*m_j)=n.",
+        "Prod_j(m_j!)(n-m+1)! becomes n! at the extremes (finest partition of n, m=n -- coarsest partition of n, m=1). Nseq (n,partition) is in that sense a relative measure of the complexity of the partition and the associated binary strings. a(n) is the number of strings obtained based on the partition of n that maximizes Nseq(n,partition)."
+    ],
+    "formula": [
+        "a(n) = (n+1)*A130760(n).",
+        "a(n) = Max[(n+1)!/(Prod_j(m_j!)(n-m+1)!)] over all partitions of n."
+    ],
+    "example": [
+        "n=0 gives the empty string.",
+        "n=1 and the only possible partition generate 01 and 10.",
+        "For n=2, both possible partitions generate 3 strings (0011,0110 and 1100, and respectively 0101, 1001 and 1010, based on runs of 1's).",
+        "For n=3, the optimal partition is {1,2}, generating 12 strings (based on runs of 1's: 001011, 001101, 010011, 010110, 011001, 011010, 100011, 100110, 101100, 110001, 110010, 110100)."
+    ],
+    "mathematica": [
+        "nseq[p_]:=FactorialPower[Total[p]+1,Length[p]]/Apply[Times,Map[Factorial[Count[p,#1]]&,Range[Max[Length[p]]]]];",
+        "a[n_]:=Max[Map[nseq,IntegerPartitions[n]]]",
+        "Table[a[n],{n,0,20}] (* after A130670 *)"
+    ],
+    "xref": [
+        "Cf. A025560, A130760."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Andrei Cretu_ and Yuri Dimitrov, Oct 03 2014",
+    "references": 1,
+    "revision": 45,
+    "time": "2014-10-23T20:54:16-04:00",
+    "created": "2014-10-23T20:54:16-04:00"
+}

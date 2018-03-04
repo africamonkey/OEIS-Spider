@@ -1,0 +1,38 @@
+{
+    "number": 181997,
+    "data": "1,1,2,9,46,259,1539,9484,59961,386319,2524940,16687599,111264335,747080253,5044629212,34218868880,232964088130,1590660486297,10885758313976,74627209920879,512254418843196,3519150502675731,24187028454513735,166249089897708930",
+    "name": "G.f. satisfies: x = Sum_{n>=1} 1/A(x)^(3*n) * Product_{k=1..n} (1 - 1/A(x)^k).",
+    "comment": [
+        "Compare the g.f. to the identity:",
+        "G(x) = Sum_{n>=0} 1/G(x)^n * Product_{k=1..n} (1 - 1/G(x)^k)",
+        "which holds for all power series G(x) such that G(0)=1."
+    ],
+    "formula": [
+        "G.f. satisfies: 1+x = A(y) where y = x - 2*x^2 - x^3 + 4*x^4 + 4*x^5 + x^6.",
+        "G.f. satisfies: x = Sum_{n>=1} 1/A(x)^(n*(n+7)/2) * Product_{k=1..n} (A(x)^k - 1)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 9*x^3 + 46*x^4 + 259*x^5 + 1539*x^6 +...",
+        "The g.f. satisfies:",
+        "x = (A(x)-1)/A(x)^4 + (A(x)-1)*(A(x)^2-1)/A(x)^9 + (A(x)-1)*(A(x)^2-1)*(A(x)^3-1)/A(x)^15 + (A(x)-1)*(A(x)^2-1)*(A(x)^3-1)*(A(x)^4-1)/A(x)^22 + (A(x)-1)*(A(x)^2-1)*(A(x)^3-1)*(A(x)^4-1)*(A(x)^5-1)/A(x)^30 +..."
+    ],
+    "mathematica": [
+        "nmax = 20; aa = ConstantArray[0,nmax]; aa[[1]] = 1; Do[AGF = 1+Sum[aa[[n]]*x^n,{n,1,j-1}]+koef*x^j; sol=Solve[SeriesCoefficient[Sum[Product[(1-1/AGF^m)/AGF^3,{m,1,k}],{k,1,j}],{x,0,j}]==0,koef][[1]]; aa[[j]]=koef/.sol[[1]],{j,2,nmax}]; Flatten[{1,aa}] (* _Vaclav Kotesovec_, Dec 01 2014 *)",
+        "CoefficientList[1+InverseSeries[Series[x - 2*x^2 - x^3 + 4*x^4 + 4*x^5 + x^6, {x, 0, 20}], x],x] (* _Vaclav Kotesovec_, Dec 01 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n<0,0,polcoeff(1 + serreverse(x - 2*x^2 - x^3 + 4*x^4 + 4*x^5 + x^6 +x^2*O(x^n)),n))}",
+        "(PARI) {a(n)=local(A=[1,1]);for(i=1,n,A=concat(A,0);A[#A]=-polcoeff(sum(m=1,#A,1/Ser(A)^(3*m)*prod(k=1,m,1-1/Ser(A)^k)),#A-1));A[n+1]}",
+        "for(n=0,25,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A001002, A181998, A209441, A209442, A214693 (variant)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 05 2012",
+    "references": 6,
+    "revision": 17,
+    "time": "2014-12-01T07:09:37-05:00",
+    "created": "2012-04-05T13:10:25-04:00"
+}

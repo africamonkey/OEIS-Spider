@@ -1,0 +1,51 @@
+{
+    "number": 96541,
+    "data": "0,0,1,2,5,8,16,24,41,61,95,136,204,284,407,560,779,1050,1432,1901,2543,3338,4393,5698,7411,9513,12226,15562,19803,24993,31538,39506,49456,61546,76499,94603,116858,143679,176431,215802,263576,320796,389900",
+    "name": "Number of parts unequal to 1 in all partitions of the integer n. Also the difference between the labeled and the unlabeled case of one-element transitions from the partitions of n to the partitions of n+1.",
+    "comment": [
+        "Also column 2 of A181187. - _Omar E. Pol_, Feb 18 2012"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A096541/b096541.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A093694(n) - A000070(n).",
+        "a(n) = Sum_{k=1..n} (tau(k)-1)*numbpart(n-k). - _Vladeta Jovovic_, Jun 26 2004",
+        "a(n) ~ exp(Pi*sqrt(2*n/3))*(2*gamma - 2 + log(6*n/Pi^2))/(4*Pi*sqrt(2*n)), where gamma is the Euler-Mascheroni constant A001620. - _Vaclav Kotesovec_, Oct 24 2016"
+    ],
+    "example": [
+        "The partitions of n=5 are [11111], [1112], [113], [122], [23], [14], [5] and they contain 0 + 1 + 1 + 2 + 2 + 1 + 1 = 8 = A096541(5) parts unequal to 1."
+    ],
+    "maple": [
+        "main := proc(n::integer) local a,ndxp,ndxprt,ListOfPartitions,iverbose; with(combinat): ListOfPartitions:=partition(n); a:=0; for ndxp from 1 to nops(ListOfPartitions) do for ndxprt from 1 to nops(ListOfPartitions[ndxp]) do if op(ndxprt,ListOfPartitions[ndxp]) <> 1 then a := a + 1; fi; end do; end do; print(\"n, a(n):\",n,a); end proc;",
+        "# second Maple program:",
+        "b:= proc(n, i) option remember; local f, g;",
+        "      if n=0 or i=1 then [1, 0]",
+        "    else f:= b(n, i-1); g:= `if`(i>n, [0, 0], b(n-i, i));",
+        "         [f[1]+g[1], f[2]+g[2]+g[1]]",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n, n)[2]:",
+        "seq(a(n), n=0..60); # _Alois P. Heinz_, Apr 04 2012"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{l = Sort[ Flatten[ IntegerPartitions[n]]]}, Length[l] - Count[l, 1]]; Table[ f[n], {n, 0, 20}] (_Robert G. Wilson v_)",
+        "a[n_] := Sum[(DivisorSigma[0, k] - 1)*PartitionsP[n - k], {k, 1, n}]; Table[a[n], {n, 0, 42}] (* _Jean-Fran\u00e7ois Alcover_, Jan 14 2013, after _Vladeta Jovovic_ *)"
+    ],
+    "program": [
+        "(PARI) a(n)=sum(k=1,n,(numdiv(k)-1)*numbpart(n-k)) \\\\ _Charles R Greathouse IV_, Jan 14 2013"
+    ],
+    "xref": [
+        "Cf. A093694, A093695, A094533, A006128."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Thomas Wieder_, Jun 24 2004",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Jun 30 2004"
+    ],
+    "references": 8,
+    "revision": 35,
+    "time": "2016-10-24T18:08:59-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 263161,
+    "data": "1,240,600,768,1008,1200,1320,1800,2160,2688,2736,3000,3360,3888,4800,5280,5520,6120,6479,6480,6720,6840,7320,7680,8208,8640,9000,9600,9720,10368,11160,11663,12240,12288,13200,13248,13440,13680,14400,15120,15360,15456,16560,18048",
+    "name": "Positive values of n such that A000071(n+2) is divisible by A000217(n).",
+    "comment": [
+        "Interestingly, the minimum value of a(n) - a(n-1) is 1. Is there a maximum value of a(n) - a(n-1)?",
+        "From _Robert Israel_, Oct 19 2015: (Start)",
+        "n is in the sequence if either n is odd and A001175(n) and A001175((n+1)/2) both divide n+1, or n is even and A001175(n/2) and A001175(n+1) both divide n.",
+        "Most of the terms of the sequence appear to fall in these categories. The first two that do not are 15456 and 41640.",
+        "In particular, if n = 2^j * 3^k * 5^m with j >= 4, k >= 1 and m >= 1, and n+1 is prime, then n is in the sequence.  There are believed to be infinitely many numbers of this form.  The first few are 240, 1200, 2160, 4800, 6480, 7680, 8640, 9600, 14400, 15360. (End)"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A263161/b263161.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "For n = 1, A000071(1+2) = 1 is divisible by A000217(1) = 1."
+    ],
+    "maple": [
+        "fmod:= proc(a, b) local A, t;",
+        "  uses LinearAlgebra[Modular];",
+        "  if b < 4295022903 then t:= integer[8] else t:= integer fi;",
+        "  A:= Mod(b, <<1, 1>|<1, 0>>, t);",
+        "  MatrixPower(b, A, a)[1, 2];",
+        "end proc:",
+        "filter:= n -> (fmod(n+2, n*(n+1)/2) = 1):",
+        "filter(1):= true:",
+        "select(filter, [$1..10^5]); # _Robert Israel_, Oct 19 2015"
+    ],
+    "mathematica": [
+        "fQ[n_] := Mod[Fibonacci[n + 2] - 1, n (n + 1)/2] == 0; Select[Range@20000, fQ] (* _Bruno Berselli_, Oct 19 2015 - after _Robert G. Wilson v_ in A263225 *)"
+    ],
+    "program": [
+        "(PARI) for(n=1, 20000, if((fibonacci(n+2)-1) % (n*(n+1)/2) == 0, print1(n\", \")));",
+        "(PARI) is(n)=((Mod([1,1;1,0],n*(n+1)/2))^(n+2))[1,2]==1 \\\\ _Charles R Greathouse IV_, Oct 19 2015",
+        "(MAGMA) [n: n in [1..20000] | IsDivisibleBy(Fibonacci(n+2)-1, n*(n+1) div 2)]; // _Bruno Berselli_, Oct 19 2015"
+    ],
+    "xref": [
+        "Cf. A000045, A000071, A000217, A001175, A263225."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Altug Alkan_, Oct 11 2015",
+    "references": 2,
+    "revision": 37,
+    "time": "2015-10-23T13:24:07-04:00",
+    "created": "2015-10-19T17:30:00-04:00"
+}

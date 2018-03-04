@@ -1,0 +1,41 @@
+{
+    "number": 224219,
+    "data": "1,1,4,5,31,82,344,1661,7942,38721,228680,1377026,8529756,56756260,402300799,2960135917,22692746719,181667760724,1516381486766,13135566948285,117868982320877,1093961278908818,10492653292100919,103880022098900234,1059925027073166856",
+    "name": "Number of set partitions of {1,2,...,n} such that the size of the smallest block is unique.",
+    "comment": [
+        "In other words, if the smallest block in a partition has size k then there are no other blocks in the partition with size k."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A224219/b224219.txt\">Table of n, a(n) for n = 1..576</a>"
+    ],
+    "formula": [
+        "E.g.f.: Sum_{k>=1} x^k/k! * exp(exp(x) - Sum_{i=0..k} x^i/i!)."
+    ],
+    "example": [
+        "a(4) = 5 because we have: {{1,2,3,4}}, {{1},{2,3,4}}, {{1,3,4},{2}}, {{1,2,3},{4}}, {{1,2,4},{3}}."
+    ],
+    "maple": [
+        "with(combinat):",
+        "b:= proc(n, i) option remember;",
+        "      `if`(i<1, 0, `if`(n=i, 1, 0)+add(b(n-i*j, i-1)*",
+        "       multinomial(n, n-i*j, i$j)/j!, j=0..(n-1)/i))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Jul 07 2016"
+    ],
+    "mathematica": [
+        "nn=25;Drop[Range[0,nn]!CoefficientList[Series[Sum[x^k/k!Exp[Exp[x]-Sum[x^i/i!,{i,0,k}]],{k,1,nn}],{x,0,nn}],x],1]",
+        "(* Second program: *)",
+        "multinomial[n_, k_List] := n!/Times @@ (k!); b[n_, i_] := b[n, i] = If[i<1, 0, If[n==i, 1, 0] + Sum[b[n-i*j, i-1]*multinomial[n, Prepend[Array[i&, j], n-i*j]]/j!, {j, 0, (n-1)/i}]]; a[n_] := b[n, n]; Table[a[n], {n, 1, 25}] (* _Jean-Fran\u00e7ois Alcover_, Feb 03 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A224244."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Geoffrey Critzer_, Apr 01 2013",
+    "references": 4,
+    "revision": 17,
+    "time": "2017-02-03T04:36:43-05:00",
+    "created": "2013-04-03T03:54:16-04:00"
+}

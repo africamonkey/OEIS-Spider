@@ -1,0 +1,66 @@
+{
+    "number": 116700,
+    "data": "12,21,23,31,32,34,41,42,43,45,51,52,53,54,56,61,62,63,64,65,67,71,72,73,74,75,76,78,81,82,83,84,85,86,87,89,91,92,93,94,95,96,97,98,99,101,110,111,112,121,122,123,131,132,141,142,151,152,161,162,171",
+    "name": "\"Early bird\" numbers: write the natural numbers in a string 12345678910111213.... Sequence gives numbers that occur in the string ahead of their natural place (cf. A117804).",
+    "comment": [
+        "Based on an idea by Argentinian puzzle creator Jaime Poniachik, these numbers were introduced by Martin Gardner in 2005 in the magazine Math. Horizons, published by the MAA.",
+        "A048992 is a similar sequence, but is different because it does not contain 21, etc. - see comments in A048992.",
+        "A220376(n) = position of a(n) in 1234567891011121314151617181... . - _Reinhard Zumkeller_, Dec 13 2012"
+    ],
+    "reference": [
+        "Martin Gardner, Transcendentals and early birds, Math. Horizons, XIII(2) (2005), pp. 5, 34 (published by Math. Assoc. America)."
+    ],
+    "link": [
+        "Joshua Zucker and R. Zumkeller, <a href=\"/A116700/b116700.txt\">Table of n, a(n) for n = 1..10000</a> (first 675 terms from Joshua Zucker)",
+        "S. W. Golomb, <a href=\"http://www.itsoc.org/publications/nltr/it1202.pdf\">Early Bird Numbers</a>, Puzzle Column in IEEE Inform. Soc. Newsletter, 52(4) (2002), p. 10.",
+        "S. W. Golomb, <a href=\"http://www.itsoc.org/publications/nltr/it0303web.pdf\">Early Bird Numbers: Solutions</a>, IEEE Inform. Soc. Newsletter, 53(1) (2003), p. 30."
+    ],
+    "formula": [
+        "Asymptotically, the early bird numbers have density 1 [Golomb]."
+    ],
+    "example": [
+        "\"12\" appears at the start of the string, ahead of its position after \"11\", so is a member."
+    ],
+    "mathematica": [
+        "s = \"\"; Reap[For[n=1, n <= 200, n++, sn = ToString[n]; If[StringPosition[s, sn, 1] =!= {}, Sow[n]]; s = s <> sn]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Nov 04 2016, after _Klaus Brockhaus_ *)"
+    ],
+    "program": [
+        "(ARIBAS) s:= \"\"; for n:=1 to 200 do sn:=itoa(n);",
+        "if substr_index(s, sn) >= 0 then write(n, \",\"); end;",
+        "s:=concat(s, sn); end; (* _Klaus Brockhaus_, Jul 23 2007 *)",
+        "(Ubasic)",
+        "10 X=\"\"",
+        "20 for N=1 to 396",
+        "30 A=cutspc(str(N))",
+        "40 if instr(X,A)>0 then print N;",
+        "50 X+=A",
+        "60 next N",
+        "# _Warut Roonguthai_, Jul 23 2007",
+        "(Haskell)",
+        "import Data.List (isPrefixOf, find)",
+        "import Data.Maybe (fromJust)",
+        "a116700 n = a116700_list !! (n-1)",
+        "a116700_list = filter early [1 ..] where",
+        "   early z = not (reverse (show (z - 1)) `isPrefixOf` fst bird) where",
+        "      bird = fromJust $ find ((show z `isPrefixOf`) . snd) xys",
+        "   xys = iterate (\\(us, v : vs) -> (v : us, vs))",
+        "                 ([], concatMap show [0 ..])",
+        "-- _Reinhard Zumkeller_, Dec 13 2012"
+    ],
+    "xref": [
+        "Cf. A117804. A131881 gives complement.",
+        "Cf. A048991 and A048992 (Rollman numbers).",
+        "Cf. A007908 (subsequence, apart from initial 1)."
+    ],
+    "keyword": "nonn,base,nice,look",
+    "offset": "1,1",
+    "author": "Bernardo Recam\u00e1n Santos (ignotus(AT)hotmail.com), Jul 22 2007",
+    "ext": [
+        "More terms from _Warut Roonguthai_ and _Klaus Brockhaus_, Jul 23 2007",
+        "Golomb links from _Jeremy Gardiner_, Jul 23 2007"
+    ],
+    "references": 26,
+    "revision": 36,
+    "time": "2018-01-16T02:40:42-05:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

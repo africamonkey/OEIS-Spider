@@ -1,0 +1,71 @@
+{
+    "number": 16,
+    "id": "M0324 N0121",
+    "data": "1,1,1,2,2,4,6,10,16,30,52,94,172,316,586,1096,2048,3856,7286,13798,26216,49940,95326,182362,349536,671092,1290556,2485534,4793492,9256396,17895736,34636834,67108864,130150588,252645136,490853416",
+    "name": "a(n) = number of distinct (infinite) output sequences from binary n-stage shift register which feeds back the complement of the last stage. E.g., for n=6 there are 6 such sequences.",
+    "comment": [
+        "Also a(n+1) = number of distinct (infinite) output sequences from binary n-stage shift register which feeds back the complement of the sum of its contents. E.g., for n=5 there are 6 such sequences.",
+        "Also a(n+1) = number of binary vectors (x_1,...x_n) satisfying Sum_{i=1..n} i*x_i = 0 (mod n+1) = size of Varshamov-Tenengolts code VT_0(n). E.g., |VT_0(5)| = 6 = a(6).",
+        "Number of binary necklaces with an odd number of zeros. - _Joerg Arndt_, Oct 26 2015",
+        "Also, number of subsets of {1,2,...,n-1} which sum to 0 modulo n (cf. A063776). - _Max Alekseyev_, Mar 26 2016"
+    ],
+    "reference": [
+        "B. D. Ginsburg, On a number theory function applicable in coding theory, Problemy Kibernetiki, No. 19 (1967), pp. 249-252.",
+        "S. W. Golomb, Shift-Register Sequences, Holden-Day, San Francisco, 1967, p. 172.",
+        "J. Hedetniemi and K. R. Hutson, Equilibrium of shortest path load in ring network, Congressus Numerant., 203 (2010), 75-95. See p. 83.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane, On single-deletion-correcting codes, in Codes and Designs (Columbus, OH, 2000), 273-291, Ohio State Univ. Math. Res. Inst. Publ., 10, de Gruyter, Berlin, 2002.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe and Seiichi Manyama, <a href=\"/A000016/b000016.txt\">Table of n, a(n) for n = 0..3334</a> (first 201 terms from T. D. Noe)",
+        "A. E. Brouwer, <a href=\"http://oai.cwi.nl/oai/asset/6805/6805A.pdf\">The Enumeration of Locally Transitive Tournaments</a>, Math. Centr. Report ZW138, Amsterdam, 1980.",
+        "S. Butenko, P. Pardalos, I. Sergienko, V. P. Shylo and P. Stetsyuk, <a href=\"http://dx.doi.org/10.1007/978-0-387-98096-6_12\">Estimating the size of correcting codes using extremal graph problems</a>, Optimization, 227-243, Springer Optim. Appl., 32, Springer, New York, 2009.",
+        "P. J. Cameron, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/groups.html\">Sequences realized by oligomorphic permutation groups</a>, J. Integ. Seqs. Vol. 3 (2000), #00.1.5.",
+        "R. W. Hall and P. Klingsberg, <a href=\"http://www.jstor.org/stable/27642087\">Asymmetric rhythms and tiling canons</a>, Amer. Math. Monthly, 113 (2006), 887-896.",
+        "A. A. Kulkarni, N. Kiyavash and R. Sreenivas, <a href=\"http://www.sc.iitb.ac.in/~ankur/docs/CombinInsightDM_final.pdf\">On the Varshamov-Tenengolts Construction on Binary Strings</a>, 2013.",
+        "R. Pries and C. Weir, <a href=\"http://arxiv.org/abs/1302.6261\">The Ekedahl-Oort type of Jacobians of Hermitian curves</a>, arXiv preprint arXiv:1302.6261 [math.NT], 2013.",
+        "N. J. A. Sloane, <a href=\"http://neilsloane.com/doc/dijen.txt\">On single-deletion-correcting codes</a>",
+        "N. J. A. Sloane, <a href=\"/A265032/a265032.html\">Challenge Problems: Independent Sets in Graphs</a>",
+        "<a href=\"/index/To#tournament\">Index entries for sequences related to tournaments</a>",
+        "<a href=\"/index/Ne#necklaces\">Index entries for sequences related to necklaces</a>",
+        "<a href=\"/index/Su#subsetsums\">Index entries for sequences related to subset sums modulo m</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{odd d divides n} (phi(d)*2^(n/d))/(2*n), n>0.",
+        "a(n) = A063776(n)/2."
+    ],
+    "example": [
+        "For n=3 the 2 output sequences are 000111000111... and 010101...",
+        "For n=5 the 4 output sequences are those with periodic parts {0000011111, 0001011101, 0010011011, 01}."
+    ],
+    "maple": [
+        "with(numtheory); A000016 := proc(n) local d,t1; if n = 0 then RETURN(1) else t1 := 0; for d from 1 to n do if n mod d = 0 and d mod 2 = 1 then t1 := t1+phi(d)*2^(n/d)/(2*n); fi; od; RETURN(t1); fi; end;"
+    ],
+    "mathematica": [
+        "a[0] = 1; a[n_] := Sum[Mod[k, 2] EulerPhi[k]*2^(n/k)/(2*n), {k, Divisors[n]}]; Table[a[n], {n, 0, 35}](* _Jean-Fran\u00e7ois Alcover_, Feb 17 2012, after Pari *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,n >= 0,sumdiv(n,k,(k%2)*eulerphi(k)*2^(n/k))/(2*n));",
+        "(Haskell)",
+        "a000016 0 = 1",
+        "a000016 n = (`div` (2 * n)) $ sum $",
+        "   zipWith (*) (map a000010 oddDivs) (map ((2 ^) . (div n)) $ oddDivs)",
+        "   where oddDivs = a182469_row n",
+        "-- _Reinhard Zumkeller_, May 01 2012"
+    ],
+    "xref": [
+        "The main diagonal of table A068009, the left edge of triangle A053633.",
+        "Cf. A000048, A000031, A000013, A053634, A182469."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Michael Somos_, Dec 11 1999"
+    ],
+    "references": 29,
+    "revision": 84,
+    "time": "2016-12-31T07:07:50-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

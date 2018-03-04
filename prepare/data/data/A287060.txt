@@ -1,0 +1,35 @@
+{
+    "number": 287060,
+    "data": "2,3,11,47,59,71,83,107,131,179,191,227,239,251,311,347,431,443,467,491,563,587,599,647,719,743,839,911,971,1019,1031,1091,1103,1151,1187,1259,1283,1307,1319,1367,1427,1451,1511,1523,1559,1571,1583,1619,1667",
+    "name": "Primes a(n) such that a(1) = 2, a(2) = 3, and a(n) is the smallest prime greater than a(n-1) such that (a(n) - 1)/2 is not divisible by a(m) for all m < n.",
+    "comment": [
+        "As in A100564, the number of terms in this sequence which do not exceed x is ~ (1 + o(1)) x/(logx loglogx), thus the sum of the their reciprocals diverges."
+    ],
+    "reference": [
+        "Jean-Marie De Koninck and Florian Luca, Analytic Number Theory: Exploring the Anatomy of Integers, American Mathematical Society, 2012, Problem 15.1, p. 263."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A287060/b287060.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "5 and 7 are not in the sequence since a(1) | (5 - 1)/2 and a(2) | (7 - 1)/2.",
+        "a(3) = 11 is in the sequence since (11 - 1)/2 = 5 is not divisible by 2 or 3."
+    ],
+    "mathematica": [
+        "a[1] = 2; a[2] = 3; a[n_] := a[n] = Block[{k=PrimePi[a[n - 1]] + 1, t=Table[a[i], {i, n-1}]}, While[Union[ Mod[(Prime[k] - 1)/2, t]][[1]] == 0, k++]; Prime[k]]; Table[a[n], {n, 49}]"
+    ],
+    "program": [
+        "(PARI) isok(p, va) = {q = (p-1)/2; for (k=1, #va, if (!(q % va[k]), return (0));); return (1);}",
+        "lista(nn) = {va = [2, 3]; print1(va[1], \", \" va[2], \", \"); for (n=3, nn, forprime(p=nextprime(vecmax(va)+1),, if (isok(p, va), va = concat(va, p); print1(p, \", \"); break);););} \\\\ _Michel Marcus_, May 21 2017"
+    ],
+    "xref": [
+        "Cf. A100564."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, May 19 2017",
+    "references": 1,
+    "revision": 18,
+    "time": "2017-05-27T05:26:45-04:00",
+    "created": "2017-05-26T20:59:37-04:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 220655,
+    "data": "2,5,6,7,8,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99",
+    "name": "For n with an unique factorial base representation n = du*u! + ... + d2*2! + d1*1! (each di in range 0..i, cf. A007623), a(n) = (du+1)*u! + ... + (d2+1)*2! + (d1+1)*1!; a(n) = n + A007489(A084558(n)).",
+    "comment": [
+        "Used for computing A107346.",
+        "Term a(n) can be obtained by adding one to each digit of factorial base representation of n (A007623(n)) and then reinterpreting it as a kind of pseudo-factorial base representation, ignoring the fact that now some of the digits might be over the maximum allowed in that position. Please see the example section. - _Antti Karttunen_, Nov 29 2013"
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A220655/b220655.txt\">Table of n, a(n) for n = 1..5039</a>"
+    ],
+    "formula": [
+        "a(n) = A220656(n)-1 = A003422(A084558(n)+1) + A000142(A084558(n)) + A212598(n) - 1. [The original definition]",
+        "a(n) = n + A007489(A084558(n)). [The above formula reduces to this, which proves that the original Dec 17 2012 description and the new main description produce the same sequence. Essentially, we are adding to n a factorial base repunit '1...111' with as many fact.base digits as n has] - _Antti Karttunen_, Nov 29 2013",
+        "For n>=1, A231720(n) = a(A153880(n))."
+    ],
+    "example": [
+        "1 has a factorial base representation A007623(1) = '1', as 1 = 1*1!. Incrementing the digit 1 with 1, we get 2*1! = 2, thus a(1) = 2. (Note that although '2' is not a valid factorial base representation, it doesn't matter here).",
+        "2 has a factorial base representation '10', as 2 = 1*2! + 0*1!. Incrementing the digits by one, we get 2*2! + 1*1! = 5, thus a(2) = 5.",
+        "3 has a factorial base representation '11', as 3 = 1*2! + 1*1!. Incrementing the digits by one, we get 2*2! + 2*1! = 6, thus a(3) = 6."
+    ],
+    "program": [
+        "(Scheme)",
+        ";; Standalone iterative implementation (Nov 29 2013):",
+        "(define (A220655 n) (let loop ((n n) (z 0) (i 2) (f 1)) (cond ((zero? n) z) (else (loop (quotient n i) (+ (* f (+ 1 (remainder n i))) z) (+ 1 i) (* f i))))))",
+        ";; Alternative implementation:",
+        "(define (A220655 n) (+ n (A007489 (A084558 n))))"
+    ],
+    "xref": [
+        "Complement: A220695.",
+        "One less than A220656.",
+        "Cf. A000142, A003422, A007489, A007623, A084558, A212598, A153880, A231720."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Dec 17 2012",
+    "ext": [
+        "Name changed by _Antti Karttunen_, Nov 29 2013"
+    ],
+    "references": 5,
+    "revision": 23,
+    "time": "2013-11-29T22:18:58-05:00",
+    "created": "2012-12-18T15:37:52-05:00"
+}

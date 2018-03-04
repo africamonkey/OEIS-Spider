@@ -1,0 +1,43 @@
+{
+    "number": 287930,
+    "data": "1,3,21,33,93,105,123,177,219,237,321,417,489,537,633,699,813,951,1011,1299,1419,1641,1923,1959,2073,2211,2433,2661,3387,3453,3489,3741,3981,4083,4377,4461,4467,4827,4911,5007,5997,6423,6621,7467,7647,7881,8031,8061",
+    "name": "Numbers m such that for any positive integers (x, y), if x * y = m where x <= y, then x^2 + 2*y^2 is a prime number.",
+    "comment": [
+        "The sequence contains A287799.",
+        "a(n) == 3 or 15 (mod 18) for n > 1.",
+        "The numbers a(n)/3 are 1, 7, 11, 31, 35, 41, 59, 73, 79, 107, ... with a majority of prime numbers, except the subset {b(m)} = {1, 35, 473, 737, 1247, 2489, 2627, ...}. It seems that b(m) is semiprime for m > 1.",
+        "From _Robert Israel_, Jul 13 2017: (Start)",
+        "Not all b(m) for m > 1 are semiprime.",
+        "A counterexample is a(8821) = 23963385 = 3*5*373*4283.",
+        "All terms are squarefree. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A287930/b287930.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "105 = 1*105 = 3*35 = 5*21 = 7*15 => 1^2 + 2*105^2 = 22051, 3^2 + 2*35^2 = 2459, 5^2 + 2*21^2 = 907 and 7^2 + 2*15^2 = 499 are primes."
+    ],
+    "maple": [
+        "filter:= proc(m)",
+        "   andmap(x -> isprime(x^2 + 2*(m/x)^2),",
+        "     select(t -> t^2 <= m,numtheory:-divisors(m)));",
+        "end proc:",
+        "select(filter, [1, seq(i,i=3..10000,3)]); # _Robert Israel_, Jul 13 2017"
+    ],
+    "mathematica": [
+        "t={};Do[ds=Divisors[n];If[EvenQ[Length[ds]],ok=True;k=1;While[k<=Length[ds]/2&&(ok=PrimeQ[ds[[k]]^2+2*ds[[-k]]^2]),k++];If[ok,AppendTo[t,n]]],{n,2,10^4}];t"
+    ],
+    "xref": [
+        "Cf. A000040, A287799."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Lagneau_, Jun 03 2017",
+    "ext": [
+        "Edited by _Robert Israel_, Jul 13 2017"
+    ],
+    "references": 1,
+    "revision": 20,
+    "time": "2017-07-13T20:42:10-04:00",
+    "created": "2017-06-29T13:46:11-04:00"
+}

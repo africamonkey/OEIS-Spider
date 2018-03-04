@@ -1,0 +1,52 @@
+{
+    "number": 182978,
+    "data": "1,3,6,12,20,34,52,80,116,170,236,333,453,621,825,1111,1455,1923,2487,3239,4149,5342,6770,8625,10852,13698,17107,21413,26567,33019,40721,50270,61663,75665,92318,112686,136849,166173,200923,242836",
+    "name": "Total number of parts that are the smallest part or the largest part in all partitions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A182978/b182978.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A006128(n) - A182977(n)."
+    ],
+    "example": [
+        "For n = 6 the partitions of 6 are",
+        "6",
+        "5 + 1",
+        "4 + 2",
+        "4 + 1 + 1",
+        "3 + 3",
+        "3 + (2) + 1 .... the \"2\" is the part that does not count.",
+        "3 + 1 + 1 + 1",
+        "2 + 2 + 2",
+        "2 + 2 + 1 + 1",
+        "2 + 1 + 1 + 1 + 1",
+        "1 + 1 + 1 + 1 + 1 + 1",
+        "The total number of parts in all partitions of 6 is equal to 35. All parts are the smallest part or the largest part, except the \"2\" in the partition (3 + 2 + 1), so a(6) = 35 - 1 = 34."
+    ],
+    "maple": [
+        "l:= proc(n, i) option remember; `if`(n=i, n, 0)+",
+        "      `if`(i<1, 0, l(n, i-1) +`if`(n<i, 0, l(n-i, i)))",
+        "    end:",
+        "s:= proc(n, i) option remember; `if`(n=0 or i=1, n,",
+        "      `if`(irem(n, i, 'r')=0, r, 0)+add(s(n-i*j, i-1), j=0..n/i))",
+        "    end:",
+        "a:= n-> l(n, n) +s(n, n) -numtheory[sigma](n):",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Jan 17 2013"
+    ],
+    "mathematica": [
+        "l[n_, i_] := l[n, i] = If[n==i, n, 0] + If[i<1, 0, l[n, i-1] + If[n<i, 0, l[n-i, i]]]; s[n_, i_] := s[n, i] = If[n==0 || i==1, n, {q, r} = QuotientRemainder[n, i]; If[r==0, q, 0] + Sum[s[n-i*j, i-1], {j, 0, n/i}] ]; a[n_] := l[n, n] + s[n, n] - DivisorSigma[1, n]; Table[a[n], {n, 1, 50}] (* _Jean-Fran\u00e7ois Alcover_, Nov 03 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A006128, A046746, A092269, A116686, A182977, A182984."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Omar E. Pol_, Jul 17 2011",
+    "ext": [
+        "a(12) corrected and more terms a(13)-a(40) from _David Scambler_, Jul 18 2011"
+    ],
+    "references": 3,
+    "revision": 15,
+    "time": "2015-11-03T03:18:57-05:00",
+    "created": "2011-07-18T12:55:06-04:00"
+}

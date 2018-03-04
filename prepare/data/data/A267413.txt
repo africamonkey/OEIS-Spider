@@ -1,0 +1,81 @@
+{
+    "number": 267413,
+    "data": "6,7,11,15,35,39,63,135,255,999,2175,8223,16383,57735,131075,131079,262143,524295,1048575,536870919,1073735679,2147483655,4294967295,17179770879",
+    "name": "Dropping any binary digit gives a prime number.",
+    "comment": [
+        "This is the binary analog of A034895. The sequence contains mostly numbers with very few binary digit runs (BDR, A005811). Those with one BDR are of the type 2^k-1, such that 2^(k-1)-1 is a Mersenne prime (A000668). Vice versa, if M is any Mersenne prime, then 2*M+1 is a member. Number 6 is the only member with an even number of BDRs. There are many members with 3 BDRs. The first member with 5 BDRs is 57735. Next members with at least 5 BDRs (if they exist at all) are larger than 10^10. So far, I could test that a(24)>10^10.",
+        "From _Robert Israel_, Jan 14 2016: (Start)",
+        "For n >= 2, a(n) == 3 (mod 4).",
+        "2^k+3 is in the sequence if 2^(k-1)+1 and 2^(k-1)+3 are primes, i.e. 2^(k-1)+1 is in the intersection of A019434 and A001359.  The only known members of the sequence in this class are 7, 11, 35, 131075.",
+        "2^k+7 is in the sequence if 2^(k-1)+3 and 2^(k-1)+7 are primes: thus 2^(k-1)+3 is in A057733 and 2^(k-1)+7 is in A104066.  Members of the sequence in this class include 15, 39, 135, 131079, 524295, 536870919, 2147483655 (but no more for k <= 2000).",
+        "(End)",
+        "a(25) > 2^38. - _Giovanni Resta_, Apr 10 2016"
+    ],
+    "example": [
+        "Decimal and binary forms of the first few members:",
+        "1  6           110",
+        "2  7           111",
+        "3  11          1011",
+        "4  15          1111",
+        "5  35          100011",
+        "6  39          100111",
+        "7  63          111111",
+        "8  135         10000111",
+        "9  255         11111111",
+        "10 999         1111100111",
+        "11 2175        100001111111",
+        "12 8223        10000000011111",
+        "13 16383       11111111111111",
+        "14 57735       1110000110000111 (binary palindrome with 5 digit runs)",
+        "15 131075      100000000000000011",
+        "16 131079      100000000000000111",
+        "17 262143      111111111111111111",
+        "18 524295      10000000000000000111",
+        "19 1048575     11111111111111111111",
+        "20 536870919   100000000000000000000000000111",
+        "21 1073735679  111111111111111110011111111111",
+        "22 2147483655  10000000000000000000000000000111",
+        "23 4294967295  11111111111111111111111111111111",
+        "24 17179770879 1111111111111111100111111111111111"
+    ],
+    "maple": [
+        "filter:= proc(n) local B,k,y;",
+        "   if not isprime(floor(n/2)) then return false fi;",
+        "   B:= convert(n,base,2);",
+        "   for k from 2 to nops(B) do",
+        "     if B[k] <> B[k-1] then",
+        "       y:= n mod 2^(k-1);",
+        "       if not isprime((y+n-B[k]*2^(k-1))/2) then return false fi",
+        "     fi",
+        "   od;",
+        "   true",
+        "end proc:",
+        "select(filter, [6, seq(i,i=7..10^6,4)]); # _Robert Israel_, Jan 14 2016"
+    ],
+    "mathematica": [
+        "Select[Range[2^20], AllTrue[Function[w, Map[FromDigits[#, 2] &@ Drop[w, {#}] &, Range@ Length@ w]]@ IntegerDigits[#, 2], PrimeQ] &] (* _Michael De Vlieger_, Jan 16 2016, Version 10 *)"
+    ],
+    "program": [
+        "(PARI) DroppingAnyDigitGivesAPrime(N,b) = {",
+        "\\\\ Property-testing function; returns 1 if true for N, 0 otherwise",
+        "\\\\ Works with any base b. Here used with b=2.",
+        "  my(k=b,m); if(N<b,return(0));",
+        "  while(N>=(k\\b), m=(N\\k)*(k\\b)+(N%(k\\b));",
+        "    if ((m<2)||(!isprime(m)),return(0)); k*=b);",
+        "  return(1);",
+        "}"
+    ],
+    "xref": [
+        "Cf. A000668, A001359, A005811, A019434, A034895 (base 10), A051362, A057733, A104066."
+    ],
+    "keyword": "nonn,base,more,hard",
+    "offset": "1,1",
+    "author": "_Stanislav Sykora_, Jan 14 2016",
+    "ext": [
+        "a(24) from _Giovanni Resta_, Apr 10 2016"
+    ],
+    "references": 1,
+    "revision": 27,
+    "time": "2016-04-10T11:16:36-04:00",
+    "created": "2016-02-21T20:02:55-05:00"
+}

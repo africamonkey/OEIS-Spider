@@ -1,0 +1,32 @@
+{
+    "number": 34698,
+    "data": "2,7,31,113,233,647,1487,4919,6329,7951,26833,47737,53623,128959,135697,142327,1312777,3178289,6061607,26564393,32426081,102958417,209074609,323901311",
+    "name": "a(n) = smallest prime such that a(1), ..., a(n-1) are squares mod a(n).",
+    "mathematica": [
+        "residueQ[n_, p_] := JacobiSymbol[n, p] == 1; a[1] = 2;  a[n_] := a[n] = For[r = Range[n - 1]; p = NextPrime[a[n - 1]], True, p = NextPrime[p], If[AllTrue[r, residueQ[a[#], p] &], Return[p]]]; Table[Print[\"a(\", n, \") = \", a[n]]; a[n], {n, 1, 24}] (* _Jean-Fran\u00e7ois Alcover_, Feb 16 2018 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a034698 n = a034698_list !! (n-1)",
+        "a034698_list = f [2..] [1] where",
+        "   f (x:xs) ys | a010051' x == 1 &&",
+        "                 (and $ map (isSquMod x) ys) = x : f xs (x:ys)",
+        "               | otherwise                   = f xs ys",
+        "   isSquMod u v = v `mod` u `elem` (map ((`mod` u) . (^ 2)) [0..u-1])",
+        "-- _Reinhard Zumkeller_, Mar 28 2012"
+    ],
+    "xref": [
+        "Cf. A034700.",
+        "Cf. A010051, A034791."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "E. M. Rains (rains(AT)caltech.edu)",
+    "ext": [
+        "More terms from _David W. Wilson_"
+    ],
+    "references": 3,
+    "revision": 15,
+    "time": "2018-02-16T04:15:43-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

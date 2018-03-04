@@ -1,0 +1,43 @@
+{
+    "number": 213273,
+    "data": "2,4,7,9,11,15,17,21,23,27,29,32,37,40,43,46,49,53,57,61,63,67,71",
+    "name": "The smallest m such that the complete bipartite graph K_{n,n} has a coprime labeling using labels from {1,...,m}.",
+    "comment": [
+        "A prime labeling of a graph G is a labeling of the vertices with the integers 1, 2, ..., v (where v is the number of vertices) such that any two adjacent vertices have labels that are relatively prime. Here we are allowing the largest label m >= v and calling that a coprime labeling. Our goal is to find the smallest m that makes the labeling possible for K_{n,n} (which clearly does not have a prime labeling for n>2)."
+    ],
+    "link": [
+        "Adam H. Berliner, N. Dean, J. Hook, A. Marr, A. Mbirika, \u200bC. McBee, <a href=\"https://arxiv.org/abs/1604.07698\">Coprime and prime labelings of graphs</a>, arXiv preprint arXiv:1604.07698 [math.CO], 2016."
+    ],
+    "example": [
+        "For n=12 and K_{12,12} the two independent sets would be labeled {1,3,5,9,15,17,19,23,25,27,29,31} and {2,4,7,8,11,13,14,16,22,26,28,32}."
+    ],
+    "maple": [
+        "b:= proc(n, k, t, s) option remember;",
+        "      nops(s)>=t and (k>=t or n>1 and (b(n-1, k, t, s) or",
+        "      b(n-1, k+1, t, select(x-> igcd(n, x)=1, s))))",
+        "    end:",
+        "a:= proc(n) option remember; local m; forget(b);",
+        "      for m from `if`(n=1, 1, a(n-1))",
+        "      while not b(m, 1, n, {$2..m}) do od; m",
+        "    end:",
+        "seq(a(n), n=1..14);  # _Alois P. Heinz_, Jun 16 2012"
+    ],
+    "mathematica": [
+        "b[n_, k_, t_, s_] := b[n, k, t, s] = Length[s] >= t && (k >= t || n > 1 && (b[n - 1, k, t, s] || b[n - 1, k + 1, t, Select[s, GCD[n, #] == 1 &]]));",
+        "a[n_] := a[n] = Module[{m}, m = If[n == 1, 1, a[n - 1]]; While[!b[m, 1, n, Range[2, m]], m++]; m];",
+        "Table[Print[\"a(\", n, \") = \", a[n]]; a[n], {n, 1, 23}] (* _Jean-Fran\u00e7ois Alcover_, Nov 06 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A213806, A284875, A291465."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "Adam Berliner, Nate Dean, Jonelle Hook, _Alison Marr_, _Aba Mbirika_, Cayla McBee, Jun 08 2012",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jun 16 2012"
+    ],
+    "references": 3,
+    "revision": 54,
+    "time": "2017-11-06T08:51:58-05:00",
+    "created": "2012-06-17T08:39:24-04:00"
+}

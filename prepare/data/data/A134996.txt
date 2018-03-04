@@ -1,0 +1,41 @@
+{
+    "number": 134996,
+    "data": "2,5,11,101,181,1181,1811,18181,108881,110881,118081,120121,121021,121151,150151,151051,151121,180181,180811,181081,188011,188801,1008001,1022201,1028011,1055501,1058011,1082801,1085801,1088081",
+    "name": "Dihedral calculator primes: p, p upside down, p in a mirror, p upside-down-and-in-a-mirror are all primes.",
+    "comment": [
+        "The digits of a(n) are restricted to 0, 1, 2, 5, 8. - _Ivan N. Ianakiev_, Oct 08 2015",
+        "The first term containing all the possible digits is 108225151. There are 2958 such terms up to 10^12, the last one in this range being 188885250551. - _Giovanni Resta_, Oct 08 2015"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A134996/b134996.txt\">Table of n, a(n) for n = 1..7174</a>",
+        "C. K. Caldwell, The Prime Glossary, <a href=\"http://primes.utm.edu/glossary/page.php?sort=DihedralPrime\">Dihedral Prime</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/DihedralPrime.html\">Dihedral Prime.</a>"
+    ],
+    "example": [
+        "120121 is such a number because 120121, 121021 (upside down), 151051 (mirror) and 150151 are all prime. (This is the smallest one in which all four numbers are distinct.)"
+    ],
+    "mathematica": [
+        "lst1={2,5};",
+        "startQ[n_]:=First[IntegerDigits[n]]==1;",
+        "subQ[n_]:=Module[{lst={0,1,2,5,8}},SubsetQ[lst,Union[IntegerDigits[n]]]];",
+        "rev[n_]:=Reverse[IntegerDigits[n]];",
+        "updown[n_]:=FromDigits[rev[n]];",
+        "mirror[n_]:=FromDigits[rev[n]/.{2-> 5,5-> 2}];",
+        "updownmirror[n_]:=FromDigits[rev[mirror[n]]];",
+        "lst2=Select[Range@188801,And[startQ[#],subQ[#],PrimeQ[#],PrimeQ[updown[#]],PrimeQ[mirror[#]],PrimeQ[updownmirror[#]]]&];",
+        "Join[lst1,lst2] (* _Ivan N. Ianakiev_, Oct 08 2015 *)"
+    ],
+    "xref": [
+        "Cf. A038136, A048660, A048662."
+    ],
+    "keyword": "nonn,base,nice",
+    "offset": "1,1",
+    "author": "Mike Keith (domnei(AT)aol.com)",
+    "ext": [
+        "5 added by _Patrick Capelle_, Feb 06 2008"
+    ],
+    "references": 4,
+    "revision": 30,
+    "time": "2015-10-08T16:43:57-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

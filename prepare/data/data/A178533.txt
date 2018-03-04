@@ -1,0 +1,37 @@
+{
+    "number": 178533,
+    "data": "1,2,15,220,5025,159066,6515551,330344736,20099812977,1434653999650,118051188070431,11045624947772328,1162186160312303737,136250833163724567666,17661781851438961602255,2514858304152906320391136",
+    "name": " E.g.f. satisfies: A(x) = Sum_{n>=0} A_{n}(x)^(n+1)/n! where A_{n}(x) denotes the n-th iteration of A(x).",
+    "comment": [
+        " Not the same as A140054."
+    ],
+    "formula": [
+        " E.g.f. satisfies: A_{k}(x) = Sum_{n>=0} A_{n+k-1}(x)^(n+1)/n! where A_{n}(x) denotes the n-th iteration of A(x): A_{n}(x) = A_{n-1}(A(x)) with A_0(x)=x."
+    ],
+    "example": [
+        " E.g.f.: A(x) = x + 2*x^2/2! + 15*x^3/3! + 220*x^4/4! + 5025*x^5/5! +...",
+        "The e.g.f. equals the series:",
+        "A(x) = x + A(x)^2 + A(A(x))^3/2! + A(A(A(x)))^4/3! + A(A(A(A(x))))^5/4! +...+ A_{n}(x)^(n+1)/n! +...",
+        "Related expansions:",
+        "A(A(x)) = x + 4*x^2/2! + 42*x^3/3! + 764*x^4/4! + 20400*x^5/5! +...",
+        "A(A(A(x))) = x + 6*x^2/2! + 81*x^3/3! + 1776*x^4/4! + 55125*x^5/5! +...",
+        "A(A(A(A(x)))) = x + 8*x^2/2! + 132*x^3/3! + 3400*x^4/4! + 121080*x^5/5! +...",
+        "The series reversion of the e.g.f. is given by:",
+        "A_{-1}(x) = x - x^2 - A(A(x))^3/2! - A(A(A(x)))^4/3! - A(A(A(A(x))))^5/4! -...- A_{n-1}(x)^(n+1)/n! -...",
+        "A_{-1}(x) = x - 2*x^2/2! - 3*x^3/3! - 40*x^4/4! - 795*x^5/5! - 22356*x^6/6! -..."
+    ],
+    "program": [
+        " (PARI) {ITERATE(F,n,p)=local(G=x);for(i=1,n,G=subst(F,x,G+x*O(x^p)));G}",
+        "{a(n)=local(A=x+x^2+x*O(x^n));for(i=1,n,A=sum(m=0,n,ITERATE(A,m,n)^(m+1)/m!));n!*polcoeff(A,n)}"
+    ],
+    "xref": [
+        " Cf. A140054."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Dec 24 2010",
+    "references": 1,
+    "revision": 6,
+    "time": "2012-03-30T18:37:22-04:00",
+    "created": "2010-11-12T14:27:12-05:00"
+}

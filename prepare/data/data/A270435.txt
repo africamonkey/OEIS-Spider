@@ -1,0 +1,29 @@
+{
+    "number": 270435,
+    "data": "96,220,222,226,272,274,276,288,376,380,394,396,398,412,414,416,422,434,448,458,462,464,466,472,476,480,482,484,486,506,508,512,514,522,524,528,590,592,594,596,618,620,622,636,638,648,652,654,656,658,662,678,680,682,684,686,688,704,706,708,992,1008,1016,1024",
+    "name": "Positions of zeros in A270434; numbers n for which A270432(n) = A270433(n).",
+    "comment": [
+        "Numbers n for which in range 1 .. n there are exactly same number of such s that A048673(s) and A064216(s) are of the same parity than there are such t that A048673(t) and A064216(t) are of opposite parity.",
+        "No other terms after a(2651) = 2346398 in range 1 .. 2^25."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A270435/b270435.txt\">Table of n, a(n) for n = 1..2651</a>"
+    ],
+    "mathematica": [
+        "nn = 2048; f[n_] := (Times @@ Power[If[# == 1, 1, NextPrime@ #] & /@ First@ #, Last@ #] + 1)/2 &@ Transpose@ FactorInteger@ n; g[n_] := Times @@ Power[If[# == 1, 1, NextPrime[#, -1]] & /@ First@ #, Last@ #] &@ Transpose@ FactorInteger[2 n - 1]; s = Select[Range@ nn, Xor[EvenQ@ f@ #, OddQ@ g@ #] &]; t = Select[Range@ nn, Xor[EvenQ@ f@ #, EvenQ@ g@ #] &]; Flatten@ Position[Table[Count[s, k_ /; k <= n] - Count[t, k_ /; k <= n], {n, nn/2}], n_ /; n == 0] (* _Michael De Vlieger_, Mar 19 2016 *)"
+    ],
+    "program": [
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A270435 (ZERO-POS 1 1 A270434))"
+    ],
+    "xref": [
+        "Cf. A048673, A064216, A270432, A270433, A270434."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Mar 17 2016",
+    "references": 2,
+    "revision": 10,
+    "time": "2016-03-20T12:57:01-04:00",
+    "created": "2016-03-20T12:57:01-04:00"
+}

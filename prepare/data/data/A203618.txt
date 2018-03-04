@@ -1,0 +1,48 @@
+{
+    "number": 203618,
+    "data": "1,2,6,42,104,120,165,245,272,561,1806,47058,765625,1137501,3874128,9131793,2214502422,52495396602",
+    "name": "Solutions of (n'+1)' = n-1, where n' is the arithmetic derivative of n.",
+    "comment": [
+        "The differential equation whose solutions are the primary pseudoperfect numbers is n\u2019 = k*n-1, with k positive integer. Let us rewrite the equation as n\u2019+1 = k*n and then take the derivative: (n\u2019+1)' = (k*n)\u2019 = k\u2019*n + k*n\u2019 = k\u2019*n + k*(k*n-1) = (k\u2019+k^2)*n-k. Let k=1: (n\u2019+1)\u2019 = n-1. The solutions of this equation are the primary pseudoperfect numbers plus couples of numbers (x,y) for which x\u2019 = y-1 and y\u2019 = x-1.",
+        "A054377 is a subset of this sequence.",
+        "a(17) > 10^9. - _Michel Marcus_, Nov 05 2014",
+        "a(19) > 10^11. - _Giovanni Resta_, Jun 04 2016"
+    ],
+    "example": [
+        "n=765625. 765625\u2019=1137500; (1137500+1)\u2019=1137501\u2019=765624=765625-1.",
+        "n=1137501. 1137501\u2019=765624; (765624+1)\u2019=765625\u2019=1137500=1137501-1."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "P:=proc(i)",
+        "local a,n,p,pfs;",
+        "for n from 1 to i do",
+        "  pfs:=ifactors(n)[2]; a:=n*add(op(2,p)/op(1,p),p=pfs);",
+        "  pfs:=ifactors(a+1)[2]; a:=(a+1)*add(op(2,p)/op(1,p),p=pfs);",
+        "  if a=n-1 then print(n); fi;",
+        "od;",
+        "end:",
+        "P(10000000);"
+    ],
+    "mathematica": [
+        "A003415[n_]:=If[Abs[n]<2,0,n*Total[#2/#1&@@@FactorInteger[Abs[n]]]];",
+        "Select[Range[1,100000],A003415[A003415[#]+1]==#-1&] (* _Julien Kluge_, Jul 08 2016 *)"
+    ],
+    "program": [
+        "(PARI) ad(n) = sum(i=1, #f=factor(n)~, n/f[1, i]*f[2, i]);",
+        "isok(n) = ad(ad(n)+1) == n-1; \\\\ _Michel Marcus_, Nov 05 2014"
+    ],
+    "xref": [
+        "Cf. A054377, A203617."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Jan 20 2012",
+    "ext": [
+        "a(17)-a(18) from _Giovanni Resta_, Jun 04 2016"
+    ],
+    "references": 3,
+    "revision": 30,
+    "time": "2016-07-08T07:07:04-04:00",
+    "created": "2012-01-25T13:35:58-05:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 54986,
+    "data": "13,19,23,26,29,39,46,49,59,69,79,89,103,109,111,133,199,203,206,209,211,218,222,233,266,299,309,311,327,333,399,406,409,411,412,418,422,433,436,444,466,499,509,511,515,533,545,555,599,609,611,618,622,627",
+    "name": "Base-10 modest numbers.",
+    "comment": [
+        "A number is modest if there exists at least one partitioning of its decimal expansion wherein the number divided by the second part leaves a remainder of the first part."
+    ],
+    "reference": [
+        "Problem 1291, J. Rec. Math., 17 (No.2, 1984), 140-141."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A054986/b054986.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "2036 is modest because 2036 mod 36 = 20. 2037 is modest because 2037 mod 037 = 2."
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (inits, tails)",
+        "a054986 n = a054986_list !! (n-1)",
+        "a054986_list = filter modest [1..] where",
+        "   modest x = or $ zipWith m",
+        "              (map read $ (init $ tail $ inits $ show x) :: [Integer])",
+        "              (map read $ (tail $ init $ tails $ show x) :: [Integer])",
+        "      where m u v = u < v && (x - u) `mod` v == 0",
+        "-- _Reinhard Zumkeller_, Mar 26 2012",
+        "(PARI) is(n,p=1)=while(n>p*=10,n%p&&(n%(n%p)==n\\p)&&return(1)) \\\\ _M. F. Hasler_, Sep 17 2014"
+    ],
+    "xref": [
+        "Cf. A007627."
+    ],
+    "keyword": "easy,nonn,base",
+    "offset": "1,1",
+    "author": "_Hans Havermann_, May 30 2000",
+    "references": 4,
+    "revision": 21,
+    "time": "2014-09-17T09:53:36-04:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

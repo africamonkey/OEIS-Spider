@@ -1,0 +1,40 @@
+{
+    "number": 108348,
+    "data": "1,3,4,6,7,8,12,13,14,15,18,20,24,30,31,32,38,40,42,44,48,54,57,60,62,63,68,72,74,80,84,90,98,102,104,108,110,114,121,127,128,132,133,138,140,150,152,156,158,164,168,174,180,182,183,192,194,198,200",
+    "name": "Numbers of the form p^k + p^(k-1) + ... + p + 1 (where p is a prime and k>=0) in ascending order.",
+    "comment": [
+        "A proper subset of A002191 (e.g. 28 is in A002191, but not in this sequence). a(15)=31 admits two representations: 31=2^4+2^3+2^2+2+1=5^2+5+1. Are there other numbers with two or more representation?",
+        "I have checked all the sums of primes up to prime number 56873 to a sum total >= 10^100 and have not come across another number that has multiple representations. - Patrick Schutte (patrick(AT)onyxsa.co.za), Mar 28 2007"
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A108348/b108348.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(2)=3=2+1 since a(1)=1 and 2 is not expressible in the required form."
+    ],
+    "program": [
+        "(PARI) A108348(n)={ local(m=1, a=[m]); while( #a<n, m++; forprime(p=2,m, if( m%p==1 && m*(p-1)==p^round(log(m*(p-1))/log(p))-1, a=concat(a,m);next(2)) ));a }; a=A108348(1000) [M. F. Hasler]",
+        "(GAP) SumNum := function ( FNum) local a,ap,b,bp,at,bt; a := 2; repeat at := 1; ap := 1; repeat at := at + a^ap; b := 2; repeat bt := 1; bp := 1; repeat bt := bt + b^bp; if at = bt and bp > 1 and a <> b then Print(\"a \",a,\" ap \",ap,\" at \", at,\" \"); Print(\"b \",b,\" bp \",bp,\" bt \", bt,\" \"); Print(\"---------------- \"); fi; bp := bp + 1; until bt > at; b := NextPrime(b); until b >=a; ap := ap + 1; until at > 10^100; a := NextPrime(a); until a >FNum; end; - Patrick Schutte (patrick(AT)onyxsa.co.za), Mar 28 2007",
+        "(Haskell)",
+        "a108348 n = a108348_list !! (n-1)",
+        "a108348_list = 1 : f [2..] where",
+        "   f (x:xs) = g a000040_list where",
+        "     g (p:ps) = h 0 $ map ((`div` (p - 1)) . subtract 1) $",
+        "                          iterate (* p) (p ^ 2) where",
+        "       h i (pp:pps) | pp > x    = if i == 0 then f xs else g ps",
+        "                    | pp < x    = h 1 pps",
+        "                    | otherwise = x : f xs",
+        "-- _Reinhard Zumkeller_, Nov 26 2013"
+    ],
+    "xref": [
+        "Cf. A002191.",
+        "Cf. A000040, A090503."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Franz Vrabec_, Jul 01 2005",
+    "references": 3,
+    "revision": 9,
+    "time": "2013-11-26T14:30:27-05:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

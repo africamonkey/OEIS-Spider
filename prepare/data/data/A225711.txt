@@ -1,0 +1,31 @@
+{
+    "number": 225711,
+    "data": "385,2737,6061,6721,17641,24769,25201,31521,34561,49105,66385,76609,79401,113221,136081,180481,194833,199801,254881,268801,311905,321937,328321,362881,436645,469201,506521,545905,547561,558145,628705,642505,649153,778261,884305",
+    "name": "Composite squarefree numbers n such that p(i)+1 divides n-1, where p(i) are the prime factors of n.",
+    "link": [
+        "Paolo P. Lava, <a href=\"/A225711/b225711.txt\">Table of n, a(n) for n = 1..150</a>"
+    ],
+    "example": [
+        "Prime factors of 24769 are 17, 31 and 47. We have that (24769-1)/(17+1) = 1376, (24769-1)/(31+1) = 774 and (24769-1)/(47+1) = 516."
+    ],
+    "maple": [
+        "with(numtheory); A225711:=proc(i,j) local c, d, n, ok, p, t;",
+        "for n from 2 to i do if not isprime(n) then p:=ifactors(n)[2]; ok:=1;",
+        "for d from 1 to nops(p) do if p[d][2]>1 or p[d][1]=j then ok:=0; break; fi;",
+        "if  not type((n+j)/(p[d][1]-j),integer) then ok:=0; break; fi; od;",
+        "if ok=1 then print(n); fi; fi; od; end: A225711(10^9,-1);"
+    ],
+    "mathematica": [
+        "t = {}; n = 0; len = -2; While[len <= 262, n++; {p, e} = Transpose[FactorInteger[n]]; If[Length[p] > 1 && Union[e] == {1} && Union[Mod[n - 1, p + 1]] == {0}, AppendTo[t, n]; len = len + Length[IntegerDigits[n]] + 2]]; t (* _T. D. Noe_, May 17 2013 *)"
+    ],
+    "xref": [
+        "Cf. A208728, A225702-A225710, A225712-A225720."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, May 13 2013",
+    "references": 3,
+    "revision": 12,
+    "time": "2013-05-17T15:16:24-04:00",
+    "created": "2013-05-16T13:10:07-04:00"
+}

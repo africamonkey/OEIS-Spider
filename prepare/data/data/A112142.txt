@@ -1,0 +1,46 @@
+{
+    "number": 112142,
+    "data": "1,12,66,232,639,1596,3774,8328,17283,34520,66882,125568,229244,409236,716412,1231048,2079237,3459264,5677832,9200232,14729592,23325752,36567222,56778888,87369483,133315692,201825420,303257512",
+    "name": "McKay-Thompson series of class 8B for the Monster group.",
+    "comment": [
+        "Ramanujan theta functions: f(q) (see A121373), phi(q) (A000122), psi(q) (A010054), chi(q) (A000700)."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A112142/b112142.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "D. Ford, J. McKay and S. P. Norton, <a href=\"http://dx.doi.org/10.1080/00927879408825127\">More on replicable functions</a>, Commun. Algebra 22, No. 13, 5175-5193 (1994).",
+        "M. Somos, <a href=\"http://cis.csuohio.edu/~somos/multiq.pdf\">Introduction to Ramanujan theta functions</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RamanujanThetaFunctions.html\">Ramanujan Theta Functions</a>",
+        "<a href=\"/index/Mat#McKay_Thompson\">Index entries for McKay-Thompson series for Monster simple group</a>"
+    ],
+    "formula": [
+        "Expansion of chi(q)^12 in powers of q where chi() is a Ramanujan theta function.",
+        "Expansion of q^(1/2) * (eta(q^2)^2 / (eta(q) * eta(q^4)))^12 in powers of q.",
+        "G.f.: Product_{k>0} (1 + (-x)^k)^-12 = Product_{k>0} (1 + x^(2*k - 1))^-12.",
+        "a(n) = (-1)^n * A007249(n). Convolution inverse of A124863.",
+        "G.f.: T(0), where T(k) = 1 - 1/(1 - 1/(1 - 1/(1+(x)^(2*k+1))^12/T(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Nov 06 2013",
+        "a(n) ~ exp(Pi*sqrt(2*n)) / (2^(5/4) * n^(3/4)). - _Vaclav Kotesovec_, Aug 27 2015"
+    ],
+    "example": [
+        "1 + 12*x + 66*x^2 + 232*x^3 + 639*x^4 + 1596*x^5 + 3774*x^6 + 8328*x^7 + ...",
+        "T8B = 1/q + 12*q + 66*q^3 + 232*q^5 + 639*q^7 + 1596*q^9 + 3774*q^11 + ..."
+    ],
+    "mathematica": [
+        "a[ n_] := With[ {m = InverseEllipticNomeQ @ q}, SeriesCoefficient[ ((1 - m) m / 16 / q)^(1/2), {q, 0, n}]] (* _Michael Somos_, Jul 22 2011 *)",
+        "a[ n_] := SeriesCoefficient[ Product[ 1 + x^k, {k, 1, n, 2}]^-12, {x, 0, n}] (* _Michael Somos_, Jul 22 2011 *)",
+        "nmax = 50; CoefficientList[Series[Product[(1 + x^(2*k+1))^12, {k, 0, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Aug 27 2015 *)",
+        "QP = QPochhammer; s = (QP[q^2]^2/(QP[q]*QP[q^4]))^12 + O[q]^50; CoefficientList[s, q] (* _Jean-Fran\u00e7ois Alcover_, Nov 16 2015, adapted from PARI *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = local(A); if( n<0, 0, A = x * O(x^n); polcoeff( ( eta(x^2 + A)^2 / (eta(x + A) * eta(x^4 + A)))^12, n))}"
+    ],
+    "xref": [
+        "Cf. A007249, A124863."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Michael Somos_, Aug 28 2005",
+    "references": 5,
+    "revision": 31,
+    "time": "2017-01-02T08:56:16-05:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

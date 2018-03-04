@@ -1,0 +1,71 @@
+{
+    "number": 29837,
+    "data": "0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7",
+    "name": "Binary order of n: log_2(n) rounded up to next integer.",
+    "comment": [
+        "Or, ceiling(log_2(n)).",
+        "Worst-case cost of binary search.",
+        "Equal to number of binary digits in n unless n is a power of 2 when it is one less.",
+        "Thus a(n) gives the length of the binary representation of n-1 (n>=2), which is also A070939(n-1).",
+        "Let x(0)=n>1 and x(k+1)=x(k)-floor(x(k)/2), then a(n) is the smallest integer such that x(a(n))=1. - _Benoit Cloitre_, Aug 29 2002",
+        "Also number of division steps when go from n to 1 by process of adding 1 if odd, or dividing by 2 if even. - _Cino Hilliard_, Mar 25 2003",
+        "Number of ways to write n as (x+2^y), x>=0. Number of ways to write n+1 as 2^x+3^y (cf. A004050). - _Benoit Cloitre_, Mar 29 2003",
+        "The minimum number of cuts for dividing an object into n (possibly unequal) pieces. - Karl Ove Hufthammer (karl(AT)huftis.org), Mar 29 2010",
+        "Partial sums of A209229; number of powers of 2 not greater than n. - _Reinhard Zumkeller_, Mar 07 2012"
+    ],
+    "reference": [
+        "R. L. Graham, D. E. Knuth and O. Patashnik, Concrete Mathematics, Addison-Wesley, 1989, p. 70.",
+        "G. J. E. Rawlins, Compared to What? An Introduction to the Analysis of Algorithms, W. H. Freeman, 1992; see pp. 108, 118."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A029837/b029837.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Cino Hilliard, <a href=\"http://groups.msn.com/BC2LCC/page.msnw?fc_p=%2Fkx%2Bp%20problems&amp;fc_a=0\">The x+1 conjecture</a>",
+        "L. Levine, <a href=\"http://arXiv.org/abs/math.CO/0409408\">Fractal sequences and restricted Nim</a>, arXiv:math/0409408 [math.CO], 2004.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/BitLength.html\">Bit Length.</a>",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "formula": [
+        "a(n) = ceiling(log_2(n)).",
+        "a(1) = 0; for n>1, a(2n) = a(n)+1, a(2n+1) = a(n)+1. Alternatively, a(1) = 0; for n>1, a(n) = a(floor(n/2)) + 1.",
+        "a(n) = k such that n^(1/k-1) > 2 > n^(1/k), or the least value of k for which floor n^(1/k) = 1. a(n) = k for all n such that 2^(k-1) < n < 2^k. - _Amarnath Murthy_, May 06 2001",
+        "G.f.: x/(1-x) * Sum(k>=0, x^2^k). - _Ralf Stephan_, Apr 13 2002",
+        "A062383(n-1) = 2^a(n). - _Johannes W. Meijer_, Jul 06 2009",
+        "a(n+1) = -sum(k=1..n, mu(2*k)*floor(n/k)). - _Benoit Cloitre_, Oct 21 2009"
+    ],
+    "example": [
+        "a(1) = 0, since log_2(1) = 0. a(2) = 1, since log_2(2) = 1. a(3) = 2, since log_2(3) = 1.58... If a(n)=7, then n=65, 66, ..., 127, 128."
+    ],
+    "maple": [
+        "a:= proc(n) local p; p:= ilog2(n); p +`if`(2^p<n, 1, 0) end:",
+        "seq(a(n), n=1..120);  # _Alois P. Heinz_, Mar 18 2013"
+    ],
+    "mathematica": [
+        "f[n_] := Ceiling[Log[2, n]]; Array[f, 105] (* _Robert G. Wilson v_, Dec 09 2005 *)",
+        "Table[IntegerLength[n - 1, 2], {n, 1, 105}] (* _Peter Luschny_, Dec 02 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,0,ceil(log(n)/log(2)))",
+        "(PARI) /* Set p = 1, then: */",
+        "xpcount(n,p) = for(x=1,n, p1 = x; ct=0; while(p1>1, if(p1%2==0,p1/=2; ct++,p1 = p1*p+1)); print1(ct\" \"))",
+        "(Haskell)",
+        "a029837 n = a029837_list !! (n-1)",
+        "a029837_list = scanl1 (+) a209229_list",
+        "-- _Reinhard Zumkeller_, Mar 07 2012",
+        "(Common Lisp) (defun A029837 (n) (integer-length (1- n))) ; _James Spahlinger_, Oct 15 2012"
+    ],
+    "xref": [
+        "Cf. A000523, A070939, A000193, A000195, A004233.",
+        "Used for several definitions: A029827, A036378-A036390. Partial sums: A001855."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Additional comments from Daniele Parisse (daniele.parisse(AT)m.dasa.de)",
+        "More terms from _Michael Somos_, Aug 02 2002"
+    ],
+    "references": 117,
+    "revision": 47,
+    "time": "2017-12-02T11:56:30-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

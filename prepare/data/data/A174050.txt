@@ -1,0 +1,51 @@
+{
+    "number": 174050,
+    "data": "2,13,17,29,37,53,73,89,97,101,113,173,181,193,197,233,241,257,277,293,313,337,349,353,373,409,421,433,449,457,521,541,569,577,593,613,641,661,673,677,709,733,757,761,809,821,853,881,929,1021,1033,1049,1069",
+    "name": "Primes of the form x^2 + y^2 such that L(x)* L(y) = 1, where L is the Liouville lambda-function A008836.",
+    "comment": [
+        "One contribution to the set of solutions is from (x,y) where x and y are both prime, see A045637.",
+        "Another set of solutions is contributed if (x,y) are both in A026424."
+    ],
+    "example": [
+        "2 is in the sequence because 2 = 1 + 1 and L(1)*L(1)= (1) *(1) = 1.",
+        "13 is in the sequence because 13 = 2^2 + 3^2 and L(2)*L(3)= (-1)*(-1) = 1.",
+        "193 is in the sequence because 193 = 12^2 + 7^2 and L(12)*L(7)= (-1)*(-1) = 1."
+    ],
+    "maple": [
+        "isA174050 := proc(n)",
+        "        local x,y ;",
+        "        if not isprime(n) then",
+        "                return false;",
+        "        end if;",
+        "        for x from 1 do",
+        "                if x^2 > n then",
+        "                        return false;",
+        "                end if;",
+        "                if issqr(n-x^2) then",
+        "                        y := sqrt(n-x^2) ;",
+        "                        if A008836(x) * A008836(y) = 1 then",
+        "                                return true;",
+        "                        end if;",
+        "                end if;",
+        "        end do:",
+        "end proc:",
+        "for n from 1 to 1100 do",
+        "        if isA174050(n) then",
+        "                printf(\"%d,\\n\",n) ;",
+        "        end if;",
+        "end do: # _R. J. Mathar_, Jul 09 2012"
+    ],
+    "mathematica": [
+        "lambdaQ[{x_, y_}] := LiouvilleLambda[x]*LiouvilleLambda[y] == 1; Select[ Prime /@ Range[200], Or @@ lambdaQ /@ PowersRepresentations[#, 2, 2] &] (* _Jean-Fran\u00e7ois Alcover_, Jul 30 2013 *)"
+    ],
+    "xref": [
+        "Cf. A002819, A002313, A174054."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Mar 06 2010",
+    "references": 1,
+    "revision": 8,
+    "time": "2013-07-30T13:55:15-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

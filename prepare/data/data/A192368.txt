@@ -1,0 +1,38 @@
+{
+    "number": 192368,
+    "data": "1,1,6,19,94,396,1870,8541,40284,189274,899260,4281168,20487156,98299384,473118174,2282322211,11034087438,53443135944,259283934816,1259795078566,6129223177272,29856164309124,145592506783224,710686739172096,3472285996766556,16979257639328076",
+    "name": "Number of lattice paths from (0,0) to (n,n) using steps (1,0), (2,0), (0,2), (1,1).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A192368/b192368.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f. -16*(3*s+1)*s^(3/2)/(3*s^4+2*s^3-76*s^2+6*s+1) where s satisfies 16*x*(3*s+1)*s+(s^2-18*s+1)*(s-1) = 0. - _Mark van Hoeij_, Apr 16 2013"
+    ],
+    "maple": [
+        "s := RootOf( 16*x*(3*s+1)*s+(s^2-18*s+1)*(s-1), s):",
+        "ogf := -16*(3*s+1)*s^(3/2)/(3*s^4+2*s^3-76*s^2+6*s+1):",
+        "series(ogf, x=0, 20); # _Mark van Hoeij_, Apr 16 2013",
+        "# second Maple program:",
+        "b:= proc(x, y) option remember;",
+        "      `if`(min(x, y)<0, 0, `if`(max(x, y)=0, 1,",
+        "       b(x-1, y)+b(x-2, y)+b(x, y-2)+b(x-1, y-1)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..35);  # _Alois P. Heinz_, May 16 2017"
+    ],
+    "program": [
+        "(PARI) /* same as in A092566 but use */",
+        "steps=[[1,0], [2,0], [0,2], [1,1]];",
+        "/* _Joerg Arndt_, Jun 30 2011 */"
+    ],
+    "xref": [
+        "Cf. A001850, A026641, A036355, A137644, A192364, A192365, A192369."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Joerg Arndt_, Jul 01 2011",
+    "references": 3,
+    "revision": 15,
+    "time": "2017-05-16T19:34:14-04:00",
+    "created": "2011-07-01T09:04:15-04:00"
+}

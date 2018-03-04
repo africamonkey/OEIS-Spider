@@ -1,0 +1,38 @@
+{
+    "number": 246792,
+    "data": "1,7,25,25,181,208,208,1867,14345,19609,40918,40918,620326,2552265,2552265,7225612,7225612,16679492,33772734,33772734,33772734,620326386,1516416904,1516416904,4764006481,5272314878,21423652192",
+    "name": "Smallest number m such that for 0 < k < n+1, np(m+k-1) = np(m)-k+1, where np(t) is number of primes p with prime(t) < p < prime(t)^(1 + 1/t).",
+    "comment": [
+        "np(m) = A182134(m).",
+        "According to the definition, numbers np(a(n)), np(a(n)+1), ..., np(a(n)+n-2) and np(a(n)+n-1) are n consecutive numbers in descending order.",
+        "a(34) > 10^12. - _Robert Price_, Dec 07 2014",
+        "See A251736 for the corresponding values of np."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A246792/b246792.txt\">Table of n, a(n) for n = 1..33</a>"
+    ],
+    "example": [
+        "a(15) = 2552265, since np(2552265) = 24, np(2552265+1) = 23 , ..., np(2552265+13) = 11, np(2552265+14) = 10 are 15 consecutive numbers in descending order."
+    ],
+    "mathematica": [
+        "np[t_] := np[t] = Length[Select[Range[Prime[t]+1,Prime[t]^(1+1/t)],PrimeQ]]; a[1]=1; a[n_] := a[n] = (For[m = a[n-1],c = Table[np[m+k-1],{k,n}]; c !=  Reverse[Range[Min[c], Max[c]]], m++]; m); Do[Print[a[n]],{n,15}]"
+    ],
+    "program": [
+        "(PARI) np(n) = primepi(prime(n)^(1+1/n))-n;",
+        "isok(m, n) = {for (k=1, n, if (np(m+k-1) != np(m)-k+1, return (0));); return (1);}",
+        "a(n) = {m = 1; while (! isok(m, n), m++); m;} \\\\ _Michel Marcus_, Dec 07 2014"
+    ],
+    "xref": [
+        "Cf. A000040, A182134, A246791, A251736."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Farideh Firoozbakht_, Oct 16 2014",
+    "ext": [
+        "a(18)-a(33) from _Robert Price_, Dec 07 2014"
+    ],
+    "references": 3,
+    "revision": 26,
+    "time": "2014-12-22T22:11:33-05:00",
+    "created": "2014-10-17T23:48:21-04:00"
+}

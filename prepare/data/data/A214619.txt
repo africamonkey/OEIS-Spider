@@ -1,0 +1,58 @@
+{
+    "number": 214619,
+    "data": "148,162,180,216,264,270,296,324,432,450,462,486,540,648,720,810,814,864,962,1035,1056,1072,1080,1089,1107,1125,1215,1224,1248,1250,1260,1269,1296,1320,1326,1359,1386,1395,1426,1443,1450,1458,1480,1482,1485,1488,1515",
+    "name": "Numbers n such that at least one other integer m exists with the same smallest prime factor, same largest prime factor, and same set of decimal digits as n.",
+    "comment": [
+        "Decimal digits of m are a permutation of decimal digits of n.",
+        "Conjecture: there is an X such that among integers bigger than X more than 50% are in the sequence."
+    ],
+    "example": [
+        "148 and 814 have the same set of decimal digits, same smallest prime factor 2, and same largest prime factor 37, so both 148 and 814 are in the sequence.",
+        "1080 and 1800 have the same set of decimal digits, same smallest prime factor 2, and same largest prime factor 5."
+    ],
+    "program": [
+        "(Python)",
+        "# primes = [...]",
+        "TOP = 10000",
+        "smallest = [0]*TOP",
+        "largest  = [0]*TOP",
+        "digitset = [0]*TOP",
+        "flags = [0]*TOP",
+        "for n in range(1,TOP):",
+        "    curSm = curLa = curDi = 0",
+        "    t = x = n",
+        "    while x:",
+        "        curDi += 10**( x%10 )",
+        "        x /= 10",
+        "    for p in primes:",
+        "        if t%p==0:",
+        "            if curSm==0:",
+        "                curSm = p",
+        "            curLa = p",
+        "            t/=p",
+        "            while t%p==0:",
+        "                t/=p",
+        "            if t==1:",
+        "                break",
+        "    digitset[n] = curDi",
+        "    smallest[n] = curSm",
+        "    largest[n]  = curLa",
+        "    for k in range(1,n):",
+        "        if smallest[k]==curSm and largest[k]==curLa and digitset[k]==curDi:",
+        "            flags[k]+=1",
+        "            flags[n]+=1",
+        "for n in range(1,TOP):",
+        "    if flags[n]>0:",
+        "        print n,"
+    ],
+    "xref": [
+        "Cf. A214620, A214621."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, Jul 23 2012",
+    "references": 2,
+    "revision": 10,
+    "time": "2012-08-02T16:59:39-04:00",
+    "created": "2012-08-02T16:57:07-04:00"
+}

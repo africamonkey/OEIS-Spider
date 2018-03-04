@@ -1,0 +1,35 @@
+{
+    "number": 287298,
+    "data": "1,1,225,576,38025,751689,10323369,355624164,9814072356,279740499025,8706730814089,23132511879129,11027486960232964,435408094460869201,18362780530794065025,48470866291337805316,39207739576969100808801,1972312183619434816475625,104566626183621314286288961",
+    "name": "a(n) is the largest square with distinct digits in base n.",
+    "comment": [
+        "a(n) does not always have n digits in base n. If n is 5 mod 8 then a number which contains all the digits in base n is congruent to (n-1)n/2 mod (n-1). It will be then divisible by a single power of 2 and not a square.",
+        "a(22) = 340653564758245010607213613056. - _Chai Wah Wu_, May 24 2017"
+    ],
+    "example": [
+        "a(4)=225 which is 3201 in base 4. Higher squares have at least 5 digits in base 4."
+    ],
+    "program": [
+        "(Python)",
+        "from gmpy2 import isqrt, mpz, digits",
+        "def A287298(n): # assumes n <= 62",
+        "    m = isqrt(mpz(''.join(digits(i,n) for i in range(n-1,-1,-1)),n))",
+        "    m2 = m**2",
+        "    d = digits(m2,n)",
+        "    while len(set(d)) < len(d):",
+        "        m -= 1",
+        "        m2 -= 2*m+1",
+        "        d = digits(m2,n)",
+        "    return int(m2) # _Chai Wah Wu_, May 24 2017"
+    ],
+    "keyword": "nonn,base",
+    "offset": "2,3",
+    "author": "_John L. Drost_, May 22 2017",
+    "ext": [
+        "Added a(16)-a(20) and corrected a(12) by _Chai Wah Wu_, May 24 2017"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2017-05-24T13:08:59-04:00",
+    "created": "2017-05-23T00:20:52-04:00"
+}

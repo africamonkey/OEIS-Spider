@@ -1,0 +1,60 @@
+{
+    "number": 45980,
+    "data": "0,1,2,7,8,9,16,19,26,27,28,35,37,54,56,61,63,64,65,72,91,98,117,124,125,126,127,128,133,152,169,189,208,215,216,217,218,224,243,250,271,279,280,296,316,331,335,341,342,343,344,351,370,386,387,397,407,432",
+    "name": "Numbers of the form x^3 + y^3 or x^3 - y^3.",
+    "reference": [
+        "B. C. Berndt, Ramanujan's Notebooks Part IV, Springer-Verlag, see p. 86."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A045980/b045980.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Kevin A. Broughan, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL6/Broughan/broughan25.html\">Characterizing the sum of two cubes</a>, J. Integer Seqs., Vol. 6, 2003.",
+        "M. Kim, <a href=\"http://arXiv.org/abs/math.NT/0210329\">Diophantine equations in two variables</a>",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of cubes</a>"
+    ],
+    "example": [
+        "7 = (2)^3 + (-1)^3."
+    ],
+    "mathematica": [
+        "Union[Select[Sort[Flatten[Table[{j^3-i^3, j^3+i^3}, {i, 0, 20}, {j, i, 20}]]], #<20^3-19^3&]]",
+        "With[{nn=20},Take[Union[Select[Flatten[{Total[#],#[[1]]-#[[2]]}&/@(Tuples[ Range[0,nn],2]^3)],#>-1&]],3*nn]] (* _Harvey P. Dale_, Jun 22 2014 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=fordiv(n,d, my(L=(d^2-n/d)/3); if(denominator(L)==1 && issquare(d^2-4*L), return(1))); 0",
+        "list(lim)={",
+        "    my(v=List(),X,t);     for(x=0,(lim+1/2)^(1/3),",
+        "        X=x^3;",
+        "        for(y=0,min(x,(lim+1/2-X)^(1/3)),",
+        "            listput(v,X+y^3)",
+        "        )",
+        "    );",
+        "    for(x=2,t=sqrtint(lim\\3),",
+        "        X=x^3;",
+        "        for(y=ceil((max(1,X-lim))^(1/3)),x-1,",
+        "            listput(v,X-y^3)",
+        "        )",
+        "    );",
+        "    t=(t+1)^3-t^3;",
+        "    if(t<=lim,listput(v,t));",
+        "    vecsort(Vec(v),,8)",
+        "}; \\\\ _Charles R Greathouse IV_, Jun 12 2012",
+        "(PARI) is(n)=#thue(thueinit(z^3+1),n) \\\\ _Ralf Stephan_, Oct 18 2013",
+        "(Haskell)",
+        "a045980 n = a045980_list !! (n-1)",
+        "a045980_list = 0 : filter f [1..] where",
+        "   f x = g $ takeWhile ((<= 4 * x) . (^ 3)) $ a027750_row x where",
+        "     g [] = False",
+        "     g (d:ds) = r == 0 && a010052 (d ^ 2 - 4 * y) == 1 || g ds",
+        "       where (y, r) = divMod (d ^ 2 - div x d) 3",
+        "-- _Reinhard Zumkeller_, Dec 20 2013"
+    ],
+    "xref": [
+        "Cf. A222304, A222305, A222306, A027750, A010052, A004999, A003325."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_.",
+    "references": 9,
+    "revision": 23,
+    "time": "2014-11-29T22:15:44-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

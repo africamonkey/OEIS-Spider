@@ -1,0 +1,46 @@
+{
+    "number": 71379,
+    "data": "1,1,209,163121,326922081,1346634725665,9939316337679281,119802044788535500753,2205421644124274191535553,58945667435045762187763602753,2198513228897522394476415669503377,110833342180980170285766876408530089329",
+    "name": "a(n) = 1/exp(1) * Sum_{k>=0} ((k+4)!/k!)^(n-1)/k!.",
+    "comment": [
+        "This is a Dobinski-type summation formula.",
+        "a(n) quickly become gigantic: a(15)= 9142140479823239889945170786704021785456107245847570873873. a(n) appears in the process of ordering the n-th power of a product of fourth power of boson creation and fourth power of boson annihilation operators.",
+        "From _Peter Luschny_, Mar 27 2011: (Start)",
+        "Let B_{m}(x) = sum_{j>=0}(exp(j!/(j-m)!*x-1)/j!) then a(n) = n! [x^n] taylor(B_{4}(x)), where [x^n] denotes the coefficient of x^k in the Taylor series for B_{4}(x).",
+        "a(n) is row 4 of the square array representation of A090210. (End)"
+    ],
+    "link": [
+        "P. Blasiak, K. A. Penson and A. I. Solomon, <a href=\"http://www.arXiv.org/abs/quant-ph/0402027\">The general boson normal ordering problem</a>, arXiv:quant-ph/0402027, 2004.",
+        "P. Blasiak, K. A. Penson and A. I. Solomon, <a href=\"https://doi.org/10.1016/S0375-9601(03)00194-4\">The general boson normal ordering problem/a>, Phys. Lett. A 309 (2003) 198-205.",
+        "K. A. Penson, P. Blasiak, A. Horzela, A. I. Solomon and G. H. E. Duchamp, <a href=\"http://arxiv.org/abs/0904.0369\">Laguerre-type derivatives: Dobinski relations and combinatorial identities</a>, J. Math. Phys. 50, 083512 (2009).",
+        "M. Schork, <a href=\"http://dx.doi.org/10.1088/0305-4470/36/16/314\">On the combinatorics of normal ordering bosonic operators and deforming it</a>, J. Phys. A 36 (2003) 4651-4665."
+    ],
+    "formula": [
+        "sum((fallfac(k, 4)^n)/k!, k>=4)/exp(1), n>=1, with fallfac(n, m) := A008279(n, m) (falling factorials). (From eq.(26) with r=4 of the Schork reference.)",
+        "E.g.f. with a(0) := 1: (sum((exp(fallfac(k, 4)*x))/k!, k>=4)+8/3)/exp(1). From top of p. 4656 with r=4 of the Schork reference."
+    ],
+    "maple": [
+        "A071379 := proc(n) local r,s,i;",
+        "if n=0 then 1 else r := [seq(5,i=1..n-1)]; s := [seq(1,i=1..n-1)];",
+        "exp(-x)*24^(n-1)*hypergeom(r,s,x); round(evalf(subs(x=1,%),99)) fi end:",
+        "seq(A071379(n),n=0..10); # - _Peter Luschny_, Mar 30, 2011"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[FactorialPower[k, 4]^n/k!, {k, 4, Infinity}]/E; a[0] = 1; Array[a, 12, 0] (* _Jean-Fran\u00e7ois Alcover_, Sep 01 2016 *)"
+    ],
+    "xref": [
+        "Cf. A000110, A020556 and A069223, when k+4 is replaced by k+1, k+2 or k+3 respectively.",
+        "Cf. A090210."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Karol A. Penson_, May 22 2002",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Aug 01 2016",
+        "If it is proved that A283153 and A071379 are the same, then the entries should be merged and A283153 recycled. - _N. J. A. Sloane_, Mar 06 2017"
+    ],
+    "references": 8,
+    "revision": 34,
+    "time": "2017-07-09T17:41:09-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

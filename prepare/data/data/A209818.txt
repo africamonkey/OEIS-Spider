@@ -1,0 +1,42 @@
+{
+    "number": 209818,
+    "data": "1,4,12,34,84,199,436,919,1845,3590,6751,12384,22142,38797,66634,112540,187013,306421,495332,791131,1249153,1951915,3019969,4630063,7037286,10610240,15874998,23582081,34791668,50999319,74297620,107608848,154986104,222037997",
+    "name": "Number of partitions of 3n in which every part is <=n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A209818/b209818.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "For n>3, a(n) = A000041(3*n) - A000070(2*n-1) + A000097(n-3). - _Vaclav Kotesovec_, May 25 2015",
+        "a(n) ~ exp(Pi*sqrt(2*n))/(12*sqrt(3)*n). - _Vaclav Kotesovec_, May 25 2015"
+    ],
+    "example": [
+        "The 4 partitions of 6 with parts <3:",
+        "2+2+2, 2+2+1+1, 2+1+1+1+1, 1+1+1+1+1+1."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember;",
+        "      `if`(n=0, 1, `if`(i<1, 0, b(n, i-1)+`if`(i>n, 0, b(n-i, i))))",
+        "    end:",
+        "a:= n-> b(3*n, n):",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Jul 09 2012"
+    ],
+    "mathematica": [
+        "f[n_] := Length[Select[IntegerPartitions[3n], First[#] <= n &]]; Table[f[n], {n, 1, 25}] (* A209818 *)",
+        "Table[SeriesCoefficient[Product[1/(1-x^k),{k,1,n}],{x,0,3*n}],{n,1,20}] (* _Vaclav Kotesovec_, May 25 2015 *)",
+        "b[n_, i_] := b[n, i] = If[n==0, 1, If[i<1, 0, b[n, i-1] + If[i>n, 0, b[n-i, i]]]]; a[n_] := b[3*n, n]; Table[a[n], {n, 1, 50}] (* _Jean-Fran\u00e7ois Alcover_, Oct 28 2015, after _Alois P. Heinz_ *)",
+        "Table[Length@IntegerPartitions[4n, {n}], {n, 25}] (* _Vladimir Reshetnikov_, Jul 24 2016 *)"
+    ],
+    "xref": [
+        "Cf. A209817."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Mar 13 2012",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jul 09 2012"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2016-07-24T23:49:46-04:00",
+    "created": "2012-03-18T19:19:03-04:00"
+}

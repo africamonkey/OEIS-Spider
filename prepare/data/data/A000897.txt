@@ -1,0 +1,60 @@
+{
+    "number": 897,
+    "data": "1,12,420,18480,900900,46558512,2498640144,137680171200,7735904619300,441233078286000,25467973278667920,1484298740174927040,87202550985276963600,5157850293780050462400,306839461354466267304000",
+    "name": "a(n) = (4*n)! / ((2*n)!*n!^2).",
+    "comment": [
+        "Appears in Ramanujan's theory of elliptic functions of signature 4.",
+        "H. A. Verrill proves that a(n) = Sum_{p + q + r = 3n} w^(p-q) * {(3n)!/(p! q! r!)}^2, with p, q, r >= 0 and w = primitive 3rd root of unity."
+    ],
+    "reference": [
+        "E. R. Hansen, A Table of Series and Products, Prentice-Hall, Englewood Cliffs, NJ, 1975, p. 96."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A000897/b000897.txt\">Table of n, a(n) for n = 0..200</a>",
+        "H. J. Brothers, <a href=\"http://www.brotherstechnology.com/docs/Pascal&#39;s_Prism_(supplement).pdf\">Pascal's Prism: Supplementary Material</a>",
+        "H. A. Verrill, <a href=\"https://arxiv.org/abs/math/0407327\">Sums of squares of binomial coefficients, with applications to Picard-Fuchs equations</a>, arXiv:math/0407327v1 [math.CO], 2004."
+    ],
+    "formula": [
+        "E.g.f.: Sum_{k>=0} (-1)^k * a(k) * x^(4*k) / (4*k)! = BesselI(0, 2x) * BesselJ(0, 2x).",
+        "G.f.: F(1/4, 3/4; 1; 64*x). - _Michael Somos_, Oct 31 2005",
+        "a(n) = A008977/A000984(n) - _Zerinvary Lajos_, Jun 28 2007",
+        "Sum_{k>=0} a(k) * x^(3k)/(3k)!^2 = f(x)*f(x*w)*f(x/w) where f(x) = BesselI(0, 2*sqrt(x)) and w = primitive 3rd root of unity. - _Michael Somos_, Jul 25 2007 */",
+        "In general, for (BesselI(b, 2x))*(BesselJ(b, 2x))=((x^(2*b))/((GAMMA(b+1))^2)*(1-(x^4)/(Q(0)+(x^4))); Q(k)=(k+1)*(k+b+1)*(2*k+b+1)*(2*k+b+2)-(x^4)+(x^4)*(k+1)*(k+b+1)*(2*k+b+1)*(2*k+b+2)/Q(k+1)) ; (continued fraction). - _Sergei N. Gladkovskii_, Nov 24 2011",
+        "0 = a(n)*4*(4*n + 1)*(4*n + 3) - a(n+1)*(n + 1)^2 for all n in Z. - _Michael Somos_, Aug 12 2014",
+        "0 = a(n)*(-4026531840*a(n+2) +2005401600*a(n+3) -103896576*a(n+4) +1251948*a(n+5)) + a(n+1)*(+41418752*a(n+2) -30435328*a(n+3) +1863228*a(n+4) -24604*a(n+5)) + a(n+2)*(-16896*a(n+2) +75608*a(n+3) -6740*a(n+4) +105*a(n+5)) for all n in Z. - _Michael Somos_, Aug 12 2014",
+        "From _Peter Bala_, Jul 12 2016: (Start)",
+        "a(n) = binomial(3*n,n)*binomial(4*n,n) = ( [x^n](1 + x)^(3*n) ) * ( [x^n](1 + x)^(4*n) ) = [x^n](F(x)^(12*n)), where F(x) = 1 + x + 6*x^2 + 105*x^3 + 2448*x^4 + 67043*x^5 + 2028307*x^6 + ... appears to have integer coefficients. Cf. A002894, A002897, A006480, A008977, A186420 and A188662. (End)",
+        "a(n) ~ 2^(6*n-1/2)/(Pi*n). - _Ilya Gutkovskiy_, Jul 12 2016",
+        "G.f.: 2*EllipticK(sqrt((sqrt(1-64*x)-1)/(2*sqrt(1-64*x))))/(Pi*(1-64*x)^(1/4)) where EllipticK is the complete elliptic integral of the first kind (in Maple's notation). - _Robert Israel_, Jul 12 2016",
+        "a(n) = Sum_{k = 0..3*n} (-1)^k*C(3*n,k)*C(6*n-k,3*n)*C(2*k,k). - _Peter Bala_, Feb 10 2018"
+    ],
+    "example": [
+        "G.f.: 1 + 12*x + 420*x^2 + 18480*x^3 + 900900*x^4 + 46558512*x^5 + 2498640144*x^6 + ..."
+    ],
+    "maple": [
+        "seq((4*n)!/(n!)^4/binomial(2*n,n), n=0..14); # _Zerinvary Lajos_, Jun 28 2007"
+    ],
+    "mathematica": [
+        "Table[(4n)!/((2n)! n!^2), {n, 0, 30}] (* _Stefan Steinerberger_, Apr 14 2006 *)",
+        "a[ n_] := Binomial[ 4 n, 2 n] Binomial[ 2 n, n]; (* _Michael Somos_, Mar 24 2013 *)",
+        "a[ n_] := SeriesCoefficient[ Hypergeometric2F1[ 1/4, 3/4, 1, 64 x], {x, 0, n}]; (* _Michael Somos_, Mar 24 2013 *)",
+        "a[ n_] := If[ n < 0, 0, With[{m = 4 n}, (-1)^n m! SeriesCoefficient[ BesselI[ 0, 2 x] BesselJ[ 0, 2 x], {x, 0, m}]]]; (* _Michael Somos_, Aug 12 2014 *)",
+        "a[ n_] := 64^n Pochhammer[1/4, n] Pochhammer[3/4, n] / n!^2; (* _Michael Somos_, Aug 12 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, (4*n)! / ((2*n)! * n!^2))}; /* _Michael Somos_, Oct 31 2005 */",
+        "(GAP) a:=n->Sum([0..3*n],k->(-1)^k*Binomial(3*n,k)*Binomial(6*n-k,3*n)*",
+        "Binomial(2*k,k));;",
+        "A000897:=List([0..14],n->a(n)); # _Muniru A Asiru_, Feb 11 2018"
+    ],
+    "xref": [
+        "Cf. A002894, A002897, A006480, A008977, A186420, A188662."
+    ],
+    "keyword": "nonn,easy,changed",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 13,
+    "revision": 62,
+    "time": "2018-02-18T12:14:51-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

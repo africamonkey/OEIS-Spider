@@ -1,0 +1,74 @@
+{
+    "number": 84057,
+    "data": "1,1,6,16,56,176,576,1856,6016,19456,62976,203776,659456,2134016,6905856,22347776,72318976,234029056,757334016,2450784256,7930904576,25664946176,83053510656,268766806016,869747654656,2814562533376,9108115685376,29474481504256",
+    "name": "a(n) = 2*a(n-1)+4*a(n-2), a(0)=1, a(1)=1.",
+    "comment": [
+        "Inverse binomial transform of A001077. Binomial transform of expansion of cosh(sqrt(5)x) (1,0,5,0,25,...).",
+        "The same sequence may be obtained by the following process. Starting a priori with the fraction 1/1, the numerators of fractions built according to the rule: add top and bottom to get the new bottom, add top and 5 times the bottom to get the new top. The limit of the sequence of fractions is sqrt(5). - _Cino Hilliard_, Sep 25 2005",
+        "From _Mark Dols_, Jul 24 2009 (Start):",
+        "Numerators of fractions in the approximation of the square root of 5 satisfying: a(n)= (a(n-1)+ c)/(a(n-1)+1); with c=5 and a(1)=1. For denominators see A063727.",
+        "(End)",
+        "Equals right border of triangle A143969. (1, 6, 16, 56,...) = row sums of triangle A143969 and INVERT transform of (1, 5, 5, 5,...). - _Gary W. Adamson_, Sep 06 2008",
+        "a(n) is the number of compositions of n when there are 1 type of 1 and 5 types of other natural numbers. - _Milan Janjic_, Aug 13 2010",
+        "From _Gary W. Adamson_, Jul 30 2016 (Start):",
+        "The sequence is case N=1 in an infinite set obtained by taking powers of the 2x2 matrix M = [(1,5); (1,N)], then extracting the upper left terms. The infinite set begins:",
+        "N=1 (A084057):  1, 6, 16,  56,  176,   576,   1856,...",
+        "N=2 (A108306):  1, 6, 21,  81,  306,  1161,   4401,...",
+        "N=3 (A164549):  1, 6, 26, 116,  516,  2296,  10216,...",
+        "N=4 (A015449):  1, 6, 31, 161,  836,  4341,  22541,...",
+        "N=5 (A000400):  1, 6, 36, 216, 1296,  7776,  46656,...",
+        "N=6 (A049685):  1, 6, 41, 281, 1926, 13201,  90481,...",
+        "N=7 (.......):  1, 6, 46, 356, 2756, 21336, 222712,...",
+        "...Sequences in the above set can be obtained by taking INVERT transforms of the following:",
+        "N=1 INVERT transform of (1, 5,  5,  5,   5,   5,...",
+        "N=2 ...\"......\"......\". (1, 5, 10, 20,  40,   80,...",
+        "N=3 ...\"......\"......\". (1, 5, 15, 45, 135,  405,...",
+        "N=4 ...\"......\"......\". (1, 5, 20, 80, 320, 1280,...",
+        "...with the pattern.... (1, 5, N*5, (N^2)*5, (N^3)*5,...",
+        "It appears that a sequence generated from powers (n>0) of the matrix  P = [(1,a); (1,b)], (a,b,>0) then extracting the upper left terms; is equal to the INVERT transform of the sequence starting: (1, a, b*a, (b^2)*a, (b^3)*a,...). (End)"
+    ],
+    "reference": [
+        "John Derbyshire, Prime Obsession, Joseph Henry Press, April 2004, see p. 16."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A084057/b084057.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (2,4)."
+    ],
+    "formula": [
+        "a(n) = ((1+sqrt(5))^n + (1-sqrt(5))^n)/2.",
+        "G.f.: (1-x) / (1-2*x-4*x^2).",
+        "E.g.f.: exp(x) * cosh(sqrt(5)*x).",
+        "a(2n+1) = 2*a(n)*a(n+1)-(-4)^n. - Mario Catalani (mario.catalani(AT)unito.it), Jun 13 2003",
+        "a(n) = sum{k=0..floor(n/2), binomial(n, 2k)5^k }. - _Paul Barry_, Jul 25 2004",
+        "a(n) = Sum_{k, 0<=k<=n} A098158(n,k)*5^(n-k). - _Philippe Del\u00e9ham_, Dec 26 2007",
+        "a(n) = 2^(n-1)*A000032(n). - _Mark Dols_, Jul 24 2009",
+        "If p[1]=1, and p[i]=5, (i>1), and if A is Hessenberg matrix of order n defined by: A[i,j]=p[j-i+1], (i<=j), A[i,j]:=-1, (i=j+1), and A[i,j]:=0 otherwise. Then, for n>=1, a(n)=det A. - _Milan Janjic_, Apr 29 2010",
+        "G.f.: G(0)/2, where G(k)= 1 + 1/(1 - x*(5*k-1)/(x*(5*k+4) - 1/G(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, May 26 2013"
+    ],
+    "mathematica": [
+        "f[n_] := Simplify[((1 + Sqrt[5])^n + (1 - Sqrt[5])^n)/2]; Array[f, 28, 0] (* Or *)",
+        "LinearRecurrence[{2, 4}, {1, 1}, 28] (* _Robert G. Wilson v_, Sep 18 2013 *)",
+        "RecurrenceTable[{a[1] == 1, a[2] == 1, a[n] == 2 a[n-1] + 4 a[n-2]}, a, {n, 30}] (* _Vincenzo Librandi_, Jul 31 2016 *)",
+        "Table[2^(n-1) LucasL[n], {n, 0, 20}] (* _Vladimir Reshetnikov_, Sep 19 2016 *)"
+    ],
+    "program": [
+        "(Sage) from sage.combinat.sloane_functions import recur_gen2b; it = recur_gen2b(1,1,2,4, lambda n: 0); [it.next() for i in xrange(1,26)] # _Zerinvary Lajos_, Jul 09 2008",
+        "(Sage) [lucas_number2(n,2,-4)/2 for n in xrange(0, 26)] # _Zerinvary Lajos_, Apr 30 2009",
+        "(PARI) lucas(n)=fibonacci(n-1)+fibonacci(n+1)",
+        "a(n)=lucas(n)/2*2^n \\\\ _Charles R Greathouse IV_, Sep 18 2013",
+        "(MAGMA) I:=[1,1]; [n le 2 select I[n] else 2*Self(n-1)+4*Self(n-2): n in [1..30]]; // _Vincenzo Librandi_, Jul 31 2016"
+    ],
+    "xref": [
+        "Cf. A046717, A002533, A143969.",
+        "a(n) = A087131(n)/2.",
+        "The following sequences (and others) belong to the same family: A001333, A000129, A026150, A002605, A046717, A015518, A084057, A063727, A002533, A002532, A083098, A083099, A083100, A015519.",
+        "Cf. A108306, A164549, A015449, A000400, A049685"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Paul Barry_, May 10 2003",
+    "references": 36,
+    "revision": 52,
+    "time": "2016-11-03T07:53:11-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

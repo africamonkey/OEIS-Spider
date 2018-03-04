@@ -1,0 +1,38 @@
+{
+    "number": 244186,
+    "data": "711131719,5359616771,6771737983,149151157163167,401409419421431,479487491499503,757761769773787,14091423142714291433,18111823183118471861,21132129213121372141,26892693269927072711,27192729273127412749,36133617362336313637,37613767376937793793",
+    "name": "Primes which are the concatenation of five consecutive primes p, q, r, s, t while the sum (p + q + r + s + t) is another prime.",
+    "comment": [
+        "Subsequence of A086041.",
+        "Numbers: Concatenation of 5 consecutive primes at A132905."
+    ],
+    "link": [
+        "K. D. Bajpai, <a href=\"/A244186/b244186.txt\">Table of n, a(n) for n = 1..1703</a>"
+    ],
+    "example": [
+        "711131719 is in the sequence because the concatenation of [7, 11, 13, 17, 19] = 711131719 which is prime. The sum [7 + 11 + 13 + 17 + 19] = 67 is another prime.",
+        "5359616771 is in the sequence because the concatenation of [53, 59, 61, 67, 71] = 5359616771 which is prime. The sum [53 + 59 + 61 + 67 + 71] = 311 is another prime."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "T:=proc(t) local w, x, y; x:=t; y:=0; while x>0 do x:=trunc(x/10); y:=y+1; od; end:",
+        "P:=proc(q) local a,b,c,d,k,i,n;",
+        "for n from 1 to q do a:=ithprime(n+4); b:=ithprime(n+3); c:=ithprime(n+2); d:=ithprime(n+1);",
+        "if isprime(a+b+c+d+ithprime(n)) then k:=a+b*10^T(a); i:=c*10^T(k); k:=k+i; i:=d*10^T(k);",
+        "k:=k+i; i:=ithprime(n)*10^T(k); k:=k+i; if isprime(k) then print(k); fi; fi;",
+        "od; end: P(10^4); # _Paolo P. Lava_, Jul 11 2014"
+    ],
+    "mathematica": [
+        "FromDigits[Flatten[IntegerDigits/@#]]&/@Select[Partition[Prime[Range[ 1000]],5,1],AllTrue[{Total[#],FromDigits[Flatten[ IntegerDigits/@ #]]}, PrimeQ]&] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Dec 24 2014 *)"
+    ],
+    "xref": [
+        "Cf. A000040, A086041, A034961, A034962, A132903, A244163."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_K. D. Bajpai_, Jun 21 2014",
+    "references": 1,
+    "revision": 16,
+    "time": "2014-12-24T17:30:05-05:00",
+    "created": "2014-07-02T16:46:48-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 235000,
+    "data": "2,3,5,7,11,199,277,311,577,733,811,877,911,977,10133,13177,22277,27211,27277,28211,32377,33311,40499,43411,43499,45433,46499,49499,55511,60611,62633,63611,65633,67699,72733,79777,80833,84811,87833,87877,93911,98911",
+    "name": "Primes which become palindromic primes when the digits are rotated once to the right.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A235000/b235000.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The prime 277 is in the sequence because 727 is a palindromic prime."
+    ],
+    "program": [
+        "(PARI) rotr(a) = if(a<10, a, eval(Str(a%10, a\\10)))",
+        "revint(n) = my(m=n%10); n\\=10; while(n>0, m=m*10+n%10; n\\=10); m",
+        "s=[]; forprime(n=2, 1000000, r=rotr(n); if(isprime(r) && revint(r)==r, s=concat(s, n))); s",
+        "(Python)",
+        "from sympy import isprime",
+        "def palQgen10(l): # generator of palindromes in base 10 of length <= 2*l",
+        "....if l > 0:",
+        "........yield 0",
+        "........for x in range(1,l+1):",
+        "............for y in range(10**(x-1),10**x):",
+        "................s = str(y)",
+        "................yield int(s+s[-2::-1])",
+        "............for y in range(10**(x-1),10**x):",
+        "................s = str(y)",
+        "................yield int(s+s[::-1])",
+        "A235000_list = []",
+        "for x in palQgen10(5):",
+        "....s = str(x)",
+        "....y = int(s[1:]+s[0])",
+        "....if (s[1] if len(s) > 1 else []) != '0' and isprime(x) and isprime(y):",
+        "........A235000_list.append(y)",
+        "A235000_list = sorted(A235000_list) # _Chai Wah Wu_, Dec 21 2014"
+    ],
+    "xref": [
+        "Cf. A234912."
+    ],
+    "keyword": "nonn,base,less",
+    "offset": "1,1",
+    "author": "_Colin Barker_, Jan 02 2014",
+    "references": 4,
+    "revision": 13,
+    "time": "2017-04-12T23:06:49-04:00",
+    "created": "2014-01-02T13:01:27-05:00"
+}

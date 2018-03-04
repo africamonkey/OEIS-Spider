@@ -1,0 +1,40 @@
+{
+    "number": 192876,
+    "data": "1,1,4,9,31,94,309,989,3212,10373,33595,108670,351729,1138113,3683172,11918737,38570247,124815294,403911805,1307084405,4229816636,13687969901,44295207939,143342292894,463865421721,1501100008249",
+    "name": "Constant term in the reduction by (x^2->x+1) of the polynomial p(n,x) given in Comments.",
+    "comment": [
+        "The polynomial p(n,x) is defined by p(0,x)=1, p(1,x)=x+1, and p(n,x)=x*p(n-1,x)+2*(x^2)*p(n-1,x)+1.  See A192872."
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (2, 6, -5, -6, 4)."
+    ],
+    "formula": [
+        "a(n)=2*a(n-1)+6*a(n-2)-5*a(n-3)-6*a(n-4)+4*a(n-5).",
+        "G.f.: ( -1+x+4*x^2 ) / ( (x-1)*(x^2-x-1)*(4*x^2+2*x-1) ). - _R. J. Mathar_, May 06 2014"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 26;",
+        "p[0, x_] := 1; p[1, x_] := x + 1;",
+        "p[n_, x_] := p[n - 1, x]*x + 2*p[n - 2, x]*x^2 + 1;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u0 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]  (* A192876 *)",
+        "u1 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]  (* A192877 *)",
+        "FindLinearRecurrence[u0]",
+        "FindLinearRecurrence[u1]",
+        "LinearRecurrence[{2,6,-5,-6,4},{1,1,4,9,31},26] (* _Ray Chandler_, Aug 02 2015 *)"
+    ],
+    "xref": [
+        "Cf. A192872, A192877."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 11 2011",
+    "references": 3,
+    "revision": 13,
+    "time": "2017-03-21T10:52:23-04:00",
+    "created": "2011-07-12T12:16:08-04:00"
+}

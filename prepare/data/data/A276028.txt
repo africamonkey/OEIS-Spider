@@ -1,0 +1,43 @@
+{
+    "number": 276028,
+    "data": "1,3,10,50,259,1540,9594,62649,422598,2960716,21030711,152470357,1129502128,8434189996,63674017174,488573782216,3762932025753,29178861276815,229208503750838,1803350026315019,14248236439629534,113825380196996557,909507867095014380",
+    "name": "Number of ways to transform a sequence of n zeros and n ones to a single number by continually removing two numbers and replacing them with their sum modulo 3.",
+    "comment": [
+        "Also the number of distinct transformations when the initial state consists of n zeros and n twos."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A276028/b276028.txt\">Table of n, a(n) for n = 1..650</a>",
+        "C. Ji, <a href=\"https://arxiv.org/abs/1608.06025\">Enumerative Properties of Posets Corresponding to a Certain Class of No Strategy Games</a>, arXiv:1608.06025 [math.CO], 2016"
+    ],
+    "formula": [
+        "a(n) = f(n, n, 0) where f(a, b, c) is the number of ways to reach one number beginning with a zeros, b ones, and c twos.",
+        "Then f(a, b, c) = f_1 + f_2 + f_3 + f_4 where f_1 = f(a-1, b, c) if a>=2 or a, b >=1 or a,c >=1, f_2 = f(a, b-2, c+1) if b >= 2, f_3 = f(a, b+1, c-2) if c >= 2, and f_4 = f(a+1, b-1, c-1) if b, c >= 1, and each are 0 otherwise.  Initial terms: f(a, b, c) = 1 for all 1 <= a+b+c <= 2, where a, b, c >= 0."
+    ],
+    "maple": [
+        "b:= proc(x, y, z) option remember;",
+        "      `if`(x+y+z=1, 1, `if`(y>0 and z>0, b(x+1, y-1, z-1), 0)+",
+        "      `if`(x>1 or x>0 and y>0 or x>0 and z>0, b(x-1, y, z), 0)+",
+        "      `if`(y>1, b(x, y-2, z+1), 0)+`if`(z>1, b(x, y+1, z-2), 0))",
+        "    end:",
+        "a:= n-> b(n, n, 0):",
+        "seq(a(n), n=1..35);  # _Alois P. Heinz_, Aug 18 2016"
+    ],
+    "mathematica": [
+        "b[x_, y_, z_] := b[x, y, z] = If[x + y + z == 1, 1, If[y > 0 && z > 0, b[x + 1, y - 1, z - 1], 0] + If[x > 1 || x > 0 && y > 0 || x > 0 && z > 0, b[x - 1, y, z], 0] + If[y > 1, b[x, y - 2, z + 1], 0] + If[z > 1, b[x, y + 1, z - 2], 0]];",
+        "a[n_] := b[n, n, 0];",
+        "Table[a[n], {n, 1, 35}] (* _Jean-Fran\u00e7ois Alcover_, Nov 10 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A276027, A276029."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Caleb Ji_, Aug 17 2016",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Aug 18 2016"
+    ],
+    "references": 2,
+    "revision": 23,
+    "time": "2017-11-10T02:34:02-05:00",
+    "created": "2016-08-26T22:45:00-04:00"
+}

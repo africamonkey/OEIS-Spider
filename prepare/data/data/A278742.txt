@@ -1,0 +1,57 @@
+{
+    "number": 278742,
+    "data": "1,2,3,10,11,12,20,30,100,110,200,300,1000,1100,2000,2100,3000,10000,20000,30000,100000,110000,120000,200000,300000,1000000,1100000,2000000,3000000,10000000,11000000,20000000,21000000,30000000,100000000,200000000,300000000",
+    "name": "Lexicographically least strictly increasing sequence such that, for any n>0, Sum_{k=1..n} a(k) can be computed without carries in base 10.",
+    "link": [
+        "Colin Barker, <a href=\"/A278742/b278742.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_17\">Index entries for linear recurrences with constant coefficients</a>, signature (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10000)."
+    ],
+    "formula": [
+        "a(n+17) = 10000*a(n) for any n>0.",
+        "a(17k+1) = 10^(4k), k >= 0. - _N. J. A. Sloane_, Jan 06 2017",
+        "G.f.: x*(1 +2*x +3*x^2 +10*x^3 +11*x^4 +12*x^5 +20*x^6 +30*x^7 +100*x^8 +110*x^9 +200*x^10 +300*x^11 +1000*x^12 +1100*x^13 +2000*x^14 +2100*x^15 +3000*x^16) / (1 -10000*x^17). - _Colin Barker_, Jan 10 2017"
+    ],
+    "example": [
+        "The first terms, alongside their partial sums, are:",
+        "n     a(n)     Partial sums (A280730)",
+        "--    -----    ----------------------",
+        "1         1              1",
+        "2         2              3",
+        "3         3              6",
+        "4        10             16",
+        "5        11             27",
+        "6        12             39",
+        "7        20             59",
+        "8        30             89",
+        "9       100            189",
+        "10      110            299",
+        "11      200            499",
+        "12      300            799",
+        "13     1000           1799",
+        "14     1100           2899",
+        "15     2000           4899",
+        "16     2100           6999",
+        "17     3000           9999",
+        "--    -----          -----",
+        "18    10000          19999",
+        "19    20000          39999",
+        "20    30000          69999"
+    ],
+    "mathematica": [
+        "f[a_] := Function[w, Function[s, Total@ Map[PadLeft[#, s] &, w]]@ Max@ Map[Length, w]]@ Map[IntegerDigits, a]; g[n_] := FixedPoint[Function[k, If[Total@ Drop[RotateRight@ DigitCount@ k, 4] > 0, k + (6 * 10^(Position[#, 4][[1, 1]] - 1)) &@ Reverse@ IntegerDigits@ k, k]], n]; a = {1}; Do[If[n <= 17, k = g[Max@ a + 1]; While[Max@ f@ Join[a, {k}] > 9, k = g[k + 1]], k = 10^4 * a[[n - 17]]]; AppendTo[a, k], {n, 2, 37}]; a (* _Michael De Vlieger_, Dec 18 2016 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n>17, a(n-17)*10000, [1, 2, 3, 10, 11, 12, 20, 30, 100, 110, 200, 300, 1000, 1100, 2000, 2100, 3000][n]) \\\\ _Charles R Greathouse IV_, Nov 27 2016",
+        "(PARI) Vec(x*(1 +2*x +3*x^2 +10*x^3 +11*x^4 +12*x^5 +20*x^6 +30*x^7 +100*x^8 +110*x^9 +200*x^10 +300*x^11 +1000*x^12 +1100*x^13 +2000*x^14 +2100*x^15 +3000*x^16) / (1 -10000*x^17) + O(x^50)) \\\\ _Colin Barker_, Jan 10 2017"
+    ],
+    "xref": [
+        "Cf. A278743, A279732, A280730."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_R\u00e9my Sigrist_, Nov 27 2016",
+    "references": 6,
+    "revision": 32,
+    "time": "2017-01-10T07:25:56-05:00",
+    "created": "2016-11-27T14:25:20-05:00"
+}

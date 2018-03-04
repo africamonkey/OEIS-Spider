@@ -1,0 +1,31 @@
+{
+    "number": 167141,
+    "data": "1,4,48,864,20880,632448,23018688,978179328,47529084096,2598928566336,157937795847936,10559489876375040,770269715428025088,60876094422772800000,5181654464327251948032,472584847824904789910016",
+    "name": "G.f.: Sum_{n>=0} A004123(n)^2*log(1+x)^n/n! where 1/(1-2x) = Sum_{n>=0} A004123(n)*log(1+x)^n/n!.",
+    "comment": [
+        "CONJECTURE: For all integer m>0, Sum_{n>=0} L(n)^m * log(1+x)^n/n! is an integer series whenever Sum_{n>=0} L(n)*log(1+x)^n/n! is an integer series.",
+        "In this case, m=2 and L(n) = A004123(n), which is the number of generalized weak orders on n points."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 4*x + 48*x^2 + 864*x^3 + 20880*x^4 + 632448*x^5 +...",
+        "Illustrate A(x) = Sum_{n>=0} A004123(n)^2 * log(1+x)^n/n!:",
+        "A(x) = 1 + 2^2*log(1+x) + 10^2*log(1+x)^2/2! + 74^2*log(1+x)^3/3! + 730^2*log(1+x)^4/4! + 9002^2*log(1+x)^5/5! +...+ A004123(n)^2*log(1+x)^n/n! +...",
+        "where the e.g.f. of A004123 is 1/(3 - 2*exp(x)) and thus:",
+        "1/(1-2x) = 1 + 2*log(1+x) + 10*log(1+x)^2/2! + 74*log(1+x)^3/3! + 730*log(1+x)^4/4! + 9002*log(1+x)^5/5! +...+ A004123(n)*log(1+x)^n/n! +..."
+    ],
+    "program": [
+        "(PARI) {Stirling2(n, k)=if(k<0|k>n,0, sum(i=0,k,(-1)^i*binomial(k, i)/k!*(k-i)^n))}",
+        "{A004123(n)=sum(k=0,n,2^k*Stirling2(n, k)*k!)}",
+        "{a(n)=polcoeff(sum(m=0,n,A004123(m)^2*log(1+x+x*O(x^n))^m/m!),n)}"
+    ],
+    "xref": [
+        "Cf. A004123, variants: A167139, A167138, A101370."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 04 2009",
+    "references": 1,
+    "revision": 2,
+    "time": "2012-03-30T18:37:20-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

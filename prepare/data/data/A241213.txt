@@ -1,0 +1,48 @@
+{
+    "number": 241213,
+    "data": "1,2,3,4,5,10,11,12,13,14,15,20,21,22,23,24,25,30,31,32,33,34,35,40,41,42,43,44,45,100,101,102,103,104,105,110,111,112,113,114,115,120,121,122,123,124,125,130,131,132,133,134,135,140,141,142,143,144,145",
+    "name": "a(n) is built digit-by-digit (see comments for details).",
+    "comment": [
+        "a(n) is built digit-by-digit as a_i ... a_3 a_2 a_1.",
+        "Note that in this case, the definition of digit is a nonnegative integer. If i > 3, number digits of a_i may be greater than 1.",
+        "Successively, we have:",
+        "a_1 = n mod 6;",
+        "a_2 = ((n - a_1)/primorial(2)) mod prime(2+1);",
+        "a_3 = ((n - a_1 - a_2*primorial(2))/primorial(3)) mod prime(3+1);",
+        "...",
+        "a_i = ((n - a_1 - a_2*primorial(2)-...-a_(i-1)*primorial(i-1))/primorial(i)) mod prime(i+1).",
+        "So that finally, n = a_1 + a_2*primorial(2) + ... + a_i*primorial(i)."
+    ],
+    "link": [
+        "Lear Young, <a href=\"/A241213/b241213.txt\">Table of n, a(n) for n = 1..100000</a>"
+    ],
+    "example": [
+        "a(2287) = 10611.",
+        "10611 is built digit-by-digit as a_4 a_3 a_2 a_1 = 10 6 1 1.",
+        "And a_1+a_2*primorial(2)+a_3*primorial(3)+a_4*primorial(4) = 1 + 1*6 + 6*30 + 10*210 = 2287.",
+        "(Definition of digit is nonnegative integer. See comments for how to get a_1, a_2, a_3, a_4.)"
+    ],
+    "program": [
+        "(Sage)",
+        "Pr = Primes()",
+        "c = oeis(2110)[:10]",
+        "def bjz(a):",
+        "    d = len(str(a)) + 1",
+        "    b  = [0] * (d)",
+        "    b[0] = a % 6",
+        "    s = 0",
+        "    for x in range(1, d):",
+        "        if x > 1:",
+        "            s += c[x] * b[x-1]",
+        "        b[x] = ((a - b[0] - s) / c[x+1] ) % Pr.unrank(x+1)",
+        "    return int(''.join(map(str, b[::-1])))",
+        "[ bjz(x)  for x in range(1, 101)] # _Lear Young_, Apr 17 2014"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Lear Young_, Apr 17 2014",
+    "references": 1,
+    "revision": 45,
+    "time": "2015-08-11T09:49:14-04:00",
+    "created": "2014-04-24T05:02:03-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 187276,
+    "data": "1,2,6,19,61,196,630,2024,6499,20860,66941,214797,689201,2211347,7095226,22765414,73044113,234366327,751978494,2412768983,7741517800,24839137696,79697907919,255715662623",
+    "name": "Number of d+/d- diagonally convex polyominoes with n cells.",
+    "comment": [
+        "A polyomino is d+ [d-] convex if the intersection of its interior with any line of slope 1 [-1] through the centers of the cells is connected."
+    ],
+    "reference": [
+        "M. Bousquet-M\u00e9lou and R. Brak, \"Exactly Solved Models\", in A. J. Guttmann, ed., Polygons, Polyominoes and Polycubes, Springer, 2009, pp. 46 & 76."
+    ],
+    "example": [
+        "A(5) = 61 = A001168(5) - 2, omitting two of the orientations of the V pentomino."
+    ],
+    "mathematica": [
+        "ab[n_,m_,q_]:=Sum[q[n-m-r,k],{r,1,m},{k,m+1-r,n-m-r}]",
+        "bb[n_,m_,q_]:=Sum[q[n-m-r,m-r],{r,1,m-1}]+Sum[q[n-m-r,k],{r,1,m-1},{k,m-r,n-m-r}]",
+        "cb[n_,m_,q_]:=Sum[q[n-m-r,m-1-r],{r,1,m-2}]",
+        "a[n_,m_]:=0/;n<=1||m<=0",
+        "a[n_,m_]:=a[n,m]=Sum[(k-m)p[n-m,k],{k,m+1,n-m}]+ab[n,m,b]+2ab[n,m,c]+Sum[(r-1)c[n-m-r,m+1-r],{r,2,m}]",
+        "b[1,1]=1;",
+        "b[n_,m_]:=0/;n<=1||m<=0",
+        "b[n_,m_]:=b[n,m]=2Sum[p[n-m,k],{k,m,n-m}]+bb[n,m,b]+2bb[n,m,c]+2Sum[(r-1)c[n-m-r,m-r],{r,2,m-1}]",
+        "c[n_,m_]:=0/;n<=1||m<=0",
+        "c[n_,m_]:=c[n,m]=p[n-m,m-1]+cb[n,m,b]+2cb[n,m,c]+Sum[(r-1)c[n-m-r,m-1-r],{r,2,m-2}]",
+        "p[n_,m_]:=a[n,m]+b[n,m]+c[n,m]",
+        "Table[Sum[p[n,m],{m,(n+1)/2}],{n,20}]"
+    ],
+    "xref": [
+        "Cf. A001168 (fixed polyominoes), A001169 (row-convex polyominoes)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_David Bevan_, Mar 07 2011",
+    "ext": [
+        "Typo in example corrected by _David Bevan_, Mar 23 2013"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2013-09-01T16:24:54-04:00",
+    "created": "2011-03-07T16:02:24-05:00"
+}

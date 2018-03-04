@@ -1,0 +1,59 @@
+{
+    "number": 22547,
+    "data": "13,113143,626927443,2335215973,3447123283,4086982633,4422726013,6318867403,7093284043,8541306853,10998082213,14005112893,18869466373,21528117883,21843411823,28156779793,30303283243",
+    "name": "Initial members of prime nonuplets (p, p+4, p+6, p+10, p+16, p+18, p+24, p+28, p+30).",
+    "comment": [
+        "All terms are congruent to 13 (modulo 30). - _Matt C. Anderson_, May 28 2015"
+    ],
+    "link": [
+        "Matt C. Anderson and Dana Jacobsen, <a href=\"/A022547/b022547.txt\">Table of n, a(n) for n = 1..10000</a> [first 1000 terms from Matt C. Anderson]",
+        "T. Forbes, <a href=\"http://anthony.d.forbes.googlepages.com/adf.htm\">Prime k-tuplets</a>"
+    ],
+    "maple": [
+        "composite_small := proc (n::integer)",
+        "description \"determine if n has a prime factor less than 100\";",
+        "if igcd(2305567963945518424753102147331756070, n) = 1 then return false else return true end if;",
+        "end proc:",
+        "# A prime constellation pattern of length 9",
+        "p := [0, 4, 6, 10, 16, 18, 24, 28, 30];",
+        "# using isprime(m*n+o+p)",
+        "o := [1273, 2263, 2683, 4003, 4633, 4993, 5893, 6883, 6943, 8623, 9613, 10243, 11563, 12823, 14863, 15133, 15553, 17863, 18433, 19753, 21163, 21793, 22483, 23053, 23113, 24103, 25783, 27733, 28723, 29983]:",
+        "with(ArrayTools):",
+        "os := Size(o, 2):",
+        "m := 30030:",
+        "loopstop := 10^11:",
+        "loopstart := 0:",
+        "print(13);",
+        "for n from loopstart to loopstop do",
+        "for a from 1 to os do",
+        "counter := 0; wc := 0; wd := 0;",
+        "while `and`(wd > -10, wd < 9) do",
+        "wd := wd+1;",
+        "if composite_small(m*n+o[a]+p[wd]) = false then wd := wd+1 else wd := -10 end if",
+        "end do;",
+        "if wd >= 9 then",
+        "while `and`(counter >= 0, wc < 9) do",
+        "wc := wc+1; if isprime(m*n+o[a]+p[wc]) then counter := counter+1 else counter := -1 end if;",
+        "end do;",
+        "end if;",
+        "if counter = 9 then print(m*n+o[a]) end if;",
+        "end do:",
+        "end do:",
+        "# _Matt C. Anderson_, Feb 01 2014"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[200000]], Union[PrimeQ[# + {4, 6, 10, 16, 18, 24, 28, 30}]] == {True} &] (* _Vincenzo Librandi_, Sep 30 2015 *)"
+    ],
+    "program": [
+        "(Perl) use ntheory \":all\"; say for sieve_prime_cluster(1,1e11, 4,6,10,16,18,24,28,30); # _Dana Jacobsen_, Sep 30 2015",
+        "(MAGMA) [p: p in PrimesUpTo(2*10^8) | forall{p+r: r in [4,6,10,16,18,24,28,30] | IsPrime(p+r)}]; // _Vincenzo Librandi_, Sep 30 2015",
+        "(PARI) forprime(p=2, 10^30, if (isprime(p+4) && isprime(p+6) && isprime(p+10) && isprime(p+16) && isprime(p+18) && isprime(p+24) && isprime(p+28) && isprime(p+30), print1(p\", \"))) \\\\ _Altug Alkan_, Sep 30 2015"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Warut Roonguthai_",
+    "references": 31,
+    "revision": 34,
+    "time": "2018-01-08T02:32:27-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

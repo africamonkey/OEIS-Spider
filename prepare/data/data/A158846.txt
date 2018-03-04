@@ -1,0 +1,37 @@
+{
+    "number": 158846,
+    "data": "19,29,41,47,53,59,61,97,149,167,173,233,239,251,271,283,313,331,349,373,409,433,439,499,509,521,557,563,593,641,677,743,761,797,827,887,911,941,953,1013,1019,1021,1039,1051,1129,1171,1237,1279,1291",
+    "name": "Primes which are removed with the algorithm of A156284, starting the selection with the interval (2^4,2^5).",
+    "comment": [
+        "We iteratively scan integer intervals (2^(m-1)..2^m), first the one with m=5, then m=6, m=7 etc., and start with the set S={3,5,7,11..} of all odd primes. For each prime p=2^m-k, 2^(m-1) <p < 2^m, p is removed from S if k is in S. Basically, all the upper primes of primes pairs are removed when the prime pair sums to a power of 2 which are larger than 2^4. The sequence shows all p that are removed from S at any stage m.",
+        "Powers 2^m, m>=5, are not expressible as sums of two primes which are not in the sequence"
+    ],
+    "maple": [
+        "A158846 := proc()",
+        "        local mmax,prrem,m,prm,pi,p,q ;",
+        "        mmax := 12 ; prrem := {} ;",
+        "        for m from 5 to mmax do",
+        "                prm := {} ;",
+        "                for pi from 1 do",
+        "                        k := ithprime(pi) ;",
+        "                        p := 2^m-k ;",
+        "                        if p <= 2^(m-1) then  break; end if;",
+        "                        if isprime(p) and not k in prrem then prm := prm union {p} ;",
+        "                        end if ;",
+        "                end do:",
+        "                prrem := prrem union prm ;",
+        "        end do: print( sort(prrem)) ; return ;",
+        "end proc:",
+        "A158846() ; # R. J. Mathar, Dec 07 2010"
+    ],
+    "xref": [
+        "Cf. A156284, A158756, A156759"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladimir Shevelev_, Mar 28 2009",
+    "references": 4,
+    "revision": 4,
+    "time": "2012-03-30T18:52:53-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

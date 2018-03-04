@@ -1,0 +1,37 @@
+{
+    "number": 186925,
+    "data": "1,1,6,45,454,5775,88796,1602447,33213510,777665691,20302315252,584774029983,18422140045596,630132567760345,23257790717110392,921362075184792825,38994274473840538182,1755943506127367745795",
+    "name": "Coefficient of x^n in (1+n*x+x^2)^n.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A186925/b186925.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n](1+n*x+x^2)^n.",
+        "a(n) = Sum_{k=0..floor(n/2)} binomial(n, k)*binomial(n-k, n-2*k)*n^(n-2*k).",
+        "a(n) ~ BesselI(0,2) * n^n. - _Vaclav Kotesovec_, Apr 17 2014",
+        "a(n) = GegenbauerPoly(n,-n,-n/2). - _Emanuele Munarini_, Oct 20 2016",
+        "From _Ilya Gutkovskiy_, Sep 20 2017: (Start)",
+        "a(n) = [x^n] 1/sqrt((1 + 2*x - n*x)*(1 - 2*x - n*x)).",
+        "a(n) = n! * [x^n] exp(n*x)*BesselI(0,2*x). (End)"
+    ],
+    "mathematica": [
+        "Flatten[{1,Table[Sum[Binomial[n, k]*Binomial[n-k, n-2*k]*n^(n-2*k), {k,0,Floor[n/2]}],{n,1,20}]}] (* _Vaclav Kotesovec_, Apr 17 2014 *)",
+        "Table[GegenbauerC[n, -n, -n/2] + KroneckerDelta[n, 0], {n, 0, 100}] (* _Emanuele Munarini_, Oct 20 2016 *)"
+    ],
+    "program": [
+        "(Maxima) a(n):=coeff(expand((1+n*x+x^2)^n),x,n);",
+        "(Maxima) makelist(ultraspherical(n,-n,-n/2),n,0,12); /* _Emanuele Munarini_, Oct 20 2016 */",
+        "makelist(a(n),n,0,20);",
+        "(MAGMA) P<x>:=PolynomialRing(Integers()); [ Coefficients((1+n*x+x^2)^n)[n+1]: n in [0..22] ]; // _Klaus Brockhaus_, Mar 02 2011"
+    ],
+    "xref": [
+        "Cf. A092366, A187018, A187019, A187021, A070910."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Emanuele Munarini_, Mar 02 2011",
+    "references": 10,
+    "revision": 35,
+    "time": "2017-09-20T19:52:11-04:00",
+    "created": "2011-02-28T23:02:53-05:00"
+}

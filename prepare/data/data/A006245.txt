@@ -1,0 +1,93 @@
+{
+    "number": 6245,
+    "id": "M1894",
+    "data": "1,1,2,8,62,908,24698,1232944,112018190,18410581880,5449192389984,2894710651370536,2752596959306389652,4675651520558571537540,14163808995580022218786390",
+    "name": "Number of primitive sorting networks on n elements; also number of rhombic tilings of 2n-gon.",
+    "comment": [
+        "Also the number of commutation classes of reduced words for the longest element of a Weyl group of type A_{n-1} (see Armstrong reference).",
+        "Also the number of oriented matroids of rank 3 on n elements (see Folkman-Lawrence reference). - _Matthew J. Samuel_, Jan 19 2013"
+    ],
+    "reference": [
+        "J. Kawahara, T. Saitoh, R. Yoshinaka and S. Minato: \"Counting Primitive Sorting Networks by PiDDs,\" Hokkaido University, Division of Computer Science, TCS Technical Reports, TCS-TR-A-11-54, Oct. 2011.",
+        "D. E. Knuth, Axioms and hulls, Lect. Notes Comp. Sci., Vol. 606.",
+        "Shin-ichi Minato, Counting by ZDD, Encyclopedia of Algorithms, 2014, pp. 1-6.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "D. Armstrong, <a href=\"https://doi.org/10.1016/j.jcta.2009.03.009\">The sorting order on a Coxeter group</a>, Journal of Combinatorial Theory 116 (2009), no. 8, 1285-1305.",
+        "H. Denoncourt, D. C. Ernst, D. Story, <a href=\"https://arxiv.org/abs/1602.08328\">On the number of commutation classes of the longest element in the symmetric group</a>, arXiv:1602.08328 [math.HO], 2016.",
+        "Stefan Felsner, <a href=\"http://page.math.tu-berlin.de/~felsner/Paper/numarr.pdf\">On the number of arrangements of pseudolines</a>, Proceedings of the twelfth annual symposium on Computational geometry. ACM, 1996. Also Discrete and Computational Geometry, 18 (1997),257-267. Gives a(10).",
+        "S. Felsner and P. Valtr, <a href=\"http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.224.8115\">Coding and Counting Arrangements of Pseudolines</a>, Discrete and Computational Geometry, 46(3) (2011), 405-416.",
+        "J. Folkman and J. Lawrence, <a href=\"https://doi.org/10.1016/0095-8956(78)90039-4\">Oriented matroids</a>, Journal of Combinatorial Theory, Series B 25 (1978), no. 2, 199-236.",
+        "M. J. Hay, J. Schiff, N. J. Fisch, <a href=\"http://arxiv.org/abs/1604.08573\">Available free energy under local phase space diffusion</a>, arXiv preprint arXiv:1604.08573 [math-ph], 2016, see Footnote 27.",
+        "J. Kawahara, T. Saitoh, R. Yoshinaka and S. Minato, <a href=\"http://www-alg.ist.hokudai.ac.jp/~thomas/TCSTR/tcstr_11_54/tcstr_11_54.pdf\">Counting Primitive Sorting Networks by PiDDs</a>",
+        "D. E. Knuth, <a href=\"http://dx.doi.org/10.1007/3-540-55611-7\">Axioms and Hulls</a>, LNCS 606 (1992) p. 35. [From _R. J. Mathar_, Apr 02 2009]",
+        "S. Minato, <a href=\"http://doi.org/10.1587/transinf.E96.D.1419\">Techniques of BDD/ZDD: Brief History and Recent Activity</a>, IEICE Transactions on Information and Systems, Vol. E96-D, No. 7, pp.1419-1429.",
+        "Matthew J. Samuel, <a href=\"http://arxiv.org/abs/1101.4655\">Word posets, complexity, and Coxeter groups</a>, arXiv:1101.4655 [math.CO], 2011.",
+        "M. J. Samuel, <a href=\"http://arxiv.org/abs/1108.3638\">Word posets, with applications to Coxeter groups</a>, arXiv preprint arXiv:1108.3638 [cs.DM], 2011.",
+        "M. Widom, N. Destainville, R. Mosseri and F. Bailly, <a href=\"https://arxiv.org/abs/cond-mat/9912275\">Two-dimensional random tilings of large codimension</a>, Proceedings of the 7th International Conference on Quasicrystals (ICQ7, Stuttgart), arXiv:cond-mat/9912275 [cond-mat.stat-mech], 1999.",
+        "M. Widom, N. Destainville, R. Mosseri and F. Bailly, <a href=\"https://doi.org/10.1016/S0921-5093(00)01140-0\">Two-dimensional random tilings of large codimension</a>, Materials Science and Engineering: A, Volumes 294-296, 15 December 2000, Pages 409-412.",
+        "K. Yamanaka, S. Nakano, Y. Matsui, R. Uehara and K. Nakada, <a href=\"https://doi.org/10.1016/j.tcs.2010.01.002\">Efficient enumeration of all ladder lotteries and its application</a>, Theoretical Computer Science, Vol. 411, pp. 1714-1722, 2010.",
+        "<a href=\"/index/So#sorting\">Index entries for sequences related to sorting</a>"
+    ],
+    "formula": [
+        "Felsner and Valtr show that 0.1887 <= log_2(a(n))/n^2 <= 0.6571 for sufficiently large n. - _Jeremy Tan_, Nov 20 2017"
+    ],
+    "maple": [
+        "# classes: Wrapper for computing number of commutation classes;",
+        "#   pass a permutation as a list",
+        "# Returns number of commutation classes of reduced words",
+        "# Longest element is of the form [n, n-1, ..., 1] (see Comments)",
+        "classes:=proc(perm) option remember:",
+        "    RETURN(classesRecurse(Array(perm), 0, 1)):",
+        "end:",
+        "#classesRecurse: Recursive procedure for computing number of commutation classes",
+        "classesRecurse:=proc(perm, spot, negs) local swaps, i, sums, c, doneany:",
+        "    sums:=0:",
+        "    doneany:=0:",
+        "    for i from spot to ArrayNumElems(perm)-2 do",
+        "        if perm[i+1]>perm[i+2] then",
+        "            swaps:=perm[i+1]:",
+        "            perm[i+1]:=perm[i+2]:",
+        "            perm[i+2]:=swaps:",
+        "            c:=classes(convert(perm, `list`)):",
+        "            sums:=sums+negs*c+classesRecurse(perm, i+2, -negs):",
+        "            swaps:=perm[i+1]:",
+        "            perm[i+1]:=perm[i+2]:",
+        "            perm[i+2]:=swaps:",
+        "            doneany:=1:",
+        "        end:",
+        "    end:",
+        "    if spot=0 and doneany=0 then RETURN(1):",
+        "    else RETURN(sums):",
+        "    end:",
+        "end:",
+        "seq(classes([seq(n+1-i, i = 1 .. n)]), n = 1 .. 9)",
+        "# _Matthew J. Samuel_, Jan 23 2011, Jan 26 2011"
+    ],
+    "mathematica": [
+        "classes[perm_List] := classes[perm] = classesRecurse[perm, 0, 1];",
+        "classesRecurse[perm_List, spot_, negs_] := Module[{swaps, i, Sums, c, doneany, prm = perm}, Sums = 0; doneany = 0; For[i = spot, i <= Length[prm]-2, i++, If[prm[[i+1]] > prm[[i+2]], swaps = prm[[i+1]]; prm[[i+1]] = prm[[i+2]]; prm[[i+2]] = swaps; c = classes[prm]; Sums = Sums + negs*c + classesRecurse[prm, i+2, -negs]; swaps = prm[[i+1]]; prm[[i+1]] = prm[[i+2]]; prm[[i+2]] = swaps; doneany = 1]]; If[spot == 0 && doneany == 0, Return[1], Return[Sums]]];",
+        "a[n_] := a[n] = classes[Range[n] // Reverse];",
+        "Table[Print[\"a(\", n, \") = \", a[n]]; a[n], {n, 1, 9}] (* _Jean-Fran\u00e7ois Alcover_, May 09 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A006246."
+    ],
+    "keyword": "nonn,nice,more",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from Sebastien VEIGNEAU (sv(AT)univ-mlv.fr) Jan 15 1997.",
+        "a(10) confirmed by Katsuhisa Yamanaka(yamanaka(AT)hol.is.uec.ac.jp), May 06 2009. This value was also confirmed by Takashi Horiyama of Saitama Univ.",
+        "a(11) from Katsuhisa Yamanaka(yamanaka(AT)hol.is.uec.ac.jp), May 06 2009.",
+        "Reference with formula that the Maple program implements added and a(11) verified by _Matthew J. Samuel_, Jan 25 2011",
+        "Removed invalid comment concerning the denominators of the indicated polynomials; added a(12). - _Matthew J. Samuel_, Jan 30 2011",
+        "a(13) from _Toshiki Saitoh_, Oct 17 2011",
+        "a(14) and a(15) from _Yuma Tanaka_, Aug 20 2013"
+    ],
+    "references": 14,
+    "revision": 115,
+    "time": "2017-12-02T03:06:48-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

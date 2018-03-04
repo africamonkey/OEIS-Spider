@@ -1,0 +1,43 @@
+{
+    "number": 275695,
+    "data": "1,1,1,1,1,1,1,9,33,385,13825,5474305,75873853441,415386585427968001,3501887406773528570406162401,44079910680970588907541344275243042224979209,400942556117903539711475671972145122347091674105174721165559627509313",
+    "name": "a(0) = a(1) = a(2) = a(3) = a(4) = a(5) = a(6) = 1; for n>6, a(n) = ( a(n-1)+a(n-3)+a(n-5) )*( a(n-2)+a(n-4)+a(n-6) ) / a(n-7).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A275695/b275695.txt\">Table of n, a(n) for n = 0..21</a>"
+    ],
+    "formula": [
+        "a(n) = (8-4*(-1)^n)*a(n-1)*a(n-3)*a(n-5) - a(n-2) - a(n-4) - a(n-6)."
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[n] == (a[n - 1] + a[n - 3] + a[n - 5]) (a[n - 2] + a[n - 4] + a[n - 6])/a[n - 7], a[0] == a[1] == a[2] == a[3] == a[4] == a[5] == a[6] == 1}, a, {n, 0, 16}] (* _Michael De Vlieger_, Aug 25 2016 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = if (n <=6, 1, (a(n-1)+a(n-3)+a(n-5))*(a(n-2)+a(n-4)+a(n-6))/a(n-7)); \\\\ _Michel Marcus_, Aug 25 2016",
+        "(Ruby)",
+        "def A(m, n)",
+        "  a = Array.new(2 * m + 1, 1)",
+        "  ary = [1]",
+        "  while ary.size < n + 1",
+        "    i = (1..m).inject(0){|s, i| s += a[2 * i - 1]} * (1..m).inject(0){|s, i| s += a[2 * i]}",
+        "    break if i % a[0] > 0",
+        "    a = *a[1..-1], i / a[0]",
+        "    ary << a[0]",
+        "  end",
+        "  ary",
+        "end",
+        "def A275695(n)",
+        "  A(3, n)",
+        "end # _Seiichi Manyama_, Aug 27 2016",
+        "(MAGMA) I:=[1,1,1,1,1,1,1]; [n le 7 select I[n] else (Self(n-1) + Self(n-3) + Self(n-5))*(Self(n-2) + Self(n-4) + Self(n-6))/Self(n-7): n in [1..17]]; // _G. C. Greubel_, Feb 21 2018"
+    ],
+    "xref": [
+        "Cf. A006723, A276130."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,8",
+    "author": "_Bruno Langlois_, Aug 21 2016",
+    "references": 1,
+    "revision": 48,
+    "time": "2018-02-22T16:28:27-05:00",
+    "created": "2016-08-27T15:19:17-04:00"
+}

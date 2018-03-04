@@ -1,0 +1,35 @@
+{
+    "number": 218436,
+    "data": "1,1,2,514,39880,14508236,71502130216,159891388498192,515576952451247744,3043225095505808401540,113662467332884035859383856,3902474169746657778866025106136,123694078552827146016863752849997152,3719080702866914288727567048533259759664",
+    "name": "Sum of the 9th powers of the numbers of standard Young tableaux over all partitions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A218436/b218436.txt\">Table of n, a(n) for n = 0..60</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau\">Young tableau</a>"
+    ],
+    "maple": [
+        "h:= proc(l) local n; n:=nops(l); add(i, i=l)! /mul(mul(1+l[i]-j",
+        "       +add(`if`(l[k]>=j, 1, 0), k=i+1..n), j=1..l[i]), i=1..n)",
+        "    end:",
+        "g:= proc(n, i, l) `if`(n=0, h(l)^9, `if`(i<1, 0, g(n, i-1, l)+",
+        "      `if`(i>n, 0, g(n-i, i, [l[], i]))))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, g(n, n, [])):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "h[l_] := With[{n = Length[l]}, Total[l]!/Product[Product[1 + l[[i]] - j + Sum[If[l[[k]] >= j, 1, 0], {k, i + 1, n}], {j, 1, l[[i]]}], {i, 1, n}]];",
+        "g[n_, i_, l_] := g[n, i, l] = If[n == 0, h[l]^9, If[i < 1, 0, g[n, i - 1, l] + If[i > n, 0, g[n - i, i, Append[l, i]]]]];",
+        "a[n_] := If[n == 0, 1, g[n, n, {}]];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, May 18 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Column k=9 of A208447."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Oct 28 2012",
+    "references": 2,
+    "revision": 12,
+    "time": "2017-05-18T03:23:36-04:00",
+    "created": "2012-10-28T16:42:07-04:00"
+}

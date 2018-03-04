@@ -1,0 +1,39 @@
+{
+    "number": 186998,
+    "data": "1,1,2,4,11,35,123,462,1829,7558,32380,143102,649999,3026171,14411412,70095713,347817785,1759198500,9063638685,47545501777,253854457415,1379172691108,7623064091313,42860238300826,245098499411379,1425403070154478,8429327482836740,50681175605982771",
+    "name": "G.f. satisfies: A(x) = Sum_{n>=0} x^n*(1 + x*A(x)^n)^n.",
+    "comment": [
+        "Compare g.f. to a g.f. C(x) of the Catalan sequence:",
+        "C(x) = Sum_{n>=0} x^n*(1 + x*C(x)^2)^n where C(x) = 1 + x*C(x)^2."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A186998/b186998.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = Sum_{n>=0} x^(2*n) * A(x)^(n^2) / (1 - x*A(x)^n)^(n+1). - _Paul D. Hanna_, Sep 24 2014"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 4*x^3 + 11*x^4 + 35*x^5 + 123*x^6 +...",
+        "such that",
+        "A(x) = 1 + x*(1+x*A(x)) + x^2*(1+x*A(x)^2)^2 + x^3*(1+x*A(x)^3)^3 + x^4*(1+x*A(x)^4)^4 + x^5*(1+x*A(x)^5)^5 + x^6*(1+x*A(x)^6)^6 +...",
+        "The g.f. satisfies the series identity:",
+        "A(x) = 1/(1-x) + x^2*A(x)/(1-x*A(x))^2 + x^4*A(x)^4/(1-x*A(x)^2)^3 + x^6*A(x)^9/(1-x*A(x)^3)^4 + x^8*A(x)^16/(1-x*A(x)^4)^5 + x^10*A(x)^25/(1-x*A(x)^5)^6 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,A=1+sum(m=1,n,x^m*(1+x*(A+x*O(x^n))^m)^m));polcoeff(A,n)}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=sum(k=0, n,x^(2*k)*A^(k^2)/(1 - x*A^k +x*O(x^n))^(k+1) )); polcoeff(A, n)}",
+        "for(n=0, 30, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Sep 24 2014"
+    ],
+    "xref": [
+        "Cf. A186999, A203000, A247330, A186999.",
+        "Cf. A300041, A300042, A300043."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Mar 01 2011",
+    "references": 6,
+    "revision": 16,
+    "time": "2018-02-24T12:32:56-05:00",
+    "created": "2011-03-01T20:16:14-05:00"
+}

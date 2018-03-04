@@ -1,0 +1,32 @@
+{
+    "number": 205797,
+    "data": "1,1,41,126,1526,5185,46920,176865,1254608,4986548,30563031,123868761,683127011,2793828323,14223836013,58127497582,278433541834,1130954381904,5159127957638,20767403083249,91032595281699,362455763000997,1536849042738162",
+    "name": "G.f.: A(x) = exp( Sum_{n>=1} sigma(n)^4 * x^n/n ).",
+    "comment": [
+        "Compare with g.f. for partition numbers: exp( Sum_{n>=1} sigma(n)*x^n/n ), where sigma(n) = A000203(n) is the sum of the divisors of n."
+    ],
+    "formula": [
+        "a(n) = (1/n)*Sum_{k=1..n} sigma(k)^4*a(n-k) for n>0, with a(0) = 1.",
+        "G.f.: exp( Sum_{n>=1} Sum_{k>=1} sigma(n*k)^3 * x^(n*k) / n )."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 41*x^2 + 126*x^3 + 1526*x^4 + 5185*x^5 +...",
+        "such that, by definition,",
+        "log(A(x)) = x + 3^4*x^2/2 + 4^4*x^3/3 + 7^4*x^4/4 + 6^4*x^5/5 + 12^4*x^6/6 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(exp(sum(k=1, n, sigma(k)^4*x^k/k)+x*O(x^n)), n)} /* Paul D. Hanna */",
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1, n+1, sum(k=1, n\\m, sigma(m*k)^3*x^(m*k)/m)+x*O(x^n))), n)} /* Paul D. Hanna */",
+        "(PARI) a(n)=if(n==0, 1, (1/n)*sum(k=1, n, sigma(k)^4*a(n-k)))"
+    ],
+    "xref": [
+        "Cf. A156302, A178933, A000203 (sigma), A000041 (partitions)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jan 31 2012",
+    "references": 1,
+    "revision": 9,
+    "time": "2012-03-30T18:37:34-04:00",
+    "created": "2012-02-02T02:49:02-05:00"
+}

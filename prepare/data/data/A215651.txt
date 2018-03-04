@@ -1,0 +1,48 @@
+{
+    "number": 215651,
+    "data": "1,2,8,283",
+    "name": "Number of transformation semigroups acting on n points (counting conjugates as one), i.e., the number of subsemigroups of the full transformation semigroup T_n.",
+    "comment": [
+        "The semigroup analog of A000638.",
+        "We apply the categorical viewpoint and consider the empty set as a semigroup.",
+        "The fifth term has been calculated: 132069776. Currently, the result is being verified and the related publication is being prepared. - _Attila Egri-Nagy_, Jan 09 2014"
+    ],
+    "program": [
+        "(GAP)",
+        "################################################################################",
+        "# GAP 4.5 function calculating the conjugacy classes of a set of subsemigrops.",
+        "# (C) 2012 Attila Egri-Nagy www.egri-nagy.hu",
+        "# GAP can be obtained from www.gap-system.org",
+        "################################################################################",
+        "# Input: list of subsemigroups of a transformation semigroup,",
+        "#        automorphism group of the semigroup",
+        "# Output: list of conjugacy classes",
+        "ConjugacyClassesSubsemigroups := function(subsemigroups, G)",
+        "local ssg, #subsemigroup",
+        "      ccl, #conjugacy class",
+        "      ccls; #result: all conjugacy classes",
+        "  ccls := [];",
+        "  for ssg in subsemigroups do",
+        "    #we check whether the subsemigroup is already in a conjugacy class",
+        "    if not ForAny(ccls, x -> ssg in x) then",
+        "      #conjugating by all group elements",
+        "      ccl := DuplicateFreeList(",
+        "                     List(G,",
+        "                          g -> AsSortedList(List(ssg, t-> t^g))));",
+        "      Add(ccls, ccl);",
+        "    fi;",
+        "  od;",
+        "  return ccls;",
+        "end;"
+    ],
+    "xref": [
+        "Cf. A215650."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Attila Egri-Nagy_, Aug 19 2012",
+    "references": 0,
+    "revision": 21,
+    "time": "2015-07-10T18:02:06-04:00",
+    "created": "2012-09-07T04:45:13-04:00"
+}

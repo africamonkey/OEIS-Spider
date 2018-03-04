@@ -1,0 +1,55 @@
+{
+    "number": 29907,
+    "data": "0,1,2,4,8,15,28,51,92,164,290,509,888,1541,2662,4580,7852,13419,22868,38871,65920,111556,188422,317689,534768,898825,1508618,2528836,4233872,7080519,11828620,19741179,32916068,54835556,91276202,151814645,252318312",
+    "name": "a(n+1) = a(n) + a(n-1) + Fibonacci(n).",
+    "comment": [
+        "Number of matchings of the fan graph on n vertices, n>0 (a fan is the join of the path graph with one extra vertex).",
+        "a(n+1) gives row sums of A054450. - _Paul Barry_, Oct 23 2004",
+        "Number of parts in all compositions of n into odd parts. Example: a(5)=15 because the compositions 5, 311, 131, 113, and 11111 have a total of 1+3+3+3+5=15 parts.",
+        "a(n-1) is the number of compositions of n that contain one even part; for example, a(5-1)=a(4)=8 counts the compositions 1112, 1121, 1211, 14, 2111, 23, 32, 41. - _Joerg Arndt_, May 21 2013"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A029907/b029907.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (2,1,-2,-1)"
+    ],
+    "formula": [
+        "G.f.: x*(1-x^2)/(1-x-x^2)^2.",
+        "a(n) = ((n+4)*F(n)+2*n*F(n-1))/5, where F(n)=A000045(n) (Fibonacci).",
+        "a(n+1) = sum{k=0..n, sum{j=0..floor(k/2), binomial(n-j, j)}}. - _Paul Barry_, Oct 23 2004",
+        "a(n) = A010049(n+1) + A152163(n+1). - _R. J. Mathar_, Dec 10 2011",
+        "a(n) = sum(F(k)*F(n-k): k=1..n-1) + F(n), where F = A000045. - _Reinhard Zumkeller_, Nov 01 2013"
+    ],
+    "example": [
+        "a(4)=8 because matchings of fan graph with edges {OA,OB,OC,AB,AC} are: {},{OA},{OB},{OC},{AB},{AC},{OA,BC},{OC,AB}."
+    ],
+    "maple": [
+        "with(combinat); A029907 := proc(n) options remember; if n <= 1 then n else procname(n-1)+procname(n-2)+fibonacci(n-1); fi; end;"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[x (1 - x^2)/(1 - x - x^2)^2, {x, 0, 37}], x] (* or *)",
+        "a[n_] := a[n] = a[n - 1] + a[n - 2] + Fibonacci[n - 1]; a[0] = 0; a[1] = 1; Array[a, 37] (* or *)",
+        "LinearRecurrence[{2, 1, -2, -1}, {0, 1, 2, 4}, 38] (* _Robert G. Wilson v_, Jun 22 2014 *)"
+    ],
+    "program": [
+        "(PARI) alias(F,fibonacci); a(n)=((n+4)*F(n)+2*n*F(n-1))/5;",
+        "(Haskell)",
+        "a029907 n = a029907_list !! n",
+        "a029907_list = 0 : 1 : zipWith (+) (tail a000045_list)",
+        "                      (zipWith (+) (tail a029907_list) a029907_list)",
+        "-- _Reinhard Zumkeller_, Nov 01 2013"
+    ],
+    "xref": [
+        "Cf. A010049."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "Additional formula from _Wolfdieter Lang_, May 02 2000",
+        "Additional comments from _Michael Somos_, Jul 23 2002"
+    ],
+    "references": 29,
+    "revision": 50,
+    "time": "2016-07-19T03:19:01-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

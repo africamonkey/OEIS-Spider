@@ -1,0 +1,48 @@
+{
+    "number": 79262,
+    "data": "0,0,0,0,0,0,0,1,1,2,4,8,16,32,64,128,255,509,1016,2028,4048,8080,16128,32192,64256,128257,256005,510994,1019960,2035872,4063664,8111200,16190208,32316160,64504063,128752121,256993248,512966536,1023897200,2043730736",
+    "name": "Octanacci numbers: a(0)=a(1)=...=a(6)=0, a(7)=1; for n >= 8, a(n) = Sum_{i=1..8} a(n-i).",
+    "link": [
+        "T. D. Noe, <a href=\"/A079262/b079262.txt\">Table of n, a(n) for n=0..207</a>",
+        "Martin Burtscher, Igor Szczyrba, Rafa\u0142 Szczyrba, <a href=\"http://www.emis.de/journals/JIS/VOL18/Szczyrba/sz3.pdf\">Analytic Representations of the n-anacci Constants and Generalizations Thereof</a>, Journal of Integer Sequences, Vol. 18 (2015), Article 15.4.5.",
+        "T.-X. He, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL16/He/he13.html\">Impulse Response Sequences and Construction of Number Sequence Identities</a>, J. Int. Seq. 16 (2013) #13.8.2",
+        "F. T. Howard and Curtis Cooper, <a href=\"http://www.math-cs.ucmo.edu/~curtisc/articles/howardcooper/genfib4.pdf\">Some identities for r-Fibonacci numbers</a>.",
+        "Tony D. Noe and Jonathan Vos Post, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL8/Noe/noe5.html\">Primes in Fibonacci n-step and Lucas n-step Sequences,</a> J. of Integer Sequences, Vol. 8 (2005), Article 05.4.4",
+        "Fred J. Rispoli, <a href=\"http://www.fq.math.ca/Papers1/43-3/paper43-3-5.pdf\">Fibonacci Polytopes and Their Applications</a>, Fib. Q., 43,3 (2005), 227-233.",
+        "<a href=\"/index/Rec#order_08\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,1,1,1,1,1,1)."
+    ],
+    "formula": [
+        "G.f.: x^7/(1 - x - x^2 - x^3 - x^4 - x^5 - x^6 - x^7 - x^8). - _Emeric Deutsch_, Apr 16 2005",
+        "a(1)..a(9) = 1, 1, 2, 4, 8, 16, 32, 64, 128. a(10) and following are given by 63*2^(n-8)+(1/2+sqrt(5/4))^(n-6)/sqrt(5)-(1/2-sqrt(5/4))^(n-6)/sqrt(5). Offset 10. a(10)=255. - Al Hakanson (hawkuu(AT)gmail.com), Feb 14 2009",
+        "Another form of the g.f.: f(z) = (z^7 - z^8)/(1 - 2*z + z^9), then a(n) = sum_{i=0..floor((n-7)/9)} ((-1)^i*binomial(n-7-8*i,i)*2^(n-7-9*i) - sum_{i=0..floor((n-8)/9)} (-1)^i*binomial(n-8-8*i,i)*2^(n-8-9*i) with sum_{i=m..n} alpha(i) = 0 for m>n. - _Richard Choulet_, Feb 22 2010",
+        "sum_{k=0..7*n} a(k+b)*A171890(n,k) = a(8*n+b), b>=0.",
+        "For a(0)=a(1)=..=a(6)=0, a(7)=a(8)=1, a(n) = 2*a(n-1) - a(n-9). - _Vincenzo Librandi_, Dec 20 2010"
+    ],
+    "example": [
+        "a(16) = 1 + 2 + 4 + 8 + 16 + 32 + 64 + 128 = 255."
+    ],
+    "maple": [
+        "for j from 0 to 6 do a[j]:=0 od: a[7]:=1: for n from 8 to 45 do a[n]:=sum(a[n-i],i=1..8) od:seq(a[n],n=0..45); # _Emeric Deutsch_, Apr 16 2005",
+        "for n from 0 to 50 do k(n):=sum((-1)^i*binomial(n-7-8*i,i)*2^(n-7-9*i),i=0..floor((n-7)/9))-sum((-1)^i*binomial(n-8-8*i,i)*2^(n-8-9*i),i=0..floor((n-8)/9)):od:seq(k(n),n=0..50);a:=taylor((z^7-z^8)/(1-2*z+z^9),z=0,51);for p from 0 to 50 do j(p):=coeff(a,z,p):od :seq(j(p),p=0..50); # _Richard Choulet_, Feb 22 2010"
+    ],
+    "mathematica": [
+        "a=0;b=0;c=0;d=0;e=0;f=0;g=0;h=1;lst={a, b, c, d, e, f, g, h};Do[k=a+b+c+d+e+f+g+h;AppendTo[lst, k];a=b;b=c;c=d;d=e;e=f;f=g;g=h;h=k, {n, 4!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Sep 30 2008 *)",
+        "LinearRecurrence[{1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0, 1}, 50]] (* _Vladimir Joseph Stephan Orlovsky_, May 25 2011 *)",
+        "With[{nn=8},LinearRecurrence[Table[1,{nn}],Join[Table[0,{nn-1}],{1}],50]] (* _Harvey P. Dale_, Aug 17 2013 *)"
+    ],
+    "xref": [
+        "Cf. A066178, A001592, A001591, A001630, A000073, A000045.",
+        "Row 8 of arrays A048887 and A092921 (k-generalized Fibonacci numbers).",
+        "Cf. A253706, A253705. Primes and indices of primes in this sequence."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,10",
+    "author": "_Michael Joseph Halm_, Feb 04 2003",
+    "ext": [
+        "Corrected by Joao B. Oliveira (oliveira(AT)inf.pucrs.br), Nov 25 2004"
+    ],
+    "references": 28,
+    "revision": 49,
+    "time": "2018-01-21T14:43:43-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

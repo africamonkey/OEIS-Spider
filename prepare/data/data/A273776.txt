@@ -1,0 +1,42 @@
+{
+    "number": 273776,
+    "data": "4,46,138,690,197890,5444670,156719940,4941906970,135969743910",
+    "name": "Smallest composite number with n distinct prime factors with property that the concatenation of its distinct prime factors, in descending order, is a palindrome.",
+    "comment": [
+        "4 = 2 * 2",
+        "46 = 2 * 23",
+        "138 = 2 * 3 * 23",
+        "690 = 2 * 3 * 5 * 23",
+        "197890 = 2 * 5 * 7 * 11 * 257",
+        "5444670 = 2 * 3 * 5 * 7 * 11 * 2357",
+        "156719940 = 2 * 2  * 3 * 5 * 13 * 17 * 53 * 223",
+        "4941906970 = 2 * 5 * 7 * 11 * 13 * 17 * 113 * 257",
+        "135969743910 = 2 * 3 * 5 * 7 * 11 * 13 * 17 * 113 * 2357"
+    ],
+    "example": [
+        "Prime factors of 4 are 2, 2 and concat(2,2) = 22 is palindromic.",
+        "Prime factors of 46 are 2, 23 and concat(23,2) = 232 is palindromic.",
+        "Prime factors of 5444670 are 2, 3, 5, 7, 11, 2357 and concat(2357,11,7,5,3,2) = 2357117532 is palindromic."
+    ],
+    "maple": [
+        "with(numtheory): T:=proc(w) local x, y, z; x:=0; y:=w; for z from 1 to ilog10(w)+1 do x:=10*x+(y mod 10); y:=trunc(y/10); od; x; end;",
+        "P:=proc(q) local a,b,c,i,j,k,n; c:=1; for j from 1 to q do for n from c to q do",
+        "if not isprime(n) then a:=ifactors(n)[2]; b:=[]; if nops(a)=j then for k from 1 to nops(a) do",
+        "for i from 1 to a[k][2] do b:=[op(b),a[k][1]]; od; od; b:=sort(b); a:=b[nops(b)];",
+        "for k from nops(b)-1 by -1 to 1 do a:=a*10^(ilog10(b[k])+1)+b[k]; od;",
+        "if T(a)=a then c:=n; print(n); break; fi; fi; fi; od; od; end: P(10^9);"
+    ],
+    "xref": [
+        "Cf. A046449."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jul 06 2016",
+    "ext": [
+        "a(7)-a(9) from _Giovanni Resta_"
+    ],
+    "references": 0,
+    "revision": 14,
+    "time": "2016-07-08T09:50:10-04:00",
+    "created": "2016-07-08T09:50:10-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 71268,
+    "data": "1,33,1332,66660,3999960,279999720,22399997760,2015999979840,201599999798400,927359999990726400,1064447999999893555200,2058376319999997941623680,4439635199999999955603648000,10585935359999999998941406464000,27655756127999999999972344243872000",
+    "name": "Sum of all digit permutations of the concatenation of first n numbers.",
+    "comment": [
+        "The permutations yield n! different numbers and if they are stacked vertically then the sum of each column is (n-1)! times the n-th triangular number = (n-1)!*n(n+1)/2. a(n) = [(n+1)!/2]*[{10^n -1}/9]. Note that this is only valid for 1 <= n <= 9.",
+        "The first person who studied the sum of different permutations of digits of a given number seems to be the French scientist Eug\u00e8ne Aristide Marre (1823-1918). See links. - _Bernard Schott_, Dec 07 2012"
+    ],
+    "link": [
+        "A. Marre, <a href=\"http://archive.numdam.org/ARCHIVE/NAM/NAM_1846_1_5_/NAM_1846_1_5__57_1/NAM_1846_1_5__57_1.pdf\">Trouver la somme de toutes les permutations diff\u00e9rentes d'un nombre donn\u00e9.</a>, Nouvelles Annales de Math\u00e9matiques, 1\u00e8re s\u00e9rie, tome 5 (1846), p. 57-60.",
+        "Norbert Verdier and Raymond Cordier, <a href=\"http://www.les-mathematiques.net/phorum/read.php?17,777265\">QDV4 : Marre, Marre et Marre, page=1</a> (French mathematical forum les-mathematiques.net)"
+    ],
+    "formula": [
+        "a(n) = (n + 1)!*(10^n - 1)/18 for 1 <= n <= 9.",
+        "a(n) = ((10^A055642(A007908(n))-1)/9)*(A047726(A007908(n))*A007953(A007908(n))/(A055642(A007908(n)))). - _Altug Alkan_, Aug 28 2016"
+    ],
+    "example": [
+        "For n=3, a(n) = 123 + 132 + 213 + 231 + 312 + 321 = 1332. - _Michael B. Porter_, Aug 28 2016"
+    ],
+    "mathematica": [
+        "Table[Total@ Map[FromDigits, Permutations@ Flatten@ Map[IntegerDigits, Range@ n]], {n, 10}] (* or *)",
+        "Table[Function[d, (((10^Length@ d - 1)/9)* Length@ Union@ Map[FromDigits, Permutations@ d] Total[d])/Length@ d]@ Flatten@ Map[IntegerDigits, Range@ n], {n, 11}] (* _Michael De Vlieger_, Aug 30 2016, latter after _Harvey P. Dale_ at A047726 *)"
+    ],
+    "program": [
+        "(PARI) A007908(n) = my(s=\"\"); for(k=1, n, s=Str(s, k)); eval(s);",
+        "A047726(n) = n=eval(Vec(Str(n))); (#n)!/prod(i=0, 9, sum(j=1, #n, n[j]==i)!);",
+        "A055642(n) = #Str(n);",
+        "A007953(n) = sumdigits(n);",
+        "a(n) = ((10^A055642(A007908(n))-1)/9)*(A047726(A007908(n))*A007953(A007908(n))/(A055642(A007908(n)))); \\\\ _Altug Alkan_, Aug 28 2016"
+    ],
+    "xref": [
+        "Cf. A045876, A047726, A007908."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, Jun 01 2002",
+    "ext": [
+        "Edited by _Robert G. Wilson v_, Jun 03 2002",
+        "Corrected by _Altug Alkan_, Aug 28 2016"
+    ],
+    "references": 3,
+    "revision": 39,
+    "time": "2016-09-03T16:56:38-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

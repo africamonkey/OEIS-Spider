@@ -1,0 +1,32 @@
+{
+    "number": 182140,
+    "data": "2,3,5,7,11,13,15,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,127,131,137,139,143,149,151,157,163,167,173,179,181,191,193,197,199,211,223,227,229,233,239,241,251,255,257",
+    "name": "Numbers n such that A060968(n) = A201629(n).",
+    "comment": [
+        "Includes prime numbers and the sequence A071700.",
+        "a(n) = A240960(n) for n <= 35. - _Reinhard Zumkeller_, Aug 05 2014"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A182140/b182140.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "fa = FactorInteger; A060968[p_, s_] := Which[Mod[p, 4] == 1, p^( s - 1)*(p - 1), Mod[p, 4] == 3, p^(s - 1)*(p + 1), s == 1,2, True, 2^(s + 1)]; A060968[1] = 1; A060968[n_] := Product[A060968[fa[n][[i, 1]], fa[n][[i, 2]]], {i, Length[fa[n]]}]; A201629[n_] := Which[Mod[n, 4] == 1, (n - 1), Mod[n, 4] == 3, (n + 1), True, n]; Select[Range[1000], A060968[#] == A201629[#] &]"
+    ],
+    "program": [
+        "(PARI) is(n)=my(f=factor(n)[, 1]); n*prod(i=if(n%2, 1, 2), #f, if(f[i]%4==1, 1-1/f[i], 1+1/f[i]))*if(n%4, 1, 2)==if(n%2,(n+1)\\4*4,n) \\\\ _Charles R Greathouse IV_, Jul 03 2013",
+        "(Haskell)",
+        "a182140 n = a182140_list !! (n-1)",
+        "a182140_list = [x | x <- [1..], a060968 x == a201629 x]",
+        "-- _Reinhard Zumkeller_, Aug 05 2014"
+    ],
+    "xref": [
+        "Cf. A060968, A201629, A071700, A240960."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jos\u00e9 Mar\u00eda Grau Ribas_, Apr 14 2012",
+    "references": 5,
+    "revision": 36,
+    "time": "2015-09-26T22:43:58-04:00",
+    "created": "2012-04-17T11:52:24-04:00"
+}

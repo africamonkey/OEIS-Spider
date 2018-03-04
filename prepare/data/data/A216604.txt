@@ -1,0 +1,48 @@
+{
+    "number": 216604,
+    "data": "1,1,1,2,3,4,7,12,19,33,59,102,181,329,593,1076,1979,3643,6723,12494,23289,43498,81557,153356,288925,545687,1032997,1958978,3721819,7083716,13503311,25778612,49283755,94345179,180830195,347006694,666636809,1282024484,2467964693",
+    "name": "G.f. satisfies: A(x) = (1 + x*(1-x)*A(x)) * (1 + x^2*A(x)).",
+    "comment": [
+        "The radius of convergence of the g.f. A(x) equals 1/2, with A(1/2) = 4.",
+        "More generally, if A(x) = (1 + x*(t-x)*A(x)) * (1 + x^2*A(x)), |t|>0, then",
+        "A(x) = exp( Sum_{n>=1} x^n/n * Sum_{k=0..n} binomial(n,k)^2 * x^k*(t-x)^(n-k) )",
+        "where the radius of convergence r of the g.f. A(x) satisfies",
+        "r = (1-r)^2/(t-r) = (1-t*r)/(2*(1-r)) with A(r) = 1/(r*(1-r)) = 2/(1-t*r)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A216604/b216604.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: exp( Sum_{n>=1} x^n/n * Sum_{k=0..n} binomial(n,k)^2 * x^k*(1-x)^(n-k) ).",
+        "G.f.: ((1-x) - sqrt( (1-x)^2 - 4*x^3*(1-x) )) / (2*x^3*(1-x)).",
+        "a(n) ~ 2^(n+2)/(sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Sep 16 2013"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + x^2 + 2*x^3 + 3*x^4 + 4*x^5 + 7*x^6 + 12*x^7 + 19*x^8 +...",
+        "The logarithm of the g.f. begins:",
+        "log(A(x)) = ((1-x) + x)*x + ((1-x)^2 + 2^2*x*(1-x) + x^2)*x^2/2 +",
+        "((1-x)^3 + 3^2*x*(1-x)^2 + 3^2*x^2*(1-x) + x^3)*x^3/3 +",
+        "((1-x)^4 + 4^2*x*(1-x)^3 + 6^2*x^2*(1-x)^2 + 4^2*x^3*(1-x) + x^4)*x^4/4 +",
+        "((1-x)^5 + 5^2*x*(1-x)^4 + 10^2*x^2*(1-x)^3 + 10^2*x^3*(1-x)^2 + 5^2*x^4*(1-x) + x^5)*x^5/5 +...",
+        "Explicitly,",
+        "log(A(x)) = x + x^2/2 + 4*x^3/3 + 5*x^4/4 + 6*x^5/5 + 16*x^6/6 + 29*x^7/7 + 45*x^8/8 + 94*x^9/9 + 186*x^10/10 +...+ A217464(n)*x^n/n +..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[((1 - x) - Sqrt[(1 - x)^2 - 4*x^3*(1 - x)])/(2*x^3 *(1 - x)), {x,0,50}], x] (* _G. C. Greubel_, Jan 24 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1,n+1,x^m/m*sum(k=0,m,binomial(m,k)^2*x^k*(1-x)^(m-k) + x*O(x^n)))),n)}",
+        "(PARI) {a(n)=polcoeff(2/(1-x+sqrt((1-x)^2-4*x^3*(1-x) +x*O(x^n))),n)}",
+        "for(n=0,40,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A217464, A105633, A216434, A216454, A216447, A192415, A216616, A216617."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Sep 10 2012",
+    "references": 9,
+    "revision": 35,
+    "time": "2017-01-24T20:28:16-05:00",
+    "created": "2012-09-10T00:16:24-04:00"
+}

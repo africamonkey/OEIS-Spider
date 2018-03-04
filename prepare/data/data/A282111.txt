@@ -1,0 +1,35 @@
+{
+    "number": 282111,
+    "data": "37,43,49,55,61,67,74,80,86,92,98,104,111,117,123,129,135,141,148,154,160,166,172,178,185,191,197,203,209,215,218,222,224,230,236,242,248,255,258,261,267,273,279,285,292,294,298,304,310,316,322,329,330,335,341",
+    "name": "Numbers n with k digits in base x (MSD(n)=d_k, LSD(n)=d_1) such that, chosen one of their digits in position d_k < j < d_1, is Sum_{i=j+1..k}{(i-j)*d_i} = Sum_{i=1..j-1}{(j-i)*d_i}. Case x = 6.",
+    "comment": [
+        "All the palindromic numbers in base 6 with an odd number of digits belong to the sequence.",
+        "Here the fulcrum is one of the digits while in the sequence from A282143 to A282151 is between two digits.",
+        "Numbers with this property in all the bases from 2 to 6 are:",
+        "144781, 345440, 743687, 1650704, 4020912, 4270149, 4757093, 6922591, 7102553, 7406643, 7677171, 7823009, 8853188, 12444016, 14457746, 14853520, 14861718, 15794512, 15994195, 17375742, 20450682, 20802565, 22173561, 22186557, 25268754, 261656297, 26648201, 27740672, ..."
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A282111/b282111.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "304 in base 6 is 1224. If j = 2 (the first 2 from right) we have 2*1 + 1*2 = 4 for the left side and 4*1 = 4 for the right one."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q,h) local a,b,d,j,k,n,s;",
+        "for n from 1 to q do a:=convert(n,base,h);",
+        "for k from 1 to trunc(nops(a)/2) do b:=a[k]; a[k]:=a[nops(a)-k+1]; a[nops(a)-k+1]:=b; od;",
+        "for k from 2 to nops(a)-1 do d:=0; s:=0;",
+        "for j from 1 to k-1 do if a[j]>0 then s:=s+a[j]*(k-j); fi; od; for j from nops(a) by -1 to k+1 do",
+        "if a[j]>0 then d:=d+a[j]*(j-k); fi; od; if d=s then print(n); break; fi; od; od; end: P(10^9,6);"
+    ],
+    "xref": [
+        "Cf. A282107 - A282110, A282112 - A282115."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Feb 06 2017",
+    "references": 3,
+    "revision": 9,
+    "time": "2017-02-15T03:28:38-05:00",
+    "created": "2017-02-15T03:28:38-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 182337,
+    "data": "1,2,4,5,7,10,11,13,14,16,17,19,20,22,23,25,26,28,29,31,32,34,35,37,38,41,43,44,46,47,49,50,52,53,55,58,59,61,62,65,67,68,70,71,73,74,76,77,79,80,82,83,85,86,89,91,92,94,95,97,98,100,101,103,106",
+    "name": "List of positive integers whose prime tower factorization, as defined in comments, does not contain the prime 3.",
+    "comment": [
+        "The prime tower factorization of a number can be recursively defined as follows:",
+        "(0) The prime tower factorization of 1 is itself",
+        "(1) To find the prime tower factorization of an integer n>1, let n = p1^e1 * p2^e2 * ... * pk^ek be the usual prime factorization of n. Then the prime tower factorization is given by p1^(f1) * p2^(f2) * ... * pk^(fk), where fi is the prime tower factorization of ei.",
+        "As an alternative definition, let I(n) be the indicator function for the set of positive integers whose prime tower factorization does not contain a 3. Then I(n) is the multiplicative function satisfying I(p^k) = I(k) for p prime not equal to 3, and I(3^k) = 0."
+    ],
+    "link": [
+        "Patrick Devlin and Edinah Gnang, <a href=\"https://arxiv.org/abs/1204.5251\">Primes Appearing in Prime Tower Factorization</a>, arXiv:1204.5251 [math.NT], 2012-2014."
+    ],
+    "maple": [
+        "# The integer n is in this sequence if and only if",
+        "# containsPrimeInTower(3, n) returns false",
+        "containsPrimeInTower:=proc(q, n) local i, L, currentExponent; option remember;",
+        "if n <= 1 then return false: end if;",
+        "if type(n/q, integer) then return true: end if;",
+        "L := ifactors(n)[2];",
+        "for i to nops(L) do currentExponent := L[i][2];",
+        "  if containsPrimeInTower(q, currentExponent) then return true: end if",
+        "end do;",
+        "return false:",
+        "end proc:",
+        "select(x-> not containsPrimeInTower(3,x), [$1..120])[];"
+    ],
+    "mathematica": [
+        "indic[1] = 1; indic[n_] := indic[n] = Switch[f = FactorInteger[n], {{3, _}}, 0, {{_, _}}, indic[f[[1, 2]] ], _, Times @@ (indic /@ (Power @@@ f))]; Select[Range[120], indic[#] == 1&] (* _Jean-Fran\u00e7ois Alcover_, Feb 25 2018 *)"
+    ],
+    "xref": [
+        "Cf. A182318."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "1,2",
+    "author": "_Patrick Devlin_, Apr 25 2012",
+    "references": 1,
+    "revision": 19,
+    "time": "2018-02-25T09:21:12-05:00",
+    "created": "2012-04-25T21:03:59-04:00"
+}

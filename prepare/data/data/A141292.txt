@@ -1,0 +1,38 @@
+{
+    "number": 141292,
+    "data": "1,5,9,12,15,19,22,25,28,31,35,38,42,47,50,53,56,60,63,67,72,76,79,82,85,89,93,100,103,106,109,113,117,121,126,130,133,136,139,143,147,156,160,163,166,169,174,177,182,186,189,192,196,202,205,214,217,220,223",
+    "name": "Conjectured values for minimal number of pieces required in a 2n-gon to square dissection that uses translation alone.",
+    "reference": [
+        "Boltyanskii, V.G., Equivalent and Equidecomposable Figures, D.C. Heath and Company, Boston, 1963.",
+        "G. N. Frederickson, Dissections Plane and Fancy, Camb. 1997."
+    ],
+    "example": [
+        "a(2)=1 because a regular 4-gon-to-square dissection can be accomplished with a single \"piece\". Busschop gave a 5-piece hexagon-to-square dissection using translations alone,so a(3)=5 (see Frederickson, p. 118). Further terms in the sequence are obtained by a systematic process for cutting the original 2n-gon, and the algorithm for generating these terms is given below. - Pamela Pierce (ppierce(AT)wooster.edu), Sep 03 2009"
+    ],
+    "mathematica": [
+        "b1 := (n, k) -> 2*sin(Pi*(2*k-1)/n)",
+        "b2 := (n, k) -> 2*sin(Pi*(2*k+1)/n)",
+        "w1 := (n, k) -> b1(n, k)+b2(n, k)",
+        "w2 := (n, k) -> sqrt((1/2)*n*sin(2*Pi/n))",
+        "h1 := (n, k) -> cos(Pi*(2*k-1)/n)-cos(Pi*(2*k+1)/n)",
+        "h2 := (n, k) -> w1(n, k)*h1(n, k)/w2(n, k)",
+        "a := (n, k) -> floor(w2(n, k)/w1(n, k))*h2(n, k)/h1(n, k)",
+        "kp := (n, k) -> 3*signum(w1(n, k)-w2(n, k))+3+((1/2)*signum(w2(n, k)-w1(n, k))+1/2)* (3*floor(w2(n, k)/w1(n, k))+9/2+(1/2)*signum(w2(n, k)-floor(w2(n, k)/w1(n, k))*w1(n, k)-(1/2-(1/2)*a(n, k))*w1(n, k)-a(n, k)*b2(n, k)))",
+        "P := n-> 9/2+sum(kp(n, k), k = 1 .. floor((1/4)*n)-1)+1.5*signum((1/4)*n-floor((1/4)*n)-.25)",
+        "[seq([2*i, P(2*i)], i = 3 .. 100)]"
+    ],
+    "xref": [
+        "Cf. A110312."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "Pamela Pierce (PPierce(AT)wooster.edu), Jeffrey Willert (jwillert09(AT)wooster.edu) and Wenyuan Wu (wwu11(AT)wooster.edu), Aug 01 2008, Aug 12 2008",
+    "ext": [
+        "Entry revised by Pamela Pierce (PPierce(AT)wooster.edu), John Ramsay (JRamsay(AT)wooster.edu), Jeffrey Willert (jawiller(AT)ncsu.edu), Hannah Roberts (HRoberts12(AT)wooster.edu), Nancy Tinoza (NTinoza12(AT)wooster.edu and Wenyuan Wu (wwu11(AT)wooster.edu), Sep 03 2009. The revisions are based on a dissection method found in 2009.",
+        "Given that the value of a(3) changed from 6 to 5 at the latest revision, one should not have too much confidence that these entries are minimal. - _N. J. A. Sloane_, Sep 05 2009"
+    ],
+    "references": 0,
+    "revision": 6,
+    "time": "2014-02-10T01:11:26-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

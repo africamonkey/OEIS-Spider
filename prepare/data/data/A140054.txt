@@ -1,0 +1,55 @@
+{
+    "number": 140054,
+    "data": "1,2,15,220,5025,159606,6593041,338977416,21032339985,1539275365450,130569297615801,12660181105282668,1387510663815243721,170295099173001030606,23224872340978381412865,3496270002640563444940816,577651124287028261031912609,104221856744783499072505465746",
+    "name": "E.g.f. A(x) satisfies: A( x*exp(-A(x)) ) = x.",
+    "comment": [
+        "Unsigned version of A087962.",
+        "Not the same as A178533."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A140054/b140054.txt\">Table of n, a(n) for n = 1..75</a>"
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A(x) = x*exp( A(A(x)) ).",
+        "(2) A(x) = x*exp( A(x)*exp( A(A(x))*exp( A(A(A(x)))*exp( ...)))) (infinite exponential tower).",
+        "(3) Let A_{n}(x) denote n-th iteration of e.g.f. A(x) with A_0(x)=x,",
+        "then",
+        "(3.a) A_{n+1}(x) = A( A_{n}(x) ) = A_{n}(x) * exp( A_{n+2}(x) );",
+        "(3.b) A_{n}(x) = x*exp( Sum_{k=2..n+1} A_{k}(x) ).",
+        "(4) exp(-A(x)) = G(x) where G(x*G(x)) = exp(-x) and G(-x) = e.g.f. of A087961.",
+        "a(n)=n!*T(n,1), T(n,m)=m/n*sum(T(n-m,k)*n^k/k!,k,1,n-m), n>m, T(n.n)=1. [_Vladimir Kruchinin_, May 06 2012]"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 15*x^3/3! + 220*x^4/4! + 5025*x^5/5! +...",
+        "Related expansions are:",
+        "exp(-A(x)) = 1 - x - x^2/2! - 10*x^3/3! - 159*x^4/4! - 3816*x^5/5! -...",
+        "A(A(x)) = x + 4*x^2/2! + 42*x^3/3! + 764*x^4/4! + 20400*x^5/5! +...",
+        "A(A(A(x))) = x + 6*x^2/2! + 81*x^3/3! + 1776*x^4/4! + 55125*x^5/5! +...",
+        "A(A(A(A(x)))) = x + 8*x^2/2! + 132*x^3/3! + 3400*x^4/4! + 121080*x^5/5! +...",
+        "Iterations of A(x) obey the relation illustrated by:",
+        "A(x) = x*exp( A(A(x)) );",
+        "A(A(x)) = x*exp( A(A(x)) + A(A(A(x))) );",
+        "A(A(A(x))) = x*exp( A(A(x)) + A(A(A(x))) + A(A(A(A(x)))) ).",
+        "..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x);for(i=0,n,A=serreverse(x*exp(-A+x*O(x^n))));n!*polcoeff(A,n)}",
+        "for(n=1,20,print1(a(n),\", \"))",
+        "(PARI) {a(n)=local(A=x);for(i=0,n,A=x*exp(subst(A,x,A+x*O(x^n))));n!*polcoeff(A,n)}",
+        "for(n=1,20,print1(a(n),\", \"))",
+        "(Maxima) A(n,m):=if n=m then 1 else m/n*sum(A(n-m,k)*n^k/k!,k,1,n-m);",
+        "makelist(n!*A(n,1),n,1,10); [_Vladimir Kruchinin_, May 06 2012]"
+    ],
+    "xref": [
+        "Cf. A087962 (A(-x)), A087961 (exp(-A(-x))), A140055 (A(A(x))).",
+        "Cf. A178533."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, May 03 2008",
+    "references": 4,
+    "revision": 14,
+    "time": "2015-05-02T05:54:29-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

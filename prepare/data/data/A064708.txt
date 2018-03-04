@@ -1,0 +1,30 @@
+{
+    "number": 64708,
+    "data": "6,14,20,33,54,91,141,141",
+    "name": "Initial term of run of (at least) n consecutive numbers with just 2 distinct prime factors.",
+    "comment": [
+        "It can be shown by an application of Mihailescu's theorem that a(12) does not exist, since then there would be two 3-smooth numbers close together (it suffices to check up to 2*3^3).",
+        "If a(9) exists, it is greater than 10^30. - _Don Reble_, Mar 02 2003",
+        "If a(9) exists, it is greater than 10^3000. - _Charles R Greathouse IV_, Apr 22 2009",
+        "Eggleton and MacDougall prove that no terms exist beyond a(9) and conjecture that a(9) does not exist. - _Jason Kimberley_, Jul 08 2017"
+    ],
+    "link": [
+        "Roger B. Eggleton and James A. MacDougall, <a href=\"http://www.jstor.org/stable/27643119\">Consecutive integers with equally many principal divisors</a>, Math. Mag. 81 (2008), 235-248. [_T. D. Noe_, Oct 13 2008]"
+    ],
+    "example": [
+        "6 = 2*3; 14 = 2*7 and 15 = 3*5; 20 = 2^2*5, 21 = 3*7 and 22 = 2*11; 33 = 3*11, 34 = 2*17, 35 = 5*7 and 36 = (2*3)^2; etc."
+    ],
+    "mathematica": [
+        "Function[s, Function[t, Reverse@ FoldList[If[#2 > #1, #1, #2] &, Reverse[#]] &@ Map[t[[First@ FirstPosition[t[[All, -1]], k_ /; k == #] ]] &, Range[0, Max@ t[[All, -1]] ] ][[All, 1]] ]@ Join[{{First@ s, 0}, {#[[1, 1, 1]], 1}}, Rest@ Map[{#[[1, 1]], Length@ # + 1} &, #, {1}]] &@ SplitBy[Partition[Select[#, Last@ # == 1 &][[All, 1]], 2, 1], Differences] &@ Map[{First@ #, First@ Differences@ #} &, Partition[s, 2, 1]]]@ Select[Range[10^5], PrimeNu[#] == 2 &] (* _Michael De Vlieger_, Jul 17 2017 *)"
+    ],
+    "xref": [
+        "Cf. A064709."
+    ],
+    "keyword": "nonn,fini",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Oct 13 2001",
+    "references": 4,
+    "revision": 21,
+    "time": "2017-10-19T03:13:56-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

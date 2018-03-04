@@ -1,0 +1,56 @@
+{
+    "number": 276194,
+    "data": "5,9,17,23,27,29,33,39,43,45,51,53,57,65,71,75,77,83,85,89,95,99,101,105,111,113,119,123,125,129,135,139,141,147,149,153,159,163,165,169,175,177,183,187,189,195,197,201,207,209,215,219,221,225,231,235,237",
+    "name": "Odd numbers whose binary representation contains an even number of 1's and at least one 0.",
+    "link": [
+        "Lei Zhou, <a href=\"/A276194/b276194.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "formula": [
+        "a(2^n - floor(n/2)) = 4*2^n + 1, for all n>=0. - _Gheorghe Coserea_, Oct 24 2016"
+    ],
+    "example": [
+        "Binary expressions of odd integers in decimal and binary form as the following:",
+        "1 -> 1 no;",
+        "3 -> 11 no;",
+        "5 -> 101 yes, so a(1)=5;",
+        "7 -> 111, no;",
+        "9 -> 1001, yes so a(2)=9;",
+        "11 -> 1011, no;",
+        "13 -> 1101, no;",
+        "15 -> 1111, no;",
+        "17 -> 10001, yes so a(3)=17."
+    ],
+    "mathematica": [
+        "BNDigits[m_Integer] :=",
+        "  Module[{n = m, d, t = {}},",
+        "   While[n > 0, d = Mod[n, 2]; PrependTo[t, d]; n = (n - d)/2]; t];",
+        "c = 1;",
+        "Table[While[c = c + 2; d = BNDigits[c]; ld = Length[d];",
+        "  c1 = Total[d]; ! (EvenQ[c1] && (c1 < ld))]; c, {n, 1, 57}]"
+    ],
+    "program": [
+        "(PARI) isok(n) = my(b=binary(n)); (n % 2) && (vecmin(b)==0) && !(vecsum(b) % 2); \\\\ _Michel Marcus_, Oct 21 2016",
+        "(PARI)",
+        "seq(N) = {",
+        "  my(bag = List(), cnt = 0, n = 1);",
+        "  while(cnt < N,",
+        "        if (hammingweight(n)%2 == 0 && hammingweight(n+1) > 1,",
+        "            listput(bag, n); cnt++);",
+        "        n += 2);",
+        "  return(Vec(bag));",
+        "};",
+        "seq(57)  \\\\ _Gheorghe Coserea_, Oct 25 2016"
+    ],
+    "xref": [
+        "Cf. A005408.",
+        "Intersection of A129771 and A062289."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Lei Zhou_, Oct 20 2016",
+    "references": 2,
+    "revision": 54,
+    "time": "2016-11-05T12:47:29-04:00",
+    "created": "2016-11-05T12:47:29-04:00"
+}

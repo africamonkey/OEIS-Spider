@@ -1,0 +1,41 @@
+{
+    "number": 290133,
+    "data": "1,1,2,5,8,13,21,31,45,65,92,127,175,237,318,425,561,735,959,1241,1597,2047,2607,3305,4174,5247,6569,8197,10189,12621,15588,19189,23551,28829,35189,42841,52033,63039,76197,91903,110603,132831,159215,190463,227416",
+    "name": "Number of unique X-rays of n X n binary matrices with exactly n ones.",
+    "comment": [
+        "The X-ray of a matrix is defined as the sequence of antidiagonal sums.",
+        "A unique X-ray allows to reconstruct the binary matrix."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A290133/b290133.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "C. Bebeacua, T. Mansour, A. Postnikov and S. Severini, <a href=\"https://arxiv.org/abs/math/0506334\">On the X-rays of permutations</a>, arXiv:math/0506334 [math.CO], 2005.",
+        "<a href=\"/index/Mat#binmat\">Index entries for sequences related to binary matrices</a>"
+    ],
+    "example": [
+        "a(3) = 5: 00021, 00300, 02001, 10020, 12000.",
+        "a(4) = 8: 0000301, 0004000, 0030001, 0200020, 1000021, 1000300, 1030000, 1200001."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; (m-> `if`(n>m, 0,",
+        "      `if`(n=m or n=0, 1, add(b(n-i*j, min(n-i*j, i-1))*",
+        "      `if`(j=1, 2, 1), j=0..min(2, n/i)))))(i*(i+1))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, 1+b(n, n-1)) :",
+        "seq(a(n), n=0..60);"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = Function [m, If[n > m, 0, If[n == m || n == 0, 1, Sum[b[n - i*j, Min[n - i*j, i - 1]]*If[j == 1, 2, 1], {j, 0, Min[2, n/i]} ]]]][i*(i + 1)];",
+        "a[n_] := If[n == 0, 1, 1 + b[n, n - 1]] ;",
+        "Table[a[n], {n, 0, 60}] (* _Jean-Fran\u00e7ois Alcover_, Nov 07 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A290052, A290134."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 20 2017",
+    "references": 3,
+    "revision": 20,
+    "time": "2017-11-07T07:17:22-05:00",
+    "created": "2017-07-21T19:00:22-04:00"
+}

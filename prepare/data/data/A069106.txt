@@ -1,0 +1,39 @@
+{
+    "number": 69106,
+    "data": "442,1891,2737,4181,6601,6721,8149,13201,13981,15251,17119,17711,30889,34561,40501,51841,52701,64079,64681,67861,68101,68251,78409,88601,88831,90061,96049,97921,115231,118441,138601,145351,146611,150121,153781,163081,179697,186961,191351,194833",
+    "name": "Composite n such that n divides F(n-1) where F(k) are the Fibonacci numbers.",
+    "comment": [
+        "Primes p congruent to 1 or 4 (mod 5) divide F(p-1) (cf. A045468 and Hardy and Wright, An introduction to number theory, Chap. X, p. 150, Oxford University Press, Fifth edition)."
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A069106/b069106.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "mathematica": [
+        "A069106[nn_] := Select[Complement[Range[2,nn],Prime[Range[2,PrimePi[ nn]]]],Divisible[ Fibonacci[ #-1],#]&] (* _Harvey P. Dale_, Jul 05 2011 *)"
+    ],
+    "program": [
+        "(C) #include <stdio.h> #include <gmp.h> #define STARTN 10 #define N_OF_MILLER_RABIN_TESTS 5 int main() { mpz_t n, f1, f2; int flag=0; /* flag? 0: f1 contains current F[n-1] 1: f2 = F[n-1] */ mpz_set_ui (n, STARTN); mpz_init (f1); mpz_init (f2); mpz_fib2_ui (f1, f2, STARTN-1); for (;;) { if (mpz_probab_prime_p (n, N_OF_MILLER_RABIN_TESTS)) goto next_iter; if (mpz_divisible_p (!flag? f1:f2, n)) { mpz_out_str (stdout, 10, n); printf (\" \"); fflush (stdout); } next_iter: mpz_add_ui (n, n, 1); mpz_add (!flag? f2:f1, f1, f2); flag = !flag; } }",
+        "(Haskell)",
+        "a069106 n = a069106_list !! (n-1)",
+        "a069106_list = [x | x <- a002808_list, a000045 (x-1) `mod` x == 0]",
+        "-- _Reinhard Zumkeller_, Jul 19 2013",
+        "(PARI) fibmod(n,m)=((Mod([1,1;1,0],m))^n)[1,2]",
+        "is(n)=!isprime(n) && !fibmod(n-1,n) && n>1 \\\\ _Charles R Greathouse IV_, Oct 06 2016"
+    ],
+    "xref": [
+        "Subsequence of A123976.",
+        "Cf. A045468, A003631, A064739, A081264 (Fibonacci pseudoprimes).",
+        "Cf. A002808, A000045."
+    ],
+    "keyword": "easy,nice,nonn",
+    "offset": "1,1",
+    "author": "_Benoit Cloitre_, Apr 06 2002",
+    "ext": [
+        "Corrected and extended (with C program) by _Ralf Stephan_, Oct 13 2002",
+        "a(35)-a(40) added by _Reinhard Zumkeller_, Jul 19 2013"
+    ],
+    "references": 11,
+    "revision": 26,
+    "time": "2016-10-06T11:58:10-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

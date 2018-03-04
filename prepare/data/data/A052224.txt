@@ -1,0 +1,58 @@
+{
+    "number": 52224,
+    "data": "19,28,37,46,55,64,73,82,91,109,118,127,136,145,154,163,172,181,190,208,217,226,235,244,253,262,271,280,307,316,325,334,343,352,361,370,406,415,424,433,442,451,460,505,514,523,532,541,550,604,613,622,631,640",
+    "name": "Numbers whose sum of digits is 10.",
+    "comment": [
+        "Proper subsequence of A017173. - _Rick L. Shepherd_, Jan 12 2009",
+        "Subsequence of A227793. - _Michel Marcus_, Sep 23 2013",
+        "A007953(a(n)) = 10; number of repdigits = #{55,22222,1^10} = A242627(10) = 3. - _Reinhard Zumkeller_, Jul 17 2014",
+        "a(n) = A094677(n) for n = 1..28. - _Reinhard Zumkeller_, Nov 08 2015",
+        "The number of terms having <= m digits is the coefficient of x^10 in sum(i=0,9,x^i)^m = ((1-x^10)/(1-x))^m. - _David A. Corneth_, Jun 04 2016",
+        "In general, the set of numbers with sum of base-b digits equal to b is a subset of { (b-1)*k + 1; k = 2, 3, 4, ... }. - _M. F. Hasler_, Dec 23 2016"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A052224/b052224.txt\">Table of n, a(n) for n = 1..8037</a>"
+    ],
+    "maple": [
+        "sd := proc (n) options operator, arrow: add(convert(n, base, 10)[j], j = 1 .. nops(convert(n, base, 10))) end proc: a := proc (n) if sd(n) = 10 then n else end if end proc: seq(a(n), n = 1 .. 800); # _Emeric Deutsch_, Jan 16 2009"
+    ],
+    "mathematica": [
+        "Union[Flatten[Table[FromDigits /@ Permutations[PadRight[s, 7]], {s, Rest[IntegerPartitions[10]]}]]] (* _T. D. Noe_, Mar 08 2013 *)",
+        "Select[Range[1000], Total[IntegerDigits[#]] == 10 &] (* _Vincenzo Librandi_, Mar 10 2013 *)"
+    ],
+    "program": [
+        "(MAGMA) [n: n in [1..1000] | &+Intseq(n) eq 10 ]; // _Vincenzo Librandi_, Mar 10 2013",
+        "(Haskell)",
+        "a052224 n = a052224_list !! (n-1)",
+        "a052224_list = filter ((== 10) . a007953) [0..]",
+        "-- _Reinhard Zumkeller_, Jul 17 2014",
+        "(PARI) isok(n) = sumdigits(n) == 10; \\\\ _Michel Marcus_, Dec 28 2015",
+        "(PARI) \\\\ This algorithm needs a modified binomial.",
+        "C(n, k)=if(n>=k, binomial(n, k), 0)",
+        "\\\\ways to roll s-q with q dice having sides 0 through n - 1.",
+        "b(s, q, n)=if(s<=q*(n-1), s+=q; sum(i=0, q-1, (-1)^i*C(q, i)*C(s-1-n*i, q-1)), 0)",
+        "\\\\ main algorithm; this program applies to all sequences of the form \"Numbers whose sum of digits is m.\"",
+        "a(n,{m=10}) = {my(q); q = 2; while(b(m, q, 10) < n, q++); q--; s = m; os = m; r=0; while(q, if(b(s, q, 10) < n, n-=b(s, q, 10); s--, r+=(os-s)*10^(q); os = s; q--)); r+= s; r}",
+        "\\\\ _David A. Corneth_, Jun 05 2016"
+    ],
+    "xref": [
+        "Cf. A007953, A017173, A254524.",
+        "Cf. A011557 (1), A052216 (2), A052217 (3), A052218 (4), A052219 (5), A052220 (6), A052221 (7), A052222 (8), A052223 (9), A166311 (11), A235151 (12), A143164 (13), A235225 (14), A235226 (15), A235227 (16), A166370 (17), A235228 (18), A166459 (19), A235229 (20).",
+        "Cf. A242614, A242627.",
+        "Cf. A094677.",
+        "Cf. A018900, A187813.",
+        "Sum of base-b digits equal b: A226636 (b = 3), A226969 (b = 4), A227062 (b = 5), A227080 (b = 6), A227092 (b = 7), A227095 (b = 8), A227238 (b = 9)."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Henry Bottomley_, Feb 01 2000",
+    "ext": [
+        "Incorrect formula deleted by _N. J. A. Sloane_, Jan 15 2009",
+        "Extended by _Emeric Deutsch_, Jan 16 2009",
+        "Offset changed by _Bruno Berselli_, Mar 07 2013"
+    ],
+    "references": 44,
+    "revision": 41,
+    "time": "2016-12-23T21:34:24-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

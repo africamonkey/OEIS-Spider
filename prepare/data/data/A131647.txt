@@ -1,0 +1,34 @@
+{
+    "number": 131647,
+    "data": "30,70,105,231,286,627,646,805,897,1122,1581,1798,2730,2958,2967,3055,3526,3570,4070,4543,5487,5658,6461,6745,7198,7881,8778,8970,9222,9282,9717,10366,10370,10626,10707,11130,14231,15015,16377,16530,19866",
+    "name": "Composite numbers that are products of distinct primes and divisible by the sum of those primes.",
+    "comment": [
+        "A131647 union A000040 = A005117 intersect A086486. - _Ray Chandler_, Nov 29 2011"
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A131647/b131647.txt\">Table of n, a(n) for n = 1..2000</a>"
+    ],
+    "example": [
+        "1122 = 2*3*11*17 and 1122 is divisible by 2+3+11+17=33."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,k,n; for n from 2 to q do",
+        "if issqrfree(n) and not isprime(n) then a:=ifactors(n)[2];",
+        "if type(n/add(a[k][1],k=1..nops(a)),integer) then print(n); fi;",
+        "fi; od; end: P(10^9); # _Paolo P. Lava_, Sep 19 2014"
+    ],
+    "mathematica": [
+        "Select[Range[2, 20000], PrimeQ[ # ] == False && Union[Transpose[FactorInteger[ # ]][[2]]] == {1} && Mod[ #, Plus @@ Transpose[FactorInteger[ # ]][[1]]] == 0 &]",
+        "pdpQ[n_]:=Module[{fi=Transpose[FactorInteger[n]]},!PrimeQ[n]&&Max[fi[[2]]] == 1&&Divisible[n,Total[fi[[1]]]]]; Select[Range[2,50000],pdpQ] (* _Harvey P. Dale_, Oct 16 2013 *)"
+    ],
+    "program": [
+        "(PARI) lista(nn) = {forcomposite(n=1, nn, f = factor(n); nbp = #f~; if ((vecmax(f[,2]) == 1) && !(n % sum(i=1, nbp, f[i, 1])), print1(n, \", \")););} \\\\ _Michel Marcus_, Sep 19 2014"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Sep 08 2007",
+    "references": 1,
+    "revision": 19,
+    "time": "2014-09-21T16:23:32-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

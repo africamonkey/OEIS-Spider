@@ -1,0 +1,49 @@
+{
+    "number": 226897,
+    "data": "1,5,16,59,156,529,1351,3988,10236,27746,66763,176783,412450",
+    "name": "a(n) is the total number of parts in the set of partitions of an n X n square lattice into squares, considering only the list of parts.",
+    "comment": [
+        "The sequence was derived from the documents in the Links section.  The documents are first specified in the Links section of A034295."
+    ],
+    "link": [
+        "Jon E. Schoenfield, <a href=\"https://oeis.org/A034295/a034295.txt\">Table of solutions for n <= 12</a>",
+        "Alois P. Heinz, <a href=\"https://oeis.org/A034295/a034295_1.txt\">More ways to divide an 11 X 11 square into sub-squares</a>",
+        "Alois P. Heinz, <a href=\"https://oeis.org/A034295/a034295_2.txt\">List of different ways to divide a 13 X 13 square into sub-squares</a>"
+    ],
+    "example": [
+        "For n = 3, the partitions are:",
+        "Square side 1 2 3 Total Parts",
+        "            9 0 0     9",
+        "            5 1 0     6",
+        "            0 0 1     1",
+        "Total                16",
+        "So a(3) = 16."
+    ],
+    "maple": [
+        "b:= proc(n, l) option remember; local i, k, s, t;",
+        "      if max(l[])>n then {} elif n=0 or l=[] then {0}",
+        "    elif min(l[])>0 then t:=min(l[]); b(n-t, map(h->h-t, l))",
+        "    else for k do if l[k]=0 then break fi od; s:={};",
+        "         for i from k to nops(l) while l[i]=0 do s:=s union",
+        "             map(v->v+x^(1+i-k), b(n, [l[j]$j=1..k-1,",
+        "                 1+i-k$j=k..i, l[j]$j=i+1..nops(l)]))",
+        "         od; s",
+        "      fi",
+        "    end:",
+        "a:= n-> add(coeff(add(j, j=b(n, [0$n])), x, i), i=1..n):",
+        "seq(a(n), n=1..9);  # _Alois P. Heinz_, Jun 21 2013"
+    ],
+    "mathematica": [
+        "$RecursionLimit = 1000; b[n_, l_List] := b[n, l] = Module[{i, k, s, t}, Which [Max[l]>n, {}, n == 0 || l == {}, {0}, Min[l]>0, t = Min[l]; b[n-t, l-t], True, k = Position[l, 0, 1, 1][[1, 1]]; s = {}; For[i = k, i <= Length[l] && l[[i]]== 0, i++, s = s ~Union~ Map[Function[{v}, v+x^(1+i-k)], b[n, Join[l[[1 ;; k-1]], Array[1+i-k&, i-k+1], l[[i+1 ;; -1]] ]]]]; s]]; a[n_] := Sum[Coefficient[Sum[j, {j, b[n, Array[0&, n]]}], x, i], {i, 1, n}]; Table[a[n], {n, 1, 9}] (* _Jean-Fran\u00e7ois Alcover_, May 29 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A034295, A226554."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,2",
+    "author": "_Christopher Hunt Gribble_, Jun 21 2013",
+    "references": 2,
+    "revision": 24,
+    "time": "2015-05-29T09:40:35-04:00",
+    "created": "2013-06-22T14:00:45-04:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 174641,
+    "data": "3,3,3,73,191,191,509,2539,2539,5279,9901,9901,9901,11593,11593,55343,55343,55343,55343,55343,174929,174929,174929,225977,225977,225977,225977,225977,534889,534889,534889,534889,534889,534889,534889,534889,2492317,2492317",
+    "name": "Smallest prime that begins a run of n consecutive primes that are not Ramanujan primes.",
+    "comment": [
+        "The run of 10 consecutive non-Ramanujan primes was mentioned by Sondow."
+    ],
+    "reference": [
+        "J. Sondow, Ramanujan primes and Bertrand's postulate, Amer. Math. Monthly, 116 (2009) 630-635."
+    ],
+    "link": [
+        "T. D. Noe and Dana Jacobsen, <a href=\"/A174641/b174641.txt\">Table of n, a(n) for n = 1..107</a> (first 67 terms from Noe)",
+        "J. Sondow, <a href=\"http://arxiv.org/abs/0907.5232\">Ramanujan primes and Bertrand's postulate</a>",
+        "J. Sondow, J. W. Nicholson, and T. D. Noe, <a href=\"http://arxiv.org/abs/1105.2249\">Ramanujan Primes: Bounds, Runs, Twins, and Gaps</a>, J. Integer Seq. 14 (2011) Article 11.6.2"
+    ],
+    "mathematica": [
+        "nn=10000; t=Table[0, {nn}]; len=Prime[3*nn]; s=0; Do[If[PrimeQ[k], s++]; If[PrimeQ[k/2], s--]; If[s<nn, t[[s+1]]=k], {k, len}]; t=t+1; t=Complement[Prime[Range[PrimePi[t[[-1]]]]], t]; ind=PrimePi[t]; d=Differences[ind]; cnt=0; n=1; Join[{2}, Reap[Do[If[d[[i]]==1, cnt++; If[cnt==n, Sow[t[[i-n+1]]]; n++], cnt=0], {i, Length[d]}]][[2, 1]]]"
+    ],
+    "program": [
+        "(Perl) use ntheory \":all\";",
+        "my($k, $max, $start, $end, $inc, $p, $q, $r, $pi)",
+        "   = (0, 0, 0, 10, 1e9, 0, 2, [], prime_iterator(3));",
+        "while (1) {",
+        "  if (!@$r) {",
+        "    ($start, $end) = ($end+1, $end+$inc);",
+        "    $r = ramanujan_primes($start, $end);",
+        "  }",
+        "  ($p, $q, $k) = ($q, shift(@$r), 0);",
+        "  # $k = prime_count($p+1,$q-1);",
+        "  $k++ while $pi->() < $q;",
+        "  say ++$max,\" \",next_prime($p)   while $k > $max;",
+        "}",
+        "# _Dana Jacobsen_, Jul 14 2016"
+    ],
+    "xref": [
+        "Cf. A104272 (Ramanujan primes), A174635 (non-Ramanujan primes).",
+        "Cf. A174602 (runs of Ramanujan primes).",
+        "Cf. A202187, A202188."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_T. D. Noe_, Nov 29 2010",
+    "references": 9,
+    "revision": 37,
+    "time": "2016-08-05T12:04:20-04:00",
+    "created": "2010-11-12T14:23:40-05:00"
+}

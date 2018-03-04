@@ -1,0 +1,49 @@
+{
+    "number": 192946,
+    "data": "1,1,3,21,181,1746,18039,195214,2184381,25067856,293420578,3489516381,42044519283,512146618088,6296546349018,78031090301868,973723814391957,12224652295383324,154299365902579044,1956876044969421604,24924046596321581940",
+    "name": "G.f. satisfies: A(x) = 1 + x*Sum_{n>=0} (A(x)^3 - 1)^n.",
+    "comment": [
+        "Compare to a g.f. of the Catalan numbers: C(x) = 1 + x*Sum_{n>=0} (C(x) - 1)^n."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A192946/b192946.txt\">Table of n, a(n) for n = 0..875</a>"
+    ],
+    "formula": [
+        "G.f. A(x) equals the formal inverse of function (x-1)*(2-x^3).",
+        "G.f. satisfies: A(x) = 1 + x/(2 - A(x)^3).",
+        "G.f.: A(x) = 1 + Series_Reversion( 2*x - x*(1+x)^3 ).",
+        "Recurrence: 108*(n-2)*(n-1)*n*(9*n-25)*a(n) = 18*(n-2)*(n-1)*(702*n^2 - 3003*n + 2924)*a(n-1) + 3*(n-2)*(3375*n^3 - 22875*n^2 + 50704*n - 36656)*a(n-2) + 8*(2*n-5)*(4*n-13)*(4*n-11)*(9*n-16)*a(n-3). - _Vaclav Kotesovec_, Sep 17 2013",
+        "a(n) ~ 1/48*sqrt(6)*sqrt(1271 - (2661+32096*sqrt(2))^(2/3) + 3*(2661+32096*sqrt(2))^(1/3))/((2661 + 32096*sqrt(2))^(1/6)) * ((3*(841+34*sqrt(2))^(2/3) + 267 + 26*(841+34*sqrt(2))^(1/3)) / (841+34*sqrt(2))^(1/3)/6)^n / (n^(3/2)*sqrt(Pi)). - _Vaclav Kotesovec_, Sep 17 2013"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 3*x^2 + 21*x^3 + 181*x^4 + 1746*x^5 + 18039*x^6 +...",
+        "where (A(x) - 1)*(2 - A(x)^3)  = x",
+        "and A(x - 3*x^2 - 3*x^3 - x^4) = 1+x.",
+        "Related expansions.",
+        "(A(x)^3-1) = 3*x + 12*x^2 + 82*x^3 + 705*x^4 + 6792*x^5 + 70122*x^6 +...",
+        "(A(x)^3-1)^2 = 9*x^2 + 72*x^3 + 636*x^4 + 6198*x^5 + 64396*x^6 +...",
+        "(A(x)^3-1)^3 = 27*x^3 + 324*x^4 + 3510*x^5 + 38475*x^6 +...",
+        "(A(x)^3-1)^4 = 81*x^4 + 1296*x^5 + 16632*x^6 + 203148*x^7 +...",
+        "Also,",
+        "A(x)^3 = 1 + 3*x + 12*x^2 + 82*x^3 + 705*x^4 + 6792*x^5 + 70122*x^6 +...",
+        "A(x)^4 = 1 + 4*x + 18*x^2 + 124*x^3 + 1067*x^4 + 10284*x^5 + 106200*x^6 +...",
+        "where 2+x = 2*A(x) + A(x)^3 - A(x)^4."
+    ],
+    "mathematica": [
+        "CoefficientList[1+InverseSeries[Series[2*x-x*(1+x)^3,{x,0,20}],x],x] (* _Vaclav Kotesovec_, Sep 17 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,A=1+x*sum(m=0,n,(A^3-1+x*O(x^n))^m));polcoeff(A,n)}",
+        "(PARI) {a(n)=local(A=1+serreverse(2*x-x*(1+x)^3+x^2*O(x^n)));polcoeff(A,n)}"
+    ],
+    "xref": [
+        "Cf. A192945, A192947, A192948."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jul 13 2011",
+    "references": 5,
+    "revision": 16,
+    "time": "2017-02-01T11:55:00-05:00",
+    "created": "2011-07-14T07:13:28-04:00"
+}

@@ -1,0 +1,33 @@
+{
+    "number": 76127,
+    "data": "0,1,101,101001,1010010001,101001000100001,101001000100001000001,1010010001000010000010000001,101001000100001000001000000100000001,101001000100001000001000000100000001000000001",
+    "name": "n-th term is binary string of length t_n with 1's at positions t_i, where t_n = n-th triangular number.",
+    "formula": [
+        "if(n==0), a(0)=0; else a(n)=10^n*a(n-1)+1",
+        "a(n)=10^[(1/2)*n]*Sum{k=1..n}{[(1/10)*sqrt(10)]^k*10^[(-1/2)*k^2]}*10^[(1/2)*n^2], with n>=0 - _Paolo P. Lava_, Oct 06 2008"
+    ],
+    "example": [
+        "For example, the first 4 strings are: '1' (length 1, nonzero index 1), '101' (length 3, nonzero indices 1,3), '101001' (length 6, nonzero indices 1,3,6) '1010010001' (length 10, nonzero indices 1,3,6,10)"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{a = {1}}, Do[a = Join[a, Table[0, {i}], {1}], {i, 1, n}]; FromDigits[a]]; Table[ f[n], {n, 0, 8}]"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,0,1+a(n-1)*10^n)",
+        "(PARI) a(n)=subst( Polrev( Vec( sum(k=1, n, x^(k*(k+1)/2)))), x, 10)",
+        "(MATLAB) function ans=bstn(n) if(n==0), ans=0; else, ans=10^n*bstn(n-1)"
+    ],
+    "xref": [
+        "Cf. A000217, A076131."
+    ],
+    "keyword": "easy,nonn,base",
+    "offset": "0,3",
+    "author": "Kyle Hunter (hunterk(AT)raytheon.com), Oct 31 2002",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, Oct 31 2002"
+    ],
+    "references": 2,
+    "revision": 11,
+    "time": "2016-08-25T09:37:27-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

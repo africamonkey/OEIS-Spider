@@ -1,0 +1,41 @@
+{
+    "number": 187877,
+    "data": "1,5,10,45,60,128,231,308,470,847,1846,3570,4284,4740,5126,5688,6171,6650,7473,7980,8687,9310,9964,10640,11172,12896,17877,19716,22011,22736,23280,23836,24823,33480,34335,36384,37260,41202,42315,43761,44480",
+    "name": "Numbers n such that sopfr(n + bigomega(n)) = sopfr(n).",
+    "comment": [
+        "Sopfr(n) = A001414(n).",
+        "bigomega(n) = A001222(n)."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A187877/b187877.txt\">Table of n, a(n) for n = 1..500</a>",
+        "Antonio Rold\u00e1n, <a href=\"http://hojaynumeros.blogspot.com/2011/03/parientes-de-ruth-y-aaron.html\">hojaynumeros.blogspot.com</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Additive_function\">Additive function</a>"
+    ],
+    "example": [
+        "308 is a term because bigomega(308)=4 (308=2*2*7*11), 308+4=312, sopfr(308)=2+2+7+11=22, 312=2*2*2*3*13, sopfr(312)=2+2+2+3+13=22"
+    ],
+    "maple": [
+        "A001414 := proc(n) if n = 1 then 0; else f := ifactors(n)[2] ; add( op(1,i)*op(2,i),i=f) ; end if; end proc:",
+        "isA187877 := proc(n) local m; m := n+numtheory[bigomega](n) ; is(A001414(n)=A001414(m)) ; end proc:",
+        "for n from 1 to 50000 do if isA187877(n) then printf(\"%d,\",n) ; end if; end do: # R. J. Mathar, Mar 14 2011"
+    ],
+    "mathematica": [
+        "soprQ[n_]:=Total[Flatten[Table[#[[1]],{#[[2]]}]&/@FactorInteger[n]]] == Total[Flatten[Table[#[[1]],{#[[2]]}]&/@FactorInteger[n+PrimeOmega[n]]]]; Select[Range[50000],soprQ] (* _Harvey P. Dale_, Jan 21 2013 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "sopfr(n)= { local(f, s=0); f=factor(n); for(i=1, matsize(f)[1], s+=f[i, 1]*f[i, 2]); return(s) }",
+        "{ for (n=1, 10^6, if (sopfr(n)==sopfr(n+bigomega(n)), print1(n,\", \"))); }",
+        "/* _Antonio Rold\u00e1n_, Oct 23 2012 */"
+    ],
+    "xref": [
+        "Cf. A187878."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antonio Rold\u00e1n_, Mar 14 2011",
+    "references": 2,
+    "revision": 27,
+    "time": "2014-08-11T22:45:45-04:00",
+    "created": "2011-03-14T13:18:16-04:00"
+}

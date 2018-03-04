@@ -1,0 +1,40 @@
+{
+    "number": 816,
+    "data": "0,2,40,1952,177280,25866752,5535262720,1633165156352,635421069967360,315212388819402752,194181169538675507200,145435130631317935357952,130145345400688287667978240,137139396592145493713802493952",
+    "name": "E.g.f.: Sum_{n >= 0} a(n) * x^(2*n) / (2*n)! = sin(x)^2 / cos(2*x).",
+    "link": [
+        "R. J. Mathar, <a href=\"/A000816/b000816.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "1/2 * A002436(n), n>0. - _Ralf Stephan_, Mar 09 2004",
+        "a(n) = 2^(2*n - 1) * A000364(n) except n=0.",
+        "E.g.f.: sin(x)^2/cos(2x)=1/Q(0)-1/2;   Q(k)=1+1/(1-2*(x^2)/(2*(x^2)-(k+1)*(2k+1)/Q(k+1)));  (continued fraction). - Sergei N. Gladkovskii, Nov 18 2011",
+        "a(n) = A000819(n) unless n=0.",
+        "G.f.: (1/(G(0))-1)/2 where G(k) = 1 - 4*x*(k+1)^2/G(k+1); (continued fraction). - _Sergei N. Gladkovskii_, Jan 12 2013",
+        "G.f.: T(0)/2 -1/2, where T(k) = 1 - 4*x*(k+1)^2/( 4*x*(k+1)^2 - 1/T(k+1) ); (continued fraction). - _Sergei N. Gladkovskii_, Oct 25 2013",
+        "E.g.f.: sin(x)^2/cos(2*x)= x^2/(1-2*x^2)*T(0), where T(k) = 1 - x^2*(2*k+1)*(2*k+2)/( x^2*(2*k+1)*(2*k+2) + ((k+1)*(2*k+1) - 2*x^2)*((k+2)*(2*k+3) - 2*x^2)/T(k+1) ); (continued fraction). - _Sergei N. Gladkovskii_, Oct 25 2013"
+    ],
+    "mathematica": [
+        "Union[ Range[0, 26]! CoefficientList[ Series[ Sin[x]^2/Cos[ 2x], {x, 0, 26}], x]] (* _Robert G. Wilson v_, Apr 16 2011 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = local(m); if( n<0, 0, m = 2*n; m! * polcoeff( 1 / (2 - 1 / cos(x + x * O(x^m))^2) - 1, m))} /* _Michael Somos_, Apr 16 2011 */",
+        "(Sage)",
+        "@CachedFunction",
+        "def sp(n,x) :",
+        "    if n == 0 : return 1",
+        "    return -add(2^(n-k)*sp(k,1/2)*binomial(n,k) for k in range(n)[::2])",
+        "def A000816(n) : return 0 if n == 0 else abs(sp(2*n,x)/2)",
+        "[A000816(n) for n in (0..13)]   # _Peter Luschny_, Jul 30 2012"
+    ],
+    "xref": [
+        "Cf. A000364, A000819, A000822, A000828, A003707, A009125, A009569."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 6,
+    "revision": 42,
+    "time": "2017-12-30T14:33:01-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

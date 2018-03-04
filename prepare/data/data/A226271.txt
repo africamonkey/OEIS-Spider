@@ -1,0 +1,36 @@
+{
+    "number": 226271,
+    "data": "1,4,6,9,14,22,35,56,90,145,234,378,611,988,1598,2585,4182,6766,10947,17712,28658,46369,75026,121394,196419,317812,514230,832041,1346270,2178310,3524579,5702888,9227466,14930353,24157818,39088170,63245987,102334156,165580142",
+    "name": "Index of 1/n in the Fibonacci (or rabbit) ordering of the positive rationals.",
+    "comment": [
+        "The Fibonacci ordering of the rationals (cf. A226080) is the sequence of rationals produced from the initial vector [1] by appending iteratively the new rationals obtained by applying the map t-> (t+1, 1/t) to the vector (cf. example).",
+        "Apart from initial terms, the same as A001611=(1, 2, 2, 3, 4, 6,...), A020706=(4,6,9,...), A048577=(3, 4, 6, ...), A000381=(2, 3, 4, ...)."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A226271/b226271.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (2,0,-1)."
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1)-a(n-3) for n>4. G.f.: -x*(2*x^3+2*x^2-2*x-1) / ((x-1)*(x^2+x-1)). - _Colin Barker_, Jun 03 2013",
+        "a(n) = 1+(2^(-1-n)*((1-sqrt(5))^n*(-3+sqrt(5))+(1+sqrt(5))^n*(3+sqrt(5))))/sqrt(5) for n>1. - _Colin Barker_, May 11 2016",
+        "E.g.f.: -2*(1 + x) + exp(x) + (3*sqrt(5)*sinh(sqrt(5)*x/2) + 5*cosh(sqrt(5)*x/2))*exp(x/2)/5. - _Ilya Gutkovskiy_, May 11 2016"
+    ],
+    "example": [
+        "Starting from the vector [1] and applying the map t->(1+t,1/t), we get [2,1] (but ignore the number 1 which already occurred earlier), then [3,1/2], then [4,1/3,3/2,2] (where we ignore 2), etc. This yields the sequence (1,2,3,1/2,4,1/3,3/2,5,1/4,4/3,5/2,2/3,....) The unit fractions 1=1/1, 1/2, 1/3, ... occur at positions 1,4,6,9,..."
+    ],
+    "mathematica": [
+        "LinearRecurrence[{2,0,-1},{1,4,6,9},40] (* _Harvey P. Dale_, Feb 04 2016 *)"
+    ],
+    "program": [
+        "(PARI) A226271(n)=if(n>1,fibonacci(n+2))+1",
+        "(PARI) {k=1;print1(s=1,\",\");U=Set(g=[1]);for(n=1,9,U=setunion(U,Set(g=select(f->!setsearch(U,f), concat(apply(t->[t+1,k/t],g))))); for(i=1,#g,numerator(g[i])==1&&print1(s+i\",\"));s+=#g)} \\\\ for illustrative purpose",
+        "(PARI) Vec(-x*(2*x^3+2*x^2-2*x-1)/((x-1)*(x^2+x-1)) + O(x^50)) \\\\ _Colin Barker_, May 11 2016"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_M. F. Hasler_, Jun 01 2013",
+    "references": 3,
+    "revision": 21,
+    "time": "2016-05-12T02:52:36-04:00",
+    "created": "2013-06-03T03:52:40-04:00"
+}

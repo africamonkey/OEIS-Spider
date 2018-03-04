@@ -1,0 +1,68 @@
+{
+    "number": 3072,
+    "data": "3,10,17,24,29,36,43,55,62,66,73,80,81,92,99,118,127,129,134,136,141,153,155,160,179,190,192,197,216,218,225,232,244,251,253,258,270,277,281,288,307,314,342,344,345,349,352,359,368,371,375,378,397,405,408,415,433,434",
+    "name": "Numbers that are the sum of 3 positive cubes.",
+    "comment": [
+        "A119977 is a subsequence; if m is a term then there exists at least one k>0 such that m-k^3 is a term of A003325. - _Reinhard Zumkeller_, Jun 03 2006",
+        "A025456(a(n)) > 0. - _Reinhard Zumkeller_, Apr 23 2009",
+        "Davenport proved that a(n) << n^(54/47 + e) for every e > 0. - _Charles R Greathouse IV_, Mar 26 2012"
+    ],
+    "link": [
+        "T. D. Noe and K. D. Bajpai, <a href=\"/A003072/b003072.txt\">Table of n, a(n) for n = 1..12955</a> (first 1000 terms from T. D. Noe)",
+        "H. Davenport, <a href=\"https://doi.org/10.1112/jlms/s1-25.4.339\">Sums of three positive cubes</a>, J. London Math. Soc., 25 (1950), 339-343. Coll. Works III p. 999.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CubicNumber.html\">Cubic Number</a>",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of cubes</a>"
+    ],
+    "example": [
+        "a(11) = 73 = 1^3 + 2^3 + 4^3, which is sum of three cubes.",
+        "a(15) = 99 = 2^3 + 3^3 + 4^3, which is sum of three cubes."
+    ],
+    "maple": [
+        "isA003072 := proc(n)",
+        "    local x,y,z;",
+        "    for x from 1 do",
+        "        if 3*x^3 > n then",
+        "            return false;",
+        "        end if;",
+        "        for y from x do",
+        "            if x^3+2*y^3 > n then",
+        "                break;",
+        "            end if;",
+        "            if isA000578(n-x^3-y^3) then",
+        "                return true;",
+        "            end if;",
+        "        end do:",
+        "    end do:",
+        "end proc:",
+        "for n from 1 to 1000 do",
+        "    if isA003072(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 23 2016"
+    ],
+    "mathematica": [
+        "Select[Range[435], (p = PowersRepresentations[#, 3, 3]; (Select[p, #[[1]] > 0 && #[[2]] > 0 && #[[3]] > 0 &] != {})) &] (* _Jean-Fran\u00e7ois Alcover_, Apr 29 2011 *)",
+        "Union[Total/@(Tuples[Range[8],3]^3)] (* _Harvey P. Dale_, May 09 2012 *)"
+    ],
+    "program": [
+        "(PARI) sum(n=1,11,x^(n^3),O(x^1400))^3",
+        "(PARI) list(lim)=my(v=List(),k,t); lim\\=1; for(x=1,sqrtnint(lim-2,3), for(y=1, min(sqrtnint(lim-x^3-1,3),x), k=x^3+y^3; for(z=1,min(sqrtnint(lim-k,3), y), listput(v, k+z^3)))); Set(v) \\\\ _Charles R Greathouse IV_, Sep 14 2015",
+        "(Haskell)",
+        "a003072 n = a003072_list !! (n-1)",
+        "a003072_list = filter c3 [1..] where",
+        "   c3 x = any (== 1) $ map (a010057 . fromInteger) $",
+        "                       takeWhile (> 0) $ map (x -) $ a003325_list",
+        "-- _Reinhard Zumkeller_, Mar 24 2012"
+    ],
+    "xref": [
+        "Subsequence of A004825.",
+        "Cf. A003325, A024981, A057904 (complement), A010057, A000578, A023042 (subsequence of cubes)."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, _David W. Wilson_",
+    "references": 43,
+    "revision": 61,
+    "time": "2017-11-24T05:25:13-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

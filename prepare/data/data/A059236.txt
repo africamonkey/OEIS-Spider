@@ -1,0 +1,38 @@
+{
+    "number": 59236,
+    "data": "83,739,821,1231,1559,1723,2297,2543,2707,2789,2953,3527,3691,4019,5003,5167,5413,5659,5741,5987,6151,6397,6971,7873,8447,8693,9103,9349,9431,9677,9923,10169,10333,11071,11317,11399,12301,12547,13121,13367",
+    "name": "Primes p such that x^41 = 2 has no solution mod p.",
+    "comment": [
+        "Complement of A049573 relative to A000040.",
+        "Presumably this is also \"Primes congruent to 1 mod 41\" (A212379), but that requires a proof. - _N. J. A. Sloane_, Jul 11 2008",
+        "Smallest counterexample: 17467 is not in A059236, but congruent to 1 mod 41 (17467 = 426*41+1). - _Klaus Brockhaus_, May 18 2011"
+    ],
+    "link": [
+        "Klaus Brockhaus, <a href=\"/A059236/b059236.txt\">Table of n, a(n) for n = 1..100000</a>"
+    ],
+    "mathematica": [
+        "ok[p_]:= Reduce[Mod[x^41 - 2, p] == 0, x, Integers] == False; Select[Prime[Range[2000]], ok] (* _Vincenzo Librandi_, Sep 20 2012 *)",
+        "Select[Prime[Range[PrimePi[14000]]], ! MemberQ[PowerMod[Range[#], 41, #], Mod[2, #]] &] (* _Bruno Berselli_, Sep 20 2012 *)"
+    ],
+    "program": [
+        "(MAGMA) [p: p in PrimesUpTo(13400) | not exists{x: x in ResidueClassRing(p) | x^41 eq 2}]; // _Klaus Brockhaus_, May 18 2011",
+        "(MAGMA) /* Alternatively: */ [p: p in PrimesUpTo(13400) | forall{x: x in ResidueClassRing(p) | x^41 ne 2}]; // _Bruno Berselli_, Sep 20 2012",
+        "(PARI) forprime(p=2, 69589957, if(trap(, 1, sqrtn(Mod(2, p), 41); 0), print1(p,\", \"))) \\\\ _Klaus Brockhaus_, May 18 2011",
+        "(PARI)",
+        "N=10^5;  default(primelimit,N);",
+        "ok(p, r, k)={ return ( (p==r) || (Mod(r,p)^((p-1)/gcd(k,p-1))==1) ); }",
+        "forprime(p=2,N, if (! ok(p,2,41),print1(p,\", \")));",
+        "/* _Joerg Arndt_, Sep 21 2012 */"
+    ],
+    "xref": [
+        "Subsequence of A212379.",
+        "Cf. A049573, A142199, A142200, A190758."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Klaus Brockhaus_, Jan 20 2001",
+    "references": 19,
+    "revision": 34,
+    "time": "2012-09-22T03:18:05-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 293645,
+    "data": "1,2,7,9,19,26,28,35,37,61,63,65,91,98,117,124,126,127,133,152,169,189,215,217,218,271,279,316,331,335,341,342,344,351,370,386,387,397,407,468,469,485,511,513,539,547,559,602,604,631,637,657,665,721,728,730",
+    "name": "Positive numbers that are the sum of two (possibly negative) coprime cubes.",
+    "comment": [
+        "Also sum or difference of two coprime cubes. - _David A. Corneth_, Oct 20 2017"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A293645/b293645.txt\">Table of n, a(n) for n = 1..10000</a>, (first 101 terms from Rosalie Fay)."
+    ],
+    "example": [
+        "19 = 3^3 + (-2)^3, where 3 and -2 are coprime, so 19 is in the sequence.",
+        "152 = 5^3 + 3^3, where 5 and 3 are coprime, so 152 is in the sequence."
+    ],
+    "maple": [
+        "filter:= proc(n) local s,x,y;",
+        "  for s in numtheory:-divisors(n) do",
+        "    x:= s/2 + sqrt(12*n/s-3*s^2)/6;",
+        "    if not x::integer then next fi;",
+        "    y:= s - x;",
+        "    if igcd(x,y) = 1 then return true fi;",
+        "  od;",
+        "  false",
+        "end proc:",
+        "select(filter, [seq(seq(9*i+j,j=[1,2,7,8,9]),i=0..1000)]); # _Robert Israel_, Oct 22 2017"
+    ],
+    "program": [
+        "(PARI) upto(lim) = {my(res = List([2]), c, i, j); for(i=1,sqrtnint(lim, 3), for(j=0, sqrtnint(lim - i^3, 3), if(gcd(i, j) == 1, listput(res, c)))); for(i=1, sqrtint(lim\\3)+1, for(j = 1, i, if(gcd(i, j) == 1, c = i^3 - (i-j)^3; if(c<=lim, listput(res, c), next(2))))); listsort(res, 1); res} \\\\ _David A. Corneth_, Oct 20 2017"
+    ],
+    "xref": [
+        "Cf. A003325 (positive cubes); A020895 (cubefree); A293646 (only coprime); A293647, A293650."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Rosalie Fay_, Oct 16 2017",
+    "references": 4,
+    "revision": 45,
+    "time": "2018-02-06T13:05:22-05:00",
+    "created": "2017-10-22T12:52:00-04:00"
+}

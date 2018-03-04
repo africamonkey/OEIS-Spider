@@ -1,0 +1,37 @@
+{
+    "number": 260844,
+    "data": "1,29,4205,59075645525,10427850191150022432969513125,304669107991301365158304346164327052368420474013935400932296601953125",
+    "name": "Field discriminant of n-th composite, f(f(...f(r)...)), where r = 5 and f(x) = [x,x,x, ...] (continued fraction).",
+    "comment": [
+        "f(x) = [x,x,x, ...] = (1/2) (x + sqrt((4 + x^2));",
+        "f(f(x)) = (1/4)(x + sqrt(4 + x^2)) + (1/2)sqrt[4 + (1/4)(x + sqrt(4 + x^2))^2])/2;",
+        "Conjecture:  a(n+1) is divisible by a(n)^2, for n>=1; see Example."
+    ],
+    "example": [
+        "f(5) = (1/2)(5 + sqrt(29));",
+        "f(f(5)) = 5/4 + sqrt(29)/4 + (1/2)sqrt[4 + (1/4)(5 + sqrt(29))^2];",
+        "D(f(1)) = 29; D(f(f(1))) = 5205;",
+        "a(2)/(a(1)^2) = 4205/29^2 = 5;",
+        "a(3)/(a(2)^2) = 3341;",
+        "a(4)/(a(3)^2) = 2987981.",
+        "(Regarding n = 0, the zeroth composite of f is taken to be 1.)"
+    ],
+    "mathematica": [
+        "s[1] = x; t[1] = 5; z = 8;",
+        "s[n_] := s[n] = s[n - 1]^2 - t[n - 1]^2; t[n_] := t[n] = s[n - 1]*t[n - 1];",
+        "coeffs[n_] := Apply[Riffle, Map[DeleteCases[#, 0] &, CoefficientList[{s[n], t[n]}, x]]];",
+        "polys = Table[Root[Total[Reverse[coeffs[n]] #^(Range[1 + (2^(n - 1))] - 1)] &,     1(*2^(n-1)*)], {n, z}];",
+        "m = Map[NumberFieldDiscriminant, polys] (* _Peter J. C. Moses_, Jul 30 2015 *)",
+        "Table[m[[n + 1]]/m[[n]]^2, {n, 1, z - 1}] (* divisibility conjecture *)"
+    ],
+    "xref": [
+        "Cf. A260481, A259440, A260457, A260843."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, Sep 16 2015",
+    "references": 4,
+    "revision": 9,
+    "time": "2015-11-04T12:27:29-05:00",
+    "created": "2015-09-21T19:48:16-04:00"
+}

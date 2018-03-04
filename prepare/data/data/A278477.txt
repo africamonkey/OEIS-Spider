@@ -1,0 +1,37 @@
+{
+    "number": 278477,
+    "data": "2,3,7,23,31,127,383,991,2039,3583,6143,8191,63487,129023,131071,522239,524287,1966079,4128767,14680063,33546239,67108351,201064447,260046847,536739839,1073479679,2147483647,8581545983,16911433727",
+    "name": "Primes that set a new record for the Hamming weight.",
+    "comment": [
+        "The Mersenne primes (A000668) are a subsequence."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A278477/b278477.txt\">Table of n, a(n) for n = 1..3301</a>"
+    ],
+    "maple": [
+        "M:= 40: # to use A061712(1..M)",
+        "A061712:= proc(n) local d,c,cands;",
+        "  for d from 0 do",
+        "    cands:= map(t -> 2^(n+d)-1 - add(2^(n-1+d-j), j=t),",
+        "        combinat:-choose([$1..n-2+d], d));",
+        "    for c in cands do if  isprime(c) then return c fi od",
+        "  od",
+        "end proc:",
+        "A061712(1):= 2:",
+        "R:= map(A061712, [$1..M]):",
+        "R[select(t -> R[t] < `if`(isprime(2^(M+1)-1), 2^(M+1)-1, 2^(M+2)+2^M-1) and R[t] = min(R[t..-1]), [$1..nops(R)])]; # _Robert Israel_, Nov 23 2016"
+    ],
+    "program": [
+        "(PARI) {my(h=0);forprime(p=2,10^11,my(t=hammingweight(p));if(t>h,print1(p,\", \");h=t));}"
+    ],
+    "xref": [
+        "Cf. A000668, A061712, A211997."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Joerg Arndt_, Nov 23 2016",
+    "references": 1,
+    "revision": 15,
+    "time": "2016-11-24T09:03:55-05:00",
+    "created": "2016-11-23T04:57:32-05:00"
+}

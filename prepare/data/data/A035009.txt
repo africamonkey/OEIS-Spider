@@ -1,0 +1,65 @@
+{
+    "number": 35009,
+    "data": "1,1,3,11,47,227,1215,7107,44959,305091,2206399,16913987,136823263,1163490499,10366252031,96491364675,935976996127,9440144423875,98800604237119,1071092025420867,12008090971866207,139014305916844739,1659578039401022079,20405708646650507075",
+    "name": "STIRLING transform of [1,1,2,4,8,16,32,...].",
+    "comment": [
+        "Numerators of sequence that shifts left one place under 1/2 order binomial transform. (Denominators are 2^(n-1) for n > 0.) - _Franklin T. Adams-Watters_, Jul 31 2005",
+        "Row sums of triangle A137597 starting (1, 3, 11, 47, 227, ...). - _Gary W. Adamson_, Jan 29 2008",
+        "From _Gary W. Adamson_, Jul 22 2011: (Start)",
+        "a(n)/2^(n-1) = upper left term in M^n, M = an infinite square production matrix in which a column of (1/2, 1/2, 1/2, ...) is appended to the right of Pascal's triangle, as follows:",
+        "  1,  1/2,  0,   0,   0,   0,  ...",
+        "  1,   1,  1/2,  0,   0,   0,  ...",
+        "  1,   2,   1,  1/2,  0,   0,  ...",
+        "  1,   3,   3,   1,  1/2,  0,  ...",
+        "  1,   4,   6,   4,   1,  1/2, ..., etc.",
+        "(End)",
+        "From _Bruno Berselli_, Mar 20 2013: (Start)",
+        "Note that, for t=A222391:",
+        "a(1)*t = Sum_{n >= 1} 1  /(Gamma(n/2)*Gamma((n+1)/2)),",
+        "a(2)*t = Sum_{n >= 1} n  /(Gamma(n/2)*Gamma((n+1)/2)),",
+        "a(3)*t = Sum_{n >= 1} n^2/(Gamma(n/2)*Gamma((n+1)/2)),",
+        "a(4)*t = Sum_{n >= 1} n^3/(Gamma(n/2)*Gamma((n+1)/2)),",
+        "a(5)*t = Sum_{n >= 1} n^4/(Gamma(n/2)*Gamma((n+1)/2)),",
+        "a(6)*t = Sum_{n >= 1} n^5/(Gamma(n/2)*Gamma((n+1)/2)), etc.",
+        "(End)",
+        "Except for the initial term, the main diagonal of A129340. - _Peter Bala_, Apr 14 2017"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A035009/b035009.txt\">Table of n, a(n) for n = 0..558</a>",
+        "Paul Barry, <a href=\"https://arxiv.org/abs/1702.04007\">Eulerian-Dowling Polynomials as Moments, Using Riordan Arrays</a>, arXiv:1702.04007 [math.CO], 2017.",
+        "Toufik Mansour and Mark Shattuck, <a href=\"https://www.emis.de/journals/INTEGERS/papers/l67/l67.Abstract.html\">A recurrence related to the Bell Numbers</a>, Integers 11 (2011), #A67."
+    ],
+    "formula": [
+        "a(n) = (1/2)*A001861(n), n > 0.",
+        "E.g.f.: (1 + exp(2*exp(x)-2))/2. - _Emeric Deutsch_, Feb 09, 2002",
+        "a(n+1) = 1 + 2*Sum_{j=1..n} binomial(n, j)*a(j). - _Jon Perry_, Apr 25 2005",
+        "Define f_1(x), f_2(x), ... such that f_1(x)=e^x and for n=2,3,... f_{n+1}(x) = (d/dx)(x*f_n(x)). Then a(n) = e^(-2)*f_n(2). - _Milan Janjic_, May 30 2008",
+        "G.f.: 1 + x/(Q(0) - 2*x) where Q(k) =  1 - x*(k+1)/( 1 - 2*x/Q(k+1) ); (continued fraction ). - _Sergei N. Gladkovskii_, Mar 22 2013",
+        "G.f.: 1/Q(0), where Q(k)= 1 - x - 2*x/(1 - x*(2*k+1)/(1 - x - 2*x/(1 - x*(2*k+2)/Q(k+1)))); (continued fraction). - _Sergei N. Gladkovskii_, May 13 2013"
+    ],
+    "example": [
+        "Given the production matrix M, upper left term of M^5 = a(5)/2^4 = 227/16."
+    ],
+    "maple": [
+        "A035009 := proc(n) local a,b,i;",
+        "a := [seq(2,i=1..n-1)]; b := [seq(1,i=1..n-1)];",
+        "exp(-x)*hypergeom(a,b,x); round(evalf(subs(x=2,%), 10+2*n)) end:",
+        "seq(A035009(n),n=0..19);  # _Peter Luschny_, Mar 30 2011"
+    ],
+    "mathematica": [
+        "1/(2*E^2)*Sum[(i + j)^n/(i!*j!), {i, 0, Infinity}, {j, 0, Infinity}] (* Starting from the 2nd term *) (* _Vladimir Reshetnikov_, Dec 31 2008 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^99); Vec(serlaplace((1 + exp(2*exp(x)-2))/2)) \\\\ _Joerg Arndt_, Apr 01 2011"
+    ],
+    "xref": [
+        "Cf. A000110, A137597, A222391, A129340."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "references": 11,
+    "revision": 73,
+    "time": "2018-01-09T02:54:43-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

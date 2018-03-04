@@ -1,0 +1,71 @@
+{
+    "number": 209410,
+    "data": "1,2,4,8,16,28,49,91,169,312,576,1056,1936,3564,6561,12069,22201,40826,75076,138096,254016,467208,859329,1580535,2907025,5346880,9834496,18088448,33269824,61192712,112550881,207013417,380757169,700321570,1288092100",
+    "name": "Number of subsets of {1,...,n} not containing {a,a+2,a+4} for any a.",
+    "comment": [
+        "Also, the number of bitstrings of length n not containing 10101,11101,10111 or 11111."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A209410/b209410.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_09\">Index entries for linear recurrences with constant coefficients</a>, signature (1, 0, 2, 0, 2, 2, 0, -1, -1)."
+    ],
+    "formula": [
+        "a(n) = 2^n - A209409(n).",
+        "a(n) = t[floor(n/2)+2]*t[floor((n+1)/2)+2] where t(n) is the n-th tribonacci number.",
+        "a(n) = a(n-1) + 2*a(n-3) + 2*a(n-5) + 2*a(n-6) - a(n-8) - a(n-9).",
+        "G.f.: (1 + 1*x + 2*x^2 + 2*x^3 + 4*x^4 + 2*x^5 - 1*x^6 - 2*x^7 - x^8)/((-1 + x + x^2 + x^3)*(-1 - x^2 - x^4 + x^6))."
+    ],
+    "example": [
+        "For n=5, subsets containing {a,a+2,a+4} occur only when a=1.  There are 2^2 subsets including {1,3,5}, thus a(5) = 2^5 - 4 = 28."
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1, 0, 2, 0, 2, 2, 0, -1, -1}, {1, 2, 4, 8, 16, 28, 49, 91, 169}, 40]"
+    ],
+    "program": [
+        "(Python)",
+        "#Returns the actual list of valid subsets",
+        "def avoidscode(n,bitstring=(1,0,1,0,1)):",
+        ".patterns=list()",
+        ".for start in range (1,n-len(bitstring)+2):",
+        "..s=set()",
+        "..for i in range(len(bitstring)):",
+        "...if bitstring[i]:",
+        "....s.add(start+i)",
+        "..patterns.append(s)",
+        ".s=list()",
+        ".for i in range(sum(bitstring)):",
+        "..for smallset in comb(range(1,n+1),i):",
+        "...s.append(smallset)",
+        ".for i in range(sum(bitstring),n+1):",
+        "..for temptuple in comb(range(1,n+1),i):",
+        "...tempset=set(temptuple)",
+        "...for sub in patterns:",
+        "....if sub <= tempset:",
+        ".....status=False",
+        ".....break",
+        "...if status:",
+        "....s.append(tempset)",
+        ".return s",
+        "#Counts all such sets",
+        "def countavoidscode(n,bitstring=(1,0,1,0,1)):",
+        ".return len(avoidscode(n))",
+        "#From recurrence",
+        "def a(n, adict={0:1, 1:2, 2:4, 3:8, 4:16, 5:28, 6:49, 7:91, 8:169}):",
+        ".if n in adict:",
+        "..return adict[n]",
+        ".adict[n]=a(n-1) + 2*a(n-3) + 2*a(n-5) + 2*a(n-6) - a(n-8) - a(n-9)",
+        ".return adict[n]",
+        "(PARI) x='x+O('x^30); Vec((1+x+2*x^2+2*x^3+4*x^4+2*x^5-x^6-2*x^7-x^8)/( (-1+x+x^2+x^3)*(-1-x^2-x^4+x^6))) \\\\ _G. C. Greubel_, Jan 05 2018",
+        "(MAGMA) I:=[1, 2, 4, 8, 16, 28, 49, 91, 169]; [n le 9 select I[n] else Self(n-1)+2*Self(n-3)+2*Self(n-5)+2*Self(n-6)-Self(n-8)-Self(n-9): n in [1..30]]; // _G. C. Greubel_, Jan 05 2018"
+    ],
+    "xref": [
+        "Cf. A209408, A209409"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_David Nacin_, Mar 08 2012",
+    "references": 3,
+    "revision": 13,
+    "time": "2018-01-05T22:00:37-05:00",
+    "created": "2012-03-08T17:04:27-05:00"
+}

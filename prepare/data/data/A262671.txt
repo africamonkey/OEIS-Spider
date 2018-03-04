@@ -1,0 +1,65 @@
+{
+    "number": 262671,
+    "data": "1,6,42,335,2956,28468,296540",
+    "name": "Number of pointed multiset partitions of normal pointed multisets of weight n.",
+    "comment": [
+        "A pointed multiset k[1...k...n] with point k is normal if its entries [1...k...n] span an initial interval of positive integers. Pointed multiset partitions are triangles (or compositions) in the multiorder of pointed multisets."
+    ],
+    "link": [
+        "Gus Wiseman, <a href=\"https://docs.google.com/document/d/1m0s6DGTBkDW9gvMuFmJHvy6oLGRAbQ7okAZcOPZawp0/pub\">Comcategories and Multiorders</a>"
+    ],
+    "example": [
+        "The a(2) = 6 pointed multiset partitions are:",
+        "1[1[11]],1[1[1]1[1]],",
+        "1[1[12]],1[1[1]2[2]],",
+        "2[2[12]],2[1[1]2[2]].",
+        "The a(3) = 42 pointed multiset partitions are:",
+        "1[1[111]],1[1[1]1[11]],1[1[11]1[1]],1[1[1]1[1]1[1]],",
+        "1[1[122]],1[1[1]2[22]],1[1[12]2[2]],1[1[1]2[2]2[2]],",
+        "2[2[122]],2[1[1]2[22]],2[1[12]2[2]],2[2[2]2[12]],2[2[12]2[2]],2[1[1]2[2]2[2]],",
+        "1[1[112]],1[1[1]1[12]],1[1[1]2[12]],1[1[11]2[2]],1[1[12]1[1]],1[1[1]1[1]2[2]],",
+        "2[2[112]],2[1[1]2[12]],2[1[11]2[2]],2[1[1]1[1]2[2]],",
+        "1[1[123]],1[1[1]2[23]],1[1[1]3[23]],1[1[12]3[3]],1[1[13]2[2]],1[1[1]2[2]3[3]],",
+        "2[2[123]],2[1[1]2[23]],2[1[13]2[2]],2[2[2]3[13]],2[2[12]3[3]],2[1[1]2[2]3[3]],",
+        "3[3[123]],3[1[1]3[23]],3[1[12]3[3]],3[2[2]3[13]],3[2[12]3[3]],3[1[1]2[2]3[3]]."
+    ],
+    "mathematica": [
+        "ReplaceListRepeated[forms_List, rerules_List] :=",
+        "Union[Flatten[",
+        "   FixedPointList[",
+        "    Function[preforms,",
+        "     Union[Flatten[ReplaceList[#, rerules] & /@ preforms, 1]]],",
+        "    forms], 1]]",
+        "pointedPartitions[JIX[r_, b_List?OrderedQ]] /; MemberQ[b, r] :=",
+        "  Cases[ReplaceListRepeated[{Z[Y[JIX[r, {r}]],",
+        "      Y @@ DeleteCases[b, r, 1, 1]]}, {Z[Y[sof___, JIX[w_, t_]],",
+        "        Y[for___, x_, aft___]] /; OrderedQ[{w, x}] :>",
+        "      Z[Y[sof, JIX[w, t], JIX[x, {x}]], Y[for, aft]],",
+        "     Z[Y[JIX[w_, t_], soa___], Y[for___, x_, aft___]] /;",
+        "       OrderedQ[{x, w}] :>",
+        "      Z[Y[JIX[x, {x}], JIX[w, t], soa], Y[for, aft]],",
+        "     Z[Y[sof___, JIX[w_, {tof__}]], Y[for___, x_, aft___]] :>",
+        "      Z[Y[sof, JIX[w, Sort[{tof, x}]]], Y[for, aft]],",
+        "     Z[Y[JIX[w_, {tof__}], soa___], Y[for___, x_, aft___]] :>",
+        "      Z[Y[JIX[w, Sort[{tof, x}]], soa], Y[for, aft]]}],",
+        "   Z[Y[pts__], Y[]] :> JIX[r, {pts}]];",
+        "allnormpms[n_Integer] :=",
+        "  Join @@ Function[s,",
+        "     JIX[#, Array[Count[s, y_ /; y <= #] + 1 &, n]] & /@",
+        "      Range[Length[s] + 1]] /@ Subsets[Range[n - 1] + 1];",
+        "Join @@ pointedPartitions /@ allnormpms[3] /.",
+        "JIX -> Apply(* to construct the example *)",
+        "Array[Plus @@ (Length[pointedPartitions[#]] & /@",
+        "     allnormpms[#]) &, 7](* to compute the sequence *)"
+    ],
+    "xref": [
+        "Cf. A185298, A080108, A276024."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Sep 26 2015",
+    "references": 5,
+    "revision": 14,
+    "time": "2016-08-26T16:55:01-04:00",
+    "created": "2015-10-04T03:56:58-04:00"
+}

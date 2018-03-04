@@ -1,0 +1,34 @@
+{
+    "number": 134955,
+    "data": "1,1,2,4,9,20,50,128,351,1009,3035,9464,30479,100712,340072,1169296,4082243,14438577,51643698,186530851,679530937,2494433346,9219028889,34280914106,128179985474,481694091291,1818516190252,6894350122452",
+    "name": "Number of \"hyperforests\" on n unlabeled nodes, i.e., hypergraphs that have no cycles, assuming that each edge contains at least two vertices.",
+    "reference": [
+        "D. E. Knuth: The Art of Computer Programming, Volume 4, Generating All Combinations and Partitions Fascicle 3, Section 7.2.1.4. Generating all partitions. Page 38, Algorithm H. - _Washington Bomfim_, Sep 25 2008"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A134955/b134955.txt\">Table of n, a(n) for n = 0..1000</a> (first 201 terms from T. D. Noe)",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "Euler transform of A035053. - _N. J. A. Sloane_, Jan 30 2008",
+        "a(n) = Sum of prod_{k=1}^n\\,{A035053(k) + c_k -1 /choose c_k} over all the partitions of n, c_1 + 2c_2 + ... + nc_n; c_1, c_2, ..., c_n >= 0. - _Washington Bomfim_, Sep 25 2008",
+        "a(n) ~ c * d^n / n^(5/2), where d = 4.189610958393826965527036454524... (see A245566), c = 0.36483930544... . - _Vaclav Kotesovec_, Jul 26 2014"
+    ],
+    "maple": [
+        "with(numtheory): etr:= proc(p) local b; b:=proc(n) option remember; `if`(n=0,1, add(add(d*p(d), d=divisors(j)) *b(n-j), j=1..n)/n) end end: b:= etr(B): c:= etr(b): B:= n-> if n=0 then 0 else c(n-1) fi: C:= etr(B): aa:= proc(n) option remember; B(n)+C(n) -add(B(k)*C(n-k), k=0..n) end: a:= etr(aa): seq(a(n), n=0..27); # _Alois P. Heinz_, Sep 09 2008"
+    ],
+    "mathematica": [
+        "etr[p_] := Module[{b}, b[n_] := b[n] = If[n == 0, 1, Sum[Sum[d*p[d], {d, Divisors[ j]}]*b[n-j], {j, 1, n}]/n]; b]; b = etr[B]; c = etr[b]; B[n_] := If[n == 0, 0, c[n-1]]; CC = etr[B]; aa[n_] := aa[n] = B[n]+CC[n]-Sum[B[k]*CC[n-k], {k, 0, n}]; a = etr[aa]; Table[a[n], {n, 0, 27}] (* _Jean-Fran\u00e7ois Alcover_, Feb 13 2015, after _Alois P. Heinz_*)"
+    ],
+    "xref": [
+        "Cf. A035053 (hypertrees), A134954 (labeled case).",
+        "Cf. A245566."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Don Knuth_, Jan 26 2008",
+    "references": 7,
+    "revision": 25,
+    "time": "2017-06-23T17:04:09-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

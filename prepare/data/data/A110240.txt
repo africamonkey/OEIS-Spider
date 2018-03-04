@@ -1,0 +1,57 @@
+{
+    "number": 110240,
+    "data": "1,7,25,111,401,1783,6409,28479,102849,456263,1641433,7287855,26332369,116815671,420186569,1865727615,6741246849,29904391303,107568396185,477630335215,1725755276049,7655529137527,27537575631497",
+    "name": "Decimal form of binary integer produced by the ON cells at n-th generation following Wolfram's Rule 30 cellular automaton starting from a single ON-cell represented as 1.",
+    "comment": [
+        "See A245549 for binary equivalents. See A070952 for number of ON cells. - _N. J. A. Sloane_, Jul 28 2014",
+        "For n > 0: 3 < a(n+1) / a(n) < 5, floor(a(n+1)/a(n)) = A010702(n+1). - _Reinhard Zumkeller_, Jun 08 2013",
+        "Iterates of A269160 starting from a(0) = 1. See also A269168. - _Antti Karttunen_, Feb 20 2016"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A110240/b110240.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "N. J. A. Sloane, <a href=\"/A070952/a070952.png\">Illustration of first 20 generations</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Rule30.html\">Rule 30.</a>"
+    ],
+    "formula": [
+        "From _Antti Karttunen_, Feb 20 2016: (Start)",
+        "a(0) = 1, for n >= 1, a(n) = A269160(a(n-1)).",
+        "a(n) = A030101(A265281(n)). [The rule 30 is the mirror image of the rule 86.]",
+        "A269166(a(n)) = n for all n >= 0.",
+        "(End)"
+    ],
+    "example": [
+        "a(1)=1 because the automaton begins at first \"generation\" with one black cell: 1;",
+        "a(2)=5 because one black cell, through Rule 30 at 2nd generation, produces three contiguous black cells: 111 (binary), so 7 (decimal);",
+        "a(3)=25 because the third generation is \"black black white white black\" cells: 11001, so 25 (decimal)."
+    ],
+    "mathematica": [
+        "rows = 23; ca = CellularAutomaton[30, {{1}, 0}, rows-1]; Table[ FromDigits[ ca[[k, rows-k+1 ;; rows+k-1]], 2], {k, 1, rows}](* _Jean-Fran\u00e7ois Alcover_, Jun 07 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a110240 = foldl (\\v d -> 2 * v + d) 0 . map toInteger . a070950_row",
+        "-- _Reinhard Zumkeller_, Jun 08 2013",
+        "(Scheme, with memoization-macro definec)",
+        "(definec (A110240 n) (if (zero? n) 1 (A269160 (A110240 (- n 1)))))",
+        ";; _Antti Karttunen_, Feb 20 2016"
+    ],
+    "xref": [
+        "This sequence, A070952, and A245549 all describe the same sequence of successive states.",
+        "Cf. A030101, A070950, A051023, A092539, A092540, A070952 (number of ON cells), A100053, A100054, A100055, A094603, A094604, A000225, A074890, A010702, A245549, A269160, A269162.",
+        "Cf. A269165 (indices of ones in this sequence).",
+        "Cf. A269166 (a left inverse).",
+        "Left edge of A269168.",
+        "Cf. also A265281, A269160."
+    ],
+    "keyword": "easy,nonn,base",
+    "offset": "0,2",
+    "author": "_Alexandre Wajnberg_ and _Eric Angelini_, Sep 06 2005",
+    "ext": [
+        "More terms from _Eric W. Weisstein_, Apr 08 2006",
+        "Offset corrected by _Reinhard Zumkeller_, Jun 08 2013"
+    ],
+    "references": 13,
+    "revision": 55,
+    "time": "2016-11-25T19:05:24-05:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

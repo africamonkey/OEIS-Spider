@@ -1,0 +1,47 @@
+{
+    "number": 25282,
+    "data": "1,4,12,51,373,7724",
+    "name": "Smallest number requiring n Fibonacci numbers to build using + and *.",
+    "comment": [
+        "The n Fibonacci numbers need not be distinct.  - _Robert Israel_, Jan 25 2015"
+    ],
+    "example": [
+        "a(12) = 1 + 3 + 8 but can't be represented using fewer than 3 Fibonacci numbers, and is the least number with this property. - _Robert Israel_, Jan 25 2015"
+    ],
+    "maple": [
+        "N:= 50000: # to get a(n) where a(n) <= N",
+        "P:= Vector(N):",
+        "for i from 1 do",
+        "  f:= combinat:-fibonacci(i);",
+        "if f > N then break fi;",
+        "P[f]:= 1",
+        "od:",
+        "A[1]:= 1:",
+        "rmax:= 1:",
+        "for n from 1 to N do",
+        "  if P[n] = 0 then",
+        "     m:= floor(n/2);",
+        "     r:= min(P[1..m] + P[[seq(n-i, i=1..m)]]);",
+        "     for a in select(`<=`, numtheory:-divisors(n) minus {1}, floor(sqrt(n))) do",
+        "        r:= min(r, P[a] + P[n/a])",
+        "     od:",
+        "     P[n]:= r;",
+        "     if r > rmax then",
+        "       A[r]:= n;",
+        "       rmax:= r;",
+        "     fi",
+        "  fi",
+        "od:",
+        "seq(A[i], i=1..rmax); # _Robert Israel_, Jan 25 2015"
+    ],
+    "xref": [
+        "Cf. A000045, A254122, A254123."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_David W. Wilson_",
+    "references": 2,
+    "revision": 22,
+    "time": "2015-02-13T06:56:28-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

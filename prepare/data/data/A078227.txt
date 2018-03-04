@@ -1,0 +1,46 @@
+{
+    "number": 78227,
+    "data": "2,4,8,16,32,96,672,45696,2787456,270383232,507238943232,27274745216527872,141232121898569036783616,216567470725252501672125832323072",
+    "name": "a(1) = 2, a(n+1) is the smallest multiple of a(n) such that the digits are alternately odd and even. The unit digit is always even and parity alternates.",
+    "example": [
+        "a(7) = 672 = 7*a(6) = 7*96. Starting with the unit digit the digits in 672 are alternately even and odd."
+    ],
+    "maple": [
+        "isAltr := proc(n) local nshft,osgn,sgn ; nshft := n ; osgn := ( n mod 10 ) mod 2 ; while nshft >= 10 do nshft := floor(nshft/10) ; sgn := ( nshft mod 10 ) mod 2 ; if sgn = osgn then RETURN(false) ; fi ; osgn := sgn ; od ; RETURN(true) ; end: A078227 := proc(prev) local m; m := 2 ; while true do if isAltr(m*prev) then RETURN(m*prev) ; fi ; m := m+1 ; od ; end: n := 2 : while true do print(n) ; n := A078227(n) : od : # _R. J. Mathar_, Nov 12 2006"
+    ],
+    "program": [
+        "(Python)",
+        "A078227_list = [2]",
+        "for _ in range(20):",
+        "....x = A078227_list[-1]",
+        "....y = x",
+        "....while True:",
+        "........y += x",
+        "........s = str(y)",
+        "........for j in range(len(s)-1,-1,-2):",
+        "............if not s[j] in ('0','2','4','6','8'):",
+        "................break",
+        "........else:",
+        "............for k in range(len(s)-2,-1,-2):",
+        "................if not s[k] in ('1','3','5','7','9'):",
+        "....................break",
+        "............else:",
+        "................A078227_list.append(y)",
+        "................break",
+        "# _Chai Wah Wu_, Nov 06 2014"
+    ],
+    "xref": [
+        "Cf. A078221, A078222, A078223, A078224, A078225, A078226, A078228."
+    ],
+    "keyword": "base,more,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Nov 23 2002",
+    "ext": [
+        "More terms from _R. J. Mathar_, Nov 12 2006",
+        "a(13) and a(14) from _Donovan Johnson_, Mar 09 2008"
+    ],
+    "references": 4,
+    "revision": 14,
+    "time": "2015-08-07T02:39:25-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

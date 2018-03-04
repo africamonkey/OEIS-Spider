@@ -1,0 +1,46 @@
+{
+    "number": 75227,
+    "data": "3,5,7,17,37,43,43,151,151,409,491,491,491,1087,2011,3709,3709,7417,7417,7417,19699,30139,35573,35573,40237,40237,132151,132151",
+    "name": "Smallest odd prime not occurring in the numerator of the 2^n sums generated from the set 1, 1/2, 1/3,..., 1/n.",
+    "comment": [
+        "The largest prime generated is given in A075226. For information about how often the numerator of these sums is prime, see A075188 and A075189."
+    ],
+    "example": [
+        "a(3) = 7 because 7 is the smallest prime not occurring in the numerator of the sums 1+1/2 = 3/2, 1/2+1/3 = 5/6 and 1+1/2+1/3 = 11/6."
+    ],
+    "mathematica": [
+        "Needs[\"DiscreteMath`Combinatorica`\"]; maxN=20; For[lst={}; prms={}; i=0; n=1, n<=maxN, n++, While[i<2^n-1, i++; s=NthSubset[i, Range[n]]; k=Numerator[Plus@@(1/s)]; If[PrimeQ[k], AppendTo[prms, k]]]; prms=Union[prms]; j=2; While[MemberQ[prms, Prime[j]], j++ ]; AppendTo[lst, Prime[j]]]; lst",
+        "(* Second program; does not need Combinatorica *)",
+        "a[1] = 3; a[2] = 5; a[n_] := For[nums = (Total /@ Subsets[1/Range[n]]) // Numerator // Union // Select[#, PrimeQ]&; p = 3, p <= Last[nums], p = NextPrime[p], If[FreeQ[nums, p], Print[n, \" \", p]; Return[p]]];",
+        "Table[a[n], {n, 1, 23}] (* _Jean-Fran\u00e7ois Alcover_, Sep 10 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Ratio ((%), numerator)",
+        "import Data.Set (Set, empty, fromList, toList, union)",
+        "a075227 n = a075227_list !! (n-1)",
+        "a075227_list = f 1 empty a065091_list where",
+        "   f x s ps = head qs : f (x + 1) (s `union` fromList hs) qs where",
+        "     qs = foldl (flip del)",
+        "          ps $ filter ((== 1) . a010051') $ map numerator hs",
+        "     hs = map (+ 1 % x) $ 0 : toList s",
+        "   del u vs'@(v:vs) = case compare u v",
+        "                      of LT -> vs'; EQ -> vs; GT -> v : del u vs",
+        "-- _Reinhard Zumkeller_, May 28 2013"
+    ],
+    "xref": [
+        "Cf. A001008, A075135, A075188, A075189, A075226.",
+        "Cf. A010051, A065091.",
+        "Cf. A217712."
+    ],
+    "keyword": "nice,nonn,more",
+    "offset": "1,1",
+    "author": "_T. D. Noe_, Sep 08 2002",
+    "ext": [
+        "a(21)-a(28) by _Reinhard Zumkeller_, May 28 2013"
+    ],
+    "references": 6,
+    "revision": 19,
+    "time": "2017-09-10T15:04:57-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

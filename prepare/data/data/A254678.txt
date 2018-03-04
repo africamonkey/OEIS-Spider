@@ -1,0 +1,41 @@
+{
+    "number": 254678,
+    "data": "7,17,23,31,41,47,73,89,97,103,127,137,151,167,199,223,233,239,241,257,271,281,311,313,353,359,367,383,409,431,433,439,449,479,487,503,521,577,593,601,607,647,673,719,727,743,751,761,769,839,857,881,887,911,929,937,953,967,977,983",
+    "name": "Primes p with the property that there are four consecutive integers less than p whose product is 1 mod p.",
+    "formula": [
+        "x*(x+1)*(x+2)*(x+3) == 1 mod p, p is prime, 1 <= x <= p-4."
+    ],
+    "example": [
+        "p=7: 2*3*4*5=120 == 1 mod 7;",
+        "p=17: 2*3*4*5=120 == 1 mod 17 AND 12*13*14*15=32760 == 1 mod 17; for p=13: no triple == 1 mod 13;",
+        "p=23: 5*6*7*8 == 1 mod 23 AND 15*16*17*18== 1 mod 23 AND 19*20*21*22 == 1 mod 23; and so on. For the number of quadruples for a prime, see A256580."
+    ],
+    "program": [
+        "(R)",
+        "library(numbers)",
+        "IP <- vector()",
+        "t <- vector()",
+        "S <- vector()",
+        "IP <- c(Primes(1000))",
+        "for (j in 1:(length(IP))){",
+        "   for (i in 2:(IP[j]-4)){",
+        "       t[i-1] <- as.vector(mod((i*(i+1)*(i+2)*(i+3)),IP[j]))",
+        "       Z[j] <- sum(which(t==1))",
+        "       S[j] <- length(which(t==1))",
+        "   }",
+        "}",
+        "IP[S!=0]",
+        "#Carefully increase Primes(1000). It takes several hours for 100000.",
+        "(PARI) lista(nn) = forprime(p=2, nn, if (sum(x=1, p-4, ((x*(x+1)*(x+2)*(x+3)) % p) == 1) > 0, print1(p, \", \"))); \\\\ _Michel Marcus_, Apr 03 2015"
+    ],
+    "xref": [
+        "Cf. A256567, A256580."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Marian Kraus_, Apr 02 2015",
+    "references": 1,
+    "revision": 39,
+    "time": "2015-04-03T13:02:01-04:00",
+    "created": "2015-04-02T14:23:42-04:00"
+}

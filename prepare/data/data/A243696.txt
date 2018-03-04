@@ -1,0 +1,44 @@
+{
+    "number": 243696,
+    "data": "1,1,4,27,254,3048,44328,755681,14750646,323999500,7901623624,211690439030,6176393964684,194847458672328,6606138879434128,239466033046020357,9239284257332493478,377948418993992417644,16335430070738649950536,743711790322786003051882",
+    "name": "Number of meta-Sylvester classes of 2-multiparking functions of length n.",
+    "comment": [
+        "See Novelli-Thibon (2014) for precise definition.",
+        "Sum over all Dyck paths of semilength n of products over all peaks p of (1+x_p-y_p), where x_p and y_p are the coordinates of peak p. - _Alois P. Heinz_, May 27 2015"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A243696/b243696.txt\">Table of n, a(n) for n = 0..400</a>",
+        "J.-C. Novelli, J.-Y. Thibon, <a href=\"http://arxiv.org/abs/1403.5962\">Hopf Algebras of m-permutations, (m+1)-ary trees, and m-parking functions</a>, arXiv preprint arXiv:1403.5962 [math.CO], 2014. See Fig. 28."
+    ],
+    "formula": [
+        "G.f.: 1/(1-x) = Sum_{n>=0} a(n) * x^n*(1-x)^n / Product_{k=1..n} (1 + 2*k*x). - _Paul D. Hanna_, Jun 14 2014"
+    ],
+    "maple": [
+        "b:= proc(x, y, t) option remember; `if`(y>x or y<0, 0,",
+        "      `if`(x=0, 1, b(x-1, y-1, false)*`if`(t, (1+x-y), 1) +",
+        "                   b(x-1, y+1, true)))",
+        "    end:",
+        "a:= n-> b(2*n, 0, false):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, May 27 2015"
+    ],
+    "mathematica": [
+        "b[x_, y_, t_] := b[x, y, t] = If[y>x || y<0, 0, If[x==0, 1, b[x-1, y-1, False]*If[t, 1+x-y, 1] + b[x-1, y+1, True]]]; a[n_] := b[2*n, 0, False]; Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Feb 24 2016, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n<0, 0, polcoeff(1/(1-x+x*O(x^n)) - sum(k=1, n-1, a(k)*x^k*(1-x)^k/prod(j=0, k, 1+2*j*x+x*O(x^n))), n))}",
+        "for(n=0, 20, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Jun 14 2014"
+    ],
+    "xref": [
+        "Cf. A132624, A243697, A243698, A243699."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Jun 14 2014",
+    "ext": [
+        "Offset changed to 0 by _Paul D. Hanna_, Jun 14 2014"
+    ],
+    "references": 5,
+    "revision": 25,
+    "time": "2016-02-24T11:14:39-05:00",
+    "created": "2014-06-14T09:50:07-04:00"
+}

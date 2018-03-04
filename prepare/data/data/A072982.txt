@@ -1,0 +1,54 @@
+{
+    "number": 72982,
+    "data": "3,11,17,73,101,137,257,353,449,641,1409,10753,15361,19841,65537,69857,453377,976193,1514497,5767169,5882353,6187457,8253953,8257537,70254593,167772161,175636481,302078977,458924033,639631361,1265011073",
+    "name": "Primes p for which the period length of 1/p is a power of 2.",
+    "comment": [
+        "All Fermat primes>5 (A019434) are in the sequence, since it can be shown that the period length of 1/(2^(2^n)+1) is 2^(2^n) whenever 2^(2^n)+1 is prime. - _Benoit Cloitre_, Jun 13 2007",
+        "Take all the terms from row 2^k of triangle in A046107 for k >= 0 and sort to arrive at this sequence. - _Ray Chandler_, Nov 04 2011",
+        "Furthermore (excluding the initial term 3) this sequence is also the ascending sequence of primes dividing 10^(2^k)+1 for some nonnegative integer k. For a prime dividing 10^(2^k)+1, the period length of 1/p is 2^(k+1). Thus for the prime p = 558711876337536212257947750090161313464308422534640474631571587847325442162307811\\",
+        "65223702155223678309562822667655169, a factor of 10^(2^7)+1, the period of 1/p is only 2^8. This large prime then also belongs to the sequence. - _Christopher J. Smyth_, Mar 13 2014",
+        "For any m, every term that is not a factor of 10^(2^k)-1 for some k<m is congruent to 1 mod 2^m.  Thus all terms except 3, 11, 17, 73, 101, 137, 353, 449, 69857, 976193, 5882353, 6187457 are congruent to 1 mod 128. # _Robert Israel_, Jun 17 2016"
+    ],
+    "link": [
+        "Ray Chandler, Arkadiusz Wesolowski and Robert G. Wilson v, <a href=\"/A072982/b072982.txt\">Table of n, a(n) for n = 1..45</a> [Terms 40 to 45 added by Arkadiusz Wesolowski, Jun 17 2016]",
+        "<a href=\"/index/1#1overn\">Index entries for sequences related to decimal expansion of 1/n</a>"
+    ],
+    "example": [
+        "15361 has a period length of 256 = 2^8, hence 15361 is in the sequence.",
+        "13462517317633 has period length 1048576 = 2^20; 46179488366593 has period length 2199023255552 = 2^41; 101702694862849 has period length 8388608 = 2^23; 171523813933057 has period length 4398046511104 = 2^42; 505775348776961 has period length 2199023255552 = 2^41; 834427406578561 has period length 64 = 2^6. - _Ray Chandler_, Nov 09 2011"
+    ],
+    "maple": [
+        "filter:= proc(p) local k;",
+        "  if not isprime(p) then return false fi;",
+        "  k:=igcd(p-1,2^ilog2(p));",
+        "  evalb(10 &^ k mod p = 1)",
+        "end proc:",
+        "r:= select(`<=`,`union`(seq(numtheory:-factorset(10^(2^k)-1),k=1..6)),10^9):",
+        "b:= select(filter, {seq(i,i=129..10^9,128)}):",
+        "sort(convert(r union b, list)); # _Robert Israel_, Jun 17 2016"
+    ],
+    "mathematica": [
+        "Do[ If[ IntegerQ[ Log[2, Length[ RealDigits[ 1/Prime[n]] [[1, 1]]]]], Print[ Prime[n]]], {n, 1, 47500}] (* _Robert G. Wilson v_ *)",
+        "pmax = 10^10; p = 1; While[p < pmax,p = NextPrime[p];If[ IntegerQ[Log[2, MultiplicativeOrder[10, p] ] ], Print[ p];];]; (* _Ray Chandler_ *)"
+    ],
+    "program": [
+        "(PARI) ? a(n)=if(n<4,n==2,znorder(Mod(10, prime(n)))) ? for(n=1,20000,if(gcd(a(n), 2^1000)==a(n),print1(prime(n),\",\")))"
+    ],
+    "xref": [
+        "Cf. A002371, A007138, A046107, A054471.",
+        "Cf. A197224 (power of 2 which is the period of the decimal 1/a(n))."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Benoit Cloitre_, Jul 26 2002",
+    "ext": [
+        "Edited by _Robert G. Wilson v_, Aug 20 2002",
+        "a(18) from _Ray Chandler_, May 02 2007",
+        "a(19) from _Robert G. Wilson v_, May 09 2007",
+        "a(20)-a(32) from _Ray Chandler_, May 14 2007"
+    ],
+    "references": 12,
+    "revision": 59,
+    "time": "2016-06-22T23:22:00-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

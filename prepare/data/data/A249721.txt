@@ -1,0 +1,40 @@
+{
+    "number": 249721,
+    "data": "0,2,4,6,8,12,14,18,20,22,24,26,36,38,42,44,54,56,58,60,62,66,68,72,74,76,78,80,108,110,114,116,126,128,132,134,162,164,166,168,170,174,176,180,182,184,186,188,198,200,204,206,216,218,220,222,224,228,230,234,236,238,240,242,324",
+    "name": "Numbers whose base 3 representation consists entirely of 0's and 2's, except possibly for a single pair of adjacent 1's among them.",
+    "comment": [
+        "9 divides neither C(s-1,s/2) (= A001700(s/2)) nor C(s,s/2) (= A000984(s/2)) if and only if s = a(n)."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A249721/b249721.txt\">Table of n, a(n) for n = 0..8192</a>"
+    ],
+    "formula": [
+        "a(n) = 2 * A051382(n)."
+    ],
+    "example": [
+        "2, which in base-3 is also '2' satisfies the condition, thus it is included.",
+        "4, which in base-3 is '11' is included.",
+        "6, which in base-3 is '20' is included.",
+        "8, which in base-3 is '22' is included.",
+        "12, which in base-3 is '110' is included.",
+        "14, which in base-3 is '112' is included.",
+        "but neither for example 13, 40 nor 130, whose ternary representations are '111', '1111' and '11211' respectively, are not included, because all of them contain more than one pair of 1's."
+    ],
+    "program": [
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A249721 (MATCHING-POS 0 0 in_A249721?))",
+        "(define (in_A249721? n) (let loop ((n n) (seen11yet? #f)) (cond ((zero? n) #t) ((= 2 n) #t) ((modulo n 3) => (lambda (r) (let ((next_n (/ (- n r) 3))) (cond ((= r 1) (if (or seen11yet? (not (= 1 (modulo next_n 3)))) #f (loop (/ (- next_n 1) 3) #t))) (else (loop next_n seen11yet?)))))))))",
+        ";; Or alternatively, based on code for A051382:",
+        "(define (A249721 n) (* 2 (A051382 n)))"
+    ],
+    "xref": [
+        "Cf. A007089, A051382, A249719, A249720, A001700, A000984, A117966, A249733."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,2",
+    "author": "_Antti Karttunen_, Nov 14 2014",
+    "references": 4,
+    "revision": 8,
+    "time": "2014-11-14T12:40:10-05:00",
+    "created": "2014-11-14T12:40:10-05:00"
+}

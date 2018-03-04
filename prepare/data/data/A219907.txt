@@ -1,0 +1,35 @@
+{
+    "number": 219907,
+    "data": "0,4,7,13,16,27,28,36,49,52,63,64,73,76,79,91,100,108,112,117,124,144,148,151,163,172,175,189,193,196,208,211,217,241,243,252,256,268,279,292,301,304,316,324,325,343,349,361,364,367,379,387",
+    "name": "Numbers of the form 4x^2+2xy+7y^2, x, y >= 0.",
+    "reference": [
+        "W. C. Jagy, Problem 11539, Amer. Math. Monthly, 119 (2012), 884-885."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A219907/b219907.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (deleteFindMin, empty, fromList, union)",
+        "import qualified Data.Set as Set (null)",
+        "a219907 n = a219907_list !! (n-1)",
+        "a219907_list = f 0 empty where",
+        "   f z s | Set.null s || z' <= m = f (z + 1) (s `union` (fromList ws))",
+        "         | otherwise             = m : f z s'",
+        "         where (m,s') = deleteFindMin s",
+        "               ws = map (h z) [0..z] ++ map (flip h z) [0..z-1]",
+        "               h i j = 4 * i ^ 2 + 2 * i * j + 7 * j ^ 2",
+        "               z' = h z 0",
+        "-- _Reinhard Zumkeller_, Dec 15 2012"
+    ],
+    "xref": [
+        "Cf. A219908."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Dec 14 2012",
+    "references": 3,
+    "revision": 10,
+    "time": "2013-07-13T12:04:34-04:00",
+    "created": "2012-12-14T21:35:14-05:00"
+}

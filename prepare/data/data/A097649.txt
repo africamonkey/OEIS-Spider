@@ -1,0 +1,29 @@
+{
+    "number": 97649,
+    "data": "1,11,101,1111,10291,100651,1004251,10165751,100064101,1000078501,10000222501,100062501601,1000062516001,10000062660001,100002441447211,1003922328562757,10000390625025601,100000002482366251",
+    "name": "Duplicate of A072075.",
+    "comment": [
+        "Name was: a(n) is the smallest number m such that phi(m)=10^n.",
+        "phi(1)=1, phi(11)=10 & for n > 0 phi(25*10^n)=10^(n+1), so for each n, a(n) exists and is less than 25*10^(n-1)+1."
+    ],
+    "example": [
+        "a(10)=10000222501 because phi(10000222501)=10^10 and for all m<10000222501 phi(m) # 10^10.",
+        "a(15)=1003922328562757 because of the primes among the divisors plus 1 of 10^15, they being {2, 3, 5, 11, 17, 41, 101, 251, 257, 401, 641, 1601, 4001, 16001, 25601, 40961, 62501, 160001, 62500001, 2441406251, 2500000001}, the least product of all the possible subsets whose totient equals 10^15 is a(15)."
+    ],
+    "mathematica": [
+        "a[n_] := Block[{m = 10^n}, While[ EulerPhi[m] != 10^n, m++ ]; m]; Do[ Print[ a[n]], {n, 0, 12}]",
+        "(* first do *) Needs[\"DiscreteMath`Combinatorica`\"] (* then *) f[n_] := If[n == 0, 1, Block[{p = Select[ Divisors[10^n], PrimeQ[ # + 1] &]}, Min[ Transpose[ Partition[ Flatten[ Table[ Select[ Transpose[{Times @@@ KSubsets[p, i], Times @@@ KSubsets[p + 1, i]}], #[[1]] == 10^n &], {i, 9}]], 2]][[2]] ]]]; Table[ f[n], {n, 0, 18}] (* _Robert G. Wilson v_, Mar 14 2005 *)"
+    ],
+    "xref": [
+        "Cf. A097650."
+    ],
+    "keyword": "dead",
+    "offset": "0,2",
+    "ext": [
+        "Edited and extended from a(11) by _Robert G. Wilson v_, Mar 12 2005"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2015-09-19T17:35:44-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

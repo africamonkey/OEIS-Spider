@@ -1,0 +1,50 @@
+{
+    "number": 279314,
+    "data": "4,22,27,58,85,94,105,114,121,150,166,202,204,222,224,265,274,315,319,342,346,355,378,382,391,438,445,450,454,483,517,526,535,540,560,562,576,588,612,627,634,636,640,645,648,654,663,666,690,697,706,728,729,762,778,825,840,841,852",
+    "name": "Composite numbers n such that the sum of the prime factors of n, with multiplicity, is congruent to n (mod 9).",
+    "comment": [
+        "Supersequence of A006753 (Smith numbers).",
+        "Sequence is proven infinite due to the infinitude of the Smith numbers.",
+        "Can be generalized for other moduli. Setting the modulus to 1 yields the composite numbers. Setting the modulus to m (m>=2) yields the supersequence which includes the Smith numbers in base (m+1). Of course, m=1 includes all Smith numbers for any base."
+    ],
+    "link": [
+        "Ely Golden, <a href=\"/A279314/b279314.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "105 is a member as 105 = 3*5*7 with 105 mod 9 = 6 and (3+5+7) mod 9 = 15 mod 9 = 6."
+    ],
+    "mathematica": [
+        "Select[Range[4, 860], Function[n, And[CompositeQ@ n, Mod[#, 9] == Mod[n, 9] &@ Total@ Flatten@ Map[ConstantArray[#1, #2] & @@ # &, FactorInteger@ n]]]] (* _Michael De Vlieger_, Dec 10 2016 *)",
+        "cnnQ[n_]:=CompositeQ[n]&&Mod[Total[Flatten[Table[#[[1]],#[[2]]]&/@ FactorInteger[ n]]],9]==Mod[n,9]; Select[Range[900],cnnQ] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Jul 17 2017 *)"
+    ],
+    "program": [
+        "(SageMath)",
+        "def factorSum(f):",
+        "    s=0",
+        "    for c in range(len(f)):",
+        "        s+=(f[c][0]*f[c][1])",
+        "    return s",
+        "#this variable affects the modulus",
+        "modulus=9",
+        "c=2",
+        "index=1",
+        "while(index<=10000):",
+        "    f=list(factor(c))",
+        "    if(((len(f)>1)|(f[0][1]>1))&(factorSum(f)%modulus==c%modulus)):",
+        "        print(str(index)+\" \"+str(c))",
+        "        index+=1",
+        "    c+=1",
+        "print(\"complete\")",
+        "(PARI) isok(n) = !isprime(n) && (f=factor(n)) && ((n % 9) == (sum(k=1, #f~, f[k,1]*f[k,2]) % 9)); \\\\ _Michel Marcus_, Dec 10 2016"
+    ],
+    "xref": [
+        "Cf. A006753."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ely Golden_, Dec 09 2016",
+    "references": 1,
+    "revision": 18,
+    "time": "2017-07-17T13:44:17-04:00",
+    "created": "2016-12-21T12:44:36-05:00"
+}

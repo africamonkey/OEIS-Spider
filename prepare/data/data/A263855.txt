@@ -1,0 +1,59 @@
+{
+    "number": 263855,
+    "data": "1,6,38,277,3056,59768,2376028,195245762,31700259751",
+    "name": "Number of connected graphs on n nodes up to isomorphism with a factor of (1+x) in their independence polynomial.",
+    "link": [
+        "F. H\u00fcffner, <a href=\"https://github.com/falk-hueffner/tinygraph\">tinygraph</a>, software for generating integer sequences based on graph properties, version b3ab217."
+    ],
+    "example": [
+        "For n = 4, the a(4)=1 solution is the path of length 3."
+    ],
+    "program": [
+        "(Sage)",
+        "from sage.graphs.independent_sets import IndependentSets",
+        "from math import factorial",
+        "from time import time",
+        "#Function to calculate a binomial coefficient (n choose r)",
+        "def choose(n, r):",
+        "    return factorial(n) / (factorial(r) * factorial(n - r))",
+        "#Function that checks if a polynomial has a certain root",
+        "def root_in_poly(poly, root):",
+        "    root_list = poly.roots()",
+        "    for tuple in root_list:",
+        "        for elt in tuple:",
+        "            if root == elt:",
+        "                return True",
+        "    return False",
+        "#Builds an independence polynomial for a graph",
+        "def build_ip(graph):",
+        "    number_of = [0] * graph.order()",
+        "    for set in IndependentSets(graph):",
+        "        number_of[len_set] += 1;",
+        "    poly = 0",
+        "    for index in range(0, len(number_of)):",
+        "        poly += (number_of[index]) * (x ** index)",
+        "    return poly",
+        "ip_list = []",
+        "R.<x> = QQ[]",
+        "root = -1",
+        "for v in range(4, 10):",
+        "    count = 0",
+        "    for g in graphs(v):",
+        "        if g.is_connected():",
+        "            ip = build_ip(g)",
+        "            if root_in_poly(ip, root):",
+        "                ip_list.append(ip)",
+        "                count += 1",
+        "    print(v, \": \", count)"
+    ],
+    "keyword": "nonn,more",
+    "offset": "4,2",
+    "author": "_Ethan J. Brockmann_, Nov 03 2015",
+    "ext": [
+        "a(10)-a(12) added using tinygraph by _Falk H\u00fcffner_, Jan 20 2016"
+    ],
+    "references": 0,
+    "revision": 25,
+    "time": "2016-01-20T08:07:45-05:00",
+    "created": "2015-11-28T14:47:28-05:00"
+}

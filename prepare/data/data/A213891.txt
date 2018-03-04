@@ -1,0 +1,81 @@
+{
+    "number": 213891,
+    "data": "3,11,19,43,67,83,107,131,139,163,211,283,307,331,347,467,491,499,523,547,563,571,587,619,659,691,739,787,811,859,883,907,947,971,1019,1051,1123,1163,1171,1283,1291,1307",
+    "name": "Fixed points of the sequence A262212 defined by the minimum number of 2's in the relation n*[n,2,2,...,2,n] = [x,...,x] between simple continued fractions.",
+    "comment": [
+        "It has long been a problem to find \"natural\" functions which will produce only primes. The sequence here apparently does just that, and it may well be the most natural function yet doing just that. There is apparently no reason why these sequences should produce only primes.",
+        "Let [a,b,...,c] = a+1/(b+(1/...+1/c)) represent a simple continued fraction.",
+        "Consider for n=2 the continued fraction [2,1,2] = 8/3. If we multiply 8/3 by 2, we get 16/3. If we write 16/3 as a continued fraction, we get [5,3]. Since the first entry 5 of this sequence is not equal to the last, 3, we insert another 1 in [2,1,2] between n and n to get [n,1,1,n] = 13/5. If we multiply 13/5 by 2, we get 26/5. If we write 26/5 as a continued fraction, we get [5,5] and now the first entry 5, of [5,5] is the same as the last entry 5 of [5,5]. Therefore 2 is the first number of 1s that we had to insert between the 1s in order for twice the resulting continued fraction to have equal first and last entries. Therefore, we define g(2)=2.",
+        "If we do the same for n=3, [3,1,3], we see that 3 is the minimum number of 1s that we have to insert between the 3s in order that when we multiply the continued fraction [3,1,1,1,3] by 3, we get [10,1,10], so the first and last entries are the same, namely 10. Therefore we define g(3)=3.",
+        "If we do this for n=4, [4,1,4] we see that 5 is the minimum number of 1s we have to insert before the first and last entries of 4*[4,1,1,1,1,1,4] are the same, namely, we get [18,2,18]. If we had multiplied [4,1,4], [4,1,1,4], [4,1,1,1,4],[4,1,1,1,1,4] by 4 we get, respectively [19,5],[18,4,2],[18,1,1,3],[18,2,2,3], none of which has its first and last entries equal. Therefore we define g(4)=5.",
+        "It turns out, proceeding as we just have, we get g(5)=4, g(6)=11, g(7)=7, which is A213648. If we define a sequence b(n) to contain the fixed points for which g(n)=n, considering that the sequence A213648 starts with 2 as its second term, then we get A000057 connected with the prime divisors of all the Fibonacci sequences.",
+        "If we do the same for inserting 2s as we just described for 1s, we get this sequence here.",
+        "These primes arise by first looking at the sequence h(n), whose n-th term is the minimum number of twos in [n,2,2,....,2,n], so that the continued fraction of n times the fraction corresponding to the above quotients has its first and last term equal. Next we construct the sequence of fixed points where h(n)=n. This sequence consists of prime numbers (conjecture). We conjecture that this sequence of prime numbers is analogous to A000057, in the sense that, instead of referring to the Fibonacci sequences it refers to the generalized Fibonacci sequences satisfying f(n)=2*f(n-1)+f(n-2). This would mean that a prime is in this sequence here if and only if it divides some term in each of the sequences satisfying f(n)=2*f(n-1)+f(n-2)."
+    ],
+    "example": [
+        "The basic sequence h(n) (= A262212) is for n = 3,4,5,..:",
+        "3*[3, 2, 2, 2, 3] = [10,4,10], h(3) = 3: the first fixed point a(1) = 3.",
+        "4*[4, 2, 2, 2, 4] = [17, 1, 1, 1, 17], h(4) = 3;",
+        "5*[5, 2, 2, 5] = [27, 27], h(5) = 2;",
+        "6*[6, 2, 2, 2, 6] = [38, 2, 38], h(6) = 3;",
+        "(...)",
+        "11*[11, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 11] = [125, 1, 1, 3, 1, 14, 1, 3, 1, 1, 125] , h(11) = 11: this is the next fixed point after 3, so a(2)=11."
+    ],
+    "maple": [
+        "simpcf := proc(L)",
+        "        if nops(L) = 1 then",
+        "                op(1,L) ;",
+        "        else",
+        "                op(1,L)+1/procname([op(2..nops(L),L)]) ;",
+        "        end if;",
+        "end proc:",
+        "A213891aux := proc(n)",
+        "        local h,ins,c ;",
+        "        for ins from 1 do",
+        "                c := [n,seq(2,i=1..ins),n] ;",
+        "                h := numtheory[cfrac](n*simpcf(c),quotients) ;",
+        "                if op(1,h) = op(-1,h) then",
+        "                        return ins;",
+        "                end if;",
+        "        end do:",
+        "end proc:",
+        "A213891 := proc(n)",
+        "        if n = 1 then",
+        "                3;",
+        "        else",
+        "                for a from procname(n-1)+1 do",
+        "                        if A213891aux(a) = a then",
+        "                                return a;",
+        "                        end if;",
+        "                end do:",
+        "        end if;",
+        "end proc: # _R. J. Mathar_, Jul 06 2012"
+    ],
+    "mathematica": [
+        "f[m_, n_] := Block[{c, k = 1}, c[x_, y_] := ContinuedFraction[x FromContinuedFraction[Join[{x}, Table[m, {y}], {x}]]]; While[First@ c[n, k] != Last@ c[n, k], k++]; k]; Select[Range[2, 1000], f[2, #] == # &] (* _Michael De Vlieger_, Sep 16 2015 *)"
+    ],
+    "program": [
+        "(PARI) (From _ Michael Somos_, June 2012) (Start)",
+        "{a(n) = local(t, m=1); if( n<2, 0, while( 1,",
+        "   t = contfracpnqn( concat([n, vector(m,i,2), n]));",
+        "   t = contfrac(n*t[1,1]/t[2,1]);",
+        "   if(t[1]<n^2 || t[#t]<n^2, m++, break));",
+        "m)};",
+        "for(k=1,1500,if(k==a(k),print1(a(k), \", \"))); \\\\ (End)",
+        "(PARI) forprime(p=2,999, A262212(p)==p&&print1(p\",\")) \\\\ _M. F. Hasler_, Sep 30 2015"
+    ],
+    "xref": [
+        "Cf. A000057, A213892 - A213899, A261311; A213358.",
+        "Cf. A213648, A262212 - A262220, A213900, A262211."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Art DuPre_, Jun 23 2012",
+    "ext": [
+        "Edited by _R. J. Mathar_ and _T. D. Noe_, July 2012 and _M. F. Hasler_, Sep 15 - Sep 30 2015"
+    ],
+    "references": 27,
+    "revision": 48,
+    "time": "2015-09-30T08:48:53-04:00",
+    "created": "2012-07-06T08:19:52-04:00"
+}

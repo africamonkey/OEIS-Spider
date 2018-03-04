@@ -1,0 +1,53 @@
+{
+    "number": 257869,
+    "data": "6,8,136,138,144,154,156,160,164,168,170,180,186,188,208,210,214,218,222,224,232,236,248,258,260,266,288,294,296,312,314,320,3406,3412,3414,3430,3432,3438,3484,3486,3492,3510,3568,3574,3576,3592,3594,3600,3622",
+    "name": "Nonnegative integers with an equal number of occurrences of all trits in balanced ternary representation.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A257869/b257869.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Balanced_ternary\">Balanced ternary</a>"
+    ],
+    "example": [
+        "6 = 1L0_bal3, 8 = 10L_bal3, 136 = 1LL001_bal3, 138 = 1LL010_bal3, 144 = 1LL100_bal3, where L represents (-1)."
+    ],
+    "maple": [
+        "p:= proc(n) local d, m, r; m:=n; r:=0;",
+        "      while m>0 do",
+        "        d:= irem(m, 3, 'm');",
+        "        if d=2 then m:=m+1 fi;",
+        "        r:= r+x^d",
+        "      od;",
+        "      simplify(r/(1+x+x^2))::integer",
+        "    end:",
+        "a:= proc(n) option remember; local k;",
+        "      for k from 1+`if`(n=1, 0, a(n-1)) by 1",
+        "      while not p(k) do od; k",
+        "    end:",
+        "seq(a(n), n=1..70);"
+    ],
+    "program": [
+        "(Python)",
+        "def a(n):",
+        "    s=[]",
+        "    x=0",
+        "    while n>0:",
+        "        x=n%3",
+        "        n=n/3",
+        "        if x==2:",
+        "            x=-1",
+        "            n+=1",
+        "        s+=[x, ]",
+        "    return s",
+        "print [n for n in xrange(1, 5001) if a(n).count(1)==a(n).count(-1) and a(n).count(-1)==a(n).count(0)] # _Indranil Ghosh_, Jun 07 2017"
+    ],
+    "xref": [
+        "Cf. A117967, A140267, A257867, A257868, A258410.",
+        "Subsequence of A174658."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Alois P. Heinz_, May 11 2015",
+    "references": 5,
+    "revision": 14,
+    "time": "2017-06-07T00:44:59-04:00",
+    "created": "2015-05-13T09:05:22-04:00"
+}

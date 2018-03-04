@@ -1,0 +1,36 @@
+{
+    "number": 125525,
+    "data": "2,3,5,7,23,37,53,73,223,227,233,257,263,277,283,293,307,313,317,337,347,353,367,373,383,397,503,523,547,557,563,577,587,593,727,733,743,757,773,787,797,1103,1117,1123,1129,1153,1171,1303,1307,1319,1361,1367",
+    "name": "Centrist primes. Primes such that both the right half and the left half of the prime are prime.",
+    "comment": [
+        "If the length of n > 9 is odd then the central number is not used in the calculation. So neither the left half nor the right half will contain the central digit. If the length of n is even, then all numbers are used. My guess is these numbers are infinite.",
+        "Number of n-digit terms for n=1..9: {4, 4, 33, 92, 1100, 3223, 37611, 130607, 1590017}. - _Zak Seidov_, Feb 19 2015"
+    ],
+    "link": [
+        "Zak Seidov, <a href=\"/A125525/b125525.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "Half n > 9 is the floor of the length of n divided by 2. For n <= 9 half n is 1."
+    ],
+    "example": [
+        "The right half of 23 is 2 which is prime. The left half is 3 which is also prime so 23 is a centrist prime."
+    ],
+    "program": [
+        "(PARI) left(str, n) = /* Get the left n characters from string str */ { my(v, tmp, x); v =\"\"; tmp = Vec(str); ln=length(tmp); if(n > ln, n=ln); for(x=1, n, v=concat(v, tmp[x]); ); return(v) }",
+        "right(str, n) = /* Get the right n characters from string str.*/ { my(v, ln, s, x); v =\"\"; tmp = Vec(str); ln=length(tmp); if(n > ln, n=ln); s = ln-n+1; for(x=s, ln, v=concat(v, tmp[x]); ); return(v) }",
+        "/* Political primes, Centrist case */ rep(n) = { my(x,ln,y,lp,rp); forprime(x=2,n, y=Str(x); if(x > 9, ln=floor(length(y)/2), ln=1); lp = eval(left(y,ln)); rp = eval(right(y,ln)); if(isprime(lp)&& isprime(rp),print1(x\",\") ) ) }"
+    ],
+    "xref": [
+        "Cf. A125523, A125524."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Jan 22 2007",
+    "ext": [
+        "Offset changed to 1 by _Zak Seidov_, Feb 19 2015"
+    ],
+    "references": 4,
+    "revision": 25,
+    "time": "2017-06-20T23:12:09-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

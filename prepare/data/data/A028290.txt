@@ -1,0 +1,41 @@
+{
+    "number": 28290,
+    "data": "1,1,2,3,4,6,8,10,14,17,22,27,33,40,48,57,68,79,93,107,124,142,162,184,209,235,265,296,331,368,409,452,500,550,605,663,726,792,864,939,1021,1106,1198,1294,1397,1505",
+    "name": "Expansion of 1/((1-x)(1-x^2)(1-x^3)(1-x^5)(1-x^8)).",
+    "comment": [
+        "Number of partitions of n into parts equal to 1, 2, 3, 5 and 8. E.g. a(5)=6 because we have 5, 3+2, 3+1+1, 2+2+1, 2+1+1+1 and 1+1+1+1+1. - _Emeric Deutsch_, Mar 25 2005"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A028290/b028290.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "maple": [
+        "G:=1/(1-x)/(1-x^2)/(1-x^3)/(1-x^5)/(1-x^8): Gser:=series(G,x=0,47): 1, seq(coeff(Gser,x^n),n=1..45); # _Emeric Deutsch_, Mar 25 2005"
+    ],
+    "mathematica": [
+        "CoefficientList[ Series[ 1/Product[1 - x^Fibonacci[i], {i, 2, 6}], {x, 0, 45}], x] (* _Robert G. Wilson v_, Oct 15 2016 *)"
+    ],
+    "program": [
+        "(PARI) Vec(1/((1-x)*(1-x^2)*(1-x^3)*(1-x^5)*(1-x^8))+O(x^99)) \\\\ _Charles R Greathouse IV_, Sep 27 2012",
+        "(Haskell)",
+        "import Data.MemoCombinators (memo2, integral)",
+        "a028290 n = a028290_list !! n",
+        "a028290_list = map (p' 0) [0..] where",
+        "   p' = memo2 integral integral p",
+        "   p _ 0 = 1",
+        "   p 5 _ = 0",
+        "   p k m | m < parts !! k = 0",
+        "         | otherwise = p' k (m - parts !! k) + p' (k + 1) m",
+        "   parts = [1, 2, 3, 5, 8]",
+        "-- _Reinhard Zumkeller_, Dec 09 2015"
+    ],
+    "xref": [
+        "Cf. A003107, A029145."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_.",
+    "references": 3,
+    "revision": 16,
+    "time": "2016-10-19T08:02:10-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

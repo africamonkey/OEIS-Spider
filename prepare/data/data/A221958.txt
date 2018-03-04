@@ -1,0 +1,27 @@
+{
+    "number": 221958,
+    "data": "1,2,7,31,159,916,5859,41462,324539,2810398,26897153,283648795,3280219609,41351673884,564705224247,8303579891143,130750660999203,2194139204726190,39075773290973877,735859491383643477,14606522141527912317,304753237798452557652",
+    "name": "Number of n X n rook placements avoiding the pattern 102.",
+    "link": [
+        "Michel Marcus and Vaclav Kotesovec, <a href=\"/A221958/b221958.txt\">Table of n, a(n) for n = 0..33</a>, terms a(22)-a(33) from _Vaclav Kotesovec_, Dec 26 2013",
+        "Dan Daly and Lara Pudwell, <a href=\"http://faculty.valpo.edu/lpudwell/slides/sandiego2013.pdf\">Pattern avoidance in rook monoids</a>, Special Session on Patterns in Permutations and Words, Joint Mathematics Meetings, 2013."
+    ],
+    "program": [
+        "(PARI)",
+        "combi(n, k, r, d, s) = {if (n-k == 0, return(1);); if (d == k, p = 1; for (j=2, k, p *= (r[j+1] - r[j] - 1)!;); p *= (r[2] - 1)! * (n - r[k+1])!; s += p; , for(i = r[d+1]+1, n, r[d+2] = i; s = combi(n, k, r, d+1, s););); return (s);}",
+        "r102(n, k) = { if (k == n, return (n!)); s = 0; v = vector(n, i, i-1); s = combi(n, n-k, v, 0, s); s *= binomial(n, k); return (s); }",
+        "a(n) = sum(k=0, n, r102(n,k))",
+        "\\\\ _Michel Marcus_, Feb 21 2013"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Feb 04 2013",
+    "ext": [
+        "Typo in definition corrected by _Vaclav Kotesovec_, Feb 04 2013",
+        "More terms from _Michel Marcus_, Feb 21 2013"
+    ],
+    "references": 1,
+    "revision": 21,
+    "time": "2013-12-26T09:08:57-05:00",
+    "created": "2013-02-04T08:47:14-05:00"
+}

@@ -1,0 +1,31 @@
+{
+    "number": 265750,
+    "data": "2,192,3732480,105815808000000,15845956399848960000000000,64521196676588557133336908800000000000000,11596208520592232147315615803672416545196288000000000000000000,254410805372253907145905144265082090216385314644252349615132618240000000000000000000000",
+    "name": "Prime factorization representation of polynomials defined recursively by p(0,x)=1 and for n>0: p(n,x) = x*p(n-1,x) + 4n+2. (See A192750).",
+    "link": [
+        "Antti Karttunen, <a href=\"/A265750/b265750.txt\">Table of n, a(n) for n = 0..10</a>"
+    ],
+    "formula": [
+        "a(0) = 2; for n >= 1, a(n) = A003961(a(n-1)) * 2^((4*n)+2).",
+        "Other identities. For all n >= 1:",
+        "A192750(n) = A265752(a(n)).",
+        "A192751(n) = A265753(a(n))."
+    ],
+    "program": [
+        "(PARI)",
+        "A003961(n) = my(f = factor(n)); for (i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); \\\\ Using code of Michel Marcus",
+        "A265750(n) = if(0==n, 2, A003961(A265750(n-1)) * 2^((4*n)+2));",
+        "for(n=0, 10, write(\"b265750.txt\", n, \" \", A265750(n)));",
+        "(Scheme) (definec (A265750 n) (if (zero? n) 2 (* (A003961 (A265750 (- n 1))) (A000079 (+ 2 (* 4 n))))))"
+    ],
+    "xref": [
+        "Cf. A003961, A192750, A192751, A206296, A265752, A265753."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Antti Karttunen_, Dec 15 2015",
+    "references": 5,
+    "revision": 9,
+    "time": "2015-12-18T11:34:30-05:00",
+    "created": "2015-12-18T11:34:30-05:00"
+}

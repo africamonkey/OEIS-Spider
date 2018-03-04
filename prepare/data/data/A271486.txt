@@ -1,0 +1,53 @@
+{
+    "number": 271486,
+    "data": "1,2,3,4,6,8,11,16,22,30,43,60,82,113,162,224,306,435,610,836,1168,1637,2282,3120,4399,6131,8522,11812,16561,22933,31810,44468,62335,85639,119452,167281,233169,320747,449700,626513,872175",
+    "name": "Maximal term of TRIP-Stern sequence of level n corresponding to permutation triple (e,13,23).",
+    "link": [
+        "Ilya Amburg, Krishna Dasaratha, Laure Flapan, Thomas Garrity, Chansoo Lee, Cornelia Mihaila, Nicholas Neumann-Chun, Sarah Peluse, Matthew Stoffregen, <a href=\"http://arxiv.org/abs/1509.05239\">Stern Sequences for a Family of Multidimensional Continued Fractions: TRIP-Stern Sequences</a>, arXiv:1509.05239 [math.CO], 2015."
+    ],
+    "maple": [
+        "A271486T := proc(n)",
+        "    option remember;",
+        "    local an ;",
+        "    if n = 1 then",
+        "        [1,1,1] ;",
+        "    else",
+        "        an := procname(floor(n/2)) ;",
+        "        if type(n,'even') then",
+        "            # apply F0",
+        "            [op(1,an)+op(3,an),op(3,an),op(2,an)] ;",
+        "        else",
+        "            # apply F1",
+        "            [op(1,an),op(1,an)+op(3,an),op(2,an)] ;",
+        "        end if;",
+        "    end if;",
+        "end proc:",
+        "A271486 := proc(n)",
+        "    local a,l,nmax;",
+        "    a := 0 ;",
+        "    for l from 2^n to 2^(n+1)-1 do",
+        "        nmax := max( op(A271486T(l)) );",
+        "        a := max(a,nmax) ;",
+        "    end do:",
+        "    a ;",
+        "end proc: # _R. J. Mathar_, Apr 16 2016"
+    ],
+    "mathematica": [
+        "A271487T[n_] := A271487T[n] = Module[{an}, If[n == 1, {1, 1, 1}, an = A271487T[Floor[n/2]]; If[EvenQ[n], {an[[1]] + an[[3]], an[[3]], an[[2]]}, {an[[1]], an[[1]] + an[[3]], an[[2]]}]]];",
+        "a[n_] := a[n] = Module[{a = 0, l, nMax}, For[l = 2^n, l <= 2^(n + 1) - 1, l++, nMax = Max[A271487T[l]]; a = Max[a, nMax]]; a];",
+        "Table[Print[\"a(\", n, \") = \", a[n]]; a[n], {n, 0, 19}] (* _Jean-Fran\u00e7ois Alcover_, Nov 17 2017, after _R. J. Mathar_ *)"
+    ],
+    "xref": [
+        "For sequences mentioned in Conjecture 5.8 of Amburg et al. (2015) see A271485, A000930, A271486, A271487, A271488, A164001, A000045, A271489."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Apr 13 2016",
+    "ext": [
+        "a(20)-a(40) from _Lars Blomberg_, Jan 08 2018"
+    ],
+    "references": 8,
+    "revision": 18,
+    "time": "2018-01-08T09:34:05-05:00",
+    "created": "2016-04-13T17:14:22-04:00"
+}

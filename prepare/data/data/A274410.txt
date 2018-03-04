@@ -1,0 +1,41 @@
+{
+    "number": 274410,
+    "data": "3067,4088,4089,5742,6135,7151,8179,8263,8614,9979,10904,10905,11016,11017,11485,12922,13304,13305,14303,14538,14539,14689,15303,15313,16527,16891,17229,19384,19385,19386,19585,19959,20417,21482,21791,21808,21811,22035",
+    "name": "Numbers n such that the Collatz iterations for n and n + 1 have the same length (A078417) but do not meet a certain condition. (See comments.)",
+    "comment": [
+        "Consider the parity vectors of the Collatz iterations of n and n + 1. Consider the portions of the vectors before the Collatz iterations start to coincide. Then the condition to exclude n from the sequence is that these portions end in (0, 0, 1) and (1, 0, 0), in either order."
+    ],
+    "link": [
+        "Eric M. Schmidt, <a href=\"/A274410/b274410.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Marcus Elia and Amanda Tucker, <a href=\"https://www.emis.de/journals/INTEGERS/papers/p54/p54.Abstract.html\">Consecutive Integers and the Collatz Conjecture</a>, INTEGERS, Electronic J. of Combinatorial Number Theory, Vol. 15, Paper A54, 2015. (But beware of errors.)"
+    ],
+    "example": [
+        "The Collatz iterations for 3067 and 3068 yield 1384 on the 27th iteration in both cases. For 3067, the three previous terms are (1844, 922, 461), with parities (0, 0, 1). For 3068, the three previous terms are (11072, 5536, 2768), with parities (0, 0, 0). Thus the condition fails to hold and 3067 is in the sequence."
+    ],
+    "program": [
+        "(Sage)",
+        "def collatz(n) : return 3*n+1 if n%2 else n//2",
+        "def isa(n) :",
+        "....parityn = paritynp1 = [-1]*3",
+        "....valn = n",
+        "....valnp1 = n+1",
+        "....while valn != valnp1 :",
+        "........if valn==1 or valnp1==1 : return false",
+        "........parityn = [parityn[1], parityn[2], valn%2]",
+        "........paritynp1 = [paritynp1[1], paritynp1[2], valnp1%2]",
+        "........valn = collatz(valn)",
+        "........valnp1 = collatz(valnp1)",
+        "....return [parityn, paritynp1] not in [ [[1,0,0],[0,0,1]], [[0,0,1],[1,0,0]] ]",
+        "end"
+    ],
+    "xref": [
+        "Cf. A006577, A078417."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Eric M. Schmidt_, Jun 21 2016",
+    "references": 2,
+    "revision": 13,
+    "time": "2016-06-22T23:53:48-04:00",
+    "created": "2016-06-22T09:39:32-04:00"
+}

@@ -1,0 +1,51 @@
+{
+    "number": 4214,
+    "id": "M0959",
+    "data": "1,2,4,5,7,8,10,13,15,16,20,23,25,28,31,32,37,39,40,47,52,55,58,60,63,64,71,79,80,85,87,92,95,100,103,111,112,119,124,127,128,130,135,143,148,151,156,159,160,167,175,183,188,191,199,207,208,215,220,223,231",
+    "name": "Positive numbers that are not the sum of three nonzero squares.",
+    "comment": [
+        "Not of the form x^2 + y^2 + z^2 with x, y, z >=1.",
+        "Complement of A000408, but skipping the zero. - _R. J. Mathar_, Nov 23 2006",
+        "A025427(a(n)) = 0. - _Reinhard Zumkeller_, Feb 26 2015"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Ray Chandler, <a href=\"/A004214/b004214.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "David S. Bettes, <a href=\"/A004214/a004214.pdf\">Letter to N. J. A. Sloane, Nov 05 1976</a>",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of squares</a>"
+    ],
+    "example": [
+        "The smallest numbers that are the sums of 3 nonzero squares are 3=1+1+1, 6=1+1+4, 9=1+4+4, etc."
+    ],
+    "maple": [
+        "gf := sum(sum(sum(q^(x^2+y^2+z^2), x=1..25), y=1..25), z=1..25): s := series(gf, q, 500): for n from 1 to 500 do if coeff(s, q, n)=0 then printf(`%d,`,n) fi:od:"
+    ],
+    "mathematica": [
+        "f[n_] := Flatten[Position[Take[Rest[CoefficientList[Sum[x^(i^2), {i, n}]^3, x]], n^2], 0]];f[16] (* _Ray Chandler_, Dec 06 2006 *)"
+    ],
+    "program": [
+        "(PARI) isA000408(n)={ local(a,b) ; a=1; while(a^2+1<n, b=1 ; while(b<=a && a^2+b^2<n, if(issquare(n-a^2-b^2), return(1) ) ; b++ ; ) ; a++ ; ) ; return(0) ; }",
+        "isA004214(n)={ return(! isA000408(n)) ; }",
+        "n=1 ; for(an=1,20000, if(isA004214(an), print(n,\" \",an); n++)) \\\\ _R. J. Mathar_, Nov 23 2006",
+        "(Haskell)",
+        "a004214 n = a004214_list !! (n-1)",
+        "a004214_list = filter ((== 0) . a025427) [1..]",
+        "-- _Reinhard Zumkeller_, Feb 26 2015"
+    ],
+    "xref": [
+        "Cf. A000408, A025427."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _James A. Sellers_, Apr 20 2001",
+        "Name clarified. - _Wolfdieter Lang_, Apr 04 2013"
+    ],
+    "references": 16,
+    "revision": 41,
+    "time": "2017-10-14T22:13:30-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

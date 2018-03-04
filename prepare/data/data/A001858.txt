@@ -1,0 +1,68 @@
+{
+    "number": 1858,
+    "id": "M1804 N0714",
+    "data": "1,1,2,7,38,291,2932,36961,561948,10026505,205608536,4767440679,123373203208,3525630110107,110284283006640,3748357699560961,137557910094840848,5421179050350334929,228359487335194570528,10239206473040881277575,486909744862576654283616",
+    "name": "Number of forests of trees on n labeled nodes.",
+    "comment": [
+        "The number of integer lattice points in the permutation polytope of {1,2,...,n}. - _Max Alekseyev_, Jan 26 2010"
+    ],
+    "reference": [
+        "B. Bollobas, Modern Graph Theory, Springer, 1998, p. 290.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A001858/b001858.txt\">Table of n, a(n) for n = 0..388</a> (first 101 terms from T. D. Noe)",
+        "David Callan, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL6/Callan/callan10.html\">A Combinatorial Derivation of the Number of Labeled Forests</a>, J. Integer Seqs., Vol. 6, 2003.",
+        "Huantian Cao, <a href=\"http://www.cs.uga.edu/~rwr/STUDENTS/hcao.html\">AutoGF: An Automated System to Calculate Coefficients of Generating Functions</a>.",
+        "P. Flajolet and R. Sedgewick, <a href=\"http://algo.inria.fr/flajolet/Publications/books.html\">Analytic Combinatorics</a>, 2009; see page 132",
+        "Samuele Giraudo, <a href=\"http://igm.univ-mlv.fr/~giraudo/Articles/CliqueFPSAC.pdf\">Combalgebraic structures on decorated cliques</a>, Formal Power Series and Algebraic Combinatorics, S\u00e9minaire Lotharingien de Combinatoire, 78B.15, 2017, p. 7.",
+        "Anton Izosimov, <a href=\"http://arxiv.org/abs/1506.05179\">Matrix polynomials, generalized Jacobians, and graphical zonotopes</a>, arXiv preprint arXiv:1506.05179 [math.AG], 2015.",
+        "Arun P. Mani and Rebecca J. Stones, <a href=\"https://www.emis.de/journals/INTEGERS/papers/q17/q17.Abstract.html\">Congruences for weighted number of labeled forests</a>, INTEGERS 16 (2016). #A17.",
+        "J. Pitman, <a href=\"http://www.stat.berkeley.edu/users/pitman/457.pdf\">Coalescent Random Forests</a>, J. Combin. Theory, A85 (1999), 165-193.",
+        "J. Riordan, <a href=\"http://dx.doi.org/10.1016/S0021-9800(68)80033-X\">Forests of labeled trees</a>, J. Combin. Theory, 5 (1968), 90-103.",
+        "J. Riordan, <a href=\"/A001861/a001861.pdf\">Letter to N. J. A. Sloane, Oct 19 1970</a>",
+        "J. Riordan, <a href=\"/A000262/a000262_1.pdf\">Letter to N. J. A. Sloane, Nov 10 1975</a>",
+        "John Riordan and N. J. A. Sloane, <a href=\"/A003471/a003471_1.pdf\">Correspondence, 1974</a>",
+        "N. J. A. Sloane, <a href=\"/A001514/a001514.pdf\">Letter to J. Riordan, Nov. 1970</a>",
+        "L. Takacs, <a href=\"http://dx.doi.org/10.1137/0403050\">On the number of distinct forests</a>, SIAM J. Discrete Math., 3 (1990), 574-581.",
+        "E. M. Wright, <a href=\"http://plms.oxfordjournals.org/content/s3-17/2/296.extract\">A relationship between two sequences</a>, Proc. London Math. Soc. (3) 17 (1967) 296-304."
+    ],
+    "formula": [
+        "E.g.f.: exp( Sum_{n>=1} n^(n-2)*x^n/n! ). This implies (by a theorem of Wright) that a(n) ~ exp(1/2)*n^(n-2). - _N. J. A. Sloane_, May 12 2008 [Corrected by Philippe Flajolet, Aug 17 2008]",
+        "E.g.f.: exp(T - T^2/2), where T = T(x) = Sum_{ n>=1} n^(n-1)*x^n/n! is Euler's tree function (see A000169). - _Len Smiley_, Dec 12 2001",
+        "Shifts 1 place left under the hyperbinomial transform (cf. A088956). - _Paul D. Hanna_, Nov 03 2003",
+        "a(0) = 1, a(n) = Sum_{j=0..n-1} C(n-1,j) (j+1)^(j-1) a(n-1-j) if n>0. - _Alois P. Heinz_, Sep 15 2008"
+    ],
+    "maple": [
+        "exp(x+x^2+add(n^(n-2)*x^n/n!, n=3..50));",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      binomial(n-1, j-1)*j^(j-2)*a(n-j), j=1..n))",
+        "    end:",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Sep 15 2008",
+        "# third Maple program:",
+        "F:= exp(-LambertW(-x)*(1+LambertW(-x)/2)):",
+        "S:= series(F,x,51):",
+        "seq(coeff(S,x,j)*j!, j=0..50); # _Robert Israel_, May 21 2015"
+    ],
+    "mathematica": [
+        "nn=20;t=Sum[n^(n-1)x^n/n!,{n,1,nn}];Range[0,nn]!CoefficientList[ Series[Exp[t-t^2/2],{x,0,nn}],x] (* _Geoffrey Critzer_, Sep 05 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,sum(m=0,n,sum(j=0,m,binomial(m,j)*binomial(n-1,n-m-j)*n^(n-m-j)*(m+j)!/(-2)^j)/m!)) /* _Michael Somos_, Aug 22 2002 */"
+    ],
+    "xref": [
+        "Cf. A088956. Row sums of A138464. Cf. also A006572, A006573."
+    ],
+    "keyword": "nonn,easy,eigen",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_ and _Simon Plouffe_",
+    "ext": [
+        "More terms from _Michael Somos_, Aug 22 2002"
+    ],
+    "references": 23,
+    "revision": 88,
+    "time": "2017-12-27T11:02:44-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

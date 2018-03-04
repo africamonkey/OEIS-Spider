@@ -1,0 +1,47 @@
+{
+    "number": 251584,
+    "data": "1,1,6,82,1856,59904,2533888,133169152,8384643072,616038400000,51781055676416,4903194794655744,516634816527990784,59967828129860288512,7604226293760000000000,1046004175955626414833664,155145294199098982239567872,24683771056652857103433596928,4193546668531304927540807729152,757730637305085952000000000000000",
+    "name": "a(n) = 4^(n-2) * (n+1)^(n-4) * (3*n^2 + 13*n + 16).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A251584/b251584.txt\">Table of n, a(n) for n = 0..322</a>"
+    ],
+    "formula": [
+        "Let G(x) = 1 + x*G(x)^4 be the g.f. of A002293, then the e.g.f. A(x) of this sequence satisfies:",
+        "(1) A(x) = exp( 4*x*A(x) * G(x*A(x))^3 ) / G(x*A(x))^3.",
+        "(2) A(x) = F(x*A(x)) where F(x) = exp(4*x*G(x)^3)/G(x)^3 is the e.g.f. of A251574.",
+        "(3) a(n) = [x^n/n!] F(x)^(n+1)/(n+1) where F(x) is the e.g.f. of A251574.",
+        "E.g.f.: -LambertW(-4*x) * (4 + LambertW(-4*x))^3 / (256*x). - _Vaclav Kotesovec_, Dec 07 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 6*x^2/2! + 82*x^3/3! + 1856*x^4/4! + 59904*x^5/5! + ...",
+        "such that A(x) = exp( 4*x*A(x) * G(x*A(x))^3 ) / G(x*A(x))^3",
+        "where G(x) = 1 + x*G(x)^3 is the g.f. of A002293:",
+        "G(x) = 1 + x + 4*x^2 + 22*x^3 + 140*x^4 + 969*x^5 + 7084*x^6 + ...",
+        "RELATED SERIES.",
+        "Note that A(x) = F(x*A(x)) where F(x) = exp(4*x*G(x)^3)/G(x)^3,",
+        "F(x) = 1 + x + 4*x^2/2! + 40*x^3/3! + 712*x^4/4! + 18784*x^5/5! + ...",
+        "is the e.g.f. of A251574."
+    ],
+    "mathematica": [
+        "Table[4^(n - 2)*(n + 1)^(n - 4)*(3*n^2 + 13*n + 16), {n, 0, 50}] (* _G. C. Greubel_, Nov 13 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = 4^(n-2) * (n+1)^(n-4) * (3*n^2 + 13*n + 16) }",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(PARI) {a(n) = local(G=1,A=1); for(i=1,n, G=1+x*G^4 +x*O(x^n));",
+        "for(i=1,n, A = exp(4*x*A * subst(G^3,x,x*A) ) / subst(G^3,x,x*A) ); n!*polcoeff(A, n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(MAGMA) [4^(n - 2)*(n + 1)^(n - 4)*(3*n^2 + 13*n + 16): n in [0..50]]; // _G. C. Greubel_, Nov 13 2017"
+    ],
+    "xref": [
+        "Cf. A251574, A001764.",
+        "Cf. Variants: A251583, A251585, A251586, A251587, A251588, A251589, A251590."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 06 2014",
+    "references": 9,
+    "revision": 11,
+    "time": "2017-11-14T03:04:56-05:00",
+    "created": "2014-12-06T15:12:02-05:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 203855,
+    "data": "1,40,85,580,2928,17440,101040,609660,3706880,22887192,142567200,895855380,5667708960,36072949560,230763023408,1482822818820,9565561745040,61920953016320,402074969960400,2618069854211784,17090016552803440,111812320834030800",
+    "name": "a(n) = (1/n) * Sum_{d|n} moebius(n/d) * Lucas(d)^4, where Lucas(n) = A000204(n).",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A203855/b203855.txt\">Table of n, a(n) for n = 1..400</a>"
+    ],
+    "formula": [
+        "G.f.: 1/Product_{n>=1} (1 - Lucas(n)*x^n + (-1)^n*x^(2*n))^a(n) = exp(Sum_{n>=1} Lucas(n)^5 * x^n/n), which is the g.f. of A203805.",
+        "a(n) ~ phi^(4*n) / n, where phi = A001622 = (1+sqrt(5))/2 is the golden ratio. - _Vaclav Kotesovec_, Sep 02 2017"
+    ],
+    "example": [
+        "G.f.: F(x) = 1/((1-x-x^2) * (1-3*x^2+x^4)^40 * (1-4*x^3-x^6)^85 *",
+        "(1-7*x^4+x^8)^580 * (1-11*x^5-x^10)^2928 * (1-18*x^6+x^12)^17440 *...* (1 - Lucas(n)*x^n + (-1)^n*x^(2*n))^a(n) *...)",
+        "where F(x) = exp( Sum_{n>=1} Lucas(n)^5 * x^n/n ) = g.f. of A203805:",
+        "F(x) = 1 + x + 122*x^2 + 463*x^3 + 11985*x^4 + 85456*x^5 +...",
+        "where",
+        "log(F(x)) = x + 3^5*x^2/2 + 4^5*x^3/3 + 7^5*x^4/4 + 11^5*x^5/5 + 18^5*x^6/6 + 29^5*x^7/7 + 47^5*x^8/8 +...+ Lucas(n)^5*x^n/n +..."
+    ],
+    "mathematica": [
+        "a[n_] := 1/n DivisorSum[n, MoebiusMu[n/#] LucasL[#]^4 &]; Array[a, 30] (* _Jean-Fran\u00e7ois Alcover_, Dec 04 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n<1, 0, sumdiv(n, d, moebius(n/d)*(fibonacci(d-1)+fibonacci(d+1))^4)/n)}",
+        "(PARI) {Lucas(n)=fibonacci(n-1)+fibonacci(n+1)}",
+        "{a(n)=local(F=exp(sum(m=1, n, Lucas(m)^5*x^m/m)+x*O(x^n)));if(n==1,1,polcoeff(F*prod(k=1,n-1,(1 - Lucas(k)*x^k + (-1)^k*x^(2*k) +x*O(x^n))^a(k)),n)/Lucas(n))}"
+    ],
+    "xref": [
+        "Cf. A203805, A203853, A203854, A203856, A203857, A203858, A203859, A203800."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jan 07 2012",
+    "references": 8,
+    "revision": 13,
+    "time": "2017-09-02T05:09:03-04:00",
+    "created": "2012-01-09T03:58:16-05:00"
+}

@@ -1,0 +1,52 @@
+{
+    "number": 77998,
+    "data": "1,1,3,6,14,31,70,157,353,793,1782,4004,8997,20216,45425,102069,229347,515338,1157954,2601899,5846414,13136773,29518061,66326481,149034250,334876920,752461609,1690765888,3799116465,8536537209,19181424995,43100270734,96845429254",
+    "name": "Expansion of (1-x)/(1-2*x-x^2+x^3).",
+    "comment": [
+        "Let u(k), v(k), w(k) be defined by u(1)=1, v(1)=0, w(1)=0 and u(k+1)=u(k)+v(k)+w(k), v(k+1)=u(k)+v(k), w(k+1)=u(k); then {u(n)} = 1,1,3,6,14,31,... (A006356 with an extra initial 1), {v(n)} = 0,1,2,5,11,25,... (A006054 with its initial 0 deleted) and {w(n)} = {u(n)} prefixed by an extra 0 = this sequence with an extra initial 0. - _Benoit Cloitre_, Apr 05 2002 [Also u(k)^2+v(k)^2+w(k)^2 = u(2k). - _Gary W. Adamson_, Dec 23 2003]",
+        "Form the graph with matrix A=[1, 1, 1; 1, 0, 0; 1, 0, 1]. Then A077998 counts closed walks of length n at the vertex of degree 4. - _Paul Barry_, Oct 02 2004",
+        "a(n)=number of Motzkin (n+2)-sequences with no flatsteps at ground level and whose height is <=2. For example, a(3)=6 counts UDUFD, UFDUD, UFFFD, UFUDD, UUDFD, UUFDD. - _David Callan_, Dec 09 2004",
+        "Number of compositions of n if there are two kinds of part 2. Example: a(3)=6 because we have (3),(1,2),(1,2'),(2,1),(2',1) and (1,1,1). Row sums of A105477. - _Emeric Deutsch_, Apr 09 2005",
+        "Diagonal sums of A056242. - _Paul Barry_, Dec 26 2007",
+        "Diagonal sums of triangle in A105306. - _Philippe Del\u00e9ham_, Nov 16 2008",
+        "a(n) appears in the formula for the nonpositive powers of rho:= 2*cos(Pi/7), the ratio of the smaller diagonal in the heptagon to the side length s=2*sin(Pi/7), when expressed in the basis <1,rho,sigma>, with sigma:=rho^2-1, the ratio of the larger heptagon diagonal to the side length, as follows. rho^(-n) = a(n)*1 + a(n-1)*rho - C(n)*sigma, n>=0, with C(n)=A006054(n+1). Put a(-1):=0. See the Steinbach reference, and a comment under A052547.",
+        "The limit a(n+1)/a(n) for n -> infinity is sigma = rho^2-1, approximately 2.246979603. See a Nov 07 2013 comment on A006054 for the proof, and the preceding comment for rho and sigma and the P. Steinbach reference. - _Wolfdieter Lang_, Nov 07 2013"
+    ],
+    "reference": [
+        "Jay Kappraff, Beyond Measure, A Guided Tour Through Nature, Myth and Number, World Scientific, 2002."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A077998/b077998.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "P. Steinbach, <a href=\"http://www.jstor.org/stable/2691048\">Golden fields: a case for the heptagon</a>, Math. Mag. 70 (1997), no. 1, 22-31.",
+        "Alexey Ustinov, <a href=\"http://arxiv.org/abs/1503.04497\">Supercontinuants</a>, arXiv:1503.04497 [math.NT], 2015.",
+        "R. Witula, D. Slota and A. Warzynski, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL9/Slota/slota57.html\">Quasi-Fibonacci Numbers of the Seventh Order</a>, J. Integer Seq., 9 (2006), Article 06.4.3.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (2,1,-1)"
+    ],
+    "formula": [
+        "a(0)=a(1)=1, a(2)=3, a(n+1) = 2*a(n)+a(n-1)-a(n-2) for n>=2. - _Philippe Del\u00e9ham_, Sep 07 2006",
+        "7*a(n) = (s(2))^2*(1+c(1))^n + (s(4))^2*(1+c(2))^n + (s(1))^2(1+c(4))^n, where c(j) = 2*Cos(2Pi*j/7) and s(j) = 2*Sin(2Pi*j/7) - for the proof of this one and many other relations for the sequences u(k), v(k) and w(k) defined on the top of the comments by _Benoit Cloitre_ - see Witula et al.'s paper. - _Roman Witula_, Aug 07 2012",
+        "a(n) = b(n+2)- b(n+1), first differences of b(n) = A006054(n). - _Wolfdieter Lang_, Nov 07 2013; corrected by _Kai Wang_, May 31 2017"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1 - x)/(1 - 2*x - x^2 + x^3), {x, 0, 200}], x] (* _Stefan Steinerberger_, Sep 11 2006 *)",
+        "LinearRecurrence[{2,1,-1},{1,1,3},50] (* _Roman Witula_, Aug 07 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=([0,1,0; 0,0,1; -1,1,2]^n*[1;1;3])[1,1] \\\\ _Charles R Greathouse IV_, May 10 2016",
+        "(MAGMA) I:=[1,1,3]; [n le 3 select I[n] else 2*Self(n-1)+Self(n-2)-Self(n-3): n in [1..40]]; // _Vincenzo Librandi_, Jun 01 2017"
+    ],
+    "xref": [
+        "Apart from initial term, same as A006356, which is the main entry for this sequence. A106803 is yet another version.",
+        "Cf. A105477."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Nov 17 2002",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Aug 08 2008 at the suggestion of _R. J. Mathar_"
+    ],
+    "references": 26,
+    "revision": 74,
+    "time": "2017-06-01T14:00:33-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

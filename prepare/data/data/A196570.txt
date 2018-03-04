@@ -1,0 +1,77 @@
+{
+    "number": 196570,
+    "data": "0,4,6,18,48,118,314,806,2082,5402,13946,36102,93378,241518,624810,1616142,4180594,10814158,27973298,72359966,187176434,484177358,1252442706,3239746862,8380393330,21677923822,56075218194,145052181998,375212720786,970578896942",
+    "name": "LAN party numbers.",
+    "comment": [
+        "a(n) gives the number of solutions to the following problem: n couples, each consisting of 1 boy and 1 girl, are at a LAN party with a 2 x n table, where pairs of index cards labeled \"B\" and \"G\" have been laid out on either adjacent or opposite seats. Each boy takes a seat at a chair marked \"B\" and his date takes the corresponding \"G\" chair either next to him or across from him. Additionally, each boy finds that he is either across from or next to at least one other boy. How many ways are there for the host to arrange the pairs of cards that result in such an assignment?"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A196570/b196570.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Jonathan Daniel Kilgallin, <a href=\"/A196570/a196570.pdf\">LAN party numbers</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (1,4,2,-4,-2,2)."
+    ],
+    "formula": [
+        "m(1) = 0; m(2) = 2; m(3) = 4; m(4) = 10.",
+        "x(1) = 2; x(2) = 0; x(3) = 6; x(4) = 12.",
+        "a(1) = 0; a(2) = 4; a(3) = 6; a(4) = 18.",
+        "m(n) = 2*a(n-3) + m(n-1) + x(n-1).",
+        "x(n) = 2*a(n-3) + 2*a(n-4) + m(n-1) + m(n-2) + x(n-2) + 2*x(n-3).",
+        "a(n) = 2*a(i-2) + x(n-2) + m(n).",
+        "G.f.: -2*x^2*(2+x-2*x^2-x^3+x^4)/ ((1+x)*(2*x^5-4*x^4+2*x^2+2*x-1)). - _Alexander R. Povolotsky_, Oct 05 2011"
+    ],
+    "example": [
+        "for n = 3 the a(3)=6 solutions are",
+        "G-B G",
+        "    |",
+        "G-B B",
+        "+++++",
+        "G-B B",
+        "    |",
+        "G-B G",
+        "+++++",
+        "G G G",
+        "| | |",
+        "B B B",
+        "+++++",
+        "G B-G",
+        "|",
+        "B B-G",
+        "+++++",
+        "B B-G",
+        "|",
+        "G B-G",
+        "+++++",
+        "B B B",
+        "| | |",
+        "G G G"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[-2*x^2*(2 + x - 2*x^2 - x^3 + x^4)/((1 + x)*(2*x^5 - 4*x^4 + 2*x^2 + 2*x - 1)), {x, 0, 50}],x] (* _G. C. Greubel_, Feb 22 2017 *)"
+    ],
+    "program": [
+        "(C#) public static long a(int n)",
+        "        {",
+        "            long[] M = new long[n+1];",
+        "            long[] X = new long[n+1];",
+        "            long[] S = new long[n+1];",
+        "            M[1] = 0; M[2] = 2; M[3] = 4; M[4] = 10;",
+        "            X[1] = 2; X[2] = 0; X[3] = 6; X[4] = 12;",
+        "            S[1] = 0; S[2] = 4; S[3] = 6; S[4] = 18;",
+        "            for (int i = 5; i <= n; i++)",
+        "            {",
+        "                M[i] = 2 * S[i-3] + M[i-1] + X[i-1];",
+        "                X[i] = 2 * S[i - 3] + 2 * S[i - 4] + M[i - 1] + M[i - 2] + X[i - 2] + 2 * X[i - 3];",
+        "                S[i] = 2 * S[i - 2] + X[i - 2] + M[i];",
+        "            }",
+        "            return S[n];",
+        "        }",
+        "(PARI) x='x+O('x^50); Vec(-2*x^2*(2 + x - 2*x^2 - x^3 + x^4)/((1 + x)*(2*x^5 - 4*x^4 + 2*x^2 + 2*x - 1)) \\\\ _G. C. Greubel_, Feb 22 2017"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Jonathan Daniel Kilgallin_, Oct 04 2011",
+    "references": 1,
+    "revision": 31,
+    "time": "2017-03-24T00:47:53-04:00",
+    "created": "2011-10-20T12:56:43-04:00"
+}

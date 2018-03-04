@@ -1,0 +1,40 @@
+{
+    "number": 131850,
+    "data": "8,28,42,44,50,52,70,76,98,110,117,124,138,148,164,171,174,182,186,188,230,236,242,244,261,266,268,273,279,285,286,290,292,310,316,322,333,345,357,369,370,385,388,406,410,412,425,426,428,434,436,465,475,477",
+    "name": "Odious 3-almost primes.",
+    "comment": [
+        "Numbers that are divisible by exactly 3 primes (counted with multiplicity) and also odious (odd number of 1's in binary expansion). This is to 3-almost primes A014612 as A027697 is to primes A000040 and as semiprimes not in A130593 are to semiprimes A001358. 3-almost primes that are not odious are evil A001969."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A131850/b131850.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "A014612 INTERSECTION A000069."
+    ],
+    "example": [
+        "a(1) = 8 because 8 = 2^3 is divisible by exactly 3 primes (counted with multiplicity and 8 (base 2) = 1000 has an odd number (1) of ones in its binary expansion.",
+        "a(2) = 28 = 2^2 * 7 = 11100 (base 2) has an odd number (1) of ones in its binary expansion."
+    ],
+    "maple": [
+        "isA014612 := proc(n) if numtheory[bigomega](n) = 3 then true ; else false ; fi ; end: isA000069 := proc(n) bdigs := convert(n,base,2) ; if add(i,i=bdigs) mod 2 = 1 then true; else false ; fi ; end: isA131850 := proc(n) isA000069(n) and isA014612(n) ; end: for n from 1 to 500 do if isA131850(n) then printf(\"%d,\",n) fi ; od: # _R. J. Mathar_, Oct 24 2007"
+    ],
+    "mathematica": [
+        "Select[Range[500],PrimeOmega[#]==3&&OddQ[DigitCount[#,2,1]]&] (* _Harvey P. Dale_, Jun 11 2017 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List(), t); forprime(p=2, lim\\4, forprime(q=2, min(lim\\(2*p), p), t=p*q; forprime(r=2, min(lim\\t, q), if(hammingweight(t*r)%2,listput(v, t*r))))); vecsort(Vec(v)) \\\\ _Charles R Greathouse IV_, Mar 29 2013"
+    ],
+    "xref": [
+        "Cf. A000069, A014612."
+    ],
+    "keyword": "easy,nonn,less",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_, Oct 04 2007",
+    "ext": [
+        "More terms from _R. J. Mathar_, Oct 24 2007"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2017-06-11T10:18:27-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

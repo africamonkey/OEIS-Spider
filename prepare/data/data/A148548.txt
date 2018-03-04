@@ -1,0 +1,26 @@
+{
+    "number": 148548,
+    "data": "1,1,3,5,21,44,179,405,1835,4490,19779,49829,232721,610882,2788715,7427785,35253935,96368290,448865903,1237270005,5931202577,16649102672,78553909015,221640074309,1069716764575,3059624598509,14565629603329,41799007929725,202728660743415,588026037157535,2817795677054636",
+    "name": "Number of walks within N^3 (the first octant of Z^3) starting at (0,0,0) and consisting of n steps taken from {(-1, -1, -1), (-1, -1, 0), (-1, 1, 0), (-1, 1, 1), (1, 0, 0)}",
+    "link": [
+        "A. Bostan and M. Kauers, <a href=\"http://arxiv.org/abs/0811.2899\">Automatic Classification of Restricted Lattice Walks</a>, arXiv:0811.2899v2 [math.CO], 2008."
+    ],
+    "maple": [
+        "H := hypergeom([1/4, 7/12],[4/3],64*x*(x-1)*(3*x+1)^2/(1-5*x)^4);",
+        "U := ((1816*x^5-3192*x^4+382*x^3+140*x^2-13*x-1)*hypergeom([1/4, 3/4, 7/6],[1, 4/3],256*x^4)+3*(2*x-1)*(3*x+1)*(16*x^2+1)*(212*x^3-82*x^2+4*x+1)*hypergeom([3/4, 7/6, 5/4],[1, 4/3],256*x^4)-16*x^3*(564*x^4+142*x^3-89*x^2+8*x-1)*hypergeom([3/4, 7/6, 5/4],[4/3, 2],256*x^4))/((5*x-1)*(2*x-1))^3;",
+        "Ord := 40;  seriesInt := proc(A,x) global Ord; int(series(A,x,Ord),x) end:",
+        "S :=  seriesInt((1-5*x)*x^(-4/3)*(1+3*x)^(-5/3)*(1-5*x)^(4/3)*(1-x)^(-4/3)*H^(-2)*(1-seriesInt(H*U,x)),x):",
+        "ogf := series((1-2*x)/(4*x^2) + (1/12) * (1-2*x)*x^(-5/3)*(1+3*x)^(2/3)*(1-5*x)^(-4/3)*(1-x)^(1/3)*H*S,x,Ord);",
+        "# So the ogf can be expressed in terms of 3F2 and 2F1 functions. - Mark van Hoeij, Apr 10 2012."
+    ],
+    "mathematica": [
+        "aux[i_Integer, j_Integer, k_Integer, n_Integer] := Which[Min[i, j, k, n] < 0 || Max[i, j, k] > n, 0, n == 0, KroneckerDelta[i, j, k, n], True, aux[i, j, k, n] = aux[-1 + i, j, k, -1 + n] + aux[1 + i, -1 + j, -1 + k, -1 + n] + aux[1 + i, -1 + j, k, -1 + n] + aux[1 + i, 1 + j, k, -1 + n] + aux[1 + i, 1 + j, 1 + k, -1 + n]]; Table[Sum[aux[i, j, k, n], {i, 0, n}, {j, 0, n}, {k, 0, n}], {n, 0, 10}]"
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Manuel Kauers_, Nov 18 2008",
+    "references": 0,
+    "revision": 12,
+    "time": "2012-04-10T12:51:35-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 246618,
+    "data": "1,4,57,4480,866460,302835456,165589522560,130247609057280,139297568464454400,194428045753727385600,343266731083210449715200,747889980460943180326502400,1971026081420013638259189350400,6180432779330984921337015828480000",
+    "name": "Number of endofunctions on [2n] whose cycle lengths are multiples of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A246618/b246618.txt\">Table of n, a(n) for n = 0..195</a>"
+    ],
+    "formula": [
+        "a(n) = A246609(2n,n).",
+        "a(n) ~ 2^(3*n-1/2) * n^(2*n-1) / exp(n). - _Vaclav Kotesovec_, Sep 01 2014"
+    ],
+    "maple": [
+        "with(combinat):",
+        "b:= proc(n, i, k) option remember; `if`(n=0, 1,",
+        "      `if`(i=0 or i>n, 0, add(b(n-i*j, i+k, k)*(i-1)!^j*",
+        "      multinomial(n, n-i*j, i$j)/j!, j=0..n/i)))",
+        "    end:",
+        "a:= n->add(b(j, n$2)*(2*n)^(2*n-j)*binomial(2*n-1, j-1), j=0..2*n):",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "multinomial[n_, k_] := n!/Times @@ (k!); b[n_, i_, k_] := b[n, i, k] = If[n == 0, 1, If[i == 0 || i > n, 0, Sum[b[n - i*j, i + k, k]*(i - 1)!^j * multinomial[n, Join[{n-i*j}, Array[i&, j]]]/j!, {j, 0, n/i}]]]; a[0] = 1; a[n_] := Sum[b[j, n, n]*(2n)^(2n-j)*Binomial[2n-1, j-1], {j, 0, 2n}]; Table[a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Feb 26 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A246609."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Aug 31 2014",
+    "references": 2,
+    "revision": 10,
+    "time": "2017-02-26T10:51:56-05:00",
+    "created": "2014-08-31T11:06:40-04:00"
+}

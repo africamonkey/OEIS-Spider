@@ -1,0 +1,51 @@
+{
+    "number": 188145,
+    "data": "0,20,135,164,1107,15625,43692,128125,188228,294921,1270539,4117715,33765263,34134375,147053125,8995560189,19348535652,38753462951",
+    "name": "Solutions of the equation n\" - n' - n = 0, where n' and n\" are the first and second arithmetic derivatives (see A003415).",
+    "comment": [
+        "Solutions of the similar equation n\u201d-n\u2019+n=0 are 30, 858, 1722, etc., apparently Giuga numbers whose derivative is a prime number. In fact the equation can be rewritten as n'=n+n\" and if n\"=1 it is the conjecture in A007850.",
+        "a(16) > 2*10^9. - _Donovan Johnson_, Apr 30 2011",
+        "a(19) > 10^11. - _Giovanni Resta_, Jun 04 2016"
+    ],
+    "example": [
+        "n=20, n\u2019=24, n\u201d=44 -> 44-24-20=0;  n=135, n\u2019=162, n\u201d=297 -> 297-162-135=0"
+    ],
+    "maple": [
+        "readlib(ifactors):",
+        "Der:= proc(n)",
+        "local a,b,i,p,pfs;",
+        "for i from 0 to n do",
+        "  if i<=1 then a:=0;",
+        "  else pfs:=ifactors(i)[2]; a:=i*add(op(2,p)/op(1,p),p=pfs) ;",
+        "  fi;",
+        "  if a<=1 then b:=0;",
+        "  else pfs:=ifactors(a)[2]; b:=a*add(op(2,p)/op(1,p),p=pfs) ;",
+        "  fi;",
+        "  if b-a=i then lprint(i,a,b); fi;",
+        "od",
+        "end:",
+        "Der(10000000);"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (zipWith3, elemIndices)",
+        "a188145 n = a188145_list !! (n-1)",
+        "a188145_list = elemIndices 0 $ zipWith3 (\\x y z -> x - y - z)",
+        "   (map a003415 a003415_list) a003415_list [0..]",
+        "-- _Reinhard Zumkeller_, May 10 2011"
+    ],
+    "xref": [
+        "Cf. A003415, A007850, A165558, A165561, A165562, A189639, A189710."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Mar 22 2011",
+    "ext": [
+        "a(13)-a(15) from _Donovan Johnson_, Apr 30 2011",
+        "Corrected a(9) and a(16)-a(18) from _Giovanni Resta_, Jun 04 2016"
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2016-06-04T06:55:54-04:00",
+    "created": "2011-03-27T18:25:37-04:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 129350,
+    "data": "1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,19,20,21,23,24,25,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,64,65,66,67",
+    "name": "The smallest number in a group of four consecutive mutually coprime integers such that the sum of three of the them plus the square of the fourth is prime.",
+    "comment": [
+        "Groups of 4 coprime integers (a,b,c,d) are defined by fixing a, then searching for the smallest b>a such that b is coprime to a, searching for the smallest c>b coprime to a and b, then searching for the smallest d>c coprime to a, b and c. If at least one of the 4 sums a^2+b+c+d, a+b^2+c+d, a+b+c^2+d or a+b+c+d^2 is prime, a is in the sequence."
+    ],
+    "formula": [
+        "The groups of four coprimes increase from 1,2,3,5 as the first group, 2,3,5,7 as the second, 3,4,5,7 as the third and so forth. Each group has four chances of producing a prime by squaring one and adding the rest."
+    ],
+    "example": [
+        "Take the quadruplet 17, 18, 19, 23: 17^2 +18 + 19 + 23 = 349; 18^2 + 17+19+23 = 383; 19^2 + 17+18+23 = 419. Three sum to primes but only one is required put 17 in the sequence."
+    ],
+    "maple": [
+        "filter:= proc(n)",
+        "local S,k,Ss,cands;",
+        "   S:= {n};",
+        "   for k from n+1 while nops(S) < 4 do",
+        "     if max(map2(igcd,k,S))=1 then S:= S union {k}",
+        "     fi",
+        "   od;",
+        "   Ss:= convert(S,`+`);",
+        "   cands:= {seq(S[i]^2 - S[i] + Ss, i=1..4)};",
+        "   ormap(isprime,cands)",
+        "end proc:",
+        "select(filter, [$1..100]); # _Robert Israel_, Dec 15 2014"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_J. M. Bergot_, May 28 2007",
+    "ext": [
+        "Edited by _R. J. Mathar_, Dec 17 2014"
+    ],
+    "references": 0,
+    "revision": 19,
+    "time": "2014-12-18T03:26:16-05:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

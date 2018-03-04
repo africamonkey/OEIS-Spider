@@ -1,0 +1,53 @@
+{
+    "number": 53816,
+    "data": "1,9,45,55,99,297,703,999,2223,2728,4950,5050,7272,7777,9999,17344,22222,77778,82656,95121,99999,142857,148149,181819,187110,208495,318682,329967,351352,356643,390313,461539,466830,499500,500500,533170",
+    "name": "Another version of the Kaprekar numbers (A006886): n such that n=q+r and n^2=q*10^m+r, for some m >= 1, q>=0 and 0<=r<10^m, with n != 10^a, a>=1 and n an m-digit number.",
+    "comment": [
+        "Consider an m-digit number n. Square it and add the right m digits to the left m or m-1 digits. If the resultant sum is n, then n is a term of the sequence.",
+        "4879 and 5292 are in A006886 but not in this version.",
+        "Shape of plot (see links) seems to consist of line segments whose lengths along the x-axis depend on the number of unitary divisors of 10^m-1 which is equal to 2^w if m is a multiple of 3 or 2^(w+1) otherwise, where w is the number of distinct prime factors of the repunit of length m (A095370). w for m = 60 is 20, whereas w <= 15 for m < 60. This leads to the long segment corresponding to m = 60. - _Chai Wah Wu_, Jun 02 2016"
+    ],
+    "reference": [
+        "D. R. Kaprekar, On Kaprekar numbers, J. Rec. Math., 13 (1980-1981), 81-82.",
+        "D. Wells, The Penguin Dictionary of Curious and Interesting Numbers. Penguin Books, NY, 1986, 151."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A053816/b053816.txt\">Table of n, a(n) for n = 1..50000</a>",
+        "D. E. Iannucci, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL3/iann2a.html\">The Kaprekar numbers</a>, J. Integer Sequences, Vol. 3, 2000, #1.2.",
+        "R. Munafo, <a href=\"http://www.mrob.com/pub/math/seq-kaprekar.html\">Kaprekar Sequences</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/KaprekarNumber.html\">Kaprekar Number</a>",
+        "Chai Wah Wu, <a href=\"/A053816/a053816.pdf\">Semilog plot of A053816(n), n = 1..1003371 (all terms with m <= 60).</a>",
+        "Chai Wah Wu, <a href=\"/A053816/a053816_1.pdf\">Plot of A053816(n), n = 1..1003371 (all terms with m <= 60).</a>",
+        "<a href=\"/index/Coi#Colombian\">Index entries for Colombian or self numbers and related sequences</a>"
+    ],
+    "example": [
+        "703 is Kaprekar because 703=494+209, 703^2=494209."
+    ],
+    "mathematica": [
+        "kapQ[n_]:=Module[{idn2=IntegerDigits[n^2],len},len=Length[idn2];FromDigits[ Take[idn2,Floor[len/2]]]+FromDigits[Take[idn2, -Ceiling[len/2]]]==n]; Select[Range[540000],kapQ] (* _Harvey P. Dale_, Aug 22 2011 *)",
+        "ktQ[n_] := ((x = n^2) - (z = FromDigits[Take[IntegerDigits[x], y = -IntegerLength[n]]]))*10^y + z == n; Select[Range[540000], ktQ] (* _Jayanta Basu_, Aug 04 2013 *)",
+        "Select[Range[540000],Total[FromDigits/@TakeDrop[IntegerDigits[#^2], Floor[ IntegerLength[ #^2]/2]]] ==#&] (* The program uses the TakeDrop function from Mathematica version 10 *) (* _Harvey P. Dale_, Jun 03 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a053816 n = a053816_list !! (n-1)",
+        "a053816_list = 1 : filter f [4..] where",
+        "   f x = length us - length vs <= 1 &&",
+        "         read (reverse us) + read (reverse vs) == x",
+        "         where (us, vs) = splitAt (length $ show x) (reverse $ show (x^2))",
+        "-- _Reinhard Zumkeller_, Oct 04 2014"
+    ],
+    "xref": [
+        "Cf. A006886, A037042, A053394, A053395, A053396, A053397, A045913, A003052, A055642."
+    ],
+    "keyword": "nonn,nice,base,easy",
+    "offset": "1,2",
+    "author": "_Robert Munafo_",
+    "ext": [
+        "More terms from Michel ten Voorde (seqfan(AT)tenvoorde.org), Apr 11 2001"
+    ],
+    "references": 6,
+    "revision": 43,
+    "time": "2016-06-03T17:28:40-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

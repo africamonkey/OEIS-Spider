@@ -1,0 +1,43 @@
+{
+    "number": 171499,
+    "data": "3,14,60,248,1008,4064,16320,65408,261888,1048064,4193280,16775168,67104768,268427264,1073725440,4294934528,17179803648,68719345664,274877644800,1099511103488,4398045462528,17592183947264,70368739983360",
+    "name": "a(n) = 6*a(n-1) - 8*a(n-2) for n > 1; a(0) = 3, a(1) = 14.",
+    "comment": [
+        "Binomial transform of A171498; second binomial transform of A171497; third binomial transform of A010703.",
+        "Related to sequences A001969 and A000069, sum of each group with exponent 1. - _Eric Desbiaux_, Jul 24 2013"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A171499/b171499.txt\">Table of n, a(n) for n = 0..500</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (6,-8)"
+    ],
+    "formula": [
+        "a(n) = 4*4^n - 2^n = 2^n * (2^(n+2)-1).",
+        "G.f.: (3-4*x)/((1-2*x)*(1-4*x)).",
+        "a(n) = 4*a(n-1)+2^n, a(0)=3; a(n) = 6*a(n-1) - 8*a(n-2). [_Vincenzo Librandi_, Jul 18 2011]"
+    ],
+    "mathematica": [
+        "(* This program shows how A171499 arises from the Vandermonde determinant of (1,2,4,...,2^(n-1)). *)",
+        "f[j_] := 2^(j - 1); z = 15;",
+        "v[n_] := Product[Product[f[k] - f[j], {j, 1, k - 1}], {k, 2, n}]",
+        "d[n_] := Product[(i - 1)!, {i, 1, n}]",
+        "Table[v[n], {n, 1, z}]               (* A203303 *)",
+        "Table[v[n + 1]/v[n], {n, 1, z - 1}]  (* A002884 *)",
+        "Table[v[n] v[n + 2]/(2*v[n + 1]^2),",
+        "  {n, 1, z - 1}]                       (* A171499 *)",
+        "(* _Clark Kimberling_, Jan 02 2011 *)"
+    ],
+    "program": [
+        "(PARI) {m=23; v=concat([3, 14], vector(m-2)); for(n=3, m, v[n]=6*v[n-1]-8*v[n-2]); v}",
+        "(MAGMA) [4*4^n-2^n: n in [0..30]]; // _Vincenzo Librandi_, Jul 18 2011"
+    ],
+    "xref": [
+        "Cf. A010703, A171497, A171498, A171472, A171473."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,1",
+    "author": "_Klaus Brockhaus_, Dec 10 2009",
+    "references": 7,
+    "revision": 31,
+    "time": "2015-08-24T08:22:32-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

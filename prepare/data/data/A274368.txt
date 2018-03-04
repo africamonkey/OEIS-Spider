@@ -1,0 +1,53 @@
+{
+    "number": 274368,
+    "data": "45,48,231,121116,159229,11985489,17514256,51624256,88172137,228523729,467597425,11112111412,4329279198937,3716589421762641,23228676113127556",
+    "name": "Numbers n such that if n is decreased by the sum of its digits and n is decreased by the product of its digits both differences are squares > 0.",
+    "comment": [
+        "It appears that if n is increased by the sum of its digits and n is increased by the product of its digits no two squares are found, except for the trivial n = 2 and n = 8.",
+        "The smallest n>8 such that n+A007953(n) and n+A007954(n) are both squares is n = 6469753431969. If a fourth such n exists, it must be larger than 1.6*10^19. - _Giovanni Resta_, Jun 19 2016"
+    ],
+    "example": [
+        "45 - (4 + 5) = 36 and 45 - (4 * 5) = 25.",
+        "159229 - (1 + 5 + 9 + 2 + 2 + 9) = 157609 (= 397^2) and 159229 - (1*5*9*2*2*9) = 159201 (= 399^2)."
+    ],
+    "mathematica": [
+        "lim = 10^6; s = Select[Range@ lim, IntegerQ@ # && # != 0 &@ Sqrt[# - Times @@ IntegerDigits@ #] &]; t = Select[Range@ lim, IntegerQ@ # && # != 0 &@ Sqrt[# - Total@ IntegerDigits@ #] &]; Intersection[s, t] (* _Michael De Vlieger_, Jun 19 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def pod(n):",
+        "    p = 1",
+        "    for x in str(n):",
+        "        p *= int(x)",
+        "    return p",
+        "def sod(n):",
+        "    return (sum(int(d) for d in str(n))",
+        "def cube(z,p):",
+        "    iscube=False",
+        "    y=int(pow(z,1/p)+0.01)",
+        "    if y**p==z:",
+        "        iscube=True",
+        "    return iscube",
+        "for c in range (1, 10**8):",
+        "    aa,ab=c-pod(c,10),c-sod(c,10)",
+        "    if cube(aa,2)==True and cube(ab,2)==True and aa>0:",
+        "       print (c,aa,ab)",
+        "(PARI) a007953(n) = sumdigits(n)",
+        "a007954(n) = my(d=digits(n)); prod(i=1, #d, d[i])",
+        "is(n) = n > 9 && issquare(n-a007953(n)) && issquare(n-a007954(n)) \\\\ _Felix Fr\u00f6hlich_, Jun 19 2016"
+    ],
+    "xref": [
+        "Cf. A007953, A007954.",
+        "Intersection of A066566 and A228187."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Pieter Post_, Jun 19 2016",
+    "ext": [
+        "a(10)-a(15) from _Giovanni Resta_, Jun 19 2016"
+    ],
+    "references": 0,
+    "revision": 19,
+    "time": "2016-06-19T14:24:47-04:00",
+    "created": "2016-06-19T14:24:47-04:00"
+}

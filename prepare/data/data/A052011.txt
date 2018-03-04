@@ -1,0 +1,43 @@
+{
+    "number": 52011,
+    "data": "0,0,0,0,1,1,2,3,5,7,10,16,23,37,55,84,125,198,297,458,704,1087,1673,2602,4029,6263,9738,15186,23704,36981,57909,90550,142033,222855,349862,549903,865019,1361581,2145191,3381318,5334509,8419527,13298630",
+    "name": "Number of primes between successive Fibonacci numbers.",
+    "comment": [
+        "The formula given and the sequence itself must use the same convention on \"between\" and what to do if one or both fibonacci numbers are themselves prime. - _Jonathan Vos Post_, Mar 08 2010",
+        "With the given sequence data, we see that neither endpoint is included, so we count primes p in the open interval F(n)<p<F(n+1) only. - _Jeppe Stig Nielsen_, Jun 06 2015"
+    ],
+    "formula": [
+        "a(n) = PrimePi(F(n+1)-1) - PrimePi(F(n)) = A000720(A000045(n+1)-1) - A000720(A000045(n)). - _Jonathan Vos Post_, Mar 08 2010; corrected by _Jeppe Stig Nielsen_, Jun 06 2015",
+        "a(n) ~ phi^(n-1)/(n*sqrt(5)*log(phi)), where phi = (1+sqrt(5))/2 is the golden ratio. - _Charles R Greathouse IV_, Jun 08 2015"
+    ],
+    "example": [
+        "Between Fib(9)=34 and Fib(10)=55 we find the following primes: 37, 41, 43, 47 and 53 hence a(9)=5."
+    ],
+    "maple": [
+        "for n from 1 to 43 do T[n]:= numtheory:-pi(combinat:-fibonacci(n)) od:",
+        "seq(T[n]-T[n-1]-`if`(isprime(combinat:-fibonacci(n)),1,0), n=2..43); # _Robert Israel_, Jun 08 2015"
+    ],
+    "mathematica": [
+        "lst={};Do[p=0;Do[If[PrimeQ[a],p++ ],{a,Fibonacci[n]+1,Fibonacci[n+1]-1}];AppendTo[lst,p],{n,50}];lst (* _Vladimir Joseph Stephan Orlovsky_, Nov 23 2009 *)",
+        "pbf[n_]:=Module[{fib1=If[PrimeQ[Fibonacci[n+1]],PrimePi[Fibonacci[n+1]-1], PrimePi[ Fibonacci[n+1]]], fib0=If[PrimeQ[Fibonacci[n]], PrimePi[ Fibonacci[n]+1],PrimePi[Fibonacci[n]]]},Max[0,fib1-fib0]]; Array[pbf,50] (* _Harvey P. Dale_, Mar 01 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a052011 n = a052011_list !! (n-1)",
+        "a052011_list = c 0 0 $ drop 2 a000045_list where",
+        "  c x y fs'@(f:fs) | x < f     = c (x+1) (y + a010051 x) fs'",
+        "                   | otherwise = y : c (x+1) 0 fs",
+        "-- _Reinhard Zumkeller_, Dec 18 2011",
+        "(PARI) a(n)=my(s); forprime(p=fibonacci(n)+1,fibonacci(n+1)-1,s++); s \\\\ _Charles R Greathouse IV_, Jun 08 2015"
+    ],
+    "xref": [
+        "Cf. A000040, A052012, A010051, A005478 (endpoint primes)"
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,7",
+    "author": "_Patrick De Geest_, Nov 15 1999",
+    "references": 4,
+    "revision": 32,
+    "time": "2015-06-08T14:53:32-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

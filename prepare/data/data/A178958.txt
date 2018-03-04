@@ -1,0 +1,44 @@
+{
+    "number": 178958,
+    "data": "15,28,35,39,51,52,55,63,66,70,75,76,87,95,99,111,112,115,119,123,124,130,135,143,147,148,154,155,159,171,172,176,183,186,187,190,195,196,203,207,208,215,219,232,235,238,244,246,255,267,268,275,276,279,280,286,287,291,292,295,299",
+    "name": "Numbers n from A181780 that are not in A181781.",
+    "comment": [
+        "Numbers that are Fermat pseudoprimes to some base a (2<=a<=n-2) not Euler pseudoprimes to any base a (2<=a<=n-2)."
+    ],
+    "example": [
+        "4^(15-1) == 1 (mod 15), but 4^((15-1)/2) == 4 (mod 15)"
+    ],
+    "program": [
+        "(PARI)",
+        "fsp(n)=",
+        "{ /* whether n is Fermat pseudoprime to any base a where 2<=a<=n-2 */",
+        "    for (a=2,n-2,",
+        "        if ( gcd(a,n)!=1, next() );",
+        "        if ( (Mod(a,n))^(n-1)==+1, return(1) )",
+        "    );",
+        "    return(0);",
+        "}",
+        "esp(n)=",
+        "{ /* whether n is Euler pseudoprime to any base a where 2<=a<=n-2 */",
+        "    local(w);",
+        "    if ( n%2==0, return(0) );",
+        "    for (a=2,n-2,",
+        "        if ( gcd(a,n)!=1, next() );",
+        "        w = abs(component((Mod(a,n))^((n-1)/2),2));",
+        "        if ( (w==1) || (w==n-1), return(1) )",
+        "    );",
+        "    return(0);",
+        "}",
+        "for(n=3,300, if(isprime(n),next()); if( fsp(n) && (!esp(n)) , print1(n,\", \") ); );"
+    ],
+    "xref": [
+        "A181780"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Karsten Meyer_, Dec 31 2010",
+    "references": 0,
+    "revision": 13,
+    "time": "2012-03-30T18:38:31-04:00",
+    "created": "2010-11-12T14:28:09-05:00"
+}

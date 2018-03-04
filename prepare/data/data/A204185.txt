@@ -1,0 +1,55 @@
+{
+    "number": 204185,
+    "data": "0,0,6,33,102,243,492,894,1500,2370,3570,5175,7266,9933,13272,17388,22392,28404,35550,43965,53790,65175,78276,93258,110292,129558,151242,175539,202650,232785,266160,303000,343536,388008,436662,489753,547542,610299,678300,751830,831180,916650,1008546,1107183,1212882,1325973,1446792,1575684,1713000,1859100,2014350",
+    "name": "Number of quadrilaterals in a triangular matchstick arrangement of side n.",
+    "comment": [
+        "The total number of parallelograms and trapezoids that appear in a triangular matchstick array of side n.",
+        "Can always be split into three equal sets, parallelograms 'belonging' to the side of the triangle that none of its sides are parallel to, and trapezoids 'belonging' to the side of the triangle that two of its sides are parallel to.",
+        "Rhombuses belonging to each side are A173196(n).",
+        "Irregular parallelograms belonging to each side are 2(A001752(n-3)).",
+        "'Upside down' trapezoids (those where the shorter of the two parallel sides is closest to the parallel side of the triangle) belonging to each side are A001752(n-3).",
+        "'Right side up' trapezoids belonging to each side are A000332(n+2)."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A204185/b204185.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-5,0,5,-4,1)."
+    ],
+    "formula": [
+        "a(n) = b(1)T(n-1) + b(2)T(n-2) + b(3)T(n-3) ... + b(k)T(n-k) ... + b(n-1)T(1), where b(m) = 3(floor(5m/2)) and T(m) is the m-th triangular number A000217.",
+        "a(n) = a(n-1) + floor((n+1)(n-1)(10n-3)/8).",
+        "a(n) = 3(A173196(n)+A000332(n+2)+3(A001752(n-3)) (see comments above).",
+        "From _Colin Barker_, Mar 16 2015: (Start)",
+        "a(n) = (3-3*(-1)^n-16*n-16*n^2+16*n^3+10*n^4)/32.",
+        "a(n) = 4*a(n-1)-5*a(n-2)+5*a(n-4)-4*a(n-5)+a(n-6).",
+        "G.f.: -3*x^2*(3*x+2) / ((x-1)^5*(x+1)).",
+        "(End)"
+    ],
+    "example": [
+        "a(3) = 33 because the following figure contains 33 quadrilaterals (15 parallelograms and 18 trapezoids)",
+        "....... /\\",
+        "...... /\\/\\",
+        "..... /\\/\\/\\",
+        "Size and quantity of each quadrilateral in above figure:",
+        "2 triangles: 9",
+        "3 triangles: 12",
+        "4 triangles: 6",
+        "5 triangles: 3",
+        "8 triangles: 3"
+    ],
+    "mathematica": [
+        "nxt[{n_,a_}]:={n+1,a+Floor[n(n+2) (10(n+1)-3)/8]}; Transpose[ NestList[ nxt,{0,0},50]][[2]] (* _Harvey P. Dale_, Jan 11 2013 *)"
+    ],
+    "program": [
+        "(PARI) concat([0,0], Vec(-3*x^2*(3*x+2)/((x-1)^5*(x+1)) + O(x^100))) \\\\ _Colin Barker_, Mar 16 2015"
+    ],
+    "xref": [
+        "Cf. A173196 = number of rhombuses of a particular orientation; A001752, related to number of irregular parallelograms and number of 'upside down' trapezoids; A000332, related to number of 'right side up' trapezoids (see comments above); A002717 = number of triangles in a triangular matchstick arrangement; A000217 = triangular numbers."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,3",
+    "author": "_Elliott Line_ & Paul Bostock (enigma.mensa(AT)yahoo.co.uk), Jan 12 2012",
+    "references": 1,
+    "revision": 26,
+    "time": "2015-06-13T00:54:09-04:00",
+    "created": "2012-01-12T10:04:29-05:00"
+}

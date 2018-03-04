@@ -1,0 +1,32 @@
+{
+    "number": 223075,
+    "data": "1,1,2,13,132,2492,76726,4048401,360486616,54950141846,14338767268684,6424397920197266,4947731418324541980,6554636080888858780850,14947781374271898418583534,58699996835841575449007944393,397110307362512858324163841229032",
+    "name": "O.g.f. satisfies: A(x) = Sum_{n>=0} n^n * x^n * A((2*n-1)*x)^n/n! * exp(-n*x*A((2*n-1)*x)).",
+    "comment": [
+        "Compare to the LambertW identity:",
+        "Sum_{n>=0} n^n * x^n * G(x)^n/n! * exp(-n*x*G(x)) = 1/(1 - x*G(x))."
+    ],
+    "formula": [
+        " a(n) == 1 (mod 2) when n = 2^m-1 for m>=0, and a(n) == 0 (mod 2) otherwise."
+    ],
+    "example": [
+        "O.g.f.: A(x) = 1 + x + 2*x^2 + 13*x^3 + 132*x^4 + 2492*x^5 + 76726*x^6 +...",
+        "where",
+        "A(x) = 1 + x*A(x)*exp(-x*A(x)) + 2^2*x^2*A(3*x)^2/2!*exp(-2*x*A(3*x)) + 3^3*x^3*A(5*x)^3/3!*exp(-3*x*A(5*x)) + 4^4*x^4*A(7*x)^4/4!*exp(-4*x*A(7*x)) + 5^5*x^5*A(9*x)^5/5!*exp(-5*x*A(9*x)) +...",
+        "simplifies to a power series in x with integer coefficients."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=sum(k=0, n, k^k*x^k*subst(A, x, (2*k-1)*x)^k/k!*exp(-k*x*subst(A, x, (2*k-1)*x)+x*O(x^n)))); polcoeff(A, n)}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A223076, A218672, A217900."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Mar 14 2013",
+    "references": 1,
+    "revision": 6,
+    "time": "2013-03-14T13:03:52-04:00",
+    "created": "2013-03-14T12:59:10-04:00"
+}

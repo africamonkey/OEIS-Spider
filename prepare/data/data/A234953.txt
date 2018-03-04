@@ -1,0 +1,38 @@
+{
+    "number": 234953,
+    "data": "0,1,5,37,357,4351,64243,1115899,22316409,505378207,12789077631,357769603027,10965667062133,365497351868767,13163965052815515,509522144541045811,21093278144993719665,930067462093579181119,43518024090910884374263,2153670733766937656155699",
+    "name": "Normalized total height of all rooted trees on n labeled nodes.",
+    "comment": [
+        "Equals A001854(n)/n. That is, similar to A001854, except here the root always has the fixed label 1.",
+        "This was in one of my thesis notebooks from 1964 (see the scans in A000435), but because it wasn't of central importance it was never added to the OEIS."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A234953/b234953.txt\">Table of n, a(n) for n = 1..387</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n-1} k*A034855(n,k)/n = Sum_{k=1..n-1} k*A235595(n,k)."
+    ],
+    "mathematica": [
+        "gf[k_] := gf[k] = If[k == 0, x, x*E^gf[k-1]]; a[n_, k_] := n!*Coefficient[Series[gf[k], {x, 0, n+1}], x, n]; a[n_] := Sum[k*(a[n, k] - a[n, k-1]), {k, 1, n-1}]/n; Array[a, 20] (* _Jean-Fran\u00e7ois Alcover_, Mar 18 2014, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import binomial",
+        "from sympy.core.cache import cacheit",
+        "@cacheit",
+        "def b(n, h): return 1 if min(n, h)==0 else sum([binomial(n - 1, j - 1)*j*b(j - 1, h - 1)*b(n - j, h) for j in xrange(1, n + 1)])",
+        "def T(n, k): return b(n - 1, k - 1) - b(n - 1, k - 2)",
+        "def a(n): return sum([k*T(n, k) for k in xrange(1, n)])",
+        "print map(a, xrange(1, 31)) # _Indranil Ghosh_, Aug 26 2017"
+    ],
+    "xref": [
+        "Cf. A001854, A034855, A235595, A236396."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, Jan 14 2014",
+    "references": 7,
+    "revision": 22,
+    "time": "2017-08-26T17:55:22-04:00",
+    "created": "2014-01-14T18:36:17-05:00"
+}

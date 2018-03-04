@@ -1,0 +1,34 @@
+{
+    "number": 288507,
+    "data": "24,319,738,57360,1077529,116552943",
+    "name": "Least number k such that both prime(k+1) -/+ prime(k) are products of n prime factors (counting multiplicity).",
+    "comment": [
+        "Prime(k) + prime(k+1) cannot be semiprime, so the offset is 3.",
+        "For n=3 to 8, all terms k happen to satisfy prime(k+1) - prime(k) = 2^n. - _Michel Marcus_, Jul 24 2017"
+    ],
+    "example": [
+        "n = 8: k = 116552943, p = prime(k) = 2394261637, q = prime(k+1) = 2394261893; both q-p = 2^8 and  p+q = 2*3^2*5*7^3*155119 are 8-almost primes (A046310)."
+    ],
+    "program": [
+        "(PARI) a(n) = my(k = 1, p = 2, q = nextprime(p+1)); while((bigomega(p+q)!= n) || (bigomega(p-q)!= n), k++; p = q; q = nextprime(p+1)); k; \\\\ _Michel Marcus_, Jul 24 2017",
+        "(Python)",
+        "from sympy import factorint, nextprime",
+        "def A288507(n):",
+        "    k, p, q = 1, 2, 3",
+        "    while True:",
+        "        if sum(factorint(q-p).values()) == n and sum(factorint(q+p).values()) == n:",
+        "            return k",
+        "        k += 1",
+        "        p, q = q, nextprime(q) # _Chai Wah Wu_, Jul 23 2017"
+    ],
+    "xref": [
+        "Cf. A001043, A001223, A046310, A251600."
+    ],
+    "keyword": "nonn,more",
+    "offset": "3,1",
+    "author": "_Zak Seidov_, Jun 10 2017",
+    "references": 1,
+    "revision": 22,
+    "time": "2017-07-24T01:55:14-04:00",
+    "created": "2017-06-11T01:07:51-04:00"
+}

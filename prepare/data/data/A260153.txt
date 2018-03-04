@@ -1,0 +1,55 @@
+{
+    "number": 260153,
+    "data": "1,3,12,41,164,590,2360,8715,34860,130776,523104,1983212,7932848,30303416,121213664,465673065,1862692260,7187760140,28751040560,111338982436,445355929744,1729672999418,6918691997672,26936111629934,107744446519736,420338301077100",
+    "name": "Number of walks of length n on the square lattice (with steps N, E, S, W) that start at (0,0) and avoid the West quadrant {(i,j): i < -|j|}.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A260153/b260153.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "M. Bousquet-M\u00e9lou, <a href=\"http://arxiv.org/abs/1511.02111\">Plane lattice walks avoiding a quadrant</a>, arXiv:1511.02111 [math.CO], 2015."
+    ],
+    "formula": [
+        "G.f.: -1/(4*t) + (1+4*t) * ((sc(K(4*t)/3;4*t)+nc(K(4*t)/3;4*t))/sqrt(3-48*t^2) - K(4*t)/(2*Pi)) / (3*t), where K(4*t) is the complete elliptic integral of modulus 4*t and sc(.;4*t), nc(.;4*t) are Jacobi elliptic functions again with modulus 4*t. - _Timothy Budd_, Oct 23 2016"
+    ],
+    "example": [
+        "For n=1, the three possible walks are N, E, S."
+    ],
+    "maple": [
+        "b:= proc(n,i,j) option remember;",
+        "      if i < -abs(j) then 0",
+        "    elif n=0 then 1",
+        "    else b(n-1,i-1,j)+",
+        "         b(n-1,i+1,j)+",
+        "         b(n-1,i,j-1)+",
+        "         b(n-1,i,j+1)",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n,0,0);",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Nov 09 2015",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n<4, [1, 3, 12, 41][n+1],",
+        "      ((4*(2*n-5))*(12*n^4-16*n^3-6*n^2+10*n+3) *a(n-1)",
+        "      +(16*(2*n-5))*(2*n+1)*(6*n^4-24*n^3+28*n^2-8*n-3) *a(n-2)",
+        "      -(64*(2*n+1))*(12*n^4-80*n^3+186*n^2-178*n+63) *a(n-3)",
+        "      -(256*(n-1))*(2*n+1)*(2*n-1)*(3*n-7)*(n-3)^2 *a(n-4))/",
+        "      ((2*n-3)*(2*n-5)*(n-1)*(3*n+1)*(n+1)^2))",
+        "    end:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Nov 09 2015"
+    ],
+    "mathematica": [
+        "b[n_, i_, j_] := b[n, i, j] = Which[i < -Abs[j], 0, n == 0, 1, True, b[n-1, i-1, j] + b[n-1, i+1, j] + b[n-1, i, j-1] + b[n-1, i, j+1]]; a[n_] := b[n, 0, 0]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Feb 01 2016, after _Alois P. Heinz_ *)",
+        "With[{n = 10}, CoefficientList[Series[",
+        "-1/(4*t) + (1+4*t)*((sc+Sqrt[1+sc^2])/Sqrt[3-48*t^2] - k/(2*Pi))/(3*t)",
+        "  /. sc -> Pi*Sqrt[3]*Normal[Sum[(-1)^p/(1 + q^(-2*p) + q^(2*p)), {p,-n,n}]  + O[q]^(2*n)]/(2*k*Sqrt[1-16*t^2])",
+        "  /. q -> EllipticNomeQ[16*t^2] /. k -> EllipticK[16*t^2],",
+        "{t,0,4*n}], t]] (* _Timothy Budd_, Oct 23 2016 *)"
+    ],
+    "xref": [
+        "Cf. A060898 for walks avoiding the negative quadrant rather than the West one, A260154."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Mireille Bousquet-M\u00e9lou_, Nov 09 2015",
+    "references": 2,
+    "revision": 36,
+    "time": "2016-10-27T11:47:14-04:00",
+    "created": "2015-11-09T11:28:17-05:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 249638,
+    "data": "0,0,5,45,245,1305,6605,33405,167405,838845,4196045,20989245,104955245,524820945,2624149445,13120970445,65605075445,328026491505,1640133571805,8200673428605,41003372712605,205016891401905,1025084484848405,5125422563427405",
+    "name": "Number of strings of length n over a 5-letter alphabet that begin with a nontrivial palindrome.",
+    "comment": [
+        "A nontrivial palindrome is a palindrome of length 2 or greater. (E.g., \"1\" is a trivial palindrome, but \"11\" and \"121\" are nontrivial palindromes.)",
+        "For example, 0042 is a is a string in a five letter alphabet of length 4 that begins with a nontrivial palindrome (00).",
+        "5 divides a(n) for all n.",
+        "Number of walks of n steps that begin with a palindromic sequence on the complete graph K_5 with loops. (E.g., 0, 1, 1, 0, 4, 1, 2 is a valid walk with 7 steps and begins with the palindromic sequence '0110'.)",
+        "lim n -> infinity a(n)/5^n ~ 0.429951613027098 is the probability that a random, infinite string in a five letter alphabet begins with a nontrivial palindrome."
+    ],
+    "link": [
+        "Peter Kagey, <a href=\"/A249638/b249638.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(0) = 0; a(1) = 0; a(n+1) = 5*a(n) + 5^ceiling((n+1)/2) - a(ceiling((n+1)/2))."
+    ],
+    "example": [
+        "For n=3 the a(3) = 45 valid strings are: 000, 001, 002, 003, 004, 010, 020, 030, 040, 101, 110, 111, 112, 113, 114, 121, 131, 141, 202, 212, 220, 221, 222, 223, 224, 232, 242, 303, 313, 323, 330, 331, 332, 333, 334, 343, 404, 414, 424, 434, 440, 441, 442, 443, 444."
+    ],
+    "mathematica": [
+        "a249638[n_] := Block[{f},",
+        "  f[0] = f[1] = 0;",
+        "  f[x_] := 5*f[x - 1] + 5^Ceiling[x/2] - f[Ceiling[x/2]];",
+        "Table[f[i], {i, 0, n}]]; a249638[23] (* _Michael De Vlieger_, Dec 27 2014 *)"
+    ],
+    "program": [
+        "(Ruby) seq = [0, 0]; (2..N).each{ |i| seq << 5 * seq[i-1] + 5**((i+1)/2) - seq[(i+1)/2] }",
+        "(Haskell)",
+        "import Data.Ratio",
+        "a 0 = 0; a 1 = 0;",
+        "a n = 5 * a(n - 1) + 5^ceiling(n % 2) - a(ceiling(n % 2)) -- _Peter Kagey_, Aug 13 2015"
+    ],
+    "xref": [
+        "Analogous sequences for k-letter alphabets: A248122 (k=3), A249629 (k=4), A249639 (k=6), A249640 (k=7), A249641 (k=8), A249642 (k=9), A249643 (k=10)."
+    ],
+    "keyword": "easy,nonn,walk",
+    "offset": "0,3",
+    "author": "_Peter Kagey_, Nov 02 2014",
+    "references": 9,
+    "revision": 36,
+    "time": "2015-08-24T12:07:51-04:00",
+    "created": "2014-11-03T10:54:19-05:00"
+}

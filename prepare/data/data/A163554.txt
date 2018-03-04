@@ -1,0 +1,37 @@
+{
+    "number": 163554,
+    "data": "104,106,110,118,119,124,125,128,133,140,142,146,152,160,164,169,172,182,190,196,214,215,217,218,238,305,319,328,329,346,350,356,364,365,368,374,376,382,386,391,392,394,410,412,416,436,437,473,475,476,493",
+    "name": "Composite numbers such that exactly two distinct permutations of digits give primes.",
+    "link": [
+        "Robert Israel, <a href=\"/A163554/b163554.txt\">Table of n, a(n) for n = 1..6095</a>"
+    ],
+    "example": [
+        "a(1) = 104 because 104 is composite and 41 and 401 are prime permutations, and no other permutation of 104 is prime."
+    ],
+    "maple": [
+        "filter:= proc(n) local d,Permutor,P,c,i;",
+        "  if isprime(n) then return false fi;",
+        "  d:= ilog10(n)+1;",
+        "  Permutor:= Iterator:-Permute(convert(n,base,10));",
+        "  c:= 0;",
+        "  for P in Permutor do",
+        "    if isprime(add(P[i]*10^(i-1),i=1..d)) then",
+        "      c:= c+1;",
+        "      if c >= 3 then return false fi;",
+        "    fi",
+        "  od;",
+        "  evalb(c=2)",
+        "end proc:",
+        "select(filter, [$10..1000]); # _Robert Israel_, Jan 22 2017"
+    ],
+    "mathematica": [
+        "Select[Range[500],CompositeQ[#]&&Count[FromDigits/@Permutations[ IntegerDigits[ #]], _?PrimeQ]==2&] (* _Harvey P. Dale_, Aug 10 2017 *)"
+    ],
+    "keyword": "easy,nonn,base",
+    "offset": "1,1",
+    "author": "_Gil Broussard_, Jul 30 2009",
+    "references": 1,
+    "revision": 12,
+    "time": "2017-08-10T12:48:44-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

@@ -1,0 +1,30 @@
+{
+    "number": 151882,
+    "data": "1,5,17,80,424,2744,19928,166984,1543176,15939792,178966512,2200820544,29089668672,415261531008,6316101256320,102692213061120,1766690411927040,32235156493470720,618870347081671680,12523381062124032000,265423904312781312000",
+    "name": "Let g be a permutation of [1..n] having say j_i cycles of length i, with Sum_i i*j_i = n; sequence gives Sum_g Sum_i (j_i)^2.",
+    "link": [
+        "N. J. A. Sloane and Alois P. Heinz, <a href=\"/A151882/b151882.txt\">Table of n, a(n) for n = 1..450</a> (first 30 terms from N. J. A. Sloane)"
+    ],
+    "maple": [
+        "with(combinat):",
+        "b:= proc(n, i) option remember; `if`(n=0, [1,0], `if`(i<1, 0,",
+        "      add(multinomial(n,n-i*j,i$j)/j!*(i-1)!^j*(p-> p+",
+        "      [0, p[1]*j^2])(b(n-i*j, i-1)), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2)[2]:",
+        "seq(a(n), n=1..30);  # _Alois P. Heinz_, Oct 21 2015"
+    ],
+    "mathematica": [
+        "multinomial[n_, k_] := n!/Times @@ (k!); b[n_, i_] := b[n, i] = If[n==0, {1, 0}, If[i<1, {0, 0}, Sum[multinomial[n, Join[{n-i*j}, Array[i&, j]] ]/j! * (i-1)!^j*Function[p, p+{0, p[[1]]*j^2}][b[n-i*j, i-1]], {j, 0, n/i}] ] ]; a[n_] := b[n, n][[2]]; Table[a[n], {n, 1, 30}] (* _Jean-Fran\u00e7ois Alcover_, Mar 10 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000254, A151881, A151883."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jul 22 2009",
+    "references": 4,
+    "revision": 11,
+    "time": "2017-03-10T19:36:14-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

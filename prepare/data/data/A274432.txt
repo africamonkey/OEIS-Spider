@@ -1,0 +1,36 @@
+{
+    "number": 274432,
+    "data": "3,5,9,15,17,27,31,45,51,57,85,93,105,135,153,155,171,193,255,279,285,315,355,459,465,513,525,527,579,653,765,837,855,945,965,969,1065,1201,1395,1539,1575,1581,1737,1767,1775,1785,1959,2209,2295,2565,2635",
+    "name": "Products of distinct tribonacci numbers (A000213).",
+    "comment": [
+        "Decree that a set S has the distinct products property if for every pair u and v of distinct finite subsets of S, (product of the numbers in u) != (product of the numbers in v).  Does the set of numbers in A274432 have this property?"
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A274432/b274432.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The tribonacci numbers are 1,1,1,3,5,9,17,31,..., so that the sequence of all products of distinct members, in increasing order, is (3, 5, 9, 15, 17, 27, 31, 45,...)."
+    ],
+    "mathematica": [
+        "r[1] := 1; r[2] := 1; r[3] = 1; r[n_] := r[n] = r[n - 1] + r[n - 2] + r[n - 3];",
+        "s = {1}; z = 60; f = Map[r, Range[z]]; Take[f, 20]",
+        "Do[s = Union[s, Select[s*f[[i]], # <= f[[z]] &]], {i, z}];",
+        "Take[s, 2 z]  (*A274432*)",
+        "infQ[n_] := MemberQ[f, n];",
+        "ans = Table[#[[Flatten[Position[Map[Apply[Times, #] &, #], s[[n]]]][[1]]]] &[",
+        "Rest[Subsets[Map[#[[1]] &, Select[Map[{#, infQ[#]} &, Divisors[s[[n]]]], #[[2]] && #[[1]] > 1 &]]]]], {n, 2, 300}];",
+        "Map[Apply[Times, #] &, Select[ans, Length[#] == 2 &]] (* A274433 *)",
+        "Map[Apply[Times, #] &, Select[ans, Length[#] == 3 &]] (* A274434 *)",
+        "(* _Peter J. C. Moses_, Jun 17 2016 *)"
+    ],
+    "xref": [
+        "Cf. A160009, A274280, A274433 (binary products), A274434 (trinary products)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jun 22 2016",
+    "references": 6,
+    "revision": 9,
+    "time": "2016-06-25T01:46:30-04:00",
+    "created": "2016-06-22T23:16:30-04:00"
+}

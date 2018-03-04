@@ -1,0 +1,41 @@
+{
+    "number": 50495,
+    "data": "72,144,216,216,288,432,432,576,648,648,792,864,864,1080,1152,1224,1296,1296,1368,1446,1512,1584,1656,1728,1728,1944,1944,2088,2160,2232,2304,2376,2376,2448,2592,2592,2664,2736,2892,2952,3024,3096,3168",
+    "name": "Arithmetic progressions of at least 4 terms having the same value of phi(x) start at these numbers.",
+    "comment": [
+        "A number can occur multiple times, corresponding to the number of these arithmetic progressions that it starts. - _Robert Israel_, Nov 29 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A050495/b050495.txt\">Table of n, a(n) for n = 1..2704</a>"
+    ],
+    "example": [
+        "phi(72)=phi(78)=phi(84)=phi(90)=24, so 72 is a member of the sequence."
+    ],
+    "maple": [
+        "N:= 5000: # to get all terms <= N",
+        "AP4:= proc(S) local res, n, i1,i4;",
+        "   n:= nops(S); res:= NULL;",
+        "   for i1 from 1 to n-3 do",
+        "     for i4 from i1+3 to n do",
+        "       if (S[i1] - S[i4]) mod 3 = 0 and has(S, (2*S[i1]+S[i4])/3) and has(S, (S[i1]+2*S[i4])/3) then res:= res, S[i1]",
+        "       fi",
+        "   od od;",
+        "   [res]",
+        "end proc:",
+        "Res:= NULL:",
+        "for m from 1 to N-1 do",
+        "  Res:= Res, op(select(`<=`,AP4(numtheory:-invphi(m)),N));",
+        "od:",
+        "sort([Res]); # _Robert Israel_, Nov 29 2016"
+    ],
+    "xref": [
+        "Cf. A000010, A050496, A050497."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jud McCranie_, Dec 27 1999",
+    "references": 9,
+    "revision": 9,
+    "time": "2016-11-29T17:46:02-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

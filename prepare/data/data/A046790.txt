@@ -1,0 +1,46 @@
+{
+    "number": 46790,
+    "data": "8,9,16,18,24,25,27,32,36,40,45,48,49,50,54,56,63,64,72,75,80,81,88,90,96,98,99,100,104,108,112,117,120,121,125,126,128,135,136,144,147,150,152,153,160,162,168,169,171,175,176,180,184,189,192,196,198,200,207,208",
+    "name": "Positive numbers divisible by 8 or by the square of an odd prime.",
+    "comment": [
+        "This sequence has many equivalent definitions:",
+        "(D1) Positive numbers divisible by 8 or by the square of an odd prime. (We take this as the main definition, since it is the simplest.)",
+        "(D2) Moduli n for which there exist affine maps f:x->a*x + b modulo n, with a>1, such that f has order n in the affine group. (For example, 8 is a term because f:x->5x+1 mod 8 is a map with order 8 in the group of affine maps mod 8: the smallest power of f equal to identity is f^8. The maps x->x+1 always have this property, so are excluded from consideration.) - _Emmanuel Amiot_, Jul 28 2007",
+        "(D3) Numbers n such that A005361(n) < A003557(n). - _Anthony Browne_, Jun 03 2016",
+        "(D4) Numbers i such that there is a smaller positive number j such that (i+j)/2 and sqrt(i*j) are integers. (See A046791 for the smallest choice for j.) - _David W. Wilson_, Dec 11 1999",
+        "(D5) Numbers n such that A008475(n) is different from A001414(n). - _Benoit Cloitre_, Jan 11 2003",
+        "For a proof of the equivalence of definitions (D1)-(D5) see the Don Reble link.",
+        "(D6) Numbers n>=8 having a divisor k^2>=4 such that n and n/k^2 are of the same parity. (See A046791 for the largest such k.) - _Vladimir Shevelev_, Jun 06 2006",
+        "Closed under multiplication, which may be used to construct the sequence. - _David A. Corneth_, Jun 07 2016",
+        "Complement of A078779. - _Omar E. Pol_, Jun 11 2016"
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A046790/b046790.txt\">Table of n, a(n) for n = 1..10000</a> (first 290 terms from N. J. A. Sloane).",
+        "Emmanuel Amiot, <a href=\"http://dx.doi.org/10.1080/17459730802598146\">Autosimilar Melodies</a>, J. Math. Music 2 (2008), no. 3, 157-180. DOI: 10.1080/17459730802598146.",
+        "Emmanuel Amiot, <a href=\"http://canonsrythmiques.free.fr/pdf/maMuXMelodieAmiot.pdf\">M\u00e9lodies autosimilaires (Self-Replicating Melodies)</a> (in French).",
+        "_Don Reble_, <a href=\"/A046790/a046790_1.txt\">Proof of equivalence of definitions (D1)-(D5)</a>, Jun 06 2016"
+    ],
+    "formula": [
+        "Let A(x) be the number of a(n)<=x. Then A(x)~(1 - 7/Pi^2)*x = 0.2907517...*x as x goes to infinity. - _Vladimir Shevelev_, Jun 07 2016"
+    ],
+    "mathematica": [
+        "ordreMax[a_, n_]:= Module[{mo, r, s, s0, gcd}, mo=MultiplicativeOrder[a,n]; s= s0=Mod[Sum[a^k,{k,0,mo-1}], n]; Max[Table[gcd=GCD[a-1,b];r=1; While[Mod[s *gcd, n]!=0, s=Mod[s0+a^mos,n];r++ ]; r*mo, {b,0,n-1} ]] ] ordreMax[n_] := Module[{candidats, m,t}, candidats = Select[Range[2,n-1], (GCD[n,# ]==1 && GCD[n, #-1]>1)&]; m=Max[t=Table[ordreMax[a,n], {a, candidats}] ]; {m,Part[candidats,Flatten@Position[t, m] ]}] Module[{resu}, Do[resu=ordreMax[n]; If[First[resu] >=n, Print[n ]], {n,4,200}]] (* This is for definition (D2). _Emmanuel Amiot_, Jul 28 2007 *)",
+        "Select[Range[210], Mod[#, 8] == 0 || AnyTrue[ Divisors[#], DivisorSigma[0, #] == 3 && Mod[#, 4] != 0 &] &] (* _Carlos Eduardo Olivieri_, Jun 07 2016 *)"
+    ],
+    "program": [
+        "(PARI) is(n)={n%8==0||!issquarefree(n>>!bittest(n,0))} \\\\ _M. F. Hasler_, Jun 07 2016"
+    ],
+    "xref": [
+        "Cf. A001414, A003557, A005361, A008475, A046791."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_David W. Wilson_, Dec 11 1999",
+    "ext": [
+        "Entry revised by _N. J. A. Sloane_, with help from _Don Reble_ and several OEIS editors, Jun 07 2016"
+    ],
+    "references": 10,
+    "revision": 94,
+    "time": "2017-10-19T10:46:14-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

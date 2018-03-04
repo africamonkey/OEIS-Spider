@@ -1,0 +1,42 @@
+{
+    "number": 261966,
+    "data": "1,101,101001,101001011,1010010110001,1010010110001011,101001011000101100101,10100101100010110010100101,101001011000101100101001010001,101001011000101100101001010001000011,10100101100010110010100101000100001101111",
+    "name": "Minimal appendage-sequence of primes with seed 1, base 2, and appendages of the form 0s(n); see Comments.",
+    "comment": [
+        "The minimal appendage-sequence of primes with seed s and base b is defined as follows:",
+        "a(1) = s",
+        "a(2) = least prime that begins with s0;",
+        "a(3) = least prime that begins with a(2)0;",
+        "a(n) = least prime that begins with a(n-1)0."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A261966/b261966.txt\">Table of n, a(n) for n = 1..300</a>"
+    ],
+    "example": [
+        "a(7) = 101001011000101100101 comes from a(6) = 1010010110001011 by appending 00101 to a(6); the result is the least prime that begins with 1010010110001011. Note that \"internal 0's\" are possible; e.g., the appendage, 00101 in a(6) contains an \"internal 0\" (the 3rd 0). Triangular format:",
+        "1",
+        "101",
+        "101001",
+        "101001011",
+        "1010010110001",
+        "1010010110001011",
+        "101001011000101100101",
+        "10100101100010110010100101",
+        "101001011000101100101001010001"
+    ],
+    "mathematica": [
+        "base = 2; s = {{1}}; Do[NestWhile[# + 1 &, 1, (nn = #; ! PrimeQ[FromDigits[tmp =IntegerDigits[FromDigits[Flatten[IntegerDigits[Join[Last[s], {0},               IntegerDigits[nn - Sum[base^n, {n, l = NestWhile[# + 1 &, 1, ! (nn - (Sum[base^n, {n, #}]) < 0) &] - 1}], base, l + 1]]]]]], base]]) &]; AppendTo[s, {FromDigits[tmp]}], {12}];",
+        "u = Flatten[s]",
+        "Column[Flatten[s]] (* _Peter J. C. Moses_, Sep 03 2015 *)"
+    ],
+    "xref": [
+        "Cf. A261965."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Sep 25 2015",
+    "references": 2,
+    "revision": 6,
+    "time": "2015-10-02T13:06:29-04:00",
+    "created": "2015-10-02T13:06:29-04:00"
+}

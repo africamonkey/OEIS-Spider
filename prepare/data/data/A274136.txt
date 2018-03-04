@@ -1,0 +1,60 @@
+{
+    "number": 274136,
+    "data": "1,16,540,32256,3024000,410572800,76281004800,18598035456000,5762136335155200,2211729098342400000,1030334000462807040000,572721601599913328640000,374484928188990947328000000,284562454970932936468070400000",
+    "name": "a(n) = (n+1)*(2*n+2)!/(n+2).",
+    "comment": [
+        "Sequence is inspired by A273889, A274119 and A273983.",
+        "Since Product_{i=0..n}(i*k+a) - Product_{i=0..n}(-i*k-b) \u2261 0 mod (n*k+a+b), then define B(n,k,a,b) = (Product_{i=0..n}(i*k+a) - Product_{i=0..n}(-i*k-b))/(n*k+a+b), with n*k+a+b <> 0, n >= 0 and k,a,b are integers, such that B(1,n,2,1) = (Product_{i=0..1}(i*n+2) - Product_{i=0..1}(-i*n-1))/(n+3) = A000012(n) with n >= 0;",
+        "B(3,n,2,1) = (Product_{i=0..3}(i*n+2) - Product_{i=0..3}(-i*n-1))/(3*n+3) = A100040(n+2) with n >= 0;",
+        "B(2*n+1,0,2,1) = (Product_{i=0..2*n+1}(2) - Product_{i=0..2*n+1}(-1))/3 = A002450(n+1) with n >= 0;",
+        "B(2*n+1,2,2,1) = (Product_{i=0..2*n+1}(2*i+2) - Product_{i=0..2*n+1}(-2*i-1))/(4*n+5) = A273983(n+1) with n >= 0;",
+        "and a(n) is B(2*n+1,1,2,1). - _Hong-Chang Wang_, Jun 17 2016"
+    ],
+    "link": [
+        "Hong-Chang Wang, <a href=\"/A274136/b274136.txt\">Table of n, a(n) for n = 0..30</a>",
+        "Hong-Chang Wang, <a href=\"/A274119/a274119_5.png\">Definition of the formula B(n,k,a,b)</a>"
+    ],
+    "formula": [
+        "a(n) = B(2*n+1,1,2,1) = (Product_{i=0..2*n+1}(i+2) - Product_{i=0..2*n+1}(-i-1))/(2*n+4), n >= 0.",
+        "a(n) = A062779(n)/(2*(n+1)). - _Michel Marcus_, Jun 11 2016",
+        "a(n) ~ sqrt(Pi)*exp(-2*n)*(48*n*(24*n + 13) + 1177)*4^(n-2)*n^(2*n+1/2)/9. - _Ilya Gutkovskiy_, Jul 07 2016"
+    ],
+    "example": [
+        "a(0) = (2*3 - 1*2)/4 = 1.",
+        "a(1) = (2*3*4*5 - 1*2*3*4)/6 = 16.",
+        "a(2) = (2*3*4*5*6*7 - 1*2*3*4*5*6)/8 = 540."
+    ],
+    "mathematica": [
+        "a[n_] := (Product[i + 2, {i, 0, 2*n + 1}] - Product[-i - 1, {i, 0, 2*n + 1}])/(2*n + 4); Table[a[n], {n, 0, 10}] (* _G. C. Greubel_, Jun 19 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "# subroutine",
+        "def B (n, k, a, b):",
+        "    pa = pb = 1",
+        "    for i in range(n+1):",
+        "        pa *= (i*k+a)",
+        "        pb *= (-i*k-b)",
+        "    m = n*k+a+b",
+        "    p = pa-pb",
+        "    if m == 0:",
+        "        return \"NaN\"",
+        "    else:",
+        "        return p/m",
+        "# main program",
+        "for j in range(101):",
+        "    print(str(j)+\" \"+str(B(2*j+1, 1, 2, 1)))  # _Hong-Chang Wang_, Jun 14 2016",
+        "(PARI) a(n) = ((2*n+1)!-(2*n)!)/(2*(n+1)) \\\\ _Felix Fr\u00f6hlich_, Jun 11 2016",
+        "(PARI) a(n) = (prod(i=0, 2*n+1, i+2)-prod(i=0, 2*n+1, -i-1))/(2*n+4) \\\\ _Felix Fr\u00f6hlich_, Jul 05 2016"
+    ],
+    "xref": [
+        "Cf. A000012, A002450, A062779, A100040, A273889, A273983, A274119."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Hong-Chang Wang_, Jun 10 2016",
+    "references": 1,
+    "revision": 29,
+    "time": "2016-07-16T18:08:37-04:00",
+    "created": "2016-07-16T18:08:37-04:00"
+}

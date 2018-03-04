@@ -1,0 +1,61 @@
+{
+    "number": 180238,
+    "data": "1,3,9,27,75,189,447,951,1911,3621,6513,11103,18267,29013,44691,67251,98547,140865,197679,272799,370659,497403,658371,859863,1110453,1420527,1799373,2260161,2815401,3479235,4269279",
+    "name": "a(n) counts the distinct billiard words with length n on alphabet of 3 symbols.",
+    "comment": [
+        "Computation: _Allan C. Wechsler_ for n <= 5 (manual), _Fred Lunnon_ for n <= 8 (Maple), _Michael Kleber_ for n <= 30 (Mathematica)."
+    ],
+    "link": [
+        "N. Bedaride, <a href=\"http://dx.doi.org/10.1016/j.tcs.2007.05.037\">Classification of rotations on the torus T^2</a>, Theoretical Computer Science, 385 (2007), 214-225.",
+        "J.-P. Borel, <a href=\"http://dx.doi.org/10.1016/j.tcs.2007.03.020\">A geometrical Characterization of factors of multidimensional Billiards words and some Applications</a>, Theoretical Computer Science, 380 (2007) 286-303.",
+        "L. Vuillon, <a href=\"http://projecteuclid.org/euclid.bbms/1074791332\">Balanced Words</a>, Bull. Belg. Math. Soc., 10 (2003), 787-805."
+    ],
+    "formula": [
+        "Computation may be expedited by generating only words in which the symbols occur in increasing alphabetic order: this was done in the production version."
+    ],
+    "example": [
+        "For n = 5 there are a(5) = 189 words, permutations on the alphabet {1,2,3} of the 32 words",
+        "11111, 11112, 11121, 11123, 11211, 11212, 11213, 11231, 12111, 12112, 12113, 12121, 12122, 12123, 12131, 12132, 12212, 12213, 12221, 12222, 12223, 12231, 12232, 12311, 12312, 12313, 12321, 12322, 12323, 12331, 12332, 12333."
+    ],
+    "mathematica": [
+        "(* Number of ways to interleave N elements from 3 arithmetic seqs *)",
+        "(* Program due to _Michael Kleber_, Aug 2010 *)",
+        "(* Given a string like \"ABCABA\", produce a set of inequalities *)",
+        "(* about the three arithmetic progressions giving successive A/B/Cs *)",
+        "(* The N-th occurrence (1-indexed) of character X corresponds to the value *)",
+        "(* BASE[X] + N * DELTA[X] *)",
+        "(* In all functions, seq is eg {\"A\", \"B\", \"C\", \"A\", \"B\", \"A\"} *)",
+        "(* The arithmetic-progression value of the i-th element of seq *)",
+        "value[seq_, i_] := BASE[seq[[i]]] + DELTA[seq[[i]]] * numoccur[seq,i]",
+        "numoccur[seq_, i_] := Count[Take[seq,If[i>0,i,Length[seq]+i+1]],seq[[i]]]",
+        "(* First element of the seq is greater than anything that would precede it*)",
+        "lowerbound[seq_] := (BASE[ # ] < value[seq,1])& /@ Union[seq]",
+        "(* Each element of the seq is greater than the previous one *)",
+        "upperbound[seq_] := (value[seq,-1] < value[Append[seq,# ],-1])& /@ Union[seq]",
+        "(* Last element of the seq is less than anything that would follow it *)",
+        "ordering[seq_] := Table[value[seq,i] < value[seq,i+1], {i,Length[seq]-1}]",
+        "ineqs[seq_] := Join[ lowerbound[seq], ordering[seq], upperbound[seq] ]",
+        "vars[seq_] := Join @@ ({BASE[ # ],DELTA[ # ]}& /@ Union[seq])",
+        "witness[seq_] := FindInstance[ ineqs[seq], vars[seq] ]",
+        "witness[s_String] := witness[Characters[s]]",
+        "(* All obtainable length-n shuffles of three arithmetic seqs: *)",
+        "names = {\"A\", \"B\", \"C\"}",
+        "shuf[0] := {\"\"}",
+        "candidates[n_] := Flatten[Table[ob<>ch, {ob,shuf[n-1]}, {ch, names}]]",
+        "shuf[n_] := shuf[n] = Select[ candidates[n], witness[ # ] != {}& ]",
+        "(* Typical session *)",
+        "In[18]:= Table[Length[shuf[i]],{i,0,12}]",
+        "Out[18]= {1, 3, 9, 27, 75, 189, 447, 951, 1911, 3621, 6513, 11103, 18267}",
+        "In[19]:= TimeUsed[]/60 Out[19]= 6.73642"
+    ],
+    "xref": [
+        "See A005598 for 2 symbols, A180239 for 4 symbols."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Fred Lunnon_, Aug 18 2010",
+    "references": 4,
+    "revision": 16,
+    "time": "2014-04-20T01:46:59-04:00",
+    "created": "2010-08-27T03:00:00-04:00"
+}

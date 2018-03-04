@@ -1,0 +1,41 @@
+{
+    "number": 123911,
+    "data": "2295,29625,869227,24612989369,989252839643,475851922819895,2766613478748294,383649822198994888719136,753247689895391625667326763984815199",
+    "name": "Numbers n such that if you multiply the primes that are indexed by the digits of n and add the sum of digits of n you get n.",
+    "comment": [
+        "As prime(0) is not defined, n may not contain any zero digits.",
+        "a(10) > 10^40. - _Max Alekseyev_, Feb 08 2010"
+    ],
+    "example": [
+        "2295 is in the sequence because prime(2)*prime(2)*prime(9)*prime(5) + sum of digits of 2295 = 3*3*23*11 + (2+2+9+5) = 2277 + 18 = 2295."
+    ],
+    "mathematica": [
+        "fQ[n_] := ! MemberQ[IntegerDigits@n, 0] && Times @@ Prime@ IntegerDigits@n + Plus @@ IntegerDigits@n == n; Do[ If[fQ@n, Print@n], {n, 2*10^9}]"
+    ],
+    "program": [
+        "(PARI) { a(m) = forvec(v=vector(8,i,[0,m]), u=vector(9,i, if(i<9,v[i],m)-if(i>1,v[i-1],0) ); t=prod(i=1,9,prime(i)^u[i])+sum(i=1,9,u[i]*i); s=eval(Vec(Str(t))); if(#s!=m,next); w=vector(9); for(j=1,#s, if(s[j], w[s[j]]++)); if(u==w, print(t)), 1) } /* m is the length */ \\\\ _Max Alekseyev_, Feb 08 2010",
+        "(Python)",
+        "from operator import mul",
+        "from functools import reduce",
+        "from itertools import combinations_with_replacement",
+        "A123911_list, plist = [], [0]+[prime(i) for i in range(1,10)]",
+        "for l in range(1,30):",
+        "    L = 10**(l-1)",
+        "    H = 10*L",
+        "    for c in combinations_with_replacement(range(1,10),l):",
+        "        n = reduce(mul,[plist[i] for i in c]) + sum(c)",
+        "        if L <= n < H and sorted(int(d) for d in str(n)) == list(c):",
+        "            A123911_list.append(n) # _Chai Wah Wu_, Jan 02 2016"
+    ],
+    "keyword": "base,more,nonn",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Oct 28 2006",
+    "ext": [
+        "a(4) and a(5) from _Donovan Johnson_, Apr 22 2008",
+        "a(6)-a(9) from _Max Alekseyev_, Feb 08 2010"
+    ],
+    "references": 0,
+    "revision": 13,
+    "time": "2016-01-03T02:26:49-05:00",
+    "created": "2006-12-06T03:00:00-05:00"
+}

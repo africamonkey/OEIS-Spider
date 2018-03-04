@@ -1,0 +1,41 @@
+{
+    "number": 111004,
+    "data": "1,1,2,5,16,63,296,1623,10176,71793,562848,4853949,45664896,465403791,5108121216,60069714207,753492215808,10042248398625,141712039383552,2110880441637045,33097631526180864,544903371859138335,9398216812334008320,169463659008217238055",
+    "name": "Number of permutations avoiding a consecutive 132 pattern.",
+    "comment": [
+        "a(n) is the number of permutations on [n] that avoid the consecutive pattern 132 (pattern entries must occur consecutively in the permutation).",
+        "Asymptotically, a(n)/n! ~ c/r^n where r = 1.2755477364172... is the unique positive root of Integrate[exp(-t^2/2),{t,0,r}] = 1 and c = exp(r^2/2)/r = 1.7685063678958...."
+    ],
+    "link": [
+        "Ray Chandler, <a href=\"/A111004/b111004.txt\">Table of n, a(n) for n = 0..200</a>",
+        "A. Baxter, B. Nakamura, and D. Zeilberger. <a href=\"http://www.math.rutgers.edu/~zeilberg/mamarim/mamarimhtml/auto.html\">Automatic generation of theorems and proofs on enumerating consecutive Wilf-classes</a>",
+        "Sergi Elizalde, <a href=\"http://arXiv.org/abs/math.CO/0505254\">Asymptotic enumeration of permutations avoiding generalized patterns</a>, arXiv:math/0505254 [math.CO], 2005.",
+        "S. Elizalde and M. Noy, <a href=\"http://dx.doi.org/10.1016/S0196-8858(02)00527-4\">Consecutive patterns in permutations</a>, Adv. Appl. Math. 30 (2003), 110-125.",
+        "M. E. Jones and J. B. Remmel, <a href=\"http://puma.dimai.unifi.it/22_2/jones_remmel.pdf\">Pattern matching in the cycle structures of permutations</a>, Pure Math. Appl. (PU.M.A.), 22 (2011) 173-208."
+    ],
+    "formula": [
+        "In the Mathematica code below, a[n, k] is the number of such permutations with first entry k and they are counted recursively by the length, say ell, of the longest increasing left factor L. (For ell >=2 the first entry following L must be < the penultimate entry of L or else a consecutive 132 would occur.) The first sum counts ell=1, the second ell=2, the third ell>=3; m is the penultimate entry of L and j is the first entry in the (reduced) subpermutation following L. Note that j is indexed from 0 to cover the case when L is the entire permutation.",
+        "E.g.f.: Sum_{n>=0} a(n) x^n/n! = 1/( 1-(Pi/2)^(1/2)*Erf[x/2^(1/2)] ).",
+        "a(n) = A197365(n,0). - _Peter Bala_, Oct 14 2011",
+        "E.g.f.: A(x)=1/( 1-(Pi/2)^(1/2)*erf(x/2^(1/2)) )=(1+(x^3)/(2*(x-1)*W(0)-(x^2)))/(1-x);",
+        "W(k)=2*(k^2)+(5-4*(x^2))*k+3-2*(x^2)+2*(x^2)*(k+1)*((2*k+3)^2)/W(k+1) ; (continued fraction). - _Sergei N. Gladkovskii_, Nov 28 2011"
+    ],
+    "example": [
+        "The first 3 entries of 2431 form a consecutive 132 pattern.",
+        "The 4!-a(4) = 8 permutations on [4] that DO contain a consecutive 132 pattern are 1243, 1324, 1423, 1432, 2143, 2431, 3142, 4132. Also, for example, 1342 contains a scattered 1-3-2 pattern but not a consecutive 132."
+    ],
+    "mathematica": [
+        "Clear[a]; a[0, 0] = a[0] = 1; a[n_, 0]/;n>=1 := 0; a[n_, k_]/;k>n := 0; a[n_, k_]/;1<=k<=n<=2 := 1; a[n_, k_]/;n>=3 := a[n, k] = Sum[a[n-1, j], {j, k-1}] + (n-k)Sum[a[n-2, j], {j, k-1}] + Sum[(n-m) Binomial[m-k-1, ell-3]a[n-ell, j], {ell, 3, n-k+1}, {m, k+ell-2, n-1}, {j, 0, m-ell+1}]; a[n_]/;n>=1 := a[n] = Sum[a[n, k], {k, n}]; Table[a[n], {n, 0, 15}]",
+        "(* or, faster *) ExpGfToList[f_, n_, x_] := CoefficientList[Normal[Series[f, {x, 0, n}]] /. x^(pwr_) -> pwr!*x^pwr, x]; ExpGfToList[1/( 1-(Pi/2)^(1/2)*Erf[z/2^(1/2)] ), 25, z]"
+    ],
+    "xref": [
+        "Cf. A049774, A197365."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_David Callan_, Oct 01 2005",
+    "references": 5,
+    "revision": 35,
+    "time": "2015-11-05T06:19:05-05:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

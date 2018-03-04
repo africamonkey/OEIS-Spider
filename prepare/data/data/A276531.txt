@@ -1,0 +1,47 @@
+{
+    "number": 276531,
+    "data": "1,1,1,1,1,1,2,3,5,11,41,247,1498,39629,3121233,1344630757,4527359876765,673384475958949877,12684198948982702826816701,103442271685605704255863097581658042,12389248756108266360505757651017660004796444483503,657084395567781339286109602463271066924826185667810218784212689809097",
+    "name": "a(n) = (a(n-1) * a(n-5) + a(n-2) * a(n-3) * a(n-4)) / a(n-6), with a(0) = a(1) = a(2) = a(3) = a(4) = a(5) = 1.",
+    "comment": [
+        "This sequence is the generalization of Dana Scott's sequence (A048736).",
+        "Conjecture: a(n) is integer for all n. It has been checked by computer for 0 <= n <= 50.",
+        "The recursion has the Laurent property. If a(0), ..., a(5) are variables, then a(n) is a Laurent polynomial (a rational function with a monomial denominator). - _Michael Somos_, Nov 21 2016"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A276531/b276531.txt\">Table of n, a(n) for n = 0..28</a>"
+    ],
+    "formula": [
+        "a(n) * a(n-6) = a(n-1) * a(n-5) + a(n-2) * a(n-3) * a(n-4).",
+        "a(5-n) = a(n) for all n in Z."
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[n] == (a[n - 1] a[n - 5] + a[n - 2] a[n - 3] a[n - 4])/a[n - 6], a[0] == a[1] == a[2] == a[3] == a[4] == a[5] == 1}, a, {n, 0, 21}] (* _Michael De Vlieger_, Nov 21 2016 *)"
+    ],
+    "program": [
+        "(Ruby)",
+        "def A(k, n)",
+        "  a = Array.new(k, 1)",
+        "  ary = [1]",
+        "  while ary.size < n + 1",
+        "    i = a[-1] * a[1] + a[2..-2].inject(:*)",
+        "    break if i % a[0] > 0",
+        "    a = *a[1..-1], i / a[0]",
+        "    ary << a[0]",
+        "  end",
+        "  ary",
+        "end",
+        "def A276531(n)",
+        "  A(6, n)",
+        "end"
+    ],
+    "xref": [
+        "Cf. A048736, A006721."
+    ],
+    "keyword": "nonn",
+    "offset": "0,7",
+    "author": "_Seiichi Manyama_, Nov 16 2016",
+    "references": 3,
+    "revision": 26,
+    "time": "2016-11-21T11:06:30-05:00",
+    "created": "2016-11-21T10:17:15-05:00"
+}

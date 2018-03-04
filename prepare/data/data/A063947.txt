@@ -1,0 +1,36 @@
+{
+    "number": 63947,
+    "data": "1,6,45,60,90,270,420,630,2970,5460,8190,9100,15925,27300,36720,40950,46494,54600,81900,95550,136500,163800,172900,204750,232470,245700,257040,409500,464940,491400,646425,716625,790398,791700,819000,900900",
+    "name": "Infinitary harmonic numbers: harmonic mean of infinitary divisors is an integer.",
+    "link": [
+        "P. Hagis, Jr. and G. L. Cohen, <a href=\"http://dx.doi.org/10.1017/S0004972700017949\">Infinitary harmonic numbers</a>, Bull. Australian math. Soc., 41 (1990), 151-158 (Math. Rev. 91d:11001) (asymptotics).",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HarmonicMean.html\">Harmonic Mean</a>",
+        "Wikipedia, <a href=\"http://www.wikipedia.org/wiki/Harmonic_mean\">Harmonic mean</a>"
+    ],
+    "mathematica": [
+        "bitty[ k_ ] := Union[ Flatten[ Outer[ Plus, Sequence @@ ({0, #} & /@ Union[ (2^Range[ 0, Floor[ Log[ 2, k ] ] ] ) Reverse[ IntegerDigits[ k, 2 ] ] ] ) ] ] ]; 1 + Flatten[ Position[ Table[ (Length[ # ] /(Plus @@ (1/#)) &)@ (Apply[ Times, (First[ it ] ^ (# /. z -> List)) ] & /@ Flatten[ Outer[ z, Sequence @@ (bitty /@ Last[ it = Transpose[ FactorInteger[ k ] ] ] ), 1 ] ]), {k, 2, 2^22 + 1} ], _Integer ] ] (* _Robert G. Wilson v_, Sep 04 2001 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Ratio (denominator)",
+        "import Data.List (genericLength)",
+        "a063947 n = a063947_list !! (n-1)",
+        "a063947_list = filter ((== 1) . denominator . hm . a077609_row) [1..]",
+        "   where hm xs = genericLength xs / sum (map (recip . fromIntegral) xs)",
+        "-- _Reinhard Zumkeller_, Jul 10 2013"
+    ],
+    "xref": [
+        "Cf. A037445, A049417.",
+        "Cf. A077609."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_Wouter Meeussen_, Sep 03 2001",
+    "ext": [
+        "More terms from _David W. Wilson_, Sep 04 2001"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2015-02-01T04:40:55-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

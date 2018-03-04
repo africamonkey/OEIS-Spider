@@ -1,0 +1,46 @@
+{
+    "number": 158104,
+    "data": "1,4,152,49920,191701440,9659304851456,6631121047328399360,63121566305846614746333184,8450364710466604643357631528951808,16116664948206611884835318695391740990586880",
+    "name": "a(n) = [x^n] 1/eta(x)^(4^n).",
+    "comment": [
+        "Here eta(q) is the q-expansion of the Dedekind eta function without the q^(1/24) factor (A010815)."
+    ],
+    "formula": [
+        "G.f.: A(x) = Sum_{n>=0} (-1)^n*log( eta(4^n*x) )^n/n!.",
+        "G.f.: A(x) = Sum_{n>=0} [ Sum_{k>=1} ( (4^n*x)^k/(1 - (4^n*x)^k) )/k ]^n/n!.",
+        "a(n) = [x^n] P(x)^(4^n) where P(x) = 1/eta(x) = Product_{n>0} 1/(1-x^n) = g.f. of the partition numbers (A000041)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 4*x + 152*x^2 + 49920*x^3 + 191701440*x^4 +...",
+        "A(x) = 1 - log(eta(4*x)) + log(eta(16*x))^2/2! - log(eta(64*x))^3/3! +-...",
+        "...",
+        "Let P(x) = 1/eta(x) denote the g.f. of the partition numbers A000041:",
+        "P(x) = 1 + x + 2*x^2 + 3*x^3 + 5*x^4 + 7*x^5 + 11*x^6 +...",
+        "then a(n) is the coefficient of x^n in P(x)^(4^n):",
+        "P(x)^(4^0): [(1),1,2,3,5,7,11,15,22,30,42,56,77,101,135,176,...];",
+        "P(x)^(4^1): [1,(4),14,40,105,252,574,1240,2580,5180,10108,...];",
+        "P(x)^(4^2): [1,16,(152),1088,6460,33440,155584,663936,2636326,...];",
+        "P(x)^(4^3): [1,64,2144,(49920),905840,13627264,176638592,...];",
+        "P(x)^(4^4): [1,256,33152,2894848,(191701440),10266643968,...];",
+        "P(x)^(4^5): [1,1024,525824,180531200,46620870400,(9659304851456),...];",
+        "where terms in parenthesis form the initial terms of this sequence."
+    ],
+    "mathematica": [
+        "a[n_] := SeriesCoefficient[1/QPochhammer[q]^(4^n), {q, 0, n}]; Table[a[n], {n, 0, 10}] (* _Jean-Fran\u00e7ois Alcover_, Nov 24 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(1/eta(x+x*O(x^n))^(4^n), n)}",
+        "(PARI) {a(n)=polcoeff(sum(m=0,n,(-1)^m*log(eta(4^m*x+x*O(x^n)))^m/m!), n)}",
+        "(PARI) {a(n)=polcoeff(sum(m=0,n,sum(k=1,n,(4^m*x)^k/(1-(4^m*x)^k)/k+x*O(x^n))^m/m!),n)}"
+    ],
+    "xref": [
+        "Cf. A000041, A158102, A158103, A158105, A158112, A158113, A158114, A158115."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 12 2009",
+    "references": 7,
+    "revision": 5,
+    "time": "2015-11-24T03:36:28-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

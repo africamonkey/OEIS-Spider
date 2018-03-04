@@ -1,0 +1,43 @@
+{
+    "number": 87912,
+    "data": "1,3,14,86,648,5752,58576,671568,8546432,119401856,1815177984,29808908032,525586164736,9898343691264,198227905206272,4204989697906688,94163381359509504,2219240984918720512,54898699229094412288,1422015190821016633344,38484192401958599131136",
+    "name": "Exponential generating function is exp(2*x/(1-x))/(1-x).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A087912/b087912.txt\">Table of n, a(n) for n = 0..200</a>",
+        "OEIS Wiki, <a href=\"https://oeis.org/wiki/Generating_functions#Exponential_generating_functions\">Exponential generating functions</a>."
+    ],
+    "formula": [
+        "E.g.f.: exp(2*x/(1-x))/(1-x). - _M. F. Hasler_, Sep 30 2012",
+        "a(n) = n!*LaguerreL(n, -2).",
+        "a(n) = Sum_{k=0..n} 2^k*(n-k)!*binomial(n, k)^2.",
+        "E.g.f.: exp(x) * Sum_{n>=0} 2^n*x^n/n!^2 = Sum_{n>=0} a(n)*x^n/n!^2. [_Paul D. Hanna_, Nov 18 2011]",
+        "a(n) ~ n^(n+1/4)*exp(2*sqrt(2*n)-n-1)*2^(-3/4). - _Vaclav Kotesovec_, Sep 29 2012",
+        "Lim n -> infinity a(n)/(n!*BesselI(0, 2*sqrt(2*n))) = exp(-1).",
+        "a(n) = n! * A160615(n)/A160616(n). - _Alois P. Heinz_, Jun 28 2017"
+    ],
+    "maple": [
+        "a := proc(n) option remember: if n<1 then 1 else (2*n+1)*a(n-1) - (n-1)^2*a(n-2) fi end: 'a(n)'$n=0..17; # _Zerinvary Lajos_, Sep 26 2006; corrected by _M. F. Hasler_, Sep 30 2012"
+    ],
+    "mathematica": [
+        "Table[n! SeriesCoefficient[E^(2 x / (1 - x)) / (1 - x), {x, 0, n}], {n, 0, 20}] (* _Vincenzo Librandi_, May 10 2013 *)"
+    ],
+    "program": [
+        "(PARI) A087912(n)={n!^2*polcoeff(exp(x+x*O(x^n))*sum(m=0,n,2^m*x^m/m!^2),n)} \\\\ _Paul D. Hanna_, Nov 18 2011",
+        "(PARI) x='x+O('x^66); Vec(serlaplace(exp(2*x/(1-x))/(1-x))) \\\\ _Joerg Arndt_, May 10 2013"
+    ],
+    "xref": [
+        "Cf. A002720, A274246, A277372.",
+        "Column k=2 of A289192.",
+        "Cf. A160615, A160616."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Vladeta Jovovic_, Oct 18 2003",
+    "ext": [
+        "Several minor edits by _M. F. Hasler_, Sep 30 2012"
+    ],
+    "references": 18,
+    "revision": 30,
+    "time": "2017-06-28T12:23:33-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

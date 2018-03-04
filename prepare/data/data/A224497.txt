@@ -1,0 +1,42 @@
+{
+    "number": 224497,
+    "data": "1,1,1,1,2,2,12,12,96,288,5760,5760,829440,829440,46448640,2090188800,267544166400,267544166400,346737239654400,346737239654400,1109559166894080000,209706682542981120000,73816752255129354240000,73816752255129354240000",
+    "name": "a(n) = (floor(n/2)! * product_{k=1..n} product_{i=1..k-1} GCD(k,i))^(1/2).",
+    "comment": [
+        "The order of the primes in the prime factorization of a(n) is given by",
+        "ord_{p}(a(n)) = (1/4)*sum(i>0, floor(n/p^i)*(floor(n/p^i)-1)) + (1/2)*sum(i>0, floor(floor(n/2)/p^i)).",
+        "For n>1: a(n) = a(n-1) if and only if n is prime."
+    ],
+    "formula": [
+        "a(n) = sqrt(floor(n/2)! * A224479(n)).",
+        "A092287(n) = A056040(n) * a(n)^4."
+    ],
+    "maple": [
+        "A224497 := n -> sqrt(iquo(n,2)!*mul(mul(igcd(k,i), i=1..k-1), k=1..n)):",
+        "seq(A224497(i), i = 0..23);"
+    ],
+    "program": [
+        "(Sage)",
+        "def A224497(n):",
+        "    R = 1;",
+        "    for p in primes(n):",
+        "        s = 0; t = 0",
+        "        r = n; u = n//2",
+        "        while r > 0 :",
+        "            r = r//p; u = u//p",
+        "            t += u; s += r*(r-1)",
+        "        R *= p^((t+s/2)/2)",
+        "    return R",
+        "[A224497(i) for i in (0..23)]"
+    ],
+    "xref": [
+        "Cf. A224479."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Peter Luschny_, Apr 08 2013",
+    "references": 2,
+    "revision": 8,
+    "time": "2013-04-10T06:42:58-04:00",
+    "created": "2013-04-10T06:42:58-04:00"
+}

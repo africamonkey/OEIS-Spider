@@ -1,0 +1,43 @@
+{
+    "number": 97933,
+    "data": "11,13,23,37,47,59,61,71,73,83,97,107,109,131,157,167,179,181,191,193,227,229,239,241,251,263,277,311,313,337,347,349,359,373,383,397,409,419,421,431,433,443,457,467,479,491,503,541,563,577,587,599,601,613",
+    "name": "Primes such that p divides 3^((p-1)/2) - 1.",
+    "comment": [
+        "Rational primes that decompose in the field Q(sqrt(3)). - _N. J. A. Sloane_, Dec 26 2017",
+        "For all primes p > 2 and integers gcd(x,y,p) = 1, x^(p-1)/2 +- y^(p-1)/2 is divisible by p. This is so because (x^(p-1)/2 - y^(p-1)/2)(x^(p-1)/2 + y^(p-1)/2) = N = x^(p-1) - y^(p-1). Now N is divisible by p for x,y, (xy,p)=1 from Fermat's Little Theorem (flt) prime p divides a^(p-1) - 1 for all a, (a,p) = 1. Then X = x^(p-1)/2 - 1 is divisible by p and Y = y^(p-1)/2 - 1 is divisible by p. This implies X-Y is divisible by p and hence N is divisible by p. N is a general case of flt. Proving N is divisible by p not using flt will serve to prove flt as a special case of N with y = 1. For N, p=2 is allowed only if x and y have the same parity.",
+        "Apart from initial terms, this and A038874 are the same. - _N. J. A. Sloane_, May 31 2009",
+        "Primes in A091998. - _Reinhard Zumkeller_, Jan 07 2012",
+        "Also, primes congruent to 1 or 11 (mod 12). - _Vincenzo Librandi_, Mar 23 2013",
+        "Conjecture: Let r(n) = (a(n)-1)/(a(n)+1)) if a(n) mod 4 = 1, (a(n)+1)/(a(n)-1)) otherwise; then Product_{n>=1} r(n) = (6/5) * (6/7) * (12/11) * (18/19) * ... = 2/sqrt(3). - _Dimitris Valianatos_, Mar 27 2017"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A097933/b097933.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_OEIS:_Section_Pri#primes_decomp_of\">Index to sequences related to decomposition of primes in quadratic fields</a>"
+    ],
+    "example": [
+        "For p=5, 3^2 - 1 = 8 <> 3*k for any integer k, So 5 is not in the table.",
+        "For p=11, 3^5 - 1 = 242 = 11*22, so 11 is in the table."
+    ],
+    "mathematica": [
+        "Select[Prime[Range[300]], MemberQ[{1, 11, 13, 23}, Mod[#, 24]]&] (* _Vincenzo Librandi_, Mar 23 2013 *)"
+    ],
+    "program": [
+        "(PARI) \\s = +-1,d=diff ptopm1d2(n,x,d,s) = { forprime(p=3,n,p2=(p-1)/2; y=x^p2 + s*(x-d)^p2; if(y%p==0,print1(p\",\"))) }",
+        "(PARI) {a(n)= local(m, c); if(n<1, 0, c=0; m=0; while( c<n, m++; if( isprime(m)& kronecker(3,m)==1, c++)); m)} /* _Michael Somos_, Aug 28 2006 */",
+        "(Haskell)",
+        "a097933 n = a097933_list !! (n-1)",
+        "a097933_list = [x | x <- a091998_list, a010051 x == 1]",
+        "-- _Reinhard Zumkeller_, Jan 07 2012",
+        "(MAGMA) [p: p in PrimesUpTo(1000) | p mod 24 in [1, 11, 13, 23]]; // _Vincenzo Librandi_, Mar 23 2013"
+    ],
+    "xref": [
+        "Cf. A010051, A038874, A091998."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Sep 04 2004",
+    "references": 8,
+    "revision": 52,
+    "time": "2017-12-31T16:46:48-05:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

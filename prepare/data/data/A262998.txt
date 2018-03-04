@@ -1,0 +1,46 @@
+{
+    "number": 262998,
+    "data": "10,26,34,58,74,82,106,122,146,178,194,202,218,226,274,298,314,320,346,362,386,394,458,466,480,482,514,538,554,562,586,626,634,674,698,706,746,778,794,802,818,842,866,898,914,922,1018,1042,1082,1114,1138,1154,1186,1202,1226,1234,1282,1306",
+    "name": "Composite numbers n such that Sum_{k=1..phi(n)} k^phi(n) == phi(n) (mod n), where phi(n) = A000010(n).",
+    "comment": [
+        "The terms a(18) = 320 and a(25) = 480 are not of the form 2p, where prime p == 1 (mod 4). - _Altug Alkan_, Oct 07 2015",
+        "The term a(662) = 22113 is the first odd term and the third one not of the form above. - _Giovanni Resta_, Oct 07 2015",
+        "If n == 1 (mod 4) is in the sequence, then so is 2n. - _Thomas Ordowski_, Oct 07 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A262998/b262998.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "formula": [
+        "{2 * A002144} U {320, 480, 22113, 44226, 66339, ?}."
+    ],
+    "example": [
+        "For a(1) = 10; phi(10) = 4, 1^4 + 2^4 + 3^4 + 4^4 = 354 == 4 (mod 10)."
+    ],
+    "maple": [
+        "filter:= proc(n) local p;",
+        "  if isprime(n) then return false fi;",
+        "  p:= numtheory:-phi(n);",
+        "  evalb(add(i &^ p mod n, i=1..p) mod n = p)",
+        "end proc:",
+        "select(filter, [$2..2000]); # _Robert Israel_, Oct 07 2015"
+    ],
+    "mathematica": [
+        "Select[Range[2, 3000], !PrimeQ[#] && (p= EulerPhi@ #; Mod[ Sum[ PowerMod[k, p, #], {k, p}]-p, #] == 0) &] (* _Giovanni Resta_, Oct 07 2015 *)"
+    ],
+    "program": [
+        "(PARI) forcomposite(n=1, 3000, if(lift(sum(k=1,eulerphi(n), Mod(k, n)^eulerphi(n))) ==  eulerphi(n), print1(n\", \"))); \\\\ _Altug Alkan_, Oct 07 2015"
+    ],
+    "xref": [
+        "Cf. A007850 (see Jonathan Sondow's comment, Jan 03 2014)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Thomas Ordowski_, Oct 07 2015",
+    "ext": [
+        "More terms from _Altug Alkan_, Oct 07 2015"
+    ],
+    "references": 1,
+    "revision": 52,
+    "time": "2015-11-28T13:21:39-05:00",
+    "created": "2015-11-28T13:21:39-05:00"
+}

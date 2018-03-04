@@ -1,0 +1,54 @@
+{
+    "number": 45499,
+    "data": "1,1,5,20,85,400,2046,11226,65676,407787,2675410,18475311,133843405,1014271763,8019687099,66011609670,564494701167,5005880952390,45958055208576,436161412834300,4273045478169842,43160044390231165",
+    "name": "Fourth-from-right diagonal of triangle A121207.",
+    "comment": [
+        "With leading 0 and offset 3: number of permutations beginning with 4321 and avoiding 1-23. - _Ralf Stephan_, Apr 25 2004",
+        "a(n) is the number of set partitions of {1,2,...,n+3} in which the last block has length 3; the blocks are arranged in order of their least element. - _Don Knuth_, Jun 12 2017"
+    ],
+    "link": [
+        "S. Kitaev, <a href=\"http://www.mat.univie.ac.at/users/slc/public_html/wpapers/s48kitaev.html\">Generalized pattern avoidance with additional restrictions</a>, Sem. Lothar. Combinat. B48e (2003).",
+        "S. Kitaev and T. Mansour, <a href=\"http://arXiv.org/abs/math.CO/0205182\">Simultaneous avoidance of generalized patterns</a>, arXiv:math/0205182 [math.CO], 2002."
+    ],
+    "formula": [
+        "a(n+1) = Sum_{k=0..n} binomial(n+3, k+3)*a(k). - _Vladeta Jovovic_, Nov 10 2003",
+        "With offset 3, e.g.f.: x^3 + exp(exp(x))/6 * int[0..x, t^3*exp(-exp(t)+t) dt]. - _Ralf Stephan_, Apr 25 2004",
+        "O.g.f. satisfies: A(x) = 1 + x*A( x/(1-x) ) / (1-x)^4. [_Paul D. Hanna_, Mar 23 2012]"
+    ],
+    "maple": [
+        "A045499 := proc(n)",
+        "    option remember ;",
+        "    if n =0  then",
+        "        1 ;",
+        "    else",
+        "        add( binomial(n+2,k+3)*procname(k),k=0..n-1) ;",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Jun 03 2014"
+    ],
+    "mathematica": [
+        "a[0] = 1; a[n_] := a[n] = Sum[a[k]*Binomial[n+2, k+3], {k, 0, n-1}];",
+        "Table[a[n], {n, 0, 21}] (* _Jean-Fran\u00e7ois Alcover_, Nov 20 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1+x*subst(A, x, x/(1-x+x*O(x^n)))/(1-x)^4); polcoeff(A, n)} /* _Paul D. Hanna_, Mar 23 2012 */",
+        "(Python)",
+        "# The function Gould_diag is defined in A121207.",
+        "A045499_list = lambda size: Gould_diag(4, size)",
+        "print(A045499_list(24)) # _Peter Luschny_, Apr 24 2016"
+    ],
+    "xref": [
+        "Cf. A045500, A045501.",
+        "Column k=3 of A124496."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Henry Gould_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Nov 10 2003",
+        "Entry revised by _N. J. A. Sloane_, Dec 11 2006"
+    ],
+    "references": 5,
+    "revision": 36,
+    "time": "2017-11-20T09:39:05-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

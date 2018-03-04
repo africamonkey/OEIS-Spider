@@ -1,0 +1,55 @@
+{
+    "number": 99964,
+    "data": "1,1,1,1,2,2,3,3,3,6,8,8,14,17,17,31,39,39,39,78,109,126,126,235,313,352,352,665,900,1026,1026,1926,2591,2943,2943,2943,5886,8477,10403,11429,11429,21832,30309,36195,39138,39138,75333,105642,127474,138903",
+    "name": "Triangle read by rows: The n-th row is constructed by forming the partial sums of the previous row, reading from the right and if n is a triangular number repeating the final term.",
+    "comment": [
+        "..."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A099964/b099964.txt\">Rows n = 0..500 of triangle, flattened</a>"
+    ],
+    "example": [
+        "Triangle begins",
+        "     1;",
+        "     1,    1;",
+        "     1,    2,",
+        "     2,    3,    3;",
+        "     3,    6,    8,",
+        "     8,   14,   17,",
+        "    17,   31,   39,   39;",
+        "    39,   78,  109,  126,",
+        "   126,  235,  313,  352,",
+        "   352,  665,  900, 1026,",
+        "  1026, 1926, 2591, 2943, 2943;"
+    ],
+    "maple": [
+        "with(linalg):rev:=proc(a) local n, p; n:=vectdim(a): p:=i->a[n+1-i]: vector(n,p) end: ps:=proc(a) local n, q; n:=vectdim(a): q:=i->sum(a[j],j=1..i): vector(n,q) end: pss:=proc(a) local n, q; n:=vectdim(a): q:=proc(i) if i<=n then sum(a[j],j=1..i) else sum(a[j],j=1..n) fi end: vector(n+1,q) end: tr:={seq(n*(n+1)/2,n=1..30)}: R[0]:=vector(1,1): for n from 1 to 15 do if member(n,tr)=false then R[n]:=ps(rev(R[n-1])) else R[n]:=pss(rev(R[n-1])) fi od: for n from 0 to 15 do evalm(R[n]) od; # _Emeric Deutsch_, Nov 16 2004"
+    ],
+    "mathematica": [
+        "triQ[n_] := Reduce[ n == k(k+1)/2, k, Integers] =!= False; row[0] = {1}; row[1] = {1, 1}; row[n_] := row[n] = (ro = Accumulate[ Reverse[ row[n-1]]]; If[triQ[n], Append[ ro, Last[ro] ], ro]); Flatten[ Table[ row[n], {n, 0, 13}]](* _Jean-Fran\u00e7ois Alcover_, Nov 24 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a099964 n k = a099964_tabf !! n !! k",
+        "a099964_row n = a099964_tabf !! n",
+        "a099964_tabf = scanl f [1] $ tail a010054_list where",
+        "   f row t = if t == 1 then row' ++ [last row'] else row'",
+        "           where row' = scanl1 (+) $ reverse row",
+        "-- _Reinhard Zumkeller_, May 02 2012"
+    ],
+    "xref": [
+        "First column (and row sums) gives A099965. Cf. A099966, A099968.",
+        "If an extra term is added to /every/ row we get A008282. Cf. A099959, A099961.",
+        "Cf. A010054."
+    ],
+    "keyword": "nonn,tabf,nice,easy",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_, Nov 13 2004, following a suggestion made by Douglas G. Rogers, Mar 10 2003",
+    "ext": [
+        "More terms from _Emeric Deutsch_, Nov 16 2004"
+    ],
+    "references": 4,
+    "revision": 21,
+    "time": "2017-08-17T02:56:52-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

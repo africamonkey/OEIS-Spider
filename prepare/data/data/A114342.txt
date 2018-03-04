@@ -1,0 +1,42 @@
+{
+    "number": 114342,
+    "data": "0,0,0,35,577,5909,16331,2053379,42374099,987654203,2334368201,736867783013,23136292864661,789018236128979,1936265501684027,1147797409030816259,48471109094902544503,2178347851919531380901,5463472083532379956913,5228356786703601108032803",
+    "name": "Largest number whose base n representation does not contain any digit more than once and which is not divisible by any of its base n digits, or 0 if no such number exists.",
+    "reference": [
+        "\"Enigma 1343: Digital Dividend\", New Scientist, Jun 04 2005, 28."
+    ],
+    "example": [
+        "There are 49 numbers whose base 4 representation does not contain repeated digits. Of these, the largest which is not divisible by any of its digits is a(4)=203_4=35_10.",
+        "Any base 3 number containing only 0's and 2's with at least one 2 is divisible by 2, while any number with a 1 is divisible by 1, so no positive integer meets the criteria in base 3. Thus a(3) = 0."
+    ],
+    "program": [
+        "(Sage)",
+        "def A114342(n):",
+        "....dd = [0] + [2..n-1]",
+        "....for width in [1..n-1][::-1]:",
+        "........found = []",
+        "........for dc in Combinations(dd, width):",
+        "............m = sum(dc) % (n-1)",
+        "............if gcd(m,n-1) in dc: continue # rule of nines",
+        "............for p in Permutations(dc[::-1]):",
+        "................s = sum((d)*n**i for i,d in enumerate(p[::-1]))",
+        "................if not any(d != 0 and s % d == 0 for d in p): found.append(s)",
+        "................if found and width == len(dd): return s",
+        "................if found and s < max(found): break",
+        "........if found: return max(found)",
+        "....return 0 # _D. S. McNeil_, Oct 01 2011"
+    ],
+    "xref": [
+        "Cf. A113028."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,4",
+    "author": "Francis Carr (fcarr(AT)alum.mit.edu), Feb 08 2006",
+    "ext": [
+        "a(12)-a(20) from _Nathaniel Johnston_, Sep 30 2011"
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2014-05-28T00:21:41-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

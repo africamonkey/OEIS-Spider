@@ -1,0 +1,55 @@
+{
+    "number": 20492,
+    "data": "1,2,3,6,12,14,15,30,35,42,56,70,78,105,140,168,190,210,248,264,270,357,418,420,570,594,616,630,714,744,812,840,910,1045,1240,1254,1485,1672,1848,2090,2214,2376,2436,2580,2730,2970,3080,3135,3339,3596,3720,3828",
+    "name": "Balanced numbers: numbers n such that phi(n) (A000010) divides sigma(n) (A000203).",
+    "comment": [
+        "The quotient A020492(n)/A002088(n) = SummatorySigma/SummatoryTotient as n increases seems to approach Pi^4/36 or zeta(2)^2 [~2.705808084277845]. - _Labos Elemer_, Sep 20 2004, corrected by _Charles R Greathouse IV_, Jun 20 2012",
+        "If 2^p-1 is prime (a Mersenne prime) then m=2^(p-2)*(2^p-1) is in the sequence because when p=2 we get m=3 and phi(3) divides sigma(3) and for p>2, phi(m)=2^(p-2)*(2^(p-1)-1); sigma(m) =(2^(p-1)-1)*2^p hence sigma(m)/phi(m)=4 is an integer. So for each n, 2^(A000043(n)-2)*(2^A000043(n)-1) is in the sequence. - _Farideh Firoozbakht_, Nov 28 2005",
+        "phi and sigma are both multiplicative functions and for this reason if m and n are coprime and included in this sequence then m*n is also in this sequence. - _Enrique P\u00e9rez Herrero_, Sep 05 2010",
+        "The quotients sigma(n)/phi(n) are in A023897. - _Bernard Schott_, Jun 06 2017",
+        "There are 544768 balanced numbers < 10^14. - _Jud McCranie_, Sep 10 2017",
+        "a(975807) = 419998185095132. - _Jud McCranie_, Nov 28 2017"
+    ],
+    "reference": [
+        "D. Chiang, \"N's for which phi(N) divides sigma(N)\", Mathematical Buds, Chap. VI pp. 53-70 Vol. 3 Ed. H. D. Ruderman, Mu Alpha Theta 1984."
+    ],
+    "link": [
+        "T. D. Noe and Donovan Johnson, <a href=\"/A020492/b020492.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from T. D. Noe)",
+        "Jud McCranie, <a href=\"/A020492/a020492.txt\">Balanced numbers < 6.0x10^14 (1127844 of them) (first 1000 by T. D. Noe and first 10000 by Donovan Johnson)</a>"
+    ],
+    "example": [
+        "sigma(35) = 1+5+7+35 = 48, phi(35) = 24, hence 35 is a term."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A020492:=proc(q)",
+        "local n; for n from 1 to q do if (sigma(n) mod phi(n))=0 then print(n);",
+        "fi; od; end:",
+        "A020492(10000000); # _Paolo P. Lava_, Jan 31 2013"
+    ],
+    "mathematica": [
+        "Select[ Range[ 4000 ], IntegerQ[ DivisorSigma[ 1, # ]/EulerPhi[ # ] ]& ]",
+        "(* Second program: *)",
+        "Select[Range@ 4000, Divisible[DivisorSigma[1, #], EulerPhi@ #] &] (* _Michael De Vlieger_, Nov 28 2017 *)"
+    ],
+    "program": [
+        "(MAGMA) [ n: n in [1..3900] | SumOfDivisors(n) mod EulerPhi(n) eq 0 ]; // _Klaus Brockhaus_, Nov 09 2008",
+        "(PARI) select(n->sigma(n)%eulerphi(n)==0,vector(10^4,i,i)) \\\\ _Charles R Greathouse IV_, Jun 20 2012",
+        "(Python)",
+        "from sympy import totient, divisor_sigma",
+        "print [n for n in xrange(1, 4001) if divisor_sigma(n)%totient(n)==0] # _Indranil Ghosh_, Jul 06 2017"
+    ],
+    "xref": [
+        "Cf. A000010, A000203, A000043, A000668, A011257, A023897, A291565, A291566, A292422."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "More terms from _Farideh Firoozbakht_, Nov 28 2005"
+    ],
+    "references": 59,
+    "revision": 74,
+    "time": "2017-12-30T10:02:57-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

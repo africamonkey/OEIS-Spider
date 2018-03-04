@@ -1,0 +1,35 @@
+{
+    "number": 242418,
+    "data": "1,2,4,6,8,10,14,16,22,26,30,32,34,36,38,46,58,62,64,74,82,86,90,94,100,106,110,118,122,128,134,142,146,158,166,178,194,196,202,206,210,214,216,218,226,238,254,256,262,270,274,278,298,300,302,314,326,334",
+    "name": "Numbers n in whose prime factorization, n = 2^e1 * 3^e2 * 5^e3 * ... * p_k^e_k, the exponents (some of them possibly zero) of prime factors from 2 to p_k form a palindrome, so that e1 = e_k, e2 = e_{k-1}, etc.",
+    "comment": [
+        "a(1)=1 is included because 1 has an empty factorization (either no exponents, or all of them are zero), which thus is also a palindrome."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A242418/b242418.txt\">Table of n, a(n) for n = 1..1200</a>"
+    ],
+    "formula": [
+        "a(1)=1, and for n > 1, a(n) = 2 * A241912(n-1)."
+    ],
+    "mathematica": [
+        "f[n_] := If[n == 1, {0}, Function[f, ReplacePart[Table[0, {PrimePi[f[[-1, 1]]]}], #] &@ Map[PrimePi@ First@ # -> Last@ # &, f]]@ FactorInteger@ n]; g[w_List] := Times @@ Flatten@ MapIndexed[Prime[#2]^#1 &, w]; Select[Range@ 336, g@ f@ # == g@ Reverse@ f@ # &] (* _Michael De Vlieger_, Aug 27 2016 *)"
+    ],
+    "program": [
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A242418 (FIXED-POINTS 1 1 A137502))",
+        ";; Alternatively:",
+        "(define (A242418 n) (if (= 1 n) n (* 2 (A241912 (- n 1)))))"
+    ],
+    "xref": [
+        "Fixed points of A137502.",
+        "Cf. A241912.",
+        "A002110 and A079704 are subsequences."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, May 20 2014",
+    "references": 6,
+    "revision": 13,
+    "time": "2016-08-27T09:57:04-04:00",
+    "created": "2014-05-20T23:32:57-04:00"
+}

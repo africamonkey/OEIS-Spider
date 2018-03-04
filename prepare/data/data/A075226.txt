@@ -1,0 +1,41 @@
+{
+    "number": 75226,
+    "data": "3,11,19,137,137,1019,2143,7129,7129,78167,81401,1085933,1111673,1165727,2364487,41325407,41325407,796326437,809074601,812400209,822981689,19174119571,19652175721,99554817251,100483070801",
+    "name": "Largest prime in the numerator of the 2^n sums generated from the set 1, 1/2, 1/3,..., 1/n.",
+    "comment": [
+        "For the smallest odd prime not generated, see A075227. For information about how often the numerator of these sums is prime, see A075188 and A075189. The Mathematica program also prints the subset that yields the largest prime. For n <=20, the largest prime occurs in a sum of n-2, n-1, or n reciprocals."
+    ],
+    "link": [
+        "Martin Fuller, <a href=\"/A075226/b075226.txt\">Table of n, a(n) for n = 2..100</a>",
+        "Martin Fuller, <a href=\"/A075226/a075226.gp.txt\">PARI program</a>"
+    ],
+    "example": [
+        "a(3) =11 because 11 is largest prime numerator in the three sums that yield primes: 1+1/2 = 3/2, 1/2+1/3 = 5/6 and 1+1/2+1/3 = 11/6."
+    ],
+    "mathematica": [
+        "Needs[\"DiscreteMath`Combinatorica`\"]; maxN=20; For[t={}; lst={}; mx=0; i=0; n=2, n<=maxN, n++, While[i<2^n-1, i++; s=NthSubset[i, Range[n]]; k=Numerator[Plus@@(1/s)]; If[PrimeQ[k], If[k>mx, t=s]; mx=Max[mx, k]]]; Print[n, \" \", t]; AppendTo[lst, mx]]; lst"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Ratio (numerator)",
+        "a075226 n = a075226_list !! (n-1)",
+        "a075226_list = f 2 [recip 1] where",
+        "   f x hs = (maximum $ filter ((== 1) . a010051') (map numerator hs')) :",
+        "            f (x + 1) hs' where hs' = hs ++ map (+ recip x) hs",
+        "-- _Reinhard Zumkeller_, May 28 2013",
+        "(PARI) See Fuller link."
+    ],
+    "xref": [
+        "Cf. A001008, A075135, A075188, A075189, A075227, A010051, A217712."
+    ],
+    "keyword": "nice,nonn",
+    "offset": "2,1",
+    "author": "_T. D. Noe_, Sep 08 2002",
+    "ext": [
+        "More terms from _Martin Fuller_, Jan 19 2008"
+    ],
+    "references": 6,
+    "revision": 13,
+    "time": "2015-04-29T16:21:34-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

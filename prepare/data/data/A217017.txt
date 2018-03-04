@@ -1,0 +1,42 @@
+{
+    "number": 217017,
+    "data": "1,1,2,9,216,4985,100560,2957857,136497536,6610096593,345956417280,23296776506201,1836435977198592,154494426214284169,14810872713498208256,1636841993390984400945,196590054470072062279680,25774473091662477588656417,3765032120872059152077357056",
+    "name": "E.g.f. satisfies: A(x) = Sum_{n>=0} x^n * cosh(n^2*x).",
+    "formula": [
+        "E.g.f. satisfies: A(x) = Sum_{n>=0} x^n * (exp(n^2*x) + exp(-n^2*x))/2.",
+        "E.g.f.: A(x) = (B(x) + C(x))/2 where",
+        "B(x) = Sum_{n>=0} x^n*exp(n*x)*Product_{k=1..n} (1 - x*exp((4*k-3)*x)) / (1 - x*exp((4*k-1)*x)),",
+        "C(x) = Sum_{n>=0} x^n*exp(n*x)*Product_{k=1..n} (exp((4*k-3)*x) - x) / (exp((4*k-1)*x) - x)."
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 2*x^2/2! + 9*x^3/3! + 216*x^4/4! + 4985*x^5/5! +...",
+        "where",
+        "A(x) = 1 + x*cosh(x) + x^2*cosh(4*x) + x^3*cosh(9*x) + x^4*cosh(16*x) +...",
+        "Also, A(x) = (B(x) + C(x))/2 where",
+        "B(x) = 1 + x*exp(x)*(1-x*exp(x))/(1-x*exp(3*x)) +",
+        "x^2*exp(2*x)*(1-x*exp(x))*(1-x*exp(5*x))/((1-x*exp(3*x))*(1-x*exp(7*x))) +",
+        "x^3*exp(3*x)*(1-x*exp(x))*(1-x*exp(5*x))*(1-x*exp(9*x))/((1-x*exp(3*x))*(1-x*exp(7*x))*(1-x*exp(11*x))) +...",
+        "and",
+        "C(x) = 1 + x*exp(x)*(exp(x)-x)/(exp(3*x)-x) +",
+        "x^2*exp(2*x)*(exp(x)-x)*(exp(5*x)-x)/((exp(3*x)-x)*(exp(7*x)-x)) +",
+        "x^3*exp(3*x)*(exp(x)-x)*(exp(5*x)-x)*(exp(9*x)-x)/((exp(3*x)-x)*(exp(7*x)-x)*(exp(11*x)-x)) +...",
+        "Also, the above B(x) and C(x) are given by the continued fractions:",
+        "B(x) = 1/(1- q*x/(1- q*(q^2-1)*x/(1- q^5*x/(1- q^3*(q^4-1)*x/(1- q^9*x/(1- q^5*(q^6-1)*x/(1- q^13*x/(1- q^7*(q^8-1)*x/(1- ...))))))))),",
+        "C(x) = 1/(1 - x/(q - (1-q^2)*x/(q^2 - x/(q^3 - (1-q^4)*x/(q^4 - x/(q^5 - (1-q^6)*x/(q^6 - x/(q^7 - (1-q^8)*x/(q^8 - ...))))))))),",
+        "where q = exp(x), due to a partial elliptic theta function identity."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); A=1+sum(m=1, n, x^m*cosh(m^2*x+x*O(x^n))); n!*polcoeff(A, n)}",
+        "for(n=0, 21, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A194017, A193421."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Sep 23 2012",
+    "references": 1,
+    "revision": 5,
+    "time": "2012-09-23T18:34:31-04:00",
+    "created": "2012-09-23T18:33:06-04:00"
+}

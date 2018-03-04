@@ -1,0 +1,80 @@
+{
+    "number": 230439,
+    "data": "1,2,6,14,34,68,150,296,586,1140,2182,4130,7678,14368,26068,48248,86572,158146,281410,509442,901014,1618544,2852464,5089580,8948694,15884762,27882762,49291952,86435358,152316976,266907560,469232204,821844316",
+    "name": "Number of contractible \"tight\" meanders of width n.",
+    "comment": [
+        "A tight meander of width n is a special kind of meander defined as follows.",
+        "For any pair (S={s_1,...,s_k},T={t_1,...,t_l}) of subsets of {1,...,n-1} (k or l might be 0), the tight meander M(S,T) defined by (S,T) is the following subset of R^2:",
+        "assuming S and T ordered so that 0=s_0<s_1<...<s_k<s_{k+1}=n and 0=t_0<t_1<...<t_l<t_{l+1}=n, let M(S,T) be the union of the set of points {(1,0),...,(n,0)},",
+        "semicircles in the upper half-plane with endpoints (s_{i-1}+j,0) and (s_i+1-j,0), for i=1,...,k+1, and j positive integer with s_{i-1}+j<s_i+1-j,",
+        "and semicircles in the lower half-plane with endpoints (t_{i-1}+j,0) and (t_i+1-j,0), for i=1,...,l+1, and j positive integer with t_{i-1}+j<t_i+1-j.",
+        "The tight meander M(S,T) is called contractible if it is a contractible subspace of R^2, i.e., is either a single point or homeomorphic to an interval.",
+        "Then, a(n) is the number of pairs (S,T) as above such that the tight meander M(S,T) is contractible."
+    ],
+    "link": [
+        "Mamuka Jibladze, <a href=\"/A230439/b230439.txt\">Table of n, a(n) for n = 1..100</a> (first 64 terms by Martin Plechsmid)",
+        "Vincent Coll, Colton Magnant and Hua Wang, <a href=\"http://arxiv.org/abs/1206.2705\">The Signature of a Meander</a>, arXiv preprint 1206.2705",
+        "Vladimir Dergachev and Alexandre Kirillov, <a href=\"http://www.heldermann-verlag.de/jlt/jlt10/DERGALAT2E.PDF\">Index of Lie algebras of Seaweed Type</a>, J. Lie Theory, 10 (2000), 331-343",
+        "Mathoverflow, <a href=\"http://mathoverflow.net/questions/146802/special-meanders\">\"Special\" meanders</a>",
+        "Dmitri I. Panyushev, <a href=\"http://www.ams.org/distribution/mmj/vol1-2-2001/panyushev.pdf\">Inductive Formulas for the Index of Seaweed Lie Algebras</a>, Moscow Math. J., 1 (2001), 221-241"
+    ],
+    "example": [
+        "For n=3 the a(3)=6 contractible tight meanders of width 3 correspond to the following pairs of subsets of {1,2}: ({},{1}), ({},{2}), ({1},{}), ({2},{}), ({1},{2}), ({2},{1})."
+    ],
+    "maple": [
+        "# The Maple program based on the C code by Martin Plechsmid",
+        "proc()",
+        "local n,a,b,d,r;",
+        "option remember;",
+        "  if args[1]=1 then",
+        "   1",
+        "  elif nargs=1 then",
+        "   2*`+`(''procname(args,[i],[j])'$'j'=1..i-1'$'i'=2..args)",
+        "  else",
+        "   n:=args[1]; a:=args[2]; b:=args[3];",
+        "   if b=[] then",
+        "    `+`('procname(n,a,[k])'$'k'=1..n)",
+        "   elif a[1]=b[1] then",
+        "    0",
+        "   elif a[1]<b[1] then",
+        "    procname(n,b,a)",
+        "   else",
+        "    d:=a[1]-b[1];",
+        "    r:=irem(b[1],d);",
+        "    if r>0 then",
+        "     procname(n-b[1],[d-r,op(subsop(1=r,a))],subsop(1=NULL,b))",
+        "    else",
+        "     procname(n-b[1],subsop(1=d,a),subsop(1=NULL,b))",
+        "    fi",
+        "   fi",
+        "  fi",
+        "end;"
+    ],
+    "mathematica": [
+        "(* Mathematica program based on the C code by Martin Plechsmid *)",
+        "f[n_, a___, b___] := f[n, a, b] =",
+        "  Which[",
+        "   n == 1, 1,",
+        "   a == Null, 2 Sum[f[n, {i}, {j}], {i, 2, n}, {j, i - 1}],",
+        "   b == {}, Sum[f[n, a, {i}], {i, n}],",
+        "   First[a] == First[b], 0,",
+        "   First[a] < First[b], f[n, b, a],",
+        "   True,",
+        "   Block[{d = First[a] - First[b], r, s},",
+        "    r = Mod[First[b], d];",
+        "    s = If[r == 0, {d}, {d - r, r}];",
+        "    f[n - First[b], Join[s, Rest[a]], Rest[b]]",
+        "    ]",
+        "   ]"
+    ],
+    "xref": [
+        "For various kinds of meandric numbers see A005315, A005316, A060066, A060089, A060206."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Mamuka Jibladze_, Nov 04 2013",
+    "references": 1,
+    "revision": 51,
+    "time": "2014-09-30T17:42:59-04:00",
+    "created": "2013-11-05T13:17:56-05:00"
+}

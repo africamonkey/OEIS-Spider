@@ -1,0 +1,48 @@
+{
+    "number": 239118,
+    "data": "0,0,0,0,0,0,0,1,1,3,9,29,99,357,1351,5342,21983,93823,414198,1886424,8846390,42628782,210773592,1067599984,5533263752,29307314408,158484944416,874103230896,4913196556800,28120097476640,163770757573776,969858742317600",
+    "name": "Number of ballot sequences of length n with exactly 7 fixed points.",
+    "comment": [
+        "The fixed points are in the first 7 positions.",
+        "Also the number of standard Young tableaux with n cells such that the first column contains 1, 2, ..., 7, but not 8.  An alternate definition uses the first row."
+    ],
+    "link": [
+        "Joerg Arndt and Alois P. Heinz, <a href=\"/A239118/b239118.txt\">Table of n, a(n) for n = 0..800</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau\">Young tableau</a>"
+    ],
+    "formula": [
+        "See Maple program.",
+        "Recurrence (for n>=9): (n-8)*(n^7 - 36*n^6 + 706*n^5 - 13080*n^4 + 177169*n^3 - 1264884*n^2 + 3776364*n - 9605520)*a(n) = (n^8 - 44*n^7 + 802*n^6 - 12104*n^5 + 206449*n^4 - 2516636*n^3 + 16735788*n^2 - 68051376*n + 170709120)*a(n-1) + (n-9)*(n-7)*(n^7 - 29*n^6 + 511*n^5 - 10055*n^4 + 131224*n^3 - 805316*n^2 + 1729104*n - 6929280)*a(n-2). - _Vaclav Kotesovec_, Mar 11 2014",
+        "a(n) ~ sqrt(2)/11520 * exp(sqrt(n)-n/2-1/4) * n^(n/2) * (1+7/(24*sqrt(n))). - _Vaclav Kotesovec_, Mar 11 2014"
+    ],
+    "example": [
+        "a(7) = 1: [1,2,3,4,5,6,7].",
+        "a(8) = 1: [1,2,3,4,5,6,7,1].",
+        "a(9) = 3: [1,2,3,4,5,6,7,1,1], [1,2,3,4,5,6,7,1,2], [1,2,3,4,5,6,7,1,8].",
+        "a(10) = 9: [1,2,3,4,5,6,7,1,1,1], [1,2,3,4,5,6,7,1,1,2], [1,2,3,4,5,6,7,1,1,8], [1,2,3,4,5,6,7,1,2,1], [1,2,3,4,5,6,7,1,2,3], [1,2,3,4,5,6,7,1,2,8], [1,2,3,4,5,6,7,1,8,1], [1,2,3,4,5,6,7,1,8,2], [1,2,3,4,5,6,7,1,8,9]."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n<4, [1, 1, 3, 9][n+1],",
+        "      ((41*n^2 +82925*n -562776)*b(n-1)",
+        "       +(174*n^3 +63287*n^2 -447840*n +352440) *b(n-2)",
+        "       +(133*n^3 -81472*n^2 +363510*n -267096) *b(n-3)",
+        "       -(n-4)*(30661*n^2 -93002*n -90720) *b(n-4))/",
+        "       (174*n^2+31449*n-246768))",
+        "    end:",
+        "a:=n-> `if`(n<7, 0, b(n-7)):",
+        "seq(a(n), n=0..40);"
+    ],
+    "mathematica": [
+        "b[n_, l_List] := b[n, l] = If[n <= 0, 1, b[n - 1, Append[l, 1]] + Sum[If[i == 1 || l[[i - 1]] > l[[i]], b[n - 1, ReplacePart[l, i -> l[[i]] + 1]], 0], {i, 1, Length[l]}]]; a[n_] := If[n == 7, 1, b[n - 8, {2, 1, 1, 1, 1, 1, 1}]]; a[n_ /; n < 7] = 0; Table[ Print[\"a(\", n, \") = \", an = a[n]]; an, {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Feb 06 2015, after Maple *)"
+    ],
+    "xref": [
+        "Column k=7 of A238802."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,10",
+    "author": "_Joerg Arndt_ and _Alois P. Heinz_, Mar 10 2014",
+    "references": 2,
+    "revision": 13,
+    "time": "2017-02-06T18:08:07-05:00",
+    "created": "2014-03-10T15:25:48-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 276176,
+    "data": "2,26,31,34,15526",
+    "name": "Consider the race between primes, semiprimes, 3-almost primes, ... k-almost primes; sequence indicates when one overtakes another.",
+    "comment": [
+        "A \"k-almost prime\" is a number which is the product of exactly k primes.",
+        "Let pi_k(n) be the number of k-almost primes less than or equal to n. In 1909, on page 211 of the Handbuch, Edmund G. H. Landau stated that pi_k(n) ~ (n/log n)*(log log n^(k-1))/(k-1)! for all k >= 0.",
+        "Because of this fact, eventually the semiprimes will outnumber the primes; they do starting at 34. Likewise the 3-almost primes will outnumber the semiprimes and they do starting at 15526."
+    ],
+    "reference": [
+        "Edmund Georg Hermann Landau, Handbuch der Lehre von der Verteilung der Primzahlen, Band I, B. G. Teubner, Leipzig u. Berlin, or Chelsea Publishing, NY 1953, or Vol. 1, Teubner, Leipzig; third edition: Chelsea, New York 1974."
+    ],
+    "link": [
+        "University of Michigan Historical Math Collection, <a href=\"http://quod.lib.umich.edu/cgi/t/text/text-idx?c=umhistmath;idno=ABV2766.0001.001\">Edmund Georg Hermann Landau, Handbuch der Lehre von der Verteilung der Primzahlen, page 211, (4).</a>"
+    ],
+    "example": [
+        "a(1) = 2 since beginning with the natural numbers (A000027) the race is even with no group in the lead. But at 2, we encounter our first member (1 is unity and is not a member of any group here) which is a prime and therefore the primes take the lead with 2.",
+        "a(2) = 34 which is a semiprime. pi_1(34) = 11 and pi_2(34) = 12. This is the first time that the semiprimes overtake the primes."
+    ],
+    "mathematica": [
+        "k = 1; lst = {}; tf = 0; p1 = 0; p2 = 0; While[k < 100001, If[PrimeOmega@k == 1, p1++]; If[PrimeOmega@k == 2, p2++]; If[p1 > p2 && tf == 0, tf++; AppendTo[lst, k]]; If[p2 > p1 && tf == 1, tf--; AppendTo[lst, k]]; k++]; lst",
+        "(* cross check using *) AlmostPrimePi[k_Integer, n_] := Module[{a, i}, a[0] = 1; If[k == 1, PrimePi[n], Sum[PrimePi[n/Times @@ Prime[ Array[a, k - 1]]] - a[k - 1] + 1, Evaluate[ Sequence @@ Table[{a[i], a[i - 1], PrimePi[(n/Times @@ Prime[Array[a, i - 1]])^(1/(k - i + 1))]}, {i, k - 1}]] ]]]; (* Eric W. Weisstein Feb 07 2006 *)",
+        "(* as an example *) AlmostPrimePi[2, 15526] => 3986 whereas AlmostPrimePi[3, 15526] => 3987."
+    ],
+    "xref": [
+        "Cf. A274123."
+    ],
+    "keyword": "hard,more,nonn",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_ and _Robert G. Wilson v_, Oct 09 2016",
+    "references": 0,
+    "revision": 24,
+    "time": "2016-11-08T22:34:46-05:00",
+    "created": "2016-11-08T22:34:46-05:00"
+}

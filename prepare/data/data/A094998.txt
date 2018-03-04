@@ -1,0 +1,33 @@
+{
+    "number": 94998,
+    "data": "2,3,25,301,25201,83161,7207201,49008961,698377681,2248776129601,39594522567601,2599263952084801,160287943711896001,4381203794791824001,386203114510899285601,130159869178331861668801",
+    "name": "a(n) = smallest positive integer multiple of n-th prime, say k*prime(n), such that k*prime(n) == 1 mod j for each integer j with 1<j<prime(n).",
+    "formula": [
+        "a(n) = A099795(n) * A099796(n) + 1 = A099794(n) * prime(n)."
+    ],
+    "example": [
+        "For n = 1 there are no such j, so the condition is vacuously satisfied and we can take k=1, getting a(1)=2. - _N. J. A. Sloane_, Feb 10 2015"
+    ],
+    "mathematica": [
+        "a[1] = 2; a[2] = 3; a[n_] := Module[{p, m, r, r0, r1}, p = Prime[n]; m = LCM @@ Range[2, p - 1]; r = Reduce[k > 0 && p*k + m*j == 1, {k, j}, Integers]; r0 = r /. C[_] -> 0; r1 = r /. C[_] -> 1; If[r0 === False, r1[[1, 2]], Min[r0[[1, 2]], r1[[1, 2]]]]*p]; Table[a[n], {n, 1, 20}] (* _Jean-Fran\u00e7ois Alcover_, Feb 09 2015 *)"
+    ],
+    "program": [
+        "(MAGMA) /* By definition (slow): */",
+        "S:=[]; for n in [1..9] do k:=1; while not forall{j: j in [2..NthPrime(n)-1] | IsOne(k*NthPrime(n) mod j)} do k:=k+1; end while; Append(~S, k*NthPrime(n)); end for; S; /* or */",
+        "[p eq 2 select p else Modinv(p, Lcm([1..p-1]))*p: p in PrimesUpTo(60)]; // _Bruno Berselli_, Feb 08 2015"
+    ],
+    "xref": [
+        "Cf. A099794, A099795, A099796."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Mark Troll (mtroll(AT)u.washington.edu), Oct 22 2004",
+    "ext": [
+        "Edited and extended by _Ray Chandler_, Oct 29 2004",
+        "Added \"positive\" to definition. - _N. J. A. Sloane_, Feb 10 2015"
+    ],
+    "references": 5,
+    "revision": 13,
+    "time": "2015-02-12T17:53:49-05:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

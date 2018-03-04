@@ -1,0 +1,44 @@
+{
+    "number": 288492,
+    "data": "1,2,3,18,95,440,1897,7882,32139,129804,521741,2092046,8378383,33533968,134176785,536789010,2147319827,8589606932,34359083029,137437642774,549753192471,2199018012696,8796082536473,35184351117338,140737446412315,562949869535260",
+    "name": "Indices of terms of A288349 that are powers of 2.",
+    "comment": [
+        "The sequence is derived from Chinese 2017 college entrance examination mathematics questions."
+    ],
+    "link": [
+        "Zhining Yang, <a href=\"/A288492/b288492.txt\">Table of n, a(n) for n = 1..200</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (8,-21,22,-8)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Jun 23 2017: (Start)",
+        "G.f.: x*(1 - 6*x + 8*x^2 + 14*x^3 - 22*x^4 + 8*x^5) / ((1 - x)^2*(1 - 2*x)*(1 - 4*x)).",
+        "a(n) = 2 - 5*2^(n-2) + 2^(2*n-3) + n for n>2.",
+        "a(n) = 8*a(n-1) - 21*a(n-2) + 22*a(n-3) - 8*a(n-4) for n>6.",
+        "(End)"
+    ],
+    "example": [
+        "a(4) = 18 means the 18th element of the sum of the concatenate subsequences [2^0, 2^1, ..., 2^k] = 1+1+2+1+2+4+1+2+4+8+1+2+4+8+16+1+2+4 = 64, and 64 is power of 2."
+    ],
+    "mathematica": [
+        "Position[Accumulate@ Flatten@ Array[2^Range[0, #] &, 2000, 0], k_ /; IntegerQ@ Log2@ k][[All, 1]] (* per Name, or *)",
+        "Table[2 - 5*2^(n - 2) + 2^(2 n - 3) + n + Boole[n == 2], {n, 26}] (* or *)",
+        "LinearRecurrence[{8, -21, 22, -8}, {1, 2, 3, 18, 95, 440}, 26] (* or *)",
+        "Rest@ CoefficientList[Series[x (1 - 6 x + 8 x^2 + 14 x^3 - 22 x^4 + 8 x^5)/((1 - x)^2*(1 - 2 x) (1 - 4 x)), {x, 0, 26}], x] (* _Michael De Vlieger_, Jun 19 2017 *)"
+    ],
+    "program": [
+        "(PARI) for(k=0,100,p=(2^k-3)*(2^k-2)/2+k; print1(p, \", \"))",
+        "(PARI) ispower2(n) = (n==1) || (n==2) || (ispower(n,,&two) && (two==2));",
+        "lista(nn) = select(x->ispower2(x), vector(nn, n, t=floor(sqrt(2*n)+1/2); 2^t+2^(n-t*(t-1)/2)-t-2), 1); \\\\ _Michel Marcus_, Jun 20 2017",
+        "(PARI) Vec(x*(1 - 6*x + 8*x^2 + 14*x^3 - 22*x^4 + 8*x^5) / ((1 - x)^2*(1 - 2*x)*(1 - 4*x)) + O(x^30)) \\\\ _Colin Barker_, Jun 23 2017"
+    ],
+    "xref": [
+        "Cf. A059268, A288349."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Zhining Yang_, Jun 10 2017",
+    "references": 1,
+    "revision": 43,
+    "time": "2017-07-19T21:36:31-04:00",
+    "created": "2017-07-19T21:36:31-04:00"
+}

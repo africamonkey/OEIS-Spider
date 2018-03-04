@@ -1,0 +1,55 @@
+{
+    "number": 272860,
+    "data": "12,18,24,96,116,120,984,990,996,8408,23616,23742,23850,24030,24066,24084,480324,480336,481344,3523814,3523842,3523884,3524514,9557160,9558030,9558240,9558300,25874592,25874640,70119798,189960894,189961344,189962352,189963594,189963630,189969102",
+    "name": "Sums of two primes (in increasing order) when equal to the product of their prime-counting functions.",
+    "comment": [
+        "Each term is necessarily even and 3 < p < q in the formula n = p+q = pi(p)*pi(q). Indeed, assuming p<=q, if p=2 then n = 2+q = pi(2)*pi(q) = pi(q) < q. Inequality p > 3 easily follows from prime(k) > k*log(k) and if p=q then 2*p = pi(p)^2 with no solution.",
+        "Primes p,q can only occur for a finite number of terms n (see comments in A273286).",
+        "Conjecture: the sequence is infinite and each term has only one decomposition into a sum of suitable primes p,q.",
+        "From _David A. Corneth_, Jun 28 2016: (Start)",
+        "Pi(p) and pi(q) seem dependent on each other. Below is a small list of pi(p), the least corresponding pi(q) and the largest corresponding pi(q). If a value of pi(p) isn't listed, no terms are formed with it.",
+        "3, 4, 8",
+        "4, 24, 30",
+        "6, 164, 166",
+        "8, 1051, 1051",
+        "9, 2624, 2676",
+        "12, 40027, 40112",
+        "Can these bounds on pi(q) be expressed in terms of pi(p)? (End)"
+    ],
+    "link": [
+        "Giuseppe Coppoletta, <a href=\"/A272860/b272860.txt\">Table of n, a(n) for n = 1..43</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RossersTheorem.html\">Rosser's Theorem</a>",
+        "Pierre Dusart, <a href=\"http://arxiv.org/abs/1002.0442/\">Estimates of some functions over primes without R.H.</a>, arXiv:1002.0442 [math.NT], 2010."
+    ],
+    "formula": [
+        "Numbers n = p+q = pi(p)*pi(q) for some primes p and q.",
+        "Equivalently, n = i*j = prime(i) + prime(j) for some i,j.",
+        "A272862 gives the corresponding terms pi(q) (with q>p). The terms pi(p) are given by A272860 / A272862"
+    ],
+    "example": [
+        "12 is a term because 12 = 5 + 7 = pi(5) * pi(7)."
+    ],
+    "mathematica": [
+        "Select[Range[10^3], Function[n, MemberQ[Times @@ # & /@ PrimePi@ Select[Transpose@ {#, n - #} &@ Range[Floor[n/2]], Times @@ Boole@ PrimeQ@ {First@ #, Last@ #} == 1 &], n]]] (* _Michael De Vlieger_, Jun 29 2016 *)"
+    ],
+    "program": [
+        "(Sage) def sol(n):",
+        "    return [k for k in divisors(n) if k^2<= n and is_prime(n-nth_prime(k)) and k*prime_pi(n-nth_prime(k))==n]",
+        "N=25000",
+        "v=[n for n in range(2,N,2) if len(sol(n))>0]; print 'A272862 =',v;",
+        "list_pi=flatten([sol(n) for n in range(2,N,2) if len(sol(n))>0]); print 'list_pi(p) =',list_pi"
+    ],
+    "xref": [
+        "Cf. A272861, A272862, A273286, A000040, A000720."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Giuseppe Coppoletta_, Jun 19 2016",
+    "ext": [
+        "More terms from _David A. Corneth_, Jun 28 2016"
+    ],
+    "references": 4,
+    "revision": 68,
+    "time": "2016-08-10T12:02:24-04:00",
+    "created": "2016-07-12T22:37:42-04:00"
+}

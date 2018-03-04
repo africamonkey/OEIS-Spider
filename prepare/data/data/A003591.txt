@@ -1,0 +1,36 @@
+{
+    "number": 3591,
+    "data": "1,2,4,7,8,14,16,28,32,49,56,64,98,112,128,196,224,256,343,392,448,512,686,784,896,1024,1372,1568,1792,2048,2401,2744,3136,3584,4096,4802,5488,6272,7168,8192,9604,10976,12544,14336,16384,16807,19208,21952,25088",
+    "name": "Numbers of form 2^i*7^j, with i, j >= 0.",
+    "comment": [
+        "A204455(7*a(n)) = 7, and only for these numbers. - _Wolfdieter Lang_, Feb 04 2012"
+    ],
+    "link": [
+        "Vincenzo Librandi and Reinhard Zumkeller, <a href=\"/A003591/b003591.txt\">Table of n, a(n) for n = 1..10000</a>, first 100 terms from Vincenzo Librandi"
+    ],
+    "mathematica": [
+        "fQ[n_] := PowerMod[14,n,n]==0; Select[Range[30000], fQ] (* _Vincenzo Librandi_, Feb 04 2012 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List(),N);for(n=0,log(lim)\\log(7),N=7^n;while(N<=lim,listput(v,N);N<<=1));vecsort(Vec(v)) \\\\ _Charles R Greathouse IV_, Jun 28 2011",
+        "(PARI) isA003591(n)=n>>=valuation(n,2);ispower(n,,&n);n==1||n==7 \\\\ _Charles R Greathouse IV_, Jun 28 2011",
+        "(MAGMA) [n: n in [1..26000] | PrimeDivisors(n) subset [2,7]]; // _Bruno Berselli_, Sep 24 2012",
+        "(Haskell)",
+        "import Data.Set (singleton, deleteFindMin, insert)",
+        "a003591 n = a003591_list !! (n-1)",
+        "a003591_list = f $ singleton 1 where",
+        "   f s = y : f (insert (2 * y) $ insert (7 * y) s')",
+        "               where (y, s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, May 16 2015"
+    ],
+    "xref": [
+        "Cf. A003586, A003592, A003593, A003594, A003595."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_.",
+    "references": 17,
+    "revision": 29,
+    "time": "2015-05-16T16:40:27-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

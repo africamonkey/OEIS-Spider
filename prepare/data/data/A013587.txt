@@ -1,0 +1,69 @@
+{
+    "number": 13587,
+    "data": "1,1,12,620,87304,26312976,14616808192,13525751027392,19385778269260800,40739017561997799680,120278021410937387514880,482113680618029292368686080,2551154673732472157928033617920",
+    "name": "Number of rational plane curves of degree d passing through 3d-1 general points.",
+    "reference": [
+        "M. Atiyah, On the unreasonable effectiveness of physics in mathematics, in \"Highlights of Mathematical Physics:, ed. A. S. Fokas, pp. 25-.",
+        "D. A. Cox and S. Katz, Mirror Symmetry and Algebraic Geometry, American Mathematical Society, 1999, p. 198.",
+        "P. DiFranceso and C. Itzykson, Quantum intersection rings, in The Moduli Space of Curves, Birkh\u00e4user, Boston, 1995, pp. 81-148.",
+        "W. Fulton, Enumerative geometry via quantum cohomology, lecture notes, AMS Summer Institute, Santa Cruz, 1995.",
+        "Yuri I. Manin, Frobenius Manifolds, Quantum Cohomology and Moduli Spaces, American Mathematical Society, 1999, p. 7."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A013587/b013587.txt\">Table of n, a(n) for n=1..50</a>",
+        "Steven R. Finch, <a href=\"/A013587/a013587.pdf\">Enumerative geometry</a>, February 24, 2014. [Cached copy, with permission of the author]",
+        "Sergey Fomin and Grigory Mikhalkin, <a href=\"http://arxiv.org/abs/0906.3828\">Labeled floor diagrams for plane curves</a>, arXiv:0906.3828 [math.AG], 2009-2010. [From _N. J. A. Sloane_, Sep 27 2010",
+        "E. Getzler, <a href=\"http://www.ams.org/journal-getitem?pii=S0273-0979-00-00888-0\">Review of \"Frobenius Manifolds, Quantum Cohomology and Moduli Spaces\"</a> by Y. I. Manin, Bull. Amer. Math. Soc., 38 (No. 1, 2001), 101-108.",
+        "\u00c9tienne Ghys, Catriona Maclean, <a href=\"http://images.math.cnrs.fr/Des-equations-geometriques.html\">Des \u00e9quations g\u00e9om\u00e9triques</a> - Images des Math\u00e9matiques, CNRS, 2013.",
+        "Daniel B. Grunberg and Pieter Moree, with an Appendix by Don Zagier, <a href=\"http://arxiv.org/abs/math.NT/0610286\">Sequences of enumerative geometry: congruences and asymptotics</a>, arXiv:math/0610286 [math.NT], 2006.",
+        "M. Kontsevich, <a href=\"http://dx.doi.org/10.1007/978-1-4612-4264-2_12\">Enumeration of rational curves via torus actions</a>, in The Moduli Space of Curves, Birkh\u00e4user, Boston, 1995, 335-368.",
+        "M. Kontsevich, <a href=\"https://arxiv.org/abs/hep-th/9405035\">Enumeration of rational curves via torus actions</a>, arXiv:hep-th/9405035, 1994-1995.",
+        "Grigory Mikhalkin, <a href=\"http://arxiv.org/abs/math/0312530\">Enumerative tropical algebraic geometry in R^2</a>, arXiv:math/0312530 [math.AG], 2003-2004. [From N. J. A. Sloane, Sep 27 2010]",
+        "Ian Strachan, <a href=\"http://www.maths.gla.ac.uk/~iabs/Visions.pdf\">How to count curves: from C. 19 problems to C. 20 solutions</a>, Phil. Trans. Royal Soc. London, A 351 (2003), 2633-2647.",
+        "Jean-Yves Welschinger, <a href=\"http://images.math.cnrs.fr/Enumeration-de-fractions.html\">Enum\u00e9ration de fractions rationnelles r\u00e9elles</a>, Images des Math\u00e9matiques, CNRS, 2006 (in French)."
+    ],
+    "formula": [
+        "a_d = sum_{i+j=d} a_i*a_j ( i^2*j^2*binom(3d-4, 3i-2) - i^3*j*binom(3d-4, 3i-1) )."
+    ],
+    "example": [
+        "G.f. = x + x^2 + 12*x^3 + 620*x^4 + 87304*x^5 + 26312976*x^6 + ..."
+    ],
+    "maple": [
+        "a := proc(d:nonnegint) options remember; if d = 1 then 1 else sum('a(k)*a(d-k)*(k^2*(d-k)^2*binomial(3*d-4,3*k-2)-k^3*(d-k)*binomial(3*d-4,3*k-1))','k' = 1 .. d-1) fi end"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = Sum[ a[k]*a[n-k]*k^2*(n-k)*(3k-n)*(3n-4)! / (3k-1)! / (3*(n-k)-2)!, {k, 1, n-1}]; a[1] = 1; Table[a[n], {n, 1, 13}] (* _Jean-Fran\u00e7ois Alcover_, Nov 09 2011, after Pari *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<2, n>0, sum(k=1, n-1, a(k) * a(n-k) * k^2 * (n-k) * (3*k-n) * (3*n-4)! / ((3*k-1)! * (3*(n-k)-2)!) ))}; /* _Michael Somos_, Dec 11 1999 */",
+        "(PARI)",
+        "N=20;",
+        "MEM=vector(N, j, -1);  \\\\ for memoization",
+        "MEM[1] = 1;",
+        "K(d)= \\\\ Kontsevich's recursion, see S. Finch link.",
+        "{",
+        "    my(m = MEM[d]);",
+        "    if ( m != -1, return(m) );  \\\\ memoized",
+        "    my(t, d2);",
+        "    t = sum(d1=1, d-1,  d2=d-d1;  \\\\ d1+d2==d, both >= 1",
+        "        K(d1) * K(d2) *",
+        "        (d1^2 * d2^2 * binomial(3*d-4, 3*d1-2) -",
+        "         d1^3 * d2^1 * binomial(3*d-4, 3*d1-1) )",
+        "    );",
+        "    MEM[d] = t;  \\\\ memoize",
+        "    return(t);",
+        "}",
+        "vector(N, d, K(d) )",
+        "\\\\ _Joerg Arndt_, Feb 26 2014"
+    ],
+    "keyword": "nonn,easy,nice,changed",
+    "offset": "1,3",
+    "author": "Gary Kennedy (kennedy(AT)math.ohio-state.edu)",
+    "ext": [
+        "Additional terms and references from _Michael Somos_"
+    ],
+    "references": 6,
+    "revision": 52,
+    "time": "2018-02-26T00:56:03-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

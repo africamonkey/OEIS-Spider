@@ -1,0 +1,44 @@
+{
+    "number": 249156,
+    "data": "0,1,2,3,4,6,24,57,78,114,342,624,856,1432,10308,12654,27616,100056,537856,593836,769621,1434168,1473368,1636104,1823544,1862744,17968646,18108296,22412057,34713713,34853363,39280254,159690408,663706192",
+    "name": "Palindromic in bases 5 and 7.",
+    "comment": [
+        "Intersection of A029952 and A029954."
+    ],
+    "link": [
+        "G. Resta, <a href=\"/A249156/b249156.txt\">Table of n, a(n) for n = 1..72</a> (first 60 terms from Ray Chandler)",
+        "Attila B\u00e9rczes and Volker Ziegler, <a href=\"http://arxiv.org/abs/1403.0787\">On Simultaneous Palindromes</a>, arXiv:1403.0787 [math.NT], 2014."
+    ],
+    "example": [
+        "114 is a term since 114 = 424 base 5 and 114 = 222 base 7."
+    ],
+    "mathematica": [
+        "palQ[n_Integer,base_Integer]:=Block[{idn=IntegerDigits[n,base]},idn==Reverse[idn]];Select[Range[10^6]-1,palQ[#,5]&&palQ[#,7]&]"
+    ],
+    "program": [
+        "(Python)",
+        "from gmpy2 import digits",
+        "def palQ(n,b): # check if n is a palindrome in base b",
+        "....s = digits(n,b)",
+        "....return s == s[::-1]",
+        "def palQgen(l,b): # unordered generator of palindromes in base b of length <= 2*l",
+        "....if l > 0:",
+        "........yield 0",
+        "........for x in range(1,b**l):",
+        "............s = digits(x,b)",
+        "............yield int(s+s[-2::-1],b)",
+        "............yield int(s+s[::-1],b)",
+        "A249156_list = sorted([n for n in palQgen(8,5) if palQ(n,7)]) # _Chai Wah Wu_, Nov 25 2014",
+        "(PARI) isok(n) = my(df = digits(n, 5), ds = digits(n, 7)); (Vecrev(df)==df) && (Vecrev(ds)==ds); \\\\ _Michel Marcus_, Oct 31 2017"
+    ],
+    "xref": [
+        "Cf. A007632, A060792, A249155, A249157, A249158."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Ray Chandler_, Oct 27 2014",
+    "references": 20,
+    "revision": 29,
+    "time": "2018-01-15T23:36:36-05:00",
+    "created": "2014-10-27T20:46:47-04:00"
+}

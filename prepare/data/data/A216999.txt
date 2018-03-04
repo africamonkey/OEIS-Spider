@@ -1,0 +1,34 @@
+{
+    "number": 216999,
+    "data": "1,3,6,13,38,153,867,6930,75986,1109442,20693262,477815647",
+    "name": "Number of integers obtainable from 1 in n steps using addition, multiplication, and subtraction.",
+    "comment": [
+        "A straight-line program is a sequence that starts at 1 and has each entry obtained from two preceding entries by addition, multiplication, or subtraction.  S(n) is the set of integers obtainable at any point in a straight-line program using n steps.  Thus S(0) = {1}, S(1) = {0,1,2}, S(2) = {-1,0,1,2,3,4}; the sequence here is the cardinality of S(n)."
+    ],
+    "link": [
+        "Peter Borwein and Joe Hobart, <a href=\"http://www.jstor.org/stable/10.4169/amer.math.monthly.119.07.584\">The extraordinary power of division in straight line programs</a>, American Mathematical Monthly 119:7 (2012), pp. 584-592.",
+        "Michael Shub and Steve Smale, <a href=\"http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.100.5035\">On the intractability of Hilbert's Nullstellensatz and an algebraic version of \"NP = P\"</a>, Duke Mathematical Journal 81:1 (1995), pp. 47-54."
+    ],
+    "mathematica": [
+        "extend[p_] :=  Module[{q = Tuples[p, {2}], new},",
+        "  new = Flatten[Table[{Total[t], Subtract @@ t, Times @@ t}, {t, q}]];",
+        "  Union[ Sort /@  DeleteCases[ Table[If[! MemberQ[p, n], Append[p, n]], {n, new}], Null]]] ;",
+        "P[0] = {{1}};",
+        "P[n_] := P[n] = DeleteDuplicates[Flatten[extend /@ P[n - 1], 1]];",
+        "S[n_] := DeleteDuplicates[Flatten[P[n]]];",
+        "Length /@ S /@ Range[6]"
+    ],
+    "xref": [
+        "Cf. A173419, A003065, A141414."
+    ],
+    "keyword": "nonn,more,hard,nice",
+    "offset": "0,2",
+    "author": "_Stan Wagon_, Sep 22 2012",
+    "ext": [
+        "a(9)-a(11) (Michael Collier verified independently the 1109442, 20693262 values) by _Gil Dogon_, Sep 27 2013"
+    ],
+    "references": 10,
+    "revision": 28,
+    "time": "2017-09-28T22:26:19-04:00",
+    "created": "2012-09-22T19:06:29-04:00"
+}

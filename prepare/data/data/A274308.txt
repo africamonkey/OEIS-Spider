@@ -1,0 +1,44 @@
+{
+    "number": 274308,
+    "data": "1,3,37,997,44121,2882071,260415373,31088448777,4737782756017,897380763253291,206773800208348341,56951114596754707693,18476855531112777659017,6973886287904020598308287,3029760395576715276955711261,1501087423496953812426438796561",
+    "name": "Number of n-tuples of singular vectors of a 3 X 3 X 3 X ... X 3 n-dimensional tensor.",
+    "link": [
+        "Shalosh B. Ekhad and Doron Zeilberger, <a href=\"http://www.math.rutgers.edu/~zeilberg/mamarim/mamarimhtml/svt.html\">On the Number of Singular Vector Tuples of Hyper-Cubical Tensors</a>, 2016; also arXiv preprint arXiv:1605.00172, 2016.",
+        "Bernd Sturmfels, <a href=\"http://www.ams.org/publications/journals/notices/201606/rnoti-p604.pdf\">Tensors and Their Eigenvalues</a>, Notices AMS, 63 (No. 6, 2016), 606-606. (Th. 9 gives g.f.)"
+    ],
+    "maple": [
+        "ans:=[];",
+        "for d from 1 to 10 do",
+        "for h from 1 to d do zh[h]:=add(z[i],i=1..d)-z[h]; od;",
+        "t1:= expand(simplify( mul( (zh[i]^3-z[i]^3) / (zh[i]-z[i]), i=1..d)));",
+        "a:=t1; for i from 1 to d do a:=coeff(a,z[i],2); od;",
+        "ans:=[op(ans),a];",
+        "od:",
+        "ans;"
+    ],
+    "program": [
+        "(PARI)",
+        "a(n) = {",
+        "  my(v = vector(n, i, eval(concat(\"x\", i))), S = sum(i = 1, #v, v[i]),",
+        "     d = 3, f = vector(n, i, ((S - v[i])^d - v[i]^d)/((S-v[i])-v[i])),",
+        "     o = sum(i=1, n, O(v[i]^d)), res = prod(i=1, n, (f[i] + o)));",
+        "  for(i = 1, n, res = polcoeff(res, d-1)); return(res);",
+        "};",
+        "vector(10,n,a(n))  \\\\ _Gheorghe Coserea_, Jun 29 2016"
+    ],
+    "xref": [
+        "Row n=3 of A284308.",
+        "Cf. A271905, A272551, A283829, A283830."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jun 21 2016",
+    "ext": [
+        "a(11)-a(15) from _Gheorghe Coserea_, Jun 29 2016",
+        "a(16) from _Alois P. Heinz_, Mar 24 2017"
+    ],
+    "references": 2,
+    "revision": 23,
+    "time": "2017-05-19T15:30:52-04:00",
+    "created": "2016-06-21T13:50:26-04:00"
+}

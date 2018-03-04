@@ -1,0 +1,56 @@
+{
+    "number": 262059,
+    "data": "2,4913,29410,96854,236916,484596,879483,1465239,2289183,3401984,4857388,6712006,9025131,11858570,15276512,19345406,24133846,29712478,36153913,43532644,51924974,61408954,72064316,83972419,97216198,111880113,128050105,145813554,165259239,186477301,209559205",
+    "name": "Least integer k such that cbrt(k)/log(k) exceeds n.",
+    "maple": [
+        "A262059val := proc(k)",
+        "    Digits := 100 ;",
+        "    evalf(root[3](k)/log(k)) ;",
+        "end proc:",
+        "A262059lims := proc(n,lowk,highk)",
+        "    local vallow, valhigh,midk,valmid ;",
+        "    vallow := A262059val(lowk) ;",
+        "    valhigh := A262059val(highk) ;",
+        "    if valhigh > n and vallow <= n and highk= lowk+1 then",
+        "        return highk;",
+        "    else",
+        "        midk := floor((lowk+highk)/2) ;",
+        "        valmid := A262059val(midk) ;",
+        "        if valmid < n then",
+        "            return procname(n,midk,highk) ;",
+        "        else",
+        "            return procname(n,lowk,midk) ;",
+        "        end if;",
+        "    end if;",
+        "end proc:",
+        "A262059 := proc(n)",
+        "    local lowk,highk,p ;",
+        "    if n = 1 then",
+        "        return 2;",
+        "    end if;",
+        "    for p from 0 do",
+        "        lowk := 10^p ;",
+        "        highk := 10^(p+1) ;",
+        "        if A262059val(highk) >=n then",
+        "            return A262059lims(n,min(2,lowk),highk) ;",
+        "        end if;",
+        "    end do:",
+        "end proc: # _R. J. Mathar_, Oct 22 2015"
+    ],
+    "mathematica": [
+        "f[n_] := f[n] = Block[{k = f[n - 1]}, While[n > k^(1/3)/Log[k], k++]; k]; f[1] = 2; Array[f, 40]"
+    ],
+    "program": [
+        "(PARI) a(n) = {my(k = 2); while(sqrtn(k,3)/log(k) <= n, k++); k;} \\\\ _Michel Marcus_, Sep 10 2015"
+    ],
+    "xref": [
+        "Cf. A088346, A262058, A262060."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Sep 09 2015",
+    "references": 3,
+    "revision": 13,
+    "time": "2015-10-23T03:55:43-04:00",
+    "created": "2015-10-23T03:55:43-04:00"
+}

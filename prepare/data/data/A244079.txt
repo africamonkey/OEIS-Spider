@@ -1,0 +1,31 @@
+{
+    "number": 244079,
+    "data": "28,120,162,196,868,1260,1302,1800,2016,2480,3780,4464,6804,7440,8370,9882,22200,32640,34290,35640,40640,73152,127008,187488,213776,489888,572880,602640,674082,1074528,1077120,1397088,1536192,1582560,1662120,1669164,1781136,1905120",
+    "name": "Numbers n with the property that it is possible to write the base 2 expansion of n as concat(a_2,b_2), with a_2>0 and b_2>0 such that, converting a_2 and b_2 to base 10 as a and b, we have sigma(a)*sigma(b) = n.",
+    "example": [
+        "28 in base 2 is 11100. If we take 11100 = concat(11,100) then 11 and 100 converted to base 2 are 3 and 4. Finally sigma(3)*sigma(4) = 4 * 7 = 28;",
+        "120 in base 2 is 1111000. If we take 1111000 = concat(111,1000) then 111 and 1000 converted to base 10 are 7 and 8. Finally sigma(7)*sigma(8) = 8 * 15 = 120."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,b,c,k,n;",
+        "for n from 1 to q do c:=convert(n, binary, decimal);",
+        "for k from 1 to ilog10(c) do",
+        "a:=convert(trunc(c/10^k), decimal, binary);",
+        "b:=convert((c mod 10^k), decimal, binary);",
+        "if a*b>0 then if sigma(a)*sigma(b)=n then print(n);",
+        "break; fi; fi; od; od; end: P(10^9);"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{d = IntegerDigits[n, 2], len = IntegerLength[n, 2], k}, ReplaceAll[Reap[Do[k = {FromDigits[Take[d, i], 2], FromDigits[Take[d, -(len - i)], 2]}; If[! MemberQ[k, 0], Sow@k], {i, 1, len - 1}]], {} -> {1}][[-1, 1]]]; Select[Range@ 100000, MemberQ[DivisorSigma[1, #1] DivisorSigma[1, #2] & @@@ f@ #, #] &] (* _Michael De Vlieger_, Jul 07 2015 *)"
+    ],
+    "xref": [
+        "Cf. A000203, A258813, A258843, A259831, A259832."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jul 06 2015",
+    "references": 3,
+    "revision": 17,
+    "time": "2015-07-17T12:30:01-04:00",
+    "created": "2015-07-17T12:30:01-04:00"
+}

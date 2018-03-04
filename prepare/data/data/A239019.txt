@@ -1,0 +1,35 @@
+{
+    "number": 239019,
+    "data": "11,22,33,44,55,66,77,88,99,111,222,333,444,555,666,777,888,999,1010,1111,1212,1313,1414,1515,1616,1717,1818,1919,2020,2121,2222,2323,2424,2525,2626,2727,2828,2929,3030,3131,3232,3333,3434,3535,3636,3737,3838,3939,4040,4141,4242,4343,4444,4545,4646,4747,4848,4949",
+    "name": "Numbers which are not primitive words over the alphabet {0,...,9} (when written in base 10).",
+    "comment": [
+        "A word is primitive iff it is not a power, i.e., repetition, of a subword. The only non-primitive words with a prime number of letters (here: digits) are the repdigit numbers. Thus, the first nontrivial terms of this sequence are 1010,1212,...",
+        "This sequence does *not* contain all non-primitive words over the alphabet {0,...,9}, namely, it excludes those which would be numbers with leading zeros: 00,000,0000,0101,0202,...",
+        "Lists of non-primitive words over a sub-alphabet of {1...9}, like",
+        "A213972, A213973, A213974, A239018, ... are given as intersection of this with the set of all words in that alphabet, e.g., A007931, A032810, A032917, A007932, ..."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A239019/b239019.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "F:= proc(d) local p,R,q;",
+        "  R:= {seq(x*(10^d-1)/9, x=1..9)};",
+        "  for p in numtheory:-factorset(d) minus {d} do",
+        "    q:= d/p;",
+        "    R:= R union {seq(x*(10^d-1)/(10^q-1),x=10^(q-1)..10^q-1)};",
+        "  od:",
+        "  sort(convert(R,list))",
+        "end proc:",
+        "[seq(op(F(i)),i=2..4)]; # _Robert Israel_, Nov 14 2017"
+    ],
+    "program": [
+        "(PARI) is_A239019(n)=fordiv(#n=digits(n),L,L<#n && n==concat(Col(vector(#n/L,i,1)~*vecextract(n,2^L-1))~)&&return(1))"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_M. F. Hasler_, Mar 08 2014",
+    "references": 2,
+    "revision": 8,
+    "time": "2017-11-14T03:08:09-05:00",
+    "created": "2014-03-10T01:47:29-04:00"
+}

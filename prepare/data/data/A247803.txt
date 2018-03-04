@@ -1,0 +1,38 @@
+{
+    "number": 247803,
+    "data": "0,1,2,3,4,5,6,7,8,9,20,21,23,24,25,26,27,29,30,31,34,35,36,37,39,40,41,45,47,49,51,59,60,61,64,65,67,69,71,75,79,80,81,82,83,84,85,86,87,89,91,201,205,207,209,230,231,234,235,236,237,239,240,241",
+    "name": "Numbers in decimal representation with distinct digits, such that in Finnish their digits are in alphabetic order.",
+    "comment": [
+        "List of decimal digits, alphabetically sorted by their names in Finnish:",
+        "8 _ kahdeksan, 2 _ kaksi, 3 _ kolme, 6 _ kuusi, 4 _ nelj\u00e4, 0 _ nolla, 7 _ seitsem\u00e4n, 5 _ viisi, 9 _ yhdeks\u00e4n, 1 _ yksi;",
+        "finite sequence with last and largest term a(1008) = 8236407591."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A247803/b247803.txt\">Table of n, a(n) for n = 1..1008</a>",
+        "Wikipedia, <a href=\"http://de.wikipedia.org/wiki/Zahlen_in_unterschiedlichen_Sprachen#0_bis_10\">Zahlen in unterschiedlichen Sprachen</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/List_of_numbers_in_various_languages\">List of numbers in various languages</a>"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.IntSet (fromList, deleteFindMin, union)",
+        "import qualified Data.IntSet as Set (null)",
+        "a247803 n = a247803_list !! (n-1)",
+        "a247803_list = 0 : f (fromList [1..9]) where",
+        "   f s | Set.null s = []",
+        "       | otherwise  = x : f (s' `union`",
+        "         fromList (map (+ 10 * x) $ tail $ dropWhile (/= mod x 10) digs))",
+        "       where (x, s') = deleteFindMin s",
+        "   digs = [8, 2, 3, 6, 4, 0, 7, 5, 9, 1]"
+    ],
+    "xref": [
+        "Intersection of A010784 and A247753.",
+        "Cf. A247800 (Czech), A247801 (Danish), A247802 (Dutch), A053433 (English), A247804 (French), A247805 (German), A247806 (Hungarian), A247807 (Italian), A247808 (Latin), A247809 (Norwegian), A247810 (Polish), A247807 (Portuguese), A247811 (Russian), A247812 (Slovak), A247813 (Spanish), A247809 (Swedish), A247814 (Turkish)."
+    ],
+    "keyword": "nonn,base,word,fini,full",
+    "offset": "1,3",
+    "author": "_Reinhard Zumkeller_, Oct 05 2014",
+    "references": 17,
+    "revision": 4,
+    "time": "2014-10-05T19:06:13-04:00",
+    "created": "2014-10-05T19:06:13-04:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 200222,
+    "data": "1,2,4,12,42,164,688,3024,13680,63110,295520,1401012,6713280,32470468,158343504,777725264,3843992546,19104857608,95419519076,478668009828,2410698765472,12184259877320,61782045169312,314202878599696,1602270787137472,8191160756085318,41971595130249968,215522156779513584",
+    "name": "G.f. satisfies: A(x) = 1 + Sum_{n>=1} (x*A(x))^(n^2) * (A(x)^n + 1/A(x)^n).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A200222/b200222.txt\">Table of n, a(n) for n = 0..430</a> (terms 0..200 from Paul D. Hanna)"
+    ],
+    "formula": [
+        "By the Jacobi triple product identity, g.f. A(x) satisfies:",
+        "(1) A(x) = Product_{n>=1} (1 + x^(2*n-1)*A(x)^(2*n-2)) * (1 + x^(2*n-1)*A(x)^(2*n)) * (1 - x^(2*n)*A(x)^(2*n)).",
+        "Let G(x) be the g.f. of A190791, then A(x) satisfies:",
+        "(2) A(x) = (1/x)*Series_Reversion(x/G(x)),",
+        "(3) A(x) = G(x*A(x)) and G(x) = A(x/G(x)),",
+        "(4) a(n) = [x^n] G(x)^(n+1)/(n+1),",
+        "where G(x) = 1 + Sum_{n>=1} x^(n^2) * (G(x)^n + 1/G(x)^n).",
+        "a(n) ~ c * d^n / n^(3/2), where d = 5.42800145666083947972618... and c = 0.45497910593346577587... - _Vaclav Kotesovec_, Sep 04 2017"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 4*x^2 + 12*x^3 + 42*x^4 + 164*x^5 + 688*x^6 +...",
+        "The g.f. A = A(x) may be expressed by the series:",
+        "A(x) = 1 + x*A*(A + 1/A) + x^4*A^4*(A^2 + 1/A^2) + x^9*A^9*(A^3 + 1/A^3) + x^16*A^16*(A^4 + 1/A^4) + x^25*A^25*(A^5 + 1/A^5) +...",
+        "and by the Jacobi triple product:",
+        "A(x) = (1+x)*(1+x*A^2)*(1-x^2*A^2) * (1+x^3*A^2)*(1+x^3*A^4)*(1-x^4*A^4) * (1+x^5*A^4)*(1+x^5*A^6)*(1-x^6*A^6) * (1+x^7*A^6)*(1+x^7*A^8)*(1-x^8*A^8) *..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=1,n,A=1+sum(m=1, sqrtint(n+1), (A^m +1/(A+x*O(x^n))^m)*(x*A)^(m^2))); polcoeff(A, n)}",
+        "(PARI) /* By Jacobi's Triple Product Identity: */",
+        "{a(n)=local(A=1+x); for(i=1,n,A=prod(m=1, n\\2+1, (1+x^(2*m-1)*A^(2*m-2)+x*O(x^n))*(1+x^(2*m-1)*A^(2*m))*(1-x^(2*m)*A^(2*m)) )); polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A190791, A199576, A196354, A197707."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 14 2011",
+    "references": 1,
+    "revision": 20,
+    "time": "2017-09-04T03:12:59-04:00",
+    "created": "2011-11-14T19:41:36-05:00"
+}

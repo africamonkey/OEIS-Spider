@@ -1,0 +1,34 @@
+{
+    "number": 215197,
+    "data": "2511,7856,10287,15471,15632,18063,20816,28592,36368,40816,54512,75248,88047,93231,101168,126927,134703,160624,163376,170991,178767,210032,215216,217808,220624,254096,256527,274671,280624,292976,334448,347408,443151,482192",
+    "name": "Numbers n such that n and n + 1 are both of the form p*q^4 where p and q are distinct primes.",
+    "comment": [
+        "The smaller of adjacent terms in A178739. - _R. J. Mathar_, Aug 08 2012",
+        "These are numbers n such that n and n+1 both have 10 divisors. Proof: clearly n and n+1 cannot both be of the form p^9, so for contradiction assume either n and n+1 is of the form p*q^4 and the other is of the form r^9 where p, q, and r are prime. So p*q^4 is either r^9 - 1 = (r-1)(r^2+r+1)(r^6+r^3+1) or r^9 + 1 = (r+1)(r^2-r+1)(r^6-r^3+1). But these factors are relatively prime and so cannot represent p*q^4 unless one or more factors are units. But this does not happen for r > 2, and the case r = 2 does not work since neither 511 not 513 is of the form p*q^4. - _Charles R Greathouse IV_, Jun 19 2016"
+    ],
+    "example": [
+        "2511 is a member as 2511 = 31*3^4 and 2512 = 157*2^4."
+    ],
+    "maple": [
+        "with(numtheory):for n from 3 to 500000 do:x:=factorset(n):y:=factorset(n+1):n1:=nops(x):n2:=nops(y):if n1=2 and n2=2 then xx1:=x[1]*x[2]^4 : xx2:=x[2]*x[1]^4:yy1:=y[1]*y[2]^4: yy2:=y[2]*y[1]^4:if (xx1=n or xx2=n) and (yy1=n+1 or yy2=n+1) then printf(\"%a, \", n):else fi:fi:od:"
+    ],
+    "mathematica": [
+        "lst={}; Do[f1=FactorInteger[n]; If[Sort[Transpose[f1][[2]]]=={1, 4}, f2=FactorInteger[n+1]; If[Sort[Transpose[f2][[2]]]=={1, 4}, AppendTo[lst, n]]], {n, 3, 55000}]; lst (* Lagneau *)",
+        "(* First run program for A178739 *) Select[A178739, MemberQ[A178739, # + 1] &] (* _Alonso del Arte_, Aug 05 2012 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=numdiv(n)==10 && numdiv(n)==10 \\\\ _Charles R Greathouse IV_, Jun 19 2016",
+        "(PARI) is(n)=vecsort(factor(n)[,2])==[1,4]~ && vecsort(factor(n+1)[,2])==[1,4]~ \\\\ _Charles R Greathouse IV_, Jun 19 2016"
+    ],
+    "xref": [
+        "Intersection of A005237 and A030628.",
+        "Cf. A074172, A215173."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Aug 05 2012",
+    "references": 4,
+    "revision": 16,
+    "time": "2016-07-07T12:07:51-04:00",
+    "created": "2012-08-08T15:36:47-04:00"
+}

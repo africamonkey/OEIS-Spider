@@ -1,0 +1,41 @@
+{
+    "number": 269731,
+    "data": "1,7,61,595,6217,68047,770149,8939707,105843409,1273241431,15517824973,191202877411,2377843390873,29807864423071,376255282112629,4778240359795147,61007205215610529,782648075371992487,10083436451634033757,130413832663780730995,1692599303723819234281,22037570163808433691247,287762084009227350367621",
+    "name": "Dimensions of the 3-polytridendriform operad TDendr_3.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A269731/b269731.txt\">Table of n, a(n) for n = 1..512</a>",
+        "Samuele Giraudo, <a href=\"http://arxiv.org/abs/1603.01394\">Pluriassociative algebras II: The polydendriform operad and related operads</a>, arXiv:1603.01394 [math.CO], 2016; Adv. Appl. Math., 77, 3-85, 2016."
+    ],
+    "formula": [
+        "a(n) = P_n(3), where P_n(x) is the polynomial associated with row n of triangle A126216 in order of decreasing powers of x.",
+        "Recurrence: (n+1)*a(n) = 7*(2*n-1)*a(n-1) - (n-2)*a(n-2). - _Vaclav Kotesovec_, Apr 24 2016",
+        "a(n) ~ sqrt(24 + 14*sqrt(3)) * (7 + 4*sqrt(3))^n / (24*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Apr 24 2016",
+        "A(x) = -serreverse(A005061(x))(-x). - _Gheorghe Coserea_, Sep 30 2017"
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[Series[(1 - 7*x - Sqrt[1 - 14*x + x^2])/(24*x), {x, 0, 20}], x]] (* _Vaclav Kotesovec_, Apr 24 2016 *)",
+        "Table[-I*LegendreP[n, -1, 2, 7]/(2*Sqrt[3]), {n, 1, 20}] (* _Vaclav Kotesovec_, Apr 24 2016 *)",
+        "RecurrenceTable[{a[1] == 1, a[2] == 7, (n + 1) a[n] == 7 (2 n - 1) a[n-1] - (n - 2) a[n-2]}, a, {n, 25}] (* _Vincenzo Librandi_, Nov 29 2016 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "q = 3; A001263(n,k) = binomial(n-1,k-1) * binomial(n, k-1)/k;",
+        "dimTDendr(n,q) = sum(k = 0, n-1, (q+1)^k * q^(n-k-1) * A001263(n,k+1));",
+        "vector(23, n, dimTDendr(n,q))  \\\\ _Gheorghe Coserea_, Apr 23 2016",
+        "(PARI) q=3; x='x + O('x^24); Vec(serreverse(x/((1+q*x)*(1+(q+1)*x)))) \\\\ _Gheorghe Coserea_, Sep 30 2017",
+        "(MAGMA) I:=[1,7]; [n le 2 select I[n] else (7*(2*n-1)*Self(n-1)-(n-2)*Self(n-2))/(n+1): n in [1..30]]; // _Vincenzo Librandi_, Nov 29 2016"
+    ],
+    "xref": [
+        "Cf. A005061, A001263, A126216, A269730."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Mar 08 2016",
+    "ext": [
+        "More terms from _Gheorghe Coserea_, Apr 23 2016"
+    ],
+    "references": 3,
+    "revision": 37,
+    "time": "2017-10-01T00:29:37-04:00",
+    "created": "2016-03-08T10:54:51-05:00"
+}

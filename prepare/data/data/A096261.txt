@@ -1,0 +1,38 @@
+{
+    "number": 96261,
+    "data": "1,10,91,828,7534,68552,623756,5675568,51642104,469892512,4275561136,38903414208,353982925023,3220897542254,29307009588171,266665052127080,2426390512890816,22077774624328776,200886102122914612",
+    "name": "Number of n-tuples of 0,1,2,3,4,5,6,7,8,9 without consecutive digits.",
+    "comment": [
+        "Sketch of a proof for a general base b=2,3,...: Let a(n) be number of n-tuples of 0,1,...,b-1 without consecutive digits and s(n,i) the number of them with i (i=0,1,...,b-1) as the last digit. Then it is clear that s(n,i)=a(n-1)-s(n-1,i-1) since when extending a valid n-1-tuple by i those ending by i-1 are not valid as n-tuples.",
+        "Thus s(n,0)=a(n-1), s(n,1)=a(n-1)-s(n-1,0)=a(n-1)-a(n-2) and in general s(n,i)=a(n-1)-a(n-2)+a(n-3)-...+(-1)^i*a(n-i-1), i=0,1,...,b-1. Since a(n)=s(n,0)+s(n,1)+...+s(n,b-1), we get the recursion formula a(n)=b*a(n-1)-(b-1)*a(n-2)+(b-2)*a(n-3)-...+(-1)^(b-1)*a(n-b)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A096261/b096261.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_10\">Index entries for linear recurrences with constant coefficients</a>, signature (10,-9,8,-7,6,-5,4,-3,2,-1)."
+    ],
+    "formula": [
+        "a(n) = 10*a(n-1) - 9*a(n-2) + 8*a(n-3) - 7*a(n-4) + 6*a(n-5) -5*a(n-6) + 4*a(n-7) - 3*a(n-8) + 2*a(n-9) - 1*a(n-10), a(0)=1, a(n)=0, for n<0.",
+        "G.f.: 1/(x^10-2*x^9+3*x^8-4*x^7+5*x^6-6*x^5+7*x^4-8*x^3+9*x^2-10*x+1). [_Colin Barker_, Dec 06 2012]"
+    ],
+    "maple": [
+        "A096261:=proc(n,b::nonnegint) local s,i; option remember; if n<0 then RETURN(0) fi; if n=0 then RETURN(1) fi; s:=0; for i from 1 to b do s:=s+(-1)^(i-1)*(b-i+1)*A096261(n-i,b); od; end; seq(A096261(i,10),i=0..20);"
+    ],
+    "mathematica": [
+        "a[ -9] = a[ -8] = a[ -7] = a[ -6] = a[ -5] = a[ -4] = a[ -3] = a[ -2] = a[ -1] = 0; a[0] = 1; a[n_] := a[n] = 10a[n - 1] - 9a[n - 2] + 8a[n - 3] - 7a[n - 4] + 6a[n - 5] - 5a[n - 6] + 4a[n - 7] - 3a[n - 8] + 2a[n - 9] - a[n - 10]; Table[ a[n], {n, 0, 15}] (* _Robert G. Wilson v_, Aug 02 2004 *)",
+        "LinearRecurrence[{10,-9,8,-7,6,-5,4,-3,2,-1},{1,10,91,828,7534,68552,623756,5675568,51642104,469892512},30] (* _Harvey P. Dale_, Dec 16 2013 *)"
+    ],
+    "xref": [
+        "Case b=3 is A095263.",
+        "Column k=10 of A277666."
+    ],
+    "keyword": "base,nonn,easy",
+    "offset": "0,2",
+    "author": "_Seppo Mustonen_, Aug 01 2004",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Aug 02 2004"
+    ],
+    "references": 3,
+    "revision": 17,
+    "time": "2016-10-26T11:29:40-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

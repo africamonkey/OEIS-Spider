@@ -1,0 +1,51 @@
+{
+    "number": 91191,
+    "data": "12,18,20,30,42,56,66,70,78,88,102,104,114,138,174,186,196,222,246,258,272,282,304,308,318,354,364,366,368,402,426,438,464,474,476,498,532,534,550,572,582,606,618,642,644,650,654,678,748,762,786,812,822",
+    "name": "Primitive abundant numbers: abundant numbers (A005101) having no abundant proper divisor.",
+    "comment": [
+        "A080224(a(n)) = 1.",
+        "This is a supersequence of the primitive abundant number sequence A071395, since many of these numbers will be positive integer multiples of the perfect numbers (A000396). - _Timothy L. Tiffin_, Jul 15 2016",
+        "If the terms of A071395 are removed from this sequence, then the resulting sequence will be A275082. - _Timothy L. Tiffin_, Jul 16 2016"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A091191/b091191.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "P. Erd\u0151s, <a href=\"http://www.renyi.hu/~p_erdos/1934-04.pdf\">On the density of the abundant numbers</a>, J. London Math. Soc. 9 (1934), pp. 278-282.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/AbundantNumber.html\">Abundant Number</a>"
+    ],
+    "formula": [
+        "Erd\u0151s shows that a(n) >> n log^2 n. - _Charles R Greathouse IV_, Dec 05 2012"
+    ],
+    "example": [
+        "12 is a term since 1, 2, 3, 4, and 6 (the proper divisors of 12) are either deficient or perfect numbers, and thus not abundant. - _Timothy L. Tiffin_, Jul 15 2016"
+    ],
+    "maple": [
+        "isA005101 := proc(n) is(numtheory[sigma](n) > 2*n ); end proc:",
+        "isA091191 := proc(n) local d; if isA005101(n) then for d in numtheory[divisors](n) minus {1,n} do if isA005101(d) then return false; end if; end do: return true; else false; end if; end proc:",
+        "for n from 1 to 200 do if isA091191(n) then printf(\"%d\\n\",n) ; end if;end do: # _R. J. Mathar_, Mar 28 2011"
+    ],
+    "mathematica": [
+        "t = {}; n = 1; While[Length[t] < 100, n++; If[DivisorSigma[1, n] > 2*n && Intersection[t, Divisors[n]] == {}, AppendTo[t, n]]]; t (* _T. D. Noe_, Mar 28 2011 *)",
+        "Select[Range@ 840, DivisorSigma[1, #] > 2 # && Times @@ Boole@ Map[DivisorSigma[1, #] <= 2 # &, Most@ Divisors@ #] == 1 &] (* _Michael De Vlieger_, Jul 16 2016 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=sumdiv(n,d,sigma(d,-1)>2)==1 \\\\ _Charles R Greathouse IV_, Dec 05 2012",
+        "(Haskell)",
+        "a091191 n = a091191_list !! (n-1)",
+        "a091191_list = filter f [1..] where",
+        "   f x = sum pdivs > x && all (<= 0) (map (\\d -> a000203 d - 2 * d) pdivs)",
+        "         where pdivs = a027751_row x",
+        "-- _Reinhard Zumkeller_, Jan 31 2014"
+    ],
+    "xref": [
+        "Cf. A006038 (odd terms), A005101 (abundant numbers), A091192.",
+        "Cf. A027751, A071395 (subsequence), supersequence of A275082.",
+        "Cf. A294930 (characteristic function), A294890."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Dec 27 2003",
+    "references": 22,
+    "revision": 36,
+    "time": "2017-11-15T04:29:14-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

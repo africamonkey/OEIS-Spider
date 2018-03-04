@@ -1,0 +1,36 @@
+{
+    "number": 220423,
+    "data": "1,2,4,6,12,30,36,60,180,210,420,900,1260,2310,4620,6300,13860,30030,44100,60060,69300,180180,485100,510510,900900,1021020,3063060,5336100,6306300,9699690,15315300,19399380,58198140,69369300,107207100,223092870,290990700",
+    "name": "Cubefree products of primorials, cf. A002110.",
+    "comment": [
+        "Suggested by a comment of _Charles R Greathouse IV_ in A220264;",
+        "A212793(a(n)) = 1; A051903(a(n)) < 3;",
+        "A001221(a(n)) <= A001222(a(n)) <= 2*A001221(a(n));",
+        "A006530(a(n)) = A000040(A001221(a(n)))."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A220423/b220423.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (deleteFindMin, empty, fromList, union)",
+        "import qualified Data.Set as Set (null)",
+        "a220423 n = a220423_list !! (n-1)",
+        "a220423_list = f (splitAt 1 a002110_list) empty where",
+        "   f (us'@(u:_), vs'@(v:vs)) s",
+        "     | Set.null s || m > u",
+        "                 = f (v:us', vs) (s `union` (fromList $ map (* u) us'))",
+        "     | otherwise = m : f (us', vs') s'",
+        "     where (m,s') = deleteFindMin s"
+    ],
+    "xref": [
+        "Subsequence of A004709, A073491; A220264 (subsequence)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Dec 14 2012",
+    "references": 2,
+    "revision": 10,
+    "time": "2013-10-11T18:37:23-04:00",
+    "created": "2012-12-14T14:45:58-05:00"
+}

@@ -1,0 +1,63 @@
+{
+    "number": 225879,
+    "data": "1,1,2,3,7,14,23,51,102,167,371,742,1215,2699,5398,8839,19635,39270,64303,142843,285686,467799,1039171,2078342,3403199,7559883,15119766,24757991,54997523,109995046,180112335,400102427,800204854,1310302327,2910712035,5821424070",
+    "name": "Number of n-length words w over ternary alphabet {1,2,3} such that for every prefix z of w we have 0<=#(z,1)-#(z,2)<=2 and 0<=#(z,2)-#(z,3)<=2 and #(z,x) gives the number of occurrences of letter x in z.",
+    "comment": [
+        "a(3n+2) = 2*a(3n+1)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A225879/b225879.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (0,0,7,0,0,2)."
+    ],
+    "formula": [
+        "From _Alois P. Heinz_, May 20 2013: (Start)",
+        "G.f.: (x-1)*(4*x^2+2*x+1) / (2*x^6+7*x^3-1).",
+        "a(n) = 7*a(n-3) + 2*a(n-6) for n>5. (End)"
+    ],
+    "example": [
+        "For n=6 the 23 words are: 112121, 112123, 112132, 112211, 112213, 112231, 112233, 112312, 112321, 112323, 121121, 121123, 121132, 121211, 121213, 121231, 121233, 121312, 121321, 121323, 123112, 123121 and 123123."
+    ],
+    "maple": [
+        "a:= n-> (<<0|1>, <2|7>>^iquo(n, 3, 'r').",
+        "        [<<1, 3>>, <<1, 7>>, <<2, 14>>][r+1])[1, 1]:",
+        "seq(a(n), n=0..50); # _Alois P. Heinz_, May 20 2013"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{0,0,7,0,0,2},{1,1,2,3,7,14},40] (* _Harvey P. Dale_, Mar 06 2015 *)"
+    ],
+    "program": [
+        "(JavaScript)",
+        "function countOK(arr) {",
+        "var i,c=[0,0,0];",
+        "for (i=0;i<arr.length;i++) c[arr[i]-1]++;",
+        "if (c[0]>=c[1] && c[0]-c[1]<=2 && c[1]>=c[2] && c[1]-c[2]<=2) return true; else return false;",
+        "}",
+        "x=new Array();",
+        "x[0]=new Array();",
+        "x[0][0]=[1];",
+        "document.write(x[0].length+\", \");",
+        "for (i=1;i<21;i++) {",
+        "x[i]=new Array();",
+        "xc=0;",
+        "for (j=0;j<x[i-1].length;j++) {",
+        "xn=x[i-1][j].concat([1]);",
+        "if (countOK(xn)) x[i][xc++]=xn;",
+        "xn=x[i-1][j].concat([2]);",
+        "if (countOK(xn)) x[i][xc++]=xn;",
+        "xn=x[i-1][j].concat([3]);",
+        "if (countOK(xn)) x[i][xc++]=xn;",
+        "}",
+        "document.write(x[i].length+\", \");",
+        "}"
+    ],
+    "xref": [
+        "Cf. A015555 (trisection)"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Jon Perry_, May 19 2013",
+    "references": 1,
+    "revision": 26,
+    "time": "2017-03-24T00:47:55-04:00",
+    "created": "2013-05-21T08:10:07-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 91112,
+    "data": "1,8,513,115272,70162625,95640604266,256797561193432,1238094271228829120,9993778343964199218438,127849400250667505250954500,2480163309080566931933236667234,70354340598798824605743590305386600,2830805474672999382519296750329811657242",
+    "name": "Number of orbits of length n under the map whose periodic points are counted by A061686.",
+    "comment": [
+        "Old Name was: \"A061686 appears to count the periodic points for a certain map. If so, then this is the sequence of the numbers of orbits of length n under that map\"."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A091112/b091112.txt\">Table of n, a(n) for n = 1..126</a>",
+        "Y. Puri and T. Ward, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL4/WARD/short.html\">Arithmetic and growth of periodic orbits</a>, J. Integer Seqs., Vol. 4 (2001), #01.2.1.",
+        "J.-M. Sixdeniers, K. A. Penson and A. I. Solomon, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL4/SIXDENIERS/bell.html\">Extended Bell and Stirling Numbers From Hypergeometric Exponentiation</a>, J. Integer Seqs. Vol. 4 (2001), #01.1.4.",
+        "Thomas Ward, <a href=\"http://web.archive.org/web/20081002082625/http://www.mth.uea.ac.uk/~h720/research/files/integersequences.html\">Exactly realizable sequences</a>. <a href=\"/A091112/a091112.pdf\">[local copy]</a>."
+    ],
+    "formula": [
+        "If b(n) is the (n+1)-th term of A061686, then a(n) = (1/n)*Sum_{d|n} mu(d) b(n/d)."
+    ],
+    "example": [
+        "b(1)=1, b(3)=1540, so a(3)=(1/3)(b(3)-b(1))=513."
+    ],
+    "maple": [
+        "a061686:= proc(n) option remember;",
+        "  add(binomial(n,k)^5*(n-k)*procname(k)/n, k=0..n-1)",
+        "end proc:",
+        "a061686(0):= 1:",
+        "a:= n -> 1/n * add(numtheory:-mobius(d)*a061686(n/d), d = numtheory:-divisors(n)):",
+        "seq(a(n), n=1..6); # _Robert Israel_, May 05 2015"
+    ],
+    "mathematica": [
+        "(* b = A061686 *) b[0]=1; b[n_] := b[n] = Sum[Binomial[n, k]^5*(n-k)*b[k]/ n, {k, 0, n-1}]; a[n_] := (1/n)*DivisorSum[n, MoebiusMu[#] * b[n/#] &]; Array[a, 20] (* _Jean-Fran\u00e7ois Alcover_, Dec 04 2015 *)"
+    ],
+    "program": [
+        "(PARI) A091112(n)=sumdiv(n,d,moebius(d)*A061686(n/d)) \\\\ _M. F. Hasler_, May 11 2015"
+    ],
+    "xref": [
+        "Cf. A061686."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Thomas Ward (t.ward(AT)uea.ac.uk), Feb 24 2004",
+    "ext": [
+        "More terms from _Robert Israel_, May 05 2015",
+        "Name clarified by _M. F. Hasler_, May 11 2015"
+    ],
+    "references": 7,
+    "revision": 20,
+    "time": "2015-12-04T08:58:20-05:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

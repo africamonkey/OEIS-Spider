@@ -1,0 +1,67 @@
+{
+    "number": 181167,
+    "data": "1,1,8,165,6384,397320,36273600,4566166605,757975618400,160424015864112,42164387189608320,13473505313334666600,5144136790654611953280,2312696796696904699224000,1209297981696245764641077760",
+    "name": "G.f.: 1 = Sum_{n>=0} a(n)*x^n* Sum_{k>=0} C(2n+k,k)^2*(-x)^k.",
+    "comment": [
+        "Compare g.f. to a g.f of the Catalan numbers:  1 = Sum_{n>=0} A000108(n)*x^n * Sum_{k>=0} C(2n+k,k)*(-x)^k."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A181167/b181167.txt\">Table of n, a(n) for n = 0..230</a>"
+    ],
+    "formula": [
+        "a(n) = n*A000108(n)*A181168(n) = C(2n,n-1)*A181168(n) for n>0, with a(0)=1.",
+        "a(n) = A000108(n)*A002190(n+1), where A002190 describes the coefficients in -log(BesselJ(0,2*sqrt(x))) and A000108 is the Catalan numbers. - _Paul D. Hanna_, Oct 09 2010",
+        "Differentiating -log(BesselJ(0,2*sqrt(x))) and substituting z=z^2 gives the e.g.f. Sum_{n>=0} a(n) * z^(2*n)/(2n)! = BesselJ(1,2*z)/z/BesselJ(0,2*z). Consequently, using Gauss' continued fraction, this e.g.f. is also: 1/(1-z^2/(2-z^2/(3-z^2/(4-z^2/(5-z^2/...))))). - Matthieu Josuat-Verg\u00e8s, Apr 17 2011",
+        "E.g.f.: U(0) where U(k) = 1 - x^2/(x^2 - (k+1)*(k+2)/U(k+1)); (continued fraction, 2-step). - Sergei N. Gladkovskii, Nov 15 2012",
+        "a(n) ~ c * d^n * (n!)^2 / sqrt(n), where d = 16/BesselJZero[0,1]^2 = 2.76664110449031883070186935..., c = 4/(sqrt(Pi)*BesselJZero[0,1]^2) = 0.390227523142124366836071453... . - _Vaclav Kotesovec_, Jul 31 2014"
+    ],
+    "example": [
+        "E.g.f.: E(x) = 1 + x^2/2! + 8*x^4/4! + 165*x^6/6! + 6384*x^8/8! +...",
+        "where the e.g.f. equals the continued fraction:",
+        "E(x) = 1/(1 - x^2/(2 - x^2/(3 - x^2/(4 - x^2/(5 - x^2/(6 - x^2/(7 - x^2/(8 - x^2/(9 - x^2/(10 - ...)))))))))). [Due to Matthieu Josuat-Verg\u00e8s]",
+        "Illustrate the g.f. by the series:",
+        "1 = 1*(1 - x + x^2 - x^3 + x^4 - x^5 + x^6 - x^7 +...)",
+        "+ 1*x*(1 - 3^2*x + 6^2*x^2 - 10^2*x^3 + 15^2*x^4 - 21^2*x^5 +...)",
+        "+ 8*x^2*(1 - 5^2*x + 15^2*x^2 - 35^2*x^3 + 70^2*x^4 - 126^2*x^5 +...)",
+        "+ 165*x^3*(1 - 7^2*x + 28^2*x^2 - 84^2*x^3 + 210^2*x^4 - 462^2*x^5+...)",
+        "+ 6384*x^4*(1 - 9^2*x + 45^2*x^2 - 165^2*x^3 + 495^2*x^4 +...)",
+        "+ 397320*x^5*(1 - 11^2*x + 66^2*x^2 - 286^2*x^3 + 1001^2*x^4 +...)",
+        "+ 36273600*x^6*(1 - 13^2*x + 91^2*x^2 - 455^2*x^3 + 1820^2*x^4 +...)",
+        "+ 4566166605*x^7*(1 - 15^2*x + 120^2*x^2 - 680^2*x^3 + 3060^2*x^4 +...)",
+        "+...",
+        "Compare to a g.f. of the Catalan numbers (A000108):",
+        "1 = 1*(1 - x + x^2 - x^3 + x^4 - x^5 + x^6 - x^7 +...)",
+        "+ 1*x*(1 - 3*x + 6*x^2 - 10*x^3 + 15*x^4 - 21*x^5 +...)",
+        "+ 2*x^2*(1 - 5*x + 15*x^2 - 35*x^3 + 70*x^4 - 126*x^5 +...)",
+        "+ 5*x^3*(1 - 7*x + 28*x^2 - 84*x^3 + 210*x^4 - 462*x^5 +...)",
+        "+ 14*x^4*(1 - 9*x + 45*x^2 - 165*x^3 + 495*x^4 - 1287*x^5 +...)",
+        "+ 42*x^5*(1 - 11*x + 66*x^2 - 286*x^3 + 1001*x^4 - 3003*x^5 +...)",
+        "+ 132*x^6*(1 - 13*x + 91*x^2 - 455*x^3 + 1820*x^4 - 6188*x^5 +...)",
+        "+...",
+        "Surprisingly, terms a(n) are divisible by n*A000108(n) for n>0:",
+        "a(2)=2*2*2, a(3)=3*5*11, a(4)=4*14*114, a(5)=5**42*1892, a(6)=6*132*45800, a(7)=7*429*1520535, ..., a(n)=n*A000108(n)*A181168(n)."
+    ],
+    "mathematica": [
+        "nmax=20; Table[(CoefficientList[Series[BesselJ[1,2*x]/x/BesselJ[0,2*x],{x,0,2*nmax}],x] * Range[0,2*nmax]!)[[2*n-1]],{n,1,nmax}] (* _Vaclav Kotesovec_, Jul 31 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0, 1, -polcoeff(sum(m=0, n-1, a(m)*x^m*sum(k=0, n-m, binomial(2*m+k, k)^2*(-x)^k)+x*O(x^n)), n))}",
+        "Contribution from _Paul D. Hanna_, Oct 09 2010: (Start)",
+        "(PARI) /* Formula: a(n) = A000108(n)*A002190(n+1) implies: */",
+        "{a(n)=binomial(2*n,n)/(n+1)*(n+1)!^2*polcoeff(-log(sum(m=0,n+1,(-x)^m/m!^2)+O(x^(n+2))),n+1)} (End)",
+        "(PARI) /* Continued Fraction expansion of the E.G.F.: */",
+        "{a(n)=local(CF=1+O(x));for(i=0,n,CF=1/((n-i+1)-x^2*CF));(2*n)!*polcoeff(CF,2*n)}"
+    ],
+    "xref": [
+        "Cf. A181168, A180716.",
+        "Cf. A002190. [From _Paul D. Hanna_, Oct 09 2010]",
+        "Cf. A115368."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Oct 08 2010",
+    "references": 4,
+    "revision": 26,
+    "time": "2014-07-31T07:51:33-04:00",
+    "created": "2010-10-20T03:00:00-04:00"
+}

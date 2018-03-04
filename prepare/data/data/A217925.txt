@@ -1,0 +1,36 @@
+{
+    "number": 217925,
+    "data": "1,1,1,3,5,10,19,40,77,155,306,610,1207,2400,4760,9456,18765,37257,73955,146813,291434,578524,1148434,2279720,4525487,8983421,17832976,35399824,70271944,139495472,276910976,549691232,1091185133,2166094309,4299884233,8535634803,16943967775",
+    "name": "G.f. A(x) satisfies A(x) = 1 + x*A(x)*A(x^2)^2.",
+    "comment": [
+        "What does this sequence count?"
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A217925/b217925.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * d^n, where d = 1.985085392419660786124534041173530134614822710253953085885966352..., c = 0.322822740100478716884116064042886830242825005622702339543369128... . - _Vaclav Kotesovec_, Aug 10 2014",
+        "a(n) = T(4*n+1,1), where T(n,m) = Sum_{k=1..(n-m)/4} C(m+k-1,k)*T((n-m)/2,2*k). - _Vladimir Kruchinin_, Mar 25 2015"
+    ],
+    "program": [
+        "(PARI)",
+        "N=66;  R=O('x^N);  x='x+R;",
+        "F = 1 + x;",
+        "{ for (k=1,N+1, F = 1 + x * F * subst(F,'x,'x^2)^2 + R; ); }",
+        "Vec(F+O('x^N))",
+        "(Maxima)",
+        "T(n,m):=if n=m then 1 else sum(binomial(m+k-1,k)*T((n-m)/2,2*k),k,1,(n-m)/4);",
+        "makelist(T(4*n+1,1),n,0,25); /* _Vladimir Kruchinin_, Mar 25 2015 */"
+    ],
+    "xref": [
+        "Cf. A000108 (A(x) = 1 + x*A(x)^2), A000621 (A(x) = 1 + x*A(x)*A(x^2)).",
+        "Cf. A036675 (A(x) = 1 + x*A(x)^2*A(x^2)), A101913 (A(x) = 1 + x*A(x)*A(x^3); for abs. values)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Joerg Arndt_, Oct 15 2012",
+    "references": 1,
+    "revision": 14,
+    "time": "2015-03-25T15:23:03-04:00",
+    "created": "2012-10-15T07:41:23-04:00"
+}

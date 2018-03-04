@@ -1,0 +1,36 @@
+{
+    "number": 191236,
+    "data": "1,2,14,184,3532,89256,2800016,104967808,4578528464,227816059360,12735645181536,790296855912576,53905019035510528,4008716449677965312,322807879692969879552,27983800239966141382656",
+    "name": "Number of ways to place n nonattacking bishops on black squares of a 2n X 2n board.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A191236/b191236.txt\">Table of n, a(n) for n = 0..340</a>",
+        "V. Kotesovec, <a href=\"https://oeis.org/wiki/User:Vaclav_Kotesovec\">Number of ways of placing non-attacking queens, kings, bishops and knights</a> (in English and Czech)"
+    ],
+    "formula": [
+        "a(n) = 1/n! * Sum_{j=0..n} (-1)^(n-j) * binomial(n,j) * (j*(j+1))^n.",
+        "Asymptotic: a(n) ~ 1/sqrt(Pi*(z-1)*(2-z)*n)*(2*n*exp(z-1)/z)^n or a(n) ~ exp(z/2)*StirlingS2(2*n,n) where z=1.59362426... is a root of the equation exp(z)*(2-z)=2.",
+        "O.g.f.: Sum_{n>=0} n^n*(n+1)^n * exp(-n*(n+1)*x) * x^n/n! = Sum_{n>=0} a(n)*x^n. - _Paul D. Hanna_, Oct 15 2012",
+        "a(n) = Sum_{k=0..n} binomial(n,k) * Stirling2(2*n-k,n), where Stirling2(n,k) = A008277(n,k). - _Paul D. Hanna_, Nov 13 2012"
+    ],
+    "mathematica": [
+        "Join[{1}, Table[(1/n!)*Sum[(-1)^(n - k)*Binomial[n, k]*(k*(k + 1))^n, {k, 0, n}], {n,1,50}]] (* _G. C. Greubel_, Feb 03 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(m=0,n,m^m*(m+1)^m*x^m*exp(-m*(m+1)*x+x*O(x^n))/m!),n)} \\\\ _Paul D. Hanna_, Oct 15 2012",
+        "(PARI) {Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)}",
+        "{a(n)=sum(k=0,n, binomial(n,k) * Stirling2(2*n-k,n))} \\\\ _Paul D. Hanna_, Nov 13 2012"
+    ],
+    "xref": [
+        "Cf. A002465, A187235, A217905."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Vaclav Kotesovec_, May 27 2011",
+    "ext": [
+        "Offset changed to 0 and a(0)=1 added by _Paul D. Hanna_, Nov 13 2012"
+    ],
+    "references": 4,
+    "revision": 21,
+    "time": "2017-02-03T19:16:06-05:00",
+    "created": "2011-05-28T10:51:35-04:00"
+}

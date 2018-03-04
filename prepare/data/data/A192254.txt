@@ -1,0 +1,33 @@
+{
+    "number": 192254,
+    "data": "1,1,10,26,76,184,429,941,1994,4094,8208,16128,31169,59393,111818,208330,384620,704408,1280925,2314525,4158346,7432606,13223040,23424576,41335201,72679969,127373194,222545306,387732844,673762744",
+    "name": "0-sequence of reduction of (n^2) by x^2 -> x+1.",
+    "comment": [
+        "See A192232 for definition of \"k-sequence of reduction of [sequence] by [substitution]\"."
+    ],
+    "formula": [
+        "Empirical G.f.: x*(1-3*x+9*x^2-6*x^3+2*x^4)/(1-x)/(1-x-x^2)^3. [Colin Barker, Feb 10 2012]"
+    ],
+    "mathematica": [
+        "c[n_] := n^2;  (* A000290 *)",
+        "Table[c[n], {n, 1, 15}]",
+        "q[x_] := x + 1;",
+        "p[0, x_] := 1; p[n_, x_] := p[n - 1, x] + (x^n)*c[n + 1]",
+        "reductionRules = {x^y_?EvenQ -> q[x]^(y/2),",
+        "   x^y_?OddQ -> x q[x]^((y - 1)/2)};",
+        "t = Table[",
+        "  Last[Most[",
+        "    FixedPointList[Expand[#1 /. reductionRules] &, p[n, x]]]], {n, 0,",
+        "   30}]",
+        "Table[Coefficient[Part[t, n], x, 0], {n, 1, 30}]  (* A192254 *)",
+        "Table[Coefficient[Part[t, n], x, 1], {n, 1, 30}]   (* A192255 *)",
+        "(* by _Peter J. C. Moses_, Jun 20 2011 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Clark Kimberling_, Jun 27 2011",
+    "references": 3,
+    "revision": 8,
+    "time": "2016-12-04T19:46:25-05:00",
+    "created": "2011-06-28T11:23:45-04:00"
+}

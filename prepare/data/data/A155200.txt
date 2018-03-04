@@ -1,0 +1,41 @@
+{
+    "number": 155200,
+    "data": "1,2,10,188,16774,6745436,11466849412,80444398636280,2306003967992402758,268654794629082985019564,126765597346260977505891041836,241678070948246232010898235031930952,1858395916567787793818891330877931472153500,57560683587056536617649234722821582390470430186648",
+    "name": "G.f.: A(x) = exp( Sum_{n>=1} 2^(n^2) * x^n/n ), a power series in x with integer coefficients.",
+    "comment": [
+        "More generally, it appears that for m integer, exp( Sum_{n >= 1} m^(n^2) * x^n/n ) is a power series in x with integer coefficients.",
+        "Conjecture: highest exponent of 2 dividing a(n) = A000120(n) = number of 1's in binary expansion of n, so that a(n)/2^A000120(n) is odd for n >= 0. - _Paul D. Hanna_, Sep 01 2009"
+    ],
+    "formula": [
+        "Equals column 0 of triangle A155810.",
+        "G.f. satisfies: 2*A(x)*A(4x) + 8*x*A(x)*A'(4x) - A'(x)*A(4x) = 0. - _Paul D. Hanna_, Feb 24 2009",
+        "Contribution from _Paul D. Hanna_, Mar 11 2009: (Start)",
+        "The differential equation implies recurrence:",
+        "n*a(n) = 2*a(n-1) + sum(k = 1, n - 1, 4^k*a(k)*[2*(k+1)*a(n-1-k) - (n-k)*a(n-k)] for n > 0, with a(0) = 1.",
+        "G.f. A(x) generates A156631:",
+        "A156631(n) = [x^n] A(x)^(2^n) for n >= 0, where the g.f. of A156631 = Sum_{n >= 0} [Sum_{k >= 1} (2^n*2^k*x)^k/k]^n/n!. (End)",
+        "a(n) = (1/n)*Sum_{k = 1..n} 2^(k^2)*a(n-k), a(0) = 1. - _Vladeta Jovovic_, Feb 04 2009",
+        "Euler transform of A159034. - _Vladeta Jovovic_, Apr 02 2009",
+        "a(n) = B_n( 0!*2^(1^2), 1!*2^(2^2), 2!*2^(3^2), ..., (n-1)!*2^(n^2) ) / n!, where B_n() is the complete Bell polynomial. - _Max Alekseyev_, Oct 10 2014"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 10*x^2 + 188*x^3 + 16774*x^4 + 6745436*x^5 +...",
+        "log(A(x)) = 2*x + 2^4*x^2/2 + 2^9*x^3/3 + 2^16*x^4/4 + 2^25*x^5/5 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1,n+1,2^(m^2)*x^m/m)+x*O(x^n)),n)}",
+        "(PARI) {a(n)=if(n==0,1,(1/n)*(2*a(n-1) + sum(k=1,n-1,4^k*a(k)*(2*(k+1)*a(n-1-k) - (n-k)*a(n-k)))))} \\\\ _Paul D. Hanna_, Mar 11 2009",
+        "(PARI) {a(n)=if(n==0,1,(1/n)*sum(k=1,n,2^(k^2)*a(n-k)))} \\\\ _Paul D. Hanna_, Sep 01 2009"
+    ],
+    "xref": [
+        "Cf. A155201, A155202, A155810 (triangle), variants: A155203, A155207.",
+        "Cf. A000120, A156631,  A159034."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Feb 04 2009",
+    "references": 47,
+    "revision": 15,
+    "time": "2014-10-13T19:36:06-04:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

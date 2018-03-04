@@ -1,0 +1,35 @@
+{
+    "number": 180305,
+    "data": "1,1,4,11,34,96,288,833,2456,7175,21054,61633,180674,529220,1550800,4543446,13312552,39004278,114281748,334837511,981059294,2874447292,8421986238,24675963950,72299290794,211833080161,620659794584,1818500391218,5328110328116,15611082044176,45739647180588,134014753120706,392656158141832",
+    "name": "G.f.: 1/(1 + x*d/dx log(eta(x))), where eta(x) is Dedekind's eta(q) function without the q^(1/24) factor.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A180305/b180305.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0,n-1} sigma(n-k)*a(k) for n>0 with a(0) = 1.",
+        "G.f.: 1/(1 - sum(k>=1, x^k/(1-x^k)^2)). [_Joerg Arndt_, Mar 09 2014]"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 4*x^2 + 11*x^3 + 34*x^4 + 96*x^5 + 288*x^6 +...",
+        "eta(x)^3/A(x) = 1 - 4*x + 10*x^3 - 21*x^6 + 39*x^10 - 66*x^15 + 104*x^21 +...+ A184363(n)*x^n +...",
+        "1 + x*d/dx log(eta(x)) = 1 - x - 3*x^2 - 4*x^3 - 7*x^4 - 6*x^5 - 12*x^6 - 8*x^7 - 15*x^8 +...+ -sigma(n)*x^n +..."
+    ],
+    "mathematica": [
+        "nmax = 50; CoefficientList[Series[1/(1 - Sum[DivisorSigma[1, k]*x^k, {k, 1, nmax}]), {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Jan 06 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(1/(1+x*deriv(log(eta(x+x*O(x^n))))), n)}",
+        "(PARI) {a(n)=if(n==0,1,sum(k=0,n-1,sigma(n-k)*a(k)))}",
+        "(PARI) N=66; x='x+O('x^N); Vec(1/(1 - sum(k=1,N, x^k/(1-x^k)^2))) \\\\ _Joerg Arndt_, Mar 09 2014"
+    ],
+    "xref": [
+        "Cf. A184363, A000203, A000041."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jan 18 2011",
+    "references": 2,
+    "revision": 14,
+    "time": "2017-01-06T14:38:07-05:00",
+    "created": "2010-11-12T14:29:43-05:00"
+}

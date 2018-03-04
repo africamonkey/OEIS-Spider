@@ -1,0 +1,82 @@
+{
+    "number": 124627,
+    "data": "2,3,5,11,33,127,715,5345,52692,648344,9737826,174442666,3657513487,88362834417,2428095525614,75063691591379,2586559741900744,98552043877145945,4123221751454999891,188272405177875090033,9332039515886416792536,499720579610294249596689,28785866289101759323472435,1776891233143817540293248652",
+    "name": "Riemann-Gram approximation to A007097(n+1) using A007097(n).",
+    "comment": [
+        "The largest presently known value of prime(10^n) is",
+        "prime(10^18) = 44211790234832169331 this compares to",
+        "primex(10^18) = 44211790234127235727 accurate to 11 places",
+        "Here the sign of prime(x)-primex(x) is positive. However the sign changes as x varies. The following is a table with the relative error and sign change:",
+        "n, prime(10^n), primex(10^n), relative error",
+        "6, 15485863, 15484040, 1.1772 E-4",
+        "7, 179424673, 179431239, -3.6594 E-4",
+        "8, 2038074743, 2038076587, -9.0478 E-5",
+        "9, 22801763489, 22801797576, -1.4949 E-5",
+        "10, 252097800623, 252097715777, 3.3655 E-6",
+        "11, 2760727302517, 2760727752353, -1.6294 E-6",
+        "12, 29996224275833, 29996225393465, -3.7259 E-7",
+        "13, 323780508946331, 323780512411510, -1.0702 E-7",
+        "14, 3475385758524527, 3475385760290723, -5.0820 E-8",
+        "15, 37124508045065437, 37124508056355511, -3.0411 E-9",
+        "16, 394906913903735329, 394906913798224969, 2.6718 E-9",
+        "17, 4185296581467695669, 4185296581676470048, -4.9883 E-11",
+        "18, 44211790234832169331,44211790234127235727, 1.5944 E-11"
+    ],
+    "formula": [
+        "Primex(n) ~ prime(n). Prime(n) is the n-th prime number. Primex(n) is the Riemann-Gram approximation of Prime(n) accurate to log10(n)/2 + 1 digits for large n. The sequence is primex(A007097(n)) for n = 1 to 18."
+    ],
+    "example": [
+        "A007097(17) = 75063692618249",
+        "Primex(75063692618249) = 2586559741900744",
+        "A007097(18) = 2586559730396077",
+        "Primex(2586559730396077) = 98552043877145945",
+        "A007097(19) ~ 98552043800000000"
+    ],
+    "mathematica": [
+        "RiemannGram[x_] := Module[{n = 1, L, s = 1, r}, L = r = Log[x];",
+        "   While[s < 10^30 r, s = s + r/(Zeta[n + 1] n); n++; r = r L/n]; s];",
+        "Primex[n_] :=  Module[{r1, r2, r, est},   If[n == 1, r = 2, r1 = n Log[n]; r2 = 2 r1;    For[i = 1, i < 50, i++, r = (r1 + r2)/2; est = RiemannGram[r]; If[est < n, r1 = r, r2 = r]]]; Round@r];",
+        "Primex /@ NestList[Prime, 1, 15] (* _Birkas Gyorgy_, Apr 04 2011 *)"
+    ],
+    "program": [
+        "(PARI) xeqprimex(n) = {",
+        "my(a,x); a = [1, 2, 3, 5, 11, 31, 127, 709, 5381, 52711, 648391, 9737333, 174440041, 3657500101, 88362852307, 2428095424619, 75063692618249, 2586559730396077];",
+        "for(x=1,n, print1(round(primex(a[x]))\",\") ) }",
+        "\\\\ Approximates the n-th prime number to an accuracy of log10(n)/2 places.",
+        "primex(n) = {",
+        "my(x,px,r1,r2,r,p10,b,e,est);",
+        "if(n==1,return(2)); \\\\ force to 2",
+        "b=10; \\\\ Select base",
+        "p10=log(n)/log(10); \\\\ Determine p10 = power of 10 of n to adjust b^p10",
+        "if(Rg(b^p10*log(b^(p10+1)))< b^p10,m=p10+1,m=p10);",
+        "r1 = 0; r2 = 7.718281828; \\\\ Real kicker. if r2=1, it fails at 1e117",
+        "for(x=1, 100,",
+        "   r=(r1+r2)/2;",
+        "   est = (b^p10*log(b^(m+r)));",
+        "   px = Rg(est);",
+        "   if(px <= b^p10,r1=r,r2=r); r=(r1+r2)/2; );",
+        "  est;",
+        "}",
+        "Rg(x) = \\\\ Gram's Riemann Approx of Pi(x)",
+        "{ my(n=1,L,s=1,r);",
+        "L=r=log(x);",
+        "while(s<10^40*r, s=s+r/zeta(n+1)/n; n=n+1; r=r*L/n);",
+        "(s)",
+        "}"
+    ],
+    "xref": [
+        "Cf. A007097."
+    ],
+    "keyword": "nonn,uned",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Dec 21 2006",
+    "ext": [
+        "a(19) and a(20) found by _David Baugh_ using a program by Xavier Gourdon and _Andrey V. Kulsha_, Oct 25 2007",
+        "a(21), a(22) and a(23) calculated by _David Baugh_, Feb 10 2015",
+        "a(24) calculated by _David Baugh_, May 16 2016"
+    ],
+    "references": 0,
+    "revision": 31,
+    "time": "2016-12-17T11:05:03-05:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

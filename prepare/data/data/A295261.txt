@@ -1,0 +1,48 @@
+{
+    "number": 295261,
+    "data": "1,1,1,2,2,4,4,6,8,11,12,18,22,28,34,44,54,69,82,102,125,154,185,226,271,327,393,474,562,673,797,947,1124,1329,1563,1846,2164,2541,2974,3480,4062,4738,5508,6403,7432,8614,9966,11530,13307,15345,17670,20337",
+    "name": "Partitions into parts with frequency less than or equal to their place in the list of summands.",
+    "comment": [
+        "Let the summands of a partition be s(1) < s(2) < ... < s(k) and the frequency of s(i) be f(i). Then we count those partitions for which f(i) <= i."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A295261/b295261.txt\">Table of n, a(n) for n = 0..2000</a>"
+    ],
+    "example": [
+        "The partition 1+1 is not counted because its smallest part, 1, appears twice.",
+        "The partition 3+2+2+1 is counted because its smallest part, 1, appears once; its next smallest part, 2 appears twice (and 2 <= 2) and its third part, 3, appears 1 time (and 1 <= 3)."
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, 1, `if`(n<i, 0,",
+        "      add(b(n-i*j, i+1, t+`if`(j=0, 0, 1)), j=0..min(t, n/i))))",
+        "    end:",
+        "a:= n-> b(n, 1$2):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Nov 18 2017"
+    ],
+    "mathematica": [
+        "<< Combinatorica`;",
+        "nend = 30;",
+        "For[n = 1, n <= nend, n++, count[n] = 0;",
+        "  part = Partitions[n];",
+        "  For[i = 1, i <= Length[part], i++,",
+        "   t = Tally[part[[i]]];",
+        "   condition = True;",
+        "   For[j = 1, j <= Length[t], j++,",
+        "    If[t[[-j, 2]] > j, condition = False ]];",
+        "   If[condition, count[n]++]]];",
+        "Print[Table[count[i], {i, 1, nend}]]"
+    ],
+    "xref": [
+        "Cf. A244395."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_David S. Newman_, Nov 18 2017",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Nov 18 2017"
+    ],
+    "references": 2,
+    "revision": 18,
+    "time": "2017-11-19T08:02:11-05:00",
+    "created": "2017-11-19T07:16:08-05:00"
+}

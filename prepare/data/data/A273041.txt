@@ -1,0 +1,44 @@
+{
+    "number": 273041,
+    "data": "1,2,5,5,11,11,16,16,23,23,23,23,47,47,64,64,64,64,71,71,141,141,141,141,173,173,173,173,173,173,173,201,251,251,251,251,251,251,251,313,313,313,383,383,383,383,383,519,519,519,519,519,519,519,519,519,601,601,601,601,601,601,601,601,601,601",
+    "name": "Discriminator of the Catalan numbers A000108.",
+    "comment": [
+        "The discriminator of a sequence is the least positive integer k such that the first n terms of the sequence are pairwise distinct modulo k."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A273041/b273041.txt\">Table of n, a(n) for n = 1..1127</a>"
+    ],
+    "maple": [
+        "N = 100: # to get a(1) .. a(N)",
+        "F:= proc(m)",
+        "  local G, i,j,x,S;",
+        "  G:= 1+x; S:= {1};",
+        "  for i from 2 do",
+        "    G:= convert(series((x*G^2-1)/(2*x*G-1),x,2^i+1),polynom) mod m;",
+        "    for j from 2^(i-1) to 2^i do",
+        "      S:= S union {coeff(G,x,j)};",
+        "      if nops(S) < j then return j-1 fi",
+        "    od:",
+        "  od",
+        "end proc:",
+        "nmax:= 1: A[1]:= 1:",
+        "for k from 2 while nmax < N do",
+        "  v:= F(k);",
+        "  if v > nmax then",
+        "    for j from nmax+1 to v do A[j]:= k od:",
+        "    nmax:= v;",
+        "  fi:",
+        "od:",
+        "seq(A[i],i=1..N); # _Robert Israel_, May 13 2016"
+    ],
+    "xref": [
+        "Cf. A000108."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jeffrey Shallit_, May 13 2016",
+    "references": 2,
+    "revision": 14,
+    "time": "2016-05-14T13:43:54-04:00",
+    "created": "2016-05-14T13:43:54-04:00"
+}

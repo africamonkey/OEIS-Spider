@@ -1,0 +1,28 @@
+{
+    "number": 257976,
+    "data": "23,94,123,147,269,806,1049,1081,1179,1277,1775,2575,5374,14865,20490,20845,27177,54934,72599,87031,101827,391514,452574,534389,1197146,1219229,1297767,1327510,4565354,4946164,6124646,7967984,8637602,8869951,9615708,10061718",
+    "name": "Numbers equal to the sum of the prime factors, with multiplicity, of the previous k numbers, for some k.",
+    "comment": [
+        "Number of terms < 10^k: 0, 2, 6, 13, 20, 24, 35, 49, 62, 68, 79, 91, ..., . - _Robert G. Wilson v_, May 19 2015"
+    ],
+    "link": [
+        "Robert G. Wilson v and Giovanni Resta, <a href=\"/A257976/b257976.txt\">Table of n, a(n) for n = 1..91</a> (terms < 10^12, first 58 terms from Robert G. Wilson v)"
+    ],
+    "mathematica": [
+        "sopfr[n_] := Plus @@ Times @@@ FactorInteger@ n; sopfr[1] = 0; ls = Table[0, {50}]; k = 1; lst = {}; While[k < 10^7, If[ MemberQ[ Accumulate@ ls, k], AppendTo[lst, k]]; ls = Join[{sopfr@ k}, Drop[ls, -1]]; k++]; lst (* dated May 15 2015 and modified after a suggestion from Giovanni Resta in a private e-mail dated Apr 20 2015 to _Robert G. Wilson v_, May 21 2015 *)"
+    ],
+    "program": [
+        "(PARI) sopfr(n)=my(f=factor(n));sum(i=1,#f[,1],f[i,1]*f[i,2]);",
+        "is(n)=if(n<23,return(0)); my(s); for(k=1,n, s+=sopfr(n-k); if(s>=n, return(n==s))) \\\\ _Charles R Greathouse IV_, May 15 2015"
+    ],
+    "xref": [
+        "Union of A257525 and A257930 which are disjoint."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, May 15 2015",
+    "references": 3,
+    "revision": 32,
+    "time": "2017-06-17T13:08:36-04:00",
+    "created": "2015-05-18T09:58:07-04:00"
+}

@@ -1,0 +1,61 @@
+{
+    "number": 54753,
+    "data": "12,18,20,28,44,45,50,52,63,68,75,76,92,98,99,116,117,124,147,148,153,164,171,172,175,188,207,212,236,242,244,245,261,268,275,279,284,292,316,325,332,333,338,356,363,369,387,388,404,412,423,425,428,436,452",
+    "name": "Numbers which are the product of a prime and the square of a different prime (p^2 * q).",
+    "comment": [
+        "A178254(a(n)) = 4; union of A095990 and A096156. - _Reinhard Zumkeller_, May 24 2010",
+        "Numbers with prime signature (2,1) = union of numbers with ordered prime signature (1,2) and numbers with ordered prime signature (2,1) (restating second part of above comment). - _Daniel Forgues_, Feb 05 2011",
+        "A056595(a(n)) = 4. - _Reinhard Zumkeller_, Aug 15 2011",
+        "Sum_{n>=1} 1/a(n)^k = P(k) * P(2*k) - P(3*k), where P is the Prime Zeta function. - _Enrique P\u00e9rez Herrero_, Jun 27 2012",
+        "Also numbers n with A001222(n)=3 and A001221(n)=2. - _Enrique P\u00e9rez Herrero_, Jun 27 2012",
+        "A089233(a(n)) = 2. - _Reinhard Zumkeller_, Sep 04 2013",
+        "Subsequence of the triprimes (A014612). If a(n) is even, then a(n)/2 is semiprime (A001358). - _Wesley Ivan Hurt_, Sep 08 2013",
+        "From _Bernard Schott_, Sep 16 2017: (Start)",
+        "These numbers are called \"Nombres d'Einstein\" on the French site \"Diophante\" (see link) because a(n) = m * c^2 where m and c are two different primes.",
+        "The numbers 44 = 2^2 * 11 and 45 = 3^2 * 5 are the two smallest consecutive \"Einstein numbers\"; 603, 604, 605 are the three smallest consecutive integers in this sequence. It's not possible to get more than five such consecutive numbers (proof in the link); the first set of five such consecutive numbers begins at the 17-digit number 10093613546512321. Where does the first sequence of four consecutive \"Einstein numbers\" begin? (End) [corrected by _Jon E. Schoenfield_, Sep 20 2017]",
+        "The first set of four consecutive integers in this sequence begins at the 11-digit number 17042641441. (Each such set must include two even numbers, one of which is of the form 2^2*q, the other of the form p^2*2; a quick search, taking the factorizations of consecutive integers before and after numbers of the latter form, shows that the number of sets of four consecutive k-digit integers in this sequence is 1, 7, 12, 18 for k = 11, 12, 13, 14, respectively.) - _Jon E. Schoenfield_, Sep 16 2017",
+        "The first 13 sets of 5 consecutive integers in this sequence have as their first terms 10093613546512321, 14414905793929921, 266667848769941521, 562672865058083521, 1579571757660876721, 1841337567664174321, 2737837351207392721, 4456162869973433521, 4683238426747860721, 4993613853242910721, 5037980611623036721, 5174116847290255921, 5344962129269790721. Each of these numbers except the last is 7^2 times a prime; the last is 23^2 times a prime. - _Jon E. Schoenfield_, Sep 17 2017"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A054753/b054753.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Guilhem Castagnos, Antoine Joux, Fabien Laguillaumie, and Phong Q. Nguyen, <a href=\"http://www.iacr.org/archive/asiacrypt2009/59120468/59120468.pdf\">Factoring pq^2 with quadratic forms: nice cryptanalyses</a>, Advances in Cryptology - ASIACRYPT 2009. Lecture Notes in Computer Science Volume 5912 (2009), pp. 469-486.",
+        "Michel Lafond, <a href=\"http://www.diophante.fr/images/stories/diophante/mai_2014/A350ML.pdf\">Les Nombres d'Einstein, Diophante, A 350, May 2014</a>",
+        "Ren\u00e9 Peralta and Eiji Okamoto, <a href=\"http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.33.2625\">Faster factoring of integers of a special form</a> (1996)",
+        "StackExchange, <a href=\"http://math.stackexchange.com/questions/64892/sequence-of-numbers-with-prime-factorization-pq2\">Sequence of numbers with prime factorization pq^2</a>",
+        "<a href=\"/index/Pri#prime_signature\">Index to sequences related to prime signature</a>"
+    ],
+    "formula": [
+        "Solutions of the equation tau(n^5) = 11*tau(n). - _Paolo P. Lava_, Mar 15 2013"
+    ],
+    "example": [
+        "a(1)=12 because 12 = 2^2*3 is the smallest number of the form p^2*q."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A054753:=proc(q) local n;",
+        "for n from 1 to q do if tau(n^5)=11*tau(n) then print(n); fi; od; end:",
+        "A054753(10^10);  # _Paolo P. Lava_, Mar 15 2013"
+    ],
+    "mathematica": [
+        "Select[Range[12,452], {1,2}==Sort[Last/@FactorInteger[ # ]]&] (* Zak Seidov, Jul 19 2009 *)",
+        "With[{nn=60},Take[Union[Flatten[{#[[1]]#[[2]]^2,#[[1]]^2 #[[2]]}&/@ Subsets[ Prime[Range[nn]],{2}]]],nn]] (* _Harvey P. Dale_, Dec 15 2014 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=vecsort(factor(n)[,2])==[1,2]~ \\\\ _Charles R Greathouse IV_, Dec 30 2014",
+        "(PARI) for(n=1, 1e3, if(numdiv(n) - bigomega(n) == 3, print1(n, \", \"))) \\\\ _Altug Alkan_, Nov 24 2015"
+    ],
+    "xref": [
+        "Cf. A001221, A001222, A001358, A014612, A056595, A089233, A095990, A096156, A178254.",
+        "Numbers with 6 divisors (A030515) which are not 5th powers of primes (A050997)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Henry Bottomley_, Apr 25 2000",
+    "ext": [
+        "Link added and incorrect Mathematica code removed by _David Bevan_, Sep 17 2011"
+    ],
+    "references": 41,
+    "revision": 92,
+    "time": "2017-09-22T02:50:30-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

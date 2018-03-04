@@ -1,0 +1,49 @@
+{
+    "number": 5635,
+    "id": "M2761",
+    "data": "1,1,1,1,3,8,36,110,666,3250,23436,125198,1037520,7241272,66360960,500827928,5080370400,45926666984,508032504000,4919789029480,59256857923200,656763542278304,8532986822438400,100525959568386848,1405335514253932800,18431883489984091552",
+    "name": "Number of ways of placing n non-attacking bishops on an n X n board so that every square is attacked (or occupied).",
+    "comment": [
+        "From _Vaclav Kotesovec_, Apr 26 2012: (Start)",
+        "This sequence gives (according to the article by Robinson) the number of inequivalent solutions.",
+        "For the total number of all arrangements of n non-attacking bishops such that every square of the board is controlled by at least one bishop, see A122749.",
+        "For the total number of all arrangements of n bishops (in any position) such that every square of the board is controlled by at least one bishop, see A182333.",
+        "(End)"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A005635/b005635.txt\">Table of n, a(n) for n = 0..250</a>",
+        "R. W. Robinson, <a href=\"http://dx.doi.org/10.1007/BFb0097382\">Counting arrangements of bishops</a>, pp. 198-214 of Combinatorial Mathematics IV (Adelaide 1975), Lect. Notes Math., 560 (1976).",
+        "R. W. Robinson, <a href=\"/A000899/a000899_1.pdf\">Counting arrangements of bishops</a>, pp. 198-214 of Combinatorial Mathematics IV (Adelaide 1975), Lect. Notes Math., 560 (1976). (Annotated scanned copy)"
+    ],
+    "maple": [
+        "E:=proc(n) local k; if n mod 2 = 0 then k := n/2; if k mod 2 = 0 then RETURN( (k!*(k+2)/2)^2 ); else RETURN( ((k-1)!*(k+1)^2/2)^2 ); fi; else k := (n-1)/2; if k mod 2 = 0 then RETURN( ((k!)^2/12)*(3*k^3+16*k^2+18*k+8) ); else RETURN( ((k-1)!*(k+1)!/12)*(3*k^3+13*k^2-k-3) ); fi; fi; end; # Gives A122749",
+        "unprotect(D); D:=proc(n) option remember; if n <= 1 then 1 else D(n-1)+(n-1)*D(n-2); fi; end; # Gives A000085",
+        "C:=proc(n) local k; if n mod 2 = 0 then RETURN(0); fi; k:=(n-1)/2; if k mod 2 = 0 then RETURN( k*2^(k-1)*((k/2)!)^2 ); else RETURN( 2^k*(((k+1)/2)!)^2 ); fi; end; # Gives A122693",
+        "Q:=proc(n) local m; if n mod 8 <> 1 then RETURN(0); fi; m:=(n-1)/8; ((2*m)!)^2/(m!)^2; end; # Gives A122747",
+        "M:=proc(n) local k; if n mod 2 = 0 then k:=n/2; if k mod 2 = 0 then RETURN( k!*(k+2)/2 ); else RETURN( (k-1)!*(k+1)^2/2 ); fi; else k:=(n-1)/2; RETURN(D(k)*D(k+1)); fi; end; # Gives A122748",
+        "a:=n-> if n <= 1 then RETURN(1) else E(n)/8 + C(n)/8 + Q(n)/4 + M(n)/4; fi; # Gives A005635",
+        "# The following additional Maple programs produce A123071, A005631, A123072, A005633, A005632, A005634",
+        "S:=proc(n) local k; if n mod 2 = 0 then RETURN(0) else k:=(n-1)/2; RETURN(B(k)*B(k+1)); fi; end; # Gives A123071",
+        "psi:=n->S(n)/2; # Gives A005631",
+        "zeta:=n->Q(n)/2; # Gives A123072",
+        "mu:=n->(M(n)-S(n))/2; # Gives A005633",
+        "chi:=n->(C(n)-S(n)-Q(n))/4; # Gives A005632",
+        "eps:=n->E(n)/8-C(n)/8+S(n)/4-M(n)/4; # Gives A005634"
+    ],
+    "xref": [
+        "Cf. A005631, A005632, A005633, A005634, A122749, A123071, A123072, A182333."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "Entry revised by _N. J. A. Sloane_, Sep 25 2006"
+    ],
+    "references": 10,
+    "revision": 24,
+    "time": "2018-01-10T16:10:19-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

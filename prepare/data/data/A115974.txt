@@ -1,0 +1,60 @@
+{
+    "number": 115974,
+    "data": "1,2,6,42,414,5058,72486,1182762,21573054,434358018,9565348806,228740050602,5904853053534,163728751178178,4855046674314726,153367360732387242,5143219420761900414,182530741698302811138,6835913695777897799046,269455018264860747728682,11152465473005099074500894,483617145128737549802831298",
+    "name": "Number of Feynman diagrams (vanishing and non-vanishing) of order 2n for the proper self-energy function of quantum electrodynamics (QED).",
+    "comment": [
+        "The number of diagrams of A000698 left if the connected improper diagrams are removed: a(n)<=A000698(n+1). G.f. is essentially the inversion of the G.f. of A000698.",
+        "From _Groux Roland_, Mar 22 2011: (Start)",
+        "a(n) is the INVERTi transform of A001147(n+2), starting at n=2.",
+        "Let rho(x)=sqrt(x)*exp(-x/2)/sqrt(2*Pi); s(x)=integral(rho'(t)*log(abs(1-t/x)),t=0..infinity), and mu(x)=rho(x)/((s(x))^2+Pi^2*(rho(x))^2), then a(n+1) is the moment of order n for the measure of density mu(x) over the interval 0..infinity.",
+        "(End)",
+        "From _Robert Coquereaux_, Sep 14 2014: (Start)",
+        "Vanishing diagrams: QED diagrams containing electron loops with an odd number of vertices are set to 0 (Furry theorem). See comments in A000698. This sequence (which is twice A167872) counts all the diagrams (vanishing and non-vanishing) for the self-energy function of QED. The sequence A005412 gives the number of non-vanishing diagrams for the self-energy. - _Robert Coquereaux_, Sep 12 2014"
+    ],
+    "reference": [
+        "A. L. Fetter and J. D. Walecka, Quantum Theory of Many-Particle Systems, McGraw-Hill, 1971."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A115974/b115974.txt\">Table of n, a(n) for n = 0..400</a>",
+        "P. Cvitanovic, B. Lautrup and R. B. Pearson, <a href=\"http://www.nbi.dk/~predrag/papers/PRD18-78.pdf\">The number and weights of Feynman diagrams</a>, Phys. Rev. D 18 (1978), 1939-1949.",
+        "R. J. Mathar, <a href=\"http://dx.doi.org/10.1002/qua.21334\">Table of Third and Fourth Order Feynman Diagrams of the Interacting Fermion Green's Function</a>, Int. J. Quantum. Chem. 107 (10) (2007) 1975-1984.",
+        "Adrian Ocneanu, <a href=\"http://arxiv.org/abs/1304.1263\">On the inner structure of a permutation: bicolored partitions and Eulerians, trees and primitives</a>; arXiv preprint arXiv:1304.1263 [math.CO], 2013.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Feynman_diagram\">Feynman diagram</a>"
+    ],
+    "formula": [
+        "a(n) = A000698(n+1)-sum(m=1..n-1, a(m)*A000698(n+1-m) ).",
+        "1-sum(n>=1, a(n)*x^n ) = 1/(1+sum(n>=1, A000698(n+1)*x^n ) (G.f.)",
+        "G.f. (1-Q(0))/x where Q(k)= 1 - (k+2)*x/Q(k+1); (continued fraction, 1-step). - _Sergei N. Gladkovskii_, Aug 20 2012",
+        "G.f. 1/x - 1 - 1/(Q(0)-1) where Q(k)= 1 + (4*k+1)*x/(1 - (4*k+3)*x/((4*k+3)*x + 1/Q(k+1))); (continued fraction, 3rd kind, 3-step). - _Sergei N. Gladkovskii_, Sep 12 2012",
+        "G.f.: 1/x + 1/(G(0)-1) where G(k)= 1 - x*(k+1)/G(k+1); (recursively defined continued fraction). - _Sergei N. Gladkovskii_, Dec 10 2012",
+        "G.f.: A(x) = (1 - (G(0))/x where G(k) =  1 + (2*k+1)*x - x*(2*k+3)/G(k+1); (recursively defined continued fraction). - _Sergei N. Gladkovskii_, Dec 26 2012",
+        "G.f.: 1/x - 1 - Q(0)/x, where Q(k)= 1 - x*(2*k+3)/(1 - x*(2*k+2)/Q(k+1)); (continued fraction). - _Sergei N. Gladkovskii_, May 21 2013",
+        "Call Sf the G.f. for the sequence 1, 2, 10, 74, ..., i.e., A000698 with first term (equal to 1) dropped. Call Sigmaf the G.f. for the sequence 0, 2, 6, 42, ..., i.e., this sequence A115974 with a first term of order 0 (equal to 0) added. Then Sf = 1/(1-Sigmaf). - _Robert Coquereaux_, Sep 14 2014"
+    ],
+    "example": [
+        "There are A000698(3)=10 self-energy diagrams of order 4, (n=2). Four of them are chained diagrams of order 2, (n=1) (of two kinds) which are simply connected, which leaves 10-4=6=a(2) proper diagrams."
+    ],
+    "maple": [
+        "A000698 := proc(n::integer) local resul,fac,pows,c,c1,p,i ; if n = 0 then RETURN(1) ; else pows := combinat[partition](n) ; resul := 0 ; for p from 1 to nops(pows) do c := combinat[permute](op(p,pows)) ; c1 := op(1,c) ; fac := nops(c) ; for i from 1 to nops(c1) do fac := fac*doublefactorial(2*op(i,c1)-1) ; od ; resul := resul-(-1)^nops(c1)*fac ; od : fi ; RETURN(resul) ; end:",
+        "A115974 := proc(n::integer) local resul,m ; resul := A000698(n+1) ; for m from 1 to n-1 do resul := resul-A115974(m)*A000698(n+1-m) ; od: RETURN(resul) ; end:",
+        "for n from 1 to 20 do printf(\"%a,\",A115974(n)) ; od ; # _R. J. Mathar_, Apr 24 2006"
+    ],
+    "mathematica": [
+        "(* b = A000698 *) b[n_] := b[n] = (2n-1)!! - Sum[b[n-k]*(2k-1)!!, {k, n-1}]; a[0] = 1; a[n_] := a[n] = b[n+1] - Sum[a[m]*b[n+1-m], {m, n-1}]; Array[a, 22, 0] (* _Jean-Fran\u00e7ois Alcover_, Jul 10 2017 *)"
+    ],
+    "xref": [
+        "Cf. A000698, A005411, A005412, A167872."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_R. J. Mathar_, Mar 15 2006",
+    "ext": [
+        "More terms from _R. J. Mathar_, Apr 24 2006, Nov 07 2006",
+        "Name and definition clarified by _Robert Coquereaux_, Sep 14 2014",
+        "a(0)=1 prepended by _Alois P. Heinz_, Jun 22 2015"
+    ],
+    "references": 7,
+    "revision": 62,
+    "time": "2017-07-10T15:00:30-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

@@ -1,0 +1,68 @@
+{
+    "number": 268555,
+    "data": "1,6,78,1260,22470,424116,8305836,166929048,3419932230,71109813060,1496053026468,31777397077608,680354749147164,14664155597771400,317877850826299800,6924815555276838960,151505459922479997510,3327336781596164286180",
+    "name": "Diagonal of the rational function of six variables 1/((1 - w - u v - u v w) * (1 - z - x y)).",
+    "comment": [
+        "Also diagonal of rational function R(x,y,z) = 1 /(1 - x - y - z - x*y + x*z).",
+        "Annihilating differential operator: x*(16*x^2-24*x+1)*Dx^2 + (48*x^2-48*x+1)*Dx + 12*x-6."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A268555/b268555.txt\">Table of n, a(n) for n = 0..200</a>",
+        "A. Bostan, S. Boukraa, J.-M. Maillard, J.-A. Weil, <a href=\"http://arxiv.org/abs/1507.03227\">Diagonals of rational functions and selected differential Galois groups</a>, arXiv preprint arXiv:1507.03227 [math-ph], 2015.",
+        "Jacques-Arthur Weil, <a href=\"http://www.unilim.fr/pages_perso/jacques-arthur.weil/diagonals/\">Supplementary Material for the Paper \"Diagonals of rational functions and selected differential Galois groups\"</a>"
+    ],
+    "formula": [
+        "Conjecture: n^2*a(n) -6*(2*n-1)^2*a(n-1) +4*(2*n-1)*(2*n-3)*a(n-2)=0. - _R. J. Mathar_, Mar 10 2016",
+        "a(n) ~ sqrt(4+3*sqrt(2)) * 2^(2*n-3/2) * (1+sqrt(2))^(2*n) / (Pi*n). - _Vaclav Kotesovec_, Jul 01 2016",
+        "G.f.: hypergeom([1/12, 5/12],[1],6912*x^4*(1-24*x+16*x^2)/(1-24*x+48*x^2)^3)/(1-24*x+48*x^2)^(1/4).",
+        "0 = x*(16*x^2-24*x+1)*y'' + (48*x^2-48*x+1)*y' + (12*x-6)*y, where y is g.f."
+    ],
+    "example": [
+        "G.f. = 1 + 6*x + 78*x^2 + 1260*x^3 + 22470*x^4 + 424116*x^5 + 8305836*x^6 + ..."
+    ],
+    "maple": [
+        "A268555 := proc(n)",
+        "    1/(1-w-u*v-u*v*w)/(1-z-x*y) ;",
+        "    coeftayl(%,x=0,n) ;",
+        "    coeftayl(%,y=0,n) ;",
+        "    coeftayl(%,z=0,n) ;",
+        "    coeftayl(%,u=0,n) ;",
+        "    coeftayl(%,v=0,n) ;",
+        "    coeftayl(%,w=0,n) ;",
+        "end proc:",
+        "seq(A268555(n),n=0..40) ; # _R. J. Mathar_, Mar 10 2016"
+    ],
+    "mathematica": [
+        "sc = SeriesCoefficient;",
+        "a[n_] := 1/(1-w-u*v-u*v*w)/(1-z-x*y) // sc[#, {x, 0, n}]& // sc[#, {y, 0, n}]& // sc[#, {z, 0, n}]& // sc[#, {u, 0, n}]& // sc[#, {v, 0, n}]& // sc[#, {w, 0, n}]&;",
+        "Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Nov 14 2017 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "my(x='x, y='y, z='z);",
+        "R = 1 /(1 - x - y - z - x*y + x*z);",
+        "diag(n, expr, var) = {",
+        "  my(a = vector(n));",
+        "  for (i = 1, #var, expr = taylor(expr, var[#var - i + 1], n));",
+        "  for (k = 1, n, a[k] = expr;",
+        "       for (i = 1, #var, a[k] = polcoeff(a[k], k-1)));",
+        "  return(a);",
+        "};",
+        "diag(10, R, [x, y, z])",
+        "(PARI) \\\\ system(\"wget http://www.jjj.de/pari/hypergeom.gpi\");",
+        "read(\"hypergeom.gpi\");",
+        "N = 18; x = 'x + O('x^N);",
+        "Vec(hypergeom([1/12, 5/12],[1],6912*x^4*(1-24*x+16*x^2)/(1-24*x+48*x^2)^3, N)/(1-24*x+48*x^2)^(1/4)) \\\\ _Gheorghe Coserea_, Jul 05 2016",
+        "(PARI) {a(n) = if( n<1, n==0, my(A = vector(n+1)); A[1] = 1; A[2] = 6; for(k=2, n, A[k+1] = (6*(2*k-1)^2*A[k] - 4*(2*k-1)*(2*k-3)*A[k-1]) / k^2); A[n+1])}; /* _Michael Somos_, Jan 22 2017 */"
+    ],
+    "xref": [
+        "Cf. A268545-A268555."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Feb 29 2016",
+    "references": 70,
+    "revision": 21,
+    "time": "2017-11-14T08:20:13-05:00",
+    "created": "2016-02-29T10:53:24-05:00"
+}

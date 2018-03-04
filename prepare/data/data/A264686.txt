@@ -1,0 +1,37 @@
+{
+    "number": 264686,
+    "data": "1,3,6,15,27,51,93,159,264,432,696,1086,1683,2553,3837,5700,8367,12147,17505,24972,35361,49728,69402,96243,132657,181782,247692,335838,453042,608289,813102,1082256,1434519,1894215,2491644,3265869,4265973,5553771,7207167",
+    "name": "Expansion of Product_{k>=1} (1 + 2*x^k)/(1 - x^k).",
+    "comment": [
+        "Convolution of A000041 and A032302."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A264686/b264686.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "a(n) ~ sqrt(c) * exp(sqrt(2*c*n)) / (4*Pi*sqrt(3)*n), where c = 2*Pi^2/3 + log(2)^2 + 2*polylog(2, -1/2) = 6.163360867463814765670634381079217086937812673723341... . - _Vaclav Kotesovec_, Jan 04 2016"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(i*(i+1)/2<n, 0,",
+        "      `if`(n=0, 1, b(n, i-1)+`if`(i>n, 0, 2*b(n-i, i-1))))",
+        "    end:",
+        "a:= n-> add(b(i$2)*combinat[numbpart](n-i), i=0..n):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Dec 22 2017"
+    ],
+    "mathematica": [
+        "nmax = 40; CoefficientList[Series[Product[(1 + 2*x^k)/(1 - x^k), {k, 1, nmax}], {x, 0, nmax}], x]"
+    ],
+    "program": [
+        "(PARI) { my(n=40); Vec(prod(k=1, n, 3/(1-x^k) - 2 + O(x*x^n))) } \\\\ _Andrew Howroyd_, Dec 22 2017"
+    ],
+    "xref": [
+        "Cf. A000041, A006951, A015128, A032302, A261584, A264685, A266821."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Vaclav Kotesovec_, Nov 21 2015",
+    "references": 4,
+    "revision": 17,
+    "time": "2017-12-22T16:25:49-05:00",
+    "created": "2015-11-21T06:19:39-05:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 175005,
+    "data": "0,1,4,13,42,137,448,1465,4790,15661,51204,167413,547362,1789617,5851208,19130705,62548430,204504021,668632204,2186113613,7147565882,23369187097,76406277968,249812682345,816770269670,2670455587581",
+    "name": "Expansion of x/(1 - 4*x + 3*x^2 - 2*x^3).",
+    "comment": [
+        "The sequence is an expansion based on a Padovan polynomial inside a Fibonacci polynomial (a Pisot): 2 - 3 x + 4 x^2 - x^3.",
+        "The limiting ratio a(n+1)/a(n) is  3.269530842081143...."
+    ],
+    "link": [
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-3,2)."
+    ],
+    "formula": [
+        "a(n) = 4a(n-1) - 3a(n-2) + 2a(n-3), starting 0,1,4."
+    ],
+    "mathematica": [
+        "(* expansion form: toral inverse of the derived polynomial*);",
+        "f[x_] = ExpandAll[4*(x - (1 - Sqrt[",
+        "    x^3 - x - 1])/2)*(x - (1 + Sqrt[x^3 - x - 1])/2)];",
+        "g[x_] = ExpandAll[x^3*f[1/x]];",
+        "a = Table[SeriesCoefficient[",
+        "      Series[-1/g[x], {x, 0, 50}], n], {n, 0, 50}]",
+        "(* vector Matrix Markov version derived*);",
+        "CompanionMatrix[p_, x_] := Module[{cl = CoefficientList[p, x], deg,",
+        "      m}, cl = Drop[cl/Last[cl], -1]; deg = Length[cl];",
+        "            If[deg == 1, {-cl}, m = RotateLeft[",
+        "        IdentityMatrix[deg]]; m[[ -1]] = -cl; Transpose[m]]];",
+        "M = Transpose[CompanionMatrix[f[x], x]];",
+        "v[0] = Table[a[[n]], {n, 1, 3}]",
+        "v[n_] := v[n] = M.v[n - 1];",
+        "Table[v[n][[1]], {n, 0, 50}]"
+    ],
+    "program": [
+        "(PARI) Vec(x/(1-4*x+3*x^2-2*x^3)+O(x^99)) \\\\ _Charles R Greathouse IV_, Sep 26 2012"
+    ],
+    "xref": [
+        "Cf. A000045, A174631, A000931, A111285."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Roger L. Bagula_, Dec 02 2010",
+    "references": 2,
+    "revision": 17,
+    "time": "2015-06-13T00:53:30-04:00",
+    "created": "2010-11-12T14:24:03-05:00"
+}

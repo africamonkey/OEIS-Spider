@@ -1,0 +1,35 @@
+{
+    "number": 289971,
+    "data": "1,1,2,4,9,20,49,114,277,665,1608,3875",
+    "name": "Number of permutations of [n] determined by their antidiagonal sums.",
+    "link": [
+        "C. Bebeacua, T. Mansour, A. Postnikov, S. Severini, <a href=\"https://arxiv.org/abs/math/0506334\">On the X-rays of permutations</a>, arXiv:math/0506334 [math.CO], 2005.",
+        "FindStat - Combinatorial Statistic Finder, <a href=\"http://www.findstat.org/St000886\">The number of permutations with the same antidiagonal sums</a>."
+    ],
+    "program": [
+        "(Sage)",
+        "def X_ray(pi):",
+        "    P = Permutation(pi).to_matrix()",
+        "    n = P.nrows()",
+        "    return tuple(sum(P[k-1-j][j] for j in range(max(0, k-n), min(k,n)))",
+        "                 for k in range(1,2*n))",
+        "@cached_function",
+        "def X_rays(n):",
+        "    return sorted(X_ray(pi) for pi in Permutations(n))",
+        "def statistic(pi): return X_rays(pi.size()).count(X_ray(pi))",
+        "[[statistic(pi) for pi in Permutations(n)].count(1) for n in range(7)]"
+    ],
+    "xref": [
+        "Cf. A019589, A002047, A290279, A290280."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Martin Rubey_, Jul 16 2017",
+    "ext": [
+        "a(8)-a(11) from _Alois P. Heinz_, Jul 24 2017"
+    ],
+    "references": 3,
+    "revision": 14,
+    "time": "2017-07-27T11:51:52-04:00",
+    "created": "2017-07-24T09:42:56-04:00"
+}

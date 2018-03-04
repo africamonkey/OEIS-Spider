@@ -1,0 +1,88 @@
+{
+    "number": 246840,
+    "data": "1,1,1,2,5,10,18,35,73,151,306,623,1286,2668,5531,11477,23889,49852,104175,217936,456534,957609,2010839,4226417,8891022,18719637,39443860,83170162,175484915,370491775,782648333,1654197568,3498049053,7400639286,15664103420,33168342557,70260909811",
+    "name": "G.f.: Sum_{n>=0} x^n * Sum_{k=0..n} C(n,k)^2 * x^(2*k).",
+    "comment": [
+        "Compare to the g.f. of Narayana's cows sequence A000930:",
+        "Sum_{n>=0} x^n * Sum_{k=0..n} C(n,k) * x^(2*k)  =  1/(1-x-x^3).",
+        "Compare to the g.f. of Whitney numbers sequence A051286:",
+        "Sum_{n>=0} x^n * Sum_{k=0..n} C(n,k)^2 * x^k = 1/sqrt((1+x+x^2)*(1-3*x+x^2)).",
+        "...",
+        "Limit a(n)/a(n+1) = t^2 = 0.465571231876768... where t = ((sqrt(93)+9)/18)^(1/3) - ((sqrt(93)-9)/18)^(1/3) is the positive real root of 1 - x - x^3 = 0."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A246840/b246840.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{n>=0} (2*n)!/(n!)^2 * x^(3*n) / (1 - x + x^3)^(2*n+1). - _Paul D. Hanna_, Oct 15 2014",
+        "G.f.: Sum_{n>=0} x^n * [Sum_{k>=0} C(n+k,k)^2 * x^(2*k)] * (1-x^2)^(2*n+1).",
+        "G.f.: Sum_{n>=0} x^(3*n) * [Sum_{k>=0} C(n+k,k)^2 * x^k].",
+        "G.f.: Sum_{n>=0} x^(3*n) * [Sum_{k=0..n} C(n,k)^2 * x^k] /(1-x)^(2n+1).",
+        "G.f.: exp( Sum_{n>=1} (x^n/n) * Sum_{k=0..n} C(2*n,2*k) * x^(2*k) ).",
+        "G.f.: exp( Sum_{n>=1} (x^n/n) * ((1+x)^(2*n) + (1-x)^(2*n))/2 ).",
+        "G.f.: 1 / sqrt((1 - x + 2*x^2 - x^3)*(1 - x - 2*x^2 - x^3)).",
+        "G.f.: 1 / sqrt((1 - x - x^3)^2 - 4*x^4).",
+        "a(n) = Sum_{k=0..[n/2]} C(n-2*k, k)^2."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + x^2 + 2*x^3 + 5*x^4 + 10*x^5 + 18*x^6 + 35*x^7 +...",
+        "where, by definition,",
+        "A(x) = 1 + x*(1 + x^2) + x^2*(1 + 2^2*x^2 + x^4)",
+        "+ x^3*(1 + 3^2*x^2 + 3^2*x^4 + x^6)",
+        "+ x^4*(1 + 4^2*x^2 + 6^2*x^4 + 4^2*x^6 + x^8)",
+        "+ x^5*(1 + 5^2*x^2 + 10^2*x^4 + 10^2*x^6 + 5^2*x^8 + x^10) +...",
+        "which is also given by the series identity:",
+        "A(x) = 1/(1-x+x^3) + 2*x^3/(1-x+x^3)^3 + 6*x^6/(1-x+x^3)^5 + 20*x^9/(1-x+x^3)^7 + 70*x^12/(1-x+x^3)^9 + 252*x^15/(1-x+x^3)^11 + 924*x^18/(1-x+x^3)^13 +...",
+        "The logarithm of the g.f. begins:",
+        "log(A(x)) = x*(1 + x^2) + x^2*(1 + 6*x^2 + x^4)/2",
+        "+ x^3*(1 + 15*x^2 + 15*x^4 + x^6)/3",
+        "+ x^4*(1 + 28*x^2 + 70*x^4 + 28*x^6 + x^8)/4",
+        "+ x^5*(1 + 45*x^2 + 210*x^4 + 210*x^6 + 45*x^8 + x^10)/5 +...",
+        "more explicitly,",
+        "log(A(x)) = x + x^2/2 + 4*x^3/3 + 13*x^4/4 + 26*x^5/5 + 46*x^6/6 + 99*x^7/7 + 229*x^8/8 + 499*x^9/9 + 1046*x^10/10 + 2223*x^11/11 + 4810*x^12/12 +...",
+        "where the logarithmic derivative equals",
+        "A'(x)/A(x) = (1-x+3*x^2+4*x^3-3*x^5)/((1-x+2*x^2-x^3)*(1-x-2*x^2-x^3))."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/Sqrt[(1 - x - x^3)^2 - 4*x^4], {x,0,50}], x] (* _G. C. Greubel_, Apr 27 2017 *)"
+    ],
+    "program": [
+        "(PARI) /* By definition: */",
+        "{a(n)=local(A=1);A=sum(m=0,n,x^m*sum(k=0,m,binomial(m,k)^2*x^(2*k)) +x*O(x^n));polcoeff(A,n)}",
+        "for(n=0,40,print1(a(n),\", \"))",
+        "(PARI) /* From closed formula: */",
+        "{a(n)=local(A=1);A= 1/sqrt((1 - x - x^3)^2 - 4*x^4 +x*O(x^n));polcoeff(A, n)}",
+        "for(n=0,40,print1(a(n),\", \"))",
+        "(PARI) /* From a series identity: */",
+        "{a(n)=local(A=1+x); A=sum(m=0, n, (2*m)!/(m!)^2 * x^(3*m) / (1 - x + x^3 +x*O(x^n))^(2*m+1)); polcoeff(A, n)}",
+        "for(n=0, 40, print1(a(n), \", \"))",
+        "(PARI) /* From a binomial series identity: */",
+        "{a(n)=local(A=1+x); A=sum(m=0, n, x^m*(1-x^2)^(2*m+1)*sum(k=0, n, binomial(m+k, k)^2*x^(2*k)) +x*O(x^n)); polcoeff(A, n)}",
+        "for(n=0, 40, print1(a(n), \", \"))",
+        "(PARI) /* From a binomial series identity: */",
+        "{a(n)=local(A=1+x); A=sum(m=0, n\\3, x^(3*m)*sum(k=0, n-3*m, binomial(m+k, k)^2*x^k) +x*O(x^n)); polcoeff(A, n)}",
+        "for(n=0, 40, print1(a(n), \", \"))",
+        "(PARI) /* From a binomial series identity: */",
+        "{a(n)=local(A=1+x); A=sum(m=0, n\\3, x^(3*m) * sum(k=0, m, binomial(m, k)^2*x^k) / (1-x +x*O(x^n))^(2*m+1) ); polcoeff(A, n)}",
+        "for(n=0, 40, print1(a(n), \", \"))",
+        "(PARI) /* From exponential formula: */",
+        "{a(n)=local(A=1);A=exp(sum(m=1, n, sum(k=0, m, binomial(2*m, 2*k)*x^(2*k)) * x^m/m) +x*O(x^n));polcoeff(A, n)}",
+        "for(n=0,40,print1(a(n),\", \"))",
+        "(PARI) /* From exponential formula: */",
+        "{a(n)=local(A=1);A=exp(sum(m=1, n, ((1+x)^(2*m) + (1-x)^(2*m))/2 * x^m/m) +x*O(x^n));polcoeff(A, n)}",
+        "for(n=0,40,print1(a(n),\", \"))",
+        "(PARI) /* From formula for a(n): */",
+        "{a(n)=sum(k=0,n\\2,binomial(n-2*k,k)^2)}",
+        "for(n=0,40,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A246861, A181665, A246883, A246884."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Sep 04 2014",
+    "references": 6,
+    "revision": 35,
+    "time": "2017-04-28T03:18:35-04:00",
+    "created": "2014-09-04T22:30:36-04:00"
+}

@@ -1,0 +1,30 @@
+{
+    "number": 126175,
+    "data": "1483785,2479065,2580105,4895241,7336455,9100905,10350345,16367481",
+    "name": "Larger member of an augmented infinitary amicable pair.",
+    "comment": [
+        "A divisor of n is called infinitary if it is a product of divisors of the form p^{y_a 2^a}, where p^y is a prime power dividing n and sum_a y_a 2^a is the binary representation of y."
+    ],
+    "link": [
+        "Pedersen J. M., <a href=\"http://amicable.homepage.dk/knwnc2.htm\">Known amicable pairs</a>."
+    ],
+    "formula": [
+        "The values of n for which isigma(m)=isigma(n)=m+n-1, where n>m and isigma(n) is given by A049417(n)"
+    ],
+    "example": [
+        "a(3)=2580105 because 2580105 is the larger member of the third augmented infinitary amicable pair, (2166136,2580105)"
+    ],
+    "mathematica": [
+        "ExponentList[n_Integer, factors_List] := {#, IntegerExponent[n, # ]} & /@ factors; InfinitaryDivisors[1] := {1}; InfinitaryDivisors[n_Integer?Positive] := Module[ { factors = First /@ FactorInteger[n], d = Divisors[n] }, d[[Flatten[Position[ Transpose[ Thread[Function[{f, g}, BitOr[f, g] == g][ #, Last[ # ]]] & /@ Transpose[Last /@ ExponentList[ #, factors] & /@ d]], _?( And @@ # &), {1}]] ]] ] Null; properinfinitarydivisorsum[k_] := Plus @@ InfinitaryDivisors[k] - k; AugmentedInfinitaryAmicableNumberQ[n_] := If[properinfinitarydivisorsum[properinfinitarydivisorsum[ n] + 1] == n - 1 && ! properinfinitarydivisorsum[n] + 1 == n, True, False]; AugmentedInfinitaryAmicablePairList[k_] := (anlist = Select[Range[k], AugmentedInfinitaryAmicableNumberQ[ # ] &]; prlist = Table[ Sort[{anlist[[n]], properinfinitarydivisorsum[anlist[[n]]] + 1}], {n, 1, Length[anlist]}]; amprlist = Union[prlist, prlist]); data = AugmentedInfinitaryAmicablePairList[10^7]; Table[Last[data[[k]]], {k, 1, Length[data]}]"
+    ],
+    "xref": [
+        "Cf. A126169, A049417, A126168, A037445, A126170, A126171, A126173, A126174, A126176."
+    ],
+    "keyword": "hard,nonn",
+    "offset": "1,1",
+    "author": "_Ant King_, Dec 23 2006",
+    "references": 5,
+    "revision": 4,
+    "time": "2012-03-30T18:41:04-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

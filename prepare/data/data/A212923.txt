@@ -1,0 +1,49 @@
+{
+    "number": 212923,
+    "data": "1,2,4,19,111,734,5338,41839,348827,3065255,28199803,270253498,2687629926,27652068276,293627150268,3211604669731,36124424800797,417294625090201,4944772338009206,60045368928594948,746560751627818906,9496624640844863631,123507266690219103213",
+    "name": "G.f. satisfies: A(x) = x^2 + Series_Reversion(x - x*A(x)).",
+    "comment": [
+        "This is an application of the more general formula given by:",
+        "if G(x) = Series_Reversion(x - x*F(x)), with F(0)=0, then",
+        "(1) G(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) x^n*F(x)^n/n!,",
+        "(2) G(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(n-1)*F(x)^n/n! );",
+        "here F(x) = A(x) and G(x) = A(x) - x^2."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A212923/b212923.txt\">Table of n, a(n) for n = 1..365</a>"
+    ],
+    "formula": [
+        "G.f. A(x) also satisfies:",
+        "(1) A(x) = x+x^2 + Sum_{n>=1} d^(n-1)/dx^(n-1) x^n*A(x)^n/n!.",
+        "(2) A(x) = x^2 + x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(n-1)*A(x)^n/n! )."
+    ],
+    "example": [
+        "G.f.: A(x) = x + 2*x^2 + 4*x^3 + 19*x^4 + 111*x^5 + 734*x^6 + 5338*x^7 +...",
+        "The series reversion of x - x*A(x) begins:",
+        "x + x^2 + 4*x^3 + 19*x^4 + 111*x^5 + 734*x^6 + 5338*x^7 +...",
+        "which equals A(x) - x^2.",
+        "The g.f. A(x) satisfies:",
+        "A(x) - x^2 = x + x*A(x) + d/dx x^2*A(x)^2/2! + d^2/dx^2 x^3*A(x)^3/3! + d^3/dx^3 x^4*A(x)^4/4! +...",
+        "log(A(x)/x - x) = A(x) + d/dx x*A(x)^2/2! + d^2/dx^2 x^2*A(x)^3/3! + d^3/dx^3 x^3*A(x)^4/4! +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x+x^2); for(i=1, n, A=x^2+serreverse(x-x*A +x*O(x^n))); polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(G=F); for(i=1, n, G=deriv(G)); G}",
+        "{a(n)=local(A=x+x^2); for(i=1, n, A=x+x^2+sum(m=1, n, Dx(m-1, x^m*A^m/m!)+x*O(x^n))); polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(G=F); for(i=1, n, G=deriv(G)); G}",
+        "{a(n)=local(A=x+x^2); for(i=1, n, A=x^2+x*exp(sum(m=1, n, Dx(m-1, x^(m-1)*A^m/m!)+x*O(x^n)))); polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A212922, A088714, A212910, A212919."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, May 31 2012",
+    "references": 3,
+    "revision": 10,
+    "time": "2014-02-21T05:48:02-05:00",
+    "created": "2012-05-31T05:30:40-04:00"
+}

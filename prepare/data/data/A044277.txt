@@ -1,0 +1,30 @@
+{
+    "number": 44277,
+    "data": "26,107,188,234,269,350,431,512,593,674,755,836,917,963,998,1079,1160,1241,1322,1403,1484,1565,1646,1692,1727,1808,1889,1970,2051,2106,2213,2294,2375,2421,2456,2537,2618,2699,2780,2861",
+    "name": "Numbers n such that string 2,8 occurs in the base 9 representation of n but not of n-1.",
+    "link": [
+        "Robert Israel, <a href=\"/A044277/b044277.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "N:= 6000: # to get all terms <= N",
+        "f:= proc(n) local L,Q;",
+        "  L:= convert(n,base,9);",
+        "  Q:= map(`+`,[ListTools:-SearchAll(8,L[1..-2])],1);",
+        "  if ormap(t -> (L[t]=2), Q) then 1 else 0 fi;",
+        "end proc:",
+        "V:= Vector(N,f):",
+        "W:= V[2..-1] - V[1..-2]:",
+        "select(t -> (W[t-1]=1),[$2..N]); # _Robert Israel_, Feb 24 2017"
+    ],
+    "program": [
+        "(PARI) has(n)=while(n>25, if(n%81==26, return(1)); n\\=9); 0",
+        "is(n)=has(n) && !has(n-1) \\\\ _Charles R Greathouse IV_, Feb 24 2017"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_",
+    "references": 1,
+    "revision": 13,
+    "time": "2017-02-24T17:07:44-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

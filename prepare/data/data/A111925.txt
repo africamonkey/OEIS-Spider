@@ -1,0 +1,58 @@
+{
+    "number": 111925,
+    "data": "2,5,10,17,20,25,26,32,37,41,50,52,65,80,82,85,90,97,101,106,116,117,122,130,137,145,160,162,170,181,185,197,202,212,225,226,241,250,257,260,265,272,277,281,290,292,305,306,320,325,337,340,356,362,370,377",
+    "name": "Numbers of the form a^2 + b^4, with a,b > 0.",
+    "comment": [
+        "Every term in this sequence also arises in A000404.",
+        "Although there are squares, cubes, fifth powers, ... in this sequence, there are no fourth powers. - _Altug Alkan_, Apr 09 2016"
+    ],
+    "link": [
+        "R. J. Mathar, <a href=\"/A111925/b111925.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "25 = 3^2 + 2^4, so 25 is an element of the sequence."
+    ],
+    "maple": [
+        "isA111925 := proc(n)",
+        "    local a,b ;",
+        "    for a from 1 do",
+        "        if a^4 >= n then",
+        "            return false;",
+        "        end if;",
+        "        b := n-a^4 ;",
+        "        if issqr(b) then",
+        "            return true;",
+        "        end if;",
+        "    end do:",
+        "end proc:",
+        "A111925 := proc(n)",
+        "    option remember;",
+        "    if n = 1 then",
+        "        2;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if isA111925(a) then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Apr 22 2013"
+    ],
+    "mathematica": [
+        "With[{nn=60},Take[Union[First[#]^2+Last[#]^4&/@Tuples[Range[nn],2]],nn]] (* _Harvey P. Dale_, Jul 09 2014 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List(),t); lim\\=1; for(b=1,sqrtnint(lim-1,4), t=b^4; for(a=1,sqrtint(lim-t), listput(v,t+a^2))); Set(v) \\\\ _Charles R Greathouse IV_, Jun 07 2016",
+        "(PARI) is(n)=for(b=1,sqrtnint(n-1,4), if(issquare(n-b^4), return(1))); 0 \\\\ _Charles R Greathouse IV_, Jun 07 2016"
+    ],
+    "xref": [
+        "Cf. A055394, A022549; complement of A111909; subsequence of A000404."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Stefan Steinerberger_, Nov 25 2005",
+    "references": 14,
+    "revision": 16,
+    "time": "2016-06-07T11:31:20-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

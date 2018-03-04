@@ -1,0 +1,44 @@
+{
+    "number": 166374,
+    "data": "0,2,9,15,625,1225,3993,117649,218491,857375,3788435,4259571,69302975,136410197,200533921,313742585,603439225,1516358753,2563893625,3326174929,5655792025,10214476341,25937424601,29677977573,59797108943,283867750439,715167055525",
+    "name": "Numbers whose arithmetic derivative is equal to Euler totient function: n' = phi(n).",
+    "comment": [
+        "The sequence is infinite. If n=prod(pi^ei) with each pi prime, then phi(n) = n*prod((pi-1)/pi) and n' = n*sum(ei/pi). Thus every number of the form p^(p-1), where p is prime, is in this sequence. - _Nathaniel Johnston_, Nov 27 2010",
+        "If p > q are primes and q does not divide p-1, there is a solution in positive integers of (p-1)*(q-1) = a*p + b*q, and then p^b*q^a is in the sequence. - _Robert Israel_, Aug 21 2014"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A166374/b166374.txt\">Table of n, a(n) for n = 1..32</a> (terms < 10^13)"
+    ],
+    "maple": [
+        "A003415:= n -> n*add(f[2]/f[1],f=ifactors(n)[2]):",
+        "select(numtheory:-phi = A003415, [$0..10^5]); # _Robert Israel_, Aug 21 2014"
+    ],
+    "mathematica": [
+        "(*Run the Mathematica program given in A003415 first, to define the function a as the arithmetic derivative.*) Select[Range[0, 10000], EulerPhi[ # ] == a[ # ] &]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint, totient",
+        "A166374 = [0]+[n for n in range(1,10**6) if sum([int(n*e/p) for p,e in factorint(n).items()]) == totient(n)] # _Chai Wah Wu_, Aug 22 2014",
+        "(Sage)",
+        "A166374_list = lambda n: filter(lambda k: euler_phi(k) == A003415(k), range(n))",
+        "A166374_list(10^6) # _Peter Luschny_, Aug 23 2014"
+    ],
+    "xref": [
+        "Cf. A000010, A003415."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_ and _Giorgio Balzarotti_, Oct 13 2009",
+    "ext": [
+        "Two terms added by _Alonso del Arte_, Oct 20 2009",
+        "Offset corrected and a(13)-a(17) from _Donovan Johnson_, Nov 03 2010",
+        "a(18)-a(19) from _Donovan Johnson_, May 09 2011",
+        "a(20)-a(25) from _Donovan Johnson_, Oct 01 2012",
+        "a(26)-a(27) from _Giovanni Resta_, Mar 13 2014"
+    ],
+    "references": 6,
+    "revision": 35,
+    "time": "2014-11-01T10:45:28-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

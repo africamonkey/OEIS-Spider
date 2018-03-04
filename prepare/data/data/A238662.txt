@@ -1,0 +1,42 @@
+{
+    "number": 238662,
+    "data": "0,0,0,0,0,1,1,3,5,9,12,20,29,43,62,88,118,169,223,306,403,532,693,907,1160,1490,1910,2423,3044,3845,4783,5957,7401,9104,11209,13805,16806,20449,24920,30223,36494,44022,52880,63511,76003,90631,108088,128708",
+    "name": "Number of partitions of n having standard deviation \u03c3 >= 2.",
+    "comment": [
+        "Regarding \"standard deviation\" see Comments at A238616."
+    ],
+    "formula": [
+        "a(n) + A238658(n) = A000041(n)."
+    ],
+    "example": [
+        "There are 22 partitions of 8, whose standard deviations are given by these approximations: 0., 3., 2., 2.35702, 1., 1.69967, 1.73205, 0., 1.24722, 0.942809, 1.22474, 1.2, 0.471405, 1., 0.707107, 0.8, 0.745356, 0., 0.489898, 0.471405, 0.349927, 0, so that a(8) = 3."
+    ],
+    "maple": [
+        "b:= proc(n, i, m, s, c) `if`(n=0, `if`(s/c-(m/c)^2>=4, 1, 0),",
+        "      `if`(i=1, b(0$2, m+n, s+n, c+n), add(b(n-i*j, i-1,",
+        "       m+i*j, s+i^2*j, c+j), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2, 0$3):",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Mar 11 2014"
+    ],
+    "mathematica": [
+        "z = 50; g[n_] := g[n] = IntegerPartitions[n]; c[t_] := c[t] = Length[t]; s[t_] := s[t] = Sqrt[Sum[(t[[k]] - Mean[t])^2, {k, 1, c[t]}]/c[t]];",
+        "Table[Count[g[n], p_ /; s[p] < 2], {n, z}]   (*A238658*)",
+        "Table[Count[g[n], p_ /; s[p] <= 2], {n, z}]  (*A238659*)",
+        "Table[Count[g[n], p_ /; s[p] == 2], {n, z}]  (*A238660*)",
+        "Table[Count[g[n], p_ /; s[p] > 2], {n, z}]   (*A238661*)",
+        "Table[Count[g[n], p_ /; s[p] >= 2], {n, z}]  (*A238662*)",
+        "t[n_] := t[n] = N[Table[s[g[n][[k]]], {k, 1, PartitionsP[n]}]]",
+        "ListPlot[Sort[t[30]]] (*plot of st deviations of partitions of 30*)"
+    ],
+    "xref": [
+        "Cf. A238616, A238658, A238660, A238661."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,8",
+    "author": "_Clark Kimberling_, Mar 03 2014",
+    "references": 6,
+    "revision": 20,
+    "time": "2014-03-11T13:53:04-04:00",
+    "created": "2014-03-09T11:28:14-04:00"
+}

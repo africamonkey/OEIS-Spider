@@ -1,0 +1,57 @@
+{
+    "number": 245664,
+    "data": "16,34,36,66,70,78,88,92,100,120,124,144,154,160,162,186,210,216,248,250,256,260,262,268,300,330,336,340,342,366,378,394,396,404,428,474,484,486,512,520,538,552,574,582,630,636,640,696,700,706,708,714,718,722",
+    "name": "Prime-partitionable numbers a(n) for which there exists a 2-partition of the set of primes < a(n) that has one subset containing two primes only.",
+    "comment": [
+        "Prime-partitionable numbers are defined in A059756.",
+        "To demonstrate that a number is prime-partitionable a suitable 2-partition {P1, P2} of the set of primes < a(n) must be found. In this sequence we are interested in prime-partitionable numbers such that P1 contains 2 odd primes.",
+        "Conjecture: If P1 = {p1a, p1b} with p1a and p1b odd primes, p1a < p1b and p1b = 2*k*p1a + 1 for some natural k such that 2*k <= p1a - 3 and if m = p1a + p1b then m is prime-partitionable and belongs to {a(n)}."
+    ],
+    "link": [
+        "Christopher Hunt Gribble, <a href=\"/A245664/b245664.txt\">Table of n, a(n) for n = 1..145</a>",
+        "Christopher Hunt Gribble, <a href=\"/A245664/a245664_4.txt\">Demonstrating 2-partitions.</a>",
+        "Christopher Hunt Gribble, <a href=\"/A245664/a245664_1.txt\">Conjectured sequence: 20000 terms</a>",
+        "Christopher Hunt Gribble, <a href=\"/A245664/a245664_2.txt\">MAPLE program generating {a(n)}.</a>",
+        "Christopher Hunt Gribble, <a href=\"/A245664/a245664_3.txt\">MAPLE program generating 20000 terms of conjectured sequence.</a>",
+        "W. Holsztynski, R. F. E. Strube, <a href=\"http://dx.doi.org/10.1016/0012-365X(78)90059-6\">Paths and circuits in finite groups</a>, Discr. Math. 22 (1978) 263-272.",
+        "R. J. Mathar and M. F. Hasler, <a href=\"http://list.seqfan.eu/pipermail/seqfan/2014-June/013267.html\">Is 52 prime-partitionable?</a>, Seqfan thread (Jun 29 2014), <a href=\"https://arxiv.org/abs/1510.07997\">arXiv:1510.07997</a>",
+        "W. T. Trotter, Jr. and Paul Erd\u0151s, <a href=\"https://www.renyi.hu/~p_erdos/1978-49.pdf\">When the Cartesian product of directed cycles is Hamiltonian</a>, J. Graph Theory 2 (1978) 137-142 DOI:10.1002/jgt.3190020206."
+    ],
+    "example": [
+        "a(1) = 16 because A059756(1) = 16 and the 2-partition {5, 11}, {2, 3, 7, 13} of the set of primes < 16 demonstrates it."
+    ],
+    "maple": [
+        "See Gribble links referring to \"MAPLE program generating {a(n)}\" and \"MAPLE program generating 20000 terms of conjectured sequence.\""
+    ],
+    "program": [
+        "(PARI) prime_part(n)=",
+        "{",
+        "  my (P = primes(primepi(n-1)));",
+        "  for (k1 = 2, #P - 1,",
+        "    for (k2 = 1, k1 - 1,",
+        "      mask = 2^k1 + 2^k2;",
+        "      P1 = vecextract(P, mask);",
+        "      P2 = setminus(P, P1);",
+        "      for (n1 = 1, n - 1,",
+        "        bittest(n - n1, 0) || next;",
+        "        setintersect(P1, factor(n1)[,1]~) && next;",
+        "        setintersect(P2, factor(n-n1)[,1]~) && next;",
+        "        next(2)",
+        "      );",
+        "      print(n, \", \");",
+        "    );",
+        "  );",
+        "}",
+        "forstep(m=2,2000,2,prime_part(m));"
+    ],
+    "xref": [
+        "Cf. A059756, A244640."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Christopher Hunt Gribble_, Jul 28 2014",
+    "references": 5,
+    "revision": 50,
+    "time": "2017-09-27T04:32:05-04:00",
+    "created": "2014-08-10T15:03:36-04:00"
+}

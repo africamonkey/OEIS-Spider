@@ -1,0 +1,49 @@
+{
+    "number": 239119,
+    "data": "0,0,0,0,0,0,0,0,1,1,3,9,29,99,357,1351,5343,21992,93912,414848,1891264,8878972,42849860,212214460,1077052284,5594301872,29704267536,161055535088,890880956848,5022885935600,28843306388880,168562494708400,1001888980299056",
+    "name": "Number of ballot sequences of length n with exactly 8 fixed points.",
+    "comment": [
+        "The fixed points are in the first 8 positions.",
+        "Also the number of standard Young tableaux with n cells such that the first column contains 1, 2, ..., 8, but not 9.  An alternate definition uses the first row.",
+        "Conjecture: Generally, for fixed k is column k of A238802 asymptotic to sqrt(2)/(2*(k+1)*(k-1)!) * exp(sqrt(n)-n/2-1/4) * n^(n/2) * (1 + 7/(24*sqrt(n))), (holds for all k<=10). - _Vaclav Kotesovec_, Mar 11 2014"
+    ],
+    "link": [
+        "Joerg Arndt and Alois P. Heinz, <a href=\"/A239119/b239119.txt\">Table of n, a(n) for n = 0..800</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau\">Young tableau</a>"
+    ],
+    "formula": [
+        "See Maple program.",
+        "Recurrence (for n>=10): (n-9)*(n^8 - 45*n^7 + 1302*n^6 - 34146*n^5 + 562989*n^4 - 4387005*n^3 + 7242668*n^2 + 80535276*n + 148594320)*a(n) = (n^9 - 54*n^8 + 1392*n^7 - 33705*n^6 + 734286*n^5 - 9696141*n^4 + 60317333*n^3 - 48716460*n^2 - 234532332*n - 4007057040)*a(n-1) + (n-10)*(n-8)*(n^8 - 37*n^7 + 1015*n^6 - 27223*n^5 + 410284*n^4 - 2451988*n^3 - 2863260*n^2 + 83948328*n + 232515360)*a(n-2). - _Vaclav Kotesovec_, Mar 11 2014",
+        "a(n) ~ sqrt(2)/90720 * exp(sqrt(n)-n/2-1/4) * n^(n/2) * (1+7/(24*sqrt(n))). - _Vaclav Kotesovec_, Mar 11 2014"
+    ],
+    "example": [
+        "a(8) = 1: [1,2,3,4,5,6,7,8].",
+        "a(9) = 1: [1,2,3,4,5,6,7,8,1].",
+        "a(10) = 3: [1,2,3,4,5,6,7,8,1,1], [1,2,3,4,5,6,7,8,1,2], [1,2,3,4,5,6,7,8,1,9].",
+        "a(11) = 9: [1,2,3,4,5,6,7,8,1,1,1], [1,2,3,4,5,6,7,8,1,1,2], [1,2,3,4,5,6,7,8,1,1,9], [1,2,3,4,5,6,7,8,1,2,1], [1,2,3,4,5,6,7,8,1,2,3], [1,2,3,4,5,6,7,8,1,2,9], [1,2,3,4,5,6,7,8,1,9,1], [1,2,3,4,5,6,7,8,1,9,2], [1,2,3,4,5,6,7,8,1,9,10]."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n<3, [1, 1, 3][n+1],",
+        "      ((78*n^4 -18395*n^3 -71700*n^2 +536111*n -6824556)*b(n-1)",
+        "       +(203*n^5 +3335*n^4 +113400*n^3 +811949*n^2 -2733405*n",
+        "       +5461380)*b(n-2) +(n-3)*(125*n^4 +21309*n^3 +273479*n^2",
+        "       +556667*n +1829700)*b(n-3)) /",
+        "       (203*n^4+1789*n^3+80693*n^2+377071*n-3156156))",
+        "    end:",
+        "a:=n-> `if`(n<8, 0, b(n-8)):",
+        "seq(a(n), n=0..40);"
+    ],
+    "mathematica": [
+        "b[n_, l_List] := b[n, l] = If[n <= 0, 1, b[n - 1, Append[l, 1]] + Sum[If[i == 1 || l[[i - 1]] > l[[i]], b[n - 1, ReplacePart[l, i -> l[[i]] + 1]], 0], {i, 1, Length[l]}]]; a[n_] := If[n == 8, 1, b[n - 9, {2, 1, 1, 1, 1, 1, 1, 1}]]; a[n_ /; n < 8] = 0; Table[ Print[\"a(\", n, \") = \", an = a[n]]; an, {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Feb 06 2015, after Maple *)"
+    ],
+    "xref": [
+        "Column k=8 of A238802."
+    ],
+    "keyword": "nonn",
+    "offset": "0,11",
+    "author": "_Joerg Arndt_ and _Alois P. Heinz_, Mar 10 2014",
+    "references": 2,
+    "revision": 14,
+    "time": "2017-02-06T18:09:59-05:00",
+    "created": "2014-03-10T15:32:21-04:00"
+}

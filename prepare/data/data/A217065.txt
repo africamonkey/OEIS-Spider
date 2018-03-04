@@ -1,0 +1,38 @@
+{
+    "number": 217065,
+    "data": "13,19,67,73,97,277,367,379,421,433,487,541,691,757,853,967,1117,1471,1747,2017,2617,2749,2851,2953,3463,3529,3571,4507,5077,5923,6073,6079,6343,6481,6577,6709,6829,6967,7351,7417,7573,7681,8317,8719,9157,9649,13177",
+    "name": "Primes that remain prime when a single \"7\" digit is inserted between any two adjacent digits.",
+    "link": [
+        "Harvey P. Dale, <a href=\"/A217065/b217065.txt\">Table of n, a(n) for n = 1..422</a> (* First 118 terms from Paolo P. Lava *)"
+    ],
+    "example": [
+        "311683 is prime and also 3116873, 3116783, 3117683, 3171683 and 3711683."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A217065:=proc(q,x)",
+        "local a,b,c,i,n,ok;",
+        "for n from 5 to q do",
+        "  a:=ithprime(n); b:=0; while a>0 do b:=b+1; a:=trunc(a/10); od; a:=ithprime(n); ok:=1;",
+        "    for i from 1 to b-1 do",
+        "      c:=a+9*10^i*trunc(a/10^i)+10^i*x;  if not isprime(c) then ok:=0; break; fi; od;",
+        "    if ok=1 then print(ithprime(n)); fi; od; end:",
+        "A217065(1000000,7);"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[5,1600]],AllTrue[FromDigits/@Table[Insert[ IntegerDigits[ #],7,i],{i,2,IntegerLength[#]}],PrimeQ]&] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Oct 12 2016 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(v=concat([\"\"], digits(n))); for(i=2, #v-1, v[1]=Str(v[1], v[i]); v[i]=7; if(i>2, v[i-1]=\"\"); if(!isprime(eval(concat(v))), return(0))); isprime(n) \\\\ _Charles R Greathouse IV_, Sep 26 2012"
+    ],
+    "xref": [
+        "Cf. A050674, A050711-A050719, A069246, A159236, A215417, A215419-A215421, A217044-A217047, A217062-A217064."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Sep 26 2012",
+    "references": 7,
+    "revision": 12,
+    "time": "2016-10-12T19:43:41-04:00",
+    "created": "2012-09-26T12:07:57-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 161125,
+    "data": "0,0,1,4,15,52,190,696,2674,10480,42732,178480,770836,3411024,15538120,72446752,346550520,1694394496,8477167504,43287312960,225707308912,1199526928960,6498288708576,35836282708864,201160191642400,1148165325126912,6662315102507200,39268797697682176",
+    "name": "Number of descents in all involutions of {1,2,...,n}.",
+    "comment": [
+        "Also total number of descents in all tableaux of size n (see Stanley ref.).",
+        "A descent in a standard Young tableau is a entry i such that i+1 lies strictly below and weakly left of i. [_Joerg Arndt_, Feb 18 2014]"
+    ],
+    "reference": [
+        "J. Desarmenien and D. Foata, Fonctions symetriques et series hypergeometriques basiques multivariees, Bull. Soc. Math. France, 113, 1985, 3-22.",
+        "I. M. Gessel and C. Reutenauer, Counting permutations with given cycle structure and descent set, J. Combin. Theory, Ser. A, 64, 1993, 189-215.",
+        "V. J. W. Guo and J. Zeng, The Eulerian distribution on involutions is indeed unimodal, J. Combin. Theory, Ser. A, 113, 2006, 1061-1071.",
+        "R. P. Stanley, Enumerative Combinatorics Vol 2., Lemma 7.19.6, p. 361"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A161125/b161125.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "a(n)=(n-1)*A000085(n)/2.",
+        "a(n)=Sum(k*A161126(n,k), k=0..n-1).",
+        "Rec. rel.: a(n)/(n-1) = a(n-1)/(n-2) + (n-1)*a(n-2)/(n-3) for n>=4 (see 1st Maple program).",
+        "E.g.f.: (1/2)*(1 - (1 - z - z^2)*exp(z + z^2/2))."
+    ],
+    "example": [
+        "a(3)=4 because in the involutions 123, 132, 213, and 321 we have 0 + 1 + 1 + 2 descents."
+    ],
+    "maple": [
+        "a[0] := 0: a[1] := 0: a[2] := 1: a[3] := 4: for n from 4 to 27 do a[n] := (n-1)*(a[n-1]/(n-2)+(n-1)*a[n-2]/(n-3)) end do: seq(a[n], n = 0 .. 27); # end of program",
+        "g := (1-(1-z-z^2)*exp(z+(1/2)*z^2))*1/2: gser := series(g, z = 0, 30): seq(factorial(n)*coeff(gser, z, n), n = 0 .. 27); # end of program"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1-(1-z-z^2)*Exp[z+(1/2)*z^2])/2,{z,0,24}],z] Range[0,24]!; (* _Emeric Deutsch_ *)",
+        "descentset[t_?TableauQ]:=Sort[Cases[t,i_Integer /; Position[t,i+1][[1,1]] > Position[t,i][[1,1]], {2}]]; Table[Tr[Length[descentset[#]]& /@Tableaux[n]], {n,1,12}] (* _Wouter Meeussen_, Aug 04 2013 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^66);  concat([0,0],Vec(serlaplace((1/2)*(1-(1-x-x^2)*exp(x+x^2/2))))) \\\\ _Joerg Arndt_, Aug 04 2013"
+    ],
+    "xref": [
+        "Cf. A000085, A161126."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Emeric Deutsch_, Jun 09 2009",
+    "references": 4,
+    "revision": 19,
+    "time": "2014-02-18T11:59:32-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

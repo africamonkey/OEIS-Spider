@@ -1,0 +1,46 @@
+{
+    "number": 88966,
+    "data": "3,8,24,80,288,1088,4224,4374,16640,66048,263168,1050624,4198400",
+    "name": "Numbers n such that A007947(n) = A007947(m+1) and A007947(m) = A007947(n+1), where n > m.",
+    "comment": [
+        "For every k >= 0, the sequence includes 4^k + 2^(k+1), with m = 2^k + 1. - _David Wasserman_, Jan 29 2004",
+        "So a(13) <= 4198400. - _Michel Marcus_, Aug 10 2014",
+        "Are there other terms like 4374 that are not of this form? - _Michel Marcus_, Aug 10 2014"
+    ],
+    "formula": [
+        "G.f.: Conjecture: Q(0)/x - 1/x where Q(k)= 1 + 2^k*x/(1 - 2*x/(2*x + 2^k*x/Q(k+1) )); (continued fraction ). - _Sergei N. Gladkovskii_, Apr 10 2013"
+    ],
+    "example": [
+        "With n=3 and m=2, rad(3) = rad(3) and rad(2) = rad(4), so 3 is in the sequence."
+    ],
+    "maple": [
+        "rad:= n -> convert(numtheory:-factorset(n),`*`):",
+        "count:= 0: lastr:= rad(1):",
+        "for n from 2 to 10^7 do",
+        "  newr:= rad(n);",
+        "  P[lastr,newr]:= n-1;",
+        "  if assigned(P[newr,lastr]) then",
+        "    count:= count+1; A[count]:= n-1; M[count]:= P[newr,lastr];",
+        "  fi;",
+        "  lastr:= newr;",
+        "od:",
+        "seq(A[n],n=1..count); # _Robert Israel_, Aug 10 2014"
+    ],
+    "program": [
+        "(PARI) lista(nn) = {v = vector(nn, i, rad(i)); for (n=1, nn-1, ok = 0; if (n % 2, ma = 2, ma = 1); forstep (m = ma, n-1, 2, if ((v[n] == v[m+1]) && (v[m] == v[n+1]), ok = 1; break);); if (ok, print1(n, \", \")););} \\\\ _Michel Marcus_, Aug 10 2014"
+    ],
+    "xref": [
+        "Cf. A007947 (rad(n)), A087914 (similar sequence), A091697 (the values of m)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Naohiro Nomoto_, Oct 29 2003",
+    "ext": [
+        "More terms from _David Wasserman_, Jan 29 2004",
+        "a(13) confirmed by _Robert Israel_, Aug 10 2014"
+    ],
+    "references": 4,
+    "revision": 28,
+    "time": "2014-08-17T16:30:28-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

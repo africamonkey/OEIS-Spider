@@ -1,0 +1,45 @@
+{
+    "number": 207063,
+    "data": "0,3,5,6,10,12,15,23,27,29,30,46,54,58,60,63,95,111,119,123,125,126,190,222,238,246,250,252,255,383,447,479,495,503,507,509,510,766,894,958,990,1006,1014,1018,1020,1023,1535,1791,1919,1983,2015,2031,2039,2043",
+    "name": "a(n) is the smallest number larger than a(n-1) with mutual Hamming distance 2 and a(1)=0.",
+    "comment": [
+        "The binary expansion of a(n) has an even number of 1's. So this is a subsequence of A001969. The odd analog is A206853.",
+        "This sequence has 4*k+1 = A016813(k) numbers with exactly 2*k 1's and no number with more than two 0's in their binary expansion."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A207063/b207063.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "| n | a(n) | A007088(a(n))| A000120(a(n))|",
+        "+---+------+--------------+--------------+",
+        "| 1 |   0  |         0    |       0      |",
+        "| 2 |   3  |        11    |       2      |",
+        "| 3 |   5  |       101    |       2      |",
+        "| 4 |   6  |       110    |       2      |",
+        "| 5 |  10  |      1010    |       2      |",
+        "| 6 |  12  |      1100    |       2      |",
+        "| 7 |  15  |      1111    |       4      |",
+        "| 8 |  23  |     10111    |       4      |"
+    ],
+    "maple": [
+        "g:= proc(n) option remember; local l; l:= g(n-1);",
+        "      `if`(nops(l)=1, [l[1]+1, l[1]-1], `if`(nops(l)=2,",
+        "      `if`(l[2]<>0, [l[1], l[2]-1], [l[1]+1, 0, l[1]-1]),",
+        "      `if`(l[3]<>1, [l[1], l[2], l[3]-1], [l[1]])))",
+        "    end: g(1):= [2, 0, 1]:",
+        "a:= proc(n) local l; l:= g(n);",
+        "      2^l[1]-1 -add(2^l[i], i=2..nops(l))",
+        "    end:",
+        "seq(a(n), n=1..300);"
+    ],
+    "xref": [
+        "Cf. A000120, A001969, A007088, A016813, A206853."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Feb 14 2012",
+    "references": 5,
+    "revision": 26,
+    "time": "2015-07-18T17:31:42-04:00",
+    "created": "2012-02-15T21:05:48-05:00"
+}

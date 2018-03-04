@@ -1,0 +1,37 @@
+{
+    "number": 194349,
+    "data": "1,2,5,24,129,960,7965,80640,903105,11612160,163451925,2554675200,43259364225,797058662400,15764670046125,334764638208000,7571150452490625,182111963185152000,4634731528895593125,124564582818643968000",
+    "name": "E.g.f.: -log( sqrt(1-x^2) - x ).",
+    "comment": [
+        "Compare e.g.f. to acosh(x) = log(sqrt(x^2-1) + x)."
+    ],
+    "formula": [
+        "a(2*n) = 2^n*(2*n-1)! for n>=1.",
+        "a(n) = A100097(n+1)*(n-1)!/2^n for n>=1.",
+        "a(n) = (n-1)!/2^n * Sum_{k=0..floor((n+1)/2)} C(n+1,k)*A000129(n+1-2*k) for n>=1. [From a formula of Paul Barry in A100097]",
+        "E.g.f.: log( (sqrt(1-x^2) + x)/(1-2*x^2) )."
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 5*x^3/3! + 24*x^4/4! + 129*x^5/5! +...",
+        "where",
+        "exp(A(x)) = 1 + 2*(x/2) + 6*(x/2)^2 + 16*(x/2)^3 + 46*(x/2)^4 + 128*(x/2)^5 +...+ A098617(n)*(x/2)^n +..."
+    ],
+    "mathematica": [
+        "With[{nn=30},Rest[CoefficientList[Series[-Log[Sqrt[1-x^2]-x],{x,0,nn}], x] Range[0,nn]!]] (* _Harvey P. Dale_, Dec 01 2011 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(-log(sqrt(1-x^2+x*O(x^n))-x),n)}",
+        "(PARI) {A000129(n)=polcoeff(x/(1-2*x-x^2+x*O(x^n)),n)}",
+        "{a(n)=if(n<1,0,sum(k=0,floor((n+1)/2),binomial(n+1, k)*A000129(n+1-2*k))*(n-1)!/2^n)}"
+    ],
+    "xref": [
+        "Cf. A098617, A100097."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Aug 21 2011",
+    "references": 1,
+    "revision": 13,
+    "time": "2013-11-21T12:50:19-05:00",
+    "created": "2011-08-22T04:06:49-04:00"
+}

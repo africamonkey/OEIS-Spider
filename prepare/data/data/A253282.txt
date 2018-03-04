@@ -1,0 +1,30 @@
+{
+    "number": 253282,
+    "data": "1,1,2,12,124,1844,39288,1134928,42346256,1985443536,114380311072,7938644848832,653292526793664,62901472582993984,7005466255571255168,893590563265303934208,129425758313629525647616,21124489015640181154724096,3859303832272520341300756992",
+    "name": "Coefficients in the expansion of sn(t * x, m) / t in powers of x where t = sqrt( -1/2 - sqrt(1/6)), m = 5 - sqrt(24), and sn() is a Jacobi elliptic function.",
+    "formula": [
+        "The e.g.f. A(x) = y satisfies 0 = 2 - 2 * y'*y' + y*y'' + y^2.",
+        "The e.g.f. A(x) satisfies 0 = A(x) * A(y) * A(x-y) + A(y) * A(z) * A(y-z) - A(x) * A(z) * A(x-z) - A(x-y) * A(x-z) * A(y-z) for all x, y, z.",
+        "E.g.f.: Sum_{k>=0} a(k) * x^(2*k+1) / (2*k+1)! = sn(t * x, m) / t  where t = sqrt( -1/2 - sqrt(1/6)), m = 5 - sqrt(24), and sn() is a Jacobi elliptic function."
+    ],
+    "example": [
+        "G.f. = 1 + x + 2*x^2 + 12*x^3 + 124*x^4 + 1844*x^5 + 39288*x^6 + ...",
+        "E.g.f. = x + x^3/6 + x^5/60 + x^7/420 + 31*x^9/90720 + 461*x^11/9979200 + ..."
+    ],
+    "mathematica": [
+        "a[ n_] := If[ n < 0, 0, With[{t = Sqrt[-1/2 - Sqrt[1/6]], m = 5 - Sqrt[24]}, SeriesCoefficient[ JacobiSN[ t x, m] / t, {x, 0, 2 n + 1}] (2 n + 1)! // Simplify]];"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A, c); if( n<0, 0, A = x + x^3/6 + x^5/60; for(k=3, n, A += O(x^(2*k+2)); A = x + intformal( intformal( 2*(A'^2 - 1) / A - A)); c = polcoeff( A, 2*k + 1) * k / (k-2); A = truncate( A + O(x^(2*k))) + c * x^(2*k+1)); (2*n + 1)! * polcoeff( A, 2*n + 1))};"
+    ],
+    "xref": [
+        "Cf. A144853, A253649."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Michael Somos_, May 02 2015",
+    "references": 1,
+    "revision": 8,
+    "time": "2015-05-02T13:18:04-04:00",
+    "created": "2015-05-02T12:36:21-04:00"
+}

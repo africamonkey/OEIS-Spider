@@ -1,0 +1,33 @@
+{
+    "number": 91375,
+    "data": "8,12,16,18,20,24,28,30,32,36,40,42,44,48,50,52,54,56,60,64,66,68,70,72,76,78,80,81,84,88,90,92,96,98,100,102,104,108,110,112,114,116,120,124,126,128,130,132,135,136,138,140,144,148,150,152,154,156,160,162",
+    "name": "Numbers having more prime factors than the value of their smallest prime factor.",
+    "comment": [
+        "A091371(a(n)) < 0: A001222(a(n))>A020639(a(n)).",
+        "Numbers of the form m*i + n*j = k*(i+j), where i and j are > 1. - _Giovanni Teofilatto_, Aug 29 2007"
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A091375/b091375.txt\">Table of n, a(n) for n = 1..10438</a>"
+    ],
+    "mathematica": [
+        "Select[Range@ 162, Length@ Flatten[Table[#1, {#2}] & @@@ #] > #[[1, 1]] &@ FactorInteger@ # &] (* _Michael De Vlieger_, Jul 06 2016 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=n>7 && bigomega(n) > factor(n)[1,1] \\\\ _Charles R Greathouse IV_, Jul 06 2016",
+        "(PARI) bigomegaAtLeast(n,k,startAt=2)=if(k<3, return(if(k==2,n>1&&!isprime(n),k==0||n>1))); forprime(p=startAt,logint(n,k), if(n%p==0, k-=valuation(n,p);n/=p^valuation(n,p); return(bigomegaAtLeast(n,k)))); 0",
+        "is(n)=if(n%2==0,return(bigomegaAtLeast(n/2,2))); if(n%3==0,return(bigomegaAtLeast(n/3,3,3))); if(n<9,return(0)); forprime(p=5,log(n)/lambertw(log(n)), if(n%p==0, return(bigomegaAtLeast(n/p,p,p)))); 0 \\\\ _Charles R Greathouse IV_, Jul 06 2016"
+    ],
+    "xref": [
+        "Cf. A091372, A091376, A091377."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Jan 04 2004",
+    "ext": [
+        "Missing a(10001)-a(10424) inserted into b-file by _Andrew Howroyd_, Feb 25 2018"
+    ],
+    "references": 6,
+    "revision": 17,
+    "time": "2018-02-25T20:26:18-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

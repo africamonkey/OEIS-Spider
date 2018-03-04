@@ -1,0 +1,39 @@
+{
+    "number": 234023,
+    "data": "47,51,59,67,75,79,175,179,187,195,203,207,291,299,339,347,419,427,467,475,531,539,611,619,659,667,739,747,767,771,779,815,831,847,883,891,899,907,943,959,975,1011,1019,1027,1035,1087,1139,1147,1155,1163,1215",
+    "name": "Positions n where abs(A234022(n)-A234022(n+1)) > 1.",
+    "comment": [
+        "These are the indices to A193231 where the count of 1-bits in its terms changes by more than one."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A234023/b234023.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>, section 1.19, \"Invertible transforms on words\", pp. 49--55. [This sequence appears on page 50]"
+    ],
+    "example": [
+        "47 is in the sequence, as A193231(47) = 59, A193231(48) = 34, and A007088(59)='111011', A007088(34)='100010', thus there are five 1-bits in the former, while there are only two in the latter, and abs(5-2) = 3 > 1."
+    ],
+    "program": [
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A234023 (MATCHING-POS 1 1 (lambda (n) (> (abs (- (A234022 n) (A234022 (+ n 1)))) 1))))",
+        "(Python)",
+        "def a065621(n): return n^(2*(n - (n&-n)))",
+        "def a048724(n): return n^(2*n)",
+        "def a193231(n):",
+        "    if n<2: return n",
+        "    if n%2==0: return a048724(a193231(n/2))",
+        "    else: return a065621(1 + a193231((n - 1)/2))",
+        "def a234022(n): return bin(a193231(n))[2:].count(\"1\")",
+        "def ok(n): return 1 if abs(a234022(n) - a234022(n + 1))>1 else 0",
+        "print [n for n in xrange(1, 1501) if ok(n)] # _Indranil Ghosh_, Jun 05 2017"
+    ],
+    "xref": [
+        "Cf. A234022, A193231."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Dec 28 2013",
+    "references": 3,
+    "revision": 16,
+    "time": "2017-06-05T17:36:26-04:00",
+    "created": "2013-12-31T12:36:11-05:00"
+}

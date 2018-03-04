@@ -1,0 +1,32 @@
+{
+    "number": 217038,
+    "data": "0,1,1,1,2,2,2,2,3,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,6,6,7,7,7,7,7,8,8,8,8,9,9,9,9,9,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,11,11,11,11,11,11,11,11,12,12,12,12,12",
+    "name": "Number of powerful numbers < n.",
+    "comment": [
+        "Powerful numbers are given by A001694."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A217038/b217038.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(10)=4 since there are exactly 4 powerful numbers (1,4,8,9) less than 10."
+    ],
+    "mathematica": [
+        "PowQ[n_] := Cases[FactorInteger[n], {p_, 1} -> p] == {}; Q[n_] := Length[Join[{1}, Select[Range[n - 1], PowQ[#] &]]] ; Join[{0}, Table[Q[n], {n, 2, 100}]]"
+    ],
+    "program": [
+        "(PARI) g(n,fe=factor(n)[,2])=prod(i=1,#fe, (fe[i]+2)\\2 - (fe[i]+2)\\3)",
+        "a(n)=my(v=List(),t); n--; for(m=2,sqrtnint(n,6), for(y=1,sqrtnint(n\\m^6,3), t=(m^2*y)^3; for(x=1,sqrtint(n\\t), listput(v,t*x^2)))); v=Set(v); sum(y=1,sqrtnint(n,3), sqrtint(n\\y^3))-sum(i=1,#v, g(v[i])-1) \\\\ _Charles R Greathouse IV_, Jul 31 2017",
+        "(PARI) first(n)=my(v=vector(n),s=1); if(n>1, v[2]=1); forfactored(k=2,n-1, if(vecmin(k[2][,2])>1, s++); v[k[1]+1]=s); v \\\\ _Charles R Greathouse IV_, Jul 31 2017"
+    ],
+    "xref": [
+        "Cf. A001597, A001694, A076411."
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "_Jayanta Basu_, Apr 07 2013",
+    "references": 1,
+    "revision": 69,
+    "time": "2017-07-31T16:25:58-04:00",
+    "created": "2013-04-08T12:16:27-04:00"
+}

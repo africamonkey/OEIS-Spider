@@ -1,0 +1,41 @@
+{
+    "number": 192943,
+    "data": "1,1,3,13,84,799,11614,261871,9310722,526600361,47689339307,6941763106589,1628280738899789,616407665133432210,376972626454916592035,372661572610740328515040,595723423648119559905487975,1540281161085963627452726056250",
+    "name": "Constant term of the reduction by x^2->x+1 of the polynomial p(n,x)=(x+1)(x+2)...(x+F(n+1)), where F=A000045, the Fibonacci sequence.",
+    "comment": [
+        "For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232."
+    ],
+    "example": [
+        "The first four polynomials p(n,x) and their reductions are as follows:",
+        "p(0,x)=1",
+        "p(1,x)=x+1 -> 1+x",
+        "p(2,x)=(x+1)(x+2) -> 3+4x",
+        "p(3,x)=(x+1)(x+2)(x+3) -> 13+19x",
+        "From these, read",
+        "A192943=(1,1,3,13,...) and A192944=(0,1,4,19,...)"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 26;",
+        "p[0, x] := 1;",
+        "p[n_, x_] := (x + Fibonacci[n + 1])*p[n - 1, x];",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        " FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "  (* A192943 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "  (* A192944 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192744, A192944."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 13 2011",
+    "references": 2,
+    "revision": 5,
+    "time": "2012-03-30T18:57:37-04:00",
+    "created": "2011-07-13T20:19:06-04:00"
+}

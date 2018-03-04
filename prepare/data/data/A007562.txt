@@ -1,0 +1,71 @@
+{
+    "number": 7562,
+    "id": "M0773",
+    "data": "1,1,1,2,3,6,10,20,36,72,137,275,541,1098,2208,4521,9240,19084,39451,82113,171240,358794,753460,1587740,3353192,7100909,15067924,32044456,68272854,145730675,311575140,667221030,1430892924,3072925944,6607832422,14226665499",
+    "name": "Number of planted trees where non-root, non-leaf nodes an even distance from root are of degree 2.",
+    "comment": [
+        "There is no planted tree on one node by definition.",
+        "Column k=2 of A144018. - _Alois P. Heinz_, Oct 17 2012"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A007562/b007562.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "M. Bernstein and N. J. A. Sloane, <a href=\"http://arXiv.org/abs/math.CO/0205301\">Some canonical sequences of integers</a>, Linear Alg. Applications, 226-228 (1995), 57-72; erratum 320 (2000), 210. [Link to arXiv version]",
+        "M. Bernstein and N. J. A. Sloane, <a href=\"/A003633/a003633_1.pdf\">Some canonical sequences of integers</a>, Linear Alg. Applications, 226-228 (1995), 57-72; erratum 320 (2000), 210. [Link to Lin. Alg. Applic. version together with omitted figures]",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "Shifts left 2 places under Euler transform.",
+        "G.f.: x + x^2 / (Product_{k>0} (1 - x^k)^a(k)). - _Michael Somos_, Oct 06 2003",
+        "a(n) ~ c * d^n / n^(3/2), where d = 2.246066877341161662499621547921... and  c = 0.68490297576105466417608032... . - _Vaclav Kotesovec_, Jun 23 2014"
+    ],
+    "example": [
+        "G.f. = x + x^2 + x^3 + 2*x^4 + 3*x^5 + 6*x^6 + 10*x^7 + 20*x^8 + 36*x^9 + ...",
+        "From _Joerg Arndt_, Jun 23 2014: (Start)",
+        "The a(7) = 20 such trees have the following level sequences:",
+        "01:  [ 0 1 2 3 4 3 2 1 ]",
+        "02:  [ 0 1 2 3 3 3 2 1 ]",
+        "03:  [ 0 1 2 3 3 2 2 1 ]",
+        "04:  [ 0 1 2 3 3 2 1 1 ]",
+        "05:  [ 0 1 2 3 2 3 2 1 ]",
+        "06:  [ 0 1 2 3 2 2 2 1 ]",
+        "07:  [ 0 1 2 3 2 2 1 1 ]",
+        "08:  [ 0 1 2 3 2 1 2 1 ]",
+        "09:  [ 0 1 2 3 2 1 1 1 ]",
+        "10:  [ 0 1 2 2 2 2 2 1 ]",
+        "11:  [ 0 1 2 2 2 2 1 1 ]",
+        "12:  [ 0 1 2 2 2 1 2 1 ]",
+        "13:  [ 0 1 2 2 2 1 1 1 ]",
+        "14:  [ 0 1 2 2 1 2 2 1 ]",
+        "15:  [ 0 1 2 2 1 2 1 1 ]",
+        "16:  [ 0 1 2 2 1 1 1 1 ]",
+        "17:  [ 0 1 2 1 2 1 2 1 ]",
+        "18:  [ 0 1 2 1 2 1 1 1 ]",
+        "19:  [ 0 1 2 1 1 1 1 1 ]",
+        "20:  [ 0 1 1 1 1 1 1 1 ]",
+        "Successive levels change by at most 1 and the last level is 1, compare to the example in A000081.",
+        "(End)"
+    ],
+    "maple": [
+        "with(numtheory): etr:= proc(p) local b; b:= proc(n) option remember; if n=0 then 1 else (add(d*p(d), d=divisors(n)) +add(add(d*p(d), d= divisors(j)) *b(n-j), j=1..n-1))/n fi end end: b:= etr(a): a:= n-> `if`(n<=1, n, b(n-2)): seq(a(n), n=1..40);  # _Alois P. Heinz_, Sep 06 2008"
+    ],
+    "mathematica": [
+        "etr[p_] := Module[{b}, b[n_] := b[n] = If[n == 0, 1, (Sum[ Sum[ d*p[d], {d, Divisors[j]}]*b[n-j], {j, 1, n-1}] + Sum[ d*p[d], {d, Divisors[n]}])/n]; b]; b = etr[a]; a[n_] := If[n <= 1, n, b[n-2]]; Table[a[n], {n, 1, 36}] (* _Jean-Fran\u00e7ois Alcover_, Aug 01 2013, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = local(A); if( n<2, n>0, A = x / (1 - x) + O(x^n); for(k=2, n-2, A /= (1 - x^k + O(x^n))^polcoeff(A, k-1)); polcoeff(A, n-1))}; /* _Michael Somos_, Oct 06 2003 */"
+    ],
+    "keyword": "nonn,nice,eigen",
+    "offset": "1,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Better description from _Christian G. Bower_, May 15 1998"
+    ],
+    "references": 3,
+    "revision": 45,
+    "time": "2017-10-07T02:55:55-04:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

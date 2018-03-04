@@ -1,0 +1,37 @@
+{
+    "number": 156604,
+    "data": "2,3,5,7,29,47,67,89,179,197,199,379,397,487,577,599,797,887,977,1499,1697,1787,1877,1949,2399,2579,2687,2777,2939,2957,2999,3989,4799,4889,4999,6997,7699,7789,7879,8599,8689,8779,8887,9679,9697,9769,9787,9859",
+    "name": "a(1)=2; for n>0, a(n+1) is the smallest prime of A046704 larger than a(n) such that the sequence of digit sums of a(n) is nondecreasing.",
+    "comment": [
+        "The slowest increasing sequence that is a subsequence of A046704 such that the sequence of A007953(a(n)) is nondecreasing. - _R. J. Mathar_, Mar 29 2010"
+    ],
+    "example": [
+        "3 (3>2). 5 (5>3). 7 (7>5). 29 (prime=2+9>7). 47 (4+7=2+9). 67 (prime=6+7> 4+9). 89 (prime=8+9>6+7).",
+        "179 (1+7+9 = 8+9), 197 (1+9+7=8+9)."
+    ],
+    "maple": [
+        "A007953 := proc(n) local d ; add(d,d= convert(n,base,10)) ; end proc:",
+        "isA046704 := proc(n) isprime(n) and isprime(A007953(n)) ; end proc:",
+        "A156604 := proc(n) option remember ; local psprev,i ; if n = 1 then 2 ; else psprev := A007953(procname(n-1)) ; for i from procname(n-1)+1 do if isA046704(i) then if A007953(i) >= psprev then return i ; end if; end if; end do: end if ; end proc:",
+        "seq(A156604(n),n=1..80) ; # R. J. Mathar, Mar 18 2010",
+        "Contribution from _R. J. Mathar_, Mar 29 2010: (Start)",
+        "A007953 := proc(n) add(d, d= convert(n,base,10)) ; end proc:",
+        "isA028834 := proc(n) local d; add(d, d= convert(n,base,10)) ; isprime(%) ; end proc:",
+        "isA046704 := proc(n) isprime(n) and isA028834(n) ; end proc:",
+        "A156604 := proc(n) option remember; if n = 1 then 2; else for a from procname(n-1)+1 do if isA046704(a) and A007953(a) >= A007953(procname(n-1)) then return a; end if; end do: end if; end proc: seq(A156604(n),n=1..100) ; (End)"
+    ],
+    "xref": [
+        "Cf. A000040, A067954."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Feb 11 2009",
+    "ext": [
+        "Definition, terms and examples corrected by _R. J. Mathar_, Mar 18 2010",
+        "Inserted 179 and 1877 and replaced 9 numbers after 4889 by 4999 - _R. J. Mathar_, Mar 29 2010"
+    ],
+    "references": 4,
+    "revision": 9,
+    "time": "2015-12-12T16:44:39-05:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

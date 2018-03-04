@@ -1,0 +1,45 @@
+{
+    "number": 118896,
+    "data": "1,4,14,54,185,619,2027,6553,21044,67231,214122,680330,2158391,6840384,21663503,68575557,217004842,686552743,2171766332,6869227848,21725636644,68709456167,217293374285,687174291753,2173105517385,6872112993377,21731852479862,68722847672629,217322225558934,687236449779456,2173239433013146",
+    "name": "Number of powerful numbers <= 10^n.",
+    "comment": [
+        "These numbers agree with the asymptotic formula c*sqrt(x), with c=2.1732...(A090699). - _T. D. Noe_, May 09 2006",
+        "Bateman & Grosswald proved that the number of powerful numbers up to x is zeta(3/2)/zeta(3) * x^1/2 + zeta(2/3)/zeta(2) * x^1/3 + o(x^1/6). This approximates the series very closely: up to a(24), all absolute errors are less than 75. - _Charles R Greathouse IV_, Sep 23 2008"
+    ],
+    "link": [
+        "Charles R Greathouse IV and Hiroaki Yamanouchi, <a href=\"/A118896/b118896.txt\">Table of n, a(n) for n = 0..45</a> (terms a(0)-a(32) from Charles R Greathouse IV)",
+        "Michael Filaseta and Ognian Trifonov, <a href=\"http://matwbn.icm.edu.pl/ksiazki/aa/aa67/aa6743.pdf\">The distribution of squarefull numbers in short intervals</a>, Acta Arithmetica 67 (1994), pp. 323-333.",
+        "Paul T. Bateman and Emil Grosswald, <a href=\"http://projecteuclid.org/euclid.ijm/1255380836\">On a theorem of Erd\u0151s and Szekeres</a>, Illinois J. Math. 2:1 (1958), p. 88-98.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PowerfulNumber.html\">Powerful Number</a>"
+    ],
+    "formula": [
+        "Pi(x) = Sum {i=1..cbrt(x)}, floor(sqrt( x/i^3)) only if i is squarefree. - _Robert G. Wilson v_, Aug 12 2014"
+    ],
+    "maple": [
+        "f:= m -> nops({seq(seq(a^2*b^3, b=1..floor((m/a^2)^(1/3))),a=1..floor(sqrt(m)))}):",
+        "seq(f(10^n),n=0..10); # _Robert Israel_, Aug 12 2014"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{max = 10^n}, Length@ Union@ Flatten@ Table[ a^2*b^3, {b, max^(1/3)}, {a, Sqrt[ max/b^3]}]]; Array[f, 13, 0] (* _Robert G. Wilson v_, Aug 11 2014 *)",
+        "powerfulNumberPi[n_] := Sum[ If[ SquareFreeQ@ i, Floor[ Sqrt[ n/i^3]], 0], {i, n^(1/3)}]; Array[ powerfulNumberPi[10^#] &, 27, 0] (* _Robert G. Wilson v_, Aug 12 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=n=10^n;sum(k=1, floor((n+.5)^(1/3)), if(issquarefree(k), sqrtint(n\\k^3))) \\\\ _Charles R Greathouse IV_, Sep 23 2008"
+    ],
+    "xref": [
+        "Cf. A001694, A090699."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Eric W. Weisstein_, May 05 2006",
+    "ext": [
+        "More terms from _T. D. Noe_, May 09 2006",
+        "a(13)-a(24) from _Charles R Greathouse IV_, Sep 23 2008",
+        "a(25)-a(29) from _Charles R Greathouse IV_, May 30 2011",
+        "a(30) from _Charles R Greathouse IV_, May 31 2011"
+    ],
+    "references": 3,
+    "revision": 55,
+    "time": "2015-03-26T15:10:51-04:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 5487,
+    "id": "M3243",
+    "data": "0,4,5,7,11,12,16,23,26,31,33,37,38,44,49,56,73,78,80,85,95,99,106,124,128,131,136,143,169,188,197,203,220,221,226,227,238,247,259,269,276,284,287,302,308,310,313,319,337,385,392,397,422,434,455,466,470",
+    "name": "Starts 0, 4 and contains no 3-term arithmetic progression.",
+    "comment": [
+        "This is what would now be called the Stanley Sequence S(0,4). See A185256."
+    ],
+    "reference": [
+        "R. K. Guy, Unsolved Problems in Number Theory, E10.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A005487/b005487.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "P. Erdos, V. Lev, G. Rauzy, C. Sandor, A. Sarkozy, <a href=\"http://www.math.haifa.ac.il/~seva/Papers/greeda.dvi\">Greedy algorithm, arithmetic progressions, subset sums and divisibility</a>, Discrete Mathematics 200 (1999), pp. 119-135.",
+        "R. A. Moy and D. Rolnick, <a href=\"http://arxiv.org/abs/1502.06013\">Novel structures in Stanley sequences</a>, arXiv:1502.06013 [math.CO], 2015.",
+        "R. A. Moy and D. Rolnick, <a href=\"http://dx.doi.org/10.1016/j.disc.2015.10.017\">Novel structures in Stanley sequences</a>, Discrete Math., 339 (2016), 689-698.",
+        "A. M. Odlyzko and R. P. Stanley, <a href=\"http://www-math.mit.edu/~rstan/papers/od.ps\">Some curious sequences constructed with the greedy algorithm</a>, 1978",
+        "<a href=\"http://oeis.org/wiki/Index_to_OEIS:_Section_No#non_averaging\">Index entries related to non-averaging sequences</a>"
+    ],
+    "mathematica": [
+        "ss[s1_, M_] := Module[{n, chvec, swi, p, s2, i, j, t1, mmm}, t1 = Length[s1]; mmm = 1000; s2 = Table[s1, {t1 + M}] // Flatten; chvec = Array[0&, mmm]; For[i = 1 , i <= t1 , i++, chvec[[s2[[i]] ]] = 1]; (* get n-th term *) For[n = t1+1 , n <= t1 + M , n++, (* try i as next term *) For[i = s2[[n-1]] + 1 , i <= mmm , i++, swi = -1; (* test against j-th term *) For[ j = 1 , j <= n-2 , j++, p = s2[[n - j]]; If[ 2*p - i < 0 , Break[] ]; If[ chvec[[2*p - i]] == 1 , swi = 1; Break[] ] ]; If[ swi == -1 , s2[[n]] = i; chvec[[i]] = 1; Break[] ] ]; If[ swi == 1 , Print[\"Error, no solution at n = \", n] ] ]; Table[s2[[i]], {i, 1, t1+M}] ]; ss[{0, 4}, 80] (* _Jean-Fran\u00e7ois Alcover_, Sep 10 2013, translated from Maple program given in A185256 *)"
+    ],
+    "program": [
+        "(Python)",
+        "A005487_list = [0,4]",
+        "for i in range(101-2):",
+        "    n, flag = A005487_list[-1]+1, False",
+        "    while True:",
+        "        for j in range(i+1,0,-1):",
+        "            m = 2*A005487_list[j]-n",
+        "            if m in A005487_list:",
+        "                break",
+        "            if m < A005487_list[0]:",
+        "                flag = True",
+        "                break",
+        "        else:",
+        "            A005487_list.append(n)",
+        "            break",
+        "        if flag:",
+        "            A005487_list.append(n)",
+        "            break",
+        "        n += 1 # _Chai Wah Wu_, Jan 05 2016"
+    ],
+    "xref": [
+        "Equals A033158(n+1)-1. Cf. A185256."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Name clarified by _Charles R Greathouse IV_, Jan 30 2014"
+    ],
+    "references": 11,
+    "revision": 35,
+    "time": "2017-03-08T10:28:18-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

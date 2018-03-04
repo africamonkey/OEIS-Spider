@@ -1,0 +1,61 @@
+{
+    "number": 166083,
+    "data": "8,12,16,18,20,24,27,28,30,32,36,40,45,48,54,60,64,72,75,80,84,90,96,100,105,112,120,125,128,140,144,150,160,168,175,180,192,200,210,216,225,240,245,252,256,270,280,288,294,300,315,324,336,343,350,360,378",
+    "name": "Maximal volume of a closed box created by using at most n voxels as the boundary, skipping values of n for which the volume is the same as for n-1.",
+    "comment": [
+        "For example, a 3 X 3 X 3 box can be created by using top and bottom plates of 3 X 3 X 1 voxels, and using 8 voxels to connect them, totaling 26 voxels."
+    ],
+    "link": [
+        "Li-yao Xia, <a href=\"/A166083/a166083.txt\">Examples of (N, Volume(N)), N<1000</a>"
+    ],
+    "formula": [
+        "For each N (starting at 8), calculate the max Volume(N)=w*h*d such that (N <= (w*h*d - (w-1)*(h-1)*(d-1)). Keep only those N for which Volume(N)>Volume(N-1). The minimum box is 2 X 2 X 2 voxels to prevent overlapping voxels (multiple voxels occupying the same location in space) or degenerate cases."
+    ],
+    "example": [
+        "N Volume",
+        "8 8",
+        "12 12",
+        "16 16",
+        "18 18",
+        "20 20",
+        "24 24",
+        "26 27",
+        "28 28",
+        "30 30",
+        "32 32"
+    ],
+    "program": [
+        "(Java)",
+        "int lastMax = 0;",
+        "for (int voxels = 8; voxels <= 1000; voxels++) {",
+        "  int max = 0;",
+        "  for (int depth = voxels / 4; depth >= 2; depth--) {",
+        "    for (int width = voxels / (2 * depth); width >= 2; width--) {",
+        "      int remaining = voxels - 2 * width * depth;",
+        "      int height = 2 + remaining / (2 * (width - 1 + depth - 1));",
+        "      int volume = width * depth * height;",
+        "      if (max < volume) {",
+        "        max = volume;",
+        "      }",
+        "    }",
+        "  }",
+        "  if (lastMax < max) {",
+        "   lastMax = max;",
+        "   System.out.println(voxels + \" \" + max);",
+        "  }",
+        "}"
+    ],
+    "xref": [
+        "Cf. A166082 (full sequence without conditions), A166084 (sequence where the enclosed empty space must increase)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Mark Jeronimus (mark.jeronimus(AT)gmail.com), Oct 06 2009, Dec 01 2009",
+    "ext": [
+        "Minor edits by _N. J. A. Sloane_, Dec 05 2009"
+    ],
+    "references": 3,
+    "revision": 15,
+    "time": "2014-11-14T12:42:30-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

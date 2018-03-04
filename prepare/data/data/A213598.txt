@@ -1,0 +1,48 @@
+{
+    "number": 213598,
+    "data": "1,1,2,3,5,7,11,15,22,30,42,56,77,101,135,176,231,297,385,490,627,792,1002,1255,1575,1958,2436,3010,3718,4565,5604,6842,8349,10143,12310,14883,17977,21637,26015,31185,37338,44583,53174,63261,75175,89134,105558,124754,147273,173524",
+    "name": "Number of partitions of n in which no parts are multiples of 49.",
+    "comment": [
+        "For n<49 we have a(n)=A000041(n), for n>=49 a(n)!=A000041(n).",
+        "In Fricke page 401, he gives the expansion sigma(omega) = q^4 + q^6 + 2q^8 + 3q^10 + 5q^12 + 7q^14 + 11q^16 + 15q^18 + ... where q = exp( Pi i omega)."
+    ],
+    "reference": [
+        "R. Fricke, Die elliptischen Funktionen und ihre Anwendungen, Teubner, 1922, Vol. 2, see p. 401. Eq. (49)"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A213598/b213598.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Vaclav Kotesovec, <a href=\"http://arxiv.org/abs/1509.08708\">A method of finding the asymptotics of q-series based on the convolution of generating functions</a>, arXiv:1509.08708 [math.CO], Sep 30 2015."
+    ],
+    "formula": [
+        "Expansion of q^(-2) * eta(q^49) / eta(q) in powers of q.",
+        "Euler transform of period 49 sequence [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, ...].",
+        "Given g.f. A(x) then B(x) = x^2 * A(x) satisfies 0 = f(B(x), B(x^2),",
+        "B(x^4)) where f(u, v, w) = u * v * w * (1 - 7*v^2) - (v - w) * (u - v) * (v^2 - u*w).",
+        "G.f. is a period 1 Fourier series which satisfies f(-1 / (49 t)) = 1 / (7 f(t)) where q = exp(2 Pi i t).",
+        "G.f.: Product_{k>0} (1 - x^(49*k)) / (1 - x^k).",
+        "a(n) ~ exp(4*Pi*sqrt(2*n)/7) / (2^(1/4) * 7^(3/2) * n^(3/4)). - _Vaclav Kotesovec_, Oct 14 2015",
+        "a(n) = (1/n)*Sum_{k=1..n} A287926(k)*a(n-k), a(0) = 1. - _Seiichi Manyama_, Jun 16 2017"
+    ],
+    "example": [
+        "G.f. = 1 + x + 2*x^2 + 3*x^3 + 5*x^4 + 7*x^5 + 11*x^6 + 15*x^7 + 22*x^8 + ...",
+        "G.f. = q^2 + q^3 + 2*q^4 + 3*q^5 + 5*q^6 + 7*q^7 + 11*q^8 + 15*q^9 + 22*q^10 + ..."
+    ],
+    "mathematica": [
+        "a[ n_] := SeriesCoefficient[ Product[ 1 - x^k, {k, 49, n, 49}] / Product[ 1 - x^k, {k, n}], {x, 0, n}];",
+        "a[ n_] := SeriesCoefficient[ QPochhammer[ x^49] / QPochhammer[ x], {x, 0, n}]; (* _Michael Somos_, May 13 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = local(A); if( n<0, 0, A = x * O(x^n); polcoeff( eta(x^49 + A) / eta(x + A), n))};"
+    ],
+    "xref": [
+        "Cf. A000009 (m=2), A000726 (m=3), A001935 (m=4), A035959 (m=5), A219601 (m=6), A035985 (m=7), A261775 (m=8), A104502 (m=9), A261776 (m=10), A092885 (m=25), this sequence (m=49).",
+        "Cf. A000041, A287926."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Michael Somos_, Jun 14 2012",
+    "references": 3,
+    "revision": 33,
+    "time": "2017-06-16T07:54:31-04:00",
+    "created": "2012-06-15T19:39:34-04:00"
+}

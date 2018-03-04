@@ -1,0 +1,101 @@
+{
+    "number": 213816,
+    "data": "1,1,1,2,2,3,4,6,7,11,13,20,24,37,44,68,81,125,149,230,274,423,504,778,927,1431,1705,2632,3136,4841,5768,8904,10609,16377,19513,30122,35890,55403,66012,101902,121415,187427,223317,344732,410744,634061,755476,1166220",
+    "name": "Tribonacci sequences A000073 and A001590 interleaved.",
+    "comment": [
+        "Bruce (see reference) formulated the sequence using the following two equations:",
+        "a(2n) = a(2n-1)+a(2n-3),",
+        "a(2n+1) = a(2n-1)+a(2n-2),",
+        "with n>1 and initial conditions a(1)=a(2)=a(3)= 1. These equations lead to a pair of tribonacci-type recurrence equations, for n>2:",
+        "a(2n+1) = a(2n-1)+a(2n-3)+a(2n-5),",
+        "a(2n+2) = a(2n)+a(2n-2)+a(2n-4).",
+        "It could be more appropriate to consider the sequence as a kind of two dimensional tribonacci sequence (a(2n-1),(a(2n)), i.e. as (1, 1), (1, 2), (2, 3), (4, 6), (7, 11), (13, 20), (24, 37), (44, 68), (81, 125), (149, 230), (274, 423), (504, 778), (927, 1431), (1705, 2632), (3136, 4841),... since after the first three initial pairs, the next pair can be obtained by adding three previous pairs component-wise. However, the first three initial pairs (1, 1), (1, 2), (2, 3) are redundant in comparison with the original integer sequence that needs only three initial integers 1, 1 and 1.",
+        "One method to construct the two dimensional sequence is by using the well-known tribonacci-related morphism f with f(a) = ab, f(b) = ac, f(c) = a on the monoid of strings over the alphabet {a, b, c}. Using component-wise map, the following sequence of pairs is obtained: (c,b), (a, ac), (ab, aba), (abac, abacab), (abacaba, abacabaabac), (abacabaabacab, abacabaabacababacaba), ...; which is initialized by the pair (c,b) and any pair (x,y) is followed by (f(x),f(y)). The length of every string in every component consitutes the two-dimensional sequence."
+    ],
+    "reference": [
+        "Ian Bruce, A Modified Tribonacci Sequence, The Fibonacci Quarterly 22, no.3 (1984), 244-246"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A213816/b213816.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Ian Bruce, <a href=\"http://www.fq.math.ca/22-3.html\">A Modified Tribonacci Sequence</a>, The Fibonacci Quarterly 22, no.3 (1984):244-246",
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (0,1,0,1,0,1)."
+    ],
+    "formula": [
+        "G.f.: x*(1+x-x^6)/(1-x^2-x^4-x^6).",
+        "a(1) = a(2) = a(3) = 1; for n>1:",
+        "a(2n) = a(2n-1) + a(2n-3),",
+        "a(2n+1) = a(2n-1) + a(2n-2)."
+    ],
+    "example": [
+        "The first 14 pairs of string and its length are",
+        "(c, 1);",
+        "(b, 1);",
+        "(a, 1);",
+        "(ac, 2);",
+        "(ab, 2);",
+        "(aba, 3);",
+        "(abac, 4);",
+        "(abacab, 6);",
+        "(abacaba, 7);",
+        "(abacabaabac, 11);",
+        "(abacabaabacab, 13);",
+        "(abacabaabacababacaba, 20);",
+        "(abacabaabacababacabaabac, 24);",
+        "(abacabaabacababacabaabacabacabaabacab, 37); ..."
+    ],
+    "maple": [
+        "with(StringTools):",
+        "# The following procedure defines the morphism f",
+        "Morphf := proc (x::string) local Start, L, Init, i;",
+        "Init := x;",
+        "L := length(Init);",
+        "Start := 1;",
+        "for i from Start to 2*L do",
+        "   if Init[i] = \"c\" then",
+        "         Init := Insert(Init, i, \"a\");     i := i+1; L := L+1;",
+        "         Init := Delete(Init, i-1 .. i-1); i := i-1; L := L-1;",
+        "   elif Init[i] = \"b\" then",
+        "         Init := Insert(Init, i, \"ac\");    i := i+2; L := L+2;",
+        "         Init := Delete(Init, i-2 .. i-2); i := i-1; L := L-1;",
+        "   elif Init[i] = \"a\" then",
+        "         Init := Insert(Init, i, \"b\");     i := i+1; L := L+1;",
+        "   end if;",
+        "end do;",
+        "eval(Init);",
+        "end proc:",
+        "#The following procedure is intended to create sequence of",
+        "#strings c, b, a, ac, ab, aba, abac, ..., etc, obtained by",
+        "#iterating the morphism f n times but it starts from the third",
+        "#string \"a\", i.e. leaving the first two strings \"c\" and \"b\"",
+        "#behind:",
+        "TribWord := proc (x1, x2::string, n) local A, B, C, i;",
+        "A := x1; B := x2;",
+        "for i to n do",
+        "   if type(i, odd) = true then",
+        "      A := Morphf(A);",
+        "      C := A;",
+        "   else",
+        "      B := Morphf(B); C := B",
+        "   end if;",
+        "end do;",
+        "eval(C);",
+        "end proc;",
+        "#The following command will print a(1), a(2), ..., a(30).",
+        "for i to 30 do",
+        "printf(\"%d%s\", length(TribWord(\"c\", \"b\", i-2)), `, `);",
+        "end do"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{0, 1, 0, 1, 0, 1}, {1, 1, 1, 2, 2, 3}, 48] (* _Bruno Berselli_, Jun 25 2012 *)"
+    ],
+    "xref": [
+        "Cf. A000073."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,4",
+    "author": "_Loeky Haryanto_, Jun 22 2012",
+    "references": 2,
+    "revision": 44,
+    "time": "2015-06-13T00:54:17-04:00",
+    "created": "2012-06-26T06:19:16-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 28365,
+    "data": "1,2,24,1344,322560,319979520,1290157424640,20972799094947840,1369104324918194995200,358201502736997192984166400,375234700595146883504949480652800,1573079924978208093254925489963584716800",
+    "name": "Order of general affine group over GF(2), AGL(n,2).",
+    "comment": [
+        "For n>0, a(n)=v(n+1)/v(n), where v=A203305 is the Vandermonde determinant of the first n of the numbers -2^j-1; see the Mathematica section. - _Clark Kimberling_, Jan 01 2012"
+    ],
+    "reference": [
+        "J. M. Borwein, D. H. Bailey and R. Girgensohn, Experimentation in Mathematics, A K Peters, Ltd., Natick, MA, 2004. x+357 pp. See p. 54 (1.64).",
+        "I. Strazdins, Universal affine classification of Boolean functions, Acta Applic. Math. 46 (1997), 147-167."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A028365/b028365.txt\">Table of n, a(n) for n = 0..57</a>",
+        "<a href=\"http://math.ucsd.edu/~pfitz/downloads/putnam/putnam1999.pdf\">Putnam Exam. 1999</a>, Question A6, Amer. Math. Monthly 107 (Oct 2000), 721-732; see p. 725."
+    ],
+    "formula": [
+        "a(n) = 2^A000217(n) * A005329(n) = 2^n * A002884(n) = 2^n * n! * A053601(n). - _Max Alekseyev_, Jun 09 2015",
+        "a(n) = (6*a(n-1)^2*a(n-3) - 8*a(n-1)*a(n-2)^2) / (a(n-2)*a(n-3)). [From Putman Exam.] - _Max Alekseyev_, May 18 2007",
+        "a(n) is asymptotic to C*2^(n*(n+1)) where C = 0.288788095086602421278899721... = prod(k>=1, 1-1/2^k) (cf. A048651). - _Benoit Cloitre_, Apr 11 2003"
+    ],
+    "maple": [
+        "A028365 := n->2^n*product(2^n-2^'i','i'=0..n-1); # version 1",
+        "A028365 := n->product(2^'j'-1,'j'=1..n)*2^binomial(n+1,2); # version 2"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[1]==1,a[2]==2,a[3]==24,a[n]==(6a[n-1]^2 a[n-3]- 8a[n-1] a[n-2]^2)/(a[n-2]a[n-3])},a[n],{n,20}] (* _Harvey P. Dale_, Aug 03 2011 *)",
+        "(* Next, the connection with Vandermonde determinants *)",
+        "f[j_] := 2^(j - 1); z = 15;",
+        "v[n_] := Product[Product[f[k] - f[j], {j, 1, k - 1}], {k, 2, n}]",
+        "Table[v[n], {n, 1, z}]   (* A203303 *)",
+        "Table[v[n + 1]/v[n], {n, 1, z - 1}]  (* A028365 *)",
+        "Table[v[n] v[n + 2]/(2*v[n + 1]^2), {n, 1, z - 1}]  (* A171499 *)",
+        "(* _Clark Kimberling_, Jan 01 2011 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,prod(k=1,n,2^k-1)*2^((n^2+n)/2)) /* _Michael Somos_, May 09 2005 */"
+    ],
+    "xref": [
+        "Cf. A020522."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 6,
+    "revision": 37,
+    "time": "2016-10-20T10:28:12-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

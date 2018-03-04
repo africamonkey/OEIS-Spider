@@ -1,0 +1,46 @@
+{
+    "number": 55561,
+    "data": "75,363,609,867,1183,1265,1275,1491,1587,1725,1805,2067,2175,2373,2523,3045,3525,3685,3795,3975,4137,4205,4335,4425,4895,5019,5043,5109,5901,5915,6171,6225,6627,6675,6699,7935,8025,8427,8475,8855,9429,9537,10275",
+    "name": "Numbers n such that there are precisely 3 groups of order n.",
+    "comment": [
+        "Let gnu(n) (= A000001(n)) denote the \"group number of n\" defined in A000001 or in (J. H. Conway, Heiko Dietrich and E. A. O'Brien, 2008), then the sequence n -> gnu(a(n)) -> gnu(gnu(a(n))) consists of 1's. - _Muniru A Asiru_, Nov 19 2017"
+    ],
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A055561/b055561.txt\">Table of n, a(n) for n = 1..234567</a>, terms 1..206 from Muniru A Asiru.",
+        "H.-U. Besche, B. Eick and E. A. O'Brien, <a href=\"http://www.icm.tu-bs.de/ag_algebra/software/small/\">The Small Groups Library</a>",
+        "H.-U. Besche, B. Eick and E. A. O'Brien, <a href=\"http://dx.doi.org/10.1142/S0218196702001115\">A Millennium Project: Constructing Small Groups</a>, Internat. J. Algebra and Computation, 12 (2002), 623-644.",
+        "J. H. Conway, Heiko Dietrich and E. A. O'Brien, <a href=\"http://www.math.auckland.ac.nz/~obrien/research/gnu.pdf\"> Counting groups: gnus, moas and other exotica</a>, Math. Intell., Vol. 30, No. 2, Spring 2008.",
+        "Gordon Royle, <a href=\"http://staffhome.ecm.uwa.edu.au/~00013890/remote/cubcay/\">Numbers of Small Groups</a>",
+        "<a href=\"/index/Gre#groups\">Index entries for sequences related to groups</a>"
+    ],
+    "example": [
+        "For n = 75, the 3 groups of order 75 are C75, (C5 x C5) : C3, C15 x C5 and for n = 363 the 3 groups of order 363 are C363, (C11 x C11) : C3, C33 x C11 where C is the Cyclic group of the stated order. The symbols x and : mean direct and semi-direct products respectively. - _Muniru A Asiru_, Oct 24 2017"
+    ],
+    "program": [
+        "(PARI)",
+        "is(n) = {",
+        "  my(p = gcd(n, eulerphi(n)),f,g);",
+        "  if (isprime(p), return(n % p^2 == 0 && isprime(gcd(p+1, n))));",
+        "  if (omega(p) != 2 || !issquarefree(n), return(0));",
+        "  f = factor(n); g = factor(p);",
+        "  1 == g[2,1] % g[1,1] &&",
+        "  1 == sum(k=1, matsize(f)[1], f[k,1] % g[1,1] == 1) &&",
+        "  1 == sum(k=1, matsize(f)[1], f[k,1] % g[2,1] == 1);",
+        "};",
+        "seq(N) = {",
+        "  my(a = vector(N), k=0, n=1);",
+        "  while(k < N, if(is(n), a[k++]=n); n++); a;",
+        "};",
+        "seq(43) \\\\ _Gheorghe Coserea_, Dec 12 2017"
+    ],
+    "xref": [
+        "Cf. A000001, A003277, A054395, A054396, A054397."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Christian G. Bower_, May 25 2000; Nov 12 2003; Feb 17 2006",
+    "references": 25,
+    "revision": 48,
+    "time": "2017-12-13T03:10:28-05:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

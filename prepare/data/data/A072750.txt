@@ -1,0 +1,46 @@
+{
+    "number": 72750,
+    "data": "0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,11,11,11,11,11,11,11,11,11,11,11,11,12",
+    "name": "Counting factor 7 in the first n squarefree numbers.",
+    "comment": [
+        "a(n) - a(n-1) = 1 if A005117(n) is in A008589, otherwise 0. - _Robert Israel_, Aug 23 2015"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A072750/b072750.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The first 10 squarefree numbers are: 1, 2, 3, 5, 6=2*3, 7, 10=2*5, 11, 13 and 14=2*7: 7 and 14 are divisible by 7, therefore a(10)=2."
+    ],
+    "maple": [
+        "N:= 1000: # to use the squarefree numbers <= N",
+        "M:= map(proc(t) if numtheory:-issqrfree(t) then if t mod 7 = 0 then 1 else 0 fi fi end proc, [$1..N]):",
+        "ListTools:-PartialSums(M); # _Robert Israel_, Aug 23 2015"
+    ],
+    "mathematica": [
+        "With[{sf=Select[Range[200],SquareFreeQ]},Accumulate[If[Divisible[#,7],1,0]&/@sf]] (* _Harvey P. Dale_, Mar 21 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a072750 n = a072750_list !! (n-1)",
+        "a072750_list = scanl1 (+) $ map ((0 ^) . (`mod` 7)) a005117_list",
+        "-- _Reinhard Zumkeller_, Mar 25 2013",
+        "(PARI)",
+        "n = 94; k = 0; bag = List(); a = vector(n);",
+        "until(n == 0, k++; if (issquarefree(k), listput(bag, k); n--));",
+        "for (i=2, #bag, a[i] = a[i-1] + (bag[i] % 7 == 0));",
+        "print(a); \\\\ _Gheorghe Coserea_, Aug 23 2015"
+    ],
+    "xref": [
+        "Cf. A005117, A008589, A072747, A072748, A072749, A072751."
+    ],
+    "keyword": "nonn",
+    "offset": "1,10",
+    "author": "_Reinhard Zumkeller_, Jul 08 2002",
+    "ext": [
+        "Name clarified by _Gheorghe Coserea_, Aug 23 2015"
+    ],
+    "references": 5,
+    "revision": 19,
+    "time": "2015-08-23T21:32:38-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

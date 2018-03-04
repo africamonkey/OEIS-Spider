@@ -1,0 +1,55 @@
+{
+    "number": 223911,
+    "data": "1,1,3,13,111,1381,25623,678133,26169951,1447456261,114973232583,13034314621813,2103826463800911,481932523110975301,156356753093586913143,71729530379673590609653,46471511649877647638694591,42487759521494442057018000901,54781291469300608901184153800103",
+    "name": "Number of tiered orders on n nodes (corrected version of A006860).",
+    "link": [
+        "Joerg Arndt and Alois P. Heinz, <a href=\"/A223911/b223911.txt\">Table of n, a(n) for n = 0..100</a> (terms n = 1..22 from Joerg Arndt)",
+        "D. Klarner, <a href=\"http://dx.doi.org/10.1016/0012-365X(86)90216-5\">The number of tiered posets modulo six</a>, Discrete Math., 62 (1986), 295-297."
+    ],
+    "formula": [
+        "a(n) = sum(all composition C of n, M(C) * prod(j=1..m-1, f(C[j]*C[j+1]) ) ) where m is the number of parts of the current composition P, f(i,j) = sum(k=0..i, (-1)^(i-k) * binomial(i,k) * (2^k-1)^j ), and M(C) is the multinomial coefficient n!/prod(j=1..m, C[j]! ); see Pari code.",
+        "Klarner incorrectly gives prod(j=1..m-1, f(C[j]*C[m]) ) in the formula for a(n).",
+        "Conjecture: a(n) ~ c * 2^(n^2/4 + 3*n/2) / sqrt(n), where c = EllipticTheta[3, 0, 1/2^(1/4)] / (sqrt(Pi) * 2^(1/4)) = 2.020039... (based on the numerical analysis of 600 terms). - _Vaclav Kotesovec_, Apr 10 2015"
+    ],
+    "maple": [
+        "f:= (i, j)-> add((-1)^(i-k)*binomial(i, k) *(2^k-1)^j, k=0..i):",
+        "b:= proc(n, i) option remember;",
+        "      `if`(n=0, 1, add(b(n-j, j)/j!*f(i, j), j=1..n))",
+        "    end:",
+        "a:= n-> n!*b(n, 1):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Jul 23 2013"
+    ],
+    "mathematica": [
+        "f[i_, j_] := Sum[(-1)^(i-k)*Binomial[i, k]*(2^k-1)^j, {k, 0, i}]; b[n_, i_] := b[n, i] = If[n==0, 1, Sum[b[n-j, j]/j!*f[i, j], {j, 1, n}]]; a[n_] := n!*b[n, 1]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Apr 08 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "f(m,n) = sum(k=0, m, (-1)^(m-k) * binomial(m,k) * (2^k-1)^n );",
+        "mn(n,V,m) = n! / prod(k=1, m, V[k]! ); /* multinomial of V[1..m] */",
+        "A223911(n)=",
+        "{",
+        "    my(m=n, C=vector(n,j,1), z, t, ret);",
+        "    while ( 1,  /* for all compositions C[1..m] of n */",
+        "        t = mn(n,C,m) * prod(j=1, m-1, f(C[j],C[j+1]) );",
+        "        ret += t;",
+        "        if ( m<=1, break() ); /* last composition? */",
+        "        /* create next composition: */",
+        "        C[m-1] += 1;",
+        "        z = C[m];",
+        "        C[m] = 1;",
+        "        m += z - 2;",
+        "    );",
+        "    return(ret);",
+        "}"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Joerg Arndt_, Mar 29 2013, using information provided by _Joel B. Lewis_, _M. F. Hasler_ and _Michel Marcus_ in A006860.",
+    "ext": [
+        "Added a(0) = 1 by _Alois P. Heinz_, Jul 23 2013"
+    ],
+    "references": 2,
+    "revision": 38,
+    "time": "2015-04-10T11:59:26-04:00",
+    "created": "2013-03-31T01:23:04-04:00"
+}

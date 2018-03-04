@@ -1,0 +1,35 @@
+{
+    "number": 193467,
+    "data": "1,1,4,27,280,4025,75876,1800253,52193408,1807302897,73406128420,3446236588421,184750419871920,11194423784630281,759960096829452260,57367378069894391325,4783586470578255085696,438054092182322814028001,43827052650093379145736900",
+    "name": "E.g.f.: Sum_{n>=0} x^n * exp(n*(n+1)/2*x).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A193467/b193467.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "E.g.f.: A(x) = Sum_{n>=0} x^n*exp(n*x)*Product_{k=1..n} (1 - x*exp((2*k-1)*x)) / (1 - x*exp(2*k*x)), due to a q-series identity.",
+        "Let q = exp(x), then the e.g.f. equals the continued fraction:",
+        "A(x) = 1/(1- q*x/(1- q*(q-1)*x/(1- q^3*x/(1- q^2*(q^2-1)*x/(1- q^5*x/(1- q^3*(q^3-1)*x/(1- q^7*x/(1- q^4*(q^4-1)*x/(1- ...))))))))), due to a partial theta function identity."
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 4*x^2/2! + 27*x^3/3! + 280*x^4/4! + 4025*x^5/5! + 75876*x^6/6! + 1800253*x^7/7! +...",
+        "where",
+        "A(x) = 1 + x*exp(x) + x^2*exp(3*x) + x^3*exp(6*x) + x^4*exp(10*x) +...",
+        "By a q-series identity:",
+        "A(x) = 1 + x*exp(x)*(1-x*exp(x))/(1-x*exp(2*x)) + x^2*exp(2*x)*(1-x*exp(x))*(1-x*exp(3*x))/((1-x*exp(2*x))*(1-x*exp(4*x))) + x^3*exp(3*x)*(1-x*exp(x))*(1-x*exp(3*x))*(1-x*exp(5*x))/((1-x*exp(2*x))*(1-x*exp(4*x))*(1-x*exp(6*x))) +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(Egf); Egf=sum(m=0, n, x^m*exp(m*(m+1)/2*x+x*O(x^n))); n!*polcoeff(Egf, n)}",
+        "(PARI) /* q-series identity: */",
+        "{a(n)=local(A=1+x);for(i=1, n, A=sum(m=0, n, x^m*exp(m*x+x*O(x^n))*prod(k=1, m, (1-x*exp((2*k-1)*x+x*O(x^n)))/(1-x*exp((2*k)*x+x*O(x^n)))))); n!*polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A193421, A193469, A177385, A193466."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jul 27 2011",
+    "references": 5,
+    "revision": 12,
+    "time": "2014-11-05T04:54:47-05:00",
+    "created": "2011-07-27T04:02:15-04:00"
+}

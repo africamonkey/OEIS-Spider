@@ -1,0 +1,54 @@
+{
+    "number": 30019,
+    "data": "1,1,1,4,29,311,4447,79745,1722681,43578820,1264185051,41381702275,1509114454597,60681141052273,2667370764248023,127258109992533616,6549338612837162225,361680134713529977507,21333858798449021030515",
+    "name": "Number of labeled spanning trees in the complete hypergraph on n vertices (all hyperedges having cardinality 2 or greater).",
+    "comment": [
+        "Equivalently, this is the number of \"hypertrees\" on n labeled nodes, i.e. connected hypergraphs that have no cycles, assuming that each edge contains at least two vertices. - _Don Knuth_, Jan 26 2008. See A134954 for hyperforests.",
+        "Also number of labeled connected graphs where every block is a complete graph (cf. A035053).",
+        "Let H = (V,E) be the complete hypergraph on N labeled vertices (all edges having cardinality 2 or greater). Let e in E and K = |e|. Then the number of distinct spanning trees of H that contain edge e is g(N,K) = K * E[X_N^{N-K}] / N and the K=1 case gives this sequence. Clearly there is some deep structural connection between spanning trees in hypergraphs and Poisson moments."
+    ],
+    "reference": [
+        "L. Kalikow, Enumeration of parking functions, allowable permutation pairs, and labeled trees. PhD thesis, Brandeis University, 1999.",
+        "Warren D. Smith and David Warme, Paper in preparation, 2002."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A030019/b030019.txt\">Table of n, a(n) for n=0..100</a>",
+        "R. Bacher, <a href=\"http://arxiv.org/abs/1102.2708\">On the enumeration of labelled hypertrees and of labelled bipartite trees</a>, arXiv:1102.2708v1 [math.CO]",
+        "Maryam Bahrani and J\u00e9r\u00e9mie Lumbroso, <a href=\"http://arxiv.org/abs/1608.01465\">Enumerations, Forbidden Subgraph Characterizations, and the Split-Decomposition</a>, arXiv:1608.01465, 2016.",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=810\">Encyclopedia of Combinatorial Structures 810</a>",
+        "R Lorentz, S Tringali, CH Yan, <a href=\"http://arxiv.org/abs/1511.04039\">Generalized Goncarov polynomials</a>, arXiv preprint arXiv:1511.04039, 2015",
+        "A. Piggott, <a href=\"http://www.facstaff.bucknell.edu/ap030/researchfiles/TheSymmetriesOfMMSpace.pdf\">The symmetries of Mccullough-Miller space</a>, 2011",
+        "D. M. Warme, <a href=\"http://www.citeulike.org/user/veer/article/1236677\">Spanning Trees in Hypergraphs with Applications to Steiner Trees</a>. PhD thesis, University of Virginia, 1998, Table 5.1",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "a(n) = A035051(n)/n, n>0.",
+        "a(n) = sum_{i=0...n-1} Stirling2(n-1, i) n^{i-1}, n >= 1. (Warme, corollary 3.15.1)",
+        "a(n) = E[X_n^{n-1}] / n, n >= 1, where X_n is a Poisson random variable with mean n.",
+        "1 = Sum_{n>=0} a(n+1) * x^n/n! * exp( -(n+1)*(exp(x)-1) ). - Paul D. Hanna, Jun 11 2011",
+        "E.g.f. satisfies: A(x) = Sum_{n>=0} exp(n*x*A(x)-1)/n! = Sum_{n>=0} a(n+1)*x^n/n!. - Paul D. Hanna, Sep 25 2011",
+        "Dobinski-type formula: a(n) = 1/e^n*sum {k = 0..inf} n^(k-1)*k^(n-1)/k!. Cf. A052888. For a refinement of this sequence see A210587. - Peter Bala, Apr 05 2012",
+        "a(n) ~ n^(n-2) / (sqrt(1+LambertW(1)) * (LambertW(1))^(n-1) * exp((2-1/LambertW(1))*n)). - _Vaclav Kotesovec_, Jul 26 2014"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[ StirlingS2[n-1, i]*n^(i-1), {i, 0, n-1}]; a[0] = 1; Table[a[n], {n, 0, 18}](* _Jean-Fran\u00e7ois Alcover_, Sep 12 2012, from 2nd formula *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0,1,(n-1)!*polcoeff(1-sum(k=0, n-2, a(k+1)*x^k/k!*exp(-(k+1)*(exp(x+O(x^n))-1))), n-1))} /* Paul D. Hanna */",
+        "(PARI) /* E.g.f. of sequence shifted left one place: */",
+        "{a(n)=local(A=1+x); for(i=1, n, A=exp(-1)*sum(m=0, 2*n+10, exp(m*x*A+x*O(x^n))/m!)); round(n!*polcoeff(A, n))} /* Paul D. Hanna */"
+    ],
+    "xref": [
+        "Cf. A030438, A035051, A035053, A134954, A134956, A134958. A052888, A210587."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,4",
+    "author": "David Warme (warme(AT)s3i.com)",
+    "ext": [
+        "More terms, formula and comment from _Christian G. Bower_ Dec 15 1999"
+    ],
+    "references": 15,
+    "revision": 39,
+    "time": "2017-06-21T14:41:59-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

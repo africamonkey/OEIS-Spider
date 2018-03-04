@@ -1,0 +1,56 @@
+{
+    "number": 246282,
+    "data": "4,6,8,9,10,12,14,15,16,18,20,21,24,27,28,30,32,35,36,39,40,42,44,45,48,49,50,52,54,56,57,60,63,64,66,68,69,70,72,75,76,78,80,81,84,88,90,91,92,96,98,99,100,102,104,105,108,110,112,114,116,117,120,124,125,126,128,130,132,135,136,138,140,144",
+    "name": "Numbers n such that if n = product_{k >= 1} (p_k)^(c_k), then product_{k >= 1} (p_{k+1})^(c_k) > 2*n, where p_k indicates the k-th prime, A000040(k).",
+    "comment": [
+        "Numbers n such that A003961(n) > 2*n.",
+        "Numbers n such that A048673(n) > n.",
+        "The sequence grows as:",
+        "        a(10) = 18",
+        "       a(100) = 192",
+        "      a(1000) = 1830",
+        "     a(10000) = 18636",
+        "    a(100000) = 187350",
+        "   a(1000000) = 1865226",
+        "  a(10000000) = 18654333",
+        "and the powers of 10 occur at:",
+        "        a(5) = 10",
+        "       a(53) = 100",
+        "      a(536) = 1000",
+        "     a(5423) = 10000",
+        "    a(53290) = 100000",
+        "   a(535797) = 1000000",
+        "  a(5361886) = 10000000",
+        "suggesting that the ratio a(n)/n is converging to an constant and an arbitrary natural number is slightly more likely to be in this sequence than in the complement A246281. See also comments at A246351 and compare to quite a different ratio present in the \"inverse\" case A246362."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A246282/b246282.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "3 = p_2 (3 is the second prime, A000040(2)) is not a member, because p_3 = 5 (5 is the next prime after 3, A000040(3)) and 5/3 < 2.",
+        "4 = 2*2 = p_1 * p_1 is a member, as p_2 * p_2 = 3*3 = 9, and 9/4 > 2.",
+        "33 = 3*11 = p_2 * p_5 is not a member, as p_3 * p_6 = 5*13 = 65, and 65/33 < 2.",
+        "35 = 5*7 = p_3 * p_4 is a member, as p_4 * p_5 = 7*11 = 77, and 77/35 > 2."
+    ],
+    "program": [
+        "(PARI)",
+        "A003961(n) = my(f = factor(n)); for (i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); \\\\ From _Michel Marcus_",
+        "isA246282(n) = (A003961(n) > (n+n));",
+        "n = 0; i = 0; while(i < 10000, n++; if(isA246282(n), i++; write(\"b246282.txt\", i, \" \", n)));",
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library, two alternative implementations)",
+        "(define A246282 (MATCHING-POS 1 1 (lambda (n) (> (A003961 n) (* 2 n)))))",
+        "(define A246282 (MATCHING-POS 1 1 (lambda (n) (> (A048673 n) n))))"
+    ],
+    "xref": [
+        "Complement: A246281.",
+        "Setwise difference of A246352 and A048674.",
+        "Cf. A000040, A003961, A048673, A246362."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Aug 24 2014",
+    "references": 16,
+    "revision": 20,
+    "time": "2014-08-26T01:17:51-04:00",
+    "created": "2014-08-26T01:17:51-04:00"
+}

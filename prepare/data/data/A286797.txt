@@ -1,0 +1,45 @@
+{
+    "number": 286797,
+    "data": "1,2,10,82,898,12018,187626,3323682,65607682,1424967394,33736908874,864372576626,23825543471234,703074672632018,22118247888976170,739081808704195650,26146116129400483842,976382058777174451650,38386296866727499728522,1584986693941237056394386",
+    "name": "Row sums of A286796.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A286797/b286797.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Luca G. Molinari, Nicola Manini, <a href=\"https://arxiv.org/abs/cond-mat/0512342\">Enumeration of many-body skeleton diagrams</a>, arXiv:cond-mat/0512342 [cond-mat.str-el], 2006."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} A286796(n,k)."
+    ],
+    "mathematica": [
+        "max = 20; y0[x_, t_] = 1; y1[x_, t_] = 0; For[n = 1, n <= max, n++, y1[x_, t_] = (1 + x*(1 + 2*t + x*t^2)*y0[x, t]^2 + t*(1 - t)*x^2*y0[x, t]^3 + 2*x^2*y0[x, t]*D[y0[x, t], x])/(1 + 2*x*t) + O[x]^n // Normal // Simplify; y0[x_, t_] = y1[x, t]];",
+        "a[n_] := CoefficientList[SeriesCoefficient[y0[x, t]/(1 - x*t*y0[x, t]), {x, 0, n}], t] // Total;",
+        "Table[a[n], {n, 0, max-1}] (* _Jean-Fran\u00e7ois Alcover_, May 24 2017, adapted from PARI *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A286795_ser(N, t='t) = {",
+        "  my(x='x+O('x^N), y0=1, y1=0, n=1);",
+        "  while(n++,",
+        "    y1 = (1 + x*(1 + 2*t + x*t^2)*y0^2 + t*(1-t)*x^2*y0^3 + 2*x^2*y0*y0');",
+        "    y1 = y1 / (1+2*x*t); if (y1 == y0, break()); y0 = y1;); y0;",
+        "};",
+        "A286796_ser(N,t='t) = my(v=A286795_ser(N,t)); v/(1-x*t*v);",
+        "Vec(A286796_ser(20,1))",
+        "(PARI)",
+        "A049464_ser(N) = {  \\\\ for A049464(0)=0",
+        "  my(s=Ser(concat(1, vector(N+1, n, (2*n)!/(2^n*n!)))), g=(1/s - 1/s^2)/x);",
+        "  1 - 1/subst(g, 'x, serreverse(x*g^2*s^2));",
+        "};",
+        "A286797_ser(N) = my(q=A049464_ser(N)); q/(x-x*q);",
+        "Vec(A286797_ser(20))"
+    ],
+    "xref": [
+        "Cf. A286796."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gheorghe Coserea_, May 21 2017",
+    "references": 2,
+    "revision": 15,
+    "time": "2017-05-26T22:18:16-04:00",
+    "created": "2017-05-26T22:18:16-04:00"
+}

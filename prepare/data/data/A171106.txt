@@ -1,0 +1,59 @@
+{
+    "number": 171106,
+    "data": "1,1,7,138,5477,367640,37541883,5432772352,1059075055273,267757626501504,85244466165571535,33379687015338236672,15770655073870516443597,8847780392111931116474368,5815426547948880787678282627,4426738320076692932937846865920,3863757059392099045703984747480273",
+    "name": "Number of irreducible rational curves maximally tangent to a line.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A171106/b171106.txt\">Table of n, a(n) for n = 1..222</a>",
+        "Sergey Fomin and Grigory Mikhalkin, <a href=\"http://arxiv.org/abs/0906.3828\">Labeled floor diagrams for plane curves</a>, arXiv:0906.3828 [math.AG], 2009-2010."
+    ],
+    "formula": [
+        "Sergey Fomin and Grigory Mikhalkin give a recurrence.",
+        "From _Gheorghe Coserea_, Jan 04 2018: (Start)",
+        "(n-1)*(2*n-1)*n^2 * a(n) = 2*s1(n) - s2(n) - s3(n) + 5*s4(n) - 3*s5(n), where s1(n) = Sum_{i+j+k=n} i^3*j^3*k^3 * (2*n)!/((2*i)!*(2*j)!*(2*k)!) * a(i)*a(j)*a(k), s2(n) = Sum_{i+j+k=n} i^3*j^3*k^2 * (2*n)!/((2*i)!*(2*j)!*(2*k)!) * a(i)*a(j)*a(k), s3(n) = Sum_{i+j=n} i^3*(i-1)*j^2 * (2*n)!/((2*i)!*(2*j)!) * a(i)*a(j), s4(n) = Sum_{i+j=n} i^3*j^3 * (2*n)!/((2*i)!*(2*j)!) * a(i)*a(j), s5(n) = Sum_{i+j=n} i^3*j^2 * (2*n)!/((2*i)!*(2*j)!) * a(i)*a(j) , n>=3.",
+        "x*(4*y' - exp(y) - x*exp(y)*y') = 2*y, where y(x) = Sum_{n>=1} n^2*a(n)/(2*n)! * x^n. (eqn. (4.8))",
+        "(End)"
+    ],
+    "program": [
+        "(PARI)",
+        "runs(v) = {",
+        "  my(a=List(),j=1,k=1);",
+        "  for (i=2, #v, if (v[i] == v[j], k++, listput(a,k); k=1; j=i));",
+        "  listput(a,k); Vec(a);",
+        "};",
+        "M(v) = vecsum(v)! \\ prod(k=1, #v, v[k]!);",
+        "A171106_seq(N) = {",
+        "  my(a = vector(N),s,p,q); a[1]=1; a[2]=1;",
+        "  for (n=2, N-1, a[n+1] = sum(k=1, n, s=0;",
+        "    forpart(p=n, q = prod(i=1, k, p[i]^2*a[p[i]]/(2*p[i])!);",
+        "      s += q * M(runs(p)), , [k,k]); (2*n)!/k! * s)); a;",
+        "};",
+        "A171106_seq(17)",
+        "\\\\ test: N=33; a=A171106_seq(N); y='x*Ser(vector(N, n, n^2*a[n]/(2*n)!)); x*(4*y' - exp(y) - x*exp(y)*y') == 2*y",
+        "(PARI)",
+        "A171106_seq(N) = {",
+        "  my(a=vector(N), s1, s2, s3, s4=vector(N), s5);",
+        "  a[1]=1; a[2]=1; s4[1]=0; s4[2]=6;",
+        "  for (n=3, N,",
+        "    s4[n] = sum(k=1, n-1, k^3*(n-k)^3 * binomial(2*n, 2*k) * a[k]*a[n-k]);",
+        "    s1 = sum(k=1, n-1, k^3*binomial(2*n, 2*k) * s4[n-k]*a[k]);",
+        "    s2 = sum(k=1, n-1, k^2*binomial(2*n, 2*k) * s4[n-k]*a[k]);",
+        "    s3 = sum(k=1, n-1, k^3*(k-1)*(n-k)^2 * binomial(2*n, 2*k) * a[k]*a[n-k]);",
+        "    s5 = sum(k=1, n-1, k^3*(n-k)^2 * binomial(2*n, 2*k) * a[k]*a[n-k]);",
+        "    a[n] = (2*s1 - s2 - s3 + 5*s4[n] - 3*s5) / ((n-1)*(2*n-1)*n^2)); a;",
+        "};",
+        "A171106_seq(17) \\\\ _Gheorghe Coserea_, Jan 04 2018"
+    ],
+    "xref": [
+        "Cf. A171107."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, Sep 27 2010",
+    "ext": [
+        "Terms a(15) and beyond from _Gheorghe Coserea_, Jan 02 2018"
+    ],
+    "references": 2,
+    "revision": 31,
+    "time": "2018-01-05T02:52:54-05:00",
+    "created": "2010-10-02T03:00:00-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 274936,
+    "data": "0,1,1,2,3,6,11,22,44,93,202,451,1033,2422,5792,14075,34734,86761,219188,558984,1437927,3726535,9723678,25525112,67374649,178723358,476263051,1274448596,3423491458,9229075121,24961961679,67721961268,184255943244,502658875034,1374713643212",
+    "name": "Number of n-node unlabeled forests that have 2 non-isomorphic components.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A274936/b274936.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: [A(x)^2 - A(x^2)]/2 where A(x) is the o.g.f. for A000055.",
+        "a(2n+1) = A274935(2n+1). a(2n) = A274935(2n)-A000055(n). - _R. J. Mathar_, Jul 20 2016"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; `if`(n<2, n, (add(add(d*",
+        "      b(d), d=divisors(j))*b(n-j), j=1..n-1))/(n-1))",
+        "    end:",
+        "g:= proc(n) option remember; `if`(n=0, 1, b(n)-add(b(j)*",
+        "      b(n-j), j=0..n/2)+`if`(n::odd, 0, (t->t*(t+1)/2)(b(n/2))))",
+        "    end:",
+        "a:= proc(n) option remember; add(g(j)*g(n-j), j=0..n/2)-",
+        "      `if`(n::odd, 0, (t-> t*(t+1)/2)(g(n/2)))",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jul 20 2016"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n<2, n, Sum[DivisorSum[j, #*b[#]&]*b[n-j], {j, 1, n-1}]/(n-1)];",
+        "g[n_] := g[n] = If[n==0, 1, b[n]-Sum[b[j]*b[n-j], {j, 0, n/2}]+If[OddQ[n], 0, Function[t, t*(t+1)/2][b[n/2]]]];",
+        "a[n_] := a[n] = Sum[g[j]*g[n-j], {j, 0, n/2}]-If[OddQ[n], 0, Function[t, t*(t+1)/2][g[n/2]]];",
+        "Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Mar 15 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000055, A274935-A274938. [A274935, A274936, A274937, A274938] are analogs for forests of [A275165, A275166, A216785, A274934] for graphs."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_, Jul 19 2016",
+    "references": 4,
+    "revision": 20,
+    "time": "2017-03-15T08:52:46-04:00",
+    "created": "2016-07-19T10:30:01-04:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 182108,
+    "data": "513,695,925,1177,1355,1395,1507,1681,1685,1687,1689,1819,1827,1893,1959,2043,2165,2169,2637,2651,2757,2875,2987,3159,3339,3417,3503,3649,3681,3743,3873,3963,3975,4041,4169,4353,4489,4767,4773,4805,4845,4881,5123",
+    "name": "Odd composite numbers in successive intervals [2^i +1 .. 2^(i+1) -1] i=1,2,3... such that there are only composite symmetric XOR couples in either the original interval or any recursively halved interval that contains them.",
+    "comment": [
+        "The description of the process is outlined in A199824. Up to the interval that starts 2^10 there are only 109 of these numbers, while there are a mere 50 primes of the type in A199824."
+    ],
+    "program": [
+        "(MAGMA)",
+        "XOR := func<a, b | Seqint([ (adigs[i] + bdigs[i]) mod 2 : i in [1..n]], 2)",
+        "    where adigs := Intseq(a, 2, n)",
+        "    where bdigs := Intseq(b, 2, n)",
+        "    where n := 1 + Ilog2(Max([a, b, 1]))>;",
+        "function IsClardynum(X,i)",
+        "  if i eq 1 then",
+        "    return true;",
+        "  else",
+        "    xornum:=2^i - 2;",
+        "    xorcouple:=XOR(X,xornum);",
+        "    if (IsPrime(xorcouple)) then",
+        "       return false;",
+        "    else",
+        "       return IsClardynum(X,i-1);",
+        "    end if;",
+        "  end if;",
+        "end function;",
+        "for i:= 3 to 10001 by 2 do",
+        "   if not IsPrime(i) then",
+        "      if IsClardynum(i,Ilog2(i)) then i;",
+        "      end if;",
+        "   end if;",
+        "end for;"
+    ],
+    "xref": [
+        "Cf. A199824."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Brad Clardy_, Apr 12 2012",
+    "references": 3,
+    "revision": 6,
+    "time": "2012-04-12T12:40:15-04:00",
+    "created": "2012-04-12T12:40:15-04:00"
+}

@@ -1,0 +1,52 @@
+{
+    "number": 50519,
+    "data": "30,60,90,120,150,180,210,240,270,300,330,360,390,420,450,480,510,540,570,600,630,660,690,720,750,780,810,840,870,900,930,960,990,1020,1050,1080,1110,1140,1170,1200,1230,1260,1290,1320,1350,1380,1410,1440,1470",
+    "name": "Increments of arithmetic progression of at least 6 terms having the same value of phi in A050518.",
+    "comment": [
+        "The first 112 terms are successive multiples of 30, but this sequence does not coincide with A249674: a(113) = 210. See the Khovanova link and comments in A050518.",
+        "The increments <= 1000 for terms of A050518 between 13413600 and 10^9 (see comment on A050518) are 720, 750, 780, 810, 840, 870, 900, 930, 960, 990, 210, 210, 420, 30, 420, 630, 630, 840, 60, 840, 90, 30, 30, 120, 150, 30, 18. - _Mauro Fiorentini_, Apr 12 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A050519/b050519.txt\">Table of n, a(n) for n = 1..114</a>",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/NonRecursions.html\">Non Recursions</a>"
+    ],
+    "maple": [
+        "N:= 10^7: # to get all terms <= N in A050518",
+        "with(numtheory):",
+        "Res:= NULL:",
+        "phis:= {seq(phi(i), i=2..N)}:",
+        "for m in phis do",
+        "   S:= convert(invphi(m), set);",
+        "   if nops(S) < 6 then next fi;",
+        "   for d from 0 to 4 do",
+        "     Sd[d]:= select(t-> (t mod 5 = d), S, d);",
+        "     nd:= nops(Sd[d]);",
+        "     for i0 from 1 to nd-1 do",
+        "       s0:= Sd[d][i0];",
+        "       if s0 > N then break fi;",
+        "       for i5 from i0+1 to nd do",
+        "         s5:= Sd[d][i5];",
+        "         incr:= (s5 - s0)/5;",
+        "         if {s0+incr, s0+2*incr, s0+3*incr, s0+4*incr} subset S then",
+        "           Res:= Res, [s0, incr];",
+        "         fi",
+        "       od",
+        "     od;",
+        "   od;",
+        "od:",
+        "sort([Res], (s, t)->s[1]<t[1]); # gives both A050518 and A050519 entries map2(op, 2, %); # _Robert Israel_, Apr 30 2015"
+    ],
+    "xref": [
+        "Cf. A000010, A050495, A050496, A050497, A050515-A050520."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jud McCranie_, Dec 28 1999",
+    "ext": [
+        "More terms from _Mauro Fiorentini_, Apr 12 2015"
+    ],
+    "references": 3,
+    "revision": 43,
+    "time": "2017-06-25T00:00:35-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

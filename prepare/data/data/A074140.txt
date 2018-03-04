@@ -1,0 +1,52 @@
+{
+    "number": 74140,
+    "data": "1,2,10,50,346,3182,38770,609290,11226106,250148582,7057182250,216512001950,7903965900226,321552174623162,13779150603234010,644574260638821590,33968684108427733426,1994885097404292104942,121496572792097514728530,8114030083731371137603190",
+    "name": "Sum of least integers of prime signatures over all partitions of n.",
+    "comment": [
+        "Old name was: Sum of terms in n-th group in A036035.",
+        "a(n) is also the sum of terms in n-th row of A087443 or A227955."
+    ],
+    "link": [
+        "Peter Luschny and Alois P. Heinz, <a href=\"/A074140/b074140.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "example": [
+        "a(6) = 64+96+144+216+240+360+900+840+1260+4620+30030 = 38770."
+    ],
+    "maple": [
+        "b:= proc(n, i, j) option remember;",
+        "      `if`(n=0, 1, `if`(i<1, 0, b(n, i-1, j)+",
+        "      `if`(i>n, 0, ithprime(j)^i*b(n-i, i, j+1))))",
+        "    end:",
+        "a:= n-> b(n$2, 1):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Aug 03 2013"
+    ],
+    "mathematica": [
+        "b[n_, i_, j_] := b[n, i, j] = If[n == 0, 1, If[i<1, 0, b[n, i-1, j]+If[i>n, 0, Prime[j]^i*b[n-i, i, j+1]]]]; a[n_] := b[n, n, 1]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Feb 25 2014, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A074140(n):",
+        "    L = []; P = primes_first_n(n)",
+        "    for p in Partitions(n):",
+        "        m = mul(P[i]^p[i] for i in range(len(p)))",
+        "        L.append(m)",
+        "    return add(L)",
+        "[A074140(n) for n in (0..20)]  # _Peter Luschny_, Aug 02 2013"
+    ],
+    "xref": [
+        "Cf. A036035, A074139, A074141, A025487, A087443, A227955."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Amarnath Murthy_, Aug 28 2002",
+    "ext": [
+        "More terms from _Alford Arnold_, Sep 10 2002",
+        "a(10)-a(12) from Thomas A. Rockwell (LlewkcoRAT(AT)aol.com), Sep 30 2004",
+        "a(12) corrected by _Peter Luschny_, Aug 03 2013",
+        "New name from _Alois P. Heinz_, Aug 03 2013"
+    ],
+    "references": 6,
+    "revision": 32,
+    "time": "2018-01-08T01:36:20-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

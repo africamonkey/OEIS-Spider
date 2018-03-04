@@ -1,0 +1,51 @@
+{
+    "number": 276349,
+    "data": "10,100,110,1000,1100,1110,10000,11000,11100,11110,100000,110000,111000,111100,111110,1000000,1100000,1110000,1111000,1111100,1111110,10000000,11000000,11100000,11110000,11111000,11111100,11111110,100000000,110000000,111000000",
+    "name": "Numbers consisting of a nonempty string of 1's followed by a nonempty string of 0's.",
+    "comment": [
+        "Intersection of A037415 and A009996 except for 1 [Corrected by _David A. Corneth_, Aug 30 2016].",
+        "Set of terms from sequence A052983.",
+        "a(n) is the binary expansion of A043569(n). - _Michel Marcus_, Sep 04 2016"
+    ],
+    "reference": [
+        "L. Pick, Dirichletovy \u0161upl\u00ed\u010dky. Pokroky matematiky, fyziky & astronomie; 2 (2016), 106-118. (In Czech; The Dirichlet pigeonhole principle)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A276349/b276349.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "A227362(a(n)) = 10.",
+        "From _Robert Israel_, Sep 02 2016: (Start)",
+        "a((m^2-m)/2+j) = 10^(m+1)*(1-10^(-j))/9 for m>=1, 1<=j<=m.",
+        "a(n) = 10*(10^m - 10^(-n+m*(m+1)/2))/9 where m = A002024(n). (End)",
+        "A002275(A002260(n)) * 10^A004736(n) - _Peter Kagey_, Sep 02 2016"
+    ],
+    "example": [
+        "60 is of the form binomial(a, 2) + b where 0 < b <= a and a = 11, b = 5. So a(60) has (11 + 1) digits and 5 leading ones. The other digits are 0. Giving a(60) = 111110000000. It has 7 (more than 1) trailing zero's so the next one, a(61) is a(60) + 10^(7 - 1). - _David A. Corneth_, Aug 30 2016"
+    ],
+    "maple": [
+        "seq(seq(10^(m+1)*(1-10^(-j))/9,j=1..m),m=1..20); # _Robert Israel_, Sep 02 2016"
+    ],
+    "mathematica": [
+        "Table[FromDigits@ Join[ConstantArray[1, #1], ConstantArray[0, #2]] & @@@ Transpose@ {#, n - #} &@ Range[n - 1], {n, 2, 9}] // Flatten (* _Michael De Vlieger_, Aug 30 2016 *)"
+    ],
+    "program": [
+        "(MAGMA) [n: n in [1..10^7] | Seqint(Setseq(Set(Sort(Intseq(n))))) eq 10 and Seqint(Sort((Intseq(n)))) eq n]",
+        "(PARI) is(n) = vecmin(digits(n))==0 && vecmax(digits(n))==1 && digits(n)==vecsort(digits(n), , 4) \\\\ _Felix Fr\u00f6hlich_, Aug 30 2016",
+        "(PARI) a(n) = my(r =  ceil((sqrt(1+8*n)+1)/2), k = n - binomial(r-1, 2));10^(r-k)*(10^(k)-1)/9",
+        "\\\\ given an element n, computes the next element of the sequence.",
+        "nxt(n) = my(d = digits(n), qd=#d, s = vecsum(d)); if(qd-s>1, n+10^(qd-s-1), 10^qd)",
+        "\\\\ given an element n of the sequence, computes its place in the sequence.",
+        "inv(n) = my(d = digits(n)); binomial(#d-1,2) + vecsum(d) \\\\ _David A. Corneth_, Aug 31 2016"
+    ],
+    "xref": [
+        "Cf. A002024, A009996, A037415, A043569, A052983, A227362, A276348."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jaroslav Krizek_, Aug 30 2016",
+    "references": 2,
+    "revision": 38,
+    "time": "2016-09-04T23:12:21-04:00",
+    "created": "2016-09-04T23:12:21-04:00"
+}

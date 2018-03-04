@@ -1,0 +1,45 @@
+{
+    "number": 274383,
+    "data": "4,7,10,15,18,23,29,35,40,47,54,60,68,75,83,90,99,107,116,125,134,143,152,162,172,182,193,203,214,225,236,248,259,271,283,295,307,320,332,345,358,372,385,398,412,426,440,454,469,483,498,513,528,543,559,574,590,606,622,638,654,671,688,704",
+    "name": "a(n) is the least m such that A008284(m,n+1) > A008284(m,n).",
+    "comment": [
+        "A008284(m,n) is the number of partitions of the integer m into n parts; p(m,n) in the following. It is numerically and intuitively clear that for any fixed n, for sufficiently large m, p(m,n+1) > p(m,n).  Moreover, from examining the table of p(m,n) for small values of n, it appears that for any fixed n, once it has occurred for some m that p(m,n+1) > p(m,n), then it holds for all larger m. However, I did not see a simple proof of this, nor could I easily find one on the net. Presuming it is true, then the m at which p(m,n+1) first overtakes p(m,n) is of intrinsic interest."
+    ],
+    "example": [
+        "a(1) = 4 since p(4,2) = 2, which is greater than p(4,1) = 1, whereas for any lesser integer, e.g. 3, p(3,2) <= p(3,1)."
+    ],
+    "mathematica": [
+        "t[n_, 1] = 1; t[n_, k_] := t[n, k] = If[n >= k, Sum[t[n - i, k - 1], {i, 1, n - 1}] - Sum[t[n - i, k], {i, 1, k - 1}], 0]; Table[m = 1; While[t[m, n + 1] <= t[m, n], m++]; m, {n, 0, 50}] (* _Michael De Vlieger_, Jun 23 2016, after _Mats Granvik_ at A008284 *)"
+    ],
+    "program": [
+        "(Python)",
+        "element = 1",
+        "goal = 64",
+        "n = 1",
+        "p = [[]]",
+        "while element <= goal:",
+        "    # fill in the nth row of the table",
+        "    p.append([0]*(goal+2))",
+        "    for k in xrange(1, min(n,goal+1)+1):",
+        "        if (k == 1) or (k == n):",
+        "            p[n][k] = 1",
+        "        else:",
+        "            p[n][k] = p[n-1][k-1] + p[n-k][k]",
+        "      # see if we can increment element",
+        "    if p[n][element+1] > p[n][element]:",
+        "        print \"p[{}][{}]={} and p[{}][{}]={} so a[{}] = {}\".format(",
+        "            n,element,p[n][element],n,element+1,p[n][element+1],element,n)",
+        "        element = element+1",
+        "    n = n+1"
+    ],
+    "xref": [
+        "Cf. A008284."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Glen Whitney_, Jun 23 2016",
+    "references": 0,
+    "revision": 29,
+    "time": "2016-06-23T18:21:30-04:00",
+    "created": "2016-06-23T18:21:30-04:00"
+}

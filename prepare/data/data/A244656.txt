@@ -1,0 +1,57 @@
+{
+    "number": 244656,
+    "data": "2,2,6,12,60,60,420,840,2520,2520,55440,55440,360360,360360,360360,2162160,85765680,85765680,33522128640,33522128640,33522128640,33522128640,19275223968000,19275223968000,19275223968000",
+    "name": "Least product of consecutive positive integers which is divisible by each of 1, 2, ..., n.",
+    "comment": [
+        "For n > 1, clearly a(n) is bounded below by LCM(1,2,...,n) and bounded above by n!. Further, a(n) is a positive multiple of LCM(1,2,...,n). Any product of two or more consecutive positive integers may be expressed as m!/k!, where 0 <= k <= m-2. For this sequence, the m corresponding to a(n) may or may not be a multiple of n. Whenever a(n) can be expressed as the product of exactly two consecutive integers, it is a term of A002378. See the a-file link for further comments."
+    ],
+    "link": [
+        "Rick L. Shepherd, <a href=\"/A244656/b244656.txt\">Table of n, a(n) for n = 1..36</a>",
+        "Rick L. Shepherd, <a href=\"/A244656/a244656.txt\">Sample program output and calculation notes</a>"
+    ],
+    "example": [
+        "a(7) = 20*21 = 21!/19! = 420 because 420 is divisible by 1, 2, 3, 4, 5, 6, and 7, and no positive integer less than 420 is divisible by each of these. Here, 420 = LCM(1,2,3,4,5,6,7). 420 is an oblong (or promic) number (A002378).",
+        "a(11) = 7*8*9*10*11 = 11!/6! = 55440. Here, 27720 = LCM(1,2,3,4,5,6,7,8,9,10,11), but 27720 cannot be represented as a product of consecutive positive integers.",
+        "a(31) = 6081487775*6081487776 = 36984493563555938400, also a promic number."
+    ],
+    "program": [
+        "(PARI)",
+        "{a(n) =",
+        "local(L, M, i, k = 0, s = 0, ret = 0, d, divs2,",
+        "   st, pr, prt = 1); /* Use prt = 0 to suppress printing. */",
+        "if(n < 1, return, if(n < 3, ret = 2,",
+        "L = lcm(vector(n, i, i));",
+        "M = n!/L;",
+        "while(k < M,",
+        "   k++;",
+        "   s += L; d = divisors(s); divs2 = #d \\ 2;",
+        "   st = 2; pr = d[st];",
+        "   i = 0;",
+        "   while(st + i <= divs2,",
+        "      if(d[st + i + 1] == d[st + i] + 1,",
+        "         pr *= d[st + i + 1]; i++;",
+        "         if(pr == s,",
+        "            if(prt,",
+        "               print1(\"k*L = \", k, \"*\", L, \" = \",",
+        "                 s, \" = \", d[st], \"*\");",
+        "               if(d[st + i] > d[st] + 2, print1(\"...*\"),",
+        "                 if(d[st + i] == d[st] + 2,",
+        "                   print1(d[st] + 1, \"*\")));",
+        "               print(d[st + i], \" = \", d[st + i], \"!/\",",
+        "                 d[st] - 1, \"!\"));",
+        "            ret = s; break(2),",
+        "            if(pr > s, st++; pr = d[st]; i = 0)),",
+        "         if(pr < s, st += i + 1, st++); pr = d[st]; i = 0)))));",
+        "return(ret)}"
+    ],
+    "xref": [
+        "Cf. A003418, A000142, A025527, A002378."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Rick L. Shepherd_, Jul 03 2014, Sep 14 2014",
+    "references": 1,
+    "revision": 10,
+    "time": "2014-10-15T09:38:09-04:00",
+    "created": "2014-10-15T09:38:09-04:00"
+}

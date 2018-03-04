@@ -1,0 +1,63 @@
+{
+    "number": 242268,
+    "data": "225,5625,5405625,23765625,2127515625,58503515625,51921031640625,250727431640625,20090404775390625,608180644775390625,498431438615478515625,2642208974615478515625,189450791534674072265625,6319494849134674072265625,9981411957966851806640625",
+    "name": "Squares not ending in 00 that remain squares if prefixed with the digit 1.",
+    "comment": [
+        "It can easily be shown that all squares that remain squares if prefixed with the digit 1 end in 00 or 25 and, moreover, that all squares ending in 00 are multiples of the squares ending in 5 (factor: 10^(2*n)).",
+        "Subsequence of A167035. - _Michel Marcus_, Sep 08 2014"
+    ],
+    "link": [
+        "Reiner Moewald, <a href=\"/A242268/b242268.txt\">Table of n, a(n) for n = 1..102</a>"
+    ],
+    "example": [
+        "225 = 15*15 and 1225 = 35*35."
+    ],
+    "maple": [
+        "A:= {}:",
+        "for m from 3 to 100 do",
+        "  cand1:= floor(log[5](1/2*(1+sqrt(2))*10^(m/2)));",
+        "  cand2:= floor(log[5](2*(1+sqrt(2))*(5/2)^(m/2)));",
+        "  s1:= 5^cand1 - 10^m/4/5^cand1;",
+        "  s2:=  2^m/4*5^cand2 - 5^(m-cand2);",
+        "  if s1^2 >= 10^(m-1) then A:= A union {s1^2} fi;",
+        "  if s2^2 >= 10^(m-1) then A:= A union {s2^2} fi;",
+        "od:",
+        "A; # _Robert Israel_, Sep 08 2014"
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "def power(a,n):",
+        "...pow = 1",
+        "...for i in range(0, n):",
+        "......pow = pow * a",
+        "...return pow",
+        "end = 50",
+        "for n in range(1, end):",
+        "...l1 = 1/math.log(5)*(math.log(math.sqrt(2)-1)+(n-2)/2*math.log(2))+ n/2",
+        "...u1 = 1/math.log(5)*(math.log(math.sqrt(11)-1)+(n-3)/2*math.log(2))+ (n-1)/2",
+        "...if math.ceil(l1) == math.floor(u1) and math.ceil(l1)>0:",
+        "......p = math.ceil(l1)",
+        "......x = power(5,p)*(-1)+power(2,n-2)*power(5,n-p)",
+        "......print(x*x)",
+        "...l2 = 1/math.log(5)*(math.log(math.sqrt(11)+1)+(n-3)/2*math.log(2))+ (n-1)/2",
+        "...u2 = 1/math.log(5)*(math.log(math.sqrt(2)+1)+(n-2)/2*math.log(2))+ n/2",
+        "...if math.ceil(l2) == math.floor(u2) and math.ceil(l2)>0:",
+        "......p = math.ceil(l2)",
+        "......x = power(5,p)-power(2,n-2)*power(5,n-p)",
+        "......print(x*x)",
+        "print('End.')",
+        "(PARI)",
+        "for(n=1,10^20,p=n^2;if(p%100,s=concat(\"1\",Str(p));if(issquare(eval(s)),print1(p,\", \")))) \\\\ _Derek Orr_, Aug 23 2014"
+    ],
+    "xref": [
+        "Cf. A167035."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Reiner Moewald_, Aug 16 2014",
+    "references": 4,
+    "revision": 28,
+    "time": "2014-09-09T11:48:44-04:00",
+    "created": "2014-09-09T11:48:44-04:00"
+}

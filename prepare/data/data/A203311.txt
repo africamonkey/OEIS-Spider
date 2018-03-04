@@ -1,0 +1,43 @@
+{
+    "number": 203311,
+    "data": "1,1,2,48,30240,1596672000,18172937502720000,122457316443772566896640000,1284319496829094129116119090331648000000,55603466527142141932748234118927499493985767915520000000",
+    "name": "Vandermonde determinant of (1,2,3,...,F(n+1)), where F=A000045 (Fibonacci numbers).",
+    "comment": [
+        "Each term divides its successor, as in A123741. Each term is divisible by the corresponding superfactorial, A000178(n), as in A203313.",
+        "For a signed version, see A123742. For a guide to related sequences, including sequences of Vandermonde permanents, see A093883."
+    ],
+    "example": [
+        "v(4) = (2-1)(3-1)(3-2)(5-1)(5-2)(5-3)."
+    ],
+    "maple": [
+        "with(LinearAlgebra): F:= combinat[fibonacci]:",
+        "a:= n-> Determinant(VandermondeMatrix([F(i)$i=2..n+1])):",
+        "seq(a(n), n=1..12);  # _Alois P. Heinz_, Jul 23 2017"
+    ],
+    "mathematica": [
+        "f[j_] := Fibonacci[j + 1]; z = 15;",
+        "v[n_] := Product[Product[f[k] - f[j], {j, 1, k - 1}], {k, 2, n}]",
+        "d[n_] := Product[(i - 1)!, {i, 1, n}]",
+        "Table[v[n], {n, 1, z}]                (* A203311 *)",
+        "Table[v[n + 1]/v[n], {n, 1, z - 1}]   (* A123741 *)",
+        "Table[v[n]/d[n], {n, 1, 13}]          (* A203313 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import fibonacci, factorial",
+        "from operator import mul",
+        "def f(j): return fibonacci(j + 1)",
+        "def v(n): return 1 if n==1 else reduce(mul, [reduce(mul, [f(k) - f(j) for j in xrange(1, k)]) for k in xrange(2, n + 1)])",
+        "print map(v, xrange(1, 16)) # _Indranil Ghosh_, Jul 26 2017"
+    ],
+    "xref": [
+        "Cf. A000045, A123741, A123742, A203313, A203518."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Clark Kimberling_, Jan 01 2012",
+    "references": 5,
+    "revision": 19,
+    "time": "2017-07-27T14:00:40-04:00",
+    "created": "2012-01-03T18:47:49-05:00"
+}

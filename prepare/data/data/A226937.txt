@@ -1,0 +1,56 @@
+{
+    "number": 226937,
+    "data": "1,2,3,7,11,23,34,52,68,87,105,134,153,182,213,237",
+    "name": "Number of different numbers of square parts in the set of partitions of an n X n square lattice into squares, considering only the list of parts.",
+    "comment": [
+        "The sequence was derived from the documents in the Links section.  The documents are first specified in the Links section of A034295.",
+        "a(n) is the number of nonzero columns in the n-th row of the irregular triangle specified in A226912."
+    ],
+    "link": [
+        "Jon E. Schoenfield, <a href=\"https://oeis.org/A034295/a034295.txt\">Table of solutions for n <= 12</a>",
+        "Alois P. Heinz, <a href=\"https://oeis.org/A034295/a034295_1.txt\">More ways to divide an 11 X 11 square into sub-squares</a>",
+        "Alois P. Heinz, <a href=\"https://oeis.org/A034295/a034295_2.txt\">List of different ways to divide a 13 X 13 square into sub-squares</a>"
+    ],
+    "formula": [
+        "a(n) <= n^2."
+    ],
+    "example": [
+        "For n = 3, the partitions are:",
+        "Square side 1 2 3 Number of parts",
+        "            9 0 0       9",
+        "            5 1 0       6",
+        "            0 0 1       1",
+        "As the number of parts for each partition is different, a(3) = 3."
+    ],
+    "maple": [
+        "b:= proc(n, l) option remember; local i, k, s, t;",
+        "      if max(l[])>n then {} elif n=0 or l=[] then {0}",
+        "    elif min(l[])>0 then t:=min(l[]); b(n-t, map(h->h-t, l))",
+        "    else for k do if l[k]=0 then break fi od; s:={};",
+        "         for i from k to nops(l) while l[i]=0 do s:=s union",
+        "             map(v->v+1, b(n, [l[j]$j=1..k-1,",
+        "                 1+i-k$j=k..i, l[j]$j=i+1..nops(l)]))",
+        "         od; s",
+        "      fi",
+        "    end:",
+        "a:= n-> nops(b(n, [0$n])):",
+        "seq(a(n), n=1..10);  # _Alois P. Heinz_, Jun 22 2013"
+    ],
+    "mathematica": [
+        "b[n_, l_List] := b[n, l] = Module[{i, k, s, t}, Which[Max[l] > n, {}, n == 0 || l == {}, {0}, Min[l] > 0, t = Min[l]; b[n - t, l - t], True, For[k = 1, k <= Length[l], k++, If[l[[k]] == 0, Break[]]]; s = {}; For[i = k, i <= Length[l] && l[[i]] == 0, i++, s = s  ~Union~ Map[# + 1 &, b[n, Join[ l[[1 ;; k - 1]], Array[ 1 + i - k &, i - k + 1], l[[i + 1 ;; Length[l] ]]]]]]; s]]; a[n_] := Length[b[n, Array[0&, n]]]; Table[an = a[n]; Print[ \"a(\", n, \") = \", an]; an, {n, 1, 16}] (* _Jean-Fran\u00e7ois Alcover_, Jan 24 2016, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A034295, A226912."
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "1,2",
+    "author": "_Christopher Hunt Gribble_, Jun 22 2013",
+    "ext": [
+        "a(14) from _Alois P. Heinz_, Jun 22 2013",
+        "Two more terms from _Jean-Fran\u00e7ois Alcover_, Jan 24 2016"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2016-01-24T16:43:40-05:00",
+    "created": "2013-06-22T19:54:33-04:00"
+}

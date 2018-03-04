@@ -1,0 +1,59 @@
+{
+    "number": 15449,
+    "data": "1,1,6,31,161,836,4341,22541,117046,607771,3155901,16387276,85092281,441848681,2294335686,11913527111,61861971241,321223383316,1667978887821,8661117822421,44973567999926,233528957822051",
+    "name": "Expansion of (1-4*x)/(1-5*x-x^2).",
+    "comment": [
+        "Row m=5 of A135597.",
+        "Binomial transform of A152187. - _Johannes W. Meijer_, Aug 01 2010",
+        "For n>=1, row sums of triangle",
+        "m/k.|..0.....1.....2.....3.....4.....5.....6.....7",
+        "==================================================",
+        ".0..|..1",
+        ".1..|..1.....5",
+        ".2..|..1.....5....25",
+        ".3..|..1....10....25.....125",
+        ".4..|..1....10....75.....125....625",
+        ".5..|..1....15....75.....500....625....3125",
+        ".6..|..1....15...150.....500...3125....3125...15625",
+        ".7..|..1....20...150....1250...3125...18750...15625...78125",
+        "which is triangle for numbers 5^k*C(m,k) with duplicated diagonals. - _Vladimir Shevelev_, Apr 12 2012",
+        "a(n+1) is (for n>=0) the number of length-n strings of 6 letters {0,1,2,3,4,5} with no two adjacent nonzero letters identical. The general case (strings of L letters) is the sequence with g.f. (1+x)/(1-(L-1)*x-x^2). [_Joerg Arndt_, Oct 11 2012]",
+        "With offset 1, the sequence is the INVERT transform (1, 5, 5*4, 5*4^2, 5*4^3,...); i.e. of (1, 5, 20, 80, 320, 1280,...). The sequence can also be obtained by taking powers of the matrix [(1,5); (1,4)] and extracting the upper left terms. - _Gary W. Adamson_, Jul 31 2016"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A015449/b015449.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>",
+        "M. Janjic, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Janjic/janjic63.html\">On Linear Recurrence Equations Arising from Compositions of Positive Integers</a>, Journal of Integer Sequences, Vol. 18 (2015), Article 15.4.7.",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (5,1)."
+    ],
+    "formula": [
+        "a(n) = 5*a(n-1) + a(n-2).",
+        "a(n) = Sum_{k, 0<=k<=n} 4^k*A055830(n,k) . - _Philippe Del\u00e9ham_, Oct 18 2006",
+        "G.f.: (1-4*x)/(1-5*x-x^2). - _Philippe Del\u00e9ham_, Nov 20 2008",
+        "a(n) = (1/2)*[(5/2) +(1/2)*sqrt(29)]^n -(3/58)*[(5/2) +(1/2)*sqrt(29) ]^n*sqrt(29) +(1/2)*[(5/2) -(1/2) *sqrt(29)]^n +(3/58)*sqrt(29)*[(5/2) -(1/2)*sqrt(29)]^n, with n>=0. - _Paolo P. Lava_, Nov 21 2008",
+        "For n>=2, a(n)=F_n(5)+F_(n+1)(5), where F_n(x) is Fibonacci polynomial (cf. A049310): F_n(x) = Sum_{i=0,...,floor((n-1)/2)} C(n-i-1,i)*x^(n-2*i-1). - _Vladimir Shevelev_, Apr 13 2012"
+    ],
+    "maple": [
+        "a[0]:=1: a[1]:=1: for n from 2 to 26 do a[n]:=5*a[n-1]+a[n-2] od: seq(a[n], n=0..21); # _Zerinvary Lajos_, Jul 26 2006"
+    ],
+    "mathematica": [
+        "Transpose[NestList[Flatten[{Rest[#],ListCorrelate[{1,5},#]}]&, {1,1},40]][[1]]  (* _Harvey P. Dale_, Mar 23 2011 *)",
+        "LinearRecurrence[{5, 1}, {1, 1}, 50] (* _Vincenzo Librandi_, Nov 06 2012 *)",
+        "CoefficientList[Series[(1-4*x)/(1-5*x-x^2), {x, 0, 50}], x] (* _G. C. Greubel_, Dec 19 2017 *)"
+    ],
+    "program": [
+        "(MAGMA) [n le 2 select 1 else 5*Self(n-1)+Self(n-2): n in [1..30]]; // _Vincenzo Librandi_, Nov 06 2012",
+        "(PARI) x='x+O('x^30); Vec((1-4*x)/(1-5*x-x^2)) \\\\ _G. C. Greubel, Dec 19 2017"
+    ],
+    "xref": [
+        "Cf. A084057, A108306, A164549."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 13,
+    "revision": 61,
+    "time": "2017-12-19T18:32:29-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

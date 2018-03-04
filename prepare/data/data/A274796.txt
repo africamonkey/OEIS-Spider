@@ -1,0 +1,55 @@
+{
+    "number": 274796,
+    "data": "1,2,4,5,8,16,20,32,64,80,128,186,256,320,512,704,1024,1280,1344,2048,3808,4096,5090,5120,6464,8192,10152,15904,16384,20480,21760,28672,32768,34640,59392,62132,65536,81920,106496,131072,138880,217824,262144,327680",
+    "name": "Numbers n such that s2/s1 is an integer, where s1 is the sum of the odd numbers and s2 is the sum of the even numbers in the Collatz (3x+1) iteration of n.",
+    "comment": [
+        "Or numbers n such that A213909(n)/A213916(n) is integer.",
+        "The powers of 2 are in the sequence because s1 = 1.",
+        "The corresponding integers s2/s1 are 0, 2, 6, 5, 14, 30, 10, 62, 126, 30, 254, 6, 510, 110, 1022, 34, 2046, 430, 126, 4094, 14, 8190, 6, 1710, 70, 16382, 14, 37, 32766, 6830, 510, 1066, 65534, 26, 1567,... The odd numbers are very rare: 5, 37, 1567,...",
+        "The numbers of the form 5*2^2m for m = 0,1,.. are in the sequence because s1 = 6, s2 = (5*(2^(2m+1)-2)+ 30) ==0 (mod 6) => s2/s1 is integer."
+    ],
+    "example": [
+        "5 is in the sequence because the Collatz trajectory of 5 is 5 -> 16 -> 8 -> 4 -> 2 -> 1 with s1 = 5+1 = 6 and s2 = 16 + 8 + 4 + 2 = 30 => 30/6 = 5 is integer."
+    ],
+    "maple": [
+        "T:=array(1..2000):U:=array(1..2000):nn:=350000:",
+        "for n from 1 to nn do:",
+        "  kk:=1:m:=n:T[kk]:=n:it:=0:",
+        "    for i from 1 to nn while(m<>1) do:",
+        "     if irem(m,2)=0",
+        "      then",
+        "       m:=m/2:kk:=kk+1:T[kk]:=m:",
+        "      else",
+        "      m:=3*m+1:kk:=kk+1:T[kk]:=m:",
+        "     fi:",
+        "    od:",
+        "    s1:=0:s2:=0:",
+        "    for j from 1 to kk do:",
+        "    if irem(T[j],2)=1",
+        "    then",
+        "    s1:=s1+T[j]:",
+        "    else s2:=s2+T[j]:",
+        "    fi:",
+        "    od:",
+        "    if s1<>0 and floor(s2/s1)=s2/s1",
+        "    then",
+        "    printf(`%d, `,n):else fi:",
+        "  od:"
+    ],
+    "mathematica": [
+        "coll[n_]:=NestWhileList[If[EvenQ[#],#/2,3#+1]&,n,#>1&];a:=Select[coll[n],OddQ[#]&];b:=Select[coll[n],EvenQ[#]&];Do[s1=Sum[a[[i]],{i,1,Length[a]}];s2=Sum[b[[j]],{j,1,Length[b]}];If[IntegerQ[s2/s1],Print[n]],{n,1,350000}]"
+    ],
+    "program": [
+        "(PARI) isok(n) = {if (n % 2, s1 = n; s2 = 0, s2 = n; s1 = 0); while (n != 1, if (n % 2, n = 3*n+1, n /= 2); if (n % 2, s1 += n, s2 +=n);); s2 % s1 == 0;} \\\\ _Michel Marcus_, Jul 09 2016"
+    ],
+    "xref": [
+        "Cf. A213909, A213916."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Lagneau_, Jul 07 2016",
+    "references": 1,
+    "revision": 8,
+    "time": "2016-08-03T06:38:31-04:00",
+    "created": "2016-08-03T06:38:31-04:00"
+}

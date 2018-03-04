@@ -1,0 +1,44 @@
+{
+    "number": 225728,
+    "data": "3,17,967",
+    "name": "Primes p such that sum of primorials (A143293) not including p as a factor is divisible by p.",
+    "comment": [
+        "As in A002110, primorial(0)=1, and primorial(n) = primorial(n-1)*prime(n).",
+        "The next term, if it exists, is bigger than 10^8."
+    ],
+    "example": [
+        "Sum of primorials not including 3 as a factor is 1 + 2 = 3. Because it's divisible by 3, the latter is in the sequence.",
+        "Sum of primorials not including 17 as a factor is 1 + 2 + 6 + 6*5 + 30*7 + 210*11 + 2310*13 = 32589. Because 32589 is divisible by 17, the latter is in the sequence."
+    ],
+    "program": [
+        "(Python)",
+        "primes = [2]*2",
+        "primes[1] = 3",
+        "def addPrime(k):",
+        "  for p in primes:",
+        "    if k%p==0:  return",
+        "    if p*p > k:  break",
+        "  primes.append(k)",
+        "for n in range(5,100000000,6):",
+        "  addPrime(n)",
+        "  addPrime(n+2)",
+        "sum = 0",
+        "primorial = 1",
+        "for p in primes:",
+        "  sum += primorial",
+        "  primorial *= p",
+        "  if sum % p == 0:  print p,",
+        "(PARI) s=P=1;forprime(p=2,1e6,s+=P*=p;if(s%p==0,print1(p\", \"))) \\\\ _Charles R Greathouse IV_, Mar 19 2014",
+        "(PARI) is(p)=if(!isprime(p),return(0)); my(s=Mod(1,p),P=s); forprime(q=2,p-1,s+=P*=q); s==0 \\\\ _Charles R Greathouse IV_, Mar 19 2014"
+    ],
+    "xref": [
+        "Cf. A002110, A143293, A225727."
+    ],
+    "keyword": "nonn,bref,hard,more",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, May 14 2013",
+    "references": 0,
+    "revision": 15,
+    "time": "2014-03-20T03:37:26-04:00",
+    "created": "2013-05-14T13:51:45-04:00"
+}

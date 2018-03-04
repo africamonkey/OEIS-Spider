@@ -1,0 +1,64 @@
+{
+    "number": 55616,
+    "data": "1233,8833,990100,94122353,1765038125,2584043776,7416043776,8235038125,9901009901,116788321168,123288328768,876712328768,883212321168,999900010000,13793103448276,15348303604525,84651703604525,86206903448276,91103202846976,92318202663025",
+    "name": "Numbers, with an even number of digits, that are the sum of the squares of their two halves (leading zeros allowed only for the second half).",
+    "comment": [
+        "The sequence is infinite since it contains several infinite subsequences (see A055617, etc.).",
+        "If x = A*10^n+B is an element not beginning with 9, then (10^n-A)*10^n+B is another (e.g. 1233 <-> 8833).",
+        "Numbers that can be written as n = A*10^d + B with 10^(d-1) <= A < 10^d, 0 <= B < 10^d, and A^2 + B^2 = n. - _Robert Israel_, May 10 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A055616/b055616.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "8833 is ok, since 8833 = 88^2 + 33^2."
+    ],
+    "maple": [
+        "dmax:= 8: # to get all entries with at most 2*dmax digits",
+        "Res:= NULL:",
+        "for d from 2 to dmax  do",
+        "     cands:= map(t -> subs(t,[x,y]), [isolve(x^2 + y^2 = 10^(2*d)+1)]);",
+        "     cands:= select(t -> t[1]::even and t[1]>=0 and t[2]>0, cands);",
+        "     cands:= map(t -> ([(10^d + t[1])/2, (t[2]+1)/2], [(10^d-t[1])/2, (t[2]+1)/2]), cands);",
+        "     cands:= select(t -> (t[1]>= 10^(d-1) and t[1] < 10^d and t[2] <= 10^d), cands);",
+        "     Res:= Res, op(map(t -> 10^d*t[1]+t[2], cands));",
+        "od:",
+        "sort([Res]); # _Robert Israel_, May 10 2015"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{d = IntegerDigits@ n}, If[OddQ[Length@ d], False, Plus[FromDigits[Take[d, Length[d]/2]]^2, FromDigits[Take[d, -Length[d]/2]]^2]] == n]; Select[Range@ 1000000, fQ] (* _Michael De Vlieger_, May 09 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def a():",
+        "..n = 1",
+        "..while n < 10**6:",
+        "....st = str(n)",
+        "....if len(st) % 2 == 0:",
+        "......s1 = st[:int(len(st)/2)]",
+        "......s2 = st[int(len(st)/2):int(len(st))]",
+        "......if int(s1)**2+int(s2)**2 == int(st):",
+        "........print(n,end=', ')",
+        "........n += 1",
+        "......else:",
+        "........n += 1",
+        "....else:",
+        "......n = 10*n",
+        "a()",
+        "# _Derek Orr_, Jul 08 2014"
+    ],
+    "xref": [
+        "Cf. A064942 for the number of solutions, where leading zeros are allowed.",
+        "Cf. A055617, A055618, A055619."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "Ulrich Schimke (ulrschimke(AT)aol.com)",
+    "ext": [
+        "Definition corrected by _Derek Orr_, Jul 09 2014"
+    ],
+    "references": 10,
+    "revision": 25,
+    "time": "2015-05-21T20:25:56-04:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

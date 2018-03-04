@@ -1,0 +1,58 @@
+{
+    "number": 18913,
+    "data": "0,1,9,80,711,6319,56160,499121,4435929,39424240,350382231,3114015839,27675760320,245967827041,2186034683049,19428344320400,172669064200551,1534593233484559,13638670037160480,121213437100959761",
+    "name": "a(n) = 9*a(n - 1) - a(n - 2) for n>1, a(0)=0, a(1)=1.",
+    "comment": [
+        "Define the sequence L(a_0,a_1) by a_{n+2} is the greatest integer such that a_{n+2}/a_{n+1}<a_{n+1}/a_n for n >= 0. This is L(1,9).",
+        "For n>=2, a(n) equals the permanent of the (n-1)X(n-1) tridiagonal matrix with 9's along the main diagonal, and i's along the superdiagonal and the subdiagonal (i is the imaginary unit). - _John M. Campbell_, Jul 08 2011",
+        "For n>=1, a(n) equals the number of 01-avoiding words of length n-1 on alphabet {0,1,...,8}. - _Milan Janjic_, Jan 25 2015",
+        "Not to be confused with the Pisot L(1,9) sequence, which is A001019. - _R. J. Mathar_, Feb 13 2016"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A018913/b018913.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Marco Abrate, Stefano Barbero, Umberto Cerruti, Nadir Murru, <a href=\"https://www.emis.de/journals/INTEGERS/papers/p38/p38.Abstract.html\">Polynomial sequences on quadratic curves</a>, Integers, Vol. 15, 2015, #A38.",
+        "D. W. Boyd, <a href=\"http://www.researchgate.net/publication/258834801\">Linear recurrence relations for some generalized Pisot sequences</a>, Advances in Number Theory ( Kingston ON, 1991) 333-340, Oxford Sci. Publ., Oxford Univ. Press, New York, 1993.",
+        "E. I. Emerson, <a href=\"http://www.fq.math.ca/Scanned/7-3/emerson.pdf\">Recurrent Sequences in the Equation DQ^2=R^2+N</a>, Fib. Quart., 7 (1969), pp. 231-242.",
+        "A. F. Horadam, <a href=\"http://www.fq.math.ca/Scanned/5-5/horadam.pdf\">Special properties of the sequence W_n(a,b; p,q)</a>, Fib. Quart., 5.5 (1967), 424-434. Case a=0,b=1; p=9, q=-1.",
+        "M. Janjic, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Janjic/janjic63.html\">On Linear Recurrence Equations Arising from Compositions of Positive Integers</a>, Journal of Integer Sequences, Vol. 18 (2015), Article 15.4.7.",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "W. Lang, <a href=\"http://www.fq.math.ca/Scanned/38-5/lang.pdf\">On polynomials related to powers of the generating function of Catalan's numbers</a>, Fib. Quart. 38 (2000) 408-419. Eq.(44), lhs, m=11.",
+        "<a href=\"/index/Ch#Cheby\">Index entries for sequences related to Chebyshev polynomials.</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (9,-1)."
+    ],
+    "formula": [
+        "G.f.: x/(1-9*x+x^2).",
+        "a(n) = S(2*n-1, sqrt(11))/sqrt(11) = S(n-1, 9); S(n, x) := U(n, x/2), Chebyshev polynomials of 2nd kind, A049310. S(-1, x) := 0.",
+        "a(n) = (((9+sqrt(77))/2)^n - ((9-sqrt(77))/2)^n)/sqrt(77). - _Barry E. Williams_, Aug 21 2000",
+        "G.f.: x/(1-9*x+x^2). - _Barry E. Williams_, Aug 21 2000",
+        "a(n+1) = Sum_{k, 0<=k<=n} A101950(n,k)*8^k. - _Philippe Del\u00e9ham_, Feb 10 2012",
+        "Product {n >= 1} (1 + 1/a(n)) = 1/7*(7 + sqrt(77)). - _Peter Bala_, Dec 23 2012",
+        "Product {n >= 2} (1 - 1/a(n)) = 1/18*(7 + sqrt(77)). - _Peter Bala_, Dec 23 2012"
+    ],
+    "example": [
+        "G.f. = x + 9*x^2 + 80*x^3 + 711*x^4 + 6319*x^5 + 56160*x^6 + 499121*x^7 + ..."
+    ],
+    "mathematica": [
+        "Join[{a=0,b=1},Table[c=9*b-a; a=b; b=c, {n,60}]] (* _Vladimir Joseph Stephan Orlovsky_, Jan 20 2011 *)",
+        "CoefficientList[Series[x/(1 - 9*x + x^2), {x, 0, 40}], x] (* _Vincenzo Librandi_, Dec 23 2012 *)"
+    ],
+    "program": [
+        "(Sage) [lucas_number1(n,9,1) for n in range(22)] # _Zerinvary Lajos_, Jun 25 2008",
+        "(MAGMA) I:=[0, 1]; [n le 2 select I[n] else 9*Self(n-1) - Self(n-2): n in [1..30]]; // _Vincenzo Librandi_, Dec 23 2012",
+        "(PARI) concat(0, Vec(x/(1-9*x+x^2) + O(x^30))) \\\\ _Michel Marcus_, Sep 06 2017"
+    ],
+    "xref": [
+        "Cf. A000027, A001906, A001353, A004254, A001109, A004187, A001090.",
+        "Cf. A056918(n)=sqrt{77*(a(n))^2 +4}, that is, a(n)=sqrt((A056918(n)^2 - 4)/77)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_R. K. Guy_",
+    "ext": [
+        "G.f. adapted to the offset by _Vincenzo Librandi_, Dec 23 2012"
+    ],
+    "references": 19,
+    "revision": 78,
+    "time": "2017-09-06T03:26:49-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

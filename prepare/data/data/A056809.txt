@@ -1,0 +1,39 @@
+{
+    "number": 56809,
+    "data": "33,85,93,121,141,201,213,217,301,393,445,633,697,841,921,1041,1137,1261,1345,1401,1641,1761,1837,1893,1941,1981,2101,2181,2217,2305,2361,2433,2461,2517,2641,2721,2733,3097,3385,3601,3693,3865,3901,3957,4285",
+    "name": "Numbers n such that n, n+1 and n+2 are products of two primes.",
+    "comment": [
+        "Each term is the beginning of a run of three 2-almost primes (semiprimes). No runs exist of length greater than three. For the same reason, each term must be odd: If n were even, then so would be n+2. In fact, one of n or n+2 would be divisible by 4, so must indeed be 4 to have only two prime factors. However, neither 2,3,4 nor 4,5,6 is such a run. - _Rick L. Shepherd_, May 27 2002",
+        "n+1, which is twice a prime, is in A086005. The primes are in A086006. - _T. D. Noe_, May 31 2006"
+    ],
+    "link": [
+        "D. W. Wilson, <a href=\"/A056809/b056809.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "121 is in the sequence because 121 = 11^2, 122 = 2*61 and 123 = 3*41, each of which is the product of two primes."
+    ],
+    "mathematica": [
+        "f[n_] := Plus @@ Transpose[ FactorInteger[n]] [[2]]; Select[Range[10^4], f[ # ] == f[ # + 1] == f[ # + 2] == 2 & ]",
+        "f[n_]:=Last/@FactorInteger[n]=={1,1}||Last/@FactorInteger[n]=={2};Timing[lst={};Do[If[f[n]&&f[n+1]&&f[n+2],AppendTo[lst,n]],{n,2,8!}];lst] (* _Vladimir Joseph Stephan Orlovsky_, Feb 25 2010 *)",
+        "Flatten[Position[Partition[PrimeOmega[Range[5000]],3,1],{2,2,2}]] (* _Harvey P. Dale_, Feb 15 2015 *)"
+    ],
+    "program": [
+        "(PARI) forstep(n=1,5000,2, if(bigomega(n)==2 && bigomega(n+1)==2 && bigomega(n+2)==2, print1(n,\",\")))",
+        "(PARI) is(n)=n%4==1 && isprime((n+1)/2) && bigomega(n)==2 && bigomega(n+2)==2 \\\\ _Charles R Greathouse IV_, Sep 08 2015",
+        "(PARI) list(lim)=my(v=List(),t); forprime(p=2,(lim+1)\\2, if(bigomega(t=2*p-1)==2 && bigomega(t+2)==2, listput(v,t))); Vec(v) \\\\ _Charles R Greathouse IV_, Sep 08 2015"
+    ],
+    "xref": [
+        "Intersection of A070552 and A092207.",
+        "Cf. A045939, A039833, A086005, A086006."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Sharon Sela (sharonsela(AT)hotmail.com), May 04 2002",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, May 04 2002"
+    ],
+    "references": 28,
+    "revision": 35,
+    "time": "2016-10-13T16:17:52-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

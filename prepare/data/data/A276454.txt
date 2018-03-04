@@ -1,0 +1,80 @@
+{
+    "number": 276454,
+    "data": "1,2,22,464,13302,487152,21475652,1106550392,65221981530,4327577893800,319187492622012,25904823495240144,2294089575287710984,220132629099295901408,22751391952803426496488,2519687900505935894639088,297684761086123702744203918",
+    "name": "a(n) = A276452(n) + A276451(n) + A276449(n).",
+    "comment": [
+        "For a definition and examples of this problem see the comment section of A276449.",
+        "The present sequence a(n) gives the number of all orbits under C_4 of 2-colored n X n square grids with n squares of one color.",
+        "See A054772(n, k) for the table of these total C_4 orbit numbers for 2-colored grids with any number k from {0,1,...,n^2} of squares of one color. - _Wolfdieter Lang_, Oct 02 2016"
+    ],
+    "link": [
+        "Hong-Chang Wang, <a href=\"/A276454/b276454.txt\">Table of n, a(n) for n = 1..70</a>"
+    ],
+    "formula": [
+        "a(n) = A276452(n) + A276451(n) + A276449(n) for n = 1, 2, 3, ...,",
+        "A014062(n) = A276452(n)*4 + A276451(n)*2 + A276449(n).",
+        "a(n) = A054772(n, 2), n >= 1. - _Wolfdieter Lang_, Oct 02 2016"
+    ],
+    "example": [
+        "For n = 4 there are A276449(4) = 4 1-orbits, represented by",
+        "   + o o +   o + o o   o o + o   o o o o",
+        "   o o o o   o o o +   + o o o   o + + o",
+        "   o o o o   + o o o   o o o +   o + + o",
+        "   + o o +   o o + o   o + o o   o o o o  .",
+        "A276451(4) = 12 orbits: one of them is",
+        "   + o + o   o o o +",
+        "   o o o o   + o o o",
+        "   o o o o   O o o +",
+        "   o + o +   + o o o  ,",
+        "and one can take the first one as representative.",
+        "A276452(4) = 448 4-orbits: one of them is",
+        "  represented by",
+        "   + + + +",
+        "   o o o o",
+        "   o o o o",
+        "   o o o o .",
+        "The complete orbit structure for n=4 is 1^4 2^12 4^448, see A276449(4) = 4, A276451(4) = 12,  A276452(4) = 448.",
+        "a(4) = 448 + 12 + 4 = 464.",
+        "A014062(4) = 448*4 + 12*2 + 4*1 = 1820."
+    ],
+    "mathematica": [
+        "f[n_] := If[MemberQ[{2, 3}, #], 0, Function[i, Binomial[(2 i) (2 i + #), i]]@ Floor[n/4]] &@ Mod[n, 4];g[n_] := (Function[j, Binomial[2 j (j + Boole@ OddQ@ n), j]]@ Floor[n/2] - f@ n)/2; Table[(Binomial[n^2, n] - 2 g@ n - f@ n)/4 + (Function[j, Binomial[2 j (j + Boole@ OddQ@ n), j]]@ Floor[n/2] - f@ n)/2 + f@ n, {n, 17}] (* _Michael De Vlieger_, Sep 12 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "def nCr(n,r):",
+        "    f = math.factorial",
+        "    return f(n) / f(r) / f(n-r)",
+        "# main program",
+        "for j in range(101):",
+        "   t = nCr(j*j,j)",
+        "    i = j/2",
+        "    if j%2==0:",
+        "        d = nCr(2*i*i,i)",
+        "    else:",
+        "        d = nCr(2*i*(i+1),i)",
+        "    a = (t-d)/4",
+        "    if j%4==0:",
+        "        c = nCr((j*j/4),(j/4))",
+        "    elif j%4==1:",
+        "        c = nCr(((j-1)/2)*((j-1)/2+1),((j-1)/4))",
+        "    else:",
+        "        c = 0",
+        "    b = (d-c)/2",
+        "    print(str(j)+\" \"+str(a+b+c))"
+    ],
+    "xref": [
+        "Cf. A014062, A054772, A276451, A276452, A276454."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Jason Y.S. Chiu_, _Hong-Chang Wang_, _Chiang, Tung-Ying_, Sep 03 2016",
+    "ext": [
+        "Edited: _Wolfdieter Lang_, Oct 02 2016"
+    ],
+    "references": 4,
+    "revision": 21,
+    "time": "2016-10-17T16:06:10-04:00",
+    "created": "2016-10-17T16:06:10-04:00"
+}

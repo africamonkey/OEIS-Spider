@@ -1,0 +1,26 @@
+{
+    "number": 125526,
+    "data": "1,22,34,43,54,81,82,169,187",
+    "name": "Numbers n for which the sum of the digits of n raised to the sum of the digits of n itself is equal to n. If \"sumdigit\" denotes the sum of the digits of a number then these are the numbers n such that n=sumdigit(n^sumdigit(n)).",
+    "comment": [
+        "There are no other terms. Proof: Assume the next terms has d digits. 10^d > n >= 10^(d-1); sumdigit(n) >= 9d; n^sumdigit(n) < (10^d)^(9d) < 10^(9d^2); 9*(9d^2+1) > sumdigit(n^sumdigit(n)); 9*(9d^2+1) > n 9*(9d^2+1) > 10^(d-1). So d<5. - Fung Cheok Yin (cheokyin_restart(AT)yahoo.com.hk), Mar 11 2007"
+    ],
+    "example": [
+        "a(2)=22 because 2+2=4, 22^4=234256, 2+3+4+2+5+6=22."
+    ],
+    "maple": [
+        "P:=proc(n) local i,j,k,w; for i from 1 by 1 to n do w:=0; k:=i; while k>0 do w:=w+k-trunc(k/10)*10; k:=trunc(k/10); od; k:=i^w; w:=0; while k>0 do w:=w+k-trunc(k/10)*10; k:=trunc(k/10); od; if (i=w) then print(w); fi; od; end: P(200);",
+        "sod := proc(n,b) convert(convert(n,base,b),`+`) end; b:=10: L:=[]: for w to 1 do for n from 1 to 10^3 do x:=sod(n^sod(n,b),b); if x=n then print(n); L:=[op(L),n]; fi; od od; L; - _Walter Kehowski_, Feb 12 2007",
+        "sd:=proc(n) local nn: nn:=convert(n,base,10): sum(nn[j],j=1..nops(nn)) end: a:=proc(n) if sd(n^sd(n))=n then n else fi end: seq(a(n),n=1..500); - _Emeric Deutsch_, Feb 16 2007"
+    ],
+    "xref": [
+        "Cf. A124053, A124359, A124360, A046019, A124365, A124366, A124367."
+    ],
+    "keyword": "easy,fini,nonn,full,base",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_ and _Giorgio Balzarotti_, Jan 22 2007",
+    "references": 4,
+    "revision": 9,
+    "time": "2012-09-25T15:29:45-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

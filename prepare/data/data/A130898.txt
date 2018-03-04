@@ -1,0 +1,42 @@
+{
+    "number": 130898,
+    "data": "1,2,3,5,6,10,12,18,22,30,37,50,59,78,93,118,140,176,206,255,297,362,421,507,585,699,803,949,1088,1276,1455,1696,1927,2230,2527,2909,3284,3761,4233,4825,5416,6146,6879,7778,8682,9778,10892,12226,13582,15200",
+    "name": "Number of partitions of n into \"number of partitions of n into partition numbers\" numbers.",
+    "comment": [
+        "The \"partition transformation\" of sequence A can be defined as the number of partitions of n into elements of sequence A. This is the partition transformation composed with itself three times on the positive integers.",
+        "a(6) = 10 because there are 10 partitions of 6 whose parts are 1,2,3,4,6 which are terms of sequence A007279, which is the number of partitions of n into partition numbers."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A130898/b130898.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(6) = 12 because there are 12 partitions of 6 whose parts are 1,2,3,4,6 which are terms of sequence A007279, which is the number of partitions of n into partition numbers."
+    ],
+    "maple": [
+        "pp:= proc(p) local b;",
+        "       b:= proc(n, i)",
+        "             if n<0 then 0",
+        "           elif n=0 then 1",
+        "           elif i<1 then 0",
+        "           else b(n,i):= b(n,i-1) +b(n-p(i), i)",
+        "             fi",
+        "           end;",
+        "       n-> b(n, n)",
+        "     end:",
+        "a:= (pp@@3)(n->n):",
+        "seq(a(n), n=1..100); # _Alois P. Heinz_, Sep 13 2011"
+    ],
+    "mathematica": [
+        "pp[p_] := Module[{b}, b[n_, i_] := Which[n<0, 0, n==0, 1, i<1, 0, True, b[n, i] = b[n, i-1] + b[n-p[i], i]]; b[#, #]&]; a = Nest[pp, Identity, 3]; Table[a[n], {n, 1, 100}] (* _Jean-Fran\u00e7ois Alcover_, Oct 26 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000027, A000041, A007279, A130899, A130900 which are m-fold self-compositions of the \"partition transformation\" on the counting numbers, for m=0, 1, 2, 4, 5."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Graeme McRae_, Jun 07 2007",
+    "references": 3,
+    "revision": 10,
+    "time": "2015-10-26T10:34:23-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 80107,
+    "data": "1,1,2,3,7,12,31,59,164,339,999,2210,6841,16033,51790,127643,428131,1103372,3827967,10269643,36738144,102225363,376118747,1082190554,4086419601,12126858113,46910207114,143268057587,566845074703,1778283994284,7186474088735",
+    "name": "Number of fixed points of permutation of SetPartitions under {1,2,..,n}->{n,n-1,..,1}. Number of symmetric arrangements of non-attacking rooks on upper half of n X n chessboard.",
+    "comment": [
+        "Even-numbered terms a(2k) are A002872: 2,7,31,164,999 (\"Sorting numbers\"); odd-numbered terms are its binomial transform, A080337. The symmetrical set partitions of {-n,...,-1,0,1,...,n} can be classified by the partition containing 0. Thus we get the sum over k of {n choose k} times the number of symmetrical set partitions of 2n-2k elements. - _Don Knuth_, Nov 23 2003",
+        "Number of partitions of n numbers that are symmetrical and cannot be nested (i.e. include a pattern of the form abab). - _Douglas Boffey_, May 21 2015"
+    ],
+    "reference": [
+        "D. E. Knuth, The Art of Computer Programming, vol. 4A, Combinatorial Algorithms, Section 7.2.1.5 (p. 765)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A080107/b080107.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "S. V. Pemmaraju and S. S. Skiena, <a href=\"http://www.cs.uiowa.edu/~sriram/Combinatorica/newFeatures.nb.pdf\">NewCombinatorica</a>",
+        "Frank Ruskey, <a href=\"http://www.theory.csc.uvic.ca/~cos/inf/setp/SetPartitions.html\">Set Partitions</a>"
+    ],
+    "formula": [
+        "Knuth gives recurrences and generating functions.",
+        "a(n) = Sum_{k=0..t(n)} (-1)^k*A125810(n,k) where A125810 is a triangle of coefficients for a q-analog of the Bell numbers and t(n)=A125811(n)-1. - _Paul D. Hanna_, Jan 19 2009"
+    ],
+    "example": [
+        "Of the set partitions of 4, the following 7 are invariant under 1->4, 2->3, 3->2, 4->1: {{1,2,3,4}}, {{1,2},{3,4}}, {{1,4},{2,3}}, {{1,3},{2,4}}, {{1},{2,3},{4}}, {{1,4},{2},{3}}, {{1},{2},{3},4}}, so a[4]=7."
+    ],
+    "mathematica": [
+        "<<DiscreteMath`NewCombinatorica`; Table[t = SetPartitions[n]; t= t /. Thread[Range[n] -> Range[n, 1, -1]]; t= 1 + RankSetPartition /@ t; t= ToCycles[t]; t= Cases[t, {_Integer}]; Length[t], {n, 7}]",
+        "(* second program: *)",
+        "QB[n_, q_] := QB[n, q] = Sum[QB[j, q] QBinomial[n-1, j, q], {j, 0, n-1}] // FunctionExpand // Simplify; QB[0, q_]=1; QB[1, q_]=1; Table[cc = CoefficientList[QB[n, q], q]; cc.Table[(-1)^(k+1), {k, 1, Length[cc]}], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Feb 29 2016, after _Paul D. Hanna_ *)"
+    ],
+    "xref": [
+        "Cf. A002872, A080337.",
+        "Cf. A125810. - _Paul D. Hanna_, Jan 19 2009"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Wouter Meeussen_, Mar 15 2003",
+    "ext": [
+        "Offset set to 0 by _Alois P. Heinz_, May 23 2015"
+    ],
+    "references": 8,
+    "revision": 28,
+    "time": "2016-02-29T12:14:16-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

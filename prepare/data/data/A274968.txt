@@ -1,0 +1,60 @@
+{
+    "number": 274968,
+    "data": "4,8,14,20,26,32,38,44,50,56,62,68,74,80,86,98,104,110,116,122,128,134,140,146,152,158,164,170,182,188,194,200,206,212,218,224,230,236,242,248,254,266,272,278,284,290,296,302",
+    "name": "Even numbers n >= 4 which are not m-gonal number for 3 <= m < n.",
+    "comment": [
+        "An m-gonal number, m >= 3, i.e., of the form n = (k/2)*[(m-2)*k - (m-4)], yields a nontrivial factorization of n if and only if of order k >= 3.",
+        "Except for a(1) = 4, all a(n) are congruent to 2 (mod 6), although from 8 to 302, the numbers",
+        "     92:  5-gonal of order 8,",
+        "    176:  5-gonal of order 11, 8-gonal of order 8,",
+        "    260: 11-gonal of order 8,",
+        "  are not in this sequence.",
+        "Even numbers n for which A176948(n) = n.",
+        "Since we are looking for solutions of (m-2)*k^2 - (m-4)*k - 2*n = 0, with m >= 3 and k >= 3, the largest order k we need to consider is",
+        "    k = {(m-4) + sqrt[(m-4)^2 + 8*(m-2)*n]}/[2*(m-2)] with m = 3, thus",
+        "    k <= (1/2)*{-1 + sqrt[1 + 8*n]}.",
+        "Or, since we are looking for solutions of 2n = m*k*(k-1) - 2*k*(k-2), with m >= 3 and k >= 3, the largest m we need to consider is",
+        "    m = [2n + 2*k*(k-2)]/[k*(k-1)] with k = 3, thus m <= (n+3)/3.",
+        "Composite numbers n which are divisible by 3 are m-gonal numbers of order 3, with m = (n + 3)/3. Thus all a(n) are coprime to 3.",
+        "a(1) = 4 is the only square number: 4-gonal with order k = 2.",
+        "All integers of the form n = 6j + 4, with j >= 1, are m-gonal numbers of order k = 4, with m = j + 2, which means that none are in this sequence. - _Daniel Forgues_, Aug 01 2016"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A274968/b274968.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "OEIS Wiki, <a href=\"/wiki/Polygonal_numbers\">Polygonal numbers</a>"
+    ],
+    "example": [
+        "20 is in this sequence because 20 is trivially a 20-gonal number of order k = 2 (element of A051872) but not an m-gonal number for 3 <= k <= (1/2)*{-1 + sqrt[1 + 8*20]}."
+    ],
+    "program": [
+        "(Sage)",
+        "def is_A274968(n):",
+        "    if is_odd(n): return false",
+        "    for m in (3..(n+3)//3):",
+        "        if pari('ispolygonal')(n, m):",
+        "            return false",
+        "    return true",
+        "print [n for n in (3..302) if is_A274968(n)] # _Peter Luschny_, Jul 28 2016",
+        "(Python)",
+        "A274968_list = []",
+        "for n in range(4,10**6,2):",
+        "    k = 3",
+        "    while k*(k+1) <= 2*n:",
+        "        if not (2*(k*(k-2)+n)) % (k*(k - 1)):",
+        "            break",
+        "        k += 1",
+        "    else:",
+        "        A274968_list.append(n) # _Chai Wah Wu_, Jul 28 2016",
+        "(PARI) lista(nn) = {forstep(n=4, nn, 2, sp = n; forstep(k=n, 3, -1, if (ispolygonal(n, k), sp=k);); if (sp == n, print1(n, \", \")););} \\\\ _Michel Marcus_, Sep 06 2016"
+    ],
+    "xref": [
+        "Cf. A051872, A176948, A176949, A274967."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Daniel Forgues_, Jul 12 2016",
+    "references": 3,
+    "revision": 72,
+    "time": "2016-09-19T03:36:30-04:00",
+    "created": "2016-07-28T06:00:55-04:00"
+}

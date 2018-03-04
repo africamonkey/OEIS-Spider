@@ -1,0 +1,34 @@
+{
+    "number": 126348,
+    "data": "1,1,2,4,7,12,20,33,53,84,131,202,308,465,695,1030,1514,2209,3201,4609,6596,9386,13284,18705,26211,36561,50776,70226,96742,132765,181540,247369,335940,454756,613689,825698,1107755,1482038,1977465,2631664",
+    "name": "Limit of reversed rows of triangle A126347, in which row sums equal Bell numbers (A000110).",
+    "comment": [
+        "In triangle A126347, row n lists coefficients of q in B(n,q) that satisfies: B(n,q) = Sum_{k=0..n-1} C(n-1,k)*B(k,q)*q^k for n>0, with B(0,q) = 1; row sums equal the Bell numbers: B(n,1) = A000110(n).",
+        "Row sums of A253830. a(n) equals the number of colored compositions of n, as defined in A253830,  whose associated color partition has distinct parts. An example is given below. - _Peter Bala_, Jan 20 2015"
+    ],
+    "formula": [
+        "1 + Sum_{k>0} x^(k * (k + 1) / 2) / ((1 - x)^k * (1 - x) * (1 - x^2) ... (1 - x^k)). - _Michael Somos_, Aug 17 2008",
+        "G.f.: Product_{k>0} (1+x^k/(1-x)). - _Vladeta Jovovic_, Oct 05 2008"
+    ],
+    "example": [
+        "a(5) = 12: The colored compositions (defined in A253830) of 5 whose color partitions have distinct parts are",
+        "5(c1), 5(c2), 5(c3), 5(c4), 5(c5),",
+        "1(c1) + 4(c2), 1(c1) + 4(c3), 1(c1) + 4(c4),",
+        "3(c1) + 2(c2),",
+        "2(c1) + 3(c2), 2(c1) + 3(c3), 2(c2) + 3(c3). - _Peter Bala_, Jan 20 2015"
+    ],
+    "program": [
+        "(PARI) {B(n,q)=if(n==0,1,sum(k=0,n-1,binomial(n-1,k)*B(k,q)*q^k))} {a(n)=Vec(B(n+1,q)+O(q^(n*(n-1)/2+1)))[n*(n-1)/2+1]}",
+        "(PARI) {a(n) = local(t); if( n<0, 0, t = 1; polcoeff( sum(k=1, (sqrtint(8*n + 1) - 1)\\2, t = t * x^k / (1 - x) / (1 - x^k) + x * O(x^n), 1), n))} /* _Michael Somos_, Aug 17 2008 */"
+    ],
+    "xref": [
+        "Cf. A126347, A126349; factorial variant: A126471. A253830."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 31 2006",
+    "references": 4,
+    "revision": 13,
+    "time": "2015-01-20T14:07:52-05:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

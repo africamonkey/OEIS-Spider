@@ -1,0 +1,81 @@
+{
+    "number": 23359,
+    "data": "1,1,2,3,6,10,18,31,56,98,174,306,542,956,1690,2983,5272,9310,16448,29050,51318,90644,160118,282826,499590,882468,1558798,2753448,4863696,8591212,15175514,26805983,47350056,83639030,147739848,260967362",
+    "name": "Number of compositions (ordered partitions) of n into powers of 2.",
+    "comment": [
+        "a(n) is the number of partitions of 2n into n parts, with each partition realized into non-symmetric permutations ignoring 1's. For example a(6): the partitions of 12 into 6 are: 111117 (1), 111126 (1), 111135 (1), 111144 (1), 111225 (2), 111234 (3), 111333 (1), 112233 (3), 112224 (2), 122223 (2), 222222 (1), where the number in brackets is the number of non-symmetric permutations ignoring 1's (e.g. 111234, ignore 1's -> 234 and we can also have 243 and 324, 112233->2233 or 2323 or 2332). The sum of the bracketed numbers is a(6)=18. - _Jon Perry_, Jun 22 2003",
+        "Equals right border of triangle A144219. Row sums of A144219 = (1, 2, 3, 6, 10, 18,...). - _Gary W. Adamson_, Sep 14 2008",
+        "Equals the INVERT transform of its aerated variant. - _Gary W. Adamson_, Oct 29 2010",
+        "a(n) is an eigensequence for the sequence array of the Fredholm-Rueppel sequence A036987. - _Paul Barry_, Nov 03 2010"
+    ],
+    "link": [
+        "T. D. Noe and Alois P. Heinz, <a href=\"/A023359/b023359.txt\">Table of n, a(n) for n = 0..1000</a> (terms n = 0..200 from T. D. Noe)",
+        "G. Alkauskas, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL13/Alkauskas/alkauskas2.html\">Congruence properties of the function that counts compositions into powers of 2</a>, J. Integer Sequences 13 (2010), Article: 10.5.3, 2010.",
+        "Giedrius Alkauskas, <a href=\"https://arxiv.org/abs/1609.09842\">Algebraic functions with Fermat property, eigenvalues of transfer operator and Riemann zeros, and other open problems</a>, arXiv:1609.09842 [math.NT], 2016. Mentions this sequence.",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "G.f.: 1 / (1 - sum(k>=0, x^(2^k) ) ). [_Joerg Arndt_, Oct 21 2012]",
+        "a(n) = (n=0) + sum(a(n-2^k), k=0...) - _Len Smiley_, May 07 2001",
+        "A(x) = A(x^2)/(1 - x*A(x^2)). - _Paul D. Hanna_, Dec 16 2002",
+        "INVERT transform of characteristic function of powers of 2, i.e. A036987 interpreted with an offset 1 instead of 0. - _Antti Karttunen_, Dec 12 2003",
+        "a(n) seems to be asymptotic to A*B^n where A=0.332198... B=1.766398... - _Benoit Cloitre_, Dec 17 2002. More accurately: B=1.76639811455017359722848839244009973023206928795707277527828507440838434..., A=0.58679374529351144845013208294162259198824401250194713608555348278359775... - _Vaclav Kotesovec_, Apr 30 2014",
+        "Satisfies A(x)=1+A(x)*sum(k>=0, x^(2^k)). a(m) == 1 (mod 2) when m=2^n-1, otherwise a(m) == 0 (mod 2). - _Paul D. Hanna_, Aug 27 2003",
+        "a(m) == 0 (mod 4) if A000120(m+2)>=4. In general, a(m) == 0 (mod 2^N) if A000120(m+2^(N-1))>=2^N. - _Giedrius Alkauskas_, Mar 05 2010"
+    ],
+    "example": [
+        "A(x) = A(x^2) + x*A(x^2)^2 + x^2*A(x^2)^3 + x^3*A(x^2)^4 +... = 1 +x +2x^2 +3x^3 +6x^4 + 10x^5 + 18x^6 +31x^7 +....",
+        "From _Joerg Arndt_, Dec 28 2012: (Start)",
+        "There are a(6)=18 compositions of 6 into powers of 2:",
+        "[ 1]  [ 1 1 1 1 1 1 ]",
+        "[ 2]  [ 1 1 1 1 2 ]",
+        "[ 3]  [ 1 1 1 2 1 ]",
+        "[ 4]  [ 1 1 2 1 1 ]",
+        "[ 5]  [ 1 1 2 2 ]",
+        "[ 6]  [ 1 1 4 ]",
+        "[ 7]  [ 1 2 1 1 1 ]",
+        "[ 8]  [ 1 2 1 2 ]",
+        "[ 9]  [ 1 2 2 1 ]",
+        "[10]  [ 1 4 1 ]",
+        "[11]  [ 2 1 1 1 1 ]",
+        "[12]  [ 2 1 1 2 ]",
+        "[13]  [ 2 1 2 1 ]",
+        "[14]  [ 2 2 1 1 ]",
+        "[15]  [ 2 2 2 ]",
+        "[16]  [ 2 4 ]",
+        "[17]  [ 4 1 1 ]",
+        "[18]  [ 4 2 ]",
+        "(End)"
+    ],
+    "maple": [
+        "a:= proc(n) option remember;",
+        "      `if`(n=0, 1, add(a(n-2^i), i=0..ilog2(n)))",
+        "    end:",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Jan 11 2014"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/(1 - Sum[x^(2^i), {i, 0, 20}]), {x, 0, 20}], x]",
+        "a[0] = 1; a[n_] := a[n] = Sum[a[n-2^k], {k, 0, Log[2, n]}]; Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Oct 25 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = local(A, m); if( n<0, 0, m=1; A = 1 + O(x); while( m<=n, m*=2; A = 1 /(1 / subst(A, x, x^2) - x)); polcoeff(A, n))}; /* _Michael Somos_, Dec 20 2002 */",
+        "(PARI)",
+        "N=66; x='x+O('x^N);",
+        "Vec( 1/(1-sum(k=0,ceil(log(N)/log(2)), x^(2^k) ) ) )",
+        "/* _Joerg Arndt_, Oct 21 2012 */"
+    ],
+    "xref": [
+        "The column sums of the table A073265. Cf. also A073267, A073202, A073288.",
+        "Cf. A144219. - _Gary W. Adamson_, Sep 14 2008"
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,3",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "Edited by _Franklin T. Adams-Watters_, Aug 05 2005"
+    ],
+    "references": 20,
+    "revision": 68,
+    "time": "2017-07-09T11:17:53-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

@@ -1,0 +1,63 @@
+{
+    "number": 4080,
+    "data": "0,1,4,11,31,83,227,616,1674,4550,12367,33617,91380,248397,675214,1835421,4989191,13562027,36865412,100210581,272400600,740461601,2012783315,5471312310,14872568831,40427833596,109894245429,298723530401,812014744422",
+    "name": "Least k such that H(k) >= n, where H(k) is the harmonic number sum_{i=1..k} 1/i.",
+    "reference": [
+        "Bruno Rizzi and Cristina Scagliarini: I numeri armonici. Periodico di matematiche, \"Mathesis\", pp. 17-58, 1986, numbers 1-2 [From _Vincenzo Librandi_, Jan 05 2009]",
+        "W. Sierpi\u0144ski, Sur les decompositions de nombres rationnels, Oeuvres Choisies, Acad\u00e9mie Polonaise des Sciences, Warsaw, Poland, 1974, p. 181.",
+        "N. J. A. Sloane, Illustration for sequence M4299 (=A007340) in The Encyclopedia of Integer Sequences (with Simon Plouffe), Academic Press, 1995."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A004080/b004080.txt\">Table of n, a(n) for n=0..100</a> (using Hickerson's formula in A002387)",
+        "John V. Baxley, <a href=\"http://www.jstor.org/stable/2691241\">Euler's constant, Taylor's formula, and slowly converging series</a>, Math. Mag. 65 (1992), 302-313.",
+        "R. P. Boas, Jr. and J. W. Wrench, Jr., <a href=\"http://www.jstor.org/stable/2316476\">Partial sums of the harmonic series</a>, Amer. Math. Monthly, 78 (1971), 864-870.",
+        "Keneth Adrian Dagal, <a href=\"http://arxiv.org/abs/1309.3527\">A Lower Bound for tau(n) for k-Multiperfect Number</a>, arXiv:1309.3527 [math.NT]",
+        "J. Derbyshire, <a href=\"http://olimu.com/Notes/Rain.htm\">Rainfall Records</a>",
+        "J. Sondow and E. W. Weisstein, <a href=\"http://mathworld.wolfram.com/HarmonicNumber.html\">MathWorld: Harmonic Number</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HarmonicSeries.html\">Harmonic Series</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/High-WaterMark.html\">High-Water Mark</a>"
+    ],
+    "formula": [
+        "The quotient of two successive terms of this sequence has exp(1) for limit. - _S\u00e9bastien Dumortier_, Jun 29 2005",
+        "a(n) = exp(n - gamma + o(1)). - _Charles R Greathouse IV_, Mar 10 2009",
+        "a(n) = A002387(n) for n>1. - _Robert G. Wilson v_, Jun 18 2015"
+    ],
+    "example": [
+        "a(2)=4 because 1/1 + 1/2 + 1/3 + 1/4 > 2."
+    ],
+    "maple": [
+        "ListA004080:=proc(q) local a,k,n; a:=1; print(a); k:=1;",
+        "for n from 2 to q do while a<n do k:=k+1; a:=a+1/k; od; print(k);",
+        "od; end: ListA004080(10^10); # _Paolo P. Lava_, Jul 03 2013"
+    ],
+    "mathematica": [
+        "aux[0] = 0; Do[aux[n] = Floor[Floor[Sum[1/i, {i, n}]]]; If[aux[n] > aux[n - 1], Print[n]], {n, 1, 14000}] (* _Jos\u00e9 Mar\u00eda Grau Ribas_, Feb 20 2010 *)",
+        "a[0] = 0; a[1] = 1; a[n_] := k /. FindRoot[ HarmonicNumber[k] == n, {k, Exp[n - EulerGamma]}, WorkingPrecision -> 50] // Ceiling; Table[a[n], {n, 0, 28}] (* _Jean-Fran\u00e7ois Alcover_, Aug 13 2013, after _Charles R Greathouse IV_ *)"
+    ],
+    "program": [
+        "(PARI) gp > t=0;n=0;for(i=1,10^20,t+=1./i;if(t>=n,print(i,\" \",t);n++)) \\\\ Thomas Gettys (tpgettys(AT)comcast.net), Jan 21 2007",
+        "(Haskell)",
+        "import Data.List (findIndex); import Data.Maybe (fromJust)",
+        "a004080 n = fromJust $",
+        "   findIndex (fromIntegral n <=) $ scanl (+) 0 $ map recip [1..]",
+        "-- _Reinhard Zumkeller_, Jul 13 2014"
+    ],
+    "xref": [
+        "Apart from first two terms, same as A002387."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, _Clark Kimberling_",
+    "ext": [
+        "Terms for n >= 13 computed by _Eric W. Weisstein_; corrected by _James R. Buddenhagen_ and _Eric W. Weisstein_, Feb 18 2001",
+        "Edited by _Dean Hickerson_, Apr 19 2003",
+        "More terms from _S\u00e9bastien Dumortier_, Jun 29 2005",
+        "a(27) from Thomas Gettys (tpgettys(AT)comcast.net), Dec 05 2006",
+        "a(28) from Thomas Gettys (tpgettys(AT)comcast.net), Jan 21 2007",
+        "Edited by _Charles R Greathouse IV_, Mar 24 2010"
+    ],
+    "references": 28,
+    "revision": 61,
+    "time": "2015-06-20T08:25:07-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

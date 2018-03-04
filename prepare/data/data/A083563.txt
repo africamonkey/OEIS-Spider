@@ -1,0 +1,32 @@
+{
+    "number": 83563,
+    "data": "0,2,3,6,18,54,183,636,2316,8610,32763,126582,495981,1964718,7857939,31682202,128644290,525573252,2158930398,8911295286,36942107373,153742174722,642088530453,2690224616904,11304554951127,47630390054802",
+    "name": "Number of binary rooted trees (every node has out-degree 0 or 2) with n labeled leaves (2n-1 nodes in all) and at most 2 distinct labels. Also the number of expressions in at most two variables constructible with n-1 instances of a single commutative and nonassociative binary operator.",
+    "comment": [
+        "With a(1)=k, the same recurrence enumerates expressions in at most k variables. In particular, k=1 yields A001190."
+    ],
+    "link": [
+        "V. P. Johnson, <a href=\"http://www.math.sc.edu/~czabarka/JohnsonThesis.pdf\">Enumeration Results on Leaf Labeled Trees</a>, Ph. D. Dissertation, Univ. Southern Calif., 2012. - From _N. J. A. Sloane_, Dec 22 2012"
+    ],
+    "formula": [
+        "G.f. A(x) = 1 - sqrt(1 - 4*x - A(x^2)) satisfies 0 = A(x)^2 - 2*A(x) + 4*x + A(x^2), A(0)=0. - _Michael Somos_, Sep 06 2003",
+        "G.f.: A(x) = 2x + (1/2)*(A(x)^2 + A(x^2)). a(0)=0, a(1)=2, a(2*n-1) = a(1)*a(2*n-2) + a(2)*a(2*n-3) + ... + a(n-1)*a(n), a(2*n) = a(1)*a(2*n-1) + a(2)*a(2*n-2) + ... + a(n-1)*a(n+1) + a(n)*(a(n) + 1) / 2."
+    ],
+    "example": [
+        "a(3)=6, enumerating the 6 expressions with 2 # operators: x#(x#x), x#(x#y), x#(y#y), y#(x#x), y#(x#y), y#(y#y).",
+        "G.f. = 2*x + 3*x^2 + 6*x^3 + 18*x^4 + 54*x^5 + 183*x^6 + 636*x^7 + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = local(A, m); if( n<0, 0, m=1; A = O(x); while( m<=n, m*=2; A = 1 - sqrt(1 - 4*x - subst(A, x, x^2))); polcoeff(A, n))};"
+    ],
+    "xref": [
+        "Cf. A000108, A001190, A001699."
+    ],
+    "keyword": "easy,eigen,nonn",
+    "offset": "0,2",
+    "author": "Doug McIlroy (doug(AT)cs.dartmouth.edu), Jun 12 2003",
+    "references": 0,
+    "revision": 11,
+    "time": "2015-12-26T14:19:52-05:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

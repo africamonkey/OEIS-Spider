@@ -1,0 +1,28 @@
+{
+    "number": 217016,
+    "data": "8,24,90,210,840,10920,13650,39270,1492260,11741730,281291010,10919808900",
+    "name": "Least r > 1 without Goldbach partition 2r = p+q such that |p-q| is prime(n)-smooth.",
+    "comment": [
+        "More explicitly, a(n) is the smallest r > 1 such that, whenever 2r is the sum of two primes, their difference has a prime factor larger than prime(n).",
+        "Conjecture [D. Broadhurst]: a(n) is prime(n)-smooth.",
+        "a(11=primepi(31)) <= 281291010 = 29#/23, where P# = A034386(P). [This limit is quickly found using the PARI code A217016_bound(11,3e8).]",
+        "a(12=primepi(37)) <= 10919808900 = 30*17#*23*31. [D. Broadhurst]"
+    ],
+    "link": [
+        "D. Broadhurst (in reply to M. Underwood), <a href=\"http://tech.groups.yahoo.com/group/primenumbers/message/24482\">Re: Here's some Goldbach separation data</a>, Yahoo! group \"primenumbers\", Sep 23 2012"
+    ],
+    "program": [
+        "(PARI) A217016(n,m=2,M=9e99)={my(p=prime(n),/* find a p-smooth Goldbach partition: */ sG(N,p)=forprime(q=1,N\\2,isprime(N-q)||next; vecmax(factor(N-2*q,p)[,1])>p||return(q))); /* main prog: */ forstep(N=m*2,M,2, sG(N,p)||return(N\\2))} /* This brute force approach becomes too slow for n > primepi(19). */",
+        "(PARI) A217016_bound(n,B/*upper bound*/,m/*lower bound*/,verbose=1)={my(p=prime(n),P=1,sG(N,p)=forprime(q=1,N\\2,isprime(N-q)||next; vecmax(factor(N-2*q,p)[,1])>p||return(q))); /*init: default value for B & m*/ B || B=prod(i=1,n,prime(i),prime(n\\2+1)); m || m=B\\1.5; /*main*/ forprime(q=1,p,P<B||break;P*=q); my(F=factor(P)[,1]); forstep(i=#F,1,-1,my(N=P/F[i]); N<B||break; verbose & print1([[i]]); for(k=max(m\\N,1),B\\N,verbose & print1([k]);sG(2*k*N,p)||return(k*N)))}"
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "1,1",
+    "author": "_David Broadhurst_ and _M. F. Hasler_, Sep 23 2012",
+    "ext": [
+        "Terms a(11)-a(12) from _Robert Gerbicz_, Sep 25 2012."
+    ],
+    "references": 2,
+    "revision": 17,
+    "time": "2012-09-25T17:31:38-04:00",
+    "created": "2012-09-25T15:25:10-04:00"
+}

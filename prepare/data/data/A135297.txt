@@ -1,0 +1,64 @@
+{
+    "number": 135297,
+    "data": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,3,3,3,3,3,4,4,5,5,5,5,5,6,6,6,7,7,7,8,8,8,8,8,9,10,10,10,11,11,11,11,12,12,12,13,14,14,14,14,14,15,15,16,16,17,17,17,18,18,18,19,19,20,20,21,21,21,22,22,23,23,23,24,25,25,25,25,26,26,27,28,28,28,29,29",
+    "name": "Number of Riemann zeta function zeros on the critical line, less than n.",
+    "comment": [
+        "This sequence is just the cumulative distribution of the zeros.",
+        "Apart from differing singularities, the beginning of this sequence agrees with the zeta zero counting functions (RiemannSiegelTheta(n) + im(log(zeta(1/2 + I*n))))/Pi + 1 and (sign(im(zeta(1/2 + I*n))) - 1)/2 + floor(n/(2*Pi)*log(n/(2*Pi*e)) + 7/8) + 1, but disagrees later. The first deviations are seen in the continuous counting function at locations of zeta zeros with indices A153815. See also A282793 and A282794. - _Mats Granvik_, Feb 21 2017"
+    ],
+    "reference": [
+        "H. M. Edwards, Riemann's Zeta Function, Dover Publications, New York, 1974 (ISBN 978-0-486-41740-0)"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A135297/b135297.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Mats Granvik, <a href=\"http://math.stackexchange.com/q/2136668/8530\">Mathematics Stackexchange</a>",
+        "Andrew Guinand, <a href=\"http://www.archive.org/stream/proceedingsofthe032881mbp#page/n115/mode/2up\">A summation formula in the theory of prime numbers, page 111</a>",
+        "Andrew Guinand, <a href=\"http://plms.oxfordjournals.org/content/s2-50/1/107.extract\">A summation formula in the theory of prime numbers</a>, Proc. London Math. Soc. (1948) s2-50 (1): 107-119, see page 111.",
+        "Raymond Manzoni, <a href=\"http://math.stackexchange.com/a/442686/8530\">Mathematics Stackexchange</a>",
+        "Eric W. Weisstein, <a href=\"http://mathworld.wolfram.com/RiemannZetaFunctionZeros.html\">MathWorld: Riemann Zeta Function Zeros</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Riemann_zeta_function\">Riemann Zeta Function</a>"
+    ],
+    "formula": [
+        "a(n) ~ n log n / (2 * Pi). - _Charles R Greathouse IV_, Mar 11 2011",
+        "From _Mats Granvik_, May 13 2017: (Start)",
+        "a(n) ~ im(LogGamma (1/4 + I*n/2))/Pi - n/(2*Pi)*log (Pi) + im(log(zeta(1/2 + I*n)))/Pi + 1",
+        "a(n) ~ floor(im(LogGamma (1/4 + I*n/2))/Pi - n/(2*Pi)*log(Pi) + 1) + (sign(im(zeta (1/2 + I*n))) - 1)/2 + 1",
+        "a(n) ~ (RiemannSiegelTheta(n) + im(log (zeta (1/2 + I*n))))/Pi + 1",
+        "a(n) ~ (floor(RiemannSiegelTheta(n)/Pi + 1)) + (sign(im (zeta(1/2 + I*n))) -1)/2 + 1",
+        "a(n) ~ n/(2*Pi)*log[n/(2*Pi*Exp(1))] + 7/8 + (im(log (zeta (1/2 + I*n))))/Pi - 1 - BigO(n^(-1)) + 1",
+        "a(n) ~ floor(n/(2*Pi)*log(n/(2*Pi*exp(1))) + 7/8) + (sign(im(zeta (1/2 + I*n))) - 1)/2 + 1",
+        "See A286707 for exact relations.",
+        "(End)"
+    ],
+    "example": [
+        "The first nontrivial zero is 1/2 + 14.1347...I; hence, a(15)=1."
+    ],
+    "mathematica": [
+        "nn = 100; t = Table[0, {nn}]; k = 1; While[z = Im[ZetaZero[k]]; z < nn, k++; t[[Ceiling[z] ;; nn]]++]",
+        "With[{zz=Ceiling[Im[N[ZetaZero[Range[30]]]]]},Table[If[MemberQ[zz,n],1,0],{n,Max[zz]}]]//Accumulate (* _Harvey P. Dale_, Aug 15 2017 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "# This function makes sure no zeros are missed.",
+        "def A135297_list(n):",
+        "    Z = lcalc.zeros(n)",
+        "    R = []; pos = 1; count = 0",
+        "    for z in Z:",
+        "        while pos < z:",
+        "            R.append(count)",
+        "            pos += 1",
+        "        count += 1",
+        "    return R",
+        "A135297_list(30) # _Peter Luschny_, May 02 2014"
+    ],
+    "xref": [
+        "Cf. A002410, A013629, A092783."
+    ],
+    "keyword": "nonn",
+    "offset": "1,22",
+    "author": "_Jean-Fran\u00e7ois Alcover_, Mar 09 2011",
+    "references": 8,
+    "revision": 66,
+    "time": "2017-08-15T18:18:15-04:00",
+    "created": "2007-12-09T03:00:00-05:00"
+}

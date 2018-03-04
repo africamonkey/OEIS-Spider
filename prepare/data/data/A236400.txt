@@ -1,0 +1,47 @@
+{
+    "number": 236400,
+    "data": "2,3,5,7,11,23,31,67,227,373,10331,274453",
+    "name": "Primes p=prime(k) such that min{r_p, p-r_p} <= 2, where r_p = A100612(k).",
+    "link": [
+        "Romeo Mestrovic, <a href=\"http://arxiv.org/abs/1312.7037\">Variations of Kurepa's left factorial hypothesis</a>, arXiv preprint arXiv:1312.7037 [math.NT], 2013-2014.",
+        "Miodrag Zivkovic, <a href=\"https://doi.org/10.1090/S0025-5718-99-00990-4\">The number of primes sum_{i=1..n} (-1)^(n-i)*i! is finite</a>, Math. Comp. 68 (1999), pp. 403-409."
+    ],
+    "maple": [
+        "A100612 := proc(n)",
+        "    local p,lf,kf,k ;",
+        "    p := ithprime(n) ;",
+        "    lf := 1 ;",
+        "    kf := 1 ;",
+        "    for k from 1 to p-1 do",
+        "        kf := modp(kf*k,p) ;",
+        "        lf := lf+modp(kf,p) ;",
+        "    end do:",
+        "    lf mod p ;",
+        "end proc:",
+        "for n from 1 do",
+        "    p := ithprime(n) ;",
+        "    rp := A100612(n) ;",
+        "    prp := p-rp ;",
+        "    if min(rp,prp) <= 2 then",
+        "        print(p) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Feb 17 2014"
+    ],
+    "mathematica": [
+        "A100612[n_] := Module[{p = Prime[n], lf = 1, kf = 1, k}, For[k = 1, k <= p - 1, k++, kf = Mod[kf*k, p]; lf = lf + Mod[kf, p]]; Mod[lf, p]];",
+        "Reap[For[n = 1, n < 40000, n++, p = Prime[n]; rp = A100612[n]; If[Min[rp, p - rp] <= 2, Print[p]; Sow[p]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Dec 05 2017, after _R. J. Mathar_ *)"
+    ],
+    "xref": [
+        "Cf. A003422, A236399, A100612."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Jan 29 2014",
+    "ext": [
+        "a(12) from _Jean-Fran\u00e7ois Alcover_, Dec 05 2017"
+    ],
+    "references": 0,
+    "revision": 16,
+    "time": "2017-12-05T04:00:20-05:00",
+    "created": "2014-01-29T21:48:27-05:00"
+}

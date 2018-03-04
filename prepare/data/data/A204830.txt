@@ -1,0 +1,42 @@
+{
+    "number": 204830,
+    "data": "120,180,240,360,420,480,504,540,600,660,672,720,780,840,960,1080,1260,1320,1440,1512,1560,1584,1620,1680,1800,1848,1890,1920,1980,2016,2040,2160,2184,2280,2340,2352,2376,2400,2520,2640,2688,2760,2772,2856,2880,2940,3000",
+    "name": "Numbers n whose divisors can be partitioned into three disjoint sets whose sums are all sigma(n)/3.",
+    "comment": [
+        "Subsequence of A023197."
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A204830/b204830.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "Number 180 is in sequence because sigma(180)/3 = 182 = 2+180 = 1+3+4+5+6+9+10+15+18+30+36+45 = 12+20+60+90 (summands are all divisors of 180)."
+    ],
+    "maple": [
+        "with(numtheory);with(combstruct);",
+        "A204830:=proc(i)",
+        "local S,R,Stop,Comb,c,d,k,m,n,s;",
+        "for n from 1 to i do",
+        "  s:=sigma(n); c:=op(divisors(n));",
+        "  if (modp(s,3)=0 and 3*n<=s) then",
+        "     S:=1/3*s-n; R:=select(m->m<=S,[c]); Stop:=false;",
+        "     Comb:=iterstructs(Combination(R));",
+        "     while not (finished(Comb) or Stop) do",
+        "       Stop:=add(d,d=nextstruct(Comb))=S;",
+        "     od;",
+        "     if Stop then print(n); fi;",
+        "  fi;",
+        "od;",
+        "end:",
+        "A204830(1000000); # Paolo P. Lava, Jan 24 2012."
+    ],
+    "xref": [
+        "Cf. A083207 (Zumkeller numbers-numbers n whose divisors can be partitioned into two disjoint sets whose sums are both sigma(n)/2), A204831 (numbers n whose divisors can be partitioned into four disjoint sets whose sums are all sigma(n)/4)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jaroslav Krizek_, Jan 22 2012",
+    "references": 8,
+    "revision": 10,
+    "time": "2012-03-30T19:00:28-04:00",
+    "created": "2012-01-24T14:12:39-05:00"
+}

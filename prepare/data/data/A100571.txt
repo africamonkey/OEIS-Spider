@@ -1,0 +1,42 @@
+{
+    "number": 100571,
+    "data": "8,27,64,125,216,343,729,1000,1331,1728,2197,2744,3375,4096,4913,5832,6859,8000,9261,10648,12167,13824,15625,17576,19683,21952,24389,27000,29791,32768,35937,39304,42875,46656,50653,54872,59319,64000",
+    "name": "Cubes m^3 such that m^3 is the sum of m-1 consecutive primes plus a larger prime.",
+    "comment": [
+        "Or, triangular cubic numbers with primes indices.",
+        "Conjecture: sequence consists of all the cubes > 1 except 8^3=512. - _Giovanni Teofilatto_, Apr 23 2015"
+    ],
+    "example": [
+        "a(2)=27 because 3^3=3+5+19 and p is 19;",
+        "a(3)=64 because 4^3=5+7+11+41 and p is 41;",
+        "a(4)=125 because 5^3=5+7+11+13+89 and p is 89."
+    ],
+    "maple": [
+        "N:= 100; # to get all terms <= N^3",
+        "pmax:= ithprime(N+numtheory:-pi((N+1)^2)):",
+        "kmax:= (pmax-1)/2:",
+        "Primes:= select(isprime,[2,seq(2*k+1,k=1..kmax)]):",
+        "C:= ListTools:-PartialSums(Primes):",
+        "A:= NULL:",
+        "for m from 1 to N-1 do",
+        "for t from 0 do",
+        "  if t = 0 then q:= (m+1)^3 - C[m]",
+        "  else  q:= (m+1)^3 - C[t+m] + C[t]",
+        "  fi;",
+        "  if q <= Primes[t+m] then  break fi;",
+        "  if isprime(q) then A:= A,(m+1)^3; break fi;",
+        "  od",
+        "od:",
+        "A;  # _Robert Israel_, Apr 24 2015"
+    ],
+    "keyword": "nonn,uned",
+    "offset": "1,1",
+    "author": "_Giovanni Teofilatto_, Nov 29 2004",
+    "ext": [
+        "Definition corrected by _Robert Israel_, Apr 24 2015"
+    ],
+    "references": 0,
+    "revision": 21,
+    "time": "2015-04-25T00:00:45-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

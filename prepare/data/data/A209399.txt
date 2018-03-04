@@ -1,0 +1,68 @@
+{
+    "number": 209399,
+    "data": "0,0,0,0,4,14,37,83,181,387,824,1728,3584,7360,15032,30571,61987,125339,252883,509294,1024300,2057848,4130724,8285758,16610841,33285207,66673209,133512759,267294832,535025408,1070755840,2142652160,4287149680,8577285255",
+    "name": "Number of subsets of {1,...,n} containing two elements whose difference is 3.",
+    "comment": [
+        "Also, the number of bitstrings of length n containing one of the following: 1001, 1101, 1011, 1111."
+    ],
+    "link": [
+        "David Nacin, <a href=\"/A209399/b209399.txt\">Table of n, a(n) for n = 0..500</a>",
+        "<a href=\"/index/Rec#order_09\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-1,-3,3,-1,-1,-3,1,2)."
+    ],
+    "formula": [
+        "a(n) = 3*a(n-1) - a(n-2) - 3*a(n-3) + 3*a(n-4) - a(n-5) - a(n-6) - 3*a(n-7) + a(n-8) + 2*a(n-9).",
+        "G.f.: (4*x^4 + 2*x^5 - x^6 - 2*x^7 - x^8)/(1 - 3*x + 1*x^2 + 3*x^3 - 3*x^4 + x^5 + x^6 + 3*x^7 - x^8 - 2*x^9) = x^4*(4 + 2*x - x^2 - 2*x^3 - x^4)/((1 - 2*x)*(1 - x - x^2)*(1 + x^3 - x^6)).",
+        "a(n) = 2^n - A006500(n).",
+        "a(n) = 2^n - Product(i=0 to 2) F(floor((n+i)/3)+2) where F(n) is the n-th Fibonacci number."
+    ],
+    "example": [
+        "When n=4 any such subset must contain 1 and 4.  There are four such subsets so a(4) = 4."
+    ],
+    "mathematica": [
+        "LinearRecurrence[{3, -1, -3, 3, -1, -1, -3, 1, 2}, {0, 0, 0, 0, 4, 14, 37, 83, 181}, 50]",
+        "Table[2^n - Product[Fibonacci[Floor[(n + i)/3] + 2], {i, 0, 2}], {n, 0, 50}]"
+    ],
+    "program": [
+        "(Python)",
+        "#From recurrence",
+        "def a(n, adict={0:0, 1:0, 2:0, 3:0, 4:4, 5:14, 6:37, 7:83, 8:181}):",
+        ".if n in adict:",
+        "..return adict[n]",
+        ".adict[n]=3*a(n-1)-a(n-2)-3*a(n-3)+3*a(n-4)-a(n-5)-a(n-6)-3*a(n-7)+a(n-8)+2*a(n-9)",
+        ".return adict[n]",
+        "(Python)",
+        "#Returns the actual list of valid subsets",
+        "def contains1001(n):",
+        ".patterns=list()",
+        ".for start in range (1,n-2):",
+        "..s=set()",
+        "..for i in range(4):",
+        "...if (1,0,0,1)[i]:",
+        "....s.add(start+i)",
+        "..patterns.append(s)",
+        ".s=list()",
+        ".for i in range(2,n+1):",
+        "..for temptuple in comb(range(1,n+1),i):",
+        "...tempset=set(temptuple)",
+        "...for sub in patterns:",
+        "....if sub <= tempset:",
+        ".....s.append(tempset)",
+        ".....break",
+        ".return s",
+        "#Counts all such sets",
+        "def countcontains1001(n):",
+        ".return len(contains1001(n))",
+        "(PARI) x='x+O('x^30); concat([0,0,0,0], Vec(x^4*(4+2*x-x^2-2*x^3-x^4)/( (1-2*x)*(1-x-x^2)*(1+x^3-x^6)))) \\\\ _G. C. Greubel_, Jan 03 2018",
+        "(MAGMA) [2^n - Fibonacci(Floor(n/3) + 2)*Fibonacci(Floor((n + 1)/3) + 2)*Fibonacci(Floor((n + 2)/3) + 2): n in [0..30]]; // _G. C. Greubel_, Jan 03 2018"
+    ],
+    "xref": [
+        "Cf. A209398, A209400, A006500."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,5",
+    "author": "_David Nacin_, Mar 07 2012",
+    "references": 3,
+    "revision": 18,
+    "time": "2018-01-03T19:24:40-05:00",
+    "created": "2012-03-08T16:58:50-05:00"
+}

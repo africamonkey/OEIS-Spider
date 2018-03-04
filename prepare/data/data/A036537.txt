@@ -1,0 +1,45 @@
+{
+    "number": 36537,
+    "data": "1,2,3,5,6,7,8,10,11,13,14,15,17,19,21,22,23,24,26,27,29,30,31,33,34,35,37,38,39,40,41,42,43,46,47,51,53,54,55,56,57,58,59,61,62,65,66,67,69,70,71,73,74,77,78,79,82,83,85,86,87,88,89,91,93,94,95,97,101,102",
+    "name": "Numbers n such that number of divisors of n is a power of 2.",
+    "comment": [
+        "Primes and A030513(d[x]=4) are subsets; d[16k+4] and d[16k+12] have the form 3Q, so x=16k+4 or 16k-4 numbers are missing.",
+        "A number m is a term if and only if all its divisors are infinitary, or A000005(m) = A037445(m). - _Vladimir Shevelev_, Feb 23 2017",
+        "All exponents in the prime number factorization of a(n) have the form 2^k-1, k>=1. So it is an S-exponential sequence (see Shevelev link) with S={2^k-1}. Using Theorem 1, we obtain that a(n) ~ C*n, where C = Prod((1-1/p)*(1+Sum{i>=1}1/p^(2^i-1))). - _Vladimir Shevelev_ Feb 27 2017",
+        "This constant is C = 0.687827... . - _Peter J. C. Moses_, Feb 27 2017"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A036537/b036537.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Vladimir Shevelev, <a href=\"https://www.math.bgu.ac.il/~shevelev/S_exp_numb.pdf\">S-exponential numbers</a>, Acta Arithm., 175(2016), 385-395."
+    ],
+    "formula": [
+        "A209229(A000005(a(n))) = 1. - _Reinhard Zumkeller_, Nov 15 2012",
+        "a(n) << n. - _Charles R Greathouse IV_, Feb 25 2017"
+    ],
+    "example": [
+        "383, 384, 385, 386 have 1, 16, 8, 4 divisors, respectively, so they are consecutive terms of this sequence."
+    ],
+    "mathematica": [
+        "bi[ x_ ] := 1-Sign[ N[ Log[ 2, x ], 5 ]-Floor[ N[ Log[ 2, x ], 5 ] ] ]; ld[ x_ ] := Length[ Divisors[ x ] ]; Flatten[ Position[ Table[ bi[ ld[ x ] ], {x, 1, m} ], 1 ] ]",
+        "Select[Range[110],IntegerQ[Log[2,DivisorSigma[0,#]]]&] (* _Harvey P. Dale_, Nov 20 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a036537 n = a036537_list !! (n-1)",
+        "a036537_list = filter ((== 1) . a209229 . a000005) [1..]",
+        "-- _Reinhard Zumkeller_, Nov 15 2012",
+        "(PARI) is(n)=n=numdiv(n);n>>valuation(n,2)==1 \\\\ _Charles R Greathouse IV_, Mar 27 2013"
+    ],
+    "xref": [
+        "A005117 is a subsequence.",
+        "Complement of A162643; subsequence of A002035. - _Reinhard Zumkeller_, Jul 08 2009",
+        "Cf. A000005, A030513, A036538, A162644."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Labos Elemer_",
+    "references": 15,
+    "revision": 52,
+    "time": "2017-02-27T12:53:39-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 192248,
+    "data": "1,1,16,51,191,569,1619,4259,10694,25709,59743,134818,296798,639518,1352498,2813750,5769200,11676395,23358450,46239770,90667076,176244326,339887026,650715076,1237467151,2338753519,4394813644,8214444389",
+    "name": "0-sequence of reduction of binomial coefficient sequence B(n,4)=A000332 by x^2 -> x+1.",
+    "comment": [
+        "See A192232 for definition of \"k-sequence of reduction of [sequence] by [substitution]\"."
+    ],
+    "formula": [
+        "Conjecture: G.f.: -x*(-1+5*x-20*x^2+30*x^3-25*x^4+8*x^5) / ( (x-1)*(x^2+x-1)^5 ). - _R. J. Mathar_, May 04 2014"
+    ],
+    "mathematica": [
+        "c[n_] :=  n (n + 1) (n + 2) (n + 3)/24;  (* binomial B(n,4), A000332 *)",
+        "Table[c[n], {n, 1, 15}]",
+        "q[x_] := x + 1;",
+        "p[0, x_] := 1; p[n_, x_] := p[n - 1, x] + (x^n)*c[n + 1]",
+        "reductionRules = {x^y_?EvenQ -> q[x]^(y/2),",
+        "   x^y_?OddQ -> x q[x]^((y - 1)/2)};",
+        "t = Table[",
+        "  Last[Most[",
+        "    FixedPointList[Expand[#1 /. reductionRules] &, p[n, x]]]], {n, 0,",
+        "   40}]",
+        "Table[Coefficient[Part[t, n], x, 0], {n, 1, 40}]  (* A192248 *)",
+        "Table[Coefficient[Part[t, n], x, 1], {n, 1, 40}]  (* A192249 *)",
+        "Table[Coefficient[Part[t, n]/5, x, 1], {n, 1, 40}]  (* A192069 *)",
+        "(* by _Peter J. C. Moses_, Jun 20 2011 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192249, A192069."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Clark Kimberling_, Jun 27 2011",
+    "references": 3,
+    "revision": 7,
+    "time": "2016-12-04T19:46:25-05:00",
+    "created": "2011-06-28T11:19:21-04:00"
+}

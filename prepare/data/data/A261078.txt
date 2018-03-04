@@ -1,0 +1,36 @@
+{
+    "number": 261078,
+    "data": "6,15,21,33,35,57,65,77,143,161,185,201,209,221,323,377,393,437,473,497,713,899,1073,1457,1517,1529,1577,1763,1769,1841,1961,2021,2537,2993,3233,3473,3497,3599,3713,3737,3953,4553,4601,4757,5183,5561,5609,5753,6497,6557,7217,7313,8633,8777,9593,9797,10001,10265,10403,10841,10961,11009,11021",
+    "name": "Semiprimes p*q such that q = p + 2^k for some k >= 0.",
+    "comment": [
+        "Terms ending with digit 5 (in decimal) are very rare, because terms of A123250 are rare."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A261078/b261078.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "6 = 2*3 is present as 3 = 2 + 2^0.",
+        "15 = 3*5 is present as 5 = 3 + 2^1.",
+        "35 = 5*7 is present as 7 = 5 + 2^1."
+    ],
+    "program": [
+        "(PARI)",
+        "A020639(n) = if(1==n,n,vecmin(factor(n)[, 1]));",
+        "isA261078(n) = { my(d); if(bigomega(n)!=2, return(0), d = (n/A020639(n)) - A020639(n); (d && !bitand(d,d-1))); };",
+        "i=0; n=0; while(i < 10000, n++; if(isA261078(n), i++; write(\"b261078.txt\", i, \" \", n)));",
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A261078 (MATCHING-POS 1 1 (lambda (n) (and (= 2 (A001222 n)) (pow2? (- (A006530 n) (A020639 n)))))))",
+        "(define (pow2? n) (and (> n 0) (zero? (A004198bi n (- n 1))))) ;; A004198bi implements bitwise-AND (Cf. A004198)"
+    ],
+    "xref": [
+        "Cf. A001222, A004198, A006530, A020639, A123250.",
+        "Cf. also A261073, A261077 (subsequences)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Sep 22 2015",
+    "references": 2,
+    "revision": 12,
+    "time": "2015-09-24T01:39:23-04:00",
+    "created": "2015-09-24T01:39:23-04:00"
+}

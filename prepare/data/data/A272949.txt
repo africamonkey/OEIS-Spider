@@ -1,0 +1,34 @@
+{
+    "number": 272949,
+    "data": "30,48,78,80,120,126,130,195,204,208,210,312,315,330,336,340,504,510,520,534,544,546,550,816,819,825,840,864,880,884,890,1320,1326,1335,1360,1365,1398,1424,1428,1430,1440,2136,2142,2145,2160,2184,2200,2210,2262",
+    "name": "Products of three distinct Fibonacci numbers > 1.",
+    "link": [
+        "Giovanni Resta, <a href=\"/A272949/b272949.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1) = 30 = 2*3*5."
+    ],
+    "mathematica": [
+        "s = {1}; nn = 60; f = Fibonacci[2 + Range[nn]]; Do[s = Union[s, Select[s*f[[i]], # <= f[[nn]] &]], {i, nn}]; s =  Prepend[s, 0]; Take[s, 100]  (* A160009 *)",
+        "isFibonacciQ[n_] := Apply[Or, Map[IntegerQ, Sqrt[{# + 4, # - 4} &[5 n^2]]]];",
+        "ans = Join[{{0}}, {{1}}, Table[#[[Flatten[Position[Map[Apply[Times, #] &, #], s[[n]]]][[1]]]] &[Rest[Subsets[Rest[Map[#[[1]] &, Select[Map[{#, isFibonacciQ[#]} &, Divisors[s[[n]]]], #[[2]] &]]]]]], {n, 3, 500}]]",
+        "Map[Length, ans] (* A272947 *)",
+        "Flatten[Position[Map[Length, ans], 1]]  (* A272948 *)",
+        "Map[Apply[Times, #] &, Select[ans, Length[#] == 1 &]]  (* A000045 *)",
+        "Map[Apply[Times, #] &, Select[ans, Length[#] == 2 &]]  (* A271354 *)",
+        "Map[Apply[Times, #] &, Select[ans, Length[#] == 3 &]]  (* A272949 *)",
+        "Map[Apply[Times, #] &, Select[ans, Length[#] == 4 &]]  (* A272950 *)",
+        "(* _Peter J. C. Moses_, May 11 2016 *)",
+        "up=10^9; F=Fibonacci; i=3; Union[ Reap[ While[(a = F[i++]) < up, j=i; While[ (b = F[j++]*a) < up, h=j; While[ (c = F[h++]*b) < up, Sow@c ]]]][[2, 1]]] (* _Giovanni Resta_, May 14 2016 *)"
+    ],
+    "xref": [
+        "Cf. A000045, A160009, A272947, A271354, A273950."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, May 13 2016",
+    "references": 7,
+    "revision": 8,
+    "time": "2016-05-29T16:53:17-04:00",
+    "created": "2016-05-17T09:24:30-04:00"
+}

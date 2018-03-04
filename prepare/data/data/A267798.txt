@@ -1,0 +1,32 @@
+{
+    "number": 267798,
+    "data": "7,79,4373,885623,146447621,309763486247,151536553447871",
+    "name": "a(n) is the smallest prime p such that none of p + 1, p + 2,... p + n are cubefree.",
+    "example": [
+        "a(1) = 7 because 7 is prime and none of 7 + 1 = 8 = (2*2*2) is cubefree.",
+        "a(2) = 79 because 79 is prime and none of 79 + 1 = 80 = (2*2*2)*10, 79 + 2 = 81 = (3*3*3)*3 are cubefree.",
+        "a(3) = 4373 because 4373 is prime and none of 4373 + 1 = 4374 = (3*3*3)*162, 4373 + 2 = 4375 = (5*5*5)*35, 4373 + 3 = 4376 = (2*2*2)*547 are cubefree.",
+        "a(4) = 885623 because 885623 is prime and none of 885623 + 1 = 885624 = (2*2*2)*110703, 885623 + 2 = 885625 = (5*5*5)*7085, 885623 + 3 = 885626 = (7*7*7)*2582, 885623 + 4 = 885627 = (3*3*3)*32801 are cubefree."
+    ],
+    "mathematica": [
+        "Table[SelectFirst[Prime@ Range[10^5], Function[p, AllTrue[p + Range@ n, AnyTrue[Last /@ FactorInteger@ #, # > 2 &] &]]], {n, 4}] (* _Michael De Vlieger_, Apr 07 2016, Version 10 *)"
+    ],
+    "program": [
+        "(PARI) isokp(p, n)=for (k=1, n, if (vecmax(factor(p+k)[,2]) < 3, return (0));); 1;",
+        "a(n) = forprime(p=7,, if (isokp(p, n), return(p))) \\\\ _Michel Marcus_, Apr 07 2016"
+    ],
+    "xref": [
+        "Cf. A046099, A271395."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Apr 07 2016",
+    "ext": [
+        "a(5) from _Michel Marcus_, Apr 07 2016",
+        "a(6)-a(7) from _Giovanni Resta_, Apr 12 2016"
+    ],
+    "references": 1,
+    "revision": 26,
+    "time": "2016-04-12T15:56:00-04:00",
+    "created": "2016-04-09T13:16:54-04:00"
+}

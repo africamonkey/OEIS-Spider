@@ -1,0 +1,54 @@
+{
+    "number": 278909,
+    "data": "15,51,55,85,125,159,185,190,205,215,222,238,246,249,253,287,303,319,374,407,438,442,469,471,475,489,494,501,507,591,623,639,670,679,687,699,730,745,755,763,765,771,799,807,822,830,843,867,890,893,917,923,925,935,939,951,970,973,979,986,989,995,1010,1015,1017,1020,1023,1135,1167,1203,1243",
+    "name": "Binary Smith numbers: composite numbers n such that sum of bits of n = sum of bits of prime factors of n (counted with multiplicity).",
+    "comment": [
+        "Binary equivalent of A006753 as well as A176670. (Since bits can only be 0 or 1, having equal sums of bits is logically equivalent to having the same nonzero bits.)",
+        "There are 615 terms up to 10^4, 6412 up to 10^5, 66369 up to 10^6, 630106 up to 10^7, 6268949 up to 10^8, 62159262 up to 10^9, and 596587090 up to 10^10. - _Charles R Greathouse IV_, Dec 09 2016"
+    ],
+    "link": [
+        "Ely Golden, <a href=\"/A278909/b278909.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1) = 15, as 15 (1111) in binary has the same number of 1 bits as its prime factors (11 and 101)."
+    ],
+    "mathematica": [
+        "Select[Range@ 1250, And[CompositeQ@ #, DigitCount[#, 2, 1] = Total@ Flatten@ Apply[DigitCount[#, 2, 1] & /@ ConstantArray[#1, #2] &, FactorInteger@ #, 1]] &] (* _Michael De Vlieger_, Dec 02 2016 *)"
+    ],
+    "program": [
+        "(SageMath)",
+        "def numfactorbits(x):",
+        "    if(x<2):",
+        "        return 0;",
+        "    s=0;",
+        "    f=list(factor(x));",
+        "    #ensures inequality of numfactorbits(x) and bin(x).count(\"1\") if x is prime",
+        "    if((len(f)==1)&(f[0][1]==1)):",
+        "        return 0;",
+        "    for c in range(len(f)):",
+        "        s+=bin(f[c][0]).count(\"1\")*f[c][1]",
+        "    return s;",
+        "counter=2",
+        "index=1",
+        "while(index<=10000):",
+        "    if(numfactorbits(counter)==bin(counter).count(\"1\")):",
+        "        print(str(index)+\" \"+str(counter))",
+        "        index+=1;",
+        "    counter+=1;",
+        "(PARI) is(n) = my(f=factor(n)[, 1]~, expo=factor(n)[, 2]~, v=[], s=0); for(k=1, #f, while(expo[k] > 0, expo[k]--; v=concat(v, f[k]))); for(k=1, #v, v[k]=binary(v[k])); my(w=[]); for(y=1, #v, w=concat(w, v[y])); if(vecsum(w)==vecsum(binary(n)), return(1), return(0))",
+        "terms(n) = my(i=0); forcomposite(c=1, , if(is(c), print1(c, \", \"); i++; if(i==n, break)))",
+        "/* Print initial 70 terms as follows: */",
+        "terms(70) \\\\ _Felix Fr\u00f6hlich_, Dec 01 2016",
+        "(PARI) is(n)=my(f=factor(n),t=#f~); (t>1 || (t==1 && f[1,2]>1)) && hammingweight(n)==sum(i=1,t, hammingweight(f[i,1])*f[i,2]) \\\\ _Charles R Greathouse IV_, Dec 02 2016"
+    ],
+    "xref": [
+        "Cf. A006753, A176670."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Ely Golden_, Nov 30 2016",
+    "references": 4,
+    "revision": 28,
+    "time": "2016-12-14T18:07:07-05:00",
+    "created": "2016-12-02T11:30:48-05:00"
+}

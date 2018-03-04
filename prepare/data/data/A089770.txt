@@ -1,0 +1,56 @@
+{
+    "number": 89770,
+    "data": "2,11,101,1009,10009,100049,1000081,10000169,100000049,1000000009,10000000069,100000000069,1000000000091,10000000000099,100000000000099,1000000000000091,10000000000000069,100000000000000049",
+    "name": "Smallest n-digit prime containing no prime substrings, or 0 if no such number exists.",
+    "comment": [
+        "For n > 1, a(n) ends in 1 or 9 while other digits can be 0,1,4,6,8 or 9. - _Robert Israel_, Dec 09 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A089770/b089770.txt\">Table of n, a(n) for n = 1..999</a>"
+    ],
+    "example": [
+        "a(3) = 149 is a term as 1,4,9,14,49 are all nonprimes. 199 is not a member as 19 is a prime."
+    ],
+    "maple": [
+        "N:= 1000: # to get terms until the first where a(n) > 10^(n-1)+10*N+9",
+        "filter1:= proc(x)",
+        "  local k,j;",
+        "  for k from 0 to ilog10(x) do",
+        "     for j from k to ilog10(x)+1 do",
+        "       if isprime(floor((x mod 10^j)/10^k)) then return false fi;",
+        "  od od:",
+        "  true",
+        "end proc:",
+        "X:= select(filter1, [seq(seq(10*i+j,j=[1,9]),i=0..N)]):",
+        "filter2:= proc(p,x)",
+        "    local k,j;",
+        "    if not isprime(p) then return false fi;",
+        "    for k from 1 to ilog10(x)+1 do",
+        "     if isprime(floor(p /10^k)) then return false fi",
+        "    od;",
+        "    true;",
+        "end proc:",
+        "for n from 1 do",
+        "found:= false;",
+        "for x in X do",
+        "    p:= 10^(n-1)+x;",
+        "    if filter2(p,x) then A[n]:= p; found:= true; break fi;",
+        "od:",
+        "if not found then break fi",
+        "od:",
+        "seq(A[i],i=1..n-1); # _Robert Israel_, Dec 09 2017"
+    ],
+    "xref": [
+        "Cf. A089768, A033274, A089771."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Nov 23 2003",
+    "ext": [
+        "Corrected and extended by _David Wasserman_, Oct 12 2005"
+    ],
+    "references": 3,
+    "revision": 10,
+    "time": "2017-12-11T02:45:38-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

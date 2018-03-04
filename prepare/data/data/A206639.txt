@@ -1,0 +1,31 @@
+{
+    "number": 206639,
+    "data": "1,1,4,18,91,489,2751,15985,95218,578324,3568084,22299964,140885754,898292262,5772951668,37355908797,243184468271,1591567315702,10465836784159,69114490893596,458171948148640,3047865264442504,20339282134624054,136122586785459512",
+    "name": "G.f. A(x) satisfies A(x) = Sum_{n>=0} x^(n^2) * A(x)^(2*n) / Product_{k=1..n} (1 - x^k*A(x))^2.",
+    "formula": [
+        "G.f. satisfies the identities:",
+        "(1) A(x) = 1 + Sum_{n>=1} x^n*A(x)^(n+1) / Product_{k=1..n} (1 - x^k*A(x)).",
+        "(2) A(x) = 1/(1 - Sum_{n>=1} x^n*A(x)^n / Product_{k=1..n} (1 - x^k*A(x)) )."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 4*x^2 + 18*x^3 + 91*x^4 + 489*x^5 + 2751*x^6 +...",
+        "where the g.f. satisfies:",
+        "(0) A(x) = 1 + x*A(x)^2/(1-x*A(x))^2 + x^4*A(x)^4/((1-x*A(x))^2*(1-x^2*A(x))^2) + x^9*A(x)^6/((1-x*A(x))^2*(1-x^2*A(x))^2*(1-x^3*A(x))^2) +...",
+        "(1) A(x) = 1 + x*A(x)^2/(1-x*A(x)) + x^2*A(x)^3/((1-x*A(x))*(1-x^2*A(x))) + x^3*A(x)^4/((1-x*A(x))*(1-x^2*A(x))*(1-x^3*A(x))) +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1+sum(m=1, sqrtint(n+1), x^(m^2)*A^(2*m)/prod(k=1, m, 1-x^k*A+x*O(x^n))^2)); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1+sum(m=1, n, x^m*A^(m+1)/prod(k=1, m, (1-x^k*A+x*O(x^n))))); polcoeff(A, n)}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A196150, A145268, A206637."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Feb 11 2012",
+    "references": 1,
+    "revision": 10,
+    "time": "2012-03-30T18:37:35-04:00",
+    "created": "2012-02-11T12:51:01-05:00"
+}

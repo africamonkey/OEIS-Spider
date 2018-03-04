@@ -1,0 +1,48 @@
+{
+    "number": 34794,
+    "data": "2,7,19,31,41,43,53,59,67,73,79,89,97,101,107,127,139,151,163,173,179,193,197,223,241,251,283,293,307,313,317,353,383,389,409,419,443,457,461,467,487,499,521,523,571,577,593,601,607,619,631,641,643,653,659",
+    "name": "a(n) is the least prime p > a(n-1) such that a(n-1) is a quadratic residue mod p.",
+    "comment": [
+        "a(n-1) is a term in row a(n) of A046071. - _Reinhard Zumkeller_, May 10 2015"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A034794/b034794.txt\">Table of n, a(n) for n=1..1000</a>"
+    ],
+    "maple": [
+        "f:= proc(t) local i,p;",
+        "  p:= t;",
+        "  do",
+        "    p:= nextprime(p);",
+        "    if numtheory:-jacobi(t,p) = 1 then return p fi",
+        "  od",
+        "end proc:",
+        "A[1]:= 2:",
+        "for n from 2 to 100 do A[n]:= f(A[n-1]) od:",
+        "seq(A[i],i=1..100); # _Robert Israel_, Sep 04 2016"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{k = PrimePi[n] + 1}, While[ JacobiSymbol[n, Prime[k]] == -1, k++ ]; Prime[k]]; NestList[f, 2, 54] (* _Robert G. Wilson v_, Mar 16 2004 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a034794 n = a034794_list !! (n-1)",
+        "a034794_list = 2 : f 2 (tail  a000040_list) where",
+        "   f x (p:ps) = if elem x $ a046071_row p then p : f p ps else f x ps",
+        "-- _Reinhard Zumkeller_, May 10 2015"
+    ],
+    "xref": [
+        "Cf. A092581.",
+        "Cf. A046071, A000040."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "Mathematica updated by _Jean-Fran\u00e7ois Alcover_, Jul 04 2013",
+        "Name corrected by _Robert Israel_, Sep 04 2016"
+    ],
+    "references": 4,
+    "revision": 24,
+    "time": "2016-09-04T22:52:10-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

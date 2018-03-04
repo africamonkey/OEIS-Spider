@@ -1,0 +1,40 @@
+{
+    "number": 8998,
+    "data": "1,2,4,9,20,44,97,214,472,1041,2296,5064,11169,24634,54332,119833,264300,582932,1285697,2835694,6254320,13794337,30424368,67103056,148000449,326425266,719953588,1587907625,3502240516,7724434620,17036776865,37575794246",
+    "name": "a(n) = 2*a(n-1) + a(n-3).",
+    "comment": [
+        "A transform of A000079 under the mapping mapping g(x)->(1/(1-x^3))g(x/(1-x^3)). - _Paul Barry_, Oct 20 2004",
+        "The binomial transform yields 1,3,9,..., i.e. A049220 without the leading zeros. - _R. J. Mathar_, May 15 2008",
+        "a(n-3) is the top left entry of the n-th power of the 3X3 matrix [0, 0, 1; 1, 1, 1; 0, 1, 1] or of the 3X3 matrix [0, 1, 0; 0, 1, 1; 1, 1, 1]. - _R. J. Mathar_, Feb 03 2014",
+        "a(n) equals the number of n-length words on {0,1,2} such that 0 appears only in a run which length is a multiple of 3. - _Milan Janjic_, Feb 17 2015"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A008998/b008998.txt\">Table of n, a(n) for n = 0..200</a>",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=452\">Encyclopedia of Combinatorial Structures 452</a>",
+        "B. Rittaud, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL10/Rittaud2/rittaud11.pdf\">On the Average Growth of Random Fibonacci Sequences</a>, Journal of Integer Sequences, 10 (2007), Article 07.2.4.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (2,0,1)."
+    ],
+    "formula": [
+        "a(n) = sum{k=0..floor(n/3), binomial(n-2k, k)2^(n-3k)}. - _Paul Barry_, Oct 20 2004",
+        "O.g.f.: 1/(1-2x-x^3). - _R. J. Mathar_, May 15 2008",
+        "O.g.f.: exp( Sum_{n>=1} ( (1 + sqrt(1+x))^n + (1 - sqrt(1+x))^n ) * x^n/n ). - _Paul D. Hanna_, Dec 21 2012",
+        "G.f.: Q(0)/2, where Q(k) = 1 + 1/(1 - x*(4*k+2 + x^2)/( x*(4*k+4 + x^2) + 1/Q(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Aug 30 2013"
+    ],
+    "maple": [
+        "A008998 := proc(n) option remember; if n <= 2 then 2^n else 2*procname(n-1)+procname(n-3); fi; end proc;"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{2, 0, 1}, {1, 2, 4}, 80] (* _Vladimir Joseph Stephan Orlovsky_, Feb 13 2012 *)"
+    ],
+    "program": [
+        "(MAGMA) [ n eq 1 select 1 else n eq 2 select 2 else n eq 3 select 4 else 2*Self(n-1)+Self(n-3): n in [1..40]]; // _Vincenzo Librandi_, Aug 21 2011",
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1,n+1,((1+sqrt(1+x+x*O(x^n)))^m + (1-sqrt(1+x+x*O(x^n)))^m)*x^m/m)),n)} /* _Paul D. Hanna_, Dec 21 2012 */"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_.",
+    "references": 19,
+    "revision": 51,
+    "time": "2017-04-18T07:03:09-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

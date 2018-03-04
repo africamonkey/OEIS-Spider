@@ -1,0 +1,44 @@
+{
+    "number": 63776,
+    "data": "2,2,4,4,8,12,20,32,60,104,188,344,632,1172,2192,4096,7712,14572,27596,52432,99880,190652,364724,699072,1342184,2581112,4971068,9586984,18512792,35791472,69273668,134217728,260301176,505290272,981706832",
+    "name": "Number of subsets of {1,2,...,n} which sum to 0 modulo n.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A063776/b063776.txt\">Table of n, a(n) for n = 1..3333</a> (first 200 terms from T. D. Noe)",
+        "T. Amdeberhan, M. Can and V. Moll, <a href=\"http://dx.doi.org/10.1137/110819925\">Broken bracelets, Molien series, paraffin wax and the elliptic curve 48a4</a>, SIAM Journal of Discrete Math., v.25, 2011, p. 1843. See equation (1.2).",
+        "Juhani Karhum\u00e4ki, S. Puzynina, M. Rao, M. A. Whiteland, <a href=\"https://arxiv.org/abs/1605.03319\">On cardinalities of k-abelian equivalence classes</a>, arXiv preprint arXiv:1605.03319 [math.CO], 2016.",
+        "N. Kitchloo and L. Pachter, <a href=\"http://math.berkeley.edu/~lpachter/papers/modpaper2.pdf\">An interesting result about subset sums (pdf)</a>"
+    ],
+    "formula": [
+        "a(n) = 1/n * Sum_{d divides n and d is odd} 2^(n/d) * phi(d).",
+        "a(n) = 1/n * A053636(n). - _Michael Somos_, May 09 2013",
+        "a(n) = 2 * A000016(n).",
+        "For odd n, a(n) = A000031(n)."
+    ],
+    "example": [
+        "G.f. = 2*x + 2*x^2 + 4*x^3 + 4*x^4 + 8*x^5 + 12*x^6 + 20*x^7 + 32*x^8 + 60*x^9 + ..."
+    ],
+    "mathematica": [
+        "Table[a = Select[ Divisors[n], OddQ[ # ] &]; Apply[Plus, 2^(n/a)*EulerPhi[a]]/n, {n, 1, 35}]",
+        "a[ n_] := If[ n < 1, 0, 1/n Sum[ Mod[ d, 2] EulerPhi[ d] 2^(n / d), {d, Divisors[ n]}]]; (* _Michael Somos_, May 09 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<1, 0, 1 / n * sumdiv( n, d, (d % 2) * eulerphi(d) * 2^(n / d)))}; /* _Michael Somos_, May 09 2013 */",
+        "(Haskell)",
+        "a063776 n = a053636 n `div` n  -- _Reinhard Zumkeller_, Sep 13 2013",
+        "(PARI) a(n) = sumdiv(n, d, (d%2)* 2^(n/d)*eulerphi(d))/n; \\\\ _Michel Marcus_, Feb 10 2016"
+    ],
+    "xref": [
+        "The super-diagonal of A068009.",
+        "Cf. A000010, A000013, A051293, A053633, A053634, A053636, A054539, A082550."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "Ahmed Fares (ahmedfares(AT)my-deja.com), Aug 16 2001",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Aug 20 2001"
+    ],
+    "references": 13,
+    "revision": 41,
+    "time": "2017-08-22T03:22:13-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

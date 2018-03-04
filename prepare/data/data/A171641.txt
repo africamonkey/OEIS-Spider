@@ -1,0 +1,45 @@
+{
+    "number": 171641,
+    "data": "738,748,774,846,954,1062,1098,1206,1278,1314,1422,1494,1602,1746,1818,1854,1926,1962,2034,2286,2358,2466,2502,2682,2718,2826,2934,3006,3114,3222,3258,3438,3474,3492,3546,3582,3636,3708,3798,3852,3924",
+    "name": "Non-deficient numbers with even sigma which are not Zumkeller.",
+    "comment": [
+        "Numbers which are non-deficient (sigma(n) >= 2n) [A023196] such that sigma(n) [A000203] is even but which are not Zumkeller numbers [A083207], i.e., the positive factors of n cannot be partitioned into two disjoint parts so that the sums of the two parts are equal."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A171641/b171641.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Peter Luschny, <a href=\"http://www.luschny.de/math/seq/ZumkellerNumbers.html\"> Zumkeller Numbers</a>."
+    ],
+    "mathematica": [
+        "Reap[For[n = 2, n <= 4000, n = n+2, sigma = DivisorSigma[1, n]; If[sigma >= 2n && EvenQ[sigma] && Coefficient[ Times @@ (1 + x^Divisors[n]) // Expand, x, sigma/2] == 0, Print[n]; Sow[n]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Jul 26 2013 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "import numpy as np",
+        "A171641 = []",
+        "for n in range(2,10**6):",
+        "....d = divisors(n)",
+        "....s = sum(d)",
+        "....if not s % 2 and 2*n <= s:",
+        "........d.remove(n)",
+        "........s2, ld = int(s/2-n), len(d)",
+        "........z = np.zeros((ld+1,s2+1),dtype=int)",
+        "........for i in range(1,ld+1):",
+        "............y = min(d[i-1],s2+1)",
+        "............z[i,range(y)] = z[i-1,range(y)]",
+        "............z[i,range(y,s2+1)] = np.maximum(z[i-1,range(y,s2+1)],z[i-1,range(0,s2+1-y)]+y)",
+        "........if z[ld,s2] != s2:",
+        "............A171641.append(n)",
+        "# _Chai Wah Wu_, Aug 19 2014"
+    ],
+    "xref": [
+        "Cf. A083207, A023196"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Dec 14 2009",
+    "references": 3,
+    "revision": 12,
+    "time": "2014-08-20T02:08:27-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 227223,
+    "data": "0,1,10,2780,6631556521,71669271794142235712392433,78417479379491793666843945562521255790293292270929676484784808001",
+    "name": "Number of set partitions of {1,...,2^n} into sets of size at most n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A227223/b227223.txt\">Table of n, a(n) for n = 0..9</a>"
+    ],
+    "formula": [
+        "a(n) = (2^n)! * [x^(2^n)] exp(Sum_{j=1..n} x^j/j!).",
+        "a(n) = A229223(2^n,n)."
+    ],
+    "example": [
+        "a(2) = 10: 1/2/3/4, 12/3/4, 13/2/4, 14/2/3, 1/23/4, 1/24/3, 1/2/34, 12/34, 13/24, 14/23."
+    ],
+    "maple": [
+        "G:= proc(n, k) option remember; local j; if k>n then G(n, n)",
+        "      elif n=0 then 1 elif k<1 then 0 else G(n-k, k);",
+        "      for j from k-1 to 1 by -1 do %*(n-j)/j +G(n-j, k) od; % fi",
+        "    end:",
+        "a:= n-> G(2^n, n):",
+        "seq(a(n), n=0..7);"
+    ],
+    "mathematica": [
+        "G[n_, k_] := G[n, k] = Module[{j, g}, Which[k > n, G[n, n], n == 0, 1, k < 1, 0, True, g = G[n-k, k]; For[j = k-1, j >= 1, j--, g = g*(n-j)/j + G[n-j, k]]; g]]; a[n_] := G[2^n, n]; Table[a[n], {n, 0, 7}] (* _Jean-Fran\u00e7ois Alcover_, Dec 30 2013, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A229223."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 19 2013",
+    "references": 2,
+    "revision": 11,
+    "time": "2013-12-30T04:19:31-05:00",
+    "created": "2013-09-19T18:37:41-04:00"
+}

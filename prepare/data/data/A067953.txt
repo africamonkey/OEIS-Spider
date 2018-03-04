@@ -1,0 +1,39 @@
+{
+    "number": 67953,
+    "data": "0,1,1,2,2,4,7,13,23,39,69,122,211,339,564,1001,1764,2630,4565,7192,10151,17202,26152,43543,79126,117496,156229,227302,295011,422040,1004905,1423445,2210752,2796140,5225780,6546101,9921635,14947534",
+    "name": "Number of ways to sum numbers from 1 to n to the n-th prime.",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A067953/b067953.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = b(0, n), where b(m, n) satisfies b(m, n) = 1 + sum{b(i, j): m<i<j<n & i+j=prime(n)}.",
+        "a(n) < A000009(A000040(n))."
+    ],
+    "example": [
+        "a(6)=4, as there are 4 decompositions for A000040(6)=13:",
+        "6+5+2 = 6+4+3 = 6+4+2+1 = 5+4+3+1 = 13."
+    ],
+    "mathematica": [
+        "(* This program is not convenient for a large number of terms *) a[n_] := Count[ IntegerPartitions[ Prime[n], {2, Floor[n/2 + 2]}, Range[n] ], nn_ /; Length[nn] == Length[nn // Union] ]; Table[Print[n, \" \", an = a[n]]; an, {n, 1, 25}] (* _Jean-Fran\u00e7ois Alcover_, Jun 25 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a067953 n = p [1..n] $ a000040 n where",
+        "   p _  0 = 1",
+        "   p [] _ = 0",
+        "   p (k:ks) m | m < k = 0 | otherwise = p ks (m - k) + p ks m",
+        "-- _Reinhard Zumkeller_, Nov 22 2011",
+        "(PARI) a(n)=my(p=prime(n),x='x);polcoeff(prod(k=1,n,1+x^k, O(x^(p+1))+1), p) \\\\ _Charles R Greathouse IV_, Jun 25 2013",
+        "(PARI) first(n)=my(v=vector(n),x='x,P=O(x^(prime(n)+1))+1,i);forprime(p=2,prime(n),P*=1+x^i++;v[i]=polcoeff(P,p));v \\\\ _Charles R Greathouse IV_, Jun 25 2013"
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,4",
+    "author": "_Reinhard Zumkeller_, Mar 06 2002",
+    "ext": [
+        "a(36)-a(38) from _Donovan Johnson_, Aug 23 2010"
+    ],
+    "references": 6,
+    "revision": 14,
+    "time": "2013-06-25T09:52:38-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

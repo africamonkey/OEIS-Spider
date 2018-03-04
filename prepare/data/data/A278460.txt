@@ -1,0 +1,41 @@
+{
+    "number": 278460,
+    "data": "1,2,10,66,504,4008,32834,275608,2360480,20556620,181529552,1621938126,14637043030,133227981608,1221707669122,11276264756890,104678045392986,976696485890714,9154664125402120,86159716204843096,813905566526799242,7714432262247963256,73344196288917825312",
+    "name": "a(n) is the number of size n Eulerian orientations in L1(2).",
+    "comment": [
+        "For definition of the set L1(k), k>=1, see sec. 3, def. 1 in N. Bonichon et al. paper; in sec. 3.2, (12) gives the quartic equation for the g.f."
+    ],
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A278460/b278460.txt\">Table of n, a(n) for n = 0..300</a>",
+        "Nicolas Bonichon, Mireille Bousquet-M\u00e9lou, Paul Dorbec, Claire Pennarun, <a href=\"https://arxiv.org/abs/1610.09837\">On the number of planar Eulerian orientations</a>, arXiv:1610.09837 [math.CO], 2016."
+    ],
+    "formula": [
+        "0 = 8*x^3*y^4 - 4*x^2*(3*x^3+4*x^2-6*x+3)*y^3 + 2*x*(3*x^5-12*x^4-10*x^3+14*x^2-10*x+3)*y^2 + (x-1)*(11*x^5-10*x^4-6*x^3-3*x^2-x+1)*y + (x-1)*(5*x^5-4*x^4+6*x^3-7*x^2+5*x-1), where y is the g.f."
+    ],
+    "example": [
+        "A(x) = 1 + 2*x + 10*x^2 + 66*x^3 + 504*x^4 + 4008*x^5 + ... is the g.f."
+    ],
+    "program": [
+        "(PARI)",
+        "x='x; y='y;",
+        "Fxy = 8*x^3*y^4 - 4*x^2*(3*x^3+4*x^2-6*x+3)*y^3 + 2*x*(3*x^5-12*x^4-10*x^3+14*x^2-10*x+3)*y^2 + (x-1)*(11*x^5-10*x^4-6*x^3-3*x^2-x+1)*y + (x-1)*(5*x^5-4*x^4+6*x^3-7*x^2+5*x-1);",
+        "seq(N) = {",
+        "  my(y0 = 1 + O('x^N), y1=0);",
+        "  for (k = 1, N,",
+        "    y1 = y0 - subst(Fxy, y, y0)/subst(deriv(Fxy, y), y, y0);",
+        "    if (y1 == y0, break()); y0 = y1);",
+        "  Vec(y0);",
+        "};",
+        "seq(23)"
+    ],
+    "xref": [
+        "Cf. A277493."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gheorghe Coserea_, Nov 22 2016",
+    "references": 1,
+    "revision": 18,
+    "time": "2016-11-30T20:35:20-05:00",
+    "created": "2016-11-24T09:33:35-05:00"
+}

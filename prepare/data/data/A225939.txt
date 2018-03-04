@@ -1,0 +1,47 @@
+{
+    "number": 225939,
+    "data": "4,6,13,14,15,74,190,688,690,6456,40082,251735,251736,251738,399916,637325,637326,637342,637343,2582372,2582434,4124456,4124458,6592686,10553425,10553433,10553818,27067038,27067053,43435902,69709872,69709877,69709945,69709954,179992917",
+    "name": "Numbers n such that n divides prime(n) + prime(n-1).",
+    "link": [
+        "Giovanni Resta, <a href=\"/A225939/b225939.txt\">Table of n, a(n) for n = 1..58</a> (terms < 1.5*10^12)"
+    ],
+    "example": [
+        "prime(3) + prime(4) = 5+7 = 12, because 12 is divisible by 4, the latter is in the sequence.",
+        "prime(5) + prime(6) = 11+13 = 24, because 24 is divisible by 6, the latter is in the sequence."
+    ],
+    "maple": [
+        "with(numtheory); A225939:=proc(q) local n;",
+        "for n from 2 to q do",
+        "  if type((ithprime(n)+ithprime(n-1))/n,integer) then print(n);",
+        "fi; od; end: A225939(10^6); #_Paolo P. Lava_, May 22 2013"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#define TOP (1ULL<<32)",
+        "int main() {",
+        "  unsigned long long i, j, n = 1, prev;",
+        "  char *c = (char*)malloc(TOP/2);",
+        "  memset(c, 0, TOP/2);",
+        "  for (prev = 2, i = 3; i < TOP; i += 2)",
+        "    if (c[i>>1]==0) {",
+        "      if ((i+prev) % ++n == 0)  printf(\"%llu, \", n);",
+        "      for (prev = i, j = i*i>>1; j < TOP/2; j += i)  c[j] = 1;",
+        "    }",
+        "  return 0;",
+        "}",
+        "(Sage)",
+        "def is_a(n): return (nth_prime(n) + nth_prime(n-1)) % n == 0",
+        "filter(is_a, (2..1000))  # _Peter Luschny_, May 22 2013"
+    ],
+    "xref": [
+        "Cf. A000040, A023143, A045924, A066895, A066896."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, May 21 2013",
+    "references": 1,
+    "revision": 16,
+    "time": "2013-05-23T13:58:52-04:00",
+    "created": "2013-05-23T13:58:52-04:00"
+}

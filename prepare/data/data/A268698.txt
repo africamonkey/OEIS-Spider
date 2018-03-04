@@ -1,0 +1,37 @@
+{
+    "number": 268698,
+    "data": "1,1,2,4,13,36,157,554,2800,12530,70772,362188,2370564,13658713,95366064,642861687,4774830263,34769374156,288999332899,2255537559077,19693313843687,172690825379198,1572921138465599,14538979953843188,145980379536597239",
+    "name": "Total number of sequences with p_j copies of j and longest increasing subsequence of length k summed over all partitions [p_1, p_2, ..., p_k] of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A268698/b268698.txt\">Table of n, a(n) for n = 0..60</a>",
+        "J. D. Horton and A. Kurn, Counting sequences with complete increasing subsequences, Congressus Numerantium, 33 (1981), 75-80. <a href=\"http://www.ams.org/mathscinet-getitem?mr=681905\">MR 681905</a>"
+    ],
+    "example": [
+        "The partitions of 4 are [1,1,1,1], [2,1,1], [2,2], [3,1], [4] giving the a(4) = 13 sequences: 1234, 1123, 1213, 1231, 1122, 1212, 1221, 2112, 2121, 1112, 1121, 1211, 1111."
+    ],
+    "maple": [
+        "g:= proc(l) option remember; (n-> f(l[1..nops(l)-1])*",
+        "      binomial(n-1, l[-1]-1)+ add(f(sort(subsop(j=l[j]",
+        "      -1, l))), j=1..nops(l)-1))(add(i, i=l))",
+        "    end:",
+        "f:= l-> (n-> `if`(n<2 or l[-1]=1, 1, `if`(l[1]=0, 0, `if`(",
+        "         n=2, binomial(l[1]+l[2], l[1])-1, g(l)))))(nops(l)):",
+        "h:= (n, i, l)-> `if`(n=0 or i=1, f([1$n, l[]]), h(n, i-1, l)+",
+        "                `if`(i>n, 0, h(n-i, i, [i, l[]]))):",
+        "a:= n-> h(n$2, []):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "g[l_] := g[l] = Function[n, f[Most[l]]*Binomial[n-1, l[[-1]]-1] + Sum[f[ Sort[ ReplacePart[l, j -> l[[j]]-1]]], {j, 1, Length[l]-1}]][Total[l]]; f[l_] := Function[n, If[n<2 || l[[-1]] == 1, 1, If[l[[1]] == 0, 0, If[n == 2, Binomial[l[[1]] + l[[2]], l[[1]]]-1, g[l]]]]][Length[l]]; h[n_, i_, l_] := h[n, i, l] = If[n == 0 || i == 1, f[Join[Array[1&, n], l]], h[n, i - 1, l] + If[i>n, 0, h[n-i, i, Prepend[l, i]]]]; a[n_] := h[n, n, {}]; Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Feb 02 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A047909, A268699, A268700, A268701."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Feb 11 2016",
+    "references": 4,
+    "revision": 13,
+    "time": "2017-02-02T08:51:37-05:00",
+    "created": "2016-02-11T19:19:58-05:00"
+}

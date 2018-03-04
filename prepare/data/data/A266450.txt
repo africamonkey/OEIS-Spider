@@ -1,0 +1,41 @@
+{
+    "number": 266450,
+    "data": "0,2,5,9,14,19,28,33,46,51,68,73,94,99,124,129,158,163,196,201,238,243,284,289,334,339,388,393,446,451,508,513,574,579,644,649,718,723,796,801,878,883,964,969,1054,1059,1148,1153,1246,1251,1348,1353,1454",
+    "name": "Total number of OFF (white) cells after n iterations of the \"Rule 25\" elementary cellular automaton starting with a single ON (black) cell.",
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 55."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A266450/b266450.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "S. Wolfram, <a href=\"http://wolframscience.com/\">A New Kind of Science</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2,-1,1)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Dec 31 2015: (Start)",
+        "a(n) = (2*n^2+2*((-1)^n+3)*n-7*(-1)^n-1)/4 for n>2.",
+        "a(n) = a(n-1)+2*a(n-2)-2*a(n-3)-a(n-4)+a(n-5) for n>7.",
+        "G.f.: x*(1+x-x^2)*(2+x+x^2-x^3+x^4) / ((1-x)^3*(1+x)^2).",
+        "(End)"
+    ],
+    "mathematica": [
+        "rule=25; rows=20; ca=CellularAutomaton[rule,{{1},0},rows-1,{All,All}]; (* Start with single black cell *) catri=Table[Take[ca[[k]],{rows-k+1,rows+k-1}],{k,1,rows}]; (* Truncated list of each row *) nbc=Table[Total[catri[[k]]],{k,1,rows}]; (* Number of Black cells in stage n *) nwc=Table[Length[catri[[k]]]-nbc[[k]],{k,1,rows}]; (* Number of White cells in stage n *) Table[Total[Take[nwc,k]],{k,1,rows}] (* Number of White cells through stage n *)",
+        "Join[{0, 2, 5}, LinearRecurrence[{1, 2, -2, -1, 1}, {9, 14, 19, 28, 33}, 70]] (* _Vincenzo Librandi_, Dec 31 2015 *)"
+    ],
+    "program": [
+        "(PARI) concat(0, Vec(x*(1+x-x^2)*(2+x+x^2-x^3+x^4)/((1-x)^3*(1+x)^2) + O(x^60))) \\\\ _Colin Barker_, Dec 31 2015",
+        "(MAGMA) I:=[0,2,5,9,14,19,28,33]; [n le 8 select I[n] else Self(n-1)+2*Self(n-2)-2*Self(n-3)-Self(n-4)+Self(n-5): n in [1..60]]; // _Vincenzo Librandi_, Dec 31 2015"
+    ],
+    "xref": [
+        "Cf. A266441."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Robert Price_, Dec 29 2015",
+    "references": 1,
+    "revision": 15,
+    "time": "2015-12-31T05:15:24-05:00",
+    "created": "2015-12-30T13:22:54-05:00"
+}

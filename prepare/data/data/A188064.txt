@@ -1,0 +1,43 @@
+{
+    "number": 188064,
+    "data": "1,2,3,5,6,8,10,16,17,19,21,27,29,35,41,65,66,68,70,76,78,84,90,114,116,122,128,152,158,182,206,326,327,329,331,337,339,345,351,375,377,383,389,413,419,443,467,587,589,595,601,625,631,655,679,799,805,829,853,973,997,1117",
+    "name": "Partial sums of wt(n)! where wt(n) is the Hamming weight of n (A000120).",
+    "comment": [
+        "Partial sums of A093659, partial sums of the factorials of A000120.",
+        "A000522 is a subsequence: A000522(n)=a(2^n-1)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A188064/b188064.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n)=sum(k=0,n,wt(k)!) where wt(k) is the Hamming weight of k."
+    ],
+    "mathematica": [
+        "FoldList[Plus, 0!, Table[(Plus @@ IntegerDigits[n, 2])!, {n, 1, 70}]] (* From _Olivier G\u00e9rard_, Mar 23 2011 *)",
+        "Accumulate[DigitCount[Range[0,70],2,1]!] (* _Harvey P. Dale_, Jun 26 2013 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "bitcount(x)=",
+        "{ /* Return Hamming weight of x */",
+        "    local(p);  p = 0;",
+        "    while ( x, p+=bitand(x, 1); x>>=1; );",
+        "    return( p );",
+        "}",
+        "N=65; /* that many terms */",
+        "f=vector(N,n,bitcount(n-1)!); /* factorials of Hamming weights */",
+        "s=vector(N); s[1]=f[1]; /* for cumulative sums */",
+        "for (n=2,N,s[n]=s[n-1]+f[n]); /* sum up */",
+        "s /* show terms */ /* _Joerg Arndt_, Mar 20 2011 */"
+    ],
+    "xref": [
+        "Cf. A093659, A000120, A000522."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Joerg Arndt_, Mar 20 2011",
+    "references": 1,
+    "revision": 17,
+    "time": "2013-06-28T01:17:34-04:00",
+    "created": "2011-03-24T01:50:33-04:00"
+}

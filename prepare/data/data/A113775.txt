@@ -1,0 +1,37 @@
+{
+    "number": 113775,
+    "data": "1,1,3,7,49,321,2131,19783,195777,2101249,25721731,340358151,4902173233,75688032577,1253701725459,22347046050631,418439924732161,8318748086461953,175769214730290307,3871849719998940679,89734800330818444721,2187944831367633226561",
+    "name": "Number of sets of lists (cf. A000262) whose list sizes are not a multiple of 3.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A113775/b113775.txt\">Table of n, a(n) for n = 0..445</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp(x*(1+x)/(1-x^3)).",
+        "a(n) = a(n-1) + 2*(n-1)*a(n-2) + 2*(n-3)*(n-2)*(n-1)*a(n-3) + 2*(n-3)*(n-2)*(n-1)*a(n-4) + (n-4)*(n-3)*(n-2)*(n-1)*a(n-5) - (n-6)*(n-5)*(n-4)*(n-3)*(n-2)*(n-1)*a(n-6). - _Vaclav Kotesovec_, Sep 25 2013",
+        "a(n) ~ 6^(-1/4) * n^(n-1/4) * exp(2/3*sqrt(6*n)-n) * (1 - 43/(48*sqrt(6*n))). - _Vaclav Kotesovec_, Sep 25 2013"
+    ],
+    "maple": [
+        "nmax := 30: B := x*(1+x)/(1-x^3) : egf := 0 : for i from 0 to nmax do egf := convert(egf+taylor(B^i,x=0,nmax+1)/i!,polynom) : od: for i from 0 to nmax do printf(\"%d \", i!*coeftayl(egf,x=0,i)) ; od: # _R. J. Mathar_, Feb 06 2008",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(`if`(0=",
+        "      irem(j, 3), 0, a(n-j)*j!*binomial(n-1, j-1)), j=1..n))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, May 10 2016"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[E^(x*(1+x)/(1-x^3)), {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Sep 25 2013 *)"
+    ],
+    "xref": [
+        "Cf. A000726, A003724, A115276, A000246, A102736, A088009, A001590."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Vladeta Jovovic_, Jan 19 2006",
+    "ext": [
+        "2 more terms from _R. J. Mathar_, Feb 06 2008"
+    ],
+    "references": 2,
+    "revision": 11,
+    "time": "2016-05-10T20:28:16-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

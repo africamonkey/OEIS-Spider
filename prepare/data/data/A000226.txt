@@ -1,0 +1,68 @@
+{
+    "number": 226,
+    "id": "M2668 N1066",
+    "data": "1,1,3,7,18,44,117,299,793,2095,5607,15047,40708,110499,301541,825784,2270211,6260800,17319689,48042494,133606943,372430476,1040426154,2912415527,8167992598,22947778342,64577555147,182009003773,513729375064,1452007713130",
+    "name": "Number of n-node unlabeled connected graphs with one cycle of length 3.",
+    "comment": [
+        "Number of rooted trees on n+1 nodes where root has degree 3. - _Christian G. Bower_"
+    ],
+    "reference": [
+        "J. Riordan, An Introduction to Combinatorial Analysis, Wiley, 1958, p. 150.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A000226/b000226.txt\">Table of n, a(n) for n = 3..200</a>",
+        "Sergei Abramovich, <a href=\"http://www2.potsdam.edu/abramovs/publications_list.htm\">Spreadsheets in Education (eJSiE): Vol. 5: Iss. 2, Article 1, p. 5</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/FrequencyRepresentation.html\">Frequency Representation</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RootedTree.html\">Rooted Tree</a>",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "G.f.: (r(x)^3+3*r(x)*r(x^2)+2*r(x^3))/6 where r(x) is g.f. for rooted trees (A000081).",
+        "a(n)= Sum_(P) { C(f(p1)+a1-1, a1) * C(f(p2)+a2-1, a2) * C(f(p3)+a3-1, a3) }, where P is a partition of n, (p1^a1 p2^a2 p3^a3 ...); f(n) = A000081(n), n >= 1, and C(,) is a binomial coefficient. - _Washington Bomfim_, Jul 06 2012"
+    ],
+    "example": [
+        "a(7) = 18 because the partitions of 7 correspond respectively,",
+        "(1^2 5) => binomial(f(1)+2-1, 2) * f(5) = 9,",
+        "(1 2 4) => f(1) * f(2) * f(4) = 4,",
+        "(1 3^2) => f(1) * binomial(f(3)+2-1, 2) = 3,",
+        "(2^2 3) => binomial(f(2)+2-1, 2) * f(3) = 2; and 9+4+3+2 = 18."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; if n<=1 then n else add(k*b(k)* s(n-1, k), k=1..n-1)/(n-1) fi end: s:= proc(n,k) option remember; add(b(n+1-j*k), j=1..iquo(n,k)) end: B:= proc(n) option remember; unapply(add(b(k)*x^k, k=1..n),x) end: a:= n-> coeff(series((B(n-2)(x)^3+ 3*B(n-2)(x)* B(n-2)(x^2)+ 2*B(n-2)(x^3))/6, x=0, n+1), x,n): seq(a(n), n=3..40); # _Alois P. Heinz_, Aug 21 2008"
+    ],
+    "mathematica": [
+        "terms = 30; r[_] = 0; Do[r[x_] = x *Exp[Sum[r[x^k]/k, {k, 1, j}]] + O[x]^j // Normal, {j, 1, terms+3}]; A[x_] = (r[x]^3 + 3*r[x]*r[x^2] + 2*r[x^3])/6 + O[x]^(terms+3); Drop[CoefficientList[A[x], x], 3] (* _Jean-Fran\u00e7ois Alcover_, Nov 23 2011, updated Jan 11 2018 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "f = vector(200);                             \\\\ f[n] = A000081[n], n=1..200",
+        "sum2(k) = {local(s); s=0; fordiv(k, d, s += d * f[d]); return(s)};",
+        "Init_f() =",
+        "{f[1]= 1;for(n=1,199, s=0; for(k=1,n, s += sum2(k)*f[n-k+1]); f[n+1]=s/n)};",
+        "visit(p1,p2,p3) = {                       \\\\ Visit partition p1,p2,p3",
+        "if((p1<p2)&&(p2<p3),  return (f[p1] * f[p2] * f[p3]));",
+        "if((p1==p2)&&(p2<p3), return (binomial(f[p1]+2-1, 2) * f[p3]));",
+        "if((p1<p2)&&(p2==p3), return(f[p1] * binomial(f[p2]+2-1, 2)));",
+        "return (binomial(f[p1]+3-1, 3))};",
+        "a(n) = { t = floor((n^2 + 6)/12); p1 = 0; s = 0;     \\\\ Sum over partitions",
+        "while(t,p1++;N=n-p1; for(p2=p1,floor(N/2), s+=visit(p1,p2,N-p2); t--));",
+        "return (s)}",
+        "Init_f(); for(n=3, 200, print(n, \" \", a(n)))               \\\\ b-file format",
+        "\\\\ # _Washington Bomfim_, Jul 06 2012"
+    ],
+    "xref": [
+        "Cf. A000081, A001429."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "3,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Apr 19 2000"
+    ],
+    "references": 8,
+    "revision": 49,
+    "time": "2018-01-11T15:05:25-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

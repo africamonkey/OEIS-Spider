@@ -1,0 +1,49 @@
+{
+    "number": 7079,
+    "id": "M2142",
+    "data": "1,2,24,2640,3230080,48251508480,9307700611292160,24061983498249428379648,855847205541481495117975879680,427102683126284520201657800159366676480,3035991776725501434069099002640396043332019814400,311112533558482034321687955029997989477274014274150137856000",
+    "name": "Number of labeled regular tournaments with 2n+1 nodes.",
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "B. D. McKay, <a href=\"http://cs.anu.edu.au/~bdm/papers/LabelledEnumeration.pdf\">Applications of a technique for labeled enumeration</a>, Congress. Numerantium, 40 (1983), 207-221.",
+        "B. D. McKay, <a href=\"http://users.cecs.anu.edu.au/~bdm/papers/rt.pdf\">The asymptotic numbers of regular tournaments, Eulerian digraphs and Eulerian oriented graphs</a>, Combinatorica 10 (1990), 367-377.",
+        "<a href=\"/index/To#tournament\">Index entries for sequences related to tournaments</a>"
+    ],
+    "formula": [
+        "a(n) = coefficient of (x1 x2 ... xn)^((n-1)/2) in (x1+x2)(x1+x3)...(x(n-1)+xn) - Jim Ferry (ferry(AT)metsci.com), Sep 29 2005"
+    ],
+    "mathematica": [
+        "(* This program is not convenient for more than 5 terms *)",
+        "a[n_] := (xx = Sequence @@ Table[ {x[k], 0, n}, {k, 1, 2*n + 1}]; Coefficient[ Normal @ Series[ Product[x[j] + x[k], {j, 1, (2*n + 1) - 1}, {k, j + 1, (2*n + 1)}], xx], Product[x[j] , {j, 1, (2*n + 1)}]^(((2*n + 1) - 1)/2)]); a[0] = 1; Table[a[n], {n, 0, 4}] (* _Jean-Fran\u00e7ois Alcover_, Apr 10 2013 *)"
+    ],
+    "program": [
+        "(PARI) /* not convenient for more than 5 terms: */",
+        "sym(k)=eval(Str(\"x\" k));",
+        "pr(n)=prod(j=1,n-1, prod(k=j+1, n, sym(j) + sym(k) ) );",
+        "a(n)=",
+        "{",
+        "    my( p = pr(2*n+1) );",
+        "    for (k=1, 2*n+1, p = polcoeff(p, n, sym(k) );  );",
+        "    return( p );",
+        "} \\\\ _Joerg Arndt_, Apr 10 2013",
+        "(PARI)",
+        "a(n)={ local(M=Map());",
+        "my(acc(p, v)=my(z); mapput(M, p, if(mapisdefined(M, p, &z), z+v, v)));",
+        "my(recurse(p, i, q, v, e)=if(e<=n, if(i<0, acc(x^e+q, v), my(t=polcoeff(p, i)); for(k=0, if(i==n, 0, t), self()(p, i-1, (t-k+x*k)*x^i+q, binomial(t, k)*v, e+t-k)))));",
+        "my(iterate(v, k, f)=for(i=1, k, v=f(v)); v);",
+        "iterate(Mat([1, 1]), 2*n, src->M=Map(); for(i=1, matsize(src)[1], my(p=src[i, 1]); recurse(p, poldegree(p), 0, src[i, 2], 0)); Mat(M))[1,2]",
+        "} \\\\ _Andrew Howroyd_, Jan 08 2018"
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, _Mira Bernstein_",
+    "ext": [
+        "a(11) from _Andrew Howroyd_, Jan 08 2018"
+    ],
+    "references": 1,
+    "revision": 26,
+    "time": "2018-01-10T03:35:43-05:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

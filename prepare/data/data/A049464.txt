@@ -1,0 +1,43 @@
+{
+    "number": 49464,
+    "data": "1,1,1,7,63,729,10113,161935,2923135,58547761,1286468225,30747331223,793992877247,22031281255689,653827064820993,20670172958564127,693662602935500031,24632233419065156193,922938914156271368961",
+    "name": "Number of n-photon quenched skeletons.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A049464/b049464.txt\">Table of n, a(n) for n = 0..202</a>",
+        "Michael Borinsky, <a href=\"https://arxiv.org/abs/1703.00840\">Renormalized asymptotic enumeration of Feynman diagrams</a>, arXiv:1703.00840 [hep-th], 2017.",
+        "D. J. Broadhurst, <a href=\"https://arXiv.org/abs/hep-ph/9909336\">Four-loop Dyson-Schwinger-Johnson anatomy</a>, arXiv:hep-ph/9909336, 1999.",
+        "Luca G. Molinari, Nicola Manini, <a href=\"https://arxiv.org/abs/cond-mat/0512342\">Enumeration of many-body skeleton diagrams</a>, arXiv:cond-mat/0512342 [cond-mat.str-el], 2006."
+    ],
+    "formula": [
+        "Reference gives recurrence.",
+        "From _Gheorghe Coserea_, Oct 22 2017: (Start)",
+        "a(n) ~ 2*exp(-2)/sqrt(Pi) * n^(1/2) * 2^n * n! * (1 - 21/(8*n) - 87/(128*n^2) + O(1/n^3)). (see Borinsky link)",
+        "For n > 0 we have a(n) == 1 (mod 8) if n mod 8 in {1,2,5,6}, otherwise a(n) == 7 (mod 8).",
+        "G.f. y(x) satisfies (with a(0)=0): g = 1 + g*y(x*g^2*s^2), where s = A001147(x) and g = A005416(x). (eqn. (7) in Broadhurst link)",
+        "0 = 2*x*y*deriv(y,x) + (1+x)*y^2 - (2*x+1)*y + x.",
+        "(End)"
+    ],
+    "mathematica": [
+        "terms = 19; y[_] = 0; Do[y[x_] = (x + (1 + x)*y[x]^2 + 2*x*y[x]*y'[x])/(1 + 2*x) + O[x]^terms // Normal, terms]; CoefficientList[1 + y[x], x] (* _Jean-Fran\u00e7ois Alcover_, Aug 14 2013, updated Jan 12 2018 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "seq(N) = {",
+        "  my(s=Ser(concat(1, vector(N, n, (2*n)!/(2^n*n!)))), g=(1/s - 1/s^2)/x);",
+        "  Vec(1 - 1/subst(g, 'x, serreverse(x*g^2*s^2)));",
+        "};",
+        "concat(1, seq(19))",
+        "\\\\ test: y='x*Ser(seq(200)); 0==2*x*y*y' + (1+x)*y^2 - (2*x+1)*y + x",
+        "\\\\ _Gheorghe Coserea_, Oct 12 2017"
+    ],
+    "xref": [
+        "Cf. A001147, A005416, A286795."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "references": 9,
+    "revision": 49,
+    "time": "2018-01-12T07:38:16-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

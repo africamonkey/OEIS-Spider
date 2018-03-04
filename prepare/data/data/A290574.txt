@@ -1,0 +1,32 @@
+{
+    "number": 290574,
+    "data": "9,378,400,525,602,1155,1188,1862,2055,2200,2325,2415,2492,2560,2907,3045,3348,3392,3460,3515,3717,3752,3965,4180,4360,4382,4415,4865,4920,5115,5418,5517,5719,6138,6228,6900,7038,7060,7396,7532,7565,7609,7947,8162,8342,8465,8520,8700,8757,8869,8970,9152,9365,9387,9409,9420,9422,9499,9870,9925",
+    "name": "Self numbers that are the product of two self numbers greater than one.",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A290574/b290574.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The product of the self numbers 31 and 75 is the self number 2325, so 2325 is in the sequence."
+    ],
+    "mathematica": [
+        "Block[{nn = 10^4, s}, s = Rest@ Complement[Range@ nn, Union[Table[n + Total@ IntegerDigits@ n, {n, nn}]]]; Select[Range@ nn, Function[n, And[MemberQ[s, n], AnyTrue[Map[{#, n/#} &, Rest@ TakeWhile[Divisors@ n, # <= Sqrt@ n &]], AllTrue[#, MemberQ[s, #] &] &]]]]] (* or *)",
+        "Block[{nn = 5000, s}, s = Rest@ Complement[Range@ nn, Union@ Table[n + Total@ IntegerDigits@ n, {n, nn}]]; Select[Union@ Sort@ Map[Times @@ # &@ # &, Tuples[s, {2}]], MemberQ[s, #] &]] (* _Michael De Vlieger_, Aug 23 2017, after _T. D. Noe_ at A003052 *)"
+    ],
+    "program": [
+        "(PARI) isA003052(n)=forstep(k=n-1, n-9*#Str(n), -1, if(k+sumdigits(k)==n, return(0))); n>0",
+        "is(n)=if(!isA003052(n), return(0)); fordiv(n,d, if(d==1, next); if(d^2>n, break); if(isA003052(d) && isA003052(n/d), return(1))); 0 \\\\ _Charles R Greathouse IV_, Aug 23 2017"
+    ],
+    "xref": [
+        "Cf. A003052, A290426."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Peter Weiss_, Aug 06 2017",
+    "ext": [
+        "Corrected by _Charles R Greathouse IV_, Aug 23 2017"
+    ],
+    "references": 1,
+    "revision": 13,
+    "time": "2017-08-23T11:37:34-04:00",
+    "created": "2017-08-23T11:37:34-04:00"
+}

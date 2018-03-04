@@ -1,0 +1,36 @@
+{
+    "number": 287689,
+    "data": "1,7,60,968,31737,2069963,267270032,68629753640,35171000942697,36024807353574279,73784587576805254652,302228602363365451957792,2475873310144021668263093201,40564787336902311168400640561083,1329227697997490307154018925966130304",
+    "name": "Number of (non-null) connected induced subgraphs in the n-triangular graph.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A287689/b287689.txt\">Table of n, a(n) for n = 2..50</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TriangularGraph.html\">Triangular Graph</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Vertex-InducedSubgraph.html\">Vertex-Induced Subgraph</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{i=2..n} binomial(n,i) * A001187(i). - _Andrew Howroyd_, Jun 07 2017"
+    ],
+    "mathematica": [
+        "Table[With[{g = GraphData[{\"Triangular\", n}]}, Total[Boole[ConnectedGraphQ[Subgraph[g, #]] & /@ Subsets[VertexList[g]]]]], {n, 2, 5}] - 1",
+        "(* Second program: *)",
+        "g[n_] := g[n] = If[n==0, 1, 2^(n*(n-1)/2) - Sum[k*Binomial[n, k]*2^((n-k) * (n-k-1)/2)*g[k], {k, 1, n-1}]/n]; a[n_] := Sum[Binomial[n, i]*g[i], {i, 2, n}]; Table[a[n], {n, 2, 16}] (* _Jean-Fran\u00e7ois Alcover_, Oct 02 2017, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "{g(n) = n! * polcoeff(1 + log(sum( k=0, n, 2^binomial(k, 2)*x^k/k!, x*O(x^n))), n)}",
+        "a(n)=sum(i=2, n, binomial(n,i)*g(i)); \\\\ _Andrew Howroyd_, Jun 07 2017"
+    ],
+    "xref": [
+        "Cf. A001187."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_Eric W. Weisstein_, May 29 2017",
+    "ext": [
+        "Terms a(9) and beyond from _Andrew Howroyd_, Jun 07 2017"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2017-10-02T08:02:01-04:00",
+    "created": "2017-05-30T00:07:53-04:00"
+}

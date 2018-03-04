@@ -1,0 +1,37 @@
+{
+    "number": 192252,
+    "data": "1,1,3,9,57,417,4017,44337,568497,8188977,131568177,2326992177,44958134577,941649129777,21254190979377,514247427715377,13277149259395377,364340640790147377,10588931448837763377,324919870905259651377,10496883167091791491377",
+    "name": "0-sequence of reduction of (n!) by x^2 -> x+1.",
+    "comment": [
+        "See A192232 for definition of \"k-sequence of reduction of [sequence] by [substitution]\".",
+        "After the tenth term, the final digit is 7, for terms in both A192252 and A192253. After the 100th term, the final 6 digits of each term of A192252 are 9,3,1,3,7,7."
+    ],
+    "formula": [
+        "Conjecture: a(n) +(-n-1)*a(n-1) -n*(n-2)*a(n-2) +n*(n-1)*a(n-3)=0. - _R. J. Mathar_, May 04 2014"
+    ],
+    "example": [
+        "The sequence (n!)=(1,1,2,6,24,120,...) provides coefficients for the power series 1+x+2x^2+6x^3+..., of which the (n+1)st partial sum is the polynomial p(x)=1+x+2x^2+...+(n!)x^n, of which reduction by x^2 -> x+1 (as presented at A192232) is A192252(n)+x*A192253(n)."
+    ],
+    "mathematica": [
+        "c[n_] := n!; (* A000142 *)",
+        "Table[c[n], {n, 1, 15}]",
+        "q[x_] := x + 1;",
+        "p[0, x_] := 1; p[n_, x_] := p[n - 1, x] + (x^n)*c[n]",
+        "reductionRules = {x^y_?EvenQ -> q[x]^(y/2), x^y_?OddQ -> x q[x]^((y - 1)/2)};",
+        "t = Table[Last[Most[FixedPointList[Expand[#1 /. reductionRules] &, p[n, x]]]], {n, 0, 50}]",
+        "Table[Coefficient[Part[t, n], x, 0], {n, 1, 50}]  (* A192252 *)",
+        "Table[Coefficient[Part[t, n], x, 1], {n, 1, 50}]  (* A192253 *)",
+        "Table[Coefficient[(-7 + Part[t, n])/10, x, 0], {n, 1, 30}]",
+        "(* by _Peter J. C. Moses_, Jun 20 2011 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192253."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jun 27 2011",
+    "references": 2,
+    "revision": 8,
+    "time": "2016-12-04T19:46:25-05:00",
+    "created": "2011-06-28T11:21:07-04:00"
+}

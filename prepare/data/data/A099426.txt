@@ -1,0 +1,63 @@
+{
+    "number": 99426,
+    "data": "3,228,671,1261,6371,9765,35113,35928,40380,41643,66599,112245,124501,127499,167160,191771,205485,255720,297037,377567,532392,546013,647569,681285,812340,897623,1043469,1125683,1261491,1431793,1433040,1584828,1783067,1984009,2107391,2372903,2440893,2484469,2548557",
+    "name": "Numbers n where n^2 = x^3 + y^3; x,y>0 and gcd(x,y)=1.",
+    "comment": [
+        "Based on an observation of _Ed Pegg Jr_, who supplied terms a(2)-a(6) and a(8)."
+    ],
+    "link": [
+        "Joerg Arndt and Donovan Johnson, <a href=\"/A099426/b099426.txt\">Table of n, a(n) for n = 1..300</a> (first 55 terms from Joerg Arndt)"
+    ],
+    "example": [
+        "228 is in the sequence because 228^2 = 11^3 + 37^3 and gcd(11, 37) = 1."
+    ],
+    "mathematica": [
+        "n = 10^7; n2 = n^2; x = 1; x3 = x^3; Reap[ While[x3 < n2, y = x + 1; y3 = y^3; While[y3 < n2, If[GCD[x, y] == 1, s = x3 + y3; If[ IntegerQ[r = Sqrt[s]], Print[r]; Sow[r]; Break[]]]; y += 1; y3 = y^3]; x += 1; x3 = x^3]][[2, 1]] // Sort (* _Jean-Fran\u00e7ois Alcover_, Jan 11 2013, translated from _Joerg Arndt_'s 2nd Pari program *)"
+    ],
+    "program": [
+        "(PARI)",
+        "is_A099426(n)=",
+        "{",
+        "    my(n2=n^2, k=1, k3=1, r);",
+        "    while( k3 < n2,",
+        "        if ( ispower(n2-k3, 3, &r),",
+        "            if ( gcd(r,k)==1, return(1) );",
+        "        );",
+        "        k+=1;  k3=k^3;",
+        "    );",
+        "    return(0);",
+        "}",
+        "for (n=1,10^8, if( is_A099426(n), print1(n,\", \")) );",
+        "/* _Joerg Arndt_, Sep 30 2012 */",
+        "(PARI)",
+        "/* compute all terms below a threshold at once, terms need to be sorted */",
+        "{ N = 10^7; N2 = N^2;",
+        "x=1; x3=x^3;",
+        "while ( x3 < N2,",
+        "    y=x+1; y3=y^3;",
+        "    while ( y3 < N2,",
+        "        if ( gcd(x,y) == 1,",
+        "            s = x3 + y3;",
+        "            if ( issquare(s, &r), print(r); break(); );",
+        "        );",
+        "        y+=1;  y3 = y^3;",
+        "    );",
+        "    x+=1;  x3 = x^3;",
+        ");}",
+        "/* _Joerg Arndt_, Sep 30 2012 */",
+        "(PARI) for(s=2,1e5,for(x=1,s\\2,my(y=s-x);if(gcd(x,y)>1,next); if(issquare(x^3+y^3), print1(s\", \")))) \\\\ _Charles R Greathouse IV_, Nov 06 2014"
+    ],
+    "xref": [
+        "Cf. A099532, A099533, A103255 (min(x,y), sorted)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Hans Havermann_, Oct 15 2004",
+    "ext": [
+        "More terms from _Hans Havermann_ and _Bodo Zinser_, Oct 20 2004"
+    ],
+    "references": 7,
+    "revision": 23,
+    "time": "2015-12-01T20:15:49-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

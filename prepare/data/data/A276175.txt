@@ -1,0 +1,47 @@
+{
+    "number": 276175,
+    "data": "1,1,1,1,8,36,666,222111,685187756,2819713283228248,644335913093223286486628176,5604757351123068775966272886689217889936356651,14861563788248216173988661093334637018340529129342104300621091389266132702213641",
+    "name": "a(n) = (a(n-1)+1)*(a(n-2)+1)*(a(n-3)+1)/a(n-4) with a(0) = a(1) = a(2) = a(3) = 1.",
+    "comment": [
+        "Conjecture: a(n) is integer for all n >= 0. It has been checked by computer for n <= 40."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A276175/b276175.txt\">Table of n, a(n) for n = 0..16</a>",
+        "Mathematics.StackExchange.com, <a href=\"http://math.stackexchange.com/questions/1905063/is-a276175-integer-only\">Is A276175 integer-only?</a>"
+    ],
+    "formula": [
+        "Let b(n) = (b(n-1)*b(n-2)*b(n-3)+1)/b(n-4) with b(0) = 1/2, b(1) = 4, b(2) = a(3) = 1/2, then a(n) = b(n)*b(n+1)*b(n+2). - _Seiichi Manyama_, Sep 03 2016"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[n] == (a[n - 1] + 1) (a[n - 2] + 1) (a[n - 3] + 1)/a[n - 4],",
+        "a[0] == a[1] == a[2] == a[3] == 1}, a, {n, 0, 12}] (* _Michael De Vlieger_, Aug 25 2016 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = if (n <=3, 1, (a(n-1)+1)*(a(n-2)+1)*(a(n-3)+1)/a(n-4)); \\\\ _Michel Marcus_, Aug 23 2016",
+        "(Ruby)",
+        "def A(m, n)",
+        "  a = Array.new(m, 1)",
+        "  ary = [1]",
+        "  while ary.size < n + 1",
+        "    i = a[1..-1].inject(1){|s, i| s *= i + 1}",
+        "    break if i % a[0] > 0",
+        "    a = *a[1..-1], i / a[0]",
+        "    ary << a[0]",
+        "  end",
+        "  ary",
+        "end",
+        "def A276175(n)",
+        "  A(4, n)",
+        "end # _Seiichi Manyama_, Aug 23 2016"
+    ],
+    "xref": [
+        "Cf. A076839, A276123."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Bruno Langlois_, Aug 23 2016",
+    "references": 4,
+    "revision": 42,
+    "time": "2016-09-04T04:30:33-04:00",
+    "created": "2016-08-26T21:01:09-04:00"
+}

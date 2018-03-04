@@ -1,0 +1,39 @@
+{
+    "number": 178702,
+    "data": "1,1,2,2,4,6,7,10,14,20,24,32,40,54,69,86,106,135,165,206,256,311,378,460,555,670,808,970,1156,1380,1638,1938,2296,2706,3188,3752,4390,5136,6000,6990,8128,9444,10944,12672,14659,16904,19476,22420,25753,29550,33873,38759,44306",
+    "name": "Coefficients of the sum 1+ x/(1-x) + x^2/(1-x^2) + x^3/ ( (1-x)(1-x^2)) + x^4/ ( (1-x)(1-x^3) ) +  x^5/  ( (1-x)(1-x^4) ) + x^5 /((1-x^2)(1-x^3)) + x^6/ ( (1-x)(1-x^2)(1-x^3)) + ...",
+    "comment": [
+        "For a given positive integer, n, let S_n be the set of partitions of n into distinct parts where the number of parts is maximal for that n.  For example, for n=6, the set S_6 consists of just one such partition S_6={1,2,3}.  Similarly, for n=7, S_7={1,2,4},  But for n=8, S_8 will contain two partitions S_8= { {1,2,5}, {1,3,4} }.  Now form the sum whose general term is x^n divided by the product (1-x^(p_1))...(1-x^(p_i)) where the p's come from the partitions in S_n.  The sequence is the sequence of coefficients of this sum.",
+        "This sequence is an upper bound for A098859.",
+        "The initial values of the sequence were verified by several members of the Sequence Fans mailing list.",
+        " |S_n| = A144328(n) (if the offset of the latter is changed to 0). - _Benoit Jubin_, Dec 13 2010."
+    ],
+    "mathematica": [
+        "<<Combinatorica`",
+        "f[set_]:=x^Total[set]/Product[1-x^set[[i]],{i,1,Length[set]}]",
+        "gf=1;",
+        "For[n=1,n<=20,n++,Print[\"n= \",n];",
+        "For[i=1,i<=Length[Partitions[n]],i++,",
+        "t=Tally[Partitions[n][[i]]];",
+        "sum=0;",
+        "For[j=1,j<=Length[t],j++,",
+        "If[t[[j]][[2]]==1,sum++]];",
+        "If[sum==Length[t]",
+        "&&Length[t]==Floor[(-1+Sqrt[1+8 n])/2],",
+        "gf=gf+f[Partitions[n][[i]]];Print[CoefficientList[Series[gf,{x,0,n}],x]];",
+        "]]]"
+    ],
+    "xref": [
+        "Cf. A098859, A144328."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_David S. Newman_, Dec 27 2010",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jun 25 2011"
+    ],
+    "references": 1,
+    "revision": 25,
+    "time": "2014-09-20T02:46:37-04:00",
+    "created": "2010-11-12T14:27:31-05:00"
+}

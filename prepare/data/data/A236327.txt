@@ -1,0 +1,69 @@
+{
+    "number": 236327,
+    "data": "2,8,19,30,32,38,49,60,62,68,79,90,92,98,109,120,122,128,139,150,152,158,169,180,182,188,199,210,212,218,229,240,242,248,259,270,272,278,289,300,302,308,319,330,332,338,349,360,362,368,379,390,392,398,409,420,422,428,439,450,452,458,469,480,482,488",
+    "name": "a(n)*Pi is the total length of irregular spiral (center points: 1, 2, 3, 4, 5; pattern 2) after n rotations.",
+    "comment": [
+        "Let points 1, 2, 3, 4 & 5 be placed on a straight line at intervals of 1 unit. At point 1 make a half unit circle then at point 2 make another half circle; by selecting radius point on the right hand side of point 1 (pattern 2); at point 3 make another half circle and maintain continuity of circumferences. Continue using this procedure at point 4, 5, 1, ... and so on.",
+        "Conjecture: All forms of 120 permutations 5 center points are non-expanded loops."
+    ],
+    "link": [
+        "Kival Ngaokrajang, <a href=\"/A236327/a236327.pdf\">Illustration of irregular spiral (center points: 1, 2, 3, 4, 5)</a>Pattern 2."
+    ],
+    "formula": [
+        "Conjecture from _Colin Barker_, Jul 12 2014: (Start)",
+        "a(n) = a(n-1)+a(n-4)-a(n-5).",
+        "G.f.: x*(11*x^3+11*x^2+6*x+2) / ((x-1)^2*(x+1)*(x^2+1)). (End)"
+    ],
+    "program": [
+        "(Small Basic)",
+        "n =5      'center points number 1<=n<=9",
+        "pt=1      'pattern1:  pt=-1; pattern2: pt=1",
+        "i=12345   'center points order",
+        "rota=100  'rotations",
+        "sum=0",
+        "rc=1",
+        "r[1]=1",
+        "For i1 = 1 To n",
+        "  d1=i/Math.Power(10,1)",
+        "  i=math.Floor(d1)",
+        "  d[i1]=(d1-i)*Math.Power(10,1)",
+        "EndFor",
+        "For j1=1 To n",
+        "  For j2=1 To n",
+        "    If d[j1]=j2 Then",
+        "      dd[j2]=j1",
+        "    endif",
+        "  EndFor",
+        "EndFor",
+        "For j3=1 To n",
+        "  If j3=n Then",
+        "    dxy[j3]=dd[j3]-dd[1]",
+        "  Else",
+        "    dxy[j3]=dd[j3]-dd[j3+1]",
+        "  EndIf",
+        "EndFor",
+        "For k1=1 To rota*n",
+        "  cc=Math.Floor((k1-1)/n)",
+        "  p[k1]=r[k1]+pt*dxy[k1-cc*n]*Math.Power(-1,Math.Remainder(k1,2))",
+        "  r[k1+1]=p[k1]",
+        "  sum=sum+math.Abs(r[k1])",
+        "  If math.Abs(r[k1])>0 Then",
+        "    rc=rc+1",
+        "  EndIf",
+        "  If rc=3 Then",
+        "    TextWindow.Write(sum+\", \")",
+        "    rc=1",
+        "  EndIf",
+        "EndFor"
+    ],
+    "xref": [
+        "Cf. A014105 (2 center points); A234902, A234903, A234904 (3 center points); A235088, A235089 (4 center points)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Kival Ngaokrajang_, Jan 22 2014",
+    "references": 4,
+    "revision": 13,
+    "time": "2014-07-12T16:46:03-04:00",
+    "created": "2014-01-26T12:18:50-05:00"
+}

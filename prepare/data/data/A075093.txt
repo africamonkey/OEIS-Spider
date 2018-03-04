@@ -1,0 +1,39 @@
+{
+    "number": 75093,
+    "data": "11117123,12980783,14964017,32638213,32964341,33539783,35868013,44058013,46103237,48015013,50324237,52402783,58005239,60601237,61395239,74699789,76012879,78163123,80905879,81966341,82324237",
+    "name": "Smallest member of Ormiston prime triple.",
+    "comment": [
+        "A subsequence of A069567 which is in turn a subsequence of A072274. More precisely, this A075093 lists exactly the terms which precede repeated elements in A072274, since an Ormiston triple (p,q,r), i.e., three consecutive primes whose decimal representations are anagrams of each other, corresponds to two pairs (p,q) and (q,r), so that p=a(n) implies p=A072274(2k-1)=A069567(k) for some k, and q=A072274(2k)=A072274(2k+1)=A069567(k+1) and r=A072274(2k+2). - _M. F. Hasler_, Oct 11 2012"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A075093/b075093.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "example": [
+        "The first Ormiston triples are 11117123, 11117213 and 11117321."
+    ],
+    "mathematica": [
+        "NextPrim[n_] := Block[{k = n + 1}, While[ !PrimeQ[k], k++ ]; k]; a = 0; b = 1; Do[c = NextPrim[b]; If[ Sort[ IntegerDigits[a]] == Sort[ IntegerDigits[b]] == Sort[ IntegerDigits[c]], Print[a]]; a = b; b = c, {n, 1, 10^7}]",
+        "op3Q[{a_,b_,c_}]:=Sort[IntegerDigits[a]]==Sort[IntegerDigits[b]] == Sort[ IntegerDigits[ c]]; Transpose[Select[Partition[Prime[ Range[ 5000000]],3,1], op3Q]][[1]] (* _Harvey P. Dale_, Jun 16 2014 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a075093 n = a075093_list !! (n-1)",
+        "a075093_list = f a000040_list where",
+        "   f (p:ps@(q:r:_)) =",
+        "     if sort (show p) == sort (show q) && sort (show q) == sort (show r)",
+        "        then p : f ps else f ps",
+        "-- _Reinhard Zumkeller_, Mar 09 2012",
+        "(PARI) is_A075093(n)={isprime(n) & vecsort(Vec(Str(n)))==vecsort(Vec(Str(n=nextprime(n+1)))) & vecsort(Vec(Str(n)))==vecsort(Vec(Str(nextprime(n+1))))} \\\\ _M. F. Hasler_, Oct 11 2012"
+    ],
+    "xref": [
+        "Cf. A069567 - smaller member of an Ormiston prime pair.",
+        "Cf. A072274, A161160, A066540. - _M. F. Hasler_, Oct 11 2012"
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Aug 31 2002",
+    "references": 7,
+    "revision": 17,
+    "time": "2014-06-16T10:47:59-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

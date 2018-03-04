@@ -1,0 +1,46 @@
+{
+    "number": 57620,
+    "data": "7,31,151,1741,1741,1741,19471,118801,148531,148531,406951,2339041,2339041,51662593,51662593,73451737,232301497,450988159,1444257673,1444257673,1444257673,24061965043,24061965043,43553959717,43553959717",
+    "name": "Initial prime in first sequence of n consecutive primes congruent to 1 modulo 6.",
+    "comment": [
+        "See A055626 for the variant \"exactly n\". See A247967 for the indices of these primes. See A057620, A057621 for variants \"congruent to 5 (mod 6)\", resp. \"(mod 3)\". - _M. F. Hasler_, Sep 03 2016",
+        "The sequence is infinite, by Shiu's theorem. - _Jonathan Sondow_, Jun 22 2017"
+    ],
+    "reference": [
+        "R. K. Guy, \"Unsolved Problems in Number Theory\", A4"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A057620/b057620.txt\">Table of n, a(n) for n = 1..35</a> (terms < 4*10^14)",
+        "J. K. Andersen, <a href=\"http://primerecords.dk/congruent-primes.htm\">Consecutive Congruent Primes</a>.",
+        "D. K. L. Shiu, <a href=\"http://dx.doi.org/10.1112/S0024610799007863\">Strings of Congruent Primes</a>, J. Lond. Math. Soc. 61 (2) (2000) 359-373 [<a href=\"http://www.ams.org/mathscinet-getitem?mr=1760689\">MR1760689</a>]"
+    ],
+    "formula": [
+        "a(n) <= A055625(n). - _Zak Seidov_, Aug 29 2016",
+        "a(n) = A000040(A247967(n)). a(n) = min { A055625(k); k >= n }. - _M. F. Hasler_, Sep 03 2016"
+    ],
+    "example": [
+        "a(6) = 1741 because this number is the first in a sequence of 6 consecutive primes all of the form 3n + 1."
+    ],
+    "mathematica": [
+        "p = 0; Do[a = Table[-1, {n}]; k = Max[1, p]; While[Union[a] != {1}, k = NextPrime[k]; a = Take[AppendTo[a, Mod[k, 3]], -n]]; p = NestList[NextPrime[#, -1] &, k, n]; Print[p[[-2]]]; p = p[[-1]], {n, 1, 18}] (* _Robert G. Wilson v_, updated by _Michael De Vlieger_, Sep 03 2016 *)",
+        "Table[k = 1; While[Total@ Boole@ Map[Mod[#, 6] == 1 &, NestList[NextPrime, Prime@ k, n - 1]] != n, k++]; Prime@ k, {n, 12}] (* _Michael De Vlieger_, Sep 03 2016 *)"
+    ],
+    "program": [
+        "(PARI) m=c=o=0; forprime(p=1,, p%6 != 1 && (!c||!c=0) && next; c||o=p; c++>m||next; m++; print1(\", \",o)) \\\\ _M. F. Hasler_, Sep 03 2016"
+    ],
+    "xref": [
+        "Cf. A057619, A057622, A057624, A055625."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Oct 09 2000",
+    "ext": [
+        "More terms from _Don Reble_, Nov 16 2003",
+        "More terms from _Jens Kruse Andersen_, May 30 2006",
+        "Definition clarified by _Zak Seidov_, Jun 19 2017"
+    ],
+    "references": 9,
+    "revision": 35,
+    "time": "2017-10-19T03:13:52-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

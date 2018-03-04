@@ -1,0 +1,52 @@
+{
+    "number": 112487,
+    "data": "1,2,10,82,938,13778,247210,5240338,128149802,3551246162,109979486890,3764281873042,141104799067178,5749087305575378,252969604725106090,11955367835505775378,603967991604199335722,32479636694930586142802",
+    "name": "Row sums of triangle A112486.",
+    "reference": [
+        "Roland Bacher, Counting Packings of Generic Subsets in Finite Groups, Electr. J. Combinatorics, 19 (2012), #P7. - From _N. J. A. Sloane_, Feb 06 2013",
+        "W. S. Gray and M. Thitsa, System Interconnections and Combinatorial Integer Sequences, in: System Theory (SSST), 2013 45th Southeastern Symposium on, Date of Conference: 11-11 March 2013, Digital Object Identifier: 10.1109/SSST.2013.6524939.",
+        "M. Thitsa and W. S. Gray, On the Radius of Convergence of Interconnected Analytic Nonlinear Input-Output Systems, SIAM J. CONTROL OPTIM, Vol. 50, No. 5, pp. 2786-2813. - From _N. J. A. Sloane_, Dec 26 2012"
+    ],
+    "formula": [
+        "a(n)=sum(A112486(n, m), m=0..n), n>=0.",
+        "a(n) = 2*A032188(n+1), n>0. - _Vladeta Jovovic_, Jul 11 2007",
+        "Contribution from _Paul D. Hanna_, Jun 30 2009: (Start)",
+        "E.g.f. A(x) satisfies: A'(x) = A(x)^2 + A(x)^3.",
+        "E.g.f. A(x) satisfies: A(x) = exp( Integral[A(x) + A(x)^2]dx ) with A(0)=1. (End)",
+        "E.g.f. A(x) satisfies: A(x) = 2*exp(A(x)) - (2+x), where A(x) = Sum_{n>=0} a(n)*x^(n+1)/(n+1)! (the e.g.f. when offset=1). [From Paul D. Hanna, Sep 23 2011]",
+        "Contribution from Tom Copeland, Oct 05 2011: (Start)",
+        "With c(0)= 0 and c(n+1)= (-1)^n a(n) for n>=0, c(n)=(-1)^(n+1) PW(n,-2) with PW the Ward polynomials A134991. E.g.f. for the c(n) is",
+        "  A(x) = -(x+2)-LW{-2 exp[-(x+2)]}, where LW(x) is a suitable branch of the Lambert W Fct. (e.g., see A135338). The compositional inverse is",
+        "  B(x) = x + 2(exp(x) - x - 1). These results are a special case of A134685 with u(x)=B(x), i.e., u_1=1 and (u_n)=2 for n>0.",
+        "Let h(x) = 1/(dB(x)/dx) = 1/[1+2(exp(x)-1)], then c(n) is given by",
+        "(h(x)*d/dx)^n x, evaluated at x=0, i.e., A(x)=exp(x*h(u)*d/du) u, evaluated at u=0. Also, dA(x)/dx = h(A(x)).",
+        "The e.g.f. A(x) = -v * sum(j=1 to infin) D(j-1,u) (-z)^j/ j!",
+        "where u=-(x+2), v=1+u, z=(1+v)/(v^2) and D(j-1,u) are the polynomials of A042977. (End)",
+        "a(n)=(n-1)!*(sum(k=0..n-1, binomial(n+k-1, n-1)*sum(j=0..k, (-1)^(n+j-1)*binomial(k, j)*sum((l=0..j, binomial(j, l)*(j-l)!*2^(j-l)*(-1)^l*stirling2(n-l+j-1, j-l))/(n-l+j-1)!)))), n>0 [From Vladimir Kruchinin, Feb 14 2012]",
+        "G.f.: 1/Q(0), where Q(k)= 1 + k*x - 2*x*(k+1)/Q(k+1); (continued fraction). - _Sergei N. Gladkovskii_, May 01 2013",
+        "a(n) ~ n^n / (exp(n) * (1-log(2))^(n+1/2)). - _Vaclav Kotesovec_, Aug 14 2017"
+    ],
+    "maple": [
+        "A112487 := proc(n)",
+        "    add(A112486(n,k),k=0..n) ;",
+        "end proc: # _R. J. Mathar_, Dec 19 2013",
+        "seq(op(k, convert(asympt(GAMMA(n, 2*n)*exp(2*n)/(2*n)^n, n, 20), polynom))*(-1)^(k+1)*n^k, k = 1..19); # Maple 2017, _Vaclav Kotesovec_, Aug 14 2017"
+    ],
+    "mathematica": [
+        "a[n_] := (n-1)!*(Sum[ Binomial[n+k-1, n-1]* Sum[(-1)^(n+j-1)*Binomial[k, j]* Sum[(Binomial[j, l]*(j-l)!*2^(j-l)*(-1)^l*StirlingS2[n-l+j-1, j-l])/(n-l+j-1)!, {l, 0, j}], {j, 0, k}], {k, 0, n-1}]); Table[a[n], {n, 1, 18}] (* _Jean-Fran\u00e7ois Alcover_, Feb 26 2013, after _Vladimir Kruchinin_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x);for(i=1,n,A=exp(intformal(A+A^2)+x*O(x^n)));n!*polcoeff(A,n)} [From _Paul D. Hanna_, Jun 30 2009]",
+        "(Maxima) a(n):=(n-1)!*(sum(binomial(n+k-1, n-1)*sum((-1)^(n+j-1)*binomial(k, j)*sum((binomial(j, l)*(j-l)!*2^(j-l)*(-1)^l*stirling2(n-l+j-1, j-l))/(n-l+j-1)!, l, 0, j), j, 0, k), k, 0, n-1)); [From Vladimir Kruchinin, Feb 14 2012]"
+    ],
+    "xref": [
+        "Cf. A032034. [From _R. J. Mathar_, Aug 15 2008]"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Wolfdieter Lang_, Sep 12 2005",
+    "references": 5,
+    "revision": 43,
+    "time": "2017-08-14T04:52:46-04:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

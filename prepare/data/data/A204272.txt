@@ -1,0 +1,38 @@
+{
+    "number": 204272,
+    "data": "1,10,50,252,754,3500,8450,34680,89635,309140,700402,2910600,5688370,20195500,50706500,160553712,329639810,1248615550,2398289458,8732957688,19306982500,56865638380,119281100930,461838762000,853941516771",
+    "name": "a(n) = sigma_2(n)*Pell(n), where sigma_2(n) = A001157(n), the sum of squares of divisors of n.",
+    "comment": [
+        "Compare g.f. to the Lambert series identity: Sum_{n>=1} n^2*x^n/(1-x^n) = Sum_{n>=1} sigma_2(n)*x^n."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A204272/b204272.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{n>=1} n^2*Pell(n)*x^n/(1 - A002203(n)*x^n + (-1)^n*x^(2*n)) = Sum_{n>=1} sigma_2(n)*Pell(n)*x^n, where Pell(n) = A000129(n) and A002203 is the companion Pell numbers."
+    ],
+    "example": [
+        "G.f.: A(x) = x + 10*x^2 + 50*x^3 + 252*x^4 + 754*x^5 + 3500*x^6 +...",
+        "where A(x) = x/(1-2*x-x^2) + 2^2*2*x^2/(1-6*x^2+x^4) + 3^2*5*x^3/(1-14*x^3-x^6) + 4^2*12*x^4/(1-34*x^4+x^8) + 5^2*29*x^5/(1-82*x^5-x^10) + 6^2*70*x^6/(1-198*x^6+x^12) +...+ n^2*Pell(n)*x^n/(1 - A002203(n)*x^n + (-1)^n*x^(2*n)) +..."
+    ],
+    "mathematica": [
+        "With[{nn=30},Times@@@Thread[{Rest[LinearRecurrence[{2,1},{0,1},nn+1]], DivisorSigma[ 2,Range[nn]]}]] (* _Harvey P. Dale_, Oct 21 2015 *)"
+    ],
+    "program": [
+        "(PARI) /* Subroutines used in PARI programs below: */",
+        "{Pell(n)=polcoeff(x/(1-2*x-x^2+x*O(x^n)), n)}",
+        "{A002203(n)=polcoeff(2*(1-x)/(1-2*x-x^2+x*O(x^n)), n)}",
+        "(PARI) {a(n)=sigma(n,2)*Pell(n)}",
+        "(PARI) {a(n)=polcoeff(sum(m=1,n,m^2*Pell(m)*x^m/(1-A002203(m)*x^m+(-1)^m*x^(2*m)+x*O(x^n))),n)}"
+    ],
+    "xref": [
+        "Cf. A203849, A204270, A204271, A204273, A204274, A204275, A001157 (sigma_2), A002203, A000045."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jan 14 2012",
+    "references": 5,
+    "revision": 7,
+    "time": "2015-10-21T09:43:50-04:00",
+    "created": "2012-01-14T13:58:46-05:00"
+}

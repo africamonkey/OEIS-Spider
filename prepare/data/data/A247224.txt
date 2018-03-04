@@ -1,0 +1,40 @@
+{
+    "number": 247224,
+    "data": "1,1,2,6,26,149,1024,7965,68192,632724,6294190,66579501,744194484,8747497833,107718981328,1385436413289,18563761993762,258579817821799,3737335096804136,55957031888334621,866632465992896412,13865193902724224273,228875892203793317404,3893773927147402337094",
+    "name": "G.f. A(x) satisfies: A(x) = B(x)*(A(x) - x*C(x)) where B(x) = A(x/B(x)) and C(x) = A(x*C(x)).",
+    "comment": [
+        "Compare to: G(x) = Series_Reversion( x - Series_Reversion(x*G(x)) * x*G(x) )/x, which is satisfied by the g.f. G(x) = 1 + x*G(x) * G(x*G(x)) of A030266 with offset 0."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A247224/b247224.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x) = Series_Reversion( x - Series_Reversion(x/A(x)) * x/A(x) )/x.",
+        "(2) A(x) = x/Series_Reversion( (x - Series_Reversion(x*A(x))) * A(x)/x ).",
+        "Given B(x) = A(x/B(x)) and C(x) = A(x*C(x)), then:",
+        "(3.a) A(x) = B(x*A(x)) and A(x) = C(x/A(x)),",
+        "(3.b) B(x) = x/Series_Reversion(x*A(x)),",
+        "(3.c) C(x) = Series_Reversion(x/A(x))/x,",
+        "(3.d) B(x) = A(x)/(A(x) - x*C(x)),",
+        "(3.e) C(x) = A(x)*(1 - 1/B(x))/x."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 6*x^3 + 26*x^4 + 149*x^5 + 1024*x^6 +...",
+        "Let B(x) = A(x/B(x)) and C(x) = A(x*C(x)), where B(x) and C(x) begin:",
+        "B(x) = 1 + x + x^2 + 2*x^3 + 9*x^4 + 53*x^5 + 354*x^6 + 2651*x^7 + 21951*x^8 + 197666*x^9 + 1911091*x^10 + 19665622*x^11 + 214060860*x^12 +...",
+        "C(x) = 1 + x + 3*x^2 + 13*x^3 + 71*x^4 + 460*x^5 + 3399*x^6 + 27867*x^7 + 248789*x^8 + 2388199*x^9 + 24432778*x^10 + 264682253*x^11 + 3021086129*x^12 +...",
+        "then A(x) = B(x) * (A(x) - x*C(x))."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1);for(i=1,n,A=serreverse(x-x/A*serreverse(x/(A +x^2*O(x^n))))/x);polcoeff(A,n)}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 19 2014",
+    "references": 1,
+    "revision": 20,
+    "time": "2014-12-20T17:24:38-05:00",
+    "created": "2014-12-19T18:05:20-05:00"
+}

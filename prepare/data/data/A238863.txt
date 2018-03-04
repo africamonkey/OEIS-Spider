@@ -1,0 +1,44 @@
+{
+    "number": 238863,
+    "data": "1,1,2,3,5,7,10,13,18,24,32,41,54,68,87,111,139,174,218,269,333,410,501,611,745,902,1090,1315,1578,1891,2263,2695,3205,3805,4503,5322,6277,7384,8673,10172,11904,13908,16227,18894,21971,25516,29578,34245,39597,45717,52720,60721,69842,80243,92091,105559,120865,138248",
+    "name": "Number of partitions of n where the difference between consecutive parts is at most 3.",
+    "comment": [
+        "Also the number of partitions of n such that all parts, with the possible exception of the largest are repeated at most three times (by taking conjugates).",
+        "The g.f. for \"max difference d\" is 1 + sum(k>=1, q^k/(1-q^k) * prod(i=1..k-1, (1-q^((d+1)*i))/(1-q^i) ) ), see cross references."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A238863/b238863.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: 1 + sum(k>=1, q^k/(1-q^k) * prod(i=1..k-1, (1-q^(4*i))/(1-q^i) ) ).",
+        "a(n) = Sum_{k=0..3} A238353(n,k). - _Alois P. Heinz_, Mar 09 2014"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(b(n-i*j, i-1), j=0..min(3, n/i))))",
+        "    end:",
+        "g:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(b(n-i*j, i-1), j=1..n/i)))",
+        "    end:",
+        "a:= n-> add(g(n, k), k=0..n):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Mar 09 2014"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, If[i<1, 0, Sum[b[n-i*j, i-1], {j, 0, Min[3, n/i]}]]]; g[n_, i_] := g[n, i] = If[n == 0, 1, If[i<1, 0, Sum[b[n-i*j, i-1], {j, 1, n/i}]]]; a[n_] := Sum[g[n, k], {k, 0, n}]; Table[a[n], {n, 0, 60}] (* _Jean-Fran\u00e7ois Alcover_, Feb 18 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=66;  q = 'q + O('q^N);",
+        "Vec( 1 + sum(k=1, N, q^k/(1-q^k) * prod(i=1,k-1, (1-q^(4*i))/(1-q^i) ) ) )"
+    ],
+    "xref": [
+        "Sequences \"number of partitions with max diff d\": A000005 (d=0, for n>=1), A034296 (d=1), A224956 (d=2), this sequence, A238864 (d=4), A238865 (d=5), A238866 (d=6), A238867 (d=7), A238868 (d=8), A238869 (d=9), A000041 (d --> infinity)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Joerg Arndt_, Mar 08 2014",
+    "references": 10,
+    "revision": 13,
+    "time": "2018-01-09T00:47:25-05:00",
+    "created": "2014-03-08T08:57:02-05:00"
+}

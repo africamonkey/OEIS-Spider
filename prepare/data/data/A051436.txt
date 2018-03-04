@@ -1,0 +1,45 @@
+{
+    "number": 51436,
+    "data": "1,2,5,12,39,111,350,1044,3201,9627,29150,87672,264069,793431,2384450,7159164,21494001,64507827,193589270,580878432,1742897949,5229157551,15688522250,47067483684,141206647401,423627793227,1270900160990,3812732430792,11438264409429",
+    "name": "Number of undirected walks of length n+1 on tetrahedron, visiting n+2 vertices, with n \"corners\", as in A001998, but allowing only rigid motions in 3-space (|G| = 12). Walks are not self-avoiding.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A051436/b051436.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (5,0,-30,25,55,-60,-30,36)."
+    ],
+    "formula": [
+        "n=2m: (3^n+3^m)/2 -2^(n-1)+2^(m-1); n=2m+1: (3^n+3^m)/2 - 2^(n-1) +1.",
+        "G.f.: -(39*x^7-20*x^6-39*x^5+14*x^4+17*x^3-5*x^2-3*x+1) / ((x-1)*(x+1)*(2*x-1)*(3*x-1)*(2*x^2-1)*(3*x^2-1)). - _Colin Barker_, Jul 17 2013"
+    ],
+    "example": [
+        "For n=2 there are three walks that stay in one face and two that visit two faces."
+    ],
+    "maple": [
+        "a:= n-> `if`(irem(n, 2, 'm')=0,",
+        "        (3^n+3^m)/2+2^(m-1), (3^n+3^m)/2+1) -2^(n-1):",
+        "seq(a(n), n=0..35);  # _Alois P. Heinz_, Jul 17 2013"
+    ],
+    "mathematica": [
+        "a[n_?OddQ] := (3^n + 3^((n - 1)/2))/2 - 2^(n - 1) + 1; a[n_?EvenQ] := (3^n + 3^(n/2))/2 - 2^(n - 1) + 2^(n/2 - 1); Table[a[n], {n, 0, 22}] (* _Jean-Fran\u00e7ois Alcover_, Jan 25 2013, from formula *)",
+        "LinearRecurrence[{5,0,-30,25,55,-60,-30,36},{1,2,5,12,39,111,350,1044},40] (* _Harvey P. Dale_, Oct 30 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a051436 n = (3 ^ n + 3 ^ m - 2 ^ n + (1 - r) * 2 ^ m) `div` 2 + r",
+        "            where (m,r) = divMod n 2",
+        "-- _Reinhard Zumkeller_, Jun 30 2013",
+        "(PARI) a(n)=if(n%2, (3^n + 3^((n - 1)/2))/2 + 1, (3^n + 3^(n/2))/2 + 2^(n/2 - 1)) - 2^(n-1) \\\\ _Charles R Greathouse IV_, Feb 10 2017"
+    ],
+    "xref": [
+        "Cf. A001998, A001444, A000079, A000244."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,2",
+    "author": "_Colin Mallows_",
+    "ext": [
+        "Corrected by _T. D. Noe_, Nov 09 2006"
+    ],
+    "references": 2,
+    "revision": 28,
+    "time": "2017-02-10T01:16:40-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

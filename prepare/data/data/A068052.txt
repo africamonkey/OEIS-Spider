@@ -1,0 +1,40 @@
+{
+    "number": 68052,
+    "data": "1,3,15,119,1799,59367,3743271,481693095,123123509927,62989418816679,64491023022979239,132015402419352060071,540829047855347718631591,4430403202865824763042320551,72583450474242118015031400337575",
+    "name": "Start from 1, shift one left and sum mod 2 (bitwise-XOR) to get 3 (11 in binary), then shift two steps left and XOR to get 15 (1111 in binary), then three steps and XOR to get 119 (1110111 in binary), then four steps and so on.",
+    "comment": [
+        "a(n) = each row of A053632 reduced mod 2 and interpreted as a binary number."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A068052/b068052.txt\">Table of n, a(n) for n = 0..64</a>"
+    ],
+    "formula": [
+        "a(0) = 1; for n > 0, a(n) = a(n-1) XOR (2^n)*a(n-1), where XOR is bitwise-XOR (A003987).",
+        "a(n) = A248663(A285101(n)) = A048675(A285102(n)).",
+        "A000120(a(n)) = A285103(n). [Number of ones in binary representation.]",
+        "A080791(a(n)) = A285105(n). [Number of nonleading zeros.]"
+    ],
+    "maple": [
+        "with(gfun,seriestolist); [seq(foo(map(`mod`,seriestolist(series(mul(1+(z^i),i=1..n),z,binomial(n+1,2)+1)),2)), n=0..20)];",
+        "foo := proc(a) local i; add(a[i]*2^(i-1),i=1..nops(a)); end;"
+    ],
+    "program": [
+        "(Scheme, with memoization-macro definec)",
+        "(definec (A068052 n) (if (zero? n) 1 (A003987bi (A068052 (- n 1)) (* (A000079 n) (A068052 (- n 1)))))) ;; A003987bi implements bitwise-XOR (A003987).",
+        "(PARI) a(n) = if(n<1, 1, bitxor(a(n - 1), 2^n*a(n - 1))); \\\\ _Indranil Ghosh_, Apr 15 2017, after formula by _Antti Karttunen_"
+    ],
+    "xref": [
+        "Same sequence shown in binary: A068053.",
+        "Cf. A000120, A003987, A028362 (using + instead of XOR), A048675, A053632, A080791, A248663, A285101, A285102, A285103, A285105."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,2",
+    "author": "_Antti Karttunen_, Feb 13 2002",
+    "ext": [
+        "Formulas added by _Antti Karttunen_, Apr 15 2017"
+    ],
+    "references": 10,
+    "revision": 17,
+    "time": "2017-04-16T00:10:37-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

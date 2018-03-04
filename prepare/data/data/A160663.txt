@@ -1,0 +1,53 @@
+{
+    "number": 160663,
+    "data": "2,5,9,14,19,26,33,41,50,60,70,82,93,105,119,134,147,164,179,197,215,234,251,272,293,314,336,359,381,407,430,456,483,507,535,566,594,623,652,686,714,748,780,812,849,883,918,956,992,1030,1068,1107,1141,1181",
+    "name": "Number of distinct sums that one can obtain by adding two squares among the n first ones.",
+    "comment": [
+        "Essentially the same as A047800: a(n) = A047800(n) - 1.",
+        "Let A be the set of the n first squares (1,4,9,...,n^2). Let A+A be the corresponding sumset (= {a,b,a+b where (a,b) in A^2}). That very sequence describes the number of elements of A+A, relatively to n.",
+        "a(n-1) is the number of distinct positive distances on an n X n pegboard. What is its asymptotic growth? Can it be efficiently computed for large n? - _Charles R Greathouse IV_, Jun 13 2013"
+    ],
+    "reference": [
+        "Melvyn B. Nathanson (1996). \"Additive Number Theory: the Classical Bases\" Graduate Texts in Mathematics. 164. Springer-Verlag. p. 192. ISBN 0-387-94656-X.",
+        "L. G. Schnirelmann (1933). \"\u00dcber additive Eigenschaften von Zahlen\", Math. Ann. 107: 649-690. doi:10.1007/BF01448914.",
+        "Samuel S. Wagstaff, Jr. (1975). \"The Schnirelmann Density of the Sums of Three Squares\" American Mathematical Society."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A160663/b160663.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Additive_number_theory\">Additive number theory</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Schnirelmann_density\">Schnirelmann density</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Edmund_Landau\">Edmund Landau</a>"
+    ],
+    "formula": [
+        "a(n) = card(A+A) where A={k^2} k=1..n and A+A = {a,b,a+b where (a,b) in A^2}.",
+        "Trivially 2n <= a(n) <= n(n+1)/2. - _Charles R Greathouse IV_, Oct 30 2015",
+        "a(n) << n^2/sqrt(log n). - _Charles R Greathouse IV_, Oct 30 2015"
+    ],
+    "example": [
+        "For n = 3, A = {1,4,9}, A+A = {1,4,9} U {2,5,10,8,13,18} thus A+A = {1,2,4,5,8,9,10,13,18}, and hence card(A+A) = 9; a(3) = 9."
+    ],
+    "maple": [
+        "a:= proc(n) local A, i, j; A:= [i^2$i=1..n]; nops([{A[], seq (seq (A[i]+A[j], j=1..i), i=1..nops(A))}[]]) end: seq (a(n), n=1..60); # _Alois P. Heinz_, Jun 16 2009"
+    ],
+    "program": [
+        "(Python)",
+        "def a(n):",
+        "....SUM, SQR = set(), set([x ** 2 for x in range(1, n + 1)])",
+        "....for i in SQR:",
+        "........SUM.add(i)",
+        "........for j in SQR: SUM.add(i + j)",
+        "....return len(SUM)",
+        "# Romain CARRE (romain.carre.2008(AT)enseirb.fr), Apr 16 2010",
+        "(PARI) a(n)=#vecsort(vector(n^2,i,((i-1)\\n)^2+((i-1)%n)^2),,8)-1 \\\\ _Charles R Greathouse IV_, Jun 13 2013"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Romain CARRE (romain.carre.2008(AT)enseirb.fr), May 22 2009",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jun 16 2009"
+    ],
+    "references": 4,
+    "revision": 19,
+    "time": "2015-12-18T18:17:21-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

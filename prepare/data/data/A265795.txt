@@ -1,0 +1,37 @@
+{
+    "number": 265795,
+    "data": "2,2,5,7,11,59,127,163,233,653,991,1597",
+    "name": "Denominators of primes-only best approximates (POBAs) to sqrt(8); see Comments.",
+    "comment": [
+        "Suppose that x > 0. A fraction p/q of primes is a primes-only best approximate (POBA), and we write \"p/q in B(x)\", if 0 < |x - p/q| < |x - u/v| for all primes u and v such that v < q, and also, |x - p/q| < |x - p'/q| for every prime p' except p. Note that for some choices of x, there are values of q for which there are two POBAs. In these cases, the greater is placed first; e.g., B(3) = (7/2, 5/2, 17/5, 13/5, 23/7, 19/7, ...). See A265759 for a guide to related sequences."
+    ],
+    "example": [
+        "The POBAs to sqrt(8) start with 7/2, 5/2, 13/5, 19/7, 31/11, 167/59, 359/127, 461/163, 659/233. For example, if p and q are primes and q > 59, then 167/59 is closer to sqrt(8) than p/q is."
+    ],
+    "mathematica": [
+        "x = Sqrt[8]; z = 1000; p[k_] := p[k] = Prime[k];",
+        "t = Table[Max[Table[NextPrime[x*p[k], -1]/p[k], {k, 1, n}]], {n, 1, z}];",
+        "d = DeleteDuplicates[t]; tL = Select[d, # > 0 &] (* lower POBA *)",
+        "t = Table[Min[Table[NextPrime[x*p[k]]/p[k], {k, 1, n}]], {n, 1, z}];",
+        "d = DeleteDuplicates[t]; tU = Select[d, # > 0 &] (* upper POBA *)",
+        "v = Sort[Union[tL, tU], Abs[#1 - x] > Abs[#2 - x] &];",
+        "b = Denominator[v]; s = Select[Range[Length[b]], b[[#]] == Min[Drop[b, # - 1]] &];",
+        "y = Table[v[[s[[n]]]], {n, 1, Length[s]}] (* POBA, A265794/A265795 *)",
+        "Numerator[tL]   (* A265790 *)",
+        "Denominator[tL] (* A265791 *)",
+        "Numerator[tU]   (* A265792 *)",
+        "Denominator[tU] (* A265793 *)",
+        "Numerator[y]    (* A265794 *)",
+        "Denominator[y]  (* A265795 *)"
+    ],
+    "xref": [
+        "Cf. A000040, A010466, A265759, A265790, A265791, A265792, A265793, A265794."
+    ],
+    "keyword": "nonn,frac,more",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Dec 29 2015",
+    "references": 7,
+    "revision": 10,
+    "time": "2016-01-02T18:16:47-05:00",
+    "created": "2016-01-02T04:35:00-05:00"
+}

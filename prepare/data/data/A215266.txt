@@ -1,0 +1,32 @@
+{
+    "number": 215266,
+    "data": "1,1,4,26,258,3346,54108,1054256,24161966,634230122,18806776982,622011916184,22754818956246,912075762692584,39755634279964662,1872279469323840472,94783193260373606758,5135585509536795416348,296656123838796109849526,18200829821539972354967252",
+    "name": "Number of solid standard Young tableaux of cylindrical shape lambda X 2, where lambda ranges over all partitions of n.",
+    "link": [
+        "S. B. Ekhad, D. Zeilberger, <a href=\"https://arxiv.org/abs/1202.6229\">Computational and Theoretical Challenges on Counting Solid Standard Young Tableaux</a>, arXiv:1202.6229v1 [math.CO], 2012",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau\">Young tableau</a>"
+    ],
+    "maple": [
+        "b:= proc(l) option remember; local m; m:= nops(l);",
+        "      `if`({map(x-> x[], l)[]}minus{0}={}, 1, add(add(`if`(l[i][j]>",
+        "      `if`(i=m or nops(l[i+1])<j, 0, l[i+1][j]) and l[i][j]>",
+        "      `if`(nops(l[i])=j, 0, l[i][j+1]), b(subsop(i=subsop(",
+        "       j=l[i][j]-1, l[i]), l)), 0), j=1..nops(l[i])), i=1..m))",
+        "    end:",
+        "g:= proc(n, i, l) `if`(n=0 or i=1, b(map(x->[2$x], [l[], 1$n])),",
+        "       add(g(n-i*j, i-1, [l[], i$j]), j=0..n/i))",
+        "    end:",
+        "a:= n-> g(n, n, []):",
+        "seq(a(n), n=0..12);"
+    ],
+    "xref": [
+        "Column k=2 of A215204."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 07 2012",
+    "references": 1,
+    "revision": 14,
+    "time": "2017-07-19T20:39:43-04:00",
+    "created": "2012-08-07T09:25:13-04:00"
+}

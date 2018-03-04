@@ -1,0 +1,52 @@
+{
+    "number": 207966,
+    "data": "3,4,5,6,7,8,10,11,13,14,17,19,20,22,23,25,26,29,31,34,35,37,38,41,43,46,47,49,53,55,58,59,61,62,65,67,71,73,74,77,79,82,83,85,86,89,92,94,95,97,98,101,103,106,107,109,110,113,115,118,121,122,125,127",
+    "name": "Numbers that match irreducible polynomomials over {0,1,2}.",
+    "comment": [
+        "Each n>1 matches a polynomial having coefficients in",
+        "{0,1,2}, determined by the prime factorization of n.",
+        "Write n=p(1)^e(1) * p(2)^e(2) * ... * p(k)^e(k).  The",
+        "matching polynomial is then",
+        "p(n,x) = e(1) + e(2)x + e(3)x^2 + ... + e(k)x^k.",
+        "...Identities:",
+        "p(m*n)=p(m,x)+p(n,x)",
+        "p(m*n)=p(GCD(m,n),x)+p(LCM(m,n),x).",
+        "For an analogous enumeration of polynomials over {0,1}, see A206284.  \"Irreducible\" refers to irreducibility over the field of rational numbers."
+    ],
+    "example": [
+        "Polynomials having coefficients in {0,1,2} are",
+        "matched to the positive integers as follows:",
+        "n ... p[n,x] .. irreducible",
+        "1 ... 1 ....... no",
+        "2 ... 2 ....... no",
+        "3 ... x ....... yes",
+        "4 ... x+1 ..... yes",
+        "5 ... x+2 ..... yes",
+        "6 ... 2x ...... yes",
+        "7 ... 2x+1 .... yes",
+        "8 ... 2x+2 .... yes",
+        "9 ... x^2 ..... no",
+        "10 .. 1+x^2 ... yes"
+    ],
+    "mathematica": [
+        "t = Table[IntegerDigits[n, 3], {n, 1, 850}];",
+        "b[n_] := Reverse[Table[x^k, {k, 0, n}]]",
+        "p[n_, x_] := t[[n]].b[-1 + Length[t[[n]]]]",
+        "Table[p[n, x], {n, 1, 15}]",
+        "u = {}; Do[n++; If[IrreduciblePolynomialQ[p[n, x]],",
+        "  AppendTo[u, n]], {n, 300}]; u  (* A207966 *)",
+        "Complement[Range[200], u]        (* A207967 *)",
+        "b[n_] := FromDigits[IntegerDigits[u, 3][[n]]]",
+        "Table[b[n], {n, 1, 50}]          (* A207968 *)"
+    ],
+    "xref": [
+        "Cf. A207967, A207968, A206284."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Feb 21 2012",
+    "references": 5,
+    "revision": 6,
+    "time": "2012-03-30T18:58:13-04:00",
+    "created": "2012-02-24T13:48:07-05:00"
+}

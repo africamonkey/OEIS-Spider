@@ -1,0 +1,46 @@
+{
+    "number": 202617,
+    "data": "1,1,3,19,185,2441,40747,823691,19564785,534145105,16482667091,567343245635,21552042260905,895664877901145,40422799315249275,1968883362773653051,102942561775293158369,5750760587905912310177,341848844954020959953059,21545207157567497255044979",
+    "name": "E.g.f. satisfies: A(x) = exp( x*(1 + A(x)^2)/2 ).",
+    "comment": [
+        "Compare to e.g.f. F(x) of A007889: F(x) = exp(x*(1 + F(x))/2), where A007889(n) = number of intransitive (or alternating) trees: vertices are [0,n] and for no i<j<k are both (i,j) and (j,k) edges.",
+        "Related sequence: A058014(n) = number of labeled trees with n+1 nodes such that the degrees of all nodes, excluding the first node, are odd."
+    ],
+    "formula": [
+        "E.g.f. A(x) equals the formal inverse of function 2*log(x)/(1+x^2).",
+        "E.g.f.: exp( Sum_{n>=1} n^(n-1) * cosh(n*x) * x^n / n! ). - _Paul D. Hanna_, Nov 20 2012",
+        "E.g.f.: exp(G(x)) where G(x) = x/(1 - tanh(G(x))) is the e.g.f. of A214225. - _Paul D. Hanna_, Nov 20 2012",
+        "E.g.f. satisfies: A(x) = G(x*A(x)) where G(x) = A(x/G(x)) is the e.g.f. of A058014.",
+        "a(n) = (1/2^n)*Sum_{k=0..n} C(n,k)*(2*k+1)^(n-1).",
+        "Powers of e.g.f.:",
+        "If A(x)^p = Sum_{n>=0} a(n,p)*x^n/n! then a(n,p) = (1/2^n)* Sum_{k=0..n} binomial(n,k)*p*(2*k+p)^(n-1).",
+        "a(n) ~ sqrt(1+c) * n^(n-1) / (2 * exp(n) * c^(n+1/2)), where c = LambertW(exp(-1)) = 0.278464542761... (see A202357). - _Vaclav Kotesovec_, Jan 10 2014",
+        "E.g.f.: sqrt(-LambertW(-x*exp(x))/x). - _Vaclav Kotesovec_, Jan 10 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 3*x^2/2! + 19*x^3/3! + 185*x^4/4! + 2441*x^5/5! +...",
+        "where log(A(x)) = x*(1 + A(x)^2)/2 and",
+        "log(A(x)) = x + 2*x^2/2! + 12*x^3/3! + 112*x^4/4! + 1440*x^5/5! + 23616*x^6/6! +...",
+        "A(x)^2 = 1 + 2*x + 8*x^2/2! + 56*x^3/3! + 576*x^4/4! + 7872*x^5/5! + 134656*x^6/6! +..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Sqrt[-ProductLog[-E^x*x]/x], {x, 0, 20}], x] * Range[0, 20]! (* _Vaclav Kotesovec_, Jan 10 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=local(A=1+x); for(i=0, n, A=exp(x*(1+A^2)/2 +x*O(x^n))); n!*polcoeff(A, n)",
+        "(PARI) /* Coefficients of A(x)^p are given by: */",
+        "{a(n, p=1)=(1/2^n)*sum(k=0, n, binomial(n, k)*p*(2*k+p)^(n-1))}",
+        "(PARI) a(n)=n!*polcoeff(exp(sum(k=1,n,k^(k-1)*cosh(k*x +x*O(x^n))*x^k/k!) +x*O(x^n)),n)",
+        "for(n=0,25,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Nov 20 2012"
+    ],
+    "xref": [
+        "Cf. A007889, A058014, A214225, A138860, A202357."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 21 2011",
+    "references": 1,
+    "revision": 21,
+    "time": "2016-07-19T11:33:31-04:00",
+    "created": "2011-12-21T17:25:32-05:00"
+}

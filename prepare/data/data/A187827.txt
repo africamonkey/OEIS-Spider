@@ -1,0 +1,34 @@
+{
+    "number": 187827,
+    "data": "1,1,5,36,325,3468,42519,590268,9201740,160150252,3095440553,66068011710,1547572760559,39529002357409,1094096683131616,32622859912512090,1042350065213470532,35521574976088978133,1285782300453328211074,49256935742079848796102",
+    "name": "G.f. satisfies: A(x) = Sum_{n>=0} (1 - (1 - x*A(x))^n)^n.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A187827/b187827.txt\">Table of n, a(n) for n = 0..140</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: A(x) = Sum_{n>=1} (1-x*A(x))^n * (1 - (1-x*A(x))^n)^(n-1).",
+        "a(n) ~ c * n^n / (exp(n) * (log(2))^(2*n)), where c = 3.7860088... . - _Vaclav Kotesovec_, Nov 08 2014"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 5*x^2 + 36*x^3 + 325*x^4 + 3468*x^5 + 42519*x^6 +...",
+        "where the g.f. satisfies the identities:",
+        "(1) A(x) = 1 + x*A(x) + (1 - (1-x*A(x))^2)^2 + (1 - (1-x*A(x))^3)^3 + (1 - (1-x*A(x))^4)^4 + (1 - (1-x*A(x))^5)^5 +...",
+        "(2) A(x) = (1-x*A(x)) + (1-x*A(x))^2*(1 - (1-x*A(x))^2) + (1-x*A(x))^3*(1 - (1-x*A(x))^3)^2 + (1-x*A(x))^4*(1 - (1-x*A(x))^4)^3 + (1-x)^5*(1 - (1-x*A(x))^5)^4 +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(q, A=1); for(i=1,n,q=1/(1-x*A+x*O(x^n));A=sum(k=0, n+1, q^(-k^2)*(q^k-1)^k)); polcoeff(A, n)}",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(PARI) {a(n)=local(q, A=1); for(i=1,n,q=1/(1-x*A+x*O(x^n));A=sum(k=1, n+1, q^(-k^2)*(q^k-1)^(k-1))); polcoeff(A, n)}",
+        "for(n=0,20,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A220353, A187826."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 27 2012",
+    "references": 3,
+    "revision": 17,
+    "time": "2014-11-08T07:25:40-05:00",
+    "created": "2012-12-27T09:00:04-05:00"
+}

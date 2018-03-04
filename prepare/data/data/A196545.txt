@@ -1,0 +1,53 @@
+{
+    "number": 196545,
+    "data": "1,1,2,5,12,34,92,277,806,2500,7578,24198,75370,243800,776494,2545777,8223352,27221690,88984144,296856400,979829772,3287985078,10934749788,36912408342,123519937044,418650924886,1408867195252,4794243983204,16205061000480",
+    "name": "Number of weakly ordered plane trees with n leaves.",
+    "comment": [
+        "A weakly ordered plane tree (p-tree) of weight n > 1 is a sequence (t_1, t_2, ..., t_k) where k > 1 and for some integer partition y of length k and sum n, the term t_i is a p-tree of weight y_i, for 1 \u2264 i \u2264 k. For n = 1, the only p-tree is a single node.",
+        "This definition precludes nodes with only one branch, and non-leaf nodes have weight 0. If the above is changed so that k>=1 and y is partition of n-1, we get the trees counted by A093637. Binary p-trees are counted by A000992."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A196545/b196545.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Gus Wiseman, <a href=\"http://www.youtube.com/watch?v=r49O36wKCNM\">All 277 weakly ordered plane trees of weight 8</a>"
+    ],
+    "formula": [
+        "a(1) = 1, a(n>1) = Sum_y Prod_i a(y_i) where the sum is over all partitions of n with at least two parts.",
+        "The generating function is characterized by the formal equation 1+2*S(x) = x+1/P(x) where S(x) = Sum_n>0 a(n)x^n and P(x) = Prod_n>0 (1-a(n)x^n) are the formal infinite series and formal infinite product with a(n) as coefficients and roots respectively."
+    ],
+    "example": [
+        "Let o denote a single node. The 12 p-trees of weight 5 are: ((((oo)o)o)o), (((ooo)o)o), (((oo)(oo))o), (((oo)oo)o), ((oooo)o), (((oo)o)(oo)), ((ooo)(oo)), (((oo)o)oo), ((ooo)oo), ((oo)(oo)o), ((oo)ooo), (ooooo)."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember;",
+        "      `if`(i>n, 0, a(i)*`if`(i=n, 1, b(n-i, i)))+`if`(i>1, b(n, i-1), 0)",
+        "    end:",
+        "a:= proc(n) option remember;",
+        "      `if`(n=1, 1, add(a(k)*b(n-k, min(n-k, k)), k=1..n-1))",
+        "    end:",
+        "seq(a(n), n=1..40);  # _Alois P. Heinz_, Jul 06 2012"
+    ],
+    "mathematica": [
+        "PTNum[n_] := PTNum[n] =",
+        "    If[n === 1, 1, Plus @@ Function[y,",
+        "    Times @@ PTNum /@ y] /@ Rest[Partitions[n]]]; Array[PTNum, 20]",
+        "b[n_, i_] := b[n, i] = If[i>n, 0, a[i]*If[i == n, 1, b[n-i, i]]] + If[i>1, b[n, i-1], 0]; a[n_] := a[n] = If[n == 1, 1, Sum[a[k]*b[n-k, Min[n-k, k] ], {k, 1, n-1}]]; Table[a[n], {n, 1, 40}] (* _Jean-Fran\u00e7ois Alcover_, Nov 05 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@cached_function",
+        "def A196545(n):",
+        "....if n == 1: return 1",
+        "....return sum(prod(A196545(t) for t in p) for p in Partitions(n,min_length=2))",
+        "# _D. S. McNeil_, Oct 03 2011"
+    ],
+    "xref": [
+        "Cf. A000041, A063834, A093637, A000992."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Oct 03 2011",
+    "references": 20,
+    "revision": 42,
+    "time": "2016-06-02T09:40:01-04:00",
+    "created": "2011-10-03T20:38:15-04:00"
+}

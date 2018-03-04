@@ -1,0 +1,63 @@
+{
+    "number": 7500,
+    "id": "M0657",
+    "data": "2,3,5,7,11,13,17,31,37,71,73,79,97,101,107,113,131,149,151,157,167,179,181,191,199,311,313,337,347,353,359,373,383,389,701,709,727,733,739,743,751,757,761,769,787,797,907,919,929,937,941,953,967,971,983,991,1009,1021",
+    "name": "Primes whose reversal in base 10 is also prime (called \"palindromic primes\" by D. Wells, although that name usually refers to A002385). Also called reversible primes.",
+    "comment": [
+        "The numbers themselves need not be palindromes.",
+        "The range is a subset of the range of A071786. - _Reinhard Zumkeller_, Jul 06 2009",
+        "Number of terms less than 10^n: 4, 13, 56, 260, 1759, 11297, 82439, 618017, 4815213, 38434593, ..., . - _Robert G. Wilson v_, Jan 08 2015"
+    ],
+    "reference": [
+        "Roozbeh Hazrat, Mathematica: A Problem-Centered Approach, Springer 2010, pp. 39, 131-132",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "D. Wells, The Penguin Dictionary of Curious and Interesting Numbers. Penguin Books, NY, 1986, 134."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A007500/b007500.txt\">Table of n, a(n) for n=1..10000</a>"
+    ],
+    "maple": [
+        "revdigs:= proc(n)",
+        "local L,nL,i;",
+        "L:= convert(n,base,10);",
+        "nL:= nops(L);",
+        "add(L[i]*10^(nL-i),i=1..nL);",
+        "end:",
+        "Primes:= select(isprime,{2,seq(2*i+1,i=1..5*10^5)}):",
+        "Primes intersect map(revdigs,Primes); # _Robert Israel_, Aug 14 2014"
+    ],
+    "mathematica": [
+        "Select[ Prime[ Range[ 168 ] ], PrimeQ[ FromDigits[ Reverse[ IntegerDigits[ # ] ] ] ]& ] (* _Zak Seidov_, corrected by _T. D. Noe_ *)",
+        "Select[Prime[Range[1000]],PrimeQ[IntegerReverse[#]]&] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Aug 15 2016 *)"
+    ],
+    "program": [
+        "(MAGMA) [ p: p in PrimesUpTo(1030) | IsPrime(Seqint(Reverse(Intseq(p)))) ];  // _Bruno Berselli_, Jul 08 2011",
+        "(Haskell)",
+        "a007500 n = a007500_list !! (n-1)",
+        "a007500_list = filter ((== 1) . a010051 . a004086) a000040_list",
+        "-- _Reinhard Zumkeller_, Oct 14 2011",
+        "(PARI) is_A007500(n)={ isprime(n) & is_A095179(n)} \\\\ _M. F. Hasler_, Jan 13 2012",
+        "(Python)",
+        "from sympy import prime, isprime",
+        "A007500 = [prime(n) for n in xrange(1,10**6) if isprime(int(str(prime(n))[::-1]))] # _Chai Wah Wu_, Aug 14 2014"
+    ],
+    "xref": [
+        "Cf. A006567, A007628.",
+        "Cf. A002385 (primes that are palindromes in base 10).",
+        "Equals A002385 union A006567.",
+        "Complement of A076056 with respect to A000040. [From _Reinhard Zumkeller_, Jul 06 2009]",
+        "Cf. A004086, A010051, A000040."
+    ],
+    "keyword": "base,nonn,nice,changed",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, _Robert G. Wilson v_",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org), Oct 31 2000",
+        "Added further terms to the sequence Avik Roy (avik_3.1416(AT)yahoo.co.in), Jan 16 2009. Checked by _N. J. A. Sloane_, Jan 20 2009.",
+        "Third reference added by _Harvey P. Dale_, Oct 17 2011"
+    ],
+    "references": 66,
+    "revision": 48,
+    "time": "2018-03-02T02:46:44-05:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

@@ -1,0 +1,59 @@
+{
+    "number": 756,
+    "data": "1,2,3,5,13,41,157,699,3561,20401,129881,909523,6948269,57504201,512516565,4894172027,49851629137,539521049441,6182455849009,74781598946211,952148890494165,12729293006112121,178281831561868013",
+    "name": "Boustrophedon transform of sequence 1,1,0,0,0,0,...",
+    "reference": [
+        "Ludwig Seidel, \u00dcber eine einfache Entstehungsweise der Bernoulli'schen Zahlen und einiger verwandten Reihen, Sitzungsberichte der mathematisch-physikalischen Classe der k\u00f6niglich bayerischen Akademie der Wissenschaften zu M\u00fcnchen, volume 7 (1877), 157-187."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A000756/b000756.txt\">Table of n, a(n) for n = 0..400</a>",
+        "S. N. Gladkovskii, <a href=\"http://arxiv.org/abs/1208.2243\">Continued fraction expansion for function sec(x) + tan(x)</a>,  arXiv:1208.2243v1 [math.HO], Aug 09 2012",
+        "S. N. Gladkovskii, <a href=\"https://www.researchgate.net/publication/232870963\">On the continued fraction expansion for functions 1/sin(x) + cot(x) and sec(x) + tan(x)</a>, Nov 12 2012",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>",
+        "J. Millar, N. J. A. Sloane and N. E. Young, A new operation on sequences: the Boustrophedon on transform, J. Combin. Theory, 17A 44-54 1996 (<a href=\"http://neilsloane.com/doc/bous.txt\">Abstract</a>, <a href=\"http://neilsloane.com/doc/bous.pdf\">pdf</a>, <a href=\"http://neilsloane.com/doc/bous.ps\">ps</a>).",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Boustrophedon_transform\">Boustrophedon_transform</a>",
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "formula": [
+        "E.g.f.: (1+x)*( tan(x) + sec(x) ).",
+        "From _Sergei N. Gladkovskii_ Dec 03 2012 (Start)",
+        "E.g.f.: (1+x)*( 1 + x/U(0) ); U(k)= 4k + 1 - x/(2-x/(4k + 3 + x/(2+x/U(k+1) )));(continued fraction, , 4-step).",
+        "E.g.f.: (1+x)*(1 + 2*x/(U(0) - x) ) where U(k)= 4*k + 2 - x^2/U(k+1);(continued fraction, 1-step).",
+        "(End)",
+        "a(n) ~ n! * (Pi+2)*(2/Pi)^(n+1). - _Vaclav Kotesovec_, Oct 02 2013",
+        "For n > 0: a(n) = A000111(n) + n*A000111(n-1). - _Reinhard Zumkeller_, Nov 03 2013"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1+x)*(Tan[x]+1/Cos[x]), {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Oct 02 2013 *)",
+        "t[n_, 0] := If[n < 2, 1, 0]; t[n_, k_] := t[n, k] = t[n, k - 1] + t[n - 1, n - k]; a[n_] := t[n, n]; Array[a, 30, 0] (* _Jean-Fran\u00e7ois Alcover_, Feb 12 2016 *)"
+    ],
+    "program": [
+        "(Sage) Algorithm of L. Seidel (1877)",
+        "def A000756_list(n) :",
+        "    R = []; A = {-1:1, 0:1}; k = 0; e = 1",
+        "    for i in (0..n) :",
+        "        Am = 0; A[k + e] = 0; e = -e",
+        "        for j in (0..i) : Am += A[k]; A[k] = Am; k += e",
+        "        R.append(A[-i//2] if i%2 == 0 else A[i//2])",
+        "    return R",
+        "A000756_list(22) # Peter Luschny, May 27 2012",
+        "(PARI)",
+        "x='x+O('x^66);",
+        "Vec(serlaplace((1+x)*(tan(x)+ 1/cos(x))))",
+        "/* _Joerg Arndt_, May 28 2012 */",
+        "(Haskell)",
+        "a000756 n = sum $ zipWith (*) (a109449_row n) (1 : 1 : [0, 0 ..])",
+        "-- _Reinhard Zumkeller_, Nov 03 2013"
+    ],
+    "xref": [
+        "Cf. A109449."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_.",
+    "references": 1,
+    "revision": 31,
+    "time": "2016-02-12T07:54:26-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

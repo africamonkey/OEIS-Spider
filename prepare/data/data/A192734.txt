@@ -1,0 +1,50 @@
+{
+    "number": 192734,
+    "data": "7,21,273,16401,1048593,4295032833,1099512676353,9007199256838145,302231455185132270387201,1208944266358702884257793,1329227995784915872903807060297121793,1393796574908163946347162983661240005427201",
+    "name": "Smallest number having binary weight of 3 and n distinct prime factors",
+    "comment": [
+        "Written in binary, these numbers have exactly three 1 bits and the other bits are all 0s. This means that these numbers are of the sum of 1 plus two larger distinct powers of 2. - From Alonso del Arte, Jul 08 2011",
+        "a(n) > A002110(n). [_Reinhard Zumkeller_, Jul 09 2011]",
+        "Sequence is not monotone: a(12) > a(13). [_Charles R Greathouse IV_, Jul 11 2011]"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A192734/b192734.txt\">Table of n, a(n) for n = 1..14</a>"
+    ],
+    "mathematica": [
+        "list = {7}; For[max = 1; n = 2, n < 120,",
+        "For[m = 0, m < n,",
+        "  tal = 2*(2^n + 2^m) + 1; num = PrimeNu[tal];",
+        "  If[num > max, AppendTo[list, tal]; max = num]",
+        "  , m++], n++] (* Sarnbratt *)",
+        "A084468 = Flatten[Table[2^m + 2^n + 1, {m, 2, 80}, {n, m - 1}]]; Flatten[Table[Take[Select[A084468, PrimeNu[#] == n &], 1], {n, 10}]] (* _Alonso del Arte_, Jul 08 2011 *)"
+    ],
+    "program": [
+        "(PARI) a(n)={",
+        "  my(t);",
+        "  for(a=2,9e9,",
+        "    t=1+1<<a;",
+        "    for(b=1,a-1,",
+        "      if(omega(t+1<<b)==n,return(t+1<<b))",
+        "    )",
+        "  )",
+        "}; \\\\ _Charles R Greathouse IV_, Jul 08 2011",
+        "(Haskell)",
+        "a192734 n = head [x | x <- [2^u + 2^v + 1 | u <- [2..], v <- [1..u-1]],",
+        "                      a001221 x == n]",
+        "-- _Reinhard Zumkeller_, Jun 14 2015, Jul 09 2011"
+    ],
+    "xref": [
+        "Cf. A084468, A001221."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Johan S\u00e4rnbratt_, Jul 08 2011",
+    "ext": [
+        "a(9) corrected by _Charles R Greathouse IV_, Jul 08 2011",
+        "a(12) from _Charles R Greathouse IV_, Jul 11 2011"
+    ],
+    "references": 1,
+    "revision": 24,
+    "time": "2015-06-17T02:04:46-04:00",
+    "created": "2011-07-08T21:22:13-04:00"
+}

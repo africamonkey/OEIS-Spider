@@ -1,0 +1,43 @@
+{
+    "number": 251966,
+    "data": "4,14,18,27,123,256,3125,6556,6566,46656,823543,16777216,387420489,10000000000,285311670611,8916100448256,95367431640610,95367431640640,302875106592253,11112006825558016,437893890380859375,18446744073709551616,827240261886336764177",
+    "name": "Numbers representable as both b^c - b + c and x^y + x - y, where b, c, x, y are integers greater than 1.",
+    "comment": [
+        "A000312 except 1 is a subsequence.",
+        "Terms that are not in A000312: 14, 18, 123, 6556, 6566, 95367431640610, 95367431640640."
+    ],
+    "example": [
+        "a(5) = 123 = 2^7 + 2 - 7 = 5^3 - 5 + 3."
+    ],
+    "mathematica": [
+        "Clear[b0, c0, x0, y0]; m = 100; max = 2^m; tb = Flatten[Table[b0[bc = b^c - b + c ] = b; c0[bc] = c; bc, {b, 2, m}, {c, 2, m}]]; tx = Flatten[Table[x0[xy = x^y + x - y] = x; y0[xy] = y; xy, {x, 2, m}, {y, 2, m}]]; inter = Intersection[Select[tb, # <= max &], Select[tx, # <= max &]]; Table[Print[n = inter[[k]], \" b = \", b0[n], \" c = \", c0[n], \" x = \", x0[n], \" y = \", y0[n]]; n, {k, Length[inter]}] (* _Jean-Fran\u00e7ois Alcover_, Mar 23 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "TOP = 100000000",
+        "a = [0]*TOP",
+        "for y in xrange(2, TOP/2):",
+        "  if 2**y+2-y>=TOP: break",
+        "  for x in xrange(2, TOP/2):",
+        "    k = x**y+x-y",
+        "    if k>=TOP: break",
+        "    if k>=0: a[k]=1",
+        "for y in xrange(2, TOP/2):",
+        "  if 2**y-2+y>=TOP: break",
+        "  for x in xrange(2, TOP/2):",
+        "    k = x**y-x+y",
+        "    if k>=TOP: break",
+        "    if k>=0: a[k]|=2",
+        "print [n for n in xrange(TOP) if a[n]==3]"
+    ],
+    "xref": [
+        "Cf. A000312, A255535."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, Mar 21 2015",
+    "references": 0,
+    "revision": 16,
+    "time": "2015-03-27T23:25:10-04:00",
+    "created": "2015-03-27T23:25:10-04:00"
+}

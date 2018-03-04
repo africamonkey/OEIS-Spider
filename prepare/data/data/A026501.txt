@@ -1,0 +1,39 @@
+{
+    "number": 26501,
+    "data": "1,2,3,4,5,6,7,8,9,10,12,13,15,16,18,21,22,24,25,28,30,33,37,40,42,45,48,57,58,60,70,72,78,85,88,93,100,102,105,112,120,130,133,145,148,165,168,177,190,210,217,221,232,240,253,254,262,263,267,273,277,280",
+    "name": "a(n) = least positive integer > a(n-1) and not a(j)*a(k) + a(k)*a(i) + a(i)*a(j) for 1<=i<j<k<n.",
+    "comment": [
+        "Unlike A000926, this sequence is infinite. The first term not in A000926 is a(37) = 100. - _Ivan Neretin_, Jul 29 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A026501/b026501.txt\">Table of n, a(n) for n = 1..4000</a>"
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "Allowed:= {$1..N}:",
+        "for count from 1 while Allowed <> {} do",
+        "  a:= min(Allowed);",
+        "  A[count]:= a;",
+        "  Allowed:= Allowed minus{a, seq(seq(A[i]*A[j]+(A[i]+A[j])*a,j=1..i-1),i=1..count-1)};",
+        "od:",
+        "seq(A[i],i=1..count-1); # _Robert Israel_, Aug 11 2015"
+    ],
+    "program": [
+        "(PARI) oka(va, nv) = {for (i=1, nv, for (j=i+1, nv, for (k=j+1, nv, if (va[nv] == va[j]*va[k] + va[k]*va[i] + va[i]*va[j], return (0));););); return (1);}",
+        "finda(va) = {na = vecmax(va) + 1; va = concat(va, na); while(! oka(va, #va), va[#va] = na++); na;}",
+        "lista(nn) = {va = [1]; print1(1, \", \"); for (n=1, nn, na = finda(va); print1(na, \", \"); va = concat(va, na);); va;} \\\\ _Michel Marcus_, Aug 10 2015"
+    ],
+    "xref": [
+        "Cf. A000926."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "More terms from _Jud McCranie_"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2015-08-11T20:42:59-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

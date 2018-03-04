@@ -1,0 +1,41 @@
+{
+    "number": 285710,
+    "data": "1,2,3,4,5,6,7,8,9,11,13,14,16,17,19,21,23,25,27,28,29,31,32,37,41,43,47,49,53,59,61,62,64,67,71,73,79,81,83,89,97,101,103,107,109,113,121,124,125,127,128,131,137,139,149,151,157,163,167,169,173,179,181,191,193,197,199,211,223,227,229,233,237",
+    "name": "Numbers n for which A000010(n) = A285699(n); positions of zeros in A285709.",
+    "comment": [
+        "After a(1) = 1, also numbers n such that A051953(n) = A079277(n)."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A285710/b285710.txt\">Table of n, a(n) for n = 1..6672</a>"
+    ],
+    "mathematica": [
+        "Flatten@ Position[#, 0] &@ Table[EulerPhi@ n - (n - If[n <= 2, n - 1, Module[{k = n - 2, e = Floor@ Log2@ n}, While[PowerMod[n, e, k] != 0, k--]; k]]), {n, 240}] (* _Michael De Vlieger_, Apr 26 2017 *)"
+    ],
+    "program": [
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A285710 (ZERO-POS 1 1 A285709))",
+        "(Python)",
+        "from sympy import divisors, totient",
+        "from sympy.ntheory.factor_ import core",
+        "def a007947(n): return max(list(filter(lambda i: core(i) == i, divisors(n))))",
+        "def a079277(n):",
+        "    k=n - 1",
+        "    while True:",
+        "        if a007947(k*n) == a007947(n): return k",
+        "        else: k-=1",
+        "def a285699(n): return 1 if n<2 else n - a079277(n)",
+        "print [n for n in xrange(1, 301) if totient(n) == a285699(n)] # _Indranil Ghosh_, Apr 26 2017"
+    ],
+    "xref": [
+        "Positions of zeros in A285709.",
+        "Cf. A000010, A051953, A079277, A208815, A285699.",
+        "Cf. A000961 (a subsequence)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Apr 26 2017",
+    "references": 6,
+    "revision": 14,
+    "time": "2017-04-26T21:49:41-04:00",
+    "created": "2017-04-26T21:49:41-04:00"
+}

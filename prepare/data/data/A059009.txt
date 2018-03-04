@@ -1,0 +1,59 @@
+{
+    "number": 59009,
+    "data": "0,2,5,6,8,11,13,14,17,18,20,23,24,27,29,30,32,35,37,38,41,42,44,47,49,50,52,55,56,59,61,62,65,66,68,71,72,75,77,78,80,83,85,86,89,90,92,95,96,99,101,102,105,106,108,111,113,114,116,119,120,123,125,126,128,131",
+    "name": "Numbers having an odd number of zeros in their binary expansion.",
+    "link": [
+        "Indranil Ghosh, <a href=\"/A059009/b059009.txt\">Table of n, a(n) for n = 0..25000</a> (terms 0..1000 from T. D. Noe)"
+    ],
+    "formula": [
+        "a(0) = 0, a(2n) = -a(n) + 6n + 1, a(2n+1) = a(n) + 2n + 2. a(n) = 2n + 1/2(1-(-1)^A023416(n)) = 2n + A059448(n). - _Ralf Stephan_, Sep 17 2003"
+    ],
+    "example": [
+        "18 is in the sequence because 18 = 10010_2. '10010' has three zeros. - _Indranil Ghosh_, Feb 04 2017"
+    ],
+    "maple": [
+        "a:= proc(n) option remember;",
+        "  if n::even then -a(n/2) + 3*n + 1 else a((n-1)/2) + n + 1 fi",
+        "end proc:",
+        "a(0):= 0:",
+        "seq(a(n),n=0..100); # _Robert Israel_, Feb 23 2016"
+    ],
+    "mathematica": [
+        "Select[Range[0,150],OddQ[Count[IntegerDigits[#,2],0]]&] (* _Harvey P. Dale_, Oct 22 2011 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=hammingweight(bitneg(n,#binary(n)))%2 \\\\ _Charles R Greathouse IV_, Mar 26 2013",
+        "(Haskell)",
+        "a059009 n = a059009_list !! (n-1)",
+        "a059009_list = filter (odd . a023416) [1..]",
+        "-- _Reinhard Zumkeller_, Jan 21 2014",
+        "(Python)",
+        "i=j=0",
+        "while j<=25000:",
+        "....if bin(i)[2:].count(\"0\")%2==1:",
+        "........print str(j)+\" \"+str(i)",
+        "........j+=1",
+        "....i+=1 # _Indranil Ghosh_, Feb 04 2017",
+        "(R)",
+        "maxrow <- 4 # by choice",
+        "onezeros <- 1",
+        "for(m in 1:(maxrow+1)){",
+        "  row <- onezeros[2^(m-1):(2^m-1)]",
+        "  onezeros <- c(onezeros, c(1-row, row) )",
+        "}",
+        "a <- which(onezeros == 0)",
+        "a",
+        "# _Yosu Yurramendi_, Mar 28 2017"
+    ],
+    "xref": [
+        "Cf. A000069, A001969, A059010, A059011, A059012, A059013, A059014.",
+        "Cf. A023416."
+    ],
+    "keyword": "nonn,base,easy,nice",
+    "offset": "0,2",
+    "author": "_Patrick De Geest_, Dec 15 2000",
+    "references": 12,
+    "revision": 31,
+    "time": "2017-03-28T07:32:09-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

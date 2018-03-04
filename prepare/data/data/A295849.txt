@@ -1,0 +1,41 @@
+{
+    "number": 295849,
+    "data": "0,3,6,7,7,13,16,16,16,19,25,28,28,34,40,40,40,49,52,55,55,61,64,64,64,70,82,85,85,97,103,103,103,109,118,124,124,130,139,139,139,154,160,163,163,169,175,175,175,181,193,199,199,211,220,220,220,226,232,241",
+    "name": "Number of nonnegative solutions to (x,y,z) = 1 and x^2 + y^2 + z^2 <= n.",
+    "link": [
+        "Robert Israel, <a href=\"/A295849/b295849.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1) + A295848(n) for n > 0."
+    ],
+    "maple": [
+        "N:= 100:",
+        "V:= Vector(N):",
+        "for x from 0 to floor(sqrt(N/3)) do",
+        "  for y from x to floor(sqrt((N-x^2)/2)) do",
+        "    for z from y to floor(sqrt(N-x^2-y^2)) do",
+        "      if igcd(x,y,z) = 1 then",
+        "        r:= x^2 + y^2 + z^2;",
+        "        m:= nops({x,y,z});",
+        "        if m=3 then V[r]:= V[r]+6",
+        "        elif m=2 then V[r]:= V[r]+3",
+        "        else V[r]:= V[r]+1",
+        "        fi",
+        "      fi",
+        "od od od:",
+        "0,op(ListTools:-PartialSums(convert(V,list))); # _Robert Israel_, Nov 30 2017"
+    ],
+    "program": [
+        "(PARI) a(n) = {sum(i=0, sqrtint(n), sum(j=0, sqrtint(n-i^2), sum(k=0, sqrtint(n-i^2-j^2), gcd([i, j, k]) == 1)))} \\\\ _Andrew Howroyd_, Dec 12 2017"
+    ],
+    "xref": [
+        "Cf. A000606, A048134, A295820, A295848."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Seiichi Manyama_, Nov 29 2017",
+    "references": 3,
+    "revision": 24,
+    "time": "2017-12-12T16:51:08-05:00",
+    "created": "2017-11-29T09:22:51-05:00"
+}

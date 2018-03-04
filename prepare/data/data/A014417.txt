@@ -1,0 +1,86 @@
+{
+    "number": 14417,
+    "data": "0,1,10,100,101,1000,1001,1010,10000,10001,10010,10100,10101,100000,100001,100010,100100,100101,101000,101001,101010,1000000,1000001,1000010,1000100,1000101,1001000,1001001,1001010,1010000,1010001,1010010,1010100,1010101",
+    "name": "Representation of n in base of Fibonacci numbers (Zeckendorf representation of n).",
+    "comment": [
+        "For n > 0, write n = Sum_{i >= 2} eps(i) Fib_i where eps(i) = 0 or 1 and no 2 consecutive eps(i) can be 1 (see A035517); then a(n) is obtained by writing the eps(i) in reverse order.",
+        "\"One of the most important properties of the Fibonacci numbers is the special way in which they can be used to represent integers. Let's write j >> k <==> j >= k+2. Then every positive integer has a unique representation of the form n = F_k1 + F_k2 + ... + F_kr, where k1 >> k2 >> ... >> kr >> 0. (This is 'Zeckendorf's theorem.') ... We can always find such a representation by using a \"greedy\" approach, choosing F_k1 to be the largest Fibonacci number =< n, then choosing F_k2 to be the largest that is =< n - F_k1 and so on. Fibonacci representation needs a few more bits because adjacent 1's are not permitted; but the two representations are analogous.\" [Concrete Math.]",
+        "Since the binary representation of n in base of Fibonacci numbers allows only the successive bit pairs 00, 01, 10 and leaves 11 unused, we can use a ternary representation using all trits 0, 1, 2 where 00 --> 0, 01 --> 1 and 10 --> 2 (e.g. binary 1001010 as ternary 1022). - _Daniel Forgues_, Nov 30 2009",
+        "The same sequence also arises when considering the NegaFibonacci representations of the integers, as follows. Take the NegaFibonacci representations of n = 0, 1, 2, ... (A215022) and of n = -1, -2, -3, ... (A215023), sort the union of these two lists into increasing binary order, and we get A014417. Likewise the corresponding list of decimal representations, A003714, is the union of A215024 and A215025 sorted into increasing order.  - _N. J. A. Sloane_, Aug 10 2012",
+        "Also, numbers, written in binary, such that no adjacent bits are equal to 1: A one-dimensional analog of the matrices considered in A228277/A228285, A228390, A228476, A228506 etc. - _M. F. Hasler_, Apr 27 2014"
+    ],
+    "reference": [
+        "R. L. Graham, D. E. Knuth and O. Patashnik, Concrete Mathematics. Addison-Wesley, Reading, MA, 1990.",
+        "D. E. Knuth, The Art of Computer Programming, Vol. 4A, Section 7.1.3, p. 169.",
+        "E. Zeckendorf, Repr\u00e9sentation des nombres naturels par une somme des nombres de Fibonacci ou de nombres de Lucas, Bull. Soc. Roy. Sci. Li\u00e8ge 41, 179-182, 1972."
+    ],
+    "link": [
+        "T. D. Noe and Harry J. Smith, <a href=\"/A014417/b014417.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "D. E. Knuth, <a href=\"http://dx.doi.org/10.1016/0893-9659(88)90176-0\">Fibonacci multiplication</a>, Appl. Math. Lett. 1 (1988), 57-60.",
+        "Julien Leroy, Michel Rigo, Manon Stipulanti, <a href=\"http://dx.doi.org/10.1016/j.disc.2017.01.003\">Counting the number of non-zero coefficients in rows of generalized Pascal triangles</a>, Discrete Mathematics 340 (2017), 862-881.",
+        "Casey Mongoven, <a href=\"http://caseymongoven.com/b1087\">Zeckendorf Representations no. 17</a> (a musical composition with A014417)",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Zeckendorf%27s_theorem\">Zeckendorf's theorem</a>"
+    ],
+    "example": [
+        "The Zeckendorf expansions of 1, 2, ... are 1 = 1 = Fib_2 -> 1, 2 = 2 = Fib_3 -> 10, 3 = Fib_4 -> 100, 4 = 3+1 = Fib_4 + Fib_2 -> 101, 5 = 5 = Fib_5 -> 1000, 6 = 1+5 = Fib_2 + Fib_5 -> 1001, etc."
+    ],
+    "maple": [
+        "A014417 := proc(n)",
+        "    local nshi,Z,i ;",
+        "    if n <= 1 then",
+        "        return n;",
+        "    end if;",
+        "    nshi := n ;",
+        "    Z := [] ;",
+        "    for i from A130234(n) to 2 by -1 do",
+        "        if nshi >= A000045(i) and nshi > 0 then",
+        "            Z := [1,op(Z)] ;",
+        "            nshi := nshi-A000045(i) ;",
+        "        else",
+        "            Z := [0,op(Z)] ;",
+        "        end if;",
+        "    end do:",
+        "    add( op(i,Z)*10^(i-1),i=1..nops(Z)) ;",
+        "end proc: # _R. J. Mathar_, Jan 31 2015"
+    ],
+    "mathematica": [
+        "fb[n_Integer] := Block[{k = Ceiling[Log[GoldenRatio, n * Sqrt[5]]], t = n, fr = {}}, While[k > 1, If[t >= Fibonacci[k], AppendTo[fr, 1]; t = t - Fibonacci[k], AppendTo[fr, 0]]; k-- ]; FromDigits[fr]]; Table[ fb[n], {n, 0, 30}] (* _Robert G. Wilson v_, May 15 2004 *)",
+        "r = Map[Fibonacci, Range[2, 12]]; Table[Total[FromDigits@ PadRight[{1}, Flatten@ #] &@ Reverse@ Position[r, #] & /@ Abs@ Differences@ NestWhileList[Function[k, k - SelectFirst[Reverse@ r, # < k &]], n + 1, # > 1 &]], {n, 0, 33}] (* _Michael De Vlieger_, Mar 27 2016, Version 10 *)"
+    ],
+    "program": [
+        "(PARI) Zeckendorf(n)=my(k=0,v,m); while(fibonacci(k)<=n,k=k+1); m=k-1; v=vector(m-1); v[1]=1; n=n-fibonacci(k-1); while(n>0,k=0; while(fibonacci(k)<=n,k=k+1); v[m-k+2]=1; n=n-fibonacci(k-1)); v \\\\ _Ralf Stephan_",
+        "(PARI) Zeckendorf(n)= { local(k); a=0; while(n>0, k=0; while(fibonacci(k)<=n, k=k+1); a=a+10^(k-3); n=n-fibonacci(k-1); ); a } { for (n=0, 10000, Zeckendorf(n); print(n,\" \",a); write(\"b014417.txt\", n, \" \", a) ) } \\\\ _Harry J. Smith_, Jan 17 2009",
+        "(Haskell)",
+        "a014417 0 = 0",
+        "a014417 n = foldl (\\v z -> v * 10 + z) 0 $ a189920_row n",
+        "-- _Reinhard Zumkeller_, Mar 10 2013",
+        "(Python)",
+        "from sympy import fibonacci",
+        "def a(n):",
+        "    k=0",
+        "    x=0",
+        "    while n>0:",
+        "        k=0",
+        "        while fibonacci(k)<=n: k+=1",
+        "        x+=10**(k - 3)",
+        "        n-=fibonacci(k - 1)",
+        "    return x",
+        "print [a(n) for n in xrange(101)] # _Indranil Ghosh_, Jun 07 2017, after PARI code by _Harry J. Smith_"
+    ],
+    "xref": [
+        "Cf. A000045, A003794, A007895, A035517, A215022, A215023, A215024, A215025.",
+        "a(n) = A003714(n) converted to binary.",
+        "Cf. A189920, A104324, A213911."
+    ],
+    "keyword": "nonn,easy,base,nice",
+    "offset": "0,3",
+    "author": "_Olivier G\u00e9rard_",
+    "ext": [
+        "Comment layout fixed by _Daniel Forgues_, Dec 07 2009",
+        "Typo corrected by _Daniel Forgues_, Mar 25 2010"
+    ],
+    "references": 77,
+    "revision": 71,
+    "time": "2017-08-05T16:06:23-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

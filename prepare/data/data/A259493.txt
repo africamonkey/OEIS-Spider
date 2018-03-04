@@ -1,0 +1,48 @@
+{
+    "number": 259493,
+    "data": "0,1,21,148,1078,7898,60843,486390,3969956,33123937,280486145,2411806083",
+    "name": "Number of n-digit semiprimes whose prime factors concatenated larger to the right of smaller form an n-digit prime (in decimal).",
+    "comment": [
+        "For n>2, A220296(n)>a(n), with the numbers counted to obtain A220296(n) being a proper superset of the numbers counted for a(n) (and the example here being unique for both for n<3)."
+    ],
+    "example": [
+        "21=3*7 produces the prime 37 via the described concatenation, and it is the only 2-digit semiprime that does produce a 2-digit prime like this, making a(2)=1."
+    ],
+    "mathematica": [
+        "f[n_] := Block[{g, s}, s = Select[Range[10^(n - 1), 10^n - 1], PrimeOmega@ # == 2 &]; g[x_] := FromDigits[IntegerDigits[First /@ FactorInteger[x]] // Flatten]; Select[s, And[IntegerLength[g@ #] == n, PrimeQ@ g@ #] &]]; Length@ f@ # & /@ Range@ 6 (* _Michael De Vlieger_, Jul 01 2015 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "{",
+        "\\\\Variables: E changes with every other\\\\",
+        "\\\\change in n as bounding smaller prime\\\\",
+        "\\\\p, b and B are the bounding powers of\\\\",
+        "\\\\10, e represents the power of 10 just\\\\",
+        "\\\\above p, q is the larger prime, and c is\\\\",
+        "\\\\the count of those pq satisfying the\\\\",
+        "\\\\criterion.\\\\",
+        "print(0);n=2;E=10;b=10;B==100;",
+        "while(1,",
+        "  p=2;e=10;c=0;while(p<E,",
+        "    q=max(nextprime(p+1),nextprime(b/p));",
+        "    while(q<B/e,",
+        "      if(isprime(p*B/e+q),c++);",
+        "      q=nextprime(q+1));",
+        "    p=nextprime(p+1);if(p>e,e*=10));",
+        "  print(c);n++;b*=10;B*=10;if(n%2==0,E*=10))",
+        "}"
+    ],
+    "xref": [
+        "Cf. A220296."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_James G. Merickel_, Jun 28 2015",
+    "ext": [
+        "a(12) from _Giovanni Resta_, Jul 13 2015"
+    ],
+    "references": 1,
+    "revision": 34,
+    "time": "2015-07-13T11:19:03-04:00",
+    "created": "2015-07-13T11:19:03-04:00"
+}

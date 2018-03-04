@@ -1,0 +1,54 @@
+{
+    "number": 199812,
+    "data": "1,1,2,5,13,32,79,193,478,1196,3037,7802,20287,53259,141069,376449,1011295,2732453,7421128,20247355",
+    "name": "Number of distinct values taken by w^w^...^w (with n w's and parentheses inserted in all possible ways) where w is the first transfinite ordinal omega.",
+    "comment": [
+        "Any transfinite ordinal can be used instead of omega, yielding the same sequence.",
+        "It appears that 2nd differences of this sequence give A174145 (starting from offset 2).",
+        "Conjectured extension of this sequence is given by A255170."
+    ],
+    "link": [
+        "Libor Behounek, <a href=\"http://mujweb.cz/behounek/logic/papers/ordcalc/index.html\">Ordinal Calculator</a>",
+        "R. K. Guy and J. L. Selfridge, <a href=\"/A003018/a003018.pdf\">The nesting and roosting habits of the laddered parenthesis</a>",
+        "MathOverflow, <a href=\"http://mathoverflow.net/q/103411/9550\">A discussion related to this sequence</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/OrdinalNumber.html\">Ordinal Number</a>"
+    ],
+    "formula": [
+        "Conjecture: a(n) ~ c * d^n * n^(-3/2), where c = 0.664861... and d = A051491 = 2.955765... - _Vladimir Reshetnikov_, Aug 11 2016"
+    ],
+    "example": [
+        "For n=5 there are 14 possible parenthesizations, but only 13 of them produce distinct ordinals: (((w^w)^w)^w)^w < ((w^w)^w)^(w^w) < ((w^w)^(w^w))^w < ((w^(w^w))^w)^w < (w^(w^w))^(w^w) < (w^w)^((w^w)^w) < (w^((w^w)^w))^w < w^(((w^w)^w)^w) < (w^w)^(w^(w^w)) = w^((w^w)^(w^w)) < (w^(w^(w^w)))^w < w^((w^(w^w))^w) < w^(w^((w^w)^w)) < w^(w^(w^(w^w))). So, a(5)=13."
+    ],
+    "mathematica": [
+        "(* Slow exhaustive search *)",
+        "_ \\[Precedes] {} = False;",
+        "{} \\[Precedes] {__} = True;",
+        "{a_ \\[Diamond] _, ___} \\[Precedes] {b_ \\[Diamond] _, ___} := a \\[Precedes] b /; a =!= b;",
+        "{a_ \\[Diamond] m_, ___} \\[Precedes] {a_ \\[Diamond] n_, ___} := m < n /; m != n;",
+        "{z_, x___} \\[Precedes] {z_, y___} := {x} \\[Precedes] {y};",
+        "m_ \\[CirclePlus] {} := m;",
+        "{} \\[CirclePlus] n_ := n;",
+        "{x___, a_ \\[Diamond] m_} \\[CirclePlus] {a_ \\[Diamond] n_, y___} := {x, a \\[Diamond] (m + n), y};",
+        "{x___, a_ \\[Diamond] m_} \\[CirclePlus] z : {b_ \\[Diamond] n_, y___} := If[a \\[Precedes] b, {x} \\[CirclePlus] z, {x, a \\[Diamond] m, b \\[Diamond] n, y}];",
+        "{} \\[CircleTimes] _ = {};",
+        "_ \\[CircleTimes] {} = {};",
+        "{a_ \\[Diamond] m_, x___} \\[CircleTimes] {b_ \\[Diamond] n_} := If[b === {}, {a \\[Diamond] (m n), x}, {(a \\[CirclePlus] b) \\[Diamond] n}];",
+        "x_ \\[CircleTimes] {y_, z__} := x \\[CircleTimes] {y} \\[CirclePlus] x \\[CircleTimes] {z};",
+        "f[1] = {{{} \\[Diamond] 1}};",
+        "f[n_] := f[n] = Union[Flatten[Table[Outer[#1 \\[CircleTimes] {#2 \\[Diamond] 1} &, f[k], f[n - k], 1], {k, n - 1}], 2]];",
+        "Table[Length[f[n]], {n, 1, 17}]"
+    ],
+    "xref": [
+        "Cf. A000108 (upper bound), A174145 (2nd differences?), A255170 (conjectured extension), A005348, A002845, A198683, A000081 (similar asymptotics), A051491."
+    ],
+    "keyword": "nonn,nice,more,hard",
+    "offset": "1,3",
+    "author": "_Vladimir Reshetnikov_, Nov 10 2011",
+    "ext": [
+        "a(18)-a(20) from _Robert G. Wilson v_, Sep 15 2012"
+    ],
+    "references": 2,
+    "revision": 44,
+    "time": "2016-08-12T09:06:15-04:00",
+    "created": "2011-11-17T15:45:38-05:00"
+}

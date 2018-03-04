@@ -1,0 +1,37 @@
+{
+    "number": 91833,
+    "data": "2,4,7,22,29,51,173,210,262,417,746,12341,207220,498538,1286415,2351289,3702952,7664494,54693034,75971438,269954954,6674693008,13449203581,59799655308,98912303039,948887634688,3557757020909,5898230078743",
+    "name": "Pierce expansion of 1/zeta(2).",
+    "comment": [
+        "If u(0) = exp(1/m), m integer >=1, and u(n+1) = u(n)/frac(u(n)) then floor(u(n)) = m*n."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A091833/b091833.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "P. Erd\u0151s and Jeffrey Shallit, <a href=\"http://www.numdam.org/item?id=JTNB_1991__3_1_43_0\">New bounds on the length of finite Pierce and Engel series</a>, Sem. Th\u00e9or. Nombres Bordeaux (2) 3 (1991), no. 1, 43-53.",
+        "Vlado Keselj, <a href=\"https://cs.uwaterloo.ca/research/tr/1996/21/cs-96-21.pdf\">Length of Finite Pierce Series: Theoretical Analysis and Numerical Computations </a>.",
+        "Jeffrey Shallit, <a href=\"http://www.fq.math.ca/Scanned/22-4/shallit1.pdf\">Some predictable Pierce expansions</a>, Fib. Quart., 22 (1984), 332-335.",
+        "Pelegr\u00ed Viader, Llu\u00eds Bibiloni, Jaume Parad\u00eds, <a href=\"http://dx.doi.org/10.2139/ssrn.145561\">On a problem of Alfred Renyi</a>,  Economics Working Paper No. 340."
+    ],
+    "formula": [
+        "let u(0) = Pi^2/6 and u(n+1) = u(n)/frac(u(n)) where frac(x) is the fractional part of x, then a(n) = floor(u(n)).",
+        "1/zeta(2) = 1/a(1) - 1/a(1)/a(2) + 1/a(1)/a(2)/a(3) - 1/a(1)/a(2)/a(3)/a(4)...",
+        "limit n ->infty a(n)^(1/n) = e."
+    ],
+    "mathematica": [
+        "PierceExp[A_, n_] := Join[Array[1 &, Floor[A]], First@Transpose@ NestList[{Floor[1/Expand[1 - #[[1]] #[[2]]]], Expand[1 - #[[1]] #[[2]]]} &, {Floor[1/(A - Floor[A])], A - Floor[A]}, n - 1]]; PierceExp[N[1/Zeta[2], 7!], 25] (* _G. C. Greubel_, Nov 14 2016 *)"
+    ],
+    "program": [
+        "(PARI) r=zeta(2);for(n=1,30,r=r/(r-floor(r));print1(floor(r),\",\"))"
+    ],
+    "xref": [
+        "Cf. A006275, A006276, A006283.",
+        "Cf. A006784 (Pierce expansion definition), A059186."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Benoit Cloitre_, Mar 09 2004",
+    "references": 1,
+    "revision": 21,
+    "time": "2016-11-14T13:57:37-05:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

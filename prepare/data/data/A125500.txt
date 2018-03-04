@@ -1,0 +1,41 @@
+{
+    "number": 125500,
+    "data": "1,1,3,13,85,701,7261,89125,1277865,20883385,384194521,7852225481,176651705869,4337650936789,115468033349397,3312409332578221,101881034223806161,3344745711740899697,116747433680684736817",
+    "name": "Expansion of -LambertW(-x^2*exp(x))/x^2.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A125500/b125500.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "E.g.f.: A(x) = exp(x + x^2*A(x)). [_Paul D. Hanna_, Aug 30 2008]",
+        "From _Paul D. Hanna_, Jun 17 2009: (Start)",
+        "a(n) = Sum_{k=0..n} n! * (n-k+1)^(k-1)/k! * C(k,n-k).",
+        "Let A(x)^m = Sum_{n>=0} a(n,m)*x^n/n!, then",
+        "a(n,m) = Sum_{k=0..n} n! * m*(n-k+m)^(k-1)/k! * C(k,n-k). (End)",
+        "a(n) ~ sqrt((c+1)/2)/(2*c^2) * exp(n*(2*c-1)/2) * n^(n-1), where c = LambertW(exp(-1/2)/2) = 0.2388350311316... - _Vaclav Kotesovec_, Jan 04 2013"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 3*x^2/2! + 13*x^3/3! + 85*x^4/4! + 701*x^5/5! +... - _Paul D. Hanna_, Aug 30 2008"
+    ],
+    "mathematica": [
+        "Table[Sum[n!*(n-k+1)^(k-1)/k!*Binomial[k,n-k],{k,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Jan 04 2013 *)",
+        "With[{nmax=30}, CoefficientList[Series[-LambertW[-x^2*Exp[x]]/x^2, {x, 0, nmax}], x]*Range[0, nmax]!] (* _G. C. Greubel_, Feb 19 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(Ex=exp(x+x*O(x^n)),W=Ex);for(k=0,n,W=exp(x*W)); n!*polcoeff(subst(W,x,x^2*Ex)*Ex,n)} \\\\ _Paul D. Hanna_, Jan 02 2007",
+        "(PARI) {a(n)=local(A=1+x*O(x^n));for(i=0,n,A=exp(x+x^2*A));n!*polcoeff(A,n)} \\\\ _Paul D. Hanna_, Aug 30 2008",
+        "(PARI) {a(n,m=1)=if(n==0,1,sum(k=0,n,n!/k!*m*(n-k+m)^(k-1)*binomial(k,n-k)))} \\\\ _Paul D. Hanna_, Jun 17 2009",
+        "(PARI) {a(n,m=1)=local(A=1+x+x*O(x^n));for(i=1,n,A=exp(x*(1+x*A)));n!*polcoeff(A^m,n)} \\\\ _Paul D. Hanna_, Jun 17 2009",
+        "(PARI) x='x+O('x^30); Vec(serlaplace(-lambertw(-x^2*exp(x))/x^2)) \\\\ _G. C. Greubel_, Feb 19 2018",
+        "(GAP) List([0..30],n->Sum([0..n],k->Factorial(n)*(n-k+1)^(k-1)/Factorial(k)*Binomial(k,n-k))); # _Muniru A Asiru_, Feb 19 2018"
+    ],
+    "keyword": "easy,nonn,changed",
+    "offset": "0,3",
+    "author": "_Vladeta Jovovic_, Dec 27 2006",
+    "ext": [
+        "More terms from _Paul D. Hanna_, Jan 02 2007"
+    ],
+    "references": 5,
+    "revision": 21,
+    "time": "2018-02-20T09:00:35-05:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

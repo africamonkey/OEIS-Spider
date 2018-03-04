@@ -1,0 +1,37 @@
+{
+    "number": 191581,
+    "data": "3,6,11,22,30,33,65,82,117,218,354,483,508,537,3276,6430,21541,117818,130356,753612,1007328,2113416,2379540,3589646,7231219,7346148,8515767,13050345,20199648,34424166,44575896,47245905,50414595,104335023,217728002,1217532421",
+    "name": "Numbers n for which the sum of their anti-divisors divides the sum of their divisors.",
+    "comment": [
+        "A161917 is a subset of this sequence."
+    ],
+    "formula": [
+        "{n: A066417(n) | A000203(n)}. - _R. J. Mathar_, Oct 01 2011"
+    ],
+    "example": [
+        "6-> sum divisors=sigma(6)=12; sum anti-divisors=4; 12/4=3.",
+        "30-> sum divisors=sigma(30)=72; sum anti-divisors=4+12+20=36; 72/36=2."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(i) local a, b, j, k, s, n;",
+        "for n from 3 to i do b:=divisors(n); s:=add(b[k],k=1..nops(b));",
+        "k:=0; j:=n; while j mod 2 <> 1 do k:=k+1; j:=j/2; od; a:=sigma(2*n+1)+sigma(2*n-1)+sigma(n/2^k)*2^(k+1)-6*n-2;",
+        "if type(s/a,integer) then print(n); fi; od; end: P(10^6);"
+    ],
+    "mathematica": [
+        "f[n_] := Total@ Cases[Range[2, n - 1], _?(Abs[Mod[n, #] - #/2] < 1 &)]; Select[Range[3, 10^3], Mod[DivisorSigma[1, #], f@ #] == 0 &] (* _Michael De Vlieger_, Oct 08 2015 *)"
+    ],
+    "xref": [
+        "Cf. A000203, A066272, A066417, A161917, A191580."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jun 07 2011",
+    "ext": [
+        "a(21)-a(36) from _Donovan Johnson_, Jun 24 2012"
+    ],
+    "references": 2,
+    "revision": 22,
+    "time": "2015-10-25T17:36:57-04:00",
+    "created": "2011-06-10T10:18:40-04:00"
+}

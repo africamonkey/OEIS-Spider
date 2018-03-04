@@ -1,0 +1,68 @@
+{
+    "number": 144097,
+    "data": "1,2,14,134,1482,17818,226214,2984206,40503890,561957362,7934063678,113622696470,1646501710362,24098174350986,355715715691350,5289547733908510,79163575684710818,1191491384838325474",
+    "name": "a(n) = number of lattice paths (Schroeder paths) from (0,0) to (3n,n) with unit steps N=(0,1), E=(1,0) and D=(1,1) staying weakly above the line y = 3x.",
+    "comment": [
+        "a(n) is also the number of lattice path from (0,0) to (4n,0) with unit steps (1,3), (2,2) and (1,-1) staying weakly above the x-axis",
+        "Also, the number of planar rooted trees with n non-leaf vertices such that each non-leaf vertex has either 3 or 4 children. - _Cameron Marcott_, Sep 18 2013"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A144097/b144097.txt\">Table of n, a(n) for n = 0..800</a>",
+        "D. Bevan, D. Levin, P. Nugent, J. Pantone, L. Pudwell, <a href=\"http://arxiv.org/abs/1510.08036\">Pattern avoidance in forests of binary shrubs</a>, arXiv preprint arXiv:1510.08036 [math.CO], 2015.",
+        "Gi-Sang Cheon, S.-T. Jin, L. W. Shapiro, <a href=\"http://dx.doi.org/10.1016/j.laa.2015.03.015\">A combinatorial equivalence relation for formal power series</a>, Linear Algebra and its Applications, Available online 30 March 2015.",
+        "J. Schroeder, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL10/Schroder/schroder45.html\">Generalized Schroeder numbers and the rotation principle</a>, Journal of Integer Sequences 10(7).",
+        "R. A. Sulanke, <a href=\"http://www.fq.math.ca/Scanned/27-1/sulanke.pdf\">A recurrence restricted by a diagonal condition: generalized Catalan arrays</a>, Fibonacci Q., 27 (1989), 33-46."
+    ],
+    "formula": [
+        "G.f. A(z) satisfies A(z) = 1 + z(A(z)^3 + A(z)^4) a(n)= S_{3n+1}(n) - 3S_n(3n + 1), where S_a(b) are coordination numbers, ie the number of points in the a-dimensional cubic lattice Z^a having distance b in the L_1 norm.",
+        "Also a(n) = D(3n,n) - 3D(3n + 1,n-1) - 2D(3n,n-1), where D(a,b) are the Delannoy numbers, ie the number of paths with N, E and D steps from (0,0) to (a,b).",
+        "Conjecture: 3*n*(3*n-1)*(3*n+1)*(35*n^2-98*n+68) *a(n) +(-15610*n^5+67123*n^4-106824*n^3+77633*n^2-25514*n+3000)*a(n-1) +3*(n-2) *(3*n-4) *(3*n-5) *(35*n^2-28*n+5) *a(n-2)=0. - _R. J. Mathar_, Sep 06 2016"
+    ],
+    "example": [
+        "a(2)=14, because",
+        "01: NNNENNNE,",
+        "02: NNDNNNE,",
+        "03: NNNENND,",
+        "04: NNDNND,",
+        "05: NNNDNNE,",
+        "06: NNNDND,",
+        "07: NNNNENNE,",
+        "08: NNNNEND,",
+        "09: NNNNDNE,",
+        "10: NNNNDD,",
+        "11: NNNNNENE,",
+        "12: NNNNNED,",
+        "13: NNNNNDE,",
+        "14: NNNNNNEE",
+        "are all the paths from (0,0) to (2,6) with steps N,E and D weakly above y=3x."
+    ],
+    "maple": [
+        "Schr:=proc(n,m,l)(n-l*m+1)/m*sum(2^v*binomial(m,v)*binomial(n,v-1),v=1..m) end proc; where n=3m and l=3, also",
+        "Schr:=proc(n,m,l)(n-l*m+1)/(n+1)*sum(2^v*binomial(m-1,v-1)*binomial(n+1,v),v=0..m) end proc; where n=3m and l=3, also",
+        "Schr:=proc(n,m,l)(n-l*m+1)/m*sum(binomial(m,v)*binomial(n+v,m-1),v=0..m) end proc; where n=3m and l=3, also",
+        "Schr:=proc(n,m,l)(n-l*m+1)/(n+1)*sum(binomial(n+1,v)*binomial(m-1+v,n),v=0..n+1) end proc; where n=3m and l=3.",
+        "# alternative Maple program:",
+        "a:= proc(n) option remember; `if`(n<2, n+1,",
+        "      ((15610*n^5 -67123*n^4 +106824*n^3 -77633*n^2",
+        "       +25514*n-3000)*a(n-1) -(3*(n-2))*(3*n-4)*",
+        "       (3*n-5)*(35*n^2-28*n+5)*a(n-2)) / ((3*(3*n-1))",
+        "       *(3*n+1)*n*(35*n^2-98*n+68)))",
+        "    end:",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, May 26 2015"
+    ],
+    "mathematica": [
+        "d[n_, k_] := Binomial[n+k, k] Hypergeometric2F1[-k, -n, -n-k, -1]; a[0] = 1; a[n_] = d[3n, n] - 3d[3n+1, n-1] - 2d[3n, n-1]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Feb 25 2017 *)"
+    ],
+    "xref": [
+        "Cf. A027307 (the case y=2x).",
+        "Cf. A008288 (Delannoy numbers).",
+        "Cf. A008412 (4-dimensional coordination numbers)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "Joachim Schroeder (schroderjd(AT)qwa.uovs.ac.za), Sep 10 2008",
+    "references": 2,
+    "revision": 44,
+    "time": "2017-02-25T16:39:52-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

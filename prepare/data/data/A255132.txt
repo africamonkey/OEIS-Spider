@@ -1,0 +1,46 @@
+{
+    "number": 255132,
+    "data": "1,1,2,8,96,2048,3145728,206158430208,27670116110564327424,498460498419343452338927647605129216,24991100464315816765228594460089760794425300959309994174606999552,336610107623104398583024455855523763248864803845734108839073897168302318415095310965480469919661369165797247714066432",
+    "name": "Number of divisors of odd Catalan numbers (A038003).",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A255132/b255132.txt\">Table of n, a(n) for n = 0..14</a>"
+    ],
+    "formula": [
+        "a(n) = A000005(A038003(n))."
+    ],
+    "example": [
+        "A038003(4) = 9694845 which has 96 divisors."
+    ],
+    "program": [
+        "(Python)",
+        "from operator import mul",
+        "from functools import reduce",
+        "from sympy import factorint",
+        "A255132_list, c, s = [1, 1], {}, 3",
+        "for n in range(2,2**15):",
+        "....for p,e in factorint(4*n-2).items():",
+        "........if p in c:",
+        "............c[p] += e",
+        "........else:",
+        "............c[p] = e",
+        "....for p,e in factorint(n+1).items():",
+        "........if c[p] == e:",
+        "............del c[p]",
+        "........else:",
+        "............c[p] -= e",
+        "....if n == s:",
+        "........c2 = reduce(mul,[e+1 for e in c.values()])",
+        "........A255132_list.append(c2)",
+        "........s = 2*s+1"
+    ],
+    "xref": [
+        "Cf. A038003, A000005, A119861, A119908, A120274, A120275, A255133."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Chai Wah Wu_, Feb 15 2015",
+    "references": 2,
+    "revision": 12,
+    "time": "2015-02-19T00:09:40-05:00",
+    "created": "2015-02-19T00:09:40-05:00"
+}

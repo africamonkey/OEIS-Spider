@@ -1,0 +1,90 @@
+{
+    "number": 904,
+    "id": "M2955 N1193",
+    "data": "0,3,13,83,592,4821,43979,444613,4934720,59661255,780531033,10987095719,165586966816,2660378564777,45392022568023,819716784789193,15620010933562688,313219935456042955,6593238655510464741",
+    "name": "a(n) = (n+1)*a(n-1) + (n+2)*a(n-2) + a(n-3); a(1)=0, a(2)=3, a(3)=13.",
+    "comment": [
+        "Numbers connected with the m\u00e9nage problem (cf. A000179)."
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A000904/b000904.txt\">Table of n, a(n) for n=1..100</a>",
+        "E. Lucas, <a href=\"http://gallica.bnf.fr/ark:/12148/bpt6k29021h\">Th\u00e9orie des Nombres</a>, Gauthier-Villars, Paris, 1891, Vol. 1, p. 495.",
+        "E. Lucas, <a href=\"/A000904/a000904.pdf\">Th\u00e9orie des Nombres</a>, Gauthier-Villars, Paris, 1891, Vol. 1. [Annotated scan of pages 488-499 only]"
+    ],
+    "formula": [
+        "G.f.: 1/(x+x^2)^2*Sum_{n>=0} n!*(x/(1+x)^2)^n. - _Vladeta Jovovic_, Jun 29 2007",
+        "G.f.: (1/E(0)-1+x-x^2)/x^2 where E(k)= (1+x)^2 + k*x - (k+1)*x*(1+x)^2/E(k+1); (continued fraction, Euler's 1st kind, 1-step). - _Sergei N. Gladkovskii_, Sep 17 2012",
+        "From _Vladimir Shevelev_, Jun 29 - Jul 22 2015: (Start)",
+        "Using formulas in [Lucas], we have",
+        "(i) a(1)=0, a(2)=3, for n>=3, a(n) = (n+2)*a(n-1) + a(n-2) + 2*(-1)^n",
+        "(Note that (i) yields a(3)=13 and, for n>=4,",
+        "a(n-1) = (n+1)*a(n-2) + a(n-3) - 2*(-1)^n. Summing this with (i), we see that (i) defines A000904);",
+        "(ii) for n>=1, a(n) = (A000179(n+3) + 2*(-1)^n)/(n+3);",
+        "(iii) for n>=3, a(n) = a(n-2) + A000179(n+2);",
+        "(iii)*  if n is even, then a(n) = Sum_{i=0..(n+2)/2)}A000179(2*i);",
+        "(iii)** if n is odd, then a(n) = Sum_{i=2..(n+1)/2} A000179(2*i+1).",
+        "Also",
+        "(iv)  a(n+1) = A000271(n+3) - a(n);",
+        "(iv)*  a(n) = Sum_{i=0..n+2}(-1)^i*A000271(n-i+2);",
+        "(v) a(n-2) = Sum_{i=0..n}(-1)^i*binomial(2*n-i+1, i)*(n-i)!, n>=3.",
+        "Note that Lucas considered this sequence with other initials. His formulas (i) - (iii), which he proved on pp. 491-495 of his book [Lucas], we wrote for the current initials.",
+        "The other 5 formulas, including the explicit formula 5), are new and we give their proofs:",
+        "(iii)*,(iii)**. Formulas (iii)* and (iii)** are obtained by the direct summation of (iii) over even and odd values respectively, taking into account the initials.",
+        "(iv). To obtain (iv), write (iii) in the form",
+        "a(j+1) - a(j) = -(a(j) - a(j-1)) +  A000179(j+3), j>=2.",
+        "Summing Sum_{j=2..n}, we have",
+        "a(n+1) - a(2) = -a(n) + a(1) + Sum_{j=2..n}A000179(j+3). Since a(1)=0, a(2)=3, we find",
+        "a(n+1)-3 = -a(n) + Sum_{i=5..n+3}A000179(i). But A000179(3)=1, A000179(4)=2. Therefore, we have",
+        "a(n+1) = -a(n) + Sum_{i=3..n+3}A000179(i).",
+        "It is left to note that, by the definition,",
+        "A000271(n) = Sum{i=3..n}A000179(i). So",
+        "a(n+1) = A000271(n+3) - a(n).",
+        "(iv)*. In view of the first four initials 1,0,0,1 of A000271, we have",
+        "Sum_{i=0..n+2}(-1)^i*A000271(n-i+2) = Sum_{i=0..n-2}(-1)^i*A000271(n-i+2) and, by (iv), the last sum equals",
+        "Sum_{i=0..n-2}(-1)^i(a(n-i)+a(n-i-1)) = a(n) + (-1)^(n-2)*a(1) = a(n).",
+        "(v). We use induction for n>=3. In case n=3 (v) gives 6-6*2+10-4=0 = a(1). Set n:=n+2.",
+        "Suppose for some (now n>=1) we have",
+        "a(n) = Sum_{i=0..n+2}(-1)^i*binomial(2*n-i+5, i}*(n+2-i)!                           (*)",
+        "Further we use (iv). In A259212 we proved an explicit formula for A000271(n-1) such that we have",
+        "A000271(n+3) = Sum_{j=0..n+3}(-1)^j * binomial(2*n-j+6,j)*(n-j+3)!, n>3.",
+        "Now, by (iv) and (*) with changing summing j=i+1, we have",
+        "a(n+1) = Sum_{j=0..n+3}(-1)^j * binomial(2*n-j+6,j)*(n-j+3)! + Sum_{j=1..n+3}(-1)^j* binomial(2*n-j+6, j-1}*(n+3-j)!",
+        "Since binomial(n,-1)=0, then in the second sum the summing could begin with j=0.",
+        "So, we have",
+        "a(n+1) = Sum_{j=0..n+3}}(-1)^j* binomial(2*n-j+7, j}*(n+3-j)! = Sum_{j=0..n+3}(-1)^j* binomial(2*(n+1)-j+5,j)*((n+1)+2-j)!",
+        "Thus this expression formally is obtained from (*) by replacing n with n+1.",
+        "QED (End)",
+        "a(n) ~ n! * n^2 / exp(2). - _Vaclav Kotesovec_, Jul 04 2015"
+    ],
+    "example": [
+        "G.f. = 3 x^2 + 13 x^3 + 83 x^4 + 592 x^5 + 4821 x^6 + 43979 x^7 + 444613 x^8 + ..."
+    ],
+    "mathematica": [
+        "max = 19; f[x_] = 1/(x+x^2)^2 * Sum[ n!*(x/(1+x)^2)^n, {n, 0, max+2}]; Series[ f[x]+1/x-1/x^2, {x, 0, max}] // CoefficientList[#, x]& // Rest (* _Jean-Fran\u00e7ois Alcover_, May 16 2013, after _Vladeta Jovovic_ *)",
+        "RecurrenceTable[{a[1]==0,a[2]==3,a[3]==13,a[n]==(n+1)a[n-1]+(n+2)a[n-2]+a[n-3]},a,{n,20}] (* _Harvey P. Dale_, Aug 03 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a000904_list = 0 : 3 : 13 : zipWith (+) a000904_list",
+        "   (zipWith (+) (zipWith (*) [6..] $ drop 1 a000904_list)",
+        "                (zipWith (*) [5..] $ drop 2 a000904_list))",
+        "-- _Reinhard Zumkeller_, Nov 22 2011"
+    ],
+    "xref": [
+        "Cf. A000179, A000271."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org), Nov 27 2001"
+    ],
+    "references": 7,
+    "revision": 89,
+    "time": "2016-08-15T20:04:23-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

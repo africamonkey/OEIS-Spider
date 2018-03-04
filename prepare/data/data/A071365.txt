@@ -1,0 +1,48 @@
+{
+    "number": 71365,
+    "data": "18,50,54,75,90,98,108,126,147,150,162,198,234,242,245,250,270,294,300,306,324,338,342,350,363,375,378,414,450,486,490,500,507,522,525,540,550,558,578,588,594,600,605,630,648,650,666,686,702,722,726,735,738",
+    "name": "Numbers n such that A071364(n) <> A046523(n).",
+    "comment": [
+        "A071364(k), A046523(k) have the same prime factors, but not the same sequence of exponents in their prime factorizations.",
+        "A046523(n) <> n, as A046523(n) <= A071366(n) <= n.",
+        "Numbers with more than one prime factor and, in the ordered factorization, at least one exponent is greater than the previous exponent when read from left to right; contains A097319. - _Ray Chandler_, Sep 23 2005",
+        "Choie et al. call the complementary set of integers (n = p1^e1 * p2^e^2 * ... with exponents e1 >= e2 >= e3 >= ... in their ordered prime factorization) Hardy-Ramanujan integers. - _R. J. Mathar_, Dec 08 2011"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A071365/b071365.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Y. Choie, N. Lichiardopol, P. Moree, P. Sole, <a href=\"http://jtnb.cedram.org/item?id=JTNB_2007__19_2_357_0\">On Robin's criterion for the Riemann hypothesis</a>, J. Theor. Nombr. Bord. 19 (2) (2007), 357-372"
+    ],
+    "example": [
+        "n=50=2*5*5: A071364(50)=2*3*3=18, A046523(50)=2*2*3=12;",
+        "n=500=2*2*5*5*5: A071364(500)=2*2*3*3*3=108, A046523(500)=2*2*2*3*3=72."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local i, k, l;",
+        "      for k from 1 +`if`(n=1, 0, a(n-1))",
+        "      do l:= sort(ifactors(k)[2], (x, y)->x[1]<y[1]);",
+        "         for i to nops(l)-1 do",
+        "           if l[i][2]<l[i+1][2] then return k fi",
+        "         od",
+        "      od",
+        "    end:",
+        "seq(a(n), n=1..60);  # _Alois P. Heinz_, Aug 18 2014"
+    ],
+    "mathematica": [
+        "Select[Range[750], (e = Last /@ FactorInteger[ # ]) != Sort[e, Greater] &] (* _Ray Chandler_, Sep 23 2005 *)",
+        "Select[Range[750],",
+        "OrderedQ[FactorInteger[#][[All, 2]], GreaterEqual] == False &] (* _Kenneth A Klinger_, Nov 22 2016 *)"
+    ],
+    "xref": [
+        "Cf. A071366."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, May 21 2002",
+    "ext": [
+        "Extended by _Ray Chandler_, Sep 23 2005"
+    ],
+    "references": 6,
+    "revision": 30,
+    "time": "2016-11-23T16:34:40-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

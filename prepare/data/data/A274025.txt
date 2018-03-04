@@ -1,0 +1,47 @@
+{
+    "number": 274025,
+    "data": "5,691,2399,3433,5099,6217,7451,9007,10253,10883,16561,21839,23189,25679,26501,30661,39097,41443,43591,48119,50893,56009,60293,64927,65537,78979,79829,85853,98669,100403,105491,115981,124783,140557,142547,148013,149953,164113,166219,169249",
+    "name": "Primes n such that Sum_{k = primes<n}{k mod n} and Sum_{k = primes<n}{n mod k} are both prime.",
+    "comment": [
+        "As 0 < k < n, k mod n == k, so Sum_{k = primes<n}{k mod n} = A007504(A000720(A151799(n))) for n > 3. - _David A. Corneth_, Jun 07 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A274025/b274025.txt\">Table of n, a(n) for n = 1..1003</a>"
+    ],
+    "example": [
+        "2 mod 5 = 2, 3 mod 5 = 3 and 2 + 3 = 5 is prime;",
+        "5 mod 2 = 1, 5 mod 3 = 2 and 1 + 2 = 3 is prime."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,b,j,k,n; for j from 1 to q do n:=ithprime(j); a:=0; b:=0; for k from 1 to n-1 do",
+        "if isprime(k) then a:=a+k; b:=b+(n mod k); fi; od;",
+        "if isprime(a) and isprime(b) then print(n); fi; od; end: P(10^6);",
+        "# Alternative:",
+        "N:= 10^6: # to get all entries <= N",
+        "Primes:= select(isprime,[2,seq(i,i=3..N,2)]):",
+        "PS:= ListTools:-PartialSums(Primes):",
+        "count:= 0:",
+        "for i from 2 to nops(Primes) do",
+        "   n := Primes[i];",
+        "   if isprime(PS[i-1]) and isprime(add(n mod Primes[j],j=1..i-1)) then",
+        "     count:= count+1;",
+        "     A[count]:= n;",
+        "   fi",
+        "od:",
+        "seq(A[i],i=1..count); # _Robert Israel_, Jun 07 2016"
+    ],
+    "program": [
+        "(PARI) is(n) = {if(isprime(n),my(nk,kn,u=prime(primepi(n-1)));",
+        "forprime(k=2,u,kn+=k;nk+=n%k);isprime(kn)&&isprime(nk),0)} \\\\ _David A. Corneth_, Jun 07 2016"
+    ],
+    "xref": [
+        "Cf. A000040, A000720, A007504, A151799."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jun 07 2016",
+    "references": 1,
+    "revision": 18,
+    "time": "2016-06-20T18:37:07-04:00",
+    "created": "2016-06-20T18:37:07-04:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 73119,
+    "data": "0,1,1,4,5,10,14,26,35,56,77,116,157,226,302,424,560,762,998,1334,1727,2270,2914,3779,4809,6163,7781,9875,12378,15565,19383,24191,29934,37093,45643,56201,68789,84212,102564,124903,151424,183499,221508",
+    "name": "Total number of parts which are positive powers of 2 in all partitions of n.",
+    "link": [
+        "Alois P. Heinz and Vaclav Kotesovec, <a href=\"/A073119/b073119.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..2000 from Alois P. Heinz)"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} A007814(k)*A000041(n-k).",
+        "G.f.: g(x) = (Sum_{i>0} x^(h(i))/(1-x^(h(i))))/Product_{i>0}(1 - x^i), where h(i) = 2^i. - _Emeric Deutsch_, Sep 19 2016.",
+        "Conjecture: a(n) ~ exp(sqrt(2*n/3)*Pi)/(2*Pi*sqrt(2*n)) ~ p(n) * sqrt(6*n)/Pi, where p(n) is the partition function A000041. - _Vaclav Kotesovec_, Oct 07 2016"
+    ],
+    "example": [
+        "a(5) = 5 because in the partitions [1,1,1,1,1], [1,1,1,2'], [1,2'2'], [1,1,3], [2',3],[1,4'], [5] we have 5 positive powers of 2 (they are marked). - _Emeric Deutsch_, Sep 19 2016."
+    ],
+    "maple": [
+        "p2:= proc(n) p2(n):= is(n=2^ilog2(n)) end: p2(1):= false:",
+        "b:= proc(n, i) option remember; local t, l;",
+        "      if n<0 then [0, 0]",
+        "    elif n=0 then [1, 0]",
+        "    elif i<1 then [0, 0]",
+        "    else t:= b(n, i-1);",
+        "         l:= b(n-i, i);",
+        "         [t[1]+l[1], t[2]+l[2]+ `if`(p2(i), l[1], 0)]",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n, n)[2]:",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Sep 29 2011"
+    ],
+    "mathematica": [
+        "Needs[\"DiscreteMath`Combinatorica`\"]; f[n_] := Length[ Select[ Log[2, Flatten[ Partitions[n]]], IntegerQ[ # ] && # > 0 & ]]; Table[ f[n], {n, 1, 45}]",
+        "a[n_] := Sum[IntegerExponent[k, 2]*PartitionsP[n-k], {k, 1, n}]; Table[a[n], {n, 1, 50}] (* _Jean-Fran\u00e7ois Alcover_, Jan 28 2014 *)"
+    ],
+    "xref": [
+        "Cf. A024786, A000070."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,4",
+    "author": "_Vladeta Jovovic_, Aug 24 2002",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, Aug 26 2002"
+    ],
+    "references": 2,
+    "revision": 25,
+    "time": "2016-10-07T05:37:07-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

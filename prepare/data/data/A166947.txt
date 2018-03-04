@@ -1,0 +1,41 @@
+{
+    "number": 166947,
+    "data": "1,4,24,448,29152,6448000,4799359488,12099984537600,104875315518635520,3178565207840143938560,342288453932192597037125632,132776310046929259464457969090560",
+    "name": "Number of ways of writing n as the sum of 2^n squares.",
+    "formula": [
+        "a(n) equals the coefficient of x^n in the (2^n)-th power of Jacobi theta_3(x).",
+        "G.f.: A(x) = Sum_{n>=0} log( theta_3(2^n*x) )^n/n! where theta_3(x) = 1 + 2*Sum_{n>=1} x^(n^2)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 4*x + 24*x^2 + 448*x^3 + 29152*x^4 + 6448000*x^5 +...",
+        "Let F(x) = theta_3(x) = 1 + 2*Sum_{n>=1} x^(n^2),",
+        "then A(x) = 1 + log(F(2*x)) + log(F(4*x))^2/2! + log(F(8*x))^3/3! + ...",
+        "Illustrate a(n) = [x^n] F(x)^(2^n) by forming a table of",
+        "coefficients in powers F(x)^(2^n), which begin:",
+        "F^(2^0): [(1), 2, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, ...];",
+        "F^(2^1): [1, (4), 4, 0, 4, 8, 0, 0, 4, 4, 8, 0, 0, 8, 0, 0, ...];",
+        "F^(2^2): [1, 8, (24), 32, 24, 48, 96, 64, 24, 104, 144, 96, ...];",
+        "F^(2^3): [1, 16, 112, (448), 1136, 2016, 3136, 5504, 9328, ...];",
+        "F^(2^4): [1, 32, 480, 4480, (29152), 140736, 525952, 1580800, ...];",
+        "F^(2^5): [1, 64, 1984, 39680, 575424, (6448000), 58115328, ...];",
+        "F^(2^6): [1, 128, 8064, 333312, 10166144, 244000512, (4799359488), ...];",
+        "F^(2^7): [1, 256, 32512, 2731008, 170688256, 8466189824, 347119309824, (12099984537600), ...]; ...",
+        "and noting that the coefficients along the diagonal (in parenthesis)",
+        "form the initial terms of this sequence."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(THETA3=1+2*sum(k=1,sqrtint(n),x^(k^2))+x*O(x^n));polcoeff(THETA3^(2^n),n)}",
+        "(PARI) {a(n)=local(THETA3=1+2*sum(k=1,sqrtint(n),x^(k^2))+x*O(x^n)); polcoeff(sum(k=0,n,log(subst(THETA3,x,2^k*x))^k/k!),n)}"
+    ],
+    "xref": [
+        "Cf. A158112, A000122, A004018, A000118, A000143, A000152, A022085.",
+        "Cf. variant: A166953 (n as the sum of 3^n squares). [From _Paul D. Hanna_, Oct 26 2009]"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Oct 25 2009",
+    "references": 1,
+    "revision": 2,
+    "time": "2012-03-30T18:37:18-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

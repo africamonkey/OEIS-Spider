@@ -1,0 +1,40 @@
+{
+    "number": 215417,
+    "data": "11,13,17,19,37,41,53,59,61,67,71,79,89,97,109,113,131,149,191,197,227,239,269,281,283,337,367,379,383,401,421,449,457,499,503,509,587,607,673,701,719,727,739,757,809,811,887,907,929,991,1009,1061,1093,1103",
+    "name": "Primes that remain prime when a single zero digit is inserted between any two adjacent digits.",
+    "link": [
+        "Paolo P. Lava and Vincenzo Librandi, <a href=\"/A215417/b215417.txt\">Table of n, a(n) for n = 1..700</a> (first 372 terms from Paolo P. Lava)"
+    ],
+    "example": [
+        "399617 is prime and also 3996107, 3996017, 3990617, 3909617, 3099617."
+    ],
+    "maple": [
+        "A215417:=proc(q)",
+        "local a,b,c,i,n,ok;",
+        "for n from 5 to q do",
+        "  a:=ithprime(n); b:=0; while a>0 do b:=b+1; a:=trunc(a/10); od;",
+        "  a:=ithprime(n);ok:=1;",
+        "  for i from 1 to b-1 do",
+        "    c:=a+9*10^i*trunc(a/10^i); if not isprime(c) then ok:=0; break; fi;",
+        "  od;",
+        "  if ok=1 then print(ithprime(n)); fi;",
+        "od; end:",
+        "A215417(1000);"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[5,200]],And@@PrimeQ[Table[FromDigits[Insert[ IntegerDigits[ #],0,n]],{n,2,IntegerLength[#]}]]&] (* _Harvey P. Dale_, Feb 23 2014 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(v=concat([\"\"], digits(n))); for(i=2, #v-1, v[1]=Str(v[1], v[i]); v[i]=0; if(i>2, v[i-1]=\"\"); if(!isprime(eval(concat(v))), return(0))); isprime(n) \\\\ _Charles R Greathouse IV_, Sep 26 2012"
+    ],
+    "xref": [
+        "Cf. A159236, A069246, A215419-A215421."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Aug 10 2012",
+    "references": 19,
+    "revision": 28,
+    "time": "2014-02-25T06:22:23-05:00",
+    "created": "2012-08-10T13:51:52-04:00"
+}

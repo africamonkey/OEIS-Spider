@@ -1,0 +1,53 @@
+{
+    "number": 7416,
+    "id": "M1022",
+    "data": "1,2,4,6,12,16,24,36,48,60,64,120,144,180,192,240,360,576,720,840,900,960,1024,1260,1296,1680,2520,2880,3072,3600,4096,5040,5184,6300,6480,6720,7560,9216,10080,12288,14400,15120,15360,20160,25200,25920,27720,32400,36864,44100",
+    "name": "The minimal numbers: sequence A005179 arranged in increasing order.",
+    "comment": [
+        "Numbers n such there is no x<n such that A000005(x)=A000005(n). - _Benoit Cloitre_, Apr 28 2002",
+        "Brown notes that A002182 is a subsequence. - _Charles R Greathouse IV_, Jun 07 2013",
+        "A047983(a(n)) = 0. - _Reinhard Zumkeller_, Nov 03 2015"
+    ],
+    "reference": [
+        "J. Roberts, Lure of the Integers, Math. Assoc. America, 1992, p. 86.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A007416/b007416.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Ron Brown, <a href=\"http://www.math.hawaii.edu/~ron/pdfpapers/ordinarytest.pdf\">The minimal number with a given number of divisors</a> (2009), Journal of Number Theory 116:1 (2005), pp. 150-158.",
+        "M. E. Grost, <a href=\"http://www.jstor.org/stable/2315183\">The smallest number with a given number of divisors</a>, Amer. Math. Monthly, 75 (1968), 725-729.",
+        "J. Roberts, <a href=\"/A007415/a007415.pdf\">Lure of the Integers</a>, Annotated scanned copy of pp. 81, 86 with notes.",
+        "Anna K. Savvopoulou and Christopher M. Wedrychowicz, <a href=\"http://dx.doi.org/10.1007/s11139-014-9572-9\">On the smallest number with a given number of divisors</a>, The Ramanujan Journal, 2015, Vol. 37, pp. 51-64."
+    ],
+    "maple": [
+        "for n from 1 to 10^5 do",
+        "  t:= numtheory:-tau(n);",
+        "  if not assigned(B[t]) then B[t]:= n fi;",
+        "od:",
+        "sort(map(op,[entries(B)]));# _Robert Israel_, Nov 11 2015"
+    ],
+    "mathematica": [
+        "A007416 = Reap[ For[ s = 1, s <= 10^5, s++, If[ Abs[ Product[ DivisorSigma[0, i] - DivisorSigma[0, s], {i, 1, s-1}]] > 0, Print[s]; Sow[s]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Nov 19 2012, after Pari *)"
+    ],
+    "program": [
+        "(PARI) for(s=1,10^6,if(abs(prod(i=1,s-1,numdiv(i)-numdiv(s)))>0,print1(s,\",\")))",
+        "(PARI) is(n)=my(d=numdiv(n));for(i=1,n-1,if(numdiv(i)==d, return(0))); 1 \\\\ _Charles R Greathouse IV_, Feb 20 2013",
+        "(Haskell)",
+        "a007416 n = a007416_list !! (n-1)",
+        "a007416_list = f 1 [] where",
+        "   f x ts = if tau `elem` ts then f (x + 1) ts else x : f (x + 1) (tau:ts)",
+        "            where tau = a000005' x",
+        "-- _Reinhard Zumkeller_, Apr 18 2015"
+    ],
+    "xref": [
+        "Cf. A005179, A099317, A099312, A099314, A099316, A099318.",
+        "Cf. A000005, A002182, A047983."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 35,
+    "revision": 49,
+    "time": "2018-01-10T16:43:12-05:00",
+    "created": "1994-05-16T03:00:00-04:00"
+}

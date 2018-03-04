@@ -1,0 +1,34 @@
+{
+    "number": 178933,
+    "data": "1,1,14,35,205,521,2507,6709,26712,73834,262431,724537,2384988,6552033,20289864,55244988,163342701,439201501,1251532060,3321188863,9177476977,24028568664,64709650590,167153761523,440300702427,1122562426240,2900254892900,7301575351055,18544013542057",
+    "name": "Generating function exp( sum(n>=1, sigma(n)^3*x^n/n ) ).",
+    "comment": [
+        "Compare with g.f. for partition numbers A000041: exp( Sum_{n>=1} sigma(n)*x^n/n ), where sigma(n) = A000203(n) is the sum of the divisors of n.",
+        "Similarly, exp( Sum_{n>=1} sigma(n)^2*x^n/n ) gives A156302."
+    ],
+    "formula": [
+        "a(0)=0 and a(n)=1/n*sum(k=1,n,sigma(k)^3*a(n-k)) for n>0.",
+        "G.f.: exp( Sum_{n>=1} Sum_{k>=1} sigma(n*k)^2 * x^(n*k) / n ). [_Paul D. Hanna_, Jan 31 2012]"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 14*x^2 + 35*x^3 + 205*x^4 + 521*x^5 + 2507*x^6 +...",
+        "such that, by definition,",
+        "log(A(x)) = x + 3^3*x^2/2 + 4^3*x^3/3 + 7^3*x^4/4 + 6^3*x^5/5 + 12^3*x^6/6 +..."
+    ],
+    "program": [
+        "(PARI) N=100;v=Vec(exp(sum(k=1,N,sigma(k)^3*x^k/k)+x*O(x^N)))",
+        "(PARI) a(n)=if(n==0, 1, (1/n)*sum(k=1, n, sigma(k)^3*a(n-k)))",
+        "(PARI) {a(n)=polcoeff(exp(sum(k=1, n, sigma(k)^3*x^k/k)+x*O(x^n)), n)} /* _Paul D. Hanna_ */",
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1, n+1, sum(k=1, n\\m, sigma(m*k)^2*x^(m*k)/m)+x*O(x^n))), n)} /* _Paul D. Hanna_ */"
+    ],
+    "xref": [
+        "Cf. A000203 (sigma), A000041 (partitions), A156302, A205797."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Joerg Arndt_, Dec 30 2010",
+    "references": 1,
+    "revision": 15,
+    "time": "2012-10-13T14:50:55-04:00",
+    "created": "2010-11-12T14:27:58-05:00"
+}

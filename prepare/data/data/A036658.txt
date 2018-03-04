@@ -1,0 +1,33 @@
+{
+    "number": 36658,
+    "data": "0,0,0,0,1,1,3,6,14,29,68,147,337,757,1734,3953,9113,20988,48645,112909,263084,614201,1438001,3373253,7930660,18679005,44075988,104173194,246604137,584620470,1387879434,3299067379,7851736348,18708682855,44627133541",
+    "name": "Number of n-node rooted unlabeled trees with exactly 3 edges at root and otherwise out-degree <=2.",
+    "link": [
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "Let G036656(x) = g.f. for A036656. G.f.: x^3*cycle_index(S3, G036656), where cycle_index(Sk, f) means apply the cycle index for the symmetric group S_k to f(x).",
+        "E.g. cycle_index(S2, f) = (1/2!)*(f^2+subs(x=x^2, f), cycle_index(S3, f) = (1/3!)*(f^3+3*subs(x=x^2, f)*f+2*subs(x=x^3, f))."
+    ],
+    "maple": [
+        "CI2 := proc(f) (1/2)*(f^2+subs(x=x^2,f)); end; CI3 := proc(f) (1/6)*(f^3+3*subs(x=x^2,f)*f+2*subs(x=x^3,f)); end;",
+        "N := 40: G036658 := series(x^3*CI3(G036656),x,N); A036658 := n->coeff(G036658,x,n);"
+    ],
+    "mathematica": [
+        "terms = 35;",
+        "CI3[f_] := (1/3!)*(f^3 + 3*(f /. x -> x^2)*f + 2*(f /. x -> x^3));",
+        "G036656[_] = 0; Do[G036656[x_] = x + (1/2)*(G036656[x]^2 + G036656[x^2]) + O[x]^terms // Normal, terms];",
+        "G036658[x_] = x^3*CI3[G036656[x] - x] + O[x]^(terms+5);",
+        "Drop[CoefficientList[G036658[x], x], 5] (* _Jean-Fran\u00e7ois Alcover_, Jan 24 2018, adapted from Maple *)"
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,7",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "Corrected by _N. J. A. Sloane_, May 03 2000"
+    ],
+    "references": 3,
+    "revision": 18,
+    "time": "2018-01-24T03:35:50-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

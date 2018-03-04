@@ -1,0 +1,34 @@
+{
+    "number": 243956,
+    "data": "1,16,67,86,131,151,186,191,211,226,541,701",
+    "name": "Positive numbers n without a decomposition into a sum n = i+j such that 6i-1, 6i+1, 6j-1, 6j+1 are twin primes.",
+    "comment": [
+        "Conjecture: any integer n > 701 has a decomposition into a sum n = i+j such that 6i-1, 6i+1, 6j-1, 6j+1 are twin primes."
+    ],
+    "maple": [
+        "b:= n-> isprime(6*n-1) and isprime(6*n+1):",
+        "a:= proc(n) option remember; local i, k, ok;",
+        "      for k from 1 +`if`(n=1, 0, a(n-1)) do ok:= true;",
+        "        for i to iquo(k, 2) while ok",
+        "          do ok:= not(b(i) and b(k-i)) od;",
+        "        if ok then return k fi",
+        "      od",
+        "    end:",
+        "seq(a(n), n=1..12);  # _Alois P. Heinz_, Jun 20 2014"
+    ],
+    "program": [
+        "(PARI) l=List();a=select(p->isprime(p-2)&&p>5, primes(2000))\\6;",
+        "for(i=1,#a-1,listput(l,2*a[i]);for(j=i+1,#a,listput(l,(a[i]+a[j]))));",
+        "print(setminus(Set(vector(l[#l]/4, i, i)), Set(l)))"
+    ],
+    "xref": [
+        "Cf. A002822, A187759."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Lear Young_, Jun 15 2014",
+    "references": 1,
+    "revision": 25,
+    "time": "2014-06-24T13:18:18-04:00",
+    "created": "2014-06-24T13:18:18-04:00"
+}

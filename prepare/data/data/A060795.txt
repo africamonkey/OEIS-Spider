@@ -1,0 +1,47 @@
+{
+    "number": 60795,
+    "data": "1,2,5,14,42,165,714,3094,14858,79534,447051,2714690,17395070,114371070,783152070,5708587335,43848093003,342444658094,2803119896185,23619540863730,201813981102615,1793779293633437,16342050964565645,154170926013430326,1518409177581024365",
+    "name": "Write product of first n primes as x*y with x<y and x maximal; sequence gives value of x.",
+    "comment": [
+        "Or, lower central divisor of n-th primorial.",
+        "Subsequence of A005117 (squarefree numbers). - _Michel Marcus_, Feb 22 2016"
+    ],
+    "formula": [
+        "a(n) = A060775(A002110(n)). - _Labos Elemer_, Apr 27 2001"
+    ],
+    "example": [
+        "n=8: q(8)=2*3*5*7*11*13*17*19=9699690. Its 128th and 129th divisors are {3094,3135}: a(8)=3094 and 3094 < A000196(9699690)=3114<3135. [Corrected by _Colin Barker_, Oct 22 2010]",
+        "2*3*5*7 = 210 = 14*15 with difference of 1, so a(4) = 14."
+    ],
+    "maple": [
+        "F:= proc(n) local P,N,M;",
+        "     P:= {seq(ithprime(i),i=1..n)};",
+        "     N:= floor(sqrt(convert(P,`*`)));",
+        "     M:= map(convert, combinat:-powerset(P),`*`);",
+        "     max(select(`<=`,M,N))",
+        "end proc:",
+        "map(F, [$1..20]); # _Robert Israel_, Feb 22 2016"
+    ],
+    "mathematica": [
+        "a[n_] := (m = Times @@ Prime[Range[n]] ; dd = Divisors[m]; dd[[Length[dd]/2 // Floor]]); Table[Print[an = a[n]]; an, {n, 1, 25}] (* _Jean-Fran\u00e7ois Alcover_, Oct 15 2016 *)"
+    ],
+    "program": [
+        "a(n) = my(m=prod(i=1, n, prime(i))); divisors(m)[numdiv(m)\\2]; \\\\ _Michel Marcus_, Feb 22 2016"
+    ],
+    "xref": [
+        "Cf. A061055, A061056, A061057, A061058, A061059, A061060, A061030, A061031, A061032, A061033, A060755, A000196, A033677."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Labos Elemer_, Apr 27 2001",
+    "ext": [
+        "More terms from _Ed Pegg Jr_, May 28 2001",
+        "Terms 16 through 23 computed by _Jud McCranie_, Apr 15 2000",
+        "a(24) and a(25) from _Robert Israel_, Feb 22 2016",
+        "a(25) corrected by _Jean-Fran\u00e7ois Alcover_, Oct 15 2016"
+    ],
+    "references": 3,
+    "revision": 32,
+    "time": "2016-10-15T15:56:43-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

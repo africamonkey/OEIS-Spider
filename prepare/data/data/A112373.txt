@@ -1,0 +1,46 @@
+{
+    "number": 112373,
+    "data": "1,1,2,12,936,68408496,342022190843338960032,584861200495456320274313200204390612579749188443599552",
+    "name": "a(n+2) = (a(n+1)^3 + a(n+1)^2)/a(n) with a(0)=1, a(1)=1.",
+    "comment": [
+        "As n tends to infinity, log(log(a(n)))/n tends to log((3+sqrt(5))/2) = A104457.",
+        "The Laurent property is satisfied by any second-order recurrence of the form a(n+2)=f(a(n+1))/a(n) where f is a polynomial of the form f(x)=x^m*p(x) with m a positive integer greater than or equal to 2 and p arbitrary. In that case a(0)=a(1)=1 generates a sequence of integers and the ratios a(n+1)/a(n) and a(n+1)*a(n-1)/a(n)^2 are integers for all n. - _Andrew Hone_, Dec 12 2005",
+        "Also denominators of sum(1/a(k)): k=0..n) with numerators = A259644. - _Reinhard Zumkeller_, Jul 02 2015"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A112373/b112373.txt\">Table of n, a(n) for n = 0..10</a>",
+        "S. Fomin and A. Zelevinsky, <a href=\"http://dx.doi.org/10.1006/aama.2001.0770\">The Laurent Phenomenon</a>, Advances in Applied Mathematics 28 (2002) 119-144.",
+        "Andrew N. W. Hone, <a href=\"http://arxiv.org/abs/1507.00063\">Curious continued fractions, nonlinear recurrences and transcendental numbers</a>, arXiv:1507.00063 [math.NT], 2015.",
+        "A. N. W. Hone, <a href=\"http://arxiv.org/abs/1509.05019\">Continued fractions for some transcendental numbers</a>, arXiv:1509.05019 [math.NT], 2015-2016, Monatsh. Math. DOI: 10.1007/s00605-015-0844-2."
+    ],
+    "formula": [
+        "a(n+1) / a(n) = A114552(n), a(n) = a(1-n) for all n in Z. - _Michael Somos_, Apr 19 2017"
+    ],
+    "maple": [
+        "a[0]:=1; a[1]:=1; f(x):=x^3+x^2; for n from 0 to 8 do a[n+2]:=simplify(subs(x=a[n+1],f(x))/a[n]) od; s[3]:=ln(2^2*3); s[4]:=ln(2^3*3^2*13); for n from 3 to 10000 do s[n+2]:=evalf(3*s[n+1]+ln(1+exp(-s[n+1]))-s[n]): od: print(evalf(ln(s[10002])/(10002))): evalf(ln((3+sqrt(5))/2));",
+        "# s[n]=ln(a[n]); ln(s[n])/n converges slowly to 0.962..."
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[n] == (a[n - 1]^3 + a[n - 1]^2)/a[n - 2], a[0] == a[1] == 1}, a, {n, 0, 7}] (* _Michael De Vlieger_, Jul 02 2015 *)"
+    ],
+    "program": [
+        "(MAGMA) I:=[1,1]; [n le 2 select I[n] else (Self(n-1)^3+Self(n-1)^2)/Self(n-2): n in [1..10]]; // _Vincenzo Librandi_, Jul 02 2015",
+        "(Haskell)",
+        "a112373 n = a112373_list !! n",
+        "a112373_list = 1 : 1 : zipWith (\\u v -> (u^3 + u^2) `div` v)",
+        "                               (tail a112373_list) a112373_list",
+        "-- _Reinhard Zumkeller_, Jul 02 2015",
+        "(PARI) {a(n) = my(a=self()); if(n<0, a(1-n), n<2, 1, a(n-1)^2 * (1 + a(n-1)) / a(n-2))}; /* _Michael Somos_, Apr 19 2017 */"
+    ],
+    "xref": [
+        "Cf. A114551, A114552.",
+        "Cf. A259644."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Andrew Hone_, Dec 02 2005",
+    "references": 10,
+    "revision": 34,
+    "time": "2017-04-19T14:21:04-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

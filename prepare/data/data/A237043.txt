@@ -1,0 +1,31 @@
+{
+    "number": 237043,
+    "data": "6,20,21,110,136,155,253,364,602,657,812,889,979,1081",
+    "name": "Numbers n such that 2^n - 1 is not squarefree, but 2^d - 1 is squarefree for every proper divisor d of n.",
+    "comment": [
+        "Primitive elements of A049094: the elements of A049094 are precisely the positive multiples of members of this sequence.",
+        "If p^2 divides 2^n - 1 for some odd prime p, then by definition the multiplicative order of 2 mod p^2 divides n. The multiplicative order of 2 mod p^2 is p times the multiplicative order of 2 mod p unless p is a Wieferich prime, in which case the two orders are identical. Hence either p is a Wieferich prime or p*log_2(p+1) <= n. This should allow finding larger members of this sequence. - _Charles R Greathouse IV_, Feb 04 2014",
+        "If n is in the sequence and m>1 then m*n is not in the sequence. Because n is a proper divisor of m*n and 2^n-1 is not squarefree. - _Farideh Firoozbakht_, Feb 11 2014",
+        "a(15)>=1207. - _Max Alekseyev_, Sep 28 2015"
+    ],
+    "program": [
+        "(PARI) default(factor_add_primes, 1);",
+        "isA049094(n)=my(f=factor(n>>valuation(n, 2))[, 1], N, o); for(i=1, #f, if(n%(f[i]-1) == 0, return(1))); N=2^n-1; fordiv(n, d, f=factor(2^d-1)[, 1]; for(i=1, #f, if(d==n, return(!issquarefree(N))); o=valuation(N, f[i]); if(o>1, return(1)); N/=f[i]^o))",
+        "is(n)=fordiv(n,d,if(isA049094(d),return(d==n))); 0",
+        "(PARI) \\\\ Simpler but slow",
+        "is(n)=fordiv(n,d,if(!issquarefree(2^d-1),return(d==n))); 0"
+    ],
+    "xref": [
+        "Cf. A049094, A005420, A065069, A282631, A282632."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,1",
+    "author": "_Charles R Greathouse IV_, Feb 02 2014",
+    "ext": [
+        "a(14) from _Charles R Greathouse IV_, Sep 21 2015, following Womack's factorization of 2^991-1."
+    ],
+    "references": 12,
+    "revision": 36,
+    "time": "2017-02-23T22:17:05-05:00",
+    "created": "2014-02-03T08:59:55-05:00"
+}

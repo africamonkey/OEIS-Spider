@@ -1,0 +1,46 @@
+{
+    "number": 89189,
+    "data": "2,3,5,7,11,13,19,23,29,31,37,43,47,53,59,61,67,71,79,83,101,103,107,127,131,139,149,151,157,167,173,179,181,191,197,199,211,223,227,229,239,263,269,277,283,293,307,311,317,331,347,349,359,367,373,383",
+    "name": "Primes p such that p-1 is cubefree.",
+    "comment": [
+        "The ratio of the count of primes p <= n such that p-1 is cubefree to the count of primes <= n converges to 0.69.. . This implies that roughly 70% of the primes less one are cubefree. This compares to about 0.37 of the primes less one are squarefree."
+    ],
+    "link": [
+        "Reinhard Zumkeller & Vincenzo Librandi, <a href=\"/A089189/b089189.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "A212793(a(n) - 1) = 1. - _Reinhard Zumkeller_, May 27 2012"
+    ],
+    "example": [
+        "43 is included because 43-1 = 2*3*7. 41 is omitted because 41-1 = 2^3*5.",
+        "97 is omitted because 96 = 2^5*3 since higher powers are also tested for exclusion."
+    ],
+    "maple": [
+        "filter:= p -> isprime(p) and max(seq(t[2],t=ifactors(p-1)[2]))<=2:",
+        "select(filter, [2,seq(2*i+1,i=1..1000)]); # _Robert Israel_, Sep 11 2014"
+    ],
+    "mathematica": [
+        "f[n_]:=Module[{a=m=0},Do[If[FactorInteger[n][[m,2]]>2,a=1],{m,Length[FactorInteger[n]]}];a]; lst={};Do[p=Prime[n];If[f[p-1]==0,AppendTo[lst,p]],{n,6!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Jul 15 2009 *)",
+        "Select[Prime[Range[100]],Max[Transpose[FactorInteger[#-1]][[2]]]<3&] (* _Harvey P. Dale_, Feb 05 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a097375 n = a097375_list !! (n-1)",
+        "a097375_list = filter ((== 1) . a212793 . (subtract 1)) a000040_list",
+        "-- _Reinhard Zumkeller_, May 27 2012",
+        "(PARI) lista(nn) = forprime(p=2, nn, f = factor(p-1)[,2]; if ((#f == 0) || vecmax(f) < 3, print1(p, \", \"));) \\\\ _Michel Marcus_, Sep 11 2014"
+    ],
+    "xref": [
+        "Cf. A004709, A039787, A097380, A089194 (subsequence)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Dec 08 2003 and _Reinhard Zumkeller_, Aug 11 2004",
+    "ext": [
+        "Corrected and extended by _Harvey P. Dale_, Feb 05 2012"
+    ],
+    "references": 10,
+    "revision": 30,
+    "time": "2017-05-05T10:56:37-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

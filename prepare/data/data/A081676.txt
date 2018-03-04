@@ -1,0 +1,45 @@
+{
+    "number": 81676,
+    "data": "1,1,1,4,4,4,4,8,9,9,9,9,9,9,9,16,16,16,16,16,16,16,16,16,25,25,27,27,27,27,27,32,32,32,32,36,36,36,36,36,36,36,36,36,36,36,36,36,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,64,64,64,64,64,64,64,64,64,64,64",
+    "name": "Largest perfect power <= n.",
+    "comment": [
+        "a(n) = n if n is in A001597, otherwise a(n) = a(n-1). - _Robert Israel_, Dec 17 2015"
+    ],
+    "link": [
+        "Neven Sajko, <a href=\"/A081676/b081676.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = n - A069584(n)."
+    ],
+    "maple": [
+        "N:= 1000: # to get a(1) to a(N).",
+        "Powers:= {1,seq(seq(b^p, p=2..floor(log[b](N))),b=2..isqrt(N))}:",
+        "Powers:= sort(convert(Powers,list)):",
+        "j:= 1:",
+        "for i from 1 to N do",
+        "  if i >= Powers[j+1] then j:= j+1 fi;",
+        "  A[i]:= Powers[j];",
+        "od:",
+        "seq(A[i],i=1..N); # _Robert Israel_, Dec 17 2015"
+    ],
+    "mathematica": [
+        "Array[SelectFirst[Range[#, 1, -1], Or[And[! PrimeQ@ #, GCD @@ FactorInteger[#][[All, -1]] > 1], # == 1] &] &, 72] (* _Michael De Vlieger_, Jun 14 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = {while(!ispower(n), n--; if (n==0, return (1))); n;} \\\\ _Michel Marcus_, Nov 04 2015",
+        "(Sage)",
+        "p = [i for i in (1..81) if i.is_perfect_power()]",
+        "r = [[p[i]]*(p[i+1]-p[i]) for i in (0..10)]",
+        "print [y for x in r for y in x] # _Peter Luschny_, Jun 13 2017"
+    ],
+    "xref": [
+        "Cf. A001597, A069584."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Reinhard Zumkeller_, Mar 26 2003",
+    "references": 2,
+    "revision": 27,
+    "time": "2017-06-15T16:55:15-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 74677,
+    "data": "0,1,1,1,2,4,6,9,15,25,40,64,104,169,273,441,714,1156,1870,3025,4895,7921,12816,20736,33552,54289,87841,142129,229970,372100,602070,974169,1576239,2550409,4126648,6677056,10803704,17480761,28284465,45765225,74049690",
+    "name": "a(n) = Sum_{i = 0..floor(n/2)} (-1)^(i + floor(n/2)) F(2*i + e), where F = A000045 (Fibonacci numbers) and e = (1-(-1)^n)/2.",
+    "comment": [
+        "Essentially the same as A006498 (g.f. 1/(1-x-x^3-x^4)).",
+        "a(n) is the convolution of F(n) with the sequence (1,0,-1,0,1,0,-1,0,...), A056594."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A074677/b074677.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Victoria Zhuravleva, <a href=\"http://dx.doi.org/10.5802/jtnb.846\">Diophantine approximations with Fibonacci numbers</a>, Journal de th\u00e9orie des nombres de Bordeaux, 25 no. 2 (2013), p. 499-520. See Lemma 5.1.",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,1,1)."
+    ],
+    "formula": [
+        "a(n) = a(n-1) + a(n-3) + a(n-4) for n>3, a(0)=0, a(1)=1, a(2)=1, a(3)=1.",
+        "G.f.: x/(1 - x - x^3 - x^4)."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[x/(1 - x - x^3 - x^4), {x, 0, 40}], x]"
+    ],
+    "program": [
+        "(Haskell)",
+        "a074677 n = a074677_list !! (n-1)",
+        "a074677_list = 0 : 1 : 1 : 1 : zipWith (+) a074677_list",
+        "   (zipWith (+) (tail a074677_list) (drop 3 a074677_list))",
+        "-- _Reinhard Zumkeller_, Dec 28 2011",
+        "(Sage) [sum((-1)^(i+floor(n/2))*fibonacci(2*i+(1-(-1)^n)/2) for i in (0..floor(n/2))) for n in [0..50]]; # _Bruno Berselli_, Mar 15 2016",
+        "(MAGMA) [&+[(-1)^(i+Floor(n/2))*Fibonacci(2*i+(1-(-1)^n) div 2): i in [0..Floor(n/2)]]: n in [0..50]]; // _Bruno Berselli_, Mar 15 2016",
+        "(PARI) concat(0, Vec(x/((1+x^2)*(1-x-x^2)) + O(x^50))) \\\\ _Colin Barker_, Mar 15 2016"
+    ],
+    "xref": [
+        "Cf. A056594."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,5",
+    "author": "Mario Catalani (mario.catalani(AT)unito.it), Aug 30 2002",
+    "references": 5,
+    "revision": 21,
+    "time": "2016-03-15T11:59:13-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

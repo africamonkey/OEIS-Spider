@@ -1,0 +1,62 @@
+{
+    "number": 143141,
+    "data": "1,2,5,14,37,101,271,733,1976,5334,14390,38833,104779,282734,762903,2058571,5554692,14988400,40443620,109130216,294469216,794574883,2144024501,5785283758,15610599502,42122535067,113660462337,306693333868,827559549428,2233028019698",
+    "name": "Total number of all repeated partitions of the integer n and its parts down to parts equal to 1. Essentially first differences of A055887.",
+    "comment": [
+        "Start from the A000041(n) integer partitions P(n,i,s) of the integer n at stage s=1.",
+        "The index i=1,...,A000041(n) denotes the different partitions.",
+        "We call the index s the partition stage and increase it by one as we sub-partition the partitions of a previous stage.",
+        "Each P(n,i,s) is a set P(n,i,s)={t(n,1,j,s)),...,t(P,i,j,s),...,t(P,i,J,s)} of parts t(P,i,j,s) of S.",
+        "The index j is attached to the parts of a partition P(n,i,s). 1<=j<=n since there are at most n parts.",
+        "Now apply the set partition process on every P(n,i,s=1).",
+        "That is, each t(n,i,j,s=1) is subjected to a further partitioning.",
+        "We get partitions P(t'(n,i,j,1),i',j',2)={t'(t(n,i,j,1),i',1,2),...,t'(t(n,i,j,1), i',j',2),...,t'(t(n,i,j,1),i',J',2)} of the second partition stage.",
+        "We repeat this partitioning process on each part t'(i,j',2) until we arrive at parts equal to 1 which cannot be partitioned any further.",
+        "We may speak of the full decomposition F of n into parts.",
+        "The sequence counts the total number of partitions of all stages of the full decomposition of n.",
+        "Note that n is its own partition, e.g. P(n=3,i=1,s=1)={3} is an integer partition of n=3.",
+        "We do not apply the repeated partitioning on the partition P(n,i,s)={n} (otherwise an infinite loop would arise).",
+        "For n=1 and n=2 there is no second partition stage: s stays at s=1.",
+        "The corresponding labeled counterpart is sequence A143140."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A143141/b143141.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A055887(n) - A055887(n-1), n>1."
+    ],
+    "example": [
+        "n=1:",
+        "[[1]]",
+        "n=2:",
+        "[[2], [1, 1]]",
+        "n=3:",
+        "[[3], [2, 1], [1, 1, 1]], [[2], [1, 1]]",
+        "n=4 in more detail:",
+        "[4], [3, 1], [2, 2], [2, 1, 1], [1, 1, 1, 1]], <- stage s=1, partition of 4",
+        "[[3], [2, 1], [1, 1, 1]], <- stage s=2 partitioning the first 3 of the 2nd partition",
+        "[[2], [1, 1]], <- stage s=2 partitioning the first 2 of the 3rd partition",
+        "[[2], [1, 1]], <- stage s=2 partitioning the second 2 of the 3rd partition",
+        "[[2], [1, 1]] <- stage s=2 partitioning the first 2 of the 4th partition",
+        "a(4) = 14 = 5 (from s=1)+9 (from s=2)."
+    ],
+    "maple": [
+        "A055887 := proc(n) option remember ; if n = 0 then 1; else add(combinat[numbpart](k)*procname(n-k),k=1..n) ; fi; end: A143141 := proc(n) if n = 1 then 1; else A055887(n)-A055887(n-1) ; fi; end: seq(A143141(n),n=1..20) ;"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = Sum[PartitionsP[k]*b[n-k], {k, 1, n}]; b[0]=1; A055887 = Table[b[n], {n, 0, 30}]; Join[{1}, Rest[Differences[A055887]]] (* _Jean-Fran\u00e7ois Alcover_, Feb 05 2017 *)"
+    ],
+    "xref": [
+        "Cf. A143140, A055887, A000041, A141799, A131408, A137732."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Thomas Wieder_, Jul 27 2008",
+    "ext": [
+        "Edited and extended by _R. J. Mathar_, Aug 25 2008"
+    ],
+    "references": 2,
+    "revision": 12,
+    "time": "2017-02-05T09:31:07-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

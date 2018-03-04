@@ -1,0 +1,72 @@
+{
+    "number": 73485,
+    "data": "1,2,3,5,6,7,11,13,15,17,19,23,29,30,31,35,37,41,43,47,53,59,61,67,71,73,77,79,83,89,97,101,103,105,107,109,113,127,131,137,139,143,149,151,157,163,167,173,179,181,191,193,197,199,210,211,221,223,227,229,233",
+    "name": "Product of any number of consecutive primes; squarefree numbers with no gaps in their prime factorization.",
+    "comment": [
+        "A073484(a(n)) = 0 and A073483(a(n)) = 1;",
+        "See A097889 for composite terms. - _Reinhard Zumkeller_, Mar 30 2010",
+        "A169829 is a subsequence. - _Reinhard Zumkeller_, May 31 2010",
+        "a(A192280(n)) = 1: complement of A193166.",
+        "Also fixed points of A053590: a(n) = A053590(a(n)). - _Reinhard Zumkeller_, May 28 2012",
+        "The Heinz numbers of the partitions into distinct consecutive integers. The Heinz number of a partition p = [p_1, p_2, ..., p_r] is defined as Product(p_j-th prime, j=1...r) (concept used by Alois P. Heinz in A215366 as an \"encoding\" of a partition). Example: (i) 15 (= 3*5) is in the sequence because it is the Heinz number of the partition [2,3]; (ii) 10 (= 2*5) is not in the sequence because it is the Heinz number of the partition [1,3]. - _Emeric Deutsch_, Oct 02 2015"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A073485/b073485.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) ~ n log n. - _Charles R Greathouse IV_, Oct 24 2012"
+    ],
+    "example": [
+        "105 is a term, as 105 = 3*5*7 with consecutive prime factors."
+    ],
+    "maple": [
+        "isA073485 := proc(n)",
+        "    local plist,p,i ;",
+        "    plist := sort(convert(numtheory[factorset](n),list)) ;",
+        "    for i from 1 to nops(plist) do",
+        "        p := op(i,plist) ;",
+        "        if modp(n,p^2) = 0 then",
+        "            return false;",
+        "        end if;",
+        "        if i > 1 then",
+        "            if nextprime(op(i-1,plist)) <> p then",
+        "                return false;",
+        "            end if;",
+        "        end if;",
+        "    end do:",
+        "    true;",
+        "end proc:",
+        "for n from 1 to 1000 do",
+        "    if isA073485(n) then",
+        "        printf(\"%d,\",n);",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 12 2016"
+    ],
+    "mathematica": [
+        "f[n_] := FoldList[ Times, 1, Prime[ Range[n, n + 3]]]; lst = {}; k = 1; While[k < 55, AppendTo[lst, f@k]; k++ ]; Take[ Union@ Flatten@ lst, 65] (* _Robert G. Wilson v_, Jun 11 2010 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a073485 n = a073485_list !! (n-1)",
+        "a073485_list = filter ((== 1) . a192280) [1..]",
+        "-- _Reinhard Zumkeller_, May 28 2012, Aug 26 2011",
+        "(PARI) list(lim)=my(v=List(primes(primepi(lim))),p,t);for(e=2, log(lim+.5)\\log(2), p=1; t=prod(i=1,e-1,prime(i)); forprime(q=prime(e), lim, t*=q/p; if(t>lim,next(2)); listput(v,t); p=nextprime(p+1))); vecsort(Vec(v)) \\\\ _Charles R Greathouse IV_, Oct 24 2012"
+    ],
+    "xref": [
+        "Complement: A193166.",
+        "Intersection of A005117 and A073491.",
+        "Subsequence of A277417.",
+        "Cf. A053590, A073483, A073484, A073486, A192280.",
+        "Cf. A000040, A006094, A002110, A097889, A169829 (subsequences)."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Aug 03 2002",
+    "ext": [
+        "Alternative description added to the name by _Antti Karttunen_, Oct 29 2016"
+    ],
+    "references": 16,
+    "revision": 41,
+    "time": "2016-10-30T13:40:52-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

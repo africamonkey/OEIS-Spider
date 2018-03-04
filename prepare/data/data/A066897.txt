@@ -1,0 +1,71 @@
+{
+    "number": 66897,
+    "data": "1,2,5,8,15,24,39,58,90,130,190,268,379,522,722,974,1317,1754,2330,3058,4010,5200,6731,8642,11068,14076,17864,22528,28347,35490,44320,55100,68355,84450,104111,127898,156779,191574,233625,284070,344745,417292,504151",
+    "name": "Total number of odd parts in all partitions of n.",
+    "comment": [
+        "Also sum of all odd-indexed parts minus the sum of all even-indexed parts of all partitions of n (Cf. A206563). - _Omar E. Pol_, Feb 12 2012"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A066897/b066897.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} b(k)*numbpart(n-k), where b(k)=A001227(k)=number of odd divisors of k and numbpart() is A000041. - _Vladeta Jovovic_, Jan 26 2002",
+        "a(n) = Sum_{k=0..n} k*A103919(n,k). - _Emeric Deutsch_, Mar 13 2006",
+        "G.f.: Sum_{j>=1}(x^(2j-1)/(1-x^(2j-1)))/Product_{j>=1}(1-x^j). - _Emeric Deutsch_, Mar 13 2006",
+        "a(n) = A066898(n) + A209423(n) = A006128(n) - A066898(n). [_Reinhard Zumkeller_, Mar 09 2012]",
+        "a(n) = A207381(n) - A207382(n). - _Omar E. Pol_, Mar 11 2012"
+    ],
+    "example": [
+        "a(4) = 8 because in the partitions of 4, namely [4],[3,1],[2,2],[2,1,1],[1,1,1,1], we have a total of 0+2+0+2+4=8 odd parts."
+    ],
+    "maple": [
+        "g:=sum(x^(2*j-1)/(1-x^(2*j-1)),j=1..70)/product(1-x^j,j=1..70): gser:=series(g,x=0,45): seq(coeff(gser,x^n),n=1..44);",
+        "# _Emeric Deutsch_, Mar 13 2006",
+        "b:= proc(n, i) option remember; local f, g;",
+        "      if n=0 or i=1 then [1, n]",
+        "    else f:= b(n, i-1); g:= `if`(i>n, [0, 0], b(n-i, i));",
+        "         [f[1]+g[1], f[2]+g[2]+ (i mod 2)*g[1]]",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n, n)[2]:",
+        "seq(a(n), n=1..50);",
+        "# _Alois P. Heinz_, Mar 22 2012"
+    ],
+    "mathematica": [
+        "f[n_, i_] := Count[Flatten[IntegerPartitions[n]], i]",
+        "o[n_] := Sum[f[n, i], {i, 1, n, 2}]",
+        "e[n_] := Sum[f[n, i], {i, 2, n, 2}]",
+        "Table[o[n], {n, 1, 45}]  (* A066897 *)",
+        "Table[e[n], {n, 1, 45}]  (* A066898 *)",
+        "%% - %                   (* A209423 *)",
+        "(* _Clark Kimberling_, Mar 08 2012 *)",
+        "b[n_, i_] := b[n, i] = Module[{f, g}, If[n==0 || i==1, {1, n}, f = b[n, i-1]; g = If[i>n, {0, 0}, b[n-i, i]]; {f[[1]] + g[[1]], f[[2]] + g[[2]] + Mod[i, 2]*g[[1]]}] ]; a[n_] := b[n, n][[2]]; Table[a[n], {n, 1, 50}] (* _Jean-Fran\u00e7ois Alcover_, Sep 26 2015, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a066897 = p 0 1 where",
+        "   p o _             0 = o",
+        "   p o k m | m < k     = 0",
+        "           | otherwise = p (o + mod k 2) k (m - k) + p o (k + 1) m",
+        "-- _Reinhard Zumkeller_, Mar 09 2012",
+        "(Haskell)",
+        "a066897 = length . filter odd . concat . ps 1 where",
+        "   ps _ 0 = [[]]",
+        "   ps i j = [t:ts | t <- [i..j], ts <- ps t (j - t)]",
+        "-- _Reinhard Zumkeller_, Jul 13 2013"
+    ],
+    "xref": [
+        "Cf. A000041, A001227, A006128, A066898, A103919.",
+        "Column 1 of A206563. - _Omar E. Pol_, Feb 15 2012"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Naohiro Nomoto_, Jan 24 2002",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Jan 26 2002"
+    ],
+    "references": 23,
+    "revision": 58,
+    "time": "2015-09-27T11:18:24-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

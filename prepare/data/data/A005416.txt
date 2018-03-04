@@ -1,0 +1,39 @@
+{
+    "number": 5416,
+    "id": "M4259",
+    "data": "1,1,6,50,518,6354,89782,1435330,25625910,505785122,10944711398,257834384850,6572585595622,180334118225650,5300553714899094,166206234856979810,5538980473666776854,195527829569946627138,7288988096561232432070",
+    "name": "Vertex diagrams of order 2n.",
+    "reference": [
+        "P. Cvitanovic, Asymptotic estimates and gauge invariance, Nuclear Phys. B 127 (1977), 176-188.",
+        "R. J. Martin and M. J. Kearney, An exactly solvable self-convolutive recurrence, Aequat. Math., 80 (2010), 291-318. see p. 293.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005416/b005416.txt\">Table of n, a(n) for n=0..100</a>",
+        "D. J. Broadhurst, <a href=\"http://arXiv.org/abs/hep-ph/9909336\">Four-loop Dyson-Schwinger-Johnson anatomy</a>"
+    ],
+    "formula": [
+        "Let s_n=(2*n)!/(2^n*n!) (A001147), S(x)=Sum_{n >= 0} s_n*x^n; sequence has g.f. A(x) satisfying 1-1/S(x)=x*A(x)*S(x).",
+        "a(n) = (2*n - 1) * A000698(n). [Martin and Kearney]"
+    ],
+    "example": [
+        "G.f. = 1 + x + 6*x^2 + 50*x^3 + 518*x^4 + 6354*x^5 + 89782*x^6 + 1435330*x^7 + ..."
+    ],
+    "mathematica": [
+        "m = 19; s[x_] = Sum[(2*n)!/(2^n*n!)*x^n, {n, 0, m}]; gf[x_] = (s[x] - 1)/(s[x]^2*x); Most[CoefficientList[Series[gf[x], {x, 0, m}], x]] (* _Jean-Fran\u00e7ois Alcover_, Aug 31 2011, after g.f. *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A); if( n<0, 0, A = sum( k=0, n+1, (2*k)! / k! /2^k * x^k, x^2 * O(x^n)); polcoeff( (A - 1) / (x * A^2), n))}; /* _Michael Somos_, Oct 11 2006 */",
+        "(PARI) {a(n) = my(A); if( n<1, n==0, A = vector(n); A[1] = 1; for( k=2, n, A[k] = (2 * k - 3) * A[k-1] + sum( j=1, k-1, A[j] * A[k-j])); (2*n - 1) * A[n])}; /* _Michael Somos_, Jul 24 2011 */"
+    ],
+    "xref": [
+        "Cf. A000698, A049464."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_.",
+    "references": 6,
+    "revision": 31,
+    "time": "2016-08-15T15:40:36-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

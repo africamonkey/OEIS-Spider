@@ -1,0 +1,53 @@
+{
+    "number": 6456,
+    "id": "M0528",
+    "data": "1,1,1,1,2,3,4,5,7,11,16,22,30,43,62,88,124,175,249,354,502,710,1006,1427,2024,2870,4068,5767,8176,11593,16436,23301,33033,46832,66398,94137,133462,189211,268252,380315,539192,764433,1083764,1536498,2178364",
+    "name": "Number of compositions (ordered partitions) of n into squares.",
+    "reference": [
+        "Jan Bohman, Carl-Erik Fr\u00f6berg, Hans Riesel, Partitions in squares, Nordisk Tidskr. Informationsbehandling (BIT) 19 (1979), 297-301.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A006456/b006456.txt\">Table of n, a(n) for n=0..500</a>",
+        "J. Bohman et al., <a href=\"/A001156/a001156.pdf\">Partitions in squares</a>, Nordisk Tidskr. Informationsbehandling (BIT) 19 (1979), 297-301. (Annotated scanned copy)",
+        "N. Robbins, <a href=\"http://ac.inf.elte.hu/Vol_043_2014/239_43.pdf\">On compositions whose parts are polygonal numbers</a>, Annales Univ. Sci. Budapest., Sect. Comp. 43 (2014) 239-243. See p. 242.",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of squares</a>"
+    ],
+    "formula": [
+        "a(n) = 1, if n = 0;  a(n)=Sum(1 <= k^2 <= n, a(n-k^2)), if n > 0. - _David W. Wilson_",
+        "G.f.: 1/(1-x-x^4-x^9-....) - _Jon Perry_, Jul 04 2004",
+        "a(n) ~ c * d^n, where d is the root of the equation EllipticTheta(3, 0, 1/d) = 3, d = 1.41774254618138831428829091099000662953179532057717725688..., c = 0.46542113389379672452973940263069782869244877335179331541... - _Vaclav Kotesovec_, May 01 2014, updated Jan 05 2017"
+    ],
+    "mathematica": [
+        "a[n_]:=a[n]=If[n==0, 1, Sum[a[n - k], {k, Select[Range[n], IntegerQ[Sqrt[#]] &]}]]; Table[a[n], {n,0,  100}] (* _Indranil Ghosh_, Jul 28 2017, after _David W. Wilson_'s formula *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=66;  x='x+O('x^N);",
+        "Vec( 1/( 1 - sum(k=1,1+sqrtint(N), x^(k^2) ) ) )",
+        "/* _Joerg Arndt_, Sep 30 2012 */",
+        "(Python)",
+        "from gmpy2 import is_square",
+        "class Memoize:",
+        "    def __init__(self, func):",
+        "        self.func=func",
+        "        self.cache={}",
+        "    def __call__(self, arg):",
+        "        if arg not in self.cache:",
+        "            self.cache[arg] = self.func(arg)",
+        "        return self.cache[arg]",
+        "@Memoize",
+        "def a(n): return 1 if n==0 else sum([a(n - k) for k in xrange(1, n + 1) if is_square(k)])",
+        "print map(a, xrange(101)) # _Indranil Ghosh_, Jul 28 2017, after _David W. Wilson_'s formula"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Name corrected by _Bob Selcoe_, Feb 12 2014"
+    ],
+    "references": 19,
+    "revision": 49,
+    "time": "2017-08-30T16:58:15-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

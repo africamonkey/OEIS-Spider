@@ -1,0 +1,69 @@
+{
+    "number": 193498,
+    "data": "1,2,3,4,5,6,7,8,9,11,12,16,18,21,24,32,34,48,64,65,74,81,96,117,121,128,144,153,161,192,241,256,258,288,321,384,493,512,611,617,768,974,1024",
+    "name": "n such that certain polynomials are irreducible over GF(2), see first comment.",
+    "comment": [
+        "Recursively build matrices by setting M(0) = [1], and M(k+1)=[M(k),E(k); E(k),Z(k)] where E(k) is the N x N unit matrix and Z(k) is the N x N zero matrix (and N=2^k). Let c(x) the characteristic polynomial (over GF(2)) of the upper left n x n submatrix. If c(x), divided by the least power of x with nonzero coefficient, is irreducible over GF(2) then n is a term of this sequence (see example).",
+        "All powers of 2 are terms, corresponding to self-reciprocal polynomials, see Theorem 7 of the Cohen reference."
+    ],
+    "reference": [
+        "Stephen D. Cohen, \"The explicit construction of irreducible polynomials over finite fields\", Designs, Codes and Cryptography, vol.2, no.2, pp. 169-174, (June 1992)."
+    ],
+    "link": [
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>, figure 40.9-G on p.854"
+    ],
+    "example": [
+        "The 16 x 16 matrix M(4) is (dots for zeros):",
+        "111.1...1.......",
+        "1..1.1...1......",
+        "1.....1...1.....",
+        ".1.....1...1....",
+        "1...........1...",
+        ".1...........1..",
+        "..1...........1.",
+        "...1...........1",
+        "1...............",
+        ".1..............",
+        "..1.............",
+        "...1............",
+        "....1...........",
+        ".....1..........",
+        "......1.........",
+        ".......1........",
+        "The characteristic polynomial of the 9 x 9 (upper left) submatrix is c(x)=x^9 + x^8 + x^5 + x^3 + x^2, and C(x)/x^2 = x^7 + x^6 + x^3 + x + 1 is irreducible over GF(2), so 9 is a term."
+    ],
+    "program": [
+        "(PARI)",
+        "Mrec(t)=",
+        "{ /* Auxiliary routine to build up matrices */",
+        "    local(n, M);",
+        "    n = matsize(t)[1];",
+        "    M = matrix(2*n, 2*n); /* double the size */",
+        "    /* lower left and upper right: unit matrices */",
+        "    for (k=1, n, M[k,n+k]=1; M[n+k,k]=1; );",
+        "    /* upper left: copy of smaller matrix */",
+        "    for (k=1, n, for (j=1, n, M[k,j]=t[k,j]; ); );",
+        "    return ( M );",
+        "}",
+        "Mfunc(n)=",
+        "{ /* Compute matrix of size 2^n */",
+        "    local(M);",
+        "    M = matrix(1,1, r,c, 1 );  /* start with unit matrix */",
+        "    for (k=1, n, M=Mrec(M) );  /* build up to size 2^n */",
+        "    return( M * Mod(1,2) );  /* over GF(2) */",
+        "}",
+        "{ for (k=1, N,",
+        "  K =matrix(k,k,r,c,M[r, c]);",
+        "  C = charpoly(K, , 2);  /* Hessenberg is much faster than Berkowitz */",
+        "  c = polrecip(C);  c = polrecip(c); /* get rid of trivial factor (power of x) */",
+        "  if ( polisirreducible(c), print1(k,\", \") );",
+        "); }"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Joerg Arndt_, Aug 17 2011",
+    "references": 0,
+    "revision": 21,
+    "time": "2014-08-30T18:57:22-04:00",
+    "created": "2011-08-18T07:41:16-04:00"
+}

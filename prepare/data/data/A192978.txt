@@ -1,0 +1,38 @@
+{
+    "number": 192978,
+    "data": "0,1,4,12,29,62,122,227,406,706,1203,2020,3356,5533,9072,14816,24129,39218,63654,103215,167250,270886,438599,709992,1149144,1859737,3009532,4869972,7880261,12751046,20632178,33384155,54017326,87402538",
+    "name": "Coefficient of x in the reduction by x^2->x+1 of the polynomial p(n,x) defined at Comments.",
+    "comment": [
+        "The titular polynomials are defined recursively:  p(n,x)=x*p(n-1,x)+1+n+*n^2, with p(0,x)=1.  For an introduction to reductions of polynomials by substitutions such as x^2->x+1, see A192232 and A192744.",
+        "Define a triangle by T(n,0)=n*(n+1)+1, T(n,n)=1, and T(r,c)=T(r-1,c-1)+T(r-2,c-1). The sum of the terms in row(n) is a(n+1). - _J. M. Bergot_, Apr 14 2013"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A192978/b192978.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-5,1,2,-1)."
+    ],
+    "formula": [
+        "a(n) = 4*a(n-1)-5*a(n-2)+a(n-3)+2*a(n-4)-a(n-5).",
+        "G.f.: x*(1+x^2) / ( (x^2+x-1)*(x-1)^3 ). - _R. J. Mathar_, May 12 2014"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 40;",
+        "p[0, x] := 1;",
+        "p[n_, x_] := x*p[n - 1, x] + n^2 + n + 1;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] := FixedPoint[(s PolynomialQuotient @@ #1 + PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]   (* A027181 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]   (* A192978 *)",
+        "CoefficientList[Series[x (1 + x^2)/((x^2 + x - 1) (x - 1)^3), {x, 0, 40}], x] (* _Vincenzo Librandi_, May 13 2014 *)"
+    ],
+    "xref": [
+        "Cf. A192232, A192744, A192951."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 13 2011",
+    "references": 2,
+    "revision": 24,
+    "time": "2015-06-13T00:53:55-04:00",
+    "created": "2011-07-13T20:15:25-04:00"
+}

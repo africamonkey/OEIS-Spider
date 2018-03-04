@@ -1,0 +1,49 @@
+{
+    "number": 246371,
+    "data": "5,8,11,13,14,17,18,23,28,32,38,39,41,43,50,53,58,59,61,63,68,73,74,77,83,86,88,94,95,98,104,113,116,122,123,128,131,137,138,140,143,149,158,163,167,172,173,176,179,182,185,188,193,194,200,203,212,213,215,218,221,228,230,233,238,239,242,248,254,257",
+    "name": "Numbers n such that, if 2n-1 = Product_{k >= 1} (p_k)^(c_k) then n > Product_{k >= 1} (p_{k-1})^(c_k), where p_k indicates the k-th prime, A000040(k).",
+    "comment": [
+        "Numbers n such that A064216(n) < n.",
+        "Numbers n such that A064989(2n-1) < n.",
+        "From _Matthijs Coster_, Dec 22 2014: (Start)",
+        "Also area of (over 45 degree) rotated rectangles with sides > 1. The area of such rectangles is 2ab - a - b + 1 = 1/2((2a-1)(2b-1)+1).",
+        "Example: Here a = 3 and b = 5. The area = 23.",
+        "           *",
+        "          ***",
+        "         *****",
+        "          *****",
+        "           *****",
+        "            ***",
+        "             *",
+        "(End)",
+        "Note: I think the above comment applies to A053726, not this sequence, but I could be wrong (pending Matthijs Coster's further comments). - _Antti Karttunen_, Apr 17 2015"
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A246371/b246371.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Matthijs Coster, <a href=\"http://www.pyth.eu/pdf/artikel_50429_4-6.pdf\">Oplossing Zomerprijsvraag</a>, Pythagoras 54/2 (2014) 4-7."
+    ],
+    "program": [
+        "(PARI)",
+        "default(primelimit, 2^30);",
+        "A064989(n) = {my(f); f = factor(n); if((n>1 && f[1,1]==2), f[1,2] = 0); for (i=1, #f~, f[i,1] = precprime(f[i,1]-1)); factorback(f)};",
+        "A064216(n) = A064989((2*n)-1);",
+        "isA246371(n) = (A064216(n) < n);",
+        "n = 0; i = 0; while(i < 10000, n++; if(isA246371(n), i++; write(\"b246371.txt\", i, \" \", n)));",
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A246371 (MATCHING-POS 1 1 (lambda (n) (< (A064216 n) n))))"
+    ],
+    "xref": [
+        "Complement: A246372.",
+        "Setwise difference of A246361 and A048674.",
+        "Subsequence of A104275 and A053726 (20 is the first term > 1 which is not in this sequence).",
+        "Subsequence: A246374 (the primes present in this sequence).",
+        "Cf. A000040, A064216, A064989, A246351."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Aug 24 2014",
+    "references": 14,
+    "revision": 26,
+    "time": "2015-04-19T00:50:51-04:00",
+    "created": "2014-08-26T01:27:44-04:00"
+}

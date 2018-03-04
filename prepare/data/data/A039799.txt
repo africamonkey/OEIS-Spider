@@ -1,0 +1,44 @@
+{
+    "number": 39799,
+    "data": "0,0,0,1,1,2,3,6,6,9,10,12,14,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63,65,67,69,71,73,75,77,79,81,83,85,87,89,91,93,95,97,99,101,103,105,107,109,111,113,115,117,119",
+    "name": "For S a subset of [ n ] = {1,2,3,...n}, let B_S = {x+y : x,y in S, x<y}; then a(n) is maximal cardinality of B_S intersect B_{[ n ]-S}.",
+    "comment": [
+        "An easy upper bound is 2n-7, since the sums in the intersection must come from {5,...,2n-3}. It is easy to see that 5 and 6 cannot both appear as sums. It appears that at most three sums can come from {5,...,9} and at most three from {2n-7,...,2n-3}. If this is true, then 2n-11 is an upper bound for n >= 9. - _Rob Pratt_, Jul 14 2015"
+    ],
+    "link": [
+        "Rob Pratt, <a href=\"/A039799/b039799.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "formula": [
+        "Conjecture: a(n) = 2n-11 for n >= 14. - _Rob Pratt_, Jul 14 2015"
+    ],
+    "example": [
+        "a(7) = 3 since we can divide [ 7 ] into S={1,5,6} and T={2,3,4,7} giving B_S={6,7,11} and B_T={5,6,7,9,10,11}, with intersection {6,7,11} of cardinality 3."
+    ],
+    "maple": [
+        "B:= proc(s) local l, i, j;",
+        "       l:= [s[]];",
+        "       {seq(seq(l[i]+l[j], i=1..j-1), j=2..nops(l))}",
+        "    end:",
+        "b:= proc(n,i,s)",
+        "      if i=0 then nops(B(s) intersect B({$1..n} minus s))",
+        "    else max(b(n, i-1, s), b(n, i-1, s union {i}))",
+        "      fi",
+        "    end;",
+        "a:= n-> b(n, n, {}):",
+        "seq(a(n), n=1..15);  # _Alois P. Heinz_, Feb 28 2011"
+    ],
+    "mathematica": [
+        "B[s_List] := B[s] = Module[{l=s}, Flatten @ Table[Table[l[[i]] + l[[j]], {i, 1, j-1}], {j, 2, Length[l]}]]; b[n_, i_, s_List] := b[n, i, s] = If[i == 0, Length[B[s] ~Intersection~ B[Range[n] ~Complement~ s]], Max[b[n, i-1, s], b[n, i-1, s ~Union~ {i}]]]; a[n_] := b[n, n, {}]; Table[a[n], {n, 1, 15}] (* _Jean-Fran\u00e7ois Alcover_, May 29 2015, after _Alois P. Heinz_ *)"
+    ],
+    "keyword": "hard,nonn,more",
+    "offset": "1,6",
+    "author": "_Erich Friedman_",
+    "ext": [
+        "a(15)-a(23) from _Alois P. Heinz_, Feb 28 2011",
+        "a(24)-a(100) from _Rob Pratt_, Jul 14 2015"
+    ],
+    "references": 1,
+    "revision": 31,
+    "time": "2015-07-15T07:12:48-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

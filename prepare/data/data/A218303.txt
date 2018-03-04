@@ -1,0 +1,38 @@
+{
+    "number": 218303,
+    "data": "1,1,6,76,1480,39056,1303904,52716224,2504292480,136741146880,8439125550592,580959483530240,44138582550333440,3668643339883089920,331143571990522060800,32258185015683531587584,3373221864252806213435392,376881845889001869159759872",
+    "name": "E.g.f. A(x) satisfies: A( x/(exp(2*x)*cosh(2*x)) ) = exp(x)*cosh(x).",
+    "comment": [
+        "More generally, if A( x/(exp(t*x)*cosh(t*x)) ) = exp(m*x)*cosh(m*x),",
+        "then A(x) = Sum_{n>=0} m*(n*t+m)^(n-1) * cosh((n*t+m)*x) * x^n/n!."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A218303/b218303.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "E.g.f.: A(x) = Sum_{n>=0} (2*n+1)^(n-1) * cosh((2*n+1)*x) * x^n/n!.",
+        "a(n) ~ c * 2^n * n^(n-1) / (exp(n) * (LambertW(exp(-1)))^n), where c = 0.535672560704567808218663129282561449... . - _Vaclav Kotesovec_, Jul 13 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 6*x^2/2! + 76*x^3/3! + 1480*x^4/4! + 39056*x^5/5! +...",
+        "where",
+        "A(x) = cosh(x) + 3^0*cosh(3*x)*x + 5^1*cosh(5*x)*x^2/2! + 7^2*cosh(7*x)*x^3/3! + 9^3*cosh(9*x)*x^4/4! + 11^4*cosh(11*x)*x^5/5! +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=local(Egf=1,X=x+x*O(x^n),R=serreverse(x/(exp(2*X)*cosh(2*X)))); Egf=exp(R)*cosh(R); n!*polcoeff(Egf,n)}",
+        "for(n=0,25,print1(a(n),\", \"))",
+        "(PARI) /* Formula derived from a LambertW identity: */",
+        "{a(n)=local(Egf=1,X=x+x*O(x^n)); Egf=sum(k=0,n,(2*k+1)^(k-1)*cosh((2*k+1)*X)*x^k/k!); n!*polcoeff(Egf,n)}",
+        "for(n=0,25,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A201595, A218300, A218301, A218302, A218304, A218305, A218306, A218307, A218308, A218309, A218310."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Oct 25 2012",
+    "references": 11,
+    "revision": 11,
+    "time": "2014-07-13T12:09:13-04:00",
+    "created": "2012-10-25T12:57:10-04:00"
+}

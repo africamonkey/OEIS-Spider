@@ -1,0 +1,47 @@
+{
+    "number": 273061,
+    "data": "15,21,25,30,34,37,41,44,47,50,53,56,59,62,64,67,70,72,75,77,80,82,85,87,90,92,94,97,99,101,103,106,108,110,112,114,117,119,121,123,125,127,129,131,133,135,137,139,142,144,146,148,150,151,153,155,157,159,161,163",
+    "name": "Nearest integer to the Fran\u00e7a-Leclair approximation 2*Pi*(n - 11/8)/LambertW((n - 11/8)/exp(1)) of the Riemann zeta zeros.",
+    "comment": [
+        "This sequence is also the nearest integer to the n-th point t on the critical line such that Re(zeta(1/2+i*t))=0 and such that Im(zeta(1/2+i*t)) is not equal to zero, when excluding t=0.819545... Verified for the first 10000 cases. See Mathematica program for how to verify this.",
+        "Roger Bagula pointed out that the difference between the approximation and the points t, resembles a hyperbola.",
+        "Compare this sequence to the Gram points A002505.",
+        "The first point t such that Re(zeta(1/2+i*t))=0 and Im(zeta(1/2+i*t)) is not equal to zero, is: t(1)=14.5179196282622336505419642930... while for n=1 the Fran\u00e7a-Leclair approximation is 14.5213469530656281679750582094... This gives an error of 0.0034273248033... This decreases to 0.0003990193059... by n=10."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A273061/b273061.txt\">Table of n, a(n) for n = 1..5000</a>",
+        "Guilherme Fran\u00e7a and Andr\u00e9 LeClair, <a href=\"http://arxiv.org/abs/1407.4358\">A theory for the zeros of Riemann Zeta and other L-functions</a>, arXiv:1407.4358 [math.NT], 2014, formula (163) at page 47.",
+        "Mats Granvik, <a href=\"/A273061/a273061_1.txt\">Mathematica program for the iterative formula.</a>",
+        "Eric Weisstein, <a href=\"http://mathworld.wolfram.com/GramPoint.html\">Gram Point</a>."
+    ],
+    "formula": [
+        "a(n) = round(2*Pi*(n - 11/8)/LambertW((n - 11/8)/exp(1))).",
+        "a(n) = round(2*Pi*exp(1)*exp(LambertW((n - 11/8)/exp(1)))). - _Mats Granvik_, Feb 27 2017",
+        "a(n) = round(2*Pi*exp(1 + LambertW((8*(n - 3/2) + 1)/(8*e)))) after the formula in MathWorld. - _Mats Granvik_, Feb 25 2017",
+        "For c = 1/2 the n-th complementary Gram point x is the fixed point solution to the iterative formula: x = 2*Pi*e*e^LambertW(((x/(2*Pi))*log(x/(2*Pi*e)) - c + n - 1 - RiemannSiegelTheta(x)/Pi)/e). - _Mats Granvik_, Jul 24 2017"
+    ],
+    "mathematica": [
+        "(*The nearest integer to the Fran\u00e7a-Leclair approximation*)",
+        "Round[Table[2*Pi*(n - 11/8)/ProductLog[(n - 11/8)/Exp[1]], {n, 1, 60}]]",
+        "(*The nearest integer to t such that Re(zeta(1/2+I*t))=0 while Im(zeta(1/2+I*t))=/0*)",
+        "Round[x /. Table[FindRoot[Re[Zeta[1/2 + I*x]] == 0, {x, 2*Pi*Exp[1]*Exp[ProductLog[(n - 11/8)/Exp[1]]]}], {n, 1, 60}]]",
+        "Clear[a, n, g]; a[n_] := g /. FindRoot[RiemannSiegelTheta[g] == Pi*(2*n - 1)/2, {g, 2*Pi*Exp[1]*Exp[ProductLog[(n - 11/8)/Exp[1]]]}]; a = Table[Round[a[n]], {n, 0, 60 - 1}] (* after _Jean-Fran\u00e7ois Alcover_ in A002505 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=round(2*Pi*exp(lambertw((n-11/8)/exp(1))+1)) \\\\ Works for n > 1 on GP 2.8.0; _Charles R Greathouse IV_, May 15 2016",
+        "(Sage)",
+        "R = RealField(100)",
+        "a = lambda n: R(2*pi*(n - 11/8)/lambert_w((n - 11/8)/exp(1)))",
+        "print [a(n).round() for n in (1..60)] # _Peter Luschny_, May 19 2016"
+    ],
+    "xref": [
+        "Cf. A002505, A177885, A135297, A273061, A153815, A282793, A282794, A282896, A282897."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Mats Granvik_, May 14 2016",
+    "references": 9,
+    "revision": 90,
+    "time": "2017-10-13T03:23:06-04:00",
+    "created": "2016-05-20T04:13:59-04:00"
+}

@@ -1,0 +1,71 @@
+{
+    "number": 6325,
+    "data": "0,0,1,7,26,70,155,301,532,876,1365,2035,2926,4082,5551,7385,9640,12376,15657,19551,24130,29470,35651,42757,50876,60100,70525,82251,95382,110026,126295,144305,164176,186032,210001,236215,264810,295926",
+    "name": "4-dimensional analog of centered polygonal numbers.",
+    "comment": [
+        "If X is an n-set and Y and Z disjoint 2-subsets of X then a(n-4) is equal to the number of 6-subsets of X intersecting both Y and Z. - _Milan Janjic_, Aug 26 2007",
+        "For n>0, a(n+1) is the n-th antidiagonal sum of A213751. - _Clark Kimberling_, Jun 20 2012",
+        "This sequence is the case m=n-1, k=n+3 of b(m,k) = m*(m+1)*((k-2)*m-(k-5))/6, which is the m-th k-gonal pyramidal number. - _Luciano Ancora_, Apr 11 2015",
+        "Starting (1, 7, 26, ...), this is the binomial transform of (1, 6, 13, 12, 4, 0, 0, 0, ...). - _Gary W. Adamson_, Jul 31 2015",
+        "Also starting (1, 7, 26, ...), this appears to be the number of magic labelings of the cycle-of-loops graph LOOP X C_4 having magic sum n, where LOOP is the 1-vertex, 1-loop-edge graph. - _David J. Seal_, Sep 13 2017",
+        "The conjecture by David J. Seal is true and easily proved using MacMahon's Omega operators via the \"Omega\" package for Mathematica authored by Axel Riese (obtaining (up to an offset) the generating function listed in the formula section below). See the second Mathematica program in which the edges of LOOP X C_4 are indexed as in the example below. The Omega package can be downloaded from the link provided in the article by G. E. Andrews et al. - _L. Edson Jeffery_, Oct 15 2017"
+    ],
+    "reference": [
+        "T. A. Gulliver, Sequences from Arrays of Integers, Int. Math. Journal, Vol. 1, No. 4, pp. 323-332, 2002."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A006325/b006325.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "G. E. Andrews, P. Paule and A. Riese, <a href=\"http://www.risc.uni-linz.ac.at/research/combinat/risc/publications/#ppaule\">MacMahon's partition analysis III. The Omega package</a>.",
+        "Milan Janjic, <a href=\"http://www.pmfbl.org/janjic/\">Two Enumerative Functions</a>",
+        "M. Janjic and B. Petkovic, <a href=\"http://arxiv.org/abs/1301.4550\">A Counting Function</a>, arXiv 1301.4550 [math.CO], 2013.",
+        "M. Janjic, B. Petkovic, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL17/Janjic/janjic45.html\">A Counting Function Generalizing Binomial Coefficients and Some Other Classes of Integers</a>, J. Int. Seq. 17 (2014) # 14.3.5",
+        "J. K. Merikoski, R. Kumar and  R. A. Rajput, <a href=\"http://www.math.technion.ac.il/iic/ela/ela-articles/articles/vol26_pp168-176.pdf\">Upper bounds for the largest eigenvalue of a bipartite graph</a>, Electronic Journal of Linear Algebra ISSN 1081-3810, A publication of the International Linear Algebra Society, Volume 26, pp. 168-176, April 2013.",
+        "R. P. Stanley, <a href=\"/A002721/a002721.pdf\">Examples of Magic Labelings</a>, Unpublished Notes, 1973 [Cached copy, with permission]",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (5,-10,10,-5,1)"
+    ],
+    "formula": [
+        "a(n) = n*(n-1)*(n^2-n+1)/6.",
+        "a(n) = ((n^5 - (n-1)^5) - (n^1 - (n-1)^1))/30 = (n^5 - (n-1)^5 - 1)/30. - Xavier Acloque, Jan 25 2003",
+        "The partial sums of the octahedral numbers: a(n+1) = Sum_{i=0..n} A005900(i). - _Jonathan Vos Post_, Mar 14 2006",
+        "G.f.: -x^2*(x+1)^2/(x-1)^5. - Maksym Voznyy (voznyy(AT)mail.ru), Aug 10 2009",
+        "a(n) = Sum_{i=1..n-1} Sum_{j=1..n-1} min(i,j)^2. - _Enrique P\u00e9rez Herrero_, Jan 15 2013 [Which is just rephrasing the partial sum formula with the Murthy formula in A005900. - _R. J. Mathar_, Jun 14 2014]",
+        "a(n) = 5*a(n-1) - 10*a(n-2) + 10*a(n-3) - 5*a(n-4) + a(n-5), n > 4. - _Yosu Yurramendi_, Sep 03 2013",
+        "From _Daniel Poveda Parrilla_, Sep 09 2017: (Start)",
+        "a(n) = A169938(n-1)/6.",
+        "a(n+1) = A288486(n)/24. (End)"
+    ],
+    "example": [
+        "A representation of the LOOP X C_4 graph, with edges and loops indexed as shown, as used in the second Mathematica program below:",
+        ".             3         1",
+        ".              O_______O",
+        ".              |   2   |",
+        ".              |4     0|",
+        ".              |_______|",
+        ".              O   6   O",
+        ".             5         7"
+    ],
+    "mathematica": [
+        "Table[n*(n-1)*(n^2-n+1)/6, {n,0,60}] (* _Vladimir Joseph Stephan Orlovsky_, Apr 22 2011 *)",
+        "<< Omega.m; n = 4; cond = {}; Do[AppendTo[cond, Sum[a[Mod[2*k - j, 2*n]], {j, 0, 2}] == a[2*n]], {k, 0, n - 1}]; f = OEqSum[Product[x[i]^a[i], {i, 0, 2*n}], cond, u][[1]]; Do[f = OEqR[f, Subscript[u, k]], {k, n}];",
+        "(* Generating function: *)",
+        "f = Factor[f /. {x[2*n] -> x} /. {x[_] -> 1}]",
+        "(* This sequence (with initial zeros dropped): *)",
+        "CoefficientList[Series[f, {x, 0, 35}], x] (* _L. Edson Jeffery_, Oct 15 2017 *)"
+    ],
+    "program": [
+        "(MAGMA) [n*(n-1)*(n^2-n+1)/6: n in [0..40]]; // _Vincenzo Librandi_, May 22 2011",
+        "(PARI) a(n)=n*(n-1)*(n^2-n+1)/6 \\\\ _Charles R Greathouse IV_, Sep 24 2015"
+    ],
+    "xref": [
+        "Cf. A005900, A169938, A213751, A288486, A019298, A061907, A244497, A244879, A244873, A244880.",
+        "Cf. A000027, A000217, A019298, A244497, A244879, A244873, A244880, A293310, A293309 (magic labelings of LOOP X C_k, for k = 1..3,5..10).",
+        "Cf. A293311, A293312."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "Albert Rich (Albert_Rich(AT)msn.com)",
+    "references": 33,
+    "revision": 95,
+    "time": "2018-01-24T01:50:50-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

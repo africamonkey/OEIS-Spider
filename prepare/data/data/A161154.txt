@@ -1,0 +1,40 @@
+{
+    "number": 161154,
+    "data": "1,2,5,8,9,11,13,14,17,19,23,25,27,29,32,33,35,37,38,39,41,43,44,45,47,49,50,51,52,53,56,57,59,61,62,67,71,73,77,79,83,85,87,89,91,93,95,97,101,103,107,109,113,117,119,121,125,128,131,133,134,135,137,139,141",
+    "name": "Positive integers n such that both {the number of (non-leading) 0's in the binary representation of n} is coprime to n and {the number of 1's in the binary representation of n} is coprime to n.",
+    "comment": [
+        "1 is the only integer of the form 2^k -1 (k>=0) included in this sequence, because such integers contain no binary 0's, and 0 is considered here to be coprime only to 1."
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A161154/b161154.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "mathematica": [
+        "bcpQ[n_]:=Module[{ones=DigitCount[n,2,1],zeros=DigitCount[n,2,0]}, And@@ CoprimeQ[ {ones,zeros},n]]; Select[Range[150],bcpQ] (* _Harvey P. Dale_, Feb 19 2012 *)"
+    ],
+    "program": [
+        "(PARI) b0(n) = if(n<1, 0, b0(n\\2) + 1 - n%2);",
+        "b1(n) = if(n<1, 0, b1(n\\2) + n%2);",
+        "for (n=1, 141, if(gcd(b0(n),n)==1 && gcd(b1(n),n)==1, print1(n\", \"))) \\\\ _Indranil Ghosh_, Mar 08 2017",
+        "(Python)",
+        "from fractions import gcd",
+        "i=j=1",
+        "while j<=1000:",
+        "....if gcd(bin(i)[2:].count(\"0\"),i)==1 and gcd(bin(i)[2:].count(\"1\"),i)==1:",
+        "........print str(j)+\" \"+str(i)",
+        "........j+=1",
+        "....i+=1 # _Indranil Ghosh_, Mar 08 2017"
+    ],
+    "xref": [
+        "Cf. A094387, A161152, A161153, A161155, A161156."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Jun 03 2009",
+    "ext": [
+        "Extended by _Ray Chandler_, Jun 11 2009"
+    ],
+    "references": 5,
+    "revision": 14,
+    "time": "2017-06-08T16:33:44-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

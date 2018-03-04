@@ -1,0 +1,47 @@
+{
+    "number": 71605,
+    "data": "1,3,18,216,6840,228960,15573600,994533120,85232891520,8641918252800,1068888956889600,155398203460684800,26564263279602048000",
+    "name": "Number of ordered pairs (a,b) of elements of the symmetric group S_n such that the pair a,b generates S_n.",
+    "link": [
+        "L. Babai, <a href=\"http://dx.doi.org/10.1016/0097-3165(89)90068-X\">The probability of generating the symmetric group</a>, J. Combin. Theory, A52 (1989), 148-153.",
+        "J. D. Dixon, <a href=\"http://dx.doi.org/10.1007/BF01110210\">The probability of generating the symmetric group</a>, Math. Z. 110 (1969) 199-205.",
+        "J. D. Dixon, <a href=\"http://dx.doi.org/10.1016/j.disc.2007.07.021\">Problem 923 (BCC20.17), Indecomposable permutations and transitive groups</a>, in Research Problems from the 20th British Combinatorial Conference, Discrete Math., 308 (2008), 621-630.",
+        "T. Luczak and L. Pyber, <a href=\"http://dx.doi.org/10.1017/S0963548300000869\">On random generation of the symmetric group</a>, Combin. Probab. Comput., 2 (1993), 505-512.",
+        "A. Maroti and C. M. Tamburini, <a href=\"http://dx.doi.org/10.1007/s00013-010-0216-z\">Bounds for the probability of generating the symmetric and alternating groups</a>, Arch. Math. (Basel), 96 (2011), 115-121."
+    ],
+    "formula": [
+        "Except for n=2 (because of the \"replacement\") in A040175, a(n) = n! * A040175(n).",
+        "a(n) = 2 * A001691(n) for n > 2."
+    ],
+    "program": [
+        "(GAP)",
+        "a := function(n)",
+        "  local tom, mu, lens, orders, num, k;",
+        "  tom := TableOfMarks(Concatenation(\"S\",String(n)));",
+        "  if tom = fail then tom := TableOfMarks(SymmetricGroup(n)); fi;",
+        "  mu :=  MoebiusTom(tom).mu;",
+        "  lens := LengthsTom(tom);",
+        "  orders := OrdersTom(tom);",
+        "  num := 0;",
+        "  for k in [1 .. Length(lens)] do",
+        "    if IsBound(mu[k]) then",
+        "      num := num + mu[k] * lens[k] * orders[k]^2;",
+        "    fi;",
+        "  od;",
+        "  return num;",
+        "end; # _Stephen A. Silver_, Feb 20 2013"
+    ],
+    "xref": [
+        "Cf. A040175, A135474."
+    ],
+    "keyword": "nonn,more,nice",
+    "offset": "1,2",
+    "author": "Sharon Sela (sharonsela(AT)hotmail.com), Jun 02 2002",
+    "ext": [
+        "a(10)-a(13) added by _Stephen A. Silver_, Feb 20 2013"
+    ],
+    "references": 7,
+    "revision": 19,
+    "time": "2016-01-09T17:14:17-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

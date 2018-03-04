@@ -1,0 +1,46 @@
+{
+    "number": 179033,
+    "data": "1021,1201,1249,1429,9029,9209,9241,9421,10429,11621,12109,12119,12149,12491,12611,12619,12641,12689,12809,12841,12919,14029,14621,14629,14821,14929,16249,16829,18269,19219,19249,19421,90121,90821,91121",
+    "name": "Emirps with a single 2 as the only prime digit.",
+    "link": [
+        "Robert Israel, <a href=\"/A179033/b179033.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "Note that 2 and 929 are not emirps because they are palindromes."
+    ],
+    "maple": [
+        "Dmax:= 6: # to get all terms with up to Dmax digits",
+        "Res:= NULL:",
+        "npd:= [0,1,4,6,8,9]:",
+        "for dd from 3 to Dmax do",
+        "  R:= [seq(seq([seq(npd[j+1],j=convert(6*x+j,base,6))],",
+        "    x=[$6^(dd-3) .. 2*6^(dd-3)-1, $5*6^(dd-3)..6^(dd-2)-1]),j=[1,5])];",
+        "  for p from 2 to dd-1 do",
+        "    for r in R do",
+        "      x:= [op(r[1..p-1]),2,op(r[p..-1])];",
+        "      v1:= add(x[i]*10^(i-1),i=1..dd);",
+        "      v2:= add(x[-i]*10^(i-1),i=1..dd);",
+        "      if v1 < v2 and isprime(v1) and isprime(v2) then Res:= Res,v1,v2; if min(v1,v2) < 10^3  then print(dd,p,r,x,v1,v2) fi fi",
+        "od od od:",
+        "sort([Res]); # _Robert Israel_, Jun 02 2016"
+    ],
+    "mathematica": [
+        "emrp[n_]:=Module[{idn=IntegerDigits[n],rev},rev=Reverse[idn];PrimeQ[FromDigits[rev]]&&rev!=idn]",
+        "only2[n_]:=DigitCount[n,10,{3,5,7}]=={0,0,0}&&DigitCount[n,10,2]==1",
+        "Select[Select[Prime[Range[10000]],emrp],only2] (* _Harvey P. Dale_, Jan 22 2011 *)"
+    ],
+    "xref": [
+        "Cf. A006567, A179032."
+    ],
+    "keyword": "base,less,nonn",
+    "offset": "1,1",
+    "author": "_Lekraj Beedassy_, Jun 25 2010",
+    "ext": [
+        "Terms confirmed by _Ray Chandler_, Jul 13 2010",
+        "Definition improved by _Harvey P. Dale_, Jul 17 2010"
+    ],
+    "references": 2,
+    "revision": 17,
+    "time": "2016-06-03T02:43:37-04:00",
+    "created": "2010-07-11T03:00:00-04:00"
+}

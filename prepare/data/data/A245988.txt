@@ -1,0 +1,36 @@
+{
+    "number": 245988,
+    "data": "1,1,10,141,9592,159245,86252976,908888155,1682479423360,128805405787953,93998774487116800,1099662085349496911,44830846497021739693056,147548082727234113659293,3534565745374740945151080448,1613371163531618738559582856125",
+    "name": "Number of pairs of endofunctions f, g on [n] satisfying g^n(f(i)) = f(i) for all i in [n].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A245988/b245988.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "a(n) = A245980(n,n)."
+    ],
+    "maple": [
+        "with(numtheory): with(combinat): M:=multinomial:",
+        "a:= proc(n) option remember; local l, g; l, g:= sort([divisors(n)[]]),",
+        "      proc(k, m, i, t) option remember; local d, j; d:= l[i];",
+        "        `if`(i=1, n^m, add(M(k, k-(d-t)*j, (d-t)$j)/j!*",
+        "         (d-1)!^j *M(m, m-t*j, t$j) *g(k-(d-t)*j, m-t*j,",
+        "        `if`(d-t=1, [i-1, 0], [i, t+1])[]), j=0..min(k/(d-t),",
+        "        `if`(t=0, [][], m/t))))",
+        "      end; forget(g);",
+        "      `if`(n=0, 1, add(g(j, n-j, nops(l), 0)*",
+        "      stirling2(n, j)*binomial(n, j)*j!, j=0..n))",
+        "    end:",
+        "seq(a(n), n=0..20);"
+    ],
+    "xref": [
+        "Main diagonal of A245980.",
+        "Cf. A245911."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 08 2014",
+    "references": 3,
+    "revision": 7,
+    "time": "2014-08-09T17:15:20-04:00",
+    "created": "2014-08-09T14:23:48-04:00"
+}

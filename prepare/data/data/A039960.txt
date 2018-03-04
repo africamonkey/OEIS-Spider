@@ -1,0 +1,49 @@
+{
+    "number": 39960,
+    "data": "1,1,1,1,2,2,3,4,5,5,6,7,8,8,9,10,11,11,12,13,14,14,15,16,17,18,18,19,20,21,21,22,23,24,25,25,26,27,28,29,29,30,31,32,33,33,34,35,36,37,37,38,39,40,41,42,42,43,44,45,46,46,47,48,49,50,50,51,52,53,54,55,55,56,57",
+    "name": "For n >= 2, a(n) = largest value of k such that n^k is <= n! (a(0) = a(1) = 1 by convention).",
+    "comment": [
+        "Seems to be slightly more than (but asymptotic to) number of nonprimes less than or equal to n."
+    ],
+    "link": [
+        "Danny Rorabaugh, <a href=\"/A039960/b039960.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "a(n) = floor(log_n(n!)) for n>1.",
+        "a(n) = A060151(n) - 1 for n>1. - _Henry Bottomley_, Mar 08 2001",
+        "From _Danny Rorabaugh_, Apr 14 2015: (Start)",
+        "a(n) = log_n(A074182(n)) for n>1.",
+        "a(n) = A074184 - 1 = log_n(A074181(n)) - 1 for n>2.",
+        "(End)",
+        "From _Robert Israel_, Apr 14 2015 (Start)",
+        "n*(1-1/log(n)) + 1 > log(n!)/log(n) > n*(1-1/log(n)) for n >= 7.",
+        "Thus a(n) is either floor(n*(1-1/log(n))) or ceil(n*(1-1/log(n))) for n >= 7 (and in fact this is the case for n >= 3).",
+        "(End)"
+    ],
+    "example": [
+        "a(7)=4 because 7!=5040, 7^4=2401 but 7^5=16807.",
+        "a(6)=3 since 6^3.67195...=720=6! and 6^3<=6!<6^4, i.e. 216<=720<1296."
+    ],
+    "mathematica": [
+        "ds[x_, y_] :=y!-y^x a[n_] :=Block[{m=1, s=ds[m, n]}, While[Sign[s]!=-1&&!Greater[m, 256], m++ ];m]; Table[a[n]-1, {n, 1, 200}]//Timing Code2[transparent]: Table[Count[Part[Sign[Table[Table[n!-n^j, {j, 1, 128}], {n, 1, 128}]], u], 1], {u, 1, 128}]//Timing (from Labos)"
+    ],
+    "program": [
+        "(Sage) [1,1] + [floor(log(factorial(n))/log(n)) for n in range(2,75)] # _Danny Rorabaugh_, Apr 14 2015",
+        "(MAGMA) [1,1] cat [Floor(Log(Factorial(n))/Log(n)): n in [2..80]]; // _Vincenzo Librandi_, Apr 15 2015",
+        "(PARI) a(n)=if(n>3,lngamma(n+1)\\log(n),1) \\\\ _Charles R Greathouse IV_, Sep 02 2015"
+    ],
+    "xref": [
+        "Cf. A011776, A074181, A074182, A074184."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,5",
+    "author": "Dan Bentley (bentini(AT)yahoo.com)",
+    "ext": [
+        "Corrected and extended by _Henry Bottomley_, Mar 08 2001",
+        "Edited by _N. J. A. Sloane_, Sep 26 2008 at the suggestion of R. J. Mathar."
+    ],
+    "references": 7,
+    "revision": 31,
+    "time": "2015-09-02T12:53:27-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,77 @@
+{
+    "number": 11957,
+    "data": "0,1,1,1,1,2,3,6,10,18,31,59,105,198,365,688,1285,2438,4599,8755,16647,31806,60787,116570,223696,430290,828514,1598025,3085465,5965612,11545611,22370304,43383539,84216330,163617801,318148208,619094385,1205609454,2349383925,4581307186,8939118925,17452582356",
+    "name": "Number of ZnS polytypes that repeat after n layers.",
+    "comment": [
+        "Also the number of orbits of the symmetric group S3 action on irreducible polynomials of degree n>1 over GF(2). [_Jean Francis Michon_, Philippe Ravache (philippe.ravache(AT)univ-rouen.fr), Oct 04 2009]"
+    ],
+    "link": [
+        "T. J. McLarnan, <a href=\"http://dx.doi.org/10.1524/zkri.1981.155.3-4.269\">The numbers of polytypes in close-packings and related structures</a>, Zeitschrift f\u00fcr Kristallographie. Volume 155, Issue 3-4, Pages 269-291, ISSN (Online) 0044-2968, ISSN (Print) 1433-7266, DOI: 10.1524/zkri.1981.155.3-4.269, August 2010."
+    ],
+    "formula": [
+        "(see PARI code)"
+    ],
+    "mathematica": [
+        "L[n_, k_] := DivisorSum[GCD[n, k], MoebiusMu[#]*Binomial[n/#, k/#] &];",
+        "A165920[n_] := Sum[If[(n + k) ~Mod~ 3 == 1, L[n, k], 0], {k, 0, n}]/n;",
+        "A001037[n_] := If[n == 0, 1, DivisorSum[n, MoebiusMu[#]*2^(n/#) &]/n];",
+        "A000048[n_] := DivisorSum[n, (# ~Mod~ 2)*(MoebiusMu[#]*2^(n/#)) &]/(2*n);",
+        "A011957[n_] := Module[{an}, If[n <= 2, Return[n - 1]]; an =A001037[n]/6;",
+        "  If[n ~Mod~ 2 == 0, an += 1/2*A000048[n/2]];",
+        "  If[n ~Mod~ 3 == 0, an += 2/3*A165920[n/3]];",
+        "  Return[an]",
+        "];",
+        "Table[A011957[n], {n, 1, 50}] (* _Jean-Fran\u00e7ois Alcover_, Dec 02 2015, adapted from _Joerg Arndt_'s PARI script *)"
+    ],
+    "program": [
+        "(PARI)",
+        "L(n, k)=sumdiv(gcd(n, k), d, moebius(d) * binomial(n/d, k/d) );",
+        "A165920(n)=sum(k=0, n, if( (n+k)%3==1, L(n, k), 0 ) ) / n;",
+        "A001037(n)=if(n<1, n==0, sumdiv(n, d, moebius(d)*2^(n/d))/n);",
+        "A000048(n)=sumdiv(n, d, (d%2)*(moebius(d)*2^(n/d)))/(2*n);",
+        "A165921(n)=",
+        "{",
+        "    my(an);",
+        "    if ( n<=2, return(0) );",
+        "    an = A001037(n);",
+        "    if (n%2==0, an -= 3*A000048(n/2) );",
+        "    if (n%3==0, an -= 2*A165920(n/3) );",
+        "    an /= 6;",
+        "    return( an );",
+        "}",
+        "A011957(n)=",
+        "{",
+        "    my(an);",
+        "    an = A165921(n);",
+        "    if (n%2==0, an += A000048(n/2) );",
+        "    if (n%3==0, an += A165920(n/3) );",
+        "    return( an );",
+        "}",
+        "/* simplified version (merging the routines for A011957 and A165921 above): */",
+        "A011957(n)=",
+        "{",
+        "    my(an);",
+        "    if ( n<=2, return(n-1) );",
+        "    an = A001037(n) / 6;",
+        "    if (n%2==0, an += 1/2 * A000048(n/2) );",
+        "    if (n%3==0, an += 2/3 * A165920(n/3) );",
+        "    return( an );",
+        "}",
+        "/* _Joerg Arndt_, Jul 12 2012 */"
+    ],
+    "xref": [
+        "Cf. A000048 (number of 3-elements orbits).",
+        "Cf. A165920 (number of 2-elements orbits).",
+        "Cf. A165921 (number of 6-elements orbits)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,6",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "Removed incorrect formula and verified terms, _Joerg Arndt_, Jul 12 2012"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2015-12-02T10:23:44-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

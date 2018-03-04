@@ -1,0 +1,45 @@
+{
+    "number": 213242,
+    "data": "1,2,3,6,12,31,89,303,1119,4649,20572,99241,502622,2725840,15424019,92211327,571446565,3716191974,24920512847,174169990243,1251875604302,9326245177768,71241318920624,562221733320241,4535497053407716,37677863148632647,319551379756283637",
+    "name": "Number of generalizations of the partition 1^n.",
+    "comment": [
+        "Consider the ranked poset L(n) of partitions defined in A002846. Then a(n) is the total number of paths of all lengths 0,1,...,n-1 that start at any node in the poset and end at 1^n."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A213242/b213242.txt\">Table of n, a(n) for n = 1..50</a>",
+        "Olivier G\u00e9rard, <a href=\"/A002846/a002846.png\">The ranked posets L(2),...,L(8)</a>"
+    ],
+    "example": [
+        "For n=5 there are a(5) = 12 paths to 1^5 = 11111: 11111; 2111->11111; 221->2111->11111; 311->2111->11111; 32->221->2111->11111; 32->311->2111->11111; 41->221->2111->11111; 41->311->2111->11111; 5->32->221->2111->11111; 5->32->311->2111->11111; 5->41->221->2111->11111; 5->41->311->2111->11111."
+    ],
+    "maple": [
+        "b:= proc(l) option remember; local n, i, j, t; n:=nops(l);",
+        "      `if`(n<2, 1, `if`(l[n]=0, b(subsop(n=NULL, l)),",
+        "      add(`if`(l[i]=0, 0, add(b([seq(l[t]-`if`(t=1, l[t],",
+        "      `if`(t=i, 1, `if`(t=j and t=i-j, -2, `if`(t=j or t=i-j,",
+        "      -1, 0)))), t=1..n)]), j=1..i/2)), i=2..n)))",
+        "    end:",
+        "g:= proc(n, i, l)",
+        "      `if`(n=0 and i=0, b(l), `if`(i=1, b([n, l[]]), add(g(n-i*j, i-1,",
+        "      `if`(l=[] and j=0, l, [j, l[]])), j=0..n/i)))",
+        "    end:",
+        "a:= n-> g(n, n, []):",
+        "seq(a(n), n=1..25);"
+    ],
+    "mathematica": [
+        "b[l_] := b[l] = With[{n = Length[l]}, If[n < 2, 1, If[l[[n]] == 0, b[ReplacePart[l, n -> Sequence[] ]], Sum[If[l[[i]] == 0, 0, Sum[b[Join[Table[l[[t]]-If[t == 1, l[[t]], If[t == i, 1, If[t == j && t == i-j, -2, If[t == j || t == i-j, -1, 0]]]], {t, 1, n}]]], {j, 1, i/2}]], {i, 2, n}]]] ]; g[n_, i_, l_] := If[n == 0 && i == 0, b[l], If[i == 1, b[Prepend[l, n]], Sum[g[n-i*j, i-1, If[l == {} && j == 0, l, Prepend[ l, j]]], {j, 0, n/i}]]] ; a[n_] := g[n, n, {}]; Table[a[n], {n, 1, 27}] // Flatten (* _Jean-Fran\u00e7ois Alcover_, Dec 18 2013, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A002846, A213385, A213427, A213597."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Jun 14 2012",
+    "ext": [
+        "Edited by _Alois P. Heinz_ at the suggestion of _Gus Wiseman_, May 02 2016"
+    ],
+    "references": 6,
+    "revision": 27,
+    "time": "2016-05-02T09:47:46-04:00",
+    "created": "2012-06-15T03:50:15-04:00"
+}

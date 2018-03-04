@@ -1,0 +1,23 @@
+{
+    "number": 23902,
+    "data": "1,132,2970,19800,66462,194832,420684,881760,1511730,2770284,4134240,6754968,9491130,14310120,18773964,27609648,34253142,47864520,58862870,78974808,93470652",
+    "name": "Theta series of A_11 lattice.",
+    "reference": [
+        "J. H. Conway and N. J. A. Sloane, \"Sphere Packings, Lattices and Groups\", Springer-Verlag, p. 110."
+    ],
+    "mathematica": [
+        "terms = 21; f[q_] = LatticeData[\"A11\", \"ThetaSeriesFunction\"][-I Log[q] / Pi]; s = Series[f[q], {q, 0, 2 terms}]; CoefficientList[s, q^2][[1 ;; terms]] (* _Jean-Fran\u00e7ois Alcover_, Jul 04 2017 *)"
+    ],
+    "program": [
+        "(PARI) theta3(k,n,prec,f,m)=f=polcyclo(n);1+sum(m=1,sqrtint(prec),Mod(x^(m*k%n)+x^(m*(n-k)%n),f)*q^sqr(m))+O(q^(prec+1))",
+        "aaa(n,prec,k,m)=sum(k=0,n-1, theta3(k,n,prec)^n)/n/(1+2*sum(m=1,sqrtint(floor(prec/n)),q^(n*sqr(m)))+O(q^(prec+1)))",
+        "doit(m,prec)=subst(lift(aaa(m+1,prec)),x,0) \\\\ gives theta series of A_m to order \"prec\"; code from Robert.Harley(AT)inria.fr"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_.",
+    "references": 13,
+    "revision": 11,
+    "time": "2017-07-04T03:35:39-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

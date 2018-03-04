@@ -1,0 +1,41 @@
+{
+    "number": 293734,
+    "data": "1,1,3,7,20,53,157,455,1393,4270,13495,42907,139323,455182,1510831,5042858,17044789,57891598,198665585,684615958,2379765470,8302157207,29177909254,102867895209,364981305292,1298526198294,4645569147108,16659856695779,60036951331540",
+    "name": "Number of multisets of nonempty words with a total of n letters over quaternary alphabet such that within each prefix of a word every letter of the alphabet is at least as frequent as the subsequent alphabet letter.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A293734/b293734.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{j>=1} 1/(1-x^j)^A005817(j)."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n<2, 1, (4*(2*n+3)*",
+        "       g(n-1)+16*(n-1)*n*g(n-2))/((n+3)*(n+4)))",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(add(g(d)",
+        "      *d, d=numtheory[divisors](j))*a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..35);"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.core.cache import cacheit",
+        "from sympy import divisors",
+        "@cacheit",
+        "def g(n): return 1 if n<2 else (4*(2*n + 3)*g(n - 1) + 16*(n - 1)*n*g(n - 2))//((n + 3)*(n + 4))",
+        "@cacheit",
+        "def a(n): return 1 if n==0 else sum([sum([g(d)*d for d in divisors(j)])*a(n - j) for j in range(1, n + 1)])//n",
+        "print(map(a, range(36))) # _Indranil Ghosh_, Oct 15 2017"
+    ],
+    "xref": [
+        "Column k=4 of A293108.",
+        "Cf. A005817."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Oct 15 2017",
+    "references": 4,
+    "revision": 11,
+    "time": "2017-10-16T12:37:07-04:00",
+    "created": "2017-10-15T14:21:39-04:00"
+}

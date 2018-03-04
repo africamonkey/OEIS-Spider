@@ -1,0 +1,39 @@
+{
+    "number": 276710,
+    "data": "36,40,63,80,84,90,105,108,132,144,150,154,160,165,168,175,176,180,182,195,198,200,208,210,220,260,264,270,273,275,280,286,288,297,300,306,308,312,315,320,324,330,340,351,357,360,364,374,378,380,385,390",
+    "name": "Composite numbers m such that Product_{k=0..m} binomial(m,k) is divisible by m^(m-1).",
+    "comment": [
+        "The numbers Product_{k=0..m}binomial(m,k) form the sequence A001142(m). When m is a prime, the m-1 factors for 0<k<m are all divisible by m and therefore A001142(m) is divisible by m^(m-1). When m is a composite, this is generally not so, except for the numbers listed here (a variety of pseudoprimes).",
+        "Conjecture, tested so far up to m = 3828: \"When m belongs to this list, Product_{k=0..m} binomial(m,k) is divisible also by m^m\". Since this is impossible for prime m (see, e.g., A109874), the conjecture is equivalent to the statement \"m is prime if and only if Product_{k=0..m} binomial(m,k) is divisible by m^(m-1) but not by m^m\"."
+    ],
+    "link": [
+        "Stanislav Sykora and Chai Wah Wu, <a href=\"/A276710/b276710.txt\">Table of n, a(n) for n = 1..10000</a>, terms for n = 1..797 from Stanislav Sykora"
+    ],
+    "example": [
+        "Since 36 is composite and 36^35 divides Product_{k=1..36}binomial(36,k), 36 is a member. In addition, it turns out that 36^36 also divides the product."
+    ],
+    "mathematica": [
+        "Select[DeleteCases[Range[2, 400], p_ /; PrimeQ@ p], Divisible[Product[Binomial[#, k], {k, 0, #}], #^(# - 1)] &] (* _Michael De Vlieger_, Sep 16 2016 *)"
+    ],
+    "program": [
+        "(PARI) generator() = { /* Operates on two pre-defined integer vectors a, b of the same size. a(n) receives the terms of this sequence, while b(n) receives 0 if n^n|Product(binomial(n,k)), or 1 otherwise, and serves exclusively to test the conjecture. */",
+        "  my (m=1,n=0,p);for(k=1,#a,a[k]=0;b[k]=0);",
+        "  while(1,m++;p=prod(k=1,m-1,binomial(m,k));",
+        "    if((p%m^(m-1)==0)&&(!isprime(m)),n++;a[n]=m;",
+        "    if(p%m^m==0,b[n]=0,b[n]=1);if(n==#a,break)));",
+        "}",
+        "  a=vector(1000);b=a;generator();",
+        "  a /* Displays the result.",
+        "  Note: execution was interrupted due to excessive execution time */"
+    ],
+    "xref": [
+        "Cf. A000169 (n^(n-1)), A001142, A109873, A109874."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Stanislav Sykora_, Sep 15 2016",
+    "references": 1,
+    "revision": 23,
+    "time": "2016-11-07T05:08:05-05:00",
+    "created": "2016-11-05T08:13:26-04:00"
+}

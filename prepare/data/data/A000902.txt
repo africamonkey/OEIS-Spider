@@ -1,0 +1,58 @@
+{
+    "number": 902,
+    "id": "M2853 N1147",
+    "data": "1,1,3,10,38,156,692,3256,16200,84496,460592,2611104,15355232,93376960,585989952,3786534784,25152768128,171474649344,1198143415040,8569374206464,62668198184448,468111364627456,3568287053001728",
+    "name": "E.g.f.: (1/2)*(exp(2x + x^2) + 1).",
+    "comment": [
+        "Number of solutions to the rook problem on a 2n X 2n board having a certain symmetry group (see Robinson for details).",
+        "One more than the number of ordered pairs of minimally intersecting partitions such that p consists of exactly two blocks."
+    ],
+    "reference": [
+        "L. C. Larson, The number of essentially different nonattacking rook arrangements, J. Recreat. Math., 7 (No. 3, 1974), circa pages 180-181.",
+        "R. W. Robinson, Counting arrangements of bishops, pp. 198-214 of Combinatorial Mathematics IV (Adelaide 1975), Lect. Notes Math., 560 (1976).",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A000902/b000902.txt\">Table of n, a(n) for n=0..200</a>",
+        "L. C. Larson, <a href=\"/A000900/a000900_1.pdf\">The number of essentially different nonattacking rook arrangements</a>, J. Recreat. Math., 7 (No. 3, 1974), circa pages 180-181. [Annotated scan of pages 180 and 181 only]",
+        "E. Lucas, <a href=\"http://gallica.bnf.fr/ark:/12148/bpt6k29021h\">Th\u00e9orie des Nombres</a>, Gauthier-Villars, Paris, 1891, Vol. 1, p. 222.",
+        "E. Lucas, <a href=\"/A000899/a000899.pdf\">Th\u00e9orie des nombres</a> (annotated scans of a few selected pages)",
+        "B. Pittel, <a href=\"http://www.combinatorics.org\">Where the typical set partitions meet and join</a>, Electron. J. of Combin. 7, R5.",
+        "R. W. Robinson, <a href=\"/A000899/a000899_1.pdf\">Counting arrangements of bishops</a>, pp. 198-214 of Combinatorial Mathematics IV (Adelaide 1975), Lect. Notes Math., 560 (1976). (Annotated scanned copy)"
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1) + (2n-2)*a(n-2) for n >= 3. - _N. J. A. Sloane_, Sep 23 2006",
+        "a(n) = 1 + n!/(2e) * [x^n] Sum[l>=0, 1/l! * {(1+x)^l-1}^2].",
+        "For asymptotics see the Robinson paper.",
+        "But the asymptotic formula in the Robinson paper is wrong (see A000898, discussion from Oct 01 2013). - _Vaclav Kotesovec_, Aug 04 2014",
+        "a(n) ~ 2^(n/2-3/2) * n^(n/2) * exp(sqrt(2*n)-n/2-1/2). - _Vaclav Kotesovec_, Aug 04 2014",
+        "a(n) = (i/2)^(1 - n)*KummerU((1 - n)/2, 3/2, -1)) for n>=1. - _Peter Luschny_, Nov 29 2017"
+    ],
+    "maple": [
+        "# Comment from the authors: For Maple program see A000903.",
+        "A000902 := n -> `if`(n=0, 1, I^(-n)*orthopoly[H](n, I)/2):",
+        "seq(A000902(n), n=0..22); # _Peter Luschny_, Nov 29 2017"
+    ],
+    "mathematica": [
+        "n = 22; CoefficientList[ Series[(1/2)*(Exp[2*x+x^2] + 1), {x, 0, n}], x] * Table[k!, {k, 0, n}]",
+        "(* _Jean-Fran\u00e7ois Alcover_, May 18 2011 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a000902 n = a000902_list !! n",
+        "a000902_list = 1 : 1 : 3 : map (* 2) (zipWith (+)",
+        "   (drop 2 a000902_list) (zipWith (*) [2..] $ tail a000902_list))",
+        "-- _Reinhard Zumkeller_, Sep 10 2013"
+    ],
+    "xref": [
+        "Equals 1/2 * A000898(n) for n>0."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, _Simon Plouffe_",
+    "references": 6,
+    "revision": 39,
+    "time": "2018-01-10T16:05:12-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

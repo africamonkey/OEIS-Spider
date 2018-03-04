@@ -1,0 +1,59 @@
+{
+    "number": 205947,
+    "data": "561,2465,62745,162401,656601,1909001,5444489,11921001,19384289,26719701,45318561,84350561,151530401,174352641,221884001,230996949,275283401,434932961,662086041,684106401,689880801,710382401",
+    "name": "Carmichael numbers not congruent to 1 modulo 6.",
+    "comment": [
+        "These numbers are very sparse; most Carmichael numbers are 1 mod 6. - _Charles R Greathouse IV_, May 02 2012",
+        "Not known to be infinite, see Matom\u00e4ki. - _Charles R Greathouse IV_, Jun 13 2012",
+        "From _Robert Israel_, Jul 20 2015: (Start)",
+        "Now known to be infinite, see Wright.",
+        "No member of this sequence is divisible by any prime of the form 6k+1, hence all prime factors for this sequence are members of A045410. (End)"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A205947/b205947.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Kaisa Matom\u00e4ki, <a href=\"http://users.utu.fi/ksmato/papers/CarmichaelAPs.pdf\">Carmichael numbers in arithmetic progressions</a>, Journal of the Australian Mathematical Society 94:2 (2013), pp. 268-275.",
+        "T. Wright, <a href=\"http://dx.doi.org/10.1112/blms/bdt013\">Infinitely many Carmichael numbers in arithmetic progressions</a>, Bull. London Math. Soc. (2013) 45 (5): 943-952. <a href=\"http://arxiv.org/abs/1212.5850\">arXiv:1212.5850</a>"
+    ],
+    "formula": [
+        "Wright shows that there are at least x^(K/(log log log x)^2) terms up to x, for an explicitly computable (though not computed) constant K. - _Charles R Greathouse IV_, Jul 20 2015"
+    ],
+    "maple": [
+        "korselt:= proc(n) uses numtheory; local p;",
+        "  if isprime(n) or not issqrfree(n) then return false fi;",
+        "  for p in factorset(n) do",
+        "     if n-1 mod (p-1) <> 0 then return false fi",
+        "  od;",
+        "  true",
+        "end proc:",
+        "select(korselt, [seq(seq(6*i+j,j=[3,5]),i=1..10^5)]); # _Robert Israel_, Jul 20 2015"
+    ],
+    "mathematica": [
+        "Select[Range[100000], !PrimeQ[#] && IntegerQ[(#-1)/CarmichaelLambda[#]] && !Mod[#,6]==1&]"
+    ],
+    "program": [
+        "(PARI) Korselt(n,f=factor(n))=for(i=1,#f[,1],if(f[i,2]>1||(n-1)%(f[i,1]-1),return(0)));1",
+        "list(lim)={",
+        "  my(v=List(),p=2);",
+        "  forstep(n=561,lim,[12,6],",
+        "    if(Korselt(n),listput(v,n))",
+        "  );",
+        "  forprime(q=3,lim,",
+        "    forstep(n=p+if(p%6<5,4,6),q-2,6,",
+        "      if(Korselt(n),listput(v,n))",
+        "    );",
+        "    p=q",
+        "  );",
+        "  vecsort(Vec(v))",
+        "}; \\\\ _Charles R Greathouse IV_, Apr 25 2012"
+    ],
+    "xref": [
+        "Cf. A002997, A045410, A258801."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jos\u00e9 Mar\u00eda Grau Ribas_, Feb 02 2012",
+    "references": 2,
+    "revision": 35,
+    "time": "2015-07-20T16:43:24-04:00",
+    "created": "2012-02-07T17:23:27-05:00"
+}

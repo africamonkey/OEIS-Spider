@@ -1,0 +1,72 @@
+{
+    "number": 156040,
+    "data": "1,1,3,4,6,8,11,13,17,20,24,28,33,37,43,48,54,60,67,73,81,88,96,104,113,121,131,140,150,160,171,181,193,204,216,228,241,253,267,280,294,308,323,337,353,368,384,400,417,433,451,468,486,504,523,541,561,580,600",
+    "name": "Number of compositions (ordered partitions) of n into 3 parts (some of which may be zero), where the first is at least as great as each of the others.",
+    "comment": [
+        "For n = 1, 2 these are just the triangular numbers. a(n) is always at least 1/3 of the corresponding triangular number, since each partition of this type gives up to three ordered partitions with the same cyclical order.",
+        "An alternative definition, which avoids using parts of size 0: a(n) is the third diagonal of A184957. - _N. J. A. Sloane_, Feb 27 2011.",
+        "Diagonal sums of the triangle formed by rows T(2, k) k = 0, 1, ..., 2m of ascending m-nomial triangles (see A004737):",
+        "1",
+        "1 2 1",
+        "1 2 3 2 1",
+        "1 2 3 4 3 2 1",
+        "1 2 3 4 5 4 3 2 1",
+        "1 2 3 4 5 6 5 4 3 2 1",
+        "- _Bob Selcoe_, Feb 07 2014",
+        "Arrange A004396 in rows successively shifted to the right two spaces and sum the columns:",
+        "1  1  2  3  3  4  5  5  6 ...",
+        "      1  1  2  3  3  4  5 ...",
+        "            1  1  2  3  3 ...",
+        "                  1  1  2 ...",
+        "                        1 ...",
+        "------------------------------",
+        "1  1  3  4  6  8 11 13 17 ... - _L. Edson Jeffery_, Jul 30 2014",
+        "a(n) is the dimension of three-dimensional (2n + 2)-homogeneous polynomial vector fields with full tetrahedral symmetry (for a given orthogonal representation), and which are solenoidal. - _Giedrius Alkauskas_, Sep 30 2017"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A156040/b156040.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Giedrius Alkauskas, <a href=\"https://arxiv.org/abs/1601.06570\">Projective and polynomial superflows. I</a>, arxiv.org/1601.06570 [math.AG] (2017), Section 4.3.",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,0,-1,-1,1)."
+    ],
+    "formula": [
+        "G.f.: (x^2+1) / (1-x-x^2+x^4+x^5-x^6). - _Alois P. Heinz_, Jun 14 2009",
+        "Slightly nicer g.f.: (1+x^2)/((1-x)*(1-x^2)*(1-x^3)). - _N. J. A. Sloane_, Apr 29 2011",
+        "a(n) = A007590(n+2) - A000212(n+2). - _Richard R. Forberg_, Dec 08 2013",
+        "a(2*n) = A071619(n+1). - _L. Edson Jeffery_, Jul 29 2014",
+        "a(n) = a(n-1) + a(n-2) - a(n-4) - a(n-5) + a(n-6), with a(0) = 1, a(1) = 1, a(2) = 3, a(3) = 4, a(4) = 6, a(5) = 8. - _Harvey P. Dale_, May 28 2015",
+        "a(n) = (n^2 + 4*n + 3)/6 + IF(MOD(n, 2) = 0, 1/2) + IF(MOD(n, 3) = 1, -1/3). - _Heinrich Ludwig_, Mar 21 2017",
+        "a(n) = 1 + floor((n^2 + 4*n)/6). - _Giovanni Resta_, Mar 21 2017",
+        "Euler transform of length 4 sequence [1, 2, 1, -1]. - _Michael Somos_, Mar 26 2017",
+        "a(n) = a(-4 - n) for all n in Z. - _Michael Somos_, Mar 26 2017",
+        "0 = a(n)*(-1 + a(n) - 2*a(n+1) - 2*a(n+2) + 2*a(n+3)) + a(n+1)*(+1 + a(n+1) + 2*a(n+2) - 2*a(n+3)) + a(n+2)*(+1 + a(n+2) - 2*a(n+3)) + a(n+3)*(-1 + a(n+3)) for all n in Z. - _Michael Somos_, Mar 26 2017"
+    ],
+    "example": [
+        "G.f. = 1 + x + 3*x^2 + 4*x^3 + 6*x^4 + 8*x^5 + 11*x^6 + 13*x^7 + 17*x^8 + 20*x^9 + ...",
+        "The a(4) = 6 compositions of 4 are: (4 0 0), (3 1 0), (3 0 1), (2 2 0), (2 1 1), (2 0 2)."
+    ],
+    "maple": [
+        "a:= proc(n) local m, r; m := iquo(n, 6, 'r'); (4 +6*m +2*r) *m + [1, 1, 3, 4, 6, 8][r+1] end: seq(a(n), n=0..60); # _Alois P. Heinz_, Jun 14 2009"
+    ],
+    "mathematica": [
+        "nn = 58; CoefficientList[Series[x^3/(1 - x^2)^2/(1 - x^3) + 1/(1 - x^2)^2/(1 - x), {x, 0, nn}], x] (* _Geoffrey Critzer_, Jul 14 2013 *)",
+        "CoefficientList[Series[(1 + x^2)/((1 + x) * (1 + x + x^2) * (1 - x)^3), {x, 0, 58}], x] (* _L. Edson Jeffery_, Jul 29 2014 *)",
+        "LinearRecurrence[{1, 1, 0, -1, -1, 1}, {1, 1, 3, 4, 6, 8}, 60] (* _Harvey P. Dale_, May 28 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = n*(n+4)\\6 + 1}; /* _Michael Somos_, Mar 26 2017 */"
+    ],
+    "xref": [
+        "For compositions into 4 summands see A156039; also see A156041 and A156042.",
+        "Cf. A184957, A071619 (bisection)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Jack W Grahl_, Feb 02 2009, Feb 11 2009",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jun 14 2009"
+    ],
+    "references": 9,
+    "revision": 75,
+    "time": "2017-10-15T01:10:18-04:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

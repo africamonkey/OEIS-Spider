@@ -1,0 +1,44 @@
+{
+    "number": 94251,
+    "data": "0,0,2,18,104,580,3282,19236,117672,753048,5041880,35283402,257718540,1961679824,15534932350,127788932430,1090212468512,9632275777296,88013486026710,830637659785996,8087069127986020,81132805319035260,837852685505824120,8897619270153977254",
+    "name": "Number of one-element transitions between all set partitions of n labeled elements.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A094251/b094251.txt\">Table of n, a(n) for n = 0..70</a>"
+    ],
+    "example": [
+        "a(3) = 18 because there are 18 one-element transitions among the set partitions of n=3 elements ([x,z,y,...] means element 1 belongs to set x, element 2 belongs to set z, element 3 belongs to set y):",
+        "[1, 1, 1] -> [1, 1, 2]; [1, 1, 1] -> [1, 2, 1]; [1, 1, 1] -> [1, 2, 2];",
+        "[1, 1, 2] -> [1, 1, 1]; [1, 1, 2] -> [1, 2, 1]; [1, 1, 2] -> [1, 2, 2];",
+        "[1, 1, 2] -> [1, 2, 3]; [1, 2, 1] -> [1, 1, 1]; [1, 2, 1] -> [1, 1, 2];",
+        "[1, 2, 1] -> [1, 2, 2]; [1, 2, 1] -> [1, 2, 3]; [1, 2, 2] -> [1, 1, 1];",
+        "[1, 2, 2] -> [1, 1, 2]; [1, 2, 2] -> [1, 2, 1]; [1, 2, 2] -> [1, 2, 3];",
+        "[1, 2, 3] -> [1, 1, 2]; [1, 2, 3] -> [1, 2, 1]; [1, 2, 3] -> [1, 2, 2];"
+    ],
+    "maple": [
+        "a:= proc(m) local b, r;",
+        "      b:= proc(n, i, p, l) local g, h, k;",
+        "            if i=0 then if n=0 then g:= l[1]; h:= l[2]; k:= l[3]+g+h;",
+        "                r:= r+p*(g*(g-1)/2+g*(k-g)+h*(1+2*(k-1))+(m-g-2*h)*k) fi",
+        "          else b(n, i-1, p, `if`(i<3, [0, l[]], l));",
+        "               seq(b(n-i*j, i-1, p*n!/(i!)^j/(n-i*j)!/j!,",
+        "                   `if`(i<3, [j, l[]], [l[]+j])), j=1..n/i)",
+        "            fi",
+        "          end;",
+        "      r:=0; b(m, max(m, 2), 1, [0]); r",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Apr 13 2012"
+    ],
+    "xref": [
+        "Cf. A093694, A093695."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Thomas Wieder_, Apr 25 2004",
+    "ext": [
+        "a(6)-a(23) from _Alois P. Heinz_, Apr 12 2012"
+    ],
+    "references": 1,
+    "revision": 14,
+    "time": "2016-09-22T14:20:41-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

@@ -1,0 +1,55 @@
+{
+    "number": 3445,
+    "id": "M1859",
+    "data": "1,2,8,40,165,712,2912,11976,48450,195580,784504,3139396,12526605,49902440,198499200,788795924,3131945190,12428258796,49295766000,195464345440,774857314042,3071175790232,12171403236288,48233597481200,191138095393700,757436171945952",
+    "name": "Number of nonequivalent dissections of an n-gon into n-4 polygons by nonintersecting diagonals up to rotation.",
+    "comment": [
+        "In other words, the number of (n-5)-dissections of an n-gon modulo the cyclic action.",
+        "Equivalently, the number of two-dimensional faces of the (n-3)-dimensional associahedron modulo the cyclic action.",
+        "The dissection will always be composed of either 1 pentagon and n-5 triangles or 2 quadrilaterals and n-6 triangles. - _Andrew Howroyd_, Nov 24 2017"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A003445/b003445.txt\">Table of n, a(n) for n = 5..200</a>",
+        "D. Bowman and A. Regev, <a href=\"http://arxiv.org/abs/1209.6270\">Counting symmetry classes of dissections of a convex regular polygon</a>, arXiv:1209.6270 [math.CO], 2012.",
+        "P. Lisonek, <a href=\"http://dx.doi.org/10.1006/jsco.1995.1066\">Closed forms for the number of polygon dissections</a>, Journal of Symbolic Computation 20 (1995), 595-601.",
+        "C. R. Read, <a href=\"http://dx.doi.org/10.1007/BF03031688\">On general dissections of a polygon</a>, Aequat. math. 18 (1978) 370-388."
+    ],
+    "formula": [
+        "See Maple program."
+    ],
+    "maple": [
+        "C:=n->binomial(2*n,n)/(n+1);",
+        "T31:=proc(n) local t1; global C;",
+        "t1 :=  (n-3)^2*(n-4)*C(n-2)/(4*n*(2*n-5));",
+        "if n mod 5 = 0 then t1:=t1+(4/5)*C(n/5-1) fi;",
+        "if n mod 2 = 0 then t1:=t1+(n-4)*C(n/2-1)/8 fi;",
+        "t1; end;",
+        "[seq(T31(n),n=5..40)];"
+    ],
+    "mathematica": [
+        "Table[t1 = (n - 3)^2*(n - 4)*CatalanNumber[n - 2]/(4*n*(2*n - 5)); If[Mod[n, 5] == 0, t1 = t1 + (4/5)*CatalanNumber[n/5 - 1]]; If[Mod[n, 2] == 0, t1 = t1 + (n - 4)*CatalanNumber[n/2 - 1]/8]; t1, {n, 5, 20}] (* _T. D. Noe_, Jan 03 2013 *)"
+    ],
+    "program": [
+        "(PARI) \\\\ See A295495 for DissectionsModCyclic()",
+        "{ my(v=DissectionsModCyclic(apply(i->if(i>=3&&i<=5, y^(i-3) + O(y^3)), [1..30]))); apply(p->polcoeff(p, 2), v[5..#v]) } \\\\ _Andrew Howroyd_, Nov 24 2017"
+    ],
+    "xref": [
+        "A diagonal of A295633.",
+        "Cf. A003444, A003450, A220881.",
+        "Cf. A003443, A003448, A003450."
+    ],
+    "keyword": "nonn",
+    "offset": "5,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Entry revised (following Bowman and Regev) by _N. J. A. Sloane_, Dec 28 2012",
+        "Name clarified by _Andrew Howroyd_, Nov 25 2017"
+    ],
+    "references": 6,
+    "revision": 33,
+    "time": "2017-11-26T09:44:56-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

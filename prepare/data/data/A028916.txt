@@ -1,0 +1,56 @@
+{
+    "number": 28916,
+    "data": "2,5,17,37,41,97,101,137,181,197,241,257,277,281,337,401,457,577,617,641,661,677,757,769,821,857,881,977,1097,1109,1201,1217,1237,1297,1301,1321,1409,1481,1601,1657,1697,1777,2017,2069,2137,2281,2389,2417,2437",
+    "name": "Friedlander-Iwaniec primes: Primes of form a^2 + b^4.",
+    "comment": [
+        "John Friedlander and Henryk Iwaniec proved that there are infinitely many such primes.",
+        "A256852(A049084(a(n))) > 0. - _Reinhard Zumkeller_, Apr 11 2015",
+        "Primes in A111925. - _Robert Israel_, Oct 02 2015",
+        "Its intersection with A185086 is A262340, by the uniqueness part of Fermat's two-squares theorem. - _Jonathan Sondow_, Oct 05 2015",
+        "Cunningham calls these semi-quartan primes. - _Charles R Greathouse IV_, Aug 21 2017",
+        "Primes of the form (x^2 + y^2)/2, where x > y > 0, such that (x-y)/2 or (x+y)/2 is square. - _Thomas Ordowski_, Dec 04 2017"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A028916/b028916.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Art of Problem Solving, <a href=\"http://www.artofproblemsolving.com/wiki/index.php/Fermat&#39;s_Two_Squares_Theorem\">Fermat's Two Squares Theorem</a>",
+        "A. J. C. Cunningham, <a href=\"/wiki/File:High_quartan_factorisations_and_primes.pdf\">High quartan factorisations and primes</a>, Messenger of Mathematics 36 (1907), pp. 145-174.",
+        "John Friedlander and Henryk Iwaniec, <a href=\"http://www.pnas.org/cgi/content/full/94/4/1054\">Using a parity-sensitive sieve to count prime values of a polynomial</a>, Proc. Nat. Acad. Sci. 94  (1997), 1054-1058.",
+        "Charles R Greathouse IV, <a href=\"http://oeis.org/wiki/User:Charles_R_Greathouse_IV/Tables_of_special_primes\">Tables of special primes</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Friedlander%E2%80%93Iwaniec_theorem\">Friedlander-Iwaniec theorem</a>"
+    ],
+    "example": [
+        "2 = 1^2 + 1^4.",
+        "5 = 2^2 + 1^4.",
+        "17 = 4^2 + 1^4 = 1^2 + 2^4."
+    ],
+    "maple": [
+        "N:= 10^5: # to get all terms <= N",
+        "S:= {seq(seq(a^2+b^4, a = 1 .. floor((N-b^4)^(1/2))),b=1..floor(N^(1/4)))}:",
+        "sort(convert(select(isprime,S),list)); # _Robert Israel_, Oct 02 2015"
+    ],
+    "mathematica": [
+        "nn = 10000; t = {}; Do[n = a^2 + b^4; If[n <= nn && PrimeQ[n], AppendTo[t, n]], {a, Sqrt[nn]}, {b, nn^(1/4)}]; Union[t] (* _T. D. Noe_, Aug 06 2012 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List([2]),t);for(a=1,sqrt(lim\\=1),forstep(b=a%2+1, sqrtint(sqrtint(lim-a^2)), 2, t=a^2+b^4;if(isprime(t),listput(v,t)))); vecsort(Vec(v),,8) \\\\ _Charles R Greathouse IV_, Jun 12 2013",
+        "(Haskell)",
+        "a028916 n = a028916_list !! (n-1)",
+        "a028916_list = map a000040 $ filter ((> 0) . a256852) [1..]",
+        "-- _Reinhard Zumkeller_, Apr 11 2015"
+    ],
+    "xref": [
+        "Cf. A078523, A111925.",
+        "Cf. A000290,  A000583, A000040, A256852, A256863 (complement), A002645 (subsequence), subsequence of A247857.",
+        "Primes of form n^2 + b^4, b fixed: A002496 (b = 1), A243451 (b = 2), A256775 (b = 3), A256776 (b = 4), A256777 (b = 5), A256834 (b = 6), A256835 (b = 7), A256836 (b = 8), A256837 (b = 9), A256838 (b = 10), A256839 (b = 11), A256840 (b = 12), A256841 (b = 13)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Warut Roonguthai_",
+    "ext": [
+        "Title expanded by _Jonathan Sondow_, Oct 02 2015"
+    ],
+    "references": 32,
+    "revision": 46,
+    "time": "2018-01-28T13:08:49-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

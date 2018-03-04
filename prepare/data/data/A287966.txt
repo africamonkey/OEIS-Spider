@@ -1,0 +1,39 @@
+{
+    "number": 287966,
+    "data": "1,1,2,4,12,31,90,264,797,2402,7355,22725,70573,220007,688379,2160568,6798020,21428295,67644503,213806475,676499166,2142338437,6789119425,21527297986,68292751071,216737768906,688082702872,2185085230180,6940609839680,22050162168754",
+    "name": "Number of Dyck paths of semilength n such that no level has more than two peaks.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A287966/b287966.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "formula": [
+        "a(n) = A287847(n,2).",
+        "a(n) = A000108(n) for n <= 2."
+    ],
+    "mathematica": [
+        "b[n_, k_, j_]:=b[n, k, j]=If[j==n, 1, Sum[b[n - j, k, i] Sum[Binomial[i, m] Binomial[j - 1, i - 1 - m], {m, Max[0, i - j], Min[k, i - 1]}], {i, Min[j + k, n - j]}]]; a[n_]:=If[n==0, 1, m=Min[n, 2]; Sum[b[n, m, j], {j, m}]]; Table[a[n], {n, 0, 50}] (* _Indranil Ghosh_, Aug 17 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.core.cache import cacheit",
+        "from sympy import binomial",
+        "@cacheit",
+        "def b(n, k, j): return 1 if j==n else sum([b(n - j, k, i)*sum([binomial(i, m)*binomial(j - 1, i - 1 - m) for m in xrange(max(0, i - j), min(k, i - 1) + 1)]) for i in xrange(1, min(j + k, n - j) + 1)])",
+        "def a(n):",
+        "    if n==0: return 1",
+        "    m=min(n, 2)",
+        "    return sum([b(n, m , j) for j in xrange(1, m + 1)])",
+        "print map(a, xrange(51)) # _Indranil Ghosh_, Aug 17 2017"
+    ],
+    "xref": [
+        "Column k=2 of A287847.",
+        "Cf. A000108."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jun 03 2017",
+    "references": 2,
+    "revision": 10,
+    "time": "2017-08-18T18:25:45-04:00",
+    "created": "2017-06-03T17:40:07-04:00"
+}

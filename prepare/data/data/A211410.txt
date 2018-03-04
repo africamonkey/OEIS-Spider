@@ -1,0 +1,44 @@
+{
+    "number": 211410,
+    "data": "8,12,20,27,44,45,63,75,92,99,105,116,117,125,147,153,164,165,171,175,195,207,212,231,245,255,261,275,279,285,325,332,333,345,356,357,363,369,387,399,425,429,435,452,455,465,477,483,507,524",
+    "name": "Chen triprimes, triprimes (A014612) m such that m+2 is either prime or semiprime.",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A211410/b211410.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "27=3^3 and 45=3^2*9 are in the sequence because 27+2 = 29 and 45+2 = 47 are primes.",
+        "8=2^3, 12=2^2*3, and 20=2^2*5 are in the sequence because 8+2=10=2*5, 12+2=14=2*7, and 20+2=22=2*11 are semiprimes (A001358)."
+    ],
+    "maple": [
+        "A211410 := proc(n)",
+        "    option remember;",
+        "    local a;",
+        "    if n = 1 then",
+        "        8;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if numtheory[bigomega](a) = 3 then",
+        "                if isprime(a+2) or numtheory[bigomega](a+2) = 2 then",
+        "                    return a;",
+        "                end if;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "seq(A211410(n),n=1..80) ; # _R. J. Mathar_, Feb 10 2013"
+    ],
+    "program": [
+        "(PARI) issemi(n)=bigomega(n)==2",
+        "list(lim)=my(v=List(),pq); forprime(p=2,lim\\4, forprime(q=2,min(lim\\2\\p,p), pq=p*q; forprime(r=2,min(lim\\pq,q), if(isprime(pq*r+2) || issemi(pq*r+2), listput(v,pq*r))))); Set(v) \\\\ _Charles R Greathouse IV_, Aug 23 2017"
+    ],
+    "xref": [
+        "Cf. A001358, A014612, A109611, A175634."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_, Feb 09 2013",
+    "references": 1,
+    "revision": 16,
+    "time": "2017-08-23T03:01:30-04:00",
+    "created": "2013-02-10T18:22:32-05:00"
+}

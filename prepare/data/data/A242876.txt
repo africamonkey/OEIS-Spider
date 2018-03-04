@@ -1,0 +1,41 @@
+{
+    "number": 242876,
+    "data": "2,14,384,52362,25309575,49866168063",
+    "name": "Number of n X n nonograms (hanjie) which can be solved uniquely.",
+    "comment": [
+        "In this game there is an n X n grid where each square may or may not be filled. Each column and each row is labeled by the length of each successive block of filled squares, but without indication of the number of unfilled squares in between. The object is to determine which squares are filled.",
+        "100% of the 1 X 1 grids can be solved uniquely. 87.5% of the 2 X 2 grids can be solved uniquely. 75% of the 3 X 3 grids can be solved uniquely. About 80% of the 4 X 4 grids can be solved uniquely.",
+        "About 75% of the 5 X 5 grids can be solved uniquely, and about 73% of the 6 X 6 grids can be solved uniquely. - _Charles R Greathouse IV_, Apr 22 2015"
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Nonogram\">Nonogram</a>"
+    ],
+    "formula": [
+        "a(n) >= F(n)^2 * a(n-1), since there are F(n) ways to fill the last row (resp., column) such that the first and last squares are filled and no consecutive squares are unfilled. These configurations can be solved without looking at the other rows or columns and so allow expanding an (n-1) X (n-1) configuration to an n X n configuration. Thus a(n) >> phi^(n*(n+1)). (F(n) is the n-th Fibonacci number, A000045.) - _Charles R Greathouse IV_, Sep 02 2014"
+    ],
+    "example": [
+        "There are two 1 X 1 grids, filled and unfilled, and both can be distinguished, so a(1) = 2.",
+        "Of the 16 2 X 2 grids, only 10/01 and 01/10 cannot be distinguished (both have one block of length 1 for each row and column) and so a(2) = 14."
+    ],
+    "program": [
+        "(PARI) nono(v)=my(u=List(),t); for(i=1,#v,if(v[i],t++,if(t,listput(u,t);t=0))); if(t,listput(u,t)); Vec(u);",
+        "nonomat(M)=vector(matsize(M)[1],i,nono(M[i,]));",
+        "nono2(M)=[nonomat(M),nonomat(M~)];",
+        "num2mat(d,n)=matrix(d,d,i,j,bittest(n,(i-1)*d+j-1));",
+        "a(n)=my(v=vector(2^n^2,i,nono2(num2mat(n,i)))); v=vecsort(v,lex); sum(i=2,#v-1,v[i]!=v[i-1] && v[i]!=v[i+1])+(v[1]!=v[2])+(v[#v]!=v[#v-1]);"
+    ],
+    "xref": [
+        "Cf. A002416 (number of n X n nonograms)."
+    ],
+    "keyword": "nonn,hard",
+    "offset": "1,1",
+    "author": "_Charles R Greathouse IV_ and Sophia Greathouse, May 25 2014",
+    "ext": [
+        "a(5) from _Mark E. Shoulson_, Aug 13 2014",
+        "a(6) from _Karl W. Heuer_, Jan 29 2015"
+    ],
+    "references": 0,
+    "revision": 34,
+    "time": "2017-03-11T21:12:43-05:00",
+    "created": "2014-05-27T08:53:39-04:00"
+}

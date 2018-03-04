@@ -1,0 +1,39 @@
+{
+    "number": 229332,
+    "data": "0,1,1026,60077,1110704,10936407,72573360,365983991,1513288698,5365004410,16877063274,48105808222,126584890148,310963328163,721354362186,1590587613754,3359058693214,6822189191429,13396265918970,25501949210562,47248199227946,85355336473378",
+    "name": "Total sum of 10th powers of parts in all partitions of n.",
+    "comment": [
+        "The bivariate g.f. for the partition statistic \"sum of 10th powers of the parts\" is G(t,x) = 1/Product_{k>=1}(1 - t^{k^10}*x^k). The g.f. g given in the Formula section was obtained by evaluating dG/dt at t=1. - _Emeric Deutsch_, Dec 06 2015"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A229332/b229332.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Guo-Niu Han, <a href=\"https://arxiv.org/abs/0804.1849\">An explicit expansion formula for the powers of the Euler Product in terms of partition hook lengths</a>, arXiv:0804.1849 [math.CO], 2008."
+    ],
+    "formula": [
+        "a(n) = Sum_{j=k..n} A066633(n,k) * k^10.",
+        "G.f.: g(x) = (Sum_{k>=1} k^10*x^k/(1-x^k))/Product_{q>=1} (1-x^q). - _Emeric Deutsch_, Dec 06 2015"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, [1, 0],",
+        "      `if`(i<1, [0, 0], `if`(i>n, b(n, i-1),",
+        "      ((g, h)-> g+h+[0, h[1]*i^10])(b(n, i-1), b(n-i, i)))))",
+        "    end:",
+        "a:= n-> b(n, n)[2]:",
+        "seq(a(n), n=0..40);",
+        "# second Maple program:",
+        "g := (sum(k^10*x^k/(1-x^k), k = 1..100))/(product(1-x^k, k = 1..100)): gser := series(g, x = 0, 45): seq(coeff(gser, x, m), m = 1 .. 40); # _Emeric Deutsch_, Dec 06 2015"
+    ],
+    "mathematica": [
+        "(* T = A066633 *) T[n_, n_] = 1; T[n_, k_] /; k < n := T[n, k] = T[n - k, k] + PartitionsP[n - k]; T[_, _] = 0; a[n_] := Sum[T[n, k]*k^10, {k, 1, n}]; Array[a, 40, 0] (* _Jean-Fran\u00e7ois Alcover_, Dec 15 2016 *)"
+    ],
+    "xref": [
+        "Column k=10 of A213191."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 20 2013",
+    "references": 3,
+    "revision": 20,
+    "time": "2017-07-19T16:02:55-04:00",
+    "created": "2013-09-20T07:33:05-04:00"
+}

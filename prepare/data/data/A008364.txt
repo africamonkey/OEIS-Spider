@@ -1,0 +1,62 @@
+{
+    "number": 8364,
+    "data": "1,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,121,127,131,137,139,143,149,151,157,163,167,169,173,179,181,187,191,193,197,199,209,211,221,223,227,229,233,239,241,247",
+    "name": "11-rough numbers: not divisible by 2, 3, 5 or 7.",
+    "comment": [
+        "First 48 terms give reduced residue system for 4th primorial number 210 = A002110(4).",
+        "This sequence is closed under multiplication: any product of terms is also a term. - _Labos Elemer_, Feb 26 2003",
+        "Conjecture: these are numbers n such that (Sum_{k=1..n} k^4) mod n = 0 and (Sum_{k=1..n} k^6) mod n = 0. - _Gary Detlefs_, Dec 20 2011",
+        "Conjecture: these are numbers n such that (n^6 mod 210 = 1) or (n^6 mod 210 = 169). - _Gary Detlefs_, Dec 30 2011",
+        "The second Detlefs conjecture above is true and extremely easy to verify with some basic properties of congruences: take the terms of this sequence up to 209 and compute their sixth powers modulo 210: there should only be 1s and 169s there. Then take the complement of this sequence up to 210, where you will see no instances of 1 or 169. - _Alonso del Arte_, Jan 12 2014",
+        "It is well-known that the product of 7 consecutive integers is divisible by 7!. Conjecture: This sequence is exactly the set of positive values of r such that ( Product_{k = 0..6} n + k*r )/7! is an integer for all n. - _Peter Bala_, Nov 14 2015"
+    ],
+    "reference": [
+        "Diatomic sequence of 4th prime: A. de Polignac (1849), J. Dechamps J. (1907).",
+        "Dickson L. E., History of the Theory of Numbers, Vol. 1, p. 439, Chelsea, 1952."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A008364/b008364.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram. com/RoughNumber.html\">Rough Number</a>",
+        "<a href=\"/index/Rec#order_49\">Index entries for linear recurrences with constant coefficients</a>, signature (1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1).",
+        "<a href=\"/index/Sk#smooth\">Index entries for sequences related to smooth numbers</a>"
+    ],
+    "formula": [
+        "Starting with a(49) = 211, a(n) = a(n-48) + 210. - _Zak Seidov_, Apr 11 2011",
+        "a(n) = a(n-1) + a(n-48) - a(n-49). - _Charles R Greathouse IV_, Dec 21 2011",
+        "a020639(a(n)) > 7. - _Reinhard Zumkeller_, Mar 26 2012",
+        "G.f.: x*(x^48 + 10*x^47 + 2*x^46 + 4*x^45 + 2*x^44 + 4*x^43 + 6*x^42 + 2*x^41 + 6*x^40 + 4*x^39 + 2*x^38 + 4*x^37 + 6*x^36 + 6*x^35 + 2*x^34 + 6*x^33 + 4*x^32 + 2*x^31 + 6*x^30 + 4*x^29 + 6*x^28 + 8*x^27 + 4*x^26 + 2*x^25 + 4*x^24 + 2*x^23 + 4*x^22 + 8*x^21 + 6*x^20 + 4*x^19 + 6*x^18 + 2*x^17 + 4*x^16 + 6*x^15 + 2*x^14 + 6*x^13 + 6*x^12 + 4*x^11 + 2*x^10 + 4*x^9 + 6*x^8 + 2*x^7 + 6*x^6 + 4*x^5 + 2*x^4 + 4*x^3 + 2*x^2 + 10*x + 1) / (x^49 - x^48 - x + 1). - _Colin Barker_, Sep 27 2013",
+        "a(n) = 35n/8 + O(1). - _Charles R Greathouse IV_, Sep 14 2015"
+    ],
+    "maple": [
+        "for i from 1 to 500 do if gcd(i,210) = 1 then print(i); fi; od;",
+        "t1:=[]; for i from 1 to 1000 do if gcd(i,210) = 1 then t1:=[op(t1),i]; fi; od: t1;",
+        "S:= (j,n)-> sum(k^j,k=1..n): for n from 1 to 247 do if (S(4,n) mod n = 0) and (S(6,n) mod n = 0) then print(n) fi od; # _Gary Detlefs_, Dec 20 2011"
+    ],
+    "mathematica": [
+        "Select[ Range[ 300 ], GCD[ #1, 210 ] == 1 & ]",
+        "Select[Range[250], Mod[#, 2]>0 && Mod[#, 3]>0 && Mod[#, 5]>0 && Mod[#, 7]>0 &] (* _Vincenzo Librandi_, Nov 16 2015 *)",
+        "Cases[Range@1000, x_ /; NoneTrue[Array[Prime, 4], Divisible[x, #] &]] (* _Mikk Heidemaa_, Dec 07 2017 *)"
+    ],
+    "program": [
+        "(PARI) isA008364(n) = gcd(n,210)==1 \\\\ _Michael B. Porter_, Oct 10 2009",
+        "(Haskell)",
+        "a008364 n = a008364_list !! (n-1)",
+        "a008364_list = 1 : filter ((> 7) . a020639) [1..]",
+        "-- _Reinhard Zumkeller_, Mar 26 2012"
+    ],
+    "xref": [
+        "First differences give A049296. Cf. A002110, A048597.",
+        "For k-rough numbers with other values of k, see A000027, A005408, A007310, A007775, A008364, A008365, A008366, A166061, A166063. - _Michael B. Porter_, Oct 10 2009",
+        "Cf. A092695, A210679, A080672 (complement)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "New name from _Charles R Greathouse IV_, Dec 21 2011 based on comment from _Michael B. Porter_, Oct 10 2009"
+    ],
+    "references": 34,
+    "revision": 81,
+    "time": "2017-12-15T01:00:04-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

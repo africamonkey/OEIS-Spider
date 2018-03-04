@@ -1,0 +1,38 @@
+{
+    "number": 73491,
+    "data": "1,2,3,4,5,6,7,8,9,11,12,13,15,16,17,18,19,23,24,25,27,29,30,31,32,35,36,37,41,43,45,47,48,49,53,54,59,60,61,64,67,71,72,73,75,77,79,81,83,89,90,96,97,101,103,105,107,108,109,113,120,121,125,127,128,131,135",
+    "name": "Numbers having no prime gaps in their factorization.",
+    "comment": [
+        "A073490(a(n)) = 0; subsequences are: A000040, A000961, A006094, A002110, A000142, A073485.",
+        "A137721(n) = number of terms not greater than n; A137794(a(n))=1; complement of A073492. - _Reinhard Zumkeller_, Feb 11 2008",
+        "Essentially the same as A066311. - _R. J. Mathar_, Sep 23 2008",
+        "The Heinz numbers of the partitions that have no gaps. The Heinz number of a partition p = [p_1, p_2, ..., p_r] is defined as Product_{j=1..r} (p_j-th prime) (concept used by _Alois P. Heinz_ in A215366 as an \"encoding\" of a partition). Example: (i) 18 (= 2*3*3) is in the sequence because it is the Heinz number of the partition [1,2,2]; (ii) 10 (= 2*5) is not in the sequence because it is the Heinz number of the partition [1,3]. - _Emeric Deutsch_, Oct 02 2015"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A073491/b073491.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "360 is a term, as 360 = 2*2*2*3*3*5 with consecutive prime factors."
+    ],
+    "mathematica": [
+        "ok[n_] := (p = FactorInteger[n][[All, 1]]; PrimePi[Last@p] - PrimePi[First@p] == Length[p] - 1); Select[Range[135], ok] (* _Jean-Fran\u00e7ois Alcover_, Apr 29 2011 *)",
+        "npgQ[n_]:=Module[{f=Transpose[FactorInteger[n]][[1]]},f==Prime[Range[ PrimePi[ f[[1]]], PrimePi[f[[-1]]]]]]; Join[{1},Select[Range[2,200],npgQ]] (* _Harvey P. Dale_, Apr 12 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a073491 n = a073491_list !! (n-1)",
+        "a073491_list = filter ((== 0) . a073490) [1..]",
+        "-- _Reinhard Zumkeller_, Dec 20 2013",
+        "(PARI) is(n)=my(f=factor(n)[,1]); for(i=2,#f,if(precprime(f[i]-1)>f[i-1], return(0))); 1 \\\\ _Charles R Greathouse IV_, Apr 28 2015"
+    ],
+    "xref": [
+        "Cf. A137791, A137792, A137793, A137895."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Aug 03 2002",
+    "references": 29,
+    "revision": 26,
+    "time": "2015-10-02T22:08:20-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

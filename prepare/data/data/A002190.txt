@@ -1,0 +1,69 @@
+{
+    "number": 2190,
+    "id": "M3651 N1484",
+    "data": "0,1,1,4,33,456,9460,274800,10643745,530052880,32995478376,2510382661920,229195817258100,24730000147369440,3113066087894608560,452168671458789789504,75059305956331837485345,14121026957032156557396000,2988687741694684876495689040",
+    "name": "Sum_{n>=0} a(n)*x^n/n!^2 = -log(BesselJ(0,2*sqrt(x))).",
+    "comment": [
+        "Number of non-ambiguous trees, see the Aval et al. reference. - _Joerg Arndt_, May 11 2015"
+    ],
+    "reference": [
+        "Stany De Smedt, On Sloane's Sequence 1484, Saitama Math. J. 15 (1997), 9-13.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A002190/b002190.txt\">Table of n, a(n) for n = 0..100</a>",
+        "J.-C. Aval, A. Boussicault, M. Bouvel and M. Silimbani, <a href=\"http://www.labri.fr/perso/boussica/archives/publications/combinatorics_of_non_ambiguous_trees.pdf\">Combinatorics of non-ambiguous trees</a>, 2012. - From _N. J. A. Sloane_, Jan 03 2013",
+        "Jean-Christophe Aval, Adrien Boussicault, Mathilde Bouvel, Matteo, <a href=\"http://arxiv.org/abs/1305.3716\">Combinatorics of non-ambiguous trees</a>, arXiv:1305.3716 [math.CO], (16-May-2013).",
+        "Juan Arias de Reyna, Richard P. Brent and Jan van de Lune, <a href=\"http://arxiv.org/abs/1205.4423\">On the sign of the real part of the Riemann zeta-function</a>, arXiv preprint arXiv:1205.4423 [math.NT], 2012.",
+        "Be\u00e1ta B\u00e9nyi, G\u00e1bor V. Nagy, <a href=\"https://arxiv.org/abs/1707.06899\">Bijective enumerations of \u0393-free 0-1 matrices</a>, arXiv:1707.06899 [math.CO], (2017).",
+        "L. Carlitz, <a href=\"http://dx.doi.org/10.1090/S0002-9939-1963-0166147-X\">A sequence of integers related to the Bessel functions</a>, Proc. Amer. Math. Soc., 14 (1963), 1-9.",
+        "William Dugan, Sam Glennon, Paul E. Gunnells, Einar Steingrimsson, <a href=\"https://arxiv.org/abs/1702.02446\">Tiered trees, weights, and q-Eulerian numbers</a>, arXiv:1702.02446 [math.CO], 2017.",
+        "Philippe Flajolet, \u00c9ric Fusy, Xavier Gourdon, Daniel Panario and Nicolas Pouyanne, <a href=\"http://arxiv.org/abs/math.CO/0606370\">A Hybrid of Darboux's Method and Singularity Analysis in Combinatorial Asymptotics</a>, arXiv:math/0606370 [math.CO], 2006.",
+        "Christian G\u00fcnther, Kai-Uwe Schmidt, <a href=\"http://arxiv.org/abs/1602.01750\">Lq norms of Fekete and related polynomials</a>, arXiv:1602.01750 [math.NT], 2016.",
+        "<a href=\"/index/Be#Bessel\">Index entries for sequences related to Bessel functions or polynomials</a>"
+    ],
+    "formula": [
+        "Conjecture: G.f.: 1 = Sum_{n>=0} a(n+1)*A000108(n)*x^n*Sum_{k>=0} C(2*n+k,k)^2*(-x)^k. Compare with the following g.f of the Catalan numbers (A000108): 1 = Sum_{n>=0} A000108(n)*x^n*Sum_{k>=0} C(2*n+k,k)*(-x)^k. - _Paul D. Hanna_, Oct 10 2010",
+        "a(n) ~ n! * (n-1)! / r^n, where r = 1/4*BesselJZero[0,1]^2 = 1.44579649073669613... - _Vaclav Kotesovec_, Mar 02 2014"
+    ],
+    "example": [
+        "-log( Sum_{n>=0} (-x)^n/n!^2 ) = x + x^2/2!^2 + 4*x^3/3!^2 + 33*x^4/4!^2 + 456*x^5/5!^2 + 9460*x^6/6!^2 + ... . -_Paul D. Hanna_, Oct 09 2010"
+    ],
+    "maple": [
+        "a:= n-> coeff(series(-ln(BesselJ(0,2*sqrt(x))), x, n+1), x, n)*(n!)^2:",
+        "seq(a(n), n=0..30); # _Alois P. Heinz_, Oct 10 2010"
+    ],
+    "mathematica": [
+        "nn=18; CoefficientList[Series[-Log[BesselJ[0, 2*Sqrt[x]]], {x, 0, nn}], x]*Table[n!^2, {n, 0, nn}] (* _Jean-Fran\u00e7ois Alcover_, Jun 22 2011 *)",
+        "Clear[q]; q[n_, 1] := (n-1)!^2; q[n_, k_] := q[n, k] = Sum[Binomial[n-1, j]*Binomial[n-1, j+1]*Sum[q[j+1, r]*q[n-j-1, k-r], {r, Max[1, -n+j+k+1], Min[j+1, k-1]}], { n-2}]; a[n_] := q[n, n]; Table[a[n], {n, 0, 18}] (* _Jean-Fran\u00e7ois Alcover_, Feb 13 2013 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=66; x='x+O('x^N);",
+        "f=-log(sum(n=0,N, (-x)^n/(n!)^2) );",
+        "f=serlaplace(f);",
+        "f=serlaplace(f);",
+        "concat([0],Vec(f))",
+        "\\\\ _Joerg Arndt_, May 17 2013",
+        "(PARI) \\\\ Terms starting from a(1)=1:",
+        "N=33; B=vector(N);  B[1]=1;  b(j)=B[j+1];",
+        "for(n=0,N-2, B[n+2]=sum(i=0,n, my(j=n-i); binomial(n+1,i)*binomial(n+1,j)*b(i)*b(j) ) ); B",
+        "\\\\ _Joerg Arndt_, May 11 2015"
+    ],
+    "xref": [
+        "Cf. A101981. A diagonal of A217940.",
+        "Cf. A115368."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms and better definition from _Vladeta Jovovic_, Jul 16 2006",
+        "Edited by Assoc. Editors of the OEIS, Oct 12 2010"
+    ],
+    "references": 12,
+    "revision": 76,
+    "time": "2017-09-21T02:59:42-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 240511,
+    "data": "1,2,3,4,5,6,7,8,9,90,336,4538775,183670618662,429548754570,3508325641459,3632460407839,9964270889420,10256010588126,509608423720931,589543349257828,75363159369591953,108765782844884700,360449417601592380,1574414276673927523",
+    "name": "Numbers that are equal to the sum of their digits raised to each power from 1 to the number of digits.",
+    "comment": [
+        "Numbers with only 0 and 1 as digits are not considered. - _Paolo P. Lava_, Jan 11 2017"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A240511/b240511.txt\">Table of n, a(n) for n = 1..54</a> (terms < 10^32)",
+        "Jos\u00e9 de Jes\u00fas Camacho Medina, <a href=\"http://matematicofresnillense.blogspot.mx//2014/04/numeros-fresnillenses.html\">Misterio de N\u00fameros</a>"
+    ],
+    "formula": [
+        "f(n) = Sum_{i,1,floor(log_10(n))+1} (Sum_{k,0,floor(log_10(n))+1} (floor(n/10^k) - 10*floor(n/10^(k + 1)))^(i)). If f(n)-n=0 then n is a number of this category. - _Jos\u00e9 de Jes\u00fas Camacho Medina_, Apr 07 2014"
+    ],
+    "example": [
+        "9 = (9^1).",
+        "90 = (9^1 + 0^1) + (9^2 + 0^2).",
+        "336 = (3^1 + 3^1 + 6^1) + (3^2 + 3^2 + 6^2) + (3^3 + 3^3 + 6^3)."
+    ],
+    "mathematica": [
+        "Q = Table[Sum[(Sum[(Floor[f/10^n] - 10*Floor[f/10^(n + 1)])^(i), {n, 0, Floor[Log[10, f]] + 1}]), {i, 1, Floor[Log[10, f]] + 1}], {f, 336}] - Range[336]; Flatten@ Position[Q, 0]",
+        "Select[Range[10^3], Plus @@ Power @@@ Tuples[{IntegerDigits @ #, Range@ IntegerLength@ #}] == # &] (* _Giovanni Resta_, Apr 30 2014 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = (d = digits(n)) && (n == sum(i=1, #d, sum(j=1, #d, d[j]^i))); \\\\ _Michel Marcus_, Apr 07 2014"
+    ],
+    "keyword": "nonn,base,fini",
+    "offset": "1,2",
+    "author": "_Jos\u00e9 de Jes\u00fas Camacho Medina_, Apr 06 2014",
+    "ext": [
+        "a(12)-a(24) from _Giovanni Resta_, Apr 07 2014"
+    ],
+    "references": 1,
+    "revision": 54,
+    "time": "2017-01-11T03:18:01-05:00",
+    "created": "2014-04-30T03:03:17-04:00"
+}

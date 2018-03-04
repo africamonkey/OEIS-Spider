@@ -1,0 +1,39 @@
+{
+    "number": 240570,
+    "data": "11,13,17,31,37,71,73,79,97,127,163,181,211,257,271,277,293,307,349,367,431,433,457,491,521,523,541,563,587,631,659,743,839,983,10069,10151,10337,10429,10559,10889,10973,11059,11251,11329,11411,11437,11471,11617",
+    "name": "Prime numbers n such that replacing each digit in the decimal expansion of n with the sum of the other digits produces a prime.",
+    "comment": [
+        "Let d(1)d(2)...d(q) denote the decimal expansion of a prime number. Replace each digit d(i) in decimal expansion of n with Sum_{j=1..q, j<>i} d(j) such that the result is a prime number.",
+        "The corresponding primes are 11, 31, 71, 13, 73, 17, 37, 97, 79, 983, 947, 929, 233, 1297, 839, 1499, ..."
+    ],
+    "example": [
+        "983 is in the sequence because 983 becomes 111217 which is also prime, where 11=8+3, 12=9+3 and 17=9+8."
+    ],
+    "maple": [
+        "with(numtheory):T:=array(1..10):",
+        "   for n from 1 to 1000 do:",
+        "     p:=ithprime(n):k:=0:s:=0:j:=0:",
+        "     x:=convert(p,base,10):n1:=nops(x):",
+        "     s1:=sum('x[i]', 'i'=1..n1):",
+        "       for m from n1 by -1 to 1 do:",
+        "       k:=k+1:T[k]:=s1-x[m]:",
+        "       od:",
+        "       n2:=sum('length(T[j])', 'j'=1..n1):s2:=0:",
+        "         for u from 1 to n1 do:",
+        "         s2:=s2+ T[u]*10^(n2-length(T[u])):n2:=n2-length(T[u]):",
+        "         od:",
+        "            if type(s2,prime)=true",
+        "            then",
+        "            printf(`%d, `,p):",
+        "            else",
+        "            fi:",
+        "     od:"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Apr 08 2014",
+    "references": 0,
+    "revision": 6,
+    "time": "2017-09-13T00:03:46-04:00",
+    "created": "2014-04-08T09:17:56-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 260428,
+    "data": "69,77,81,121,169,205,209,261,265,275,289,295,305,321,323,327,329,339,377,405,407,437,453,473,475,481,493,517,533,551,553,559,565,575,581,583,595,625,649,667,671,689,703,707,737,747,749,755,763,767,779,781,785,805,815,833,835,851,855,861,869,893,905",
+    "name": "Composite numbers whose binary representations encode a polynomial (with coefficients 0 or 1) which is irreducible over Q, but reducible over GF(2).",
+    "link": [
+        "Antti Karttunen, <a href=\"/A260428/b260428.txt\">Table of n, a(n) for n = 1..11585</a>"
+    ],
+    "maple": [
+        "f:= proc(n) local L,p,x;",
+        "  if isprime(n) then return false fi;",
+        "  L:= convert(n,base,2);",
+        "  p:= add(L[i]*x^(i-1),i=1..nops(L));",
+        "  irreduc(p) and not (Irreduc(p) mod 2);",
+        "end proc:",
+        "select(f, [$2..10000]); # _Robert Israel_, Jul 27 2015"
+    ],
+    "program": [
+        "(PARI)",
+        "isA260428(n) = (polisirreducible( Pol(binary(n)) ) && !polisirreducible(Pol(binary(n))*Mod(1, 2)) && !isprime(n));",
+        "n = 0; i = 0; while(n < 65537, n++; if(isA260428(n), i++; write(\"b260428.txt\", i, \" \", n)));"
+    ],
+    "xref": [
+        "Intersection of A002808 and A260427.",
+        "Intersection of A091212 and A206074.",
+        "Intersection of A091242 and A206075.",
+        "Complement of A257688 in A206074."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Jul 26 2015",
+    "references": 3,
+    "revision": 20,
+    "time": "2015-07-27T22:14:01-04:00",
+    "created": "2015-07-27T22:14:01-04:00"
+}

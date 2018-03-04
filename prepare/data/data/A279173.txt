@@ -1,0 +1,46 @@
+{
+    "number": 279173,
+    "data": "1,1,101,111,10000,10111,1010100,1111101,100000001,101111101,10101000101,11111010111,1000000010000,1011111010111,101010001000100,111110101010101,10000000100000001,10111110101111101,1010100010001000101,1111101010101010111",
+    "name": "Binary representation of the x-axis, from the left edge to the origin, of the n-th stage of growth of the two-dimensional cellular automaton defined by \"Rule 147\", based on the 5-celled von Neumann neighborhood.",
+    "comment": [
+        "Initialized with a single black (ON) cell at stage zero."
+    ],
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 170."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A279173/b279173.txt\">Table of n, a(n) for n = 0..126</a>",
+        "Robert Price, <a href=\"/A279173/a279173.tmp.txt\">Diagrams of first 20 stages</a>",
+        "N. J. A. Sloane, <a href=\"http://arxiv.org/abs/1503.01168\">On the Number of ON Cells in Cellular Automata</a>, arXiv:1503.01168 [math.CO], 2015",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "S. Wolfram, <a href=\"http://wolframscience.com/\">A New Kind of Science</a>",
+        "Wolfram Research, <a href=\"http://atlas.wolfram.com/\">Wolfram Atlas of Simple Programs</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_2D_5-Neighbor_Cellular_Automata\">Index to 2D 5-Neighbor Cellular Automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>"
+    ],
+    "mathematica": [
+        "CAStep[rule_, a_] := Map[rule[[10 - #]] &, ListConvolve[{{0, 2, 0},{2, 1, 2}, {0, 2, 0}}, a, 2],{2}];",
+        "code = 147; stages = 128;",
+        "rule = IntegerDigits[code, 2, 10];",
+        "g = 2 * stages + 1; (* Maximum size of grid *)",
+        "a = PadLeft[{{1}}, {g, g}, 0,Floor[{g, g}/2]]; (* Initial ON cell on grid *)",
+        "ca = a;",
+        "ca = Table[ca = CAStep[rule, ca], {n, 1, stages + 1}];",
+        "PrependTo[ca, a];",
+        "(* Trim full grid to reflect growth by one cell at each stage *)",
+        "k = (Length[ca[[1]]] + 1)/2;",
+        "ca = Table[Table[Part[ca[[n]] [[j]],Range[k + 1 - n, k - 1 + n]], {j, k + 1 - n, k - 1 + n}], {n, 1, k}];",
+        "Table[FromDigits[Part[ca[[i]] [[i]], Range[1, i]], 10], {i, 1, stages - 1}]"
+    ],
+    "xref": [
+        "Cf. A279174, A279175, A279176."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Robert Price_, Dec 07 2016",
+    "references": 4,
+    "revision": 7,
+    "time": "2016-12-08T10:06:00-05:00",
+    "created": "2016-12-08T10:06:00-05:00"
+}

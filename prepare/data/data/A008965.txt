@@ -1,0 +1,69 @@
+{
+    "number": 8965,
+    "data": "1,2,3,5,7,13,19,35,59,107,187,351,631,1181,2191,4115,7711,14601,27595,52487,99879,190745,364723,699251,1342183,2581427,4971067,9587579,18512791,35792567,69273667,134219795,260301175,505294127,981706831,1908881899,3714566311,7233642929",
+    "name": "Number of necklaces of sets of beads containing a total of n beads.",
+    "comment": [
+        "A necklace of sets of beads is a cycle where each element of the cycle is itself a set of beads, the total size being the total number of beads.",
+        "Equivalently, a(n) is the number of cyclic compositions of n. These could also be loosely described as cyclic partitions."
+    ],
+    "reference": [
+        "Petros Hadjicostas, Cyclic Compositions of a Positive Integer with Parts Avoiding an Arithmetic Sequence, Journal of Integer Sequences, 19 (2016) #16.8.2."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A008965/b008965.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "R. Bekes, J. Pedersen and B. Shao, <a href=\"http://dx.doi.org/10.4169/college.math.j.43.1.025\">Mad tea party cyclic partitions</a>, College Math. J., 43 (2012), 24-36.",
+        "P. J. Cameron, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL3/groups.html\">Sequences realized by oligomorphic permutation groups</a>, J. Integ. Seqs. Vol. 3 (2000), #00.1.5.",
+        "P. Flajolet and M. Soria, <a href=\"http://algo.inria.fr/flajolet/Publications/publist.html\">The Cycle Construction</a> In SIAM J. Discr. Math., vol. 4 (1), 1991, pp. 58-60.",
+        "P. Flajolet and R. Sedgewick, <a href=\"http://algo.inria.fr/flajolet/Publications/books.html\">Analytic Combinatorics</a>, 2009; see page 48",
+        "<a href=\"/index/Ne#necklaces\">Index entries for sequences related to necklaces</a>"
+    ],
+    "formula": [
+        "a(n) = A000031(n-1) - 1.",
+        "G.f. sum(k>=1, phi(k)/k * log( 1/(1-B(x^k)) ) ) where B(x)=x/(1-x); see the Flajolet/Soria reference. - _Joerg Arndt_, Aug 06 2012"
+    ],
+    "example": [
+        "E.g. the 5 necklaces for n=4 are (3, 1), (4), (1, 1, 1, 1), (2, 1, 1), (2, 2).",
+        "In the Combstruct language these can be described as Cycle(Set(Z), Set(Z), Set(Z), Set(Z)), Cycle(Set(Z, Z), Set(Z), Set(Z)), Cycle(Set(Z, Z, Z, Z)), Cycle(Set(Z, Z), Set(Z, Z)), Cycle(Set(Z), Set(Z, Z, Z)).",
+        "For n=6 the 13 necklaces are",
+        ".1:  (1, 1, 1, 1, 1, 1),",
+        ".2:  (2, 1, 1, 1, 1),",
+        ".3:  (2, 1, 2, 1).",
+        ".4:  (2, 2, 1, 1),",
+        ".5:  (2, 2, 2),",
+        ".6:  (3, 1, 1, 1),",
+        ".7:  (3, 1, 2),",
+        ".8:  (3, 2, 1),",
+        ".9:  (3, 3),",
+        "10:  (4, 1, 1),",
+        "11:  (4, 2),",
+        "12:  (5, 1),",
+        "13:  (6).",
+        "[corrected by Marcel Vonk (mail(AT)marcelvonk.nl), Feb 05 2008]"
+    ],
+    "maple": [
+        "with(combstruct): seq(combstruct[count]([ N,{N=Cycle(Set(Z,card>=1))},unlabeled ], size=n), n=1..100);"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[ EulerPhi[d]*2^(n/d), {d, Divisors[n]}]/n-1; Table[a[n], {n, 1, 38}] (* _Jean-Fran\u00e7ois Alcover_, Sep 04 2012, from A000031 *)",
+        "nn=35; Drop[Apply[Plus,Table[CoefficientList[Series[CycleIndex[ CyclicGroup[n],s]/.Table[s[i]->x^i/(1-x^i),{i,1,n}],{x,0,nn}],x],{n,1,nn}]],1]  (* _Geoffrey Critzer_, Oct 30 2012 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=66;  x='x+O('x^N);",
+        "B(x)=x/(1-x);",
+        "A=sum(k=1,N,eulerphi(k)/k*log(1/(1-B(x^k))));",
+        "Vec(A)",
+        "/* _Joerg Arndt_, Aug 06 2012 */"
+    ],
+    "xref": [
+        "Row sums of A037306.",
+        "Cf. A000031."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,2",
+    "author": "_Paul Zimmermann_",
+    "references": 28,
+    "revision": 52,
+    "time": "2017-09-12T13:09:00-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

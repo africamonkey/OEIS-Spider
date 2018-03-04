@@ -1,0 +1,52 @@
+{
+    "number": 90371,
+    "data": "1,3,6,20,60,291,1310,6975,37746,215602,1262874,7611156,46814132,293447817,1868710728,12068905911,78913940784,521709872895,3483289035186,23464708686960,159346213738020,1090073011199451,7507285094455566,52021636161126702",
+    "name": "Number of unrooted planar 2-constellations with n digons. Also number of n-edge unrooted planar Eulerian maps with bicolored faces.",
+    "comment": [
+        "a(n) is also the number of unrooted planar hypermaps with n darts up to orientation-preserving homeomorphism (darts are semi-edges in the particular case of ordinary maps). - _Valery A. Liskovets_, Apr 13 2006"
+    ],
+    "link": [
+        "R. J. Mathar, <a href=\"/A090371/b090371.txt\">Table of n, a(n) for n = 1..100</a>",
+        "M. Bousquet-M\u00e9lou and G. Schaeffer, <a href=\"http://dx.doi.org/10.1006/aama.1999.0673\">Enumeration of planar constellations</a>, Adv. in Appl. Math. v.24 (2000), 337-368.",
+        "A. Mednykh and R. Nedela, <a href=\"http://garsia.math.yorku.ca/fpsac06/papers/9_ps_or_pdf.pdf\">Counting unrooted hypermaps on closed orientable surface</a>, 18th Intern. Conf. Formal Power Series & Algebr. Comb., Jun 19, 2006, San Diego, California (USA).",
+        "A. Mednykh and R. Nedela, <a href=\"http://dx.doi.org/10.1016/j.disc.2009.03.033\">Enumeration of unrooted hypermaps of a given genus</a>, Discr. Math., 310 (2010), 518-526. [From _N. J. A. Sloane_, Dec 19 2009]",
+        "Timothy R. Walsh, <a href=\"http://www.info2.uqam.ca/~walsh_t/papers/GENERATING NONISOMORPHIC.pdf\">Space-efficient generation of nonisomorphic maps and hypermaps</a>"
+    ],
+    "example": [
+        "The 3 Eulerian maps with 2 edges are the digon and two figure eight graphs (\"8\") in which both loops are colored, resp., black or white."
+    ],
+    "maple": [
+        "A090371 := proc(n)",
+        "    local s, d;",
+        "    if n=0 then",
+        "        1 ;",
+        "    else",
+        "        s := -2^n*binomial(2*n, n);",
+        "        for d in numtheory[divisors](n) do",
+        "            s := s+ numtheory[phi](n/d)*2^d*binomial(2*d, d)",
+        "        od;",
+        "        3/(2*n)*(2^n*binomial(2*n, n)/((n+1)*(n+2))+s/2);",
+        "    fi;",
+        "end proc:"
+    ],
+    "mathematica": [
+        "h0[n_] := 3*2^(n-1)*Binomial[2*n, n]/((n+1)*(n+2)); a[n_] := (h0[n] + DivisorSum[n, If[#>1, EulerPhi[#]*Binomial[n/#+2, 2]*h0[n/#], 0]&])/n; Array[a, 30] (* _Jean-Fran\u00e7ois Alcover_, Dec 06 2015, adapted from PARI *)"
+    ],
+    "program": [
+        "(PARI) h0(n) = 3*2^(n-1)*binomial(2*n, n)/((n+1)*(n+2));",
+        "a(n) = (h0(n) + sumdiv(n, d, (d>1)*eulerphi(d)*binomial(n/d+2,2)*h0(n/d)))/n; \\\\ _Michel Marcus_, Dec 11 2014"
+    ],
+    "xref": [
+        "Cf. A000257, A069727, A090372, A118094."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Valery A. Liskovets_, Dec 01 2003",
+    "ext": [
+        "More terms from _Michel Marcus_, Dec 11 2014"
+    ],
+    "references": 10,
+    "revision": 33,
+    "time": "2016-12-04T10:21:54-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

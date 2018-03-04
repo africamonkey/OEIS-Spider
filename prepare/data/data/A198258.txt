@@ -1,0 +1,56 @@
+{
+    "number": 198258,
+    "data": "1,7,190,5831,219626,8976562,394800204,18211045575,873216720082,43136486269382,2183722698469676,112795257850321202,5925951358743662260,315869014732813229716,17048301919464100932440,930217336628892162216135,51244644190683748419791970",
+    "name": "Row sums of A197655.",
+    "comment": [
+        "Number of meanders of length (n+1)*6 which are composed by arcs of equal length and a central angle of 60 degrees.",
+        "Definition of a meander:",
+        "A binary curve C is a triple (m, S, dir) such that",
+        "(a) S is a list with values in {L,R} which starts with an L,",
+        "(b) dir is a list of m different values, each value of S being allocated a value of dir,",
+        "(c) consecutive Ls increment the index of dir,",
+        "(d) consecutive Rs decrement the index of dir,",
+        "(e) the integer m>0 divides the length of S and",
+        "(f) C is a meander if each value of dir occurs length(S)/m times.",
+        "For this sequence, m = 6.",
+        "The terms are proved by brute force for 0 <= n <= 5, but not yet in general. [Susanne Wienand, Oct 29 2011]"
+    ],
+    "link": [
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/Meander\">Meanders and walks on the circle</a>."
+    ],
+    "formula": [
+        "a(n) = Sum{k=0..n} Sum{j=0..5} Sum{i=0..5} (-1)^(j+i)*C(i,j)*C(n,k)^6*(n+1)^j*(k+1)^(5-j)/(k+1)^5. - Peter Luschny, Nov 02 2011",
+        "a(n) = Sum_{k=0..n} h(n,k)*binomial(n,k)^6, where h(n,k) = (1+k)*(1-((n-k)/(1+k))^6)/(1+2*k-n) if 1+2*k-n <> 0 else h(n,k) = 6. - Peter Luschny, Nov 24 2011"
+    ],
+    "example": [
+        "Some examples of list S and allocated values of dir if n = 4:",
+        "Length(S) = (4+1)*6 = 30.",
+        "  S: L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L",
+        "dir: 1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0",
+        "  S: L,L,L,L,L,L,L,R,R,R,R,L,R,R,R,R,R,L,L,L,L,R,R,L,L,L,L,R,L,L",
+        "dir: 1,2,3,4,5,0,1,1,0,5,4,4,4,3,2,1,0,0,1,2,3,3,2,2,3,4,5,5,5,0",
+        "  S: L,L,L,L,L,R,R,R,R,R,R,R,L,L,R,L,L,R,L,L,R,L,L,L,R,R,L,L,L,L",
+        "dir: 1,2,3,4,5,5,4,3,2,1,0,5,5,0,0,0,1,1,1,2,2,2,3,4,4,3,3,4,5,0",
+        "Each value of dir occurs 30/6 = 5 times."
+    ],
+    "maple": [
+        "A198258 := proc(n) local i, j, k, pow;",
+        "pow := (a, b) -> if a=0 and b=0 then 1 else a^b fi;",
+        "add(add(add((-1)^(j+i)*binomial(i,j)*binomial(n,k)^6*pow(n+1,j)*pow(k+1,5-j)/(k+1)^5, i=0..5),j=0..5),k=0..n) end:",
+        "seq(A198258(n), n=0..16); # Peter Luschny, Nov 02 2011"
+    ],
+    "program": [
+        "(PARI)",
+        "A198258(n) = {sum(k=0,n,if(n == 1+2*k,6,(1+k)*(1-((n-k)/(1+k))^6)/(1+2*k-n))*binomial(n,k)^6)} \\\\ Peter Luschny, Nov 24 2011"
+    ],
+    "xref": [
+        "Cf. A198060, A198256, A198257."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Susanne Wienand_, Oct 24 2011",
+    "references": 6,
+    "revision": 41,
+    "time": "2013-01-12T13:11:46-05:00",
+    "created": "2011-10-24T16:29:24-04:00"
+}

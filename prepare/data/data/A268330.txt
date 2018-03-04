@@ -1,0 +1,61 @@
+{
+    "number": 268330,
+    "data": "1,17,26,2526,5876126,8061827,8996188226,2074150570370",
+    "name": "Least squarefree number differing by more than n from any other squarefree number.",
+    "comment": [
+        "1.8*10^12 < a(7) <= 10735237201449 - _Robert Israel_, Mar 18 2016",
+        "a(8) > 5*10^12. - _Giovanni Resta_, Apr 11 2016"
+    ],
+    "example": [
+        "a(2) = 26 because 26 is squarefree but 24,25,27,28 are not."
+    ],
+    "mathematica": [
+        "(* implementation assumes a(n) is increasing *)",
+        "nsfRun[n_]:=Module[{i=n}, While[!SquareFreeQ[i], i++]; i-n]",
+        "a268330[{low_, high_}, width_]:=Module[{k=width, i, next, r, s, list={}}, For[i=low, i<=high, i+=next, r=nsfRun[i]; If[r<k, next=r+1, s=nsfRun[i+r+1]; If[s<k, next=r+s+2, If[s==k, next=r+s+2, next=r+1]; AppendTo[list, {i,i+r,i+r+s}]; k++]]]; list] /; width>0 (* _Hartmut F. W. Hoft_, Mar 15 2016 *)",
+        "a268330[{0,10000000},1]]] (* computes a(1)...a(5) *)"
+    ],
+    "program": [
+        "(MATLAB)",
+        "B = 10^8; % blocks of size B",
+        "nB = 1000; % nB blocks",
+        "A = [1];",
+        "P = primes(floor(sqrt(nB*B)));",
+        "mmax = 1;",
+        "i0 = 1;",
+        "for k = 0:nB-1  % search squarefrees from i0+1 to i0 + B",
+        "  V = true(1, B);",
+        "  for i = 1:numel(P)",
+        "    p = P(i);",
+        "    V([(p^2 - mod(i0,p^2)):p^2:B]) = false;",
+        "  end",
+        "  SF = find(V) + i0;",
+        "  DSF = SF(2:end) - SF(1:end-1);",
+        "  i0 = SF(end-2);",
+        "  M = min(DSF(1:end-1), DSF(2:end));",
+        "  newmax = max(mmax,max(M));",
+        "  for i = mmax+1:newmax",
+        "    A(i) = SF(1 + find(M>=i, 1, 'first'));",
+        "  end",
+        "  mmax = newmax;",
+        "end",
+        "for i=1:mmax",
+        "  fprintf('%d ',A(i));",
+        "end",
+        "fprintf('\\n');  % _Robert Israel_, Mar 16 2016"
+    ],
+    "xref": [
+        "Cf. A073247, A268331, A268332, A268333, A268334."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Christopher E. Thompson_, Feb 01 2016",
+    "ext": [
+        "a(6) from _Hartmut F. W. Hoft_, Mar 15 2016",
+        "a(7) from _Giovanni Resta_, Apr 11 2016"
+    ],
+    "references": 6,
+    "revision": 30,
+    "time": "2016-04-25T12:05:03-04:00",
+    "created": "2016-03-18T11:05:13-04:00"
+}

@@ -1,0 +1,75 @@
+{
+    "number": 6992,
+    "id": "M0675",
+    "data": "2,3,5,7,13,23,43,83,163,317,631,1259,2503,5003,9973,19937,39869,79699,159389,318751,637499,1274989,2549951,5099893,10199767,20399531,40799041,81598067,163196129,326392249,652784471,1305568919,2611137817",
+    "name": "Bertrand primes: a(n) is largest prime < 2*a(n-1) for n > 1, with a(1) = 2.",
+    "comment": [
+        "a(n) < a(n+1) by Bertrand's postulate (Chebyshev's theorem). - _Jonathan Sondow_, May 31 2014",
+        "Let b(n) = 2^n - a(n). Then b(n) >= 2^(n-1) - 1 and b(n) is a B_2 sequence: 0, 1, 3, 9, 19, 41, 85, 173, 349, ... - _Thomas Ordowski_, Sep 23 2014 See the link for B_2 sequence.",
+        "These primes can be obtained of exclusive form using a restricted variant of Rowland's prime-generating recurrence (A106108), making gcd(n, a(n-1)) = -1 when GCDs are greater than 1 and less than n (see program). These GCDs are also a divisor of each odd number from a(n) + 2 to 2*a(n-1) - 1 in reverse order, so that this subtraction with -1's invariably leads to the prime. - _Manuel Valdivia_, Jan 13 2015",
+        "First row of array in A229607. - _Robert Israel_, Mar 31 2015"
+    ],
+    "reference": [
+        "M. Aigner and G. M. Ziegler, Proofs from The Book, Springer-Verlag, Berlin, 1999; see p. 7.",
+        "M. Griffiths, The Backbone of Pascal's Triangle, United Kingdom Mathematics Trust (2008), page 115. [From _Martin Griffiths_, Mar 28 2009]",
+        "G. H. Hardy and E. M. Wright, An Introduction to the Theory of Numbers. 3rd ed., Oxford Univ. Press, 1954, p. 344.",
+        "I. Niven and H. S. Zuckerman, An Introduction to the Theory of Numbers. 2nd ed., Wiley, NY, 1966, p. 189.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe and Robert G. Wilson v, <a href=\"/A006992/b006992.txt\">Table of n, a(n) for n = 1..1001 </a> (first 100 terms from T. D. Noe)",
+        "P. Erd\u0151s, <a href=\"http://www.renyi.hu/~p_erdos/1932-01.pdf\">Beweis eines Satzes von Tschebyschef</a> (in German), Acta Litt. Sci. Szeged 5 (1932), pp. 194-198.",
+        "P. Erd\u0151s, <a href=\"https://www.renyi.hu/~p_erdos/1934-01.pdf\">A theorem of Sylvester and Schur</a>, J. London Math. Soc., 9 (1934), 282-288.",
+        "Srinivasa Ramanujan, <a href=\"http://ramanujan.sirinudi.org/Volumes/published/ram24.html\">A proof of Bertrand's postulate</a>, J. Indian Math. Soc., 11 (1919), 181-182.",
+        "Vladimir Shevelev, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL15/Shevelev/shevelev19.html\">Ramanujan and Labos primes, their generalizations, and classifications of primes</a>, J. Integer Seq. 15 (2012) Article 12.5.4",
+        "Jonathan Sondow, <a href=\"http://arxiv.org/abs/0907.5232\">Ramanujan primes and Bertrand's postulate</a>, arXiv:0907.5232 [math.NT], 2009-2010.",
+        "Jonathan Sondow, <a href=\"http://www.jstor.org/stable/40391170\">Ramanujan primes and Bertrand's postulate</a>, Amer. Math. Monthly, 116 (2009), 630-635.",
+        "Jonathan Sondow and Eric Weisstein, <a href=\"http://mathworld.wolfram.com/BertrandsPostulate.html\">MathWorld: Bertrand's Postulate</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/B2-Sequence.html\">B2 Sequence</a>",
+        "Robert G. Wilson, V, <a href=\"/A006992/a006992.pdf\">Letter to N. J. A. Sloane, Oct. 1993</a>"
+    ],
+    "formula": [
+        "a(n+1) = A007917(2*a(n)). - _Reinhard Zumkeller_, Sep 17 2014",
+        "Lim_{n -> inf} a(n)/2^n = 0.303976447924... - _Thomas Ordowski_, Apr 05 2015"
+    ],
+    "maple": [
+        "A006992 := proc(n) option remember; if n=1 then 2 else prevprime(2*A006992(n-1)); fi; end;"
+    ],
+    "mathematica": [
+        "bertrandPrime[1] = 2; bertrandPrime[n_] := NextPrime[ 2*a[n - 1], -1]; Table[bertrandPrime[n], {n, 40}]",
+        "(* Second program: *)",
+        "NestList[NextPrime[2#, -1] &, 2, 40] (* _Harvey P. Dale_, May 21 2012 *)",
+        "k = 3; a[n_] := If[GCD[n,k] > 1 && GCD[n, k] < n, -1, GCD[n, k]]; Select[Differences@Table[k = a[n] + k, {n, 2611137817}], # > 1 &] (* _Manuel Valdivia_, Jan 13 2015 *)"
+    ],
+    "program": [
+        "(PARI) print1(t=2);for(i=2,60,print1(\", \"t=precprime(2*t))) \\\\ _Charles R Greathouse IV_, Apr 01 2013",
+        "(Haskell)",
+        "a006992 n = a006992_list !! (n-1)",
+        "a006992_list = iterate (a007917 . (* 2)) 2",
+        "-- _Reinhard Zumkeller_, Sep 17 2014",
+        "(Python)",
+        "from sympy import prevprime",
+        "l=[2]",
+        "i=1",
+        "while i<=50:",
+        "    l+=[prevprime(2*l[i - 1]),]",
+        "    i+=1",
+        "print l # _Indranil Ghosh_, Apr 26 2017"
+    ],
+    "xref": [
+        "Cf. A055496, A163961.",
+        "See A185231 for another version.",
+        "Cf. A007917, A229607, A295262."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, _Robert G. Wilson v_",
+    "ext": [
+        "Definition completed by _Jonathan Sondow_, May 31 2014",
+        "B_2 sequence link added by _Wolfdieter Lang_, Oct 09 2014"
+    ],
+    "references": 32,
+    "revision": 104,
+    "time": "2017-12-04T04:27:17-05:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

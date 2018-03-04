@@ -1,0 +1,53 @@
+{
+    "number": 225376,
+    "data": "1,5,11,20,36,60,94,140,199,272,360,465,588,730,893,1078,1286,1519,1778,2064,2378,2721,3094,3498,3934,4403,4907,5448,6027,6645,7303,8002,8743,9527,10355,11228",
+    "name": "Construct sequences P,Q,R by the rules: Q = first differences of P, R = second differences of P, P starts with 1,5,11, Q starts with 4,6, R starts with 2; at each stage the smallest number not yet present in P,Q,R is appended to R; every number appears exactly once in the union of P,Q,R. Sequence gives P.",
+    "comment": [
+        "P can be extended for 10^6 terms, but it is not known if P,Q,R can be extended to infinity.",
+        "A probabilistic argument suggests that P, Q, R are infinite. - _N. J. A. Sloane_, May 19 2013",
+        "Martin Gardner (see reference) states that no such triple P,Q,R of sequences exists if it is required that P(1)<Q(1)<R(1)."
+    ],
+    "reference": [
+        "M. Gardner, Weird Numbers from Titan, Isaac Asimov's Science Fiction Magazine, Vol. 4, No. 5, May 1980, pp. 42ff."
+    ],
+    "link": [
+        "Christopher Carl Heckman, <a href=\"/A225376/b225376.txt\">Table of n, a(n) for n = 1..10002</a>"
+    ],
+    "example": [
+        "The initial terms of P, Q, R are:",
+        "1     5    11    20    36    60    94   140   199   272   360",
+        "   4     6     9    16    24    34    46    59    73    88",
+        "      2     3     7     8    10    12    13    14    15"
+    ],
+    "maple": [
+        "Hofstadter2 := proc (N) local h, dh, ddh, S, lbmex, i:",
+        "    h := 1, 5, 11: dh := 4, 6: ddh := 2:",
+        "    lbmex := 3: S := {h,dh,ddh}:",
+        "    for i from 4 to N do:",
+        "       while lbmex in S do: S := S minus {lbmex}: lbmex := lbmex + 1: od:",
+        "       ddh := ddh, lbmex:",
+        "       dh := dh, dh[-1] + lbmex:",
+        "       h := h, h[-1] + dh[-1]:",
+        "       S := S union {h[-1], dh[-1], ddh[-1]}:",
+        "       lbmex := lbmex + 1:",
+        "    od:",
+        "    if {h} intersect {dh} <> {} then: return NULL:",
+        "    elif {h} intersect {ddh} <> {} then: return NULL:",
+        "    elif {ddh} intersect {dh} <> {} then: return NULL:",
+        "    else: return [h]: fi:",
+        "end proc: # _Christopher Carl Heckman_, May 12 2013"
+    ],
+    "xref": [
+        "Cf. A225377, A225378, A005228, A030124, A037257."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, May 12 2013, based on email from _Christopher Carl Heckman_, May 06 2013",
+    "ext": [
+        "Corrected and edited by _Christopher Carl Heckman_, May 12 2013"
+    ],
+    "references": 8,
+    "revision": 30,
+    "time": "2014-03-24T02:00:40-04:00",
+    "created": "2013-05-12T18:55:44-04:00"
+}

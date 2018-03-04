@@ -1,0 +1,45 @@
+{
+    "number": 266989,
+    "data": "31,43,67,223,379,491,619,631,643,683,859,883,907,1051,1091,1423,1747,1987,2143,2347,2371,2467,2531,2767,3307,3643,3691,3739,3823,3931,4019,4219,4519,4691,4987,5059,5107,5347,5683,5827,6043",
+    "name": "Primes for which the average of the primitive roots is < p/2.",
+    "comment": [
+        "These primes are congruent to 3 (mod 4)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A266989/b266989.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = prime(A266988(n))."
+    ],
+    "example": [
+        "a(1)=31. The primitive roots of 31 are 3, 11, 12, 13, 17, 21, 22, and 24.",
+        "Their average is (3+11+12+13+17+21+22+24)/phi(30)=123/8<31/2."
+    ],
+    "maple": [
+        "f:= proc(p) local g;",
+        "  if not isprime(p) then return false fi;",
+        "  g:= numtheory[primroot](p);",
+        "  evalb(add(g&^i mod p, i = select(t->igcd(t,p-1)=1, [$1..p-2]))",
+        "     < p/2 * numtheory:-phi(p-1))",
+        "end proc:",
+        "select(f, [seq(i,i=3..10000,4)]); # _Robert Israel_, Feb 09 2016"
+    ],
+    "mathematica": [
+        "A = Table[Total[Flatten[Position[Table[MultiplicativeOrder[i, Prime[k]], {i, Prime[k] - 1}],Prime[k] - 1]]]/(EulerPhi[Prime[k] - 1] Prime[k]/2), {k, 1,100}]; Prime[Flatten[Position[A, _?(# < 1 &)]]]"
+    ],
+    "program": [
+        "(PARI) ar(p) = my(r, pr, j); r=vector(eulerphi(p-1)); pr=znprimroot(p); for(i=1, p-1, if(gcd(i, p-1)==1, r[j++]=lift(pr^i))); vecsort(r) ;",
+        "isok(p) = my(vr = ar(p)); vecsum(vr)/#vr < p/2;",
+        "lista(nn) = forprime(p=2, nn, if (isok(p), print1(p, \", \"))); \\\\ _Michel Marcus_, Feb 09 2016"
+    ],
+    "xref": [
+        "Cf. A008330, A060749, A088144, A266987, A266988, A267010."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Dimitri Papadopoulos_, Jan 08 2016",
+    "references": 2,
+    "revision": 27,
+    "time": "2016-02-09T20:50:02-05:00",
+    "created": "2016-01-09T17:13:03-05:00"
+}

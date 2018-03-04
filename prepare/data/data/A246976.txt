@@ -1,0 +1,52 @@
+{
+    "number": 246976,
+    "data": "0,3,6,11,14,19,22,25,28,33,36,41,44,47,50,55,58,63,66,71,74,79,82,85,88,94,96",
+    "name": "Sequence B' of P-positions in Fraenkel's (2,1)-Wythoff's game.",
+    "comment": [
+        "Needs better definition and more terms. I am having difficulty accessing this document. The complement, A', is presumably also missing from the OEIS, but we cannot be certain of that until the present sequence is extended.",
+        "It appears --as a result of the Maple program-- that a(25) in the publication is a typographical error and that the sequence is an erroneous duplicate of A026368. The associated A' sequence is A026367 - _R. J. Mathar_, Oct 25 2014"
+    ],
+    "link": [
+        "Wen An Liu and Xiao Zhao, <a href=\"http://dx.doi.org/10.1016/j.dam.2014.08.009\">Adjoining to (s,t)-Wythoff's game its P-positions as moves</a>, Discrete Applied Mathematics, Aug 27 2014. See Table 4."
+    ],
+    "maple": [
+        "mex := proc(L)",
+        "        local k;",
+        "        for k from 0 do",
+        "                if not k in L then",
+        "                        return k;",
+        "                end if;",
+        "        end do:",
+        "end proc:",
+        "Aprime := proc(n,s,t)",
+        "        option remember;",
+        "        local a,b ;",
+        "        if n = 0 then",
+        "                0;",
+        "        else",
+        "                a := [seq(procname(i,s,t),i=0..n-1)] ;",
+        "                b := [seq(Bprime(i,s,t),i=0..n-1)] ;",
+        "                mex([op(a),op(b)]) ;",
+        "        end if;",
+        "end proc;",
+        "Bprime := proc(n,s,t)",
+        "        option remember;",
+        "        if n = 0 then",
+        "                0 ;",
+        "        else",
+        "                s*Aprime(n,s,t)+n*t ;",
+        "        end if;",
+        "end proc;",
+        "A246976 := proc(n)",
+        "        Bprime(n,2,1) ;",
+        "end proc:",
+        "seq(A246976(n),n=0..80) ; # _R. J. Mathar_, Oct 25 2014"
+    ],
+    "keyword": "dead",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Sep 14 2014",
+    "references": 1,
+    "revision": 18,
+    "time": "2015-09-19T18:09:04-04:00",
+    "created": "2014-09-14T16:37:55-04:00"
+}

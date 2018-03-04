@@ -1,0 +1,52 @@
+{
+    "number": 277946,
+    "data": "121,10201,12100,22201,1002001,1020100,1022121,1210000,1212201,2220100,100020001,100200100,100220121,102010000,102212100,121000000,121022001,121220100,210221001,222010000,10000200001,10002000100,10002200121,10020010000,10020210201",
+    "name": "Squares whose largest decimal digit is 2.",
+    "comment": [
+        "A subsequence of A000290.",
+        "From _Robert Israel_, Nov 14 2016: (Start)",
+        "If n is a term, then so is 100*n.",
+        "The first term with an even number of digits is a(36) = 100021020121.",
+        "The first term with an even number of digits that is not of the form a(36)*100^k has at least 24 digits.",
+        "(End)"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A277946/b277946.txt\">Table of n, a(n) for n = 1..10000</a> (terms n = 1..50 from Colin Barker, terms n = 51..474 from Robert Israel."
+    ],
+    "formula": [
+        "a(n) = A277959(n)^2. Intersection of A000290 and A277964. - _M. F. Hasler_, Nov 15 2017"
+    ],
+    "maple": [
+        "res:= NULL: B:= [1,2]:",
+        "for m from 1 to 10 do",
+        "  for q in B do",
+        "    for x from ceil(sqrt(10^m*q)) to floor(sqrt(10^m*q + 2/9*(10^m-1))) do",
+        "      if max(convert(x^2,base,10)) = 2 then res:= res, x^2 fi",
+        "  od od:",
+        "  for q in B do",
+        "     for x from ceil(sqrt(10^(m+1)*q)) to floor(sqrt(10^(m+1)*q + 2/9*(10^(m+1)-1))) do",
+        "       if max(convert(x^2,base,10)) = 2 then res:= res, x^2 fi",
+        "  od od:",
+        "  if m < 10 then B:= map(t -> (10*t,10*t+1,10*t+2),B) fi;",
+        "od:",
+        "res; # _Robert Israel_, Nov 14 2016"
+    ],
+    "mathematica": [
+        "fQ[n_] := Union[ IntegerDigits[ n^2]][[-1]] == 2; Select[ Range@100500, fQ]^2 (* _Robert G. Wilson v_, Nov 06 2016 *)"
+    ],
+    "program": [
+        "(PARI) L=List(); for(n=1, 10000, if(vecmax(digits(n^2))==2, listput(L, n^2))); Vec(L)",
+        "\\\\ See A277959 for more efficient code. - _M. F. Hasler_, Nov 16 2017",
+        "(MAGMA) [n^2: n in [1..1000000] | Maximum(Intseq(n^2)) eq 2]; // _Vincenzo Librandi_, Nov 06 2016"
+    ],
+    "xref": [
+        "Cf. A000290, A277947, A277948, A277959."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Colin Barker_, Nov 05 2016",
+    "references": 13,
+    "revision": 38,
+    "time": "2017-11-16T02:32:00-05:00",
+    "created": "2016-11-06T04:47:36-05:00"
+}

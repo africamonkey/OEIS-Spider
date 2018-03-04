@@ -1,0 +1,49 @@
+{
+    "number": 273771,
+    "data": "168,408,420,528,588,600,660,1008",
+    "name": "Integer area of primitive tangential quadrilateral with integer sides, integer inradius and rational diagonals.",
+    "comment": [
+        "A tangential quadrilateral is a quadrilateral whose sides are all tangent to a single circle within the quadrilateral. This circle is called the incircle of the quadrilateral or its inscribed circle, its center is the incenter and its radius is called the inradius.",
+        "The area S of a tangential quadrilateral is given by S = r s where s is the semiperimeter and r is the inradius.",
+        "The sides of a tangential quadrilateral satisfy s = a + c = b + d where a,c and b,d are opposite sides.",
+        "Let D^2 = a b c d - S^2 (D can be positive or negative), then the distance from the tangent point on a(or b) to the vertex point between a,b is given by (ab-D)/s. Similar formula is given for changing a-b to b-c, c-d and d-a.",
+        "As a consequences of above formula, a b c d >= S^2.",
+        "The diagonal separating ad and bc is p=Sqrt[(a-d)^2+(4S^2)/(a d+b c+2D)]",
+        "The diagonal separating ab and cd is q=Sqrt[(a-b)^2+(4S^2)/(a b+c d-2D)]"
+    ],
+    "example": [
+        "a,   b,   c,  d,  S,    r,  p,   q",
+        "15,  15,  13, 13, 168,  6,  14,  24",
+        "26,  26,  25, 25, 408,  8,  17,  48",
+        "25,  25,  17, 17, 420,  10, 28,  30",
+        "26,  26,  22, 22, 528,  11, 40,  132/5",
+        "28,  28,  21, 21, 588,  12, 35,  168/5",
+        "25,  25,  25, 25, 600,  12, 40,  30",
+        "39,  30,  16, 25, 660,  12, 34,  39",
+        "102, 102, 10, 10, 1008, 9,  104, 252/13"
+    ],
+    "mathematica": [
+        "SMax=500;",
+        "Do[",
+        "  If[a==c&&\\[CapitalDelta]<0,Continue[]];",
+        "  If[GCD[a,b,s,r]>1,Continue[]];",
+        "  If[b c+\\[CapitalDelta]<=0||c d-\\[CapitalDelta]<=0,Continue[]];",
+        "  If[!{p=Sqrt[(a-d)^2+(4S^2)/(a d+2\\[CapitalDelta]+b c)],",
+        "       q=Sqrt[(a-b)^2+(4S^2)/(a b-2\\[CapitalDelta]+c d)]",
+        "      }\\[Element]Rationals,Continue[]];",
+        "  S(*{a,b,c,d,S,r,\\[CapitalDelta],p,q}*)//Sow;",
+        "  ,{S,SMax},{s,S//Divisors//Select[#,#^2>=4S&]&},{r,{S/s}}",
+        "  ,{a,s/2//Ceiling,s},{c,{s-a}}",
+        "  ,{b,s/2//Ceiling,a},{d,{s-b}}",
+        "  ,{\\[CapitalDelta],Select[{1,-1}Sqrt[a b c d-S^2],IntegerQ]//Union}",
+        "]//Reap//Last//Last(*//TableForm*)",
+        "{p,q}=.;"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Albert Lau_, Jun 03 2016",
+    "references": 0,
+    "revision": 12,
+    "time": "2016-06-17T00:41:48-04:00",
+    "created": "2016-06-17T00:41:48-04:00"
+}

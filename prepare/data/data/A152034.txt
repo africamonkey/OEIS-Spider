@@ -1,0 +1,38 @@
+{
+    "number": 152034,
+    "data": "79,769,9679,98999,995699,9975899,99967999,999548999,9999049999,99994169999,999989299999,9999954799999,99999904999999,999999778999999,9999999349999999,99999994999999999,999999971189999999,9999999950999999999,99999999632999999999",
+    "name": "a(n) = largest n-digit prime p whose reversal is a prime q > p.",
+    "link": [
+        "Robert Israel, <a href=\"/A152034/b152034.txt\">Table of n, a(n) for n = 2..200</a>"
+    ],
+    "maple": [
+        "revdigs:= proc(x) local L,i; L:= convert(x,base,10); add(L[-i]*10^(i-1),i=1..nops(L)) end proc:",
+        "f:= proc(n)",
+        "  local d,a,B,r;",
+        "  for d from floor(n/2) by -1 do",
+        "     B:= (10^d-1)*(1+10^(n-d));",
+        "     for a from 10^(n-2*d)-1 to 1 by -1 do",
+        "       r:= revdigs(a);",
+        "       if r > a and isprime(B+10^d*a) and isprime(B+10^d*r) then return B+10^d*a fi",
+        "     od",
+        "  od",
+        "end proc:",
+        "map(f, [$2..20]); # _Robert Israel_, Aug 16 2016"
+    ],
+    "mathematica": [
+        "Do[ p = NextPrime[10^(n ), -1 ]; Do[ p1 = FromDigits[ Reverse[IntegerDigits[p]]]; If[PrimeQ[p1] && p1 > p, Print[{n, p}]; Break[]]; p = NextPrime[p, -1], {10^9}], {n, 2, 15}];"
+    ],
+    "xref": [
+        "Cf. A006567, A152014, A152033."
+    ],
+    "keyword": "nonn,base",
+    "offset": "2,1",
+    "author": "_Zak Seidov_, Nov 20 2008",
+    "ext": [
+        "More terms from _Max Alekseyev_, May 03 2011"
+    ],
+    "references": 2,
+    "revision": 12,
+    "time": "2016-08-16T21:09:51-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 238826,
+    "data": "1,2,4,9,22,53,131,323,798,1968,4853,11958,29463,72581,178803,440474,1085110,2673183,6585468,16223521,39967243,98460769,242561730,597559646,1472109847,3626595728,8934249307,22009844973,54222045921,133577963318,329074124992,810685962909",
+    "name": "a(n) = p(n+3)-p(n+1), where p(n) = A238825(n).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A238826/b238826.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "V. M. Zhuravlev, <a href=\"http://www.mccme.ru/free-books/matpros/mph.pdf\">Horizontally-convex polyiamonds and their generating functions</a>, Mat. Pros. 17 (2013), 107-129 (in Russian). See the sequence h(n).",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (3,0,-4,1,1,3,-1)."
+    ],
+    "formula": [
+        "G.f.: -x*(1+x)*(x^3+x^2-1)*(x-1)^2 / ( 1-3*x+4*x^3-x^4-x^5-3*x^6+x^7 ). - _R. J. Mathar_, Mar 20 2014"
+    ],
+    "maple": [
+        "g:=proc(n) option remember; local t1;",
+        "t1:=[2,3,6,14,34,84,208,515];",
+        "if n <= 7 then t1[n] else",
+        "3*g(n-1)-4*g(n-3)+g(n-4)+g(n-5)+3*g(n-6)-g(n-7); fi; end proc;",
+        "[seq(g(n),n=1..32)]; # A238823",
+        "d:=proc(n) option remember; global g; local t1;",
+        "t1:=[0,1];",
+        "if n <= 2 then t1[n] else",
+        "g(n-1)-2*d(n-1)-d(n-2); fi; end proc;",
+        "[seq(d(n),n=1..32)]; # A238824",
+        "p:=proc(n) option remember; global d; local t1;",
+        "t1:=[0,0,0,1];",
+        "if n <= 4 then t1[n] else",
+        "p(n-2)+p(n-3)+2*(d(n-3)+d(n-4)); fi; end proc;",
+        "[seq(p(n),n=1..32)]; # A238825",
+        "[seq(p(n+3)-p(n+1),n=1..32)]; #A238826"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[-(1 + x) (x^3 + x^2 - 1) (x - 1)^2/(1 - 3 x + 4 x^3 - x^4 - x^5 - 3 x^6 + x^7), {x, 0, 40}], x] (* _Vincenzo Librandi_, Mar 21 2014 *)"
+    ],
+    "program": [
+        "(MAGMA) m:=40; R<x>:=LaurentSeriesRing(RationalField(), m); Coefficients(R! -x*(1+x)*(x^3+x^2-1)*(x-1)^2 / ( 1-3*x+4*x^3-x^4-x^5-3*x^6+x^7)); // _Vincenzo Librandi_, Mar 21 2014"
+    ],
+    "xref": [
+        "Cf. A238823-A238825."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Mar 08 2014",
+    "references": 9,
+    "revision": 17,
+    "time": "2015-06-13T00:54:59-04:00",
+    "created": "2014-03-08T10:05:12-05:00"
+}

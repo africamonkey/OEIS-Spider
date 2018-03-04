@@ -1,0 +1,57 @@
+{
+    "number": 244750,
+    "data": "0,2,3,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144",
+    "name": "0-additive sequence: a(n) is the smallest number larger than a(n-1) which is not the sum of any subset of earlier terms, with initial values {0, 2, 3, 4}.",
+    "reference": [
+        "R. K. Guy, \"s-Additive sequences,\" preprint, 1994."
+    ],
+    "link": [
+        "S. R. Finch, <a href=\"http://www.jstor.org/stable/2325001\">Are 0-additive sequences always regular?</a>, Amer. Math. Monthly, 99 (1992), 671-673."
+    ],
+    "example": [
+        "a(5) cannot be 5=2+3. It cannot be 6=2+4. It cannot be 7=3+4, and becomes a(5)=8.",
+        "a(6) cannot be 9=2+3+4. It cannot be 10=2+8. It cannot be 11=3+8. It cannot be 12 = 4+8. It cannot be 13=2+3+8. It cannot be 14=2+4+8. It cannot be 15=3+4+8, and becomes a(6)=16."
+    ],
+    "maple": [
+        "A244750:= proc(n)",
+        "    option remember;",
+        "    if n <= 4 then",
+        "        op(n,[0,2,3,4]);",
+        "    else",
+        "        prev := {seq(procname(k),k=1..n-1)} ;",
+        "        for a from procname(n-1)+1 do",
+        "            awrks := true ;",
+        "            for asub in combinat[choose](prev) do",
+        "                if add(p,p=asub) = a then",
+        "                    awrks := false;",
+        "                    break;",
+        "                end if;",
+        "            end do:",
+        "            if awrks then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "for n from 1 do",
+        "    print(A244750(n)) ;",
+        "end do: # _R. J. Mathar_, Jul 12 2014"
+    ],
+    "mathematica": [
+        " f[s_List] := f[n] = Block[{k = s[[-1]] + 1, ss = Union[Plus @@@ Subsets[s]]}, While[ MemberQ[ss, k], k++]; Append[s, k]]; Nest[ f[#] &, {0, 2, 3, 4}, 16]"
+    ],
+    "xref": [
+        "Cf. A003662, A003663, A005408, A026471, A026474, A033627, A051039, A051040, A244151, A244749.",
+        "Cf. A060469, A060470, A060471, A060472."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_ and _Robert G. Wilson v_, Jul 05 2014",
+    "ext": [
+        "Corrected by _R. J. Mathar_, Jul 12 2014"
+    ],
+    "references": 2,
+    "revision": 17,
+    "time": "2014-07-13T00:20:39-04:00",
+    "created": "2014-07-05T18:01:30-04:00"
+}

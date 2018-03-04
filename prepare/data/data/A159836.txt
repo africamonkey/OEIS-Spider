@@ -1,0 +1,37 @@
+{
+    "number": 159836,
+    "data": "8,9,18,24,25,32,36,40,45,49,50,56,63,64,75,81,88,90,96,98,99,100,104,117,120,121,125,126,128,136,144,147,150,152,153,160,162,168,169,171,175,180,184,192,196,198,200,207,216,224,225,232,234,242,243,245,248",
+    "name": "Integers n such that the orbit n, f(n), f(f(n)), ... is eventually periodic with period 2, where f(n) = product(a(k)^p(k)) when n has the prime factorization n = product(p(k)^a(k)).",
+    "comment": [
+        "It is proved in the reference that for every positive integer n the orbit n, f(n), f(f(n)), ... is eventually periodic with period 1 or 2."
+    ],
+    "reference": [
+        "Problem 11315, American Mathematical Monthly, May 2009, page 470."
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A159836/b159836.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "maple": [
+        "with(numtheory); P:=proc(q) local a0f,a1,a1f,a2,a2f,a3,a3f,a4,a4f,k,n;",
+        "for n from 1 to q do a0:=1;a1:=1;a2:=2;a3:=3;a4:=n;",
+        "  while not (a1=a3 and a2=a4) do a0f:=ifactors(a4)[2];",
+        "   a1:=mul(a0f[k][2]^a0f[k][1],k=1..nops(a0f)); a1f:=ifactors(a1)[2];",
+        "   a2:=mul(a1f[k][2]^a1f[k][1],k=1..nops(a1f)); a2f:=ifactors(a2)[2];",
+        "   a3:=mul(a2f[k][2]^a2f[k][1],k=1..nops(a2f)); a3f:=ifactors(a3)[2];",
+        "   a4:=mul(a3f[k][2]^a3f[k][1],k=1..nops(a3f)); od;",
+        "if a1<>a2 then print(n); fi; od; end: P(10^6); # _Paolo P. Lava_, Oct 24 2013"
+    ],
+    "mathematica": [
+        "f[n_] := Module[{f = Transpose[FactorInteger[n]]}, Times @@ (f[[2]]^f[[1]])]; Select[Range[300], (x = NestWhileList[f, #, UnsameQ, All]; x[[-2]] != x[[-1]]) &] (* _T. D. Noe_, Oct 24 2013 *)"
+    ],
+    "xref": [
+        "Cf. A008477, A008478."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_John W. Layman_, Apr 23 2009",
+    "references": 2,
+    "revision": 9,
+    "time": "2013-10-24T13:56:33-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

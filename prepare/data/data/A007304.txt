@@ -1,0 +1,77 @@
+{
+    "number": 7304,
+    "id": "M5207",
+    "data": "30,42,66,70,78,102,105,110,114,130,138,154,165,170,174,182,186,190,195,222,230,231,238,246,255,258,266,273,282,285,286,290,310,318,322,345,354,357,366,370,374,385,399,402,406,410,418,426,429,430,434,435,438",
+    "name": "Sphenic numbers: products of 3 distinct primes.",
+    "comment": [
+        "Note the distinctions between this and \"n has exactly three prime factors\" (A014612) or \"n has exactly three distinct prime factors.\" (A033992). The word \"sphenic\" also means \"shaped like a wedge\" [American Heritage Dictionary] as in dentation with \"sphenic molars.\" - _Jonathan Vos Post_, Sep 11 2005",
+        "Also the volume of a sphenic brick. A sphenic brick is a rectangular parallelopiped whose sides are components of a sphenic number, namely whose sides are three distinct primes. Example: The distinct prime triple (3,5,7) produces a 3x5x7 unit brick which has volume 105 cubic units. 3-D analog of 2-D A037074 Product of twin primes, per Cino Hilliard's comment. Compare with 3-D A107768 Golden 3-almost primes = Volumes of bricks (rectangular parallelopipeds) each of whose faces has golden semiprime area. - _Jonathan Vos Post_, Jan 08 2007",
+        "Or the numbers n such that 13 = number of perfect partitions of n. - _Juri-Stepan Gerasimov_, Oct 07 2009",
+        "A178254(a(n)) = 36. - _Reinhard Zumkeller_, May 24 2010",
+        "Sum(n>=1,  1/a(n)^s) = (1/6)*(P(s)^3 - P(3*s) - 3*(P(s)*P(2*s)-P(3*s))), where P is prime Zeta function. - _Enrique P\u00e9rez Herrero_, Jun 28 2012",
+        "Also numbers n with A001222(n)=3 and A001221(n)=3. - _Enrique P\u00e9rez Herrero_, Jun 28 2012",
+        "A050326(a(n)) = 5, subsequence of A225228; A162143(n) = a(n)^2. - _Reinhard Zumkeller_, May 03 2013"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "\"Sphenic\", The American Heritage Dictionary of the English Language, Fourth Edition, Houghton Mifflin Company, 2000."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A007304/b007304.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Pri#prime_signature\">Index to sequences related to prime signature</a>"
+    ],
+    "formula": [
+        "A008683(a(n)) = -1.",
+        "A000005(a(n)) = 8. - _R. J. Mathar_, Aug 14 2009",
+        "A002033(a(n)-1) = 13. - _Juri-Stepan Gerasimov_, Oct 07 2009, _R. J. Mathar_, Oct 14 2009",
+        "a(n) ~ 2n log n/(log log n)^2. - _Charles R Greathouse IV_, Sep 14 2015"
+    ],
+    "maple": [
+        "with(numtheory): a:=proc(n) if bigomega(n)=3 and nops(factorset(n))=3 then n else fi end: seq(a(n),n=1..450); # _Emeric Deutsch_",
+        "A007304 := proc(n)",
+        "    option remember;",
+        "    local a;",
+        "    if n =1 then",
+        "        30;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if bigomega(a)=3 and nops(factorset(a))=3 then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Dec 06 2016"
+    ],
+    "mathematica": [
+        "Union[Flatten[Table[Prime[n]*Prime[m]*Prime[k], {k, 20}, {n, k+1, 20}, {m, n+1, 20}]]]",
+        "Take[ Sort@ Flatten@ Table[ Prime@i Prime@j Prime@k, {i, 3, 21}, {j, 2, i - 1}, {k, j - 1}], 53] (* _Robert G. Wilson v_ *)",
+        "With[{upto=500},Sort[Select[Times@@@Subsets[Prime[Range[Ceiling[upto/6]]],{3}],#<=upto&]]] (* _Harvey P. Dale_, Jan 08 2015 *)"
+    ],
+    "program": [
+        "(PARI) for(n=1,1e4,if(bigomega(n)==3 && omega(n)==3,print1(n\", \"))) \\\\ _Charles R Greathouse IV_, Jun 10 2011",
+        "(PARI) list(lim)=my(v=List(),t);forprime(p=2,(lim)^(1/3),forprime(q=p+1,sqrt(lim\\p),t=p*q;forprime(r=q+1,lim\\t,listput(v,t*r))));vecsort(Vec(v)) \\\\ _Charles R Greathouse IV_, Jul 20 2011",
+        "(Haskell)",
+        "a007304 n = a007304_list !! (n-1)",
+        "a007304_list = filter f [1..] where",
+        "f u = p < q && q < w && a010051 w == 1 where",
+        "p = a020639 u; v = div u p; q = a020639 v; w = div v q",
+        "-- _Reinhard Zumkeller_, Mar 23 2014"
+    ],
+    "xref": [
+        "Subsequence of A014612.",
+        "Cf. A006881, A046386, A046387, A067885 (product of 2, 4, 5 and 6 distinct primes, resp.)",
+        "Cf. A046389, A046393, A061299, A067467, A071140, A096917, A096918, A096919, A100765, A103653, A107464, A037074, A107768, A002033, A179643, A179695, A020639, A010051, A239656 (first differences)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Simon Plouffe_",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Jan 04 2006",
+        "Comment concerning number of divisors corrected by _R. J. Mathar_, Aug 14 2009",
+        "Formula index corrected - _R. J. Mathar_, Oct 14 2009"
+    ],
+    "references": 113,
+    "revision": 70,
+    "time": "2017-08-23T03:03:25-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

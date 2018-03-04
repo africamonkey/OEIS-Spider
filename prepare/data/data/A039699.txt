@@ -1,0 +1,47 @@
+{
+    "number": 39699,
+    "data": "1,8,168,5120,190120,7939008,357713664,16993726464,839358285480,42714450658880,2225741588095168,118227198981126144,6380762273973278464,349019710593278412800,19310744204362333900800",
+    "name": "Number of 4-dimensional cubic lattice walks that start and end at origin after 2n steps, free to pass through origin at intermediate stages.",
+    "reference": [
+        "S. R. Finch, Mathematical Constants, Cambridge, 2003, pp. 322-331."
+    ],
+    "link": [
+        "S. R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/constant/polya/flajolet.html\">Symmetric Random Walk on n-Dimensional Integer Lattice</a>",
+        "Gilbert Labelle and Annie Lacasse, <a href=\"http://www.dmtcs.org/dmtcs-ojs/index.php/proceedings/article/download/dmAO0153/3610\">Closed paths whose steps are roots of unity</a>, in FPSAC 2011, Reykjav\u00b4k, Iceland DMTCS proc. AO, 2011, 599-610.",
+        "Yen Lee Loh, <a href=\"https://arxiv.org/abs/1706.03083\">A general method for calculating lattice Green functions on the branch cut</a>, arXiv:1706.03083 [math-ph], 2017."
+    ],
+    "formula": [
+        "1, 0, 8, 0, 168, 0, 5120... has e.g.f. BesselI[ 0, 2x ]^4 (BesselI=modified Bessel function of first kind).",
+        "a(n) = binomial(2*n,n)*A002895(n). - _Mark van Hoeij_, Apr 19 2013",
+        "a(n) = binomial(2*n,n)^2*hypergeom([1/2,-n,-n,-n],[1,1,1/2-n],1). - _Peter Luschny_, May 23 2017",
+        "a(n) ~ 2^(6*n+1) / (Pi*n)^2. - _Vaclav Kotesovec_, Nov 13 2017"
+    ],
+    "example": [
+        "a(5)=7939008 i.e. there are 7939008 different walks that start and end at origin of a 4-dimensional integer lattice after 2*5=10 steps, free to pass through origin at intermediate steps."
+    ],
+    "maple": [
+        "A039699 := n -> binomial(2*n,n)^2*hypergeom([1/2, -n, -n, -n],[1, 1, 1/2 - n], 1):",
+        "seq(simplify(A039699(n)), n=0..14); # _Peter Luschny_, May 23 2017"
+    ],
+    "mathematica": [
+        "max = 30 (* must be even *); Partition[ CoefficientList[ Series[ BesselI[0, 2 x]^4, {x, 0, max}], x]*Range[0, max]!, 2][[All, 1]] (* _Jean-Fran\u00e7ois Alcover_, Oct 05 2011 *)",
+        "With[{nn=30},Take[CoefficientList[Series[BesselI[0,2x]^4,{x,0,nn}],x] Range[0,nn]!,{1,-1,2}]] (* _Harvey P. Dale_, Aug 09 2013 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "C=binomial;",
+        "A002895(n) = sum(k=0,n, C(n,k)^2 * C(2*n-2*k,n-k) * C(2*k,k) );",
+        "a(n)= C(2*n,n) * A002895(n);",
+        "/* _Joerg Arndt_, Apr 19 2013 */"
+    ],
+    "xref": [
+        "1-dimensional, 2-dimensional, 3-dimensional analogs are A000984, A002894, A002896 with e.g.f. (see above) = BesselI[ 0, 2x ]^1, BesselI[ 0, 2x ]^2, BesselI[ 0, 2x ]^3."
+    ],
+    "keyword": "nonn,nice,easy,walk",
+    "offset": "0,2",
+    "author": "Alessandro Zinani (alzinani(AT)tin.it)",
+    "references": 3,
+    "revision": 33,
+    "time": "2017-11-22T01:36:03-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 265181,
+    "data": "881,27271,7297291,133113311,337533751,19683196831,42875428751,68921689211,1038231038231,1574641574641,2053792053791,2744274427441,4218754218751,6859685968591,7290007290001,7297297297291,106120810612081,224809122480911,274400027440001,280322128032211,317652331765231,500021150002111,812060181206011,1251251251251251,1757617576175761,1968319683196831,5931959319593191",
+    "name": "Prime numbers resulting from the concatenation of at least two copies of a cubic number followed by a trailing \"1.\"",
+    "comment": [
+        "Subsequence of A030430 (primes of the form 10n+1). - _Michel Marcus_, Dec 04 2015",
+        "If m is a term then (m-1)/10 is divisible by a cube (A000578) and the resulting quotient, different from 1, is in A076289. - _Michel Marcus_, Dec 05 2015",
+        "Without the \"repeated at least twice\" constraint, A168147 would be a subsequence. - _Michel Marcus_, Dec 05 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A265181/b265181.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "8 = 2^3; 881 is prime.",
+        "27 = 3^3; 27271 is prime."
+    ],
+    "maple": [
+        "N:= 20: # to get all terms with at most N digits",
+        "M:= floor((N-1)/2):",
+        "res:= {}:",
+        "for s from 1 to floor(10^(M/3)) do",
+        "   x:= s^3;",
+        "   m:= 1+ilog10(x);",
+        "   for k from 2 to floor((N-1)/m) do",
+        "     p:= x*add(10^(1+m*i),i=0..k-1)+1;",
+        "     if isprime(p) then res:= res union {p} fi;",
+        "   od",
+        "od:",
+        "sort(convert(res,list)); # _Robert Israel_, Jan 13 2016"
+    ],
+    "mathematica": [
+        "Take[Sort@ Flatten[Select[#, PrimeQ] & /@ Table[FromDigits@ Append[Flatten@ IntegerDigits@ Table[n^3, {#}], 1] & /@ Range[2, 20], {n, 1, 300}] /. {} -> Nothing], 27] (* _Michael De Vlieger_, Jan 05 2016 *)"
+    ],
+    "xref": [
+        "Cf. A000578, A030430, A066592, A076289, A168147 , A232066."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Thomas S. Pedigo_, Dec 03 2015",
+    "references": 1,
+    "revision": 43,
+    "time": "2016-01-20T23:50:39-05:00",
+    "created": "2016-01-20T23:50:39-05:00"
+}

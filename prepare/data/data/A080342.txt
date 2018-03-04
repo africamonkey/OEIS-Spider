@@ -1,0 +1,51 @@
+{
+    "number": 80342,
+    "data": "0,1,1,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5",
+    "name": "Number of weighings required to identify a single bad coin out of n coins, using a two-pan balance.",
+    "comment": [
+        "It is known that there is exactly one bad coin, which is heavier than the others. No weights are used in the weighings.",
+        "0 appears once, 1 twice, 2 6 times, 3 18 times, 4 54 times, ... which is the same as the number of base-3 numbers of length n; see A007089. - _Jonathan Vos Post_, Apr 20 2011",
+        "Records appear at positions 3^n+1 (=A034472(n)). - _Robert G. Wilson v_, Aug 06 2012",
+        "The \"Heavy Marble\" section of \"Brainteaser Problems\" in the Mongan et al. reference describes the n = 8 case in detail and then derives the general formula given below. Of course this sequence applies also when the single, unlike object is lighter than all the others. If the unlike object is only known to have a different weight (that is, to be lighter than all the others or heavier than all the others), use A064099. - _Rick L. Shepherd_, Sep 05 2013",
+        "If it is unknown whether the bad coin is heavier or lighter, then the minimum number of weighings is A029837(n) and the number of coins that must be used in the first weighing is A004526(n), for n > 2. - _Ivan N. Ianakiev_, Apr 13 2017"
+    ],
+    "reference": [
+        "J. Mongan, N. Suojanen, and E. Gigu\u00e8re, Programming Interviews Exposed: Secrets to Landing Your Next Job, 2nd Edition, Wiley Publishing, Inc., 2007, pp. 169-172."
+    ],
+    "link": [
+        "Rick L. Shepherd, <a href=\"/A080342/b080342.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "R. K. Guy, R. J. Nowakowski, <a href=\"http://www.jstor.org/stable/2975353\">Coin-weighing problems</a>, Am. Math. Monthly 102 (2) (1995) 164-167.",
+        "B. Manvel, <a href=\"http://www.jstor.org/stable/2689732\">Counterfeit coin problems</a>, Math. Mag. 50 (2) (1977) 90-92, theorem 1."
+    ],
+    "formula": [
+        "a(n) = floor(L) - floor(2^(-f(L))) + 1, where L = log_3(n) and f() = fractional part.",
+        "a(n) = ceiling(log_3(n)). - _Rick L. Shepherd_, Sep 05 2013",
+        "A064235(n) = 3 ^ a(n). - _Reinhard Zumkeller_, Sep 02 2015"
+    ],
+    "example": [
+        "a(1) = 0 since no weighings are needed - the coin is bad. a(2) = 1 since one weighing is needed."
+    ],
+    "mathematica": [
+        "f[n_] := Floor[ Log[3, n]] - Floor[2^-FractionalPart[ Log[3, n]]] + 1; Array[f, 105] (* _Robert G. Wilson v_, Aug 05 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = ceil(log(n)/log(3)) \\\\ _Rick L. Shepherd_, Sep 05 2013",
+        "(Haskell)",
+        "import Data.List (transpose)",
+        "a080342 n = genericIndex a080342_list (n - 1)",
+        "a080342_list = 0 : zs where",
+        "   zs = 1 : 1 : (map (+ 1) $ concat $ transpose [zs, zs, zs])",
+        "-- _Reinhard Zumkeller_, Sep 02 2015"
+    ],
+    "xref": [
+        "Cf. A000244, A007089, A025192, A064235.",
+        "Cf. also A004526, A029837, A064099."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,4",
+    "author": "Artemario Tadeu Medeiros da Silva (artemario(AT)uol.com.br), Mar 19 2003",
+    "references": 4,
+    "revision": 42,
+    "time": "2017-04-14T09:03:00-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

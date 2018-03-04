@@ -1,0 +1,46 @@
+{
+    "number": 72456,
+    "data": "3,7,11,17,47,53,61,67,73,79,89,101,139,151,157,191,199,229,233,241,263,269,277,283,311,317,337,347,359,367,379,397,433,449,467,487,503,521,541,563,569,571,577,593,607,613,619,647,659,673,683,691,727,743,769,773,809,823,827,911,919,929,953,971,991",
+    "name": "Annihilating primes for A000522.",
+    "comment": [
+        "Primes p such that A072453(p) = 0."
+    ],
+    "reference": [
+        "C. Cobeli and A. Zaharescu, Promenade around Pascal Triangle-Number Motives, Bull. Math. Soc. Sci. Math. Roumanie, Tome 56(104) No. 1, 2013, 73-98; http://rms.unibuc.ro/bulletin/pdf/56-1/PromenadePascalPart1.pdf. - From _N. J. A. Sloane_, Feb 16 2013"
+    ],
+    "link": [
+        "Lorenz Halbeisen and Norbert Hungerbuehler, Number theoretic aspects of a combinatorial function, Notes on Number Theory and Discrete Mathematics 5 (1999) 138-150. (<a href=\"http://math.berkeley.edu/~halbeis/publications/psf/seq.ps\">ps</a>, <a href=\"http://math.berkeley.edu/~halbeis/publications/pdf/seq.pdf\">pdf</a>)",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/List_of_prime_numbers#Annihilating_primes\">Annihilating primes</a>"
+    ],
+    "program": [
+        "(Perl) use warnings;",
+        "  use strict;",
+        "  use ntheory \":all\";",
+        "  use Math::GMPz;",
+        "  use Memoize;  memoize 'a000522';",
+        "  sub a000522 {",
+        "    my($n, $sum, $fn) = (shift, 0, Math::GMPz->new(1));",
+        "    do {  $sum += $fn;  $fn *= ($n-$_);  } for 0 .. $n;",
+        "    $sum;",
+        "  }",
+        "  sub a072453 {",
+        "    my $n = shift;",
+        "    vecsum( map { a000522($_) % $n == 0 } 0 .. $n-1 );",
+        "  }",
+        "  forprimes { print \"$_\\n\" unless a072453($_) } 1000;",
+        "# _Dana Jacobsen_, Feb 16 2016"
+    ],
+    "xref": [
+        "Cf. A000522, A072453."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_, Aug 02 2002",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Aug 02 2002"
+    ],
+    "references": 5,
+    "revision": 14,
+    "time": "2016-02-17T03:09:51-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

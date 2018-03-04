@@ -1,0 +1,33 @@
+{
+    "number": 165646,
+    "data": "0,0,0,0,2,3,4,5,18,43,60,84,294,472,724,1077,3504,5807,10396,15944,43664,84308,137004,217728,582966,1134304,1883360,3225812,8964134,15461472,27796942,45814765,123307634,233218013,396304692,663041846",
+    "name": "The revolver sequence.",
+    "comment": [
+        "a(n) is the number of ways in which you can load a revolver with n chambers so that if a person survives after the first shot, he/she has better chances of survival for the second shot if the shooter continues rather than spins. a(n) <= A000031(n) as A000031(n) gives the number of possible revolver loadings."
+    ],
+    "link": [
+        "Tanya Khovanova, <a href=\"http://blog.tanyakhovanova.com/?p=174\">Heard on the Street</a>"
+    ],
+    "example": [
+        "Based on the famous interview question where the revolver has six chambers and the shooter loads two adjacent bullets. As the answer to this question is to continue, a(6) must be at least 1."
+    ],
+    "mathematica": [
+        "<< Combinatorica` colors[x_] := Table[PadLeft[Table[1, {n, i}], x], {i, 0, x}] continueBetter[list_] := (len = Length[list]; c0 = 0; c00 = 0; rotateN = 0; While[rotateN < len, newList = RotateLeft[list, rotateN]; If[newList[[1]] == 0, c0++; If[newList[[2]] == 0, c00++ ]]; rotateN++ ]; If[c0 > 0, c00/c0 > c0/len, False]) continueNum[num_] := (neckNum = Length[colors[num]]; ans = 0; count = 1; While[count <= neckNum, ans = ans + Length[Select[ListNecklaces[num, colors[num][[count]], Cyclic], continueBetter[ # ] &]]; count++ ]; ans) Table[continueNum[n], {n, 2, 15}]"
+    ],
+    "program": [
+        "(PARI) { a(n) = sum(z=0,n, sum(r=1,min(ceil(z-z^2/n)-1,n-z), sumdiv(gcd([n,z,r]),d, eulerphi(d) * binomial(z/d - 1, r/d - 1) * binomial((n-z)/d - 1, r/d - 1) )/r )) } \\\\ _Max Alekseyev_, Sep 25 2009"
+    ],
+    "xref": [
+        "Cf. A000031."
+    ],
+    "keyword": "nonn,uned",
+    "offset": "1,5",
+    "author": "_Tanya Khovanova_, Sep 23 2009",
+    "ext": [
+        "Extended by _Max Alekseyev_, Sep 25 2009"
+    ],
+    "references": 0,
+    "revision": 8,
+    "time": "2018-02-02T02:58:21-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

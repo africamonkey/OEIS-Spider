@@ -1,0 +1,37 @@
+{
+    "number": 76468,
+    "data": "1,16,32,64,81,128,243,256,512,625,729,1024,1296,2048,2187,2401,3125,4096,6561,7776,8192,10000,14641,15625,16384,16807,19683,20736,28561,32768,38416,46656,50625,59049,65536,78125,83521,100000,104976,117649",
+    "name": "Perfect powers m^k where m is an integer and k > 3.",
+    "comment": [
+        "If p|n then at least p^4|n.",
+        "Subsequence of A036967. - R. J. Mathar, May 27 2011"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A076468/b076468.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "a = {1}; Do[ If[ Apply[ GCD, Last[ Transpose[ FactorInteger[n]]]] > 3, a = Append[a, n]; Print[n]], {n, 2, 131071}]; a"
+    ],
+    "program": [
+        "(Haskell)",
+        "import qualified Data.Set as Set (null)",
+        "import Data.Set (empty, insert, deleteFindMin)",
+        "a076468 n = a076468_list !! (n-1)",
+        "a076468_list = 1 : f [2..] empty where",
+        "   f xs'@(x:xs) s | Set.null s || m > x ^ 4 = f xs $ insert (x ^ 4, x) s",
+        "                  | m == x ^ 4  = f xs s",
+        "                  | otherwise = m : f xs' (insert (m * b, b) s')",
+        "                  where ((m, b), s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Jun 19 2013"
+    ],
+    "xref": [
+        "Cf. A001597, A076467, A076469, A076470."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Robert G. Wilson v_, Oct 14 2002",
+    "references": 4,
+    "revision": 7,
+    "time": "2013-06-19T13:22:51-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

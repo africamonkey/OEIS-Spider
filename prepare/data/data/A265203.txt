@@ -1,0 +1,52 @@
+{
+    "number": 265203,
+    "data": "9,99,9009,14841,76167,108801,239932,828828,886688,2112112,4663664,7152517,17333371,17511571,42844824,61200216,135666531,658808856,6953443596,6961551696,27110501172,46277277264,405162261504,483867768384,522733337225,588114411885",
+    "name": "Palindromes that can be written as the sum of two or more consecutive positive cubes.",
+    "comment": [
+        "Can any term in the sequence be written as sum of 2 or more consecutive cubes in more than one way?  The answer is no for a(1)-a(46). - _Chai Wah Wu_, Dec 17 2015"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A265203/b265203.txt\">Table of n, a(n) for n = 1..46</a> (all terms < 2000000300000030000001)"
+    ],
+    "example": [
+        "14841 can be written as 16^3 + 17^3 + 18^3."
+    ],
+    "maple": [
+        "ispali:= proc(n) local L; L:= convert(n,base,10);",
+        "  ListTools:-Reverse(L) = L end proc:",
+        "A265203:= proc(N) # get all terms <= N",
+        "  local S,a,b,t;",
+        "  S:= select(t -> t<=N and ispali(t),",
+        "     {seq(seq(b^2*(b+1)^2/4 - a^2*(a+1)^2/4, a=0..b-2),b=2..(1+iroot(4*N,3))/2)});",
+        "  sort(convert(S,list));",
+        "end proc:",
+        "A265203(10^9); # _Robert Israel_, Dec 07 2015"
+    ],
+    "mathematica": [
+        "lim = 800; Sort@ Select[Plus @@@ Map[#^3 &, Select[Flatten[Table[Partition[Range@ lim, k, 1], {k, 2, lim}], 1], Times @@ Differences@ # == 1 &]], # == Reverse@ # &@ IntegerDigits@ # &] (* _Michael De Vlieger_, Dec 16 2015 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def palindromic_cubic_sums(x_max):",
+        "    success = set()",
+        "    for x_min in xrange(1,x_max^(1/3)):",
+        "        sum_powers = x_min^3",
+        "        for i in xrange(x_min+1,x_max^(1/3)):",
+        "            sum_powers += (i^3)",
+        "            if sum_powers >= x_max:",
+        "                break",
+        "            if str(sum_powers) == str(sum_powers)[::-1]:",
+        "                success.add(sum_powers)",
+        "    return sorted(success)"
+    ],
+    "xref": [
+        "Cf. A002113, A217843."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Ann Marie Murray_, Dec 03 2015",
+    "references": 1,
+    "revision": 28,
+    "time": "2015-12-18T15:14:17-05:00",
+    "created": "2015-12-15T10:09:10-05:00"
+}

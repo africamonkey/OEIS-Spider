@@ -1,0 +1,40 @@
+{
+    "number": 276656,
+    "data": "2,3,4,5,5,6,6,7,7,8,8,9,9,10,10,10,11,11,12,12,12,13,13,14,14,14,15,15,15,16,16,16,17,17,18,18,18,19,19,19,20,20,20,21,21,21,22,22,22,22,23,23,23,24,24,24,25,25,25,26,26,26,27,27,27,27,28,28,28,29,29,29,30,30,30,30,31,31,31,32,32,32,32,33,33,33,34,34,34,34",
+    "name": "Nearest integer to the inverse function of the factorial where the exponential of n is the argument.",
+    "comment": [
+        "Conjecture: Lim_{n->infinity} (Im(zetazero(n))/(2*Pi))/(The nearest integer to the inverse function of the factorial where the exponential of n is the argument.) = 1. In other words the non-rounded version of this sequence is asymptotic to imaginary part of the Riemann zeta zeros divided by 2*Pi.",
+        "The asymptotic is not as good as an average order of the zeta zeros. That is given by the Fran\u00e7a-LeClair asymptotic in A273061.",
+        "The errors between the first few terms of the non-rounded version of this sequence and the Riemann zeta zeros are:",
+        "-0.0628295, 0.182931, 0.0998766, 0.316127, 0.118029, 0.295418, 0.289761, 0.15857, 0.406467, 0.206441, 0.246699, 0.34284, 0.357547, 0.155911, 0.407421, 0.298123, 0.275056, 0.266823",
+        "Only the first error is negative, the rest are positive. The error appears to increase, but the rate of change in the errors becomes smaller higher up in the sequence.",
+        "Changing the Mathematica command InverseFunction[Factorial, 1, 1][Exp[n]]] into InverseFunction[Factorial, 1, 1][Exp[n-1/2]]] gives a more constant error fluctuating above 1/2 for the first 90 terms of the sequence."
+    ],
+    "mathematica": [
+        "(*",
+        "In Mathematica 8, this is the essential command that describes the sequence:",
+        "a(n) = Round[InverseFunction[Factorial, 1, 1][Exp[n]]]",
+        "a(n) = Round[InverseFunction[LogGamma, 1, 1][n]] - 1",
+        "*)",
+        "nn = 90;",
+        "Monitor[a =",
+        "  Table[Round[InverseFunction[Factorial, 1, 1][Exp[n]]], {n, 1,",
+        "    nn}], n]",
+        "(*Uncomment the code below to see the phenomenon described in the comment section*)",
+        "(*Monitor[a=Table[N[InverseFunction[Factorial, 1, 1][Exp[n -1/2]]],{n,1,nn}],n]",
+        "g1=ListLinePlot[a,PlotStyle->Red]",
+        "g2=ListPlot[b=Table[Im[ZetaZero[n]]/(2*Pi),{n,1,nn}]]",
+        "Show[g1,g2]",
+        "ListLinePlot[b-a]*)"
+    ],
+    "xref": [
+        "Cf. A046654, A273061, A275341, A275579, A275737."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Mats Granvik_, Sep 11 2016",
+    "references": 0,
+    "revision": 7,
+    "time": "2016-09-12T17:15:55-04:00",
+    "created": "2016-09-12T17:15:55-04:00"
+}

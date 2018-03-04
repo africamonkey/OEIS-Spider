@@ -1,0 +1,50 @@
+{
+    "number": 261100,
+    "data": "1,2,2,3,3,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10",
+    "name": "a(n) is the greatest m for which A002182(m) <= n; the least monotonic left inverse for highly composite numbers A002182.",
+    "comment": [
+        "Each n occurs A262501(n) times.",
+        "This is the only sequence w, which (1) satisfies w(A002182(n)) = n for all n >= 1 (thus is a left inverse of A002182), which (2) is monotonic (by necessity growing, although not strictly so), and which (3) is the lexicographically least of all sequences satisfying both (1) and (2). In other words, the largest number m for which A002182(m) <= n. - _Antti Karttunen_, Jun 06 2017"
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A261100/b261100.txt\">Table of n, a(n) for n = 1..10080</a>"
+    ],
+    "formula": [
+        "a(n) = the least k for which A002182(k+1) > n.",
+        "Other identities. For all n >= 1:",
+        "a(A002182(n)) = n. [The least monotonic sequence satisfying this condition.]",
+        "A070319(n) = A002183(a(n))."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "A261100_list := proc(len) local n, k, j, b, A, tn: A := NULL; k := 0;",
+        "for n from 1 to len do",
+        "    b := true; tn := tau(n);",
+        "    for j from 1 to n-1 while b do b := b and tau(j) < tn od:",
+        "    if b then k := k + 1 fi;",
+        "    A := A,k",
+        "od: A end: A261100_list(120); # _Peter Luschny_, Jun 06 2017"
+    ],
+    "program": [
+        "(PARI)",
+        "v002182 = vector(1000); v002182[1] = 1; \\\\ For memoization.",
+        "A002182(n) = { my(d,k); if(v002182[n],v002182[n], k = A002182(n-1); d = numdiv(k); while(numdiv(k) <= d, k=k+1); v002182[n] = k; k); };",
+        "A261100(n) = { my(k=1); while(A002182(k)<=n,k=k+1); (k-1); } \\\\ _Antti Karttunen_, Jun 06 2017",
+        "(Scheme, two variants, the other one requiring _Antti Karttunen_'s IntSeq-library)",
+        "(define (A261100 n) (let loop ((k 1)) (if (> (A002182 k) n) (- k 1) (loop (+ 1 k)))))",
+        "(define A261100 (LEFTINV-LEASTMONO 1 1 A002182))"
+    ],
+    "xref": [
+        "Cf. A000005, A002182, A002183, A060990, A070319, A262501."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Sep 24 2015",
+    "ext": [
+        "Description clarified by _Antti Karttunen_, Jun 06 2017"
+    ],
+    "references": 10,
+    "revision": 26,
+    "time": "2017-06-06T05:59:59-04:00",
+    "created": "2015-10-02T12:05:02-04:00"
+}

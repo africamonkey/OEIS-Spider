@@ -1,0 +1,45 @@
+{
+    "number": 84609,
+    "data": "1,2,10,44,214,1052,5284,26840,137638,710828,3692140,19266920,100932220,530479640,2795917960,14771797424,78210099718,414862155980,2204273582236,11729283976136,62496686731924,333400654676168",
+    "name": "Coefficients of 1/(1-4x-8x^2)^(1/2); also, a(n) is the central coefficient of (1+2x+3x^2)^n.",
+    "comment": [
+        "Also number of paths from (0,0) to (n,0) using steps U=(1,1), H=(1,0) and D=(1,-1), U can have 3 colors and H can have 2 colors. - _N-E. Fahssi_, Mar 30 2008",
+        "Self-convolution of a(n)/2^n gives A002605(n+1). - _Vladimir Reshetnikov_, Oct 10 2016"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A084609/b084609.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Tony D. Noe, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL9/Noe/noe35.html\">On the Divisibility of Generalized Central Trinomial Coefficients</a>, Journal of Integer Sequences, Vol. 9 (2006), Article 06.2.7."
+    ],
+    "formula": [
+        "a(n) = sum{k=0..floor(n/2), C(n,k)*C(2*(n-k),n)*2^k} - _Paul Barry_, Sep 08 2004",
+        "a(n) = sum{k=0..floor(n/2), C(n,2*k)*C(2*k,k)*3^k*2^(n-2*k)}; a(n) = sum{k=0..floor(n/2), C(n,k)*C(n-k,k)*3^k*2^(n-2k)}. - _Paul Barry_, Sep 19 2006",
+        "E.g.f.: exp(2*x) * Bessel_I(0,2*sqrt(3)*x)",
+        "a(n) = ( 2*(2*n-1)*a(n-1) + 8*(n-1)*a(n-2) )/n, a(0)=1, a(1)=2. - _Sergei N. Gladkovskii_, Jul 20 2012",
+        "a(n) ~ sqrt(18+6*sqrt(3))*(2+2*sqrt(3))^n/(6*sqrt(Pi*n)). - _Vaclav Kotesovec_, Oct 14 2012",
+        "G.f.: 1/(1 - 2*x*(1+2*x)*Q(0)), where Q(k)= 1 + (4*k+1)*x*(1+2*x)/(k+1 - x*(1+2*x)*(2*k+2)*(4*k+3)/(2*x*(1+2*x)*(4*k+3)+(2*k+3)/Q(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, May 15 2013",
+        "G.f.: G(0), where G(k)= 1 + x*(2+4*x)*(4*k+1)/(2*k+1 - x*(1+2*x)*(2*k+1)*(4*k+3)/(x*(1+2*x)*(4*k+3) + (k+1)/G(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, Jun 18 2013",
+        "a(n) = 2^n * hypergeom([(1-n)/2,-n/2], [1], 3) = binomial(2*n, n) * hypergeom([(1-n)/2,-n/2], [1/2-n], -2). - _Vladimir Reshetnikov_, Oct 10 2016"
+    ],
+    "mathematica": [
+        "f[n_] := Sum[Binomial[n, k] Binomial[2 (n - k), n] 2^k, {k, 0, n/2}] (* Or *)",
+        "f[n_] := CoefficientList[ Expand[(1 + 2 x + 3 x^2)^n], x][[n + 1]]; Array[f, 22, 0] (* Or *)",
+        "CoefficientList[ Series[ 1/Sqrt[1 - 4 x - 8 x^2], {x, 0, 21}], x] (* Or *)",
+        "Range[0, 21]! CoefficientList[ Series[ Exp[ 2x] BesselI[0, Sqrt[12] x], {x, 0, 21}], x] (* _Robert G. Wilson v_ *)",
+        "Table[2^n Hypergeometric2F1[(1 - n)/2, -n/2, 1, 3], {n, 0, 20}] (* _Vladimir Reshetnikov_, Oct 10 2016 *)"
+    ],
+    "program": [
+        "(PARI) for(n=0,30,t=polcoeff((1+2*x+3*x^2)^n,n,x); print1(t\",\"))",
+        "(Maxima) a(n):=coeff(expand((1+2*x+3*x^2)^n),x,n);",
+        "makelist(a(n),n,0,12);"
+    ],
+    "xref": [
+        "Cf. A002426, A084600-A084608, A084610-A084615."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jun 01 2003",
+    "references": 8,
+    "revision": 41,
+    "time": "2016-10-11T05:34:03-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

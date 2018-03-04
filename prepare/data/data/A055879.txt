@@ -1,0 +1,48 @@
+{
+    "number": 55879,
+    "data": "1,1,2,2,5,5,15,15,51,51,188,188,731,731,2950,2950,12235,12235,51822,51822,223191,223191,974427,974427,4302645,4302645,19181100,19181100,86211885,86211885,390248055,390248055,1777495635,1777495635,8140539950,8140539950",
+    "name": "Least nondecreasing sequence with a(1) = 1 and Hankel transform {1,1,1,1,...}.",
+    "comment": [
+        "Hankel transform {t(n)} of {a(n)} is given by t(n) = Det[{a(1), a(2), ..., a(n)}, {a(2), a(3), ..., a(n+1)}, ..., {a(n), a(n+1), ..., a(2n-1)}].",
+        "The bisections of this sequence appear to be the binomial transform of the Catalan numbers, A007317. If that is true then the g.f. for this sequence is (1/(2*x))*( 1 + x - (1-x)^(-1)*(1-x^2)^(1/2)*(1-5*x^2)^(1/2)), which occurs in the Cyvin et al. reference.",
+        "Self-convolution yields A039658 (shifted left), which is related to enumeration of edge-rooted catafusenes. - _Paul D. Hanna_, Aug 08 2008"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A055879/b055879.txt\">Table of n, a(n) for n = 1..200</a>",
+        "B. N. Cyvin et al., <a href=\"http://dx.doi.org/10.1007/BF00811082\">A class of polygonal systems representing polycyclic conjugated hydrocarbons: Catacondensed monoheptafusenes</a>, Monat. f. Chemie, 125 (1994), 1327-1337 (see V(x)).",
+        "S. J. Cyvin et al., <a href=\"http://dx.doi.org/10.1021/ci00021a026\">Enumeration and Classification of Certain Polygonal Systems Representing Polycyclic Conjugated Hydrocarbons: Annelated Catafusenes</a>, J. Chem. Inform. Comput. Sci., 34 (1994), 1174-1180. See Table 1 second column on page 1174.",
+        "J. W. Layman, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL4/LAYMAN/hankel.html\">The Hankel Transform and Some of its Properties</a>, J. Integer Sequences, 4 (2001), #01.1.5."
+    ],
+    "formula": [
+        "G.f.: A(x) = sqrt( (1+x)*(1-3*x^2-sqrt(1-6*x^2+5*x^4))/(2*(1-x)) ). G.f. satisfies: A(x) = 1 + x*A(x) + x^2*A(x)*A(-x). - _Paul D. Hanna_, Aug 08 2008",
+        "G.f.: 1/(1-x-x^2/(1+x-x^2/(1-x-x^2/(1+x-x^2/(1-... (continued fraction). - _Paul Barry_, Feb 11 2009",
+        "Conjecture: (n+1)*a(n) - a(n-1) + (-6*n+11)*a(n-2) + 5*a(n-3) + 5*(n-4)*a(n-4) = 0. - _R. J. Mathar_, Nov 26 2012",
+        "G.f.: sqrt((1+x)*(1-3*x^2-sqrt(1-6*x^2+5*x^4))/(2*(1-x)))/x. - _Vaclav Kotesovec_, Feb 13 2014",
+        "a(n) ~ (5+sqrt(5) - (-1)^n*(5-sqrt(5))) * sqrt(2) * 5^(n/2) / (8 * sqrt(Pi) * n^(3/2)). - _Vaclav Kotesovec_, Feb 13 2014"
+    ],
+    "example": [
+        "G.f.: x + x^2 + 2*x^3 + 2*x^4 + 5*x^5 + 5*x^6 + 15*x^7 + 15*x^8 + 51*x^9 + ..."
+    ],
+    "mathematica": [
+        "a[ n_] := If[ n < 1, 0, With[ {m = n - 1}, SeriesCoefficient[ Nest[ 1 / (1 - x - x^2 / (1 + x - x^2 #)) &, 1, Quotient[ m + 1, 2]], {x, 0, m}]]]; (* _Michael Somos_, Jul 01 2011 *)",
+        "CoefficientList[Series[Sqrt[(1 + x) (1 - 3 x^2 - Sqrt[1 - 6 x^2 + 5 x^4])/(2 (1 - x))]/x^2, {x, 0, 40}], x] (* _Vincenzo Librandi_, Feb 14 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=local(A=1+x+x*O(x^n));for(i=0,n,B=subst(A,x,-x);A=1+x*A+x^2*A*B);polcoeff(A,n)",
+        "(PARI) a(n)=polcoeff(sqrt((1+x)*(1-3*x^2-sqrt(1-6*x^2+5*x^4 +x^4*O(x^n)))/(2*(1-x))),n) \\\\ _Paul D. Hanna_, Aug 08 2008",
+        "(PARI) {a(n) = local(A); if( n<1, 0, n--; A = O(x); for( k = 0, n\\2, A = 1 / (1 - x - x^2 / (1 + x - x^2 * A))); polcoeff( A, n))}; /* _Michael Somos_, Jul 01 2011 */"
+    ],
+    "xref": [
+        "Cf. A007317, A039658."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_John W. Layman_, Jul 15 2000",
+    "ext": [
+        "More terms from _Vincenzo Librandi_, Feb 14 2014"
+    ],
+    "references": 5,
+    "revision": 35,
+    "time": "2015-12-12T04:26:58-05:00",
+    "created": "2000-07-22T03:00:00-04:00"
+}

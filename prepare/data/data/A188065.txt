@@ -1,0 +1,42 @@
+{
+    "number": 188065,
+    "data": "5,8,35,38,50,80,101,102,110,178,196,201,221,227,257,258,279,289,319,329,331,341,345,350,355,356,371,379,380,384,405,406,408,417,427,455,457,473,497,500,514,553,564,576,635,638,639,641,644,656,665,668,674,689,709,711,722,725,773,781,792,800,804,836,858,862,894,923,933,943,961,973,978,981,983,992,996",
+    "name": "Numbers n such that n^3 contains the same digits as some other cube.",
+    "link": [
+        "Robert Israel, <a href=\"/A188065/b188065.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "5 is a member since 5^3 = 125, and 512 = 8^3.",
+        "178^3 = 5639752 has same digits as 196^3 = 7529536, so 178 and 196 are in the sequence"
+    ],
+    "maple": [
+        "dmax:= 10: # to get all terms of at most dmax digits.",
+        "N:= 'N':",
+        "S:= {}:",
+        "for n from 1 while n^3 < 10^dmax do",
+        "  w:= sort(convert(n^3,base,10));",
+        "  if assigned(N[w]) then",
+        "    if N[w] = 0 then S:= S union {n}",
+        "    else",
+        "      S:= S union {n,N[w]};",
+        "      N[w] = 0",
+        "    fi",
+        "  else N[w]:= n",
+        "  fi",
+        "od:",
+        "sort(convert(S,list)); # _Robert Israel_, Jun 15 2017"
+    ],
+    "mathematica": [
+        "id3Q[n_]:=Module[{idn3=Sort[IntegerDigits[n^3]],perms},perms= FromDigits/@ Permutations[idn3];Length[Select[perms,Sort[IntegerDigits[#]]==idn3 && IntegerQ[#^(1/3)]&]]>1]; Select[Range[1000],id3Q] (* _Harvey P. Dale_, Apr 27 2012 *)"
+    ],
+    "program": [
+        "(PARI) do(n)=my(v=List()); for(D=1,n, my(m=Map(),low=sqrtnint(10^(D-1)-1,3)+1,high=sqrtnint(10^D-1,3),n3,d); for(n=low,high, d=vecsort(digits(n3=n^3)); if(mapisdefined(m,d), mapput(m,d,1), mapput(m,d,0))); for(n=low,high, if(mapget(m,vecsort(digits(n^3))), listput(v,n)))); Set(v) \\\\ _Charles R Greathouse IV_, Jun 15 2017"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Claudio Meller_, Mar 20 2011",
+    "references": 1,
+    "revision": 13,
+    "time": "2017-06-15T01:55:12-04:00",
+    "created": "2011-03-20T10:28:05-04:00"
+}

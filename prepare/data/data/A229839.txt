@@ -1,0 +1,55 @@
+{
+    "number": 229839,
+    "data": "8,15,16,21,24,30,32,35,40,42,45,48,55,56,60,63,64,65,70,72,75,77,80,84,88,90,91,96,99,104,105,110,112,117,119,120,126,128,130,133,135,136,140,143,144,147,150,152,153,154,160,165,168,171,175,176,180,182",
+    "name": "Consider all 60-degree triangles with sides A < B < C. The sequence gives the values of C.",
+    "comment": [
+        "A009005 gives the values of A, and A050931 gives the values of B.",
+        "The side n of an equilateral triangle for which a nontrivial integral cevian of length less than n exists, which divides an edge into two integral parts. - _Colin Barker_, Sep 09 2014"
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Integer_triangle\">Integer triangle</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Cevian\">Cevian</a>"
+    ],
+    "example": [
+        "16 appears in the sequence because there exists a 60-degree triangle with sides 6, 14 and 16."
+    ],
+    "program": [
+        "(PARI)",
+        "\\\\ Gives values of C not exceeding cmax.",
+        "\\\\ e.g. t60c(60) gives [8, 15, 16, 21, 24, 30, 32, 35, 40, 42, 45, 48, 55, 56, 60]",
+        "t60c(cmax) = {",
+        "  v=pt60c(cmax);",
+        "  s=[];",
+        "  for(i=1, #v,",
+        "    for(m=1, cmax\\v[i],",
+        "      if(v[i]*m<=cmax, s=concat(s, v[i]*m))",
+        "    )",
+        "  );",
+        "  vecsort(s,,8)",
+        "}",
+        "\\\\ Gives values of C not exceeding cmax in primitive triangles.",
+        "\\\\ e.g. pt60c(115) gives [8, 15, 21, 35, 40, 48, 55, 65, 77, 80, 91, 96, 99, 112]",
+        "pt60c(cmax) = {",
+        "  s=[];",
+        "  for(m=1, ceil(sqrt(cmax+1)),",
+        "   for(n=1, m-1,",
+        "      if((m-n)%3!=0 && gcd(m, n)==1,",
+        "        if(2*m*n+m*m<=cmax, s=concat(s, 2*m*n+m*m))",
+        "      )",
+        "    )",
+        "  );",
+        "  vecsort(s,,8)",
+        "}"
+    ],
+    "xref": [
+        "Cf. A009005, A050931, A229838.",
+        "Cf. A246918, A246919, A246920."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Colin Barker_, Oct 01 2013",
+    "references": 4,
+    "revision": 17,
+    "time": "2016-12-10T19:31:21-05:00",
+    "created": "2013-10-06T13:51:13-04:00"
+}

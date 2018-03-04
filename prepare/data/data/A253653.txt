@@ -1,0 +1,38 @@
+{
+    "number": 253653,
+    "data": "3,28,45,153,171,300,325,496,2556,2628,3321,4753,4851,7381,8128,13203,19900,25200,25425,29161,29403,56953,64980,65341,101025,166753,195625,209628,320400,354061,388521,389403,468028,662976,664128,749700,750925,780625,781875,936396,1063611,1157481",
+    "name": "Triangular numbers that are the product of a square number and a prime number.",
+    "comment": [
+        "The perfect numbers 28, 496, 8128, ... (A000396) are in the sequence, because A000396(n) = 2^(k-1)*(2^k-1) = 2^k*(2^k-1)/2 is a triangular number, and is the product of 2^(k-1) (a square when k>2) and 2^k-1 (a Mersenne prime number).",
+        "Number of terms less than 10^n: 0, 2, 7, 14, 22, 38, 68, 100, 165, 262, 420, 667, 1064, 1754, .... - _Robert G. Wilson v_, Jan 11 2015",
+        "This sequence is the intersection of A000217 and A229125. - _Antonio Rold\u00e1n_, Jan 12 2015"
+    ],
+    "example": [
+        "45 is in the sequence because it is a triangular number (45 = 9*10/2) and 45 = 9*5, with 9 a square number and 5 a prime number."
+    ],
+    "maple": [
+        "N:= 10^7: # to get all entries <= N",
+        "Tris:= {seq(x*(x+1)/2, x = 1 .. floor((sqrt(1+8*N)-1)/2))}:",
+        "Primes:= select(isprime,[2,seq(2*i+1,i=1..floor(N/8-1))]):",
+        "Tris intersect {3,seq(seq(p*y^2,y=2..floor(sqrt(N/p))),p=Primes)};",
+        "# if using Maple 11 or earlier, uncomment the next line",
+        "# sort(convert(%, list));  # _Robert Israel_, Jan 14 2015"
+    ],
+    "mathematica": [
+        "tri[n_] := n(n+1)/2; fQ[n_] := Block[{exp = Sort[ Last@# & /@ FactorInteger@ n]}, exp[[1]] == 1 != exp[[2]] && Union@ Mod[ Rest@ exp, 2] == {0}]; Select[ tri@ Range@ 1500, fQ] (* _Robert G. Wilson v_, Jan 11 2015 *)"
+    ],
+    "program": [
+        "(PARI) {i=1; j=2; while(i<=3*10^6, k=1; p=3; c=0; while(k<i&&c==0, if(i/k==i\\k&&isprime(i/k), c=k); if(c>0, print1(i, \", \")); k+=p; p+=2); i+=j; j+=1)}",
+        "(PARI) lista(nn) = {for (n=1, nn, if (isprime(core(t=n*(n+1)/2)), print1(t, \", \")););} \\\\ _Michel Marcus_, Jan 12 2015"
+    ],
+    "xref": [
+        "Cf. A000217, A188630, A229125, A253650, A253651, A253652."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antonio Rold\u00e1n_, Jan 07 2015",
+    "references": 3,
+    "revision": 22,
+    "time": "2015-01-15T13:30:35-05:00",
+    "created": "2015-01-15T13:30:35-05:00"
+}

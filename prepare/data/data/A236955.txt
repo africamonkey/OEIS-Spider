@@ -1,0 +1,38 @@
+{
+    "number": 236955,
+    "data": "1,1,5,61,905,20473,508685,16761013,585178385,25302198769,1138789420565,60931744739629,3358493791987865,214135163725140457,13970561744501181725,1033867628277644584357,77925569710983386849825,6564469233905978976791521,561328952232987425817545765",
+    "name": "E.g.f. satisfies: A'(x) = A(x)^7 * A(-x)^2 with A(0) = 1.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A236955/b236955.txt\">Table of n, a(n) for n = 0..350</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1/(1 - 4*Series_Reversion( Integral (1 - 16*x^2)^(1/2) dx ))^(1/4)."
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 5*x^2/2! + 61*x^3/3! + 905*x^4/4! + 20473*x^5/5! + ...",
+        "Related series.",
+        "A(x)^7 = 1 + 7*x + 77*x^2/2! + 1267*x^3/3! + 26873*x^4/4! + 712831*x^5/5! + ...",
+        "Note that 1 - 1/A(x)^4 is an odd function:",
+        "1 - 1/A(x)^4 = 4*x + 64*x^3/3! + 13312*x^5/5! + 8077312*x^7/7! + 9796059136*x^9/9! + ...",
+        "where Series_Reversion((1 - 1/A(x)^4)/4) = Integral (1-16*x^2)^(1/2) dx."
+    ],
+    "mathematica": [
+        "With[{nmax = 40}, CoefficientList[1/(1 - 4*InverseSeries[Series[ Integrate[ (1 - 16*x^2)^(1/2) , x], {x, 0, nmax}], x])^(1/4), x]*Range[0, nmax]!] (* _G. C. Greubel_, Nov 20 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1); for(i=0, n, A=1+intformal(A^7*subst(A^2, x, -x) +x*O(x^n) )); n!*polcoeff(A, n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n)=local(A=1); A=1/(1-4*serreverse(intformal((1-16*x^2 +x*O(x^n))^(2/4))))^(1/4); n!*polcoeff(A, n)}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A236953, A236954, A235372, A236956, A236957, A236958."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 09 2014",
+    "references": 6,
+    "revision": 11,
+    "time": "2017-11-21T03:35:43-05:00",
+    "created": "2014-04-09T21:01:52-04:00"
+}

@@ -1,0 +1,76 @@
+{
+    "number": 236339,
+    "data": "1,2,8,39,212,1232,7492,47082,303336,1992826,13299624,89912992,614474252,4238138216,29463047072,206234876287,1452319244772,10281935334928,73138728191724,522475643860940,3746698673538480,26961197787989220,194626504416928080",
+    "name": "Association types in 2-dimensional algebra.",
+    "comment": [
+        "A kind of two-dimensional Catalan number.",
+        "This sequence has two equivalent descriptions:",
+        "(1) This sequence enumerates the number of decompositions of the unit square into n rectangles obtained by the following algorithm.",
+        "(a) Start with the unit square.",
+        "(b) Perform the following operation n-1 times:",
+        "    Choose a rectangle in the current decomposition.",
+        "    Bisect this rectangle into two rectangles horizontally or vertically.",
+        "Different sequences of bisections can produce the same decomposition.",
+        "(2) Consider the universal algebra with two nonassociative binary products *1 and *2 related only by the interchange law from 2-category theory:",
+        "( a *1 b ) *2 ( c *1 d ) = ( a *2 c ) *1 ( b *2 d )",
+        "This sequence enumerates the number of distinct monomials of degree n."
+    ],
+    "reference": [
+        "J.-L. Loday and B. Vallette, Algebraic Operads, Grundlehren 346, Springer, 2012, section 13.10.4, page 544 (for the interchange law)",
+        "S. Mac Lane, Categories for the Working Mathematician, second edition, Springer, 1978, equation (5), page 43 (also for the interchange law)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A236339/b236339.txt\">Table of n, a(n) for n = 1..400</a>",
+        "arXiv preprint in preparation by M. R. Bremner and S. Madariaga",
+        "Murray R. Bremner, <a href=\"/A236339/a236339.pdf\">Diagrams representing 2-dimensional Catalan numbers for n = 2,3,4,5</a>"
+    ],
+    "formula": [
+        "Recurrence relation:",
+        "C(1) = 1,",
+        "C(n) = 2 sum_{i,j} C(i)C(j) - sum_{i,j,k,l} C(i)C(j)C(k)C(l).",
+        "The first sum is over all 2-compositions of n into positive integers (i+j=n), and the second sum is over all 4-compositions of n into positive integers (i+j+k+l=n).",
+        "Generating function G(x) = sum_{n>=1} C(n)x^n satisfies a quartic polynomial equation: G(x)^4 - 2G(x)^2 + G(x) - x = 0.",
+        "a(n) ~ (1/r)^(n-1/2) / (2 * sqrt(2*Pi*(1-3*s^2)) * n^(3/2)), where s = 0.2695944364054445582... is the root of the equation 4*s*(1-s^2) = 1, and r = s*(1-2*s+s^3) = 0.1295146671633141285... - _Vaclav Kotesovec_, Feb 16 2014"
+    ],
+    "maple": [
+        "c := table():",
+        "c[1] := 1:",
+        "printf( \"\\n\" ):",
+        "for n from 2 to 50 do",
+        "c[n] := 0:",
+        "for ij in combinat[composition](n,2) do",
+        "    c[n] := c[n] + 2*c[ij[1]]*c[ij[2]]",
+        "od:",
+        "for ijkl in combinat[composition](n,4) do",
+        "    c[n] := c[n] - c[ijkl[1]]*c[ijkl[2]]*c[ijkl[3]]*c[ijkl[4]]",
+        "od:",
+        "   printf( \"%2d      %d \\n\", n, c[n] )",
+        "od:",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n<3, n, (",
+        "      8*(2*n-5)*(148*n-243)*(4*n-13)*(4*n-11)*a(n-3)",
+        "      +16*(n-2)*(4736*n^3-31456*n^2+68444*n-48609)*a(n-2)",
+        "      -32*(n-1)*(n-2)*(148*n^2-613*n+594)*a(n-1)) /",
+        "      (5*n*(n-1)*(n-2)*(148*n-391)))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jan 22 2014"
+    ],
+    "mathematica": [
+        "max = 30; c[1] = 1; c[2] = 2; g = Sum[c[k]*x^k, {k, 1, max}]; eq = Take[Thread[CoefficientList[g^4 - 2*g^2 + g - x, x] == 0], max+1]; sol = Solve[eq] // First; Array[c, max] /. sol (* _Jean-Fran\u00e7ois Alcover_, Jan 27 2014 *)",
+        "Rest[CoefficientList[InverseSeries[Series[x^4-2*x^2+x, {x, 0, 20}], x],x]] (* _Vaclav Kotesovec_, Feb 16 2014 *)"
+    ],
+    "xref": [
+        "Cf. A000108 (Catalan numbers), A236342.",
+        "Column k=2 of A237018."
+    ],
+    "keyword": "easy,nonn,nice",
+    "offset": "1,2",
+    "author": "_Murray R. Bremner_, Jan 22 2014",
+    "ext": [
+        "a(17)-a(23) from _Alois P. Heinz_, Jan 22 2014"
+    ],
+    "references": 3,
+    "revision": 42,
+    "time": "2014-02-16T17:17:49-05:00",
+    "created": "2014-01-22T18:04:21-05:00"
+}

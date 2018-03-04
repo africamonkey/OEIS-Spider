@@ -1,0 +1,46 @@
+{
+    "number": 251698,
+    "data": "1,7,832,214016,86118400,47393538048,33160072265728,28180480000000000,28194546272924860416,32466269569728810844160,42295727044150128912891904,61505801717703291002224115712,98762474157744880353280000000000,173565347832317233669371533581090816,331360760866451564310212841997955235840",
+    "name": "a(n) = (6*n+1) * (7*n+1)^(n-2) * 8^n.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A251698/b251698.txt\">Table of n, a(n) for n = 0..240</a>"
+    ],
+    "formula": [
+        "Let G(x) = 1 + x*G(x)^8 be the g.f. of A007556, then the e.g.f. A(x) of this sequence satisfies:",
+        "(1) A(x) = exp( 8*x*A(x)^7 * G(x*A(x)^7)^7 ) / G(x*A(x)^7).",
+        "(2) A(x) = F(x*A(x)^7) where F(x) = exp(8*x*G(x)^7)/G(x) is the e.g.f. of A251668.",
+        "(3) A(x) = ( Series_Reversion( x*G(x)^7 / exp(56*x*G(x)^7) )/x )^(1/7).",
+        "E.g.f.: (-LambertW(-56*x)/(56*x))^(1/7) * (1 + LambertW(-56*x)/56). - _Vaclav Kotesovec_, Dec 07 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + 7*x + 832*x^2/2! + 214016*x^3/3! + 86118400*x^4/4! + 47393538048*x^5/5! +...",
+        "such that A(x) = exp( 8*x*A(x)^7 * G(x*A(x)^7)^7 ) / G(x*A(x)^7),",
+        "where G(x) = 1 + x*G(x)^8 is the g.f. A007556:",
+        "G(x) = 1 + x + 8*x^2 + 92*x^3 + 1240*x^4 + 18278*x^5 + 285384*x^6 +...",
+        "Also, e.g.f. A(x) satisfies A(x) = F(x*A(x)^7) where",
+        "F(x) = 1 + 7*x + 146*x^2/2! + 5570*x^3/3! + 316376*x^4/4! + 24070168*x^5/5! +...",
+        "F(x) = exp( 8*x*G(x)^7 ) / G(x) is the e.g.f. of A251668."
+    ],
+    "mathematica": [
+        "Table[(6*n + 1)*(7*n + 1)^(n - 2)*8^n, {n, 0, 50}] (* _G. C. Greubel_, Nov 14 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = (6*n+1) * (7*n+1)^(n-2) * 8^n}",
+        "for(n=0,20,print1(a(n),\", \"))",
+        "(PARI) {a(n)=local(G=1,A=1); for(i=0, n, G = 1 + x*G^8 +x*O(x^n));",
+        "A = ( serreverse( x*G^7 / exp(56*x*G^7) )/x )^(1/7); n!*polcoeff(A, n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(MAGMA) [(6*n + 1)*(7*n + 1)^(n - 2)*8^n: n in [0..50]]; // _G. C. Greubel_, Nov 14 2017"
+    ],
+    "xref": [
+        "Cf. A251668, A007556.",
+        "Cf. Variants: A127670, A251693, A251694, A251695, A251696, A251697, A251699, A251700."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 07 2014",
+    "references": 9,
+    "revision": 14,
+    "time": "2017-11-14T03:06:15-05:00",
+    "created": "2014-12-07T14:51:38-05:00"
+}

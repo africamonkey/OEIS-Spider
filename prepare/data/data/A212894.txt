@@ -1,0 +1,38 @@
+{
+    "number": 212894,
+    "data": "0,2,22,92,246,520,950,1572,2422,3536,4950,6700,8822,11352,14326,17780,21750,26272,31382,37116,43510,50600,58422,67012,76406,86640,97750,109772,122742,136696,151670,167700,184822,203072,222486,243100",
+    "name": "Number of (w,x,y,z) with all terms in {0,...,n} and (least gapsize)=1.",
+    "comment": [
+        "The gapsizes are |w-x|, |x-y|, |y-z|.  Every term is even. For a guide to related sequences, see A211795."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A212894/b212894.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-6,4,-1)."
+    ],
+    "formula": [
+        "a(n) = 2*(n-1)*(3*n^2-3*n+5) with n>1, a(0)=0, a(1)=2.",
+        "a(n) = 4*a(n-1)-6*a(n-2)+4*a(n-3)-a(n-4) for n>=6.",
+        "G.f.: f(x)/g(x), where f(x)=2*(x+7*x^2+8*x^3+x^4+x^5) and g(x)=(1-x)^4."
+    ],
+    "mathematica": [
+        "t = Compile[{{n, _Integer}}, Module[{s = 0},",
+        "(Do[If[Min[Abs[w - x], Abs[x - y], Abs[y - z]] == 1, s = s + 1],",
+        "{w, 0, n}, {x, 0, n}, {y, 0, n}, {z, 0, n}]; s)]];",
+        "m = Map[t[#] &, Range[0, 40]]   (* A212894 *)",
+        "m/2 (* integers *)",
+        "CoefficientList[Series[2*(x+7*x^2+8*x^3+x^4+x^5) /(1-x)^4,{x,0,50}],x] (* _Vincenzo Librandi_, Jul 04 2012 *)"
+    ],
+    "program": [
+        "(MAGMA) I:=[0, 2, 22, 92, 246, 520]; [n le 6 select I[n] else 4*Self(n-1)-6*Self(n-2)+4*Self(n-3)-Self(n-4): n in [1..40]]; // _Vincenzo Librandi_, Jul 04 2012 *)"
+    ],
+    "xref": [
+        "Cf. A211795."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, May 30 2012",
+    "references": 2,
+    "revision": 14,
+    "time": "2017-06-17T02:59:43-04:00",
+    "created": "2012-06-11T14:22:34-04:00"
+}

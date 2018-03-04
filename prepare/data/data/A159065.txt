@@ -1,0 +1,92 @@
+{
+    "number": 159065,
+    "data": "0,1,7,27,65,147,261,461,737,1143,1637,2349,3217,4401,5769,7457,9433,11945,14753,18235,22173,26771,31801,37813,44449,52161,60489,69955,80289,92203,104941,119493,135261,152705,171205,191649,213473,237877",
+    "name": "Number of crossings in a regular drawing of the complete bipartite graph K(n,n).",
+    "reference": [
+        "Umberto Eco, Foucault's Pendulum. San Diego: Harcourt Brace Jovanovich, p. 473, 1989.",
+        "Athanasius Kircher (1601-1680). Ars Magna Sciendi, In XII Libros Digesta, qua nova et universali Methodo Per Artificiosum Combinationum contextum de omni re proposita plurimis et prope infinitis rationibus disputari, omniumque summaria quaedam cognitio comparari potest, Amstelodami, Apud Joannem Janssonium a Waesberge, et Viduam Elizei Weyerstraet, 1669, fol., pp. 482 (altra ed.: Amstelodami.(ut supra), 1671)."
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A159065/b159065.txt\">Table of n, a(n) for n = 1..500</a>",
+        "M. Griffiths, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL13/Griffiths2/griffiths.html\">Counting the regions in a regular drawing of K_{n,n}</a>, J. Int. Seq. 13 (2010) # 10.8.5, Lemma 2.",
+        "S. Legendre, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL12/Legendre/legendre2.html\">The Number of Crossings in a Regular Drawing of the Complete Bipartite Graph</a>, J. Integer Seqs., Vol. 12, 2009.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CompleteBipartiteGraph.html\">Complete Bipartite Graph</a>"
+    ],
+    "formula": [
+        "a(n) = Sum((n-a)*(n-b); 1<=a<n, 1<=b<n, (a,b)=1) - Sum((n-2*a)*(n-2*b); 1<=2*a<n, 1<=2*b<n, (a,b)=1). a(n) = Sum(f(a,b)-g(a,b); 1<=a<n, 1<=b<n,), f(a,b) the number of irreducible fractions p/q with 1<=p<=a,1<=q<=b, g(a,b) the number of rationals admitting at least one reducible form p/q with 1 <= p <= a, 1 <= q <= b (Philippe Paclet).",
+        "a(n) = (9/(8*Pi^2))*n^4 + O(n^3 log(n))."
+    ],
+    "example": [
+        "For n = 3 draw vertically 3 points regularly spaced on the right, and 3 points regularly spaced on the left. Join the left and right points by straight lines. These lines cross at c(3) = 7 points."
+    ],
+    "maple": [
+        "A159065 := proc(n)",
+        "    local a,b,c ;",
+        "    c := 0 ;",
+        "    for a from 1 to n-1 do",
+        "    for b from 1 to n-1 do",
+        "        if igcd(a,b) = 1 then",
+        "            c := c+(n-a)*(n-b) ;",
+        "            if 2*a< n and 2*b < n then",
+        "                c := c-(n-2*a)*(n-2*b) ;",
+        "            end if;",
+        "        end if;",
+        "    end do:",
+        "    end do:",
+        "    c ;",
+        "end proc:",
+        "seq(A159065(n),n=1..30); # _R. J. Mathar_, Jul 20 2017"
+    ],
+    "mathematica": [
+        "a[n_] := Module[{x, y, s1 = 0, s2 = 0}, For[x = 1, x <= n-1, x++, For[y = 1, y <= n-1, y++, If[GCD[x, y] == 1, s1 += (n-x)*(n-y); If[2*x <= n-1 && 2*y <= n-1, s2 += (n-2*x)*(n-2*y)]]]]; s1-s2]; Table[a[n], {n, 1, 40}] (* _Jean-Fran\u00e7ois Alcover_, Jan 10 2014, translated from _Joerg Arndt_'s PARI code *)"
+    ],
+    "program": [
+        "(Pascal)",
+        "s1:=0; s2:=0;",
+        "for a:=1 to n-1 do",
+        "   for b:=1 to n-1 do",
+        "      if gcd(a, b)=1 then",
+        "      begin",
+        "         s1:=s1+(n-a)*(n-b);",
+        "         if (2*a<=n-1) and (2*b<=n-1) then",
+        "            s2:=s2+(n-2*a)*(n-2*b);",
+        "      end;",
+        "a:=s1-s2;",
+        "(PARI)",
+        "a(n) = {",
+        "    my(s1=0, s2=0);",
+        "    for (x=1, n-1,",
+        "        for (y=1, n-1,",
+        "            if ( gcd(x, y)==1,",
+        "                s1 += (n-x) * (n-y);",
+        "                if ( ( 2*x<=n-1) && (2*y<=n-1),",
+        "                    s2 += (n-2*x) * (n-2*y); );",
+        "             );",
+        "        );",
+        "    );",
+        "    return( s1 - s2 );",
+        "}",
+        "\\\\ _Joerg Arndt_, Oct 13 2013",
+        "(Python)",
+        "from fractions import gcd",
+        "def a159065(n):",
+        "    c=0",
+        "    for a in xrange(1, n):",
+        "        for b in xrange(1, n):",
+        "            if gcd(a, b)==1:",
+        "                c+=(n - a)*(n - b)",
+        "                if 2*a<n and 2*b<n:c-=(n - 2*a)*(n - 2*b)",
+        "    return c",
+        "print map(a159065, xrange(1, 51)) # _Indranil Ghosh_, Jul 20 2017"
+    ],
+    "xref": [
+        "Cf. A115004, A114999. Asymptotic to (9/(2*Pi^2))*A000537(n-1)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,3",
+    "author": "_St\u00e9phane Legendre_, Apr 04 2009, Jul 11 2009",
+    "references": 2,
+    "revision": 31,
+    "time": "2017-07-21T03:13:25-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

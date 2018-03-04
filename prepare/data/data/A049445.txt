@@ -1,0 +1,55 @@
+{
+    "number": 49445,
+    "data": "1,2,4,6,8,10,12,16,18,20,21,24,32,34,36,40,42,48,55,60,64,66,68,69,72,80,81,84,92,96,108,110,115,116,120,126,128,130,132,136,138,144,155,156,160,162,168,172,180,184,185,192,204,205,212,216,220,222,228",
+    "name": "Numbers n with property that the number of 1's in binary expansion of n (see A000120) divides n.",
+    "comment": [
+        "If instead of base 2 we take base 10, then we have the so-called Harshad or Niven numbers (i.e., positive integers divisible by the sum of their digits; A005349). - _Emeric Deutsch_, Apr 11 2007",
+        "A199238(a(n)) = 0. - _Reinhard Zumkeller_, Nov 04 2011"
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A049445/b049445.txt\">Table of n, a(n) for n = 1..20000</a> (first 1000 terms from T. D. Noe)"
+    ],
+    "formula": [
+        "{n: A000120(n) | n}. - _R. J. Mathar_, Mar 03 2008",
+        "a(n) seems to be asymptotic to c*n*log(n) where 0.7 < c < 0.8. - _Benoit Cloitre_, Jan 22 2003",
+        "Heuristically, c should be 1/(2*log(2)), since a random d-bit number should have probability approximately 2/d of being in the sequence. - _Robert Israel_, Aug 22 2014",
+        "A049445 = { n: A199238(n)=0 }. - _M. F. Hasler_, Oct 09 2012"
+    ],
+    "example": [
+        "20 is in the sequence because 20 is written 10100 in binary and 1 + 1 = 2, which divides 20.",
+        "21 is in the sequence because 21 is written 10101 in binary and 1 + 1 + 1 = 3, which divides 21.",
+        "22 is not in the sequence because 22 is written 10110 in binary 1 + 1 + 1 = 3, which does not divide 22."
+    ],
+    "maple": [
+        "a:=proc(n) local n2: n2:=convert(n,base,2): if n mod add(n2[i],i=1..nops(n2)) = 0 then n else fi end: seq(a(n),n=1..300); # _Emeric Deutsch_, Apr 11 2007"
+    ],
+    "mathematica": [
+        "binHarshadQ[n_] := Divisible[n, Count[IntegerDigits[n, 2], 1]]; Select[Range[228], binHarshadQ] (* _Jean-Fran\u00e7ois Alcover_, Dec 01 2011 *)",
+        "Select[Range[300],Divisible[#,DigitCount[#,2,1]]&] (* _Harvey P. Dale_, Mar 20 2016 *)"
+    ],
+    "program": [
+        "(PARI) for(n=1,1000,b=binary(n):l=length(b); if(n%sum(i=1,l, component(b,i))==0,print1(n,\",\")))",
+        "(PARI) is_A049445(n)={n%norml2(binary(n))==0} \\\\ _M. F. Hasler_, Oct 09 2012",
+        "(PARI) isok(n) = ! (n % hammingweight(n)); \\\\ _Michel Marcus_, Feb 10 2016",
+        "(Haskell)",
+        "a049445 n = a049445_list !! (n-1)",
+        "a049445_list = map (+ 1) $ elemIndices 0 a199238_list",
+        "-- _Reinhard Zumkeller_, Nov 04 2011",
+        "(Python)",
+        "A049445 = [n for n in range(1,10**5) if not n % sum([int(d) for d in bin(n)[2:]])] # _Chai Wah Wu_, Aug 22 2014"
+    ],
+    "xref": [
+        "Cf. A000120, A005349, A199238."
+    ],
+    "keyword": "nonn,easy,nice,base",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Michael Somos_",
+        "Edited by _N. J. A. Sloane_, Oct 07 2005 and May 16 2008"
+    ],
+    "references": 18,
+    "revision": 63,
+    "time": "2017-01-29T07:33:47-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

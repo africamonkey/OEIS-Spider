@@ -1,0 +1,63 @@
+{
+    "number": 2436,
+    "id": "M3701 N1512",
+    "data": "1,4,80,3904,354560,51733504,11070525440,3266330312704,1270842139934720,630424777638805504,388362339077351014400,290870261262635870715904,260290690801376575335956480,274278793184290987427604987904,336150887870579862992197737512960",
+    "name": "E.g.f.: Sum_{n >= 0} a(n)*x^(2*n)/(2*n)! = sec(2*x).",
+    "reference": [
+        "A. Fletcher, J. C. P. Miller, L. Rosenhead and L. J. Comrie, An Index of Mathematical Tables. Vols. 1 and 2, 2nd ed., Blackwell, Oxford and Addison-Wesley, Reading, MA, 1962, Vol. 1, p. 75.",
+        "Glaisher, J. W. L., Quart. J. Pure Appl. Math., 44 (1913), 105-112.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A002436/b002436.txt\">Table of n, a(n) for n = 0..216</a>"
+    ],
+    "formula": [
+        "a(n) = A000831(2*n) = 4^n * A000364(n). a(n) = 2 * A000816(n) except n=0. - _Michael Somos_, Apr 26 2011",
+        "E.g.f.: sec(2*x)= 1 + 2*(x^2)/G(0) ; G(k) = (k+1)*(2*k+1) - 2*(x^2) + (x^2)*(2*k+1)*(2*k+2)/G(k+1)); (continued fraction). - _Sergei N. Gladkovskii_, Dec 01 2011",
+        "E.g.f.: sec(2*x) = 1/cos(2*x) = 1/(cos(x)^2 - sin(x)^2). - _Arkadiusz Wesolowski_, Jul 25 2012",
+        "From _Sergei N. Gladkovskii_, Oct 23 2012 (Start)",
+        "G.f.: 1/U(0) where U(k)=  1 - 2*(4*k+1)*(4*k+2)*x/( 1 - 2*(4*k+3)*(4*k+4)*x/U(k+1)); (continued fraction, 2-step).",
+        "E.g.f.: 1/S(0) where S(k)= 1 - 2*x^2/((4*k+1)*(2*k+1) - x^2*(4*k+1)*(2*k+1)/(x^2 - (4*k+3)*(k+1)/S(k+1); (continued fraction, 3rd kind, 3-step). (End)",
+        "G.f.: 1/U(0) where U(k,x)= 1 - (4*k+2)*(4*k+2)*x^2/(1 - (4*k+4)*(4*k+4)*x^2/U(k+1); (continued fraction, 2-step). - _Sergei N. Gladkovskii_, Nov 06 2012",
+        "G.f.: 1/G(0) where G(k) =  1 - 4*x*(k+1)^2/G(k+1); (continued fraction). - _Sergei N. Gladkovskii_, Jan 12 2013.",
+        "a(n+1) = | 2*16^n*lerchphi(-1, -2*n, 1/2) |, n>=0. - _Peter Luschny_, Apr 27 2013",
+        "G.f.: Q(0), where Q(k) = 1 - x*(2*k+2)^2/( x*(2*k+2)^2 - 1/Q(k+1) ); (continued fraction). - _Sergei N. Gladkovskii_, Oct 10 2013",
+        "E.g.f.: sec(2*x) = 1/cos(2*x)= 1+ 2*x^2/(1-2*x^2)*T(0), where T(k) = 1 - x^2*(2*k+1)*(2*k+2)/( x^2*(2*k+1)*(2*k+2) + ((k+1)*(2*k+1) - 2*x^2)*((k+2)*(2*k+3) - 2*x^2)/T(k+1) ); (continued fraction). - _Sergei N. Gladkovskii_, Oct 25 2013",
+        "a(n) = (-1)^n*2^(6*n+1)*(Zeta(-2*n,1/4) - Zeta(-2*n, 3/4)), where Zeta(a, z) is the generalized Riemann zeta function. - _Peter Luschny_, Mar 11 2015"
+    ],
+    "example": [
+        "G.f. = 1 + 4*x + 80*x^2 + 3904*x^3 + 354560*x^4 + 51733504*x^5 + 11070525440*x^6 + ..."
+    ],
+    "maple": [
+        "A := n -> (-4)^n*euler(2*n); # (Then A(n) = a(n+1) for n >= 0.) # _Peter Luschny_, Jan 27 2009"
+    ],
+    "mathematica": [
+        "Rest@ Union[ Range[0, 24]! CoefficientList[ Series[ Sec[ 2x], {x, 0, 24}], x]] (* _Robert G. Wilson v_, Apr 16 2011 *)",
+        "a[ n_] :=  If[ n < 0, 0, 2 (-16)^n LerchPhi[ -1, -2 n, 1/2]]; (* _Michael Somos_, Oct 14 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = local(m); if( n<0, 0, m = 2*n; m! * polcoeff( 1 / cos( 2*x + x * O(x^m)), m))}; /* _Michael Somos_, Apr 16 2011 */",
+        "(Sage)",
+        "@CachedFunction",
+        "def sp(n,x) :",
+        "    if n == 0 : return 1",
+        "    return -add(2^(n-k)*sp(k,1/2)*binomial(n,k) for k in range(n)[::2])",
+        "A002436 = lambda n : abs(sp(2*(n-1),x))",
+        "[A002436(n) for n in (1..15)]   # _Peter Luschny_, Jul 30 2012"
+    ],
+    "xref": [
+        "Cf. A000364, A000816, A000831.",
+        "(-1)^n*a(n) give the alternating row sums of A060187(2*n), n >= 0. The alternating sums for odd numbered rows vanish. - _Wolfdieter Lang_, Jul 12 2017"
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Michael Somos_, Jun 21 2002"
+    ],
+    "references": 12,
+    "revision": 74,
+    "time": "2018-01-19T13:50:30-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

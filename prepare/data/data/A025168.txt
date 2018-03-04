@@ -1,0 +1,54 @@
+{
+    "number": 25168,
+    "data": "1,1,5,37,361,4361,62701,1044205,19748177,417787921,9770678101,250194150581,6959638411705,208919770666777,6729933476435261,231512615111396221,8469125401589550241,328241040596380393505,13434223364220816489637,578931271898150002093381",
+    "name": "E.g.f.: exp(x/(1-2*x)).",
+    "comment": [
+        "From _Peter Bala_, Nov 21 2017: (Start)",
+        "The sequence terms have the form 4*m + 1 (follows from the recurrence).",
+        "For k = 2,3,4,... the difference a(n+k) - a(n) is divisible by k (proof by induction on n making use of the recurrence - the starting case a(k) == a(0) (mod k) for all k follows from the sum formula for a(k)). Hence for each k, the sequence b(n) == a(n) (mod k) is periodic with the exact period dividing k. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A025168/b025168.txt\">Table of n, a(n) for n = 0..400</a>",
+        "K. A. Penson, P. Blasiak, G. Duchamp, A. Horzela and A. I. Solomon, <a href=\"http://arXiv.org/abs/quant-ph/0312202\">Hierarchical Dobinski-type relations via substitution and the moment problem</a>, arXiv:quant-ph/0312202, 2003; J. Phys. A 37 (2004), 3475-3487.",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "N. J. A. Sloane and Thomas Wieder, <a href=\"https://arxiv.org/abs/math/0307064\">The Number of Hierarchical Orderings</a>, arXiv:math/0307064 [math.CO], 2003; Order 21 (2004), 83-89.",
+        "Thomas Wieder, <a href=\"/A103446/a103446.txt\">Expanded definitions of A103446 and A025168</a>"
+    ],
+    "formula": [
+        "Second LAH transform of A000012. LAH transform of A000262. a(n) = Sum_{k=0..n) 2^(n-k)*n!/k!*binomial(n-1, k-1). - _Vladeta Jovovic_, Oct 17 2003",
+        "Define f_1(x), f_2(x), ... such that f_1(x) = e^x, f_{n+1}(x) = (d/dx)(x^2*f_n(x)), for n=2,3,.... Then a(n) = e^(-1/2)*4*(n-1)*f_n(1/2). - _Milan Janjic_, May 30 2008",
+        "From _Vaclav Kotesovec_, Jun 22 2013: (Start)",
+        "Recurrence: a(n) = (4*n-3)*a(n-1) - 4*(n-2)*(n-1)*a(n-2).",
+        "a(n) ~ 2^(n-3/4)*n^(n-1/4)*exp(sqrt(2*n)-n-1/4) * (1-1/(3*sqrt(2*n))).",
+        "(End)",
+        "E.g.f.: E(0)/2, where E(k) = 1 + 1/(1 - x/(x + (k+1)*(1-2*x)/E(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Jul 09 2013",
+        "a(n) = hypergeometric([-n,-n+1],[],2). - _Peter Luschny_, Sep 22 2014"
+    ],
+    "maple": [
+        "with(combstruct); SetSeqSeqL := [T, {T=Set(S), S=Sequence(U,card >= 1), U=Sequence(Z,card >=1)},labeled];",
+        "f:= gfun:-rectoproc({a(n) = (4*n-3)*a(n-1) - 4*(n-2)*(n-1)*a(n-2),a(0)=1,a(1)=1},a(n),remember):",
+        "map(f, [$0..30]); # _Robert Israel_, Nov 21 2017"
+    ],
+    "mathematica": [
+        "Table[ n! 2^n LaguerreL[ n, 1, -1/2 ], {n, 0, 12} ]",
+        "With[{nn=20},CoefficientList[Series[Exp[x/(1-2x)],{x,0,nn}],x] Range[0,nn]!] (* _Harvey P. Dale_, Aug 12 2012 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "A025168 = lambda n: hypergeometric([-n,-n+1], [], 2)",
+        "[Integer(A025168(n).n(100)) for n in range(20)] # _Peter Luschny_, Sep 22 2014"
+    ],
+    "xref": [
+        "Cf. A000012, A000262, A103446."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Wouter Meeussen_",
+    "ext": [
+        "Corrected and extended by _Vladeta Jovovic_, Sep 08 2002"
+    ],
+    "references": 8,
+    "revision": 51,
+    "time": "2018-01-19T10:56:45-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

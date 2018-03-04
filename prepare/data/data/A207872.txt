@@ -1,0 +1,33 @@
+{
+    "number": 207872,
+    "data": "1,2,4,4,8,8,8,16,16,16,16,16,32,32,32,32,32,32,32,32,64,64,64,64,64,64,64,64,64,64,64,64,64,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,256,256,256,256,256",
+    "name": "Denominator of Z(n,1/2), where Z(n,x) is the n-th Zeckendorf polynomial.",
+    "comment": [
+        "The Zeckendorf polynomials Z(x,n) are defined and ordered at A207813.  Each power 2^k appears F(k+1) times, where F=A000045 (Fibonacci numbers)."
+    ],
+    "link": [
+        "Sajed Haque, <a href=\"https://uwspace.uwaterloo.ca/bitstream/handle/10012/12234/Haque_Sajed.pdf\">Discriminators of Integer Sequences</a>, Thesis, 2017, See p. 36."
+    ],
+    "mathematica": [
+        "fb[n_] := Block[{k = Ceiling[Log[GoldenRatio, n*Sqrt[5]]], t = n, fr = {}}, While[k > 1, If[t >= Fibonacci[k], AppendTo[fr, 1]; t = t - Fibonacci[k],",
+        "    AppendTo[fr, 0]]; k--]; fr]; t = Table[fb[n],",
+        "      {n, 1, 500}];",
+        "b[n_] := Reverse[Table[x^k, {k, 0, n}]]",
+        "p[n_, x_] := t[[n]].b[-1 + Length[t[[n]]]]",
+        "Table[p[n, x], {n, 1, 40}]",
+        "Denominator[Table[p[n, x] /. x -> 1/2,",
+        "   {n, 1, 120}]]                       (* A207872 *)",
+        "Numerator[Table[p[n, x] /. x -> 1/2,",
+        "   {n, 1, 120}]]                       (* A207873 *)"
+    ],
+    "xref": [
+        "Cf. A207813, A207873."
+    ],
+    "keyword": "nonn,frac",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Feb 21 2012",
+    "references": 5,
+    "revision": 12,
+    "time": "2018-02-17T12:28:32-05:00",
+    "created": "2012-02-24T13:47:45-05:00"
+}

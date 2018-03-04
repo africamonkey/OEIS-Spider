@@ -1,0 +1,56 @@
+{
+    "number": 22546,
+    "data": "17,1277,113147,252277007,408936947,521481197,1116452627,1209950867,1645175087,2966003057,3947480417,6234613727,9307040837,9853497737,11878692167,13766391467,21956291867,22741837817,24388061207",
+    "name": "Initial members of prime nonuplets (p, p+2, p+6, p+12, p+14, p+20, p+24, p+26, p+30).",
+    "comment": [
+        "Subsequence of A022012. - _R. J. Mathar_, Feb 10 2013",
+        "All terms congruent to 17 (modulo 30). - _Matt C. Anderson_, May 27 2015"
+    ],
+    "link": [
+        "Matt C. Anderson and Dana Jacobsen, <a href=\"/A022546/b022546.txt\">Table of n, a(n) for n = 1..10000</a> [first 200 terms from Matt C. Anderson]",
+        "T. Forbes, <a href=\"http://anthony.d.forbes.googlepages.com/adf.htm\">Prime k-tuplets</a>"
+    ],
+    "maple": [
+        "composite_small := proc (n::integer)",
+        "description \"determine if n has a prime factor less than 100\";",
+        "if igcd(2305567963945518424753102147331756070, n) = 1 then return false else return true;",
+        "end if ;",
+        "end proc:",
+        "p := [0, 2, 6, 12, 14, 20, 24, 26, 30]:",
+        "# using isprime(m*n+o+p)",
+        "o := 17:",
+        "m:=30:",
+        "loopstop:=10^11:",
+        "loopstart:=0:",
+        "for n from loopstart to loopstop do",
+        "counter := 0:",
+        "wc := 0;",
+        "wd := 0;",
+        "while `and`(wd > -10, wd < 9) do",
+        "wd := wd+1;",
+        "if composite_small(m*n+o+p[wd]) = false then wd := wd+1 else wd := -10 end if ;",
+        "end do;",
+        "if wd >= 9 then",
+        "while `and`(counter >= 0, wc < 9) do",
+        "wc := wc+1;",
+        "if isprime(m*n+o+p[wc]) then counter := counter+1 else counter := -1 end if;",
+        "end do end if;",
+        "if counter = 9 then print(m*n+o) end if;",
+        "end do:"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[260000000]], Union[PrimeQ[ # +{2, 6, 12, 14, 20, 24, 26, 30}]]=={True} &] (* _Vincenzo Librandi_, May 27 2015 *)"
+    ],
+    "program": [
+        "(MAGMA) [p: p in PrimesUpTo(260000000) | forall{p+r: r in [2, 6, 12,14,20,24,26,30] | IsPrime(p+r)}]; // _Vincenzo Librandi_, May 27 2015",
+        "(Perl) use ntheory \":all\"; say for sieve_prime_cluster(1,1e11, 2,6,12,14,20,24,26,30); # _Dana Jacobsen_, Sep 30 2015",
+        "(PARI) forprime(p=2, 1e30, if (isprime(p+2) && isprime(p+6) && isprime(p+12) && isprime(p+14) && isprime(p+20) && isprime(p+24) && isprime(p+26) && isprime(p+30) , print1(p\", \"))) \\\\ _Altug Alkan_, Sep 30 2015"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Warut Roonguthai_",
+    "references": 30,
+    "revision": 37,
+    "time": "2018-01-08T02:32:27-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 206074,
+    "data": "2,3,5,7,11,13,17,19,23,25,29,31,37,41,43,47,53,55,59,61,67,69,71,73,77,79,81,83,87,89,91,97,101,103,107,109,113,115,117,121,127,131,137,139,143,145,149,151,157,163,167,169,171,173,179,181,185,191,193,197,199,203,205,209,211,213,223,227,229",
+    "name": "n-th irreducible polynomial over Q (with coefficients 0 or 1) evaluated at x=2.",
+    "comment": [
+        "Is every prime present?",
+        "Yes, see the Filaseta reference. - _Thomas Ordowski_, Feb 19 2014",
+        "Corresponding evaluation at x=10 is A206073. - _Michael Somos_, Feb 26 2014"
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A206074/b206074.txt\">Table of n, a(n) for n = 1..21692</a>",
+        "John Brillhart, Michael Filaseta, Andrew Odlyzko, <a href=\"http://dx.doi.org/10.4153/CJM-1981-080-0\">On an irreducibility theorem of A. Cohn</a>, Canad. J. Math. 33(1981), pp. 1055-1059.",
+        "Michael Filaseta, <a href=\"http://dx.doi.org/10.4153/CJM-1982-097-3\">A further generalization of an irreducibility theorem of A. Cohn</a>, Canad J. Math. 34 (1982), pp. 1390-1395."
+    ],
+    "formula": [
+        "Other identities and observations. For all n >= 1:",
+        "A255574(a(n)) = n."
+    ],
+    "example": [
+        "(See the example at A206073.)"
+    ],
+    "mathematica": [
+        "t = Table[IntegerDigits[n, 2], {n, 1, 850}];",
+        "b[n_] := Reverse[Table[x^k, {k, 0, n}]]",
+        "p[n_, x_] := t[[n]].b[-1 + Length[t[[n]]]]",
+        "Table[p[n, x], {n, 1, 15}]",
+        "u = {}; Do[n++; If[IrreduciblePolynomialQ[p[n, x]],",
+        "AppendTo[u, n]], {n, 300}];",
+        "u                          (* A206074 *)",
+        "Complement[Range[200], u]  (* A205783 *)",
+        "b[n_] := FromDigits[IntegerDigits[u, 2][[n]]]",
+        "Table[b[n], {n, 1, 40}]    (* A206073 *)"
+    ],
+    "program": [
+        "(PARI) for(n=2, 10^3, if( polisirreducible( Pol(binary(n)) ), print1(n,\", \") ) ); \\\\ _Joerg Arndt_, Feb 19 2014"
+    ],
+    "xref": [
+        "Cf. A206073, A205783 (complement), A206075 (nonprime terms), A014580 (irreducible over GF(2), a subsequence of this one), A000040 (primes, also a subsequence), A260427 (terms that are reducible over GF(2)).",
+        "Cf. A255574 (left inverse).",
+        "Cf. also permutations A260421 - A260426.",
+        "Disjoint union of A257688 (without 1) and A260428.",
+        "a(n) differs from A186891(n+1) for the first time at n=21, where a(21) = 67, while A186891(22) = 65, a term missing from here. There are several other sequences that do not diverge until after approx. the twentieth term from this one (see the context-links)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Feb 03 2012",
+    "ext": [
+        "Clarified name, added more terms, _Joerg Arndt_, Feb 20 2014"
+    ],
+    "references": 26,
+    "revision": 34,
+    "time": "2015-08-02T17:52:07-04:00",
+    "created": "2012-02-03T19:33:24-05:00"
+}

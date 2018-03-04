@@ -1,0 +1,51 @@
+{
+    "number": 133226,
+    "data": "1,9,36,98,246,646,1777,4883,13120,34642,90976,239160,629427",
+    "name": "Number of possible 2 X n arrangements of black and white squares that can form two consecutive rows in an n X n crossword puzzle.",
+    "comment": [
+        "In a standard American crossword puzzle, such as those in the New York Times, in any row there must be at least one run of white squares and all runs of white squares must be of length at least three."
+    ],
+    "formula": [
+        "a[n]=2a[n-1]-a[n-2]+a[n-3]+a[n-4]+f[n] where f[n]=b[n]^2-2b[n-1]^2+b[n-2]^2-b[n-3]^2-b[n-4]^2-2b[n-3] and b[n] is the sequence A130578"
+    ],
+    "example": [
+        "a[4]=9 = 3^2 because using 0's for white squares and 1's for black squares, the three possible rows in a 4 X 4 crossword are 0000, 1000 and 0001 and any of these three rows as a top row is compatible with any as a second row.",
+        "Furthermore, a[6]=98 < 100 = 10^2 because while 000111 and 111000 are two of the ten possible rows in a 6 X 6 crossword puzzle, the arrangement",
+        "000111",
+        "111000",
+        "would not be possible."
+    ],
+    "mathematica": [
+        "<< DiscreteMath`Combinatorica` (*This program counts, lists and displays the possible 2 - row patterns in an n X n crossword puzzle*)",
+        "plotnice = ArrayPlot [ #, Frame -> False, Mesh -> True, MeshStyle -> GrayLevel [ 0 ] ] &;",
+        "For [ n = 3, n <= 7, n++,",
+        "usablemods = {0, 1, 3, 7};",
+        "usablenumbers = Function [ MemberQ [ usablemods, Mod [ #, 8 ] ] ];",
+        "goodnumbers = Union [ Table [",
+        "k, {k, 0, 2^(n - 3) - 1} ], Table [ k, {k, 2^(n - 1), 2^n - 2} ] ];",
+        "numbers = Select [ goodnumbers, usablenumbers ];",
+        "rows = Table [ PadLeft [ IntegerDigits [ numbers [ [ j ] ], 2 ], n ], {j, 1, Length [",
+        "numbers ]} ];",
+        "no101s = Function [ FreeQ [ Partition [ #1, 3, 1 ], {1, 0, 1} ] ];",
+        "no1001s = Function [ FreeQ [ Partition [ #1, 4, 1 ], {1, 0, 0, 1} ] ];",
+        "legalrows = Select [ Select [ rows, no1001s ], no101s ];",
+        "tworows = Tuples [ legalrows, 2 ];",
+        "addrows = Function [ Plus [ # [ [ 1 ] ], # [ [ 2 ] ] ] ];",
+        "goodrows = Function [ Not [ FreeQ [ Plus [ # [ [ 1 ] ], # [ [ 2 ] ] ], 0 ] ] ];",
+        "goodtworows = Select [ tworows, goodrows ];",
+        "Print [ \"the number of two-row arrangements in a \", n, \" x \", n, \" puzzle is \\",
+        "\", Length [ goodtworows ] ];",
+        "plotnice /@ goodtworows;",
+        "]"
+    ],
+    "xref": [
+        "Cf. A130578."
+    ],
+    "keyword": "nonn",
+    "offset": "3,2",
+    "author": "Marc A. Brodie (mbrodie(AT)wju.edu), Jan 03 2008",
+    "references": 1,
+    "revision": 2,
+    "time": "2009-02-27T03:00:00-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

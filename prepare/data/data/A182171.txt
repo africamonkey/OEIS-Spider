@@ -1,0 +1,82 @@
+{
+    "number": 182171,
+    "data": "108,384,432,768,972,1536,1728,2700,3072,3456,3888,5292,6144,6912,8748,9600,10800,12288,13068,13824,15552,17280,18252,18816,18900,19200,21168,24300,24576,27000,27648,31104,31212,34560,34992,37632",
+    "name": "Area A of the triangles such that A, the sides and three perpendicular bisectors are integers.",
+    "comment": [
+        "Let a triangle with the angles (A, B, C) and the sides opposite the angles labeled (a, b, c). The length of the perpendicular bisectors is given by (x, y, z) where:",
+        "x is the perpendicular bisector passing through the midpoint of the segment BC = a;",
+        "y is the perpendicular bisector passing through the midpoint of the segment AC = b;",
+        "z is the perpendicular bisector passing through the midpoint of the segment AB = c.",
+        "We obtain the relations:",
+        "x = (a/2)*tg B if x intersects AB or (a/2)* tg C if x intersects AC;",
+        "y = (b/2)* tg A if y intersects AB or (b/2)* tg C if y intersects BC;",
+        "z = (c/2)*tg A if z intersects AC or (c/2) *tg B if z intersects BC.",
+        "The area A of the triangle whose sides have lengths a, b, and c is given by Heron's formula: A = sqrt(s*(s-a)*(s-b)*(s-c)), where s = (a+b+c)/2.",
+        "Finally, we obtain:",
+        "x = (a/2) * min {tg B, tg C }; y = (b/2) * min {tg A, tg C }; z = (c/2) * min {tg A, tg B } with tg A = 4*A/(b^2+c^2-a^2) ; tg B = 4*A/(c^2+a^2-b^2) ; tg C = 4*A/(a^2+b^2-c^2).",
+        "Properties of this sequence:",
+        "The numbers of the form 108*n^2, 384*n^2, 768*n^2, 17280*n^2, 18900*n^2 are in the sequence because the area of the primitive triangles (15, 15, 18), (24, 32, 40), (40, 40, 64), (120, 288, 312), (150, 255, 315) are 108, 384, 768 , 17280 and 18900 respectively.",
+        "There exists three class of numbers included into a(n) :",
+        "Case (i) : a subset of isosceles triangles;",
+        "Case (ii) : a subset of right triangles;",
+        "Case (iii) : other (neither isosceles nor right triangle)."
+    ],
+    "link": [
+        "Ray Chandler, <a href=\"/A182171/b182171.txt\">Table of n, a(n) for n = 1..65</a>",
+        "Eric W. Weisstein, <a href=\"http://mathworld.wolfram.com/Triangle.html\">MathWorld: Triangle</a>"
+    ],
+    "formula": [
+        "x = Min{2*a*A/(c^2+a^2-b^2) , 2*a*A/(a^2+b^2-c^2)};",
+        "y = Min{2*b*A/(a^2+b^2-c^2)  , 2*b*A/(b^2+c^2-a^2)};",
+        "z = Min{2*c*A/(c^2+a^2-b^2)  , 2*c*A/(b^2+c^2-a^2)}."
+    ],
+    "example": [
+        "Primitive solutions follow:",
+        "Area,  ( a,   b,   c),  ( x,   y,   z), Case",
+        "  108,  (15,  15,  18),  (10,  10,  12), Isosceles,",
+        "  384,  (24,  32,  40),  (16,  12,  15), Right,",
+        "  768,  (40,  40,  64),  (15,  15,  24), Isosceles,",
+        "17280, (120, 288, 312), (144,  60,  65), Right,",
+        "18900, (150, 255, 315), (100,  68,  84), Other,",
+        "27000, (255, 255, 450),  (68,  68, 120), Isosceles,",
+        "34560, (312, 312, 576),  (65,  65, 120), Isosceles,",
+        "53760, (272, 400, 448), (255, 150, 168), Other,",
+        "54000, (240, 450, 510), (225, 120, 136), Right,",
+        "91476, (429, 462, 495), (364, 308, 330), Other,",
+        "95256, (252, 819, 945), (168, 104, 120), Other,",
+        "96768, (336, 720, 960), (126, 105, 140), Other."
+    ],
+    "maple": [
+        "zz:=evalf(1/10^6):k:=0:nn:=350:",
+        "for a from 15 to nn do:",
+        "   for b from a to nn do:",
+        "       for c from b to nn do:",
+        "             p:=(a+b+c)/2:s:=p*(p-a)*(p-b)*(p-c):",
+        "             u:= a^2+b^2-c^2:v:= b^2+c^2-a^2 :w:=c^2+a^2-b^2:",
+        "             if s>0 then s1:=sqrt(s):else fi:",
+        "             if u>0 then u0:=u:else u0:=zz:fi:",
+        "             if v>0 then v0:=v:else vo:=zz:fi:",
+        "             if w>0 then w0:=w:else w0:=zz:fi:",
+        "a0:= evalf(2*a*s1/w0):a1:=evalf(2*a*s1/u0): b0:= evalf(2*b*s1/u0):b1:=evalf(2*b*s1/v0): c0:= evalf(2*c*s1/w0):c1:=evalf(2*c*s1/v0):",
+        "             if a0<a1 then x:= a0:else x:=a1:fi:",
+        "             if b0<b1 then y:=b0:else y:=b1:fi:",
+        "             if c0<c1 then z:=c0:else z:=c1:fi:",
+        "             if s1=floor(s1) and  x=floor(x) and y=floor(y) and z=floor(z)  then print(s1):else fi:",
+        "od:",
+        "  od:",
+        "   od:"
+    ],
+    "xref": [
+        "Cf. A188158, A210643, A181924, A181925, A181928."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Apr 16 2012",
+    "ext": [
+        "More terms from _Ray Chandler_, Apr 24 2013"
+    ],
+    "references": 1,
+    "revision": 12,
+    "time": "2013-04-25T09:13:09-04:00",
+    "created": "2012-04-16T14:45:47-04:00"
+}

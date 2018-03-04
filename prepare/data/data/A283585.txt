@@ -1,0 +1,52 @@
+{
+    "number": 283585,
+    "data": "1,11,111,1101,11101,110101,1110001,11011011,111011011,1101011011,11100011011,110110111011,1110110101011,11010110101011,111000110101011,1101101110101011,11101101110101011,110101101110101011,1110001101110101011,11011011101110101011",
+    "name": "Binary representation of the x-axis, from the left edge to the origin, of the n-th stage of growth of the two-dimensional cellular automaton defined by \"Rule 654\", based on the 5-celled von Neumann neighborhood.",
+    "comment": [
+        "Initialized with a single black (ON) cell at stage zero."
+    ],
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 170."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A283585/b283585.txt\">Table of n, a(n) for n = 0..126</a>",
+        "Robert Price, <a href=\"/A283585/a283585.tmp.txt\">Diagrams of first 20 stages</a>",
+        "N. J. A. Sloane, <a href=\"http://arxiv.org/abs/1503.01168\">On the Number of ON Cells in Cellular Automata</a>, arXiv:1503.01168 [math.CO], 2015",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "S. Wolfram, <a href=\"http://wolframscience.com/\">A New Kind of Science</a>",
+        "Wolfram Research, <a href=\"http://atlas.wolfram.com/\">Wolfram Atlas of Simple Programs</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_2D_5-Neighbor_Cellular_Automata\">Index to 2D 5-Neighbor Cellular Automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>"
+    ],
+    "example": [
+        "Conjectures from _Colin Barker_, Mar 12 2017: (Start)",
+        "G.f.: (1 + 10*x + 100*x^2 + 990*x^3 + 10000*x^4 + 99000*x^5 + 999900*x^6 + 9901010*x^7 - 10000000*x^9 - 1000000*x^10 + 10100000*x^11 - 10000*x^12) / ((1 - x)*(1 - 10*x)*(1 + 10*x)*(1 + 100*x^2)*(1 + 10000*x^4)).",
+        "a(n) = a(n-1) + 100000000*a(n-8) - 100000000*a(n-9) for n>12.",
+        "(End)"
+    ],
+    "mathematica": [
+        "CAStep[rule_, a_] := Map[rule[[10 - #]] &, ListConvolve[{{0, 2, 0},{2, 1, 2}, {0, 2, 0}}, a, 2],{2}];",
+        "code = 654; stages = 128;",
+        "rule = IntegerDigits[code, 2, 10];",
+        "g = 2 * stages + 1; (* Maximum size of grid *)",
+        "a = PadLeft[{{1}}, {g, g}, 0,Floor[{g, g}/2]]; (* Initial ON cell on grid *)",
+        "ca = a;",
+        "ca = Table[ca = CAStep[rule, ca], {n, 1, stages + 1}];",
+        "PrependTo[ca, a];",
+        "(* Trim full grid to reflect growth by one cell at each stage *)",
+        "k = (Length[ca[[1]]] + 1)/2;",
+        "ca = Table[Table[Part[ca[[n]] [[j]],Range[k + 1 - n, k - 1 + n]], {j, k + 1 - n, k - 1 + n}], {n, 1, k}];",
+        "Table[FromDigits[Part[ca[[i]] [[i]], Range[1, i]], 10], {i, 1, stages - 1}]"
+    ],
+    "xref": [
+        "Cf. A283586, A283587, A283588."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Robert Price_, Mar 11 2017",
+    "references": 4,
+    "revision": 11,
+    "time": "2017-03-12T12:09:46-04:00",
+    "created": "2017-03-11T21:17:49-05:00"
+}

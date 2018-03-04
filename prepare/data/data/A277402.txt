@@ -1,0 +1,52 @@
+{
+    "number": 277402,
+    "data": "1,6,19,30,61,78,127,150,217,234,331,366,469,510,631,678,817,870,1027,1074,1261,1326,1519,1590,1801,1878,2107,2190,2437,2514,2791,2886,3169,3270,3571,3678,3997,4110,4447,4554,4921,5046,5419,5550,5941,6078,6487,6630,7057,7194",
+    "name": "\"3-Portolan numbers\": number of regions formed by n-secting the angles of an equilateral triangle.",
+    "comment": [
+        "I like the name \"portolan numbers\": cf. the rhumbline designs on medieval maps, constructed in a similar way.",
+        "The regions can be counted using an adaptation of Smiley and Wick's method in A092098: count regions assuming there are no redundant intersections, then subtract the number of regions that Ceva's Theorem says must vanish.",
+        "Off-diagonal redundant intersections occur for triples of integers 1 <= i, j, k < floor(n/2)-1 such that M(i)*M(j) = M(k), where M(x) is the ratio (sin(Pi(n-x)/(3n)))/(sin(Pi*x/(3n))). In the case 10|n, this corresponds to the charming identity (sin(7Pi/30) sin(8Pi/30))/(sin(3Pi/30) sin(2Pi/30)) = (sin(9Pi/30))/(sin(1Pi/30)).",
+        "Differs from A092098 (which counts regions when *sides*, not angles, are n-sected) for the first time at the tenth term.",
+        "The above equation has solutions if and only if 10|n. This can be shown by rewriting the equation in exponential form, and using facts about vanishing sums of roots of unity to narrow the possibilities for n.(See Conway and Jones 1976.) This is computationally feasible because A273096(6) = 1. - _Ethan Beihl_, Nov 26 2016"
+    ],
+    "link": [
+        "J. H. Conway and A. J. Jones, <a href=\"http://matwbn.icm.edu.pl/ksiazki/aa/aa30/aa3033.pdf\"> Trigonometric diophantine equations (On vanishing sums of roots of unity)</a>, Acta Arithmetica 30(3), 229-240 (1976).",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Rhumbline_network\">Rhumbline network</a>"
+    ],
+    "formula": [
+        "Empirical g.f.: x*(1 +5*x +12*x^2 +6*x^3 +18*x^4 +6*x^5 +18*x^6 +6*x^7 +18*x^8 -6*x^9 +29*x^10 +13*x^11 -6*x^12) / ((1 -x)^3*(1 +x)^2*(1 -x +x^2 -x^3 +x^4)*(1 +x +x^2 +x^3 +x^4)). - _Colin Barker_, Oct 14 2016"
+    ],
+    "example": [
+        "For n=3, a(n) gives the 19 regions formed by the intersection of 3*2 lines: 3 pentagons, 3 quadrilaterals, 12 triangles, and 1 big central hexagon."
+    ],
+    "mathematica": [
+        "regions[n_]:=",
+        "If[Mod[n,2]==0, 3n^2-6n+6, 3n^2-3n+1]-",
+        "  6*Length@",
+        "    Select[",
+        "     Flatten@",
+        "      With[",
+        "       {b=N@",
+        "          Table[",
+        "             1/2 - (Sqrt[3]/2)Tan[(60Degree/n)(n/2-i)],",
+        "             {i, 1, Floor[n/2]- 1}",
+        "             ]},",
+        "       Table[",
+        "        Abs[(1-b[[k]])b[[l]]b[[j]] - b[[k]](1-b[[l]])(1-b[[j]])],",
+        "        {j, 1, Floor[n/2]-1},",
+        "        {k, 1, Floor[n/2]-1},",
+        "        {l, 1, Floor[n/2]-1}]",
+        "       ],",
+        "     Chop@#==0&]"
+    ],
+    "xref": [
+        "Cf. A092098."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ethan Beihl_, Oct 13 2016",
+    "references": 1,
+    "revision": 22,
+    "time": "2016-11-27T22:04:07-05:00",
+    "created": "2016-11-05T13:24:01-04:00"
+}

@@ -1,0 +1,67 @@
+{
+    "number": 236264,
+    "data": "0,2,6,12,14,26,38,62,74,86,98,122,134,146,158,182,222,254,326,338,366,398,446,614,626,698,722,794,866,1022,1046,1082,1226,1238,1418,1646,1814,2174,2246,2258,2294,2426",
+    "name": "Even indices of Fibonacci numbers which are the sum of two squares.",
+    "comment": [
+        "The first 10 such Fibonacci numbers are 0, 1, 8, 144, 377, 121393, 39088169, 4052739537881, 1304969544928657, 420196140727489673.",
+        "Ballot & Luca (Proposition 1) show that this sequence has asymptotic density 0. - _Charles R Greathouse IV_, Jan 21 2014",
+        "a(43) >= 2558. Determining this term requires factoring the Lucas number L_1279. - _Charles R Greathouse IV_, Jan 21 2014"
+    ],
+    "link": [
+        "Christian Ballot, Florian Luca, <a href=\"http://dx.doi.org/10.4064/aa127-2-4\">On the equation x^2+dy^2=Fn</a>, Acta Arith. 127 (2007), 145-155.",
+        "Kevin O'Bryant, <a href=\"http://mathoverflow.net/questions/67601\">Which Fibonacci numbers are the sum of two squares?</a>, MathOverflow"
+    ],
+    "formula": [
+        "a(n) = 2*A124132(n-1)."
+    ],
+    "example": [
+        "Fibonacci(14) = 377 = 19^2 + 4^2, so 14 is in the sequence."
+    ],
+    "mathematica": [
+        "Reap[For[n = 0, n <= 400, n = n+2, If[Reduce[Fibonacci[n] == x^2 + y^2, {x, y}, Integers] =!= False, Print[n]; Sow[n]]]][[2, 1]]"
+    ],
+    "program": [
+        "(PARI) is(n)=if(n%2, return(0)); my(f=factor(fibonacci(n))); for(i=1,#f~, if(f[i,1]%4==3 && f[i,2]%2, return(0))); 1 \\\\ _Charles R Greathouse IV_, Jan 21 2014",
+        "(PARI) default(factor_add_primes, 1);",
+        "is(n)={",
+        "    if(n%2,return(0));",
+        "    my(f=fibonacci(n),t);",
+        "    if(f%4==3,return(0));",
+        "    forprime(p=2,min(log(f)^2,1e5),",
+        "        if(f%p==0,",
+        "            t=valuation(f,p);",
+        "            if(p%4==3&&t%2,return(0));",
+        "            f/=p^t;",
+        "            if(f%4==3,return(0))",
+        "        )",
+        "    );",
+        "    fordiv(n,d,",
+        "        if(d==n, break);",
+        "        t=factor(fibonacci(d))[,1];",
+        "        for(i=1,#t,",
+        "            if(t[i]%4==3 && valuation(f,t[i])%2, return(0));",
+        "            f/=t[i]^valuation(f,t[i]);",
+        "            if(f%4==3,return(0))",
+        "        )",
+        "    );",
+        "    f=factor(f);",
+        "    for(i=1,#f[,1],",
+        "        if(f[i,2]%2&&f[i,1]%4==3,return(0))",
+        "    );",
+        "    1",
+        "}; \\\\ _Charles R Greathouse IV_, Jan 21 2014"
+    ],
+    "xref": [
+        "Cf. A000045, A001481, A124132."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Jean-Fran\u00e7ois Alcover_, Jan 21 2014",
+    "ext": [
+        "a(32)-a(42) from _Charles R Greathouse IV_, Jan 21 2014"
+    ],
+    "references": 0,
+    "revision": 25,
+    "time": "2017-08-10T03:39:58-04:00",
+    "created": "2014-01-24T11:50:24-05:00"
+}

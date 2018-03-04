@@ -1,0 +1,79 @@
+{
+    "number": 195865,
+    "data": "1,1,1,2,2,4,5,10,12,25,33,68,91,190,264,555,780,1649,2365,5021,7274,15518,22727,48646,71784,154162,229094,493346,737215,1591518,2390072,5170896,7798020,16903848,25587218,55561618,84377881,183509750,279499063,608726985,929556155,2027094432",
+    "name": "G.f. satisfies: A(x) = exp( Sum_{n>=1} (A(x^n) + A(-x^n))/2 * x^n/n ).",
+    "comment": [
+        "For n>=1, a(n) is the number of rooted trees (see A000081) with n non-root nodes where non-root nodes cannot have odd out-degrees, see the note by _David Callan_ and the example. - _Joerg Arndt_, Jun 28 2014"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A195865/b195865.txt\">Table of n, a(n) for n = 0..300</a>",
+        "David Callan, <a href=\"/A195865/a195865.pdf\">Even outdegree rooted trees</a>, (7-July-2014)."
+    ],
+    "formula": [
+        "Euler transform of the coefficients in (A(x) + A(-x))/2.",
+        "G.f. satisfies: A(x) = Product_{n>=0} 1/(1 - x^(2*n+1))^a(2*n).",
+        "G.f. satisfies: A(x)*A(-x) = A(x^2)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + x^2 + 2*x^3 + 2*x^4 + 4*x^5 + 5*x^6 + 10*x^7 +...",
+        "Let B(x) = (A(x) + A(-x))/2 then",
+        "log(A(x)) = B(x) + B(x^2)*x^2/2 + B(x^3)*x^3/3 + B(x^4)*x^4/4 +...",
+        "The coefficients in (A(x) + A(-x))/2 begin:",
+        "[1,0,1,0,2,0,5,0,12,0,33,0,91,0,264,0,780,0,2365,0,7274,...]",
+        "from which the Euler transform generates the g.f. A(x):",
+        "A(x) = 1/((1-x)*(1-x^3)*(1-x^5)^2*(1-x^7)^5*(1-x^9)^12*(1-x^11)^33*(1-x^13)^91*...*(1-x^(2*n+1))^a(2*n)*...).",
+        "From _Joerg Arndt_, Jun 28 2014: (Start)",
+        "The a(6) = 5 rooted trees with 6 non-root nodes as described in the comment are:",
+        ":           level sequence       out-degrees (dots for zeros)",
+        ":     1:  [ 0 1 2 3 3 2 1 ]    [ 2 2 2 . . . . ]",
+        ":  O--o--o--o",
+        ":        .--o",
+        ":     .--o",
+        ":  .--o",
+        ":",
+        ":     2:  [ 0 1 2 2 2 2 1 ]    [ 2 4 . . . . . ]",
+        ":  O--o--o",
+        ":     .--o",
+        ":     .--o",
+        ":     .--o",
+        ":  .--o",
+        ":",
+        ":     3:  [ 0 1 2 2 1 2 2 ]    [ 2 2 . . 2 . . ]",
+        ":  O--o--o",
+        ":     .--o",
+        ":  .--o--o",
+        ":     .--o",
+        ":",
+        ":     4:  [ 0 1 2 2 1 1 1 ]    [ 4 2 . . . . . ]",
+        ":  O--o--o",
+        ":     .--o",
+        ":  .--o",
+        ":  .--o",
+        ":  .--o",
+        ":",
+        ":     5:  [ 0 1 1 1 1 1 1 ]    [ 6 . . . . . . ]",
+        ":  O--o",
+        ":  .--o",
+        ":  .--o",
+        ":  .--o",
+        ":  .--o",
+        ":  .--o",
+        ":",
+        "(End)"
+    ],
+    "mathematica": [
+        "a[1] = 1;",
+        "a[n_] := a[n] = 1/(n - 1) Sum[(2 m + 1) a[2 m + 1] a[n - k (2 m + 1)], {m, 0, Floor[n/2] - 1}, {k, Floor[(n - 1)/(2 m + 1)]}];",
+        "Table[a[n], {n, 30}] (* Use offset 1 to simplify defining equation for G.f. Then apply xD_x, simplify, and equate coefficients to get above recurrence. - _David Callan_, Jul 07 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x,B);for(i=1,n, B=(A+subst(A,x,-x))/2; A=exp(sum(m=1,n,subst(B,x,x^m+x*O(x^n))*x^m/m)));polcoeff(A,n)}"
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Oct 26 2011",
+    "references": 1,
+    "revision": 33,
+    "time": "2014-07-09T14:22:08-04:00",
+    "created": "2011-10-27T00:50:56-04:00"
+}

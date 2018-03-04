@@ -1,0 +1,73 @@
+{
+    "number": 36991,
+    "data": "0,1,3,5,7,11,13,15,19,21,23,27,29,31,39,43,45,47,51,53,55,59,61,63,71,75,77,79,83,85,87,91,93,95,103,107,109,111,115,117,119,123,125,127,143,151,155,157,159,167,171,173,175,179,181,183,187,189,191,199,203",
+    "name": "Numbers n with the property that in the binary expansion of n, reading from right to left, the number of 0's never exceeds the number of 1's.",
+    "comment": [
+        "List of binary words that correspond to a valid pairing of parentheses. [_Joerg Arndt_, Nov 27 2004]"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A036991/b036991.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>, section 1.28, pp. 78 -80",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "example": [
+        "List of binary words with parentheses for those in the sequence:",
+        "01: 0000 P [empty string]",
+        "02: 0001 P ()",
+        "03: 0010",
+        "04: 0011 P (())",
+        "05: 0100",
+        "06: 0101 P ()()",
+        "07: 0110",
+        "08: 0111 P ((()))",
+        "09: 1000",
+        "10: 1001",
+        "11: 1010",
+        "12: 1011 P (()())",
+        "13: 1100",
+        "14: 1101 P ()(())",
+        "15: 1110",
+        "16: 1111 P (((()))) ."
+    ],
+    "mathematica": [
+        "moreOnesRLQ[n_Integer] := Module[{digits, len, flag = True, iter = 1, ones = 0, zeros = 0}, digits = Reverse[IntegerDigits[n, 2]]; len = Length[digits]; While[flag && iter < len, If[digits[[iter]] == 1, ones++, zeros++]; flag = ones >= zeros; iter++]; flag]; Select[Range[0, 203], moreOnesRLQ] (* _Alonso del Arte_, Sep 21 2011 *)",
+        "Join[{0},Select[Range[210],Min[Accumulate[Reverse[IntegerDigits[#,2]]/.{0->-1}]]>-1&]] (* _Harvey P. Dale_, Apr 18 2014 *)"
+    ],
+    "program": [
+        "(C++) /* returns true if the input is in the sequence: */",
+        "bool is_parenword(ulong x)",
+        "{",
+        "    int s = 0;",
+        "    for (ulong j=0; x!=0; ++j)",
+        "    {",
+        "        s += ( x&1 ? +1 : -1 );",
+        "        if ( s<0 ) break; /* invalid word */",
+        "        x >>= 1;",
+        "    }",
+        "    return (s>=0);",
+        "}  /* _Joerg Arndt_, Nov 27 2004 */",
+        "(Haskell)",
+        "a036991 n = a036991_list !! (n-1)",
+        "a036991_list = filter ((p 1) . a030308_row) [0..] where",
+        "   p _    [_]    = True",
+        "   p ones (0:bs) = ones > 1 && p (ones - 1) bs",
+        "   p ones (1:bs) = p (ones + 1) bs",
+        "-- _Reinhard Zumkeller_, Jul 31 2013"
+    ],
+    "xref": [
+        "Cf. A036988, A036990, A036992. A036994 is a subset (requires the count of zeros to be strictly less than).",
+        "Cf. A030308."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Erich Friedman_.",
+        "Edited by _N. J. A. Sloane_, Sep 14 2008 at the suggestion of R. J. Mathar",
+        "Offset corrected and example adjusted accordingly by _Reinhard Zumkeller_, Jul 31 2013"
+    ],
+    "references": 6,
+    "revision": 37,
+    "time": "2014-08-30T18:57:19-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

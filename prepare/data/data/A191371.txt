@@ -1,0 +1,50 @@
+{
+    "number": 191371,
+    "data": "1,3,15,123,1635,35043,1206915,66622083,5884188675,830476531203,187106645932035,67241729173555203,38521811621470420995,35161184767296890265603,51112793797110111859802115,118291368253025368001553530883,435713124846749574718274002747395,2553666761436949125065383836043837443",
+    "name": "Number of simple labeled graphs with (at most) 3-colored nodes such that no edge connects two nodes of the same color.",
+    "comment": [
+        "Cf. A213442, which counts colorings of labeled graphs on n vertices using exactly 3 colors. For 3-colorable labeled graphs on n vertices see A076315. - _Peter Bala_, Apr 12 2013"
+    ],
+    "reference": [
+        "F. Harary and E. M. Palmer, Graphical Enumeration, Academic Press, 1973, 16-18."
+    ],
+    "link": [
+        "S. R. Finch, <a href=\"/A191371/a191371.pdf\">Bipartite, k-colorable and k-colored graphs</a>, June 5, 2003. [Cached copy, with permission of the author]",
+        "R. C. Read, <a href=\"http://cms.math.ca/10.4153/CJM-1960-035-0\">The number of k-colored graphs on labelled nodes</a>, Canad. J. Math., 12 (1960), 410\u2014414.",
+        "R. P. Stanley, <a href=\"http://www-math.mit.edu/~rstan/pubs/pubfiles/18.pdf\">Acyclic orientation of graphs</a>, Discrete Math. 5 (1973), 171-178. North Holland Publishing Company.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/k-ColorableGraph.html\">k-Colorable Graph</a>"
+    ],
+    "formula": [
+        "a(n) = Sum(C(n,k)*C(n-k,r)*2^(k*r+k*m+r*m)) where the sum is taken over all nonnegative solutions to k + r + m = n.",
+        "From _Peter Bala_, Apr 12 2013: (Start)",
+        "a(n) = Sum_{k = 0..n} binomial(n,k)*2^(k*(n-k))*A047863(k).",
+        "a(n)= 3*A000685(n) for n >= 1.",
+        "Let E(x) = Sum_{n >= 0} x^n/(n!*2^C(n,2)). Then a generating function for this sequence is E(x)^3 = sum {n >= 0} a(n)*x^n/(n!*2^C(n,2)) = 1 + 3*x + 15*x^2/(2!*2) + 123*x^3/(3!*2^3) + 1635*x^4/(4!*2^6) + ....",
+        "In general, for k = 1, 2, ..., E(x)^k is a generating function for labeled k-colored graphs (see Read). For other examples see A047863 (k = 2) and A223887 (k = 4). (End)"
+    ],
+    "example": [
+        "a(2) = 15: There are two labeled 3-colorable graphs on 2 nodes, namely",
+        "A)  1    2   B)  1    2",
+        "    o    o       o----o",
+        "Using 3 colors there are 9 ways to color the graph of type A and 3*2 = 6 ways to color the graph of type B so that adjacent vertices do not share the same color. Thus there are in total 15 labeled 3-colored graphs on 2 vertices."
+    ],
+    "mathematica": [
+        "f[{k_,r_,m_}]:= Binomial[m+r+k,k] Binomial[m+r,r] 2^ (k r + k m + r m); Table[Total[Map[f,Compositions[n,3]]],{n,0,20}]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import binomial",
+        "def a047863(n): return sum([binomial(n, k)*2**(k*(n - k)) for k in xrange(n + 1)])",
+        "def a(n): return sum([binomial(n, k)*2**(k*(n - k))*a047863(k) for k in xrange(n + 1)]) # _Indranil Ghosh_, Jun 03 2017"
+    ],
+    "xref": [
+        "Cf. A047863. A000685, A076315, A223887."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Geoffrey Critzer_, Jun 01 2011",
+    "references": 7,
+    "revision": 25,
+    "time": "2017-06-03T13:06:42-04:00",
+    "created": "2011-06-02T14:09:12-04:00"
+}

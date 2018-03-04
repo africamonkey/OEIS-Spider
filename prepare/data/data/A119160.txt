@@ -1,0 +1,57 @@
+{
+    "number": 119160,
+    "data": "6,66,666,426426,266262426,22464262666,46624464466426,644644226644644222426,46424226426466426446424262644446,626644642222466644646226466422666",
+    "name": "Triangular numbers composed of digits {2,4,6}.",
+    "comment": [
+        "Next term must be greater than 10^37.",
+        "All terms end in 6. - _Robert Israel_, Feb 05 2016"
+    ],
+    "link": [
+        "G. Resta, <a href=\"http://www.numbersaplenty.com/tr/tr246.html\">Tridigital Triangular Numbers</a>"
+    ],
+    "maple": [
+        "F:= proc(d) # get all terms with d digits",
+        "local res, m, prefs,i,t,qmax,qmin,smax,smin,cand,s;",
+        "  res:= NULL;",
+        "  m:= max(1,floor(d/2-1));",
+        "  prefs:= [2,4,6]*10^(d-1);",
+        "  for i from 1 to m-1 do",
+        "    prefs:= map(t -> (t + 2*10^(d-1-i),t+4*10^(d-1-i),t+6*10^(d-1-i)), prefs)",
+        "  od;",
+        "  for t in prefs do",
+        "       qmax:= t + 6*(10^(d-m)-1)/9; smax:= floor(sqrt(8*qmax+1));",
+        "       qmin:= t + 2*(10^(d-m)-1)/9; smin:= ceil(sqrt(8*qmin+1));",
+        "       smin:= smin + 1 - (smin mod 2);",
+        "       for s from smin to smax by 2 do",
+        "           cand:= (s^2 -1)/8;",
+        "           if cand mod 10 = 6 and convert(convert(cand,base,10),set) subset {2,4,6} then",
+        "              res:= res, cand;",
+        "           fi",
+        "       od",
+        "  od;",
+        "res;",
+        "end proc:",
+        "seq(F(d),d=1..21);  # _Robert Israel_, Feb 05 2016"
+    ],
+    "mathematica": [
+        "Select[#*(# + 1)/2 & /@",
+        "  Range[1000000], !",
+        "MemberQ[IntegerDigits[#], 0 | 1 | 3 | 5 | 7 | 8 | 9] &] (*_Julien Kluge_, Feb 01 2016*)"
+    ],
+    "program": [
+        "(MAGMA) [t: n in [1..2*10^7] | Set(Intseq(t)) subset {2, 4, 6} where t is n*(n+1) div 2]; // _Vincenzo Librandi_, Feb 04 2016"
+    ],
+    "xref": [
+        "Cf. A000217, A053923, A119161. See A119033 for a table of cross-references."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Giovanni Resta_, May 10 2006",
+    "ext": [
+        "a(10) from _Max Alekseyev_, Jun 16 2011"
+    ],
+    "references": 2,
+    "revision": 19,
+    "time": "2016-02-06T12:15:04-05:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

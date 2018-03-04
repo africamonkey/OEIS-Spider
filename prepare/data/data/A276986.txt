@@ -1,0 +1,52 @@
+{
+    "number": 276986,
+    "data": "0,1,3,4,9,10,12,13,28,29,31,32,37,38,40,41,90,91,93,94,99,100,102,103,118,119,121,122,127,128,130,131,297,298,300,301,306,307,309,310,325,326,328,329,334,335,337,338,387,388,390,391,396,397,399,400,415,416",
+    "name": "Numbers n for which there is a permutation p of (1,2,3,...,n) such that k+p(k) is a Catalan number for 1<=k<=n.",
+    "comment": [
+        "A001453 is a subsequence. - _Altug Alkan_, Sep 29 2016",
+        "n>=1 is in the sequence if and only if there is a Catalan number c such that c/2 <= n < c and c-n-1 is in the sequence. - _Robert Israel_, Nov 20 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A276986/b276986.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(i) + a(2^n+1-i) = A000108(n+1)-1 for 1<=i<=2^n. - _Robert Israel_, Nov 20 2016"
+    ],
+    "example": [
+        "3 is in the sequence because the permutation (1,3,2) added termwise to (1,2,3) yields (2,5,5) and both 2 and 5 are Catalan numbers."
+    ],
+    "maple": [
+        "S:= {0}:",
+        "for i from 1 to 8 do",
+        "  c:= binomial(2*i,i)/(i+1);",
+        "  S:= S union map(t -> c - t - 1, S);",
+        "od:",
+        "sort(convert(S,list)); # _Robert Israel_, Nov 20 2016"
+    ],
+    "mathematica": [
+        "CatalanTo[n0_] :=",
+        "Module[{n = n0}, k = 1; L = {};",
+        "  While[CatalanNumber[k] <= 2*n, L = {L, CatalanNumber[k]}; k++];",
+        "  L = Flatten[L]]",
+        "perms[n0_] := Module[{n = n0, S, func, T, T2},",
+        "  func[k_] := Cases[CatalanTo[n], x_ /; 1 <= x - k <= n] - k;",
+        "  T = Tuples[Table[func[k], {k, 1, n}]];",
+        "  T2 = Cases[T, x_ /; Length[Union[x]] == Length[x]];",
+        "  Length[T2]]",
+        "Select[Range[41], perms[#] > 0 &]"
+    ],
+    "xref": [
+        "Cf. A000108, A073364."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gary E. Davis_, Sep 24 2016",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Sep 28 2016",
+        "a(23)-a(58) from _Robert Israel_, Nov 18 2016"
+    ],
+    "references": 1,
+    "revision": 36,
+    "time": "2016-11-20T09:04:12-05:00",
+    "created": "2016-11-05T08:45:41-04:00"
+}

@@ -1,0 +1,26 @@
+{
+    "number": 154780,
+    "data": "5,35,235,335,2335,3335,23335,32335,33335,72335,233335,323335,333335,372335,572335,723335,2333335,2372335,2723335,3233335,3323335,3333335,3572335,3723335,7233335,7323335,7372335,7572335,22372335,23333335",
+    "name": "Numbers n with d digits such that all digits of n and the last d+1 digits of n^2 are prime.",
+    "comment": [
+        "Subsequence of A046034; contains A153025 as a subsequence.",
+        "Any term with d digits is the concatenation of a prime digit and an earlier term (with d-1 digits).",
+        "The sequence is infinite since it contains subsequences b(n) = (10^n-1)/3+2 = (5,35,335,3335,..), c(n) = 23*10^n+b(n) = (235,2335,23335,...), d(n) = 3233*10^n+b(n), e(n) = 7233*10^n+b(n) etc."
+    ],
+    "formula": [
+        "For all n, a(n) = 5 mod 10. For a(n)>5, a(n)=35 mod 100. For a(n)>35, a(n)=235 or 335 mod 1000. For a(n)>335, a(n)=2335 or 3335 mod 10^4."
+    ],
+    "mathematica": [
+        "Select[Range[5,24000000,5],And@@PrimeQ[IntegerDigits[#]]&& And@@ PrimeQ[ Take[ IntegerDigits[#^2],-(IntegerLength[#]+1)]]&] (* _Harvey P. Dale_, Dec 31 2012 *)"
+    ],
+    "program": [
+        "(PARI) last=[0]; {for( d=1,8, new=[]; forprime( p=0,9, for( k=1,#last, is_A046034((p*10^(d-1)+last[k])^2%10^(d+1)+20*10^d) & new=concat( new, p*10^(d-1)+last[k]))); print1(last=new,\",\"))} /*for slightly more efficient code see A154779 */"
+    ],
+    "keyword": "base,easy,nice,nonn",
+    "offset": "1,1",
+    "author": "_M. F. Hasler_, Jan 23 2009",
+    "references": 1,
+    "revision": 5,
+    "time": "2012-12-31T11:26:11-05:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

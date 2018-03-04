@@ -1,0 +1,59 @@
+{
+    "number": 295035,
+    "data": "4,29,140,741,3853,19956,104096,541775,2819027,14671776,76356631,397392690,2068192977,10763659993,56018290276,291541126302,1517293977155,7896590852333,41096944195828,213884557644749,1113138825391146",
+    "name": "Number of nX3 0..1 arrays with each 1 horizontally or vertically adjacent to 1 or 2 1s.",
+    "comment": [
+        "Column 3 of A295040."
+    ],
+    "link": [
+        "R. H. Hardin, <a href=\"/A295035/b295035.txt\">Table of n, a(n) for n = 1..210</a>",
+        "Robert Israel, <a href=\"/A295035/a295035_1.pdf\">Maple-assisted proof of formula</a>"
+    ],
+    "formula": [
+        "Empirical: a(n) = 4*a(n-1) +2*a(n-2) +17*a(n-3) +18*a(n-4) +53*a(n-5) -23*a(n-6) -38*a(n-7) +52*a(n-8) -19*a(n-9) -14*a(n-10) +16*a(n-11) -11*a(n-12) +a(n-14) -a(n-15)",
+        "Empirical formula confirmed by _Robert Israel_, Nov 12 2017 (see link)."
+    ],
+    "example": [
+        "Some solutions for n=7",
+        "..1..1..0. .1..0..0. .0..0..0. .0..0..1. .0..1..0. .1..1..0. .0..0..0",
+        "..0..0..0. .1..0..0. .1..1..1. .1..0..1. .0..1..0. .1..0..1. .0..0..1",
+        "..1..1..0. .1..1..0. .0..0..1. .1..1..0. .0..1..0. .0..1..1. .0..1..1",
+        "..0..0..0. .0..0..1. .0..0..0. .0..0..0. .0..1..0. .0..1..0. .1..1..0",
+        "..0..0..0. .0..0..1. .1..1..0. .1..1..1. .1..0..1. .0..1..1. .1..0..1",
+        "..1..1..0. .1..1..0. .0..1..0. .0..0..0. .1..0..1. .1..0..1. .0..0..1",
+        "..1..0..0. .0..0..0. .0..0..0. .0..0..0. .1..1..1. .1..0..1. .0..0..1"
+    ],
+    "maple": [
+        "q:= proc(a,b) local r,s,t,M,i;",
+        "   s:= floor((a-1)/8);",
+        "   if s <> (b-1) mod 8 then return 0 fi;",
+        "   s:= convert(s+8,base,2);",
+        "   r:= convert(8+floor((b-1)/8),base,2);",
+        "   t:= convert(8+ ((a-1) mod 8),base,2);",
+        "   M:= Vector(3);",
+        "   if s[1] = 1 and s[2] = 1 then M[1]:= 1; M[2]:= 1 fi;",
+        "   if s[2]=1 and s[3]=1 then M[2]:= M[2]+1; M[3]:= 1 fi;",
+        "   for i from 1 to 3 do if s[i]=1 then",
+        "     M[i]:= M[i]+r[i]+t[i];",
+        "     if M[i] = 0 or M[i]>2 then return 0 fi;",
+        "   fi od;",
+        "   1",
+        "end proc:",
+        "T:= Matrix(64,64, q);",
+        "u:= Vector[row](64):",
+        "v:= Vector(64):",
+        "for i from 0 to 7 do u[8*i+1]:= 1; v[i+1]:= 1;",
+        "od:",
+        "seq(u . T^n . v, n = 1 .. 100); # _Robert Israel_, Nov 12 2017"
+    ],
+    "xref": [
+        "Cf. A295040."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. H. Hardin_, Nov 12 2017",
+    "references": 1,
+    "revision": 11,
+    "time": "2017-11-13T06:28:28-05:00",
+    "created": "2017-11-12T20:01:27-05:00"
+}

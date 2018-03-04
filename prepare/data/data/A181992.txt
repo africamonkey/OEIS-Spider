@@ -1,0 +1,36 @@
+{
+    "number": 181992,
+    "data": "1,5,1513,60376809,613498040952501,2655748106132754540814283,7350748555338515554166266981278924209,18155845241010181420704703186769135339279915667193169,53121946985233865823079732996510797894348260342024814486694637630897821",
+    "name": "n-alternating permutations of length n^2.",
+    "comment": [
+        "These are the generalized Euler numbers A181985(n, n) and also the Andr\u00e9 numbers A181937(n, n^2)."
+    ],
+    "link": [
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>"
+    ],
+    "maple": [
+        "A181992 := proc(n) local E, dim, i, k; dim := n*n;",
+        "E := array(0..dim, 0..dim); E[0, 0] := 1;",
+        "for i from 1 to dim do",
+        "if i mod n = 0 then E[i, 0] := 0 ;",
+        "   for k from i-1 by -1 to 0 do E[k, i-k] := E[k+1, i-k-1] + E[k, i-k-1] od;",
+        "else E[0, i] := 0;",
+        "   for k from 1 by 1 to i do E[k, i-k] := E[k-1, i-k+1] + E[k-1, i-k] od;",
+        "fi od;",
+        "E[0, dim] end:",
+        "seq(A181992(i),i=1..9);"
+    ],
+    "mathematica": [
+        "A181985[n_, len_] := Module[{e, dim = n*(len - 1)}, e[0, 0] = 1; For[i = 1, i <= dim, i++, If[Mod[i, n] == 0, e[i, 0] = 0; For[k = i - 1, k >= 0, k--, e[k, i - k] = e[k + 1, i - k - 1] + e[k, i - k - 1]], e[0, i] = 0; For[k = 1, k <= i, k++, e[k, i - k] = e[k - 1, i - k + 1] + e[k - 1, i - k]]]]; Table[e[0, n*k], {k, 0, len - 1}]]; a[n_] := A181985[n, n + 1][[n + 1]]; Table[a[n], {n, 1, 14}] (* _Jean-Fran\u00e7ois Alcover_, Dec 17 2013, after Maple code in A181985 *)"
+    ],
+    "xref": [
+        "Cf. A181985, A181937."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Peter Luschny_, Apr 05 2012",
+    "references": 2,
+    "revision": 10,
+    "time": "2013-12-17T04:33:45-05:00",
+    "created": "2012-04-07T13:55:32-04:00"
+}

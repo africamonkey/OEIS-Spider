@@ -1,0 +1,47 @@
+{
+    "number": 72762,
+    "data": "0,1,3,6,13,26,53,106,212,424,849,1698,3397,6794,13588,27176,54353,108706,217413,434826,869652,1739304,3478609,6957218,13914436,27828872,55657744,111315488,222630977,445261954,890523909",
+    "name": "n coded as binary word of length=n with k-th bit set iff k is prime (1<=k<=n), decimal value.",
+    "comment": [
+        "a(n) is odd iff n is prime.",
+        "a(p) where p is prime is the numerator of Sum_{q <= p} 1/2^q where the sum is over primes up to p. - _Alexander Adamchuk_, Aug 22 2006",
+        "The n-th approximation to the Prime Constant is given by a(n)/2^n. - Anton Vrba (antonvrba(AT)yahoo.com), Nov 24 2006"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A072762/b072762.txt\">Table of n, a(n) for n = 1..300</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PrimeConstant.html\">Prime Constant</a>."
+    ],
+    "formula": [
+        "a(1) = 0 and a(n) = a(n-1)*2 + A010051(n) for n>1."
+    ],
+    "example": [
+        "a(6)='011010'=(((0*2+1)*2+1)*2*2+1)*2=26; a(7)='0110101'=(((0*2+1)*2+1)*2*2+1)*2*2+1=53; a(8)='01101010'=((((0*2+1)*2+1)*2*2+1)*2*2+1)*2=106."
+    ],
+    "maple": [
+        "a:= proc(n) option remember;",
+        "      `if` (n<2, 0, 2 * a(n-1) + `if` (isprime(n), 1, 0))",
+        "    end:",
+        "seq (a(n), n=1..40);"
+    ],
+    "mathematica": [
+        "a[1] = 0; a[n_] := a[n] = 2*a[n-1] + Boole[PrimeQ[n]]; Table[a[n], {n, 1, 31}] (* _Jean-Fran\u00e7ois Alcover_, Jun 14 2013 *)",
+        "nxt[{n_,a_}]:={n+1,Boole[PrimeQ[n+1]]+2a}; Transpose[NestList[nxt,{1,0},30]][[2]] (* _Harvey P. Dale_, Jan 07 2015 *)"
+    ],
+    "program": [
+        "(PARI) an=0; print1(an,\", \"); for(n=2,31, an=2*an+isprime(n); print1(an,\", \")) \\\\ _Washington Bomfim_, Jan 18 2011",
+        "(PARI) a(n)=my(s=1,p=2);forprime(q=3,n,s=s<<(q-p)+1;p=q);s<<(n-p) \\\\ _Charles R Greathouse IV_, Jun 03 2013",
+        "(Haskell)",
+        "a072762 n = foldl (\\v d -> 2*v + d) 0 $ map a010051 [1..n]",
+        "-- _Reinhard Zumkeller_, Sep 17 2011"
+    ],
+    "xref": [
+        "Cf. A100634, A010051."
+    ],
+    "keyword": "nonn,nice,base",
+    "offset": "1,3",
+    "author": "_Reinhard Zumkeller_, Aug 08 2002",
+    "references": 7,
+    "revision": 31,
+    "time": "2015-03-03T00:36:49-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

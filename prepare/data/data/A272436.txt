@@ -1,0 +1,49 @@
+{
+    "number": 272436,
+    "data": "4,6,9,22,123,213,321,1142,1214,1241,4121,11215,11521,12115,12151,21151,22121,51211,111261,112611,116121,116211,121161,162111,211611,261111,621111,1111217,1111413,1111431,1111721,1112117,1117121,1117211,1121117,1121171,1121711",
+    "name": "Semiprimes such that sum of digits equals product of digits.",
+    "comment": [
+        "Intersection of A001358 and A034710.",
+        "9 is the only member with digit 9. No member has more than one digit 3 or 6. - _Robert Israel_, May 06 2016"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A272436/b272436.txt\">Table of n, a(n) for n = 1..17009</a> (n = 1..3104 from Robert Israel)"
+    ],
+    "example": [
+        "1142 appears in the list because 1142 = 2*571 that is semiprime. Also, 1+1+4+2 = 8 = 1*1*4*2.",
+        "11215 appears in the list because 1142 = 5*2243 that is semiprime. Also, 1+1+2+1+5 = 10 = 1*1*2*1*5."
+    ],
+    "maple": [
+        "R:= proc(k,d,u,v) option remember;",
+        "    if k = 1 then",
+        "        if d = v - u then {[d]}",
+        "        else {}",
+        "        fi",
+        "    else",
+        "      `union`(seq(map(t -> [op(t),s], procname(k-1,d-s,u+s*k,v*k^s)),s=0..d))",
+        "    fi",
+        "end proc:",
+        "A034710:= proc(d)",
+        "  local res, r,  i, t;",
+        "  res:= NULL;",
+        "  for r in R(9,d,0,1) do",
+        "     res:= res, op(map(t -> add(10^(i-1)*t[i],i=1..nops(t)), combinat:-permute([seq(i$r[i],i=1..9)])));",
+        "  od:",
+        "  sort([res]);",
+        "end proc:",
+        "map(op, [seq(select(t -> numtheory:-bigomega(t)=2, A034710(i)),i=1..11)]); # _Robert Israel_, May 06 2016"
+    ],
+    "mathematica": [
+        "Select[Range[10000000], (Plus @@ IntegerDigits[#]) == (Times @@ IntegerDigits[#]) && PrimeOmega[#] == 2 &]"
+    ],
+    "xref": [
+        "Cf. A001358, A034710, A066306, A066307."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_K. D. Bajpai_, May 06 2016",
+    "references": 2,
+    "revision": 35,
+    "time": "2018-02-15T08:14:04-05:00",
+    "created": "2016-05-06T18:20:32-04:00"
+}

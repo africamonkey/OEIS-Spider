@@ -1,0 +1,48 @@
+{
+    "number": 123206,
+    "data": "7,17,79,431,58049,130783,162287,523927,2486784401,6102977801,8375575711,13055867207,83695120256591,375700268413577,2251799813682647,9007199254738183,79792265017612001,1490116119372884249",
+    "name": "Primes of the form x^y - y^x, for x,y > 1.",
+    "comment": [
+        "These are the primes in A045575, numbers of the form x^y - y^x, for x,y > 1. This includes all primes from A122735, smallest prime of the form (n^k - k^n) for k>1.",
+        "If y=1 was allowed, any prime p could be obtained for x=p+1. This motivates to consider sequence A243100 of primes of the form x^(y+1)-y^x. - _M. F. Hasler_, Aug 19 2014"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A123206/b123206.txt\">Table of n, a(n) for n=1..101</a> (terms < 10^400)",
+        "H. Lifchitz & R. Lifchitz, <a href=\"http://www.primenumbers.net/prptop/searchform.php?form=x%5Ey-y%5Ex&amp;action=Search\">PRP of the form x^y-y^x</a> on primenumbers.net."
+    ],
+    "example": [
+        "The primes 6102977801 and 1490116119372884249 are of the form 5^y-y^5 (for y=14 and y=26) and therefore members of this sequence. The next larger primes of this form would have y > 4500 and would be much too large to be included. - _M. F. Hasler_, Aug 19 2014"
+    ],
+    "maple": [
+        "N:= 10^100: # to get all terms <= N",
+        "A:= NULL:",
+        "for x from 2 while x^(x+1) - (x+1)^x <= N do",
+        "   for y from x+1 do",
+        "      z:= x^y - y^x;",
+        "      if z > N then break",
+        "      elif z > 0 and isprime(z) then A:=A, z;",
+        "      fi",
+        "od od:",
+        "{A}; # _Robert Israel_, Aug 29 2014"
+    ],
+    "mathematica": [
+        "Take[Select[Intersection[Flatten[Table[Abs[x^y-y^x],{x,2,120},{y,2,120}]]],PrimeQ[ # ]&],25]",
+        "nn=10^50; n=1; t=Union[Reap[While[n++; k=n+1; num=Abs[n^k-k^n]; num<nn, Sow[num]; While[k++; num=n^k-k^n; num<nn, Sow[num]]]][[2,1]]]; Select[t, PrimeQ]",
+        "With[{nn=30},Take[Sort[Select[#[[1]]^#[[2]]-#[[2]]^#[[1]]&/@Subsets[ Range[ 2nn],{2}],#>0&&PrimeQ[#]&]],nn]] (* _Harvey P. Dale_, Nov 23 2013 *)"
+    ],
+    "program": [
+        "(PARI) a=[];for(S=1,199,for(x=2,S-2,ispseudoprime(p=x^(y=S-x)-y^x)&&a=concat(a,p)));Set(a) \\\\ May be incomplete in the upper range of values, i.e., beyond a given S=x+y, a larger S may yield a smaller prime (for small x). - _M. F. Hasler_, Aug 19 2014"
+    ],
+    "xref": [
+        "Cf. A045575, A122735, A078202, A082754, A055651, A094133.",
+        "A163319 is the subsequences for fixed x=3, A243114 for x=6.",
+        "Cf. A072180, A109387, A117705, A117706, A128447, A128449, A128450, A128451, A122003, A128453, A128454."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alexander Adamchuk_, Oct 04 2006",
+    "references": 6,
+    "revision": 22,
+    "time": "2014-08-29T14:04:37-04:00",
+    "created": "2006-10-09T03:00:00-04:00"
+}

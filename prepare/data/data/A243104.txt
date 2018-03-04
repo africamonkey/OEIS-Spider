@@ -1,0 +1,52 @@
+{
+    "number": 243104,
+    "data": "945,1575,2205,2835,3465,4095,4725,6435,6615,6825,7245,7425,7875,8085,8505,8925,9135,9555,9765,10395,11655,12285,12915,13545,14805,15015,16065,16695,17955,18585,19215,19635,19845,20475,21105,21735,22275,22365,22995,23205",
+    "name": "Odd numbers in A192274.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A243104/b243104.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "import numpy as np",
+        "A243104 = []",
+        "for n in range(3,10**4,2):",
+        "....d = divisors(n)",
+        "....s = sum(d)",
+        "....if not s % 2 and 2*n <= s:",
+        "........d.remove(n)",
+        "........s2, ld = int(s/2-n), len(d)",
+        "........z = np.zeros((ld+1,s2+1),dtype=int)",
+        "........for i in range(1,ld+1):",
+        "............y = min(d[i-1],s2+1)",
+        "............z[i,range(y)] = z[i-1,range(y)]",
+        "............z[i,range(y,s2+1)] = np.maximum(z[i-1,range(y,s2+1)],z[i-1,range(0,s2+1-y)]+y)",
+        "............if z[i,s2] == s2:",
+        "................d2 = [2*x for x in d if n > 2*x and n % (2*x)] + \\",
+        "................[x for x in divisors(2*n-1) if n > x >=2 and n % x] + \\",
+        "................[x for x in divisors(2*n+1) if n > x >=2 and n % x]",
+        "................s, dmax = sum(d2), max(d2)",
+        "................if not s % 2 and 2*dmax <= s:",
+        "....................d2.remove(dmax)",
+        "....................s2, ld = int(s/2-dmax), len(d2)",
+        "....................z = np.zeros((ld+1,s2+1),dtype=int)",
+        "....................for i in range(1,ld+1):",
+        "........................y = min(d2[i-1],s2+1)",
+        "........................z[i,range(y)] = z[i-1,range(y)]",
+        "........................z[i,range(y,s2+1)] = np.maximum(z[i-1,range(y,s2+1)],z[i-1,range(0,s2+1-y)]+y)",
+        "........................if z[i,s2] == s2:",
+        "............................A243104.append(n)",
+        "............................break",
+        "................break"
+    ],
+    "xref": [
+        "Cf. A192274."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Chai Wah Wu_, Aug 19 2014",
+    "references": 1,
+    "revision": 9,
+    "time": "2014-08-20T20:41:25-04:00",
+    "created": "2014-08-20T20:41:25-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 225851,
+    "data": "3,3,7,7,7,19,59,59,59,59,157,13397,2312267,97760291,1042776437",
+    "name": "For the Collatz (3x+1) iterations starting with a prime number p, a(n) is the smallest p such that the trajectory contains n successive prime numbers.",
+    "comment": [
+        "a(13)-a(15) were found by Farideh Firoozbakht. See Carlos Rivera's website. - _T. D. Noe_, May 17 2013"
+    ],
+    "link": [
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/puzzles/puzz_476.htm\">Puzzle 476: A question related to Collatz sequence</a>"
+    ],
+    "example": [
+        "a(11) = 157 because the Collatz sequence of odd numbers is 157 -> 59 -> 89 -> 67 -> 101 -> 19 -> 29 -> 11 -> 17 -> 13 - > 5 -> 1 with 11 consecutive prime numbers."
+    ],
+    "maple": [
+        "nn:=300:T:=array(1..nn):",
+        "for n from 1 to 15 do:jj:=0:",
+        "for m from 2 to 10^5 while(jj=0) do:p:=ithprime(m):",
+        "for i from 1 to nn while(jj=0) do:",
+        "T[i]:=0:od:a:=1:T[1]:=p:x:=p:",
+        "for it from 1 to nn while (x>1) do:",
+        "if irem(x, 2)=0 then",
+        "x := x/2:",
+        "else",
+        "a:=a+1:T[a]:=x:",
+        "x := 3*x+1: fi:",
+        "od:",
+        "jj:=0:aa:=a:itr:=0:",
+        "for j from 2 to n+1 do:",
+        "if type(T[j], prime)=true then",
+        "itr :=itr+1 :",
+        "else fi:",
+        "od:",
+        "if itr=n then",
+        "jj:=1: printf ( \"%d %d \\n\",n,p):",
+        "else",
+        "fi:",
+        "od:",
+        "od:"
+    ],
+    "mathematica": [
+        "RemoveEven[n_] := n/2^IntegerExponent[n, 2]; Collatz2[n_] := NestWhileList[RemoveEven[3 # + 1] &, n, # > 1 &]; PrimeCnt[lst_] := Module[{i = 1}, While[PrimeQ[lst[[i]]], i++]; i - 1]; nn = 12; t = Table[0, {nn}]; found = 0; n = 2; While[found < nn, n = NextPrime[n]; ps = PrimeCnt[Collatz2[n]]; If[ps > nn, ps = nn]; While[ps > 0 && t[[ps]] == 0, t[[ps]] = n; found++; ps--]]; t (* _T. D. Noe_, May 17 2013 *)"
+    ],
+    "xref": [
+        "Cf. A006577."
+    ],
+    "keyword": "nonn,hard",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, May 17 2013",
+    "references": 0,
+    "revision": 11,
+    "time": "2013-05-17T23:29:07-04:00",
+    "created": "2013-05-17T23:29:07-04:00"
+}

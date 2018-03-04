@@ -1,0 +1,35 @@
+{
+    "number": 192332,
+    "data": "1,2,4,22,208,5560,299600,33562696,7635498336,3518440564544,3275345183542208,6148914696963883712,23248573454127484129024,176848577040808821410837120,2704321280486889389864215362560,83076749736557243209409446411255936,5124252113632955685095523500148980125696,634332307869315502692705867068871886072665600",
+    "name": "For n >= 3, draw a regular n-sided polygon and its n(n-3)/2 diagonals, so there are n(n-1)/2 lines; a(n) is the number of ways to choose a subset of these lines (subsets differing by a rotation are regarded as identical). a(1)=1, a(2)=2 by convention.",
+    "comment": [
+        "Suggested by A192314."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A192332/b192332.txt\">Table of n, a(n) for n = 1..80</a>"
+    ],
+    "formula": [
+        "a(n) = (1/n)*(Sum_{d|n, d odd} phi(d)*2^(n*(n-1)/(2*d)) + Sum_{d|n, d even} phi(d)*2^(n^2/(2*d)))."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "f:=proc(n) local t0, t1, d; t0:=0; t1:=divisors(n);",
+        "for d in t1 do",
+        "if d mod 2 = 0 then t0:=t0+phi(d)*2^(n^2/(2*d))",
+        "else t0:=t0+phi(d)*2^(n*(n-1)/(2*d)); fi; od; t0/n; end;",
+        "[seq(f(n), n=1..30)];"
+    ],
+    "mathematica": [
+        "Table[ 1/n* Plus @@ Map[Function[d, EulerPhi[d]*2^((n*(n - Mod[d, 2])/2)/d)], Divisors[n]], {n, 1, 20}]  (* From Olivier G\u00e9rard, Aug 27 2011 *)"
+    ],
+    "xref": [
+        "Cf. A192314, A191563 (orbits under dihedral group)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jun 28 2011",
+    "references": 4,
+    "revision": 21,
+    "time": "2012-10-21T13:05:05-04:00",
+    "created": "2011-06-28T13:27:55-04:00"
+}

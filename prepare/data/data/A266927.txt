@@ -1,0 +1,55 @@
+{
+    "number": 266927,
+    "data": "8,25,32,100,125,128,169,225,289,400,512,625,676,841,900,1000,1156,1225,1369,1521,1600,1681,2025,2048,2197,2500,2601,2704,2809,3025,3125,3364,3600,3721,4225,4624,4900,4913,5329,5476,5625,5832,6084,6400,6724,7225,7569",
+    "name": "Perfect powers of the form x^2 + y^2 where x and y are positive integers.",
+    "comment": [
+        "Intersection of A000404 and A001597.",
+        "A134422 is a subsequence.",
+        "Obviously, this sequence contains all numbers of the form 2^(2*n+1), for n > 0.",
+        "Motivation for this sequence is the equation m^k = x^2 + y^2 where m,x,y > 0, k >= 2. - _Altug Alkan_, Jan 11 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A266927/b266927.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "25 is a term because 25 = 5^2 = 3^2 + 4^2.",
+        "32 is a term because 32 = 2^5 = 4^2 + 4^2.",
+        "125 is a term because 125 = 5^3 = 10^2 + 5^2.",
+        "169 is a term because 169 = 13^2 = 5^2 + 12^2."
+    ],
+    "maple": [
+        "N:= 10000: # to get all terms <= N",
+        "g:= proc(k)",
+        "    local F,F1,F2,F3,f;",
+        "    F:= ifactors(k)[2];",
+        "    F2,F:= selectremove(f->f[1]=2,F);",
+        "    F1,F3:= selectremove(f -> f[1] mod 4 = 1, F);",
+        "    if F1 <> [] then",
+        "       if hastype(map(f -> f[2],F3),odd) then",
+        "          seq(k^j, j=2..floor(log[k](N)),2)",
+        "       else seq(k^j, j=2..floor(log[k](N)))",
+        "       fi",
+        "    elif F2 = [] or F2[1][2]::even or hastype(map(f -> f[2],F3),odd) then NULL",
+        "    else seq(k^j, j=3..floor(log[k](N)),2)",
+        "    fi",
+        "end proc:",
+        "sort(convert(map(g,{$2..floor(sqrt(N))}),list)); # _Robert Israel_, Jan 11 2016"
+    ],
+    "mathematica": [
+        "lim = 7600; fQ[n_] := n == 1 || GCD @@ FactorInteger[n][[All, 2]] > 1; Select[Union@ Flatten@ Table[a^2 + b^2, {a, Floor[Sqrt[lim - 1]]}, {b, a, Floor[Sqrt[lim - a^2]]}], fQ] (* _Michael De Vlieger_, Jan 06 2016, after _N. J. A. Sloane_ and _J. H. Conway_ at A000404 and _Ant King_ at A001597 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = {for( i=1, #n=factor(n)~%4, n[1, i]==3 && n[2, i]%2 && return); n && ( vecmin(n[1, ])==1 || (n[1, 1]==2 && n[2, 1]%2))}",
+        "for(n=1, 1e4, if((ispower(n) || n==1) && is(n), print1(n, \", \")));"
+    ],
+    "xref": [
+        "Cf. A000404, A001597, A004171, A134422."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Altug Alkan_, Jan 06 2016",
+    "references": 5,
+    "revision": 25,
+    "time": "2016-01-11T21:38:09-05:00",
+    "created": "2016-01-09T19:36:29-05:00"
+}

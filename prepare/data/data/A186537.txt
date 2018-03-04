@@ -1,0 +1,37 @@
+{
+    "number": 186537,
+    "data": "0,1,2,4,7,12,20,34,58,101,178,318,574,1046,1920,3548,6593,12312,23092,43480,82154,155716,295984,564050,1077400,2062311,3955186,7598756,14622318,28179338,54379520,105071498,203254164,393607534,763001000,1480458656,2875091021,5588152920,10869906136",
+    "name": "G.f.: Sum( x^k/(1-2*x+x^k), k=1..oo).",
+    "comment": [
+        "This arose while studying the properties of A079500."
+    ],
+    "link": [
+        "N. J. A. Sloane and Alois P. Heinz, <a href=\"/A186537/b186537.txt\">Table of n, a(n) for n = 0..1000</a> (first 257 terms from N. J. A. Sloane)"
+    ],
+    "formula": [
+        "G.f.: -(1+x^2+ 1/(x-1) )/(1-x)*( 1 + x*(x-1)^3*(1-x+x^3)/( Q(0)- x*(x-1)^3*(1-x+x^3)) ), where Q(k) = (x+1)*(2*x-1)*(1-x)^2 + x^(k+2)*(x+x^2+x^3-2*x^4-1 - x^(k+3) + x^(k+5)) - x*(-1+2*x-x^(k+3))*(1-2*x+x^2+x^(k+4)-x^(k+5))*(-1+4*x-5*x^2+2*x^3 - x^(k+2)- x^(k+5) + 2*x^(k+3) - x^(2*k+5) + x^(2*k+6))/Q(k+1) ; (continued fraction). - _Sergei N. Gladkovskii_, Dec 14 2013"
+    ],
+    "maple": [
+        "add( x^k/(1-2*x+x^k), k=1..61); series(%,x,60); seriestolist(%);",
+        "# second Maple program:",
+        "b:= proc(n, m) option remember; `if`(n=0, 1,",
+        "      `if`(m=0, add(b(n-j, j), j=1..n),",
+        "      add(b(n-j, min(n-j, m)), j=1..min(n, m))))",
+        "    end:",
+        "a:= proc(n) a(n):= `if`(n=0, 0, b(n-1, 0)+a(n-1)) end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, May 01 2014"
+    ],
+    "mathematica": [
+        "b[n_, m_] := b[n, m] = If[n == 0, 1, If[m == 0, Sum[b[n-j, j], {j, 1, n}], Sum[b[n-j, Min[n-j, m]], {j, 1, Min[n, m]}]]]; a[n_] := If[n == 0, 0, b[n-1, 0] + a[n-1]]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, May 05 2014, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "First differences give A079500."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Feb 23 2011",
+    "references": 2,
+    "revision": 27,
+    "time": "2014-05-05T08:55:33-04:00",
+    "created": "2011-02-23T15:38:03-05:00"
+}

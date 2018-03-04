@@ -1,0 +1,33 @@
+{
+    "number": 64527,
+    "data": "1,2,4,6,8,12,16,18,24,32,36,48,54,64,72,96,108,120,128,144,162,192,200,216,240,256,288,324,384,400,432,480,486,512,576,648,720,768,800,864,960,972,1024,1152,1200,1296,1440,1458,1536,1600,1728,1920,1944",
+    "name": "Numbers n such that there exists a finite group G of order n such that all entries in its character table are integers.",
+    "comment": [
+        "The list contains all numbers of the form 2^w*3^u for w> 0, u>=0. But it also contains 120, 200, 240 and 400. It contains n! for all n because the symmetric groups have integral character tables. By taking direct products, we get all numbers of the form n! * 2^w * 3^u, w > 0, u >= 0. The 200 comes from a semidirect product of an elementary group of order 25 with a quaternion group of order 8, with fixed-point-free action (a Frobenius group). - Derek Holt",
+        "From _Eric M. Schmidt_, Feb 22 2013: (Start)",
+        "A group of order n has integral character table iff g^m is conjugate to g for all group elements g and all m coprime to n.",
+        "A necessary condition for a group G to have an integral character table is for G/G' to be an elementary Abelian 2-group. Therefore, by the Feit-Thompson theorem, the only odd term in this sequence is 1.",
+        "R. Gow proved (see reference) that no prime greater than 5 can divide the order of a solvable group with integral character table. (End)"
+    ],
+    "reference": [
+        "Roderick Gow, Groups whose characters are rational-valued, J. Algebra 40 (1976) 280-299.",
+        "Hegedus Pal, Structure of Solvable Rational Groups, Proc. London Math. Soc. (2005) 90 (2): 439-471."
+    ],
+    "program": [
+        "(GAP) HasIntegerCharTable := function(G) local cc, ccr, e; cc := ConjugacyClasses(G); ccr := List(cc, Representative); e := Exponent(G); return ForAll([2..e-1], m->(not (IsPrimeInt(m) and GcdInt(m, e)=1)) or ForAll([1..Length(cc)], j->ccr[j]^m in cc[j])); end; A064527 := function(max) local res, i, j; res := [1]; for i in [2, 4..max-(max mod 2)] do if ForAny(res, j->i/j in res) then Add(res, i); continue; fi; for j in [1..NumberSmallGroups(i)] do if HasIntegerCharTable(SmallGroup(i, j)) then Add(res, i); continue; fi; od; od; return res; end; # _Eric M. Schmidt_, Feb 22 2013"
+    ],
+    "xref": [
+        "Contains A000142 and A007694."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "Tim Brooks (tim_brooks(AT)my-deja.com), Oct 07 2001",
+    "ext": [
+        "More terms from Derek Holt (mareg(AT)csv.warwick.ac.uk), Oct 07, 2001",
+        "More terms from _Eric M. Schmidt_, Feb 22 2013"
+    ],
+    "references": 1,
+    "revision": 15,
+    "time": "2013-02-26T12:20:03-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

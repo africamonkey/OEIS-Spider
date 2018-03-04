@@ -1,0 +1,30 @@
+{
+    "number": 72373,
+    "data": "1,4,75,384,1805,8100,35287,150528,632025,2620860,10759331,43804800,177105253,711809364,2846259375,11330543616,44929049777,177540878700,699402223099,2747583822720,10766828545725,42095796462852,164244726238343",
+    "name": "Complexity of doubled cycle (regarding case n = 2 as a graph).",
+    "reference": [
+        "G. Kreweras, Complexite et circuits Euleriens dans les sommes tensorielles de graphes, J. Combin. Theory, B 24 (1978), 202-212."
+    ],
+    "formula": [
+        "G.f.: -8x^2+x(1+2x-10x^2+2x^3+x^4)/((1-x)*(1-4x+x^2))^2.",
+        "a(n)=10a(n-1)-35a(n-2)+52a(n-3)-35a(n-4)+10a(n-5)-a(n-6), n>8."
+    ],
+    "program": [
+        "(PARI) /* prism (or doubled cycle) graph with n vertices */ prism(n)=if(n%2,[;],matrix(n,n,i,j,i!=j && ((abs(i-j)==1 && (i+j)!=n+1) || (abs(i-j)==n/2-1 && (i+j)%n==n/2+1) || abs(i-j)==n/2)))",
+        "(PARI) /* treenumber (or complexity) of a graph */ treenumber(m)=local(n); n=matdim(m); if(n,matdet(adj2laplace(m)+matone(n))/n^2)",
+        "(PARI) /* convert adjacency matrix to laplacian matrix */ adj2laplace(m)=local(l,n); n=matdim(m); matdiagonal(m*vectorv(n,i,1))-m",
+        "(PARI) /* matrix J of all ones */ matone(n)=matrix(n,n,i,j,1) /* dimension of a square matrix */ matdim(m)=matsize(m)[1]",
+        "(PARI) a(n)=treenumber(prism(2*n))",
+        "(PARI) a(n)=if(n<0,0,polcoeff(-8*x^2+x*(1+2*x-10*x^2+2*x^3+x^4)/((1-x)*(1-4*x+x^2))^2+x*O(x^n),n))"
+    ],
+    "xref": [
+        "Apart from a(2) coincides with A006235."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Michael Somos_, Jul 19 2002",
+    "references": 1,
+    "revision": 8,
+    "time": "2017-06-13T21:44:58-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

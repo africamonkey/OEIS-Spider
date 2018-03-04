@@ -1,0 +1,45 @@
+{
+    "number": 51532,
+    "data": "1,2,3,4,5,7,9,11,13,15,17,19,23,25,29,31,33,35,37,41,43,45,47,49,51,53,59,61,65,67,69,71,73,77,79,83,85,87,89,91,95,97,99,101,103,107,109,113,115,119,121,123,127,131,133,137,139,141,143,145,149,151,153,157,159,161",
+    "name": "The Abelian orders (or Abelian numbers): n such that every group of order n is Abelian.",
+    "comment": [
+        "Except for a(2)=2 and a(4)=4, all of the terms in the sequence are odd. This is because of the existence of a non-Abelian dihedral group of order 2n for each n>2.",
+        "Cubefree terms of A056867; A212793(a(n)) = 1. - _Reinhard Zumkeller_, Jun 28 2013"
+    ],
+    "reference": [
+        "W. R. Scott, Group Theory, Dover, 1987, page 217."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A051532/b051532.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "J. Pakianathan and K. Shankar, <a href=\"http://www.jstor.org/stable/2589118\">Nilpotent Numbers</a>, Amer. Math. Monthly, 107, August-September 2000, pp. 631-634.",
+        "<a href=\"/index/Gre#groups\">Index entries for sequences related to groups</a>"
+    ],
+    "formula": [
+        "n must be cubefree and its prime divisors must satisfy certain congruences.",
+        "Let the prime factorization of n be p1^e1...pr^er. Then n is in this sequence if ei<3 for all i and pi^k does not equal 1 (mod pj) for all i and j and 1 <= k <= ei. - _T. D. Noe_, Mar 25 2007"
+    ],
+    "example": [
+        "a(4)=4 because every group of order 4 is Abelian."
+    ],
+    "mathematica": [
+        "isA051532[n_] := Catch[f = FactorInteger[n]; v = f[[All, 1]]; lv = Length[v]; For[i = 1, i <= lv, i++, If[f[[i, 2]] > 2, Throw[False], v[[i]] = f[[i, 1]]^f[[i, 2]]]]; For[i = 1, i <= lv, i++, For[j = i + 1, j <= lv, j++, If[Mod[v[[i]], f[[j, 1]]] == 1 || Mod[v[[j]], f[[i, 1]]] == 1, Throw[False]]]]; Throw[True]]; Select[Range[200], isA051532] (* _Jean-Fran\u00e7ois Alcover_, May 03 2012, after PARI *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(f=factor(n),v=vector(#f[,1])); for(i=1,#v, if(f[i,2]>2, return(0), v[i]=f[i,1]^f[i,2])); for(i=1,#v, for(j=i+1,#v, if(v[i]%f[j,1]==1 || v[j]%f[i,1]==1, return(0)))); 1 \\\\ _Charles R Greathouse IV_, Feb 13 2011",
+        "(Haskell)",
+        "a051532 n = a051532_list !! (n-1)",
+        "a051532_list = filter ((== 1) . a212793) a056867_list",
+        "-- _Reinhard Zumkeller_, Jun 28 2013"
+    ],
+    "xref": [
+        "Subsequence of A056867; complement of A060652.",
+        "Cf. A003277, A064899."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_Des MacHale_",
+    "references": 20,
+    "revision": 34,
+    "time": "2017-05-05T10:57:38-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

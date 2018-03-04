@@ -1,0 +1,47 @@
+{
+    "number": 1196,
+    "data": "0,3,12,15,48,51,60,63,192,195,204,207,240,243,252,255,768,771,780,783,816,819,828,831,960,963,972,975,1008,1011,1020,1023,3072,3075,3084,3087,3120,3123,3132,3135,3264,3267,3276,3279,3312",
+    "name": "Double-bitters: only even length runs in binary expansion.",
+    "comment": [
+        "Numbers whose set of base 4 digits is {0,3}. - _Ray Chandler_, Aug 03 2004",
+        "n such that there exists a permutation p_1, ..., p_n of 1, ..., n such that i + p_i is a power of 4 for every i - _Ray Chandler_, Aug 03 2004",
+        "The first 2^n terms of the sequence could be obtained using the Cantor-like process for the segment [0,4^n-1]. E.g., for n=1 we have [0,{1,2},3] such that numbers outside of braces are the first 2 terms of the sequence; for n=2 we have [0,{1,2},3,{4,5,6,7,8,9,10,11},12,{13,14},15] such that the numbers outside of braces are the first 4 terms of the sequence, etc. - _Vladimir Shevelev_, Dec 17 2012",
+        "From _Emeric Deutsch_, Jan 26 2018: (Start)",
+        "Also, the indices of the compositions having only even parts. For the definition of the index of a composition see A298644. For example, 195 is in the sequence since its binary form is 11000011 and the composition [2,4,2] has only even parts. 132 is not in the sequence since its binary form is 10000100 and the composition [1,4,1,2] has also odd parts.",
+        "The command c(n) from the Maple program yields the composition having index n. (End)"
+    ],
+    "link": [
+        "Sean A. Irvine, <a href=\"/A001196/b001196.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "R. Stephan, <a href=\"/somedcgf.html\">Some divide-and-conquer sequences ...</a>",
+        "R. Stephan, <a href=\"/A079944/a079944.ps\">Table of generating functions</a>",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "formula": [
+        "a(2n) = 4a(n), a(2n+1) = 4a(n) + 3.",
+        "a(n) = 3 * A000695(n)."
+    ],
+    "maple": [
+        "Runs := proc (L) local j, r, i, k: j := 1: r[j] := L[1]: for i from 2 to nops(L) do if L[i] = L[i-1] then r[j] := r[j], L[i] else j := j+1: r[j] := L[i] end if end do: [seq([r[k]], k = 1 .. j)] end proc: RunLengths := proc (L) map(nops, Runs(L)) end proc: c := proc (n) ListTools:-Reverse(convert(n, base, 2)): RunLengths(%) end proc: A := {}: for n to 3350 do if type(product(1+c(n)[j], j = 1 .. nops(c(n))), odd) = true then A := `union`(A, {n}) else  end if end do: A; # most of the Maple  program is due to _W. Edwin Clark_. - _Emeric Deutsch_, Jan 26 2018"
+    ],
+    "mathematica": [
+        "fQ[n_] := Union@ Mod[Length@# & /@ Split@ IntegerDigits[n, 2], 2] == {0}; Select[ Range@ 10000, fQ] (* Or *)",
+        "fQ[n_] := Union@ Join[IntegerDigits[n, 4], {0, 3}] == {0, 3}; Select[ Range@ 10000, fQ] (* _Robert G. Wilson v_, Dec 24 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a001196 n = if n == 0 then 0 else 4 * a001196 n' + 3 * b",
+        "            where (n',b) = divMod n 2",
+        "-- _Reinhard Zumkeller_, Feb 21 2014"
+    ],
+    "xref": [
+        "3 times the Moser-de Bruijn sequence A000695.",
+        "Cf. A005823, A097252-A097262."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, based on an email from Bart la Bastide (bart(AT)xs4all.nl)",
+    "references": 20,
+    "revision": 44,
+    "time": "2018-01-27T02:24:22-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

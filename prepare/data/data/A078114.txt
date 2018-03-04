@@ -1,0 +1,35 @@
+{
+    "number": 78114,
+    "data": "79,4259,322079,1391239,9416279,57229199,180621149,583332179,666475879,758206139,1090726199,1366313119,1780616609,3017394239,3297759379,3754381249,8119069289,9639336299,12901941509,16441316629,17940244339",
+    "name": "Pinomial primes of order 4: primes of the form 3*x^4 + 1*x^3 + 4*x^2 + 1*x + 5, x a positive integer.",
+    "comment": [
+        "Note that only primes that end in 9 occur in the sequence of order 4. This is easy to prove by considering the ending digit combinations. actually, order 4 with odd x produces an even number so only even numbers need be considered.",
+        "For order 5, x<= 10, y = 3*x^5 + x^4 + 4*x^3 + x^2 + 5*x + 9. Sequence is 23 167 10559 54287 104561 314159 ...",
+        "Allowing any integral value for x, the sequence would read: 5, 59, 79, 769, 4259, 113279, 310379, 322079, 694039, 983789, 1391239, 1825129, 9416279,... (M. F. Hasler)",
+        "One could also reverse the order of polynomial coefficients, i.e. list primes p = 3 + 1*x + 4*x^2 + 1*x^3 + 5*x^4. For a base independent approach, one could take coefficients from the continued fraction expansion of Pi. (M. F. Hasler, Jun 17 2007)"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A078114/b078114.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "Only even x can give a prime."
+    ],
+    "mathematica": [
+        "Select[Table[3*n^4+n^3+4*n^2+n+5,{n,1,300}],PrimeQ] (* _Vincenzo Librandi_, Jul 15 2012 *)"
+    ],
+    "program": [
+        "(PARI) This program is hard-wired for order 4. Change the polynomial y for more terms. pinomial(n) = { ct=0; sr=0; for(x=1,n, /* odd x => even y */ y = 3*x^4 + x^3 + 4*x^2 + x + 5; /* y = 3*x^5 + x^4 + 4*x^3 + x^2 + 5*x + 9; /* order 5*/ if(isprime(y),ct+=1; print1(y\" \"); ); ) }",
+        "(PARI) polyprimes( N=25 /*# of terms*/, P=[3,1,4,1,5], X=1/*starting value*/, a=[] )={ local(t); P=Pol(P); while( #a<N, if( isprime( t=subst( P,x,X )) & !setsearch(Set(a),t), /*print([X,t]);*/ a=concat(a,t)); X++/*or: X=(X<=0)-X to get all integers*/); vecsort(a) } /* then polyprimes() gives the first 25 terms; polyprimes(50,[null],0) gives 50 terms including the term 5=P(x=0), etc. */ (M. F. Hasler, Jun 17 2007)",
+        "(MAGMA) [a: n in [1..300] | IsPrime(a) where a is 3*n^4+n^3+ 4*n^2+ n+5]; // _Vincenzo Librandi_, Jul 15 2012"
+    ],
+    "keyword": "easy,nonn,base,less",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Dec 04 2002",
+    "ext": [
+        "Edited by _M. F. Hasler_, Jun 17 2007"
+    ],
+    "references": 3,
+    "revision": 12,
+    "time": "2013-10-01T17:57:31-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

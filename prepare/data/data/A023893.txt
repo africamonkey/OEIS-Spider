@@ -1,0 +1,29 @@
+{
+    "number": 23893,
+    "data": "1,1,2,3,5,7,10,14,20,27,36,48,63,82,105,134,171,215,269,335,415,511,626,764,929,1125,1356,1631,1953,2333,2776,3296,3903,4608,5427,6377,7476,8744,10205,11886,13818,16032,18565,21463,24768,28536",
+    "name": "Number of partitions of n into prime power parts (1 included); number of nonisomorphic Abelian subgroups of symmetric group S_n.",
+    "link": [
+        "<a href=\"/index/Gre#groups\">Index entries for sequences related to groups</a>"
+    ],
+    "formula": [
+        "G.f.: (Product_{p prime} Product_{k>=1} 1/(1-x^(p^k))) / (1-x)."
+    ],
+    "mathematica": [
+        "Table[Length[Select[IntegerPartitions[n],Count[Map[Length,FactorInteger[#]], 1] == Length[#] &]], {n, 0, 35}] (* _Geoffrey Critzer_, Oct 25 2015 *)",
+        "nmax = 50; Clear[P]; P[m_] := P[m] = Product[Product[1/(1-x^(p^k)), {k, 1, m}], {p, Prime[Range[PrimePi[nmax]]]}]/(1-x)+O[x]^nmax // CoefficientList[ #, x]&; P[1]; P[m=2]; While[P[m] != P[m-1], m++]; P[m] (* _Jean-Fran\u00e7ois Alcover_, Aug 31 2016 *)"
+    ],
+    "program": [
+        "(PARI) lista(m) = {x = t + t*O(t^m); gf = prod(k=1, m, if (isprimepower(k), 1/(1-x^k), 1))/(1-x); for (n=0, m, print1(polcoeff(gf, n, t), \", \"));} \\\\ _Michel Marcus_, Mar 09 2013"
+    ],
+    "xref": [
+        "Cf. A009490, A023894 (first differences), A062297 (number of Abelian subgroups).",
+        "Cf. A018819, A062051, A131995."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 14,
+    "revision": 32,
+    "time": "2016-08-31T11:26:08-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

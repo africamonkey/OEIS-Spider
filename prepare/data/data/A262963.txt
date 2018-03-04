@@ -1,0 +1,48 @@
+{
+    "number": 262963,
+    "data": "2,14,43,238,239,698,4010,4090,4091,4094,10922,12031,12271,12283,174842,174847,176062,176063,977578,977579,981679,981691,981931,981934,981935,981950,1043114,1043194,1043195,1043198,3129259,3129262,3129263,3129322,3129323,3129326,3129343",
+    "name": "List of numbers n whose base-3 expansion contains only the digits 1 and 2 and whose base-4 expansion contains only the digits 2 and 3.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A262963/b262963.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "43 is 1121 in base 3 and 223 in base 4; it uses the two largest digits in the two bases and is therefore a term.",
+        "Similarly 238 is 22211 in base 3 and 3232 in base 4 so it is also a term."
+    ],
+    "program": [
+        "(Python)",
+        "from gmpy2 import digits",
+        "def f1(n):",
+        "    s = digits(n,3)",
+        "    m = len(s)",
+        "    for i in range(m):",
+        "        if s[i] == '0':",
+        "            return(int(s[:i]+'1'*(m-i),3))",
+        "    return n",
+        "def f2(n):",
+        "    s = digits(n,4)",
+        "    m = len(s)",
+        "    for i in range(m):",
+        "        if s[i] in ['0','1']:",
+        "            return(int(s[:i]+'2'*(m-i),4))",
+        "    return n",
+        "A262963_list = []",
+        "n = 1",
+        "for i in range(10**4):",
+        "    m = f2(f1(n))",
+        "    while m != n:",
+        "        n, m = m, f2(f1(m))",
+        "    A262963_list.append(m)",
+        "    n += 1 # _Chai Wah Wu_, Oct 30 2015"
+    ],
+    "xref": [
+        "Cf. A258981, A261970, A262958."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robin Powell_, Oct 05 2015",
+    "references": 2,
+    "revision": 20,
+    "time": "2015-10-31T00:35:39-04:00",
+    "created": "2015-10-29T23:02:09-04:00"
+}

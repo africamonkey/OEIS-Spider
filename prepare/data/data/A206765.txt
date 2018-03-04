@@ -1,0 +1,41 @@
+{
+    "number": 206765,
+    "data": "1,1,12,87,907,8393,118932,1683990,31209334,635005549,15054451057,393600573337,11466736952722,363842430190308,12564913404375244,467483278911401155,18670853023655302285,795978439482823960066,36093307429580735618893",
+    "name": "G.f.: Product_{n>=1} [ (1 - 3^n*x^n) / (1 - (n+3)^n*x^n) ]^(1/n).",
+    "comment": [
+        "Here sigma(n,k) equals the sum of the k-th powers of the divisors of n."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A206765/b206765.txt\">Table of n, a(n) for n = 0..380</a>"
+    ],
+    "formula": [
+        "G.f.: exp( Sum_{n>=1} x^n/n * Sum_{k=1..n} binomial(n,k) * sigma(n,k) * 3^(n-k) ).",
+        "Logarithmic derivative yields A206766.",
+        "a(n) ~ exp(3) * n^(n-1). - _Vaclav Kotesovec_, Oct 08 2016"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 12*x^2 + 87*x^3 + 907*x^4 + 8393*x^5 + 118932*x^6 +...",
+        "where the g.f. equals the product:",
+        "A(x) = (1-3*x)/(1-4*x) * ((1-3^2*x^2)/(1-5^2*x^2))^(1/2) * ((1-3^3*x^3)/(1-6^3*x^3))^(1/3) * ((1-3^4*x^4)/(1-7^4*x^4))^(1/4) * ((1-3^5*x^5)/(1-8^5*x^5))^(1/5) *...",
+        "The logarithm equals the l.g.f. of A206766:",
+        "log(A(x)) = x + 23*x^2/2 + 226*x^3/3 + 3039*x^4/4 + 33306*x^5/5 +..."
+    ],
+    "mathematica": [
+        "max = 19; p = Product[((1-3^n*x^n) / (1-(n+3)^n*x^n))^(1/n), {n, 1, max}] + O[x]^max; CoefficientList[p, x] (* _Jean-Fran\u00e7ois Alcover_, Oct 08 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(exp(sum(m=1, n+1, x^m/m*sum(k=1, m, binomial(m, k)*sigma(m, k)*3^(m-k))+x*O(x^n))), n)}",
+        "(PARI) {a(n)=polcoeff(prod(k=1, n, ((1-3^k*x^k)/(1-(k+3)^k*x^k +x*O(x^n)))^(1/k)), n)}",
+        "for(n=0,31,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A206766 (log), A205814, A205811, A206763."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Feb 12 2012",
+    "references": 2,
+    "revision": 14,
+    "time": "2018-02-12T21:06:08-05:00",
+    "created": "2012-02-12T13:25:09-05:00"
+}

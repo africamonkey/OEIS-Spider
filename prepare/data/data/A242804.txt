@@ -1,0 +1,50 @@
+{
+    "number": 242804,
+    "data": "213,143097,194757,206133,273417,684897,807657,1373937,1391757,1516533,1591593,1610997,1774797,1882977,1891761,2046453,2051493,2163417,2163957,2338053,2359977,2522517,2913837,3108201,4221753",
+    "name": "Integers n such that each of n, n+1, n+2, n+4, n+5, n+6 is the product of two distinct primes.",
+    "comment": [
+        "A remarkable gap occurs between the initial two members, and the sequence seems to be rather sparse compared to the related A242805.",
+        "Here, the first member n of the sextet is the reference, whereas in A068088 the center n+3 is selected as reference. Observe that n+3 must be divisible by the square 4.",
+        "All terms are 9 mod 12. - _Zak Seidov_, Apr 14 2015",
+        "From _Robert Israel_, Apr 15 2015: (Start)",
+        "All terms are 33 mod 36.",
+        "n in A039833 such that n+4 is in A039833. (End)",
+        "From _Robert G. Wilson v_, Apr 15 2015: (Start)",
+        "n is congruent to 33 (mod 36) so one of its factors is 3 and the other is == 11 (mod 12);",
+        "n+1 is congruent to 34 (mod 36) so one of its factors is 2 and the other is == 17 (mod 18);",
+        "n+2 is congruent to 35 (mod 36) so its factors are == \u00b11 (mod 6);",
+        "n+4 is congruent to 1 (mod 36) so its factors are == \u00b11 (mod 6);",
+        "n+5 is congruent to 2 (mod 36) so one of its factors is 2 and the other is == 1 (mod 18);",
+        "n+6 is congruent to 3 (mod 36) so one of its factors is 3 and the other is == 1 (mod 12). (End).",
+        "Number of terms < 10^k: 0, 0, 1, 1, 1, 7, 39, 169, 882, 4852, 27479, \u2026,. - _Robert G. Wilson v_, Apr 15 2015",
+        "Or, numbers n such that n, n+1 and n+2 are terms in A175648. - _Zak Seidov_, Dec 08 2015"
+    ],
+    "link": [
+        "Zak Seidov and Robert G. Wilson v, <a href=\"/A242804/b242804.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "213=3*71, 214=2*107, 215=5*43, 217=7*31, 218=2*109, 219=3*73."
+    ],
+    "maple": [
+        "f:= t -> numtheory:-issqrfree(t) and (numtheory:-bigomega(t) = 2):",
+        "select(t -> andmap(f, [t,t+1,t+2,t+4,t+5,t+6]), [seq(36*k+33,k=0..10^6)]); # _Robert Israel_, Apr 15 2015"
+    ],
+    "mathematica": [
+        "fQ[n_] := PrimeQ[n/3] && PrimeQ[(n + 1)/2] && PrimeQ[(n + 5)/2] && PrimeQ[(n + 6)/3] && PrimeNu[{n + 2, n + 4}] == {2, 2} == PrimeOmega[{n + 2, n + 4}]; k = 33; lst = {}; While[k < 10^8, If[fQ@ k, AppendTo[lst, k]]; k += 36]; lst (* _Robert G. Wilson v_, Apr 14 2015 and revised Apr 15 2015 after _Zak Seidov_ and _Robert Israel_ *)"
+    ],
+    "program": [
+        "(PARI) default(primelimit, 1000M); i=0; j=0; k=0; l=0; m=0; loc=0; lb=2; ub=9*10^9; o=2; for(n=lb, ub, if(issquarefree(n)&&(o==omega(n)), loc=loc+1; if(1==loc, i=n; ); if(2==loc, if(i+1==n, j=n; ); if(i+1<n, loc=1; i=n; ); ); if(3==loc, if(j+1==n, k=n; ); if(j+1<n, loc=1; i=n; ); ); if(4==loc, if(k+2==n, l=n; ); if(k+2<n, loc=1; i=n; ); ); if(5==loc, if(l+1==n, m=n; ); if(l+1<n, loc=1; i=n; ); ); if(6==loc, if(m+1==n, print1(i,\",\"); loc=0; ); if(m+1<n, loc=1; i=n))))",
+        "(PARI) forstep(x=213,4221753,12, if( isprime(x/3) && isprime((x+1)/2) && 2==omega(x+2) && 2==bigomega(x+2) && 2==omega(x+4) && 2==bigomega(x+4) && isprime((x+5)/2) && isprime((x+6)/3), print1(x\", \"))) \\\\ _Zak Seidov_, Apr 14 2015"
+    ],
+    "xref": [
+        "Cf. A242793 (minima for two, three and more prime divisors) and A068088 (arbitrary squarefree integers).",
+        "Cf. A242805, A039833, A175648."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Daniel Constantin Mayer_, May 23 2014",
+    "references": 6,
+    "revision": 64,
+    "time": "2017-07-20T09:00:28-04:00",
+    "created": "2014-05-27T00:20:01-04:00"
+}

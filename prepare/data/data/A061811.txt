@@ -1,0 +1,45 @@
+{
+    "number": 61811,
+    "data": "0,6,24,42,48,60,66,84,204,222,228,240,246,264,282,288,402,408,420,426,444,462,468,480,486,600,606,624,642,648,660,666,684,804,822,828,840,846,864,882,888,2004,2022,2028,2040,2046,2064,2082,2088,2202,2208",
+    "name": "Multiples of 3 with all even digits.",
+    "comment": [
+        "The numbers b(d) of terms from 10^(d-1) to 10^d satisfy the recurrence b(d) = 6 b(d-1) - 6 b(d-2) + 5 b(d-3) with b(1)=1, b(2)=6, b(3)=33.  For d >= 4, b(d) = (3*A276508(d) - 10*A276508(d-1) + 3*A276508(d-2))/7. - _Robert Israel_, Feb 15 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A061811/b061811.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Ar#10-automatic\">Index entries for 10-automatic sequences</a>."
+    ],
+    "example": [
+        "228 has all even digits and 228 = 3*76."
+    ],
+    "maple": [
+        "N:= 4: # for all terms < 10^N",
+        "E[1,0]:= {6}:",
+        "E[1,1]:= {4}:",
+        "E[1,2]:= {2,8}:",
+        "for n from 2 to N do",
+        "  for j from 0 to 2 do",
+        "    E[n,j]:= map(t -> (10*t, 10*t+6),E[n-1,j]) union",
+        "             map(t -> (10*t+2, 10*t+8), E[n-1,j+1 mod 3]) union",
+        "           map(t -> 10*t+4, E[n-1,j+2 mod 3]);",
+        "od od:",
+        "A:=sort([0,seq(op(E[i,0]),i=1..N)]); # _Robert Israel_, Feb 15 2017"
+    ],
+    "program": [
+        "(PARI) is(n)=n%3==0 && #setintersect(Set(digits(n)), [1,3,5,7,9])==0 \\\\ _Charles R Greathouse IV_, Feb 15 2017"
+    ],
+    "xref": [
+        "Cf. A061810, A276508."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, May 28 2001",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org), May 30 2001",
+        "Offset corrected by _Charles R Greathouse IV_, Feb 15 2017"
+    ],
+    "references": 2,
+    "revision": 10,
+    "time": "2017-02-15T19:36:35-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

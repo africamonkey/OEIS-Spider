@@ -1,0 +1,53 @@
+{
+    "number": 30267,
+    "data": "1,4,14,46,145,444,1331,3926,11434,32960,94211,267384,754309,2116936,5914310,16458034,45638101,126159156,347769719,956238170,2623278946,7181512964,19622668679,53522804976,145753273225,396323283724,1076167858046,2918447861686",
+    "name": "COMPOSE natural numbers with themselves.",
+    "comment": [
+        "Sum of pyramid weights of all nondecreasing Dyck paths of semilength n. (A pyramid in a Dyck word (path) is a factor of the form U^h D^h, where U=(1,1), D=(1,-1) and h is the height of the pyramid. A pyramid in a Dyck word w is maximal if, as a factor in w, it is not immediately preceded by a u and immediately followed by a d. The pyramid weight of a Dyck path (word) is the sum of the heights of its maximal pyramids.) Example: a(4)=46. Indeed, there are 14 Dyck paths of semilength 4. One of them, namely UUDUDDUD is not nondecreasing because the valleys are at heights 1 and 0. The other 13, with the maximal pyramids shown between parentheses, are: (UD)(UD)(UD)(UD), (UD)(UD)(UUDD), (UD)(UUDD)(UD), (UD)U(UD)(UD)D, (UD)(UUUDDD), (UUDD)(UD)(UD), (UUDD)(UUDD), (UUUDDD)(UD), U(UD)(UD)(UD)D, U(UD)(UUDD)D, U(UUDD)(UD)D, UU(UD)(UD)DD and (UUUUDDDD). The pyramid weights of these paths are 4, 4, 4, 3, 4, 4, 4, 4, 3, 3, 3, 2 and 4, respectively. Their sum is 46. a(n)=Sum(k*A121462(n,k),k=1..n). - _Emeric Deutsch_, Jul 31 2006",
+        "Number of 1s in all compositions of n, where compositions are understood with two different kinds of 1s, say 1 and 1' (n>=1). Example: a(2)=4 because the compositions of 2 are 11, 11', 1'1, 1'1', 2, having a total of 2+1+1+0+0=4 1s. Also number of k's in all compositions of n+k (k=2,3,...). - _Emeric Deutsch_, Jul 21 2008"
+    ],
+    "reference": [
+        "R. P. Grimaldi, Compositions and the alternate Fibonacci numbers, Congressus Numerantium, 186, 2007, 81-96."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A030267/b030267.txt\">Table of n, a(n) for n = 1..200</a>",
+        "E. Barcucci, A. Del Lungo, S. Fezzi and R. Pinzani, <a href=\"http://dx.doi.org/10.1016/S0012-365X(97)82778-1\">Nondecreasing Dyck paths and q-Fibonacci numbers</a>, Discrete Math., 170, 1997, 211-217.",
+        "R. X. F. Chen, L. W. Shapiro, <a href=\"http://cs.uwaterloo.ca/journals/JIS/VOL10/Chen/chen509.html\">On sequences G(n) satisfying G(n)=(d+2)G(n-1)-G(n-2)</a>, J. Int. Seq. 10 (2007) 07.8.1, proposition 17.",
+        "\u00c9. Czabarka, R. Fl\u00f3rez, L. Junes, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v22i1p3\">Some Enumerations on Non-Decreasing Dyck Paths</a>, The Electronic Journal of Combinatorics, 22(1), 2015, #P1.3.",
+        "\u00c9. Czabarka, R. Fl\u00f3rez, L. Junes, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Florez/florez12.html\">A Discrete Convolution on the Generalized Hosoya Triangle</a>, Journal of Integer Sequences, 18 (2015), #15.1.6.",
+        "A. Denise and R. Simion, <a href=\"http://dx.doi.org/10.1016/0012-365X(93)E0147-V\">Two combinatorial statistics on Dyck paths</a>, Discrete Math., 137, 1995, 155-176.",
+        "M. Janjic, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL13/Janjic/janjic33.html\">Hessenberg Matrices and Integer Sequences </a>, J. Int. Seq. 13 (2010) # 10.7.8",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "<a href=\"/index/Tu#2wis\">Index entries for two-way infinite sequences</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (6,-11,6,-1)."
+    ],
+    "formula": [
+        "a(n) = -a(-n) = (2nF(2n+1)+(2-n)F(2n))/5 with F=A000045 (Fibonacci numbers).",
+        "G.f.: x(1-x)^2/(1-3x+x^2)^2. a(n) = Sum_{k=1..n} k*C(n+k-1, 2k-1).",
+        "a(n) = (2/5)F(2n)+(1/5)nL(2n), where F(k) are the Fibonacci numbers (F(0)=0, F(1)=1) and L(k) are the Lucas numbers (L(0)=2, L(1)=1). - _Emeric Deutsch_, Jul 21 2008",
+        "a(0)=1, a(1)=4, a(2)=14, a(3)=46, a(n)=6*a(n-1)-11*a(n-2)+ 6*a(n-3)- a(n-4). - _Harvey P. Dale_, Aug 01 2011"
+    ],
+    "example": [
+        "G.f. A(x) = B(B(x)) where g.f. for natural numbers is B(x) = x/(1-x)^2."
+    ],
+    "maple": [
+        "with(combinat): L[0]:=2: L[1]:=1: for n from 2 to 60 do L[n]:=L[n-1] +L[n-2] end do: seq(2*fibonacci(2*n)*1/5+(1/5)*n*L[2*n],n=1..30); # _Emeric Deutsch_, Jul 21 2008"
+    ],
+    "mathematica": [
+        "Table[Sum[k Binomial[n+k-1,2k-1],{k,n}],{n,30}] (* or *) LinearRecurrence[ {6,-11,6,-1},{1,4,14,46},30] (* _Harvey P. Dale_, Aug 01 2011 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=(2*n*fibonacci(2*n+1)+(2-n)*fibonacci(2*n))/5"
+    ],
+    "xref": [
+        "Partial sums of A038731. First differences of A001870.",
+        "Cf. A121462, A045623, A001629 (right-shifted inverse Binom. Transf.), A023610 (inverse Binom. Transf. of left-shifted sequence)."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_Christian G. Bower_",
+    "references": 12,
+    "revision": 40,
+    "time": "2017-07-15T12:18:59-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

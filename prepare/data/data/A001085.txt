@@ -1,0 +1,61 @@
+{
+    "number": 1085,
+    "id": "M4744 N2030",
+    "data": "1,10,199,3970,79201,1580050,31521799,628855930,12545596801,250283080090,4993116004999,99612037019890,1987247624392801,39645340450836130,790919561392329799,15778745887395759850,314783998186522867201,6279901217843061584170",
+    "name": "a(n) = 20*a(n-1) - a(n-2).",
+    "comment": [
+        "From _Wolfdieter Lang_, Nov 08 2002: (Start)",
+        "Chebyshev's polynomials T(n,x) evaluated at x=10.",
+        "The a(n) give all (unsigned, integer) solutions of Pell equation a(n)^2 - 99*b(n)^2 = +1 with b(n)=A075843(n), n>=0. (End)",
+        "a(11+22k)-1 and a(11+22k)+1 are consecutive odd powerful numbers. The first pair is 99612037019890+-1. See A076445. - _T. D. Noe_, May 04 2006",
+        "This sequence gives the values of x in solutions of the Diophantine equation x^2-11*y^2=1. The corresponding y values are in A001084.",
+        "Except for the first term, positive values of x (or y) satisfying x^2 - 20xy + y^2 + 99 = 0. - _Colin Barker_, Feb 18 2014"
+    ],
+    "reference": [
+        "Bastida, Julio R. Quadratic properties of a linearly recurrent sequence. Proceedings of the Tenth Southeastern Conference on Combinatorics, Graph Theory and Computing (Florida Atlantic Univ., Boca Raton, Fla., 1979), pp. 163--166, Congress. Numer., XXIII-XXIV, Utilitas Math., Winnipeg, Man., 1979. MR0561042 (81e:10009) - From _N. J. A. Sloane_, May 30 2012",
+        "H. Brocard, Notes \u00e9l\u00e9mentaires sur le probl\u00e8me de Peel, Nouvelle Correspondance Math\u00e9matique, 4 (1878), 161-169.",
+        "\"Questions D'Arithmetique\", Question 3686, Solution by H.L. Mennessier, Mathesis, 65(4, Supplement) 1956, pp. 1-12.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A001085/b001085.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "<a href=\"/index/Ch#Cheby\">Index entries for sequences related to Chebyshev polynomials.</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (20,-1)"
+    ],
+    "formula": [
+        "For all members x of the sequence, 11*x^2 - 11 is a square. Lim. n-> Inf. a(n)/a(n-1) = 10 + 3*Sqrt(11) - _Gregory V. Richardson_, Oct 13 2002",
+        "a(n) = T(n, 10) = (S(n, 20)-S(n-2, 20))/2, with S(n, x) := U(n, x/2) and T(n), resp. U(n, x), are Chebyshev's polynomials of the first, resp. second, kind. See A053120 and A049310. S(-2, x) := -1, S(-1, x) := 0, S(n-1, 20)= A075843(n).",
+        "G.f.: (1-10*x)/(1-20*x+x^2). - _Simon Plouffe_ in his 1992 dissertation",
+        "a(n) = (((10+3*sqrt(11))^n + (10-3*sqrt(11))^n))/2.",
+        "a(n) = sqrt(99*A075843(n)^2 + 1), (cf. Richardson comment)."
+    ],
+    "example": [
+        "G.f. = 1 + 10*x + 199*x^2 + 3970*x^3 + 79201*x^4 + 1580050*x^5 + 31521799*x^6 + ..."
+    ],
+    "mathematica": [
+        "LinearRecurrence[{20, -1}, {1, 10}, 20] (* _T. D. Noe_, Dec 19 2011 *)",
+        "a[ n_] := ChebyshevT[ n, 10]; (* _Michael Somos_, May 27 2014 *)",
+        "a[ n_] := ((10 + Sqrt[99])^n + (10 - Sqrt[99])^n) / 2 // Simplify; (* _Michael Somos_, May 27 2014 *)",
+        "a[ n_] := With[{m = Abs @ n}, SeriesCoefficient[ (1 - 10 x) / (1 - 20 x + x^2), {x, 0, m}]]; (* _Michael Somos_, May 27 2014 *)"
+    ],
+    "program": [
+        "(Sage) [lucas_number2(n,20,1)/2 for n in xrange(0,20)] # _Zerinvary Lajos_, Jun 27 2008",
+        "(PARI) {a(n) = n=abs(n); polsym( 1 - 20*x + x^2, n) [n+1] / 2}; /* _Michael Somos_, May 27 2014 */",
+        "(PARI) x='x+O('x^30); Vec((1-10*x)/(1-20*x+x^2)) \\\\ _G. C. Greubel_, Dec 20 2017",
+        "(MAGMA) I:=[1, 10]; [n le 2 select I[n] else 20*Self(n-1) -1 Self(n-2): n in [1..30]]; (* _G. C. Greubel_, Dec 20 2017 *)"
+    ],
+    "xref": [
+        "Cf. A090728, A001084."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 10,
+    "revision": 66,
+    "time": "2017-12-20T03:18:49-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 3237,
+    "id": "M0766",
+    "data": "0,0,1,1,2,3,6,10,19,33,62,110,204,366,677,1223,2254,4089,7526,13692,25171,45882,84291,153860,282509,516192,947469,1732477,3179083,5816301,10670751,19531034,35826689,65596323,120312363,220340374,404096665,740212002,1357426934",
+    "name": "Number of partially achiral planted trees with n nodes.",
+    "comment": [
+        "The g.f. z*(1-z**2-z**3-z**4+z**5)/(1-z-2*z**2+3*z**5) conjectured by _Simon Plouffe_ in his 1992 dissertation is wrong."
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A003237/b003237.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "F. Harary and R. W. Robinson, <a href=\"http://dx.doi.org/10.1515/crll.1975.278-279.322\">The number of achiral trees</a>, J. Reine Angew. Math., 278 (1975), 322-335.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/FonctionsGeneratrices.pdf\">1031 Generating Functions and Conjectures</a>, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "G.f.: A(x) = x*G(x)/(x-G(x)), where G(x) = G000081(x^2), G000081(x) = x+x^2+2*x^3+ ... being the g.f. for A000081."
+    ],
+    "maple": [
+        "G := subs(x=x^2,G000081); x*G/(x-G);",
+        "# second Maple program:",
+        "b:= proc(n) option remember; if n<=1 then n else add(k*b(k)* s(n-1, k), k=1..n-1)/(n-1) fi end: s:= proc(n,k) option remember; add(b(n+1-j*k), j=1..iquo(n,k)) end: B:= proc(n) option remember; unapply(add(b(k)*x^k, k=1..n),x) end: a:= n-> coeff(series(x* B(floor(n/2))(x^2)/ (x-B(floor(n/2))(x^2)), x=0, n+2),x,n): seq(a(n), n=0..38); # _Alois P. Heinz_, Aug 21 2008"
+    ],
+    "mathematica": [
+        "max = 38; a81[n_] := a81[n] = If[n <= 1, n, Sum[Sum[d*a81[d], {d, Divisors[j]}]*a81[n-j], {j, 1, n-1}]/(n-1)]; G81[x_] = Sum[a81[k]*x^k, {k, 0, max}]; G[x_] = G81[x^2]; A[x_] = x*(G[x]/(x-G[x])); CoefficientList[Series[A[x], {x, 0, max}], x] (* _Jean-Fran\u00e7ois Alcover_, Feb 17 2014, after _Alois P. Heinz_ *)"
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "Entry revised Mar 25 2004"
+    ],
+    "references": 2,
+    "revision": 32,
+    "time": "2014-12-29T18:59:36-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

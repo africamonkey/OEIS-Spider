@@ -1,0 +1,44 @@
+{
+    "number": 291839,
+    "data": "3,5,7,9,11,14,16,18,21,23,25,27,30,32,34,37,39,41,43,46,48,50,52,55,57,59,61,64,66,68,71,73,75,77,80,82,84,86,89,91,93,95,98,100,102,104,107,109,111,114,116,118,120,123,125,127,129,132",
+    "name": "a(n) is the minimal position at which the maximal value of row n appears in row n of triangle A100960.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A291839/b291839.txt\">Table of n, a(n) for n = 3..126</a>",
+        "E. A. Bender, Z. Gao and N. C. Wormald, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v9i1r43\">The number of labeled 2-connected planar graphs</a>, Electron. J. Combin., 9 (2002), #R43."
+    ],
+    "formula": [
+        "a(n) ~ c*n + o(sqrt(n)), where c=2.26287583256262... (A291840).",
+        "T(n, a(n)) = max {T(n,k), n <= k <= 3*(n-2) }, where T(n,k) is defined by A100960."
+    ],
+    "program": [
+        "(PARI)",
+        "Q(n,k) = { \\\\ c-nets with n-edges, k-vertices",
+        "  if (k < 2+(n+2)\\3 || k > 2*n\\3, return(0));",
+        "  sum(i=2, k, sum(j=k, n, (-1)^((i+j+1-k)%2)*binomial(i+j-k,i)*i*(i-1)/2*",
+        "  (binomial(2*n-2*k+2,k-i)*binomial(2*k-2, n-j) -",
+        "  4*binomial(2*n-2*k+1, k-i-1)*binomial(2*k-3, n-j-1))));",
+        "};",
+        "A100960_ser(N) = {",
+        "my(x='x+O('x^(3*N+1)), t='t+O('t^(N+4)),",
+        "   q=t*x*Ser(vector(3*N+1, n, Polrev(vector(min(N+3, 2*n\\3), k, Q(n,k)),'t))),",
+        "   d=serreverse((1+x)/exp(q/(2*t^2*x) + t*x^2/(1+t*x))-1),",
+        "   g2=intformal(t^2/2*((1+d)/(1+x)-1)));",
+        "   serlaplace(Ser(vector(N, n, subst(polcoeff(g2, n,'t),'x,'t)))*'x);",
+        "};",
+        "A291839_seq(N) = {",
+        "  my(g2=apply(Vecrev, Vec(A100960_ser(N+2))), m=apply(vecmax, g2));",
+        "  apply(v->vecmin(v)-1, vector(#g2, k, select(v->v==m[k], g2[k], 1)));",
+        "};",
+        "A291839_seq(22)"
+    ],
+    "xref": [
+        "Cf. A100960, A291837."
+    ],
+    "keyword": "nonn",
+    "offset": "3,1",
+    "author": "_Gheorghe Coserea_, Sep 05 2017",
+    "references": 2,
+    "revision": 10,
+    "time": "2017-09-06T04:07:41-04:00",
+    "created": "2017-09-06T04:07:41-04:00"
+}

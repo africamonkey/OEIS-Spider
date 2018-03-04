@@ -1,0 +1,50 @@
+{
+    "number": 249819,
+    "data": "35,49,77,95,115,143,175,209,235,245,289,295,299,319,335,343,371,395,407,413,415,437,475,515,517,529,535,539,551,575,581,583,611,649,667,695,707,749,767,815,835,847,851,869,875,893,895,913,917,923,995,1007",
+    "name": "Composite natural numbers n for which there are exactly two distinct 0 < k < n^2 such that 2^k - 1 is divisible by n^2.",
+    "comment": [
+        "Equally: odd composite numbers n for which A246702((n+1)/2) = 2."
+    ],
+    "example": [
+        "35 = 5*7 is an odd composite. Only cases where 2^k - 1 (with k in range 1 .. 35^2 - 1 = 1 .. 1224) is a multiple of 35 are k = 420 and k = 840, thus 35 is included in this sequence."
+    ],
+    "maple": [
+        "isA249819 := proc(n)",
+        "    if isprime(n) or n=1 then",
+        "        false;",
+        "    else",
+        "        ct := 0 ;",
+        "        for k from 1 to n^2-1 do",
+        "            if modp(2 &^ k-1,n^2) = 0 then",
+        "                ct := ct+1 ;",
+        "            end if;",
+        "            if ct > 2 then",
+        "                return false;",
+        "            end if;",
+        "        end do:",
+        "        return is(ct=2) ;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 to 1100 do",
+        "    if isA249819(n) then",
+        "        printf(\"%d,\\n\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Nov 16 2014"
+    ],
+    "program": [
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A249819 (MATCHING-POS 1 1 (lambda (n) (and (odd? n) (not (prime? n)) (= 2 (A246702 (/ (+ 1 n) 2)))))))"
+    ],
+    "xref": [
+        "Composite terms in A246717.",
+        "Seems also to be a subsequence of A038509.",
+        "Cf. A246702."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Nov 15 2014",
+    "references": 2,
+    "revision": 12,
+    "time": "2014-11-16T14:42:05-05:00",
+    "created": "2014-11-16T14:42:05-05:00"
+}

@@ -1,0 +1,89 @@
+{
+    "number": 204091,
+    "data": "1,2,10,46,210,958,4370,19934,90930,414782,1892050,8630686,39369330,179585278,819187730,3736768094,17045465010,77753788862,354678014290,1617882493726,7380056440050,33664517212798,153562473183890,700483331493854,3195291711101490",
+    "name": "The number of 1 X n Haunted Mirror Maze puzzles with a unique solution ending with a mirror.",
+    "comment": [
+        "The final slot can refer to a mirror of either type ('/' or '\\'.)",
+        "A204092 counts the situation dropping the requirement that a board ends with a mirror. A204089 counts the situation where all mirrors have the same orientation. A204090 counts the boards with same orientation where the last square need not be a mirror."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A204091/b204091.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Samples of these types of puzzles can be found at <a href=\"http://thegriddle.net/tags/haunted\">this site</a>.",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (5,-2)."
+    ],
+    "formula": [
+        "a(n) = 5*a(n-1) - 2*a(n-2) with a(1) = 2, a(2) = 10.",
+        "a(n) = 2 * sum_{i=0}^{i=n-1} a(n)(2^(n-i)-1), a(0) = 1.",
+        "G.f.: (1-x)*(1-2*x) / (1-5*x+2*x^2).",
+        "a(n) = (2^(1-n) * ((5+sqrt(17))^n - (5-sqrt(17))^n))/sqrt(17) for n>0. - _Colin Barker_, Nov 26 2016"
+    ],
+    "example": [
+        "For n=2 we get the following ten boards:",
+        "('Z', '/')",
+        "('Z', '|')",
+        "('V', '/')",
+        "('V', '|')",
+        "('G', '/')",
+        "('G', '|')",
+        "('/', '/')",
+        "('/', '|')",
+        "('|', '/')",
+        "('|', '|')"
+    ],
+    "mathematica": [
+        "Join[{1}, LinearRecurrence[{5, -2}, {2, 10}, 40]]"
+    ],
+    "program": [
+        "(Python)",
+        "def a(n, d={0:1,1:2,2:10}):",
+        "if n in d:",
+        "return d[n]",
+        "d[n]=5*a(n-1) - 2*a(n-2)",
+        "return d[n]",
+        "(Python)",
+        "#Produces a(n) through enumeration and also displays boards::",
+        "def Lprint(n):",
+        ".print('The following generate boards with a unique solution')",
+        ".s=0",
+        ".for x in product(['Z','V','G','/','|'],repeat=n):",
+        "..if x[-1]=='/' or x[-1]=='|':",
+        "...#Splitting x up into a list pieces",
+        "...y=list(x)",
+        "...z=list()",
+        "...while y:",
+        "....if '/' in y or '|' in y:",
+        ".....if '/' in y and '|' in y:",
+        "......m = min(y.index('/'), y.index('|'))",
+        ".....else:",
+        "......if '/' in y:",
+        ".......m=y.index('/')",
+        "......else:",
+        ".......m=y.index('|')",
+        ".....if y[0] not in ['/','|']: #Don't need to add blank pieces to z",
+        "......z.append(y[:m])",
+        ".....y=y[m+1:]",
+        "....else:",
+        ".....z.append(y)",
+        ".....y=[]",
+        "...#For each element in the list checking for Z&V together",
+        "...goodword=True",
+        "...for w in z:",
+        "....if 'Z' in w and 'V' in w:",
+        ".....goodword=False",
+        "...if goodword:",
+        "....s+=1",
+        "....print(x)",
+        ".return s",
+        "(PARI) Vec((1-x)*(1-2*x)/(1-5*x+2*x^2) + O(x^30)) \\\\ _Colin Barker_, Nov 26 2016"
+    ],
+    "xref": [
+        "Cf. A204089-A204092."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_David Nacin_, Jan 10 2012",
+    "references": 5,
+    "revision": 29,
+    "time": "2016-11-26T11:28:20-05:00",
+    "created": "2012-01-11T15:56:33-05:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 2830,
+    "id": "M3871 N1586",
+    "data": "1,5,16,86,448,3580,34981,448628,6854130,121173330,2403140605,52655943500,1260724587515,32726520985365,915263580719998,27432853858637678,877211481667946811,29807483816421710806,1072542780403547030073,40739888428757581326987",
+    "name": "Number of 3-edge-colored trivalent graphs with 2n nodes.",
+    "reference": [
+        "R. C. Read, Some Enumeration Problems in Graph Theory. Ph.D. Dissertation, Department of Mathematics, Univ. London, 1958.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A002830/b002830.txt\">Table of n, a(n) for n = 1..30</a>",
+        "Sean A. Irvine, <a href=\"/A002830/a002830.gif\">Illustration of initial terms</a>",
+        "R. C. Read, <a href=\"/A002831/a002831.pdf\">Letter to N. J. A. Sloane, Feb 04 1971</a> (gives initial terms of this sequence)"
+    ],
+    "formula": [
+        "G.f.: exp(sum(F(x^k) / k, k >= 1) where F(x) is the g.f. for A002831. - _Sean A. Irvine_, Sep 09 2014"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1,s=0,k=0,t); for(i=1,#v,t=v[i]; k=if(i>1&&t==v[i-1],k+1,1); m*=t*k;s+=t); s!/m}",
+        "b(k,q) = {if(q%2, if(k%2, 0, my(j=k/2); q^j*(2*j)!/(j!*2^j)), sum(j=0, k\\2, binomial(k, 2*j)*q^j*(2*j)!/(j!*2^j)))}",
+        "pm(v) = {my(p=sum(i=1,#v,x^v[i])); prod(i=1, poldegree(p), b(polcoeff(p,i), i))}",
+        "a(n) = {my(s=0); forpart(p=2*n, s+=permcount(p)*pm(p)^3); s/(2*n)!} \\\\ _Andrew Howroyd_, Dec 14 2017"
+    ],
+    "xref": [
+        "Cf. A002831, A006712, A006713."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "a(7)-a(8) from _Sean A. Irvine_, Sep 08 2014",
+        "Terms a(9) and beyond from _Andrew Howroyd_, Dec 14 2017"
+    ],
+    "references": 4,
+    "revision": 27,
+    "time": "2017-12-15T06:18:47-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

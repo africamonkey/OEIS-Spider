@@ -1,0 +1,60 @@
+{
+    "number": 64831,
+    "data": "0,1,3,9,24,64,168,441,1155,3025,7920,20736,54288,142129,372099,974169,2550408,6677056,17480760,45765225,119814915,313679521,821223648,2149991424,5628750624,14736260449,38580030723,101003831721",
+    "name": "Partial sums of A001654, or sum of the areas of the first n Fibonacci rectangles.",
+    "comment": [
+        "The n-th rectangle is F(n)*F(n+1), where F(n) = n-th Fibonacci number (F(1)=1, F(2)=1, F(3)=2, etc.), A000045.",
+        "If 2*T(a_n) = the oblong number formed by substituting a(n) in the product formula x(x+1), then 2*T(a_n) = F(n-1)*F(n) * F(n)*F(n+1). Thus a(n) equals the integer part of the square root of the right hand side of the given equation. - _Kenneth J Ramsey_, Dec 19 2006",
+        "Contribution from _Johannes W. Meijer_, Sep 22 2010: (Start)",
+        "The a(n) represent several triangle sums of the Golden Triangle A180662: Kn11 (terms doubled), Kn12(n+1) (terms doubled), Kn4, Ca1 (terms tripled), Ca4, Gi1 (terms quadrupled) and Gi4. See A180662 for the definitions of these sums.",
+        "(End)",
+        "Define a 2 X (n+1) matrix with elements T(r,0)=A000032(r) and T(r,1) = Fibonacci(r), r=0,1,..,n. The matrix times its transposed is a 2 X 2 matrix with one diagonal element A001654(n+1), the other A216243(n), and A027941(n+1) on both outer diagonals. The determinant of this 2 X 2 matrix is 4*a(n). Example: For n=3 the matrix is 2 X 4 with rows 2 1 3 4; 0 1 1 2 to give as a product the 2 X 2 matrix with rows 30 12; 12 6 and determinant 180-144 = 36 =4*a(3). - _J. M. Bergot_, Feb 13 2013",
+        "a(n+1) is equal to the number of ternary strings of length n without any substring of the form 0x1, where x is in {0,1,2}. - _John M. Campbell_, Apr 03 2016"
+    ],
+    "reference": [
+        "E Altinisik, A Keskin, M Yildiz, M Demirbuken, On a conjecture of Ilmonen, Haukkanen and Merikoski concerning the smallest eigenvalues of certain GCD related matrices, Linear Algebra and its Applications, Volume 493, 15 March 2016, Pages 1-13",
+        "S. Falcon, On the Sequences of Products of Two k-Fibonacci Numbers, American Review of Mathematics and Statistics, March 2014, Vol. 2, No. 1, pp. 111-120."
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A064831/b064831.txt\">Table of n, a(n) for n = 0..200</a>",
+        "<a href=\"/index/Ch#Cheby\">Index entries for sequences related to Chebyshev polynomials.</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (3,0,-3,1)."
+    ],
+    "formula": [
+        "a(n) = F(n+1)^2 - 1 if n is even, or F(n+1)^2 if n is odd.",
+        "a(n) = A005313(n+1) - n.",
+        "G.f.: x/((1-x^2)*(1-3*x+x^2)). - _N. J. A. Sloane_ Jul 15 2002",
+        "a(n) = Sum_{k=0..floor(n/2)) U(n-2k-1, 3/2). - _Paul Barry_, Nov 15 2003",
+        "Let M_n denote the n X n Hankel matrix M_n(i, j)=F(i+j-1) where F = A000045 is Fibonacci numbers, then the characteristic polynomial of M_n is x^n - F(2n)x^(n-1) + a(n-1)x^(n-2) . - _Michael Somos_, Nov 14 2002",
+        "a(n) = a(n-1) + A001654(n) with a(0)=0. (Partial sums of A001654). - _Johannes W. Meijer_, Sep 22 2010",
+        "a(n) = floor(phi^(2*n+2)/5), where phi =(1+sqrt(5))/2. [_Gary Detlefs_ Mar 12 2011]",
+        "a(n) = (A027941(n) + A001654(n))/2, n>=0. [_Wolfdieter Lang_, Jul 23 2012]",
+        "a(n) = A005248(n+1)/5 -1/2 -(-1)^n/10. - _R. J. Mathar_, Feb 21 2013",
+        "Recurrence: a(0) = 0, a(1) = 1, a(2) = 3, a(3) = 9, a(n) = 3*a(n-1) - 3*a(n-3) + a(n-4). - _Vladimir Reshetnikov_, Oct 28 2015",
+        "a(n) = Sum_{i=0..n} (n+1-i)*Fibonacci(i)^2. - _Bruno Berselli_, Feb 20 2017"
+    ],
+    "mathematica": [
+        "Table[ Sum[ Fibonacci[k]*Fibonacci[k + 1], {k, n} ], {n, 0, 30}]",
+        "f[n_] := Floor[GoldenRatio^(2 n + 2)/5]; Array[f, 28, 0] (* _Robert G. Wilson v_, Oct 25 2001 *)",
+        "a[0] = 0; a[1] = 1; a[2] = 3; a[3] = 9; a[n_] := a[n] = 3 a[n-1] - 3 a[n-3] + a[n-4]; Table[a[n], {n, 0, 20}] (* _Vladimir Reshetnikov_, Oct 28 2015 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,fibonacci(n+1)^2-1+n%2)",
+        "(PARI) { for (n=0, 200, a=fibonacci(n+1)^2 - 1 + n%2; write(\"b064831.txt\", n, \" \", a) ) } \\\\ _Harry J. Smith_, Sep 27 2009"
+    ],
+    "xref": [
+        "Cf. A000045, A282464.",
+        "Odd terms of A097083.",
+        "Partial sums of A001654."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "Howard Stern (hsstern(AT)mindspring.com), Oct 23 2001",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Oct 25 2001"
+    ],
+    "references": 36,
+    "revision": 68,
+    "time": "2017-02-20T03:20:43-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

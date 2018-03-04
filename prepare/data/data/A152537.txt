@@ -1,0 +1,47 @@
+{
+    "number": 152537,
+    "data": "1,1,1,2,4,9,18,37,74,148,296,592,1183,2366,4732,9463,18926,37852,75704,151408,302816,605632,1211265,2422530,4845060,9690120,19380241,38760482,77520964,155041928,310083856,620167712,1240335424,2480670848,4961341696,9922683391",
+    "name": "Convolution sequence: convolved with A000041 = powers of 2, (A000079).",
+    "formula": [
+        "Construct an array of rows such that n-th row = partial sums of (n-1)-th row",
+        "of A010815: (1, -1, -1, 0, 0, 1, 0, 1,...).",
+        "A152537 = sums of antidiagonal terms of the array.",
+        "The sequence may be obtained directly from the following set of operations:",
+        "Our given sequence = A000041: (1, 1, 2, 3, 5, 7, 11,...). Delete the first",
+        "\"1\" then consider (1, 2, 3, 5, 7, 11,...) as an operator Q which we write in reverse with 1,2,3,...terms for each operation. Letting R = the target sequence (1,2,4,8,...); we begin a(0) = 1, a(1) = 1, then perform successive",
+        "operations of: \"next term in (1,2,4,...) - dot product of Q*R\" where Q is",
+        "written right to left and R (the ongoing result) written left to right).",
+        "Examples: Given 4 terms Q, R, we have: (5,3,2,1) dot (1,1,1,2) = (5+3+2+2) =",
+        "12, which we subtract from 16, = 4.",
+        "Given 5 terms of Q,R and A152537, we have (7,5,3,2,1) dot (1,1,1,2,4) = 23",
+        "which is subtracted from 32 giving 9. Continue with analogous operations to generate the series.",
+        "a(n)=sum_{j=0..n} A010815(j)*2^(n-j). G.f.: A000079(x)/A000041(x) = A010815(x)/(1-2x), where A......(x) denotes the g.f. of the associated sequence. - _R. J. Mathar_, Dec 09 2008"
+    ],
+    "example": [
+        "a(5) = 9 = 32 - 23 = (32 - ((7,5,3,2,1) dot (1,1,1,2,4)))",
+        "(1,1,2,3) convolved with (1,1,1,2) = 8, where (1,1,2,3...) = the first four partition numbers."
+    ],
+    "program": [
+        "(PARI) /* computation by definition (division of power series) */",
+        "N=55;",
+        "A000079=vector(N,n,2^(n-1));",
+        "S000079=Ser(A000079);",
+        "A000041=vector(N,n,numbpart(n-1));",
+        "S000041=Ser(A000041);",
+        "S152537=S000079/S000041;",
+        "A152537=Vec(S152537) /* show terms */  /* _Joerg Arndt_, Feb 06 2011 */",
+        "(PARI) /* computation using power series eta(x) and 1/(1-2*x) */",
+        "x='x+O('x^55);  S152537=eta(x)/(1-2*x);",
+        "A152537=Vec(S152537) /* show terms */  /* _Joerg Arndt_, Feb 06 2011 */"
+    ],
+    "xref": [
+        "Cf. A010815, A000041, A000079, A152538."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gary W. Adamson_, Dec 06 2008",
+    "references": 4,
+    "revision": 9,
+    "time": "2014-02-10T01:29:17-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

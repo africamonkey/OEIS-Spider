@@ -1,0 +1,46 @@
+{
+    "number": 265802,
+    "data": "1,11,19,59,145,389,1009,2651,6931,18155,47521,124421,325729,852779,2232595,5845019,15302449,40062341,104884561,274591355,718889491,1882077131,4927341889,12899948549,33772503745,88417562699,231480184339,606022990331,1586588786641",
+    "name": "Coefficient of x^2 in minimal polynomial of the continued fraction [1^n,4,1,1,1,...], where 1^n means n ones.",
+    "comment": [
+        "See A265762 for a guide to related sequences."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A265802/b265802.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (2,2,-1)."
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1) + 2*a(n-2) - a(n-3) for n>3.",
+        "G.f.:  (1 + 9 x - 5 x^2)/(1 - 2 x - 2 x^2 + x^3).",
+        "a(n) = (2^(-n)*(-13*(-2)^n + 3*(3-sqrt(5))^(1+n) + 3*(3+sqrt(5))^(1+n)))/5. - _Colin Barker_, Oct 20 2016"
+    ],
+    "example": [
+        "Let p(n,x) be the minimal polynomial of the number given by the n-th continued fraction:",
+        "[4,1,1,1,1,...] = (7 + sqrt(5))/2 has p(0,x) = 11 - 7 x + x^2, so a(0) = 1;",
+        "[1,4,1,1,1,...] = (29 - sqrt(5))/22 has p(1,x) = 19 - 29 x + 11 x^2, so a(1) = 11;",
+        "[1,1,4,1,1,...] = (67 + sqrt(5))/38 has p(2,x) = 59 - 67 x + 19 x^2, so a(2) = 19."
+    ],
+    "mathematica": [
+        "u[n_] := Table[1, {k, 1, n}]; t[n_] := Join[u[n], {4}, {{1}}];",
+        "f[n_] := FromContinuedFraction[t[n]];",
+        "t = Table[MinimalPolynomial[f[n], x], {n, 0, 20}]",
+        "Coefficient[t, x, 0] (* A265802 *)",
+        "Coefficient[t, x, 1] (* A265803 *)",
+        "Coefficient[t, x, 2] (* A236802 *)",
+        "Join[{1}, LinearRecurrence[{2, 2, -1}, {11, 19, 59}, 30]] (* _Vincenzo Librandi_, Jan 06 2016 *)"
+    ],
+    "program": [
+        "(PARI) Vec((1+9*x-5*x^2)/(1-2*x-2*x^2+x^3) + O(x^100)) \\\\ _Altug Alkan_, Jan 04 2016",
+        "(MAGMA) I:=[1,11,19,59]; [n le 4 select I[n] else 2*Self(n-1)+2*Self(n-2)-Self(n-3): n in [1..30]]; // _Vincenzo Librandi_, Jan 06 2016"
+    ],
+    "xref": [
+        "Cf. A265762, A265803."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, Jan 04 2016",
+    "references": 3,
+    "revision": 12,
+    "time": "2016-10-20T12:38:18-04:00",
+    "created": "2016-01-06T06:28:14-05:00"
+}

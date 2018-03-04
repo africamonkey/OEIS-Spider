@@ -1,0 +1,28 @@
+{
+    "number": 225712,
+    "data": "182,21827,32942,46055,84502,151202,191522,361802,532247,780626,1368642,1398377,1425230,1556258,1751927,1932338,2209727,3496502,4078802,4216862,4438709,5191562,5991477,7413002,8385365,8797502,11749127,13634138,15921677,16772177",
+    "name": "Composite squarefree numbers n such that p(i)+2 divides n-2, where p(i) are the prime factors of n.",
+    "example": [
+        "Prime factors of 151202 are 2, 19, 23 and 173. We have that (151202-2)/(2+2) = 37800, (151202-2)/(19+2) = 7200, (151202-2)/(23+2) = 6048 and (151202-2)/(173+2)= 864."
+    ],
+    "maple": [
+        "with(numtheory); A225712:=proc(i,j) local c, d, n, ok, p, t;",
+        "for n from 2 to i do if not isprime(n) then p:=ifactors(n)[2]; ok:=1;",
+        "for d from 1 to nops(p) do if p[d][2]>1 or p[d][1]=j then ok:=0; break; fi;",
+        "if  not type((n+j)/(p[d][1]-j),integer) then ok:=0; break; fi; od;",
+        "if ok=1 then print(n); fi; fi; od; end: A225712(10^9,-2);"
+    ],
+    "mathematica": [
+        "t = {}; n = 0; len = -2; While[len <= 262, n++; {p, e} = Transpose[FactorInteger[n]]; If[Length[p] > 1 && Union[e] == {1} && Union[Mod[n - 2, p + 2]] == {0}, AppendTo[t, n]; len = len + Length[IntegerDigits[n]] + 2]]; t (* _T. D. Noe_, May 17 2013 *)"
+    ],
+    "xref": [
+        "Cf. A208728, A225702-A225711, A225713-A225720."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, May 13 2013",
+    "references": 3,
+    "revision": 10,
+    "time": "2013-05-17T15:42:45-04:00",
+    "created": "2013-05-16T13:11:21-04:00"
+}

@@ -1,0 +1,51 @@
+{
+    "number": 5322,
+    "id": "M2799",
+    "data": "1,3,9,25,69,189,518,1422,3915,10813,29964,83304,232323,649845,1822824,5126520,14453451,40843521,115668105,328233969,933206967,2657946907,7583013474,21668135850,62007732605,177696228411,509899901553,1464990733969,4214045993925",
+    "name": "Column of Motzkin triangle.",
+    "comment": [
+        "Number of returns (i.e. down steps hitting the x-axis) in all Motzkin paths of length n. E.g. a(4)=9 because in the nine Motzkin paths of length 4, HHHH, HHU(D), HU(D)H, HUH(D), U(D)HH, U(D)U(D), UH(D)H, UHH(D) and UUD(D), where H=(1,0), U=(1,1), D=(1,-1), we have altogether nine down steps D hitting the x-axis (shown in parentheses). - _Emeric Deutsch_, Dec 26 2003",
+        "Number of nonnegative H,U,D paths of length n that end at height 2. Bijection to the Deutsch manifestation above: turn the last U carrying the path up to height 2 into a D. This gives a Motzkin n-path with a marked return D. - _David Callan_, Jun 07 2006",
+        "Number of Motzkin paths of length n+2, starting with a (1,1) step, ending with a (1,-1) step and touching the x-axis at least three times. Example: a(3)=3 because we have UDHUD, UDUHD and UHDUD, where H=(1,0), U=(1,1), D=(1,-1). - _Emeric Deutsch_, Jul 27 2006"
+    ],
+    "reference": [
+        "R. Donaghey and L. W. Shapiro, Motzkin numbers, J. Combin. Theory, Series A, 23 (1977), 291-301.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A005322/b005322.txt\">Table of n, a(n) for n = 2..1000</a>",
+        "N. Benyahia Tani, Z. Yahi, S. Bouroubi, <a href=\"http://www.liforce.usthb.dz/IMG/pdf/bulletin2014.pdf\">Ordered and non-ordered non-isometric convex quadrilaterals inscribed in a regular n-gon</a>, Bulletin du Laboratoire Liforce, 01 (2014) 1 - 9.",
+        "R. De Castro, A. L. Ram\u00edrez and J. L. Ram\u00edrez, <a href=\"http://arxiv.org/abs/1310.2449\">Applications in Enumerative Combinatorics of Infinite Weighted Automata and Graphs</a>, arXiv preprint arXiv:1310.2449, 2013",
+        "Simon Plouffe, <a href=\"http://www.lacim.uqam.ca/%7Eplouffe/articles/MasterThesis.pdf\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992.",
+        "Simon Plouffe, <a href=\"http://arxiv.org/ftp/arxiv/papers/0912/0912.0072.pdf\"> Une m\u00e9thode pour obtenir la fonction g\u00e9n\u00e9ratrice d'une s\u00e9rie</a>. FPSAC 1993, Florence. Formal Power Series and Algebraic Combinatorics."
+    ],
+    "formula": [
+        "a(n) = number of (s(0), s(1), ..., s(n)) such that s(i) is a nonnegative integer and |s(i) - s(i-1)| <= 1 for i = 1, 2, ..., n, s(0) = 0, s(n) = 2.",
+        "G.f.: 2(1-z-q)/(1-z+q)^2, where q=sqrt(1-2z-3z^2). - _Emeric Deutsch_, Dec 26 2003",
+        "G.f.: z^2*M^3, where M=1+zM+z^2*M^2 is the g.f. of the Motzkin numbers (A001006). - _Emeric Deutsch_, Jul 27 2006",
+        "a(n) = -sqrt(-3)*(-1)^n*(3*n*(13*n+27)*hypergeom([1/2, n],[1],4/3) -hypergeom([1/2, n+1],[1],4/3)*(41*n^2+115*n+60))/(2*(n+3)*(n+5)*(n+6)). [From _Mark van Hoeij_, Nov 12 2009]",
+        "a(n) = sum(k=1..n+2, (k-2)*k*sum(j=k..n+2, C(-k+2*j-1,j-1)*(-1)^(n+2-j) * C(n+2,j)))/(n+2). [From _Vladimir Kruchinin_, Sep, 26 2011]",
+        "a(n) (5 + n) = (13 + 4 n) a(n - 1) - n a(n - 2) - 6 n a(n - 3). [_Simon Plouffe_. Feb 09 2012]"
+    ],
+    "maple": [
+        "M:=(1-z-sqrt(1-2*z-3*z^2))/2/z^2: ser:=series(z^2*M^3,z=0,35): seq(coeff(ser,z,n),n=2..28); # _Emeric Deutsch_, Jul 27 2006"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[2*(1 - x - Sqrt[1 - 2*x - 3*x^2])/(1 - x + Sqrt[1 - 2*x - 3*x^2])^2, {x,0,50}], x] (* _G. C. Greubel_, Mar 03 2017 *)"
+    ],
+    "program": [
+        "(Maxima) a(n):=sum((k-2)*k*sum(binomial(-k+2*j-1,j-1)*(-1)^(n+2-j)*binomial(n+2,j),j,k,n+2),k,1,n+2)/(n+2) /* _Vladimir Kruchinin_, Sep, 26 2011 */",
+        "(PARI) x='x+O('x^50); Vec(2*(1 - x - sqrt(1 - 2*x - 3*x^2))/(1 - x + sqrt(1 - 2*x - 3*x^2))^2) \\\\ _G. C. Greubel_, Mar 03 2017"
+    ],
+    "xref": [
+        "Cf. A026300, A001006.",
+        "A diagonal of triangle A020474."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 8,
+    "revision": 44,
+    "time": "2017-03-03T19:38:16-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

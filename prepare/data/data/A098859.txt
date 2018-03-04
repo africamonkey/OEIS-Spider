@@ -1,0 +1,51 @@
+{
+    "number": 98859,
+    "data": "1,1,2,2,4,5,7,10,13,15,21,28,31,45,55,62,82,105,116,153,172,208,251,312,341,431,492,588,676,826,905,1120,1249,1475,1676,2003,2187,2625,2922,3409,3810,4481,4910,5792,6382,7407,8186,9527,10434",
+    "name": "Number of partitions of n into parts each of which is used a different number of times.",
+    "comment": [
+        "Fill, Janson and Ward refer to these partitions as Wilf partitions. - _Peter Luschny_, Jun 04 2012"
+    ],
+    "reference": [
+        "Stephan Wagner, The Number of Fixed Points of Wilf's Partition Involution, The Electronic Journal of Combinatorics, 20(4) (2013), #P13"
+    ],
+    "link": [
+        "Maciej Ireneusz Wilczynski, <a href=\"/A098859/b098859.txt\">Table of n, a(n) for n = 0..700</a>",
+        "James Allen Fill, Svante Janson and Mark Daniel Ward, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v19i2p18\">Partitions with Distinct Multiplicities of Parts: On An \"Unsolved Problem\" Posed By Herbert S. Wilf</a>, The Electronic Journal of Combinatorics, Volume 19, Issue 2 (2012)",
+        "Daniel Kane and Robert C. Rhoades, <a href=\"http://math.stanford.edu/~rhoades/FILES/wilf.pdf\">Asymptotics for Wilf's partitions with distinct multiplicities</a>",
+        "Doron Zeilberger, <a href=\"http://www.math.rutgers.edu/~zeilberg/mamarim/mamarimhtml/dmp.html\">Using generatingfunctionology to enumerate distinct-multiplicity partitions</a>."
+    ],
+    "formula": [
+        "log(a(n)) ~ N*log(N) where N = (6*n)^(1/3)  (see Fill, Janson and Ward). - _Peter Luschny_, Jun 04 2012"
+    ],
+    "example": [
+        "a(6)=7 because 6= 4+1+1= 3+3= 3+1+1+1= 2+2+2= 2+1+1+1+1= 1+1+1+1+1+1. Four unrestricted partitions of 6 are not counted by a(6): 5+1, 4+2, 3+2+1 because at least two different summands are each used once; 2+2+1+1 because each summand is used twice."
+    ],
+    "mathematica": [
+        "a[n_] := Length[sp = Split /@ IntegerPartitions[n]] - Count[sp, {___List, b_List, ___List, c_List, ___List} /; Length[b] == Length[c]]; Table[a[n], {n, 0, 48}] (* _Jean-Fran\u00e7ois Alcover_, Jan 17 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a098859 = p 0 [] 1 where",
+        "   p m ms _      0 = if m `elem` ms then 0 else 1",
+        "   p m ms k x",
+        "     | x < k       = 0",
+        "     | m == 0      = p 1 ms k (x - k) + p 0 ms (k + 1) x",
+        "     | m `elem` ms = p (m + 1) ms k (x - k)",
+        "     | otherwise   = p (m + 1) ms k (x - k) + p 0 (m : ms) (k + 1) x",
+        "-- _Reinhard Zumkeller_, Dec 27 2012"
+    ],
+    "xref": [
+        "Row sums of A182485.",
+        "Cf. A100471, A100881, A105637, A211858, A211859, A211860, A211861, A211862, A211863, A242882."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,3",
+    "author": "_David S. Newman_, Oct 11 2004",
+    "ext": [
+        "Corrected and extended by _Vladeta Jovovic_, Oct 22 2004"
+    ],
+    "references": 18,
+    "revision": 54,
+    "time": "2017-04-02T13:03:18-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

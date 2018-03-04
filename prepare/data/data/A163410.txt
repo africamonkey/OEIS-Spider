@@ -1,0 +1,46 @@
+{
+    "number": 163410,
+    "data": "1,3,5,7,9,15,17,21,27,31,45,51,63,73,85,93,107,119,127,153,189,219,255,257,313,365,381,443,511,765,771,1193,1241,1285,1453,1533,1571,1619,1787,1799,1831,1879,2313,3579,3855,4369,4889,5113,5189,5397,5557,5869",
+    "name": "A positive integer is included if it is a palindrome when written in binary, and it is not divisible by any primes that are not binary palindromes.",
+    "link": [
+        "Robert Israel, <a href=\"/A163410/b163410.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "51 in binary is 110011, which is a palindrome. 51 is divisible by the primes 3 and 17. 3 in binary is 11, a palindrome. And 17 in binary is 10001, also a palindrome. Since all the primes dividing the binary palindrome 51 are themselves binary palindromes, then 51 is included in this sequence."
+    ],
+    "maple": [
+        "dmax:= 15: # to get all terms with at most dmax binary digits",
+        "revdigs:= proc(n)",
+        "  local L, Ln, i;",
+        "  L:= convert(n, base, 2);",
+        "  Ln:= nops(L);",
+        "  add(L[i]*2^(Ln-i), i=1..Ln);",
+        "end proc:",
+        "isbpali:= proc(n) option remember; local L; L:= convert(n,base,2); L=ListTools:-Reverse(L) end proc:",
+        "Bp:= {0, 1}:",
+        "for d from 2 to dmax do",
+        "  if d::even then",
+        "    Bp:= Bp union {seq(2^(d/2)*x + revdigs(x), x=2^(d/2-1)..2^(d/2)-1)}",
+        "  else",
+        "    m:= (d-1)/2;",
+        "    B:={seq(2^(m+1)*x + revdigs(x), x=2^(m-1)..2^m-1)};",
+        "    Bp:= Bp union B union map(`+`, B, 2^m)",
+        "  fi",
+        "od:",
+        "R:= select(t -> andmap(isbpali, numtheory:-factorset(t)), Bp minus {0}):",
+        "sort(convert(R,list)); # _Robert Israel_, Dec 19 2016"
+    ],
+    "xref": [
+        "Cf. A006995, A163411, A207039."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Jul 27 2009",
+    "ext": [
+        "More terms from _Sean A. Irvine_, Nov 10 2009"
+    ],
+    "references": 2,
+    "revision": 17,
+    "time": "2016-12-19T04:08:08-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

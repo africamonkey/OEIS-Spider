@@ -1,0 +1,41 @@
+{
+    "number": 268983,
+    "data": "1,39,793,25930965,76147347",
+    "name": "Numbers n such that Sum_{d|n} sigma(n/d)^d/d is an integer, where sigma is A000203.",
+    "comment": [
+        "Conjecture: This sequence contains only the three numbers listed.",
+        "This conjecture is disproven. The number 2408321608150261253061174553 belongs to this sequence, but it may not be a(4). - _Gevorg Hmayakyan_, May 11 2017",
+        "a(6) > 10^8. - _Hiroaki Yamanouchi_, Aug 10 2017",
+        "Numbers n such that n divides Sum_{d|n} d*sigma(d)^(n/d). - _Chai Wah Wu_, Oct 02 2017"
+    ],
+    "link": [
+        "<a href=\"https://math.stackexchange.com/questions/2272764/the-integer-values-of-sum-dn-frac-sigman-ddd\">The integer values of Sum_{d|n} sigma(n/d)^d/d</a>"
+    ],
+    "maple": [
+        "a := proc (n) options operator, arrow; add(numtheory:-sigma(n/d)^d/d, d in numtheory:-divisors(n)) end proc:",
+        "seq(`if`(type(a(n), 'integer'), n, NULL), n = 1 .. 1000)"
+    ],
+    "mathematica": [
+        "Select[Range[10^5], IntegerQ@ Sum[DivisorSigma[1, #/d]^d/d, {d, Divisors@ #}] &] (* _Michael De Vlieger_, Mar 30 2016 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = denominator(sumdiv(n, d, sigma(n/d)^d/d)) == 1; \\\\ _Michel Marcus_, Feb 17 2016",
+        "(Python)",
+        "from __future__ import division",
+        "from sympy import divisors, divisor_sigma",
+        "A268983_list = [n for n in range(1,10000) if not sum(d*pow(int(divisor_sigma(d)),n//d,n) % n for d in divisors(n, generator=True)) % n] # _Chai Wah Wu_, Oct 02 2017"
+    ],
+    "xref": [
+        "Cf. A000203, A267310, A268982."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gevorg Hmayakyan_, Feb 16 2016",
+    "ext": [
+        "a(4)-a(5) from _Hiroaki Yamanouchi_, Aug 10 2017"
+    ],
+    "references": 2,
+    "revision": 45,
+    "time": "2017-10-03T02:52:24-04:00",
+    "created": "2016-03-30T17:02:53-04:00"
+}

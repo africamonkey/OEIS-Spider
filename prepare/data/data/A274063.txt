@@ -1,0 +1,34 @@
+{
+    "number": 274063,
+    "data": "0,1,25,26,51,119,218,771,1754,1799,1921,7967,16147,32639,128129,196611,458759,1044143,2031647,7190234,8323199,33464867,536581571,536813567,1073691551,2145328183,7202169026,8746826298,17179612627,68719005499,797299610790",
+    "name": "Numbers whose periodic derivative is equal to the arithmetic derivative.",
+    "comment": [
+        "Solution of the equation A003415(n) = A038556(n)."
+    ],
+    "example": [
+        "25 in base 2 is 11001 and its periodic derivative is (1+1)(1+0)(0+0)(0+1)(1+1) -> 01010 that is 10 in base 10 and 10 is also the arithmetic derivative of 25."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,b,i,n,p;",
+        "for n from 0 to q do a:=0; b:=convert(n,base,2); b:=[1,op(b)];",
+        "for i to nops(b)-1 do a:=a+((b[i]+b[i+1]) mod 2)*2^(i-1); od;",
+        "if a=n*add(op(2,p)/op(1,p),p=ifactors(n)[2]) then print(n); fi;",
+        "od; end: P(10^6);"
+    ],
+    "mathematica": [
+        "Select[Range[0, 10^6], Function[n, If[Abs@ n < 2, 0, n Total[#2/#1 & @@@ FactorInteger[Abs@ n]]] == FromDigits[Thread[BitXor[#, RotateLeft@ #]], 2] &@ IntegerDigits[n, 2]]] (* _Michael De Vlieger_, Jun 10 2016 after _Michael Somos_ at A003415 and _Jean-Fran\u00e7ois Alcover_ at A038556 *)"
+    ],
+    "xref": [
+        "Cf. A003415, A038556, A273993."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paolo P. Lava_, Jun 09 2016",
+    "ext": [
+        "a(23)-a(31) from _Giovanni Resta_, Jun 19 2016"
+    ],
+    "references": 0,
+    "revision": 13,
+    "time": "2016-06-21T16:03:21-04:00",
+    "created": "2016-06-21T16:03:21-04:00"
+}

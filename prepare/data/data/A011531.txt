@@ -1,0 +1,58 @@
+{
+    "number": 11531,
+    "data": "1,10,11,12,13,14,15,16,17,18,19,21,31,41,51,61,71,81,91,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133",
+    "name": "Numbers that contain a digit 1 in their decimal representation.",
+    "comment": [
+        "A121042(a(n)) = 1. - _Reinhard Zumkeller_, Jul 21 2006",
+        "See A043493 for numbers that contain a single digit '1'. A subsequence of numbers having a digit that divides all other digits, A263314. - _M. F. Hasler_, Jan 11 2016"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A011531/b011531.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Ar#10-automatic\">Index entries for 10-automatic sequences</a>."
+    ],
+    "maple": [
+        "M:= 3: # to get all terms of up to M digits",
+        "B:= {1}: A:= {1}:",
+        "for i from 2 to M do",
+        "   B:= map(t -> seq(10*t+j,j=0..9),B) union",
+        "      {seq(10*x+1,x=2*10^(i-2)..10^(i-1)-1)}:",
+        "   A:= A union B;",
+        "od:",
+        "sort(convert(A,list)); # _Robert Israel_, Jan 10 2016",
+        "# second program:",
+        "A011531 := proc(n)",
+        "    if n = 1 then",
+        "        1;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if nops(convert(convert(a,base,10),set) intersect {1}) > 0 then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Jul 31 2016"
+    ],
+    "mathematica": [
+        "Select[Range[600] - 1, DigitCount[#, 10, 1]>0 &] (* _Vincenzo Librandi_, Jan 11 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a011531 n = a011531_list !! (n-1)",
+        "a011531_list = filter ((elem '1') . show) [0..]",
+        "-- _Reinhard Zumkeller_, Feb 05 2012",
+        "(PARI) is_A011531(n)=setsearch(Set(digits(n)),1) \\\\ _M. F. Hasler_, Jan 10 2016",
+        "(MAGMA) [n: n in [0..500] | 1 in Intseq(n) ]; // _Vincenzo Librandi_, Jan 11 2016"
+    ],
+    "xref": [
+        "Cf. A121041, A121022, A121023, A121024, A121025, A121026, A121027, A121028, A121029, A121030, A121031, A121032, A121033, A121034, A121035, A121036, A121037, A121038, A121039, A121040.",
+        "Cf. A062634, a subsequence.",
+        "Cf. A052383 (complement)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_.",
+    "references": 57,
+    "revision": 37,
+    "time": "2017-02-12T19:03:53-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 214620,
+    "data": "18,24,36,42,48,56,70,72,84,90,96,98,112,120,135,140,144,150,154,168,170,175,180,182,186,192,196,198,204,220,224,225,234,240,242,245,248,266,270,276,279,280,286,288,294,300,304,306,308,310,312,315,322,330,336,338",
+    "name": "Numbers n such that at least one other integer m exists with the same smallest prime factor, same largest prime factor, and same set of binary digits as n.",
+    "comment": [
+        "Binary digits of m are a permutation of binary digits of n.",
+        "Conjecture: there is X such that among integers bigger than X more than 50% are in the sequence.",
+        "Since a set is an unordered collection of distinct elements, one should say \"same multiset (or bag) of binary digits as n.\" - _Daniel Forgues_, Mar 31 2016"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A214620/b214620.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "18 and 24 have the same set of binary digits: 10010 and 11000, same smallest prime factor 2, and same largest prime factor 3, so both 18 and 24 are in the sequence."
+    ],
+    "maple": [
+        "N:= 10: # to get all terms < 2^N",
+        "H:= proc(n) local F, B;",
+        "  F:= numtheory:-factorset(n);",
+        "B:= sort(convert(n,base,2));",
+        "[min(F),max(F),op(B)];",
+        "end proc:",
+        "T:= {}:",
+        "for n from 1 to 2^N-1 do",
+        "h:= H(n);",
+        "if assigned(R[h]) then T:= T union {n,R[h]}",
+        "else R[h]:= n",
+        "fi",
+        "od:",
+        "sort(convert(T,list)); # _Robert Israel_, Apr 01 2016"
+    ],
+    "mathematica": [
+        "nn = 360; TakeWhile[Union@ Flatten@ Table[Select[Complement[Range[3 n], {n}], And[Length@ Union[DigitCount[#, 2] & /@ {#, n}] == 1, Length@ Union[{First@ #, Last@ #} &@ Map[First, FactorInteger@ #] & /@ {#, n}] == 1] &] /. i_ /; MissingQ@ i -> Nothing, {n, nn}], # <= nn &] (* _Michael De Vlieger_, Apr 01 2016, Version 10.2 *)"
+    ],
+    "xref": [
+        "Cf. A214619, A214621."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, Jul 23 2012",
+    "references": 3,
+    "revision": 17,
+    "time": "2016-04-09T14:25:25-04:00",
+    "created": "2012-08-02T17:04:12-04:00"
+}

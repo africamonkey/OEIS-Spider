@@ -1,0 +1,32 @@
+{
+    "number": 156325,
+    "data": "1,1,4,34,482,10056,286372,10591372,491169996,27826318000,1887581200256,150885500428224,14028718134958936,1500672248541122944,182987661921689610000,25231215606822797450176",
+    "name": "E.g.f.: A(x) = exp( Sum_{n>=1} n(n+1)/2 * a(n-1)*x^n/n! ) = Sum_{n>=0} a(n)*x^n/n! with a(0)=1.",
+    "formula": [
+        "a(n) = Sum_{k=1..n} k(k+1)/2 * C(n-1,k-1)*a(k-1)*a(n-k) for n>0, with a(0)=1.",
+        "E.g.f. satisifies: A(x) = exp( d/dx x^2*A(x)/2 ). - _Paul D. Hanna_, Dec 17 2017"
+    ],
+    "example": [
+        "E.g.f: A(x) = 1 + x + 4*x^2/2! + 34*x^3/3! + 482*x^4/4! + 10056*x^5/5! +...",
+        "log(A(x)) = x + 3*1*x^2/2! + 6*4*x^3/3! + 10*34*x^4/4! + 15*482*x^5/5! +...",
+        "such that log(A(x))  =  x*A(x) + x^2*A'(x)/2  =  d/dx x^2*A(x)/2."
+    ],
+    "program": [
+        "(PARI) {a(n) = if(n==0,1,n!*polcoeff(exp(sum(k=1,n,k*(k+1)/2*a(k-1)*x^k/k!)+x*O(x^n)),n))}",
+        "for(n=0,25,print1(a(n),\", \"))",
+        "(PARI) {a(n) = if(n==0,1,sum(k=1,n,k*(k+1)/2*binomial(n-1,k-1)*a(k-1)*a(n-k)))}",
+        "for(n=0,25,print1(a(n),\", \"))",
+        "(PARI) {a(n) = my(A=1); for(i=1,n, A = exp(deriv(x^2*A/2 +x^2*O(x^n)))); n!*polcoeff(A,n)}",
+        "for(n=0,25,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Dec 17 2017"
+    ],
+    "xref": [
+        "Cf. A156326, A156327."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Feb 08 2009",
+    "references": 2,
+    "revision": 4,
+    "time": "2017-12-17T15:59:27-05:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

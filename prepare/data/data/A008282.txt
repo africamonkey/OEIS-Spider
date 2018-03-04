@@ -1,0 +1,70 @@
+{
+    "number": 8282,
+    "data": "1,1,1,1,2,2,2,4,5,5,5,10,14,16,16,16,32,46,56,61,61,61,122,178,224,256,272,272,272,544,800,1024,1202,1324,1385,1385,1385,2770,4094,5296,6320,7120,7664,7936,7936,7936,15872",
+    "name": "Triangle of Euler-Bernoulli or Entringer numbers read by rows: T(n,k) is the number of down-up permutations of n+1 starting with k+1.",
+    "comment": [
+        "Triangle begins",
+        "   1",
+        "   1  1",
+        "   1  2  2",
+        "   2  4  5  5",
+        "   5 10 14 16 16",
+        "  16 32 46 56 61 61",
+        "  ...",
+        "Each row is constructed by forming the partial sums of the previous row, reading from the right and repeating the final term."
+    ],
+    "reference": [
+        "R. C. Entringer, A combinatorial interpretation of the Euler and Bernoulli numbers, Nieuw Archief voor Wiskunde, 14 (1966), 241-246."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A008282/b008282.txt\">Rows n=1..120 of triangle, flattened</a>",
+        "V. I. Arnold, <a href=\"http://mi.mathnet.ru/eng/umn4470\">The calculus of snakes and the combinatorics of Bernoulli, Euler and Springer numbers of Coxeter groups</a>, Uspekhi Mat. nauk., 47 (#1, 1992), 3-45 = Russian Math. Surveys, Vol. 47 (1992), 1-51.",
+        "J. L. Arregui, <a href=\"http://arXiv.org/abs/math.NT/0109108\">Tangent and Bernoulli numbers related to Motzkin and Catalan numbers by means of numerical triangles</a>, arXiv:math/0109108 [math.NT], 2001.",
+        "B. Bauslaugh and F. Ruskey, <a href=\"http://dx.doi.org/10.1007/BF01932127\">Generating alternating permutations lexicographically</a>, Nordisk Tidskr. Informationsbehandling (BIT) 30 16-26 1990.",
+        "Neil J. Y. Fan, Liao He, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v22i2p45\">The Complete cd-Index of Boolean Lattices</a>, Electron. J. Combin., 22 (2015), #P2.45.",
+        "Dominique Foata and Guo-Niu Han, <a href=\"http://www-irma.u-strasbg.fr/~foata/paper/pub123Seidel.pdf\">Seidel Triangle Sequences and Bi-Entringer Numbers</a>, November 20, 2013.",
+        "Dominique Foata, Guo-Niu Han, <a href=\"http://arxiv.org/abs/1601.04371\">Andr\u00e9 Permutation Calculus; a Twin Seidel Matrix Sequence</a>, arXiv:1601.04371 [math.CO], 2016.",
+        "B. Gourevitch, <a href=\"http://www.pi314.net\">L'univers de Pi</a>",
+        "G. Kreweras, <a href=\"http://archive.numdam.org/article/MSH_1976__53__5_0.pdf\">Les pr\u00e9ordres totaux compatibles avec un ordre partiel</a>, Math. Sci. Humaines No. 53 (1976), 5-30.",
+        "J. Millar, N. J. A. Sloane and N. E. Young, A new operation on sequences: the Boustrophedon on transform, J. Combin. Theory, 17A 44-54 1996 (<a href=\"http://neilsloane.com/doc/bous.txt\">Abstract</a>, <a href=\"http://neilsloane.com/doc/bous.pdf\">pdf</a>, <a href=\"http://neilsloane.com/doc/bous.ps\">ps</a>).",
+        "C. Poupard, <a href=\"http://dx.doi.org/10.1016/0012-365X(82)90293-X\">De nouvelles significations \u00e9numeratives des nombres d'Entringer</a>, Discrete Math., 38 (1982), 265-271.",
+        "C. Poupard, <a href=\"http://dx.doi.org/10.1006/eujc.1997.0147\">Two other interpretations of the Entringer numbers</a>, Eur. J. Combinat. 18 (1997) 939-943.",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Boustrophedon_transform\">Boustrophedon_transform</a>",
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "formula": [
+        "T(n, k)=sum((-1)^i*binomial(k, 2i+1)*E[n-2i-1], i=0..floor((k-1)/2))= sum((-1)^i*binomial(n-k, 2i)*E[n-2i], i=0..floor((n-k)/2)) (k<n), T(n, n)=E[n]. T(n, n)=E[n]; T(n, k)=sum((-1)^i*binomial(n-k, 2i)*E[n-2i], i=0..floor((n-k)/2)) (k<n), T(n, n)=E[n]. where E(j)=A000111(j)=j!*[x^j]((sec(x)+tan(x)) are the up/down or Euler numbers. - _Emeric Deutsch_, May 15 2004"
+    ],
+    "example": [
+        "T(4,3)=5 because we have 41325,41523,42314,42513 and 43512."
+    ],
+    "maple": [
+        "f:=series(sec(x)+tan(x),x=0,25): E[0]:=1: for n from 1 to 20 do E[n]:=n!*coeff(f,x^n) od: T:=proc(n,k) if k<n then sum((-1)^i*binomial(k,2*i+1)*E[n-2*i-1],i=0..floor((k-1)/2)) elif k=n then E[n] else 0 fi end: seq(seq(T(n,k),k=1..n),n=1..10);",
+        "# Alternatively:",
+        "T := proc(n, k) option remember; if k = 0 then `if`(n = 0, 1, 0) else",
+        "T(n, k - 1) + T(n - 1, n - k) fi end:",
+        "for n from 1 to 6 do seq(T(n,k), k=1..n) od; # _Peter Luschny_, Aug 03 2017"
+    ],
+    "mathematica": [
+        "ro[1] = {1}; ro[n_] := ro[n] = (s = Accumulate[ Reverse[ ro[n-1]]]; Append[ s, Last[s]]); Flatten[ Table[ ro[n], {n, 1, 10}]] (* _Jean-Fran\u00e7ois Alcover_, Oct 03 2011 *)",
+        "nxt[lst_]:=Module[{lst2=Accumulate[Reverse[lst]]},Flatten[Join[ {lst2,Last[ lst2]}]]]; Flatten[NestList[nxt,{1},10]] (* _Harvey P. Dale_, Aug 17 2014 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a008282 n k = a008282_tabl !! (n-1) !! (k-1)",
+        "a008282_row n = a008282_tabl !! (n-1)",
+        "a008282_tabl = iterate f [1] where",
+        "   f xs = zs ++ [last zs] where zs = scanl1 (+) (reverse xs)",
+        "-- _Reinhard Zumkeller_, Dec 28 2011"
+    ],
+    "xref": [
+        "Cf. A010094, A000111, A099959, A009766, A236935."
+    ],
+    "keyword": "nonn,tabl,easy,nice",
+    "offset": "1,5",
+    "author": "_N. J. A. Sloane_",
+    "references": 19,
+    "revision": 51,
+    "time": "2017-08-04T01:22:30-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

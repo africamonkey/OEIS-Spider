@@ -1,0 +1,39 @@
+{
+    "number": 289273,
+    "data": "4,25,26,27,28,30,32,35,36,39,40,55,56,65,66,69,70,72,74,75,76,78,80,95,96,105,106,108,110,114,116,121,122,123,124,126,128,132,134,135,136,140,141,143,144,145,146,147,148,153,154,155,156,161,162,165,166",
+    "name": "Complement of A242410.",
+    "comment": [
+        "Conjecture: there will never be a point where this sequence has more terms than A242410. (80 is only the 21st term of this sequence.)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A289273/b289273.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "A242410:= proc(n) option remember; local Q,k;",
+        "     Q:= map(procname, numtheory:-divisors(n) minus {1,n});",
+        "     for k from procname(n-1) + 1 do",
+        "       if andmap(t -> (k mod t > 0), Q) then return k fi",
+        "     od",
+        "end proc:",
+        "A242410(1):= 1:",
+        "sort(convert({$1..A242410(1000)} minus map(A242410, {$1..1000}), list)); # _Robert Israel_, Jul 05 2017"
+    ],
+    "mathematica": [
+        "a = {1}; Do[k = a[[n - 1]] + 1; While[AnyTrue[Most@ Rest@ Divisors@ n, Divisible[k, a[[#]] ] &], k++]; AppendTo[a, k], {n, 2, 110}]; Complement[Range@ Max@ a, a] (* _Michael De Vlieger_, Jul 05 2017 *)"
+    ],
+    "program": [
+        "(PARI) okd(k, vd) = {for (i=1, #vd, if ((k % vd[i]) == 0, return (0)); ); return (1); }",
+        "fnext(n, va) = {d = divisors(n); vd = vector(#d-2, i, va[d[i+1]]); k = va[n-1]+1; while (! okd(k, vd), k++); k; }",
+        "lista(nn) = {va = vector(nn); va[1] = 1; for (n=2, nn, va[n] = fnext(n, va); ); va; }"
+    ],
+    "xref": [
+        "Cf. A242410."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. Lowell_, Jun 30 2017",
+    "references": 1,
+    "revision": 22,
+    "time": "2017-07-07T15:14:11-04:00",
+    "created": "2017-07-07T15:14:11-04:00"
+}

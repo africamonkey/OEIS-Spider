@@ -1,0 +1,36 @@
+{
+    "number": 232394,
+    "data": "1,1,2,4,7,15,29,57,111,218,429,841,1651,3239,6355,12473,24475,48029,94249,184946,362932,712194,1397569,2742507,5381729,10560797,20723884,40667338,79803197,156601100,307304821,603036937,1183364302,2322164658",
+    "name": "The number of compositions of n with no more than 3 consecutive identical parts (summands).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A232394/b232394.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "The g.f. for the number of compositions of n with no more than m consecutive identical parts is 1/( 1 - sum_{j>=1} x^j*(1 - x^(j*m))/(1 - x^j)/ (1 + x^j*(1 - x^(j*m))/(1 - x^j)) ); set m = 3 for this sequence.",
+        "a(n) ~ c * d^n, where d=1.962341312018097075518216734398388302205091029921968626465436021267458..., c=0.506212613637348069558928622560083229757824786467201325660889396545904... - _Vaclav Kotesovec_, May 01 2014"
+    ],
+    "example": [
+        "a(6) = 29 because there are 32 compositions of 6 but we exclude: 1+1+1+1+1+1, 1+1+1+1+2, 2+1+1+1+1."
+    ],
+    "maple": [
+        "b:= proc(n, t, c) option remember;",
+        "       `if`(n=0, 1, add(`if`(t<>j, b(n-j, j, 1),",
+        "       `if`(c<3, b(n-j, j, c+1), 0)), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, 0, 1):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Nov 24 2013"
+    ],
+    "mathematica": [
+        "Series[1/(1-Sum[(z^j+z^(2j)+z^(3j))/(1+z^j+z^(2j)+z^(3j)),{j,1,nn}]),{z,0,nn}],z]"
+    ],
+    "xref": [
+        "Cf. A003242, A128695, A232464."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Geoffrey Critzer_, Nov 23 2013",
+    "references": 2,
+    "revision": 19,
+    "time": "2017-02-08T16:44:47-05:00",
+    "created": "2013-11-24T12:13:15-05:00"
+}

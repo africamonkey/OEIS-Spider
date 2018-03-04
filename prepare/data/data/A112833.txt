@@ -1,0 +1,41 @@
+{
+    "number": 112833,
+    "data": "1,2,5,20,117,1024,13357,259920,7539421,326177280,21040987113,2024032315968,290333133984905,62102074862600192,19808204598680574457,9421371079480456587520,6682097668647718038428569,7067102111711681259234263040,11145503882824383823706372042925",
+    "name": "Number of domino tilings of a 3-pillow of order n.",
+    "comment": [
+        "A 3-pillow is also called an Aztec pillow. The 3-pillow of order n is a rotationally-symmetric region. It has a 2 X 2n central band of squares and then steps up from this band with steps of 3 horizontal squares to every 1 vertical square and steps down with steps of 1 horizontal square to every 1 vertical square."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A112833/b112833.txt\">Table of n, a(n) for n = 0..100</a>",
+        "C. Hanusa, <a href=\"http://people.qc.cuny.edu/faculty/christopher.hanusa/research/Documents/papers/Dissertation.pdf\">A Gessel-Viennot-Type Method for Cycle Systems with Applications to Aztec Pillows</a>, PhD Thesis, 2005, University of Washington, Seattle, USA."
+    ],
+    "example": [
+        "The number of domino tilings of the 3-pillow of order 4 is 117=3^2*13."
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "b:= proc(x, y, k) option remember;",
+        "      `if`(y>x or y<x/2, 0, `if`(x=k, `if`(y=k, 1, 0),",
+        "         b(x, y-1, k)+b(x-1, y, k)+b(x-1, y-1, k)))",
+        "    end:",
+        "P:= n-> Matrix(n, (i, j)-> b(i-1, i-1, j-1)):",
+        "R:= n-> Matrix(n, (i, j)-> `if`(i+j=n+1, 1, 0)):",
+        "a:= n-> Determinant(P(n)+R(n).(P(n)^(-1)).R(n)):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Apr 26 2013"
+    ],
+    "mathematica": [
+        "b[x_, y_, k_] := b[x, y, k] = If[y>x || y<x/2, 0, If[x == k, If[y == k, 1, 0], b[x, y-1, k] + b[x-1, y, k] + b[x-1, y-1, k]]]; P[n_] := Table[ b[i-1, i-1, j-1], {i, 1, n}, {j, 1, n}]; R[n_] := Table[If[i+j == n+1, 1, 0], {i, 1, n}, {j, 1, n}]; a[0] = 1; a[n_] := Det[ P[n] + R[n].Inverse[P[n]].R[n]]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Nov 08 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "This sequence breaks down as A112834^2 times A112835, where A112835 is not necessarily squarefree.",
+        "5-pillows: A112836-A112838; 7-pillows: A112839-A112841; 9-pillows: A112842-A112844.",
+        "Related to A071101 and A071100."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "Christopher Hanusa (chanusa(AT)math.binghamton.edu), Sep 21 2005",
+    "references": 20,
+    "revision": 18,
+    "time": "2015-11-09T03:39:09-05:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

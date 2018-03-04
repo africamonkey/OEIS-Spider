@@ -1,0 +1,32 @@
+{
+    "number": 192785,
+    "data": "1,1,2,5,11,29,75,203,557,1561,4427,12706,36819,107576,316579,937471,2791487,8352973,25104573,75749240,229379444,696851166,2123304184,6487295518,19870096689,61001089214,187673207413,578532522637,1786712575547",
+    "name": " G.f. satisfies: A(x) = Product_{n>=1} (1 + x^n)*(1 + x^(2n)*A(x)^2).",
+    "comment": [
+        " Related q-series identity of Lebesgue:",
+        "Product_{n>=1} (1 + q^n)*(1 + z*q^(2*n)) = 1 + Sum_{n>=1} q^(n*(n+1)/2) * Product_{k=1..n} (1 + z*q^k)/(1 - x^k); here q=x, z=A(x)^2."
+    ],
+    "formula": [
+        " G.f. satisfies: A(x) = 1 + Sum_{n>=1} x^(n*(n+1)/2)*Product_{k=1..n} (1 + x^k*A(x)^2)/(1 - x^k) due to a Lebesgue identity."
+    ],
+    "example": [
+        " G.f.: A(x) = 1 + x + 2*x^2 + 5*x^3 + 11*x^4 + 29*x^5 + 75*x^6 +...",
+        "The g.f. A = A(x) satisfies the following relations:",
+        "A = (1+x)*(1+x^2*A^2)* (1+x^2)*(1+x^4*A^2)* (1+x^3)*(1+x^6*A^2)*...",
+        "A = 1 + x*(1+x*A^2)/(1-x) + x^3*(1+x*A^2)*(1+x^2*A^2)/((1-x)*(1-x^2)) + x^6*(1+x*A^2)*(1+x^2*A^2)*(1+x^3*A^2)/((1-x)*(1-x^2)*(1-x^3)) +..."
+    ],
+    "program": [
+        " (PARI) {a(n)=local(A=1+x); for(i=1, n, A=prod(m=1, n, (1+x^m)*(1+x^(2*m)*A^2+x*O(x^n)))); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=1+x); for(i=1, n, A=1+sum(m=1, sqrtint(2*n), x^(m*(m+1)/2)*prod(k=1, m, (1+A^2*x^k)/(1-x^k+x*O(x^n))))); polcoeff(A, n)}"
+    ],
+    "xref": [
+        " Cf. A190822, A145267."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jul 10 2011",
+    "references": 0,
+    "revision": 4,
+    "time": "2012-03-30T18:37:27-04:00",
+    "created": "2011-07-10T03:45:02-04:00"
+}

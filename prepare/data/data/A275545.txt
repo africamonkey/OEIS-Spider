@@ -1,0 +1,59 @@
+{
+    "number": 275545,
+    "data": "0,0,0,0,1,1,2,4,8,16,34,67,137,272,540,1061,2074,4022,7763,14914,28556,54499,103729,196945,373201,705964,1333413,2515298,4739834,8926089",
+    "name": "Number of new duplicate terms at a given iteration of the Collatz (or 3x+1) map starting with 0.",
+    "comment": [
+        "If one considers an algebraic approach to the Collatz conjecture, the tree of outcomes of the \"Half Or Triple Plus One\" process starting with a natural number n:",
+        "  i",
+        "  0:                                   n",
+        "  1:                  3n+1                            n/2",
+        "  2:        9n+4        (3/2)n+1/2         (3/2)n+1          n/4",
+        "  3: 27n+13 (9/2)n+2 (9/2)n+5/2 (3/4)n+1/4 (9/2)n+4 (3/4)n+1/2 (3/4)n+1 n/8",
+        "  ...",
+        "  reveals that any n that is part of a cycle satisfies an equation of the form (3^(i-p)/2^p - 1)n + x_i = 0, i = 0,1,2,3,..., p = 0..i, where the x_i are the possible constant terms at iteration i, i.e.,",
+        "  x_0 = [0],",
+        "  x_1 = [1,0],",
+        "  x_2 = [4,1/2,1,0],",
+        "  x_3 = [13,2,5/2,1/4,4,1/2,1,0],",
+        "  x_4 = [40,13/2,7,1,17/2,5/4,7/4,1/8,13,2,5/2,1/4,4,1/2,1,0],",
+        "  ...",
+        "(Note that not all the combinations of members of x_i and numbers p yield an equation that corresponds to n having to belong to a cycle, instead satisfying at least one equation of the form above is a necessary condition for every n that does).",
+        "This sequence is composed of the number of new duplicates of possible constant terms at each iteration i. \"New duplicates\" refers to two identical constant terms appearing in the current iteration i, that have not appeared in any previous one j < i (because every duplicate in x_i yields two duplicates in x_(i+1), these are not counted).",
+        "This sequence is related to A275544, if one sequence is known it is possible to work out the other (see formula).",
+        "An empirical observation suggests that the same sequence of numbers arises if we analogously consider the 3n-1 problem (the Collatz conjecture can be referred to as the 3n+1 problem)."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Collatz_conjecture\">Collatz conjecture</a>"
+    ],
+    "formula": [
+        "a(n) = 2*A275544(n-1) - A275544(n), for n>=1."
+    ],
+    "example": [
+        "a(3) = 0 since all the members of x_3 are distinct.",
+        "a(4) = 1 since in x_4 the number 1 appears twice (there is 1 duplicate)."
+    ],
+    "program": [
+        "(Python)",
+        "x = [0]",
+        "for i in range(n):",
+        "    x_tmp = []",
+        "    for s in x:",
+        "        x_tmp.append(3*s+1)",
+        "        x_tmp.append(s*0.5)",
+        "    x = x_tmp",
+        "    length_tmp = len(x)",
+        "    x = list(set(x))",
+        "    print length_tmp-len(x)",
+        "(PARI) first(n)=my(v=vector(n),u=[0],t); for(i=1,n, t=2*#u; u=Set(concat(vector(#u,j,3*u[j]+1),u/2)); v[i]=t-#u); concat(0, v) \\\\ _Charles R Greathouse IV_, Aug 05 2016"
+    ],
+    "xref": [
+        "Cf. A275544."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,7",
+    "author": "_Rok Cestnik_, Aug 01 2016",
+    "references": 1,
+    "revision": 33,
+    "time": "2016-10-22T09:37:03-04:00",
+    "created": "2016-10-22T09:37:03-04:00"
+}

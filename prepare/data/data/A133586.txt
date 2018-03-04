@@ -1,0 +1,55 @@
+{
+    "number": 133586,
+    "data": "1,2,3,6,8,16,21,42,55,110,144,288,377,754,987,1974,2584,5168,6765,13530,17711,35422,46368,92736,121393,242786,317811,635622,832040,1664080,2178309,4356618,5702887,11405774,14930352,29860704,39088169,78176338,102334155",
+    "name": "Expansion of x*(1+2*x)/( (x^2-x-1)*(x^2+x-1) ).",
+    "comment": [
+        "For n>1 A133585(n) + a(n) = A000032(n+1)."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A133586/b133586.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (0,3,0,-1)."
+    ],
+    "formula": [
+        "Equals A133080 * A133566 * A000045, where A133080 and A133566 are infinite lower triangular matrices and the Fibonacci sequence as a vector (previous definition).",
+        "For odd-indexed terms, a(n) = F(n+1). For even-indexed terms, a(n) = 2*a(n-1).",
+        "For n>1 A133585(n) + a(n) = A000032(n+1).",
+        "a(n) = A147600(n) + 2*A147600(n-1). - _R. J. Mathar_, Jun 20 2015",
+        "a(n) = (2^(-2-n)*((1-sqrt(5))^n*(-5+sqrt(5)) - (-1-sqrt(5))^n*(-3+sqrt(5)) - (-1+sqrt(5))^n*(3+sqrt(5)) + (1+sqrt(5))^n*(5+sqrt(5))))/sqrt(5). - _Colin Barker_, Mar 28 2016"
+    ],
+    "example": [
+        "a(5) = F(6) = 8.",
+        "a(6) = 2*a(5) = 2*8 = 16."
+    ],
+    "maple": [
+        "A133586aux := proc(n,k)",
+        "    add(A133080(n,j)*A133566(j,k),j=k..n) ;",
+        "end proc:",
+        "A000045 := proc(n)",
+        "    combinat[fibonacci](n) ;",
+        "end proc:",
+        "A133586 := proc(n)",
+        "    add(A133586aux(n,j)*A000045(j),j=0..n) ;",
+        "end proc: # _R. J. Mathar_, Jun 20 2015"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1 + 2 x)/((x^2 - x - 1) (x^2 + x - 1)), {x, 0, 50}], x] (* _Vincenzo Librandi_, Jun 21 2015 *)",
+        "LinearRecurrence[{0,3,0,-1},{1,2,3,6},40] (* _Harvey P. Dale_, Dec 10 2017 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n%2, fibonacci(n+1), 2*fibonacci(n))}; /* _Michael Somos_, Jun 20 2015 */",
+        "(PARI) Vec(x*(1+2*x)/((x^2-x-1)*(x^2+x-1)) + O(x^50)) \\\\ _Colin Barker_, Mar 28 2016"
+    ],
+    "xref": [
+        "Cf. A001906 (bisection), A025169 (bisection), A000032, A133586."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Gary W. Adamson_, Sep 18 2007",
+    "ext": [
+        "New definition and A-number in previous definition corrected by _R. J. Mathar_, Jun 20 2015"
+    ],
+    "references": 2,
+    "revision": 25,
+    "time": "2017-12-10T10:18:34-05:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

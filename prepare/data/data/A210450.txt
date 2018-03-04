@@ -1,0 +1,37 @@
+{
+    "number": 210450,
+    "data": "0,3,4,5,6,7,11,16,17,21,23,24,27,28,32,34,35,36,38,39,40,43,44,45,47,48,49,51,53,54,55,56,59,60,63,65,67,68,69,70,72,73,74,76,77,79,81,82,85,86,89,93,96,97,98,100,102,103,105,106,107,109,110",
+    "name": "Numbers n such that 16n + 7 is in A192628.",
+    "comment": [
+        "Reduce the elements of A192718 (which are the elements of A192628 congruent to 7 (mod 16)) by subtracting 7 and dividing by 16.  In \"On the reciprocal of the binary generating function for the sum of divisors\", this sequence is precisely the set T."
+    ],
+    "reference": [
+        "J. Cooper and A. Riasanovsky, On the reciprocal of the binary generating function for the sum-of-divisors, Journal of Integer Sequences.",
+        "J. Cooper, D. Eichhorn, and K. O'Bryant, Reciprocals of binary power series, International Journal of Number Theory, 2 no. 4 (2006), 499-522."
+    ],
+    "link": [
+        "J. N. Cooper and A. W. N. Riasanovsky, <a href=\"http://www.math.sc.edu/~cooper/Sigma.pdf\">On the Reciprocal of the Binary Generating Function for the Sum of Divisors</a>, 2012"
+    ],
+    "program": [
+        "(Sage)",
+        "prec = 2^12",
+        "R = PowerSeriesRing(GF(2), 'q', default_prec = prec)",
+        "q = R.gen()",
+        "sigma = lambda x : 1 if x == 0 else sum(Integer(x).divisors())",
+        "SigmaSeries = sum([sigma(m)*q^m for m in range(prec)])",
+        "SigmaBarSeries = 1/SigmaSeries",
+        "SigmaBarList = SigmaBarSeries.exponents()",
+        "reduced = [(m-7)/16 for m in SigmaBarList if mod(m, 8) == 7]",
+        "print reduced[:128]"
+    ],
+    "xref": [
+        "Cf. A192718, A192628."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alexander Riasanovsky_, Jan 20 2013",
+    "references": 0,
+    "revision": 21,
+    "time": "2013-02-05T11:46:07-05:00",
+    "created": "2013-02-05T11:46:07-05:00"
+}

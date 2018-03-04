@@ -1,0 +1,49 @@
+{
+    "number": 274005,
+    "data": "1,2,4,8,16,32,62,120,222,410,728,1294,2220,3816,6380,10690,17486,28704,46180",
+    "name": "Number of length-n binary sequences where the sum of each subblock differs by at most 2 from every other subblock of the same length.",
+    "example": [
+        "For n = 6, the strings 000111 and 111000 are not counted, since the sum of length-3 subblocks that begin and end differ by 3."
+    ],
+    "maple": [
+        "A274005 := proc(n)",
+        "    local a,b,lbdgs,bdgs,i,j,wrks,stri ;",
+        "    a := 0 ;",
+        "    for b from 0 to 2^n-1  do",
+        "        bdgs := convert(b,base,2) ;",
+        "        lbdgs := nops(bdgs) ;",
+        "        bdgs := [op(bdgs),seq(0,i=1..n-lbdgs)] ;",
+        "        wrks := true;",
+        "        for stri from 3 to n/2 do",
+        "            for i from 1 to n-stri do",
+        "            for j from i+1 to n-stri+1 do",
+        "                if abs(add(bdgs[u],u=i..i+stri-1) - add(bdgs[u],u=j..j+stri-1)) >2 then",
+        "                    wrks := false;",
+        "                end if ;",
+        "                if not wrks then",
+        "                    break;",
+        "                end if;",
+        "            end do:",
+        "            end do:",
+        "            if not wrks then",
+        "                break;",
+        "            end if;",
+        "        end do ;",
+        "        if wrks then",
+        "            a := a+1 ;",
+        "        end if;",
+        "    end do:",
+        "    a ;",
+        "end proc: # _R. J. Mathar_, Jun 16 2016"
+    ],
+    "xref": [
+        "Cf. A005598, which is the analogous sequence where \"2\" is replaced by \"1\"."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Jeffrey Shallit_, Jun 06 2016",
+    "references": 2,
+    "revision": 11,
+    "time": "2016-06-16T11:57:24-04:00",
+    "created": "2016-06-08T04:56:44-04:00"
+}

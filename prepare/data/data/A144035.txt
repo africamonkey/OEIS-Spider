@@ -1,0 +1,25 @@
+{
+    "number": 144035,
+    "data": "0,1,1,4,13,51,197,828,3526,15538,69627,317564,1466868,6853320,32317354,153636769,735493374,3542610091,17155811156,83480667707,407969449010,2001479974330,9853652529076,48666276924852,241059431701113",
+    "name": "Shifts left when Euler transform applied 3 times.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A144035/b144035.txt\">Table of n, a(n) for n = 0..500</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "maple": [
+        "k:=3: with(numtheory): etr:= proc(p) local b; b:=proc(n) option remember; local d,j; if n=0 then 1 else add(add(d*p(d), d=divisors(j)) *b(n-j), j=1..n)/n fi end end: a:='a': b[1]:=etr(a): for t from 2 to k do b[t]:= etr(b[t-1]) od: a:= n-> `if`(n<2,n,b[k](n-1)): seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "etr[p_] := Module[{b}, b[n_] := b[n] = If[n == 0, 1, Sum[Sum[d*p[d], {d, Divisors[ j]}]*b[n-j], {j, 1, n}]/n]; b]; A[n_, k_] := Module[{a, b, t}, b[1] = etr[a]; For[ t = 2, t <= k, t++, b[t] = etr[b[t-1]]]; a = Function[m, If[m == 1, 1, b[k][m-1]]]; a[n]]; Table[ A[n, 3], {n, 0, 30} ] (* _Jean-Fran\u00e7ois Alcover_, Mar 05 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "3rd column of A144042."
+    ],
+    "keyword": "eigen,nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Sep 07 2008",
+    "references": 2,
+    "revision": 12,
+    "time": "2015-03-08T22:03:09-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

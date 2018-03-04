@@ -1,0 +1,45 @@
+{
+    "number": 22894,
+    "data": "0,1,1,2,5,13,39,122,392,1286,4341,14860,51085,178402,634511,2260918,8067237,29031202,105250449,383579285,1404666447,5171065198,19141008044,71124987313,263548339462,983424096451,3684422350470,13818161525284,51938115653565",
+    "name": "Number of solutions to c(1)*prime(1) +...+ c(2n+1)*prime(2n+1) = 0, where c(i) = +-1 for i > 1, c(1) = 1.",
+    "comment": [
+        "c(1)*prime(1) +...+ c(2n)*prime(2n) = 0 has no solution, because the l.h.s. has an odd number of odd terms and the l.h.s. is even."
+    ],
+    "link": [
+        "T. D. Noe and Ray Chandler, <a href=\"/A022894/b022894.txt\">Table of n, a(n) for n = 0..1000</a> (first 101 terms from T. D. Noe)"
+    ],
+    "example": [
+        "a(1) = 1 because +2 +3 -5 = 0, a(2) = 1 because +2 -3 +5 +7 -11 = 0, a(3) = 2 because +2 +3 -5 -7 +11 +13 -17 = +2 +3 -5 +7 -11 -13 +17 = 0.",
+        "a(4) = 5 because +2 -3 -5 +7 +11 +13 +17 -19 -23 = +2 -3 +5 -7 +11 +13 -17 +19 -23 = +2 -3 +5 +7 -11 -13 +17 +19 -23 = +2 -3 +5 +7 -11 +13 -17 -19 +23 = +2 +3 +5 -7 -11 -13 +17 -19 +23 = 0 and there are no others up through the ninth prime."
+    ],
+    "maple": [
+        "sp:= proc(n) sp(n):= `if`(n=1, 0, ithprime(n)+sp(n-1)) end:",
+        "b := proc(n,i) option remember; `if`(n>sp(i), 0, `if`(i=1, 1,",
+        "        b(n+ithprime(i), i-1)+ b(abs(n-ithprime(i)), i-1)))",
+        "     end:",
+        "a:= n-> b(2, 2*n+1):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Aug 05 2012"
+    ],
+    "mathematica": [
+        "Do[a = Table[ Prime[i], {i, 1, n} ]; c = 0; k = 2^(n - 1); While[k < 2^n, If[ Apply[ Plus, a*(-1)^(IntegerDigits[k, 2] + 1)] == 0, c++ ]; k++ ]; Print[c], {n, 1, 32, 2} ]"
+    ],
+    "program": [
+        "(PARI) A022894={a(n, s=0-prime(1), p=1)=if(n<=s, if(s==p, n==s, a(abs(n-p), s-p, precprime(p-1))+a(n+p, s-p, precprime(p-1))), if(s<=0, a(abs(s), max(sum(i=p+1, p+(p>1)+2*n, prime(i)),1), prime(p+(p>1)+2*n))))} \\\\ _M. F. Hasler_, Aug 09 2015"
+    ],
+    "xref": [
+        "Cf. A113040, A215036, A083309 (sums of odd primes).",
+        "Cf. A022895, A022896 (r.h.s. = 1 & 2, using all primes), A083309 and A022897 - A022899 (using primes >= 3), A022900 - A022902 (using primes >=5), A022903, A022904, A022920 (using primes >= 7); A261061 - A261063 & A261045 (r.h.s. = -1); A261057, A261059, A261060 & A261044 (r.h.s. = -2)."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,4",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Edited by _Robert G. Wilson v_, Jan 29 2002",
+        "More terms from _T. D. Noe_, Jan 16 2007",
+        "Edited by _M. F. Hasler_, Aug 09 2015"
+    ],
+    "references": 28,
+    "revision": 30,
+    "time": "2015-08-09T19:45:07-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 34791,
+    "data": "1,2,7,14,31,62,113,226,233,466,647,1294,1487,2974,4919,6329,7951,12658,15902,26329,26833,47737,52658,53623,53666,95474,107246,128959,135697,142327,271394,284654,715177,1312777,1430354,1474657,2625554",
+    "name": "a(n) is square mod a(i), i < n.",
+    "comment": [
+        "Apparently A034698 is a subsequence and all elements are products of elements of A034698.",
+        "a(n) is the smallest integer larger than a(n-1) such that all a(i), 1<=i<n, are quadratic residues mod a(n). - _R. J. Mathar_, Jul 27 2015"
+    ],
+    "maple": [
+        "A034791 := proc(n)",
+        "    option remember;",
+        "    local a,wrks ;",
+        "    if n = 1 then",
+        "        1;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            wrks := true;",
+        "            for i from 1 to n-1 do",
+        "                if numtheory[quadres](procname(i),a) <> 1 then",
+        "                    wrks := false;",
+        "                end if;",
+        "            end do;",
+        "            if wrks then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end  if;",
+        "end proc: # _R. J. Mathar_, Jul 27 2015"
+    ],
+    "mathematica": [
+        "residueQ[n_, k_] := Length[Select[Range[Floor[k/2]], PowerMod[#, 2, k] == n &, 1]] == 1; a[1] = 1; a[n_] := a[n] = For[r = Range[n - 1]; an = a[n - 1] + 1, True, an++, If[AllTrue[r, residueQ[a[#], an] &], Return[an]]]; Table[Print[\"a(\", n, \") = \", a[n]]; a[n], {n, 1, 37}] (* _Jean-Fran\u00e7ois Alcover_, Feb 16 2018 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a034791 n = a034791_list !! (n-1)",
+        "a034791_list = 1 : f [2..] [1] where",
+        "   f (x:xs) ys | and $ map (flip isSquMod x) ys = x : f xs (x:ys)",
+        "               | otherwise                      = f xs ys",
+        "   isSquMod u v = u `mod` v `elem` (map ((`mod` v) . (^ 2)) [0..v-1])",
+        "-- _Reinhard Zumkeller_, fixed Jul 29 2015, Mar 28 2012"
+    ],
+    "xref": [
+        "Cf. A034698.",
+        "Cf. A034793, A034903."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_David W. Wilson_",
+    "references": 3,
+    "revision": 19,
+    "time": "2018-02-16T04:04:42-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

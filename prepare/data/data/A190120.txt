@@ -1,0 +1,36 @@
+{
+    "number": 190120,
+    "data": "0,2,5,6,11,41,48,54,60,130,141,153,166,292,412,414,431,473,492,522,732,1018,1041,1107,1117,1507,1508,1564,1593,2523,2554,2564,3026,3672,4092,4107,4144,4942,5566,5736,5777,7499,7542,7674,7869,9019,9066,9087,9101,9191",
+    "name": "a(n) = Sum_{k=1..n} lcm(k,k')/gcd(k,k'), where n' is arithmetic derivative of n.",
+    "comment": [
+        "Use lcm(1,0)=0 and gcd(1,0)=1."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A190120/b190120.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "lcm(1,1')/gcd(1,1')+lcm(2,2')/gcd(2,2')+lcm(3,3')/gcd(3,3')=0+2/1+3/1=5 ->a(3)=5."
+    ],
+    "maple": [
+        "der:=n->n*add(op(2,p)/op(1,p),p=ifactors(n)[2]):",
+        "seq(add(lcm(der(i),i)/gcd(der(i),i),i=1..n),n=1..50);"
+    ],
+    "mathematica": [
+        "A003415[n_]:= If[Abs@n < 2, 0, n Total[#2/#1 & @@@FactorInteger[Abs@n]]];",
+        "Table[Sum[LCM[k, A003415[k]]/GCD[k, A003415[k]], {k, 1, n}], {n,1,50}] (* _G. C. Greubel_, Dec 29 2017 *)"
+    ],
+    "program": [
+        "(PARI) {A003145(n, f)=sum(i=1, #f=factor(n)~, n/f[1, i]*f[2, i])};",
+        "for(n=1, 50, print1(sum(k=1,n,lcm(k,A003145(k))/gcd(k,A003145(k))), \", \")) \\\\ _G. C. Greubel_, Dec 29 2017"
+    ],
+    "xref": [
+        "Cf. A003415, A190118, A190119."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Giorgio Balzarotti_, May 04 2011",
+    "references": 2,
+    "revision": 18,
+    "time": "2017-12-30T09:34:07-05:00",
+    "created": "2011-05-13T22:02:11-04:00"
+}

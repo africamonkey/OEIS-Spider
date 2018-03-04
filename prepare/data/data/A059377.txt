@@ -1,0 +1,45 @@
+{
+    "number": 59377,
+    "data": "1,15,80,240,624,1200,2400,3840,6480,9360,14640,19200,28560,36000,49920,61440,83520,97200,130320,149760,192000,219600,279840,307200,390000,428400,524880,576000,707280,748800,923520,983040,1171200",
+    "name": "Jordan function J_4(n).",
+    "comment": [
+        "This sequence is multiplicative. - Mitch Harris, Apr 19 2005"
+    ],
+    "reference": [
+        "L. Comtet, Advanced Combinatorics, Reidel, 1974, p. 199, #3.",
+        "R. Sivaramakrishnan, \"The many facets of Euler's totient. II. Generalizations and analogues\", Nieuw Arch. Wisk. (4) 8 (1990), no. 2, 169-187."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A059377/b059377.txt\">Table of n, a(n) for n=1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = sum(d|n, d^4*mu(n/d)). - _Benoit Cloitre_, Apr 05 2002",
+        "Multiplicative with a(p^e) = p^(4e)-p^(4(e-1)).",
+        "Dirichlet generating function: zeta(s-4)/zeta(s). - _Franklin T. Adams-Watters_, Sep 11 2005",
+        "a(n) = Sum_{k=1..n} GCD(k,n)^4 * Cos(2*Pi*k/n). - _Enrique P\u00e9rez Herrero_, Jan 18 2013",
+        "a(n) = n^4*Product_{distinct primes p dividing n} (1-1/p^4). - _Tom Edgar_, Jan 09 2015",
+        "G.f.: Sum_{n>=1} a(n)*x^n/(1 - x^n) = x*(1 + 11*x + 11*x^2 + x^3)/(1 - x)^5. - _Ilya Gutkovskiy_, Apr 25 2017"
+    ],
+    "maple": [
+        "J := proc(n,k) local i,p,t1,t2; t1 := n^k; for p from 1 to n do if isprime(p) and n mod p = 0 then t1 := t1*(1-p^(-k)); fi; od; t1; end; # (with k = 4)"
+    ],
+    "mathematica": [
+        "JordanJ[n_, k_: 1] := DivisorSum[n, #^k*MoebiusMu[n/#] &]; f[n_] := JordanJ[n, 4]; Array[f, 38]"
+    ],
+    "program": [
+        "(PARI) for(n=1,100,print1(sumdiv(n,d,d^4*moebius(n/d)),\",\"))",
+        "(PARI) a(n)=if(n<1,0,sumdiv(n,d,d^4*moebius(n/d)))",
+        "(PARI) a(n)=if(n<1,0,dirdiv(vector(n,k,k^4),vector(n,k,1))[n])",
+        "(PARI) { for (n = 1, 1000, write(\"b059377.txt\", n, \" \", sumdiv(n, d, d^4*moebius(n/d))); ) } \\\\ _Harry J. Smith_, Jun 26 2009"
+    ],
+    "xref": [
+        "See A059379 and A059380 (triangle of values of J_k(n)), A000010 (J_1), A007434 (J_2), A059376 (J_3), A059378 (J_5)."
+    ],
+    "keyword": "nonn,mult",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jan 28 2001",
+    "references": 19,
+    "revision": 32,
+    "time": "2017-04-25T19:01:54-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,55 @@
+{
+    "number": 181936,
+    "data": "1,1,1,1,1,1,5,20,55,125,251,2300,15775,70500,249250,750751,10006375,97226875,601638125,2886735625,11593285251,202808749375,2550175096250,20163891580625,122209131374375,613498040952501,13287626090593750,205055676105734375",
+    "name": "Number of 5-alternating permutations.",
+    "comment": [
+        "For an integer n>0, a permutation s = s_1...s_k is a n-alternating permutation if it has the property that s_i < s_{i+1} if and only if n divides i."
+    ],
+    "reference": [
+        "Anthony Mendes and Jeffrey Remmel, Generating functions from symmetric functions, Preliminary version of book, available from Jeffrey Remmel's home page."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A181936/b181936.txt\">Table of n, a(n) for n = 0..200</a>",
+        "R. J. Cano, <a href=\"http://oeis.org/w/images/0/01/AltSeq_A181936.txt\">PARI Sequencer program</a>",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>"
+    ],
+    "maple": [
+        "A181936_list := proc(dim) local E,DIM,n,k;",
+        "DIM := dim-1; E := array(0..DIM, 0..DIM); E[0,0] := 1;",
+        "for n from 1 to DIM do",
+        "if n mod 5 = 0 then E[n,0] := 0 ;",
+        "   for k from n-1 by -1 to 0 do E[k,n-k] := E[k+1,n-k-1] + E[k,n-k-1] od;",
+        "else E[0,n] := 0;",
+        "   for k from 1 by 1 to n do E[k,n-k] := E[k-1,n-k+1] + E[k-1,n-k] od;",
+        "fi od; [E[0,0],seq(E[k,0]+E[0,k],k=1..DIM)] end:",
+        "A181936_list(28);",
+        "# Alternatively, using an exponential generating function:",
+        "A181936_list := proc(n) local H,F,i; H := (r,s) -> hypergeom(r,s/5,-(t/5)^5);",
+        "F := t -> 1+(t^5*H([1],[6,7,8,9,10])+5*t^4*H([],[6,7,8,9])+20*t^3*H([],[4,6,7,8])+60*t^2*H([],[3,4,6,7])+120*t^1*H([],[2,3,4,6]))/(120*H([],[2,3,4,1])); seq(i!*coeff(series(F(t),t,n+1),t,i),i=0..n-1) end:"
+    ],
+    "mathematica": [
+        "dim = 27; e[0, 0] = 1; e[n_ /; Mod[n, 5] == 0 && 0 <= n <= dim, 0] = 0; e[k_ /; 0 <= k <= dim, n_ /; 0 <= n <= dim] /; Mod[n+k, 5] == 0 := e[k, n] = e[k, n-1] + e[k+1, n-1]; e[0, n_ /; Mod[n, 5] == 0 && 0 <= n <= dim] = 0; e[k_ /; 0 <= k <= dim, n_ /; 0 <= n <= dim] /; Mod[n+k, 5] != 0 := e[k, n] = e[k-1, n] + e[k-1, n+1]; e[_, _] = 0; a[0] = 1; a[n_] := e[n, 0] + e[0, n]; Table[a[n], {n, 0, dim}] (* _Jean-Fran\u00e7ois Alcover_, Jun 27 2013, translated and adapted from Maple *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@cached_function",
+        "def A(m,n):",
+        "    if n == 0: return 1",
+        "    s = -1 if m.divides(n) else 1",
+        "    t = [m*k for k in (0..(n-1)//m)]",
+        "    return s*add(binomial(n,k)*A(m,k) for k in t)",
+        "A181936 = lambda n: (-1)^int(is_odd(n//5))*A(5,n)",
+        "print [A181936(n) for n in (0..30)] # _Peter Luschny_, Jan 24 2017"
+    ],
+    "xref": [
+        "Number of m-alternating permutations: A000012 (m=1), A000111 (m=2), A178963 (m=3), A178964 (m=4), A181936 (m=5).",
+        "Cf. A181937."
+    ],
+    "keyword": "nonn",
+    "offset": "0,7",
+    "author": "_Peter Luschny_, Apr 03 2012",
+    "references": 5,
+    "revision": 32,
+    "time": "2017-02-21T02:12:37-05:00",
+    "created": "2012-04-04T13:16:04-04:00"
+}

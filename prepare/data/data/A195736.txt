@@ -1,0 +1,31 @@
+{
+    "number": 195736,
+    "data": "1,2,21,568,29705,2573136,335201293,61480323584,15135660248913,4823681315219200,1934425407465004421,954153609788873382912,568125617688093236137561,402006917909739659429470208,333597313002114320208678928125",
+    "name": "E.g.f.: x = Sum_{n>=1} a(n)*x^n/n! * exp(-n^2*x).",
+    "comment": [
+        "Compare e.g.f. to: x = Sum_{n>=1} n^(n-1)*x^n/n! * exp(-n*x), which generates coefficients for the series reversion of x*exp(-x)."
+    ],
+    "formula": [
+        "G.f.: x = Sum_{n>=1} a(n)*x^n/(n*(1 + n^2*x)^n).",
+        "a(n) = n*A082157(n+1)."
+    ],
+    "example": [
+        "x = x*exp(-x) + 2*x^2/2!*exp(-4*x) + 21*x^3/3!*exp(-9*x) + 568*x^4/4!*exp(-16*x) + 29705*x^5/5!*exp(-25*x) +...+ a(n)*x^n/n!*exp(-n^2*x) +...",
+        "The coefficients a(n) also satisfy:",
+        "x = x/(1+x) + 2*x^2/(2*(1+4*x)^2) + 21*x^3/(3*(1+9*x)^3) + 568*x^4/(4*(1+16*x)^4) + 29705*x^5/(5*(1+25*x)^5) +...+ a(n)*x^n/(n*(1+n^2*x)^n) +..."
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n<1,0,n!*polcoeff(x-sum(m=1,n-1,a(m)*x^m/m!*exp(-m^2*x+x*O(x^n))),n))}",
+        "(PARI) {a(n)=if(n<1,0,n*polcoeff(x-sum(m=1,n-1,a(m)*x^m/(m*(1+m^2*x+x*O(x^n))^m)),n))}"
+    ],
+    "xref": [
+        "Cf. A195737, A082157."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Sep 30 2011",
+    "references": 2,
+    "revision": 17,
+    "time": "2012-03-30T18:37:29-04:00",
+    "created": "2011-09-30T17:50:12-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 136633,
+    "data": "1,2,10,68,544,4832,46312,471536,5055328,56795840,667286656,8197599104,105446118784,1423627264256,20234885027968,303737480337152,4827671316780544,81385455480335360,1455806861755411456",
+    "name": "G.f.: A(x) = Series_Reversion( x / Sum_{n>=0} (n+1)!*x^n ).",
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x) = F(x*A(x)) and A(x/F(x)) = F(x);",
+        "(2) a(n) = [x^n] F(x)^n / (n+1);",
+        "where F(x) = Sum_{n>=0} (n+1)!*x^n.",
+        "G.f. satisfies: A(x) = 1 + 2*Sum_{n>=1} n^n * x^n * A(x)^n / (1 + n*x*A(x))^n. - _Paul D. Hanna_, Feb 04 2013"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 10*x^2 + 68*x^3 + 544*x^4 + 4832*x^5 + 46312*x^6 +...",
+        "Let F(x) = 1 + 2x + 6x^2 + 24x^3 + 120x^4 + 720x^5 +...+ (n+1)!*x^n +...",
+        "then A(x) = F(x*A(x)) and A(x/F(x)) = F(x);",
+        "also, a(n) = coefficient of x^n in F(x)^n divided by (n+1).",
+        "The g.f. A(x) also satisfies:",
+        "A(x) = 1 + 2*x*A(x)/(1+x*A(x)) + 2*2^2*x^2*A(x)^2/(1+2*x*A(x))^2 + 2*3^3*x^3*A(x)^3/(1+3*x*A(x))^3 + 2*4^4*x^4*A(x)^4/(1+4*x*A(x))^4 +..."
+    ],
+    "program": [
+        "(PARI) a(n)=polcoeff(serreverse(x/sum(k=0,n,(k+1)!*x^k +x*O(x^n))),n)",
+        "(PARI) a(n)=local(A=1+x); for(i=1, n, A=1+2*sum(m=1, n, m^m*x^m*A^m/(1+m*x*A+x*O(x^n))^m)); polcoeff(A, n)",
+        "for(n=0, 30, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Feb 04 2013"
+    ],
+    "xref": [
+        "Cf. A090753, A075834, A211207."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jan 14 2008",
+    "references": 1,
+    "revision": 10,
+    "time": "2016-07-19T11:17:56-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

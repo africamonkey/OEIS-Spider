@@ -1,0 +1,45 @@
+{
+    "number": 5186,
+    "id": "M0305",
+    "data": "1,1,1,1,1,2,2,4,4,6,6,8,10,14,18,24,29,36,44,58,72,91,113,143,179,227,287,366,460,578,732,926,1174,1489,1879,2365,2988,3780,4788,6049,7628,9635,12190,15409,19452,24561,31025,39229,49580,62680,79255,100144",
+    "name": "a(n) = number of m which take n steps to reach 1 in '3x+1' problem.",
+    "reference": [
+        "R. K. Guy, personal communication.",
+        "J. C. Lagarias, ed., The Ultimate Challenge: The 3x+1 Problem, Amer. Math. Soc., 2010; see p. 33.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005186/b005186.txt\">Table of n, a(n) for n = 0..70</a>",
+        "S. N. Anderson, <a href=\"http://www.jstor.org/stable/3617045\">Struggling with the 3x+1 problem</a>, Math. Gazette, 71 (1987), 271-274.",
+        "S. N. Anderson, <a href=\"/A005186/a005186_1.pdf\">Struggling with the 3x+1 problem</a>, Math. Gazette, 71 (1987), 271-274. [Annotated scanned copy]",
+        "R. K. Guy, S. N. Anderson, and N. J. A. Sloane, <a href=\"/A005186/a005186.pdf\">Correspondence</a>, 1988.",
+        "Wolfdieter Lang, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL17/Lang/lang6.html\">On Collatz Words, Sequences, and Trees</a>, Journal of Integer Sequences, Vol 17 (2014), Article 14.11.7.",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/File:Collatz-graph-20-iterations.svg\">The beginning of the Collatz directed graph</a>",
+        "<a href=\"/index/3#3x1\">Index entries for sequences related to 3x+1 (or Collatz) problem</a>"
+    ],
+    "formula": [
+        "Appears to settle into approximately exponential growth after about 25 terms or so with a ratio between adjacent terms of roughly 1.264. - _Howard A. Landman_, May 24 2003",
+        "_David W. Wilson_ (Jun 10 2003) gives a heuristic argument that the constant should be the largest eigenvalue of the matrix [ 1 0 0 1 0 0 / 0 0 0 0 1/3 0 / 0 1 0 0 1 0 / 0 0 0 0 1/3 0 / 0 0 1 0 0 1 / 0 0 0 0 1/3 0 ], which is (3 + sqrt(21))/6 = 1.2637626..."
+    ],
+    "mathematica": [
+        "(* This program is not suitable to compute more than 20 terms *) maxiSteps = 20; mMaxi = 2*10^6; Clear[a]; a[_] = 0; steps[m_] := steps[m] = Module[{n = m, ns = 0}, While[n != 1, If[Mod[n, 2] == 0, n = n/2, n = 3*n+1]; ns++]; ns]; Do[sn = steps[m]; If[sn <= maxiSteps, a[sn] = a[sn]+1; Print[\"m = \", m, \" a(\", sn, \") = \", a[sn]]], {m, 1, mMaxi}]; Table[a[n], {n, 0, maxiSteps}] (* _Jean-Fran\u00e7ois Alcover_, Oct 18 2013 *)",
+        "(* 60 terms in under a minute *) s = {1}; t = Join[{1}, Table[s = Union[2*s, (Select[s, Mod[#, 3] == 1 && OddQ[(# - 1)/3] && (# - 1)/3 > 1 &] - 1)/3]; Length[s], {n, 60}]] (* _T. D. Noe_, Oct 18 2013 *)"
+    ],
+    "program": [
+        "(Perl) #!/usr/bin/perl @old = ( 1 ); while (1) { print scalar(@old), \" \"; @new = ( ); foreach $n (@old) { $used{$n} = 1; if (($n % 6) == 4) { $m = ($n-1)/3; push(@new,$m) unless ($used{$m}); } $m = $n + $n; push(@new,$m) unless ($used{$m}); } @old = @new; }",
+        "(PARI) first(n)=my(v=vector(n+1),u=[1],old=u,w); v[1]=1; for(i=1,n, w=List(); for(j=1,#u, listput(w,2*u[j]); if(u[j]%6==4, listput(w,u[j]\\3))); old=setunion(old,u); u=setminus(Set(w),old); v[i+1]=#u); v \\\\ _Charles R Greathouse IV_, Jun 26 2017"
+    ],
+    "xref": [
+        "Cf. A088975."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,6",
+    "author": "_N. J. A. Sloane_, _R. K. Guy_",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org), Apr 27 2001"
+    ],
+    "references": 11,
+    "revision": 52,
+    "time": "2017-06-26T19:45:51-04:00",
+    "created": "1991-05-20T03:00:00-04:00"
+}

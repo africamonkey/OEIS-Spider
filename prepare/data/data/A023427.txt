@@ -1,0 +1,53 @@
+{
+    "number": 23427,
+    "data": "1,1,1,1,1,2,4,7,11,17,28,49,87,152,262,453,794,1408,2507,4462,7943,14179,25415,45713,82398,148731,268859,486890,883411,1605582,2922259,5325377,9716564,17750332,32464980,59443403,108951953,199886003,367052947,674620772",
+    "name": "Generalized Catalan Numbers.",
+    "comment": [
+        "Number of secondary structures of size n having no stacks of odd length (see Hofacker et al., p. 209). - _Emeric Deutsch_, Dec 26 2011",
+        "a(n) is the number of Dyck n-paths all of whose ascents and descents have lengths equal to 1 (mod 4).  The a(5) = 2 paths for n=5 are: UDUDUDUDUD, UUUUUDDDDD. - _Alois P. Heinz_, May 09 2012"
+    ],
+    "reference": [
+        "I. L. Hofacker, P. Schuster and P. F. Stadler, Combinatorics of RNA secondary structures, Discrete Appl. Math., 88, 1998, 207-237.",
+        "P. R. Stein and M. S. Waterman, On some new sequences generalizing the Catalan and Motzkin numbers, Discrete Math., 26, 1979, 261-272."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A023427/b023427.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A202845(n,0). A(x) satisfies A=1+x*A+f*A*(A-1)/(1+f), where f=x^4/(1-x^4). - _Emeric Deutsch_, Dec 26 2011",
+        "G.f.: A(x) = ((1-x+x^4) - sqrt((1-x+x^4)^2 - 4*x^4))/(2*x^4). - _Paul D. Hanna_, Oct 29 2012",
+        "G.f. satisfies: A(x) = 1 + x*A(x)/(1 - x^4*A(x)). - _Paul D. Hanna_, Oct 29 2012",
+        "G.f.: 1 + x*exp( Sum_{n>=1} x^n/n * Sum_{k=0..n} C(n,k)^2 * x^(3*k) ). - _Paul D. Hanna_, Oct 29 2012",
+        "a(n) = A216116(n-1) or n>0.",
+        "Recurrence: (n+4)*a(n) = (2*n+5)*a(n-1) - (n+1)*a(n-2) + 2*(n-2)*a(n-4) + (2*n-7)*a(n-5) - (n-8)*a(n-8). - _Vaclav Kotesovec_, Sep 16 2013",
+        "a(n) ~ sqrt(-4*c^2-3*c^3+4-4*c)*(1+2*c-c^3)^n*(-5*c^3-3*c^2+9*c+10) / (2*n^(3/2)*sqrt(Pi)), where c = 1/2*sqrt((4+(155/2-3*sqrt(849)/2)^(1/3) +(155/2+3*sqrt(849)/2)^(1/3))/3) - 1/2*sqrt(8/3-1/3*(155/2-3*sqrt(849)/2)^(1/3) - 1/3*(155/2+3*sqrt(849)/2)^(1/3) + 2*sqrt(3/(4+(155/2-3*sqrt(849)/2)^(1/3) + (155/2+3*sqrt(849)/2)^(1/3)))) = 0.5248885986564... is the root of the equation c^4-2*c^2-c+1=0. - _Vaclav Kotesovec_, Sep 16 2013"
+    ],
+    "example": [
+        "(5)=2; representing unpaired vertices by v and arcs by AA, BB, etc., the 8 (= A004148(5)) secondary structures of size 5 are vvvvv, AvAvv, vvAvA, AvvAv, vAvvA, AvvvA, vAvAv, ABvBA; they have 0,1,1,1,1,1,1,0 stacks of odd length, respectively. - _Emeric Deutsch_, Dec 26 2011"
+    ],
+    "maple": [
+        "f := z^4/(1-z^4): eq := G = 1+z*G+f*G*(G-1)/(1+f): G := RootOf(eq, G): Gser := simplify(series(G, z = 0, 42)): seq(coeff(Gser, z, n), n = 0 .. 39); # _Emeric Deutsch_, Dec 26 2011",
+        "a:= proc(n) option remember;",
+        "      `if`(n=0, 1, a(n-1) +add(a(k)*a(n-4-k), k=1..n-4))",
+        "    end:",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, May 09 2012"
+    ],
+    "mathematica": [
+        "Clear[ a ]; a[ 0 ]=1; a[ n_Integer ] := a[ n ]=a[ n-1 ]+Sum[ a[ k ]*a[ n-4-k ], {k, 1, n-4} ];",
+        "CoefficientList[Series[((1-x+x^4) - Sqrt[(1-x+x^4)^2 - 4*x^4)]/(2*x^4), {x, 0, 20}], x] (* _Vaclav Kotesovec_, Sep 16 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(((1-x+x^4) - sqrt((1-x+x^4)^2 - 4*x^4 +x^5*O(x^n)))/(2*x^4), n)} \\\\ _Paul D. Hanna_, Oct 29 2012",
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n)); for(i=1, n, A=1 + x*A/(1-x^4*A+x*O(x^n))); polcoeff(A, n)} \\\\ _Paul D. Hanna_, Oct 29 2012"
+    ],
+    "xref": [
+        "Cf. A000108, A001006, A004148, A006318, A216116, A202845 - A202849."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,6",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 7,
+    "revision": 34,
+    "time": "2015-01-10T11:41:00-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

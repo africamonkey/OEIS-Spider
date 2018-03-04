@@ -1,0 +1,26 @@
+{
+    "number": 242065,
+    "data": "2,3,4,8,8,17,17,17,60,60,60,60,60,60,60,60,60,60,179,179,179,179,179,179,179,179,264,264,264,319,319,319,319,365,1112,1112,1112,1112,1112,1112,1112,1112,1112,1112,1112,4372,4372,4372,4372,4372,15504,15504",
+    "name": "Smallest k such that the union of {A242059(i): 1 <= i <= k} and {A242060(i): 1 <= i <= k} includes all primes {5, ..., prime(n)}.",
+    "mathematica": [
+        "lpf[n_]:=lpf[n]=First[First[FactorInteger[n]]];(*least prime factor*)",
+        "lpf3[n_]:=lpf3[n]=If[#==1,1,lpf[#]]&[n/3^IntegerExponent[n,3]];",
+        "A242059=Map[lpf3[#-1]&,Select[Range[4,100000,2],lpf3[#-1]<lpf3[#-3]&](*A242057*)];",
+        "A242060=Map[lpf3[#-3]&,Select[Range[4,100000,2],lpf3[#-1]>lpf3[#-3]&](*A242058*)];",
+        "pos={};NestWhile[#+1&,3,(AppendTo[pos,Min[Position[A242059,Prime[#],1,1],Position[A242060,Prime[#],1,1]/.{}->0]];!Last[pos]==0)&];",
+        "A242065=Rest[FoldList[Max,-Infinity,Flatten[pos]]] (* _Peter J. C. Moses_, Aug 14 2014 *)"
+    ],
+    "xref": [
+        "Cf. A242033, A242034, A242036, A242037, A242057, A242058, A242059, A242060, A242064."
+    ],
+    "keyword": "nonn",
+    "offset": "3,1",
+    "author": "_Vladimir Shevelev_, Aug 13 2014",
+    "ext": [
+        "More terms from _Peter J. C. Moses_, Aug 14 2014"
+    ],
+    "references": 2,
+    "revision": 12,
+    "time": "2014-08-21T23:08:23-04:00",
+    "created": "2014-08-21T23:08:23-04:00"
+}

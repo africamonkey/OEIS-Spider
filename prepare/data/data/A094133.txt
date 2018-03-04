@@ -1,0 +1,52 @@
+{
+    "number": 94133,
+    "data": "3,17,593,32993,2097593,8589935681,59604644783353249,523347633027360537213687137,43143988327398957279342419750374600193,4318114567396436564035293097707729426477458833,5052785737795758503064406447721934417290878968063369478337",
+    "name": "Leyland primes: 3, together with primes of form x^y + y^x, for x>y>1.",
+    "comment": [
+        "Contains A061119 as a subsequence."
+    ],
+    "link": [
+        "Charles R Greathouse IV and Hans Havermann (Charles R Greathouse IV to 49), <a href=\"/A094133/b094133.txt\">Table of n, a(n) for n = 1..100</a>",
+        "Ed Copeland and Brady Haran, <a href=\"https://www.youtube.com/watch?v=Lsu2dIr_c8k\">Leyland Numbers - Numberphile</a> (2014)",
+        "Hans Havermann, <a href=\"http://chesswanks.com/num/a094133.txt\">Table of n (where known), Leyland index, number of digits in decimal representation, and (x,y) pair for all known solutions</a>",
+        "A. Kulsha, <a href=\"http://xyyxf.at.tut.by/primes.html#0\">The XYYXF project</a> - Primes and PRPs.",
+        "P. Leyland, <a href=\"http://www.leyland.vispa.com/numth/primes/xyyx.htm\">Primes and PRPs of the form x^y + y^x</a>"
+    ],
+    "example": [
+        "2^1+1^2, 3^2+2^3, 9^2+2^9, 15^2+2^15, 21^2+2^21, 33^2+2^33, 24^5+5^24, 56^3+3^56, 32^15+15^32, 54^7+7^54, 38^33+33^38."
+    ],
+    "maple": [
+        "N:= 10^100: # to get all terms <= N",
+        "A:= {3}:",
+        "for n from 2 while 2*n^n < N do",
+        "  for k from n+1 do if igcd(n,k)=1 then",
+        "     a:= n^k + k^n;",
+        "     if a > N then break fi;",
+        "     if isprime(a) then A:= A union {a} fi fi;",
+        "  od",
+        "od:",
+        "A; # if using Maple 11 or earlier, uncomment the next line",
+        "# sort(convert(A,list)); # _Robert Israel_, Apr 13 2015"
+    ],
+    "mathematica": [
+        "a = {3}; Do[Do[k = m^n + n^m; If[PrimeQ[k], AppendTo[a, k]], {m, 2, n}], {n, 2, 100}]; Union[a] (* _Artur Jasinski_ *)"
+    ],
+    "program": [
+        "(PARI) f(x)=my(L=log(x)); L/lambertw(L) \\\\ finds y such that y^y == x",
+        "list(lim)=my(v=List()); for(x=2,f(lim/2), my(y=x+1,t); while((t=x^y+y^x)<=lim, if(ispseudoprime(t), listput(v,t)); y+=2)); Set(v) \\\\ _Charles R Greathouse IV_, Oct 28 2014"
+    ],
+    "xref": [
+        "Cf. A061119 (primes where one of x,y is 2), A064539 (non-2 values where one of x,y is 2), A253471 (non-3 values where one of x,y is 3), A073499 (subset listing y where x = y+1), A076980 (Leyland numbers)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Lekraj Beedassy_, May 04 2004",
+    "ext": [
+        "Corrected and extended by _Jens Kruse Andersen_, Oct 26 2007",
+        "Edited by _Hans Havermann_, Apr 10 2015"
+    ],
+    "references": 21,
+    "revision": 44,
+    "time": "2015-04-30T20:55:30-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

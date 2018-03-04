@@ -1,0 +1,51 @@
+{
+    "number": 710,
+    "id": "M1375 N0535",
+    "data": "1,2,5,10,20,35,62,102,167,262,407,614,919,1345,1952,2788,3950,5524,7671,10540,14388,19470,26190,34968,46439,61275,80455,105047,136541,176593,227460,291673,372605,474085,601105,759380,956249,1200143,1501749,1873407",
+    "name": "Number of partitions of n, with two kinds of 1,2,3 and 4.",
+    "comment": [
+        "Also number of partitions of 2*n+4 with exactly 4 odd parts. - _Vladeta Jovovic_, Jan 12 2005",
+        "Convolution of A000041 and A001400. - _Vaclav Kotesovec_, Aug 18 2015"
+    ],
+    "reference": [
+        "H. Gupta et al., Tables of Partitions. Royal Society Mathematical Tables, Vol. 4, Cambridge Univ. Press, 1958, p. 90.",
+        "J. Riordan, Combinatorial Identities, Wiley, 1968, p. 199.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A000710/b000710.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "Euler transform of 2 2 2 2 1 1 1...",
+        "G.f.: 1/[(1-x)(1-x^2)(1-x^3)(1-x^4)*product((1-x^k), k=1..infinity)].",
+        "a(n) = sum(A000098(n-4*j), j=0..floor(n/4)), n>=0.",
+        "a(n) ~ sqrt(3)*n * exp(Pi*sqrt(2*n/3)) / (8*Pi^4). - _Vaclav Kotesovec_, Aug 18 2015"
+    ],
+    "example": [
+        "a(2) = 5 because we have 2, 2', 1+1, 1+1', 1+1'."
+    ],
+    "maple": [
+        "with(numtheory): etr:= proc(p) local b; b:=proc(n) option remember; local d,j; if n=0 then 1 else add(add(d*p(d), d=divisors(j)) *b(n-j), j=1..n)/n fi end end: a:= etr(n-> `if`(n<5,2,1)): seq(a(n), n=0..40); # _Alois P. Heinz_, Sep 08 2008"
+    ],
+    "mathematica": [
+        "etr[p_] := Module[{b}, b[n_] := b[n] = If[n == 0, 1, Sum[Sum[d*p[d], {d, Divisors[j]}]*b[n-j], {j, 1, n}]/n]; b]; a = etr[If[#<5, 2, 1]&]; Table[a[n], {n, 0, 39}] (* _Jean-Fran\u00e7ois Alcover_, Mar 10 2014, after _Alois P. Heinz_ *)",
+        "nmax = 50; CoefficientList[Series[1/((1-x)(1-x^2)(1-x^3)(1-x^4))*Product[1/(1-x^k), {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Aug 18 2015 *)"
+    ],
+    "xref": [
+        "Cf. A000712.",
+        "Cf. A000070, A008951, A000097, A000098.",
+        "Fifth column of Riordan triangle A008951 and of triangle A103923."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "Edited by _Emeric Deutsch_, Mar 22 2005"
+    ],
+    "references": 10,
+    "revision": 35,
+    "time": "2015-08-18T12:08:03-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

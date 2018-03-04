@@ -1,0 +1,49 @@
+{
+    "number": 171711,
+    "data": "1,1,2,7,26,101,412,1738,7514,33126,148358,673094,3087076,14289509,66669232,313199848,1480261250,7033516168,33579194044,160996913287,774875393390,3742454218020,18132421559672,88107253715627,429260108473000,2096482108251547",
+    "name": "Euler characteristic of relative homology of some varieties related to cluster algebras of type A.",
+    "comment": [
+        "The true Euler characteristic alternate in sign. This sequence is the absolute value."
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=1} a(n)*x^n satisfies x = A - A^2/(1-A^2)^2.",
+        "G.f. A(x) satisfies [from _Paul D. Hanna_, Jul 14 2012]:",
+        "(1) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) x^(2*n)/(1-x^2)^(2*n)/n!.",
+        "(2) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(2*n-1)/(1-x^2)^(2*n)/n! )."
+    ],
+    "example": [
+        "The number g(3)=2 is the Euler characteristic of relative homology of the punctured affine line A^1\\{0} with respect to the divisor {1,2}. This is related to the cluster algebra of type A1.",
+        "G.f.: A(x) = x + x^2 + 2*x^3 + 7*x^4 + 26*x^5 + 101*x^6 + 412*x^7 +...",
+        "where A(x - x^2/(1-x^2)^2) = x.",
+        "Related expansions [from _Paul D. Hanna_, Jul 14 2012]:",
+        "(1) A(x) = x + x^2/(1-x^2)^2 + d/dx x^4/(1-x^2)^4/2! + d^2/dx^2 x^6/(1-x^2)^6/3! + d^3/dx^3 x^8/(1-x^2)^8/4! +...",
+        "(2) log(A(x)/x) = x/(1-x^2)^2 + d/dx x^3/(1-x^2)^4/2! + d^2/dx^2 x^5/(1-x^2)^6/3! + d^3/dx^3 x^7/(1-x^2)^8/4! +..."
+    ],
+    "maple": [
+        "eq:=x-G+G**2/(1-G**2)**2;solu:=solve(eq,G);taylor(solu,x,16);",
+        "# second Maple program:",
+        "a:= n-> coeff(series(RootOf(x-A+A^2/(1-A^2)^2,A),x,n+1),x,n):",
+        "seq(a(n), n=1..30);  # _Alois P. Heinz_, Feb 23 2017"
+    ],
+    "mathematica": [
+        "InverseSeries[x-x^2/(1-x^2)^2+x*O[x]^30, x] // CoefficientList[#, x]& // Rest (* _Jean-Fran\u00e7ois Alcover_, Feb 23 2017, after _Paul D. Hanna_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(serreverse(x-x^2/(1-x^2)^2+x*O(x^n)), n)} \\\\ _Paul D. Hanna_, Jul 14 2012",
+        "for(n=1, 30, print1(a(n), \", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, x^(2*m)/(1-x^2+x*O(x^n))^(2*m)/m!)); polcoeff(A, n)} \\\\ _Paul D. Hanna_, Jul 14 2012",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, x^(2*m-1)/(1-x^2+x*O(x^n))^(2*m)/m!))); polcoeff(A, n)} \\\\ _Paul D. Hanna_, Jul 14 2012"
+    ],
+    "xref": [
+        "Cf. A211166 (similar sequence in type D)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_F. Chapoton_, Dec 16 2009",
+    "references": 2,
+    "revision": 15,
+    "time": "2017-02-23T14:06:46-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

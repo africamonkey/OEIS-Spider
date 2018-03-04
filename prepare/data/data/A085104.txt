@@ -1,0 +1,89 @@
+{
+    "number": 85104,
+    "data": "7,13,31,43,73,127,157,211,241,307,421,463,601,757,1093,1123,1483,1723,2551,2801,2971,3307,3541,3907,4423,4831,5113,5701,6007,6163,6481,8011,8191,9901,10303,11131,12211,12433,13807,14281,17293,19183,19531,20023",
+    "name": "Primes of the form 1 + n + n^2 + n^3 + ... + n^k, n > 1, k > 1.",
+    "comment": [
+        "Primes that are base-b repunits with three or more digits for at least one b >= 2: Primes in A053696. Subsequence of A000668 UNION A076481 UNION A086122 UNION A165210 UNION A102170 UNION A004022 UNION ... (for each possible b). - _Rick L. Shepherd_, Sep 07 2009",
+        "Also known as Brazilian primes.  The primes that are not Brazilian primes are in A220627. - _Bernard Schott_, Dec 18 2012",
+        "The number of terms k+1 is always an odd prime, but this is not enough to guarantee a prime, for example 111 = 1 + 10 + 100 = 3*37. - _Bernard Schott_, Dec 18 2012",
+        "The inverses of the Brazilian primes form a convergent series, and the sum is between 0.33 and 1. (See Theorem 4 of Quadrature article in the Links.) - _Bernard Schott_, Dec 18 2012",
+        "It is not known whether there are infinitely many Brazilian primes. See A002383. - _Bernard Schott_, Jan 11 2013",
+        "Primes of the form (n^p - 1)/(n - 1), where p is odd prime and n > 1. - _Thomas Ordowski_, Apr 25 2013",
+        "Number of terms less than 10^n: 1, 5, 14, 34, 83, 205, 542, 1445, 3880, 10831, 30699, 88285, ..., . - _Robert G. Wilson v_, Mar 31 2014",
+        "From _Bernard Schott_, Apr 08 2017: (Start)",
+        "Brazilian primes fall into two classes:",
+        "1) when n is prime, we get sequence A023195 except 3 which is not Brazilian,",
+        "2) when n is composite, we get sequence A285017. (End)"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A085104/b085104.txt\">Table of n, a(n) for n = 1..3880</a> (primes < 10^9)",
+        "Bernard Schott, <a href=\"/A125134/a125134.pdf\">Les nombres br\u00e9siliens</a>, Quadrature, no. 76, avril-juin 2010, pages 30-38; included here with permission from the editors of Quadrature."
+    ],
+    "formula": [
+        "A010051(a(n)) * A088323(a(n)) > 1. - _Reinhard Zumkeller_, Jan 22 2014"
+    ],
+    "example": [
+        "13 is a term since it is prime and 13 = 1 + 3 + 3^2 = 111_3.",
+        "31 is a term since it is prime and 31 = 1 + 2 + 2^2 + 2^3 + 2^4 = 11111_2.",
+        "From _Hartmut F. W. Hoft_, May 08 2017: (Start)",
+        "The sequence represented as a sparse matrix with the k-th column indexed by A006093(k+1), primes minus 1, and row n by A000027(n+1). Traversing the matrix by counterdiagonals produces a non-monotone ordering.",
+        "    2    4      6        10             12          16",
+        "2  7    31     127      -              8191        131071",
+        "3  13   -      1093     -              797161      -",
+        "4  -    -      -        -              -           -",
+        "5  31   -      19531    12207031       305175781   -",
+        "6  43   -      55987    -              -           -",
+        "7  -    2801   -        -              16148168401 -",
+        "8  73   -      -        -              -           -",
+        "9  -    -      -        -              -           -",
+        "10  -    -      -        -              -           -",
+        "11  -    -      -        -              -           50544702849929377",
+        "12  157  22621  -        -              -           -",
+        "13  -    30941  5229043  -              -           -",
+        "14  211  -      8108731  -              -           -",
+        "15  241  -      -        -              -           -",
+        "16 -    -      -        -              -           -",
+        "17  307  88741  25646167 2141993519227  -           -",
+        "18  -    -      -        -              -           -",
+        "19  -    -      -        -              -           -",
+        "20  421  -      -        10778947368421 -           689852631578947368421",
+        "21  463  -      -        17513875027111 -           1502097124754084594737",
+        "22  -    245411 -        -              -           -",
+        "23  -    292561 -        -              -           -",
+        "24  601  346201 -        -              -           -",
+        "Except for the initial values in the respective sequences the rows and columns as labeled in the matrix are:",
+        "column  2:  A002383            row 2:  A000668",
+        "column  4:  A088548            row 3:  A076481",
+        "column  6:  A088550            row 4:  -",
+        "column 10:  A162861            row 5:  A086122.",
+        "(End)"
+    ],
+    "mathematica": [
+        "max = 140; maxdata = (1 - max^3)/(1 - max); a = {}; Do[i = 1; While[i = i + 2; cc = (1 - m^i)/(1 - m); cc <= maxdata, If[PrimeQ[cc], a = Append[a, cc]]], {m, 2, max}]; Union[a] (* _Lei Zhou_, Feb 08 2012 *)",
+        "f[n_] := Block[{i = 1, d, p = Prime@ n}, d = Rest@ Divisors[p - 1]; While[ id = IntegerDigits[p, d[[i]]]; id != Reverse@ id || Union@ id != {1}, i++]; d[[i]]]; Select[ Range[2, 60], 1 + f@# != Prime@# &] (* _Robert G. Wilson v_, Mar 31 2014 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List(),t,k);for(n=2,sqrt(lim), t=1+n;k=1; while((t+=n^k++)<=lim,if(isprime(t), listput(v,t))));vecsort(Vec(v),,8) \\\\ _Charles R Greathouse IV_, Jan 08 2013",
+        "(Haskell)",
+        "a085104 n = a085104_list !! (n-1)",
+        "a085104_list = filter ((> 1) . a088323) a000040_list",
+        "-- _Reinhard Zumkeller_, Jan 22 2014",
+        "(PARI) A085104_vec(n)={my(h=vector(n,i,1),y,c,z=4,L:list);L=List();forprime(x=3,,for(m=z,x-1,y=digits(x,m);if((y==h[1..#y])&&2<#y,listput(L,x);z=m;if(c++==n,return(Vec(L))))))} \\\\ _R. J. Cano_, Apr 18 2017"
+    ],
+    "xref": [
+        "Cf. A002383, A189891 (complement), A125134.",
+        "Cf. A003424 (n restricted to prime powers), A059055.",
+        "Cf. A053696, A000668, A076481, A086122, A165210, A102170, A004022, A220627, A086930.",
+        "Equals A023195 \\3 Union A285017, but A023195 Intersection A285017 = Empty. - _Bernard Schott_, Apr 08 2017"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_ and Meenakshi Srikanth (menakan_s(AT)yahoo.com), Jul 03 2003",
+    "ext": [
+        "More terms from _David Wasserman_, Jan 26 2005"
+    ],
+    "references": 40,
+    "revision": 88,
+    "time": "2017-07-31T03:29:34-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

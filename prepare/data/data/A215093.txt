@@ -1,0 +1,49 @@
+{
+    "number": 215093,
+    "data": "1,1,3,19,165,1801,24003,378379,6880485,141757201,3263757123,83046239299,2314209491685,70093262093401,2292753819807363,80548997707137979,3024937662747436965,120925183043471954401,5127013172890341294723,229794790034059392232819",
+    "name": "E.g.f. satisfies: A(x) = x + sinh( A(x) )^2 / 2.",
+    "comment": [
+        "Radius of convergence is r = log(sqrt(5)+2)/2 - (sqrt(5)-1)/4 = 0.41280074...,",
+        "where A(r) = log(sqrt(5)+2)/2 = asinh(2)/2 = 0.72181773..."
+    ],
+    "formula": [
+        "E.g.f. satisfies:",
+        "(1) A(x) = Series_Reversion( x - sinh(x)^2/2 ).",
+        "(2) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) sinh(x)^(2*n)/(n!*2^n).",
+        "(3) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) sinh(x)^(2*n)/(n!*2^n*x) ).",
+        "(4) A'(x) = 1/(1 - sinh(2*A(x))/2).",
+        "a(n) ~ 2^(2*n-1) * n^(n-1) / (5^(1/4) * exp(n) * (1-sqrt(5) + log(9+4*sqrt(5)))^(n-1/2)). - _Vaclav Kotesovec_, Jan 10 2014"
+    ],
+    "example": [
+        "A(x) = x + x^2/2! + 3*x^3/3! + 19*x^4/4! + 165*x^5/5! +...",
+        "sinh(A(x)) = G(x) is the e.g.f. of A215094:",
+        "G(x) = x + x^2/2! + 4*x^3/3! + 25*x^4/4! + 211*x^5/5! + 2296*x^6/6! +...",
+        "where",
+        "G(x)^2/2 = x^2/2! + 3*x^3/3! + 19*x^4/4! + 165*x^5/5! +...",
+        "Related expansions:",
+        "A(x) = x + sinh(x)^2/2 + d/dx sinh(x)^4/(2!*2^2) + d^2/dx^2 sinh(x)^6/(3!*2^3) + d^3/dx^3 sinh(x)^8/(4!*2^4) +...",
+        "log(A(x)/x) = sinh(x)^2/(2*x) + d/dx sinh(x)^4/(2!*2^2*x) + d^2/dx^2 sinh(x)^6/(3!*2^3*x) + d^3/dx^3 sinh(x)^8/(4!*2^4*x) +..."
+    ],
+    "mathematica": [
+        "max = 20; Rest[ CoefficientList[ InverseSeries[ Series[x - Sinh[x]^2/2, {x, 0, max}], x], x]]*Range[max]! (* _Jean-Fran\u00e7ois Alcover_, Aug 06 2012, from 1st formula *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(serreverse(x-sinh(x+x*O(x^n))^2/2), n)}",
+        "(PARI) {a(n)=local(A=x); for(i=0, n, A=x + sinh(A)^2/2); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, sinh(x+x*O(x^n))^(2*m)/(m!*2^m))); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, sinh(x+x*O(x^n))^(2*m)/(m!*2^m*x))+x*O(x^n))); n!*polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A215094, A143136."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Aug 02 2012",
+    "references": 1,
+    "revision": 12,
+    "time": "2014-01-10T17:03:55-05:00",
+    "created": "2012-08-02T17:11:41-04:00"
+}

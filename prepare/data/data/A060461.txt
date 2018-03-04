@@ -1,0 +1,60 @@
+{
+    "number": 60461,
+    "data": "20,24,31,34,36,41,48,50,54,57,69,71,79,86,88,89,92,97,104,106,111,116,119,130,132,134,136,139,141,145,149,150,154,160,167,171,174,176,179,180,189,190,191,193,196,201,207,209,211,212,219,222,223,224,225,226",
+    "name": "Numbers n such that 6n-1 and 6n+1 are twin composites.",
+    "comment": [
+        "A counterpart to A002822, which generates twin primes.",
+        "Intersection of A046953 and A046954. - _Michel Marcus_, Sep 27 2013"
+    ],
+    "link": [
+        "Zak Seidov, <a href=\"/A060461/b060461.txt\">Table of n, a(n) for n = 1..5000.</a>"
+    ],
+    "formula": [
+        "a(n) ~ n. More specifically, a(n) = n + 6n/log n - O(n/log^2 n). - _Charles R Greathouse IV_, Dec 30 2017"
+    ],
+    "example": [
+        "a(9)=57: the 9th twin composites among the odds are {6*57-1}, {6*57+1}, i.e., (341,343) or (11*31, 7^3)."
+    ],
+    "maple": [
+        "iscomp := proc(n) if n=1 or isprime(n) then RETURN(0) else RETURN(1) fi: end: for n from 1 to 500 do if iscomp(6*n-1)=1 and iscomp(6*n+1)=1 then printf(`%d,`,n) fi: od: # _James A. Sellers_, Apr 11 2001"
+    ],
+    "mathematica": [
+        "Select[Range[200], !PrimeQ[6#-1]&&!PrimeQ[6#+1]&] (* _Vladimir Joseph Stephan Orlovsky_, Aug 07 2008 *)",
+        "Select[Range[300],AllTrue[6#+{1,-1},CompositeQ]&] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Feb 15 2015 *)",
+        "Select[Range@ 300, Times @@ Boole@ Map[CompositeQ, 6 # + {1, -1}] > 0 &] (* _Michael De Vlieger_, Sep 14 2016 *)"
+    ],
+    "program": [
+        "(PARI) A060461()={my(maxx=5000);n=1;ctr=0;while(ctr<maxx,if(!isprime(6*n-1)&&!isprime(6*n+1),print1(n,\",\");ctr+=1);n+=1); } \\\\ _Bill McEachen_, Apr 04 2015",
+        "(MATLAB)",
+        "i=1:10000;",
+        "Q1 = 6*i-1;",
+        "Q2 = 6*i+1;",
+        "Q = union(Q1,Q2);",
+        "P = primes(max(Q));",
+        "AT = setxor(Q,P);",
+        "f = 0;",
+        "for j=1:numel(AT);",
+        "    K = AT(j);",
+        "    K2 = K+2;",
+        "    z = ismember(K2,AT);",
+        "    if z == 1;",
+        "        f = f+1;",
+        "        ATR(f,:) = K + 1;",
+        "    end",
+        "end",
+        "m6 = ATR./6;  % _Jesse H. Crotts_, Sep 05 2016"
+    ],
+    "xref": [
+        "Cf. A002822, A046953, A046954."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Lekraj Beedassy_, Apr 09 2001",
+    "ext": [
+        "More terms from _James A. Sellers_, Apr 11 2001"
+    ],
+    "references": 9,
+    "revision": 43,
+    "time": "2017-12-30T12:56:05-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

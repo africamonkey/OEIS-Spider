@@ -1,0 +1,61 @@
+{
+    "number": 255893,
+    "data": "59049,60516,91809,130321,131044,150544,199809,255025,299209,396900,656100,660969,670761,774400,811801,998001,1018081,1022121,1089936,1188100,1212201,1452025,1585081,1677025,1697809,1760929,2047761,2056356,2064969,2155024,2205225",
+    "name": "Perfect squares k such that each decimal digit of k is equal to the difference of at least two other digits of k.",
+    "comment": [
+        "Let x(1)x(2)... x(q-1)x(q) denote the decimal expansion of a square k. The sequence lists the squares k such that, for each index i, x(i) = x(u) - x(v) for some indices u and v. Each term of the sequence contains at least two identical decimal digits and at least one 0 digit.",
+        "Subsequence of A255966.",
+        "The number 10948273956 is the smallest square of the sequence containing 10 distinct digits."
+    ],
+    "link": [
+        "Michel Lagneau, <a href=\"/A255893/b255893.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "59049 is in the sequence because:",
+        "5 = 9 - 4;",
+        "9 = 9 - 0;",
+        "0 = 9 - 9;",
+        "4 = 9 - 5;",
+        "9 = 9 - 0."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "for m from 10 to 10000 do:",
+        "   n:=m^2:x:=convert(n,base,10):n1:=nops(x):c:=0:T:=array(1..n1-1):",
+        "    for nn from 1 to n1 do:",
+        "     z:=x[nn]:",
+        "     k:=0:",
+        "      for j from 1 to n1 do:",
+        "       if nn<>j",
+        "       then",
+        "       k:=k+1:T[k]:=x[j]:",
+        "       else",
+        "       fi:",
+        "      od:",
+        "      ii:=0:",
+        "        for a from 1 to n1-1 while(ii=0) do:",
+        "         for b from a+1 to n1-1 while(ii=0) do:",
+        "         if z=abs(T[a]-T[b]) then ii:=1:c:=c+1:",
+        "         else",
+        "         fi:",
+        "        od:od:",
+        "      od:",
+        "      if c=n1  then printf(`%d, `,n):",
+        "      else",
+        "      fi:",
+        "  od:"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{id = IntegerDigits@ n, lng = 1 + Floor@ Log10@ n}, Union@ Table[c = Complement[ Range@ lng, {i}]; MemberQ[ Union@ Flatten@ Table[Abs[id[[j]] - id[[k]]], {j, c}, {k, c}], id[[i]]], {i, lng}] == {True}]; Select[ Range@ 1450^2, fQ] (* _Robert G. Wilson v_, Mar 10 2015 *)"
+    ],
+    "xref": [
+        "Cf. A255892, A255893, A255917, A255966."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Mar 09 2015",
+    "references": 4,
+    "revision": 19,
+    "time": "2015-03-12T11:19:33-04:00",
+    "created": "2015-03-12T11:19:33-04:00"
+}

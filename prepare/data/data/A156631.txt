@@ -1,0 +1,43 @@
+{
+    "number": 156631,
+    "data": "1,4,64,3072,466944,283115520,814634500096,10734635101192192,601470215201514061824,138785509787119430915850240,130376354694095237162362352959488",
+    "name": "G.f.: A(x) = Sum_{n>=0} ( Sum_{k>=1} (2^n*2^k*x)^k/k )^n / n!, a power series in x with integer coefficients.",
+    "comment": [
+        "Compare to these dual g.f.s:",
+        "Sum_{n>=0} ( Sum_{k>=1} (2^n*x)^k/k )^n/n! (A060690);",
+        "Sum_{n>=0} ( Sum_{k>=1} (2^k*x)^k/k )^n/n! (A155200);",
+        "which, when expanded as power series in x, have only integer coefficients."
+    ],
+    "formula": [
+        "a(n) = [x^n] B(x)^(2^n) where B(x) = exp(Sum_{n>=1} 2^(n^2)*x^n/n) is the g.f. of A155200. - _Paul D. Hanna_, Mar 10 2009"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 4*x + 64*x^2 + 3072*x^3 + 466944*x^4 + 283115520*x^5 + ...",
+        "From _Paul D. Hanna_, Mar 10 2009: (Start)",
+        "Let B(x) be the g.f. of A155200:",
+        "B(x) = 1 + 2*x + 10*x^2 + 188*x^3 + 16774*x^4 + 6745436*x^5 + ...",
+        "then a(n) is the coefficient of x^n in B(x)^(2^n):",
+        "B(x)^(2^0): [(1),2,10,188,16774,6745436,11466849412,...];",
+        "B(x)^(2^1): [1,(4),24,416,34400,13561728,22961051392,...];",
+        "B(x)^(2^2): [1,8,(64),1024,72704,27418624,46032420864,...];",
+        "B(x)^(2^3): [1,16,192,(3072),165888,56131584,92513894400,...];",
+        "B(x)^(2^4): [1,32,640,12288,(466944),118751232,186897137664,...];",
+        "B(x)^(2^5): [1,64,2304,65536,2129920,(283115520),382143037440,...];",
+        "B(x)^(2^6): [1,128,8704,425984,17956864,1140850688,(814634500096),...];",
+        "the terms along the diagonal (in parentheses) form this sequence. (End)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(j=0,n,sum(k=1, n, (2^(j+k)*x)^k/k+x*O(x^n))^j/j!),n)}",
+        "(PARI) /* a(n) = [x^n] B(x)^(2^n) where B(x) is g.f. of A155200: */ {a(n)=polcoeff(exp( 2^n*sum(k=1,n, 2^(k^2)*x^k/k)+x*O(x^n)), n)} \\\\ _Paul D. Hanna_, Mar 11 2009"
+    ],
+    "xref": [
+        "Cf. A156630, A060690, A155200."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Feb 12 2009",
+    "references": 3,
+    "revision": 7,
+    "time": "2018-02-04T03:20:24-05:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

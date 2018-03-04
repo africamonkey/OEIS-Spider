@@ -1,0 +1,44 @@
+{
+    "number": 240919,
+    "data": "9,10,10,11,11,12,13,14,15,16,18,19,22,23,27,28,33,34,40,41,49,50,59,61,63,65,68,70,77,79,87,90,93,96,100,104,104,108,109,113,122,127,127,132,141,147,148,154,157,163",
+    "name": "The sequence whose n-th term is the sum of the first n digits in the concatenation of the base 10 representation of the sequence.",
+    "comment": [
+        "This is the unique sequence in base 10 with this property, aside from the trivial case of beginning this series with a(k)=0 for the first k terms.",
+        "The only possible nonzero values for a(1) and a(2) are 9 and 10, respectively. This is because a(1) must be a 1-digit number, while a(2) must equal the sum of its own first digit and a(1).",
+        "Likewise, for the analogous sequence in a different base b, the first two terms must be b-1 and b."
+    ],
+    "link": [
+        "Anthony Zajac, <a href=\"/A240919/b240919.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(5) = the sum of the first 5 digits of \"91010111112...\" = 9 + 1 + 0 + 1 + 0 = 11."
+    ],
+    "mathematica": [
+        "a240919 = {};",
+        "Do[",
+        "Which[Length[a240919] <= 0, AppendTo[a240919, 9],",
+        "  Length[a240919] == 1,",
+        "  AppendTo[a240919,",
+        "   First[First[a240919] +",
+        "     IntegerDigits[First[Plus[a240919, a240919]]]]],",
+        "  True, AppendTo[a240919,",
+        "   Total[Take[Flatten[Map[IntegerDigits, a240919]], n]]]], {n,",
+        "  10000}]; TableForm[",
+        "Transpose[",
+        "  List[Range[Length[a240919]],",
+        "   a240919]]] (* _Michael De Vlieger_, Aug 05 2014 *)"
+    ],
+    "program": [
+        "(PARI) lista(nn) = {v = vector(nn); v[1] = 9; v[2] = 10; vd = [9, 1, 0]; print1(v[1], \", \", v[2], \", \"); for (n=3, nn, v[n] = sum(k=1, n, vd[k]); vd = concat(vd, digits(v[n])); print1(v[n], \", \"););} \\\\ _Michel Marcus_, Aug 14 2014"
+    ],
+    "xref": [
+        "Cf. A004207, A016096, A061939, A065075."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Anthony Zajac_, Aug 02 2014",
+    "references": 1,
+    "revision": 22,
+    "time": "2015-08-11T01:27:27-04:00",
+    "created": "2014-08-21T23:18:10-04:00"
+}

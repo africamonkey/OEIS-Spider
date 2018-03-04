@@ -1,0 +1,69 @@
+{
+    "number": 259836,
+    "data": "9,121,235,301,1090,1293,1524,3152,8010,15556,15934,19247,20244,21498,24015,25363,25556,45462,57872,63758,80016,93349,94701,101929,113098,119942,132414,143653,167147,186540,192629,229508,246122,247318,292154,307534,322870",
+    "name": "Integers n where n^3 + (n+1)^3 is a Taxicab number A001235.",
+    "link": [
+        "David Rabahy and Alois P. Heinz and Chai Wah Wu, <a href=\"/A259836/b259836.txt\">Table of n, a(n) for n = 1..90</a> (first 38 terms from David Rabahy, next 12 terms from Alois P. Heinz)"
+    ],
+    "example": [
+        "9^3 + 10^3 = 1729 = A001235(1), so 9 is in the sequence."
+    ],
+    "maple": [
+        "filter:= proc(n)",
+        "  local D, b, a, Q;",
+        "  D:= numtheory:-divisors(n);",
+        "  for b in D do",
+        "    a:= n/b;",
+        "    Q:= 12*b - 3*a^2;",
+        "    if Q > 9 and issqr(Q) and Q < 9*a^2 then return true fi",
+        "  od;",
+        "  false",
+        "end proc:",
+        "select(x -> filter(x^3 +(x+1)^3), [$1..100000]); # _Robert Israel_, Jul 07 2015"
+    ],
+    "mathematica": [
+        "Select[Range[10000], Length[PowersRepresentations[#^3 + (# + 1)^3, 2, 3]]==2 &] (* _Vincenzo Librandi_, Jul 10 2015 *)"
+    ],
+    "program": [
+        "(Python 3.x)",
+        "start = 9",
+        "end = 500000",
+        "print(start,end)",
+        "cubes = []",
+        "t = end**3+(end+1)**3",
+        "max = int(t**(1/3)+.5)",
+        "for i in range(0,max+1):",
+        "  cubes.append(i**3)",
+        "for x in range(start,end):",
+        "  t = cubes[x]+cubes[x+1]",
+        "  for i in range(1,x):",
+        "   z = t-cubes[i]",
+        "   n = int(z**(1/3)+.5)",
+        "   if cubes[n] == z:",
+        "    print(x,x+1,i,n,'\\a')",
+        "(Python)",
+        "from __future__ import division",
+        "from gmpy2 import is_square",
+        "from sympy import divisors",
+        "A259836_list = []",
+        "for n in range(10000):",
+        "    m = n**3+(n+1)**3",
+        "    for x in divisors(m):",
+        "        x2 = x**2",
+        "        if x2 > m:",
+        "            break",
+        "        if x != (2*n+1) and m < x*x2 and is_square(12*m//x-3*x2):",
+        "            A259836_list.append(n)",
+        "            break # _Chai Wah Wu_, Jan 10 2016"
+    ],
+    "xref": [
+        "Cf. A001235, A005898."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David Rabahy_, Jul 06 2015",
+    "references": 2,
+    "revision": 97,
+    "time": "2016-01-11T20:59:02-05:00",
+    "created": "2015-07-10T17:01:14-04:00"
+}

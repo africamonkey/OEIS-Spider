@@ -1,0 +1,41 @@
+{
+    "number": 266592,
+    "data": "1,11,111,1110,11101,111010,1110101,11101010,111010101,1110101010,11101010101,111010101010,1110101010101,11101010101010,111010101010101,1110101010101010,11101010101010101,111010101010101010,1110101010101010101,11101010101010101010",
+    "name": "Binary representation of the middle column of the \"Rule 37\" elementary cellular automaton starting with a single ON (black) cell.",
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 55."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A266592/b266592.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "S. Wolfram, <a href=\"http://wolframscience.com/\">A New Kind of Science</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (10,1,-10)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Jan 02 2016: (Start)",
+        "a(n) = (45*(-1)^n+1099*10^n-55)/990 for n>0.",
+        "a(n) = 10*a(n-1)+a(n-2)-10*a(n-3) for n>3.",
+        "G.f.: (1+x-x^3) / ((1-x)*(1+x)*(1-10*x)).",
+        "(End)"
+    ],
+    "mathematica": [
+        "rule=37; rows=20; ca=CellularAutomaton[rule,{{1},0},rows-1,{All,All}]; (* Start with single black cell *) catri=Table[Take[ca[[k]],{rows-k+1,rows+k-1}],{k,1,rows}]; (* Truncated list of each row *) mc=Table[catri[[k]][[k]],{k,1,rows}]; (* Keep only middle cell from each row *) Table[FromDigits[Take[mc,k]],{k,1,rows}]  (* Binary Representation of Middle Column *)",
+        "Join[{1}, LinearRecurrence[{10, 1, -10}, {11, 111, 1110}, 26]] (* _Vincenzo Librandi_, Jan 02 2016 *)"
+    ],
+    "program": [
+        "(PARI) Vec((1+x-x^3)/((1-x)*(1+x)*(1-10*x)) + O(x^30)) \\\\ _Colin Barker_, Jan 02 2016",
+        "(MAGMA) I:=[1,11,111,1110]; [n le 4 select I[n] else 10*Self(n-1)+Self(n-2)-10*Self(n-3): n in [1..30]]; // _Vincenzo Librandi_, Jan 02 2016"
+    ],
+    "xref": [
+        "Cf. A266588."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Robert Price_, Jan 01 2016",
+    "references": 1,
+    "revision": 14,
+    "time": "2016-01-02T04:18:23-05:00",
+    "created": "2016-01-01T17:17:14-05:00"
+}

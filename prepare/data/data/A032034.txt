@@ -1,0 +1,37 @@
+{
+    "number": 32034,
+    "data": "2,2,10,82,938,13778,247210,5240338,128149802,3551246162,109979486890,3764281873042,141104799067178,5749087305575378,252969604725106090,11955367835505775378,603967991604199335722",
+    "name": "Shifts left under \"AIJ\" (ordered, indistinct, labeled) transform.",
+    "formula": [
+        "a(n)=((n-1)!*sum(k=1..n-1, binomial(n+k-1,n-1)*sum(j=1..k, (-1)^(j+n+1)*binomial(k,j)*sum(l=0..j, (binomial(j,l)*(j-l)!*2^(j-l)*(-1)^l*stirling2(n-l+j-1,j-l))/(n-l+j-1)!)))), n>1, a(1)=2. [From Vladimir Kruchinin, Jan 24 2012]",
+        "Let p(n,w) = w*sum_{k=0..n-1}((-1)^k*E2(n-1,k)*w^k)/(1+w)^(2*n-1),",
+        "E2 the second-order Eulerian numbers as defined by Knuth, then a(n) = p(n,-2). - _Peter Luschny_, Nov 10 2012",
+        "G.f.: 1 + 1/Q(0), where Q(k)= 1 + k*x - 2*x*(k+1)/Q(k+1); (continued fraction). - _Sergei N. Gladkovskii_, May 01 2013"
+    ],
+    "maple": [
+        "with(combinat): A032034 := n -> add(eulerian2(n-1,k)*2^(k+1), k=0..n-1):",
+        "seq(A032034(n), n=1..17); # _Peter Luschny_, Nov 10 2012"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=if n=1 then 2 else ((n-1)!*sum(binomial(n+k-1,n-1)*sum((-1)^(j+n+1)*binomial(k,j)*sum((binomial(j,l)*(j-l)!*2^(j-l)*(-1)^l*stirling2(n-l+j-1,j-l))/(n-l+j-1)!,l,0,j),j,1,k),k,1,n-1)); [From Vladimir Kruchinin, Jan 24 2012]",
+        "(Sage)",
+        "@CachedFunction",
+        "def eulerian2(n, k):",
+        "    if k==0: return 1",
+        "    elif k==n: return 0",
+        "    return eulerian2(n-1, k)*(k+1)+eulerian2(n-1, k-1)*(2*n-k-1)",
+        "A032034 = lambda n: add(eulerian2(n-1,k)*2^(k+1) for k in (0..n-1))",
+        "[A032034(n) for n in (1..17)]  # _Peter Luschny_, Nov 10 2012"
+    ],
+    "xref": [
+        "Cf. A112487"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Christian G. Bower_",
+    "references": 2,
+    "revision": 21,
+    "time": "2014-01-03T15:35:51-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

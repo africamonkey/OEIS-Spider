@@ -1,0 +1,39 @@
+{
+    "number": 130870,
+    "data": "151,727,919,10601,14741,15451,15551,16361,16561,19891,30403,31013,33533,34543,35153,39293,70507,71317,72227,73637,75557,78787,79397,93139,94049,94349,94649,94849,94949,95959,97579,1022201,1055501",
+    "name": "Palindromic primes with squareful neighbors.",
+    "comment": [
+        "Sequence is the intersection of A075432 and A002385. - _Chai Wah Wu_, Jun 09 2015"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A130870/b130870.txt\">Table of n, a(n) for n = 1..1446</a>"
+    ],
+    "mathematica": [
+        "squarefulQ[n_] := Last[Sort[Transpose[FactorInteger[n]][[2]]]] > 1; palindromeQ[n_] := Reverse[IntegerDigits[n]] == IntegerDigits[n]; Select[Range[3, 2000000], palindromeQ[ # ] && squarefulQ[ # - 1] && squarefulQ[ # + 1] && PrimeQ[ # ] &]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, factorint",
+        "def palgen10odd(l): # generator of palindromes in base 10 of odd length <= 2*l",
+        "....if l > 0:",
+        "........yield 0",
+        "........for x in range(1,l+1):",
+        "............for y in range(10**(x-1),10**x):",
+        "................s = str(y)",
+        "................yield int(s+s[-2::-1])",
+        "A130870_list = []",
+        "for i in palgen10odd(5):",
+        "....if i > 2 and isprime(i) and max(factorint(i-1).values()) > 1 and max(factorint(i+1).values()) > 1:",
+        "........A130870_list.append(i) # _Chai Wah Wu_, Jun 09 2015"
+    ],
+    "xref": [
+        "Cf. Palindromic subsequence of A075432 - Primes with no squarefree neighbors."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Jul 24 2007",
+    "references": 1,
+    "revision": 7,
+    "time": "2015-06-09T21:07:05-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

@@ -1,0 +1,52 @@
+{
+    "number": 72103,
+    "data": "4,8,9,16,16,25,27,32,36,49,64,64,64,81,81,100,121,125,128,144,169,196,216,225,243,256,256,256,289,324,343,361,400,441,484,512,512,529,576,625,625,676,729,729,729,784,841,900,961,1000,1024,1024,1024,1089",
+    "name": "Sorted perfect powers a^b for a, b > 1 with duplication.",
+    "comment": [
+        "If b is the largest integer such that n=a^b for some a>1, then n occurs d(b)-1 times in this sequence (where d = A000005 is the number of divisors function). (This includes the case where b=1 and n does not occur in the sequence.) - _M. F. Hasler_, Jan 25 2015"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A072103/b072103.txt\">Table of n, a(n) for n = 1..9999</a>, recomputed with new offset by _M. F. Hasler_, Jan 25 2015",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PerfectPower.html\">Perfect Power</a>"
+    ],
+    "formula": [
+        "Sum_{i=2}^{infty} sum_{j=2}^{infty} 1/i^j = 1."
+    ],
+    "example": [
+        "(a,b) = (2,4) and (4,2) both yield 2^4 = 4^2 = 16, therefore 16 is listed twice.",
+        "Similarly, 64 is listed 3 times since (a,b) = (2,6), (4,3) and (8,2) all yield 64."
+    ],
+    "maple": [
+        "N:= 2000: # to get all entries <= N",
+        "sort([seq(seq(a^b, b = 2 .. floor(log[a](N))), a = 2 .. floor(sqrt(N)))]); # _Robert Israel_, Jan 25 2015"
+    ],
+    "mathematica": [
+        "nn=60;Take[Sort[#[[1]]^#[[2]]&/@Tuples[Range[2,nn],2]],nn] (* _Harvey P. Dale_, Oct 03 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.Set (singleton, findMin, deleteMin, insert)",
+        "a072103 n = a072103_list !! (n-1)",
+        "a072103_list = f 9 3 $ Set.singleton (4,2) where",
+        "   f zz z s",
+        "     | xx < zz   = xx : f zz z (Set.insert (x*xx, x) $ Set.deleteMin s)",
+        "     | otherwise = zz : f (zz+2*z+1) (z+1) (Set.insert (z*zz, z) s)",
+        "     where (xx, x) = Set.findMin s",
+        "-- _Reinhard Zumkeller_, Oct 04 2012",
+        "(PARI) is_A072103(n)=ispower(n)",
+        "for(n=1,999,(e=ispower(n))||next;fordiv(e,d,d>1 && print1(n\",\")) \\\\ _M. F. Hasler_, Jan 25 2015"
+    ],
+    "xref": [
+        "Cf. A001597, A000005, A253641, A253642."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Eric W. Weisstein_, Jun 18 2002",
+    "ext": [
+        "Offset corrected and examples added by _M. F. Hasler_, Jan 25 2015"
+    ],
+    "references": 8,
+    "revision": 27,
+    "time": "2016-07-19T10:47:42-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 282148,
+    "data": "8,16,24,32,40,48,51,56,59,67,75,83,99,102,110,112,118,153,155,168,198,211,224,254,267,280,297,310,323,336,344,346,354,357,362,370,392,397,400,405,413,443,456,469,499,512,525,542,555,568,581,598,611,624,641,654",
+    "name": "Numbers n with k digits in base x (MSD(n)=d_k, LSD(n)=d_1) such that, chosen one of their digits in position d_k < j < d_1, is Sum_{i=j..k}{(i-j+1)*d_i} = Sum_{i=1..j-1}{(j-i)*d_i}. Case x = 7.",
+    "comment": [
+        "All the palindromic numbers in base 7 with an even number of digits belong to the sequence.",
+        "Here the fulcrum is between two digits while in the sequence from A282107 to A282115 is one of the digits.",
+        "The first number with this property in all the bases from 2 to 7 is",
+        "86964945. - _Giovanni Resta_, Feb 15 2017"
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A282148/b282148.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "641 in base 7 is 1604. If we split the number in 16 and 04 we have 6*1 + 1*2 = 8 for the left side and 0*1 + 4*2 = 8 for the right one."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q,h) local a,b,d,j,k,n,s;",
+        "for n from 1 to q do a:=convert(n,base,h);",
+        "for k from 1 to trunc(nops(a)/2) do b:=a[k]; a[k]:=a[nops(a)-k+1]; a[nops(a)-k+1]:=b; od;",
+        "for k from 1 to nops(a)-1 do d:=0; s:=0;",
+        "for j from 1 to k do if a[j]>0 then s:=s+a[j]*(k-j+1); fi; od; for j from nops(a) by -1 to k+1 do",
+        "if a[j]>0 then d:=d+a[j]*(j-k); fi; od; if d=s then print(n); break; fi; od; od; end: P(10^3,7);"
+    ],
+    "xref": [
+        "Cf. A282107 - A282115, A282143 - A282147."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Feb 15 2017",
+    "references": 3,
+    "revision": 7,
+    "time": "2017-02-17T02:44:58-05:00",
+    "created": "2017-02-17T02:44:58-05:00"
+}

@@ -1,0 +1,69 @@
+{
+    "number": 27934,
+    "data": "0,1,2,5,11,24,51,107,222,457,935,1904,3863,7815,15774,31781,63939,128488,257963,517523,1037630,2079441,4165647,8342240,16702191,33433039,66912446,133899917,267921227,536038872,1072395555,2145305339",
+    "name": "a(0)=0, a(1)=1, a(2)=2; for n>2, a(n)=3*a(n-1)-a(n-2)-2*a(n-3).",
+    "comment": [
+        "Number of compositions of n with at least one even part (offset 2). - _Vladeta Jovovic_, Dec 29 2004",
+        "First differences of A008466. a(n) = A008466(n+2) - A008466(n+1). - _Alexander Adamchuk_, Apr 06 2006",
+        "Starting with \"1\" = eigensequence of a triangle with the Fibonacci series as the left border and the rest 1's. - _Gary W. Adamson_, Jul 24 2010",
+        "An elephant sequence, see A175654. For the corner squares 24 A[5] vectors, with decimal values between 11 and 416, lead to this sequence (without the leading 0). For the central square these vectors lead to the companion sequence A099036 (without the first leading 1). - _Johannes W. Meijer_, Aug 15 2010",
+        "a(n) = sum(A108617(n,k): k=1..n) / 2. - _Reinhard Zumkeller_, Oct 07 2012",
+        "a(n) is the number of binary strings that contain the substring 11 or end in 1. a(3) = 5 because we have: 001, 011, 101, 110, 111. - _Geoffrey Critzer_, Jan 04 2014",
+        "a(n-1), n >= 1, is the number of non-existing (due to the maturation delay) \"[male-female] pairs of Fibonacci rabbits\" at the beginning of the n-th month. - _Daniel Forgues_, May 06 2015"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A027934/b027934.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Denis Neiter and Amsha Proag, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL19/Proag/proag3.html\">Links Between Sums Over Paths in Bernoulli's Triangles and the Fibonacci Numbers</a>, Journal of Integer Sequences, Vol. 19 (2016), Article 16.8.3.",
+        "OEIS Wiki, <a href=\"/wiki/Fibonacci_rabbits\">Fibonacci rabbits</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-1,-2)."
+    ],
+    "formula": [
+        "a(n) = sum(sum(C(n-j,n-2j-k), k=0..n-2j), j=0..floor(n/2)). - _Paul Barry_, Feb 07 2003",
+        "Row sums of A105809. G.f.: x(1-x)/((1-2x)(1-x-x^2)); a(n)=2^n-Fib(n+1). - _Paul Barry_, Jan 23 2004, corrected Apr 06 2006 and Oct 05 2012",
+        "a(n) = sum{j=0..n, sum{k=0..n, binomial(n-k, k+j)}}. - _Paul Barry_, Aug 29 2004",
+        "a(n) = (sum of (n+1)-th row of the triangle in A108617) / 2. - _Reinhard Zumkeller_, Jun 12 2005",
+        "a(n) = term (1,1) - term (2,2) in the 3x3 matrix [2,0,0; 0,1,1; 0,1,0]^n. - _Alois P. Heinz_, Jul 28 2008",
+        "a(n) = 2^n-(1/2)*[1/2+(1/2)*sqrt(5)]^n-(1/10)*[1/2 +(1/2)*sqrt(5)]^n *sqrt(5) +(1/10)*sqrt(5)*[1/2-(1 /2)*sqrt(5)]^n-(1/2)*[1/2 -(1/2) *sqrt(5)]^n, with n>=0. - _Paolo P. Lava_, Oct 02 2008",
+        "a(n) = 2^n - A000045(n+1). - _Geoffrey Critzer_, Jan 04 2014",
+        "a(n) ~ 2^n. - _Daniel Forgues_, May 06 2015",
+        "From _Bob Selcoe_, Mar 29 2016 (Start):",
+        "a(n) = 2*a(n-1) + A000045(n-2).",
+        "a(n) = 4*a(n-2) + A000032(n-2).",
+        "(End)"
+    ],
+    "maple": [
+        "A027934:= proc(n) local K; K:= Matrix ([[2,0,0], [0,1,1], [0,1,0]])^n; K[1,1]-K[2,2] end: seq (A027934(n), n=0..31); # _Alois P. Heinz_, Jul 28 2008",
+        "a := n -> 2^n - combinat:-fibonacci(n+1): seq(a(n),n=0..31); # _Peter Luschny_, May 09 2015"
+    ],
+    "mathematica": [
+        "nn=31;a=1/(1-x-x^2);b=1/(1-2x);CoefficientList[Series[a x+a x^2b,{x,0,nn}],x] (* _Geoffrey Critzer_, Jan 04 2014 *)",
+        "LinearRecurrence[{3, -1, -2}, {0, 1, 2}, 32] (* _Jean-Fran\u00e7ois Alcover_, Jan 09 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a027934 n = a027934_list !! n",
+        "a027934_list = 0 : 1 : 2 : zipWith3 (\\x y z -> 3 * x - y - 2 * z)",
+        "               (drop 2 a027934_list) (tail a027934_list) a027934_list",
+        "-- _Reinhard Zumkeller_, Oct 07 2012",
+        "(PARI) a(n)=2^n-fibonacci(n+1) \\\\ _Charles R Greathouse IV_, Jun 11 2015"
+    ],
+    "xref": [
+        "Row sums of triangle A131767. - _Gary W. Adamson_, Jul 13 2007",
+        "a(n) = A101220(1, 2, n+1).",
+        "T(n, n) + T(n, n+1) + ... + T(n, 2n), T given by A027926.",
+        "Diagonal sums of A055248.",
+        "Cf. A000045, A000079, A008466, A059570, A099036, A047967, A000032."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Simpler definition from _Miklos Kristof_, Nov 24 2003",
+        "Initial zero added by _N. J. A. Sloane_, Feb 13 2008",
+        "Definition fixed by _Reinhard Zumkeller_, Oct 07 2012"
+    ],
+    "references": 21,
+    "revision": 76,
+    "time": "2017-09-12T13:21:48-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

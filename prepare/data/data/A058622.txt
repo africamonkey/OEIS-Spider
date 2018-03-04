@@ -1,0 +1,47 @@
+{
+    "number": 58622,
+    "data": "0,1,1,4,5,16,22,64,93,256,386,1024,1586,4096,6476,16384,26333,65536,106762,262144,431910,1048576,1744436,4194304,7036530,16777216,28354132,67108864,114159428,268435456,459312152,1073741824,1846943453",
+    "name": "a(n) = 2^(n-1) - ((1+(-1)^n)/4)*binomial(n, n/2).",
+    "comment": [
+        "a(n) is the number of n-digit binary sequences that have more 1's than 0's. - _Geoffrey Critzer_, Jul 16 2009",
+        "Maps to the number of walks that end above 0 on the number line with steps being 1 or -1. - _Benjamin Phillabaum_, Mar 06 2011",
+        "Chris Godsil observes that a(n) is the independence number of the (n+1)-folded cube graph; proof is by a Cvetkovic's eigenvalue bound to establish an upper bound and a direct construction of the independent set by looking at vertices at an odd (resp., even) distance from a fixed vertex when n is odd (resp., even). - _Stan Wagon_, Jan 29 2013",
+        "Also the number of subsets of {1,2,...,n} that contain more odd than even numbers.  For example, for n=4, a(4)=5 and the 5 subsets are {1}, {3}, {1,3}, {1,2,3}, {1,3,4}. See A014495 when same number of even and odd numbers. - _Enrique Navarrete_, Feb 10 2018"
+    ],
+    "reference": [
+        "A. P. Prudnikov, Yu. A. Brychkov and O.I. Marichev, \"Integrals and Series\", Volume 1: \"Elementary Functions\", Chapter 4: \"Finite Sums\", New York, Gordon and Breach Science Publishers, 1986-1992, Eq. (4.2.1.7)"
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/FoldedCubeGraph.html\">Folded Cube Graph</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/IndependenceNumber.html\">Independence Number</a>"
+    ],
+    "formula": [
+        "a(n) = 2^(n-1) + ((1+(-1)^n)/4)*binomial(n, n/2);",
+        "a(n) = Sum_{i=0..floor((n-1)/2)} binomial(n, i).",
+        "G.f.: 2*x/((1-2*x)*(1+2*x+((1+2*x)*(1-2*x))^(1/2))). - _Vladeta Jovovic_, Apr 27 2003",
+        "E.g.f: (e^(2x)-I_0(2x))/2 where I_n is the Modified Bessel Function. - _Benjamin Phillabaum_, Mar 06 2011",
+        "Logarithmic derivative of the g.f. of A210736 is a(n+1). - _Michael Somos_, Nov 22 2014"
+    ],
+    "example": [
+        "G.f. = x + x^2 + 4*x^3 + 5*x^4 + 16*x^5 + 22*x^6 + 64*x^7 + 93*x^8 + ..."
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[n, Floor[n/2 + i]], {i, 1, n}], {n, 0, 32}] (* _Geoffrey Critzer_, Jul 16 2009 *)",
+        "a[ n_] := If[ n < 0, 0, (2^n - Boole[ EvenQ @ n] Binomial[n, Quotient[n, 2]]) / 2]; (* _Michael Somos_, Nov 22 2014 *)",
+        "a[ n_] := If[ n < 0, 0, n! SeriesCoefficient[ (Exp[2 x] - BesselI[0, 2 x]) / 2, {x, 0, n}]]; (* _Michael Somos_, Nov 22 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = 2^(n-1) - ((1+(-1)^n)/4)*binomial(n, n\\2); \\\\ _Michel Marcus_, Dec 30 2015",
+        "(PARI) x='x+O('x^200); concat(0, Vec(2*x/((1-2*x)*(1+2*x+((1+2*x)*(1-2*x))^(1/2))))) \\\\ _Altug Alkan_, Dec 30 2015"
+    ],
+    "xref": [
+        "Cf. A027306, A210736."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,4",
+    "author": "Yong Kong (ykong(AT)curagen.com), Dec 29 2000",
+    "references": 7,
+    "revision": 54,
+    "time": "2018-02-28T17:20:55-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

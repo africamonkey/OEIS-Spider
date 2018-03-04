@@ -1,0 +1,32 @@
+{
+    "number": 281916,
+    "data": "1,28,35,36,46,51,99,109,191,239,476,491,1022,1126,1358,1362,15156,21581,44270,63377,100164,375830,388148,2749998,5215505,10158487",
+    "name": "5th power analog of Keith numbers.",
+    "comment": [
+        "Like Keith numbers but starting from n^5 digits to reach n.",
+        "Consider the digits of n^5. Take their sum and repeat the process deleting the first addend and adding the previous sum. The sequence lists the numbers that after some number of iterations reach a sum equal to n."
+    ],
+    "example": [
+        "109^5 = 15386239549:",
+        "1 + 5 + 3 + 8 + 6 + 2 + 3 + 9 + 5 + 4 + 9 = 55;",
+        "5 + 3 + 8 + 6 + 2 + 3 + 9 + 5 + 4 + 9 + 55 = 109."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q, h,w) local a, b, k, t, v; global n; v:=array(1..h);",
+        "for n from 1 to q do b:=n^w; a:=[];",
+        "for k from 1 to ilog10(b)+1 do a:=[(b mod 10), op(a)]; b:=trunc(b/10); od;",
+        "for k from 1 to nops(a) do v[k]:=a[k]; od; b:=ilog10(n^w)+1;",
+        "t:=nops(a)+1; v[t]:=add(v[k], k=1..b); while v[t]<n do t:=t+1; v[t]:=add(v[k], k=t-b..t-1);",
+        "od; if v[t]=n then print(n); fi; od; end: P(10^6,10000,5);"
+    ],
+    "xref": [
+        "Cf. A007629, A246544, A263534, A274769, A274770, A281915, A281917 - A281921."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Feb 02 2017",
+    "references": 2,
+    "revision": 11,
+    "time": "2017-07-26T23:31:29-04:00",
+    "created": "2017-02-04T14:29:13-05:00"
+}

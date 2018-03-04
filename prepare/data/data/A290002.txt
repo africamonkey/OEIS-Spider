@@ -1,0 +1,37 @@
+{
+    "number": 290002,
+    "data": "1,10,18,20,36,40,54,70,72,78,80,108,110,140,144,156,160,162,174,198,216,220,222,230,234,246,280,288,294,312,320,324,348,396,414,426,432,438,440,444,450,460,468,470,486,492,534,560,576,588,594,624,640,648,666,696,702,770,792,828,846,852",
+    "name": "Numbers n such that psi(phi(n)) = phi(psi(n)).",
+    "comment": [
+        "Squarefree terms are 1, 10, 70, 78, 110, 174, 222, 230, 246, 426, 438, ...",
+        "Common terms of this sequence and A033632 are 1, 14406, 544500, 141118050, ...",
+        "From _Robert Israel_, Sep 03 2017: (Start)",
+        "Includes 2^i*3^j if i >= 1 and j >= 2, i.e. 3*A033845, and A020714(n) for n >= 1.",
+        "If an even number m is in the sequence, then so is 2*m.",
+        "Are there any odd terms other than 1? (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A290002/b290002.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "psi:= proc(n)  n*mul((1+1/i[1]), i=ifactors(n)[2]) end:",
+        "select(psi @ numtheory:-phi = numtheory:-phi @ psi, [$1..1000]); # _Robert Israel_, Sep 03 2017"
+    ],
+    "mathematica": [
+        "f[n_] := n Sum[MoebiusMu[d]^2/d, {d, Divisors@ n}]; Select[Range[10^3], f[EulerPhi@ #] == EulerPhi[f@ #] &] (* _Michael De Vlieger_, Sep 03 2017 *)"
+    ],
+    "program": [
+        "(PARI) a001615(n) = my(f=factor(n)); prod(i=1, #f~, f[i, 1]^f[i, 2] + f[i, 1]^(f[i, 2]-1));",
+        "isok(n) = eulerphi(a001615(n))==a001615(eulerphi(n)); \\\\ after _Charles R Greathouse IV_ at A001615"
+    ],
+    "xref": [
+        "Cf. A000010, A001615, A020714, A033632, A033845."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Altug Alkan_, Sep 03 2017",
+    "references": 5,
+    "revision": 22,
+    "time": "2017-09-06T03:31:42-04:00",
+    "created": "2017-09-03T21:32:41-04:00"
+}

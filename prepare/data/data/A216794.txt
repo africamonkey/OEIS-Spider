@@ -1,0 +1,46 @@
+{
+    "number": 216794,
+    "data": "1,2,12,104,1200,17312,299712,6053504,139733760,3628677632,104701504512,3323151509504,115063060869120,4316023589937152,174347763227738112,7545919601962287104,348366745238330081280,17087957176042900815872,887497598764802460352512",
+    "name": "Number of set partitions of {1,2,...,n} with labelled blocks and a (possibly empty) subset of designated elements in each block.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A216794/b216794.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Eric Weisstein's MathWorld, <a href=\"http://mathworld.wolfram.com/Polylogarithm.html\">Polylogarithm</a>."
+    ],
+    "formula": [
+        "E.g.f.: 1/(2 - exp(2*x)).",
+        "E.g.f.: 1 + 2*x/(G(0) - 2*x) where G(k) =  2*k+1 - x*2*(2*k+1)/(2*x + (2*k+2)/(1 + 2*x/G(k+1) )); (recursively defined continued fraction). - _Sergei N. Gladkovskii_, Dec 26 2012",
+        "E.g.f.: 1 + 2*x/( G(0) - 2*x ) where G(k) =  1 - 2*x/(1 + (1*k+1)/G(k+1) ); (recursively defined continued fraction). - _Sergei N. Gladkovskii_, Feb 02 2013",
+        "G.f.: 1/G(0)  where G(k) = 1 - x*(2*k+2)/( 1 - 4*x*(k+1)/G(k+1) ); (continued fraction ). - _Sergei N. Gladkovskii_, Mar 23 2013",
+        "a(n) ~ n! * (2/log(2))^n/log(4). - _Vaclav Kotesovec_, Sep 24 2013",
+        "G.f.: T(0)/(1-2*x), where T(k) = 1 - 8*x^2*(k+1)^2/( 8*x^2*(k+1)^2 - (1-2*x-6*x*k)*(1-8*x-6*x*k)/T(k+1) ); (continued fraction). - _Sergei N. Gladkovskii_, Oct 14 2013",
+        "From _Vladimir Reshetnikov_, Oct 31 2015: (Start)",
+        "a(n) = (-1)^(n+1)*(Li_{-n}(sqrt(2)) + Li_{-n}(-sqrt(2)))/4, where Li_n(x) is the polylogarithm.",
+        "Li_{-n}(sqrt(2)) = (-1)^(n+1)*(2*a(n) + A080253(n)*sqrt(2)).",
+        "(End)",
+        "a(n) = 2^(n-1)*(Li_{-n}(1/2) + 0^n) with 0^0=1. - _Peter Luschny_, Nov 03 2015"
+    ],
+    "maple": [
+        "a := n -> 2^(n-1)*(polylog(-n, 1/2)+`if`(n=0,1,0)):",
+        "seq(round(evalf(a(n),32)), n=0..18); # _Peter Luschny_, Nov 03 2015"
+    ],
+    "mathematica": [
+        "nn=25;a=Exp[2x]-1;Range[0,nn]!CoefficientList[Series[1/(1-a),{x,0,nn}],x]",
+        "Round@Table[(-1)^(n+1) (PolyLog[-n, Sqrt[2]] + PolyLog[-n, -Sqrt[2]])/4, {n, 0, 20}] (* _Vladimir Reshetnikov_, Oct 31 2015 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A216794(n):",
+        "    return 2^n*add(add((-1)^(j-i)*binomial(j,i)*i^n for i in range(n+1)) for j in range(n+1))",
+        "[A216794(n) for n in range(18)] # _Peter Luschny_, Jul 22 2014"
+    ],
+    "xref": [
+        "Cf. A006153, A055882, A080253."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Geoffrey Critzer_, Sep 16 2012",
+    "references": 2,
+    "revision": 44,
+    "time": "2015-11-03T05:52:01-05:00",
+    "created": "2012-09-16T22:55:37-04:00"
+}

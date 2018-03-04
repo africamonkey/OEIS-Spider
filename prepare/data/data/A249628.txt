@@ -1,0 +1,38 @@
+{
+    "number": 249628,
+    "data": "8,10,12,16,18,22,24,30,34,36,42,46,48,54,60,64,66,72,76,78,84,90,102,106,108,112,114,120,126,132,138,142,144,150,154,156,162,168,174,180,184,186,192,196,198,202,204,210,216,222,228,232,234,240,244,246,252",
+    "name": "Sums of two numbers that are the average of a twin prime pair (A014574).",
+    "comment": [
+        "The addends need not be distinct, see example.",
+        "Probably a(n) ~ 6n and all multiples of 6 greater than 4206 are present. - _Charles R Greathouse IV_, Nov 06 2014"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A249628/b249628.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "8 is in the sequence since 8 = 4+4 and 4 is the average of the twin primes 3 and 5.",
+        "10 is in the sequence since 10 = 4+6 and both 4 and 6 are the average of the twin primes 3,5 and 5,7 respectively.",
+        "12 is in the sequence since 12 = 6+6 and 6 is the average of the twin primes 5 and 7.",
+        "14 is not in the sequence since it is not the sum of two numbers that are the average of twin primes."
+    ],
+    "program": [
+        "(PARI) v=[];for(n=1,10^3,if(isprime(n-1)&&isprime(n+1),v=concat(v,n)))",
+        "b=[];for(n=1,1000,for(k=1,n,if(vecsearch(v,k)&&vecsearch(v,n-k),b=concat(b,n))));vecsort(b,,8) \\\\ _Derek Orr_, Nov 02 2014",
+        "(PARI) list(lim)=my(v=List(),p,r); p=3; forprime(q=5,lim-3, if(q-p>2, p=q; next); r=3; forprime(s=5,min(lim-q+2,q), if(s-r==2, listput(v, p+s)); r=s); p=q); Set(v) \\\\ _Charles R Greathouse IV_, Nov 06 2014",
+        "(PARI) list(lim)=my(v=List(),P=primes([3,lim\\1-3]),Q=v,t); for(i=2,#P, if(P[i]-P[i-1]==2, listput(Q,P[i]-1))); P=0; forstep(n=8,lim,2, for(i=1,#Q, if(setsearch(Q,t=n-Q[i]), listput(v,n); break); if(t<Q[i], break))); Vec(v) \\\\ _Charles R Greathouse IV_, Nov 06 2014",
+        "(PARI) is(n)=my(p=3);forprime(q=5,n\\2+1,if(isprime(n-p)&&isprime(n-p-2),return(1));p=q);0 \\\\ _Charles R Greathouse IV_, Nov 06 2014"
+    ],
+    "xref": [
+        "Cf. A014574 (average of twin prime pairs)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Wesley Ivan Hurt_, Nov 02 2014",
+    "ext": [
+        "Missing a(19) added by _Charles R Greathouse IV_, Nov 06 2014"
+    ],
+    "references": 3,
+    "revision": 20,
+    "time": "2014-11-07T04:07:12-05:00",
+    "created": "2014-11-07T04:07:12-05:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 246220,
+    "data": "362880,43908480,3448811520,228012744960,13954338478080,827512686000000,48753634065776640,2895879112057451520,174984885490926551040,10817178515493080290560,686533182382689959116800,44833266187415969387604480,3016487768851293040555130880",
+    "name": "Number of endofunctions on [n] where the largest cycle length equals 10.",
+    "comment": [
+        "In general, number of endofunctions on [n] where the largest cycle length equals k is asymptotic to (k*exp(H(k)) - (k-1)*exp(H(k-1))) * n^(n-1), where H(k) is the harmonic number A001008/A002805, k>=1. - _Vaclav Kotesovec_, Aug 21 2014"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A246220/b246220.txt\">Table of n, a(n) for n = 10..200</a>"
+    ],
+    "formula": [
+        "a(n) ~ (10*exp(7381/2520) - 9*exp(7129/2520)) * n^(n-1). - _Vaclav Kotesovec_, Aug 21 2014"
+    ],
+    "maple": [
+        "with(combinat):",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add((i-1)!^j*multinomial(n, n-i*j, i$j)/j!*",
+        "      b(n-i*j, i-1), j=0..n/i)))",
+        "    end:",
+        "A:= (n, k)-> add(binomial(n-1, j-1)*n^(n-j)*b(j, min(j, k)), j=0..n):",
+        "a:= n-> A(n, 10) -A(n, 9):",
+        "seq(a(n), n=10..25);"
+    ],
+    "xref": [
+        "Column k=10 of A241981."
+    ],
+    "keyword": "nonn",
+    "offset": "10,1",
+    "author": "_Alois P. Heinz_, Aug 19 2014",
+    "references": 2,
+    "revision": 9,
+    "time": "2014-08-21T05:48:05-04:00",
+    "created": "2014-08-19T13:15:36-04:00"
+}

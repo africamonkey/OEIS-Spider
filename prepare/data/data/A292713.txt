@@ -1,0 +1,41 @@
+{
+    "number": 292713,
+    "data": "1,1,4,14,67,343,2151,14900,119259,1055520,10465854,113479756,1350508150,17373376892,241576630993,3596468789967,57232276979726,967517444008250,17339617861447844,328037083000497867,6537494747743375847,136820214583596515519",
+    "name": "Number of multisets of nonempty words with a total of n letters over n-ary alphabet such that within each word every letter of the alphabet is at least as frequent as the subsequent alphabet letter.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A292713/b292713.txt\">Table of n, a(n) for n = 0..450</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n] Product_{j=1..n} 1/(1-x^j)^A226873(j,n).",
+        "a(n) = A292712(n,n).",
+        "a(n) ~ c * n!, where c = A247551 = 2.5294774720791526... - _Vaclav Kotesovec_, Oct 05 2017"
+    ],
+    "example": [
+        "a(0) = 1: {}.",
+        "a(1) = 1: {a}.",
+        "a(2) = 4: {aa}, {ab}, {ba}, {a,a}.",
+        "a(3) = 14: {aaa}, {aab}, {aba}, {baa}, {abc}, {acb}, {bac}, {bca}, {cab}, {cba}, {aa,a}, {ab,a}, {ba,a}, {a,a,a}."
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(t=1, 1/n!,",
+        "      add(b(n-j, j, t-1)/j!, j=i..n/t))",
+        "    end:",
+        "g:= (n, k)-> `if`(k=0, `if`(n=0, 1, 0), n!*b(n, 0, k)):",
+        "A:= proc(n, k) option remember; `if`(n=0, 1, add(add(d*",
+        "      g(d, k), d=numtheory[divisors](j))*A(n-j, k), j=1..n)/n)",
+        "    end:",
+        "a:= n-> A(n$2):",
+        "seq(a(n), n=0..25);"
+    ],
+    "xref": [
+        "Main diagonal of A292712.",
+        "Cf. A226873, A292796."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 21 2017",
+    "references": 4,
+    "revision": 16,
+    "time": "2017-10-05T05:20:52-04:00",
+    "created": "2017-09-21T18:32:39-04:00"
+}

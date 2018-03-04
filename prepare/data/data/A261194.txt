@@ -1,0 +1,72 @@
+{
+    "number": 261194,
+    "data": "0,1,3,5,9,11,16,17,18,19,20,21,23,25,27,33,37,49,53,65,67,73,75,81,83,89,91,141,144,145,148,149,153,154,155,157,159,181,209,217,219,272,273,274,275,283,291,305,307,308,309,311,337,339,347,513,517,529",
+    "name": "Encoded square binary matrices representing an idempotent relation.",
+    "comment": [
+        "We encode an n X n binary matrix reading it antidiagonal by antidiagonal, starting from the least significant bit. A given entry in the sequence therefore represents the infinite family of n X n matrices that can be obtained by adding zero antidiagonals. All of these matrices represent idempotent relations. This encoding makes it possible to obtain a sequence rather than a table."
+    ],
+    "link": [
+        "Philippe Beaudoin, <a href=\"/A261194/b261194.txt\">Table of n, a(n) for n = 0..6672</a>"
+    ],
+    "example": [
+        "For example, 148 = 0b10010100 encodes all square matrices with the first four antidiagonals equal to ((0), (0, 1), (0, 1, 0), (0, 1, 0, 0)). For example the 3 X 3 matrix:",
+        "  0 1 0",
+        "  0 1 0",
+        "  0 1 0",
+        "and the 4 X 4 matrix:",
+        "  0 1 0 0",
+        "  0 1 0 0",
+        "  0 1 0 0",
+        "  0 0 0 0",
+        "and all larger square matrices constructed in the same way. Since 148 is in the sequence, all these matrices are idempotent."
+    ],
+    "program": [
+        "(Python)",
+        "def getBitIndex(i, j):",
+        "..return (i+j)*(i+j+1)/2 + j",
+        "def getBit(mat, i, j):",
+        "..return (mat >> getBitIndex(i,j)) & 1",
+        "def setBit(mat, i, j):",
+        "..return mat | (1 << getBitIndex(i,j))",
+        "def noBitLeft(mat, i, j):",
+        "..return mat >> getBitIndex(i,j) == 0",
+        "def squarematrix(mat):",
+        "..result = 0;",
+        "..i = 0",
+        "..while True:",
+        "....if noBitLeft(mat, i, 0):",
+        "......return result",
+        "....j = 0;",
+        "....while True:",
+        "......if noBitLeft(mat, 0, j):",
+        "........break",
+        "......k = 0",
+        "......while True:",
+        "........if noBitLeft(mat, i, k):",
+        "..........break",
+        "........if getBit(mat, i, k) & getBit(mat, k, j):",
+        "..........result = setBit(result, i, j)",
+        "..........break",
+        "........k += 1",
+        "......j += 1",
+        "....i += 1",
+        "..return result",
+        "index = 0",
+        "mat = 0",
+        "while True:",
+        "..if mat == squarematrix(mat):",
+        "....print index, mat",
+        "....index += 1",
+        "..mat += 1"
+    ],
+    "xref": [
+        "Cf. A121337, A231428, A261195."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Philippe Beaudoin_, Aug 11 2015",
+    "references": 2,
+    "revision": 21,
+    "time": "2015-08-22T00:57:22-04:00",
+    "created": "2015-08-22T00:57:22-04:00"
+}

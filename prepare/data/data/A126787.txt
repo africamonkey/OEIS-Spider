@@ -1,0 +1,39 @@
+{
+    "number": 126787,
+    "data": "1,1,4,14,66,308,1888,12240,95640,827904,8106960,87387264,1035645312,13316300928,184988692800,2756878875648,43888205438208,742943286892800,13326434312808960,252448071959572992,5036116692383428608,105523926692032447488",
+    "name": "G.f.: B(x)*B(2!*x^2)*B(3!*x^3)*..., where B(x) is g.f. of A000142.",
+    "comment": [
+        "Take each Ferrers diagram of the partitions of n, label(linearly order) the dots within each row, then linearly order any of the rows that are of equal length. - _Geoffrey Critzer_, Mar 21 2009"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A126787/b126787.txt\">Table of n, a(n) for n = 0..450</a> (terms n=176..300 from Vaclav Kotesovec)"
+    ],
+    "formula": [
+        "a(n) ~ 2*n! * (1 + 1/(2*n) + 3/n^2 + 13/n^3 + 82/n^4 + 587/n^5 + 4966/n^6). - _Vaclav Kotesovec_, Mar 16 2015"
+    ],
+    "maple": [
+        "B:= proc(n) option remember; local x; unapply(`if`(n<=0, 1, B(n-1)(x)+ n! *x^n), x) end: BB:= proc(n) local x, d; unapply(convert(series(mul(B(floor(n/d))(d!*x^d), d=1..n), x, n+1), polynom), x) end: a:= n-> coeff(BB(n)(x), x, n): seq(a(n), n=0..25); # _Alois P. Heinz_, Sep 25 2008",
+        "# second Maple program:",
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, n!,",
+        "      add(b(n-i*j, i-1)*j!*i!^j, j=0..n/i))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Oct 02 2017"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Product[Sum[x^(n*k) n!^k*k!, {k, 0, 20}], {n, 1, 20}], {x, 0, 20}], x] (* _Geoffrey Critzer_, Mar 21 2009 *)"
+    ],
+    "xref": [
+        "Cf. A096161, A110143."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Vladeta Jovovic_, Feb 18 2007",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Sep 25 2008"
+    ],
+    "references": 2,
+    "revision": 26,
+    "time": "2017-10-02T15:17:55-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

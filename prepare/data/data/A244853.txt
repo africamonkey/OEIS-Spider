@@ -1,0 +1,42 @@
+{
+    "number": 244853,
+    "data": "11,17,71,113,131,151,167,181,211,227,281,431,467,521,547,617,743,829,853,883,1163,1193,1733,2131,2137,3121,3181,3413,3457,3727,4441,5351,6143,6151,6473,6779,6823,6977,8263,8293,8423,9787,11273,11321,11369,11483",
+    "name": "Let d(1)d(2)... d(q) denote the decimal expansion of a prime number n > 9. The sequence lists the primes such that replacing each digit d(i) with d(i+1) copies for i = 1..q-1 and d(q) by d(1) copies produces a prime. Zeros are not allowed.",
+    "link": [
+        "Harvey P. Dale, <a href=\"/A244853/b244853.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "6473 is in the sequence because 6473 becomes 66664444444777333333 which is also prime."
+    ],
+    "maple": [
+        "for n from 5 to 2500 do:",
+        "     p := ithprime(n): s :=0: j :=0:",
+        "     x := convert(p, base, 10): n1 := nops(x):",
+        "     q := mul(x[i], i=1..n1):",
+        "     if q<>0 then",
+        "         for m from n1 by -1 to 2 do:",
+        "            s := s*10^x[m-1]+add(x[m]*10^(i-1+j),i=1.. x[m-1]):",
+        "         od:",
+        "         s1 := add(x[1]*10^(i-1), i=1..x[n1]):",
+        "         z := s*10^x[n1]+s1:",
+        "         if isprime(z) then printf(`%d, `, p) fi:",
+        "     fi:",
+        "od:"
+    ],
+    "mathematica": [
+        "deQ[n_]:=Module[{idn=IntegerDigits[n]},idn=Join[idn,{idn[[1]]}];FreeQ[ idn,0] && PrimeQ[FromDigits[Flatten[Table[#[[1]],{#[[2]]}]&/@ Partition[ idn,2,1]]]]]; Select[ Prime[Range[5,1500]],deQ] (* _Harvey P. Dale_, Mar 26 2016 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {if (isprime(n) && (d=digits(n)) && (#d>1) && vecmin(d), s = \"\"; for (id = 1, #d, if (id != #d, idk = d[id+1], idk = d[1]); for (k=1, idk, s = concat(s, d[id]));); isprime(eval(s)););} \\\\ _Michel Marcus_, Jul 09 2014"
+    ],
+    "xref": [
+        "Cf. A057628."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Jul 07 2014",
+    "references": 1,
+    "revision": 14,
+    "time": "2016-03-26T12:01:19-04:00",
+    "created": "2014-07-13T13:33:54-04:00"
+}

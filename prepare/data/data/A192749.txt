@@ -1,0 +1,38 @@
+{
+    "number": 192749,
+    "data": "0,1,6,16,35,68,124,217,370,620,1027,1688,2760,4497,7310,11864,19235,31164,50468,81705,132250,214036,346371,560496,906960,1467553,2374614,3842272,6216995,10059380,16276492,26335993,42612610,68948732,111561475",
+    "name": "Constant term of the reduction by x^2->x+1 of the polynomial p(n,x) defined below in Comments.",
+    "comment": [
+        "The titular polynomial is defined recursively by p(n,x)=x*(n-1,x)+4n+1 for n>0, where p(0,x)=1.  For discussions of polynomial reduction, see A192232 and A192744.",
+        "a(n+1) is the row sum of row n of the triangle defined by T(n,1)=n*(n-1)+1, T(n,n)=2*n-1, n>=1, and T(r,c)=T(r-1,c)+T(r-2,c-1). The triangle starts 1; 3,3; 7,4,5; 13,7,8,7; 21,14,12,12,9;  - _J. M. Bergot_, Apr 26 2013"
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-2,-1,1)."
+    ],
+    "formula": [
+        "G.f. -x*(1+3*x) / ( (x^2+x-1)*(x-1)^2 ). a(n+1)-a(n) = A053311(n). - _R. J. Mathar_, Apr 29 2013"
+    ],
+    "mathematica": [
+        "q = x^2; s = x + 1; z = 40;",
+        "p[0, n_] := 1; p[n_, x_] := x*p[n - 1, x] + 4 n + 1;",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}] :=",
+        "FixedPoint[(s PolynomialQuotient @@ #1 +",
+        "       PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}]",
+        "(* A053311 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}]",
+        "(* A192749 *)"
+    ],
+    "xref": [
+        "Cf. A192744, A192232."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 09 2011",
+    "references": 2,
+    "revision": 11,
+    "time": "2015-06-13T00:53:53-04:00",
+    "created": "2011-07-10T00:54:48-04:00"
+}

@@ -1,0 +1,31 @@
+{
+    "number": 175807,
+    "data": "2,3,4,5,12,22,26,154",
+    "name": "A007318-perfect numbers.",
+    "comment": [
+        "See definition in comment to A175522. The definition is applied to the flattened view of the binomial coefficients with a single index, without regard to fact that A007318 is a triangle.",
+        "No more terms up to 10^6. - _Michel Marcus_, Feb 07 2016"
+    ],
+    "example": [
+        "Since A007318(1)+ A007318(2)+ A007318(3)+ A007318(4)+ A007318(6)=6= A007318(12), then 12 is in the sequence."
+    ],
+    "maple": [
+        "A007318 := proc(n) option remember; local t,r; t := 0 ; for r from 0 do if t+r+1 > n then return binomial(r,n-t) ; end if; t := t+r+1 ; end do: end proc:",
+        "isA175807 := proc(n) m := 0 ; for d in numtheory[divisors](n) minus {n} do m := m+A007318(d) ; end do; m = A007318(n) ; end proc:",
+        "for n from 1 do if isA175807(n) then printf(\"%d,\\n\",n); end if; end do: # _R. J. Mathar_, Dec 05 2010"
+    ],
+    "program": [
+        "(PARI) b(n) = {my(m = 1); while (m*(m+1)/2 < n, m++); if (! ispolygonal(n, 3), m--); binomial(m, n - m*(m+1)/2);}",
+        "isok(n) = sumdiv(n, d, (d<n)* b(d)) == b(n); \\\\ _Michel Marcus_, Feb 07 2016"
+    ],
+    "xref": [
+        "Cf. A175811, A175522, A000396."
+    ],
+    "keyword": "nonn,less,more",
+    "offset": "1,1",
+    "author": "_Vladimir Shevelev_, Dec 05 2010",
+    "references": 6,
+    "revision": 18,
+    "time": "2016-02-08T02:47:38-05:00",
+    "created": "2010-11-12T14:24:41-05:00"
+}

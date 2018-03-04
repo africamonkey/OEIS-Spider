@@ -1,0 +1,45 @@
+{
+    "number": 258925,
+    "data": "1,120,3024000,858574080000,1226178516326400000,5912338932461445120000000,75732595735526211882516480000000,2195068320271703663798288449536000000000,128322069958974226301129597680106864640000000000",
+    "name": "E.g.f. satisfies: A(x) = Integral 1 + A(x)^5 dx.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A258925/b258925.txt\">Table of n, a(n) for n = 0..90</a>"
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A(x) = Series_Reversion( Integral 1/(1+x^5) dx ).",
+        "Let C(x) = S'(x) such that S(x) = Series_Reversion( Integral 1/(1-x^5)^(1/5) dx ) is the e.g.f. of A258924, then e.g.f. A(x) of this sequence satisfies:",
+        "(2) A(x) = S(x)/C(x),",
+        "(3) A(x) = Integral 1/C(x)^5 dx.",
+        "From _Vaclav Kotesovec_, Jun 18 2015: (Start)",
+        "a(n) ~ 5^(5*n+5/2) * ((5-sqrt(5))/8)^(5*n/2+5/8) * (5*n)! * n^(1/4) / (sqrt(2) * Gamma(1/4) * Pi^(5*n+5/4)).",
+        "a(n) ~ 5^(5*n+5/2) * sin(Pi/5)^(5*n+5/4) * (5*n)! * n^(1/4) / (sqrt(2) * Gamma(1/4) * Pi^(5*n+5/4)).",
+        "(End)"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 120*x^6/6! + 3024000*x^11/11! + 858574080000*x^16/16! +...",
+        "where Series_Reversion(A(x)) = x - x^6/6 + x^11/11 - x^16/16 + x^21/21 +...",
+        "Also, A(x) = S(x)/C(x) where",
+        "S(x) = x - 24*x^6/6! - 169344*x^11/11! - 25255286784*x^16/16! - 23089632627769344*x^21/21! +...+ A258924(n)*x^(5*n+1)/(5*n+1)! +...",
+        "C(x) = 1 - 24*x^5/5! - 169344*x^10/10! - 25255286784*x^15/15! - 23089632627769344*x^20/20! +...+ A258924(n)*x^(5*n)/(5*n)! +...",
+        "such that C(x)^5 + S(x)^5 = 1."
+    ],
+    "program": [
+        "(PARI) /* E.g.f. Series_Reversion( Integral 1/(1+x^5) dx ): */",
+        "{a(n) = local(A=x); A = serreverse( intformal( 1/(1 + x^5 + O(x^(5*n+2))) ) ); (5*n+1)!*polcoeff(A, 5*n+1)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) /* E.g.f. A(x) = Integral 1 + A(x)^5 dx.: */",
+        "{a(n) = local(A=x); for(i=1, n+1, A = intformal( 1 + A^5 + O(x^(5*n+2)) )); (5*n+1)!*polcoeff(A, 5*n+1)}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A258924, A258880, A258901, A258927, A259112, A259113, A258971."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jun 15 2015",
+    "references": 8,
+    "revision": 12,
+    "time": "2015-06-18T16:35:42-04:00",
+    "created": "2015-06-15T16:45:50-04:00"
+}

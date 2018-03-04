@@ -1,0 +1,37 @@
+{
+    "number": 133796,
+    "data": "6,9,14,17,25,28,38,41,48,55,64,71,76,81,86,99,108,112,122,128,131,141,148,158,171,178,185,192,195,200,218,224,231,234,255,262,272,281,286,294,301,304,320,326,331,340,353,366,372,375,388,397,400,412,423,432",
+    "name": "a(n) = n-th prime + n-th semiprime.",
+    "link": [
+        "Harvey P. Dale, <a href=\"/A133796/b133796.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A000040(n) + A001358(n)."
+    ],
+    "example": [
+        "a(1) = 1st prime + 1st semiprime = 2 + 4 = 6.",
+        "a(2) = 2nd prime + 2nd semiprime = 3 + 6 = 9.",
+        "a(3) = 3rd prime + 3rd semiprime = 5 + 9 = 14."
+    ],
+    "maple": [
+        "A000040 := proc(n) ithprime(n) ; end: A001358 := proc(n) option remember ; local a ; if n = 1 then 4 ; else for a from A001358(n-1)+1 do if numtheory[bigomega](a) = 2 then RETURN(a) ; fi ; od: fi ; end: A133796 := proc(n) A000040(n)+A001358(n) ; end: seq(A133796(n),n=1..100) ; # _R. J. Mathar_, Jan 07 2008"
+    ],
+    "mathematica": [
+        "SemiPrimePi[n_] := Sum[ PrimePi[n/Prime@i] - i + 1, {i, PrimePi@ Sqrt@n}]; SemiPrime[n_] := Block[{e = Floor[Log[2, n] + 1], a, b}, a = 2^e; Do[b = 2^p; While[SemiPrimePi@a < n, a = a + b]; a = a - b/2, {p, e, 0, -1}]; a + b/2]; f[n_] := Prime@n + SemiPrime@n; Array[f, 56] (* _Robert G. Wilson v_ *)",
+        "Module[{nn=300,pr,semi,len},pr=Prime[Range[PrimePi[nn]]];semi=Select[ Range[ nn], PrimeOmega[#]==2&];len=Min[Length[pr],Length[semi]];Total/@ Thread[{Take[pr,len],Take[semi,len]}]] (* _Harvey P. Dale_, Jun 27 2014 *)"
+    ],
+    "xref": [
+        "Cf. A000040, A001358."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_, Jan 05 2008",
+    "ext": [
+        "Corrected and extended by _Robert G. Wilson v_ and _R. J. Mathar_, Jan 05 2008",
+        "Typo in first Mma program corrected by _Giovanni Resta_, Jun 12 2016"
+    ],
+    "references": 1,
+    "revision": 14,
+    "time": "2016-06-12T16:08:35-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

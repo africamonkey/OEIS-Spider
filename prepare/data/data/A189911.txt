@@ -1,0 +1,50 @@
+{
+    "number": 189911,
+    "data": "1,2,4,9,18,40,80,175,350,756,1512,3234,6468,13728,27456,57915,115830,243100,486200,1016158,2032316,4232592,8465184,17577014,35154028,72804200,145608400,300874500,601749000,1240940160,2481880320,5109183315,10218366630",
+    "name": "Row sums of the extended Catalan triangle A189231.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A189911/b189911.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/TheLostCatalanNumbers\">The lost Catalan numbers</a>"
+    ],
+    "formula": [
+        "Let a = Gamma(n-floor(n/2)), b = Gamma(floor(n/2+3/2)), d = Gamma( floor(n/2+1))^2, c = Gamma(n+1). Then a(n) = c*(a*b+d)/(a*b*d).",
+        "a(n) = A162246(n,n) + A162246(n,n+1) for n > 0.",
+        "From _Peter Luschny_, Oct 24 2013 : (Start)",
+        "E.g.f.: (x+1)*(BesselI(0, 2*x)+BesselI(1, 2*x)).",
+        "O.g.f.: I*(2*x^2-1)/(2*sqrt(2*x+1)*x*(2*x-1)^(3/2))-1/(2*x).",
+        "Recurrence: a(0) = 1; a(n) = a(n-1)*2 if n is even else ([n/2]+2)*(2*[n/2]+1)/([n/2]+1)^2. ([.] the floor brackets.)",
+        "a(n) = A056040(n) + A212303(n) = n$*(1+[(n+1)/2]^((-1)^n)), where n$ is the swinging factorial.",
+        "a(2*n) = (n+1)*C(2*n, n) (A037965);",
+        "a(2*n+1) = (n+2)*C(2*n+1, n+1) (A097070). (End)"
+    ],
+    "maple": [
+        "A189911 := proc(n) local a,b,d; if n = 0 then 1 else",
+        "a := GAMMA(n-floor(n/2)); b := GAMMA(floor(n/2+3/2));",
+        "d := GAMMA(floor(n/2+1))^2; GAMMA(n+1)*(a*b+d)/(a*b*d) fi end: seq(A189911(n),n=0..32);",
+        "A189911 := proc(n) h:=irem(n,2); g:=iquo(n,2); (g+h+1)*binomial(2*g+h,g+h) end; # _Peter Luschny_, Oct 24 2013"
+    ],
+    "mathematica": [
+        "a[n_] := Module[{q, r}, {q, r} = QuotientRemainder[n, 2]; (q+r+1)*Pochhammer[q+1, q+r]/(q+r)!]; Table[a[n], {n, 0, 32}] (* _Jean-Fran\u00e7ois Alcover_, Jan 09 2014 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A189911():",
+        "    r, n = 1, 1",
+        "    while True:",
+        "        yield r",
+        "        h = n//2",
+        "        r *= 2 if is_even(n) else (h+2)*(2*h+1)/(h+1)^2",
+        "        n += 1",
+        "a = A189911(); [a.next() for i in range(16)]  # _Peter Luschny_, Oct 24 2013"
+    ],
+    "xref": [
+        "Cf. A037965, A097070, A056040, A212303."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "Peter Luschny, May 01 2011",
+    "references": 4,
+    "revision": 16,
+    "time": "2018-01-14T04:17:03-05:00",
+    "created": "2011-05-13T21:17:25-04:00"
+}

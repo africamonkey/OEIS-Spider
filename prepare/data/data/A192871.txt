@@ -1,0 +1,51 @@
+{
+    "number": 192871,
+    "data": "1,3,6,12,24,48,90,168,318,594,1092,2004,3678,6720,12210,22128,40074,72372,130380,234432,421128,755208,1352328,2418246,4320552,7709898,13744764,24477618,43560444,77448330,137602440,244277016,433399824,768379830,1361530134",
+    "name": "Number of n-step prudent self-avoiding walks on honeycomb lattice.",
+    "comment": [
+        "A prudent walk never takes a step pointing towards a vertex it has already visited.  Prudent walks are self-avoiding but not reversible in general."
+    ],
+    "reference": [
+        "M. Bousquet-M\u00e9lou, Families of prudent self-avoiding walks, DMTCS proc. AJ, 2008, 167-180.",
+        "E. Duchi, On some classes of prudent walks, in: FPSAC'05, Taormina, Italy, 2005."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A192871/b192871.txt\">Table of n, a(n) for n = 0..110</a>"
+    ],
+    "example": [
+        "This 8-step prudent self-avoiding walk on honeycomb lattice from (S) to (E) is not reversible:",
+        ".           o...o       o...o",
+        ".          .     .     .     .",
+        ".     o...o       4---3       o",
+        ".    .     .     /     \\     .",
+        ".   o       6---5       2...o",
+        ".    .     /     .     /     .",
+        ".     o...7      (S)--1       o",
+        ".    .     \\     .     .     .",
+        ".   o      (E)..o       o...o",
+        ".    .     .     .     .",
+        ".     o...o       o...0"
+    ],
+    "maple": [
+        "i:= n-> max(n, 0)+1: d:= n-> max(n-1, -1):",
+        "b:= proc(n, x, y, z, u, v, w) option remember;",
+        "    `if`(n=0, 1, `if`(x>y, b(n, y, x, w, v, u, z),",
+        "    `if`(min(y, z)<=0 or x=-1,",
+        "        b(n-1, d(y), d(z), u, i(v), i(w), x), 0)+",
+        "    `if`(min(w, x)<=0 or y=-1,",
+        "        b(n-1, d(w), d(x), y, i(z), i(u), v), 0)))",
+        "    end:",
+        "a:= n-> `if`(n<2, 1 +2*n, 6*b(n-2, -1, -1, 1, 2, 1, -1)):",
+        "seq(a(n), n=0..20);"
+    ],
+    "xref": [
+        "Cf. A001668, A006851, A192208."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Jul 11 2011",
+    "references": 2,
+    "revision": 21,
+    "time": "2016-02-23T09:24:41-05:00",
+    "created": "2011-07-12T03:22:19-04:00"
+}

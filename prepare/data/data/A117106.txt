@@ -1,0 +1,59 @@
+{
+    "number": 117106,
+    "data": "1,2,6,23,104,530,2958,17734,112657,750726,5207910,37387881,276467208,2097763554,16282567502,128951419810,1039752642231,8520041699078,70840843420234,596860116487097,5089815866230374,43886435477701502,382269003235832006,3361054683237796748",
+    "name": "Number of permutations in S_n avoiding 21{bar 3}54 (i.e., every occurrence of 2154 is contained in an occurrence of a 21354).",
+    "comment": [
+        "From _Lara Pudwell_, Oct 23 2008: (Start)",
+        "A permutation p avoids a pattern q if it has no subsequence that is order-isomorphic to q. For example, p avoids the pattern 132 if it has no subsequence abc with a < c < b.",
+        "Barred pattern avoidance considers permutations that avoid a pattern except in a special case. Given a barred pattern q, we may form two patterns, q1 = the sequence of unbarred letters of q and q2 = the sequence of all letters of q.",
+        "A permutation p avoids barred pattern q if every instance of q1 in p is embedded in a copy of q2 in p. In other words, p avoids q1, except in the special case that a copy of q1 is a subsequence of a copy of q2.",
+        "For example, if q = 5{bar 1}32{bar 4}, then q1 = 532 and q2 = 51324. p avoids q if every for decreasing subsequence acd of length 3 in p, one can find letters b and e so that the subsequence abcde of p has b < d < c < e < a. (End)",
+        "The bar refers to a missing piece. In other words to say that a permutation has the pattern 21{bar 3}54 means that it has a 2154 (or equivalently a 2143) pattern but that there is no entry in the permutation so that we can extend this 2154 to a 21354 pattern.",
+        "(End)",
+        "From _Mathilde Bouvel_, Apr 26 2017: (Start)",
+        "Equivalently, permutations avoiding 21{bar 3}54 are those avoiding the vincular pattern 2-14-3.",
+        "This sequence also enumerates permutations avoiding the vincular pattern 2-41-3 (see Bouvel et al., 2017).",
+        "(End)"
+    ],
+    "link": [
+        "David Bevan, <a href=\"/A117106/b117106.txt\">Table of n, a(n) for n = 1..37</a>",
+        "M. Bousquet-M\u00e9lou and S. Butler, <a href=\"https://arxiv.org/abs/math/0603617\">Forest-like permutations</a>, arXiv:math/0603617 [math.CO], 2006.",
+        "Mathilde Bouvel, Veronica Guerrini, Andrew Rechnitzer, Simone Rinaldi, <a href=\"https://arxiv.org/abs/1702.04529\">Semi-Baxter and strong-Baxter: two relatives of the Baxter sequence</a>, arXiv:1702.04529 [math.CO], 2017.",
+        "Megan A. Martinez and Carla D. Savage, <a href=\"https://arxiv.org/abs/1609.08106\">Patterns in Inversion Sequences II: Inversion Sequences Avoiding Triples of Relations</a>, arXiv:1609.08106 [math.CO], 2016 [Section 2.27].",
+        "Lara Pudwell, <a href=\"http://faculty.valpo.edu/lpudwell/papers/pudwell_thesis.pdf\">Enumeration Schemes for Pattern-Avoiding Words and Permutations</a>, Ph. D. Dissertation, Math. Dept., Rutgers University, May 2008.",
+        "Jannik Silvanus, Jens Vygen, <a href=\"https://arxiv.org/abs/1708.09779\">Few Sequence Pairs Suffice: Representing All Rectangle Placements</a> arXiv:1708.09779 [math.CO], 2017."
+    ],
+    "formula": [
+        "It appears that a(n) = ((-432-120*n^2-360*n)*A005258(n)+(-120*n+144+120*n^3)*A005258(n+1)) / (5*(n-1)*n^2*(n+2)^2*(n+3)^2*(n+4)), for n>1. - _Mark van Hoeij_, Oct 24 2011",
+        "It appears that the g.f. is: -(p*(x^4-78*x^3-1606*x^2+78*x+1)*hypergeom([1/12,  5/12],[1],1728*x^5*(1-11*x-x^2)/p^3)-(x^4+18*x^3+74*x^2-18*x+1)*(228*x-228*x^3+494*x^2+x^4+1)*hypergeom([5/12, 13/12],[1],1728*x^5*(1-11*x-x^2)/p^3))*(x^2+1)/(720*x^4*p^(5/4)) - (1+8*x-6*x^2+7*x^3)/(5*x^3) where  p = 1-12*x+14*x^2+12*x^3+x^4. - _Mark van Hoeij_, Oct 25 2011",
+        "From _Mathilde Bouvel_, Apr 26 2017: (Start)",
+        "Recurrence formula for a(n) (see Bouvel et al., 2017):",
+        "a(n) = a(n-1)*(11*n^2+11*n-6)/((n+4)(n+3)) + a(n-2)*(n-3)*(n-2)/((n+4)*(n+3)).",
+        "Closed formulas for a(n) (see Bouvel et al., 2017):",
+        "a(n) = 24/(((n-1)*n^2*(n+1)*(n+2))) * Sum_{j=0..n}binomial(n,j+2)*binomial(n+2,j)*binomial(n+j+2,j+1)",
+        "= 24/(((n-1)*n^2*(n+1)*(n+2))) * Sum_{j=0..n}binomial(n,j+2)*binomial(n+1,j)*binomial(n+j+2,j+3)",
+        "= 24/(((n-1)*n^2*(n+1)*(n+2))) * Sum_{j=0..n}binomial(n+1,j+3)*binomial(n+2,j+1)*binomial(n+j+3,j).",
+        "Asymptotic behavior (see Bouvel et al., 2017):",
+        "a(n) ~ A*mu^n/n^6 where mu=phi^(-5) and A=(12/Pi)*5^(-1/4)*phi^(-15/2) for phi=(sqrt(5)-1)/2.",
+        "(End)",
+        "0 = a(n)*(-51*a(n+2) -6094*a(n+3) +345322*a(n+4) +14274640*a(n+5) -6134240*a(n+6) +594550*a(n+7)) +a(n+1)*(-408*a(n+2) +85125*a(n+3) -2325750*a(n+4) +78667094*a(n+5) -47947020*a(n+6) +6134240*a(n+7)) +a(n+2)*(-3570*a(n+2) -102714*a(n+3) +586187*a(n+4) +64518244*a(n+5) -78667094*a(n+6) +14274640*a(n+7)) +a(n+3)*(-102700*a(n+3) +994500*a(n+4) -586187*a(n+5) -2325750*a(n+6) -345322*a(n+7)) +a(n+4)*(+102700*a(n+4) -102714*a(n+5) -85125*a(n+6) -6094*a(n+7)) +a(n+5)*(+3570*a(n+5) -408*a(n+6) +51*a(n+7)) for all n>0. - _Michael Somos_, Apr 25 2017"
+    ],
+    "example": [
+        "G.f. = x + 2*x^2 + 6*x^3 + 23*x^4 + 104*x^5 + 530*x^6 + 2958*x^7 + 17734*x^8 + ...",
+        "a(4) = 23 because the permutation 2143 has the pattern 21{bar 3}54, but none of the other 23 permutations in S_4 do."
+    ],
+    "mathematica": [
+        "Table[If[n == 1, 1, 24/(((n - 1) n^2*(n + 1) (n + 2))) Sum[Binomial[n + 1, j + 3] Binomial[n + 2, j + 1] Binomial[n + j + 3, j], {j, 0, n}]], {n, 24}] (* or *)",
+        "a[n_] := a[n] = If[n <= 3, Times @@ Range@ n, a[n - 1] (11 n^2 + 11 n - 6)/((n + 4) (n + 3)) + a[n - 2] (n - 3) (n - 2)/((n + 4) (n + 3))]; Array[a, 24] (* _Michael De Vlieger_, Apr 25 2017 *)"
+    ],
+    "keyword": "nonn,changed",
+    "offset": "1,2",
+    "author": "_Steve Butler_, Apr 18 2006",
+    "ext": [
+        "More terms from _David Bevan_, Feb 12 2014"
+    ],
+    "references": 2,
+    "revision": 54,
+    "time": "2018-02-19T14:28:21-05:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

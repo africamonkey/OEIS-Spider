@@ -1,0 +1,39 @@
+{
+    "number": 275872,
+    "data": "0,0,1,1,2,6,18,54,173,605,2274,9020,37486,163128,743101,3535765,17518018,90126158,480514430,2650912738,15112253425,88903779401,539003066674,3363608949132,21581457167994,142227480847092,961868098767105,6669657795455817,47380035801732034,344555811578909254,2563218995058696890",
+    "name": "A binomial convolution recurrence sequence.",
+    "comment": [
+        "Shifts 2 places left and decreases by one under a variant of binomial transform (see formula section)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A275872/b275872.txt\">Table of n, a(n) for n = 0..648</a>"
+    ],
+    "formula": [
+        "Sum_{i=0..n} binomial(n+1,i+1)*a(i) = a(n+2) - 1.",
+        "G.f. g(x) satisfies g(x) = x^2/(1-x) + x^2*g(x/(1-x))/(1-x)^2. - _Robert Israel_, Aug 28 2016"
+    ],
+    "maple": [
+        "A[0]:= 0:",
+        "A[1]:= 0:",
+        "for m from 2 to 50 do",
+        "  A[m]:= 1 + add(binomial(m-1,i+1)*A[i],i=0..m-2)",
+        "od:",
+        "seq(A[i],i=0..50); # _Robert Israel_, Aug 28 2016"
+    ],
+    "mathematica": [
+        "Clear[a]; a[0] = 0 ; a[1] = 0; a[n_] := a[n] = 1 + Sum[Binomial[n - 1, j+1]*a[j], {j, 0, n - 1}]; Table[a[n], {n, 0, 22}]"
+    ],
+    "program": [
+        "(PARI) first(n)=my(v=vector(n)); for(k=0,n-2, v[k+2]=sum(i=2,k, binomial(k+1,i+1)*v[i])+1); concat(0,v) \\\\ _Charles R Greathouse IV_, Aug 29 2016"
+    ],
+    "xref": [
+        "Cf. A000994, A007476, A032346."
+    ],
+    "keyword": "nonn,eigen,easy",
+    "offset": "0,5",
+    "author": "_Olivier G\u00e9rard_, Aug 11 2016",
+    "references": 1,
+    "revision": 25,
+    "time": "2016-08-29T00:58:29-04:00",
+    "created": "2016-08-21T08:26:38-04:00"
+}

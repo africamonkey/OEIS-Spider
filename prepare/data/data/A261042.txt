@@ -1,0 +1,39 @@
+{
+    "number": 261042,
+    "data": "1,4,64,2176,126976,11321344,1431568384,243680935936,53725527801856,14893509177769984,5070334006399074304,2079588119566033616896,1011390382859091900891136,575501120339508919401447424,378784713733072451034702413824,285539131625477547496925147693056",
+    "name": "Generating function g(0) where g(k) = 1 - x*2*(k+1)*(k+2)/(x*2*(k+1)*(k+2) - 1/g(k+1)).",
+    "comment": [
+        "More generally let G(y) defined by the Taylor expansion of the continued fraction",
+        "g(y,k) = 1 - (y*x*(k+1)*(k+2)) / ((y*x*(k+1)*(k+2)) - 1/g(y,k+1)). Then",
+        "G(1/2) -> A002105, G(1) -> A000182, G(2) -> A261042, G(4) -> A253165 and G(1/8)(n) *2^(n-1+padic(n,2)) -> A002425."
+    ],
+    "maple": [
+        "eulerCF := proc(f, len) local g, k; g := 1;",
+        "for k from len-2 by -1 to 0 do g := 1 - f(k)/(f(k)-1/g) od;",
+        "PolynomialTools:-CoefficientList(convert(series(g, x, len), polynom), x) end:",
+        "A261042_list := len -> eulerCF(k -> x*2*(k+1)*(k+2), len): A261042_list(16);"
+    ],
+    "mathematica": [
+        "fracGen[f_, len_] := Module[{g, k}, g[len] = 1; For[k = len-1, k >= 0, k--, g[k] = 1-f[k]/(f[k]-1/g[k+1])]; CoefficientList[g[0] + O[x]^(len+1), x] ]; A261042list[len_] := fracGen[x*2*(#+1)*(#+2)&, len-1]; A261042list[16] (* _Jean-Fran\u00e7ois Alcover_, Aug 08 2015, after _Peter Luschny_ *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A261042_list(len):",
+        "    f = lambda k: x*2*(k+1)*(k+2)",
+        "    g = 1",
+        "    for k in range(len-2,-1,-1):",
+        "        g = (1-f(k)/(f(k)-1/g)).simplify_rational()",
+        "    return taylor(g, x, 0, len-1).list()",
+        "A261042_list(16)"
+    ],
+    "xref": [
+        "Cf. A000182, A002105, A002425, A126156 (example section), A253165."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Peter Luschny_, Aug 08 2015",
+    "references": 1,
+    "revision": 16,
+    "time": "2015-08-09T08:14:43-04:00",
+    "created": "2015-08-08T17:13:24-04:00"
+}

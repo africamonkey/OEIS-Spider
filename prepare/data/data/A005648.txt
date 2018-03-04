@@ -1,0 +1,51 @@
+{
+    "number": 5648,
+    "id": "M0878",
+    "data": "1,1,2,3,8,16,50,133,440,1387,4752,16159,56822,200474,718146,2587018,9398520,34324174,126068558,465093571,1723176308,6407924300,23910576230,89494164973,335913918902,1264107416466",
+    "name": "Number of 2n-bead black-white reversible necklaces with n black beads.",
+    "comment": [
+        "a(n) is the coefficient of c_1^n*c_2^n in the cycle index polynomial for the dihedral group D_{2*n} evaluated with the figure counting polynomial c = c_1 + c_2, n>=1, abbreviated as Z(D_{2*n},c). See, e.g., the Harary-Palmer reference (given under A212355), p. 42, Theorem (PET), and the example for all 6 two-colored 4-bracelets (called there necklaces) on p. 44, Figure 2.4.2. - _Wolfdieter Lang_, Jun 05 2012"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A005648/b005648.txt\">Table of n, a(n) for n = 0..1665</a> (terms 0..200 from Andrew Howroyd)",
+        "Marcia Ascher, <a href=\"http://www.jstor.org/stable/2690304\">Mu torere: an analysis of a Maori game</a>, Math. Mag. 60 (1987), no. 2, 90-100.",
+        "R. K. Guy & N. J. A. Sloane, <a href=\"/A005648/a005648.pdf\">Correspondence, 1985</a>",
+        "E. M. Palmer and R. W. Robinson, <a href=\"http://projecteuclid.org/euclid.pjm/1102711113\">Enumeration of self-dual configurations</a> Pacific J. Math., 110 (1984), 203-221.",
+        "F. Ruskey, <a href=\"http://www.theory.cs.uvic.ca/~cos/inf/neck/NecklaceInfo.html\">Necklaces, Lyndon words, De Bruijn sequences, etc.</a>",
+        "<a href=\"/index/Br#bracelets\">Index entries for sequences related to bracelets</a>"
+    ],
+    "formula": [
+        "a(n) = ( Sum_{d|n} phi(n/d)*C(2*d, d) )/(4*n) + C(2*k, k)/2, where k = floor(n/2). - _Michael Somos_",
+        "a(n) = (A003239(n) + C(2*k, k))/2, where k = [ n/2 ]. - R. J. Fletcher, (yylee(AT)mail.ncku.edu.tw)"
+    ],
+    "example": [
+        "a(2) = 2: BBWW, BWBW.",
+        "a(3) = 3: BBBWWW, BBWBWW, BWBWBW.",
+        "a(4) = 8: BBBBWWWW, BBBWBWWW, BBBWWBWW, BBWWBBWW, BBWBWBWW, BBWBWWBW, BBWBBWWW, BWBWBWBW."
+    ],
+    "mathematica": [
+        "f[k_Integer, n_] := (Plus @@ (EulerPhi[ # ]Binomial[n/#, k/# ] & /@ Divisors[GCD[n, k]])/n + Binomial[(n - If[OddQ@n, 1, If[OddQ@k, 2, 0]])/2, (k - If[OddQ@k, 1, 0])/2])/2 (* _Robert A. Russell_, Sep 27 2004 *)",
+        "Table[ f[n, 2n], {n, 27}] (* _Robert G. Wilson v_, Mar 29 2006 *)",
+        "a[0] = 1; a[n_] := 1/2*(Binomial[2*Quotient[n, 2], Quotient[n, 2]] + DivisorSum[n, EulerPhi[#]*Binomial[2*n/#, n/#]&]/(2*n)); Array[a, 26, 0] (* _Jean-Fran\u00e7ois Alcover_, Nov 05 2017, translated from PARI *)"
+    ],
+    "program": [
+        "(PARI) a(n) = 1/2*( binomial(2*(n\\2), n\\2) + if(n<1, n >= 0, sumdiv(n, k, eulerphi(k)*binomial(2*n/k, n/k))/(2*n) ));"
+    ],
+    "xref": [
+        "Cf. A000984, A003239."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Sequence extended and description corrected by _Christian G. Bower_",
+        "Example n=8 (word no. 6) corrected by _Wolfdieter Lang_, Jun 05 2012"
+    ],
+    "references": 13,
+    "revision": 56,
+    "time": "2017-12-01T18:58:07-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

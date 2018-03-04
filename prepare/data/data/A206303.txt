@@ -1,0 +1,40 @@
+{
+    "number": 206303,
+    "data": "1,1,2,8,32,184,1264,9568,79232,816128,8769536,101867776,1322831872,18122579968,268425347072,4436611211264,73309336469504,1303024044310528,25235367455752192,497968598916333568,10431118327503650816,234674470003955204096,5359992446798535852032",
+    "name": "E.g.f.: Product_{n>=1} (1 - x^(2*n-1))^(-1/(2*n-1)).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A206303/b206303.txt\">Table of n, a(n) for n = 0..448</a>"
+    ],
+    "formula": [
+        "a(n)/n! is the Euler transform of [1, 0, 1/3, 0, 1/5, 0, 1/7, 0, ...].",
+        "E.g.f.: A(x) = B(x) / sqrt(B(x^2)), where B(x) = e.g.f. of A028342.",
+        "E.g.f. A(x) satisfies: Product_{n>=0} A(x^(2^n))^(1/2^n) = e.g.f. of A028342."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2/2! + 8*x^3/3! + 32*x^4/4! + 184*x^5/5! +...",
+        "The e.g.f. equals the product:",
+        "A(x) = (1-x)^(-1) * (1-x^3)^(-1/3) * (1-x^5)^(-1/5) * (1-x^7)^(-1/7) * (1-x^9)^(-1/9) * (1-x^11)^(-1/11) *..."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; `if`(n=0, 1, add(add(",
+        "      `if`(d::odd, 1, 0), d=divisors(j))*b(n-j), j=1..n)/n)",
+        "    end:",
+        "a:= n-> b(n)*n!:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jan 24 2017"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(prod(m=1,n,(1-x^(2*m-1)+x*O(x^n))^(-1/(2*m-1))),n)}",
+        "for(n=0,31,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A028342."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Feb 06 2012",
+    "references": 7,
+    "revision": 16,
+    "time": "2017-01-24T10:47:39-05:00",
+    "created": "2012-02-06T21:30:49-05:00"
+}

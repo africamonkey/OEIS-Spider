@@ -1,0 +1,38 @@
+{
+    "number": 293077,
+    "data": "2,4,6,10,16,26,44,74,126,214,364,620,1058,1806,3082,5260,8978,15326,26162,44660,76238,130146,222172,379270,647454,1105272,1886816,3220996,5498584,9386670,16024048,27354760,46697496,79717612,136086476",
+    "name": "Number of letters (0s and 1s) in the nth-iterate of the final-letter-removed mapping defined at A289035.",
+    "comment": [
+        "It follows from the comment at A289035 that every term is even.",
+        "The first seven iterates:",
+        "00",
+        "0010",
+        "001001",
+        "0010010010",
+        "0010010010001001",
+        "00100100100010010001001001",
+        "00100100100010010001001001000100100010010010"
+    ],
+    "mathematica": [
+        "z = 10; (* number of iterations *)",
+        "s = {0, 0}; u[0] = StringJoin[Map[ToString, s]]; w[0] = u[0];",
+        "u[n_] := u[n] = StringReplace[w[n - 1], {\"00\" -> \"0010\", \"01\" -> \"010\", \"10\" -> \"010\"}];",
+        "w[n_] := w[n] = If[OddQ[StringLength[u[n]]], StringDrop[u[n], -1], u[n]];",
+        "TableForm[Table[w[n], {n, 0, 8}]]",
+        "st = ToCharacterCode[w[z]] - 48  (* A289035 *)",
+        "p0 = Flatten[Position[st, 0]] (* A289036 *)",
+        "p1 = Flatten[Position[st, 1]]  (* A289037 *)",
+        "v = Table[StringLength[w[n]], {n, 0, 34}] (* A293077 *)",
+        "v/2  (* A293078 *)"
+    ],
+    "xref": [
+        "Cf. 289035, A293076, A293078."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Sep 30 2017",
+    "references": 3,
+    "revision": 4,
+    "time": "2017-09-30T16:05:46-04:00",
+    "created": "2017-09-30T16:05:46-04:00"
+}

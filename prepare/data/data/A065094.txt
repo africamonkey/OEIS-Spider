@@ -1,0 +1,43 @@
+{
+    "number": 65094,
+    "data": "1,2,3,5,7,10,14,20,27,36,48,63,82,106,136,173,218,273,341,423,522,641,784,955,1158,1399,1685,2023,2421,2889,3437,4079,4828,5701,6716,7893,9257,10834,12655,14754,17169,19944,23128,26775,30948,35716,41157",
+    "name": "a(1) = 1, a(n+1) is the sum of a(n) and floor( arithmetic mean of a(1) ... a(n) ).",
+    "comment": [
+        "It seems that a(n) is asymptotic to C*BesselI(0,2*sqrt(n)) where C is a constant C = 0.44... and BesselI(b,x) is the modified Bessel function of the first kind. Can someone prove this?",
+        "A241772(n) = a(n+1) - a(n) = sum(a(k): 1..n) / n. - _Reinhard Zumkeller_, Apr 28 2014"
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A065094/b065094.txt\">Table of n, a(n) for n=1,...,1000</a>",
+        "<a href=\"/index/Be#Bessel\">Index entries for sequences related to Bessel functions or polynomials</a>"
+    ],
+    "formula": [
+        "a(1) = 1, a(n+1) = a(n) + floor((a(1) + a(2) + ... + a(n))/n)"
+    ],
+    "example": [
+        "a(5) = a(4) + floor((a(1)+a(2)+a(3)+a(4))/4) = 5 + floor((1+2+3+5)/4) = 5 + floor(11/4) = 5 + 2 = 7"
+    ],
+    "maple": [
+        "a[1] := 1: summe := 0: flip := 1: for j from 1 to 100 do: print (j, a[flip]); summe := summe + a[flip]: a[1-flip] := a[flip] + floor(summe/j): flip := 1-flip: od:"
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := a[n] = a[n - 1] + Floor[ Sum[ a[i], {i, 1, n - 1} ]/(n - 1) ]; Table[ a[n], {n, 1, 47} ]"
+    ],
+    "program": [
+        "(PARI) { for (n=1, 1000, if (n==1, s=0; a=1, s+=a; a+=s\\(n - 1)); write(\"b065094.txt\", n, \" \", a) ) } [From _Harry J. Smith_, Oct 06 2009]",
+        "(Haskell)",
+        "a065094 n = a065094_list !! (n-1)",
+        "a065094_list = 1 : f 1 1 1 where",
+        "   f k s x = y : f (k + 1) (s + y) y where y = x + div s k",
+        "-- _Reinhard Zumkeller_, Apr 28 2014"
+    ],
+    "xref": [
+        "Cf. A065095."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "Ulrich Schimke (ulrschimke(AT)aol.com)",
+    "references": 9,
+    "revision": 8,
+    "time": "2014-04-28T15:22:04-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

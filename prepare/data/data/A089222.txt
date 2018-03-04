@@ -1,0 +1,46 @@
+{
+    "number": 89222,
+    "data": "0,0,0,0,10,36,322,2832,27954,299260,3474482,43546872,586722162,8463487844,130214368530,2129319003680,36889393903794,675098760648204,13015877566642418,263726707757115400,5603148830577775218",
+    "name": "Number of ways of sitting n people around a table for the second time without anyone sitting next to the same person as they did the first time.",
+    "comment": [
+        "A078603 counts these arrangements up to circular symmetry (i.e., two arrangements are the same if one can be rotated to give the other). A002816 counts them up to dihedral symmetry (i.e., two arrangements are the same if one can be rotated or reflected to give the other). [_Joel B. Lewis_, Jan 28 2010]"
+    ],
+    "reference": [
+        "J. Snell, Introduction to Probability, e-book, pp. 101 Q. 20.",
+        "Roberto Tauraso, The Dinner Table Problem: The Rectangular Case, INTEGERS, vol. 6 (2006), paper A11. Note that in this paper a(1) = 1. See Column 2 in the table on page 3."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A089222/b089222.txt\">Table of n, a(n) for n = 1..200</a>",
+        "B. Aspvall and F. M. Liang, <a href=\"http://www-db.stanford.edu/TR/cstr8x.html\">The dinner table problem</a>, Technical Report CS-TR-80-829, Computer Science Department, Stanford, California, 1980.",
+        "Charles M. Grinstead & J. Laurie Snell <a href=\"http://www.dartmouth.edu/~chance/teaching_aids/books_articles/probability_book/book.html\">Introduction to Probability</a>.",
+        "V. Kotesovec, <a href=\"https://oeis.org/wiki/User:Vaclav_Kotesovec\">Non-attacking chess pieces</a>, 6ed, 2013, p. 626.",
+        "Art of Problem Solving forum, <a href=\"http://www.artofproblemsolving.com/Forum/viewtopic.php?t=327208\">Random neighbors</a>. [From _Joel B. Lewis_, Jan 28 2010]"
+    ],
+    "formula": [
+        "Inclusion-exclusion gives that for n > 2, we have a(n) = n! + 2*n*(-1)^n + sum_{1 <= k <= m < n} (-1)^m * n/k * binom(n - m - 1, k - 1) * binom(m - 1, k - 1) * 2^k * n * (n - m - 1)!  [Joel Brewster Lewis, Jan 28 2010]",
+        "a(n) = (3*n-30)*a(n-11) + (6*n-45)*a(n-10) + (5*n+18)*a(n-9) - (8*n-139)*a(n-8) - (26*n-204)*a(n-7) - (4*n-30)*a(n-6) + (26*n-148)*a(n-5) + (8*n-74)*a(n-4) - (9*n-18)*a(n-3) - (2*n-15)*a(n-2) + (n+2)*a(n-1), n>=14 [_Vaclav Kotesovec_, Apr 13 2010]",
+        "The asymptotic expansion from article by Aspvall and Liang (also cited in article by Tauraso) is wrong. Bad terms are 736/(15n^5)+8428/(45n^6)+40174/(63n^7)). Right asymptotics formula is a(n) ~ n!/e^2*(1 - 4/n + 20/(3n^3) + 58/(3n^4) + 796/(15n^5) + 7858/(45n^6) + 40324/(63n^7) + 140194/(63n^8) +...). Verified also numerically. For example for n=200 are exact/asymptotic results 1.0000000000125542243 (Aspvall + Liang), 1.0000000000000008990 (Kotesovec 7 terms) or 1.0000000000000000121 (Kotesovec 8 terms). [_Vaclav Kotesovec_, Apr 06 2012]"
+    ],
+    "example": [
+        "a(4)=0 because trying to arrange 1,2,3,4 around a table will always give a couple who is sitting next to each other and differ by 1."
+    ],
+    "mathematica": [
+        "Same[cperm_, n_] := ( For[same = False; i = 2, (i <= n) && ! same, i++, same = ((Mod[cperm[[i - 1]], n] + 1) == cperm[[i]]) || ((Mod[cperm[[ i]], n] + 1) == cperm[[i - 1]])]; same = same || ((Mod[cperm[[n]], n] + 1) == cperm[[1]]) || ((Mod[ cperm[[1]], n] + 1) == cperm[[n]]); Return[same]); CntSame[n_] := (allPerms = Permutations[Range[n]]; count = 0; For[j = 1, j <= n!, j++, perm = allPerms[[j]]; If[ ! Same[perm, n], count++ ]]; Return[count]);",
+        "(* or direct computation of terms *)",
+        "Table[If[n<3, 0, n! + (-1)^n*2n + Sum[(-1)^r*(n/(n-r))^2 * (n-r)! * Sum[2^c * Binomial[r-1,c-1] * Binomial[n-r,c], {c,1,r}], {r,1,n-1}]], {n,1,25}] (* _Vaclav Kotesovec_, Apr 06 2012 *)"
+    ],
+    "xref": [
+        "Cf. A002464, A002816, A078603, A078630, A078631."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,5",
+    "author": "Udi Hadad (somebody(AT)netvision.net.il), Dec 22 2003",
+    "ext": [
+        "Tauraso reference from _Parthasarathy Nambi_, Dec 21 2006",
+        "More terms from _Vladeta Jovovic_, Nov 29 2009"
+    ],
+    "references": 7,
+    "revision": 35,
+    "time": "2015-09-12T11:00:19-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

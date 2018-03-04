@@ -1,0 +1,60 @@
+{
+    "number": 214654,
+    "data": "1,1,4,29,307,4288,74511,1550203,37588412,1041217039,32446359005,1123624632224,42814687805649,1780347364682777,80231627759556196,3895332991309376213,202713074683790193475,11256955024502873008864,664444403260495390747071",
+    "name": "E.g.f. A(x) satisfies: A'(x) = exp( A(x)*A'(x) ).",
+    "comment": [
+        "Compare to the trivial identity: G'(x) = exp(G(x)) when G(x) = -log(1-x)."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A214654/b214654.txt\">Table of n, a(n) for n = 1..240</a>"
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A''(x) = A'(x)^3/(1 - A(x)*A'(x)).",
+        "(2) A(x) = x + Sum_{n>=2} (n-2)^(n-2)*A(x)^n/n!.",
+        "(3) A'(x) = Sum_{n>=0} (n+1)^(n-1)*A(x)^n/n!.",
+        "(4) A(x)*A'(x) = Sum_{n>=1} n^(n-1)*A(x)^n/n!.",
+        "(5) A(x) = Series_Reversion( Integral -x/LambertW(-x) dx ).",
+        "Let W(x) = Sum_{n>=2} (n-2)^(n-2)*x^n/n!, then e.g.f. A(x) satisfies:",
+        "(6) A(x) = Series_Reversion(x - W(x)).",
+        "(7) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) W(x)^n/n!.",
+        "(8) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) W(x)^n/(n!*x) ).",
+        "a(n) ~ 2^(2*n-3) * n^(n-2) / (exp(n-2) * (1+exp(-2))^(n-3/2)). - _Vaclav Kotesovec_, Feb 17 2014",
+        "A(x) = Series_Reversion( -((x^2*(1 + 2*LambertW(-x))) / (4*LambertW(-x)^2)) + 1/4). - _Vaclav Kotesovec_, Feb 21 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + x^2/2! + 4*x^3/3! + 29*x^4/4! + 307*x^5/5! + 4288*x^6/6! +...",
+        "By definition log(A'(x)) = A(x)*A'(x), where:",
+        "(3) A'(x) = 1 + x + 4*x^2/2! + 29*x^3/3! + 307*x^4/4! + 4288*x^5/5! +...",
+        "(4) A(x)*A'(x) = x + 3*x^2/2! + 19*x^3/3! + 185*x^4/4! + 2437*x^5/5! + 40523*x^6/6! + 814355*x^7/7! + 19196769*x^8/8! + 519397829*x^9/9! +...",
+        "RELATED SERIES:",
+        "Let W(x) = x^2/2! + x^3/3! + 4*x^4/4! + 27*x^5/5! + 256*x^6/6! + 3125*x^7/7! +...+ (n-2)^(n-2)*x^n/n! +... then",
+        "(6) A(x) = x + W(A(x)); equivalently, A(x - W(x)) = x.",
+        "(7) A(x) = x + W(x) + d/dx W(x)^2/2! + d^2/dx^2 W(x)^3/3! + d^3/dx^3 W(x)^4/4! +...",
+        "(8) log(A(x)/x) = W(x)/x + d/dx W(x)^2/(2!*x) + d^2/dx^2 W(x)^3/(3!*x) + d^3/dx^3 W(x)^4/(4!*x) +..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[-((x^2*(1 + 2*LambertW[-x])) / (4*LambertW[-x]^2)) + 1/4,{x,0,20}],x],x]*Range[0,20]!] (* _Vaclav Kotesovec_, Feb 21 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=x);for(i=1,n,A=intformal(exp(A*A'+x*O(x^n))));n!*polcoeff(A,n)}",
+        "for(n=1,25,print1(a(n),\", \"))",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x,W=sum(m=2,n+1,(m-2)^(m-2)*x^m/m!)+x*O(x^n)); A=x+sum(m=1, n, Dx(m-1, W^m/m!)); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x,W=sum(m=2,n+1,(m-2)^(m-2)*x^m/m!)+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, W^m/x/m!)+x*O(x^n))); n!*polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A210949, A214645."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Jul 24 2012",
+    "ext": [
+        "Program in Mathematica improved by _Vaclav Kotesovec_, Feb 21 2014"
+    ],
+    "references": 2,
+    "revision": 30,
+    "time": "2014-02-21T03:30:26-05:00",
+    "created": "2012-07-24T11:16:45-04:00"
+}

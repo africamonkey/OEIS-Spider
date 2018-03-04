@@ -1,0 +1,46 @@
+{
+    "number": 246488,
+    "data": "2,3,181,191,373,383,787,797,919,929,10501,10601,11311,11411,12721,12821,13831,13931,15451,15551,16561,16661,19891,19991,30103,30203,30703,30803,32323,32423,35053,35153,38083,38183,70507,70607,77377,77477,78787,78887,93139",
+    "name": "Gridgeman pairs in increasing order: pairs of palindromic primes which differ only in their middle digits whose difference is equal to 1.",
+    "comment": [
+        "It has been conjectured by Norman T. Gridgeman that infinitely many pairs of such primes exist (see second ref.)"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A246488/b246488.txt\">Table of n, a(n) for n = 1..1000</a> n = 1..100 from Paolo P. Lava.",
+        "Mauro Fiorentini, <a href=\"http://www.bitman.name/math/article/342\">Coppie di Gridgeman</a> (in Italian)",
+        "Mauro Fiorentini, <a href=\"http://www.bitman.name/math/article/809\">Gridgeman (congettura di)</a> (in Italian)",
+        "Prime Curios!, <a href=\"http://primes.utm.edu/curios/cpage/8733.html\">181</a>"
+    ],
+    "example": [
+        "181 and 191 is a Gridgeman pair because the two numbers are palindromic primes which differ only in their middle digits. Furthermore their middle digits differ only in one unit: 8 and 8 + 1 = 9.",
+        "The same for 30103 and 30203: middle digits are 1 and 1 + 1 = 2."
+    ],
+    "program": [
+        "(PARI) ispal(v) = {for(i=1, #v\\2, if (v[i] != v[#v-i+1], return(0));); return(1);};",
+        "isgpal(p) = {d = digits(p); if ((#d % 2) && ispal(d) && (ic = #d\\2 +1) && (d[ic]<9) && (d[ic]++) && isprime(q=subst(Pol(d), x, 10)), q);}",
+        "lista(nn) = {forprime(p=2, nn, if (q=isgpal(p), print1(p, \", \", q, \", \")););} \\\\ _Michel Marcus_, Aug 29 2014",
+        "(Python)",
+        "from sympy import isprime",
+        "A246488 = [2,3]",
+        "for n in range(1,10**4):",
+        "....s1 = str(n)",
+        "....s2 = s1[::-1]",
+        "....for m in range(10-1):",
+        "........p1 = int(s1+str(m)+s2)",
+        "........p2 = int(s1+str(m+1)+s2)",
+        "........if isprime(p1) and isprime(p2):",
+        "............A246488.append(p1), A246488.append(p2)",
+        ".",
+        "A246488 = sorted(set(A246488)) # _Chai Wah Wu_, Sep 05 2014"
+    ],
+    "xref": [
+        "Cf. A002385."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Aug 28 2014",
+    "references": 4,
+    "revision": 25,
+    "time": "2014-09-05T17:24:05-04:00",
+    "created": "2014-09-04T06:16:48-04:00"
+}

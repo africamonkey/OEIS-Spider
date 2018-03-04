@@ -1,0 +1,52 @@
+{
+    "number": 2799,
+    "id": "M2563 N1014",
+    "data": "1,1,3,6,13,23,45,78,141,239,409,674,1116,1794,2882,4544,7131,11031,16983,25844,39124,58680,87538,129578,190830,279140,406334,588026,847034,1213764,1731780,2459244,3478185,4898285,6872041,9603356,13372607,18553871,25656865",
+    "name": "Number of 4-line partitions of n (i.e., planar partitions of n with at most 4 lines).",
+    "comment": [
+        "Number of partitions of n where there is one sort of part 1, two sorts of part 2, three sorts of part 3, and four sorts of every other part. - _Joerg Arndt_, Mar 15 2014"
+    ],
+    "reference": [
+        "M. S. Cheema and B. Gordon, Some remarks on two- and three-line partitions, Duke Math. J., 31 (1964), 267-273.",
+        "P. A. MacMahon, The connexion between the sum of the squares of the divisors and the number of partitions of a given number, Messenger Math., 54 (1924), 113-116.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz and Vaclav Kotesovec, <a href=\"/A002799/b002799.txt\">Table of n, a(n) for n = 0..10000</a> (terms 1..1000 from Alois P. Heinz)",
+        "Vaclav Kotesovec, <a href=\"/A002799/a002799.jpg\">Graph - The asymptotic ratio (35000 terms)</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "Euler transform of 1, 2, 3, 4, 4, 4, ...",
+        "G.f.: (1-x)^3 * (1-x^2)^2 * (1-x^3) / prod(k>=1, 1-x^k )^4. - _Joerg Arndt_, May 01 2013",
+        "a(n) ~ 2^(13/4) * Pi^6 * exp(2*Pi*sqrt(2*n/3)) / (3^(13/4) * n^(19/4)). - _Vaclav Kotesovec_, Oct 28 2015"
+    ],
+    "maple": [
+        "with(numtheory): etr:= proc(p) local b; b:=proc(n) option remember; local d,j; if n=0 then 1 else add(add(d*p(d), d=divisors(j)) *b(n-j), j=1..n)/n fi end end: a:=etr(n-> `if`(n<5,n,4)): seq(a(n), n=0..40); # _Alois P. Heinz_, Sep 08 2008"
+    ],
+    "mathematica": [
+        "etr[p_] := Module[{b}, b[n_] := b[n] = If[n == 0, 1, Sum[Sum[d*p[d], {d, Divisors[j]}]*b[n-j], {j, 1, n}]/n]; b]; a = etr[Min[#, 4]&]; Join[{1}, Table[a[n], {n, 1, 38}]] (* _Jean-Fran\u00e7ois Alcover_, Mar 10 2014, after _Alois P. Heinz_ *)",
+        "nmax = 40; CoefficientList[Series[(1-x)^3 * (1-x^2)^2 * (1-x^3) * Product[1/(1-x^k)^4, {k,1,nmax}], {x,0,nmax}], x] (* _Vaclav Kotesovec_, Oct 28 2015 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^66); r=4; Vec( prod(k=1,r-1, (1-x^k)^(r-k)) / eta(x)^r ) \\\\ _Joerg Arndt_, May 01 2013"
+    ],
+    "xref": [
+        "A row of the array in A242641.",
+        "Cf. A000219, A001452.",
+        "Sequences \"number of r-line partitions\": A000041 (r=1), A000990 (r=2), A000991 (r=3), A002799 (r=4), A001452 (r=5), A225196 (r=6), A225197 (r=7), A225198 (r=8), A225199 (r=9)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Edited and extended with formula by _Christian G. Bower_, Jan 01 2004",
+        "Prepended a(0)=1, _Joerg Arndt_, May 01 2013",
+        "Offset corrected by _Vaclav Kotesovec_, Oct 28 2015"
+    ],
+    "references": 12,
+    "revision": 47,
+    "time": "2017-08-03T01:55:50-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

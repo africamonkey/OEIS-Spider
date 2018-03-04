@@ -1,0 +1,39 @@
+{
+    "number": 67925,
+    "data": "2,4,8,10,14,28,28,42,70,90,122,204,260,386,592,824,1192,1810,2558,3764,5580,8064,11794,17438,25338,37144,54626,79762,116852,171650,250984,367874,539668,790110,1157912,1697978,2487050,3645012,5343444",
+    "name": "Consider a room of size r X s where rs = 2n and 1 <= r, 1 <= s; count ways to arrange n Tatami mats in room; a(n) = total number of ways for all choices of r and s. Two arrangements are distinguished if one is a rotation or reflection of the other.",
+    "comment": [
+        "Tatami mats are of size 1 X 2; at most 3 may meet at a point."
+    ],
+    "link": [
+        "Dean Hickerson, <a href=\"/A068920/a068920.txt\">Filling rectangular rooms with Tatami mats</a>"
+    ],
+    "example": [
+        "For n=3 there are 3 incongruent tilings, shown below. These can be rotated to produce 8 tilings, so a(3)=8.",
+        "._____. ._____.",
+        "|___| | | | | | .___________.",
+        "|___|_| |_|_|_| |___|___|___|"
+    ],
+    "mathematica": [
+        "(* See link for Mathematica programs. *)",
+        "c[r_, s_] := Which[s<0, 0, r==1, 1 - Mod[s, 2], r == 2, c1[2, s] + c2[2, s] + Boole[s == 0], OddQ[r], c[r, s] = c[r, s - r + 1] + c[r, s - r - 1] + Boole[s == 0], EvenQ[r], c[r, s] = c1[r, s] + c2[r, s] + Boole[s == 0]];",
+        "c1[r_, s_] := Which[s <= 0, 0, r == 2, c[2, s - 1], EvenQ[r], c2[r, s - 1] + Boole[s == 1]];",
+        "c2[r_, s_] := Which[s <= 0, 0, r == 2, c2[2, s] = c1[2, s - 2] + Boole[s == 2], EvenQ[r], c2[r, s] = c1[r, s - r + 2] + c1[r, s - r] + Boole[s == r - 2] + Boole[s == r]];",
+        "t[r_, s_] := Which[r>s, t[s, r], OddQ[r] && r>1, 2 c[r, s], True, c[r, s]];",
+        "A067925[n_] := Module[{i, divs}, divs = Divisors[2 n]; Sum[t[divs[[i]], 2 n/divs[[i]]], {i, 1, Length[divs]}]];",
+        "Table[A067925[n], {n, 1, 50}] (* _Jean-Fran\u00e7ois Alcover_, May 12 2017, copied and adapted from _Dean Hickerson_'s programs. *)"
+    ],
+    "xref": [
+        "Cf. A052270 for number of incongruent tilings, A068920 for table of number of tilings of an r X s room."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_Yasutoshi Kohmoto_ Mar 05 2002",
+    "ext": [
+        "Edited by _Dean Hickerson_, Mar 11 2002"
+    ],
+    "references": 3,
+    "revision": 11,
+    "time": "2017-05-12T12:02:43-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

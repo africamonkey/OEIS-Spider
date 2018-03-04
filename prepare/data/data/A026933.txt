@@ -1,0 +1,45 @@
+{
+    "number": 26933,
+    "data": "1,2,11,52,269,1414,7575,41064,224665,1237898,6859555,38187164,213408805,1196524814,6727323439,37915058384,214140178225,1211694546194,6867622511675,38981807403268,221562006394173,1260814207833750,7182599953332423,40958645048598840,233779564099963081",
+    "name": "a(n) = self-convolution of array T given by A008288.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A026933/b026933.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} D(n-k,k)^2 where D(n,k) = A008288(n,k) are the Delannoy numbers. [_Paul D. Hanna_, Jan 10 2012]",
+        "G.f.: 1/(1+x)/sqrt(1-6*x+x^2). - _Vladeta Jovovic_, May 13 2003",
+        "a(n)=(-1)^n*sum_{k=0...n}(-1)^k*A001850(k) - _Benoit Cloitre_, Sep 28 2005",
+        "G.f.: exp( Sum_{n>=1} A002203(n)^2/2 * x^n/n ) where A002203 are the companion Pell numbers. [_Paul D. Hanna_, Jan 10 2012]",
+        "Self-convolution yields A204062; self-convolution of A204061. [_Paul D. Hanna_, Jan 10 2012]",
+        "From _Vaclav Kotesovec_, Oct 08 2012: (Start)",
+        "Recurrence: n*a(n) = (5*n-3)*a(n-1) + (5*n-2)*a(n-2) - (n-1)*a(n-3).",
+        "a(n) ~ sqrt(24+17*sqrt(2))*(3+2*sqrt(2))^n/(8*sqrt(Pi*n)). (End)",
+        "0 = +a(n)*(+a(n+1) -8*a(n+2) -7*a(n+3) +2*a(n+4)) +a(n+1)*(-2*a(n+1) +22*a(n+2) +20*a(n+3) -7*a(n+4)) +a(n+2)*(+30*a(n+2) +22*a(n+3) -8*a(n+4)) +a(n+3)*(-2*a(n+3) +a(n+4)) for all n in Z. - _Michael Somos_, Jun 27 2017"
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[1/(1+x)/Sqrt[1-6*x+x^2],{x,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Oct 08 2012 *)",
+        "a[ n_] := Sum[ SeriesCoefficient[ SeriesCoefficient[ 1 / (1 - x - y - x y) , {x, 0, n - k}] , {y, 0, k}]^2, {k, 0, n}]; (* _Michael Somos_, Jun 27 2017 *)"
+    ],
+    "program": [
+        "(PARI) /* Sum of squares of Delannoy numbers: */",
+        "{a(n)=sum(k=0,n,polcoeff(polcoeff(1/(1-x-y-x*y +x*O(x^n)+y*O(y^k)),n-k,x),k,y)^2)} \\\\ _Paul D. Hanna_, Jan 10 2012",
+        "(PARI) /* Involving squares of companion Pell numbers: */",
+        "{A002203(n)=polcoeff(2*x*(1+x)/(1-2*x-x^2+x*O(x^n)),n)}",
+        "{a(n)=polcoeff(exp(sum(k=1, n, A002203(k)^2/2*x^k/k)+x*O(x^n)), n)}",
+        "\\\\ _Paul D. Hanna_, Jan 10 2012",
+        "(PARI) x='x+O('x^66); Vec( 1/(1+x)/sqrt(1-6*x+x^2) ) \\\\ _Joerg Arndt_, May 04 2013"
+    ],
+    "xref": [
+        "Cf. A008288, A204061, A204062, A002203."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, May 13 2003"
+    ],
+    "references": 5,
+    "revision": 35,
+    "time": "2017-06-27T13:57:59-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

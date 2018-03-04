@@ -1,0 +1,51 @@
+{
+    "number": 45853,
+    "data": "1,12,66,220,507,924,1584,2772,4521,6436,8712,12552,18041,23364,28776,37896,50997,62832,72996,89892,115776,139348,156816,185064,231759,274044,300828,343564,418638,487080",
+    "name": "Number of nonnegative solutions of x1^2 + x2^2 + ... + x12^2 = n.",
+    "reference": [
+        "Coefficient of q^n in (1 + q + q^4 + q^9 + q^16 + q^25 + q^36 + q^49 + q^64 + ...)^12."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A045853/b045853.txt\">Table of n, a(n) for n = 0..10000</a> (terms 0..2000 from T. D. Noe)"
+    ],
+    "program": [
+        "(Ruby)",
+        "def mul(f_ary, b_ary, m)",
+        "  s1, s2 = f_ary.size, b_ary.size",
+        "  ary = Array.new(s1 + s2 - 1, 0)",
+        "  (0..s1 - 1).each{|i|",
+        "    (0..s2 - 1).each{|j|",
+        "      ary[i + j] += f_ary[i] * b_ary[j]",
+        "    }",
+        "  }",
+        "  ary[0..m]",
+        "end",
+        "def power(ary, n, m)",
+        "  if n == 0",
+        "    a = Array.new(m + 1, 0)",
+        "    a[0] = 1",
+        "    return a",
+        "  end",
+        "  k = power(ary, n >> 1, m)",
+        "  k = mul(k, k, m)",
+        "  return k if n & 1 == 0",
+        "  return mul(k, ary, m)",
+        "end",
+        "def A(k, n)",
+        "  ary = Array.new(n + 1, 0)",
+        "  (0..Math.sqrt(n).to_i).each{|i| ary[i * i] = 1}",
+        "  power(ary, k, n)",
+        "end",
+        "p A(12, 100) # _Seiichi Manyama_, May 28 2017"
+    ],
+    "xref": [
+        "Cf. A010052, A045847."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 1,
+    "revision": 18,
+    "time": "2017-05-28T09:19:22-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

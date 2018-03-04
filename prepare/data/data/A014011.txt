@@ -1,0 +1,52 @@
+{
+    "number": 14011,
+    "data": "1,2,4,6,9,12,15,18,21,24,28,32,36,40,45,50,55,60,65,70,75,80,85,90,96,102,108,114,120,126,133,140,147,154,161,168,176,184,192,200,208,216,225,234,243,252,261,270,280,290,300,310,320,330,341,352,363,374,385",
+    "name": "Defined by a chi-inequality greedy algorithm.",
+    "reference": [
+        "S. R. Finch, Mathematical Constants, Cambridge, 2003, pp. 163-166."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A014011/b014011.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Yong-Gao Chen, <a href=\"http://dx.doi.org/10.1007/s11425-012-4540-6\">On the reciprocal sum of a sum-free sequence</a>, Sci China Math, 2013, 56: 951-966, doi:10.1007/s11425-012-4540-6.",
+        "S. R. Finch, <a href=\"https://arxiv.org/abs/math/9912035\">A convex maximization problem: Discrete case</a>, arXiv:math/9912035 [math.OC], 1999.",
+        "S. R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/constant/erdos/convex/convex.html\">A Convex Maximization Problem</a>",
+        "S. R. Finch, <a href=\"http://www.people.fas.harvard.edu/~sfinch/constant/erdos/erdos.html\">Erdos's Reciprocal Sum Constants</a>",
+        "E. Levine and J. O'Sullivan, <a href=\"http://matwbn.icm.edu.pl/ksiazki/aa/aa34/aa3412.pdf\">An upper estimate for the reciprocal sum of a sum-free sequence</a>, Acta Arithmetica, 34 (1977), 9-24.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Levine-OSullivanSequence.html\">Levine-O'Sullivan Sequence.</a>"
+    ],
+    "formula": [
+        "a(n) = max{(k+1)*(n-a(k)): 1<=k<n}, a(1) = 1. - _Reinhard Zumkeller_, Jul 10 2013"
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := a[n] = Table[(k+1)*(n-a[k]), {k, 1, n-1}] // Max; Table[a[n], {n, 1, 60}] (* _Jean-Fran\u00e7ois Alcover_, May 07 2014 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a014011 n = a014011_list !! (n-1)",
+        "a014011_list = 1 : f 2 [1] where",
+        "   f u vs = w : f (u + 1) (w : vs) where",
+        "     w = maximum $ zipWith (*) [u, u-1 ..] $ map (u -) vs",
+        "-- _Reinhard Zumkeller_, Jul 10 2013",
+        "(PARI)",
+        "seq(N) = {",
+        "  my(a = vector(N)); a[1] = 1;",
+        "  for (n = 2, N, for (k = 1, n-1, a[n] = max(a[n], (k+1)*(n-a[k]))));",
+        "  return(a);",
+        "};",
+        "seq(59)  \\\\ _Gheorghe Coserea_, Jun 12 2016"
+    ],
+    "xref": [
+        "Cf. A051741, A051742.",
+        "Cf. A226390 (first differences)."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_Simon Plouffe_",
+    "ext": [
+        "More terms from _Steven Finch_, Dec 07 1999"
+    ],
+    "references": 5,
+    "revision": 34,
+    "time": "2017-07-29T08:09:37-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

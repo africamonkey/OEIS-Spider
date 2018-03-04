@@ -1,0 +1,31 @@
+{
+    "number": 96265,
+    "data": "2,3,5,7,23,53,89,113,211,1129,1327,2179,2503,5623,9587,14107,19609,19661,31397,31469,38501,58831,155921,360749,370261,396833,1357201,1561919,4652353,8917523,20831323,38089277,70396393,72546283,102765683",
+    "name": "Aloof primes: Total distance between prime and neighboring primes sets record.",
+    "link": [
+        "Ken Takusagawa, <a href=\"/A096265/b096265.txt\">Table of n, a(n) for n = 1..50</a>"
+    ],
+    "example": [
+        "a(1) = 2 as 2 has only one prime neighbor, 3 and 3-2 = 1, the first possible record. a(2) = 3 because the sum of the distances (gaps) from 3 to its two neighboring primes is 3-2 + 5-3 = 3 > 1, beating the previous record. a(5) = 23 because 23, with 29-19 = 10, is the smallest prime beating a(4) = 7's 11-5 = 6."
+    ],
+    "mathematica": [
+        "PrimeNextDelta[n_]:=(Do[If[PrimeQ[n+k], a=n+k; d=a-n; Break[]], {k, 9!}]; d); PrimePrevDelta[n_]:=(Do[If[PrimeQ[n-k], a=n-k; d=n-a; Break[]], {k, n}]; d); q=0; lst={2}; Do[p=Prime[n]; d1=PrimeNextDelta[p]; d2=PrimePrevDelta[p]; d=d1+d2; If[d>q, AppendTo[lst, p]; q=d], {n, 2, 10^4}]; lst (* _Vladimir Joseph Stephan Orlovsky_, Aug 07 2008 *)"
+    ],
+    "program": [
+        "(PARI) /* 436272953 is the next-to-the-largest precalculated prime */",
+        "/* with which PARI/GP (Version 2.0.17 (beta) at least) can be started */",
+        "/* A different program would be required to go beyond a(37)=325737821 */",
+        "{r=0; print1(\"2,\"); forprime(p=3,436272953,",
+        "s=nextprime(p+1)-precprime(p-1); if(s>r, print1(p,\",\"); r=s))}"
+    ],
+    "xref": [
+        "Cf. A031132 (record distances corresponding to a(2) onward), A023186 (Lonely primes), A087770 (Lonely primes, another definition)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Rick L. Shepherd_, Jun 21 2004",
+    "references": 2,
+    "revision": 13,
+    "time": "2013-11-22T14:14:57-05:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

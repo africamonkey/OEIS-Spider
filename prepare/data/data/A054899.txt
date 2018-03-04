@@ -1,0 +1,73 @@
+{
+    "number": 54899,
+    "data": "0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,11,11,11",
+    "name": "a(n) = Sum_{k>0} floor(n/10^k).",
+    "comment": [
+        "The old definition of this sequence was \"Highest power of 10 dividing n!\", but that is wrong (see A027868). For example, the highest power of 10 dividing 5!=120 is 1; however, a(5)=0. - _Hieronymus Fischer_, Jun 18 2007",
+        "Highest power of 10 dividing the quotient of multifactorials product{k>=1, M(10^k,10^k*floor(n/10^k))}/product{k>=1, M(10^(k-1),10^(k-1)*floor(n/10^k))} where M(r,s) is the r-multifactorial (r>=1) of s which is defined by M(r,s)=s*M(r,s-r) for s>0, M(r,s)=1 for s<=0. This is because that quotient of multifactorials evaluates to the product 10^floor(n/10)*10^floor(n/100)*... - _Hieronymus Fischer_, Jun 14 2007",
+        "Partial sums of A122840. - _Hieronymus Fischer_, Jun 06 2012"
+    ],
+    "link": [
+        "Hieronymus Fischer, <a href=\"/A054899/b054899.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Multifactorial.html\">Multifactorial.</a>"
+    ],
+    "formula": [
+        "floor[n/10] + floor[n/100] + floor[n/1000] + floor[n/10000] + ....",
+        "a(n) = (n - A007953(n))/9.",
+        "From _Hieronymus Fischer_, Jun 14 2007, Jun 25 2007, and Aug 13 2007: (Start)",
+        "a(n) = sum {k>0, floor(n/10^k)}.",
+        "a(n) = sum{10<=k<=n, sum{j|k,j>=10, floor(log_10(j))-floor(log_10(j-1))}}.",
+        "G.f.: g(x) = sum{k>0, x^(10^k)/(1-x^(10^k))}/(1-x).",
+        "G.f. expressed in terms of Lambert series:",
+        "g(x) = L[b(k)](x)/(1-x) where L[b(k)](x) = sum{k>=0, b(k)*x^k/(1-x^k)} is a Lambert series with b(k)=1, if k>1 is a power of 10, else b(k)=0.",
+        "G.f.: g(x) = sum{k>0, c(k)*x^k}/(1-x), where c(k)=sum{j>1,j|k, floor(log_10(j))-floor(log_10(j-1))}.",
+        "a(n) = sum_{0<=k<=floor(log_10(n))} ds_10(floor(n/10^k))*10^k - n where ds_10(x) = digital sum of x in base 10.",
+        "a(n) = sum_{0<=k<=floor(log_10(n))} A007953(floor(n/10^k))*10^k - n.",
+        "Recurrence:",
+        "a(n) = floor(n/10) + a(floor(n/10)).",
+        "a(10*n) = n + a(n).",
+        "a(n*10^m) = n*(10^m-1)/9 + a(n).",
+        "a(k*10^m) = k*(10^m-1)/9, for 0<=k<10, m>=0.",
+        "Asymptotic behavior:",
+        "a(n) = n/9 + O(log(n)),",
+        "a(n+1) - a(n) = O(log(n)), which follows from the inequalities below.",
+        "a(n) <= (n - 1)/9; equality holds for powers of 10.",
+        "a(n) >= n/9 - 1 - floor(log_10(n)); equality holds for n=10^m-1, m>0.",
+        "lim inf (n/9 - a(n)) = 1/9, for n-->oo.",
+        "lim sup (n/9 - log_10(n) - a(n)) = 0, for n-->oo.",
+        "lim sup (a(n+1) - a(n) - log_10(n)) = 0, for n-->oo. (End)"
+    ],
+    "example": [
+        "a(11)=1",
+        "a(111)=12.",
+        "a(1111)=123.",
+        "a(11111)=1234.",
+        "a(111111)=12345.",
+        "a(1111111)=123456.",
+        "a(11111111)=1234567.",
+        "a(111111111)=12345678.",
+        "a(1111111111)=123456789."
+    ],
+    "mathematica": [
+        "Table[t = 0; p = 10; While[s = Floor[n/p]; t = t + s; s > 0, p *= 10]; t, {n, 0, 100} ]"
+    ],
+    "program": [
+        "(PARI) a(n)=my(s);while(n\\=10,s+=n);s \\\\ _Charles R Greathouse IV_, Jul 19 2011"
+    ],
+    "xref": [
+        "Cf. A011371 and A054861 for analogs involving powers of 2 and 3.",
+        "Different from the highest power of 10 dividing n! (see A027868 for reference).",
+        "Cf. A027868, A067080, A098844, A132027, A122840."
+    ],
+    "keyword": "nonn",
+    "offset": "0,21",
+    "author": "_Henry Bottomley_, May 23 2000",
+    "ext": [
+        "An incorrect g.f. was deleted by _N. J. A. Sloane_, Sep 13 2009",
+        "Examples added by _Hieronymus Fischer_, Jun 06 2012"
+    ],
+    "references": 58,
+    "revision": 36,
+    "time": "2015-07-11T00:24:01-04:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

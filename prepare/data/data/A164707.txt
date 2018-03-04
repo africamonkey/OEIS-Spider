@@ -1,0 +1,40 @@
+{
+    "number": 164707,
+    "data": "1,2,3,4,5,6,7,8,9,10,12,14,15,16,17,18,20,21,24,27,28,30,31,32,33,34,36,37,40,41,42,48,51,54,56,60,62,63,64,65,66,68,69,72,73,74,80,81,82,84,85,96,99,102,108,112,119,120,124,126,127,128,129,130,132,133,136",
+    "name": "A positive integer n is included if all runs of 1's in binary n are of the same length.",
+    "comment": [
+        "Clarification: A binary number consists of \"runs\" completely of 1's alternating with runs completely of 0's. No two or more runs all of the same digit are adjacent.",
+        "This sequence contains in part positive integers that each contain one run of 1's. For those members of this sequence each with at least two runs of 1's, see A164709."
+    ],
+    "link": [
+        "Ivan Neretin, <a href=\"/A164707/b164707.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "isA164707 := proc(n) local bdg,arl,lset ; bdg := convert(n,base,2) ; lset := {} ; arl := -1 ; for p from 1 to nops(bdg) do if op(p,bdg) = 1 then if p = 1 then arl := 1 ; else arl := arl+1 ; end if; else if arl > 0 then lset := lset union {arl} ; end if; arl := 0 ; end if; end do ; if arl > 0 then lset := lset union {arl} ; end if; return (nops(lset) <= 1 ); end proc: for n from 1 to 300 do if isA164707(n) then printf(\"%d,\",n) ; end if; end do; # _R. J. Mathar_, Feb 27 2010"
+    ],
+    "mathematica": [
+        "Select[Range@ 140, SameQ @@ Map[Length, Select[Split@ IntegerDigits[#, 2], First@ # == 1 &]] &] (* _Michael De Vlieger_, Aug 20 2017 *)"
+    ],
+    "program": [
+        "(Perl)",
+        "foreach(1..140){",
+        "    %runs=();",
+        "    $runs{$_}++ foreach split /0+/, sprintf(\"%b\",$_);",
+        "    print \"$_, \" if 1==keys(%runs);",
+        "}",
+        "# _Ivan Neretin_, Nov 09 2015"
+    ],
+    "xref": [
+        "Cf. A164708, A164709, A164710."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Aug 23 2009",
+    "ext": [
+        "Extended beyond 42 by _R. J. Mathar_, Feb 27 2010"
+    ],
+    "references": 5,
+    "revision": 18,
+    "time": "2017-08-20T23:31:12-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

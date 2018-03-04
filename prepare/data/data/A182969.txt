@@ -1,0 +1,36 @@
+{
+    "number": 182969,
+    "data": "1,1,4,23,159,1236,10454,94401,899286,8964253,92961432,998600238,11075132605,126489183013,1484601117235,17876874457054,220546820252773,2784446513061287,35940592329823310,473893641259375150",
+    "name": "G.f. satisfies: A(x) = 1 + x*A(x)^3*A(x*A(x)).",
+    "formula": [
+        "G.f. satisfies: A(x) = exp( Sum_{n>=0} [d^n/dx^n x^(2n+1)*A(x)^(n+1)]*A(x)^(n+1)/(n+1)! ).",
+        "a(n)=T(n-1,1), T(n,m)=m/n*sum(k=1..n-m, sum(i=k..n-m, T(n-m,i)*k/i*binomial(2*i-k-1,i-1))*binomial(n+k-1,n-1)), n>m, T(n,n)=1. [_Vladimir Kruchinin_, May 07 2012]",
+        "T(n,m) = m * sum(k=1..m-m, (T(n-m,k)*binomial(n+2*k-1,n+k-1))/(n+k)) for n>m, and T(n,n) = 1. [_Vladimir Kruchinin_, Aug 08 2012]"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 4*x^2 + 23*x^3 + 159*x^4 + 1236*x^5 +...",
+        "Related expansions:",
+        "A(x*A(x)) = 1 + x + 5*x^2 + 35*x^3 + 287*x^4 + 2592*x^5 + 25050*x^6 +...",
+        "A(x)^3 = 1 + 3*x + 15*x^2 + 94*x^3 + 675*x^4 + 5331*x^5 + 45274*x^6 +...",
+        "Logarithmic series:",
+        "log(A(x)) = x*A(x)^2 + [d/dx x^3*A(x)^2]*A(x)^2/2! + [d^2/dx^2 x^5*A(x)^3]*A(x)^3/3! + [d^3/dx^3 x^7*A(x)^4]*A(x)^4/4! +..."
+    ],
+    "program": [
+        "(PARI) /* n-th Derivative: */",
+        "{Dx(n,F)=local(D=F);for(i=1,n,D=deriv(D));D}",
+        "/* G.f.: */",
+        "{a(n)=local(A=1+x+x*O(x^n));for(i=1,n,",
+        "A=exp(sum(m=0,n,Dx(m,x^(2*m+1)*A^(m+1))*A^(m+1)/(m+1)!)+x*O(x^n)));polcoeff(A,n)}",
+        "(Maxima) T(n,m):=if n=m then 1 else m/n*sum(sum(T(n-m,i)*k/i*binomial(2*i-k-1,i-1),i,k,n-m)*binomial(n+k-1,n-1),k,1,n-m); makelist(T(n,1),n,1,10); [_Vladimir Kruchinin_, May 07 2012]"
+    ],
+    "xref": [
+        "Cf. A139702, A143426, A087949, A143435."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 18 2010",
+    "references": 6,
+    "revision": 14,
+    "time": "2012-08-08T11:49:19-04:00",
+    "created": "2010-12-15T21:20:24-05:00"
+}

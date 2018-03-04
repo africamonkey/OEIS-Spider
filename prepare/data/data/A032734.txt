@@ -1,0 +1,51 @@
+{
+    "number": 32734,
+    "data": "2437,5620,7358,11111,13308,13332,13650,14612,19737,19817,24217,25213,26302,27971,28472,28838,29289,29542,29650,31328,33027,33170,35914,35970,36186,37977,38327,39127,39608,40078,41165,41528,42422,43277",
+    "name": "All 81 combinations of prefixing and following a(n) by a single digit are nonprime.",
+    "link": [
+        "Robert Israel, <a href=\"/A032734/b032734.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "2437 prefixed and followed with a pair of digits from (1,2,3,4,5,6,7,8,9) never yields a prime: '9'2437'1' = 7 * 37 * 43 * 83."
+    ],
+    "maple": [
+        "isA032734 := proc(n)",
+        "        for k from 1 to 9 do",
+        "        for k2 from 1 to 9 do",
+        "                dgs := [k,op(convert(n,base,10)),k2] ;",
+        "                dgsn := add( op(i,dgs)*10^(i-1),i=1..nops(dgs)) ;",
+        "                if isprime(dgsn) then",
+        "                        return false;",
+        "                end if;",
+        "        end do:",
+        "        end do:",
+        "        return true;",
+        "end proc:",
+        "for n from 1 to 50000 do",
+        "        if isA032734(n) then",
+        "                printf(\"%d,\",n);",
+        "        end if;",
+        "end do: # _R. J. Mathar_, Oct 22 2011",
+        "filter:= proc(n) local d,i,j;",
+        "     d:= 10^(ilog10(n)+2);",
+        "     not ormap(isprime,[seq(seq(d*i+10*n+j,j=[1,3,5,7,9]),i=1..9)])",
+        "end proc:",
+        "select(filter,[$1..10^5]); # _Robert Israel_, Jul 07 2016"
+    ],
+    "mathematica": [
+        "ok[n_] := With[{id = IntegerDigits[n]}, Select[ Flatten[ Table[ FromDigits[ Join[{j}, id, {k}]], {j, 1, 9}, {k, 1, 9}], 1], PrimeQ, 1] == {}]; A032734 = {}; n = 1; While[n < 50000, If[ok[n], Print[n]; AppendTo[A032734, n]]; n++]; A032734(* _Jean-Fran\u00e7ois Alcover_, Nov 23 2011 *)"
+    ],
+    "program": [
+        "(PARI) is_A032734(n)=p=10^#Str(n*=10);forstep(k=n+p,n+9*p,p,nextprime(k)>k+9 || return);1 \\\\ _M. F. Hasler_, Oct 22 2011"
+    ],
+    "xref": [
+        "Cf. A032682-A032685 and A032702-A032733."
+    ],
+    "keyword": "nonn,nice,base",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, May 15 1998",
+    "references": 6,
+    "revision": 23,
+    "time": "2017-06-13T02:14:28-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

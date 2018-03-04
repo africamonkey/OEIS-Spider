@@ -1,0 +1,39 @@
+{
+    "number": 91520,
+    "data": "1,2,14,36,214,604,3340,9928,52582,161708,831588,2620920,13187836,42350744,209519576,682960784,3332923526,10998087884,53067486836,176924683544,845545262996,2843923177544,13479791673896,45685735967984",
+    "name": "Expansion of 1 / ((1 - 4*x) * sqrt(1 + 4*x)) in powers of x.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A091520/b091520.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "G.f.: 1 / ((1 - 4*x) * sqrt(1 + 4*x)). n * a(n) = 2 * a(n-1) + 8 * (2*n - 1) * a(n-2).",
+        "a(n) = 4^n * (Sum_{k=0, n} binomial( 2*k, k) / (-4)^k).",
+        "a(n) = A003148(n) * 2^n / n!. - _Michael Somos_, Mar 17 2011",
+        "Asymptotics: a(n) ~ 4^n / sqrt(2).",
+        "G.f. y = A(x) satisfies 0 = (16*x^2 - 1) * y' + (24*x + 2) * y  and 0 = y'^3 + 8 * y'^2 * y^3 + 216 * y^5 - 256 * y^7.",
+        "G.f.: 1/((1-4*x)*sqrt(1+4*x)) = 1/(1-4*x+2*x*(1-4*x)/G(0)) ; G(k) = 1 + x/G(k+1) ; (continued fraction). - _Sergei N. Gladkovskii_, Dec 21 2011",
+        "From _Vladimir Reshetnikov_, Nov 01 2015: (Start)",
+        "a(n) = 2^(n-1)*(sqrt(2)*2^n + (-1)^n*(2n+1)!!*hypergeom([1,n+3/2], [n+2], -1)/(n+1)!.",
+        "a(n) = 2^n*(2*n+1)!!*hypergeom([-n,1/2], [3/2], 2)/n!. (End)",
+        "a(n+1) = 4*a(n) - (-1)^(n)*binom(2n+2,n+1). - _G. C. Greubel_, Nov 02 2015"
+    ],
+    "example": [
+        "1 + 2*x + 14*x^2 + 36*x^3 + 214*x^4 + 604*x^5 + 3340*x^6 + 9928*x^7 + ..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/((1-4x)Sqrt[1+4x]),{x,0,30}],x] (* _Harvey P. Dale_, Oct 14 2013 *)",
+        "Table[2^n (2n+1)!! Hypergeometric2F1[-n, 1/2, 3/2, 2]/n!, {n, 0, 20}] (* _Vladimir Reshetnikov_, Nov 01 2015 *)",
+        "RecurrenceTable[{a[n+1] == 4*a[n] - (-1)^(n)*binom[2n+2,n+1], a[0]==1}, a, {n,0, 100}] (* _G. C. Greubel_, Nov 02 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if(n<0,0,4^n*sum( k=0, n, binomial(2*k, k) / (-4)^k))}",
+        "(PARI) x='x+O('x^50); Vec(1/((1-4*x)*sqrt(1+4*x))) \\\\ _Altug Alkan_, Nov 02 2015"
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,2",
+    "author": "_Michael Somos_, Jan 18 2004",
+    "references": 2,
+    "revision": 37,
+    "time": "2018-02-23T23:02:49-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 230303,
+    "data": "0,5,129,4102,87112285931760246646623899502532662132742,1852673427797059126777135760139006525652319754650249024631321344126610074239106",
+    "name": "Let M(1)=0 and for n >= 2, let B(n)=M(ceiling(n/2))+M(floor(n/2))+2, M(n)=2^B(n)+M(floor(n/2))+1; sequence gives M(n).",
+    "comment": [
+        "M(n) is the smallest value of k such that A228085(k) = n. For example, 129 is the first time a 3 appears in A228085 (and is therefore the first term in A230092). M(4) = 4102 is the first time a 4 appears in A228085 (and is therefore the first term in A227915)."
+    ],
+    "reference": [
+        "Max A. Alekseyev, Donovan Johnson and N. J. A. Sloane, On Kaprekar's Junction Numbers, in preparation, 2017."
+    ],
+    "link": [
+        "<a href=\"/index/Coi#Colombian\">Index entries for Colombian or self numbers and related sequences</a>"
+    ],
+    "formula": [
+        "Define i by 2^(i-1) < n <= 2^i. Then it appears that",
+        "a(n) = 2^2^2^...^2^x",
+        "a tower of height i+3, containing i+2 2's, where x is in the range 0 < x <= 1.",
+        "For example, if n=7, i=3, and",
+        "a(18) = 2^4233+130 = 2^2^2^2^2^.88303276...",
+        "Note also that i+2 = A230864(a(n))."
+    ],
+    "example": [
+        "The terms are 0, 2^2+0+1, 2^7+0+1, 2^12+5+1, 2^136+5+1, 2^160+129+1, 2^4233+129+1, 2^8206+4102+1, 2^k+4102+1 with k=2^136+4110, ... .",
+        "The length (in bits) of the n-th term is A230302(n)+1."
+    ],
+    "maple": [
+        "f:=proc(n) option remember; local B, M;",
+        "if n<=1 then RETURN([0,0]);",
+        "else",
+        "if (n mod 2) = 0 then B:=2*f(n/2)[2]+2;",
+        "else B:=f((n+1)/2)[2]+f((n-1)/2)[2]+2; fi;",
+        "M:=2^B+f(floor(n/2))[2]+1; RETURN([B,M]); fi;",
+        "end proc;",
+        "[seq(f(n)[2],n=1..6)];"
+    ],
+    "xref": [
+        "Cf. A228085, A230092, A227915, A230093, A230302 (for B(n)), A230864.",
+        "Smallest number m such that u + (sum of base-b digits of u) = m has exactly n solutions, for bases 2 through 10: A230303, A230640, A230638, A230867, A238840, A238841, A238842, A238843, A006064."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Oct 24 2013; Mar 26 2014",
+    "references": 12,
+    "revision": 34,
+    "time": "2017-03-17T17:22:58-04:00",
+    "created": "2013-10-24T11:39:47-04:00"
+}

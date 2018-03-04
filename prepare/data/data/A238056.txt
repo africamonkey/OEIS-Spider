@@ -1,0 +1,39 @@
+{
+    "number": 238056,
+    "data": "23,37,53,73,113,137,173,193,197,211,223,229,233,241,271,283,293,311,331,337,347,353,359,367,379,383,389,397,433,523,541,547,571,593,613,617,673,677,719,733,743,761,773,977,1013,1033,1093,1097,1117,1123,1129",
+    "name": "Primes which are the concatenation of two primes in exactly one way.",
+    "comment": [
+        "This is not a duplicate of A129800, which accepts \"07\" for example as the second prime."
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A238056/b238056.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "example": [
+        "113 is in the sequence because 11 and 3 are both primes, but 1 and 13 are not both primes, so there is one way."
+    ],
+    "mathematica": [
+        "spl[n_] := Block[{d = IntegerDigits@n, c = 0, z}, z = Length@d; Do[If[PrimeQ@ FromDigits@ Take[d, k] && d[[k + 1]] > 0 && PrimeQ@ FromDigits@ Take[d, k - z], c++], {k, z - 1}]; c]; Select[ Prime@ Range@ 300, spl[#] == 1 &] (* _Giovanni Resta_, Feb 27 2014 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a238056 n = a238056_list !! (n-1)",
+        "a238056_list = filter ((== 1) . length . f) a000040_list where",
+        "  f x = filter (\\(us, vs) ->",
+        "               head vs /= '0' &&",
+        "               a010051' (read us :: Integer) == 1 &&",
+        "               a010051' (read vs :: Integer) == 1) $",
+        "               map (flip splitAt $ show x) [1 .. length (show x) - 1]",
+        "-- _Reinhard Zumkeller_, Feb 27 2014"
+    ],
+    "xref": [
+        "Cf. A105184, A238057, A129800.",
+        "Cf. A010051, A000040."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Colin Barker_, Feb 17 2014",
+    "references": 6,
+    "revision": 16,
+    "time": "2014-02-27T10:56:00-05:00",
+    "created": "2014-02-27T08:20:29-05:00"
+}

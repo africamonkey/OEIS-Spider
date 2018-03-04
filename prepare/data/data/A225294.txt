@@ -1,0 +1,33 @@
+{
+    "number": 225294,
+    "data": "1,1,2,6,22,92,424,2112,11236,63360,376800,2355016,15430784,105797968,757866592,5664174736,44109816528,357447744576,3010091812000,26304829992224,238217024498432,2232483865359488,21621812897089536,216130222764401024,2226983944005048960",
+    "name": " G.f. satisfies: A(x) = Sum_{n>=0} x^n / Product_{k=1..n} (1 - k*x*A(x)).",
+    "comment": [
+        " It appears that all terms a(n) for n>1 are even."
+    ],
+    "formula": [
+        " G.f. satisfies: A(x) = Sum_{n>=0} x^n * Sum_{k=0..n} Stirling2(n,k)*A(x)^(n-k)."
+    ],
+    "example": [
+        " G.f.: A(x) = 1 + x + 2*x^2 + 6*x^3 + 22*x^4 + 92*x^5 + 424*x^6 + 2112*x^7 +...",
+        "where",
+        "A(x) = 1 + x/(1-x*A(x)) + x^2/((1-x*A(x))*(1-2*x*A(x))) + x^3/((1-x*A(x))*(1-2*x*A(x))*(1-3*x*A(x))) + x^4/((1-x*A(x))*(1-2*x*A(x))*(1-3*x*A(x))*(1-4*x*A(x))) +..."
+    ],
+    "program": [
+        " (PARI) {a(n)=local(A=1+x); for(i=1, n, A=sum(m=0, n, x^m/prod(k=1, m, 1-k*x*A +x*O(x^n)) )); polcoeff(A, n)}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {Stirling2(n, k)=n!*polcoeff(((exp(x+x*O(x^n))-1)^k)/k!, n)}",
+        "{a(n)=local(A=1+x);for(i=0,n,A=sum(m=0,n,x^m*sum(k=0,m,Stirling2(m,k)*(A+x*O(x^n))^(m-k))));polcoeff(A,n)}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        " Cf. A224922, A225293, A000110, A019538."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, May 04 2013",
+    "references": 1,
+    "revision": 3,
+    "time": "2013-05-04T19:36:23-04:00",
+    "created": "2013-05-04T19:36:23-04:00"
+}

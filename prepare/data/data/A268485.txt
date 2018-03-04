@@ -1,0 +1,41 @@
+{
+    "number": 268485,
+    "data": "1,1,5,1306,46922017,449363984934526,1878320344216429026862153,5078529731893937404909347067888886466,12324197596430667064913735085330208112438377122058241,35544813569338447788721757701614208334438136486811525386710064098254294",
+    "name": "Number of sequences with n copies each of 1,2,...,n and longest increasing subsequence of length n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A268485/b268485.txt\">Table of n, a(n) for n = 0..27</a>",
+        "J. D. Horton and A. Kurn, Counting sequences with complete increasing subsequences, Congressus Numerantium, 33 (1981), 75-80. <a href=\"http://www.ams.org/mathscinet-getitem?mr=681905\">MR 681905</a>"
+    ],
+    "example": [
+        "a(2) = 5: 1122, 1212, 1221, 2112, 2121.",
+        "a(3) = 1306: 111222333, 111223233, 111223323, ..., 332212113, 332212131, 332212311."
+    ],
+    "maple": [
+        "g:= proc(l) option remember; (n-> f(l[1..nops(l)-1])*",
+        "      binomial(n-1, l[-1]-1)+ add(f(sort(subsop(j=l[j]",
+        "      -1, l))), j=1..nops(l)-1))(add(i, i=l))",
+        "    end:",
+        "f:= l-> (n-> `if`(n<2 or l[-1]=1, 1, `if`(l[1]=0, 0, `if`(",
+        "         n=2, binomial(l[1]+l[2], l[1])-1, g(l)))))(nops(l)):",
+        "a:= n-> f([n$n]):",
+        "seq(a(n), n=0..8);",
+        "# second Maple program:",
+        "b:= proc(k, p, j, l, t) option remember;",
+        "      `if`(k=0, (-1)^t/l!, `if`(p<0, 0, add(b(k-i, p-1,",
+        "       j+1, l+i*j, irem(t+i*j, 2))/(i!*p!^i), i=0..k)))",
+        "    end:",
+        "a:= n-> n!*(n^2)!*b(n, n-1, 1, 0, irem(n, 2)):",
+        "seq(a(n), n=0..10);  # _Alois P. Heinz_, Mar 03 2016"
+    ],
+    "xref": [
+        "Main diagonal of A047909.",
+        "Cf. A268667, A268751."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Feb 05 2016",
+    "references": 4,
+    "revision": 20,
+    "time": "2016-03-03T16:23:16-05:00",
+    "created": "2016-02-11T14:46:19-05:00"
+}

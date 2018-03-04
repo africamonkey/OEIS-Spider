@@ -1,0 +1,39 @@
+{
+    "number": 130219,
+    "data": "1,1,4,56,631,15457,582374,18589286,894499204,51154344582,3823359163826,274722100927166,25458967562911128,2569179797929092506,284554990016509385086,37830153187190688287522,5093072752898942262610007,798814778335473578083666573",
+    "name": "Number of partitions of 2n-set in which number of blocks of size k is even (or zero) for every k.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A130219/b130219.txt\">Table of n, a(n) for n = 0..250</a>"
+    ],
+    "formula": [
+        "E.g.f.: Product_{k>0} cosh(x^k/k!)."
+    ],
+    "example": [
+        "a(2)=4 because we have ab|cd, ac|bd, ad|bc and a|b|c|d."
+    ],
+    "maple": [
+        "g:=product(cosh(x^k/factorial(k)),k=1..35): gser:=series(g,x=0,32): seq(factorial(2*n)*coeff(gser,x,2*n),n=0..14); # _Emeric Deutsch_, Sep 01 2007",
+        "# second Maple program:",
+        "g:= proc(n, i, p) option remember; `if`(n=0, p!, `if`(i<1, 0, add(",
+        "     `if`(irem(j, 2)=0, g(n-i*j, i-1, p+j*i)/j!/i!^j, 0), j=0..n/i)))",
+        "    end:",
+        "a:= n-> g(2*n$2, 0):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Mar 06 2015"
+    ],
+    "mathematica": [
+        "g[n_, i_, p_] := g[n, i, p] = If[n == 0, p!, If[i<1, 0, Sum[If[Mod[j, 2] == 0, g[n - i*j, i-1, p + j*i]/j!/i!^j, 0], {j, 0, n/i}]]]; a[n_] := g[2*n, 2*n, 0]; Table[ a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, May 12 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A055922, A102759, A111723, A111724."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Vladeta Jovovic_, Aug 04 2007, Aug 05 2007",
+    "ext": [
+        "More terms from _Emeric Deutsch_, Sep 01 2007"
+    ],
+    "references": 7,
+    "revision": 11,
+    "time": "2015-05-12T09:37:57-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

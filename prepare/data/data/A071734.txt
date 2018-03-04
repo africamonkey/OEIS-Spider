@@ -1,0 +1,59 @@
+{
+    "number": 71734,
+    "data": "1,6,27,98,315,913,2462,6237,15035,34705,77231,166364,348326,710869,1417900,2769730,5308732,9999185,18533944,33845975,60960273,108389248,190410133,330733733,568388100,967054374,1629808139,2722189979",
+    "name": "a(n) = p(5n+4)/5 where p(k) denotes the k-th partition number.",
+    "comment": [
+        "One of the congruences related to the partition numbers stated by Ramanujan.",
+        "Also the coefficients in the expansion of C^5/B^6, in Watson's notation (p. 105). The connection to the partition function is in equation (3.31) with right side 5C^5/B^6 where B = x * f(-x^24), C = x^5 * f(-x^120) where f() is a Ramanujan theta function. Alternatively B = eta(q^24), C = eta(q^120). - _Michael Somos_, Jan 06 2015"
+    ],
+    "reference": [
+        "Berndt and Rankin, \"Ramanujan: letters and commentaries\", AMS-LMS, History of mathematics, vol. 9, pp. 192-193",
+        "G. H. Hardy, Ramanujan, Cambridge Univ. Press, 1940. - From _N. J. A. Sloane_, Jun 07 2012"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A071734/b071734.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "S. Bouroubi, N. Benyahia Tani, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL12/Bouroubi/bouroubi25.html\">A new identity for complete Bell polynomials based on a formula of Ramanujan</a>, JIS 12 (2009) 09.3.5",
+        "M. D. Hirschhorn, <a href=\"http://web.maths.unsw.edu.au/~mikeh/webpapers/paper60.pdf\">Another Shorter Proof Of Ramanujan's Mod 5 Partition Congruence, And More</a>, The American Mathematical Monthly, Vol. 106, No. 6 (Jun. - Jul., 1999), pp. 580-583.",
+        "J. L. Drost, <a href=\"http://www.jstor.org/stable/2974479\">A Shorter Proof of the Ramanujan Congruence Modulo 5</a>, in Amer. Math. Monthly Vol. 104 No. 10 December 1997 MAA Washington DC.",
+        "Lasse Winquist, <a href=\"http://dx.doi.org/10.1016/S0021-9800(69)80105-5\">An elementary proof of p(11m+6) == 0 (mod 11)</a>, J. Combinatorial Theory 6 1969 56--59. MR0236136 (38 #4434). - From _N. J. A. Sloane_, Jun 07 2012",
+        "M. Savic, <a href=\"http://www.cs.bsu.edu/homepages/fischer/Journal/01-01/savic.pdf\">The Partition Function and Ramanujan's 5k+4 Congruence</a>, Mathematics Exchange, Fall 2008, Volume 10, No. 1.",
+        "G. N. Watson, <a href=\"http://gdz.sub.uni-goettingen.de/dms/load/img/?PPN=PPN243919689_0179\">Ramanujans Vermutung ueber Zerfaellungszahlen</a>, J. Reine Angew. Math. (Crelle), 179 (1938), 97-128."
+    ],
+    "formula": [
+        "a(n) = (1/5)*A000041(5n+4).",
+        "G.f.: Product_{n>=1} (1 - x^(5*n))^5/(1 - x^n)^6 due to Ramanujan's identity. - _Paul D. Hanna_, May 22 2011",
+        "a(n) = A000041(A016897(n))/5 = A213260(n)/5. - _Omar E. Pol_, Jan 18 2013",
+        "Euler transform of period 5 sequence [ 6, 6, 6, 6, 1, ...]. - _Michael Somos_, Jan 07 2015",
+        "Expansion of q^(-19/24) * eta(q^5)^5 / eta(q)^6 in powers of q. - _Michael Somos_, Jan 07 2015",
+        "a(n) ~ exp(Pi*sqrt(10*n/3)) / (100*sqrt(3)*n). - _Vaclav Kotesovec_, Nov 28 2016"
+    ],
+    "example": [
+        "G.f. = 1 + 6*x + 27*x^2 + 98*x^3 + 315*x^4 + 913*x^5 + 2462*x^6 + ...",
+        "G.f. = q^19 + 6*q^43 + 27*q^67 + 98*q^91 + 315*q^115 + 913*q^139 + ..."
+    ],
+    "maple": [
+        "with(combinat):",
+        "a:= n-> numbpart(5*n+4)/5:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jan 07 2015"
+    ],
+    "mathematica": [
+        "a[ n_] := PartitionsP[ 5 n + 4] / 5; (* _Michael Somos_, Jan 07 2015 *)",
+        "a[ n_] := SeriesCoefficient[ 1 / QPochhammer[ x], {x, 0, 5 n + 4}] / 5; (* _Michael Somos_, Jan 07 2015 *)",
+        "nmax = 50; CoefficientList[Series[Product[(1 - x^(5*k))^5/(1 - x^k)^6, {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Nov 28 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0, polcoeff( 1 / eta(x + O(x^(5*n + 5))), 5*n + 4) / 5)};",
+        "(PARI) {a(n) = numbpart(5*n + 4) / 5};",
+        "(PARI) a(n)=polcoeff(prod(m=1,n,(1-x^(5*m))^5/(1-x^m +x*O(x^n))^6),n) \\\\ _Paul D. Hanna_"
+    ],
+    "xref": [
+        "Cf. A000041, A213260, A071746, A076394, A213256, A016897."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Benoit Cloitre_, Jun 24 2002",
+    "references": 14,
+    "revision": 50,
+    "time": "2016-11-28T05:50:09-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

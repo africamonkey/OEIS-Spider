@@ -1,0 +1,47 @@
+{
+    "number": 214431,
+    "data": "1,2,12,128,1920,37088,876288,24478848,789208320,28841682432,1178155579392,53196745543680,2630883967315968,141432764970270720,8211780541909352448,512119065654535618560,34141138126195739394048,2422954554718763388764160,182378340941780059828518912",
+    "name": "E.g.f. satisfies: A(x) = x + arcsin( A(x) )^2.",
+    "comment": [
+        "Radius of convergence of A(x) is r = A(r) - (1-A(r)^2)/4 = 0.232465575..., where A(r) = 0.435130859... satisfies A(r) = sin(sqrt(1-A(r)^2)/2)."
+    ],
+    "formula": [
+        "E.g.f. satisfies:",
+        "(1) A(x) = Series_Reversion( x - arcsin(x)^2 ).",
+        "(2) A(x) = x + Sum_{n>=1} d^(n-1)/dx^(n-1) arcsin(x)^(2*n) / n!.",
+        "(3) A(x) = x*exp( Sum_{n>=1} d^(n-1)/dx^(n-1) (arcsin(x)^(2*n)/x) / n! ).",
+        "(4) A'(x) = sqrt(1-A(x)^2) / (sqrt(1-A(x)^2) - 2*arcsin(A(x))).",
+        "a(n) ~ sqrt((1-s^2)/(2+s)) * n^(n-1) / (exp(n) * r^(n-1/2)), where r and s=A(r) were described above. - _Vaclav Kotesovec_, Jan 12 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 12*x^3/3! + 128*x^4/4! + 1920*x^5/5! + ...",
+        "where",
+        "arcsin(A(x)) = x + 2*x^2/2! + 13*x^3/3! + 140*x^4/4! + 2109*x^5/5! + 40838*x^6/6! + 966393*x^7/7! + ...",
+        "arcsin(A(x))^2 = 2*x^2/2! + 12*x^3/3! + 128*x^4/4! + 1920*x^5/5! + 37088*x^6/6! + 876288*x^7/7! + ...",
+        "Related expansions:",
+        "A(x) = x + arcsin(x)^2 + d/dx arcsin(x)^4/2! + d^2/dx^2 arcsin(x)^6/3! + d^3/dx^3 arcsin(x)^8/4! + ...",
+        "log(A(x)/x) = arcsin(x)^2/x + d/dx (arcsin(x)^4/x)/2! + d^2/dx^2 (arcsin(x)^6/x)/3! + d^3/dx^3 (arcsin(x)^8/x)/4! + ..."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[x - ArcSin[x]^2, {x, 0, 20}], x],x] * Range[0, 20]!] (* _Vaclav Kotesovec_, Jan 12 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(serreverse(x-asin(x+x*O(x^n))^2), n)}",
+        "(PARI) {a(n)=local(A=x); for(i=0, n, A=x + asin(A+x*O(x^n))^2); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x); A=x+sum(m=1, n, Dx(m-1, asin(x+x*O(x^n))^(2*m)/m!)); n!*polcoeff(A, n)}",
+        "(PARI) {Dx(n, F)=local(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n)=local(A=x+x^2+x*O(x^n)); A=x*exp(sum(m=1, n, Dx(m-1, asin(x+x*O(x^n))^(2*m)/x/m!)+x*O(x^n))); n!*polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A143134, A185190."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jul 17 2012",
+    "references": 1,
+    "revision": 16,
+    "time": "2018-01-17T03:16:33-05:00",
+    "created": "2012-07-17T13:22:52-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 282113,
+    "data": "65,73,81,89,97,105,113,121,130,138,146,154,162,170,178,186,195,203,211,219,227,235,243,251,260,268,276,284,292,300,308,316,325,333,341,349,357,365,373,381,390,398,406,414,422,430,438,446,455,463,471,479,487,495",
+    "name": "Numbers n with k digits in base x (MSD(n)=d_k, LSD(n)=d_1) such that, chosen one of their digits in position d_k < j < d_1, is Sum_{i=j+1..k}{(i-j)*d_i} = Sum_{i=1..j-1}{(j-i)*d_i}. Case x = 8.",
+    "comment": [
+        "All the palindromic numbers in base 8 with an odd number of digits belong to the sequence.",
+        "Here the fulcrum is one of the digits while in the sequence from A282143 to A282151 is between two digits.",
+        "Numbers with this property in all the bases from 2 to 8 are: 2438269535, 6936679443, 8657968788, 11107027008, 21733512704, ... - _Giovanni Resta_, Feb 13 2017"
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A282113/b282113.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "1084 in base 8 is 2074. If j = 2 (digit 7) we have 0*1 + 2*2 = 4 for the left side and 4*1 = 4 for the right one."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q,h) local a,b,d,j,k,n,s;",
+        "for n from 1 to q do a:=convert(n,base,h);",
+        "for k from 1 to trunc(nops(a)/2) do b:=a[k]; a[k]:=a[nops(a)-k+1]; a[nops(a)-k+1]:=b; od;",
+        "for k from 2 to nops(a)-1 do d:=0; s:=0;",
+        "for j from 1 to k-1 do if a[j]>0 then s:=s+a[j]*(k-j); fi; od; for j from nops(a) by -1 to k+1 do",
+        "if a[j]>0 then d:=d+a[j]*(j-k); fi; od; if d=s then print(n); break; fi; od; od; end: P(10^9,8);"
+    ],
+    "xref": [
+        "Cf. A282107 - A282112, A282114, A282115."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Feb 06 2017",
+    "references": 3,
+    "revision": 9,
+    "time": "2017-02-15T03:28:55-05:00",
+    "created": "2017-02-15T03:28:55-05:00"
+}

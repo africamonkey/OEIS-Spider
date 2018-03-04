@@ -1,0 +1,53 @@
+{
+    "number": 285101,
+    "data": "2,6,210,3573570,64845819350301990,28695662573739152697846686144187168109530,1038300112150956151877699324649731518883355380534272386781875587619359740733888844803014212990",
+    "name": "a(0) = 2, for n > 0, a(n) = a(n-1)*A242378(n,a(n-1)), where A242378(n,a(n-1)) shifts the prime factorization of a(n-1) n primes towards larger primes with A003961.",
+    "comment": [
+        "Multiplicative encoding of irregular table A053632 (in style of A007188 and A260443)."
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A285101/b285101.txt\">Table of n, a(n) for n = 0..9</a>"
+    ],
+    "formula": [
+        "a(0) = 2, for n > 0, a(n) = a(n-1)*A242378(n,a(n-1)).",
+        "Other identities. For all n >= 0:",
+        "A001222(a(n)) = A000079(n).",
+        "A048675(a(n)) = A028362(1+n).",
+        "A248663(a(n)) = A068052(n).",
+        "A007913(a(n)) = A285102(n)."
+    ],
+    "program": [
+        "(PARI)",
+        "A003961(n) = { my(f = factor(n)); for (i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); };",
+        "A242378(k,n) = { while(k>0,n = A003961(n); k = k-1); n; };",
+        "A285101(n) = { if(0==n,2,A285101(n-1)*A242378(n,A285101(n-1))); };",
+        "(Scheme) (definec (A285101 n) (if (zero? n) 2 (* (A285101 (- n 1)) (A242378bi n (A285101 (- n 1)))))) ;; For A242378bi see A242378.",
+        "(Python)",
+        "from sympy import factorint, prime, primepi",
+        "from operator import mul",
+        "def a003961(n):",
+        "    f=factorint(n)",
+        "    return 1 if n==1 else reduce(mul, [prime(primepi(i) + 1)**f[i] for i in f])",
+        "def a242378(k, n):",
+        "    while k>0:",
+        "        n=a003961(n)",
+        "        k-=1",
+        "    return n",
+        "l=[2]",
+        "for n in xrange(1, 7):",
+        "    x=l[n - 1]",
+        "    l+=[x*a242378(n, x), ]",
+        "print l # _Indranil Ghosh_, Jun 27 2017"
+    ],
+    "xref": [
+        "Cf. A001222, A003961, A007913, A028362, A048675, A053632, A068052, A242378, A248663, A285102.",
+        "Cf. also A007188, A260443."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Antti Karttunen_, Apr 15 2017",
+    "references": 7,
+    "revision": 20,
+    "time": "2017-06-28T03:00:45-04:00",
+    "created": "2017-04-16T00:10:52-04:00"
+}

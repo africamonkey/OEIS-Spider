@@ -1,0 +1,40 @@
+{
+    "number": 286304,
+    "data": "1,3,6,10,17,24,37,51,78,110,173,229,340,477,750,1024,1571,2253,3616,5024,7839,11356,18389,25173,38740,55697,89610,124870,195389,283536,459829,636123,988710,1429442,2310905,3227617,5061040,7352817,11936370,16526444",
+    "name": "Number of connected induced (non-null) subgraphs of the complete binary tree with graph n nodes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A286304/b286304.txt\">Table of n, a(n) for n = 1..5651</a> (first 255 terms from Andrew Howroyd)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Vertex-InducedSubgraph.html\">Vertex-Induced Subgraph</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Binary_tree#Types_of_binary_trees\">Types of binary trees</a>"
+    ],
+    "formula": [
+        "a(2^k-1) = A285934(k-1)."
+    ],
+    "mathematica": [
+        "Join[{1}, Table[g=KaryTree[n]; -1 + ParallelSum[Boole@ConnectedGraphQ@Subgraph[g, s], {s, Subsets@Range[n]}], {n, 2, 16}]]",
+        "(* Second program: *)",
+        "l[n_] := With[{h = 2^Floor[Log[2, n]]}, Min[h - 1, n - h/2]];",
+        "b[n_] := b[n] = 1 + If[n <= 1, n, b[l[n]]*b[n - 1 - l[n]]];",
+        "a[n_] := a[n] = If[n <= 1, n, b[n] - 1 + a[l[n]] + a[n - 1 - l[n]]];",
+        "Array[a, 40] (* _Jean-Fran\u00e7ois Alcover_, Nov 01 2017, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "l(n)={my(h=2^floor(log(n)/log(2))); min(h-1,n-h/2)}",
+        "b(n)=1+if(n<=1,n,b(l(n))*b(n-1-l(n)));",
+        "a(n)=if(n<=1,n,b(n)-1 + a(l(n)) + a(n-1-l(n))); \\\\ _Andrew Howroyd_, May 22 2017"
+    ],
+    "xref": [
+        "Cf. A285934, A020873 (wheel), A059020 (ladder), A059525 (grid), A286139 (king), A286182 (prism), A286183 (antiprism), A286184 (helm), A286185 (M\u00f6bius ladder), A286186 (friendship), A286187 (web), A286188 (gear), A286189 (rook), A285765 (queen)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Giovanni Resta_, May 05 2017",
+    "ext": [
+        "Terms a(35) and beyond from _Andrew Howroyd_, May 22 2017"
+    ],
+    "references": 2,
+    "revision": 27,
+    "time": "2017-11-01T12:25:44-04:00",
+    "created": "2017-05-05T23:58:44-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 169835,
+    "data": "1,9,36,100,225,441,784,900,1225,1296,2025,3025,4356,6084,7056,8281,11025,14400,18496,23409,29241,32400,36100,41616,44100,53361,64009,76176,88209,90000,105625,108900,123201,142884,164836,189225,216225",
+    "name": "Perfect squares that are a product of two triangular numbers.",
+    "comment": [
+        "Includes (except for 0) A000537 and 3/2*x*(x+1) for x in A132596. - _Robert Israel_, Jan 16 2015"
+    ],
+    "link": [
+        "Erich Friedman, <a href=\"http://www2.stetson.edu/~efriedma/numbers.html\">What's Special About This Number?</a> (See entry 7056.)"
+    ],
+    "maple": [
+        "N:= 10^6: # to get all terms <= N",
+        "A:= select(issqr,{seq(seq(a*(a+1)*b*(b+1)/4,",
+        "    b = a .. floor(sqrt(1/4+4*N/a/(a+1))-1/2)),a=1..floor(sqrt(4*N)))});",
+        "# if using Maple 11 or earlier, uncomment the next line",
+        "# sort(convert(A, list)); # _Robert Israel_, Jan 16 2015"
+    ],
+    "program": [
+        "(PARI) istriangular(n)=issquare(8*n+1) \\\\ now one can use ispolygonal(n, 3)",
+        "isok(n) = {if (issquare(n), fordiv(n, d, if (d > sqrtint(n), break); if (istriangular(d) && istriangular(n/d), return (1)););); return (0);} \\\\ _Michel Marcus_, Jul 24 2013",
+        "(Haskell)",
+        "a169835 n = a169835_list !! (n-1)",
+        "a169835_list = f [] (tail a000217_list) (tail a000290_list) where",
+        "   f ts us'@(u:us) vs'@(v:vs)",
+        "     | u <= v = f (u : ts) us vs'",
+        "     | any p $ map (divMod v) ts = v : f ts us' vs",
+        "     | otherwise = f ts us' vs",
+        "     where p (q, r) = r == 0 && a010054 q == 1",
+        "-- _Reinhard Zumkeller_, Mar 03 2015"
+    ],
+    "xref": [
+        "Superset of A000537. Cf. A000217, A132596, A169836.",
+        " Cf. A000290, A010054."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_R. J. Mathar_, May 30 2010",
+    "ext": [
+        "Corrected (missing terms inserted) by _R. J. Mathar_, Jun 04 2010"
+    ],
+    "references": 2,
+    "revision": 18,
+    "time": "2015-03-03T12:00:02-05:00",
+    "created": "2010-07-11T03:00:00-04:00"
+}

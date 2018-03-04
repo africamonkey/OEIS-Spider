@@ -1,0 +1,42 @@
+{
+    "number": 262445,
+    "data": "0,0,0,6,24,72,186,438,990,2142,4560,9492,19620,40068,81534,164892,332808,669528,1345554,2699448,5412636,10843038,21714972,43467342,86995428,174069306,348265164,696694692,1393652298,2787646380,5575837836,11152384044,22305891948,44613248352,89228806704,178460625402,356925987924",
+    "name": "Number of exact 3-colored partitions such that no adjacent parts have the same color.",
+    "comment": [
+        "a(1) = a(2) = 0 because we need to use exactly three colors, which means the number of parts should be greater than two.",
+        "All terms are multiples of 6."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A262445/b262445.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Ran Pan, <a href=\"http://arxiv.org/abs/1509.06107\">A note on enumerating colored integer partitions</a>, arXiv:1509.06107 [math.CO], 2015.",
+        "Ran Pan, <a href=\"http://www.math.ucsd.edu/~projectp/warmups/eS.html\">Exercise S</a>, Project P."
+    ],
+    "formula": [
+        "G.f.: 3/2*Product_{k>=1} (1/(1-2*x^k)) - 6*Product_{k>=1} (1/(1-x^k)) + 3/(1-x) + 3/2.",
+        "a(n) = A262444(n) - 6*A000041(n) + 3, for n >= 1.",
+        "a(n) = 6 * A262495(n,3). - _Alois P. Heinz_, Sep 24 2015"
+    ],
+    "example": [
+        "a(3)=6 because there are three partitions of 3 and there are no ways to color [3] or [2,1] but there are six ways to color [1,1,1]."
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      b(n, i-1, k) +`if`(i>n, 0, k*b(n-i, i, k))))",
+        "    end:",
+        "a:= n-> `if`(n=0, 0, b(n$2, 2)/2*3-6*b(n$2, 1)+3):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Sep 23 2015"
+    ],
+    "mathematica": [
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0, 1, If[i < 1, 0, b[n, i - 1, k] + If[i > n, 0, k*b[n - i, i, k]]]]; a[n_] := If[n == 0, 0, b[n, n, 2]/2*3 - 6*b[n, n, 1] + 3]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Feb 07 2017, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000041, A262444, A139582, A262495."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Ran Pan_, Sep 23 2015",
+    "references": 2,
+    "revision": 26,
+    "time": "2017-12-09T19:12:15-05:00",
+    "created": "2015-09-23T12:27:00-04:00"
+}

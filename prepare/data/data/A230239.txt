@@ -1,0 +1,56 @@
+{
+    "number": 230239,
+    "data": "0,1,4,5,9,12,13,16,17,20,21,25,28,29,32,33,36,37,41,44,45,48,49,52,53,57,60,61,64,65,68,69,73,76,77,80,81,84,85,89,92,93,96,97,100,101,105,108,109,112,113,116,117,121,124,125,128,129,132,133,137",
+    "name": "Values of N for which the equation x^2 - 4*y^2 = N has integer solutions.",
+    "comment": [
+        "This equation is a Pellian equation of the form x^2 - D^2*y^2 = N. A042965 covers the case D=1.",
+        "This sequence is also numbers that are congruent to {0,1,4,5,9,12,13} mod 16."
+    ],
+    "link": [
+        "Bruno Berselli, <a href=\"/A230239/b230239.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,0,0,0,0,1,-1)."
+    ],
+    "formula": [
+        "G.f.: x^2*(x+1)*(3*x+1)*(x^2-x+1)*(x^2+1) / ((x-1)^2*(x^6+x^5+x^4+x^3+x^2+x+1))."
+    ],
+    "example": [
+        "For N=33, the equation x^2 - 4*y^2 = 33 has solutions (X,Y) = (7,2) and (17,8)."
+    ],
+    "program": [
+        "(PARI)",
+        "\\\\ Values of n for which the equation x^2 - d^2*y^2 = n has integer solutions.",
+        "\\\\ e.g. allpellsq(2, 20) gives [0,1,4,5,9,12,13,16,17,20]",
+        "allpellsq(d, nmax) = {",
+        "  local(v=[0], n, w);",
+        "  for(n=1, nmax,",
+        "    w=pellsq(d, n);",
+        "    if(#w>0, v=concat(v, n))",
+        "  );",
+        "  v",
+        "}",
+        "\\\\ All integer solutions to x^2-d^2*y^2=n.",
+        "\\\\ e.g. pellsq(5, 5200) gives [265,51;140,24;85,9]",
+        "pellsq(d, n) = {",
+        "  local(m=Mat(), f, x, y);",
+        "  fordiv(n, f,",
+        "    if(f*f>n, break);",
+        "    if((n-f^2)%(2*f*d)==0,",
+        "      y=(n-f^2)\\(2*f*d);",
+        "      x=d*y+f;",
+        "      m=concat(m, [x,y]~)",
+        "    )",
+        "  );",
+        "  m~",
+        "}"
+    ],
+    "xref": [
+        "Cf. A042965, A230240."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Colin Barker_, Oct 13 2013",
+    "references": 5,
+    "revision": 21,
+    "time": "2015-06-13T00:54:46-04:00",
+    "created": "2013-10-14T06:22:18-04:00"
+}

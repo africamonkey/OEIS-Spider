@@ -1,0 +1,36 @@
+{
+    "number": 68876,
+    "data": "2,23,101,2129,10103,210101,1010129,21010127,101010167,2101010147,10101010163,210101010187,1010101010341,21010101010147,101010101010323,2101010101010141,10101010101010141,210101010101010323,1010101010101010143",
+    "name": "Smallest n-digit prime with property that digits alternate in parity.",
+    "example": [
+        "a(4) = 2129 as 2, 1, 2 and 9 have even and odd parity alternately."
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{m = Mod[ IntegerDigits@ n, 2]}, m == Split[m, UnsameQ][[1]]]; f[n_] := Block[{c = 1 + 100 (100^Ceiling[n/2 - 1] - 1)/99, k}, k = If[ OddQ@ n, c, 2*10^(n - 1) + c]; k = NextPrime[k - 1]; While[ !fQ@ k, k = NextPrime@ k]; k]; Array[f, 21] (* _Robert G. Wilson v_, Apr 01 2011 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "concat = lambda x: Integer(''.join(map(str,x)),base=10)",
+        "def A068876(n):",
+        "....dd = {0:range(0,10,2), 1: range(1,10,2)}",
+        "....for d0 in [1..9]:",
+        "........if n % 2 == 0 and d0 % 2 == 1: continue # optimization",
+        "........ds = [dd[(d0+1+i) % 2] for i in range(n-1)]",
+        "........for dr in CartesianProduct(*ds):",
+        "............c = concat([d0]+dr)",
+        "............if is_prime(c): return c  # [_D. S. McNeil_, Apr 02 2011]"
+    ],
+    "xref": [
+        "Cf. A030144, A068877."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Mar 19 2002",
+    "ext": [
+        "a(9)-a(13) corrected and a(14)-a(19) from _Donovan Johnson_, Apr 01 2011"
+    ],
+    "references": 7,
+    "revision": 17,
+    "time": "2014-02-12T18:25:24-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

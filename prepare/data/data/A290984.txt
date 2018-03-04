@@ -1,0 +1,30 @@
+{
+    "number": 290984,
+    "data": "6,95,427,1828,34619,507629,7342911,21958718",
+    "name": "First n-digit number to appear twice in a row in the decimal expansion of e.",
+    "comment": [
+        "18281828 appears in e before any 1-digit, 2-digit, or 3-digit number appears twice in a row.",
+        "a(n) starts at positions 31, 49, 97, 2, 112869, 5005575, 1561314, 69682897, ... - _Bobby Jacobs_, Sep 05 2017"
+    ],
+    "example": [
+        "a(1) = 6 because 6 is the first 1-digit number to appear twice in a row in the decimal expansion of e = 2.718281828459045235360287471352(66)..."
+    ],
+    "mathematica": [
+        "With[{s = Rest@ First@ RealDigits[N[E, 10^5]]}, Keys@ Merge[#, Identity] &@ Table[TakeSmallest[#, 1] &@ Sort[Map[#[[1, 1]] &, DeleteCases[#, {}]]] &@ Map[SequenceCases[#, {a_, b_} /; b == a + n] &, KeyMap[FromDigits, PositionIndex@ Partition[s, n, 1]]], {n, 4}]] (* _Michael De Vlieger_, Aug 16 2017 *)",
+        "(* or *)",
+        "s = First@ RealDigits[E,10,51*^5]; Table[p = Partition[s, k, 1]; FromDigits @@ p[[ Select[ Range[ Length@p - k], p[[#]] == p[[#+k]] &, 1]]], {k, 7}] (* much faster, _Giovanni Resta_, Sep 05 2017 *)"
+    ],
+    "xref": [
+        "Cf. A001113, A288291, A290977."
+    ],
+    "keyword": "base,more,nonn",
+    "offset": "1,1",
+    "author": "_Bobby Jacobs_, Aug 16 2017",
+    "ext": [
+        "a(6)-a(8) from _Giovanni Resta_, Sep 05 2017"
+    ],
+    "references": 2,
+    "revision": 38,
+    "time": "2017-09-05T17:36:08-04:00",
+    "created": "2017-08-17T17:36:27-04:00"
+}

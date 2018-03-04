@@ -1,0 +1,64 @@
+{
+    "number": 268653,
+    "data": "1,1,7,82,1345,28396,734149,22485898,796769201,32084546824,1447917011461,72411962077126,3976481464087609,237939307837951708,15412492927027232261,1074675869343994244266,80270802348342665849569,6395153963612453962942096,541390375948749181692141061,48536543026953818449535683054,4594206854845500504888845269481,457878082780635055560866092165156,47930551834845432770784732668907205",
+    "name": "E.g.f.: exp( T(T(T(x))) ), where T(x) = -LambertW(-x) is Euler's tree function (A000169).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A268653/b268653.txt\">Table of n, a(n) for n = 0..150</a>"
+    ],
+    "formula": [
+        "E.g.f. satisfies:",
+        "(1) A(x) = A(x/exp(x))^A(x).",
+        "(2) A(x) = W( x*W(x) * W(x*W(x)) ), where W(x) = LambertW(-x)/(-x).",
+        "(3) A(x) = W( x*W(x) )^A(x), where W(x) = LambertW(-x)/(-x).",
+        "(4) A(x) = exp( -A(x)*LambertW(LambertW(-x)) ).",
+        "(5) A(x) = ( LambertW(LambertW(-x)) / LambertW(-x) )^A(x).",
+        "(6) A(x/exp(x)) = exp(T(T(x))) = LambertW(LambertW(-x)) / LambertW(-x).",
+        "a(n) ~ exp(1 + (exp(-1) + exp(-1 - exp(-1)))*n) * n^(n-1) / sqrt((1 - exp(-1))*(1-exp(-1 - exp(-1)))). - _Vaclav Kotesovec_, Apr 01 2016"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 7*x^2/2! + 82*x^3/3! + 1345*x^4/4! + 28396*x^5/5! + 734149*x^6/6! + 22485898*x^7/7! + 796769201*x^8/8! +...",
+        "where A(x) = A( x/exp(x) )^A(x).",
+        "RELATED SERIES.",
+        "Define W(x) = LambertW(-x)/(-x), where W(x) = exp(x*W(x)) and begins:",
+        "W(x) = 1 + x + 3*x^2/2! + 4^2*x^3/3! + 5^3*x^4/4! + 6^4*x^5/5! + 7^5*x^6/6! + 8^6*x^7/7! + 9^7*x^8/8! +...+ A000272(n+1)*x^n/n! +...",
+        "then",
+        "(1) A(x) = W( x*W(x) * W(x*W(x)) ),",
+        "(2) A(x) = W( x*W(x) )^A(x),",
+        "(3) A(x) = exp( A(x) * x*W(x) * W(x*W(x)) ),",
+        "(4) A(x/exp(x)) = W(x*W(x)).",
+        "Let G(x) = A(x/exp(x)), which begins:",
+        "G(x) = 1 + x + 5*x^2/2! + 43*x^3/3! + 525*x^4/4! + 8321*x^5/5! + 162463*x^6/6! + 3774513*x^7/7! + 101808185*x^8/8! +...+ A227176(n)*x^n/n! +...",
+        "then W(x), G(x), and A(x) are in the family of functions that begin:",
+        "(1) W(x) = exp(x)^W(x) = exp(T(x)),",
+        "(2) G(x) = W(x)^G(x) = exp(T(T(x))),",
+        "(3) A(x) = G(x)^A(x) = exp(T(T(T(x)))), ...",
+        "where T(x) = -LambertW(-x) is Euler's tree function:",
+        "T(x) = x + 2*x^2/2! + 3^2*x^3/3! + 4^3*x^4/4! + 5^4*x^5/5! + 6^5*x^6/! + 7^6*x^7/7! + 8^7*x^8/8! +...+ A000169(n)*x^n/n! +..."
+    ],
+    "program": [
+        "(PARI) /* E.g.f.: A(x) = exp(T(T(T(x))) ) */",
+        "{a(n)=local(T=sum(k=1, n, k^(k-1)*x^k/k!)+x*O(x^n)); n!*polcoeff(exp(subst(T, x, subst(T, x, T))), n)}",
+        "for(n=0, 25, print1(a(n), \", \"))",
+        "(PARI) /* E.g.f.: A(x) = W( x*W(x) * W(x*W(x)) ) */",
+        "{a(n)=local(W=sum(k=0, n, (k+1)^(k-1)*x^k/k!)+x*O(x^n)); n!*polcoeff(subst(W, x, subst(x*W, x, x*W)), n)}",
+        "for(n=0, 25, print1(a(n), \", \"))",
+        "(PARI) /* E.g.f.: A(x) = exp( -A(x)*LambertW(LambertW(-x)) ) */",
+        "{a(n)=local(A=1+x, LambertW=sum(k=1, n, -k^(k-1)*(-x)^k/k!)+x*O(x^n));",
+        "for(i=1, n, A=exp(-A*subst(LambertW, x, subst(LambertW, x, -x)) +x*O(x^n))); n!*polcoeff(A, n)}",
+        "for(n=0, 25, print1(a(n), \", \"))",
+        "(PARI) /* E.g.f.: A(x) = ( LambertW(LambertW(-x))/LambertW(-x) )^A(x) */",
+        "{a(n)=local(A=1+x, W=sum(k=0, n, (k+1)^(k-1)*x^k/k!)+x*O(x^n));",
+        "for(i=1, n, A=subst(W,x,x*W)^A); n!*polcoeff(A, n)}",
+        "for(n=0, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A227176, A227278, A000169, A000272."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Feb 09 2016",
+    "references": 4,
+    "revision": 28,
+    "time": "2016-04-01T13:25:50-04:00",
+    "created": "2016-02-09T22:34:26-05:00"
+}

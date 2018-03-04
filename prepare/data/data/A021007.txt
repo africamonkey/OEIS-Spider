@@ -1,0 +1,46 @@
+{
+    "number": 21007,
+    "data": "5,13,31,61,103,139,181,193,229,421,523,571,601,811,823,1021,1231,1279,1291,1609,1669,1873,2083,2551,2659,2689,2971,3121,3253,3331,3361,3769,3823,3919,4003,5233,5419,5479,6091,6271,6553,6661,6691,8221,8821,8971",
+    "name": "Let q_k = p*(p+2) be product of k-th pair of twin primes; sequence gives values of p+2 such that (q_k)^2 > q_{k-i}*q_{k+i} for all 1 <= i <= k-1.",
+    "comment": [
+        "Even if there are infinitely many twin primes, it is not clear that this sequence is infinite.  The Hardy-Littlewood conjecture implies that there are infinitely many twin primes where p+2 is not in the sequence. - _Robert Israel_, Apr 02 2014"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A021007/b021007.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "(11*13)^2 > (5*7)*(17*19): (11*13)^2 > (3*5)*(29*31)."
+    ],
+    "maple": [
+        "N:= 20000:",
+        "Primes:= [seq(ithprime(i),i=1..N)]:",
+        "Twink:= select(t-> (Primes[t+1]=Primes[t]+2),[$1..N-1]):",
+        "Qk:= [seq(Primes[i]*Primes[i+1],i=Twink)]:",
+        "filter:= proc(k)",
+        "   local T,i;",
+        "   T:= Qk[k]^2;",
+        "   for i from 1 to k-1 do",
+        "     if Qk[k-i]*Qk[k+i]>=T then return false fi",
+        "   od;",
+        "   true",
+        "end;",
+        "R:= select(filter,[$1 .. floor(nops(Twink)/2)]):",
+        "A021007:= map(k -> Primes[Twink[k]+1],R); # _Robert Israel_, Apr 02 2014"
+    ],
+    "program": [
+        "(PARI) twins=List(); p=3;forprime(q=5,1e5,if(q-p==2,listput(twins,q)); p=q); for(k=1,(#twins+1)\\2, for(i=1,k-1,if(twins[k]^2 < twins[k-i]*twins[k+i],next(2))); print1(twins[k]\", \")) \\\\ _Charles R Greathouse IV_, Apr 02 2014"
+    ],
+    "xref": [
+        "Cf. A028388, A021005."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Naohiro Nomoto_",
+    "ext": [
+        "a(1) inserted by _Robert Israel_, Apr 02 2014"
+    ],
+    "references": 2,
+    "revision": 18,
+    "time": "2014-04-02T11:55:49-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

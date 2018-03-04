@@ -1,0 +1,56 @@
+{
+    "number": 41011,
+    "data": "0,1,1,5,6,29,35,169,204,985,1189,5741,6930,33461,40391,195025,235416,1136689,1372105,6625109,7997214,38613965,46611179,225058681,271669860,1311738121,1583407981,7645370045,9228778026,44560482149",
+    "name": "Denominators of continued fraction convergents to sqrt(8).",
+    "comment": [
+        "Sqrt(8) = 2 + continued fraction [0; 1, 4, 1, 4, 1, 4,...] = 4/2 + 4/5 + 4/(5*29) + 4/(29*169) + 4/(169*985)... - _Gary W. Adamson_, Dec 21 2007",
+        "This is the sequence of Lehmer numbers U_n(sqrt(R),Q) with the parameters R = 4 and Q = -1. It is a strong divisibility sequence, that is, GCD(a(n),a(m)) = a(GCD(n,m)) for all natural numbers n and m. - _Peter Bala_, May 12 2014"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A041011/b041011.txt\">Table of n, a(n) for n = 0..200</a>",
+        "P. Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL12/Barry4/barry64.html\">Symmetric Third-Order Recurring Sequences, Chebyshev Polynomials, and Riordan Arrays</a>, JIS 12 (2009) 09.8.6",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/LehmerNumber.html\">Lehmer Number</a>",
+        "<a href=\"/index/Di#divseq\">Index to divisibility sequences</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (0,6,0,-1)."
+    ],
+    "formula": [
+        "a(2n) = A000129(2n)/2, a(2n+1) = A000129(2n+1).",
+        "a(n) = 6*a(n-2) - a(n-4). Also:",
+        "a(2n) = a(2n-1)+a(2n-2), a(2n+1)=4*a(2n)+a(2n-1).",
+        "G.f.: (x+x^2-x^3)/(1-6*x^2+x^4).",
+        "a(n) = (1/4)*(3 - 2*sqrt(2))^(-1/4)*(3 - 2*sqrt(2))^((1/4)*(-1)^n)*(3 - 2*sqrt(2))^(1/2*n) + (1/4)*(3 + 2*sqrt(2))^((1/4)*(-1)^n)*(3 + 2*sqrt(2))^(1/2*n)*(3 + 2*sqrt(2))^(-1/4) - (1/4)*(-1)^n*(3 + 2*sqrt(2))^((1/4)*(-1)^n)*(3 + 2*sqrt(2))^(1/2*n)*(3 + 2*sqrt(2))^(-1/4) -(1/4)*(3 - 2 *sqrt(2))^(-1/4)*(-1)^n*(3 - 2*sqrt(2))^((1/4)*(-1)^n)*(3 - 2*sqrt(2))^(1/2*n) + (3/16)*(3 + 2*sqrt(2))^((1/4)*(-1)^n)*(3 + 2*sqrt(2))^(1/2*n)*(3 + 2*sqrt(2))^( - 1/4)*sqrt(2) - (1/16)*(-1)^n*(3 + 2*sqrt(2))^((1/4)*(-1)^n)*(3 + 2*sqrt(2))^(1/2*n)*(3 + 2*sqrt(2))^( - 1/4) *sqrt(2) - (3/16)*(3 - 2*sqrt(2))^(-1/4)*sqrt(2)*(3 - 2*sqrt(2))^((1/4)*(-1)^n)*(3 - 2 *sqrt(2))^(1/2*n) + (1/16)*(3 - 2*sqrt(2))^(-1/4)*(-1)^n*sqrt(2)*(3 - 2*sqrt(2))^((1/4)*(-1)^n)*(3 - 2*sqrt(2))^(1/2*n). - _Paolo P. Lava_, Feb 19 2009",
+        "From _Peter Bala_, May 12 2014: (Start)",
+        "For n odd, a(n) = (alpha^n - beta^n)/(alpha - beta), and for n even, a(n) = (alpha^n - beta^n)/(alpha^2 - beta^2), where alpha = 1 + sqrt(2) and beta = 1 - sqrt(2).",
+        "a(n) = product {k = 1..floor((n-1)/2)} ( 4 + 4*cos^2(k*Pi/n) ) for n >= 1. (End)",
+        "From _Gerry Martens_, Jul 11 2015: (Start)",
+        "Interspersion of 2 sequences [a1(n-1),a0(n)] for n>0:",
+        "a0(n) = ((3-2*sqrt(2))^n*(2+sqrt(2))-(-2+sqrt(2))*(3+2*sqrt(2))^n)/4.",
+        "a1(n) = (-(3-2*sqrt(2))^n+(3+2*sqrt(2))^n)/(4*sqrt(2)). (End)",
+        "a(n) = ((-(-1 - sqrt(2))^n - 3*(1-sqrt(2))^n + (-1+sqrt(2))^n + 3*(1+sqrt(2))^n))/(8*sqrt(2)). - _Colin Barker_, Mar 27 2016"
+    ],
+    "mathematica": [
+        "Join[{0}, Denominator[NestList[(4/(4 + #))&, 0, 60]]] (* _Vladimir Joseph Stephan Orlovsky_, Apr 13 2010 *)",
+        "CoefficientList[Series[(x + x^2 - x^3)/(1 - 6 x^2 + x^4), {x, 0, 40}], x] (* _Vincenzo Librandi_, Dec 10 2013 *)",
+        "a0[n_] := ((3-2*Sqrt[2])^n*(2+Sqrt[2])-(-2+Sqrt[2])*(3+2*Sqrt[2])^n)/4 // Simplify",
+        "a1[n_] := (-(3-2*Sqrt[2])^n+(3+2*Sqrt[2])^n)/(4*Sqrt[2]) // Simplify",
+        "Flatten[MapIndexed[{a1[#-1], a0[#]} &,Range[20]]] (* _Gerry Martens_, Jul 11 2015 *)"
+    ],
+    "program": [
+        "(MAGMA) I:=[0, 1, 1, 5]; [n le 4 select I[n] else 6*Self(n-2)-Self(n-4): n in [1..30]]; // _Vincenzo Librandi_, Dec 10 2013",
+        "(PARI) a(n)=([0,1,0,0; 0,0,1,0; 0,0,0,1; -1,0,6,0]^n*[0;1;1;5])[1,1] \\\\ _Charles R Greathouse IV_, Nov 13 2015",
+        "(PARI) x='x+O('x^99); concat(0, Vec((x+x^2-x^3)/(1-6*x^2+x^4))) \\\\ _Altug Alkan_, Mar 27 2016"
+    ],
+    "xref": [
+        "Cf. A000129, A010466, A041010. A089499, A136211, A152118."
+    ],
+    "keyword": "nonn,cofr,easy",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Entry improved by _Michael Somos_"
+    ],
+    "references": 6,
+    "revision": 50,
+    "time": "2016-09-07T15:16:36-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

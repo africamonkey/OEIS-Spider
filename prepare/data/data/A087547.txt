@@ -1,0 +1,48 @@
+{
+    "number": 87547,
+    "data": "0,1,4,22,160,1464,16224,211632,3179520,54092160,1028113920,21594021120,496702402560,12418039065600,335293281792000,9723592350259200,301432670532403200,9947299050359193600,348155822449999872000,12881771833023700992000,502389223133024747520000",
+    "name": "a(n) = n!*2^(n+1) * (Integral_{x = 0..1} 1/(1+x^2)^(n+1) dx - Pi*(2*n)!/(2^(n+1)*n!).",
+    "comment": [
+        "a(n)/A001147 gives an approximation for Pi/2 with (n-1)/3 + 1 digits of accuracy. - _Aaron Kastel_, Nov 13 2012"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A087547/b087547.txt\">Table of n, a(n) for n = 0..404</a>",
+        "Richard P. Brent, Hideyuki Ohtsuka, Judy-anne H. Osborn, Helmut Prodinger, <a href=\"http://arxiv.org/abs/1411.1477\">Some binomial sums involving absolute values</a>, arXiv:1411.1477 [math.CO], 2014 (see page 15)."
+    ],
+    "formula": [
+        "a(n) = (2n-1)*a(n-1) + (n-1)!. - _Aaron Kastel_, Nov 13 2012",
+        "From _Peter Bala_, Jun 21 2013: (Start)",
+        "a(n) = (2*n)!/(n!*2^n)*(sum {k = 0..n-1} 2^k*k!^2/(2*k+1)!). Thus a(n)/ ((2*n)!/(n!*2^n)) -> Pi/2 as n -> inf since sum {k = 0..inf} 2^k*k!^2/(2*k+1)! = Pi/2.",
+        "It appears that a(n) = sum {k = 1..n} 2^(k-1)*(k-1)!*(n+k-1)!/(2*k-1)!. Cf. A167571.",
+        "a(n) = (2*n)!/(n!*2^n)*(Pi/2) - 2^(n+1)*n!*(int {x = 0..1} x^(2*n)/(1+x^2)^(n+1) dx). Cf. A068102. (End)",
+        "From _Peter Bala_, Feb 18 2015: (Start)",
+        "Recurrence equation: a(n) = (3*n - 2)*a(n-1) - (n - 1)*(2*n - 3)*a(n-2) with a(1) = 1 and a(2) = 4.",
+        "The sequence b(n) = A001147(n), beginning [1, 3, 15, 105, 945, ... ], satisfies the same second-order recurrence equation. This leads to the generalized continued fraction expansion limit {n -> inf} a(n)/b(n) = Pi/2 = 1 + 1/(3 - 6/(7 - 15/(10 - ... - n*(2*n - 1)/((3*n + 1) - ... )))). (End)"
+    ],
+    "example": [
+        "a(3) = 22."
+    ],
+    "maple": [
+        "f := proc(n) 4*n!*2^(n-1) * (int (1/(1+x^2)^(n+1),x=0..1)) - Pi*(2*n)!/(2^(n+1)*n!); end; # _N. J. A. Sloane_"
+    ],
+    "mathematica": [
+        "f[n_] := Simplify[n!*2^(n + 1)*(Integrate[ 1/(1 + x^2)^(n + 1), {x, 0, 1}]) - Pi(2n)!/(2^(n + 1)*n!)]; Table[ f[n], {n, 0, 20}] (* _Robert G. Wilson v_, Oct 31 2003 *)"
+    ],
+    "program": [
+        "(MAGMA) [0] cat [n eq 1 select 1 else (2*n-1)*Self(n-1)+Factorial(n-1): n in [1..25]]; // _Vincenzo Librandi_, Nov 07 2014",
+        "(MAGMA) I:=[1,4]; [0] cat [n le 2 select I[n]  else (3*n-2)*Self(n-1)-(n-1)*(2*n-3)*Self(n-2): n in [1..25] ]; // _Vincenzo Librandi_, Feb 19 2015"
+    ],
+    "xref": [
+        "Cf. A068102, A167571, A001147."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "Al Hakanson (hawkuu(AT)excite.com), Oct 24 2003",
+    "ext": [
+        "More terms from _N. J. A. Sloane_, Oct 30 2003"
+    ],
+    "references": 6,
+    "revision": 39,
+    "time": "2016-11-05T11:06:39-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

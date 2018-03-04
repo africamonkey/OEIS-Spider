@@ -1,0 +1,36 @@
+{
+    "number": 213932,
+    "data": "1,5,707,268326,168146839,143163177336,149998192424502,182598353781240533,249032962712552804432,371285830572997665257695,594729699502746726969433566,1010574132470951359396337494800,1804193873947216124589237862262262",
+    "name": "Number of solid standard Young tableaux of shape [[n,n,n],[n,n]].",
+    "comment": [
+        "Also the number of solid standard Young tableaux of shape [[n,n],[n,n],[n]]."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A213932/b213932.txt\">Table of n, a(n) for n = 0..30</a>",
+        "S. B. Ekhad, D. Zeilberger, <a href=\"https://arxiv.org/abs/1202.6229\">Computational and Theoretical Challenges on Counting Solid Standard Young Tableaux</a>, arXiv:1202.6229v1 [math.CO], 2012",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau\">Young tableau</a>"
+    ],
+    "maple": [
+        "b:= proc(l) option remember; local m; m:= nops(l);",
+        "      `if`({map(x-> x[], l)[]}={0}, 1, add(add(`if`(l[i][j]>",
+        "      `if`(i=m or nops(l[i+1])<j, 0, l[i+1][j]) and l[i][j]>",
+        "      `if`(nops(l[i])=j, 0, l[i][j+1]), b(subsop(i=subsop(",
+        "       j=l[i][j]-1, l[i]), l)), 0), j=1..nops(l[i])), i=1..m))",
+        "    end:",
+        "a:= n-> b([[n, n, n], [n, n]]):",
+        "seq(a(n), n=0..10);"
+    ],
+    "mathematica": [
+        "b[l_] := b[l] = With[{ m = Length[l]}, If[Union[Flatten[l]] == {0}, 1, Sum[Sum[If[l[[i, j]] > If[i == m || Length[l[[i+1]]] < j, 0, l[[i+1, j]]] && l[[i, j]] > If[Length[l[[i]]] == j, 0, l[[i, j+1]]], b[ReplacePart[l, i -> ReplacePart[l[[i]], j -> l[[i, j]]-1]]], 0], {j, 1, Length[l[[i]]]}], {i, 1, m}]]]; a[n_] := b[{{n, n, n}, {n, n}}]; Table[a[n], {n, 0, 12}] (* _Jean-Fran\u00e7ois Alcover_, Dec 18 2013, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A213978, A214637, A214638."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Jul 23 2012",
+    "references": 6,
+    "revision": 29,
+    "time": "2017-07-19T19:42:34-04:00",
+    "created": "2012-07-26T02:43:31-04:00"
+}

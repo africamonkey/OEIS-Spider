@@ -1,0 +1,51 @@
+{
+    "number": 247607,
+    "data": "5,7,17,19,29,31,43,59,103,281,457,461,463,499,607,1409,1451,2143,2657,4229,16063,19583,19699,62143,65537,70919,107347,113159,124783,124981,600703,3103423,18936719",
+    "name": "Primes whose number of symmetric connections to other primes within the same power of two interval exceeds the number of symmetric connections to composites.",
+    "comment": [
+        "While there may be some additional terms, it is thought to be a finite sequence. An exhaustive search was conducted up to 2^29.",
+        "Members larger than 2^8 will also be in A200321."
+    ],
+    "example": [
+        "In the interval (2^4,2^5) [17,19,21,23,25,27,29,31], the prime 17 symmetrically couples with 31 around the midpoint of the interval, 23 around the midpoint of the halved interval, and 19 in the quartered interval. There is no composite couple. It has 3 prime and 0 composite symmetric connections. The same process for 19 produces 2 prime and 1 composite connection. Therefore 17 and 19 are members. 23 couples with 25, 17 and 22. It has 1 prime and 2 composite connections so it is not a member."
+    ],
+    "program": [
+        "(MAGMA)",
+        "XOR := func<a, b | Seqint([ (adigs[i] + bdigs[i]) mod 2 : i in [1..n]], 2)",
+        "  where adigs := Intseq(a, 2, n)",
+        "  where bdigs := Intseq(b, 2, n)",
+        "  where n := 1 + Ilog2(Max([a, b, 1]))>;",
+        "function PCcoord(X,i,P,C)",
+        "if (i eq 1) then",
+        "    if (P gt C) then return true;",
+        "      else",
+        "      return false,P,C;",
+        "    end if;",
+        "  else",
+        "    xornum:=2^i - 2;",
+        "    xorcouple:=XOR(X, xornum);",
+        "    if (IsPrime(xorcouple)) then",
+        "       return PCcoord(X, i-1,P+1,C);",
+        "    else",
+        "       return PCcoord(X, i-1,P,C+1);",
+        "    end if;",
+        "  end if;",
+        "end function;",
+        "for k:= 1 to 2^10 + 1 by 2 do",
+        "  if IsPrime(k) then",
+        "     if PCcoord(k,Ilog2(k),0,0) then k;",
+        "     end if;",
+        "  end if;",
+        "end for;"
+    ],
+    "xref": [
+        "Cf. A200231."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Brad Clardy_, Sep 22 2014",
+    "references": 0,
+    "revision": 25,
+    "time": "2014-10-30T06:53:54-04:00",
+    "created": "2014-10-30T06:53:54-04:00"
+}

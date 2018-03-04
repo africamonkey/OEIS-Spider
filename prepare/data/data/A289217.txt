@@ -1,0 +1,42 @@
+{
+    "number": 289217,
+    "data": "1,4,11,28,59,126,257,526,1073,2164,4367,8758,17537,35088,70187,140388,280795,561612,1123315,2246642,4493329,8986712,17973451,35946942,71893933,143787890,287575797,575151614,1150303251,2300606554,4601213127,9202426258",
+    "name": "a(1)=1, a(n)=a(n-1) plus the second prime greater than a(n-1).",
+    "link": [
+        "Harvey P. Dale, <a href=\"/A289217/b289217.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) ~ k*2^n, where k = 2.142606837.... - _Charles R Greathouse IV_, Jun 29 2017"
+    ],
+    "example": [
+        "a(3) = 11 because a(2) = 4, the first prime greater than 4 is 5, the second prime greater than 4 is 7, and 4 + 7 = 11."
+    ],
+    "mathematica": [
+        "NestList[#+NextPrime[#,2]&,1,40]"
+    ],
+    "program": [
+        "(PARI) step(n)=n+nextprime(nextprime(n+1)+1)",
+        "a(n)=if(n>1, step(a(n-1)), 1) \\\\ _Charles R Greathouse IV_, Jun 29 2017",
+        "(Python)",
+        "from sympy import nextprime",
+        "class Memoize:",
+        "    def __init__(self, func):",
+        "        self.func=func",
+        "        self.cache={}",
+        "    def __call__(self, arg):",
+        "        if arg not in self.cache:",
+        "            self.cache[arg] = self.func(arg)",
+        "        return self.cache[arg]",
+        "@Memoize",
+        "def step(n): return n + nextprime(nextprime(n))",
+        "def a(n): return n if n<2 else step(a(n - 1))",
+        "print map(a, xrange(1, 101)) # _Indranil Ghosh_, Jul 22 2017"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Harvey P. Dale_, Jun 28 2017",
+    "references": 1,
+    "revision": 17,
+    "time": "2017-07-23T21:54:25-04:00",
+    "created": "2017-06-29T10:19:35-04:00"
+}

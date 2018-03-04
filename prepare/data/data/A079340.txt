@@ -1,0 +1,50 @@
+{
+    "number": 79340,
+    "data": "1,5,72,1380,31920,861840,26611200,925404480,35805369600,1526139014400,71066912716800,3590219977344000,195589552648089600,11430978821982720000,713448513897799680000,47363888351558338560000",
+    "name": "Absolute value of determinant of n X n matrix whose entries are the integers from 1 to n^2 spiraling outward, ending in a corner.",
+    "comment": [
+        "If n == 0 or 1 (mod 4), the sign of the determinant will be independent of the orientation of the spiral. For n == 2 or 3 (mod 4), the sign will be reversed when the orientation is rotated by 1/4 or flipped on the horizontal or vertical axis. - _Franklin T. Adams-Watters_, Dec 31 2013",
+        "This distribution of the integers is sometimes known as Ulam's spiral, although that is sometimes reserved for when the primes are marked out in some way. - _Franklin T. Adams-Watters_, Dec 31 2013"
+    ],
+    "link": [
+        "Gaurav Bhatnagar, Christian Krattenthaler, <a href=\"https://arxiv.org/abs/1704.02859\">Spiral determinants</a>, arXiv:1704.02859 [math.CO], 2017."
+    ],
+    "formula": [
+        "a(n) = (2n^2-3n+3) (2n-2)!/(2 (n-1)!). - Conjectured by _Dean Hickerson_, Jan 30 2003. Proved in the article by Bhatnagar and Krattenthaler."
+    ],
+    "example": [
+        "n=2, det=-5: {1 2 / 4 3 }.",
+        "n=3, det=72: {7 8 9 / 6 1 2 / 5 4 3 }.",
+        "n=4, det=-1380: { 7 8 9 10 / 6 1 2 11 /5 4 3 12 / 16 15 14 13 }.",
+        "n=5, det=31920: { 21 22 23 24 25 / 20 7 8 9 10 / 19 6 1 2 11 /18 5 4 3 12 / 17 16 15 14 13 }"
+    ],
+    "mathematica": [
+        "M[0, 0] = 1;",
+        "M[i_, j_] := If[i <= j,",
+        "  If[i + j >= 0, If[i != j, M[i + 1, j] + 1, M[i, j - 1] + 1],",
+        "   M[i, j + 1] + 1],",
+        "  If[i + j > 1, M[i, j - 1] + 1, M[i - 1, j] + 1]",
+        "  ]",
+        "M[n_] := If[EvenQ[n],",
+        "  Table[M[i, j], {j, n/2, -n/2 + 1, -1}, {i, -n/2 + 1, n/2}],",
+        "  Table[M[i, j], {j, (n - 1)/2, -(n - 1)/2, -1}, {i, -(n - 1)/2, (n - 1)/2}]]",
+        "a[n_]:=Det[M[n]] (* _Christian Krattenthaler_, Apr 19 2017 *)"
+    ],
+    "program": [
+        "(Maxima) A079340(n):=if n=1 then 1 else (2*n^2-3*n+3)*(2*n-2)!/(2*(n-1)!)$",
+        "makelist(A079340(n),n,1,30); /* _Martin Ettl_, Nov 05 2012 */"
+    ],
+    "xref": [
+        "Cf. A078475, A023999, A067276, A052182."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Kit Vongmahadlek (kit119(AT)yahoo.com), Jan 03 2003",
+    "ext": [
+        "Extended by _Robert G. Wilson v_, Jan 25 2003"
+    ],
+    "references": 4,
+    "revision": 27,
+    "time": "2017-04-21T08:56:19-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 81545,
+    "data": "2,5,37,193,2161,23041,241921,2903041,55987201,958003201,17915904001,250822656001,5518098432001,142216445952001,2897001676800001,90386452316160001,1807729046323200001,52563198423859200001",
+    "name": "Smallest prime which is 1 more than the product of n distinct composite numbers.",
+    "comment": [
+        "Let K(m) be the smallest possible K satisfying the Theorem. Conjecture: K(m) ~ m, i.e. a(k) ~ A002808(1)*...*A002808(k), only very few of the last factors will be insignificantly larger.",
+        "Let K(b,r) be the smallest possible K satisfying the Corollary, i.e. the index from which on all a(k)-1 are multiple of b^r. With the preceding conjecture, there are asymptotically at least (k+PrimePi(A002808(k)))/b multiples of b among the factors of a(k)-1, so this is an (asymptotic) lower bound on r.",
+        "Experimentally, a(k) = 1+product( prime(i)^e(i), i=1..oo ) with e(1)~k*3/2, e(2)~k*2/3, e(3)~k/4, e(4)~k/5,... (Here ~ is not asymptotic equivalence.) Is there a simple formula? (M. F. Hasler, Jun 16 2007)"
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A081545/b081545.txt\">Table of n, a(n) for n = 0,...,100</a>"
+    ],
+    "formula": [
+        "Theorem: For any m>0 there is K>0 such that for all k>K, a(k)-1 is divisible by the first m composite numbers.",
+        "Corollary: For any b>1, r>0 there is K>0 such that for all k>K, a(k) = 1 (mod b^r). Taking b=10 shows that all a(k)>a(8), end in 0..01 with an increasing number of zeros. (M. F. Hasler, Jun 16 2007)"
+    ],
+    "example": [
+        "Writing c(n) for the n-th composite number A002808(n):",
+        "a(0) = prod(c(i),i=1..0)+1 = 1+1 = 2 (empty product).",
+        "a(1) = c(1)+1 = 4+1 = 5.",
+        "a(2) = c(1)*c(4)+1 = 4*9+1 = 37, since c(1)*c(k)+1 is not prime for k<4.",
+        "a(3) = c(1)*c(2)*c(3)+1 = 4*6*8 + 1 = 193.",
+        "a(4) = c(1)*c(2)*c(4)*c(5)+1 = 2161, nothing better since c(6)*c(3)>c(5)*c(4).",
+        "a(5) = c(1)*c(2)*c(3)*c(5)*c(6)+1 = 23041, none better since c(7)*c(4)>c(5)*c(6).",
+        "a(6) = c(1)*c(2)*c(3)*c(4)*c(5)*c(7)+1 = 241921, best since c(1)*...*c(6)+1 is not prime.",
+        "a(7) = p(7)+1 = 2903041 with p(n)=prod(c(i),i=1..n). (M. F. Hasler, Jun 16 2007)"
+    ],
+    "program": [
+        "(PARI) A081545(n, b=0 /*best*/, p=1 /*product*/, f=[]/*factors*/)={ if( #f<n, /* initialize f[1..n] to first n composites */ b=3; f=vector( n, i, while( isprime( b++ ),); b ); p=prod( i=1,n-1, f[i] ); /* get upper limit by incrementing last factor until prime is found */ while( !isprime( 1+p*b ), while( isprime( b++ ),)); b=1+p*b; p*=f[n] ); if( isprime( 1+p ), /*print(\"best: \" f);*/ return( 1+p )); /* always p < b */ /* increase the n-th factor to recursively explore all solutions < b */ p /= f[n]; until( b <= 1+p*f[n] || ( n < #f && f[n] >= f[n+1] ) || !b = A081545( n-1, b, p*f[n], f), while( isprime( f[n]++ ),) /* next composite */ ); b } /* then vector(30,n,A081545(n-1)) gives the first 30 terms */ (M. F. Hasler, Jun 16 2007)"
+    ],
+    "xref": [
+        "Cf. A131100, A081546, A002808 (composite numbers), A073918."
+    ],
+    "keyword": "hard,nonn,nice",
+    "offset": "0,1",
+    "author": "_Amarnath Murthy_, Apr 01 2003",
+    "ext": [
+        "More terms from Michel ten Voorde (seqfan(AT)tenvoorde.org) Jun 13 2003",
+        "Terms beyond a(8) by _M. F. Hasler_ Jun 16 2007"
+    ],
+    "references": 6,
+    "revision": 11,
+    "time": "2013-12-05T19:56:02-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

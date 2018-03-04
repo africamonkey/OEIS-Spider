@@ -1,0 +1,37 @@
+{
+    "number": 271271,
+    "data": "0,0,0,0,1,9,58,341,1983,11776,72345,462173,3075894,21330762,154050330,1157493707,9037925277,73244123107,615295131046,5351329029624,48126530239366,447043890866154,4284293705043796,42317095568379559,430355360965092107,4501973706497500364",
+    "name": "Number of set partitions of [n] such that at least one pair of consecutive blocks (b,b+1) exists having no pair of consecutive numbers (i,i+1) with i member of b and i+1 member of b+1.",
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "formula": [
+        "a(n) = A000110(n) - A271270(n)."
+    ],
+    "example": [
+        "a(4) = 1: 13|2|4.",
+        "a(5) = 9: 124|3|5, 134|2|5, 135|2|4, 13|25|4, 13|2|45, 13|2|4|5, 14|23|5, 14|2|3|5, 1|24|3|5."
+    ],
+    "maple": [
+        "b:= proc(n, i, m, l) option remember; `if`(n=0,",
+        "      `if`(l=[] or {l[]}={1}, 1, 0), add(b(n-1, j, max(m, j),",
+        "      `if`(j=m+1, `if`(j=i+1, [l[],1], [l[],0]),",
+        "      `if`(j=i+1, subsop(j=1, l), l))), j=1..m+1))",
+        "    end:",
+        "a:= n-> combinat[bell](n)-b(n, 0$2, []):",
+        "seq(a(n), n=0..18);"
+    ],
+    "mathematica": [
+        "b[n_, i_, m_, l_] := b[n, i, m, l] = If[n == 0, If[Union[l, {1}] == {1}, 1, 0], Sum[b[n-1, j, Max[m, j], If[j == m+1, Join[l, If[j == i+1, {1}, {0}] ], If[j == i+1, ReplacePart[l, j -> 1], l]]], {j, 1, m+1}]]; a[n_] := BellB[n] - b[n, 0, 0, {}]; Table[a[n], {n, 0, 18}] (* _Jean-Fran\u00e7ois Alcover_, Feb 02 2017, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A000110, A185982, A271270, A271273, A272065."
+    ],
+    "keyword": "nonn",
+    "offset": "0,6",
+    "author": "_Alois P. Heinz_, Apr 03 2016",
+    "references": 4,
+    "revision": 12,
+    "time": "2017-02-02T09:15:15-05:00",
+    "created": "2016-04-04T11:57:44-04:00"
+}

@@ -1,0 +1,60 @@
+{
+    "number": 2084,
+    "id": "M3667 N1493",
+    "data": "1,4,36,624,18256,814144,51475776,4381112064,482962852096,66942218896384,11394877025289216,2336793875186479104,568240131312188379136,161669933656307658932224,53204153193639888357113856,20053432927718528320240287744",
+    "name": "Sinh x / cos x = Sum_{n>=0} a(n)*x^(2n+1)/(2n+1)!.",
+    "comment": [
+        "Gandhi proves that a(n) = 1 (mod 2n+1) if 2n+1 is prime, that a(2n+1) = 4 (mod 10), and that a(2n+2) = 6 (mod 10). - _Charles R Greathouse IV_, Oct 16 2012"
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A002084/b002084.txt\">Table of n, a(n) for n = 0..50</a>",
+        "J. M. Gandhi, <a href=\"http://dx.doi.org/10.4153/CMB-1970-059-9\">The coefficients of sinh x/ cos x</a>. Canad. Math. Bull. 13 1970 305-310.",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>"
+    ],
+    "formula": [
+        "E.g.f.: sinh(x)/cos(x) = Sum_{n>=0} a(n)*x^(2n+1)/(2n+1)!.",
+        "a(n) = Sum_{k=0..n} binomial(2n+1, 2k+1)*A000364(n-k) = Sum_{k=0..n} A103327(n, k)*A000324(n-k) = Sum_{k=0..n} (-1)^(n-k)*A104033(n, k). - _Philippe Del\u00e9ham_, Aug 27 2005"
+    ],
+    "example": [
+        "x + 2/3*x^3 + 3/10*x^5 + 13/105*x^7 + 163/3240*x^9 + ..."
+    ],
+    "mathematica": [
+        "With[{nn=30},Take[CoefficientList[Series[Sinh[x]/Cos[x],{x,0,nn}],x] Range[0,nn-1]!,{2,-1,2}]] (* _Harvey P. Dale_, Jul 17 2012 *)"
+    ],
+    "program": [
+        "(Sage) # Generalized algorithm of L. Seidel (1877)",
+        "def A002084_list(n) :",
+        "    R = []; A = {-1:0, 0:0}",
+        "    k = 0; e = 1",
+        "    for i in range(2*n) :",
+        "        Am = 1 if e == -1 else 0",
+        "        A[k + e] = 0",
+        "        e = -e",
+        "        for j in (0..i) :",
+        "            Am += A[k]",
+        "            A[k] = Am",
+        "            k += e",
+        "        if e == 1 : R.append(A[i//2])",
+        "    return R",
+        "A002084_list(10) # _Peter Luschny_, Jun 02 2012",
+        "(PARI) a(n)=n++;my(v=Vec(1/cos(x+O(x^(2*n+1)))));v=vector(n,i,v[2*i-1]*(2*i-2)!);sum(g=1,n,binomial(2*n-1,2*g-2)*v[g]) \\\\ _Charles R Greathouse IV_, Oct 16 2012",
+        "(PARI) list(n)=n++;my(v=Vec(1/cos(x+O(x^(2*n+1)))));v=vector(n,i,v[2*i-1]*(2*i-2)!);vector(n,k,sum(g=1,k,binomial(2*k-1,2*g-2)*v[g])) \\\\ _Charles R Greathouse IV_, Oct 16 2012"
+    ],
+    "xref": [
+        "Cf. A002085."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "a(13)-a(15) from _Andrew Howroyd_, Feb 05 2018"
+    ],
+    "references": 9,
+    "revision": 42,
+    "time": "2018-02-05T21:53:46-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

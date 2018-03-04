@@ -1,0 +1,63 @@
+{
+    "number": 216648,
+    "data": "2,12,52,56,212,216,232,240,852,856,872,880,920,936,944,976,992,3412,3416,3432,3440,3480,3496,3504,3536,3552,3688,3696,3752,3760,3792,3808,3888,3920,3936,4000,4032,13652,13656,13672,13680,13720,13736,13744,13776",
+    "name": "Triangle T(n,k) in which n-th row lists in increasing order all positive integers with a representation as totally balanced 2n digit binary string without totally balanced proper prefixes such that all consecutive totally balanced substrings are in nondecreasing order; n>=1, 1<=k<=A000081(n).",
+    "comment": [
+        "There is a simple bijection between the elements of row n and the rooted trees with n nodes.  Each matching pair (1,0) in the binary string representation encodes a node, each totally balanced substring encodes a list of subtrees."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A216648/b216648.txt\">Rows n = 1..12, flattened</a>"
+    ],
+    "formula": [
+        "T(n,k) = A216649(n-1,k)*2 + 2^(2*n-1) for n>1."
+    ],
+    "example": [
+        "856 is element of row 5, the binary string representation (with totally balanced substrings enclosed in parentheses) is (1(10)(10)(1(10)0)0).  The encoded rooted tree is:",
+        ".    o",
+        ".   /|\\",
+        ".  o o o",
+        ".      |",
+        ".      o",
+        "Triangle T(n,k) begins:",
+        "2;",
+        "12;",
+        "52,     56;",
+        "212,   216,  232,  240;",
+        "852,   856,  872,  880,  920,  936,  944,  976,  992;",
+        "3412, 3416, 3432, 3440, 3480, 3496, 3504, 3536, 3552, 3688, 3696, ...",
+        "Triangle T(n,k) in binary:",
+        "10;",
+        "1100;",
+        "110100,       111000;",
+        "11010100,     11011000,     11101000,     11110000;",
+        "1101010100,   1101011000,   1101101000,   1101110000,   1110011000, ...",
+        "110101010100, 110101011000, 110101101000, 110101110000, 110110011000, ..."
+    ],
+    "maple": [
+        "F:= proc(n) option remember; `if`(n=1, [10], sort(map(h->",
+        "      parse(cat(1, sort(h)[], 0)), g(n-1, n-1)))) end:",
+        "g:= proc(n, i) option remember; `if`(i=1, [[10$n]], [seq(seq(seq(",
+        "      [seq (F(i)[w[t]-t+1], t=1..j),v[]], w=combinat[choose](",
+        "      [$1..nops(F(i))+j-1], j)), v=g(n-i*j, i-1)), j=0..n/i)])",
+        "    end:",
+        "b:= proc(n) local h, i, r; h, r:= n, 0; for i from 0",
+        "      while h>0 do r:= r+2^i*irem(h, 10, 'h') od; r",
+        "    end:",
+        "T:= proc(n) option remember; map(b, F(n))[] end:",
+        "seq(T(n), n=1..7);"
+    ],
+    "xref": [
+        "First column gives: A080675.",
+        "Last elements of rows give: A020522.",
+        "Row lengths are: A000081.",
+        "Subsequence of A057547, A081292.",
+        "Cf. A061773, A216349, A216350, A216649."
+    ],
+    "keyword": "nonn,tabf",
+    "offset": "1,1",
+    "author": "_Alois P. Heinz_, Sep 12 2012",
+    "references": 5,
+    "revision": 19,
+    "time": "2015-01-10T11:09:31-05:00",
+    "created": "2012-09-14T17:28:06-04:00"
+}

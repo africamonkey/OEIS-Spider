@@ -1,0 +1,41 @@
+{
+    "number": 187246,
+    "data": "0,0,0,1,7,42,267,1900,15263,137494,1375195,15127656,181532895,2359929682,33039019643,495585302836,7929364861759,134799202682670,2426385648353595,46101327318849376,922026546377249663,19362557473922767210,425976264426301927195",
+    "name": "Number of cycles with 2 alternating runs in all permutations of [n] (it is assumed that the smallest element of the cycle is in the first position).",
+    "comment": [
+        "a(n) = Sum_{k>=0} k*A187244(n,k)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A187246/b187246.txt\">Table of n, a(n) for n = 0..450</a>"
+    ],
+    "formula": [
+        "E.g.f.: g(z)=(1/4)[3+2z+exp(2z)-4exp(z)]/(1-z).",
+        "a(n) ~ (5/4-exp(1)+exp(2)/4) * n! = 0.378982196273617... * n!. - _Vaclav Kotesovec_, Mar 15 2014"
+    ],
+    "example": [
+        "a(4)=7 because each of the following permutations of {1,2,3,4} has 1 cycle with 2 alternating runs: (132)(4), (142)(3), (143)(2), (1)(243), (1243), (1342), and (1432); the remaining 17 permutations have none."
+    ],
+    "maple": [
+        "g := (1/4*(3+2*z+exp(2*z)-4*exp(z)))/(1-z): gser := series(g, z = 0, 25): seq(factorial(n)*coeff(gser, z, n), n = 0 .. 22);",
+        "# second Maple program:",
+        "b:= proc(n) option remember; expand(",
+        "      `if`(n=0, 1, add(b(n-j)*binomial(n-1, j-1)*",
+        "      `if`(j=1, 1, (j-1)!+(2^(j-2)-1)*(x-1)), j=1..n)))",
+        "    end:",
+        "a:= n-> (p-> add(coeff(p, x, i)*i, i=0..degree(p)))(b(n)):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Apr 15 2017"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(3+2*x+E^(2*x)-4*E^(x))/(4*(1-x)), {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Mar 15 2014 *)"
+    ],
+    "xref": [
+        "Cf. A187244."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Emeric Deutsch_, Mar 07 2011",
+    "references": 3,
+    "revision": 13,
+    "time": "2017-04-15T12:03:17-04:00",
+    "created": "2011-03-07T12:20:17-05:00"
+}

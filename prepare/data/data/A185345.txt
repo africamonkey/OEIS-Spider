@@ -1,0 +1,31 @@
+{
+    "number": 185345,
+    "data": "3,4,5,10,11,14,18,21,23,24,25,29,32,36,38,39,40,41,44,45,46,47,52,55,57,59,60,66,73,74,76,77,80,81,82,83,88,93,95,99,100,101,102,108,109,111,112,113,116,118,119,121",
+    "name": "Numbers that are not the sum of two rational cubes.",
+    "reference": [
+        "Henri Cohen, Number Theory - Volume I: Tools and Diophantine Equations, Springer-Verlag, 2007, pp. 378-379."
+    ],
+    "link": [
+        "Ernst S. Selmer, <a href=\"http://dx.doi.org/10.1007/BF02395746\">The diophantine equation ax^3 + by^3 + cz^3 = 0</a>, Acta Math. 85 (1951), pp. 203-362.",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of cubes</a>"
+    ],
+    "example": [
+        "22 can be expressed as (17299/9954)^3 + (25469/9954)^3, so 22 is not in the sequence."
+    ],
+    "mathematica": [
+        "(* A naive program with a few pre-computed terms from A159843 *) nmax = 122; xmax = 3000; CubeFreePart[n_] := Times @@ Power @@@ ({#[[1]], Mod[#[[2]], 3]}& /@ FactorInteger[n]); nn = Join[{1}, Reap[Do[n = CubeFreePart[x*y*(x+y)]; If[1 < n <= nmax, Sow[n]], {x, 1, xmax}, {y, x, xmax}]][[2, 1]] // Union]; A159843 = Select[ Union[nn, nn*2^3, nn*3^3, nn*4^3, {17, 31, 53, 67, 71, 89, 94, 103, 107, 122}], # <= nmax &]; Complement[Range[nmax], A159843] (* _Jean-Fran\u00e7ois Alcover_, Feb 10 2015 *)"
+    ],
+    "program": [
+        "(MAGMA) lst1:=[]; lst2:=[x^3+y^3: x, y in [0..3]]; for n in [1..40] do if IsZero(Rank(EllipticCurve([0, 16*n^2]))) and not n in lst2 then lst1:=Append(lst1, n); end if; end for; lst1;"
+    ],
+    "xref": [
+        "Complement of A159843. One subsequence of this sequence is A022555, numbers that are not the sum of two nonnegative integer cubes."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Arkadiusz Wesolowski_, Mar 17 2012",
+    "references": 2,
+    "revision": 17,
+    "time": "2015-02-10T09:45:13-05:00",
+    "created": "2012-03-18T13:30:16-04:00"
+}

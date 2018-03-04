@@ -1,0 +1,44 @@
+{
+    "number": 111592,
+    "data": "12,20,24,30,40,42,54,56,66,70,78,84,88,102,104,114,120,138,140,174,186,222,224,234,246,258,270,282,308,318,354,364,366,368,402,426,438,464,474,476,498,532,534,582,606,618,642,644,650,654,672,678,762,786,812",
+    "name": "Admirable numbers. A number n is admirable if there exists a proper divisor d' of n such that sigma(n)-2d'=2n, where sigma(n) is the sum of all divisors of n.",
+    "comment": [
+        "All admirable numbers are abundant.",
+        "If 2^n-2^k-1 is an odd prime then m=2^(n-1)*(2^n-2^k-1) is in the sequence because 2^k is one of the proper divisors of m and sigma(m)-2m=(2^n-1)*(2^n-2^k)-2^n*(2^n-2^k-1)=2^k hence m=(sigma(m)-m)-2^k, namely m is an Admirable number. This is one of the results of the following theorem that I have found. Theorem: If 2^n-j-1 is an odd prime and m=2^(n-1)*(2^n-j-1) then sigma(m)-2m=j. The case j=0 is well known. - _Farideh Firoozbakht_, Jan 28 2006",
+        "In particular, these numbers have abundancy 2 to 3: 2 < sigma(n)/n <= 3. - _Charles R Greathouse IV_, Jan 30 2014",
+        "Subsequence of A083207. - _Ivan N. Ianakiev_, Mar 20 2017"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A111592/b111592.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "F. Firoozbakht, M. F. Hasler, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL13/Hasler/hasler2.html\">Variations on Euclid's formula for Perfect Numbers</a>, JIS 13 (2010) #10.3.1",
+        "T. Trotter, <a href=\"http://www.trottermath.net/numthry/admirabl.html\">Admirable Numbers</a>"
+    ],
+    "example": [
+        "12 = 1+3+4+6-2, 20 = 2+4+5+10-1, etc."
+    ],
+    "maple": [
+        "with(numtheory); isadmirable := proc(n) local b, d, S; b:=false; S:=divisors(n) minus {n}; for d in S do if sigma(n)-2*d=2*n then b:=true; break fi od; return b; end: select(proc(z) isadmirable(z) end, [$1..1000]); # _Walter Kehowski_, Aug 12 2005"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{d = Most[Divisors[n]], k = 1}, l = Length[d]; s = Plus @@ d; While[k < l && s - 2d[[k]] > n, k++ ]; If[k > l || s != n + 2d[[k]], False, True]]; Select[ Range[821], fQ[ # ] &] (* _Robert G. Wilson v_, Aug 13 2005 *)",
+        "Select[Range[812],MemberQ[Divisors[#],(DivisorSigma[1,#]-2*#)/2]&] (* _Ivan N. Ianakiev_, Mar 23 2017 *)"
+    ],
+    "program": [
+        "(PARI) for(n=1,10^3,ap=sigma(n)-2*n;if(ap>0 && (ap%2)==0,d=ap/2;if(d!=n && (n%d)==0, print1(n\",\")))) - Herman Jamke (hermanjamke(AT)fastmail.fm), Mar 30 2008",
+        "(PARI) is(n)=if(issquare(n)||issquare(n/2),0,my(d=sigma(n)/2-n); d>0 && d!=n && n%d==0) \\\\ _Charles R Greathouse IV_, Jun 21 2011"
+    ],
+    "xref": [
+        "Subsequence of A005101.",
+        "Cf. A000396, A005100, A000203, A061645."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Jason Earls_, Aug 09 2005",
+    "ext": [
+        "Better definition from _Walter Kehowski_, Aug 12 2005"
+    ],
+    "references": 31,
+    "revision": 36,
+    "time": "2017-12-15T17:37:03-05:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

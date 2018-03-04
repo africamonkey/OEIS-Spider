@@ -1,0 +1,33 @@
+{
+    "number": 281359,
+    "data": "1,8,24301,5165454442,12845435390707724,191739533381111401455478,11834912423104188943497126664597,2371013832433361706367594400829713564440,1299618941291522676629215597535104557826094801396,1716119248126070756229849154290399886241087778087554633612",
+    "name": "Number of scenarios in the Gift Exchange Game when a gift can be stolen at most 7 times.",
+    "link": [
+        "Moa Apagodu, David Applegate, N. J. A. Sloane, and Doron Zeilberger, <a href=\"http://arxiv.org/abs/1701.08394\">Analysis of the Gift Exchange Problem</a>, arXiv:1701.08394 [math.CO], 2017.",
+        "Moa Apagodu, David Applegate, N. J. A. Sloane, and Doron Zeilberger, <a href=\"/A144416/a144416.txt\">On-Line Appendix I to \"Analysis of the gift exchange problem\"</a>, giving Type D recurrences for G_1(n) through G_15(n) (see A001515, A144416, A144508, A144509, A149187, A281358-A281361)",
+        "Moa Apagodu, David Applegate, N. J. A. Sloane, and Doron Zeilberger, <a href=\"/A144416/a144416_1.txt\">On-Line Appendix II to \"Analysis of the gift exchange problem\"</a>, giving Type C recurrences for G_1(n) through G_15(n) (see A001515, A144416, A144508, A144509, A149187, A281358-A281361)",
+        "David Applegate and N. J. A. Sloane, <a href=\"http://arxiv.org/abs/0907.0513\">The Gift Exchange Problem</a>, arXiv:0907.0513 [math.CO], 2009."
+    ],
+    "maple": [
+        "with(combinat):",
+        "b:= proc(n, i, t) option remember; `if`(t*i<n, 0,",
+        "      `if`(n=0, `if`(t=0, 1, 0), add(b(n-i*j, i-1, t-j)*",
+        "       multinomial(n, n-i*j, i$j)/j!, j=0..min(t, n/i))))",
+        "    end:",
+        "a:= n-> add(b(k, 8, n), k=0..8*n):",
+        "seq(a(n), n=0..12);  # _Alois P. Heinz_, Feb 01 2017"
+    ],
+    "mathematica": [
+        "t[n_, n_] = 1; t[n_ /; n >= 0, k_] /; 0 <= k <= 8*n := t[n, k] = Sum[(1/j!)*Product[k - m, {m, 1, j}]*t[n - 1, k - j - 1], {j, 0, 7}]; t[_, _] = 0; a[n_] := Sum[t[n, k], {k, 0, 8*n}]; Table[a[n], {n, 0, 10}] (* _Jean-Fran\u00e7ois Alcover_, Feb 18 2017 *)"
+    ],
+    "xref": [
+        "The gift scenarios sequences when a gift can be stolen at most s times, for s = 1..9, are A001515, A144416, A144508, A144509, A149187, A281358, A281359, A281360, A281361."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Jan 25 2017",
+    "references": 10,
+    "revision": 26,
+    "time": "2017-05-13T17:13:59-04:00",
+    "created": "2017-01-25T18:13:43-05:00"
+}

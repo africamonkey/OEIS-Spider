@@ -1,0 +1,45 @@
+{
+    "number": 211539,
+    "data": "0,0,2,3,7,9,15,18,26,30,40,45,57,63,77,84,100,108,126,135,155,165,187,198,222,234,260,273,301,315,345,360,392,408,442,459,495,513,551,570,610,630,672,693,737,759,805,828,876,900,950,975,1027,1053",
+    "name": "Number of ordered triples (w,x,y) with all terms in {1,...,n} and 2w = 2n - 2x + y.",
+    "comment": [
+        "For a guide to related sequences, see A211422.",
+        "a(n) = sum of natural numbers in interval (floor((n+1)/2),n]. - _Jaroslav Krizek_, Mar 05 2014",
+        "For n > 0, 2*a(n-1) is the sum of the largest parts of the partitions of 2n into two distinct even parts. - _Wesley Ivan Hurt_, Dec 19 2017"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A211539/b211539.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2,-1,1)."
+    ],
+    "formula": [
+        "a(n) = a(n-1) + 2*a(n-2) - 2*a(n-3) - a(n-4) + a(n-5).",
+        "From _Jaroslav Krizek_, Mar 05 2014: (Start)",
+        "a(n) = T(n+1) - T(floor((n+1)/2)) - (n+1), where T(k) = A000217(k).",
+        "a(n) = Sum_{k=floor((n+1)/2)+1..n} k.",
+        "a(n) = a(n-1) + n for even n; a(n) = a(n-1) + (n-1)/2 for odd n. (End)",
+        "From _Ralf Stephan_, Mar 10 2014: (Start)",
+        "a(n) = (1/16) * (6n^2 + 2n - 3 + (2n+3)*(-1)^n ).",
+        "G.f.: (x^3+2x^2)/((1+x)^2*(1-x)^3). (End)"
+    ],
+    "mathematica": [
+        "t[n_] := t[n] = Flatten[Table[2 w + 2 x - y - 2 n, {w, 1, n}, {x, 1, n}, {y, 1, n}]]",
+        "c[n_] := Count[t[n], 0]",
+        "t = Table[c[n], {n, 0, 70}]  (* A211539 *)",
+        "FindLinearRecurrence[t]",
+        "CoefficientList[Series[(x^3 + 2 x^2)/((1 + x)^2 (1 - x)^3), {x, 0, 60}], x] (* _Vincenzo Librandi_, Mar 12 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=(1/16)*(6*n^2+2*n-3+(2*n+3)*(-1)^n) \\\\ _Ralf Stephan_, Mar 10 2014",
+        "(MAGMA) I:=[0,0,2,3,7]; [n le 5 select I[n] else Self(n-1)+2*Self(n-2)-2*Self(n-3)-Self(n-4)+Self(n-5): n in [1..60]]; // _Vincenzo Librandi_, Mar 12 2014"
+    ],
+    "xref": [
+        "Cf. A211422."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Apr 15 2012",
+    "references": 3,
+    "revision": 48,
+    "time": "2017-12-20T23:35:06-05:00",
+    "created": "2012-04-23T12:13:29-04:00"
+}

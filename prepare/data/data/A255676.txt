@@ -1,0 +1,35 @@
+{
+    "number": 255676,
+    "data": "1,1,3,15,81,561,4683,44415,479241,5793921,77332563,1130944815,17984844801,308888337681,5698762943643,112401325405215,2360158641832761,52564270139375841,1237645528139173923,30717272450961249615,801500394828539219121",
+    "name": "E.g.f. satisfies: A'(x) = (1 + A(x))*(1 + A(x)^2).",
+    "formula": [
+        "E.g.f.: Series_Reversion( Integral 1/((1+x)*(1+x^2)) dx ).",
+        "E.g.f.: Series_Reversion( (log((1+x)^2/(1+x^2)) + 2*atan(x))/4 ).",
+        "E.g.f. A(x) satisfies: (1 + A(x))^2/(1 + A(x)^2) = exp(4*x) / exp(2*atan(A(x))).",
+        "a(n) ~ 2^(2*n+1) * n^n / (exp(n) * Pi^(n+1/2)). - _Vaclav Kotesovec_, Jul 17 2015"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + x^2/2! + 3*x^3/3! + 15*x^4/4! + 81*x^5/5! + 561*x^6/6! +..",
+        "where",
+        "(1 + A(x))*(1 + A(x)^2) = 1 + x + 3*x^2/2! + 15*x^3/3! + 81*x^4/4! + 561*x^5/5! +...+ a(n+1)*x^n/n! +...",
+        "The series reversion of the e.g.f. equals Integral 1/(1+x+x^2+x^3) dx:",
+        "Series_Reversion(A(x)) = x - x^2/2 + x^5/5 - x^6/6 + x^9/9 - x^10/10 + x^13/13 - x^14/16 + x^17/17 - x^18/18 +...",
+        "which equals (log((1+x)^2/(1+x^2)) + 2*atan(x))/4."
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[(Log[(1+x)^2/(1+x^2)] + 2*ArcTan[x])/4, {x, 0, 20}], x],x] * Range[0, 20]!] (* _Vaclav Kotesovec_, Jul 17 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = local(A=x); for(i=1,n, A = intformal( (1+A)*(1+A^2) +x*O(x^n))); n!*polcoeff(A,n)}",
+        "for(n=1,30,print1(a(n),\", \"))",
+        "(PARI) {a(n) = local(A=x); A = serreverse( intformal( 1/((1+x)*(1+x^2) +x*O(x^n)) )); n!*polcoeff(A,n)}",
+        "for(n=1,30,print1(a(n),\", \"))"
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Jul 10 2015",
+    "references": 0,
+    "revision": 12,
+    "time": "2015-07-17T10:03:11-04:00",
+    "created": "2015-07-10T18:06:32-04:00"
+}

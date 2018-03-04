@@ -1,0 +1,35 @@
+{
+    "number": 58007,
+    "data": "6,28,60,84,90,120,336,496,840,924,1008,1080,1260,1320,1440,1680,1980,2016,2160,2184,2520,2772,3024,3420,3600,3780,4680,5040,5940,6048,6552,7440,7560,7800,8128,8190,8280,9240,9828,9900",
+    "name": "Freestyle perfect numbers n = Product_{i=1,..,k} f_i^e_i where 1 < f_1 <  ... < f_k, e_i > 0, such that 2n = Product_{i=1,..,k} (f_i^(e_i+1)-1)/(f_i-1).",
+    "comment": [
+        "Only one odd freestyle perfect number is known: 198585576189, found by Descartes.",
+        "This sequence consists of perfect numbers A000396 and those which aren't, called spoof-perfect numbers A174292. Roughly said, a spoof-perfect number is a number that would be perfect if one or more of its composite factors were wrongly assumed to be prime, i.e., taken as a \"spoof prime\". - _Daniel Forgues_, Nov 15 2009 (slightly rephrased)",
+        "The right hand side of the second equation in the definition, 2n = ..., equals the sum of divisors sigma(n), if all of the f_i are distinct primes. If they aren't, there arise some ambiguities: See A174292 for further discussion. - _M. F. Hasler_, Jan 13 2013"
+    ],
+    "reference": [
+        "R. K. Guy, Unsolved Problems in Number Theory, B1."
+    ],
+    "link": [
+        "OEIS wiki, <a href=\"https://oeis.org/wiki/Freestyle_perfect_numbers\">Freestyle perfect numbers</a>."
+    ],
+    "example": [
+        "n = 60 = (3^1)*(4^1)*(5^1), s = 120 = [(3^2-1)*(4^2-1)*(5^2-1)]/[(3-1)*(4-1)*(5-1)]. s-n = 120-60 = n. So 60 is in the sequence."
+    ],
+    "mathematica": [
+        "r[s_, n_, f_] := Catch[If[n == 1, s == 1, Block[{p, e}, Do[e = 1; While[ Mod[n, p^e] == 0, r[s*(p^(e+1) - 1)/(p-1), n/p^e, p] && Throw@True; e++], {p, Select[Divisors@n, f < # &]}]]; False]];",
+        "spoofQ[n_] := r[1/2/n, n, 1] && DivisorSigma[-1, n] != 2;",
+        "perfectQ[n_] := DivisorSigma[1, n] == 2*n;",
+        "Select[Range[10^4], spoofQ[#] || perfectQ[#]&] (* _Jean-Fran\u00e7ois Alcover_, May 16 2017, using _Giovanni Resta_'s code for A174292 *)"
+    ],
+    "xref": [
+        "Cf. A000396, A174292."
+    ],
+    "keyword": "nonn,more,nice",
+    "offset": "1,1",
+    "author": "_Naohiro Nomoto_, Nov 13 2000",
+    "references": 3,
+    "revision": 28,
+    "time": "2017-05-17T04:25:54-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

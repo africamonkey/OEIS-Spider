@@ -1,0 +1,40 @@
+{
+    "number": 736,
+    "data": "1,2,4,10,32,120,513,2455,13040,76440,492231,3465163,26530503,219754535,1959181266,18710532565,190588702776,2062664376064,23636408157551,285900639990875,3640199365715769,48665876423760247",
+    "name": "Boustrophedon transform of Catalan numbers 1, 1, 1, 2, 5, 14, ...",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A000736/b000736.txt\">Table of n, a(n) for n = 0..400</a>",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>",
+        "J. Millar, N. J. A. Sloane and N. E. Young, A new operation on sequences: the Boustrophedon on transform, J. Combin. Theory, 17A 44-54 1996 (<a href=\"http://neilsloane.com/doc/bous.txt\">Abstract</a>, <a href=\"http://neilsloane.com/doc/bous.pdf\">pdf</a>, <a href=\"http://neilsloane.com/doc/bous.ps\">ps</a>).",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Boustrophedon_transform\">Boustrophedon_transform</a>",
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "formula": [
+        "E.g.f.: (sec(x) + tan(x))*(integral(exp(2*x)*(BesselI(0,2*x)-BesselI(1,2*x)),x)+1). - _Sergei N. Gladkovskii_, Oct 30 2014",
+        "a(n) ~ n! * (6/Pi+2*exp(Pi)*((2-1/Pi)*BesselI(0,Pi)-2*BesselI(1,Pi))) * 2^n / Pi^n. - _Vaclav Kotesovec_, Oct 30 2014"
+    ],
+    "maple": [
+        "egf := (sec(x/2)+tan(x/2))*(exp(x)*((x-1/2)*BesselI(0,x)-x*BesselI(1,x))+3/2);",
+        "s := n -> 2^n*n!*coeff(series(egf,x,n+2),x,n); seq(s(n), n=0..22); # _Peter Luschny_, Oct 30 2014, after _Sergei N. Gladkovskii_"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/2*(3 + E^(2*x)*((4*x-1)*BesselI[0, 2*x] - 4*x*BesselI[1, 2*x]))*(Sec[x] + Tan[x]), {x, 0, 20}], x] * Range[0, 20]! (* _Vaclav Kotesovec_, Oct 30 2014, after _Peter Luschny_ *)",
+        "t[n_, 0] := If[n == 0, 1, CatalanNumber[n - 1]]; t[n_, k_] := t[n, k] = t[n, k-1] + t[n-1, n-k]; a[n_] := t[n, n]; Array[a, 30, 0] (* _Jean-Fran\u00e7ois Alcover_, Feb 12 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a000736 n = sum $ zipWith (*) (a109449_row n) (1 : a000108_list)",
+        "-- _Reinhard Zumkeller_, Nov 05 2013"
+    ],
+    "xref": [
+        "Cf. A000108, A000753, A109449."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, _Simon Plouffe_",
+    "references": 4,
+    "revision": 34,
+    "time": "2017-10-02T02:13:16-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

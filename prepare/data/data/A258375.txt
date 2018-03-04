@@ -1,0 +1,69 @@
+{
+    "number": 258375,
+    "data": "70,836,7192,73616,519712,3963968,33277312,263144192,2113834496,16995175424,135895635968,1093862207488,8752602423296,70102452125696,561472495910912,4494940873621504,35979456528646144,287952747599495168",
+    "name": "Least primitive weird number with n prime divisors, counting multiplicity.",
+    "comment": [
+        "A proper subsequence of A002975.",
+        "Conjecture: a(n) = the smallest primitive weird number of the form 2^(n-2)*p*q where p*q is minimal.",
+        "Is it known that a(n) always exists? - _Charles R Greathouse IV_, Jun 11 2015",
+        "No, it is not even unconditionally proved that there are infinitely many primitive weird numbers. In view of this, the above formula a(n) = 2^(n-2)*p*q and the asymptotic formula a(n) ~ 2^(3n-2) are only conjectures. - _M. F. Hasler_, Jul 08 2016",
+        "The conjectured a(n) ~ 2^(3n-2) follows from the conjecture that a(n) = 2^(n-2)*p*q (cf. A258882) where q is the least prime larger than 2M = 2^n-2 such that 2^(n-2)*q*precprime((Mq-1)/(q-M)) is weird. I also conjecture that for all n > 7, q = nextprime(2^n-2). - _M. F. Hasler_, Jul 13 2016"
+    ],
+    "link": [
+        "Douglas E. Iannucci, <a href=\"http://arxiv.org/abs/1504.02761\">On primitive weird numbers of the form 2^k*p*q</a>, arXiv:1504.02761 [math.NT], 2015."
+    ],
+    "formula": [
+        "It appears that a(n) ~ 2^(3n-2). [Corrected by _M. F. Hasler_, Jul 13 2016]"
+    ],
+    "example": [
+        "a(3) = 2^1 * 5 * 7 = 70",
+        "a(4) = 2^2 * 11 * 19 = 836",
+        "a(5) = 2^3 * 29 * 31 = 7192",
+        "a(6) = 2^4 * 43 * 107 = 73616",
+        "a(7) = 2^5 * 109 * 149 = 519712",
+        "a(8) = 2^6 * 241 * 257 = 3963968",
+        "a(9) = 2^7 * 499 * 521 = 33277312",
+        "a(10) = 2^8 * 997 * 1031 = 263144192",
+        "a(11) = 2^9 * 2011 * 2053 = 2113834496",
+        "a(12) = 2^10 * 4049 * 4099 = 16995175424",
+        "a(13) = 2^11 * 8101 * 8191 = 135895635968",
+        "a(14) = 2^12 * 16273 * 16411 = 1093862207488",
+        "a(15) = 2^13 * 32603 * 32771 = 8752602423296",
+        "a(16) = 2^14 * 65287 * 65537 = 70102452125696",
+        "a(17) = 2^15 * 130729 * 131071 = 561472495910912",
+        "a(18) = 2^16 * 261637 * 262147 = 4494940873621504",
+        "a(19) = 2^17 * 523571 * 524287 = 35979456528646144",
+        "a(20) = 2^18 * 1047559 * 1048583 = 287952747599495168",
+        "a(21) = 2^19 * 2095721 * 2097169 = 2304288287017664512",
+        "a(22) = 2^20 * 4192267 * 4194319 = 18437851191624859648",
+        "a(23) = 2^21 * 8385719 * 8388617 = 147523287039340445696",
+        "a(24) = 2^22 * 16773149 * 16777259 = 1180308456157336305664",
+        "a(25) = 2^23 * 33548689 * 33554467 = 9443126304886073851904",
+        "a(26) = 2^24 * 67100681 * 67108879 = 75548667373415913488384",
+        "a(27) = 2^25 * 134206169 * 134217757 = 604410983292363190829056",
+        "a(28) = 2^26 * 268419077 * 268435459 = 4835408274665227893604352",
+        "a(29) = 2^27 * 536847791 * 536870923 = 38683960976635781347016704",
+        "a(30) = 2^28 * 1073709061 * 1073741827 = 309475567394195954395512832"
+    ],
+    "mathematica": [
+        "(* copy the terms from A002975, assign them equal to 'lst' and then *) Table[ Min@ Select[ lst, PrimeOmega@# == n &], {n, 3, 12}]"
+    ],
+    "program": [
+        "(PARI) a(n)=for(k=1,#A=A002975,bigomega(A[k])==n&&return(A[k])) \\\\ This assumes A002975 is defined as a set or vector with enough terms. A002975 could be replaced by A258882 (for which much larger terms are known) if we assume that all terms are in that sequence. - _M. F. Hasler_, Jul 08 2016",
+        "(PARI) A258375(n)={ forprime(q=2^n-1,, my(p=precprime((2^(n-1)-1)*(q+1)\\(q-2^(n-1)+1)),P); is_A006037(2^(n-2)*p*q) || next; while( is_A006037(2^(n-2)*q*P=precprime(p-1)), p=P); return(2^(n-2)*p*q))} \\\\ This assumes that all terms are of the form 2^k*p*q. It seems to give correct results at least up to n=30. - _M. F. Hasler_, Jul 13 2016"
+    ],
+    "xref": [
+        "Cf. A006037, A002975, A258374, A258882."
+    ],
+    "keyword": "nonn",
+    "offset": "3,1",
+    "author": "_Robert G. Wilson v_, May 28 2015",
+    "ext": [
+        "a(17) - a(20) from _Robert G. Wilson v_, Jun 14 2015",
+        "a(17) and a(19) corrected, and new terms a(21) - a(30), from _M. F. Hasler_, Jul 13 2016"
+    ],
+    "references": 8,
+    "revision": 47,
+    "time": "2016-07-16T21:19:35-04:00",
+    "created": "2015-06-11T10:35:08-04:00"
+}

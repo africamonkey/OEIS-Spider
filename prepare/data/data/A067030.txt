@@ -1,0 +1,47 @@
+{
+    "number": 67030,
+    "data": "0,2,4,6,8,10,11,12,14,16,18,22,33,44,55,66,77,88,99,101,110,121,132,141,143,154,161,165,176,181,187,198,201,202,221,222,241,242,261,262,281,282,302,303,322,323,342,343,362,363,382,383,403,404,423,424,443",
+    "name": "Numbers n of the form k + reverse(k) for at least one k.",
+    "comment": [
+        "From Avik Roy (avik_3.1416(AT)yahoo.co.in), Feb 02 2009: (Start)",
+        "Any (k+1) digit number N can be represented as",
+        "N = Sum_{i=0...k} (ai*10^i).",
+        "Rev(N) = Sum_{i=0...k} (ai*10^(k-i)).",
+        "N+Rev(N) = Sum_{i=0...k} (ai*(10^i+10^(k-i))).",
+        "The latter formula can produce all the terms of this sequence, the order of terms is explicitly determined by the order of ai's (repetition of terms might not be avoided). (End)"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A067030/b067030.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Res#RAA\">Index entries for sequences related to Reverse and Add!</a>"
+    ],
+    "example": [
+        "0 belongs to the sequence since 0 + 0 = 0;",
+        "33 belongs to the sequence since 12 + 21 = 33."
+    ],
+    "mathematica": [
+        "M = 10^3; digrev[n_] := IntegerDigits[n] // Reverse // FromDigits; Clear[b]; b[_] = 0; For[n = 1, n <= M, n++, t1 = n + digrev[n]; If[t1 <= M, b[t1] = b[t1] + 1]]; A067030 = Join[{0}, Reap[For[n = 1, n <= M, n++, If[b[n] >= 1, Sow[n]]]][[2, 1]]] (* _Jean-Fran\u00e7ois Alcover_, Oct 01 2016, after _N. J. A. Sloane_'s Maple code in A072040 *)"
+    ],
+    "program": [
+        "(ARIBAS):",
+        "function Reverse(n: integer): integer; var i: integer; str, rev: string;",
+        "begin str := itoa(n); rev := \"\";",
+        "for i := 0 to length(str)-1 do rev := concat(str[i], rev); end;",
+        "return atoi(rev); end Reverse;",
+        "function A067030(a, b: integer); var k, n: integer;",
+        "begin for n := a to b do k := 0; while k <= n do",
+        "if n = k+Reverse(k) then write(n, \", \"); break; else inc(k); end;",
+        "end; end; end A067030;",
+        "A067030(0, 500) (* revised May 04 2011 *).",
+        "(MAGMA) A067030:=function(a, b); S:=[]; for n in [a..b] do k:=0; while k le n do if n eq k+Seqint(Reverse(Intseq(k))) then Append(~S, n); break; else k+:=1; end if; end while; end for; return S; end function; A067030(0, 500); // May 04 2011"
+    ],
+    "xref": [
+        "Cf. A033865, A067031, A067032, A067033, A067034, A056964."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "0,2",
+    "author": "_Klaus Brockhaus_, Dec 29 2001",
+    "references": 42,
+    "revision": 24,
+    "time": "2016-10-01T12:15:11-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

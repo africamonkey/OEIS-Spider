@@ -1,0 +1,57 @@
+{
+    "number": 198256,
+    "data": "1,5,46,485,5626,69062,882540,11614437,156343330,2142556130,29791689148,419260001030,5960334608788,85469709312860,1234797737654296,17955907741675749,262607675818816050,3860239468267647914,57002176852356800700,845159480056345448610",
+    "name": "Row sums of A197653.",
+    "comment": [
+        "Number of meanders of length (n+1)*4 which are composed by arcs of equal length and a central angle of 90 degrees.",
+        "Definition of a meander:",
+        "A binary curve C is a triple (m, S, dir) such that",
+        "(a) S is a list with values in {L,R} which starts with an L,",
+        "(b) dir is a list of m different values, each value of S being allocated a value of dir,",
+        "(c) consecutive Ls increment the index of dir,",
+        "(d) consecutive Rs decrement the index of dir,",
+        "(e) the integer m>0 divides the length of S and",
+        "(f) C is a meander if each value of dir occurs length(S)/m times.",
+        "For this sequence, m = 4.",
+        "The terms are proved by brute force for 0 <= n <= 8, but not yet in general. [Susanne Wienand, Oct 29 2011]"
+    ],
+    "link": [
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/Meander\">Meanders and walks on the circle</a>."
+    ],
+    "formula": [
+        "a(n) = Sum{k=0..n} Sum{j=0..3} Sum{i=0..3} (-1)^(j+i)*C(i,j)*C(n,k)^4*(n+1)^j*(k+1)^(3-j)/(k+1)^3. - _Peter Luschny_, Nov 02 2011",
+        "a(n) = Sum_{k=0..n} h(n,k)*binomial(n,k)^4, where h(n,k) = (1+k)*(1-((n-k)/(1+k))^4)/(1+2*k-n) if 1+2*k-n <> 0 else h(n,k) = 4. - _Peter Luschny_, Nov 24 2011"
+    ],
+    "example": [
+        "Some examples of list S and allocated values of dir if n = 4:",
+        "Length(S) = (4+1)*4 = 20.",
+        "  S: L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L,L",
+        "dir: 1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,0",
+        "  S: L,L,L,L,R,L,R,R,L,R,R,R,L,R,L,L,R,L,L,L",
+        "dir: 1,2,3,0,0,0,0,3,3,3,2,1,1,1,1,2,2,2,3,0",
+        "  S: L,L,R,L,L,L,L,R,R,L,R,R,L,R,L,L,L,L,R,R",
+        "dir: 1,2,2,2,3,0,1,1,0,0,0,3,3,3,3,0,1,2,2,1",
+        "Each value of dir occurs 20/4 = 5 times."
+    ],
+    "mathematica": [
+        "A198256[n_] := Sum[Sum[Sum[(-1)^(j + i)* Binomial[i, j]*Binomial[n, k]^4*(n + 1)^j*(k + 1)^(3 - j)/(k + 1)^3, {i, 0, 3}], {j, 0, 3}], {k, 0, n}]; Table[A198256[n], {n, 0, 16}] (* _Peter Luschny_, Nov 02 2011 *)"
+    ],
+    "program": [
+        "(Sage) from mpmath import *",
+        "def A198256(n) : return hyper([1-n, 1-n, 1-n, 1-n], [3, 3, 3], 1)*(n^4-n^6)/4 + hyper([-n, -n, -n, -n], [2, 2, 2], 1)*(1+n+n^2+n^3) + hyper([2, 1-n, 1-n, 1-n, 1-n], [1, 3, 3, 3], 1)*(n^4+n^5)/4",
+        "mp.dps = 32",
+        "for n in (0..19) : print A198256(n)  ## _Peter Luschny_, Oct 24 2011",
+        "(PARI)",
+        "A198256(n) = {sum(k=0,n,if(n == 1+2*k,4,(1+k)*(1-((n-k)/(1+k))^4)/(1+2*k-n))*binomial(n,k)^4)} \\\\ _Peter Luschny_, Nov 24 2011"
+    ],
+    "xref": [
+        "Cf. A198060, A198257, A198258."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Susanne Wienand_, Oct 22 2011",
+    "references": 6,
+    "revision": 49,
+    "time": "2014-05-28T01:49:45-04:00",
+    "created": "2011-10-24T17:02:14-04:00"
+}

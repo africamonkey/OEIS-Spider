@@ -1,0 +1,41 @@
+{
+    "number": 183161,
+    "data": "1,1,5,26,145,841,5006,30350,186537,1158685,7258145,45779420,290399030,1851032314,11847434810,76100034106,490343021881,3168174174105,20520045125681,133197288251330,866293102078525,5644234561103785",
+    "name": "Self-convolution equals A183160.",
+    "comment": [
+        "Conjecture: a(n) is never congruent to 3 modulo 4; see A218622. - _Paul D. Hanna_, Nov 03 2012"
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A183161/b183161.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "Sum_{k=0..n} a(n-k)*a(k) = Sum_{k=0..n} C(n+k,n-k)*C(2*n-k,k) = A183160(n).",
+        "G.f.: A(x) = 1/sqrt(1 - 2*x*G(x)^2 - 3*x^2*G(x)^4), where G(x) = 1 + x*G(x)^3 = g.f. of A001764. - _Paul D. Hanna_, Nov 03 2012",
+        "G.f.: A(x) = Sum_{n>=0} A002426(n) * x^n * G(x)^(2*n), where A002426 are the central trinomial coefficients and G(x) = 1 + x*G(x)^3 = g.f. of A001764. - _Paul D. Hanna_, Nov 03 2012",
+        "a(n) = Sum_{k=0..n} A002426(k) * C(3*n-k,n-k) * 2*k/(3*n-k) for n>0, where A002426 are the central trinomial coefficients: A002426(n) = Sum_{k=0..[n/2]} C(n,2*k)*C(2*k,k). - _Paul D. Hanna_, Nov 04 2012",
+        "G.f.: A(x) = 1/sqrt(1 + 3*x*G(x) - 5*x*G(x)^2), where G(x) = 1 + x*G(x)^3 = g.f. of A001764. - _Paul D. Hanna_, Jun 16 2013"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 5*x^2 + 26*x^3 + 145*x^4 + 841*x^5 + 5006*x^6 +...",
+        "A(x)^2 = 1 + 2*x + 11*x^2 + 62*x^3 + 367*x^4 + 2232*x^5 + 13820*x^6 + 86662*x^7 +...+ A183160(n)*x^n +..."
+    ],
+    "program": [
+        "(PARI) a(n)=local(A2=sum(m=0,n,sum(k=0,m,binomial(m+k,m-k)*binomial(2*m-k,k))*x^m+x*O(x^n)));polcoeff(A2^(1/2),n)",
+        "(PARI) a(n)=local(G=1); for(i=0, n, G=1+x*G^3+O(x^(n+1))); polcoeff(1/sqrt(1-2*x*G^2-3*x^2*G^4), n) \\\\ Paul D. Hanna, Nov 03 2012",
+        "(PARI) A002426(n)=sum(k=0,n\\2,binomial(n,2*k)*binomial(2*k,k))",
+        "{a(n)=if(n==0,1,sum(k=0,n,A002426(k)*binomial(3*n-k,n-k)*2*k/(3*n-k)))} \\\\ _Paul D. Hanna_, Nov 04 2012",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) a(n)=local(G=1); for(i=0, n, G=1+x*G^3+O(x^(n+1))); polcoeff(1/sqrt(1+3*x*G-5*x*G^2), n)",
+        "for(n=0, 30, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Jun 16 2013"
+    ],
+    "xref": [
+        "Cf. A183160, A218622, A001764, A002426, A219197."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 27 2010",
+    "references": 5,
+    "revision": 25,
+    "time": "2016-07-19T11:29:26-04:00",
+    "created": "2010-12-27T12:22:24-05:00"
+}

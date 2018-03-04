@@ -1,0 +1,48 @@
+{
+    "number": 179245,
+    "data": "88,122,135,140,142,143,177,190,195,197,198,211,216,218,219,224,226,227,229,230,231,266,279,284,286,287,300,305,307,308,313,315,316,318,319,320,334,339,341,342,347,349,350,352,353,354,360,362,363,365,366,367",
+    "name": "Numbers n that have 5 terms in their Zeckendorf representation.",
+    "comment": [
+        "A007895(a(n)) = 5. - _Reinhard Zumkeller_, Mar 10 2013",
+        "Numbers that are the sum of five non-consecutive Fibonacci numbers. Their Zeckendorf representation thus consists of five 1's with at least one 0 between each pair of 1's; for example, 122 is represented as 1001010101. - _Alonso del Arte_, Nov 17 2013"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A179245/b179245.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = A048680(A014313(n)). - _Charles R Greathouse IV_, Nov 17 2013"
+    ],
+    "example": [
+        "88  = 55 + 21 + 8 + 3 + 1.",
+        "122 = 89 + 21 + 8 + 3 + 1.",
+        "135 = 89 + 34 + 8 + 3 + 1.",
+        "140 = 89 + 34 + 13 + 3 + 1.",
+        "142 = 89 + 34 + 13 + 5 + 1.",
+        "81 is not in the sequence because, although it is the sum of five Fibonacci numbers (81 = 5 + 8 + 13 + 21 + 34), its Zeckendorf representation only has three terms: 81 = 55 + 21 + 5."
+    ],
+    "maple": [
+        "with(combinat): B := proc (n) local A, ct, m, j: A := proc (n) local i: for i while fibonacci(i) <= n do n-fibonacci(i) end do end proc: ct := 0: m := n: for j while 0 < A(m) do ct := ct+1: m := A(m) end do: ct+1 end proc: Q := {}: for i from fibonacci(11)-1 to 400 do if B(i) = 5 then Q := `union`(Q, {i}) else end if end do: Q;"
+    ],
+    "mathematica": [
+        "zeck = DigitCount[Select[Range[3000], BitAnd[#, 2*#] == 0 &], 2, 1];",
+        "Position[zeck, 5] // Flatten (* _Jean-Fran\u00e7ois Alcover_, Jan 30 2018 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a179245 n = a179245_list !! (n-1)",
+        "a179245_list = filter ((== 5) . a007895) [1..]",
+        "-- _Reinhard Zumkeller_, Mar 10 2013",
+        "(PARI) A048680(n)=my(k=1,s);while(n,if(n%2,s+=fibonacci(k++)); k++; n>>=1); s",
+        "[A048680(n)|n<-[1..100],hammingweight(n)==5] \\\\ _Charles R Greathouse IV_, Nov 17 2013"
+    ],
+    "xref": [
+        "Cf. A035517, A007895. Numbers that have m terms in their Zeckendorf representations: A179242 (m = 2), A179243 (m = 3), A179244 (m = 4), A179246 (m = 6), A179247 (m = 7), A179248 (m = 8), A179249 (m = 9), A179250 (m = 10), A179251 (m = 11), A179252 (m = 12), A179253 (m = 13)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Emeric Deutsch_, Jul 05 2010",
+    "references": 11,
+    "revision": 20,
+    "time": "2018-01-30T05:08:50-05:00",
+    "created": "2010-07-11T03:00:00-04:00"
+}

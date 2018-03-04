@@ -1,0 +1,49 @@
+{
+    "number": 245589,
+    "data": "53,593,1747,2287,4013,4409,5563,6317,8117,10657,10853,11933,12547,12583,12653,15161,16937,17047,17851,18341,19603,19949,20107,22051,26693,31051,32993,35851,35911,39113,42209,42533,44041,46889,47527,48259,50417,51461",
+    "name": "Primes which are the average of the two adjacent primes and also of the two adjacent squarefree numbers.",
+    "comment": [
+        "Intersection of A006562 and A240475. Intersection of A006562 and A245289."
+    ],
+    "link": [
+        "Jens Kruse Andersen, <a href=\"/A245589/b245589.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "53 is in this sequence because 53 = prime(16) = (prime(15) + prime(17))/2 = (47 + 53))/2 = squarefree(33) = (squarefree(32) + squarefree(34))/2 = (51 + 55)/2."
+    ],
+    "maple": [
+        "Primes:= select(isprime,[$1..10^5]):",
+        "Sqfree:= select(numtheory:-issqrfree,[$1..10^5]):",
+        "A:= NULL:",
+        "for i from 2 to nops(Primes)-1 do",
+        "   if Primes[i] = (Primes[i+1]+Primes[i-1])/2 then",
+        "      member(Primes[i],Sqfree,'j');",
+        "      if Primes[i] = (Sqfree[j-1]+Sqfree[j+1])/2 then",
+        "         A:= A,Primes[i]",
+        "      fi",
+        "   fi",
+        "od:",
+        "A; # _Robert Israel_, Aug 21 2014"
+    ],
+    "program": [
+        "(PARI)",
+        "maxp=60000;",
+        "p=[]; my(v=primes(maxp)); for(k=2, #v-1, if(2*v[k] == v[k-1]+v[k+1], p=concat(p, v[k]))); p;",
+        "v = select(n->issquarefree(n), vector(maxp, n, n));",
+        "s=[]; for(k=2, #v-1, if(2*v[k] == v[k-1]+v[k+1], s=concat(s, v[k]))); s;",
+        "setintersect(p, s) \\\\ _Colin Barker_, Aug 07 2014"
+    ],
+    "xref": [
+        "Cf. A006562, A240475, A245289."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Jul 26 2014",
+    "ext": [
+        "Missing term (16937) inserted by _Colin Barker_, Aug 07 2014"
+    ],
+    "references": 1,
+    "revision": 21,
+    "time": "2014-09-03T10:28:46-04:00",
+    "created": "2014-08-21T17:46:42-04:00"
+}

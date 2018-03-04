@@ -1,0 +1,46 @@
+{
+    "number": 163927,
+    "data": "1,49,1897,69553,2515513,90663937,3264855049,117543378001,4231639039705,152339702576545,5484235568128681,197432536935184369,7107571838026381177,255872590744254526273,9211413307971174616393",
+    "name": "Numerators of the higher order exponential integral constants alpha(k,4)",
+    "comment": [
+        "The higher order exponential integrals, see A163931, are defined by E(x,m,n) = x^(n-1)*int(E(t,m-1,n)/t^n, t=x..infinity) for m >=0 and n>=1, with E(x,m=0,n) = exp(-x).",
+        "The series expansions of the higher order exponential integrals are dominated by the alpha(k,n) and the gamma(k,n) constants, see A163930.",
+        "The first Maple program uses the alpha(k,n) formula and the second the GF(n) to generate the alpha(k,n) coefficients in each column."
+    ],
+    "link": [
+        "J. W. Meijer and N.H.G. Baken, <a href=\"http://www.sciencedirect.com/science/article/B6V1D-47N62TS-4W/2/faab5428aaed95db7cfb6e62c3c93e97\">The Exponential Integral Distribution</a>, Statistics and Probability Letters, Volume 5, No.3, April 1987. pp 209-211."
+    ],
+    "formula": [
+        "alpha(k,n) = (1/k)*sum(sum(p^(-2*(k-i)),p = 0..n-1)*alpha(i, n), i = 0..k-1) with alpha(0,n) = 1, k >= 0 and n >= 1.",
+        "alpha(k,n) = alpha(k,n+1) -alpha(k-1,n+1)/n^2",
+        "GF(n) = product((1-(z/k)^2)^(-1), k = 1..n-1) = (Pi*z/sin(Pi*z))/(Beta(n+z,n-z)/Beta(n,n))"
+    ],
+    "example": [
+        "a(k=0,n=4) = 1, a(k=1,4) = 49/36, a(k=2,4) = 1897/1296, a(k=3,4) = 69553/46656."
+    ],
+    "maple": [
+        "coln := 4; nmax := 15; kmax := nmax: k:=0: for n from 1 to nmax do alpha(k, n) := 1 od: for k from 1 to kmax do for n from 1 to nmax do alpha(k, n) := (1/k)*sum(sum(p^(-2*(k-i)), p=0..n-1)*alpha(i, n), i=0..k-1) od; od: seq(alpha(k, coln), k=0..nmax-1);",
+        "# End program 1",
+        "coln:=4; nmax1 := nmax+1: for n from 0 to nmax1 do A008955(n, 0):=1 end do: for n from 0 to nmax1 do A008955(n, n) := (n!)^2 end do: for n from 1 to nmax1 do for m from 1 to n-1 do A008955(n, m) := A008955(n-1, m-1)*n^2 + A008955(n-1, m) end do: end do: m:=coln-1: f(m):=0: for n from 0 to m do f(m) := f(m) + (-1)^(n + m)*A008955(m, n)*z^(m-n) od: GF(coln) := m!^2/f(m): GF(coln):=series(GF(coln), z, nmax);",
+        "# End program 2"
+    ],
+    "xref": [
+        "Cf. A163931 (E(x, m, n)), A163930 (gamma(k, n)).",
+        "Cf. A163928 y A163929.",
+        "a(k,1) = A000007(k)",
+        "a(k,2) = A000012(k) = 1^k.",
+        "a(k,3) = A002450(k+1)/A000302(k) with A000302(k) = 4^k.",
+        "a(k,4) = A163927(k)/A009980(k) with A009980(k) = 36^k.",
+        "The GF(n) lead to A008955."
+    ],
+    "keyword": "easy,frac,nonn",
+    "offset": "0,2",
+    "author": "_Johannes W. Meijer_ & Nico Baken (n.h.g.baken(AT)tudelft.nl), Aug 13 2009, Aug 17 2009",
+    "ext": [
+        "Edited by _Johannes W. Meijer_, Sep 22 2012"
+    ],
+    "references": 6,
+    "revision": 8,
+    "time": "2013-10-05T13:16:44-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

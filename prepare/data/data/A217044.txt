@@ -1,0 +1,42 @@
+{
+    "number": 217044,
+    "data": "17,23,29,41,53,83,89,101,113,131,137,149,251,359,401,419,443,461,647,719,797,821,863,941,1289,1823,2111,2543,3323,3413,4013,4463,4751,5021,5501,5807,6299,6827,7229,7643,7883,8039,8219,8609,8837,9221,9227,9461,9623",
+    "name": "Primes that remain prime when a single \"2\" digit is inserted between any two adjacent decimal digits.",
+    "link": [
+        "Paolo P. Lava and Bruno Berselli, <a href=\"/A217044/b217044.txt\">Table of n, a(n) for n = 1..500</a> (first 123 terms from Paolo Lava)"
+    ],
+    "example": [
+        "9461 is prime and also 94621, 94261, 92461."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A217044:=proc(q,x)",
+        "local a,b,c,i,n,ok;",
+        "for n from 5 to q do",
+        "a:=ithprime(n); b:=0;",
+        "while a>0 do b:=b+1; a:=trunc(a/10); od; a:=ithprime(n); ok:=1;",
+        "  for i from 1 to b-1 do",
+        "    c:=a+9*10^i*trunc(a/10^i)+10^i*x;",
+        "    if not isprime(c) then ok:=0; break; fi; od;",
+        "  if ok=1 then print(ithprime(n)); fi;",
+        "od; end:",
+        "A217044(100000,2)"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[5,1200]],And@@PrimeQ[FromDigits/@Table[ Insert[ IntegerDigits[ #],2,i],{i,2,IntegerLength[#]}]]&] (* _Harvey P. Dale_, Oct 09 2012 *)"
+    ],
+    "program": [
+        "(MAGMA) [p: p in PrimesInInterval(11, 10000) | forall{m: t in [1..#Intseq(p)-1] | IsPrime(m) where m is (Floor(p/10^t)*10+2)*10^t+p mod 10^t}]; // _Bruno Berselli_, Sep 26 2012",
+        "(PARI) is(n)=my(v=concat([\"\"], digits(n))); for(i=2, #v-1, v[1]=Str(v[1], v[i]); v[i]=2; if(i>2, v[i-1]=\"\"); if(!isprime(eval(concat(v))), return(0))); isprime(n)  \\\\ _Charles R Greathouse IV_, Sep 26 2012"
+    ],
+    "xref": [
+        "Cf. A050674, A050711-A050719, A069246, A159236, A215417, A215419-A215421, A217045-A217047, A217062-A217065."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Sep 25 2012",
+    "references": 8,
+    "revision": 24,
+    "time": "2012-10-09T10:58:08-04:00",
+    "created": "2012-09-26T12:05:51-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 6952,
+    "id": "M1842",
+    "data": "1,2,8,24,78,232,720,2152,6528,19578,58944,176808,531128,1593288,4781952,14345792,43043622,129130584,387411144,1162232520,3486755688,10460266224,31380972784,94142915640,282429275616,847287817866,2541865038832,7625595108432",
+    "name": "Number of conjugacy classes in GL(n,3).",
+    "reference": [
+        "W. Feit and N. J. Fine, Pairs of commuting matrices over a finite field. Duke Math. Journal, 27 (1960) 91-94.",
+        "I. G. Macdonald, Numbers of conjugacy classes in some finite classical groups, Bulletin of the Australian Mathematical Society, vol.23, no.01, pp.23-48, (February-1981).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence).",
+        "W. D. Smith, personal communication."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A006952/b006952.txt\">Table of n, a(n) for n = 0..700</a>",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=162\">Encyclopedia of Combinatorial Structures 162</a>"
+    ],
+    "formula": [
+        "G.f. prod(n>=1, (1-x^n)/(1-3*x^n)  ). [_Joerg Arndt_, Jan 02 2013]",
+        "The number a(n) of conjugacy classes in the group GL(n, q) is the coefficient of t^n in prod(k>=1, (1-t^k)/(1-q*t^k) ) - Noam Katz (noamkj(AT)hotmail.com), Mar 30 2001."
+    ],
+    "maple": [
+        "with (numtheory):",
+        "b:= n-> add(phi(d)*3^(n/d), d=divisors(n))/n-1:",
+        "a:= proc(n) option remember; `if`(n=0, 1,",
+        "       add (add (d*b(d), d=divisors(j)) *a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq (a(n), n=0..30);  # _Alois P. Heinz_, Nov 03 2012"
+    ],
+    "mathematica": [
+        "b[n_] := Sum[EulerPhi[d]*3^(n/d), {d, Divisors[n]}]/n-1; a[n_] := a[n] =  If[n == 0, 1, Sum[Sum[d*b[d], {d, Divisors[j]}]*a[n-j], {j, 1, n}]/n]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Feb 17 2014, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(MAGMA) /* The program does not work for n>12: */ [1] cat [NumberOfClasses(GL(n, 3)) : n in [1..12]]; // Sergei Haller (sergei(AT)sergei-haller.de), Dec 21 2006",
+        "(PARI)",
+        "N=66; x='x+O('x^N);",
+        "gf=prod(n=1, N, (1-x^n)/(1-3*x^n)  );",
+        "v=Vec(gf)",
+        "/* _Joerg Arndt_, Jan 02 2013 */"
+    ],
+    "xref": [
+        "Cf. A006951, A049314, A049315, A049316."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Nov 03 2012",
+        "MAGMA code edited by _Vincenzo Librandi_, Jan 23 2013"
+    ],
+    "references": 23,
+    "revision": 33,
+    "time": "2017-04-18T07:02:56-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

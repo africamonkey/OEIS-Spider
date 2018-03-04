@@ -1,0 +1,38 @@
+{
+    "number": 188634,
+    "data": "1,1,4,46,1066,41506,2441314,202229266,22447207906,3216941445106,578333776748674,127464417117501586,33800841048945424546,10617398393395844992306,3898852051843774954576834,1654948033478889053351543506,804119629083230641164978005986",
+    "name": "E.g.f.: Sum_{n>=0} (1 - exp(-(n+1)*x))^n/(n+1).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A188634/b188634.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=0..n} (j+1)^(n-1) * Sum_{i=0..j} (-1)^(n+j-i)*C(j, i)*(j-i)^n.",
+        "Ignoring the initial term, equals a diagonal of array A099594, which forms the poly-Bernoulli numbers B(-k,n).",
+        "Limit n->infinity a(n)^(1/n)/n^2 = 0.281682... - _Vaclav Kotesovec_, Dec 30 2012"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 4*x^2/2! + 46*x^3/3! + 1066*x^4/4! + 41506*x^5/5! +...",
+        "where",
+        "A(x) = 1 + (1-exp(-2*x))/2 + (1-exp(-3*x))^2/3 + (1-exp(-4*x))^3/4 + (1-exp(-5*x))^4/5 + (1-exp(-6*x))^5/6 +..."
+    ],
+    "mathematica": [
+        "Table[Sum[(-1)^(k+n)*(k+1)^(n-1)*k!*StirlingS2[n, k],{k,0,n}],{n,0,20}]",
+        "Table[n!*SeriesCoefficient[Sum[(1-E^(-x*(k+1)))^k/(k+1),{k,0,n}],{x,0,n}],{n,0,20}]  (* _Vaclav Kotesovec_, Dec 30 2012 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(sum(k=0, n, (1-exp(-(k+1)*x+x*O(x^n)))^k/(k+1)), n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n)=sum(j=0,n, (j+1)^(n-1)*sum(i=0,j, (-1)^(n+j-i)*binomial(j,i)*(j-i)^n))}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A099594, A092552, A191908."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 28 2012",
+    "references": 3,
+    "revision": 23,
+    "time": "2013-06-02T10:39:57-04:00",
+    "created": "2012-12-28T15:29:08-05:00"
+}

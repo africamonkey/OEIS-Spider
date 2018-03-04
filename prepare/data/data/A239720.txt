@@ -1,0 +1,62 @@
+{
+    "number": 239720,
+    "data": "109,1009,10009,10099,100999,1000099,1000999,1000000009,1000009999,1000099999,1009999999,10000000999,10000099999,10999999999,100999999999,1000000009999,1000000999999,1099999999999,10000000000099,10009999999999",
+    "name": "Primes of the form m = 10^i + 10^j - 1, where i > j >= 0.",
+    "comment": [
+        "Numbers with the first digit 1 followed by at least one 0-digit and ending with a number > 0 of trailing 9-digits.",
+        "The digital sum of a term 10^i + 10^j - 1 is = 1 + 9*j == 1 (mod 9).",
+        "Numbers m that satisfy m = 10^i + 10^j + 1 are never primes, since the digital sum of m is 3, and thus, m is divisible by 3."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A239720/b239720.txt\">Table of n, a(n) for n = 1..1000</a> (* First 44 terms from Hieronymus Fischer *)"
+    ],
+    "example": [
+        "a(1) = 109, since 109 = 10^2 + 10^1 - 1 is prime.",
+        "a(2) = 1009, since 1009 = 10^3 + 10^1 - 1 is prime."
+    ],
+    "mathematica": [
+        "Select[Flatten[Table[10^i+10^j-1,{i,0,20},{j,0,i-1}]],PrimeQ] (* _Harvey P. Dale_, Jan 30 2017 *)"
+    ],
+    "program": [
+        "(Smalltalk)",
+        "A239720",
+        "  \"Answer the n-th term of A239720.",
+        "  Usage: n A239720",
+        "  Answer: a(n)\"",
+        "  | a b i j k p q terms |",
+        "  terms := OrderedCollection new.",
+        "  k := 0.",
+        "  b := 10.",
+        "  p := b.",
+        "  i := 1.",
+        "  [k < self] whileTrue:",
+        "         [j := 0.",
+        "         q := 1.",
+        "         [j < i and: [k < self]] whileTrue:",
+        "                   [a := p + q - 1.",
+        "                   a isPrime",
+        "                        ifTrue:",
+        "                            [k := k + 1.",
+        "                            terms add: a].",
+        "                   q := b * q.",
+        "                   j := j + 1].",
+        "         i := i + 1.",
+        "         p := b * p].",
+        "  ^terms at: self",
+        "--------------------",
+        "(Smalltalk)",
+        "A239720",
+        "  \"Version2: Answer an array of the first n terms of A239720.",
+        "  Uses method primesWhichAreDistinctPowersOf: b withOffset: d from A239712.",
+        "  Usage: n A239720",
+        "  Answer: #(109 1009 ... ) [a(1) ... a(n)]\"",
+        "  ^self primesWhichAreDistinctPowersOf: 10 withOffset: -1"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Hieronymus Fischer_, Apr 14 2014",
+    "references": 7,
+    "revision": 16,
+    "time": "2017-01-30T17:27:32-05:00",
+    "created": "2014-05-05T04:11:41-04:00"
+}

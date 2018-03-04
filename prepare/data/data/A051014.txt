@@ -1,0 +1,69 @@
+{
+    "number": 51014,
+    "data": "1,2,3,5,7,11,14,21,27,38,52,73,90,123,159,211,263,344,413,535,658,832,1026,1276,1499,1846,2226,2708,3229,3912,4592,5541,6495,7795,9207,10908,12547,14852,17358,20493,23709,27744,31921,37250,43013,49936,57319,66318",
+    "name": "Nondividing sets on {1,2,...,n}.",
+    "comment": [
+        "A set is called nondividing if no element divides the sum of any nonempty subset of the other elements."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/NondividingSet.html\">Nondividing Set</a>"
+    ],
+    "example": [
+        "a(5) = 11 because there are 11 nondividing subsets of {1,2,3,4,5}: {}, {1}, {2}, {3}, {4}, {5}, {2,3}, {2,5}, {3,4}, {3,5}, {4,5}.",
+        "a(7) = 21: {}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {2,3}, {2,5}, {2,7}, {3,4}, {3,5}, {3,7}, {4,5}, {4,6}, {4,7}, {5,6}, {5,7}, {6,7}, {4,6,7}."
+    ],
+    "maple": [
+        "sums:= proc(s) option remember; local i, m;",
+        "          m:= max(s[]);",
+        "         `if`(m<1, {}, {m, seq([i,i+m][], i=sums(s minus {m}))})",
+        "       end:",
+        "b:= proc(i,s) option remember; local j, ok, t, si;",
+        "      if i<2 then 1",
+        "    else si:= s union {i};",
+        "         ok:= true;",
+        "         for j in sums(si) while ok do",
+        "           for t in si while ok do",
+        "             if irem(j, t)=0 and t<>j then ok:= false fi",
+        "           od",
+        "         od;",
+        "         b(i-1,s) +`if`(ok, b(i-1, si), 0)",
+        "      fi",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, 1+b(n, {})):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Mar 08 2011"
+    ],
+    "mathematica": [
+        "sums[s_] := sums[s] = Module[{m=Max[s]},",
+        "If[m<1, {},",
+        "  Join[{m},",
+        "  Sequence@@Table[{i,i+m}, {i,sums[DeleteCases[s,m]]}]]]",
+        "];",
+        "b[i_,s_] := b[i,s] = Module[{ ok,si,sij,sik},",
+        "If[ i<2, 1, si = Union[s,{i}];",
+        "ok = True;",
+        "For[j=1, j <= Length[sums[si]] && ok, j++,",
+        "  sij = sums[si][[j]];",
+        "  For[k=1, k <= Length[si] && ok, k++,",
+        "    If[Divisible[sij,sik=si[[k]]]&&sij!=sik,ok=False]]];",
+        "    b[i-1, s] + If[ok, b[i-1,si],0]",
+        "  ]",
+        "];",
+        "a[n_] := a[n] = If[n==0, 1, 1+b[n, {}]];",
+        "Table[ Print[ a[n] ]; a[n], {n,0,47}]",
+        "(* _Jean-Fran\u00e7ois Alcover_, Oct 10 2012, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Row sums of A187489.  Cf. A068063."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,2",
+    "author": "_Eric W. Weisstein_",
+    "ext": [
+        "More terms from _David Wasserman_, Feb 15 2002",
+        "a(41)-a(47) from _Alois P. Heinz_, Mar 08 2011"
+    ],
+    "references": 3,
+    "revision": 26,
+    "time": "2016-03-22T20:58:43-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

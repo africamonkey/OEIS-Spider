@@ -1,0 +1,44 @@
+{
+    "number": 212921,
+    "data": "4,15,20,21,35,42,55,65,70,95,100,105,110,120,125,130,135,140,150,160,161,170,180,182,187,190,200,203,217,220,225,231,240,260,270,280,285,301,305,312,315,319,322,340,343,351,365,370,371,375,395,400,406,407",
+    "name": "Composite number n = Product(p_j^k_j) that under the iteration of the map Product (p_j^k_j) ->  Sum (p_j * k_j) reaches a limit that divides the number itself.",
+    "comment": [
+        "Apart from the case n=4, the limit of the iteration is a prime number."
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A212921/b212921.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "70 = 2*5*7 -> 2+5+7 = 14 =2*7 -> 2+7=9 = 3^2 -> 3*2=6=2*3 -> 2+3=5 and 70/5=14."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A212921:=proc(q)",
+        "local a,b,c,d,i,k,n;",
+        "print(4);",
+        "for n from 5 to q do",
+        "  if not isprime(n) then a:=n;",
+        "    while not isprime(a) do",
+        "    b:=ifactors(a)[2]; c:=nops(b); b:=op(b); d:=0;",
+        "    if c=1 then d:=b[1]*b[2];",
+        "    else for k from 1 to c do d:=d+b[k][1]*b[k][2]; od; fi;",
+        "    a:=d; if isprime(d) then if trunc(n/d)=n/d then lprint(n,d); fi; break; fi; od;",
+        "  fi;",
+        "od;",
+        "end:",
+        "A212921(10000);"
+    ],
+    "mathematica": [
+        "it[n_] := it[n] = Module[{p, e}, {p, e} = Transpose[FactorInteger[n]]; Dot[p, e]]; it2[n_] := FixedPointList[it[#] &, n]; Select[Range[2, 1000], ! PrimeQ[#] && Mod[#, it2[#][[-1]]] == 0 &] (* _T. D. Noe_, Jun 01 2012 *)"
+    ],
+    "xref": [
+        "Cf. A029909."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, May 31 2012",
+    "references": 1,
+    "revision": 11,
+    "time": "2012-06-01T12:02:28-04:00",
+    "created": "2012-06-01T12:02:28-04:00"
+}

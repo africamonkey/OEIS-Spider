@@ -1,0 +1,41 @@
+{
+    "number": 220690,
+    "data": "0,0,1,4,24,198,2110,27768,436656,8003950,167779068,3961727820,104102329504,3013887239454,95338047836520,3272043459321328,121106541865151040,4808924948167249302,203931444227955436816,9198925314402386788500,439809753701222702598528",
+    "name": "Number of acyclic graphs on {1,2,...,n} such that the node with label 1 is in the same connected component (tree) as the node with label 2.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A220690/b220690.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "E.g.f.: Double integral of U''(x)*exp(U(x)) dx^2 where U(x) is the e.g.f. for A000272.",
+        "a(n) = Sum_{k=0..n-2} binomial(n-2,k)*(k+2)^k*A001858(n-k-2)."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1,",
+        "      add(binomial(n-1, j) *(j+1)^(j-1) *b(n-1-j), j=0..n-1))",
+        "    end:",
+        "a:= n-> add(binomial(n-2, k)*(k+2)^k*b(n-k-2), k=0..n-2):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Apr 13 2013"
+    ],
+    "mathematica": [
+        "nn=20;u=Sum[n^(n-2)x^n/n!,{n,1,nn}];Range[0,nn]!CoefficientList[ Series[Integrate[Integrate[D[D[u,x],x]Exp[u],x],x],{x,0,nn}],x]"
+    ],
+    "program": [
+        "(PARI)",
+        "N = 66;  x = 'x + O('x^N);",
+        "U = sum(n=1,N,n^(n-2)*x^n/n!);",
+        "egf = intformal(intformal( deriv(deriv(U)) * exp(U) ));",
+        "gf = serlaplace(egf) + 'c0;",
+        "v = Vec(gf);  v[1]-='c0;  v",
+        "/* _Joerg Arndt_, Apr 13 2013 */"
+    ],
+    "xref": [
+        "Cf. A221864."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Geoffrey Critzer_, Apr 13 2013",
+    "references": 1,
+    "revision": 14,
+    "time": "2013-04-13T16:36:47-04:00",
+    "created": "2013-04-13T16:36:47-04:00"
+}

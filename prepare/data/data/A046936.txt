@@ -1,0 +1,54 @@
+{
+    "number": 46936,
+    "data": "0,1,1,1,2,3,3,4,6,9,9,12,16,22,31,31,40,52,68,90,121,121,152,192,244,312,402,523,523,644,796,988,1232,1544,1946,2469,2469,2992,3636,4432,5420,6652,8196,10142,12611,12611,15080,18072,21708,26140",
+    "name": "Same rule as Aitken triangle (A011971) except a(0,0)=0, a(1,0)=1.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A046936/b046936.txt\">Rows n = 0..125 of triangle, flattened</a>",
+        "R. K. Guy, <a href=\"/A002186/a002186.pdf\">Letters to N. J. A. Sloane, June-August 1968</a>",
+        "Don Knuth, <a href=\"/A040027/a040027.txt\">Email to N. J. A. Sloane</a>, Jan 29 2018"
+    ],
+    "example": [
+        "Triangle starts:",
+        "0,",
+        "1, 1,",
+        "1, 2, 3,",
+        "3, 4, 6, 9,",
+        "9, 12, 16, 22, 31,",
+        "31, 40, 52, 68, 90, 121,",
+        "121, 152, 192, 244, 312, 402, 523,",
+        "523, 644, 796, 988, 1232, 1544, 1946, 2469,",
+        "2469, 2992, 3636, 4432, 5420, 6652, 8196, 10142, 12611,",
+        "12611, 15080, ..."
+    ],
+    "mathematica": [
+        "a[0, 0] = 0; a[1, 0] = 1; a[n_, 0] := a[n, 0] = a[n-1, n-1]; a[n_, k_] := a[n, k] = a[n, k-1] + a[n-1, k-1]; Table[a[n, k], {n, 0, 9}, {k, 0, n}] // Flatten (* _Jean-Fran\u00e7ois Alcover_, Nov 15 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a046936 n k = a046936_tabl !! n !! k",
+        "a046936_row n = a046936_tabl !! n",
+        "a046936_tabl = [0] : iterate (\\row -> scanl (+) (last row) row) [1,1]",
+        "-- _Reinhard Zumkeller_, Jan 01 2014",
+        "(Python 3)",
+        "from itertools import accumulate",
+        "def A046936(): # Compare function Gould_diag in A121207.",
+        "    yield [0]",
+        "    accu = [1, 1]",
+        "    while True:",
+        "        yield accu",
+        "        accu = list(accumulate([accu[-1]] + accu))",
+        "g = A046936()",
+        "[next(g) for _ in range(9)] # _Peter Luschny_, Apr 25 2016"
+    ],
+    "xref": [
+        "Borders give A040027. Reading across rows gives A007604.",
+        "Cf. A121207, A298804."
+    ],
+    "keyword": "tabl,easy,nice,nonn",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_, _R. K. Guy_",
+    "references": 7,
+    "revision": 29,
+    "time": "2018-01-31T21:51:47-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

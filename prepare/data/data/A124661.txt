@@ -1,0 +1,79 @@
+{
+    "number": 124661,
+    "data": "2,3,5,7,13,19,23,31,43,47,73,83,109,113,181,199,283,293,313,317,463,467,503,509,523,619,661,683,691,887,1063,1069,1103,1109,1123,1129,1303,1307,1321,1327,1613,1621,1627,1637,1669,1789",
+    "name": "Popular primes: primes prime(n) such that prime(n-k)+prime(n+k) >= 2*prime(n) for all k = 1,2,...n-2.",
+    "comment": [
+        "McNew says that a prime p is \"popular\" on an interval [2, k] if no prime occurs more frequently than p as the greatest prime factor (gpf, A006530) of the integers in that interval. - _N. J. A. Sloane_, Jul 25 2017",
+        "The first two primes, 2 and 3, are tested against an empty set of k, and we include them, defining such a test to have a positive outcome."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A124661/b124661.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Nathan McNew, <a href=\"http://arxiv.org/abs/1504.05985\">Popular values of the largest prime divisor function</a>, arXiv:1504.05985 [math.NT], 2015.",
+        "Nathan McNew, <a href=\"http://dx.doi.org/10.1080/10586458.2016.115518\">The Most Frequent Values of the Largest Prime Divisor Function</a>, Exper. Math., 2017, Vol. 26, No. 2, 210-224.",
+        "C. Pomerance, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1979-0514836-7\">The prime number graph</a>, Math. Comp. 33 (1979) 399--408. - _Nathan McNew_, Apr 04 2014"
+    ],
+    "example": [
+        "prime(11)=31 is in the sequence because prime(10)+prime(12) = 66, prime(9)+prime(13) = 64,..., prime(2)+prime(20) = 74 are all >= 62 = 2*31.",
+        "prime(10) = 29 is not in the sequence because prime(9)+prime(11) = 54 for example is smaller than 58 = 2*29."
+    ],
+    "mathematica": [
+        "Select[Prime@ Range@ 300, Function[{p, n}, NoneTrue[Range[n - 2], Prime[n - #] + Prime[n + #] < 2 p &]] @@ {#, PrimePi@ #} &] (* _Michael De Vlieger_, Jul 25 2017 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = {n = primepi(p); for (k=1, n-2, if (prime(n-k) + prime(n+k) < 2*p, return (0));); return (1);}",
+        "lista(nn) = {for(n=1, nn, if (isok(prime(n)), print1(prime(n), \", \");););} \\\\ _Michel Marcus_, Nov 03 2013",
+        "(Python)",
+        "def a124661(end):",
+        "....a124661_list=[2, 3, 5, 7]",
+        "....primes=[2,3]",
+        "....add=True",
+        "....for num in range(4, end*3):",
+        "........prime=False",
+        "........length=len(primes)",
+        "........for y in range(0,length):",
+        "............if num % primes[y]!=0:",
+        "................prime=True",
+        "............else:",
+        "................prime=False",
+        "................break",
+        "........if (prime):",
+        "............primes.append(num)",
+        "....for x in range(4, int(len(primes)/2)):",
+        "........for k in range(1, x-2):",
+        "............if (primes[x-k]+primes[x+k]>=primes[x]*2):",
+        "................add=True",
+        "............else:",
+        "................add=False",
+        "................break",
+        "........if (add):",
+        "............if (primes[x]>end):",
+        "................break",
+        "............else:",
+        "................a124661_list.append(primes[x])",
+        "....return a124661_list",
+        "# _Conner L. Delahanty_, Apr 19 2014",
+        "(Python)",
+        "from sympy import prime",
+        "A124661_list = []",
+        "for n in range(1,10**6):",
+        "    p = prime(n)",
+        "    for k in range(1,n-1):",
+        "        if prime(n-k)+prime(n+k) < 2*p:",
+        "            break",
+        "    else:",
+        "        A124661_list.append(p) # _Chai Wah Wu_, Jul 25 2017"
+    ],
+    "xref": [
+        "Cf. A006530, A051635."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Artur Jasinski_, Dec 23 2006",
+    "ext": [
+        "Sequence extended by _R. J. Mathar_, Mar 28 2010"
+    ],
+    "references": 7,
+    "revision": 39,
+    "time": "2017-07-25T17:12:46-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

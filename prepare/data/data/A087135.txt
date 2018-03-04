@@ -1,0 +1,59 @@
+{
+    "number": 87135,
+    "data": "1,2,2,4,4,6,8,10,12,16,20,24,30,36,44,54,64,76,92,108,128,152,178,208,244,284,330,384,444,512,592,680,780,896,1024,1170,1336,1520,1728,1964,2226,2520,2852,3220,3632,4096,4608,5180,5820,6528,7316,8194,9164,10240,11436,12756,14216,15834",
+    "name": "Number of numbers m such that A073642(m) = n.",
+    "comment": [
+        "For n > 0, number of partitions of n into distinct nonnegative integers; for all n, number of nonempty partitions of n into distinct nonnegative integers. - _Franklin T. Adams-Watters_, Dec 28 2006",
+        "For n>=1, a(n-1) is the number of partitions of n where all parts except possibly the two smallest are distinct, see example. - _Joerg Arndt_, May 23 2013"
+    ],
+    "formula": [
+        "a(n) = 2*A000009(n) for n>0.",
+        "G.f.: Sum_{n>=0} (x^(n*(n+1)/2) / Product_{k=1..n+1} (1-x^k ) ). - _Joerg Arndt_, Mar 24 2011",
+        "G.f.: Sum_{n>=0} x^n * Product_{k=0..n-1} (1+x^k). - _Paul D. Hanna_, Feb 19 2012"
+    ],
+    "example": [
+        "n=6: numbers m such that A073642(m)=6: {14,15,20,21,34,35,64,65}, therefore a(6)=8.",
+        "From _Joerg Arndt_, May 23 2013: (Start)",
+        "There are a(10-1)=15 partitions of 10 where all parts except possibly the two smallest are distinct:",
+        "01:  [ 1 1 2 6 ]",
+        "02:  [ 1 1 3 5 ]",
+        "03:  [ 1 1 8 ]",
+        "04:  [ 1 2 3 4 ]",
+        "05:  [ 1 2 7 ]",
+        "06:  [ 1 3 6 ]",
+        "07:  [ 1 4 5 ]",
+        "08:  [ 1 9 ]",
+        "09:  [ 2 2 6 ]",
+        "10:  [ 2 3 5 ]",
+        "11:  [ 2 8 ]",
+        "12:  [ 3 3 4 ]",
+        "13:  [ 3 7 ]",
+        "14:  [ 4 6 ]",
+        "15:  [ 5 5 ]",
+        "16:  [ 10 ]",
+        "(End)"
+    ],
+    "maple": [
+        "ZL:=product(1+x^(j-1), j=1..59): gser:=series(ZL, x=0, 55): seq(coeff(gser, x, n), n=1..48); # _Zerinvary Lajos_, Mar 09 2007"
+    ],
+    "mathematica": [
+        "(QPochhammer[-1, x] - 1 + O[x]^58)[[3]] (* _Vladimir Reshetnikov_, Nov 20 2015 *)"
+    ],
+    "program": [
+        "(PARI) /* From the formula given by Joerg Arndt: */",
+        "{a(n)=polcoeff(sum(m=0,n,x^(m*(m+1)/2)/prod(k=1,m+1,1-x^k +x*O(x^n))),n)}",
+        "for(n=0,60,print1(a(n),\", \")) /* _Paul D. Hanna_, Feb 19 2012 */",
+        "(PARI) {a(n)=polcoeff(sum(m=0,n,x^m*prod(k=0,m-1,1+x^k +x*O(x^n))),n)}",
+        "for(n=0,60,print1(a(n),\", \")) /* _Paul D. Hanna_, Feb 19 2012 */"
+    ],
+    "xref": [
+        "Cf. A087136."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Reinhard Zumkeller_, Aug 17 2003",
+    "references": 4,
+    "revision": 24,
+    "time": "2015-11-21T00:44:01-05:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

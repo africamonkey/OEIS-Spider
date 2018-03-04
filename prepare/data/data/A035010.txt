@@ -1,0 +1,47 @@
+{
+    "number": 35010,
+    "data": "1,2,4,14,38,132,420,1426,4834,16796,58688,208012,742636,2674384,9693976,35357670,129641774,477638700,1767253368,6564119892,24466233428,91482563640,343059494120,1289904147128,4861945985428,18367353066440,69533549429280,263747951750360",
+    "name": "Number of prime binary rooted trees with n external nodes.",
+    "comment": [
+        "If a,b are binary trees, a.b is equal to tree b where a copy of a is put on each of b's external nodes. This is non-commutative but associative. A binary tree a is prime if it is different from the 1 node tree and if a=b.c implies that b or c is equal to the 1 node tree."
+    ],
+    "reference": [
+        "B. Amerlynck, It\u00e9r\u00e9es d'exponentielles: aspects combinatoires et arithm\u00e9tiques, M\u00e9moire de licence, Univ. Libre de Bruxelles (1998)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A035010/b035010.txt\">Table of n, a(n) for n = 2..1000</a>",
+        "V. Blondel, <a href=\"http://gallica.bnf.fr/ark:/12148/bpt6k6473221w/f113.image\">Une famille d'op\u00e9rations sur les arbres binaires</a>, [A family of operations on binary trees], Comptes Rendus de l'Academie des Sciences de Paris - Serie I, 321, 491-494, 1995.",
+        "V. Blondel, <a href=\"http://www.inma.ucl.ac.be/~blondel/publications/98B-snumbers.pdf\">Structured numbers: properties of a hierarchy of operations on binary trees</a>, Acta Informatica, vol. 35 (1998), pp. 1-15.",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "a(n) = C(n-1) - sum_{d_1*d_2=n and 1<d_1<n} a(d_1)*C(d_2-1) where C(n) is the n-th Catalan number (A000108)."
+    ],
+    "example": [
+        "a(4) = C(3) - sum_{d_1*d_2=4} a(d_1)*C(d_2-1) = 5 - a(2)*C(1) = 5 - 1 = 4"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "C:= n-> binomial(2*n, n)/(n+1):",
+        "a:= proc(n) option remember; C(n-1)",
+        "      -add(a(d)*C(n/d-1), d=divisors(n) minus {1, n})",
+        "    end:",
+        "seq(a(n), n=2..30);  # _Alois P. Heinz_, Feb 12 2015"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = CatalanNumber[n-1] - Sum[If[Divisible[n, d1], d2 = n/d1; a[d1]*CatalanNumber[d2-1], 0], {d1, 2, n-1}]; a[2] = 1; Table[a[n], {n, 2, 26}] (* _Jean-Fran\u00e7ois Alcover_, Oct 25 2011, after formula *)"
+    ],
+    "xref": [
+        "Cf. A035102."
+    ],
+    "keyword": "nice,easy,nonn",
+    "offset": "2,2",
+    "author": "Bernard Amerlynck (B.Amerlynck(AT)ulg.ac.be)",
+    "ext": [
+        "More terms from _Christian G. Bower_"
+    ],
+    "references": 3,
+    "revision": 27,
+    "time": "2015-02-12T10:02:32-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

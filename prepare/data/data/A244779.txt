@@ -1,0 +1,50 @@
+{
+    "number": 244779,
+    "data": "1,2,4,7,8,11,14,16,22,23,28,29,32,37,43,44,46,53,56,58,64,67,71,74,77,79,86,88,92,106,107,109,112,113,116,121,127,128,134,137,142,148,149,151,154,158,161,163,172,176,179,184,191,193,197,203,211,212,214",
+    "name": "Positive numbers primitively represented by the binary quadratic form (1, 1, 2).",
+    "comment": [
+        "Discriminant = -7."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A244779/b244779.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "N. J. A. Sloane et al., <a href=\"https://oeis.org/wiki/Binary_Quadratic_Forms_and_OEIS\">Binary Quadratic Forms and OEIS</a> (Index to related sequences, programs, references)"
+    ],
+    "maple": [
+        "PriRepBQF := proc(a, b, c, n) local L,q,R,r,k;",
+        "q := a*x^2 + b*x*y + c*y^2; L := NULL;",
+        "for k from 1 to n do",
+        "   R := [isolve(q = k)];",
+        "   if R = [] then next fi;",
+        "   for r in R do",
+        "      igcd(op(2,r[1]), op(2,r[2]));",
+        "      if 1 = % then L := L,k; break fi od",
+        "od; L end:",
+        "A244779_list := n -> PriRepBQF(1, 1, 2, n); A244779_list(214);",
+        "# Alternate program",
+        "A244779_set:= proc(N) local A, B, y,x;",
+        "   A:= {};",
+        "   for y from 0 to floor(sqrt(4*N/7)) do",
+        "     for x from ceil(-y/2) to floor(-y/2 + sqrt(N - 7/4*y^2)) do",
+        "       if igcd(x,y) = 1 then",
+        "         A:= A union {x^2 + x*y + 2*y^2}",
+        "       fi",
+        "     od",
+        "    od;",
+        "A",
+        "end proc:",
+        "A244779_set(1000); # _Robert Israel_, Jul 06 2014"
+    ],
+    "mathematica": [
+        "Reap[For[n = 1, n < 1000, n++, r = Reduce[x^2 + x y + 2 y^2 == n, {x, y}, Integers]; If[r =!= False, If[AnyTrue[{x, y} /. {ToRules[r /. C[1] -> 0]}, CoprimeQ @@ # &], Sow[n]]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Oct 31 2016 *)"
+    ],
+    "xref": [
+        "Cf. A244780, A244819."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Peter Luschny_, Jul 06 2014",
+    "references": 3,
+    "revision": 13,
+    "time": "2016-10-31T10:22:10-04:00",
+    "created": "2014-07-06T15:47:59-04:00"
+}

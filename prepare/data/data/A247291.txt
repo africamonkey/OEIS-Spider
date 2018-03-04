@@ -1,0 +1,42 @@
+{
+    "number": 247291,
+    "data": "1,1,2,4,7,15,32,69,154,346,786,1806,4180,9745,22865,53938,127865,304447,727733,1745736,4201350,10140975,24544000,59551327,144822097,352940719,861839226,2108381480,5166749329,12681855551,31174671514,76742344774",
+    "name": "Number of weighted lattice paths B(n) having no uhd strings.",
+    "comment": [
+        "B(n) is the set of lattice paths of weight n that start in (0,0), end on the horizontal axis and never go below this axis, whose steps are of the following four kinds: h = (1,0) of weight 1, H = (1,0) of weight 2, u = (1,1) of weight 2, and d = (1,-1) of weight 1. The weight of a path is the sum of the weights of its steps.",
+        "a(n) = A247290(n,0)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A247291/b247291.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "M. Bona and A. Knopfmacher, <a href=\"http://dx.doi.org/10.1007/s00026-010-0060-7\">On the probability that certain compositions have the same number of parts</a>, Ann. Comb., 14 (2010), 291-306."
+    ],
+    "formula": [
+        "G.f. G = G(z) satisfies G = 1 + z*G + z^2*G + z^3*G*(G - z)."
+    ],
+    "example": [
+        "a(4)=7 because we have hhhh, hhH, hHh, Hhh, HH, hud, and udh."
+    ],
+    "maple": [
+        "eq := G = 1+z*G+z^2*G+z^3*(G-z)*G: G := RootOf(eq, G): Gser := series(G, z = 0, 37): seq(coeff(Gser, z, n), n = 0 .. 35);",
+        "# second Maple program:",
+        "b:= proc(n, y, t) option remember; `if`(y<0 or y>n or t=3, 0,",
+        "      `if`(n=0, 1, b(n-1, y, `if`(t=1, 2, 0))+`if`(n>1, b(n-2,",
+        "       y, 0)+b(n-2, y+1, 1), 0)+b(n-1, y-1, `if`(t=2, 3, 0))))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(T(n), n=0..40); # _Alois P. Heinz_, Sep 16 2014"
+    ],
+    "mathematica": [
+        "b[n_, y_, t_] := b[n, y, t] = If[y<0 || y>n || t == 3, 0, If[n == 0, 1, b[n-1, y, If[t == 1, 2, 0]] + If[n>1, b[n-2, y, 0] + b[n-2, y+1, 1], 0] + b[n-1, y-1, If[t == 2, 3, 0]]]]; a[n_] := b[n, 0, 0]; Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, May 27 2015, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A247290, A247293, A247295."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Emeric Deutsch_, Sep 16 2014",
+    "references": 4,
+    "revision": 15,
+    "time": "2015-05-27T08:40:38-04:00",
+    "created": "2014-09-16T18:44:43-04:00"
+}

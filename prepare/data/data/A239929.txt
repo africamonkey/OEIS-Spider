@@ -1,0 +1,89 @@
+{
+    "number": 239929,
+    "data": "3,5,7,10,11,13,14,17,19,22,23,26,29,31,34,37,38,41,43,44,46,47,52,53,58,59,61,62,67,68,71,73,74,76,78,79,82,83,86,89,92,94,97,101,102,103,106,107,109,113,114,116,118,122,124,127,131,134,136,137,138",
+    "name": "Numbers n with the property that the symmetric representation of sigma(n) has two parts.",
+    "comment": [
+        "All odd primes are in the sequence because the symmetric representation of sigma(prime(i)) is [m, m], where m = (1 + prime(i))/2, for i >= 2.",
+        "All odd numbers are primes. There are no odd composite numbers in this sequence.",
+        "First differs from A173708 at a(13).",
+        "Since sigma(p*q) >= 1 + p + q + p*q for odd p and q, the symmetric representation of sigma(p*q) has more parts than the two extremal ones of size (p*q + 1)/2; therefore, the above comments are true. - _Hartmut F. W. Hoft_, Jul 16 2014",
+        "From _Hartmut F. W. Hoft_, Sep 16 2015: (Start)",
+        "The following two statements are equivalent:",
+        "  (1) The symmetric representation of sigma(n) has two parts, and",
+        "  (2) n = q * p where q is in A174973, p is prime, and 2 * q < p.",
+        "For a proof see the link and also the link in A071561.",
+        "This characterization allows for much faster computation of numbers in the sequence - function a239929F[] in the Mathematica section - than computations based on Dyck paths. The function a239929Stalk[] gives rise to the associated irregular triangle whose columns are indexed by A174973 and whose rows are indexed by A065091, the odd primes. (End)",
+        "From _Hartmut F. W. Hoft_, Dec 06 2016: (Start)",
+        "For the respective columns of the irregular triangle with fixed m: k = 2^m * p, m >= 1, 2^(m+1) < p and p prime:",
+        "(a) each number k is representable as the sum of 2^(m+1) but no fewer consecutive positive integers [since 2^(m+1) < p].",
+        "(b) each number k has 2^m as largest divisor <= sqrt(k) [since 2^m < sqrt(k) < p].",
+        "(c) each number k is of the form 2^m * p with p prime [by definition].",
+        "m = 1: (a) A100484 even semiprimes (except 4 and 6)",
+        "       (b) A161344 (except 4, 6 and 8)",
+        "       (c) A001747 (except 2, 4 and 6)",
+        "m = 2: (a) A270298",
+        "       (b) A161424 (except 16, 20, 24, 28 and 32)",
+        "       (c) A001749 (except 8, 12, 20 and 28)",
+        "m = 3: (a) A270301",
+        "       (b) A162528 (except 64, 72, 80, 88, 96, 104, 112 and 128)",
+        "       (c) sequence not in OEIS",
+        "b(i,j) = A174973(j) * {1,5) mod 6 * A174973(j), for all i,j >= 1; see A091999 for j=2. (End)"
+    ],
+    "link": [
+        "Hartmut F. W. Hoft, <a href=\"/A239929/a239929.pdf\">Proof of Characterization Theorem</a>"
+    ],
+    "formula": [
+        "Entries b(i, j) in the irregular triangle with rows indexed by i>=1 and columns indexed by j>=1 (alternate indexing of the example):",
+        "b(i,j) = A000040(i+1) * A174973(j) where A000040(i+1) > 2 * A174973(j). - _Hartmut F. W. Hoft_, Dec 06 2016"
+    ],
+    "example": [
+        "From _Hartmut F. W. Hoft_, Sep 16 2015: (Start)",
+        "a(23) = 52 = 2^2 * 13 = q * p with q = 4 in A174973 and 8 < 13 = p.",
+        "a(59) = 136 = 2^3 * 17 = q * p with q = 8 in A174973 and 16 < 17 = p.",
+        "The first six columns of the irregular triangle through prime 37:",
+        "   1    2    4    6    8   12 ...",
+        "  -------------------------------",
+        "   3",
+        "   5   10",
+        "   7   14",
+        "  11   22   44",
+        "  13   26   52   78",
+        "  17   34   68  102  136",
+        "  19   38   76  114  152",
+        "  23   46   92  138  184",
+        "  29   58  116  174  232  348",
+        "  31   62  124  186  248  372",
+        "  37   74  148  222  296  444",
+        "  ...",
+        "(End)"
+    ],
+    "mathematica": [
+        "(* sequence of numbers k for m <= k <= n having exactly two parts *)",
+        "(* Function a237270[] is defined in A237270 *)",
+        "a239929[m_, n_]:=Select[Range[m, n], Length[a237270[#]]==2&]",
+        "a239929[1, 260] (* data *)",
+        "(* _Hartmut F. W. Hoft_, Jul 07 2014 *)",
+        "(* test for membership in A174973 *)",
+        "a174973Q[n_]:=Module[{d=Divisors[n]}, Select[Rest[d] - 2 Most[d], #>0&]=={}]",
+        "a174973[n_]:=Select[Range[n], a174973Q]",
+        "(* compute numbers satisfying the condition *)",
+        "a239929Stalk[start_, bound_]:=Module[{p=NextPrime[2 start], list={}}, While[start p<=bound, AppendTo[list, start p]; p=NextPrime[p]]; list]",
+        "a239929F[n_]:=Sort[Flatten[Map[a239929Stalk[#, n]&, a174973[n]]]]",
+        "a239929F[138] (* data *)(* _Hartmut F. W. Hoft_, Sep 16 2015 *)"
+    ],
+    "xref": [
+        "Column 2 of A240062.",
+        "Cf. A000203, A006254, A065091, A071561, A174973, A196020, A236104, A235791, A237591, A237593, A237270, A237271, A238443, A239660, A239663, A239665, A239931-A239934, A244050, A245062, A262626.",
+        "Cf. A000040, A001747, A001749, A091999, A100484, A161344, A161424, A162528, A270298, A270301. - _Hartmut F. W. Hoft_, Dec 06 2016"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Omar E. Pol_, Apr 06 2014",
+    "ext": [
+        "Extended beyond a(56) by _Michel Marcus_, Apr 07 2014"
+    ],
+    "references": 13,
+    "revision": 64,
+    "time": "2017-01-06T08:19:54-05:00",
+    "created": "2014-04-20T17:50:50-04:00"
+}

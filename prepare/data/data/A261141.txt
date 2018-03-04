@@ -1,0 +1,34 @@
+{
+    "number": 261141,
+    "data": "1,3,5,9,11,15,21,25,27,33,43,45,55,63,75,81,85,99,105,121,125,129,135,165,171,189,215,225,231,243,255,275,297,315,341,363,375,387,405,425,441,473,495,513,525,567,605,625,645,675,683,693,729,765,825,855,891,903,935,945",
+    "name": "Positive integers n that can be expressed as a product of Jacobsthal numbers (A001045), not necessarily distinct.",
+    "link": [
+        "Robert Israel, <a href=\"/A261141/b261141.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "15 is in the sequence because Jacobsthal numbers 3 and 5 multiply to 15."
+    ],
+    "maple": [
+        "N:= 10000: # to get all terms <= N",
+        "J:= gfun:-rectoproc({a(n)=a(n-1)+2*a(n-2),a(0)=0,a(1)=1},a(n), remember):",
+        "P:= {1};",
+        "for j from 3 to ilog2(N*3+1) do",
+        "  x:= J(j);",
+        "  P:= `union`(seq(select(`<=`,map(`*`,P,x^k),N),k=0..floor(log[x](N))))",
+        "od:",
+        "sort(convert(P,list)); # _Robert Israel_, Nov 19 2015"
+    ],
+    "mathematica": [
+        "max = 11; jacobProds = Table[(2^n - (-1)^n)/3, {n, 2, max]; curr = 2; While[jacobProds[[curr]] < 2^max/3, jacobProds = Union[jacobProds, jacobProds[[curr]] * jacobProds]; curr++]; Select[jacobProds, # < 2^max/3 &] (* _Alonso del Arte_, Nov 18 2015 *)"
+    ],
+    "xref": [
+        "Cf. A001045."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jeffrey Shallit_, Nov 18 2015",
+    "references": 1,
+    "revision": 16,
+    "time": "2015-11-19T01:56:27-05:00",
+    "created": "2015-11-19T01:56:27-05:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 264746,
+    "data": "0,4,5,7,8,13,16,17,19,31,61,89,107,127,521,607,1279,2203,2281,3217,4253,4423,9689,9941,11213,19937,21701,23209,44497,86243,110503,132049,216091,756839,859433,1257787,1398269",
+    "name": "n such that either 2^n - 1 or 2^n + 1 is a prime power, but not both.",
+    "comment": [
+        "If n > 2 is even, 2^n - 1 is not a prime power, while 2^n + 1 can't be a prime power unless n is a power of 2. The sequence contains all n > 2 such that 2^n + 1 is a Fermat prime (the only known examples being 4, 8, 16). These may be the only even members of the sequence: no nonsquarefree Fermat numbers are known. - _Robert Israel_, Nov 23 2015",
+        "All odd terms are prime: if a,b > 1 and odd, 2^(ab)+1 is divisible by 2^a+1, but is not a power of it, and similarly 2^(ab)-1 is divisible by 2^a-1, but is not a power of it. - _Robert Israel_, Nov 24 2015"
+    ],
+    "example": [
+        "0 is in this sequence because both 2^0 = 1 and 2^0 + 1 = 2 are prime powers, but 2^0 - 1 = 0 is not a prime power."
+    ],
+    "maple": [
+        "ispp:= proc(n) option remember; local v, k,r, ex;",
+        "  if isprime(n) then return true fi;",
+        "  v:= ifactors(n,easy)[2];",
+        "  if nops(v) > 1 then return false",
+        "  elif type(v[1],list(integer)) then return true",
+        "  fi;",
+        "  for k from 2 to floor(log[3](n)) do",
+        "    r:= iroot(n,k,'ex');",
+        "    if ex then return ispp(r) fi;",
+        "  od;",
+        "  false",
+        "end proc:",
+        "ispp(1):= true: ispp(0):= false:",
+        "select(t -> ispp(2^t+1) xor ispp(2^t-1), [$0..2000]); # _Robert Israel_, Nov 23 2015"
+    ],
+    "mathematica": [
+        "Select[Range[0, 10^3], Xor[PrimePowerQ[2^# + 1], PrimePowerQ[2^# - 1], # == 1] &] (* _Michael De Vlieger_, Nov 23 2015 *)"
+    ],
+    "program": [
+        "(PARI) is(k) = isprimepower(k) || k==1;",
+        "for(n=0, 1e6, if(is(2^n-1) + is(2^n+1) == 1, print1(n, \", \"))) \\\\ _Altug Alkan_, Nov 23 2015"
+    ],
+    "xref": [
+        "Cf. A000043, A000215, A000961, A019434, A264747."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Juri-Stepan Gerasimov_, Nov 23 2015",
+    "references": 1,
+    "revision": 33,
+    "time": "2015-12-15T10:08:44-05:00",
+    "created": "2015-12-15T10:08:44-05:00"
+}

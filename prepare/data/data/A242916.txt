@@ -1,0 +1,42 @@
+{
+    "number": 242916,
+    "data": "1,6,11,16,34,110,113,351,586,708,839,1286,5026,6518,9404,10070,10154,10909,19382,19951,20148,23547",
+    "name": "Numbers n such that (k!+n)/(k+n) is prime for some k.",
+    "comment": [
+        "For all a(n) > 1, there is only one k that makes (k!+n)/(k+n) a prime (up to k <= 5000). For a(2) through a(11), they are given by {4, 6, 4, 12, 5, 6, 6, 12, 6, 44} respectively.",
+        "From _Robert Israel_, Aug 09 2016: (Start)",
+        "If n > 1 and (k!+n)/(k+n) is prime, we must have k < n.",
+        "Proof: if k >= n, then n | k! + n, so (after eliminating some small cases) for (k!+n)/(k+n) to be prime we need n | k+n and thus n | k.  But if k = mn,",
+        "mn-1 >= m+1 so m+1 | (mn-1)!, and (k!+n)/(k+n)=(m(mn-1)!+1)/(m+1) is not an integer. (End)"
+    ],
+    "example": [
+        "(k!+6)/(k+6) is prime for some k (let k = 4). Thus 6 is a member of this sequence."
+    ],
+    "maple": [
+        "f:= proc(n) ormap(proc(k) local v; v:= (k!+n)/(k+n); v::integer and isprime(v) end proc, [$2..n-1]) end proc:",
+        "f(1):= true:",
+        "select(f, [$1..1500]); # _Robert Israel_, Aug 09 2016"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{k = 1}, While[k < n && !PrimeQ[(k! + n)/(k + n)], k++]; k < n]; k = 2; lst = {1}; While[k < 25001, If[fQ@k, Print@k; AppendTo[lst, k]]; k++]; lst (* _Robert G. Wilson v_, Aug 14 2016 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=for(k=1,5000,s=(k!+n)/(k+n);if(floor(s)==s,if(ispseudoprime(s),return(k))))",
+        "n=1;while(n<1000,if(a(n),print1(n,\", \"));n+=1)"
+    ],
+    "xref": [
+        "Cf. A242565."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,2",
+    "author": "_Derek Orr_, May 26 2014",
+    "ext": [
+        "a(12)-a(15) from _Robert Israel_, Aug 09 2016",
+        "a(16)-a(21) from _Robert G. Wilson v_, Aug 11 2016",
+        "a(22) from _Robert G. Wilson v_, Aug 13 2016"
+    ],
+    "references": 0,
+    "revision": 31,
+    "time": "2016-08-16T10:45:48-04:00",
+    "created": "2014-05-26T22:13:06-04:00"
+}

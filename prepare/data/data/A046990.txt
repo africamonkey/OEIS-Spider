@@ -1,0 +1,46 @@
+{
+    "number": 46990,
+    "data": "0,1,1,1,17,31,691,10922,929569,3202291,221930581,9444233042,56963745931,29435334228302,2093660879252671,344502690252804724,129848163681107301953,868320396104950823611,209390615747646519456961,28259319101491102261334882",
+    "name": "Numerators of Taylor series for log(1/cos(x)). Also from log(cos(x)).",
+    "reference": [
+        "CRC Standard Mathematical Tables and Formulae, 30th ed. 1996, p. 42.",
+        "L. Comtet, Advanced Combinatorics, Reidel, 1974, p. 88."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A046990/b046990.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "Let q(n) = Sum_{k=0..n-1} (-1)^k*A201637(n-1,k) then a(n) = numerator((-1)^(n-1)*q(2*n)/(2*n)!). - _Peter Luschny_, Nov 16 2012"
+    ],
+    "example": [
+        "log(1/cos(x)) = 1/2*x^2+1/12*x^4+1/45*x^6+17/2520*x^8+31/14175*x^10+...",
+        "log(cos(x)) = -(1/2*x^2+1/12*x^4+1/45*x^6+17/2520*x^8+31/14175*x^10+...)."
+    ],
+    "maple": [
+        "q:= proc(n) add((-1)^k*combinat[eulerian1](n-1,k), k=0..n-1) end: A046990:= n -> numer((-1)^(n-1)*q(2*n)/(2*n)!):",
+        "seq(A046990(n),n=0..19);  # _Peter Luschny_, Nov 16 2012"
+    ],
+    "mathematica": [
+        "Join[{0},Numerator[Select[CoefficientList[Series[Log[1/Cos[x]],{x,0,40}], x],#!=0&]]] (* _Harvey P. Dale_, Jul 27 2011 *)",
+        "a[n_] := Numerator[((-4)^n-(-16)^n)*BernoulliB[2*n]/2/n/(2*n)!]; a[0] = 0; Table[a[n], {n, 0, 19}] (* _Jean-Fran\u00e7ois Alcover_, Feb 11 2014, after _Charles R Greathouse IV_ *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A046990(n):",
+        "    def q(n):",
+        "        return add((-1)^k*A173018(n-1, k) for k in (0..n-1))",
+        "    return ((-1)^(n-1)*q(2*n)/factorial(2*n)).numer()",
+        "[A046990(n) for n in (0..19)]  # _Peter Luschny_, Nov 16 2012",
+        "(PARI) a(n)=numerator(((-4)^n-(-16)^n)*bernfrac(2*n)/2/n/(2*n)!) \\\\ _Charles R Greathouse IV_, Nov 06 2013"
+    ],
+    "xref": [
+        "Cf. A046991, A002430, A050970."
+    ],
+    "keyword": "nonn,easy,frac,nice",
+    "offset": "0,5",
+    "author": "_N. J. A. Sloane_",
+    "references": 10,
+    "revision": 23,
+    "time": "2017-06-24T13:55:04-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

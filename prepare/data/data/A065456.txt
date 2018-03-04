@@ -1,0 +1,40 @@
+{
+    "number": 65456,
+    "data": "0,1,9,95,1220,18694,334369,6852460,158479488,4085349936,116193701393,3615197586912,122165572502324,4456126288810624,174520484866919385,7304657490838627072,325420940777809245152,15374940186972235659264,767898500931828204443769",
+    "name": "Number of functions on n labeled nodes whose representation as a digraph has two components.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A065456/b065456.txt\">Table of n, a(n) for n = 1..386</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1/2 * log(1+LambertW(-x))^2. - _Vladeta Jovovic_, Nov 25 2001",
+        "a(n) ~ (n-1)! * exp(n)*(log(n/2) + gamma)/4, where gamma is the Euler-Mascheroni constant (A001620). - _Vaclav Kotesovec_, Oct 05 2013"
+    ],
+    "example": [
+        "a(3)=9 since, on {1,2,3}, these functions and no others have two components: (3->1->3)(2->2), (1->3->1)(2->2), (3->2->2)(1->1), (2->3->2)(1->1), (2->1->2)(3->3), (1->2->1)(3->3), (1->2->2)(3->3), (1->3->3)(2->2) and (2->3->3)(1->1)."
+    ],
+    "maple": [
+        "katz := n->(n-1)!*sum(n^k/k!,k=0..n-1); A001865 := []; for m from 1 to 30 do A001865 := [op(A001865),katz(m)] od; A065456 := []; for n from 1 to 29 do unequal_splits := sum(binomial(n,k)*A001865[k]*A001865[n-k],k=1..floor((n-1)/2)); if (n mod 2=0) then A065456 := [op(A065456),unequal_splits+binomial(n,n/2)*(A001865[n/2])^2/2] fi; if (n mod 2=1) then A065456 := [op(A065456),unequal_splits] fi od; print(A065456); #if the connected components are of equal size, we correct the double counting. The Katz reference is at A001865. - _Len Smiley_, Nov 26 2001"
+    ],
+    "mathematica": [
+        "t=Sum[n^(n-1)x^n/n!,{n,1,20}];  Range[0, 20]! CoefficientList[Series[Log[1/(1 - t)]^2/2, {x, 0, 20}],",
+        "x] (* _Geoffrey Critzer_, Oct 06 2011 *)",
+        "Rest[CoefficientList[Series[Log[1+LambertW[-x]]^2, {x, 0, 20}], x]/2* Range[0, 20]!] (* _Vaclav Kotesovec_, Oct 05 2013 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^20); concat([0], Vec(serlaplace(log(1+lambertw(-x))^2/2 ))) \\\\ _G. C. Greubel_, Jan 18 2018"
+    ],
+    "xref": [
+        "Column k=2 of A060281.",
+        "See A001865 for the numbers of one-component (i.e. connected) functions on n labeled nodes."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_John W. Layman_, Nov 24 2001",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Nov 25 2001"
+    ],
+    "references": 2,
+    "revision": 32,
+    "time": "2018-01-19T02:08:52-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

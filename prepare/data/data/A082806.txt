@@ -1,0 +1,53 @@
+{
+    "number": 82806,
+    "data": "2,3,5,7,11,101,131,151,191,313,353,373,757,797,919,10301,10501,11311,12721,13331,13931,14341,14741,15551,16361,16561,18181,19391,19991,30103,30703,31513,32323,33533,34543,35153,35353,35753,36563,38183",
+    "name": "Palindromes which are prime and the sum of the digits is also prime.",
+    "comment": [
+        "Most of the initial palindromic primes are members.",
+        "11 is the only member of even length since the sum of the digits of such palindromes is even and 2 is the only even prime. For the members of odd length the middle digit is odd (except for 2). - _Chai Wah Wu_, Aug 12 2014"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A082806/b082806.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "E.g. 12721 is a palindromic prime and 1+2+7+2+1 = 13 is also prime."
+    ],
+    "maple": [
+        "N:= 3: # to get all terms of at most 2*N+1 digits",
+        "revdigs:= proc(n)",
+        "local L,d;",
+        "L:= convert(n,base,10);",
+        "d:= nops(L);",
+        "add(L[i]*10^(d-i),i=1..d);",
+        "end proc:",
+        "pals:= proc(d)",
+        "local x,y;",
+        "seq(seq(x*10^(d+1)+y*10^d + revdigs(x),y=0..9),x=10^(d-1)..10^d-1)",
+        "end proc;",
+        "select(n -> isprime(n) and isprime(convert(convert(n,base,10),`+`)), {2,3,5,7,11,seq(pals(d),d=1..3)}); # _Robert Israel_, Aug 12 2014"
+    ],
+    "mathematica": [
+        "Select[ Range[390000], PrimeQ[ # ] && FromDigits[ Reverse[ IntegerDigits[ # ]]] == # && PrimeQ[ Plus @@ IntegerDigits[ # ]] & ] (* _Robert G. Wilson v_, Jun 17 2003 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "A082806 = sorted([n for n in chain(map(lambda x:int(str(x)+str(x)[::-1]),xrange(1,10**5)),map(lambda x:int(str(x)+str(x)[-2::-1]), xrange(1,10**5))) if isprime(n) and isprime(sum([int(d) for d in str(n)]))])",
+        "# _Chai Wah Wu_, Aug 12 2014"
+    ],
+    "xref": [
+        "Cf. A002385.",
+        "Subsequence of A083393. [_Arkadiusz Wesolowski_, Sep 14 2011]"
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_ and Meenakshi Srikanth (menakan_s(AT)yahoo.com), Apr 20 2003",
+    "ext": [
+        "Corrected and extended by _Giovanni Resta_, Feb 07 2006",
+        "Edited by _N. J. A. Sloane_ at the suggestion of _Andrew Plewe_, May 14 2007"
+    ],
+    "references": 6,
+    "revision": 22,
+    "time": "2014-08-13T15:08:41-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

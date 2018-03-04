@@ -1,0 +1,72 @@
+{
+    "number": 34295,
+    "data": "1,2,3,7,11,31,57,148,312,754,1559,3844,7893,17766,37935,83667,170165,369698,743543,1566258,3154006,6424822,12629174",
+    "name": "Number of different ways to divide an n X n square into sub-squares, considering only the list of parts.",
+    "comment": [
+        "Number of ways an n X n square can be cut into integer-sided squares: collections of integers {a_i} so that squares of length a_i tile an n X n square.",
+        "This ignores the way the squares are arranged. We are only counting the lists of parts (compare A045846).",
+        "Also applies to the partitions of an equilateral triangle of length n. - _Robert G. Wilson v_"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A034295/a034295_2.txt\">List of different ways to divide a 13 X 13 square into sub-squares</a>",
+        "Alois P. Heinz, <a href=\"/A034295/a034295_1.txt\">More ways to divide an 11 X 11 square into sub-squares</a>",
+        "Jon E. Schoenfield, <a href=\"/A034295/a034295.txt\">Table of solutions for n <= 12</a>",
+        "N. J. A. Sloane, <a href=\"/A034295/a034295.jpg\">Drawing to illustrate a(1)-a(4)</a>"
+    ],
+    "example": [
+        "From _Jon E. Schoenfield_, Sep 18 2008: (Start)",
+        "a(3) = 3 because the 3 X 3 square can be divided into sub-squares in 3 different ways: a single 3 X 3 square, a 2 X 2 square plus five 1 X 1 squares, or nine 1 X 1 squares.",
+        "There are a(5) = 11 different ways to divide a 5 X 5 square into sub-squares:",
+        "   1. 25(1x1)",
+        "   2.  1(2x2) + 21(1x1)",
+        "   3.  2(2x2) + 17(1x1)",
+        "   4.  3(2x2) + 13(1x1)",
+        "   5.  4(2x2) +  9(1x1)",
+        "   6.  1(3x3) + 16(1x1)",
+        "   7.  1(3x3) +  1(2x2) + 12(1x1)",
+        "   8.  1(3x3) +  2(2x2) +  8(1x1)",
+        "   9.  1(3x3) +  3(2x2) +  4(1x1)",
+        "  10.  1(4x4) +  9(1x1)",
+        "  11.  1(5x5)",
+        "a(9) = 312 because the 9 X 9 square can be divided into 312 different combinations of sub-squares such as three 4 X 4 squares plus thirty-three 1 X 1 squares, etc. (End)"
+    ],
+    "maple": [
+        "b:= proc(n, l) option remember; local i, k, s;",
+        "      if max(l[])>n then {} elif n=0 then {0}",
+        "    elif min(l[])>0 then (t->b(n-t, map(h->h-t, l)))(min(l[]))",
+        "    else for k while l[k]>0 do od; s:={};",
+        "         for i from k to nops(l) while l[i]=0 do s:=s union",
+        "             map(v->v+x^(1+i-k), b(n, [l[j]$j=1..k-1,",
+        "                 1+i-k$j=k..i, l[j]$j=i+1..nops(l)]))",
+        "         od; s",
+        "      fi",
+        "    end:",
+        "a:= n-> nops(b(n, [0$n])):",
+        "seq(a(n), n=1..9);  # _Alois P. Heinz_, Apr 15 2013"
+    ],
+    "mathematica": [
+        "$RecursionLimit = 1000; b[n_, l_] := b[n, l] = Module[{i, k, m, s, t}, Which[Max[l]>n, {}, n == 0 || l == {}, {{}}, Min[l]>0, t = Min[l]; b[n-t, l-t], True, k = Position[l, 0, 1][[1, 1]]; s = {}; For[i = k, i <= Length[l] && l[[i]] == 0, i++, s = s ~Union~ Map[Function[x, Sort[Append[x, 1+i-k]]], b[n, Join[l[[1 ;; k-1]], Array[1+i-k &, i-k+1], l[[i+1 ;; -1]]]]]]; s]]; a[n_] := a[n] = b[n, Array[0&, n]] // Length; Table[Print[a[n]]; a[n], {n, 1, 12} ] (* _Jean-Fran\u00e7ois Alcover_, Feb 18 2014, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A045846, A224239.",
+        "Cf. A014544, A129668 (these both involve cubes).",
+        "Diagonal of A224697."
+    ],
+    "keyword": "nonn,hard,nice,more",
+    "offset": "1,2",
+    "author": "_Erich Friedman_, Dec 11 1999",
+    "ext": [
+        "More terms from _Sergio Pimentel_, Jun 03 2008",
+        "Corrected and extended by _Jon E. Schoenfield_, Sep 19 2008",
+        "Edited by _N. J. A. Sloane_, Apr 12 2013, at the suggestion of _Paolo P. Lava_",
+        "a(11) corrected by _Alois P. Heinz_, Apr 15 2013",
+        "a(13) from _Alois P. Heinz_, Apr 19 2013",
+        "a(14) from _Christopher Hunt Gribble_, Oct 26 2013",
+        "a(15) and a(16) from _Fidel I. Schaposnik_, May 04 2015",
+        "a(17)-a(23) from _Holger Langenau_, Sep 20 2017"
+    ],
+    "references": 24,
+    "revision": 105,
+    "time": "2017-09-21T13:02:28-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

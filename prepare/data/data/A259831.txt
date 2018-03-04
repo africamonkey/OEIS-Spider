@@ -1,0 +1,53 @@
+{
+    "number": 259831,
+    "data": "216,13296,13464,14416,51480,235200,575484,578592,585000,1032656,1121400,1599552,4190364,4786110,8365968,11268688,13010634,13253436,21835624,22108784,23896320,136311840,152820243,160380496,170073324,295999900,421686580,445421664",
+    "name": "Numbers n with the property that it is possible to write the base 2 expansion of n as concat(a_2,b_2), with a_2>0 and b_2>0 such that, converting a_2 and b_2 to base 10 as a and b, we have (sigma(a)-a)*(sigma(b)-b) = n.",
+    "comment": [
+        "a(31) > 5*10^8. - _Hiroaki Yamanouchi_, Sep 24 2015"
+    ],
+    "link": [
+        "Hiroaki Yamanouchi, <a href=\"/A259831/b259831.txt\">Table of n, a(n) for n = 1..30</a>"
+    ],
+    "example": [
+        "216 in base 2 is 11011000. If we take 11011000 = concat(110,11000) then 110 and 11000 converted to base 10 are 6 and 24. Finally (sigma(6) - 6)*(sigma(24) - 24) = (12 - 6)*(60 - 24) = 6 * 36 = 216;",
+        "13296 in base 2 is 11001111110000. If we take 11001111110000 = concat(110,01111110000) then 110 and 01111110000 converted to base 10 are 6 and 1008. Finally (sigma(6) - 6)*(sigma(1008) - 1008) = (12 - 6)*(3224 - 1008)= 6 * 2216 = 13296."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,b,c,j,k,n;",
+        "for n from 1 to q do c:=convert(n, binary, decimal);",
+        "j:=0; for k from 1 to ilog10(c) do",
+        "a:=convert(trunc(c/10^k), decimal, binary);",
+        "b:=convert((c mod 10^k), decimal, binary);",
+        "if a*b>0 then if (sigma(a)-a)*(sigma(b)-b)=n then print(n);",
+        "break; fi; fi; od; od; end: P(10^9);"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{d = IntegerDigits[n, 2], len = IntegerLength[n, 2], k}, ReplaceAll[Reap[Do[k = {FromDigits[Take[d, i], 2], FromDigits[Take[d, -(len - i)], 2]}; If[! MemberQ[k, 0], Sow@ k], {i, 1, len - 1}]], {} -> {1}][[-1, 1]]]; Select[Range@ 100000, MemberQ[(DivisorSigma[1, #1] - #1) (DivisorSigma[1, #2] - #2) & @@@ f@ #, #] &] (* _Michael De Vlieger_, Jul 07 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisor_sigma",
+        "A259831_list= []",
+        "for n in range(2,10**6):",
+        "....s = format(n,'0b')",
+        "....for l in range(1,len(s)):",
+        "........n1, n2 = int(s[:l],2), int(s[l:],2)",
+        "........if n2 > 0 and n == (divisor_sigma(n1)-n1)*(divisor_sigma(n2)-n2):",
+        "............A259831_list.append(n)",
+        "............break # _Chai Wah Wu_, Jul 17 2015"
+    ],
+    "xref": [
+        "Cf. A001065, A244079, A258813, A258843, A259832."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jul 06 2015",
+    "ext": [
+        "a(13)-a(14) from _Chai Wah Wu_, Jul 17 2015",
+        "a(15)-a(28) from _Hiroaki Yamanouchi_, Sep 24 2015"
+    ],
+    "references": 4,
+    "revision": 20,
+    "time": "2015-09-24T11:26:22-04:00",
+    "created": "2015-07-17T12:30:55-04:00"
+}

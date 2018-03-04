@@ -1,0 +1,65 @@
+{
+    "number": 113705,
+    "data": "1,10,110,1010,10110,100010,1001110,10000010,100010110,1000001010,10000100110,100000000010,1000001011110,10000000000010,100000010000110,1000000000101010,10000000100010110,100000000000000010,1000000001001001110,10000000000000000010,100000000010000110110",
+    "name": "Inverse Moebius transform of powers of 10.",
+    "comment": [
+        "A055895 to base 2.",
+        "The triangle formed by stacking the reversals of a(n) is A113704.",
+        "Using decimal positional notation, write a 1 at position d for all divisors d of n. All other digits are zeros and leading zeros are not permitted. - _Michael De Vlieger_, May 24 2017"
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A113705/b113705.txt\">Table of n, a(n) for n = 0..999</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} if(mod(n, k)=0, 10^k, 0).",
+        "G.f.: Sum_{k>=1} 10^k*x^k/(1 - x^k). - _Ilya Gutkovskiy_, May 23 2017"
+    ],
+    "example": [
+        "From _Michael De Vlieger_, May 24 2017: (Start)",
+        "First 20 terms of a(n), replacing zeros with \".\" to more clearly show positions of 1s in positions corresponding to terms in row n of A027750. This chart also pertains to terms of A055895 written in binary.",
+        "   n                    a(n)  A027750(n)",
+        "   ---------------------------------------",
+        "   0:                      1  {}",
+        "   1:                     1.  1",
+        "   2:                    11.  1,2",
+        "   3:                   1.1.  1,3",
+        "   4:                  1.11.  1,2,4",
+        "   5:                 1...1.  1,5",
+        "   6:                1..111.  1,2,3,6",
+        "   7:               1.....1.  1,7",
+        "   8:              1...1.11.  1,2,4,8",
+        "   9:             1.....1.1.  1,3,9",
+        "  10:            1....1..11.  1,2,5,10",
+        "  11:           1.........1.  1,11",
+        "  12:          1.....1.1111.  1,2,3,4,6,12",
+        "  13:         1...........1.  1,13",
+        "  14:        1......1....11.  1,2,7,14",
+        "  15:       1.........1.1.1.  1,3,5,15",
+        "  16:      1.......1...1.11.  1,2,4,8,16",
+        "  17:     1...............1.  1,17",
+        "  18:    1........1..1..111.  1,2,3,6,9,18",
+        "  19:   1.................1.  1,19",
+        "  20:  1.........1....11.11.  1,2,4,5,10,20 (End)"
+    ],
+    "mathematica": [
+        "Table[If[n == 0, 1, Total[10^Divisors[n]]], {n, 0, 20}] (* or *)",
+        "Table[If[n == 0, 1, Sum[If[Mod[n, k] == 0, 10^k, 0], {k, n}]], {n, 0,",
+        "  20}] (* or *)",
+        "Table[Boole[n == 0] + Total@ MapIndexed[Boole[Divisible[n, #1]]*10^First@ #2 &, Range@ n], {n, 0, 20}] (* or *)",
+        "Table[If[n == 0, 1, Function[d, FromDigits @Reverse@ ReplacePart[#, Map[# + 1 -> 1 &, d]] &@ ConstantArray[0, n + 1]]@ Divisors@ n], {n, 0, 20}]",
+        "(* _Michael De Vlieger_, May 24 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = if (n==0, 1, sum(k=1, n, if (! (n % k), 10^k))); \\\\ _Michel Marcus_, May 23 2017"
+    ],
+    "xref": [
+        "Cf. A027750, A055895, A113704."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Paul Barry_, Nov 05 2005",
+    "references": 2,
+    "revision": 12,
+    "time": "2017-05-25T04:21:08-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

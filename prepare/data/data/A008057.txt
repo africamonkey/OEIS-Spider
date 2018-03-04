@@ -1,0 +1,28 @@
+{
+    "number": 8057,
+    "data": "0,5,10,16,20,27,31,35,40,47,51,56,60,65,74,78,80,86,92,96,102,106,110,120,121,125,134,137,142,148",
+    "name": "Smallest sum of an addition chain for 2n+1.",
+    "link": [
+        "H. Zantema, <a href=\"http://igitur-archive.library.uu.nl/math/2006-1214-202352/zantema_89_minimizing_sums.pdf\">Minimizing sums of addition chains</a>, RUU-CS-89-15 (1989). <a href=\"http://dx.doi.org/10.1016/0196-6774(91)90005-J\">Minimizing sums of addition chains</a>, J. Algorithms 12 (1991) 281-307/",
+        "<a href=\"/index/Com#complexity\">Index to sequences related to the complexity of n</a>"
+    ],
+    "example": [
+        "The smallest chain for 5 is 2, 3, 5 with sum a(2) = 2+3+5 = 10.",
+        "the smallest chain for 7 is 2, 3, 4, 7 with sum a(3) = 2+3+4+7 = 16."
+    ],
+    "program": [
+        "(PARI) step(V)=my(U=List(),v); for(i=1,#V, v=V[i]; for(i=1,#v, for(j=i,#v, if(v[i]+v[j]>v[#v], listput(U, concat(v, v[i]+v[j])))))); vecsort(Vec(U),,8)",
+        "sm(v)=sum(i=2,#v,v[i])",
+        "a(n)=if(n<2,return(5*n)); n=2*n+1; my(V=[[1,2]],U,t); while(#(U=select(v->v[#v]==n,V))==0, V=select(v->v[#v]<=n,step(V))); t=vecmin(apply(sm,U)); while(#V, V=step(select(v->sm(v)<t-n,V)); for(i=1,#V, my(v=V[i]); if(v[#v]==n, t=min(sm(v),t)))); t \\\\ _Charles R Greathouse IV_, Jul 17 2013"
+    ],
+    "xref": [
+        "Cf. A003313, A079300, A003065, A005766."
+    ],
+    "keyword": "nonn,nice,more",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Aug 07 2003",
+    "references": 1,
+    "revision": 12,
+    "time": "2013-07-24T22:37:25-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

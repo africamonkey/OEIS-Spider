@@ -1,0 +1,54 @@
+{
+    "number": 292310,
+    "data": "3,21,28,36,78,105,153,171,190,210,253,325,351,378,465,528,666,703,903,946,990,1035,1128,1176,1275,1378,1485,1540,1596,1653,1711,1770,1891,1953,2278,2346,2556,2628,2775,2926,3003,3081,3160,3403,3570,3741,3828,4095,4186,4278,4371,4656",
+    "name": "Triangular numbers that are equidistant from two other triangular numbers.",
+    "comment": [
+        "Triangular numbers which are the arithmetic mean of two other triangular numbers. - _R. J. Mathar_, Oct 01 2017"
+    ],
+    "formula": [
+        "a(n) = A292309(n)/3."
+    ],
+    "example": [
+        "3 is in the sequence because 0 = A000217(0), 6 = A000217(3), and the distances from 3 to 0 and 3 to 6 are the same.",
+        "153 is in sequence because 153 = A000217(17), 6 = A000217(2), 300 = A000217(24), and the two distances 300-153 = 153-6 = 147 are the same."
+    ],
+    "maple": [
+        "isA292310 := proc(n)",
+        "    local ilow ;",
+        "    if isA000217(n) then",
+        "        for ilow from 0 do",
+        "            tilow := A000217(ilow) ;",
+        "            if tilow >= n then",
+        "                return false ;",
+        "            elif isA000217(2*n-tilow) then",
+        "                return true ;",
+        "            end if;",
+        "        end do:",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 to 5000 do",
+        "    if isA292310(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Oct 01 2017"
+    ],
+    "program": [
+        "(PARI) t=3; k=2; while(t<=6000, i=k; e=0; v=t+i; while(i>0&&e==0, if(issquare(8*v+1), e=1; print1(t,\", \")); i--; v+=i); k++; t+=k)",
+        "(PARI) upto(n) = {my(t = 0, i = 0, triangulars = List([0]), res = List); while(t <= n, i++; t+=i; listput(triangulars, t)); for(i=2,#triangulars, tr = triangulars[i]<<1; for(j = 1, i-1, if(issquare(8 * (tr - triangulars[j]) + 1), listput(res, triangulars[i]); next(2)))); res} \\\\ _David A. Corneth_, Oct 04 2017"
+    ],
+    "xref": [
+        "Cf. A000217, A292309, A292313, A292314, A292316."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antonio Rold\u00e1n_, Sep 14 2017",
+    "ext": [
+        "Term 105 added by _David A. Corneth_, Oct 04 2017"
+    ],
+    "references": 4,
+    "revision": 30,
+    "time": "2017-10-05T12:46:29-04:00",
+    "created": "2017-10-05T12:46:29-04:00"
+}

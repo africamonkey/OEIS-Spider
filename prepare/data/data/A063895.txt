@@ -1,0 +1,42 @@
+{
+    "number": 63895,
+    "data": "1,1,1,1,2,3,6,11,22,43,88,179,372,774,1631,3448,7347,15713,33791,72923,158021,343495,749102,1638103,3591724,7893802,17387931,38379200,84875596,188036830,417284181,927469845,2064465341,4601670625,10270463565,22950838755",
+    "name": "Start with x, xy; then concatenate each word in turn with all preceding words, getting x xy xxy xxxy xyxxy xxxxy xyxxxy xxyxxxy ...; sequence gives number of words of length n. Also binary trees by degree: x (x,y) (x,(x,y)) (x,(x,(x,y))) ((x,y),(x,(x,y)))...",
+    "comment": [
+        "Also binary rooted identity trees (those with no symmetries, cf. A004111)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A063895/b063895.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "a(n) = (sum a(i)*a(j), i+j=n, i<j)+(if n=2k, (a(k)-1)*a(k)/2), n>2. a(1)=a(2)=1.",
+        "G.f. A(x) = 1-sqrt(1-2x-2x^2+A(x^2)) satisfies x+x^2-A(x)+(A(x)^2-A(x^2))/2=0, A(0)=0. - _Michael Somos_, Sep 06 2003",
+        "a(n) ~ c * d^n / n^(3/2), where d = 2.33141659246516873904600076533362924695..., c = 0.2873051160895040470174351963... . - _Vaclav Kotesovec_, Sep 11 2014"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<3, n*(3-n)/2, add(a(i)*a(n-i),",
+        "      i=1..(n-1)/2)+`if`(irem(n, 2, 'r')=0, (p->(p-1)*p/2)(a(r)), 0))",
+        "    end:",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Aug 02 2013"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n<3, n*(3-n)/2, Sum[a[i]*a[n-i], {i, 1, (n-1)/2}]+If[{q, r} = QuotientRemainder[n, 2]; r == 0, (a[q]-1)*a[q]/2, 0]]; Table[a[n], {n, 1, 36}] (* _Jean-Fran\u00e7ois Alcover_, Feb 25 2014, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A, m); if(n<1, 0, m=1; A=O(x); while( m<=n, m*=2; A=1-sqrt(1-2*x-2*x^2+subst(A, x, x^2))); polcoeff(A, n))}"
+    ],
+    "xref": [
+        "Cf. A001190, A063894, A036774."
+    ],
+    "keyword": "easy,nonn,nice,eigen",
+    "offset": "1,5",
+    "author": "Claude Lenormand (claude.lenormand(AT)free.fr), Aug 29 2001",
+    "ext": [
+        "Additional comments and g.f. from _Christian G. Bower_, Nov 29 2001"
+    ],
+    "references": 7,
+    "revision": 20,
+    "time": "2014-09-11T09:13:04-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

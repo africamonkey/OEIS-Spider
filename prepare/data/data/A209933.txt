@@ -1,0 +1,34 @@
+{
+    "number": 209933,
+    "data": "1,2,3,4,5,6,7,8,9,11,12,15,22,24,33,44,48,55,66,77,88,99,132,264",
+    "name": "Numbers n that are divisible by all digits of their divisors.",
+    "comment": [
+        "There are 24 terms < 10000. Conjecture: next term a(25) = prime repunit with 19 digits 1.",
+        "Supersequence of A004022 (prime repunits). Subsequence of A034838 (numbers n that are divisible by every digit of n)."
+    ],
+    "example": [
+        "Number 264 with divisors 1, 2, 3, 4, 6, 8, 11, 12, 22, 24, 33, 44, 66, 88, 132, 264 is in sequence because all possible digits its divisors (1, 2, 3, 4, 6, 8) are its divisors."
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (unfoldr, nub, sort)",
+        "a209933 n = a209933_list !! (n-1)",
+        "a209933_list = filter f [1..] where",
+        "   f x = head (ds x) /= 0 && all (== 0) (map ((mod x)) (ds x)) where",
+        "     ds = sort . nub . concatMap (unfoldr (\\z ->",
+        "          if z == 0 then Nothing else Just $ swap $ divMod z 10)) .",
+        "          a027750_row",
+        "-- _Reinhard Zumkeller_, Apr 19 2012"
+    ],
+    "xref": [
+        "Cf. A004022, A034838, A037278.",
+        "Cf. A027750."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Jaroslav Krizek_, Apr 16 2012",
+    "references": 2,
+    "revision": 12,
+    "time": "2012-04-23T16:55:27-04:00",
+    "created": "2012-04-21T14:45:31-04:00"
+}

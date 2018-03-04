@@ -1,0 +1,33 @@
+{
+    "number": 277173,
+    "data": "1,2,6,12,24,60,120,126,240,420,480,504,672,780,1248,1260,2340,2520,3360,4680,5040,5460,6240,6552,8160,8736,9360,10080,11424,16380,21216,26208,27360,32760,38304,43680,57120,65520,71136,74592,106080,131040,147168,148512,171360,191520,202464,325920,355680,372960",
+    "name": "Numbers m such that b^sigma(m) == b^phi(m) == b^numdiv(m) == b^m (mod m) for every integer b.",
+    "comment": [
+        "Are terms products products of primes of the form 2^i*3^j + 1, A058383, for some nonnegative i and j? This is true for all terms up to 7.6*10^6. 7600320 is divisible by 29, which isn't of the form 2^j*3^i+1. Up to 10^8, all of the terms are divisible by only 16 distinct prime factors. That is: omega(lcm(all terms up to 10^8)) = 16.",
+        "Subsequence of A124240."
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A277173/b277173.txt\">Table of n, a(n) for n = 1..510</a>"
+    ],
+    "example": [
+        "6 is a term because for the primes up to 6, (2, 3 and 5), b^sigma(6) == b^phi(6) == b^numdiv(6) == b^6 (mod 6). This is sufficient to prove for all values b up to 6."
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{b = 2, s = DivisorSigma[1, n], e = EulerPhi[n], d = DivisorSigma[0, n]}, While[b < n && PowerMod[b, s, n] == PowerMod[b, e, n] == PowerMod[b, d, n] == PowerMod[b, n, n], b = NextPrime@ b]; b >= n]; lst = {1}; k = 2; While[k < 400000, If[ fQ@ k, AppendTo[lst, k]]; k ++]; lst (* _Robert G. Wilson v_, Nov 04 2016 *)"
+    ],
+    "program": [
+        "(PARI) isk(n, k) = {Mod(k, n)^sigma(n)==Mod(k, n)^n && Mod(k, n)^eulerphi(n)==Mod(k, n)^n && Mod(k, n)^numdiv(n)==Mod(k, n)^n}",
+        "is(n) = my(i);forprime(i=2, n, if(isk(n, i)==0,return(0))) ; 1",
+        "upto(lim) = my(l=List());for(n=1, lim, if(is(n), listput(l,n))); l"
+    ],
+    "xref": [
+        "Cf. A124240."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_David A. Corneth_ and _Altug Alkan_, Oct 02 2016",
+    "references": 1,
+    "revision": 20,
+    "time": "2017-01-02T02:00:12-05:00",
+    "created": "2016-11-27T22:31:57-05:00"
+}

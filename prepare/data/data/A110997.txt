@@ -1,0 +1,30 @@
+{
+    "number": 110997,
+    "data": "4,9,16,27,128,196,839056",
+    "name": "Powers equal to (sum of first n primes) minus 1.",
+    "comment": [
+        "I have checked out to the first 250000 primes but the last entry is at the 504th prime, 3607."
+    ],
+    "formula": [
+        "a(n)=sum(prime(j), j=1..N_n)-1 and a(n) is a power."
+    ],
+    "example": [
+        "Since sum(prime(j),j=1..10)=129, 128=2^7."
+    ],
+    "maple": [
+        "with(numtheory); egcd := proc(n) local L; L:=map(proc(z) z[2] end, ifactors(n)[2]); igcd(op(L)) end: s := proc(n) option remember; local p; if n=1 then [1,2] else p:=ithprime(n); [n,s(n-1)[2]+p] fi end; t := proc(n) option remember; [n,s(n)[2]-1] end; PW:=[]; for z to 1 do for j from 1 to 250000 do if egcd(t(j)[2])>1 then PW:=[op(PW),t(j)] fi od od; PW;"
+    ],
+    "mathematica": [
+        "s = 0; Do[s = s + Prime[n]; If[GCD @@ Transpose[ FactorInteger[s - 1]][[2]] > 1, Print[s - 1]], {n, 10^6}] (* _Robert G. Wilson v_, Oct 02 2005 *)"
+    ],
+    "xref": [
+        "Cf. A007504, A110979."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Walter Kehowski_, Sep 30 2005",
+    "references": 1,
+    "revision": 6,
+    "time": "2015-07-31T21:37:35-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

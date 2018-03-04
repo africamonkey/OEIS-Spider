@@ -1,0 +1,41 @@
+{
+    "number": 98762,
+    "data": "1,3,8,14,21,30,40,52,65,80,96,113,131,150,170,193,217,242,268,295,323,352,383,415,448,482,518,555,593,632,673,715,758,802,847,893,940,988,1037,1087,1140,1194,1249,1306,1362,1420,1479,1539,1600,1662,1725,1789",
+    "name": "This sequence, the sequence of first differences and the sequence of partial sums, are disjoint; a(0) = 1.",
+    "example": [
+        "If first row gives the sums and the third row the differences, then:",
+        ".4 11 22 35 51 70 92 117 145",
+        "1 3 8 14 21 30 40 52 65 80 ... [this sequence]",
+        ".2 5 6 7 9 10 12 13 15"
+    ],
+    "program": [
+        "(PLT Scheme)",
+        "(define (element? item a-list)",
+        "(ormap (lambda (i) (equal? item i)) a-list))",
+        "(define (A098762 n seq bad ops)",
+        "(local ((define newbads (map (lambda (op) (op n (first seq))) ops))",
+        "(define (ok? n)",
+        "(and (not (element? n bad))",
+        "(not (ormap (lambda (x) (element? x bad)) newbads))",
+        "(not (ormap (lambda (x) (element? x seq)) newbads)))))",
+        "(cond",
+        "[(> n 10000) (reverse seq)]",
+        "[(ok? n) (A098762 (add1 n) (cons n seq) (append newbads bad) ops)]",
+        "[else (A098762 (add1 n) seq bad ops)])))",
+        "(A098762 2 (list 1) empty (list + -))",
+        ";; _Joshua Zucker_, Jul 27 2006"
+    ],
+    "xref": [
+        "Cf. A098763."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Eric Angelini_, Oct 01 2004",
+    "ext": [
+        "Better definition from _Joshua Zucker_, Jul 27 2006"
+    ],
+    "references": 2,
+    "revision": 10,
+    "time": "2016-07-19T15:37:24-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

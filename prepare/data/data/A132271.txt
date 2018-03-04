@@ -1,0 +1,42 @@
+{
+    "number": 132271,
+    "data": "1,2,3,4,5,6,7,8,9,10,22,24,26,28,30,32,34,36,38,40,63,66,69,72,75,78,81,84,87,90,124,128,132,136,140,144,148,152,156,160,205,210,215,220,225,230,235,240,245,250,306,312,318,324,330,336,342,348,354,360,427",
+    "name": "Product{k>=0, 1+floor(n/10^k)}.",
+    "comment": [
+        "If n is written in base-10 as n=d(m)d(m-1)d(m-2)...d(2)d(1)d(0) (where d(k) is the digit at position k) then a(n) is also the product (1+d(m)d(m-1)d(m-2)...d(2)d(1)d(0))*(1+d(m)d(m-1)d(m-2)...d(2)d(1))*(1+d(m)d(m-1)d(m-2)...d(2))*...*(1+d(m)d(m-1)d(m-2))*(1+d(m)d(m-1))*(1+d(m))."
+    ],
+    "formula": [
+        "The following formulas are given for a general parameter p considering the product of terms 1+floor(n/p^k) for 0<=k<=floor(log_p(n)), where p=10 for this sequence.",
+        "Recurrence: a(n)=(1+n)*a(floor(n/p)); a(pn)=(1+pn)*a(n); a(n*p^m)=product{1<=k<=m, 1+n*p^k}*a(n).",
+        "a(k*p^m-j)=(k*p^m-j+1)*k^m*p^(m(m-1)/2), for 0<k<p, 0<j<p, m>=1, a(p^m)=p^(m(m+1)/2)*product{0<=k<=m, 1+1/p^k}, m>=1.",
+        "a(n)=A132272(p*n)=(1+n)*A132272(n).",
+        "Asymptotic behavior: a(n)=O(n^((1+log_p(n))/2)); this follows from the inequalities below.",
+        "a(n)<=A067080(n)*product{0<=k<=floor(log_p(n)), 1+1/p^k}.",
+        "a(n)>=A067080(n)/product{1<=k<=floor(log_p(n)), 1-1/p^k}.",
+        "a(n)<c*n^((1+log_p(n))/2)=c*p^A000217(log_p(n)), where c=product{k>=0, 1+1/p^k}=2.2244691382741012... (for p=10 see constant A132325).",
+        "a(n)>n^((1+log_p(n))/2)=p^A000217(log_p(n)).",
+        "lim sup a(n)/A067080(n)=2*product{k>0, 1+1/p^k}=2.2244691382741012..., for n-->oo (for p=10 see constant A132325).",
+        "lim inf a(n)/A067080(n)=1/product{k>0, 1-1/p^k}=1/0.8900100999989990000001000..., for n-->oo (for p=10 see constant A132038).",
+        "lim inf a(n)/n^((1+log_p(n))/2)=1, for n-->oo.",
+        "lim sup a(n)/n^((1+log_p(n))/2)=2*product{k>0, 1+1/p^k}=2.2244691382741012..., for n-->oo (for p=10 see constant A132325).",
+        "lim inf a(n+1)/a(n)=2*product{k>0, 1+1/p^k}=2.2244691382741012... for n-->oo (for p=10 see constant A132325)."
+    ],
+    "example": [
+        "a(12)=(1+floor(12/10^0))*(1+floor(12/10^1))=13*2=26; a(21)=63 since 21=21(base-10) and so",
+        "a(21)=(1+21)*(1+2)(base-10)=22*3=66."
+    ],
+    "mathematica": [
+        "f[n_] := Block[{k = 0, p = 1}, While[a = Floor[n/10^k]; a > 0, p *= 1 + a; k++]; p]; Array[f, 61, 0] (* _Robert G. Wilson v_, May 10 2011 *)"
+    ],
+    "xref": [
+        "Cf. A132038, A132325, A132269(p=2), A132327(p=3), A132272.",
+        "For the product of terms floor(n/p^k) see A098844, A067080, A132027-A132033, A132263, A132264."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Hieronymus Fischer_, Aug 20 2007",
+    "references": 6,
+    "revision": 5,
+    "time": "2013-10-31T12:17:43-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

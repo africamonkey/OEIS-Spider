@@ -1,0 +1,52 @@
+{
+    "number": 224479,
+    "data": "1,1,1,1,2,2,24,24,384,3456,276480,276480,955514880,955514880,428070666240,866843099136000,1775294667030528000,1775294667030528000,331312591939905257472000,331312591939905257472000,339264094146462983651328000000",
+    "name": "a(n) = product_{1 <= k <= n} product_{1 <= i < k} GCD(k,i).",
+    "comment": [
+        "The order of the primes in the prime factorization of a(n) is given by",
+        "ord_{p}(a(n)) = (1/2)*sum(i>0, floor(n/p^i)*(floor(n/p^i)-1)).",
+        "Product of all entries of lower-left (excluding main diagonal) triangular submatrix of GCDs. Also the product of all entries of upper-right (excluding main diagonal) triangular submatrix of GCDs, since the matrix is symmetric. - _Daniel Forgues_, Apr 14 2013",
+        "a(n)^2 * n! gives A092287(n), where n! is the product of the main diagonal entries of the matrix. - _Daniel Forgues_, Apr 14 2013"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A224479/b224479.txt\">Table of n, a(n) for n = 0..97</a>",
+        "OEIS Wiki, <a href=\"/wiki/Generalizations_of_the_factorial#Formulae_for_GCD_matrix_generalization_of_the_factorial\">Generalizations of the factorial</a>"
+    ],
+    "formula": [
+        "a(n) = product_{k in 1..n} product_{d divides k, d < k} d^phi(k/d).",
+        "n! * a(n)^2 = A092287(n).",
+        "a(n)/a(n-1) = A051190(n) for n >= 1.",
+        "a(n) = sqrt(A092287(n) / n!). - _Daniel Forgues_, Apr 14 2013"
+    ],
+    "maple": [
+        "A224479 := proc(n) local h, k, d;",
+        "mul(mul(d^phi(k/d), d = divisors(k) minus {k}), k = 1..n) end:",
+        "seq(A224479(i), i = 0..20);"
+    ],
+    "mathematica": [
+        "a[n_] := Product[ d^EulerPhi[k/d], {k, 1, n}, {d, Divisors[k] // Most}]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Jun 27 2013, after Maple *)"
+    ],
+    "program": [
+        "(Sage) def A224479(n):",
+        "    R = 1;",
+        "    for p in primes(n):",
+        "        s = 0; r = n",
+        "        while r > 0 :",
+        "            r = r//p",
+        "            s += r*(r-1)",
+        "        R *= p^(s/2)",
+        "    return R",
+        "[A224479(i) for i in (0..20)]",
+        "(PARI) a(n)=prod(k=1,n,my(s=1);fordiv(k,d,d<k && s*=d^eulerphi(k/d));s) \\\\ _Charles R Greathouse IV_, Jun 27 2013"
+    ],
+    "xref": [
+        "Cf. A051190, A092287."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Peter Luschny_, Apr 07 2013",
+    "references": 4,
+    "revision": 27,
+    "time": "2013-06-27T09:23:10-04:00",
+    "created": "2013-04-08T05:46:06-04:00"
+}

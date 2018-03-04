@@ -1,0 +1,54 @@
+{
+    "number": 201990,
+    "data": "1,1,7,95,1969,55201,1956375,83935039,4230528353,245059707841,16043680004903,1171567218325151,94415150206330641,8323801562833775201,796927800013656980791,82342529545666235490431,9132868398860301753027265,1082287792241161814647419265",
+    "name": "E.g.f. satisfies: A(x) = 1/(cos(x*A(x)^2) - sin(x*A(x)^2)).",
+    "comment": [
+        "Compare e.g.f. to: Sum_{n>=0} (2*n+1)^(n-1)*x^n/n! = sqrt((1/x)*Series_Reversion(x*(cosh(x) - sinh(x))^2)).",
+        "The radius of convergence r of e.g.f. A(x) is given by:",
+        "r = t*(cos(t) - sin(t))^2 where t = (1 - sin(2*t))/(2*cos(2*t)), so that:",
+        "r = 0.13127 35638 55724 99317 13322 82818 86189 50670 52604 32023 ...",
+        "t = 0.27798 42153 59698 32056 15352 87789 00442 74782 64480 84947 ...",
+        "Further, A(r) = 1/(cos(t) - sin(t)), thus",
+        "A(r) = 1.45519 57921 91350 02891 97122 64456 17664 48847 98244 19461 ..."
+    ],
+    "formula": [
+        "E.g.f. satisfies: A( x*(cos(x) - sin(x))^2 ) = 1/(cos(x) - sin(x)).",
+        "E.g.f: sqrt( (1/x) * Series_Reversion( x*(cos(x) - sin(x))^2 ) ).",
+        "a(n) = [x^n/n!] 1/(cos(x)-sin(x))^(2*n+1) / (2*n+1).",
+        "a(n) ~ sqrt((t*cos(2*t))/(2*cos(2*t)+4*t*(3+sin(2*t)))) * n^(n-1) / (exp(n) * r^(n+1/2)), where r and t were described above. - _Vaclav Kotesovec_, Jan 12 2014"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 7*x^2/2! + 95*x^3/3! + 1969*x^4/4! + 55201*x^5/5! +...",
+        "where",
+        "1/(cos(x)-sin(x)) = 1 + x + 3*x^2/2! + 11*x^3/3! + 57*x^4/4! + 361*x^5/5! + 2763*x^6/6! + 24611*x^7/7! +...+ A001586(n)*x^n/n! +...",
+        "The coefficients of x^n/n! in odd powers of G(x) = 1/(cos(x)-sin(x)) begin:",
+        "G^1: [(1), 1, 3, 11, 57, 361, 2763, 24611, ..., A001586(n), ...];",
+        "G^3: [1,(3), 15, 93, 705, 6243, 63375, 724413, ...];",
+        "G^5: [1, 5,(35), 295, 2905, 32525, 407435, 5638495, ...];",
+        "G^7: [1, 7, 63,(665), 8001, 107527, 1592703, 25738265, ...];",
+        "G^9: [1, 9, 99, 1251, (17721), 276849, 4716459, 86873211, ...];",
+        "G^11:[1, 11, 143, 2101, 34177, (607211), 11668943, 240764821, ...];",
+        "G^13:[1, 13, 195, 3263, 59865, 1190293,(25432875), 580193783, ...];",
+        "G^15:[1, 15, 255, 4785, 97665, 2146575, 50429055,(1259025585), ...]; ...",
+        "where coefficients in parenthesis form the initial terms of this sequence:",
+        "[1/1, 3/3, 35/5, 665/7, 17721/9, 607211/11, 25432875/13, 1259025585/15, ...]."
+    ],
+    "mathematica": [
+        "CoefficientList[Sqrt[1/x*InverseSeries[Series[x*(Cos[x] - Sin[x])^2, {x, 0, 21}], x]],x] * Range[0, 20]! (* _Vaclav Kotesovec_, Jan 12 2014 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(X=x+x*O(x^n));n!*polcoeff(sqrt(1/x*serreverse(x*(cos(X)-sin(X))^2)),n)}",
+        "(PARI) {a(n)=local(A=1+x,X=x+x*O(x^n));for(i=1,n,A=1/(cos(X*A^2) - sin(X*A^2)));n!*polcoeff(A,n)}",
+        "(PARI) {a(n)=local(X=x+x*O(x^n),A001586=1/(cos(X)-sin(X)));n!*polcoeff(A001586^(2*n+1),n)/(2*n+1)}"
+    ],
+    "xref": [
+        "Cf. A201923, A001586."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 07 2011",
+    "references": 0,
+    "revision": 11,
+    "time": "2014-01-12T11:17:16-05:00",
+    "created": "2011-12-07T19:33:47-05:00"
+}

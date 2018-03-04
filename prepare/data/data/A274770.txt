@@ -1,0 +1,38 @@
+{
+    "number": 274770,
+    "data": "1,8,17,18,26,27,44,55,63,80,105,187,326,776,1095,2196,6338,13031,13131,25562,27223,70825,140791,553076,632489,1402680,1404312,3183253,11311424,50783292,51231313,182252596,255246098,522599548,1180697763,2025114819,2137581414",
+    "name": "Cube analog to Keith numbers.",
+    "comment": [
+        "Like Keith numbers but starting from n^3 digits to reach n.",
+        "Consider the digits of the cube of a number n . Take their sum and repeat the process deleting the first addend and adding the previous sum. The sequence lists the numbers that after some iterations reach a sum equal to themselves."
+    ],
+    "example": [
+        "776^3 = 467288576 :",
+        "4 + 6 + 7 + 2 + 8 + 8 + 5 + 7 + 6 = 53;",
+        "6 + 7 + 2 + 8 + 8 + 5 + 7 + 6 + 53 = 102;",
+        "7 + 2 + 8 + 8 + 5 + 7 + 6 + 53 + 102 = 198;",
+        "2 + 8 + 8 + 5 + 7 + 6 + 53 + 102 + 198 = 389;",
+        "8 + 8 + 5 + 7 + 6 + 53 + 102 + 198 + 389 = 776."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q, h) local a,b,k,n,t,v; v:=array(1..h);",
+        "for n from 1 to q do b:=n^3; a:=[];",
+        "for k from 1 to ilog10(b)+1 do a:=[(b mod 10),op(a)]; b:=trunc(b/10); od;",
+        "for k from 1 to nops(a) do v[k]:=a[k]; od; b:=ilog10(n^3)+1;",
+        "t:=nops(a)+1; v[t]:=add(v[k], k=1..b); while v[t]<n do t:=t+1; v[t]:=add(v[k], k=t-b..t-1);",
+        "od; if v[t]=n then print(n); fi; od; end: P(10^6, 10000);"
+    ],
+    "xref": [
+        "Cf. A007629, A246544, A263534, A274769."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Jul 06 2016",
+    "ext": [
+        "a(34)-a(37) from _Giovanni Resta_, Jul 08 2016"
+    ],
+    "references": 8,
+    "revision": 14,
+    "time": "2016-11-11T19:59:52-05:00",
+    "created": "2016-07-08T09:51:40-04:00"
+}

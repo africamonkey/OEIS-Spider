@@ -1,0 +1,59 @@
+{
+    "number": 59015,
+    "data": "1,1,2,2,4,5,6,6,9,11,13,14,16,17,18,18,22,25,28,30,33,35,37,38,41,43,45,46,48,49,50,50,55,59,63,66,70,73,76,78,82,85,88,90,93,95,97,98,102,105,108,110,113,115,117,118,121,123,125,126,128,129,130,130,136,141",
+    "name": "Total number of 0's in binary expansions of 0, ..., n.",
+    "comment": [
+        "Partial sums of A023416. - _Reinhard Zumkeller_, Jul 15 2011",
+        "The graph of this sequence is a version of the Takagi curve: see Lagarias (2012), Section 9, especially Theorem 9.1. - _N. J. A. Sloane_, Mar 12 2016"
+    ],
+    "reference": [
+        "Hsien-Kuei Hwang, S Janson, TH Tsai, Exact and asymptotic solutions of the recurrence f(n) = f(floor(n/2)) + f(ceiling(n/2)) + g(n): theory and applications, Preprint, 2016; http://140.109.74.92/hk/wp-content/files/2016/12/aat-hhrr-1.pdf. Also Exact and Asymptotic Solutions of a Divide-and-Conquer Recurrence Dividing at Half: Theory and Applications, ACM Transactions on Algorithms, 13:4 (2017), #47; DOI: 10.1145/3127585"
+    ],
+    "link": [
+        "T. D. Noe and Hieronymus Fischer, <a href=\"/A059015/b059015.txt\">Table of n, a(n) for n = 0..10000</a> (terms up to n=1023 by T. D. Noe)",
+        "Lagarias, Jeffrey C. The Takagi function and its properties. In Functions in number theory and their probabilistic aspects, 153--189, RIMS K\u00f4ky\u00fbroku Bessatsu, B34, Res. Inst. Math. Sci. (RIMS), Kyoto, 2012. MR3014845. Also <a href=\"http://arxiv.org/abs/1112.4502\">arXiv:1112.4502</a>.",
+        "R. Stephan, <a href=\"/somedcgf.html\">Some divide-and-conquer sequences ...</a>",
+        "R. Stephan, <a href=\"/A079944/a079944.ps\">Table of generating functions</a>",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "formula": [
+        "a(n) = b(n)+1, with b(2n) = b(n)+b(n-1)+n, b(2n+1) = 2b(n)+n. - _Ralf Stephan_, Sep 13 2003",
+        "Contribution from _Hieronymus Fischer_, Jun 10 2012: (Start)",
+        "With m = floor(log_2(n)):",
+        "a(n) = 2 + (m+1)*(n+1) - 2^(m+1) + (1/2)*sum_{j=1..m+1} (floor(n/2^j)*(2n + 2 - (1 + floor(n/2^j))*2^j) - floor(n/2^j + 1/2)*(2n + 2 - floor(n/2^j + 1/2)*2^j.",
+        "a(n) = A083652(n) - (n+1)*A000120(n) + 2^(m-1) - (1/4) + (1/2)*sum_{j=1..m+1} (floor(n/2^j + 1/2)^2 - (floor(n/2^j) + 1/2)^2)*2^j.",
+        "a(2^m-1) = 2 + (m-2)*2^(m-1)",
+        "(this is the total number of zero digits occurring in all the numbers with <= m places).",
+        "G.f.: g(x) = 1 + (1/(1-x)^2)*sum_{j>=0} x^(2*2^j)/(1+x^2^j).",
+        "General formulas for the number of digits <= d in the base p representations of all integers from 0 to n, where 0 <= d < p.",
+        "With m = floor(log_p(n)):",
+        "a(n) = 1 + (m+1)*(n+1) - (p^(m+1)-1)/(p-1) + (1/2)*sum_{j=1..m+1} (floor(n/p^j)*(2n + 2 - (1 + floor(n/p^j))*p^j) - floor(n/p^j + (p-d-1)/p)*(2n + 2 + ((p-2*d-2)/p - floor(n/p^j + (p-d-1)/p))*p^j)).",
+        "a(n) = H(n,p) - (n+1)*F(n,p,d+1) + (1/2)*sum_{j=1..m+1} ((floor(n/p^j + (p-d-1)/p)^2 - floor(n/p^j)^2)*p^j - (((p - 2*d-2)/p)*floor(n/p^j + (p-d-1)/p) + floor(n/p^j))*p^j), where H(n,p) = sum of number of digits in the base p representations of 0 to n and F(n,p,d) = number of digits >=d in the base p representation of n.",
+        "a(p^m-1) = 1 + (d+1)*m*p^(m-1) - (p^m-1)/(p-1).",
+        "(this is the total number of digits <= d occurring in all the numbers with <= m places in base p representation).",
+        "G.f.: g(x) = 1 + (1/(1-x)^2)*sum_{j>=0} (1-x^(d*p^j))*x^p^j) + (1-x^p^j)*x^p^(j+1)/(1-x^p^(j+1)). (End)"
+    ],
+    "mathematica": [
+        "Accumulate[ Table[ Count[ IntegerDigits[n, 2], 0], {n, 0, 65}]] (* _Jean-Fran\u00e7ois Alcover_, Oct 03 2012 *)",
+        "Accumulate[DigitCount[Range[0,70],2,0]] (* _Harvey P. Dale_, Jun 24 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a059015 n = a059015_list !! n",
+        "a059015_list = scanl1 (+) $ map a023416 [0..]",
+        "-- _Reinhard Zumkeller_, Jul 15 2011",
+        "(PARI) v=vector(100,i,1);for(i=1,#v-1,v[i+1] = v[i] + #binary(i) - hammingweight(i)); v \\\\ _Charles R Greathouse IV_, Nov 20 2012",
+        "(PARI) a(n)=if(n, my(m=logint(n,2)); 2 + (m+1)*(n+1) - 2^(m+1) + sum(j=1,m+1, my(t=floor(n/2^j + 1/2)); (n>>j)*(2*n + 2 - (1 + (n>>j))<<j) - (2*n + 2 - t<<j)*t)/2, 1) \\\\ _Charles R Greathouse IV_, Dec 14 2015"
+    ],
+    "xref": [
+        "The basic sequences concerning the binary expansion of n are A000120, A000788, A000069, A001969, A023416, A059015, A070939, A083652.",
+        "Cf. A055640, A055641, A102669-A102685, A117804, A122840, A122841, A160093, A160094, A196563, A196564 (for base 10)."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,3",
+    "author": "_Patrick De Geest_, Dec 15 2000",
+    "references": 32,
+    "revision": 48,
+    "time": "2017-11-26T21:49:56-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 226705,
+    "data": "1,4,48,600,7856,105684,1447392,20075416,281086416,3964453368,56240518128,801624722232,11470976280960,164691196943212,2371222443727584,34224696393237360,495036708728067088,7173892793100898728,104135761805147016096,1513892435551302963792",
+    "name": "G.f.: 1 / (1 + 12*x*G(x)^4 - 16*x*G^5) where G(x) = 1 + x*G(x)^6 is the g.f. of A002295.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A226705/b226705.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} C(2*k, n-k) * C(6*n-2*k, k).",
+        "a(n) = Sum_{k=0..n} C(n+2*k, n-k) * C(5*n-2*k, k).",
+        "a(n) = Sum_{k=0..n} C(2*n+2*k, n-k) * C(4*n-2*k, k).",
+        "a(n) = Sum_{k=0..n} C(3*n+2*k, n-k) * C(3*n-2*k, k).",
+        "a(n) = Sum_{k=0..n} C(4*n+2*k, n-k) * C(2*n-2*k, k).",
+        "a(n) = Sum_{k=0..n} C(5*n+2*k, n-k) * C(n-2*k, k).",
+        "a(n) = Sum_{k=0..n} C(6*n+2*k, n-k) * C(-2*k, k).",
+        "Self-convolution of A226706.",
+        "G.f.: 1 / (1 - 4*x*G(x)^4 - 16*x^2*G(x)^10) where G(x) = 1 + x*G(x)^6 is the g.f. of A002295.",
+        "a(n) ~ 2^(6*n-2)*3^(6*n+3/2)/(5^(5*n+1/2)*sqrt(Pi*n)). - _Vaclav Kotesovec_, Jun 16 2013"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 4*x + 48*x^2 + 600*x^3 + 7856*x^4 + 105684*x^5 +...",
+        "A related series is G(x) = 1 + x*G(x)^6, where",
+        "G(x) = 1 + x + 6*x^2 + 51*x^3 + 506*x^4 + 5481*x^5 + 62832*x^6 +...",
+        "G(x)^4 = 1 + 4*x + 30*x^2 + 280*x^3 + 2925*x^4 + 32736*x^5 +...",
+        "G(x)^5 = 1 + 5*x + 40*x^2 + 385*x^3 + 4095*x^4 + 46376*x^5 +...",
+        "such that A(x) = 1/(1 + 12*x*G(x)^4 - 16*x*G^5)."
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[3*n+2*k,n-k]*Binomial[3*n-2*k,k],{k,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Jun 16 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(G=1+x); for(i=0, n,G=1+x*G^6+x*O(x^n)); polcoeff(1/(1+12*x*G^4-16*x*G^5), n)}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n)=local(G=1+x); for(i=0, n,G=1+x*G^6+x*O(x^n)); polcoeff(1/(1-4*x*G^4-16*x^2*G^10), n)}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n)=sum(k=0, n, binomial(2*k, n-k)*binomial(6*n-2*k, k))}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n)=sum(k=0, n, binomial(3*n +2*k, n-k)*binomial(3*n-2*k, k))}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n)=sum(k=0, n, binomial(6*n +2*k, n-k)*binomial(-2*k, k))}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A226706, A183160, A226733, A147855, A002295."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jun 15 2013",
+    "references": 4,
+    "revision": 18,
+    "time": "2013-07-18T02:31:40-04:00",
+    "created": "2013-06-15T12:39:52-04:00"
+}

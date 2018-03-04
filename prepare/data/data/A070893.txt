@@ -1,0 +1,46 @@
+{
+    "number": 70893,
+    "data": "1,6,19,46,94,172,290,460,695,1010,1421,1946,2604,3416,4404,5592,7005,8670,10615,12870,15466,18436,21814,25636,29939,34762,40145,46130,52760,60080,68136,76976,86649,97206,108699,121182,134710,149340",
+    "name": "Let r, s, t be three permutations of the set {1,2,3,..,n}; a(n)= value of sum_{i=1..n} r(i)*s(i)*t(i), with r={1,2,3,..,n}; s={n,n-1,..,1} and t={n,n-2,n-4,...,1,...,n-3,n-1}.",
+    "comment": [
+        "See A070735 for the minimal values for these products. This series is an upper bound. The third permutation 't'= Ceiling[Abs[Range[n-1/2,-n,-2]]] is such that it associates its smallest factor with the largest factor of the product 'r'*'s'.",
+        "We observe that is the transform of A002717 by the following transform T: T(u_0,u_1,u_2,u_3,...)=(u_0,u_0+u_1, u_0+u_1+u_2, u_0+u_1+u_2+u_3+u_4,...). In another terms v_p=sum(u_k,k=0..p) and the G.f phi_v of v is given by: phi_v=phi_u/(1-z). - _Richard Choulet_, Jan 28 2010"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A070893/b070893.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Tu#2wis\">Index entries for two-way infinite sequences</a>",
+        "<a href=\"/index/Rec\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-5,0,5,-4,1)."
+    ],
+    "formula": [
+        "G.f.: x*(1+2*x)/((1+x)*(1-x)^5). - _Michael Somos_, Apr 07 2003",
+        "a(n) = 3*a(n-1)-2*a(n-2)-2*a(n-3)+3*a(n-4)-a(n-5)+3. If sequence is also defined for n <= 0 by this equation, then a(n)=0 for -3 <= n <= 0 and a(n)=A082289(-n) for n <= -4. - _Michael Somos_, Apr 07 2003",
+        "a(n) = (1/96)*(2*n*(n+2)*(3*n^2+10*n+4)+3*(-1)^n-3). a(n)-a(n-2) = A002411(n). - _Bruno Berselli_, Aug 26 2011"
+    ],
+    "example": [
+        "{1,2,3,4,5,6,7}*{7,6,5,4,3,2,1}*{7,5,3,1,2,4,6} gives {49,60,45,16,30,48,42}, with sum 290, so a(7)=290."
+    ],
+    "maple": [
+        "with(combinat):a[0]:=0:for n from 1 to 50 do a[n]:=stirling2(n+2,n)-a[n-1] od: seq(a[n], n=1..38); # _Zerinvary Lajos_, Mar 17 2008"
+    ],
+    "mathematica": [
+        "Table[Plus@@(Range[n]*Range[n, 1, -1]*Ceiling[Abs[Range[n-1/2, -n, -2]]]), {n, 49}]; or CoefficientList[Series[ -(1+2x)/(-1+x)^5/(1+x), {x, 0, 48}], x]//Flatten"
+    ],
+    "program": [
+        "(PARI) a(n)=sum(i=1,n,i*(n+1-i)*ceil(abs(n+3/2-2*i)))",
+        "(PARI) a(n)=polcoeff(if(n<0,x^4*(2+x)/((1+x)*(1-x)^5),x*(1+2*x)/((1+x)*(1-x)^5))+x*O(x^abs(n)),abs(n))",
+        "(MAGMA) [(1/96)*(2*n*(n+2)*(3*n^2+10*n+4)+3*(-1)^n-3): n in [1..40]]; // _Vincenzo Librandi_, Aug 26 2011"
+    ],
+    "xref": [
+        "Cf. A070735, A082289. a(n)=A082290(2n-2).",
+        "Cf. A000034, A032766, A006578, A002717. - _Richard Choulet_, Jan 28 2010",
+        "Cf. A002717 (first differences). - _Bruno Berselli_, Aug 26 2011",
+        "Column k=3 of A166278. - _Alois P. Heinz_, Nov 02 2012"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Wouter Meeussen_, May 22 2002",
+    "references": 10,
+    "revision": 31,
+    "time": "2015-08-21T04:17:41-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

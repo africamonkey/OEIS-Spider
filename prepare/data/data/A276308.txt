@@ -1,0 +1,48 @@
+{
+    "number": 276308,
+    "data": "1,1,1,1,4,10,22,115,319,736,3886,10816,24991,131989,367405,848947,4483720,12480934,28839196,152314471,423984331,979683706,5174208274,14402986300,33280406797,175770766825,489277549849,1130554147381,5971031863756,16621033708546",
+    "name": "a(n) = (a(n-1)+1)*(a(n-3)+1)/a(n-4) for n > 3, a(0) = a(1) = a(2) = a(3) = 1.",
+    "reference": [
+        "Sergey Fomin and Andrei Zelevinsky, \u201cThe Laurent phenomenon,\u201d Advances in Applied Mathematics 28(2):119-144, 2002. See Theorem 3.1.",
+        "Matthew Christopher Russell, Using experimental mathematics to conjecture and prove theorems in the theory of partitions and commutative and non-commutative recurrences, PhD Dissertation, Mathematics Department, Rutgers University, May 2016; https://pdfs.semanticscholar.org/fdeb/e20954dacb7ec7a24afe2cf491b951c5a28d.pdf. Also (better) http://www.math.rutgers.edu/~zeilberg/Theses/MatthewRussellThesis.pdf. See Eq. (6.137)."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A276308/b276308.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_09\">Index entries for linear recurrences with constant coefficients</a>, signature (0,0,35,0,0,-35,0,0,1)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Aug 29 2016: (Start)",
+        "a(n) = 35*a(n-3)-35*a(n-6)+a(n-9) for n>8.",
+        "G.f.: (1+x+x^2-34*x^3-31*x^4-25*x^5+22*x^6+10*x^7+4*x^8) / ((1-x)*(1+x+x^2)*(1-34*x^3+x^6)).",
+        "(End)"
+    ],
+    "program": [
+        "(Ruby)",
+        "def A(m, n)",
+        "  a = Array.new(m, 1)",
+        "  ary = [1]",
+        "  while ary.size < n + 1",
+        "    i = (a[1] + 1) * (a[-1] + 1)",
+        "    break if i % a[0] > 0",
+        "    a = *a[1..-1], i / a[0]",
+        "    ary << a[0]",
+        "  end",
+        "  ary",
+        "end",
+        "def A276308(n)",
+        "  A(4, n)",
+        "end",
+        "(PARI) Vec((1+x+x^2-34*x^3-31*x^4-25*x^5+22*x^6+10*x^7+4*x^8)/((1-x)*(1+x+x^2)*(1-34*x^3+x^6)) + O(x^35)) \\\\ _Colin Barker_, Aug 29 2016",
+        "(PARI) a276308(maxn) = {a=vector(maxn); a[1]=a[2]=a[3]=a[4]=1; for(n=5, maxn, a[n]=(a[n-1]+1)*(a[n-3]+1)/a[n-4]); a} \\\\ _Colin Barker_, Aug 30 2016"
+    ],
+    "xref": [
+        "Cf. A276123, A276175."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,5",
+    "author": "_Seiichi Manyama_, Aug 29 2016",
+    "references": 1,
+    "revision": 26,
+    "time": "2017-03-17T12:04:53-04:00",
+    "created": "2016-08-30T03:56:53-04:00"
+}

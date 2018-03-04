@@ -1,0 +1,40 @@
+{
+    "number": 247066,
+    "data": "1,2,6,8,12,16,17,21,24,27,32,33,34,38,40,44,48,49,53,56,59,64,65,66,70,72,76,80,81,85,88,91,96,97,98,102,104,108,112,113,117,120,123,128,129,130,134,136,140,144,145,149,152,155,160,161,162,166,168,172,176,177,181,184,187,192,193,194,198",
+    "name": "Dynamic Betting Game D(n,6,2).",
+    "comment": [
+        "Players A and B bet in a k-round game. Player A has an initial amount of money n. In each round, player A can wager an integer between 0 and what he has. Player A then gains or loses an amount equal to his wager depending on whether player B lets him win or lose. Player B tries to minimize player A's money at the end. The number of rounds player A can lose is r. a(n) is the maximum amount of money player A can have at the end of the game for k = 6 and r = 2."
+    ],
+    "reference": [
+        "Charles Jwo-Yue Lien, Dynamic Betting Game, Southeast Asian Bulletin of Mathematics (to be published)"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A247066/b247066.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "With a(0)=0, a(n+1)-a(n) is a periodic function of n with value = 1,1,4,2,4,4,1,4,3,3,5.",
+        "a(n) = a(n-1)+a(n-11)-a(n-12).",
+        "G.f.:x*(1+x+4*x^2+2*x^3+4*x^4+4*x^5+x^6+4*x^7+3*x^8+3*x^9+5*x^10)/((1-x)^2*(1+x+x^2+x^3+x^4+x^5+x^6+x^7+x^8+x^9+x^10))."
+    ],
+    "example": [
+        "In the case of n=6: For the first round, player A bets 2. Player B will let player A win. Otherwise player A will end up with D(4,5,1)=17 per reference A247061. Therefore after the first round, player A has 8 and will end up with D(8,5,2)=16 per reference A247062. Alternatively, player A bets 3 for the first round. Player B will let player A lose. Otherwise player A will end up with D(9,5,2)=17 per reference A247062. Therefore after the first round, player A has 3 and will end up with D(3,5,1)=16 per reference A247061. If A does not follow the proposed bets, he will have fewer than 16 at the end. So a(6) = 16."
+    ],
+    "program": [
+        "(Haskell)",
+        "a247066 n = a247066_list !! (n-1)",
+        "a247066_list = [1,2,6,8,12,16,17,21,24,27,32,33] ++ zipWith (+)",
+        "   (drop 11 a247066_list) (zipWith (-) (tail a247066_list) a247066_list)",
+        "-- _Reinhard Zumkeller_, Sep 19 2014",
+        "(PARI) Vec(x*(1+x+4*x^2+2*x^3+4*x^4+4*x^5+x^6+4*x^7+3*x^8+3*x^9+5*x^10)/((1-x)^2*(1+x+x^2+x^3+x^4+x^5+x^6+x^7+x^8+x^9+x^10)) + O(x^100)) \\\\ _Altug Alkan_, Feb 05 2016"
+    ],
+    "xref": [
+        "Cf. A247061, A247062, A247063, A247064, A247065, A247160, A247161."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Charles Jwo-Yue Lien_, Sep 15 2014",
+    "references": 2,
+    "revision": 20,
+    "time": "2016-11-23T23:24:31-05:00",
+    "created": "2014-09-19T01:44:35-04:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 283222,
+    "data": "66,6810,182430,105470250,17356640970,678676246650,1879504308930,4491035717130,10618004862030,21136679055030,23751520478010,27081671511090,27596192489190,31721097756750,115248550935750,133303609919430,140838829659930,182797297112430,197799116497230",
+    "name": "Integer area of integer-sided triangle such that the sides are of the form p, p+2, 2(p-1), where p, p+2 and (p-1)/2 are prime numbers.",
+    "comment": [
+        "Subsequence of A257049.",
+        "The area of a triangle (a,b,c) is given by Heron's formula A = sqrt(s(s-a)(s-b)(s-c)) where its side lengths are a, b, c and semiperimeter s = (a+b+c)/2.",
+        "We observe that the sides of each triangle are of the form (k^2+2, k^2+4, 2k^2+2) and Heron's formula gives immediately the area k(2k^2+4) => a(n)= 2*A086381(n)*A253639(n).",
+        "The corresponding primes p are a subsequence of A056899 (primes of the form n^2+2): 11, 227, 2027, 140627, 4223027, 48650627, 95942027, 171479027, ...",
+        "We observe that p == 11 mod 72, or p == 11, 83 mod 144. For p>11, p == 27, 227, 627 mod 1000.",
+        "An interesting property: the greatest prime divisor of a(n) is equal to p. For instance, the prime divisors of 6810 are {2, 3, 5, 227} => p = 227 is the length of the smallest side of the triangle (227, 229, 452).",
+        "The following table gives the first values of A, the sides of the triangles and the primes (p-1)/2.",
+        "+-----------+--------+--------+--------+---------+",
+        "|         A |      p |    p+2 |  2(p-1)| (p-1)/2 |",
+        "+-----------+--------+--------+--------+---------+",
+        "|        66 |     11 |     13 |     20 |       5 |",
+        "|      6810 |    227 |    229 |    452 |     113 |",
+        "|    182430 |   2027 |   2029 |   4052 |    1013 |",
+        "| 105470250 | 140627 | 140629 | 281252 |   70313 |",
+        "+-----------+--------+--------+--------+---------+"
+    ],
+    "formula": [
+        "a(n) == 6 mod 30."
+    ],
+    "example": [
+        "66 is in the sequence because the area of the triangle (11, 13, 20) is given by Heron's formula with s = 22 and A = sqrt(22(22-11)(22-13)(22-20)) = 66. The numbers 11, 13 and 5 = (11-1)/2 are primes."
+    ],
+    "maple": [
+        "nn:=100000:",
+        "for n from 1 by 2 to nn do:",
+        "if isprime(n^2+2) and isprime(n^2+4) and isprime((n^2+1)/2)",
+        "then",
+        "printf(`%d, `,n*(2*n^2+4)):",
+        "else",
+        "fi:",
+        "od:"
+    ],
+    "mathematica": [
+        "nn=10000;lst={};Do[s=(2*Prime[c]-2+Prime[c+1]+Prime[c])/2;If[IntegerQ[s],area2=s (s-2*Prime[c]+2)(s-Prime[c+1])(s-Prime[c]); If[area2>0&&IntegerQ[Sqrt[area2]] &&Prime[c+1] ==Prime[c]+2 && PrimeQ[(Prime[c]-1)/2], AppendTo[lst,Sqrt[area2]]]], {c,nn}];Union[lst]"
+    ],
+    "program": [
+        "(PARI) lista(nn) = {forprime(p=2, nn, if (isprime(p+2) && isprime((p-1)/2), ca = p; cb = p+2; cc = 2*(p-1); sp = (ca+cb+cc)/2; a2 = sp*(sp-ca)*(sp-cb)*(sp-cc); if (issquare(a2), print1(sqrtint(a2), \", \"));););} \\\\ _Michel Marcus_, Mar 04 2017"
+    ],
+    "xref": [
+        "Cf. A056899, A085554, A086381, A188158, A253639, A257049."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Mar 03 2017",
+    "references": 0,
+    "revision": 10,
+    "time": "2017-03-21T06:34:11-04:00",
+    "created": "2017-03-21T06:34:11-04:00"
+}

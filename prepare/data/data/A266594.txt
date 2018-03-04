@@ -1,0 +1,41 @@
+{
+    "number": 266594,
+    "data": "1,2,5,7,10,16,19,29,32,46,49,67,70,92,95,121,124,154,157,191,194,232,235,277,280,326,329,379,382,436,439,497,500,562,565,631,634,704,707,781,784,862,865,947,950,1036,1039,1129,1132,1226,1229,1327,1330,1432",
+    "name": "Total number of ON (black) cells after n iterations of the \"Rule 37\" elementary cellular automaton starting with a single ON (black) cell.",
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 55."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A266594/b266594.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "S. Wolfram, <a href=\"http://wolframscience.com/\">A New Kind of Science</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2,-1,1)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Jan 02 2016: (Start)",
+        "a(n) = (n^2-(-1)^n*(n-3)+5)/2 for n>0.",
+        "a(n) = a(n-1)+2*a(n-2)-2*a(n-3)-a(n-4)+a(n-5) for n>5.",
+        "G.f.: (1+x+x^2-2*x^4+3*x^5) / ((1-x)^3*(1+x)^2).",
+        "(End)"
+    ],
+    "mathematica": [
+        "rule=37; rows=20; ca=CellularAutomaton[rule,{{1},0},rows-1,{All,All}]; (* Start with single black cell *) catri=Table[Take[ca[[k]],{rows-k+1,rows+k-1}],{k,1,rows}]; (* Truncated list of each row *) nbc=Table[Total[catri[[k]]],{k,1,rows}]; (* Number of Black cells in stage n *) Table[Total[Take[nbc,k]],{k,1,rows}] (* Number of Black cells through stage n *)",
+        "Join[{1}, LinearRecurrence[{1, 2, -2, -1, 1}, { 2, 5, 7, 10, 16}, 70]] (* _Vincenzo Librandi_, Jan 02 2016 *)"
+    ],
+    "program": [
+        "(PARI) Vec((1+x+x^2-2*x^4+3*x^5)/((1-x)^3*(1+x)^2) + O(x^100)) \\\\ _Colin Barker_, Jan 02 2016",
+        "(MAGMA) I:=[1,2,5,7,10,16]; [n le 6 select I[n] else Self(n-1)+2*Self(n-2)-2*Self(n-3)-Self(n-4)+Self(n-5): n in [1..72]]; // _Vincenzo Librandi_, Jan 02 2016"
+    ],
+    "xref": [
+        "Cf. A266588."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Robert Price_, Jan 01 2016",
+    "references": 1,
+    "revision": 14,
+    "time": "2016-01-02T05:44:55-05:00",
+    "created": "2016-01-01T17:17:30-05:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 273157,
+    "data": "6,10,12,14,15,18,20,22,24,26,28,30,34,35,36,38,40,42,44,45,46,48,50,52,54,56,58,60,62,63,66,68,70,72,74,75,76,77,78,80,82,84,86,88,90,91,92,94,96,98,99,100,102,104,105,106,108,110,112,114,116,117",
+    "name": "Numbers which have nonpositive entries in the difference table of their divisors (complement of A273130).",
+    "comment": [
+        "Primorial numbers (A002110) greater than 2 are in this sequence."
+    ],
+    "example": [
+        "30 is in this sequence because the difference table of the divisors of 30 is:",
+        "[1, 2, 3, 5, 6, 10, 15, 30]",
+        "[1, 1, 2, 1, 4, 5, 15]",
+        "[0, 1, -1, 3, 1, 10]",
+        "[1, -2, 4, -2, 9]",
+        "[-3, 6, -6, 11]",
+        "[9, -12, 17]",
+        "[-21, 29]",
+        "[50]"
+    ],
+    "program": [
+        "(Sage)",
+        "def nsf(z) :",
+        "    D = divisors(z)",
+        "    T = matrix(ZZ, len(D))",
+        "    for (m, d) in enumerate(D):",
+        "        T[0, m] = d",
+        "        for k in range(m-1, -1, -1) :",
+        "            T[m-k, k] = T[m-k-1, k+1] - T[m-k-1, k]",
+        "            if T[m-k, k] <= 0: return true",
+        "    return false",
+        "print filter(lambda n: nsf(n), range(1, 100))"
+    ],
+    "xref": [
+        "Cf. A069059, A187202, A273102, A273103, A273109, A273130 (complement)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, May 16 2016",
+    "references": 1,
+    "revision": 16,
+    "time": "2016-05-16T23:28:09-04:00",
+    "created": "2016-05-16T23:28:09-04:00"
+}

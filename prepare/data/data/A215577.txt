@@ -1,0 +1,52 @@
+{
+    "number": 215577,
+    "data": "1,18,340812,1553113040",
+    "name": "Number of nonintersecting (or self-avoiding) rook paths joining opposite corner cells of an n X n X n grid, avoiding cells that are not on the surface.",
+    "comment": [
+        "When n<3 there are n^3 cells available, otherwise n^3 - (n-2)^3.",
+        "The length of the step is 1. The length of the path varies."
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>    // GCC -O3",
+        "char grid[4][4][4];",
+        "long long SIZE;",
+        "long long calc_ways(long long x, long long y, long long z) {",
+        "    long long n;",
+        "    if (grid[x][y][z]) return 0;",
+        "    if (x+y+z==SIZE*3-3) return 1;",
+        "    grid[x][y][z]=1;",
+        "    n=0;",
+        "    if (x>0)        n =calc_ways(x-1,y,z);  // go left",
+        "    if (x<SIZE-1)   n+=calc_ways(x+1,y,z);  // right",
+        "    if (y>0)        n+=calc_ways(x,y-1,z);  // down",
+        "    if (y<SIZE-1)   n+=calc_ways(x,y+1,z);  // up",
+        "    if (z>0)        n+=calc_ways(x,y,z-1);  // level down",
+        "    if (z<SIZE-1)   n+=calc_ways(x,y,z+1);  // level up",
+        "    grid[x][y][z]=0;",
+        "    return n;",
+        "}",
+        "int main()",
+        "{",
+        "  for (SIZE=1; SIZE<=4; ++SIZE) {",
+        "    int x,y,z;",
+        "    memset(grid, 0, sizeof(grid));",
+        "    for (x=1; x<SIZE-1; ++x)",
+        "      for (y=1; y<SIZE-1; ++y)",
+        "        for (z=1; z<SIZE-1; ++z)",
+        "          grid[x][y][z]=1;",
+        "    printf(\"%llu, \",calc_ways(0,0,0));",
+        "  }",
+        "}"
+    ],
+    "xref": [
+        "Cf. A007764, A059783."
+    ],
+    "keyword": "nonn,walk,more",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, Aug 16 2012",
+    "references": 0,
+    "revision": 4,
+    "time": "2012-08-16T16:31:10-04:00",
+    "created": "2012-08-16T16:31:10-04:00"
+}

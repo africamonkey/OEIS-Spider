@@ -1,0 +1,55 @@
+{
+    "number": 51362,
+    "data": "23,37,53,73,113,131,137,173,179,197,311,317,431,617,719,1013,1031,1097,1499,1997,2239,2293,3137,4019,4919,6173,7019,7433,9677,10193,10613,11093,19973,23833,26833,30011,37019,40013,47933,73331,74177",
+    "name": "Primes remaining prime if any digit is deleted (zeros allowed).",
+    "comment": [
+        "These might be called \"super-prime numbers\". - Jaime Gutierrez (jgutierrez(AT)matematicas.net), Sep 27 2007",
+        "A proper subset of A034895. - _Robert G. Wilson v_, Oct 12 2014"
+    ],
+    "link": [
+        "T. D. Noe and Giovanni Resta, <a href=\"/A051362/b051362.txt\">Table of n, a(n) for n = 1..201</a> (terms < 10^13, first 100 terms from T. D. Noe)",
+        "StackExchange, <a href=\"http://math.stackexchange.com/questions/33094\">Deleting any digit yields a prime</a>"
+    ],
+    "maple": [
+        "P:=proc(q) local a,b,i,ok,n; for n from 1 to q do a:=ithprime(n); b:=0;",
+        "ok:=1; while a>0 do b:=b+1; a:=trunc(a/10); od; a:=ithprime(n);",
+        "for i from 0 to b-1 do if not isprime(trunc(a/10^(i+1))*10^i+(a mod 10^i))",
+        "then ok:=0; break; fi; od; if ok=1 then print(ithprime(n)); fi;",
+        "od; end: P(10^6); # _Paolo P. Lava_, Oct 25 2013"
+    ],
+    "mathematica": [
+        "rpQ[n_]:=Module[{idn=IntegerDigits[n]},And@@PrimeQ[FromDigits/@ Subsets[ IntegerDigits[ n],{Length[idn]-1}]]]; Select[Prime[Range[40000]], rpQ]"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (inits, tails)",
+        "a051362 n = a051362_list !! (n-1)",
+        "a051362_list = filter p $ drop 4 a000040_list where",
+        "   p x = all (== 1) $ map (a010051 . read) $",
+        "             zipWith (++) (inits $ show x) (tail $ tails $ show x)",
+        "-- _Reinhard Zumkeller_, Dec 17 2011, Aug 24 2011",
+        "(PARI) is(n)=my(v=Vec(Str(n)),k);for(i=1, #v, k=eval(concat(vecextract(v, 2^#v-1-2^(i-1))));if(!isprime(k),return(0)));isprime(n) \\\\ _Charles R Greathouse IV_, Oct 05 2011",
+        "(Sage)",
+        "def is_A051362(n):",
+        "    prime = is_prime(n)",
+        "    if prime:",
+        "        L = ZZ(n).digits(10)",
+        "        for k in range(len(L)):",
+        "            K = L[:]; del K[k]",
+        "            prime = is_prime(ZZ(K, base=10))",
+        "            if not prime: break",
+        "    return prime",
+        "A051362_list = lambda n: filter(is_A051362, range(n))",
+        "A051362_list(77777) # _Peter Luschny_, Jul 17 2014"
+    ],
+    "xref": [
+        "Cf. A034302, A010051, A000040, A034895."
+    ],
+    "keyword": "nonn,base,nice",
+    "offset": "1,1",
+    "author": "_Harvey P. Dale_, May 31 2000",
+    "references": 19,
+    "revision": 44,
+    "time": "2014-10-13T09:41:59-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

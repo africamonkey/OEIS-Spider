@@ -1,0 +1,41 @@
+{
+    "number": 292420,
+    "data": "1,2,2,3,4,4,6,8,8,11,14,16,20,24,28,34,42,48,57,68,78,94,110,126,148,172,198,230,266,304,351,404,460,526,602,684,780,888,1004,1140,1290,1456,1646,1856,2088,2351,2644,2964,3326,3728,4168,4664,5212,5812,6484",
+    "name": "Expansion of a q-series used by Ramanujan in his Lost Notebook.",
+    "reference": [
+        "Srinivasa Ramanujan, The Lost Notebook and Other Unpublished Papers, Narosa Publishing House, New Delhi, 1988, page 1, 1st equation with a=-1."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A292420/b292420.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f. is the product of the g.f. of A000009 and A143064.",
+        "Given g.f. A(x), then A(x^2) = 1 / (1+x) + x / (1+x^3) + x^2 * (1+x^2) / ((1+x^3) * (1+x^5)) + x^3 * (1+x^2) / ((1+x^5) * (1+x^7)) + x^4 * (1+x^2) * (1+x^4) / ((1+x^5) * (1+x^7) * (1+x^9)) + ..."
+    ],
+    "example": [
+        "G.f. = 1 + 2*x + 2*x^2 + 3*x^3 + 4*x^4 + 4*x^5 + 6*x^6 + 8*x^7 + 8*x^8 + ..."
+    ],
+    "maple": [
+        "N:= 200: # to get a(0)..a(N)",
+        "g143064:= add(x^k/mul(1+x^(2*j+1),j=0..k),k=0..2*N):",
+        "g000009:= mul(1+x^(2*k),k=1..N):",
+        "S:= series(g143064*g000009,x,2*N+2):",
+        "seq(coeff(S,x,2*j),j=0..N); # _Robert Israel_, Sep 17 2017"
+    ],
+    "mathematica": [
+        "a[ n_] := If[ n < 0, 0, SeriesCoefficient[ QPochhammer[ x^2] / QPochhammer[ x] Sum[ (-1)^k x^(3 k^2 + 2 k) (1 + x^(2 k + 1)), {k, 0, Sqrt[n / 3]}], {x, 0, n}]];"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A); if( n<0, 0, A = x * O(x^n); polcoeff( eta(x^2 + A) / eta(x + A) * sum(k=0, sqrtint(n \\ 3), (-1)^k * x^(3*k^2 + 2*k) * (1 + x^(2*k + 1)), A), n))};"
+    ],
+    "xref": [
+        "Cf. A000009, A143064, A292445."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Michael Somos_, Sep 16 2017",
+    "references": 2,
+    "revision": 22,
+    "time": "2017-09-17T13:35:58-04:00",
+    "created": "2017-09-16T22:10:19-04:00"
+}

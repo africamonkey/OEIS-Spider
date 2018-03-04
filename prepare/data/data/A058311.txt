@@ -1,0 +1,46 @@
+{
+    "number": 58311,
+    "data": "1,4,48,7918,463339346,7134188685100826388,13246386641449904934758023373599438217628,643152870463337226096320122089499144560533929707886143570111588898313745804013188842",
+    "name": "Number of nodes at n-th level in tree in which top node is 1; each node k has children labeled k, k+1, ..., (k+1)^2 at next level.",
+    "comment": [
+        "Triggered by a comment from _Michael Kleber_, Dec 08 2009, who said: The algorithm in my paper with Cook lets you compute the equivalent sequence where the children of a node labeled (k) are labeled with all the integers in the interval [p(k),q(k)] where p,q are any polynomials you like (in the paper, p(k)=k+1 and q(k)=2k). For a bunch of p,q the resulting seq is well-known, eg p(k)=1,q(k)=k+1 is the Catalan numbers."
+    ],
+    "link": [
+        "M. Cook and M. Kleber, <a href=\"http://www.combinatorics.org/\">Tournament sequences and Meeussen sequences</a>, Electronic J. Comb. 7 (2000), #R44."
+    ],
+    "maple": [
+        "M:=4;",
+        "L[0]:=[1]; a[0]:=1;",
+        "for n from 1 to M do",
+        "L[n]:=[];",
+        "t1:=L[n-1];",
+        "tc:=nops(t1);",
+        "for i from 1 to tc do",
+        "t2:=t1[i];",
+        "for j from t2 to (t2+1)^2 do",
+        "L[n]:=[op(L[n]),j]; od:",
+        "a[n]:=nops(L[n]);",
+        "#lprint(n,L[n],a[n]);",
+        "od:",
+        "od:",
+        "[seq(a[n],n=0..M)];",
+        "# See the reference for a better way to compute this!",
+        "p := proc(n,k) option remember; local j ; if n = 1 then k^2+k+2; # (k+1)^2-(k-1) else sum( procname(n-1,j),j=k..(k+1)^2) ; fi; expand(%) ; end proc:",
+        "A058311 := proc(n) if n = 0 then 1 ; else subs(k=1, p(n,k)) ; fi; end proc:",
+        "for n from 0 do printf(\"%d,\\n\", A058311(n)) ; od: # _R. J. Mathar_, May 04 2009"
+    ],
+    "xref": [
+        "Cf. A008934, A058222, A147780, A147794."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Dec 09 2000",
+    "ext": [
+        "Corrected, with Maple program, by _N. J. A. Sloane_, May 03 2009. Thanks to _Max Alekseyev_ for pointing out that something was wrong.",
+        "Replaced a(4), added three more terms - _R. J. Mathar_, May 04 2009"
+    ],
+    "references": 3,
+    "revision": 14,
+    "time": "2015-08-07T02:49:39-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

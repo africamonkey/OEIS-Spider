@@ -1,0 +1,63 @@
+{
+    "number": 247128,
+    "data": "5,9,13,17,22,27,31,35,39,44,49,53,57,61,66,71,75,79,83,88,93,97,101,105,110,115,119,123,127,132,137,141,145,149,154,159,163,167,171,176,181,185,189,193,198,203,207,211",
+    "name": "Positive numbers that are congruent to {0,5,9,13,17} mod 22.",
+    "comment": [
+        "This sequence is the union of 22*n-17, 22*n-13, 22*n-9, and 22*n-5, and A008604(22*n), for n>0.",
+        "This sequence is the integer values of sqrt(4*k - ceiling(k/3) + 3 + k mod 2), for k>0; see example.",
+        "The sequence numbers with both odd first and last digits are either palindromes or they have corresponding reversed digit numbers, e.g., 105, 501. Prime numbers in this sequence are also in A007500 (reversal primes). Some examples are 13, 17, 31, 71, 79, 97, 101.",
+        "The sequence numbers with even first digits and last digits of 2, 4, 6 or 8, are either palindromes or they have corresponding reversed digit numbers in this sequence.",
+        "The candidate Lychrel numbers, 295, 493, 691, 1677, 1765, 1857, 1945, 1997, 3493, are in this sequence."
+    ],
+    "link": [
+        "Karl V. Keller, Jr., <a href=\"/A247128/b247128.txt\">Table of n, a(n) for n = 1..100000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/196-Algorithm.html\">196 Algorithm.</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/LychrelNumber.html\">Lychrel Number</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PalindromicNumberConjecture.html\">Palindromic Number Conjecture</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,0,0,1,-1)."
+    ],
+    "formula": [
+        "a(n) = a(n-1) + a(n-5) - a(n-6). - _Colin Barker_, Nov 20 2014",
+        "G.f.: x*(5*x^4+4*x^3+4*x^2+4*x+5) / ((x-1)^2*(x^4+x^3+x^2+x+1)). - _Colin Barker_, Nov 20 2014",
+        "Proof that a(n) = a(n-1) + a(n-5) - a(n-6): the sequence a(n) is a concatenation of the sequences [5+22*i, 9+22*i, 13+22*i, 17+22*i, 22+22*i] for i = 0,1,2,..., so it is clear that a(n-1) = a(n-6) + 22 and a(n) = a(n-5) + 22. - _Chai Wah Wu_, Jan 01 2015"
+    ],
+    "example": [
+        "Sequence consists of the integer values of sqrt(4*k - ceiling(k/3) + 3 + k mod 2), for k>0; e.g.,",
+        "for k =  5, sqrt( 20 -  2 + 3 + 1) = sqrt(22)  =  4.6904;",
+        "for k =  6, sqrt( 24 -  2 + 3 + 0) = sqrt(25)  =  5;",
+        "for k = 21, sqrt( 84 -  7 + 3 + 1) = sqrt(81)  =  9;",
+        "for k = 44, sqrt(176 - 15 + 3 + 0) = sqrt(164) = 12.8062;",
+        "for k = 45, sqrt(180 - 15 + 3 + 1) = sqrt(169) = 13.",
+        "Of these, the only integer values are 5, 9, 13, so they are in the sequence."
+    ],
+    "mathematica": [
+        "a247128[n_Integer] := Select[Range[n], MemberQ[{0, 5, 9, 13, 17}, Mod[#, 22]] &]; a247128[211] (* _Michael De Vlieger_, Nov 23 2014 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from math import *",
+        "for n in range(0,100001):",
+        "..if (sqrt(4*n-ceil(n/3)+3+n%2))%1==0:print(int(sqrt(4*n-ceil(n/3)+3+n%2)),end=\",\")",
+        "(PARI) isok(n) = m = n % 22; (m==0) || (m==5) || (m==9) || (m==13) || (m==17);",
+        "select(x->isok(x), vector(200, i, i)) \\\\ _Michel Marcus_, Nov 28 2014",
+        "(Python)",
+        "A247128_list = [n for n in range(1,10**5) if (n % 22) in {0,5,9,13,17}]",
+        "# _Chai Wah Wu_, Dec 31 2014",
+        "(Python)",
+        "A247128_list, l = [], [5,9,13,17,22]",
+        "for _ in range(10**5):",
+        "....A247128_list.extend(l)",
+        "....l = [x+22 for x in l] # _Chai Wah Wu_, Jan 01 2015"
+    ],
+    "xref": [
+        "Cf. A008604, A002113(palindromes), A007500(reversal primes).",
+        "Cf. A023108."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Karl V. Keller, Jr._, Nov 19 2014",
+    "references": 1,
+    "revision": 50,
+    "time": "2016-01-18T08:52:37-05:00",
+    "created": "2014-12-31T21:51:30-05:00"
+}
