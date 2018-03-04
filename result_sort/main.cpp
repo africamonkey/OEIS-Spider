@@ -142,11 +142,6 @@ void solve(const char *file_name) {
 		}
 		fprintf(stderr, "%s\n", id.c_str());
 		t.id = id;
-		if (id == "A058649") {
-			int t = 1;
-			t *= 2;
-			t *= w;
-		}
 		t.seq = tmp;
 		t.formula = "";
 		t.prefix.clear();
@@ -181,14 +176,14 @@ void solve(const char *file_name) {
 }
 
 int main() {
-	solve("result_0_85000.csv");
-	solve("result_85000_97000.csv");
-	solve("result_97000_109000.csv");
-	solve("result_109000_121000.csv");
-	solve("result_121000_133000.csv");
-	solve("result_133000_145000.csv");
-	solve("result_145000_156000.csv");
-	solve("result_156000_167000.csv");
+//	solve("result_0_85000.csv");
+//	solve("result_85000_97000.csv");
+//	solve("result_97000_109000.csv");
+//	solve("result_109000_121000.csv");
+//	solve("result_121000_133000.csv");
+//	solve("result_133000_145000.csv");
+//	solve("result_145000_156000.csv");
+//	solve("result_156000_167000.csv");
 	solve("result_167000_178000.csv");
 	solve("result_178000_186120.csv");
 	solve("result_manual.csv");
@@ -205,23 +200,27 @@ int main() {
 	freopen("tex.txt", "w", stdout);
 	// whole.erase(whole.begin() + 3, whole.end());
 	for (int i = 0; i < (int) whole.size(); ++i) {
+		puts("\\begin{sloppypar}");
 		printf("\\textbf{[%s]}\n", whole[i].id.c_str());
-		printf("\\texttt{");
-		for (int j = 0; j < (int) whole[i].prefix.size(); ++j)
-			printf("%s, ", whole[i].prefix[j].c_str());
+		for (int j = 0; j < (int) whole[i].prefix.size(); ++j) {
+			printf("\\seqsplit{%s},", whole[i].prefix[j].c_str());
+		}
 		printf("\\underline{");
 		if (whole[i].suffix.size() > 0)
 			printf("%s", whole[i].suffix[0].c_str());
 		printf("}");
 		for (int j = 1; j < (int) whole[i].suffix.size(); ++j)
-			printf(", \\underline{%s}", whole[i].suffix[j].c_str());
-		printf("}");
-		puts("");
-		puts("");
-		puts("\\begin{sloppypar}");
+			printf(",\\seqsplit{%s}", whole[i].suffix[j].c_str());
+		//	printf(", \\underline{%s}", whole[i].suffix[j].c_str());
+		puts(" $\\bullet$ ");
 		// puts("<span style=\"white-space:pre;\"></span>");
 		for (int j = 0; j < whole[i].formula.length(); ++j) {
 			char c = whole[i].formula[j];
+			if (c == '\n' && j + 1 < whole[i].formula.length() && whole[i].formula[j + 1] == '\n') {
+				printf(" $\\bullet$ ");
+				++ j;
+				continue;
+			}
 			if (c == '#' || c == '$' || c == '%' || c == '{' || c == '}' || c == '~' || c == '^' || c == '_')
 				putchar('\\');
 			if (c != '\\')
