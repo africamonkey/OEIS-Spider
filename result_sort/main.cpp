@@ -4,7 +4,7 @@
 
 using namespace std;
 
-char s[N];
+char s[N], s2[N];
 vector< string > tmp;
 
 struct data {
@@ -13,6 +13,7 @@ struct data {
 	vector< string > prefix;
 	vector< string > suffix;
 	string formula;
+	string description;
 } t;
 
 vector< data > whole;
@@ -85,25 +86,54 @@ void solve(const char *file_name) {
 		while (isdigit(w)) w = getchar();
 		assert(w == ',');
 		w = getchar();
+		assert(w == '"' || w == ',');
+		int top = 0, top2 = 0;
+		if (w == '"') {
+			w = getchar();
+			while (w <= 32) w = getchar();
+			s[top++] = '\n';
+			while (1) {
+				if (w == '\n') {
+					s[top++] = w;
+				}
+				if (w != '"') {
+					s[top++] = w;
+					w = getchar();
+				} else {
+					w = getchar();
+					if (w == '"') {
+						s[top++] = w;
+						w = getchar();
+						continue;
+					} else {
+						s[top++] = 0;
+						break;
+					}
+				}
+			}
+		}
+		assert(w == ',');
+		w = getchar();
 		assert(w == '"');
+
 		w = getchar();
 		while (w <= 32) w = getchar();
-		int top = 0;
-		s[top++] = '\n';
+		s2[top2++] = '\n';
 		while (1) {
 			if (w == '\n') {
-				s[top++] = w;
+				s2[top2++] = w;
 			}
 			if (w != '"') {
-				s[top++] = w;
+				s2[top2++] = w;
 				w = getchar();
 			} else {
 				w = getchar();
 				if (w == '"') {
-					s[top++] = w;
+					s2[top2++] = w;
 					w = getchar();
 					continue;
 				} else {
+					s2[top2++] = 0;
 					break;
 				}
 			}
@@ -111,6 +141,7 @@ void solve(const char *file_name) {
 		assert(w == ',');
 		w = getchar();
 		assert(w == '"');
+
 		while (!isdigit(w)) w = getchar();
 		tmp.clear();
 		while (1) {
@@ -144,6 +175,7 @@ void solve(const char *file_name) {
 		t.id = id;
 		t.seq = tmp;
 		t.formula = "";
+		t.description = s2;
 		t.prefix.clear();
 		t.suffix.clear();
 		int T = 0;
@@ -184,9 +216,10 @@ int main() {
 //	solve("result_133000_145000.csv");
 //	solve("result_145000_156000.csv");
 //	solve("result_156000_167000.csv");
-	solve("result_167000_178000.csv");
-	solve("result_178000_186120.csv");
-	solve("result_manual.csv");
+//	solve("result_167000_178000.csv");
+//	solve("result_178000_186120.csv");
+//	solve("result_manual.csv");
+	solve("result.csv");
 
 	for (int i = 0; i < (int) whole.size(); ++i)
 		for (auto j : whole[i].seq)
@@ -201,7 +234,8 @@ int main() {
 	// whole.erase(whole.begin() + 3, whole.end());
 	for (int i = 0; i < (int) whole.size(); ++i) {
 		puts("\\begin{sloppypar}");
-		printf("\\textbf{[%s]}\n", whole[i].id.c_str());
+		printf("\\textbf{[%s]} $\\bullet$ ", whole[i].id.c_str());
+
 		for (int j = 0; j < (int) whole[i].prefix.size(); ++j) {
 			printf("\\seqsplit{%s},", whole[i].prefix[j].c_str());
 		}
@@ -212,8 +246,24 @@ int main() {
 		for (int j = 1; j < (int) whole[i].suffix.size(); ++j)
 			printf(",\\seqsplit{%s}", whole[i].suffix[j].c_str());
 		//	printf(", \\underline{%s}", whole[i].suffix[j].c_str());
-		puts(" $\\bullet$ ");
-		// puts("<span style=\"white-space:pre;\"></span>");
+		printf(" $\\star$ ");
+
+		for (int j = 0; j < whole[i].description.length(); ++j) {
+			char c = whole[i].description[j];
+			if (c == '\n' && j + 1 < whole[i].description.length() && whole[i].description[j + 1] == '\n') {
+				printf(" $\\bullet$ ");
+				++ j;
+				continue;
+			}
+			if (c == '#' || c == '$' || c == '%' || c == '{' || c == '}' || c == '~' || c == '^' || c == '_')
+				putchar('\\');
+			if (c != '\\')
+				putchar(c);
+			else
+				printf("$\\backslasb$");
+			if (c == '~' || c == '^')
+				printf("{}");
+		}
 		for (int j = 0; j < whole[i].formula.length(); ++j) {
 			char c = whole[i].formula[j];
 			if (c == '\n' && j + 1 < whole[i].formula.length() && whole[i].formula[j + 1] == '\n') {
@@ -230,7 +280,6 @@ int main() {
 			if (c == '~' || c == '^')
 				printf("{}");
 		}
-//		puts("</span>");
 		puts("\\end{sloppypar}");
 	}
 	return 0;
