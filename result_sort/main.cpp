@@ -250,7 +250,7 @@ int main() {
 //	for (int i = 0; i < (int) 10; ++i) {
 	for (int i = 0; i < (int) whole.size(); ++i) {
 		//puts("\\begin{sloppypar}");
-		printf("\\textbf{[%s]} $\\bullet$ ", whole[i].id.c_str());
+		printf("$\\blacktriangleright$ [%s] ", whole[i].id.c_str());
 
 		for (int j = 0; j < (int) whole[i].prefix.size(); ++j) {
 			printf("\\seqsplit{%s},", whole[i].prefix[j].c_str());
@@ -263,8 +263,16 @@ int main() {
 			printf(",\\seqsplit{%s}", whole[i].suffix[j].c_str());
 		//	printf(", \\underline{%s}", whole[i].suffix[j].c_str());
 		printf(" $\\star$ ");
+		bool is_ok = 0;
 		for (int j = 0; j < whole[i].description.length(); ++j) {
 			char c = whole[i].description[j];
+			if (valid(c) && !is_ok) {
+				printf(" \\seqsplit{");
+			}
+			if (!valid(c) && is_ok) {
+				printf("} ");
+			}
+			is_ok = valid(c);
 			if (c == '\n' && j + 1 < whole[i].description.length() && whole[i].description[j + 1] == '\n') {
 				printf(" $\\bullet$ ");
 				++ j;
@@ -279,7 +287,7 @@ int main() {
 			if (c == '~' || c == '^')
 				printf("{}");
 		}
-		bool is_ok = 0;
+		is_ok = 0;
 		for (int j = 0; j < whole[i].formula.length(); ++j) {
 			char c = whole[i].formula[j];
 			if (valid(c) && !is_ok) {
