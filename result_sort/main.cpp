@@ -200,11 +200,26 @@ void solve(const char *file_name) {
 		for (int i = 0; i < (int)tmp.size() - 1; ++i)
 			if (tmp[i] == tmp[i + 1])
 				++ cf;
-		if (trim(t.formula) != string("") && cf < (int)tmp.size() / 2) {
-			t.seq.resize(min(30, (int)t.seq.size()));
-			whole.push_back(t);
+		if (trim(t.formula) != string("") && cf < (int)tmp.size() / 2 && (t.seq.size() < 20 || t.seq[19].length() <= 20)) {
+			int ok = 1;
+			int k = min(20, (int)t.seq.size());
+			for (int j = 0; j < k; ++j)
+				if (t.seq[j].length() > 20) ok = 0;
+			if (ok) {
+				t.seq.resize(min(25, (int)t.seq.size()));
+				whole.push_back(t);
+			}
 		}
 	}
+}
+
+bool valid(char c) {
+	if (c == '#' || c == '$' || c == '%' || c == '{' || c == '}' || c == '~' || c == '^' || c == '_' || c == '&') return 0;
+	if (c == '+' || c == '-' || c == '*' || c == '/') return 0;
+	if (c == ' ') return 0;
+	if (c == '\n') return 0;
+	if (c == '\\' || c == '~' || c == '^') return 0;
+	return 1;
 }
 
 int main() {
@@ -232,8 +247,9 @@ int main() {
 	whole.erase(unique(whole.begin(), whole.end(), cmp2), whole.end());
 	freopen("tex.txt", "w", stdout);
 	// whole.erase(whole.begin() + 3, whole.end());
+//	for (int i = 0; i < (int) 10; ++i) {
 	for (int i = 0; i < (int) whole.size(); ++i) {
-		puts("\\begin{sloppypar}");
+		//puts("\\begin{sloppypar}");
 		printf("\\textbf{[%s]} $\\bullet$ ", whole[i].id.c_str());
 
 		for (int j = 0; j < (int) whole[i].prefix.size(); ++j) {
@@ -247,7 +263,6 @@ int main() {
 			printf(",\\seqsplit{%s}", whole[i].suffix[j].c_str());
 		//	printf(", \\underline{%s}", whole[i].suffix[j].c_str());
 		printf(" $\\star$ ");
-
 		for (int j = 0; j < whole[i].description.length(); ++j) {
 			char c = whole[i].description[j];
 			if (c == '\n' && j + 1 < whole[i].description.length() && whole[i].description[j + 1] == '\n') {
@@ -255,32 +270,42 @@ int main() {
 				++ j;
 				continue;
 			}
-			if (c == '#' || c == '$' || c == '%' || c == '{' || c == '}' || c == '~' || c == '^' || c == '_')
+			if (c == '#' || c == '$' || c == '%' || c == '{' || c == '}' || c == '~' || c == '^' || c == '_' || c == '&')
 				putchar('\\');
 			if (c != '\\')
 				putchar(c);
 			else
-				printf("$\\backslasb$");
+				printf("$\\backslash$");
 			if (c == '~' || c == '^')
 				printf("{}");
 		}
+		bool is_ok = 0;
 		for (int j = 0; j < whole[i].formula.length(); ++j) {
 			char c = whole[i].formula[j];
+			if (valid(c) && !is_ok) {
+				printf(" \\seqsplit{");
+			}
+			if (!valid(c) && is_ok) {
+				printf("} ");
+			}
+			is_ok = valid(c);
 			if (c == '\n' && j + 1 < whole[i].formula.length() && whole[i].formula[j + 1] == '\n') {
 				printf(" $\\bullet$ ");
 				++ j;
 				continue;
 			}
-			if (c == '#' || c == '$' || c == '%' || c == '{' || c == '}' || c == '~' || c == '^' || c == '_')
+			if (c == '#' || c == '$' || c == '%' || c == '{' || c == '}' || c == '~' || c == '^' || c == '_' || c == '&')
 				putchar('\\');
 			if (c != '\\')
 				putchar(c);
 			else
-				printf("$\\backslasb$");
+				printf("$\\backslash$");
 			if (c == '~' || c == '^')
 				printf("{}");
 		}
-		puts("\\end{sloppypar}");
+		puts("");
+		puts("");
+		//puts("\\end{sloppypar}");
 	}
 	return 0;
 }
