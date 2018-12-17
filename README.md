@@ -1,5 +1,9 @@
 # OEIS-Spider 使用说明
 
+##  懒人专用
+
+下载并打开 print/oeis.pdf ， Ctrl + P ，完成。
+
 ##  准备阶段
 
 1. 切换到 prepare 目录下。
